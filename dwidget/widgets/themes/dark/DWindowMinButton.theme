@@ -1,0 +1,5 @@
+Dtk--Widget--DWindowMinButton {
+    qproperty-normalImage: url(:/images/dark/images/window_min_normal.png);
+    qproperty-hoverImage: url(:/images/dark/images/window_min_hover.png);
+    qproperty-pressedImage: url(:/images/dark/images/window_min_press.png);
+}

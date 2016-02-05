@@ -8,7 +8,6 @@ isEmpty(LIB_INSTALL_DIR) {
 } else {
     target.path = $$LIB_INSTALL_DIR
 }
-INSTALLS += target
 
 QMAKE_PKGCONFIG_LIBDIR = $$target.path
 QMAKE_PKGCONFIG_VERSION = $$VERSION
@@ -20,4 +19,7 @@ isEmpty(INCLUDE_INSTALL_DIR) {
     DTK_INCLUDEPATH = $$INCLUDE_INSTALL_DIR/libdtk-$$VERSION
 }
 
+unix{
+    INSTALLS += includes target
+}
 

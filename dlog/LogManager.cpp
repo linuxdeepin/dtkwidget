@@ -66,7 +66,6 @@ QString DLogManager::joinPath(const QString &path, const QString &fileName){
     return QString("%1%2%3").arg(path, separator, fileName);
 }
 
-
 DLogManager::~DLogManager()
 {
 

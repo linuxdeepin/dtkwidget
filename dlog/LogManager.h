@@ -34,7 +34,6 @@ private:
         static DLogManager instance;
         return &instance;
     }
-
     explicit DLogManager();
     ~DLogManager();
     DLogManager(const DLogManager &);
