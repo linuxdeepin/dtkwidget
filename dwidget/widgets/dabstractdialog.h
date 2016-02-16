@@ -20,7 +20,7 @@ class QMouseEvent;
 class QPushButton;
 class QResizeEvent;
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DAbstractDialogPrivate;
 class DAbstractDialog : public QDialog, public DObject
@@ -72,6 +72,6 @@ private:
     D_DECLARE_PRIVATE(DAbstractDialog)
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DABSTRACTDIALOG_H

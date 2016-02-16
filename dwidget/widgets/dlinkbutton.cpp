@@ -10,7 +10,7 @@
 #include "dlinkbutton.h"
 #include "dthememanager.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DLinkButton::DLinkButton(const QString &text, QWidget *parent) :
     QPushButton(text, parent)
@@ -18,4 +18,4 @@ DLinkButton::DLinkButton(const QString &text, QWidget *parent) :
     D_THEME_INIT_WIDGET(DLinkButton);
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

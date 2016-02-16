@@ -13,7 +13,7 @@
 #include "dlineedit_p.h"
 #include "dipv4lineedit.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DIpv4LineEditPrivate : public DLineEditPrivate
 {
@@ -37,7 +37,7 @@ class DIpv4LineEditPrivate : public DLineEditPrivate
     D_DECLARE_PUBLIC(DIpv4LineEdit)
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DIPV4LINEEDIT_P_H
 

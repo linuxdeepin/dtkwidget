@@ -17,7 +17,7 @@
 #include <QResizeEvent>
 #include <QDebug>
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DCalendar::DCalendar(QWidget *parent) : QWidget(parent)
 {
@@ -273,4 +273,4 @@ void DCalendar::aniToNext()
     m_viewCurrent = m_viewRight;
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

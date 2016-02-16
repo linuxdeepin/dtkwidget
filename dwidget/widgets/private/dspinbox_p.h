@@ -16,7 +16,7 @@
 class QFrame;
 class QLabel;
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DImageButton;
 class DSpinBoxPrivate : public DObjectPrivate
@@ -49,7 +49,7 @@ class DDoubleSpinBoxPrivate : public DObjectPrivate
     D_DECLARE_PUBLIC(DDoubleSpinBox)
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DSPINBOX_P_H
 

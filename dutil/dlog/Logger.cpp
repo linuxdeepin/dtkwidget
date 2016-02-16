@@ -32,8 +32,7 @@
 // STL
 #include <iostream>
 
-namespace Dtk {
-namespace Log {
+DUTIL_BEGIN_NAMESPACE
 
 /**
  * \file Logger.h
@@ -1124,4 +1123,4 @@ QDebug CuteMessageLogger::write() const
   return m_l->write(m_level, m_file, m_line, m_function, m_category);
 }
 
-}}
+DUTIL_END_NAMESPACE

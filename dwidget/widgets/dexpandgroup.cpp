@@ -9,7 +9,7 @@
 
 #include "dexpandgroup.h"
 
-USE_NAMESPACE_DWIDGET
+DWIDGET_USE_NAMESPACE
 
 DExpandGroup::DExpandGroup(QObject *parent) : QObject(parent)
 {

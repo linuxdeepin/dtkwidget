@@ -3,8 +3,7 @@
 #include <ConsoleAppender.h>
 #include <RollingFileAppender.h>
 
-namespace Dtk {
-namespace Log {
+DUTIL_BEGIN_NAMESPACE
 
 /**
  * \class DLogManager
@@ -71,4 +70,4 @@ DLogManager::~DLogManager()
 
 }
 
-}}
+DUTIL_END_NAMESPACE

@@ -18,7 +18,7 @@
 #include "dipv4lineedit.h"
 #include "private/dipv4lineedit_p.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 #define RX_PATTERN_IP "^(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)?$"
 
@@ -408,4 +408,4 @@ bool DIpv4LineEdit::eventFilter(QObject *obj, QEvent *e)
 
 #include "moc_dipv4lineedit.cpp"
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

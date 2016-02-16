@@ -17,7 +17,7 @@
 #include "private/dspinbox_p.h"
 #include "dimagebutton.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DImageButton* DSpinBox_getButton(const QString &image_name)
 {
@@ -223,4 +223,4 @@ void DDoubleSpinBox::resizeEvent(QResizeEvent *e)
     d_func()->_q_resizeInsideFrame(e->size());
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

@@ -20,7 +20,7 @@
 #include "libdui_global.h"
 #include "dconstants.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class ArrowButtonIcon : public QLabel
 {
@@ -88,6 +88,6 @@ private:
     ArrowButtonState m_buttonState = ArrowStateNormal;
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DARROWBUTTON_H

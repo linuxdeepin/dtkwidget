@@ -16,7 +16,7 @@
 #include <QFrame>
 #include <QHBoxLayout>
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DOptionPrivate;
 class LIBDUISHARED_EXPORT DOption : public QFrame, public DObject
@@ -53,6 +53,6 @@ Q_SIGNALS:
     void checkedIconChanged(const QString checkedIcon) const;
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DOPTION_H

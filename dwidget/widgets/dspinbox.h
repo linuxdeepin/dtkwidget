@@ -15,7 +15,7 @@
 #include "libdui_global.h"
 #include "dobject.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DSpinBoxPrivate;
 class DSpinBox : public QSpinBox, public DObject
@@ -78,6 +78,6 @@ private:
     double m_defaultValue;
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DSPINBOX_H

@@ -15,7 +15,7 @@
 #include "libdui_global.h"
 #include "dobject.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DLineEditPrivate;
 class LIBDUISHARED_EXPORT DLineEdit : public QLineEdit, public DObject
@@ -62,6 +62,6 @@ protected:
     Q_PRIVATE_SLOT(d_func(), void _q_resizeInsideFrame(const QSize &))
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DLINEEDIT_H

@@ -18,7 +18,7 @@
 #include <QEasingCurve>
 #include "libdui_global.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DSegmentedHighlight : public QToolButton
 {
@@ -86,5 +86,5 @@ Q_SIGNALS:
     void animationDurationChanged(int animationDuration);
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 #endif // DSEGMENTEDCONTROL_H

@@ -10,7 +10,7 @@
 #include "dobject.h"
 #include "private/dobject_p.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DObjectPrivate::DObjectPrivate(DObject *qq)
     : q_ptr(qq)
@@ -34,4 +34,4 @@ DObject::~DObject()
 
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

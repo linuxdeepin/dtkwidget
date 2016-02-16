@@ -19,7 +19,7 @@
 
 #include "libdui_global.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DShortcutEditLabel;
 class LIBDUISHARED_EXPORT DShortcutEdit : public QFrame
@@ -97,6 +97,6 @@ private:
     EchoState m_state = Normal;
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DSHORTCUTEDIT_H

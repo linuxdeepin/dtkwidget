@@ -14,7 +14,7 @@
 #include <QMouseEvent>
 #include <QEvent>
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DImageButton::DImageButton(QWidget *parent)
     : QLabel(parent)
@@ -194,4 +194,4 @@ DImageButton::State DImageButton::getState() const
     return m_state;
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

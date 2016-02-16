@@ -24,7 +24,7 @@
 class CaLunarDayInfo;
 class CalendarView;
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class LIBDUISHARED_EXPORT DCalendar : public QWidget
 {
@@ -95,6 +95,6 @@ private:
     QDate m_showDate;
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // CALENDARWIDGET_H

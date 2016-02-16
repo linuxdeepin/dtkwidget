@@ -16,7 +16,7 @@
 #include "dfilechooseredit.h"
 #include "dimagebutton.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DFileChooserEditPrivate : DLineEditPrivate
 {
@@ -33,7 +33,7 @@ public:
     DFileChooserEdit::DialogDisplayPosition dialogDisplayPosition = DFileChooserEdit::FoloowParentWindow;
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DFILECHOOSEREDIT_P_H
 

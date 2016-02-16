@@ -16,7 +16,7 @@
 #include "private/dlistview_p.h"
 #include "dflowlayout.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DListItemCreator
 {
@@ -834,4 +834,4 @@ void DListView::rowsAboutToBeRemoved(const QModelIndex &parent, int start, int e
 
 #include "moc_dlistview.cpp"
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

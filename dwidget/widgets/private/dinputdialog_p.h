@@ -13,7 +13,7 @@
 #include "dinputdialog.h"
 #include "ddialog_p.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DLabel;
 class DLineEdit;
@@ -38,7 +38,7 @@ class DInputDialogPrivate : public DDialogPrivate
     D_DECLARE_PUBLIC(DInputDialog)
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DINPUTDIALOG_P_H
 

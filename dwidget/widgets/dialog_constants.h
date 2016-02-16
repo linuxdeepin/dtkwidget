@@ -12,7 +12,7 @@
 
 #include "libdui_global.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 namespace DIALOG {
     const int DEFAULT_WIDTH = 380;
@@ -32,7 +32,7 @@ namespace DIALOG {
     const int BUTTON_LAYOUT_RIGHT_MARGIN = 2;
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // BUTTON_CONSTANTS_H
 

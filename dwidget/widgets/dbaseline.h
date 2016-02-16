@@ -17,7 +17,7 @@
 #include "libdui_global.h"
 #include "dconstants.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class LIBDUISHARED_EXPORT DBaseLine : public QLabel
 {
@@ -45,6 +45,6 @@ private:
     int m_rightMargin = HEADER_RIGHT_MARGIN;
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DBASELINE_H

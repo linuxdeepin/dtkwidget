@@ -15,7 +15,7 @@
 #include <QDebug>
 #include <QResizeEvent>
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DLineEdit::DLineEdit(QWidget *parent)
     : QLineEdit(parent),
@@ -165,6 +165,6 @@ void DLineEditPrivate::_q_resizeInsideFrame(const QSize &size)
     m_insideFrame->setFixedWidth(size.width());
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #include "moc_dlineedit.cpp"

@@ -13,7 +13,7 @@
 #include "dlineedit_p.h"
 #include "dpasswordedit.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DPasswordEditPrivate : DLineEditPrivate
 {
@@ -28,7 +28,7 @@ protected:
     Q_DECLARE_PUBLIC(DPasswordEdit)
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DPASSWORDEDIT_P_H
 

@@ -14,7 +14,7 @@
 #include "dapplication.h"
 #include "private/dthemehelper.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DThemeManagerPrivate : public DThemeManager
 {
@@ -72,4 +72,4 @@ DThemeManager::DThemeManager() :
 }
 
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

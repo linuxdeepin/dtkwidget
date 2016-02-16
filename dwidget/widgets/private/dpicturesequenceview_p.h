@@ -17,7 +17,7 @@
 #include <QGraphicsScene>
 #include <QTimer>
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DPictureSequenceViewPrivate : public DObjectPrivate
 {
@@ -53,7 +53,7 @@ public:
     QList<QGraphicsPixmapItem *> m_pictureList;
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DPICTURESEQUENCEVIEW_P_H
 

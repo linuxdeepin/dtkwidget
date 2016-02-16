@@ -16,7 +16,7 @@
 #include "dlineedit.h"
 #include "dobject.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DInputDialogPrivate;
 class DInputDialog : public DDialog
@@ -149,6 +149,6 @@ private:
     D_DECLARE_PRIVATE(DInputDialog)
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DINPUTDIALOG_H

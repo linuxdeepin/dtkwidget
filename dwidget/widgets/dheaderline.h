@@ -16,7 +16,7 @@
 #include "libdui_global.h"
 #include "dbaseline.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class LIBDUISHARED_EXPORT DHeaderLine : public DBaseLine
 {
@@ -34,6 +34,6 @@ private:
     QLabel *m_titleLabel = NULL;
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DHEADERLINE_H

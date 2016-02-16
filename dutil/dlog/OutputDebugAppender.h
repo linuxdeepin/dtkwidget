@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2010 Boris Moiseev (cyberbobs at gmail dot com)
+  Copyright (c) 2010 Karl-Heinz Reichel (khreichel at googlemail dot com)
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU Lesser General Public License version 2.1
@@ -11,30 +11,22 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU Lesser General Public License for more details.
 */
-#ifndef CONSOLEAPPENDER_H
-#define CONSOLEAPPENDER_H
+
+#ifndef OUTPUTDEBUGAPPENDER_H
+#define OUTPUTDEBUGAPPENDER_H
 
 #include "CuteLogger_global.h"
 #include <AbstractStringAppender.h>
 
-namespace Dtk {
-namespace Log {
+DUTIL_BEGIN_NAMESPACE
 
-class CUTELOGGERSHARED_EXPORT ConsoleAppender : public AbstractStringAppender
+class CUTELOGGERSHARED_EXPORT OutputDebugAppender : public AbstractStringAppender
 {
-  public:
-    ConsoleAppender();
-    virtual QString format() const;
-    void ignoreEnvironmentPattern(bool ignore);
-
   protected:
     virtual void append(const QDateTime& timeStamp, Logger::LogLevel logLevel, const char* file, int line,
                         const char* function, const QString& category, const QString& message);
-
-  private:
-    bool m_ignoreEnvPattern;
 };
 
-}}
+DUTIL_END_NAMESPACE
 
-#endif // CONSOLEAPPENDER_H
+#endif // OUTPUTDEBUGAPPENDER_H

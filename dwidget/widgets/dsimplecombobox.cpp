@@ -10,7 +10,7 @@
 #include "dsimplecombobox.h"
 #include "private/dcombobox_p.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class SimpleDelegateItem : public DComboBoxItem
 {
@@ -103,6 +103,6 @@ void DSimpleComboBox::onCurrentIndexChange(int index)
     emit currentTextChanged(nameObj["itemText"].toString());
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #include "dsimplecombobox.moc"

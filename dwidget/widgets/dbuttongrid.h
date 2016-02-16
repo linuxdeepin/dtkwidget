@@ -22,7 +22,7 @@ class QButtonGroup;
 class QLabel;
 
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 
 class ImageButton: public QPushButton
@@ -139,6 +139,6 @@ private:
     void clearData();
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DBUTTONGRID_H

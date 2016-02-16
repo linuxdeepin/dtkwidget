@@ -15,7 +15,7 @@
 #include <QDebug>
 #include <QResizeEvent>
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DOptionPrivate::DOptionPrivate(DOption *q) :
     DObjectPrivate(q)
@@ -203,6 +203,6 @@ void DOption::resizeEvent(QResizeEvent *e)
     d->sizeChanged(e);
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #include "moc_doption.cpp"

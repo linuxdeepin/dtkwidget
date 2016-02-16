@@ -12,7 +12,7 @@
 
 #include "dlineedit.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DFileChooserEditPrivate;
 class LIBDUISHARED_EXPORT DFileChooserEdit : public DLineEdit
@@ -47,6 +47,6 @@ protected:
     Q_PRIVATE_SLOT(d_func(), void _q_showFileChooserDialog())
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DFILECHOOSEREDIT_H

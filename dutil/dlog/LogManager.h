@@ -3,8 +3,9 @@
 
 #include <QtCore>
 
-namespace Dtk {
-namespace Log {
+#include "CuteLogger_global.h"
+
+DUTIL_BEGIN_NAMESPACE
 
 class ConsoleAppender;
 class RollingFileAppender;
@@ -40,6 +41,6 @@ private:
     DLogManager & operator = (const DLogManager &);
 };
 
-}}
+DUTIL_END_NAMESPACE
 
 #endif // LOGMANAGER_H

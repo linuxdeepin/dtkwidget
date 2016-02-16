@@ -18,7 +18,7 @@
 #include <QLabel>
 #include <QPixmap>
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DCircleProgressPrivate;
 class LIBDUISHARED_EXPORT DCircleProgress : public QWidget, public DObject
@@ -67,6 +67,6 @@ private:
     D_DECLARE_PRIVATE(DCircleProgress)
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DCIRCLEPROGRESS_H

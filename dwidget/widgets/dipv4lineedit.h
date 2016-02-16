@@ -12,7 +12,7 @@
 
 #include "dlineedit.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DIpv4LineEditPrivate;
 class DIpv4LineEdit : public DLineEdit
@@ -56,6 +56,6 @@ private:
     Q_PRIVATE_SLOT(d_func(), void _q_setIpLineEditText(const QString &))
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DIPV4LINEEDIT_H

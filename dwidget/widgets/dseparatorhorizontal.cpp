@@ -10,7 +10,7 @@
 #include "dseparatorhorizontal.h"
 #include "dthememanager.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DSeparatorHorizontal::DSeparatorHorizontal(QWidget *parent) : QWidget(parent)
 {
@@ -36,4 +36,4 @@ DSeparatorHorizontal::DSeparatorHorizontal(QWidget *parent) : QWidget(parent)
     this->setLayout(mainLayout);
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

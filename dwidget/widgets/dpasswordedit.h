@@ -12,7 +12,7 @@
 
 #include "dlineedit.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DPasswordEditPrivate;
 class LIBDUISHARED_EXPORT DPasswordEdit : public DLineEdit
@@ -32,6 +32,6 @@ protected:
     Q_PRIVATE_SLOT(d_func(), void _q_toggleEchoMode())
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DPASSWORDEDIT_H

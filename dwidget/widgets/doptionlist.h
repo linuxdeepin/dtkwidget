@@ -16,7 +16,7 @@
 
 #include <QListWidget>
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DOptionListPrivate;
 class LIBDUISHARED_EXPORT DOptionList : public QListWidget, public DObject
@@ -38,6 +38,6 @@ protected:
     D_PRIVATE_SLOT(void _q_currentItemChanged(QListWidgetItem*,QListWidgetItem*))
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DOPTIONLIST_H

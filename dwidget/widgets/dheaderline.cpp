@@ -10,7 +10,7 @@
 #include "dheaderline.h"
 #include "dthememanager.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DHeaderLine::DHeaderLine(QWidget *parent) : DBaseLine(parent)
 {
@@ -34,4 +34,4 @@ void DHeaderLine::setContent(QWidget *content)
     setFixedHeight(CONTENT_HEADER_HEIGHT);
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

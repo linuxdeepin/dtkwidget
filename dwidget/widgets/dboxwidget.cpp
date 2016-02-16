@@ -24,7 +24,7 @@
 #include "dboxwidget.h"
 #include "private/dboxwidget_p.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DBoxWidgetPrivate::DBoxWidgetPrivate(DBoxWidget *qq):
     DObjectPrivate(qq),
@@ -140,4 +140,4 @@ DVBoxWidget::DVBoxWidget(QWidget *parent):
 
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

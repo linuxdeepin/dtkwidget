@@ -17,7 +17,7 @@
 #include "dlabel.h"
 #include "dpasswordedit.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DInputDialogPrivate::DInputDialogPrivate(DInputDialog *qq) :
     DDialogPrivate(qq)
@@ -473,4 +473,4 @@ double DInputDialog::getDouble(QWidget *parent, const QString &title, const QStr
     return dialog.doubleValue();
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

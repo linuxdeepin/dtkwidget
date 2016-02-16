@@ -15,7 +15,7 @@
 #include <QDebug>
 #include <QVBoxLayout>
 
-USE_NAMESPACE_DWIDGET
+DWIDGET_USE_NAMESPACE
 
 DCircleProgressPrivate::DCircleProgressPrivate(DCircleProgress *q)
     : DObjectPrivate(q)

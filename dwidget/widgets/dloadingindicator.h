@@ -25,7 +25,7 @@
 #include "libdui_global.h"
 #include "dobject.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DLoadingIndicatorPrivate;
 class LIBDUISHARED_EXPORT DLoadingIndicator : public QGraphicsView, public DObject
@@ -89,6 +89,6 @@ private:
     D_DECLARE_PRIVATE(DLoadingIndicator)
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DLOADINGINDICATOR_H

@@ -82,7 +82,7 @@ void IconButton::leaveEvent(QEvent *event){
 }
 
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DButtonList::DButtonList(QWidget *parent) : QListWidget(parent)
 {
@@ -218,4 +218,4 @@ void DButtonList::clear(){
 }
 
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

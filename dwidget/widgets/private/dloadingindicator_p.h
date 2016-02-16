@@ -13,7 +13,7 @@
 #include "dloadingindicator.h"
 #include "dobject_p.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DLoadingIndicatorPrivate : public DObjectPrivate
 {
@@ -31,7 +31,7 @@ class DLoadingIndicatorPrivate : public DObjectPrivate
     D_DECLARE_PUBLIC(DLoadingIndicator)
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DLOADINGINDICATOR_P
 

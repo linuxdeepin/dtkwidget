@@ -15,7 +15,7 @@
 
 class QLayoutItem;
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DFlowLayoutPrivate : public DObjectPrivate
 {
@@ -32,7 +32,7 @@ class DFlowLayoutPrivate : public DObjectPrivate
     D_DECLARE_PUBLIC(DFlowLayout)
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DFLOWLAYOUT_P_H
 

@@ -14,7 +14,7 @@
 
 #include "libdui_global.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class LIBDUISHARED_EXPORT DLinkButton : public QPushButton
 {
@@ -24,6 +24,6 @@ public:
     DLinkButton(const QString & text = QString(), QWidget * parent = 0);
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DLINKBUTTON_H

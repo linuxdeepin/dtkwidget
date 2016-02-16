@@ -17,7 +17,7 @@
 #include <QList>
 #include <QListWidgetItem>
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DOptionListPrivate : public DObjectPrivate
 {
@@ -39,6 +39,6 @@ protected:
     QMap<QListWidgetItem *, DOption *> m_optionList;
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DOPTIONLIST_P_H

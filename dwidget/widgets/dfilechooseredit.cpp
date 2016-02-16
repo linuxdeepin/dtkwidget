@@ -16,7 +16,7 @@
 #include <QScreen>
 #include <QGuiApplication>
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DFileChooserEdit::DFileChooserEdit(QWidget *parent)
     : DLineEdit(*new DFileChooserEditPrivate(this), parent)
@@ -92,6 +92,6 @@ void DFileChooserEditPrivate::_q_showFileChooserDialog()
     q->dialogClosed(code);
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #include "moc_dfilechooseredit.cpp"

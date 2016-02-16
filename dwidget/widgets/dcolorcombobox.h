@@ -26,7 +26,7 @@
 #include "dcombobox.h"
 #include "dabstractcomboboxdelegate.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DColorComboBoxPrivate;
 class LIBDUISHARED_EXPORT DColorComboBox : public DComboBox
@@ -47,6 +47,6 @@ private:
     D_DECLARE_PRIVATE(DColorComboBox)
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DCOLORCOMBOBOX_H

@@ -24,8 +24,7 @@
 #include <QCoreApplication>
 #include <QThread>
 
-namespace Dtk {
-namespace Log {
+DUTIL_BEGIN_NAMESPACE
 
 /**
  * \class AbstractStringAppender
@@ -460,4 +459,4 @@ QString AbstractStringAppender::formattedString(const QDateTime& timeStamp, Logg
   return result;
 }
 
-}}
+DUTIL_END_NAMESPACE

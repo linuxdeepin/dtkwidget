@@ -17,7 +17,7 @@
 #include "dcombobox.h"
 #include "dthememanager.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DComboBoxPrivate::DComboBoxPrivate(DComboBox *parent) :
     DObjectPrivate(parent)
@@ -365,6 +365,6 @@ void DComboBox::focusOutEvent(QFocusEvent *e)
     emit focusChanged(false);
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #include "moc_dcombobox.cpp"

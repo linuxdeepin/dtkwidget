@@ -4,8 +4,7 @@
 // Qt
 #include <QMutexLocker>
 
-namespace Dtk {
-namespace Log {
+DUTIL_BEGIN_NAMESPACE
 
 /**
  * \class AbstractAppender
@@ -134,5 +133,4 @@ void AbstractAppender::write(const QDateTime& timeStamp, Logger::LogLevel logLev
  * \sa Logger::write()
  */
 
-}
-}
+DUTIL_END_NAMESPACE

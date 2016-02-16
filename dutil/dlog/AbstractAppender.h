@@ -21,8 +21,7 @@
 // Qt
 #include <QMutex>
 
-namespace Dtk {
-namespace Log {
+DUTIL_BEGIN_NAMESPACE
 
 class CUTELOGGERSHARED_EXPORT AbstractAppender
 {
@@ -48,6 +47,6 @@ class CUTELOGGERSHARED_EXPORT AbstractAppender
     mutable QMutex m_detailsLevelMutex;
 };
 
-}}
+DUTIL_END_NAMESPACE
 
 #endif // ABSTRACTAPPENDER_H

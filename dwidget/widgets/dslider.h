@@ -14,7 +14,7 @@
 
 #include "libdui_global.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DSliderPrivate;
 class LIBDUISHARED_EXPORT DSlider : public QSlider
@@ -84,6 +84,6 @@ private:
     Q_DISABLE_COPY(DSlider)
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DSLIDER_H

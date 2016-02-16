@@ -10,7 +10,7 @@
 #include "dbasebutton.h"
 #include "dthememanager.h"
 
-USE_NAMESPACE_DWIDGET
+DWIDGET_USE_NAMESPACE
 
 DBaseButton::DBaseButton(QWidget *parent) :
     QPushButton(parent)

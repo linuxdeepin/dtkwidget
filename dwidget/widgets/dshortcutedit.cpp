@@ -17,7 +17,7 @@
 
 #include <cctype>
 
-USE_NAMESPACE_DWIDGET
+DWIDGET_USE_NAMESPACE
 
 // static const varibles
 const QString DShortcutEdit::DefaultTips = tr("请输入新的快捷键");

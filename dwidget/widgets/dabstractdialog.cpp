@@ -20,7 +20,7 @@
 #include "dabstractdialog.h"
 #include "private/dabstractdialogprivate_p.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DAbstractDialogPrivate::DAbstractDialogPrivate(DAbstractDialog *qq):
     DObjectPrivate(qq)
@@ -216,4 +216,4 @@ DAbstractDialog::DAbstractDialog(DAbstractDialogPrivate &dd, QWidget *parent):
     dd.init();
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

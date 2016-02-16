@@ -13,7 +13,7 @@
 #include "dobject_p.h"
 #include "dcombobox.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DComboBoxItem;
 
@@ -76,7 +76,7 @@ private:
     bool m_hovered = false;
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DCOMBOBOX_P_H
 

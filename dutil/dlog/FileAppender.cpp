@@ -17,8 +17,7 @@
 // STL
 #include <iostream>
 
-namespace Dtk {
-namespace Log {
+DUTIL_BEGIN_NAMESPACE
 
 /**
  * \class FileAppender
@@ -105,4 +104,4 @@ void FileAppender::closeFile()
   m_logFile.close();
 }
 
-}}
+DUTIL_END_NAMESPACE

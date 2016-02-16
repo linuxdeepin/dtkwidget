@@ -17,8 +17,7 @@
 // STL
 #include <iostream>
 
-namespace Dtk {
-namespace Log {
+DUTIL_BEGIN_NAMESPACE
 
 /**
  * \class ConsoleAppender
@@ -65,5 +64,4 @@ void ConsoleAppender::append(const QDateTime& timeStamp, Logger::LogLevel logLev
   std::cerr << qPrintable(formattedString(timeStamp, logLevel, file, line, function, category, message));
 }
 
-}
-}
+DUTIL_END_NAMESPACE

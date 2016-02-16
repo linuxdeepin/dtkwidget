@@ -5,8 +5,7 @@
 
 #include <FileAppender.h>
 
-namespace Dtk {
-namespace Log {
+DUTIL_BEGIN_NAMESPACE
 
 /*!
  * \brief The RollingFileAppender class extends FileAppender so that the underlying file is rolled over at a user chosen frequency.
@@ -77,6 +76,6 @@ class CUTELOGGERSHARED_EXPORT RollingFileAppender : public FileAppender
     mutable QMutex m_rollingMutex;
 };
 
-}}
+DUTIL_END_NAMESPACE
 
 #endif // ROLLINGFILEAPPENDER_H

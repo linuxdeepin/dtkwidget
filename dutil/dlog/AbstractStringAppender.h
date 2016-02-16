@@ -21,8 +21,7 @@
 // Qt
 #include <QReadWriteLock>
 
-namespace Dtk {
-namespace Log {
+DUTIL_BEGIN_NAMESPACE
 
 class CUTELOGGERSHARED_EXPORT AbstractStringAppender : public AbstractAppender
 {
@@ -45,6 +44,6 @@ class CUTELOGGERSHARED_EXPORT AbstractStringAppender : public AbstractAppender
     mutable QReadWriteLock m_formatLock;
 };
 
-}}
+DUTIL_END_NAMESPACE
 
 #endif // ABSTRACTSTRINGAPPENDER_H

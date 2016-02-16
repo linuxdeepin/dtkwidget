@@ -13,7 +13,7 @@
 
 #include <QResizeEvent>
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DBaseExpand::DBaseExpand(QWidget *parent) : QWidget(parent)
 {
@@ -175,4 +175,4 @@ void DBaseExpand::setExpandedSeparatorVisible(bool arg)
 }
 
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

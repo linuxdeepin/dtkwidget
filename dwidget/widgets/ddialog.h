@@ -20,7 +20,7 @@ class QLabel;
 class QCloseEvent;
 class QVBoxLayout;
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DDialogPrivate;
 class DDialog : public DAbstractDialog
@@ -108,6 +108,6 @@ private:
     Q_PRIVATE_SLOT(d_func(), void _q_defaultButtonTriggered())
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DDIALOG_H

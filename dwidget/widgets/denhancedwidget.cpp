@@ -12,7 +12,7 @@
 
 #include "denhancedwidget.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DEnhancedWidgetPrivate
 {
@@ -156,4 +156,4 @@ DEnhancedWidget::DEnhancedWidget(DEnhancedWidgetPrivate *dd, QWidget *w, QObject
     }
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

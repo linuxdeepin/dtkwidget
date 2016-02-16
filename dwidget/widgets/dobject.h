@@ -14,7 +14,7 @@
 
 #include "libdui_global.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 #define D_DECLARE_PRIVATE(Class) Q_DECLARE_PRIVATE_D(qGetPtrHelper(d_d_ptr),Class)
 #define D_DECLARE_PUBLIC(Class) Q_DECLARE_PUBLIC(Class)
@@ -37,6 +37,6 @@ protected:
     D_DECLARE_PRIVATE(DObject)
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DOBJECT_H

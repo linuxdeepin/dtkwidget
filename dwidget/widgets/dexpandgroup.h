@@ -17,7 +17,7 @@
 #include "libdui_global.h"
 #include "dbaseexpand.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class LIBDUISHARED_EXPORT DExpandGroup : public QObject
 {
@@ -42,6 +42,6 @@ private:
     QMap<int, DBaseExpand *> m_checkedMap;
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // EXPANDGROUP_H

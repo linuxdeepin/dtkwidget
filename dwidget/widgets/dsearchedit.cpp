@@ -18,7 +18,7 @@
 #include <QResizeEvent>
 #include <QTimer>
 
-USE_NAMESPACE_DWIDGET
+DWIDGET_USE_NAMESPACE
 
 DSearchEdit::DSearchEdit(QWidget *parent)
     : QFrame(parent)

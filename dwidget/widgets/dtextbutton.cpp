@@ -10,7 +10,7 @@
 #include "dtextbutton.h"
 #include "dthememanager.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DTextButton::DTextButton(const QString & text, QWidget * parent) :
     QPushButton(text, parent)
@@ -23,4 +23,4 @@ DTextButton::~DTextButton()
 
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

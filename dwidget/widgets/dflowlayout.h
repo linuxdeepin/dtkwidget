@@ -16,7 +16,7 @@
 
 #include "dobject.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DFlowLayoutPrivate;
 class DFlowLayout : public QLayout, public DObject
@@ -79,6 +79,6 @@ private:
     D_DECLARE_PRIVATE(DFlowLayout)
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DFLOWLAYOUT_H

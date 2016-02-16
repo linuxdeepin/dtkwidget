@@ -17,7 +17,7 @@
 
 #include <QPainter>
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DCircleProgressPrivate : public DObjectPrivate
 {
@@ -42,6 +42,6 @@ private:
     QColor m_backgroundColor = Qt::darkCyan;
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DCIRCLEPROGRESS_P_H

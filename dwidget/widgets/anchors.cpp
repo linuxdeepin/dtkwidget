@@ -12,7 +12,7 @@
 #include "anchors.h"
 #include "denhancedwidget.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class AnchorsBasePrivate
 {
@@ -1085,4 +1085,4 @@ void ARect::setRight(int arg, Qt::AnchorPoint point)
     QRect::setRight(arg);
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

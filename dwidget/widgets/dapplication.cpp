@@ -13,7 +13,7 @@
 #include "dthememanager.h"
 #include "private/dthemehelper.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DApplication::DApplication(int &argc, char **argv) :
     QApplication(argc, argv)
@@ -32,4 +32,4 @@ void DApplication::setTheme(const QString & theme)
     themeManager->setTheme(theme);
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

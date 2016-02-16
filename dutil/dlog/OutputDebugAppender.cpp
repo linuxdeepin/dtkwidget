@@ -17,8 +17,7 @@
 // STL
 #include <windows.h>
 
-namespace Dtk {
-namespace Log {
+DUTIL_BEGIN_NAMESPACE
 
 /**
  * \class OutputDebugAppender
@@ -43,4 +42,4 @@ void OutputDebugAppender::append(const QDateTime& timeStamp,
     OutputDebugStringW((LPCWSTR) s.utf16());
 }
 
-}}
+DUTIL_END_NAMESPACE

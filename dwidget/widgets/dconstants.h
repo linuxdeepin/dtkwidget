@@ -20,7 +20,7 @@
 
 #include "libdui_global.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 	//basis width and height
 	const int BUTTON_HEIGHT = 22;
 	const int EXPAND_HEADER_HEIGHT = 30;
@@ -37,6 +37,6 @@ DWIDGET_NAMESPACE_BEGIN
     const int IMAGE_BUTTON_WIDTH = 24;
 	const int FONT_SIZE = 12;
 	const int NORMAL_RADIUS = 3;
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif //DCONSTANTS_H

@@ -15,7 +15,7 @@
 
 #include <QDebug>
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DOptionListPrivate::DOptionListPrivate(DOptionList *q) :
     DObjectPrivate(q)
@@ -133,6 +133,6 @@ void DOptionList::setCurrentSelected(const QString &value)
     d->setCurrentSelected(value);
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #include "moc_doptionlist.cpp"

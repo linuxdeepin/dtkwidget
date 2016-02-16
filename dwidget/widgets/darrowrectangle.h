@@ -24,7 +24,7 @@
 #include "dthememanager.h"
 #include "dgraphicsgloweffect.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class LIBDUISHARED_EXPORT DArrowRectangle : public QWidget
 {
@@ -123,6 +123,6 @@ private:
     QWidget *m_content = NULL;
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DARROWRECTANGLE_H

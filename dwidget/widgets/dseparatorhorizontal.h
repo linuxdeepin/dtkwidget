@@ -15,7 +15,7 @@
 
 #include "libdui_global.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class LIBDUISHARED_EXPORT DSeparatorHorizontal : public QWidget
 {
@@ -28,6 +28,6 @@ private:
     QWidget *m_bottomRec = NULL;
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DSEPARATORHORIZONTAL_H

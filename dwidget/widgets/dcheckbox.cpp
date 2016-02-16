@@ -10,7 +10,7 @@
 #include "dcheckbox.h"
 #include "dthememanager.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DCheckBox::DCheckBox(QWidget *parent) :
     QCheckBox(parent)
@@ -24,4 +24,4 @@ DCheckBox::DCheckBox(const QString &text, QWidget *parent):
     D_THEME_INIT_WIDGET(DCheckBox)
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

@@ -10,7 +10,7 @@
 #include "dbaseline.h"
 #include "dthememanager.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DBaseLine::DBaseLine(QWidget *parent) : QLabel(parent)
 {
@@ -85,4 +85,4 @@ int DBaseLine::rightMargin() const
     return m_rightMargin;
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

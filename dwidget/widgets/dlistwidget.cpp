@@ -17,7 +17,7 @@
 #include "dlistwidget.h"
 #include "private/dlistwidget_p.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DListWidgetPrivate::DListWidgetPrivate(DListWidget *qq):
         DScrollAreaPrivate(qq),
@@ -541,4 +541,4 @@ DListWidget::DListWidget(DListWidgetPrivate &dd, QWidget *parent):
     d_func()->init();
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

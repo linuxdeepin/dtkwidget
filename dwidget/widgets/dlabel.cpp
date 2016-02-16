@@ -10,7 +10,7 @@
 #include "dlabel.h"
 #include "dthememanager.h"
 
-USE_NAMESPACE_DWIDGET
+DWIDGET_USE_NAMESPACE
 
 DLabel::DLabel(QWidget *parent, Qt::WindowFlags f)
     : QLabel(parent, f)

@@ -16,7 +16,7 @@
 
 class QPropertyAnimation;
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DScrollAreaPrivate : public DObjectPrivate
 {
@@ -36,6 +36,6 @@ private:
     D_DECLARE_PUBLIC(DScrollArea)
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DSCROLLAREA_P_H

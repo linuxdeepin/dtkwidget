@@ -4,8 +4,7 @@
 
 #include "RollingFileAppender.h"
 
-namespace Dtk {
-namespace Log {
+DUTIL_BEGIN_NAMESPACE
 
 RollingFileAppender::RollingFileAppender(const QString& fileName)
   : FileAppender(fileName),
@@ -249,4 +248,4 @@ int RollingFileAppender::logFilesLimit() const
   return m_logFilesLimit;
 }
 
-}}
+DUTIL_END_NAMESPACE

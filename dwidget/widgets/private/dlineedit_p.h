@@ -16,7 +16,7 @@
 
 #include <QHBoxLayout>
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DLineEditPrivate : public DObjectPrivate
 {
@@ -39,7 +39,7 @@ public:
     QHBoxLayout *m_centeralHLayout;
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DLINEEDIT_P_H
 

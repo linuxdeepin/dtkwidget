@@ -16,7 +16,7 @@
 
 #include "dcombobox.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DAbstractComboBoxDelegate : public QStyledItemDelegate
 {
@@ -29,6 +29,6 @@ public:
 
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DABSTRACTCOMBOBOXDELEGATE_H

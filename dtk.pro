@@ -2,5 +2,5 @@ TEMPLATE  = subdirs
 CONFIG   += ordered
 
 SUBDIRS  += \
-    dlog \
+    dutil \
     dwidget \

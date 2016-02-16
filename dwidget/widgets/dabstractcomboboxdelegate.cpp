@@ -9,7 +9,7 @@
 
 #include "dabstractcomboboxdelegate.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DAbstractComboBoxDelegate::DAbstractComboBoxDelegate(QObject *parent) : QStyledItemDelegate(parent)
 {
@@ -42,4 +42,4 @@ void DAbstractComboBoxDelegate::updateEditorGeometry(QWidget *editor, const QSty
     editor->setGeometry(option.rect);
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

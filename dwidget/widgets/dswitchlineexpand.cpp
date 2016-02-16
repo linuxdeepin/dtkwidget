@@ -12,7 +12,7 @@
 
 #include <QResizeEvent>
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 SwitchHeaderLine::SwitchHeaderLine(QWidget *parent) :
     DHeaderLine(parent)
@@ -72,4 +72,4 @@ void DSwitchLineExpand::resizeEvent(QResizeEvent *e)
     DBaseExpand::resizeEvent(e);
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

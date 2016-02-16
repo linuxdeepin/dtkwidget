@@ -22,8 +22,7 @@
 // Local
 #include "CuteLogger_global.h"
 
-namespace Dtk {
-namespace Log {
+DUTIL_BEGIN_NAMESPACE
 
 class AbstractAppender;
 class Logger;
@@ -204,6 +203,6 @@ class CUTELOGGERSHARED_EXPORT LoggerTimingHelper
     QString m_block;
 };
 
-}}
+DUTIL_END_NAMESPACE
 
 #endif // LOGGER_H

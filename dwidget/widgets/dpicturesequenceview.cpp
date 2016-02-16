@@ -12,7 +12,7 @@
 
 #include <QGraphicsPixmapItem>
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DPictureSequenceViewPrivate::DPictureSequenceViewPrivate(DPictureSequenceView *q) :
     DObjectPrivate(q)
@@ -146,6 +146,6 @@ void DPictureSequenceView::setSingleShot(bool singleShot)
     d->setSingleShot(singleShot);
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #include "moc_dpicturesequenceview.cpp"

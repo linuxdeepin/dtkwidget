@@ -17,7 +17,7 @@
 #include "dslider.h"
 #include "dthememanager.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 static const int CustomDrawingLeftPadding = 10;
 static const int CustomDrawingRightPadding = 10;
@@ -454,4 +454,4 @@ int DSliderPrivate::pixelPosToRangeValue(int pos) const
                                            sliderMax - sliderMin, opt.upsideDown);
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

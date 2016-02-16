@@ -18,7 +18,7 @@
 #include "dscrollbar.h"
 #include "private/dscrollarea_p.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DScrollAreaPrivate::DScrollAreaPrivate(DScrollArea *qq):
     DObjectPrivate(qq),
@@ -163,4 +163,4 @@ DScrollArea::DScrollArea(DScrollAreaPrivate &dd, QWidget *parent):
     d_func()->init();
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

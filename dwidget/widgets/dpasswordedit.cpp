@@ -13,7 +13,7 @@
 
 #include <QDebug>
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DPasswordEdit::DPasswordEdit(QWidget *parent)
     : DLineEdit(*new DPasswordEditPrivate(this), parent)
@@ -63,7 +63,7 @@ void DPasswordEditPrivate::_q_toggleEchoMode()
         q->setEchoMode(q->Normal);
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #include "moc_dpasswordedit.cpp"
 

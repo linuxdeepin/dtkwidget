@@ -16,7 +16,7 @@
 #include "dscrollarea.h"
 #include "libdui_global.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DListWidgetPrivate;
 class DListWidget : public DScrollArea
@@ -113,6 +113,6 @@ private:
     D_DECLARE_PRIVATE(DListWidget)
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DLISTWIDGET_H

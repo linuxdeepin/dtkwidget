@@ -10,7 +10,7 @@
 #include "dcolorcombobox.h"
 #include "private/dcombobox_p.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class ColorDelegateItem : public DComboBoxItem
 {
@@ -174,6 +174,6 @@ void DColorComboBox::onCurrentIndexChange(int index)
     emit currentColorChange(QColor(colorObj["itemColor"].toString()));
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #include "dcolorcombobox.moc"

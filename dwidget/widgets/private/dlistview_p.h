@@ -13,7 +13,7 @@
 #include "dobject_p.h"
 #include "dlistview.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DListItemCreator;
 class DBoxWidget;
@@ -59,7 +59,7 @@ class DListViewPrivate : public DObjectPrivate
     D_DECLARE_PUBLIC(DListView)
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DLISTVIEW_P_H
 

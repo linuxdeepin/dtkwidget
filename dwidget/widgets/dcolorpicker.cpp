@@ -14,7 +14,7 @@
 #include <QPainter>
 #include <QMouseEvent>
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DColorPicker::DColorPicker(int row, int column, int cellSize,
                            int spacing, int margin,
@@ -296,4 +296,4 @@ void DColorPicker::resize()
                  (m_row-1)*(m_cellSize+m_spacing)+m_cellSize+m_margin*2);
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

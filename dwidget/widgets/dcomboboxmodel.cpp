@@ -9,7 +9,7 @@
 
 #include "dcomboboxmodel.h"
 
-USE_NAMESPACE_DWIDGET
+DWIDGET_USE_NAMESPACE
 
 DComboBoxModel::DComboBoxModel(QObject *parent) : QAbstractItemModel(parent)
 {

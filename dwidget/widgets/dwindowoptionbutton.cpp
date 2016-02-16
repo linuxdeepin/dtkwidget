@@ -13,7 +13,7 @@
 
 #include "dwindowoptionbutton.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DWindowOptionButton::DWindowOptionButton(QWidget * parent) :
     DImageButton(parent)
@@ -57,6 +57,6 @@ void DWindowOptionButton::setPressedImage(const QString &pressedImage)
     this->setPressPic(m_pressedImage);
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 

@@ -12,7 +12,7 @@
 #include "dfontcombobox.h"
 #include "private/dcombobox_p.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class FontDelegateItem : public DComboBoxItem
 {
@@ -111,6 +111,6 @@ void DFontComboBox::onCurrentIndexChange(int index)
     emit currentFontNameChange(nameObj["itemFont"].toString());
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #include "dfontcombobox.moc"

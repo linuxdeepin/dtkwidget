@@ -17,7 +17,7 @@
 #include "dswitchbutton.h"
 #include "dheaderline.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class SwitchHeaderLine : public DHeaderLine
 {
@@ -56,6 +56,6 @@ private:
     SwitchHeaderLine *m_headerLine = NULL;
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DSWITCHLINEEXPAND_H

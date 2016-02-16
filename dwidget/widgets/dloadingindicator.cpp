@@ -14,7 +14,7 @@
 #include "private/dloadingindicator_p.h"
 #include "dthememanager.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DLoadingIndicatorPrivate::DLoadingIndicatorPrivate(DLoadingIndicator *qq) :
     DObjectPrivate(qq)
@@ -281,4 +281,4 @@ void DLoadingIndicator::stop()
 }
 
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

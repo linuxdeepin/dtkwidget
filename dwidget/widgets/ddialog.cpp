@@ -25,7 +25,7 @@
 #include "dthememanager.h"
 #include "dboxwidget.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DDialogPrivate::DDialogPrivate(DDialog *qq) :
     DAbstractDialogPrivate(qq)
@@ -643,6 +643,6 @@ void DDialog::hideEvent(QHideEvent *event)
     emit closed();
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #include "moc_ddialog.cpp"

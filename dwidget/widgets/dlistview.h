@@ -15,7 +15,7 @@
 
 #include "dobject.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DVariantListModel : public QAbstractListModel
 {
@@ -147,6 +147,6 @@ private:
     Q_PRIVATE_SLOT(d_func(), void _q_onItemPaint(const QStyleOptionViewItem&, const QModelIndex&))
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DLISTVIEW_H

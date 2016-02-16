@@ -13,7 +13,7 @@
 #include "libdui_global.h"
 #include "dobject.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DObjectPrivate
 {
@@ -28,7 +28,7 @@ protected:
     Q_DECLARE_PUBLIC(DObject)
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DOBJECT_P_H
 

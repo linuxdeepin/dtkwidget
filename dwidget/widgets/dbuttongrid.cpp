@@ -19,7 +19,7 @@
 #include <QLabel>
 #include <QDebug>
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 #include "dwindowclosebutton.h"
 
@@ -433,4 +433,4 @@ DButtonGrid::~DButtonGrid()
 
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

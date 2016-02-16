@@ -13,7 +13,7 @@
 #include "dflowlayout.h"
 #include "private/dflowlayout_p.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DFlowLayoutPrivate::DFlowLayoutPrivate(DFlowLayout *qq) :
     DObjectPrivate(qq)
@@ -385,4 +385,4 @@ void DFlowLayout::setFlow(Flow direction)
     invalidate();
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

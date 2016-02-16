@@ -15,7 +15,7 @@
 
 #include "libdui_global.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class LIBDUISHARED_EXPORT DTextButton : public QPushButton
 {
@@ -25,6 +25,6 @@ public:
     ~DTextButton();
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DTEXTBUTTON_H

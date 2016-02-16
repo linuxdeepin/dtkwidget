@@ -17,7 +17,7 @@
 #include "dabstractcomboboxdelegate.h"
 #include "dcombobox.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class LIBDUISHARED_EXPORT DSimpleComboBox : public DComboBox
 {
@@ -35,6 +35,6 @@ private:
     Q_SLOT void onCurrentIndexChange(int index);
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DSIMPLECOMBOBOX_H

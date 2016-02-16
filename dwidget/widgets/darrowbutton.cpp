@@ -10,7 +10,7 @@
 #include "darrowbutton.h"
 #include "dthememanager.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 ArrowButtonIcon::ArrowButtonIcon(QWidget *parent) :
     QLabel(parent)
@@ -173,4 +173,4 @@ void DArrowButton::updateIconState(ArrowButtonState state)
     m_pressLabel->setButtonState(state);
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

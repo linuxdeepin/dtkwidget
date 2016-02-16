@@ -9,7 +9,7 @@
 
 #include "dgraphicsgloweffect.h"
 
-USE_NAMESPACE_DWIDGET
+DWIDGET_USE_NAMESPACE
 
 DGraphicsGlowEffect::DGraphicsGlowEffect(QObject *parent) :
     QGraphicsEffect(parent),

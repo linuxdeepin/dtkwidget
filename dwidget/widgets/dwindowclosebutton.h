@@ -15,7 +15,7 @@
 
 #include "dimagebutton.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class LIBDUISHARED_EXPORT DWindowCloseButton : public DImageButton
 {
@@ -42,6 +42,6 @@ private:
     QString m_pressedImage;
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DWINDOWCLOSEBUTTON_H

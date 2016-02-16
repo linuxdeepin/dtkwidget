@@ -22,8 +22,7 @@
 #include <QFile>
 #include <QTextStream>
 
-namespace Dtk {
-namespace Log {
+DUTIL_BEGIN_NAMESPACE
 
 class CUTELOGGERSHARED_EXPORT FileAppender : public AbstractStringAppender
 {
@@ -46,6 +45,6 @@ class CUTELOGGERSHARED_EXPORT FileAppender : public AbstractStringAppender
     mutable QMutex m_logFileMutex;
 };
 
-}}
+DUTIL_END_NAMESPACE
 
 #endif // FILEAPPENDER_H

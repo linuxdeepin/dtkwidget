@@ -13,7 +13,7 @@
 #include "dstackwidget.h"
 #include "private/dstackwidget_p.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 DAbstractStackWidgetTransitionPrivate::DAbstractStackWidgetTransitionPrivate(DAbstractStackWidgetTransition *qq):
     DObjectPrivate(qq),
@@ -368,4 +368,4 @@ DStackWidget::DStackWidget(DStackWidgetPrivate &dd, QWidget *parent):
     d_func()->init();
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

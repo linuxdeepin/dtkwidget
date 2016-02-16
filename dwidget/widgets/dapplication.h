@@ -14,7 +14,7 @@
 
 #include "libdui_global.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class LIBDUISHARED_EXPORT DApplication : public QApplication
 {
@@ -26,6 +26,6 @@ public:
     void setTheme(const QString & theme);
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DAPPLICATION_H

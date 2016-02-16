@@ -15,7 +15,7 @@
 #endif
 #include <QApplication>
 
-USE_NAMESPACE_DWIDGET
+DWIDGET_USE_NAMESPACE
 
 DArrowRectangle::DArrowRectangle(ArrowDirection direction, QWidget * parent) :
     QWidget(parent),m_arrowDirection(direction)

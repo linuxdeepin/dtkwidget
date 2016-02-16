@@ -17,7 +17,7 @@
 
 class QHBoxLayout;
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DVBoxWidget;
 class DHBoxWidget;
@@ -60,7 +60,7 @@ private:
     Q_DECLARE_PUBLIC(DDialog)
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DDIALOG_P_H
 

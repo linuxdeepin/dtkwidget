@@ -12,7 +12,7 @@
 
 #include <QResizeEvent>
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 ArrowHeaderLine::ArrowHeaderLine(QWidget *parent) :
     DHeaderLine(parent)
@@ -83,4 +83,4 @@ void DArrowLineExpand::resizeEvent(QResizeEvent *e)
     DBaseExpand::resizeEvent(e);
 }
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE

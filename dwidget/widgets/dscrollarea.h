@@ -15,7 +15,7 @@
 #include "libdui_global.h"
 #include "dobject.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class DScrollBar;
 class DScrollAreaPrivate;
@@ -47,6 +47,6 @@ private:
     D_DECLARE_PRIVATE(DScrollArea)
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DSCROLLAREA_H

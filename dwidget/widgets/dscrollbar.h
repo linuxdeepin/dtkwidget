@@ -14,7 +14,7 @@
 
 #include "libdui_global.h"
 
-DWIDGET_NAMESPACE_BEGIN
+DWIDGET_BEGIN_NAMESPACE
 
 class LIBDUISHARED_EXPORT DScrollBar : public QScrollBar
 {
@@ -27,6 +27,6 @@ signals:
 public slots:
 };
 
-DWIDGET_NAMESPACE_END
+DWIDGET_END_NAMESPACE
 
 #endif // DSCROLLBAR_H
