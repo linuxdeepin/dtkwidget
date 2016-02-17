@@ -222,8 +222,14 @@ void DListViewPrivate::init()
     creator = new DListItemCreator;
     creator->view = q;
 
+    batchLayoutTimer.setSingleShot(true);
+    batchLayoutTimer.setInterval(10);
+
     q->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
     q->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+
+    q->connect(&batchLayoutTimer, SIGNAL(timeout()),
+               q, SLOT(_q_updateIndexWidget()));
 }
 
 void DListViewPrivate::onRowsInserted(const QModelIndex &parent,
@@ -368,7 +374,8 @@ void DListViewPrivate::_q_onItemPaint(const QStyleOptionViewItem &option,
 
     if(index.row() < startIndex)
         startIndex = index.row();
-    else if(index.row() > endIndex)
+
+    if(index.row() > endIndex)
         endIndex = index.row();
 }
 
@@ -781,8 +788,8 @@ void DListView::paintEvent(QPaintEvent *event)
 
     if(d->indexWidgetUpdated) {
         d->indexWidgetUpdated = false;
-    } else {
-        d->_q_updateIndexWidget();
+    } else if(!d->batchLayoutTimer.isActive()) {
+        d->batchLayoutTimer.start();
     }
 }
 

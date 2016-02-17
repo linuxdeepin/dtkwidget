@@ -10,6 +10,8 @@
 #ifndef DLISTVIEW_P_H
 #define DLISTVIEW_P_H
 
+#include  <QTimer>
+
 #include "dobject_p.h"
 #include "dlistview.h"
 
@@ -51,6 +53,8 @@ class DListViewPrivate : public DObjectPrivate
 
     QList<QWidget*> headerList;
     QList<QWidget*> footerList;
+
+    QTimer batchLayoutTimer;
 
 #if(QT_VERSION < 0x050500)
     int left = 0, top = 0, right = 0, bottom = 0; // viewport margin
