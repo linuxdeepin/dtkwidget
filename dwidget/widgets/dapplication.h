@@ -16,7 +16,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDUISHARED_EXPORT DApplication : public QApplication
+class LIBDTKWIDGETSHARED_EXPORT DApplication : public QApplication
 {
     Q_OBJECT
 public:

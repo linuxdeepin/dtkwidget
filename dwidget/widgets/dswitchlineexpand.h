@@ -38,7 +38,7 @@ private:
 
 };
 
-class LIBDUISHARED_EXPORT DSwitchLineExpand : public DBaseExpand
+class LIBDTKWIDGETSHARED_EXPORT DSwitchLineExpand : public DBaseExpand
 {
     Q_OBJECT
 public:

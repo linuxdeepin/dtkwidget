@@ -19,7 +19,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDUISHARED_EXPORT DImageButton : public QLabel
+class LIBDTKWIDGETSHARED_EXPORT DImageButton : public QLabel
 {
     Q_OBJECT
     Q_PROPERTY(QString normalPic READ getNormalPic WRITE setNormalPic DESIGNABLE true)

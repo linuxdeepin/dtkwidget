@@ -28,7 +28,7 @@
 DWIDGET_BEGIN_NAMESPACE
 
 class DLoadingIndicatorPrivate;
-class LIBDUISHARED_EXPORT DLoadingIndicator : public QGraphicsView, public DObject
+class LIBDTKWIDGETSHARED_EXPORT DLoadingIndicator : public QGraphicsView, public DObject
 {
     Q_OBJECT
 

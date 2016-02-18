@@ -21,7 +21,7 @@
 DWIDGET_BEGIN_NAMESPACE
 
 class DCircleProgressPrivate;
-class LIBDUISHARED_EXPORT DCircleProgress : public QWidget, public DObject
+class LIBDTKWIDGETSHARED_EXPORT DCircleProgress : public QWidget, public DObject
 {
     Q_OBJECT
     Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor DESIGNABLE true)

@@ -19,7 +19,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDUISHARED_EXPORT DBaseLine : public QLabel
+class LIBDTKWIDGETSHARED_EXPORT DBaseLine : public QLabel
 {
     Q_OBJECT
 public:

@@ -17,7 +17,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDUISHARED_EXPORT DWindowCloseButton : public DImageButton
+class LIBDTKWIDGETSHARED_EXPORT DWindowCloseButton : public DImageButton
 {
     Q_OBJECT
 public:

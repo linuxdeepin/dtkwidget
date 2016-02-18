@@ -19,7 +19,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDUISHARED_EXPORT DExpandGroup : public QObject
+class LIBDTKWIDGETSHARED_EXPORT DExpandGroup : public QObject
 {
     Q_OBJECT
 public:

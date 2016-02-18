@@ -19,3 +19,10 @@ includes.files += libdui_global.h widgets/*.h
 QMAKE_PKGCONFIG_NAME = DTK_WIDGET
 QMAKE_PKGCONFIG_DESCRIPTION = Deepin Tool Kit UI Module
 QMAKE_PKGCONFIG_INCDIR = $$includes.path
+
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../dbase/release/ -ldtkbase
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../dbase/debug/ -ldtkbase
+else:unix: LIBS += -L$$OUT_PWD/../dbase/ -ldtkbase
+
+INCLUDEPATH += $$PWD/../dbase
+DEPENDPATH += $$PWD/../dbase

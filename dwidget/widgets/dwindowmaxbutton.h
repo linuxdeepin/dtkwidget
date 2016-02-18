@@ -17,7 +17,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDUISHARED_EXPORT DWindowMaxButton : public DImageButton
+class LIBDTKWIDGETSHARED_EXPORT DWindowMaxButton : public DImageButton
 {
     Q_OBJECT
 public:

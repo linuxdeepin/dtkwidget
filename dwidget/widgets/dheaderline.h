@@ -18,7 +18,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDUISHARED_EXPORT DHeaderLine : public DBaseLine
+class LIBDTKWIDGETSHARED_EXPORT DHeaderLine : public DBaseLine
 {
     Q_OBJECT
 public:

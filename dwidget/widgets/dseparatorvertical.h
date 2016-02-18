@@ -17,7 +17,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDUISHARED_EXPORT DSeparatorVertical : public QWidget
+class LIBDTKWIDGETSHARED_EXPORT DSeparatorVertical : public QWidget
 {
     Q_OBJECT
 public:

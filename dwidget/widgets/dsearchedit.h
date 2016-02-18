@@ -20,7 +20,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDUISHARED_EXPORT DSearchEdit : public QFrame
+class LIBDTKWIDGETSHARED_EXPORT DSearchEdit : public QFrame
 {
     Q_OBJECT
 public:

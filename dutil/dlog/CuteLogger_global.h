@@ -1,24 +1,7 @@
 #ifndef CUTELOGGER_GLOBAL_H
 #define CUTELOGGER_GLOBAL_H
 
-#include <QtCore/qglobal.h>
-
-#ifndef DTK_NAMESPACE
-#   define DTK_NAMESPACE Dtk
-#endif
-
-#define DUTIL_NAMESPACE Util
-#define DTK_UTIL_NAMESPACE DTK_NAMESPACE::DUTIL_NAMESPACE
-
-#if !defined(DUTIL_NAMESPACE)
-#   define DUTIL_BEGIN_NAMESPACE
-#   define DUTIL_END_NAMESPACE
-#   define DUTIL_USE_NAMESPACE
-#else
-#   define DUTIL_BEGIN_NAMESPACE namespace DTK_NAMESPACE { namespace DUTIL_NAMESPACE {
-#   define DUTIL_END_NAMESPACE }}
-#   define DUTIL_USE_NAMESPACE using namespace DTK_UTIL_NAMESPACE;
-#endif
+#include "dutil_global.h"
 
 #if defined(CUTELOGGER_LIBRARY)
 #  define CUTELOGGERSHARED_EXPORT Q_DECL_EXPORT

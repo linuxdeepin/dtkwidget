@@ -22,7 +22,7 @@
 DWIDGET_BEGIN_NAMESPACE
 
 class DShortcutEditLabel;
-class LIBDUISHARED_EXPORT DShortcutEdit : public QFrame
+class LIBDTKWIDGETSHARED_EXPORT DShortcutEdit : public QFrame
 {
     Q_OBJECT
 

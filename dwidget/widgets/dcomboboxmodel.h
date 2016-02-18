@@ -21,7 +21,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDUISHARED_EXPORT DComboBoxModel : public QAbstractItemModel
+class LIBDTKWIDGETSHARED_EXPORT DComboBoxModel : public QAbstractItemModel
 {
     Q_OBJECT
 public:

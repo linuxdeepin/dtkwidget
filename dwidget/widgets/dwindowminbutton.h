@@ -14,7 +14,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDUISHARED_EXPORT DWindowMinButton : public DImageButton
+class LIBDTKWIDGETSHARED_EXPORT DWindowMinButton : public DImageButton
 {
     Q_OBJECT
 public:

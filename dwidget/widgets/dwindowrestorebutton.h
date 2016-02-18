@@ -17,7 +17,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDUISHARED_EXPORT DWindowRestoreButton : public DImageButton
+class LIBDTKWIDGETSHARED_EXPORT DWindowRestoreButton : public DImageButton
 {
     Q_OBJECT
 public:

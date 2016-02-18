@@ -33,7 +33,7 @@ private:
     QList<QVariant> dataList;
 };
 
-class LIBDUISHARED_EXPORT DListItemDelegate : public QStyledItemDelegate
+class LIBDTKWIDGETSHARED_EXPORT DListItemDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
 
@@ -60,7 +60,7 @@ Q_SIGNALS:
 };
 
 class DListViewPrivate;
-class LIBDUISHARED_EXPORT DListView : public QListView, public DObject
+class LIBDTKWIDGETSHARED_EXPORT DListView : public QListView, public DObject
 {
     Q_OBJECT
 

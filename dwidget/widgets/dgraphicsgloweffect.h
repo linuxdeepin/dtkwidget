@@ -18,7 +18,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDUISHARED_EXPORT DGraphicsGlowEffect : public QGraphicsEffect
+class LIBDTKWIDGETSHARED_EXPORT DGraphicsGlowEffect : public QGraphicsEffect
 {
     Q_OBJECT
 public:

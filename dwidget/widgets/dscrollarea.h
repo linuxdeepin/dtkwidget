@@ -19,7 +19,7 @@ DWIDGET_BEGIN_NAMESPACE
 
 class DScrollBar;
 class DScrollAreaPrivate;
-class LIBDUISHARED_EXPORT DScrollArea : public QScrollArea, public DObject
+class LIBDTKWIDGETSHARED_EXPORT DScrollArea : public QScrollArea, public DObject
 {
     Q_OBJECT
 

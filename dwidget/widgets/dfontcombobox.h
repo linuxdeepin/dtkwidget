@@ -27,7 +27,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDUISHARED_EXPORT DFontComboBox : public DComboBox
+class LIBDTKWIDGETSHARED_EXPORT DFontComboBox : public DComboBox
 {
     Q_OBJECT
 public:

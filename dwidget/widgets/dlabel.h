@@ -17,7 +17,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDUISHARED_EXPORT DLabel : public QLabel
+class LIBDTKWIDGETSHARED_EXPORT DLabel : public QLabel
 {
     Q_OBJECT
 

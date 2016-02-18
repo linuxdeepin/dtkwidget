@@ -17,7 +17,7 @@
 DWIDGET_BEGIN_NAMESPACE
 
 class DSliderPrivate;
-class LIBDUISHARED_EXPORT DSlider : public QSlider
+class LIBDTKWIDGETSHARED_EXPORT DSlider : public QSlider
 {
     Q_OBJECT
     Q_PROPERTY(int handleType READ handleType)

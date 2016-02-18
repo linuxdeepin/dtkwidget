@@ -15,7 +15,7 @@
 DWIDGET_BEGIN_NAMESPACE
 
 class DFileChooserEditPrivate;
-class LIBDUISHARED_EXPORT DFileChooserEdit : public DLineEdit
+class LIBDTKWIDGETSHARED_EXPORT DFileChooserEdit : public DLineEdit
 {
     Q_OBJECT
 

@@ -19,7 +19,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDUISHARED_EXPORT DSimpleComboBox : public DComboBox
+class LIBDTKWIDGETSHARED_EXPORT DSimpleComboBox : public DComboBox
 {
     Q_OBJECT
 public:

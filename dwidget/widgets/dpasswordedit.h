@@ -15,7 +15,7 @@
 DWIDGET_BEGIN_NAMESPACE
 
 class DPasswordEditPrivate;
-class LIBDUISHARED_EXPORT DPasswordEdit : public DLineEdit
+class LIBDTKWIDGETSHARED_EXPORT DPasswordEdit : public DLineEdit
 {
     Q_OBJECT
     Q_PROPERTY(bool isEchoMode READ isEchoMode)

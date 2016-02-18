@@ -31,7 +31,7 @@ public:
 
 class DBoxWidget;
 
-class LIBDUISHARED_EXPORT DBaseExpand : public QWidget
+class LIBDTKWIDGETSHARED_EXPORT DBaseExpand : public QWidget
 {
     Q_OBJECT
 public:

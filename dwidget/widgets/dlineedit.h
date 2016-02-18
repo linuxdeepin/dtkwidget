@@ -18,7 +18,7 @@
 DWIDGET_BEGIN_NAMESPACE
 
 class DLineEditPrivate;
-class LIBDUISHARED_EXPORT DLineEdit : public QLineEdit, public DObject
+class LIBDTKWIDGETSHARED_EXPORT DLineEdit : public QLineEdit, public DObject
 {
     Q_OBJECT
     Q_DISABLE_COPY(DLineEdit)

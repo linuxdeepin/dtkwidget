@@ -29,7 +29,7 @@
 DWIDGET_BEGIN_NAMESPACE
 
 class DColorComboBoxPrivate;
-class LIBDUISHARED_EXPORT DColorComboBox : public DComboBox
+class LIBDTKWIDGETSHARED_EXPORT DColorComboBox : public DComboBox
 {
     Q_OBJECT
 public:

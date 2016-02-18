@@ -19,7 +19,7 @@
 DWIDGET_BEGIN_NAMESPACE
 
 class DOptionPrivate;
-class LIBDUISHARED_EXPORT DOption : public QFrame, public DObject
+class LIBDTKWIDGETSHARED_EXPORT DOption : public QFrame, public DObject
 {
     Q_OBJECT
     Q_DISABLE_COPY(DOption)

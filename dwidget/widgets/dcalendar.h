@@ -26,7 +26,7 @@ class CalendarView;
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDUISHARED_EXPORT DCalendar : public QWidget
+class LIBDTKWIDGETSHARED_EXPORT DCalendar : public QWidget
 {
     Q_OBJECT
 

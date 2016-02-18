@@ -1,23 +1,12 @@
-# libdui
+# Deepin Tool Kit Document    {#mainpage}
 
-libdui is a UI library for Deepin.
+Deepint Tool Kit (Dtk) is the base devlopment tool of all C++/Qt Developer work on Deepin.
 
 ## Dependencies
 
 ### Build dependencies
 
 * qmake >= 5.3
-
-### Runtime dependencies
-
-* Qt >= 5.3
-  * Qt5-core
-  * Qt5-gui
-  * Qt5-widget
-  * Qt5-multimedia
-  * Qt5-multimediawidgets
-  * Qt5-x11extras
-* xext
 
 ## Installation
 
@@ -26,20 +15,19 @@ libdui is a UI library for Deepin.
 1. Make sure you have installed all dependencies.
 
 2. Build:
-```
-$ cd libdui
+
+````
 $ mkdir build
 $ cd build
 $ qmake ..
 $ make
-```
+````
 
 3. Install:
-```
-$ sudo make install
-```
 
-When install complete, the binary file is placed into `/usr/lib/`, c++ header file is placed into `/usr/include/libdui/`.
+````
+$ sudo make install
+````
 
 ## Getting help
 
@@ -59,4 +47,4 @@ We encourage you to report issues and contribute changes
 
 ## License
 
-libdui is licensed under [GPLv3](LICENSE).
+deepin-too-kit is licensed under [GPLv3](LICENSE).

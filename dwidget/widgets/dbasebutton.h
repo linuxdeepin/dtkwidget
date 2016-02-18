@@ -17,7 +17,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDUISHARED_EXPORT DBaseButton : public QPushButton
+class LIBDTKWIDGETSHARED_EXPORT DBaseButton : public QPushButton
 {
     Q_OBJECT
 public:

@@ -16,7 +16,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDUISHARED_EXPORT DScrollBar : public QScrollBar
+class LIBDTKWIDGETSHARED_EXPORT DScrollBar : public QScrollBar
 {
     Q_OBJECT
 public:

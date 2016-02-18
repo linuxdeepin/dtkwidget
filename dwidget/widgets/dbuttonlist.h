@@ -50,7 +50,7 @@ private:
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDUISHARED_EXPORT DButtonList : public QListWidget
+class LIBDTKWIDGETSHARED_EXPORT DButtonList : public QListWidget
 {
     Q_OBJECT
 public:

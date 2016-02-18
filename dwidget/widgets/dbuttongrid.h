@@ -87,7 +87,7 @@ protected:
 private:
     QString m_text;
 };
-class LIBDUISHARED_EXPORT DButtonGrid : public QTableWidget
+class LIBDTKWIDGETSHARED_EXPORT DButtonGrid : public QTableWidget
 {
     Q_OBJECT
 public:

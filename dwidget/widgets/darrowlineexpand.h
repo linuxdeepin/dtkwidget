@@ -38,7 +38,7 @@ private:
     DArrowButton *m_arrowButton = NULL;
 };
 
-class LIBDUISHARED_EXPORT DArrowLineExpand : public DBaseExpand
+class LIBDTKWIDGETSHARED_EXPORT DArrowLineExpand : public DBaseExpand
 {
     Q_OBJECT
 public:

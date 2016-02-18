@@ -39,7 +39,7 @@ private:
     int m_buttonState;
 };
 
-class LIBDUISHARED_EXPORT DArrowButton : public QLabel
+class LIBDTKWIDGETSHARED_EXPORT DArrowButton : public QLabel
 {
     Q_OBJECT
 public:

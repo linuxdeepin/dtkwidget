@@ -7,36 +7,37 @@
  * (at your option) any later version.
  **/
 
-#ifndef LIBDUI_GLOBAL_H
-#define LIBDUI_GLOBAL_H
+#pragma once
 
-#include <QtCore/qglobal.h>
+#include <dtk_global.h>
+
 #include <QtCore/QMetaMethod>
-
-#if defined(LIBDUI_LIBRARY)
-#  define LIBDUISHARED_EXPORT Q_DECL_EXPORT
-#else
-#  define LIBDUISHARED_EXPORT Q_DECL_IMPORT
-#endif
-
-#define DUI_DECL_DEPRECATED Q_DECL_DEPRECATED
-
-#ifndef DTK_NAMESPACE
-#define DTK_NAMESPACE Dtk
-#endif
 
 #define DWIDGET_NAMESPACE Widget
 #define DTK_WIDGET_NAMESPACE DTK_NAMESPACE::Widget
 
-#if !defined(DWIDGET_NAMESPACE)
-#   define DWIDGET_BEGIN_NAMESPACE
-#   define DWIDGET_END_NAMESPACE
-#   define DWIDGET_USE_NAMESPACE
-#else
+
 #   define DWIDGET_BEGIN_NAMESPACE namespace DTK_NAMESPACE { namespace DWIDGET_NAMESPACE {
 #   define DWIDGET_END_NAMESPACE }}
 #   define DWIDGET_USE_NAMESPACE using namespace DTK_WIDGET_NAMESPACE;
+
+
+namespace Dtk {
+
+//! Widget contians base tool lib like log, config
+namespace Widget {
+
+    class Test {
+    };
+}}
+
+#if defined(LIBDTKWIDGET_LIBRARY)
+#  define LIBDTKWIDGETSHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define LIBDTKWIDGETSHARED_EXPORT Q_DECL_IMPORT
 #endif
+
+#define DTKWIDGET_DECL_DEPRECATED Q_DECL_DEPRECATED
 
 #define D_THEME_INIT_WIDGET(className, propertys...) \
     DThemeManager * manager = DThemeManager::instance(); \
@@ -52,4 +53,3 @@
         connect(this, self->property(self->indexOfProperty(str.toLatin1().data())).notifySignal(),\
         manager, manager->metaObject()->method(manager->metaObject()->indexOfMethod("updateQss()")));\
     }
-#endif // LIBDUI_GLOBAL_H

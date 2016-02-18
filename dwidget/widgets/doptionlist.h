@@ -19,7 +19,7 @@
 DWIDGET_BEGIN_NAMESPACE
 
 class DOptionListPrivate;
-class LIBDUISHARED_EXPORT DOptionList : public QListWidget, public DObject
+class LIBDTKWIDGETSHARED_EXPORT DOptionList : public QListWidget, public DObject
 {
     Q_OBJECT
     Q_DISABLE_COPY(DOptionList)

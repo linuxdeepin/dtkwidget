@@ -27,7 +27,7 @@ DWIDGET_BEGIN_NAMESPACE
 
 class DComboBoxPrivate;
 
-class LIBDUISHARED_EXPORT DComboBox : public QComboBox, public DObject
+class LIBDTKWIDGETSHARED_EXPORT DComboBox : public QComboBox, public DObject
 {
     Q_OBJECT
 

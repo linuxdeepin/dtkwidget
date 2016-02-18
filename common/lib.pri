@@ -22,4 +22,3 @@ isEmpty(INCLUDE_INSTALL_DIR) {
 unix{
     INSTALLS += includes target
 }
-
