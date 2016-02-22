@@ -12,7 +12,8 @@
 
 #include "libdui_global.h"
 #include "dscrollarea.h"
-#include "dobject_p.h"
+
+#include <private/dobject_p.h>
 
 class QPropertyAnimation;
 

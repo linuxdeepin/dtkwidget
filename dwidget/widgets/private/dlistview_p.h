@@ -10,10 +10,11 @@
 #ifndef DLISTVIEW_P_H
 #define DLISTVIEW_P_H
 
-#include  <QTimer>
-
-#include "dobject_p.h"
 #include "dlistview.h"
+
+#include <private/dobject_p.h>
+
+#include  <QTimer>
 
 DWIDGET_BEGIN_NAMESPACE
 

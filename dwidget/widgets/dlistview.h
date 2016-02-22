@@ -10,10 +10,12 @@
 #ifndef DLISTVIEW_H
 #define DLISTVIEW_H
 
+#include "libdui_global.h"
+
+#include <dobject.h>
+
 #include <QStyledItemDelegate>
 #include <QListView>
-
-#include "dobject.h"
 
 DWIDGET_BEGIN_NAMESPACE
 

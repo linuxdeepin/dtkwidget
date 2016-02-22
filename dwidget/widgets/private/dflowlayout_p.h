@@ -10,8 +10,9 @@
 #ifndef DFLOWLAYOUT_P_H
 #define DFLOWLAYOUT_P_H
 
-#include "dobject_p.h"
 #include "dflowlayout.h"
+
+#include <private/dobject_p.h>
 
 class QLayoutItem;
 

@@ -7,31 +7,28 @@
  * (at your option) any later version.
  **/
 
+#ifndef DOBJECT_P_H
+#define DOBJECT_P_H
+
+#include "dtk_global.h"
 #include "dobject.h"
-#include "private/dobject_p.h"
 
-DWIDGET_BEGIN_NAMESPACE
+DTK_BEGIN_NAMESPACE
 
-DObjectPrivate::DObjectPrivate(DObject *qq)
-    : q_ptr(qq)
+class DObjectPrivate
 {
+public:
+    virtual ~DObjectPrivate();
 
-}
+protected:
+    DObjectPrivate(DObject *qq);
 
-DObjectPrivate::~DObjectPrivate()
-{
+    DObject *q_ptr;
 
-}
+    Q_DECLARE_PUBLIC(DObject)
+};
 
-DObject::DObject(DObjectPrivate &dd):
-    d_d_ptr(&dd)
-{
+DTK_END_NAMESPACE
 
-}
+#endif // DOBJECT_P_H
 
-DObject::~DObject()
-{
-
-}
-
-DWIDGET_END_NAMESPACE

@@ -54,7 +54,6 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/anchors.h \
     $$PWD/dbasebutton.h \
     $$PWD/dlistwidget.h \
-    $$PWD/dobject.h \
     $$PWD/dboxwidget.h \
     $$PWD/dcircleprogress.h \
     $$PWD/dstackwidget.h \
@@ -114,7 +113,6 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/anchors.cpp \
     $$PWD/dbasebutton.cpp \
     $$PWD/dlistwidget.cpp \
-    $$PWD/dobject.cpp \
     $$PWD/dboxwidget.cpp \
     $$PWD/dcircleprogress.cpp \
     $$PWD/dstackwidget.cpp \

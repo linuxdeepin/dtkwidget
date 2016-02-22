@@ -11,7 +11,8 @@
 #define DLOADINGINDICATOR_P
 
 #include "dloadingindicator.h"
-#include "dobject_p.h"
+
+#include <private/dobject_p.h>
 
 DWIDGET_BEGIN_NAMESPACE
 

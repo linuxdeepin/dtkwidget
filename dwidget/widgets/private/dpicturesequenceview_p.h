@@ -11,7 +11,8 @@
 #define DPICTURESEQUENCEVIEW_P_H
 
 #include "dpicturesequenceview.h"
-#include "dobject_p.h"
+
+#include <private/dobject_p.h>
 
 #include <QList>
 #include <QGraphicsScene>

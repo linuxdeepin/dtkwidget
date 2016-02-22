@@ -10,9 +10,10 @@
 #ifndef DOPTIONLIST_P_H
 #define DOPTIONLIST_P_H
 
-#include "dobject_p.h"
 #include "doptionlist.h"
 #include "doption.h"
+
+#include <private/dobject_p.h>
 
 #include <QList>
 #include <QListWidgetItem>

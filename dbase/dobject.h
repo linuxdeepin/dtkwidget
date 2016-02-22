@@ -12,9 +12,9 @@
 
 #include <QScopedPointer>
 
-#include "libdui_global.h"
+#include "dtk_global.h"
 
-DWIDGET_BEGIN_NAMESPACE
+DTK_BEGIN_NAMESPACE
 
 #define D_DECLARE_PRIVATE(Class) Q_DECLARE_PRIVATE_D(qGetPtrHelper(d_d_ptr),Class)
 #define D_DECLARE_PUBLIC(Class) Q_DECLARE_PUBLIC(Class)
@@ -37,6 +37,6 @@ protected:
     D_DECLARE_PRIVATE(DObject)
 };
 
-DWIDGET_END_NAMESPACE
+DTK_END_NAMESPACE
 
 #endif // DOBJECT_H

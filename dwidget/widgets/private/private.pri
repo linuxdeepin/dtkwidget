@@ -15,7 +15,6 @@ HEADERS += \
     $$PWD/dfilechooseredit_p.h \
     $$PWD/dstackwidget_p.h \
     $$PWD/dscrollarea_p.h \
-    $$PWD/dobject_p.h \
     $$PWD/dlistwidget_p.h \
     $$PWD/dboxwidget_p.h \
     $$PWD/dpasswordedit_p.h \

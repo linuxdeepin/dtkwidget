@@ -10,10 +10,12 @@
 #ifndef DBOXWIDGET_H
 #define DBOXWIDGET_H
 
+#include "libdui_global.h"
+
+#include <dobject.h>
+
 #include <QFrame>
 #include <QBoxLayout>
-
-#include "dobject.h"
 
 DWIDGET_BEGIN_NAMESPACE
 

@@ -10,8 +10,9 @@
 #ifndef DBOXWIDGET_P_H
 #define DBOXWIDGET_P_H
 
-#include "dobject_p.h"
 #include "dboxwidget.h"
+
+#include <private/dobject_p.h>
 
 class QBoxLayout;
 

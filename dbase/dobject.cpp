@@ -7,28 +7,31 @@
  * (at your option) any later version.
  **/
 
-#ifndef DOBJECT_P_H
-#define DOBJECT_P_H
-
-#include "libdui_global.h"
 #include "dobject.h"
+#include "private/dobject_p.h"
 
-DWIDGET_BEGIN_NAMESPACE
+DTK_BEGIN_NAMESPACE
 
-class DObjectPrivate
+DObjectPrivate::DObjectPrivate(DObject *qq)
+    : q_ptr(qq)
 {
-public:
-    virtual ~DObjectPrivate();
 
-protected:
-    DObjectPrivate(DObject *qq);
+}
 
-    DObject *q_ptr;
+DObjectPrivate::~DObjectPrivate()
+{
 
-    Q_DECLARE_PUBLIC(DObject)
-};
+}
 
-DWIDGET_END_NAMESPACE
+DObject::DObject(DObjectPrivate &dd):
+    d_d_ptr(&dd)
+{
 
-#endif // DOBJECT_P_H
+}
 
+DObject::~DObject()
+{
+
+}
+
+DTK_END_NAMESPACE

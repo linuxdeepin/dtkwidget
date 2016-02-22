@@ -10,8 +10,9 @@
 #ifndef DABSTRACTDIALOG_P_H
 #define DABSTRACTDIALOG_P_H
 
-#include "dobject_p.h"
 #include "dabstractdialog.h"
+
+#include <private/dobject_p.h>
 
 class QBoxLayout;
 

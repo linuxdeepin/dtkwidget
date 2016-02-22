@@ -10,11 +10,13 @@
 #ifndef DFLOWLAYOUT_H
 #define DFLOWLAYOUT_H
 
+#include "libdui_global.h"
+
+#include <dobject.h>
+
 #include <QLayout>
 #include <QWidget>
 #include <QListView>
-
-#include "dobject.h"
 
 DWIDGET_BEGIN_NAMESPACE
 

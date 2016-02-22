@@ -11,8 +11,9 @@
 #define DLINEEDIT_P_H
 
 #include "dlineedit.h"
-#include "dobject_p.h"
 #include "dimagebutton.h"
+
+#include <private/dobject_p.h>
 
 #include <QHBoxLayout>
 

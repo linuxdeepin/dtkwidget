@@ -11,9 +11,8 @@
 #define DCIRCLEPROGRESS_P_H
 
 #include "dcircleprogress.h"
-#include "dobject.h"
-#include "dobject_p.h"
-#include "libdui_global.h"
+
+#include <private/dobject_p.h>
 
 #include <QPainter>
 

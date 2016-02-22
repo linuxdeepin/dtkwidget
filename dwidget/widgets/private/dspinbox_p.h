@@ -10,8 +10,9 @@
 #ifndef DSPINBOX_P_H
 #define DSPINBOX_P_H
 
-#include "dobject_p.h"
 #include "dspinbox.h"
+
+#include <private/dobject_p.h>
 
 class QFrame;
 class QLabel;

@@ -10,9 +10,9 @@
 #ifndef DSTACKWIDGET_P_H
 #define DSTACKWIDGET_P_H
 
-#include "libdui_global.h"
-#include "dobject_p.h"
 #include "dstackwidget.h"
+
+#include <private/dobject_p.h>
 
 class QStackedLayout;
 

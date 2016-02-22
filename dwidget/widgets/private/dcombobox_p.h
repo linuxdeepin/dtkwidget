@@ -10,8 +10,9 @@
 #ifndef DCOMBOBOX_P_H
 #define DCOMBOBOX_P_H
 
-#include "dobject_p.h"
 #include "dcombobox.h"
+
+#include <private/dobject_p.h>
 
 DWIDGET_BEGIN_NAMESPACE
 

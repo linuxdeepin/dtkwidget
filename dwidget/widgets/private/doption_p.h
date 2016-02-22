@@ -11,7 +11,8 @@
 #define DOPTION_P_H
 
 #include "doption.h"
-#include "dobject_p.h"
+
+#include <private/dobject_p.h>
 
 #include <QLabel>
 #include <QHBoxLayout>

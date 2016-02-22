@@ -11,8 +11,6 @@
 #define DFILECHOOSEREDIT_P_H
 
 #include "dlineedit_p.h"
-#include "dobject.h"
-#include "dobject_p.h"
 #include "dfilechooseredit.h"
 #include "dimagebutton.h"
 
