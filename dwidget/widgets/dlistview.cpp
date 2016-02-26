@@ -359,12 +359,7 @@ void DListViewPrivate::_q_updateIndexWidget()
             creator->destroyWidget(widget);
             q->setIndexWidget(index, 0);
         }
-
-        indexWidgetUpdated = true;
     }
-
-    startIndex = INT_MAX;
-    endIndex = -1;
 }
 
 void DListViewPrivate::_q_onItemPaint(const QStyleOptionViewItem &option,
@@ -782,14 +777,23 @@ QMargins DListView::viewportMargins() const
 
 void DListView::paintEvent(QPaintEvent *event)
 {
-    QListView::paintEvent(event);
-
     D_D(DListView);
 
-    if(d->indexWidgetUpdated) {
+    int old_startIndex = d->startIndex;
+    int old_endIndex = d->endIndex;
+
+    d->startIndex = INT_MAX;
+    d->endIndex = -1;
+
+    QListView::paintEvent(event);
+
+    if(!d->indexWidgetUpdated
+            || old_startIndex != d->startIndex
+            || old_endIndex != d->endIndex) {
+        d->indexWidgetUpdated = true;
+        d->_q_updateIndexWidget();
+    } else {
         d->indexWidgetUpdated = false;
-    } else if(!d->batchLayoutTimer.isActive()) {
-        d->batchLayoutTimer.start();
     }
 }
 
