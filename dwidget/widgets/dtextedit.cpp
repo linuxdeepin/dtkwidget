@@ -1,6 +1,7 @@
 #include "dtextedit.h"
 #include "dthememanager.h"
 #include "private/dtextedit_p.h"
+#include "dscrollbar.h"
 
 #include <QResizeEvent>
 
@@ -22,6 +23,8 @@ void DTextEditPrivate::init()
     insideFrame->setAttribute(Qt::WA_TransparentForMouseEvents);
 
     q->setContextMenuPolicy(Qt::NoContextMenu);
+    q->setVerticalScrollBar(new DScrollBar);
+    q->setHorizontalScrollBar(new DScrollBar);
 }
 
 DTextEdit::DTextEdit(QWidget *parent) :
