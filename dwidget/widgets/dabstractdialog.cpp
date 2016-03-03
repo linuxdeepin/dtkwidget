@@ -19,6 +19,7 @@
 #include "dialog_constants.h"
 #include "dabstractdialog.h"
 #include "private/dabstractdialogprivate_p.h"
+#include "dthememanager.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -61,6 +62,8 @@ DAbstractDialog::DAbstractDialog(QWidget *parent) :
     QDialog(parent),
     DObject(*new DAbstractDialogPrivate(this))
 {
+    D_THEME_INIT_WIDGET(DAbstractDialog);
+
     d_func()->init();
 }
 

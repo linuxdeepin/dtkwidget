@@ -10,36 +10,28 @@
 #ifndef DWINDOWMAXBUTTON_H
 #define DWINDOWMAXBUTTON_H
 
-#include <QObject>
-#include <QString>
-
+#include <dobject.h>
 #include "dimagebutton.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDTKWIDGETSHARED_EXPORT DWindowMaxButton : public DImageButton
+class DWindowMaxButtonPrivate;
+
+class LIBDTKWIDGETSHARED_EXPORT DWindowMaxButton : public DImageButton, public DObject
 {
     Q_OBJECT
 public:
     DWindowMaxButton(QWidget * parent = 0);
 
-    Q_PROPERTY(QString normalImage READ normalImage WRITE setNormalImage)
-    Q_PROPERTY(QString hoverImage READ hoverImage WRITE setHoverImage)
-    Q_PROPERTY(QString pressedImage READ pressedImage WRITE setPressedImage)
+    Q_PROPERTY(bool isMaximized READ isMaximized)
 
-    QString normalImage() const;
-    void setNormalImage(const QString &normalImage);
+    bool isMaximized() const;
 
-    QString hoverImage() const;
-    void setHoverImage(const QString &hoverImage);
-
-    QString pressedImage() const;
-    void setPressedImage(const QString &pressedImage);
+protected slots:
+    void tirgger();
 
 private:
-    QString m_normalImage;
-    QString m_hoverImage;
-    QString m_pressedImage;
+    D_DECLARE_PRIVATE(DWindowMaxButton)
 };
 
 DWIDGET_END_NAMESPACE
