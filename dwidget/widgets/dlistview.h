@@ -35,39 +35,11 @@ private:
     QList<QVariant> dataList;
 };
 
-class LIBDTKWIDGETSHARED_EXPORT DListItemDelegate : public QStyledItemDelegate
-{
-    Q_OBJECT
-
-public:
-    explicit DListItemDelegate(QObject *parent = 0);
-
-    void paint(QPainter *,
-               const QStyleOptionViewItem &option,
-               const QModelIndex &index) const Q_DECL_OVERRIDE
-    {Q_EMIT itemPaint(option, index);}
-
-    virtual QWidget *createWidget(QWidget *parent,
-                          const QStyleOptionViewItem &option,
-                          const QModelIndex &index) const;
-
-    virtual void setWidgetData(QWidget *widget, const QModelIndex &index) const;
-
-    virtual void updateWidgetGeometry(QWidget *widget,
-                                      const QStyleOptionViewItem &option,
-                                      const QModelIndex &index) const;
-
-Q_SIGNALS:
-    void itemPaint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
-};
-
 class DListViewPrivate;
 class LIBDTKWIDGETSHARED_EXPORT DListView : public QListView, public DObject
 {
     Q_OBJECT
 
-    /// see qml ListView cacheBuffer property.
-    Q_PROPERTY(int cacheBuffer READ cacheBuffer WRITE setCacheBuffer NOTIFY cacheBufferChanged)
     /// item count.
     Q_PROPERTY(int count READ count NOTIFY countChanged)
     /// list layout orientation
@@ -76,15 +48,7 @@ class LIBDTKWIDGETSHARED_EXPORT DListView : public QListView, public DObject
 public:
     explicit DListView(QWidget *parent = 0);
 
-    void setRootIndex(const QModelIndex &index) Q_DECL_OVERRIDE;
-    DListItemDelegate *itemDelegate() const;
-    void setItemDelegate(DListItemDelegate *delegate);
-
-    inline QWidget *indexWidget(const QModelIndex &index) const
-    {return getWidget(index.row());}
-    QWidget *getWidget(int index) const;
-    QVariant getItemData(int index) const;
-    QModelIndex getIndexByWidget(const QWidget *widget) const;
+    State state() const;
 
     QWidget *getHeaderWidget(int index) const;
     QWidget *getFooterWidget(int index) const;
@@ -93,21 +57,17 @@ public:
     bool isActiveRect(const QRect &rect) const;
     bool isVisualRect(const QRect &rect) const;
 
-    int cacheBuffer() const;
     int count() const;
 
     Qt::Orientation orientation() const;
 
 public Q_SLOTS:
-    void setIndexWidget(const QModelIndex &index, QWidget *widget);
-
     bool addItem(const QVariant &data);
     bool addItems(const QVariantList &datas);
     bool insertItem(int index, const QVariant &data);
     bool insertItems(int index, const QVariantList &datas);
     bool removeItem(int index);
     bool removeItems(int index, int count);
-    void clear();
 
     int addHeaderWidget(QWidget *widget);
     void removeHeaderWidget(int index);
@@ -117,12 +77,11 @@ public Q_SLOTS:
     QWidget *takeFooterWidget(int index);
 
     void setOrientation(QListView::Flow flow, bool wrapping);
-    void setCacheBuffer(int cacheBuffer);
 
 Q_SIGNALS:
-    void cacheBufferChanged(int cacheBuffer);
     void countChanged(int count);
     void orientationChanged(Qt::Orientation orientation);
+    void currentChanged(const QModelIndex &previous);
 
 protected:
 #if(QT_VERSION < 0x050500)
@@ -131,22 +90,14 @@ protected:
     QMargins viewportMargins() const;
 #endif
 
-    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
     void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
-
-    void dataChanged(const QModelIndex &topLeft,
-                     const QModelIndex &bottomRight,
-                     const QVector<int> &roles = QVector<int>()) Q_DECL_OVERRIDE;
-    void rowsInserted(const QModelIndex &parent, int start, int end) Q_DECL_OVERRIDE;
-    void rowsAboutToBeRemoved(const QModelIndex &parent, int start, int end) Q_DECL_OVERRIDE;
+    void currentChanged(const QModelIndex & current, const QModelIndex & previous) Q_DECL_OVERRIDE;
 
 private:
     void setFlow(QListView::Flow flow);
     void setWrapping(bool enable);
 
     D_DECLARE_PRIVATE(DListView)
-    Q_PRIVATE_SLOT(d_func(), void _q_updateIndexWidget())
-    Q_PRIVATE_SLOT(d_func(), void _q_onItemPaint(const QStyleOptionViewItem&, const QModelIndex&))
 };
 
 DWIDGET_END_NAMESPACE

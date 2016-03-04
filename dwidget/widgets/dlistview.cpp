@@ -18,31 +18,6 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DListItemCreator
-{
-public:
-    explicit DListItemCreator();
-    ~DListItemCreator();
-
-    QWidget *creatWidget(const QStyleOptionViewItem &option, const QModelIndex &index);
-    void destroyWidget(QWidget *widget);
-    void setWidgetData(QWidget *widget, const QModelIndex &index);
-    void updateWidgetGeometry(QWidget *widget,
-                              const QStyleOptionViewItem &option,
-                              const QModelIndex &index) const;
-    void clear();
-
-protected:
-    QList<QWidget*> widgetList;
-    QList<QWidget*> bufferList;
-
-    DListView *view;
-
-private:
-    friend class DListView;
-    friend class DListViewPrivate;
-};
-
 DVariantListModel::DVariantListModel(QObject *parent) :
     QAbstractListModel(parent)
 {
@@ -106,103 +81,6 @@ bool DVariantListModel::removeRows(int row, int count, const QModelIndex &parent
     return true;
 }
 
-DListItemCreator::DListItemCreator()
-{
-
-}
-
-DListItemCreator::~DListItemCreator()
-{
-    clear();
-}
-
-QWidget *DListItemCreator::creatWidget(const QStyleOptionViewItem &option,
-                                               const QModelIndex &index)
-{
-    QWidget *widget = 0;
-
-    if(bufferList.isEmpty()) {
-        widget = view->itemDelegate()->createWidget(view->viewport(), option, index);
-
-        if(!widget)
-            return 0;
-    } else {
-        widget = bufferList.takeFirst();
-        setWidgetData(widget, index);
-    }
-
-    widgetList << widget;
-
-    return widget;
-}
-
-void DListItemCreator::destroyWidget(QWidget *widget)
-{
-    if(!widget)
-        return;
-
-    widgetList.removeOne(widget);
-
-    widget->hide();
-
-    bufferList << widget;
-}
-
-void DListItemCreator::setWidgetData(QWidget *widget, const QModelIndex &index)
-{
-    view->itemDelegate()->setWidgetData(widget, index);
-}
-
-void DListItemCreator::updateWidgetGeometry(QWidget *widget,
-                                                const QStyleOptionViewItem &option,
-                                                const QModelIndex &index) const
-{
-    view->itemDelegate()->updateWidgetGeometry(widget, option, index);
-}
-
-void DListItemCreator::clear()
-{
-    widgetList << bufferList;
-
-    while(!widgetList.isEmpty()) {
-        QWidget *widget = widgetList.takeAt(0);
-
-        widget->deleteLater();
-    }
-
-    bufferList.clear();
-}
-
-DListItemDelegate::DListItemDelegate(QObject *parent) :
-    QStyledItemDelegate(parent)
-{
-
-}
-
-QWidget *DListItemDelegate::createWidget(QWidget *,
-                                             const QStyleOptionViewItem &,
-                                             const QModelIndex &) const
-{
-    return 0;
-}
-
-void DListItemDelegate::setWidgetData(QWidget *, const QModelIndex &) const
-{
-
-}
-
-void DListItemDelegate::updateWidgetGeometry(QWidget *widget,
-                                                 const QStyleOptionViewItem &option,
-                                                 const QModelIndex &index) const
-{
-    Q_UNUSED(index)
-
-    if(!widget)
-        return;
-
-    widget->move(option.rect.topLeft());
-}
-
 DListViewPrivate::DListViewPrivate(DListView *qq) :
     DObjectPrivate(qq)
 {
@@ -211,63 +89,15 @@ DListViewPrivate::DListViewPrivate(DListView *qq) :
 
 DListViewPrivate::~DListViewPrivate()
 {
-    if(creator)
-        delete creator;
+
 }
 
 void DListViewPrivate::init()
 {
     D_Q(DListView);
 
-    creator = new DListItemCreator;
-    creator->view = q;
-
-    batchLayoutTimer.setSingleShot(true);
-    batchLayoutTimer.setInterval(10);
-
     q->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
     q->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
-
-    q->connect(&batchLayoutTimer, SIGNAL(timeout()),
-               q, SLOT(_q_updateIndexWidget()));
-}
-
-void DListViewPrivate::onRowsInserted(const QModelIndex &parent,
-                                             int first, int last)
-{
-    Q_UNUSED(parent);
-    Q_UNUSED(first);
-    Q_UNUSED(last);
-    Q_ASSERT(creator);
-}
-
-void DListViewPrivate::onRowsAboutToBeRemoved(const QModelIndex &parent,
-                                            int first, int last)
-{
-    Q_UNUSED(parent);
-    Q_ASSERT(creator);
-    D_Q(DListView);
-
-    int rowCount = q->model()->rowCount(parent);
-
-    for(int i = rowCount - last + first - 1; i < rowCount; ++i) {
-        creator->destroyWidget(indexToWidgetMap.take(i));
-    }
-}
-
-void DListViewPrivate::onDataChanged(const QModelIndex &topLeft,
-                                            const QModelIndex &bottomRight,
-                                            const QVector<int> &roles)
-{
-    Q_UNUSED(roles);
-    Q_ASSERT(creator);
-    D_Q(DListView);
-
-    for(int i = topLeft.row(); i <= bottomRight.row(); ++i) {
-        const QModelIndex &index = q->model()->index(i, 0, q->rootIndex());
-
-        creator->setWidgetData(q->indexWidget(index), index);
-    }
 }
 
 void DListViewPrivate::onOrientationChanged()
@@ -306,74 +136,6 @@ void DListViewPrivate::onOrientationChanged()
     }
 }
 
-void DListViewPrivate::_q_updateIndexWidget()
-{
-    D_Q(DListView);
-
-    const QList<int> &indexList = indexToWidgetMap.keys();
-
-    for(int i : indexList) {
-        const QModelIndex &index = q->model()->index(i, 0, q->rootIndex());
-        const QRect &rect = q->visualRect(index);
-        QWidget *widget = q->indexWidget(index);
-
-        if(q->isActiveRect(rect)) {
-            widget->setVisible(q->isVisualRect(rect));
-        } else {
-            creator->destroyWidget(widget);
-            q->setIndexWidget(index, 0);
-        }
-    }
-
-    for(int i = startIndex; i <= endIndex; ++i) {
-        const QModelIndex &index = q->model()->index(i, 0, q->rootIndex());
-        const QRect &rect = q->visualRect(index);
-        QWidget *widget = q->indexWidget(index);
-
-        if(!index.isValid()) {
-            continue;
-        }
-
-        if(q->isActiveRect(rect)) {
-            if(!widget) {
-                QStyleOptionViewItem option;
-
-                option.rect = rect;
-                widget = creator->creatWidget(option, index);
-                q->setIndexWidget(index, widget);
-            } else {
-                creator->setWidgetData(widget, index);
-            }
-
-            if(!widget)
-                continue;
-
-            if(q->isVisualRect(rect)) {
-                QStyleOptionViewItem option;
-
-                option.rect = rect;
-                creator->updateWidgetGeometry(widget, option, index);
-                widget->show();
-            }
-        } else if(widget) {
-            creator->destroyWidget(widget);
-            q->setIndexWidget(index, 0);
-        }
-    }
-}
-
-void DListViewPrivate::_q_onItemPaint(const QStyleOptionViewItem &option,
-                                          const QModelIndex &index)
-{
-    Q_UNUSED(option);
-
-    if(index.row() < startIndex)
-        startIndex = index.row();
-
-    if(index.row() > endIndex)
-        endIndex = index.row();
-}
-
 DListView::DListView(QWidget *parent) :
     QListView(parent),
     DObject(*new DListViewPrivate(this))
@@ -383,43 +145,9 @@ DListView::DListView(QWidget *parent) :
     d_func()->init();
 }
 
-void DListView::setRootIndex(const QModelIndex &index)
+QAbstractItemView::State DListView::state() const
 {
-    D_D(DListView);
-
-    if(!index.isValid())
-        return;
-
-    const QList<int> &indexList = d->indexToWidgetMap.keys();
-
-    for(int i : indexList) {
-        d->creator->destroyWidget(d->indexToWidgetMap.take(i));
-    }
-
-    d->startIndex = INT_MAX;
-    d->endIndex = -1;
-
-    QListView::setRootIndex(index);
-}
-
-DListItemDelegate *DListView::itemDelegate() const
-{
-    return qobject_cast<DListItemDelegate*>(QListView::itemDelegate());
-}
-
-void DListView::setItemDelegate(DListItemDelegate *delegate)
-{
-    DListItemDelegate *old_delegate = itemDelegate();
-
-    if(old_delegate)
-        disconnect(old_delegate, SIGNAL(itemPaint(QStyleOptionViewItem,QModelIndex)),
-                   this, SLOT(_q_onItemPaint(QStyleOptionViewItem,QModelIndex)));
-
-    QListView::setItemDelegate(delegate);
-
-    if(delegate)
-        connect(delegate, SIGNAL(itemPaint(QStyleOptionViewItem,QModelIndex)),
-                this, SLOT(_q_onItemPaint(QStyleOptionViewItem,QModelIndex)));
+    return QListView::state();
 }
 
 void DListView::setFlow(QListView::Flow flow)
@@ -430,27 +158,6 @@ void DListView::setFlow(QListView::Flow flow)
 void DListView::setWrapping(bool enable)
 {
     QListView::setWrapping(enable);
-}
-
-QWidget *DListView::getWidget(int index) const
-{
-    D_DC(DListView);
-
-    return d->indexToWidgetMap.value(index);
-}
-
-QVariant DListView::getItemData(int index) const
-{
-    return model()->data(model()->index(index, 0, rootIndex()));
-}
-
-QModelIndex DListView::getIndexByWidget(const QWidget *widget) const
-{
-    D_DC(DListView);
-
-    int index = d->indexToWidgetMap.key(const_cast<QWidget*>(widget), -1);
-
-    return model()->index(index, 0, rootIndex());
 }
 
 QWidget *DListView::getHeaderWidget(int index) const
@@ -468,9 +175,6 @@ bool DListView::isActiveRect(const QRect &rect) const
     D_DC(DListView);
 
     QRect area = viewport()->geometry();
-    const int &cacheBuffer = d->cacheBuffer;
-
-    area.adjust(-cacheBuffer, -cacheBuffer, cacheBuffer, cacheBuffer);
 
     return area.intersects(rect);
 }
@@ -480,11 +184,6 @@ bool DListView::isVisualRect(const QRect &rect) const
     const QRect &area = viewport()->geometry();
 
     return area.intersects(rect);
-}
-
-int DListView::cacheBuffer() const
-{
-    return d_func()->cacheBuffer;
 }
 
 int DListView::count() const
@@ -499,21 +198,6 @@ Qt::Orientation DListView::orientation() const
                             : flow() == QListView::TopToBottom;
 
     return isVerticalLayout ? Qt::Vertical : Qt::Horizontal;
-}
-
-void DListView::setIndexWidget(const QModelIndex &index, QWidget *widget)
-{
-    D_D(DListView);
-
-    int row = index.row();
-
-    if(widget) {
-        widget->setParent(viewport());
-        widget->show();
-        d->indexToWidgetMap[row] = widget;
-    } else {
-        d->indexToWidgetMap.remove(row);
-    }
 }
 
 bool DListView::addItem(const QVariant &data)
@@ -553,16 +237,6 @@ bool DListView::removeItem(int index)
 bool DListView::removeItems(int index, int count)
 {
     return model()->removeRows(index, count);
-}
-
-void DListView::clear()
-{
-    D_D(DListView);
-
-    if(d->creator)
-        d->creator->clear();
-
-    d->indexToWidgetMap.clear();
 }
 
 int DListView::addHeaderWidget(QWidget *widget)
@@ -738,17 +412,6 @@ void DListView::setOrientation(QListView::Flow flow, bool wrapping)
     }
 }
 
-void DListView::setCacheBuffer(int cacheBuffer)
-{
-    D_D(DListView);
-
-    if (d->cacheBuffer == cacheBuffer)
-        return;
-
-    d->cacheBuffer = cacheBuffer;
-    emit cacheBufferChanged(cacheBuffer);
-}
-
 #if(QT_VERSION < 0x050500)
 void DListView::setViewportMargins(int left, int top, int right, int bottom)
 {
@@ -774,28 +437,6 @@ QMargins DListView::viewportMargins() const
     return QMargins(d->left, d->top, d->right, d->bottom);
 }
 #endif
-
-void DListView::paintEvent(QPaintEvent *event)
-{
-    D_D(DListView);
-
-    int old_startIndex = d->startIndex;
-    int old_endIndex = d->endIndex;
-
-    d->startIndex = INT_MAX;
-    d->endIndex = -1;
-
-    QListView::paintEvent(event);
-
-    if(!d->indexWidgetUpdated
-            || old_startIndex != d->startIndex
-            || old_endIndex != d->endIndex) {
-        d->indexWidgetUpdated = true;
-        d->_q_updateIndexWidget();
-    } else {
-        d->indexWidgetUpdated = false;
-    }
-}
 
 void DListView::resizeEvent(QResizeEvent *event)
 {
@@ -823,24 +464,11 @@ void DListView::resizeEvent(QResizeEvent *event)
     }
 }
 
-void DListView::dataChanged(const QModelIndex &topLeft,
-                                const QModelIndex &bottomRight,
-                                const QVector<int> &roles)
+void DListView::currentChanged(const QModelIndex &current, const QModelIndex &previous)
 {
-    QListView::dataChanged(topLeft, bottomRight, roles);
-    d_func()->onDataChanged(topLeft, bottomRight, roles);
-}
+    QListView::currentChanged(current, previous);
 
-void DListView::rowsInserted(const QModelIndex &parent, int start, int end)
-{
-    QListView::rowsInserted(parent, start, end);
-    //d_func()->onRowsInserted(parent, start, end);
-}
-
-void DListView::rowsAboutToBeRemoved(const QModelIndex &parent, int start, int end)
-{
-    QListView::rowsAboutToBeRemoved(parent, start, end);
-    d_func()->onRowsAboutToBeRemoved(parent, start, end);
+    emit currentChanged(previous);
 }
 
 #include "moc_dlistview.cpp"
