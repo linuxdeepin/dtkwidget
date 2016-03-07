@@ -77,11 +77,13 @@ public Q_SLOTS:
     QWidget *takeFooterWidget(int index);
 
     void setOrientation(QListView::Flow flow, bool wrapping);
+    void edit(const QModelIndex &index);
 
 Q_SIGNALS:
     void countChanged(int count);
     void orientationChanged(Qt::Orientation orientation);
     void currentChanged(const QModelIndex &previous);
+    void triggerEdit(const QModelIndex &index);
 
 protected:
 #if(QT_VERSION < 0x050500)
@@ -92,6 +94,7 @@ protected:
 
     void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
     void currentChanged(const QModelIndex & current, const QModelIndex & previous) Q_DECL_OVERRIDE;
+    bool edit(const QModelIndex & index, EditTrigger trigger, QEvent * event) Q_DECL_OVERRIDE;
 
 private:
     void setFlow(QListView::Flow flow);

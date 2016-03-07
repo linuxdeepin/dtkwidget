@@ -412,6 +412,11 @@ void DListView::setOrientation(QListView::Flow flow, bool wrapping)
     }
 }
 
+void DListView::edit(const QModelIndex &index)
+{
+    QListView::edit(index);
+}
+
 #if(QT_VERSION < 0x050500)
 void DListView::setViewportMargins(int left, int top, int right, int bottom)
 {
@@ -469,6 +474,38 @@ void DListView::currentChanged(const QModelIndex &current, const QModelIndex &pr
     QListView::currentChanged(current, previous);
 
     emit currentChanged(previous);
+}
+
+bool DListView::edit(const QModelIndex &index, QAbstractItemView::EditTrigger trigger, QEvent *event)
+{
+    if (QWidget *w = indexWidget(index)) {
+        Qt::ItemFlags flags = model()->flags(index);
+
+        if (((flags & Qt::ItemIsEditable) == 0) || ((flags & Qt::ItemIsEnabled) == 0))
+            return false;
+        if (state() == QAbstractItemView::EditingState)
+            return false;
+        if (trigger == QAbstractItemView::AllEditTriggers) // force editing
+            return true;
+        if ((trigger & editTriggers()) == QAbstractItemView::SelectedClicked
+            && !selectionModel()->isSelected(index))
+            return false;
+
+        if(trigger & editTriggers()) {
+            w->setFocus();
+
+            Q_EMIT triggerEdit(index);
+
+            return true;
+        }
+    }
+
+    bool tmp = QListView::edit(index, trigger, event);
+
+    if(tmp)
+        Q_EMIT triggerEdit(index);
+
+    return tmp;
 }
 
 #include "moc_dlistview.cpp"
