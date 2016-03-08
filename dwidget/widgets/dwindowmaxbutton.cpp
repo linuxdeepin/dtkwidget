@@ -7,54 +7,44 @@
  * (at your option) any later version.
  **/
 
-#include <QDebug>
-
+#include <private/dobject_p.h>
 #include "dthememanager.h"
-
 #include "dwindowmaxbutton.h"
+
+#include <QStyle>
 
 DWIDGET_BEGIN_NAMESPACE
 
+class DWindowMaxButtonPrivate : public DObjectPrivate{
+public:
+    DWindowMaxButtonPrivate(DWindowMaxButton* qq):DObjectPrivate(qq) {
+        m_isMaximized = false;
+    }
+
+private:
+    bool m_isMaximized;
+    Q_DECLARE_PUBLIC(DWindowMaxButton)
+};
+
 DWindowMaxButton::DWindowMaxButton(QWidget * parent) :
-    DImageButton(parent)
+    DImageButton(parent),
+    DObject(*new DWindowMaxButtonPrivate(this))
 {
     D_THEME_INIT_WIDGET(DWindowMaxButton);
+    connect(this, &DWindowMaxButton::clicked, this, &DWindowMaxButton::tirgger);
 }
 
-QString DWindowMaxButton::normalImage() const
+bool DWindowMaxButton::isMaximized() const
 {
-    return m_normalImage;
+    D_DC(DWindowMaxButton);
+    return d->m_isMaximized;
 }
 
-void DWindowMaxButton::setNormalImage(const QString &normalImage)
-{
-    m_normalImage = normalImage;
-
-    this->setNormalPic(m_normalImage);
-}
-
-QString DWindowMaxButton::hoverImage() const
-{
-    return m_hoverImage;
-}
-
-void DWindowMaxButton::setHoverImage(const QString &hoverImage)
-{
-    m_hoverImage = hoverImage;
-
-    this->setHoverPic(m_hoverImage);
-}
-
-QString DWindowMaxButton::pressedImage() const
-{
-    return m_pressedImage;
-}
-
-void DWindowMaxButton::setPressedImage(const QString &pressedImage)
-{
-    m_pressedImage = pressedImage;
-
-    this->setPressPic(m_pressedImage);
+void DWindowMaxButton::tirgger() {
+    D_D(DWindowMaxButton);
+    d->m_isMaximized = !d->m_isMaximized;
+    style()->unpolish(this);
+    style()->polish(this);// force a stylesheet recomputation
 }
 
 DWIDGET_END_NAMESPACE

@@ -26,6 +26,12 @@
         <file>light/DBaseButton.theme</file>
         <file>light/DComboBox.theme</file>
         <file>light/DTextEdit.theme</file>
+        <file>light/DAbstractDialog.theme</file>
+        <file>light/DWindowRestoreButton.theme</file>
+        <file>light/DWindowOptionButton.theme</file>
+        <file>light/DWindowMinButton.theme</file>
+        <file>light/DWindowMaxButton.theme</file>
+        <file>light/DWindowCloseButton.theme</file>
     </qresource>
     <qresource prefix="/images">
         <file>light/images/arrow_down_hover.png</file>
@@ -101,5 +107,8 @@
         <file>light/images/button_press_bg.png</file>
         <file>light/images/button_normal_bg.png</file>
         <file>light/images/button_hover_bg.png</file>
+        <file>light/images/window_max_press.png</file>
+        <file>light/images/window_max_normal.png</file>
+        <file>light/images/window_max_hover.png</file>
     </qresource>
 </RCC>
