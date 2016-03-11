@@ -27,8 +27,6 @@ namespace Dtk {
 //! Widget contians base tool lib like log, config
 namespace Widget {
 
-    class Test {
-    };
 }}
 
 #if defined(LIBDTKWIDGET_LIBRARY)
@@ -39,13 +37,13 @@ namespace Widget {
 
 #define DTKWIDGET_DECL_DEPRECATED Q_DECL_DEPRECATED
 
-#define D_THEME_INIT_WIDGET(className, propertys...) \
+#define D_THEME_INIT_WIDGET(className, ...) \
     DThemeManager * manager = DThemeManager::instance(); \
     this->setStyleSheet(this->styleSheet() + manager->getQssForWidget(#className)); \
     connect(manager, &DThemeManager::themeChanged, [=](QString) { \
         this->setStyleSheet(manager->getQssForWidget(#className)); \
     });\
-    QStringList list = QString(#propertys).replace(" ", "").split(",");\
+    QStringList list = QString(#__VA_ARGS__).replace(" ", "").split(",");\
     const QMetaObject *self = metaObject();\
     foreach (const QString &str, list) {\
         if(str.isEmpty())\
