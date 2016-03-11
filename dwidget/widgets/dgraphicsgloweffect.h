@@ -27,6 +27,8 @@ public:
     void draw(QPainter* painter);
     QRectF boundingRectFor(const QRectF& rect) const;
 
+    inline void setOffset(qreal dx, qreal dy) {m_xOffset = dx; m_yOffset = dy;}
+
     inline void setXOffset(qreal dx) {m_xOffset = dx;}
     inline qreal xOffset() const {return m_xOffset;}
 

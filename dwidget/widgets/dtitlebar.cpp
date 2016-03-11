@@ -1,5 +1,6 @@
 #include "dtitlebar.h"
 
+#include <QDebug>
 #include <QHBoxLayout>
 #include <QApplication>
 
@@ -27,7 +28,6 @@ private:
     DLabel           titleLabel;
     DWindowMinButton minButton;
     DWindowMaxButton maxButton;
-    DWindowRestoreButton restoreButton;
     DWindowCloseButton closeButton;
     DWindowOptionButton optionButton;
 
@@ -35,13 +35,14 @@ private:
 };
 
 DTitlebarPrivate::DTitlebarPrivate(DTitlebar *qq): DObjectPrivate(qq) {
-
 }
 
 void DTitlebarPrivate::init() {
     D_Q(DTitlebar);
 
     titleLabel.setText(qApp->applicationName());
+    // TODO: use QSS
+    titleLabel.setStyleSheet("font-size: 14px");
     layout.addWidget(&iconLabel);
     layout.addWidget(&titleLabel);
     layout.addStretch();
@@ -49,7 +50,9 @@ void DTitlebarPrivate::init() {
     layout.addWidget(&minButton);
     layout.addWidget(&maxButton);
     layout.addWidget(&closeButton);
-
+    q->connect(&closeButton, &DWindowCloseButton::clicked, q, &DTitlebar::closeClicked);
+    q->connect(&maxButton, &DWindowMaxButton::maximum, q, &DTitlebar::maximumClicked);
+    q->connect(&maxButton, &DWindowMaxButton::restore, q, &DTitlebar::restoreClicked);
     q->setLayout(&layout);
 }
 

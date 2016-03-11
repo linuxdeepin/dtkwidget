@@ -23,7 +23,12 @@ DObjectPrivate::~DObjectPrivate()
 
 }
 
-DObject::DObject(DObjectPrivate &dd):
+DObject::DObject(DObject * /*parent = nullptr*/)
+{
+
+}
+
+DObject::DObject(DObjectPrivate &dd, DObject * /*parent = nullptr*/):
     d_d_ptr(&dd)
 {
 

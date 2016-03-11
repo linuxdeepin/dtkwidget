@@ -42,6 +42,12 @@ bool DWindowMaxButton::isMaximized() const
 
 void DWindowMaxButton::tirgger() {
     D_D(DWindowMaxButton);
+    if (d->m_isMaximized) {
+        emit restore();
+    } else {
+        emit maximum();
+    }
+
     d->m_isMaximized = !d->m_isMaximized;
     style()->unpolish(this);
     style()->polish(this);// force a stylesheet recomputation

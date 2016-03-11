@@ -22,12 +22,13 @@
 #   define DWIDGET_USE_NAMESPACE using namespace DTK_WIDGET_NAMESPACE;
 
 
-namespace Dtk {
+namespace Dtk
+{
+namespace Widget
+{
 
-//! Widget contians base tool lib like log, config
-namespace Widget {
-
-}}
+}
+}
 
 #if defined(LIBDTKWIDGET_LIBRARY)
 #  define LIBDTKWIDGETSHARED_EXPORT Q_DECL_EXPORT

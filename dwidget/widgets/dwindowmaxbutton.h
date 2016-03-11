@@ -27,6 +27,10 @@ public:
 
     bool isMaximized() const;
 
+signals:
+    void maximum();
+    void restore();
+
 protected slots:
     void tirgger();
 

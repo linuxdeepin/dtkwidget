@@ -69,7 +69,9 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dlistview.h \
     $$PWD/denhancedwidget.h \
     $$PWD/dtextedit.h \
-    $$PWD/dtitlebar.h
+    $$PWD/dtitlebar.h \
+    $$PWD/dwindows.h \
+    $$PWD/dwidget.h
 
 SOURCES += $$PWD/dslider.cpp \
     $$PWD/dthememanager.cpp \
@@ -130,7 +132,9 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dlistview.cpp \
     $$PWD/denhancedwidget.cpp \
     $$PWD/dtextedit.cpp \
-    $$PWD/dtitlebar.cpp
+    $$PWD/dtitlebar.cpp \
+    $$PWD/dwindows.cpp \
+    $$PWD/dwidget.cpp
 
 RESOURCES += \
     $$PWD/themes/dui_theme_dark.qrc \

@@ -21,6 +21,7 @@ public:
 signals:
     void minimumClicked();
     void maximumClicked();
+    void restoreClicked();
     void closeClicked();
     void optionClicked();
 

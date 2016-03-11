@@ -25,10 +25,14 @@ DTK_BEGIN_NAMESPACE
 #define D_PRIVATE_SLOT(Func) Q_PRIVATE_SLOT(d_func(), Func)
 
 class DObjectPrivate;
+
 class DObject
 {
 protected:
-    DObject(DObjectPrivate &dd);
+    DObject(DObject * parent = nullptr);
+
+    DObject(DObjectPrivate &dd, DObject * parent = nullptr);
+
     virtual ~DObject();
 
     QScopedPointer<DObjectPrivate> d_d_ptr;
