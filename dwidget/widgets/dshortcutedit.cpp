@@ -91,7 +91,7 @@ QSize DShortcutEdit::sizeHint() const
 void DShortcutEdit::setShortcutKey(const QString &key)
 {
     if (key.isEmpty())
-        m_keysLabel->setText(tr("无"));
+        m_keysLabel->setText(tr("None"));
     else
         m_keysLabel->setText(convertShortcutKeys(key));
     m_keysEdit->setText(convertShortcutKeys(key));

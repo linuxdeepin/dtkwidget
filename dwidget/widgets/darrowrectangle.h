@@ -65,7 +65,6 @@ public:
     void setBorderColor(const QColor &borderColor);
     void setBackgroundColor(const QColor &backgroundColor);
     void setArrowDirection(ArrowDirection value);
-    void setArrorDirection(ArrowDirection value) DTKWIDGET_DECL_DEPRECATED;
     void setWidth(int value);
     void setHeight(int value);
 

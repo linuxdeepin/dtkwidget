@@ -515,7 +515,7 @@ bool AnchorsBase::setAnchor(const Qt::AnchorPoint &p, QWidget *target, const Qt:
     }
 }
 
-#define ANCHOR_BIND_INFO(point, Point, slotName, signalsname...)\
+#define ANCHOR_BIND_INFO(point, Point, slotName, ...)\
     Q_D(AnchorsBase);\
     if(*d->point == point)\
         return true;\
@@ -524,7 +524,7 @@ bool AnchorsBase::setAnchor(const Qt::AnchorPoint &p, QWidget *target, const Qt:
     if(d->point->targetInfo){\
         tmp_w1 = d->point->targetInfo->base->d_func()->extendWidget;\
     }\
-    QStringList signalList = QString(#signalsname).split("),");\
+    QStringList signalList = QString(#__VA_ARGS__).split("),");\
     if(point){\
         if(!d->isBindable(d->point)){\
             d->errorCode = Conflict;\
