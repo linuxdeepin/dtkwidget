@@ -30,7 +30,8 @@ HEADERS += \
     $$PWD/dpicturesequenceview_p.h \
     $$PWD/dflowlayout_p.h \
     $$PWD/dlistview_p.h \
-    $$PWD/dtextedit_p.h
+    $$PWD/dtextedit_p.h \
+    $$PWD/dapplication_p.h
 
 SOURCES += \
     $$PWD/dthemehelper.cpp
