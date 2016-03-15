@@ -15,14 +15,14 @@ includes.path = $${DTK_INCLUDEPATH}/DUtil
 includes.files += \
     $$PWD/dutil_global.h \
     $$PWD/dlog/DLog \
-    $$PWD/CuteLogger_global.h \
-    $$PWD/RollingFileAppender.h \
-    $$PWD/Logger.h \
-    $$PWD/LogManager.h \
-    $$PWD/FileAppender.h \
-    $$PWD/ConsoleAppender.h \
-    $$PWD/AbstractStringAppender.h \
-    $$PWD/AbstractAppender.h
+    $$PWD/dlog/CuteLogger_global.h \
+    $$PWD/dlog/RollingFileAppender.h \
+    $$PWD/dlog/Logger.h \
+    $$PWD/dlog/LogManager.h \
+    $$PWD/dlog/FileAppender.h \
+    $$PWD/dlog/ConsoleAppender.h \
+    $$PWD/dlog/AbstractStringAppender.h \
+    $$PWD/dlog/AbstractAppender.h
 
 QMAKE_PKGCONFIG_NAME = DTK_UTIL
 QMAKE_PKGCONFIG_DESCRIPTION = Deepin Tool Kit Util Module
