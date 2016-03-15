@@ -273,6 +273,8 @@ int DListView::addHeaderWidget(QWidget *widget)
 
             setViewportMargins(margins);
         });
+
+        d->headerLayout->show();
     }
 
     d->headerLayout->addWidget(widget);
@@ -344,6 +346,8 @@ int DListView::addFooterWidget(QWidget *widget)
 
             setViewportMargins(margins);
         });
+
+        d->footerLayout->show();
     }
 
     d->footerLayout->addWidget(widget);
