@@ -5,3 +5,4 @@ SUBDIRS  += \
     dbase \
     dutil \
     dwidget \
+    examples \
