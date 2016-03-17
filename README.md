@@ -49,4 +49,4 @@ We encourage you to report issues and contribute changes
 
 ## License
 
-deepin-too-kit is licensed under [GPLv3](LICENSE).
+deepin-tool-kit is licensed under [GPLv3](LICENSE).
