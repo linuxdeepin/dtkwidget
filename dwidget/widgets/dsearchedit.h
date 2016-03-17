@@ -53,6 +53,7 @@ private slots:
 private:
     void initInsideFrame();
     void resizeEvent(QResizeEvent *e);
+    bool event(QEvent *e);
 
 private:
     QSize m_size;

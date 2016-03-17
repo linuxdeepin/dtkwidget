@@ -75,4 +75,7 @@ InputTab::InputTab(QWidget *parent) : QLabel(parent)
     spinbox->resize(100, 22);
 
     spinbox->move(300, 50);
+
+//    searchEdit->setFocus();
+    lineEditAlert->setFocus();
 }

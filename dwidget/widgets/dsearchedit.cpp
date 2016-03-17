@@ -59,6 +59,7 @@ DSearchEdit::DSearchEdit(QWidget *parent)
     layout->setContentsMargins(3, 0, 3, 0);
 
     setAutoFillBackground(true);
+    setFocusPolicy(Qt::StrongFocus);
 
     connect(m_clearBtn, &DImageButton::clicked, m_edt, static_cast<void (QLineEdit::*)()>(&QLineEdit::setFocus));
     connect(m_clearBtn, &DImageButton::clicked, this, &DSearchEdit::clear);
@@ -128,4 +129,12 @@ void DSearchEdit::initInsideFrame()
 void DSearchEdit::resizeEvent(QResizeEvent *e)
 {
     m_size = e->size();
+}
+
+bool DSearchEdit::event(QEvent *e)
+{
+    if (e->type() == QEvent::FocusIn)
+        toEditMode();
+
+    return QFrame::event(e);
 }
