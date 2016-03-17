@@ -18,6 +18,8 @@ class LIBDTKWIDGETSHARED_EXPORT DTitlebar : public QWidget , public DObject
 public:
     explicit DTitlebar(QWidget *parent = 0);
 
+    void setWindowFlags(Qt::WindowFlags type);
+
 signals:
     void minimumClicked();
     void maximumClicked();
@@ -26,6 +28,7 @@ signals:
     void optionClicked();
 
 public slots:
+    void setFixedHeight(int h);
     void setTitle(const QString& title);
     void setIcon(const QPixmap& icon);
 

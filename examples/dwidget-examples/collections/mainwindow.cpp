@@ -27,8 +27,8 @@
 
 DWIDGET_USE_NAMESPACE
 
-MainWindow::MainWindow(QWidget *parent)
-    : QWidget(parent)
+MainWindow::MainWindow(DWindow *parent)
+    : DWindow(parent)
 {
     DThemeManager * themeManager = DThemeManager::instance();
 
@@ -53,7 +53,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     mainLayout->addLayout(styleLayout);
 
-    this->setLayout(mainLayout);
+    this->setContentLayout(mainLayout);
 }
 
 void MainWindow::initTabWidget()

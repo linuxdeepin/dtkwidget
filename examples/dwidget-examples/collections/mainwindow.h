@@ -24,12 +24,14 @@
 #include "widgetstab.h"
 #include "comboboxtab.h"
 
-class MainWindow : public QWidget
+#include <DWindow>
+
+class MainWindow : public Dtk::Widget::DWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = 0);
+    MainWindow(DWindow *parent = 0);
     ~MainWindow();
 
 private:

@@ -18,8 +18,16 @@ public:
     explicit DWindow(DWidget *parent = 0);
     ~DWindow();
 
-    virtual void setTitle(const QString&);
-    virtual void setContentLayout(QLayout*);
+    Qt::WindowFlags windowFlags();
+    void setWindowFlags(Qt::WindowFlags type);
+
+    virtual void setTitle(const QString &);
+    virtual void setIcon(const QPixmap &icon);
+    virtual void setTitleFixedHeight(int h);
+
+    virtual void setContentLayout(QLayout *);
+    virtual void setContentWidget(QWidget *);
+
     virtual void showEvent(QShowEvent *);
     virtual void paintEvent(QPaintEvent *);
 private:
