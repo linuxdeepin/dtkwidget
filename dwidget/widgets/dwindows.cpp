@@ -44,7 +44,7 @@ private:
     QVBoxLayout *rootLayout;
     DTitlebar   *titlebar;
     DWidget     *contentWidget;
-
+    Qt::WindowFlags dwindowFlags;
     D_DECLARE_PUBLIC(DWindow)
 };
 
@@ -57,12 +57,18 @@ void DWindowPrivate::init()
 {
     D_Q(DWindow);
 
+    dwindowFlags = Qt::Window | Qt::WindowTitleHint |
+                   Qt::WindowSystemMenuHint | Qt::WindowMinMaxButtonsHint |
+                   Qt::WindowCloseButtonHint | Qt::WindowFullscreenButtonHint;
     m_GlowRadius = WindowGlowRadius;
     m_Radius = WindowsRadius;
     m_MousePressed = false;
     m_Shadow = nullptr;
 
     rootLayout = new QVBoxLayout;
+    rootLayout->setMargin(0);
+    rootLayout->setSpacing(0);
+
     titlebar = new DTitlebar;
     contentWidget = new DWidget;
     rootLayout->addWidget(titlebar);
@@ -71,6 +77,7 @@ void DWindowPrivate::init()
     q->connect(titlebar, &DTitlebar::closeClicked, q, &DWindow::close);
     q->connect(titlebar, &DTitlebar::maximumClicked, q, &DWindow::showMaximized);
     q->connect(titlebar, &DTitlebar::restoreClicked, q, &DWindow::showNormal);
+    q->connect(titlebar, &DTitlebar::minimumClicked, q, &DWindow::showMinimized);
 
     q->setLayout(rootLayout);
 }
@@ -82,12 +89,37 @@ DWindow::DWindow(DWidget *parent) :
     d->init();
 
     QWidget::setAttribute(Qt::WA_TranslucentBackground, true);
-    QWidget::setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
+    QWidget::setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
 
 #ifdef Q_OS_WIN
     // call this in windows platform
     setShadowHits();
 #endif
+    // Set Titlebar flag
+    setWindowFlags(windowFlags());
+}
+
+
+Qt::WindowFlags DWindow::windowFlags()
+{
+    D_D(DWindow);
+    return d->dwindowFlags;
+}
+
+///
+/// \brief setWindowFlags
+/// \param type
+///
+void DWindow::setWindowFlags(Qt::WindowFlags type)
+{
+    D_D(DWindow);
+    d->dwindowFlags = type;
+    d->titlebar->setWindowFlags(type);
+}
+
+void DWindow::setTitleFixedHeight(int h) {
+    D_D(DWindow);
+    d->titlebar->setFixedHeight(h);
 }
 
 void DWindow::setTitle(const QString &t)
@@ -96,11 +128,28 @@ void DWindow::setTitle(const QString &t)
     d->titlebar->setTitle(t);
 }
 
+void DWindow::setIcon(const QPixmap &icon)
+{
+    D_D(DWindow);
+    d->titlebar->setIcon(icon);
+}
+
 void DWindow::setContentLayout(QLayout *l)
 {
     D_D(DWindow);
     d->contentWidget->removeLayout();
+    l->setMargin(l->margin()+10);
     d->contentWidget->setLayout(l);
+}
+
+void DWindow::setContentWidget(QWidget *w)
+{
+    D_D(DWindow);
+    QHBoxLayout *l = new QHBoxLayout;
+    l->setMargin(10);
+    l->setSpacing(0);
+    l->addWidget(w);
+    setContentLayout(l);
 }
 
 void DWindow::setShadowHits()
