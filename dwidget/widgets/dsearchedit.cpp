@@ -79,9 +79,16 @@ const QString DSearchEdit::text() const
     return m_edt->text();
 }
 
-void DSearchEdit::mousePressEvent(QMouseEvent *)
+void DSearchEdit::mousePressEvent(QMouseEvent *e)
 {
     toEditMode();
+
+    e->accept();
+}
+
+void DSearchEdit::mouseReleaseEvent(QMouseEvent *e)
+{
+    e->accept();
 }
 
 bool DSearchEdit::eventFilter(QObject *o, QEvent *e)
@@ -103,6 +110,10 @@ bool DSearchEdit::eventFilter(QObject *o, QEvent *e)
 
 void DSearchEdit::toEditMode()
 {
+    // already in edit mode
+    if (!m_placeHolder->isVisible())
+        return;
+
     m_animation->stop();
     m_animation->setStartValue(0);
     m_animation->setEndValue(m_size.width() - m_searchBtn->width() - 6); // left + right margins = 6

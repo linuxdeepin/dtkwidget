@@ -31,7 +31,8 @@ public:
     QSize minimumSizeHint() const {return m_size;}
     const QString text() const;
 
-    void mousePressEvent(QMouseEvent *);
+    void mousePressEvent(QMouseEvent *e);
+    void mouseReleaseEvent(QMouseEvent *e);
     bool eventFilter(QObject *o, QEvent *e);
 
     inline void setAniDuration(const int duration) {m_animation->setDuration(duration);}
