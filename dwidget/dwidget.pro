@@ -15,7 +15,9 @@ unix{
 HEADERS += libdui_global.h
 includes.path = $${DTK_INCLUDEPATH}/DWidget
 includes.files += libdui_global.h widgets/*.h
-includes.files += widgets/DTitlebar widgets/DWindow
+includes.files += widgets/DTitlebar \
+    widgets/DWindow \
+    widgets/DApplication
 
 QMAKE_PKGCONFIG_NAME = DTK_WIDGET
 QMAKE_PKGCONFIG_DESCRIPTION = Deepin Tool Kit UI Module

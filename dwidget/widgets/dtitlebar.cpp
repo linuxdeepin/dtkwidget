@@ -15,7 +15,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-const int DefaultTitlebarHeight = 36;
+const int DefaultTitlebarHeight = 32;
 const int DefaultIconHeight = 20;
 const int DefaultIconWidth = 20;
 
@@ -62,7 +62,7 @@ void DTitlebarPrivate::init()
     titleArea       = new QWidget;
     titlePadding    = new QWidget;
 
-    mainLayout->setContentsMargins(20, 7, 20, 0);
+    mainLayout->setContentsMargins(10, 7, 10, 0);
     mainLayout->setSpacing(0);
 
     titleLabel->setText(qApp->applicationName());
@@ -77,7 +77,7 @@ void DTitlebarPrivate::init()
     buttonAreaLayout->addWidget(maxButton);
     buttonAreaLayout->addWidget(closeButton);
     buttonArea->setLayout(buttonAreaLayout);
-    buttonArea->adjustSize();
+
 
     QHBoxLayout *titleAreaLayout = new QHBoxLayout;
     titleAreaLayout->setMargin(0);
@@ -86,8 +86,10 @@ void DTitlebarPrivate::init()
     titleAreaLayout->addWidget(titlePadding);
     titleAreaLayout->addStretch();
     titleAreaLayout->addWidget(iconLabel);
+    titleAreaLayout->setAlignment(iconLabel, Qt::AlignCenter);
     titleAreaLayout->addSpacing(10);
     titleAreaLayout->addWidget(titleLabel);
+    titleAreaLayout->setAlignment(titleLabel, Qt::AlignCenter);
     titleAreaLayout->addStretch();
     titleArea->setLayout(titleAreaLayout);
 
@@ -102,6 +104,9 @@ void DTitlebarPrivate::init()
 
     q->setLayout(mainLayout);
     q->setFixedHeight(DefaultTitlebarHeight);
+    q->setMinimumHeight(DefaultTitlebarHeight);
+    titleArea->setFixedHeight(q->height());
+    buttonArea->setFixedHeight(q->height());
 
     q->connect(optionButton, &DWindowOptionButton::clicked, q, &DTitlebar::optionClicked);
     q->connect(closeButton, &DWindowCloseButton::clicked, q, &DTitlebar::closeClicked);
@@ -115,6 +120,7 @@ DTitlebar::DTitlebar(QWidget *parent) :
     DObject(*new DTitlebarPrivate(this))
 {
     d_func()->init();
+//    this->setStyleSheet("background-color: white;");
 }
 
 ///

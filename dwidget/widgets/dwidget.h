@@ -5,21 +5,22 @@
 #include <dobject.h>
 #include <libdui_global.h>
 
+
+#include <dx11widget.h>
+
 DWIDGET_BEGIN_NAMESPACE
 
-class DWidget : public QWidget, public DObject
+class LIBDTKWIDGETSHARED_EXPORT DWidget : public DX11Widget
 {
     Q_OBJECT
 public:
-    explicit DWidget(QWidget *parent = 0);
+    explicit DWidget(DWidget *parent = 0);
 
-    virtual void mouseMoveEvent(QMouseEvent *);
-
-    virtual void removeLayout();
-protected:
-    explicit DWidget(DObjectPrivate &dd, QWidget *parent = 0);
+private:
+    Q_DISABLE_COPY(DWidget)
 };
 
 DWIDGET_END_NAMESPACE
+
 
 #endif // DWIDGET_H

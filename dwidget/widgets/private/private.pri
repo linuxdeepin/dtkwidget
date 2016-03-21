@@ -31,7 +31,8 @@ HEADERS += \
     $$PWD/dflowlayout_p.h \
     $$PWD/dlistview_p.h \
     $$PWD/dtextedit_p.h \
-    $$PWD/dapplication_p.h
+    $$PWD/dapplication_p.h \
+    $$PWD/dwidget_p.h \
 
 SOURCES += \
     $$PWD/dthemehelper.cpp

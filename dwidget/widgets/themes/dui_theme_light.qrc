@@ -32,6 +32,7 @@
         <file>light/DWindowMinButton.theme</file>
         <file>light/DWindowMaxButton.theme</file>
         <file>light/DWindowCloseButton.theme</file>
+        <file>light/DWindow.theme</file>
     </qresource>
     <qresource prefix="/images">
         <file>light/images/arrow_down_hover.png</file>

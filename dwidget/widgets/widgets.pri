@@ -70,8 +70,9 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/denhancedwidget.h \
     $$PWD/dtextedit.h \
     $$PWD/dtitlebar.h \
-    $$PWD/dwindows.h \
-    $$PWD/dwidget.h
+    $$PWD/dwidget.h \
+    $$PWD/dx11widget.h \
+    $$PWD/dwindow.h
 
 SOURCES += $$PWD/dslider.cpp \
     $$PWD/dthememanager.cpp \
@@ -133,7 +134,8 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/denhancedwidget.cpp \
     $$PWD/dtextedit.cpp \
     $$PWD/dtitlebar.cpp \
-    $$PWD/dwindows.cpp \
+    $$PWD/dx11widget.cpp \
+    $$PWD/dwindow.cpp \
     $$PWD/dwidget.cpp
 
 RESOURCES += \
