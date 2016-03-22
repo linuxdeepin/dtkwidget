@@ -18,8 +18,9 @@ class LIBDTKWIDGETSHARED_EXPORT DTitlebar : public QWidget , public DObject
 public:
     explicit DTitlebar(QWidget *parent = 0);
 
+    void setCustomWidget(QWidget *, bool fixCenterPos = false);
     void setWindowFlags(Qt::WindowFlags type);
-
+    int buttonAreaWidth() const;
 signals:
     void minimumClicked();
     void maximumClicked();

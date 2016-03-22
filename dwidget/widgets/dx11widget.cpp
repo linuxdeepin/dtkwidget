@@ -79,6 +79,40 @@ enum class XCursorType
     kTopLeft = 134,
 };
 
+struct MwmHints {
+    unsigned long flags;
+    unsigned long functions;
+    unsigned long decorations;
+    long input_mode;
+    unsigned long status;
+};
+
+enum {
+    MWM_HINTS_FUNCTIONS = (1L << 0),
+    MWM_HINTS_DECORATIONS = (1L << 1),
+
+    MWM_FUNC_ALL = (1L << 0),
+    MWM_FUNC_RESIZE = (1L << 1),
+    MWM_FUNC_MOVE = (1L << 2),
+    MWM_FUNC_MINIMIZE = (1L << 3),
+    MWM_FUNC_MAXIMIZE = (1L << 4),
+    MWM_FUNC_CLOSE = (1L << 5),
+
+    MWM_DECOR_ALL      = (1L << 0),
+    MWM_DECOR_BORDER   = (1L << 1),
+    MWM_DECOR_RESIZEH  = (1L << 2),
+    MWM_DECOR_TITLE    = (1L << 3),
+    MWM_DECOR_MENU     = (1L << 4),
+    MWM_DECOR_MINIMIZE = (1L << 5),
+    MWM_DECOR_MAXIMIZE = (1L << 6),
+
+    MWM_HINTS_INPUT_MODE = (1L << 2),
+
+    MWM_INPUT_MODELESS                  = 0L,
+    MWM_INPUT_PRIMARY_APPLICATION_MODAL = 1L,
+    MWM_INPUT_FULL_APPLICATION_MODAL    = 3L
+};
+
 static int CornerEdge2WmGravity(const CornerEdge &ce)
 {
     switch (ce) {
@@ -474,12 +508,63 @@ void PropagateSizeHints(QWidget *w)
     XFree(sh);
 }
 
+void DisableResize(QWidget *w)
+{
+    Display *display = QX11Info::display();
+    Atom mwmHintsProperty = XInternAtom(display, "_MOTIF_WM_HINTS", 0);
+    struct MwmHints *hints;
+    unsigned char *wm_data;
+    Atom wm_type;
+    int wm_format;
+    unsigned long wm_nitems, wm_bytes_after;
+
+    XGetWindowProperty(display,
+                       w->winId(),
+                       mwmHintsProperty,
+                       0,
+                       sizeof(MwmHints) / sizeof(long),
+                       false,
+                       AnyPropertyType,
+                       &wm_type,
+                       &wm_format,
+                       &wm_nitems,
+                       &wm_bytes_after,
+                       &wm_data);
+
+    hints = (MwmHints *) wm_data;
+
+    hints->flags |= MWM_HINTS_FUNCTIONS;
+    if (hints->functions == MWM_FUNC_ALL) {
+        hints->functions = MWM_FUNC_MOVE | MWM_FUNC_MINIMIZE;
+    } else {
+        hints->functions &= ~MWM_FUNC_RESIZE;
+    }
+
+    if (hints->decorations == MWM_DECOR_ALL) {
+        hints->flags |= MWM_HINTS_DECORATIONS;
+        hints->decorations = (MWM_DECOR_BORDER
+                              | MWM_DECOR_TITLE
+                              | MWM_DECOR_MENU);
+    } else {
+        hints->decorations &= ~MWM_DECOR_RESIZEH;
+    }
+    XChangeProperty(display,
+                    w->winId(),
+                    mwmHintsProperty,
+                    mwmHintsProperty,
+                    32,
+                    PropModeReplace,
+                    (unsigned char *)hints,
+                    5);
 }
 
+
+}
 DWIDGET_BEGIN_NAMESPACE
 
 const int WindowGlowRadius = 8;
 const int WindowsRadius = 4;
+const int WindowsBorder = 0;
 
 const QColor BorderColor = QColor(216, 216, 216);
 const QColor ShadowColor = QColor(23, 23, 23, 128);
@@ -496,12 +581,14 @@ public:
 
     void init();
 
+    QSize externSize(const QSize &size) const;
     bool leftPressed;
     bool resizable;
 
     int                 m_ShadowWidth;
     int                 m_NormalShadowWidth;
     int                 m_Radius;
+    int                 m_Border;
     bool                m_MousePressed;
     QPoint              m_LastMousePos;
     Qt::WindowFlags     dwindowFlags;
@@ -529,6 +616,7 @@ void DX11WidgetPrivate::init()
     m_NormalShadowWidth = WindowGlowRadius;
     m_ShadowWidth = WindowGlowRadius;
     m_Radius = WindowsRadius;
+    m_Border = WindowsBorder;
     m_MousePressed = false;
     m_Shadow = nullptr;
 
@@ -538,6 +626,11 @@ void DX11WidgetPrivate::init()
 
     titlebar = new DTitlebar;
     contentWidget = new QWidget;
+    QVBoxLayout *contentWidgetLayout = new QVBoxLayout;
+    contentWidgetLayout->setSpacing(0);
+    contentWidgetLayout->setMargin(0);
+    contentWidget->setLayout(contentWidgetLayout);
+    contentWidget->setContentsMargins(m_Border, 0, m_Border, m_Border);
     rootLayout->addWidget(titlebar);
     rootLayout->addWidget(contentWidget);
     rootLayout->setAlignment(contentWidget, Qt::AlignCenter);
@@ -546,7 +639,13 @@ void DX11WidgetPrivate::init()
     q->connect(titlebar, &DTitlebar::maximumClicked, q, &DX11Widget::showMaximized);
     q->connect(titlebar, &DTitlebar::restoreClicked, q, &DX11Widget::showNormal);
     q->connect(titlebar, &DTitlebar::minimumClicked, q, &DX11Widget::showMinimized);
+}
 
+QSize DX11WidgetPrivate::externSize(const QSize &size) const
+{
+    D_QC(DX11Widget);
+    return QSize(size.width() + (m_ShadowWidth + m_Border) * 2,
+                 size.height() + (m_ShadowWidth + m_Border) * 2 + q->titlebarHeight());
 }
 
 DX11Widget::DX11Widget(DX11Widget *parent): QWidget(parent), DObject(*new DX11WidgetPrivate(this))
@@ -560,10 +659,12 @@ DX11Widget::DX11Widget(DX11Widget *parent): QWidget(parent), DObject(*new DX11Wi
     QWidget::setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
 
     setWindowFlags(windowFlags());
-    resize(size());
+
+//    resize(size());
 
     setShadow();
     XUtils::SetWindowExtents(this, WindowGlowRadius);
+    DX11Widget::adjustSize();
 }
 
 DX11Widget::DX11Widget(DObjectPrivate &dd, DX11Widget *parent)
@@ -586,7 +687,7 @@ void DX11Widget::mousePressEvent(QMouseEvent *event)
     D_D(DX11Widget);
     d->leftPressed = true;
     if (event->button() == Qt::LeftButton && d->resizable) {
-        XUtils::MoveResizeWindow(this, event->x(), event->y(), 10);
+        XUtils::MoveResizeWindow(this, event->x(), event->y(), 4);
     }
 
     return QWidget::mousePressEvent(event);
@@ -602,6 +703,7 @@ void DX11Widget::mouseReleaseEvent(QMouseEvent *event)
 void DX11Widget::showMinimized()
 {
     XUtils::ShowMinimizedWindow(this, true);
+    QWidget::showMinimized();
 }
 
 void DX11Widget::showMaximized()
@@ -659,7 +761,6 @@ void DX11Widget::showNormal()
 
 void DX11Widget::removeLayout()
 {
-    qDebug() << "removeLayout";
     qDeleteAll(this->children());
 }
 
@@ -680,16 +781,17 @@ void DX11Widget::setWindowFlags(Qt::WindowFlags type)
     d->titlebar->setWindowFlags(type);
 }
 
-int DX11Widget::titleHeight() const
+int DX11Widget::titlebarHeight() const
 {
     D_DC(DX11Widget);
     return d->titlebar->height();
 }
 
-void DX11Widget::setTitleFixedHeight(int h)
+void DX11Widget::setTitlebarFixedHeight(int h)
 {
     D_D(DX11Widget);
     d->titlebar->setFixedHeight(h);
+    DX11Widget::adjustSize();
 }
 
 void DX11Widget::setTitle(const QString &t)
@@ -698,10 +800,16 @@ void DX11Widget::setTitle(const QString &t)
     d->titlebar->setTitle(t);
 }
 
-void DX11Widget::setIcon(const QPixmap &icon)
+void DX11Widget::setTitleIcon(const QPixmap &icon)
 {
     D_D(DX11Widget);
     d->titlebar->setIcon(icon);
+}
+
+void DX11Widget::setTitlebarWidget(QWidget *w, bool fixCenterPos)
+{
+    D_D(DX11Widget);
+    d->titlebar->setCustomWidget(w, fixCenterPos);
 }
 
 QLayout *DX11Widget::layout() const
@@ -715,6 +823,8 @@ void DX11Widget::setLayout(QLayout *l)
     D_D(DX11Widget);
     qDeleteAll(d->contentWidget->children());
     d->contentWidget->setLayout(l);
+    d->contentWidget->adjustSize();
+    DX11Widget::resize(d->contentWidget->size());
 }
 
 int DX11Widget::radius() const
@@ -726,6 +836,9 @@ int DX11Widget::radius() const
 void DX11Widget::setRadius(int r)
 {
     D_D(DX11Widget);
+    if (r > d->m_Border * 2) {
+        r = d->m_Border * 2;
+    }
     d->m_Radius = r;
 }
 
@@ -739,6 +852,23 @@ void DX11Widget::setShadowWidth(int r)
 {
     D_D(DX11Widget);
     d->m_Radius = r;
+}
+
+
+int DX11Widget::border() const
+{
+    D_DC(DX11Widget);
+    return d->m_Border;
+}
+
+void DX11Widget::setBorder(int b)
+{
+    D_D(DX11Widget);
+    if (b < 0) { b = 0; }
+    d->m_Border = b;
+    if (d->m_Radius > b * 2) {
+        d->m_Radius = b * 2;
+    }
 }
 
 const QPixmap &DX11Widget::backgroundImage() const
@@ -757,12 +887,14 @@ void DX11Widget::setFixedSize(const QSize &size)
 {
     D_D(DX11Widget);
     d->resizable = false;
-//    XUtils::PropagateSizeHints(this);
-    QWidget::resize(size.width() + d->m_ShadowWidth * 2, size.height() + d->m_ShadowWidth * 2 + titleHeight());
+    d->titlebar->setMinimumWidth(size.width() + d->m_Border * 2);
     d->contentWidget->setFixedSize(size);
-//    QWidget::setMinimumSize(size);
-//    QWidget::setMaximumSize(size);
+    QSize externSize = d->externSize(size);
+    QWidget::resize(externSize);
+    QWidget::setMaximumSize(externSize);
     setWindowFlags(windowFlags() & ~ Qt::WindowMaximizeButtonHint);
+
+    XUtils::DisableResize(this);
 }
 
 void DX11Widget::setFixedSize(int w, int h)
@@ -773,8 +905,28 @@ void DX11Widget::setFixedSize(int w, int h)
 void DX11Widget::resize(const QSize &size)
 {
     D_D(DX11Widget);
-    QWidget::resize(size.width() + d->m_ShadowWidth * 2, size.height() + d->m_ShadowWidth * 2 + titleHeight());
     d->contentWidget->resize(size);
+    QSize externSize = d->externSize(size);
+    if (d->resizable) {
+        QWidget::setMinimumSize(externSize);
+        QWidget::resize(externSize);
+    } else {
+        QWidget::setMaximumSize(externSize);
+    }
+}
+
+void DX11Widget::adjustSize()
+{
+    D_D(DX11Widget);
+    d->contentWidget->adjustSize();
+    QSize externSize = d->externSize(d->contentWidget->size());
+    if (d->resizable) {
+        QWidget::setMinimumSize(externSize);
+        QWidget::resize(externSize);
+    } else {
+        QWidget::setMaximumSize(externSize);
+        QWidget::resize(externSize);
+    }
 }
 
 void DX11Widget::showEvent(QShowEvent *e)

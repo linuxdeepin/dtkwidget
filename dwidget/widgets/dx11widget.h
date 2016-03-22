@@ -18,16 +18,19 @@ public:
 
     Q_PROPERTY(int radius READ radius WRITE setRadius)
     Q_PROPERTY(int shadowWidth READ shadowWidth WRITE setShadowWidth)
-    Q_PROPERTY(int titleHeight READ titleHeight WRITE setTitleFixedHeight)
+    Q_PROPERTY(int border READ border WRITE setBorder)
+    Q_PROPERTY(int titlebarHeight READ titlebarHeight WRITE setTitlebarFixedHeight)
     Q_PROPERTY(QPixmap backgroundImage READ backgroundImage WRITE setBackgroundImage)
 
     Qt::WindowFlags windowFlags();
     void setWindowFlags(Qt::WindowFlags type);
 
     void setTitle(const QString &);
-    void setIcon(const QPixmap &icon);
-    int titleHeight() const;
-    void setTitleFixedHeight(int h);
+    void setTitleIcon(const QPixmap &icon);
+
+    void setTitlebarWidget(QWidget *, bool fixCenterPos = false);
+    int titlebarHeight() const;
+    void setTitlebarFixedHeight(int h);
 
     QLayout *layout() const;
     void setLayout(QLayout *);
@@ -37,6 +40,9 @@ public:
 
     int shadowWidth() const;
     void setShadowWidth(int w);
+
+    int border() const;
+    void setBorder(int b);
 
     const QPixmap &backgroundImage() const;
     void setBackgroundImage(const QPixmap &);
@@ -54,6 +60,8 @@ public:
     void resize(const QSize &);
 
     void removeLayout();
+
+    void adjustSize();
 
     virtual void mouseMoveEvent(QMouseEvent *);
     virtual void mousePressEvent(QMouseEvent *);
@@ -73,6 +81,7 @@ protected:
     void setShadow();
 
 private:
+
     D_DECLARE_PRIVATE(DX11Widget)
 };
 

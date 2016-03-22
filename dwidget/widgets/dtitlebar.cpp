@@ -78,7 +78,6 @@ void DTitlebarPrivate::init()
     buttonAreaLayout->addWidget(closeButton);
     buttonArea->setLayout(buttonAreaLayout);
 
-
     QHBoxLayout *titleAreaLayout = new QHBoxLayout;
     titleAreaLayout->setMargin(0);
     titleAreaLayout->setSpacing(0);
@@ -105,7 +104,7 @@ void DTitlebarPrivate::init()
     q->setLayout(mainLayout);
     q->setFixedHeight(DefaultTitlebarHeight);
     q->setMinimumHeight(DefaultTitlebarHeight);
-    titleArea->setFixedHeight(q->height());
+    coustomAtea->setFixedHeight(q->height());
     buttonArea->setFixedHeight(q->height());
 
     q->connect(optionButton, &DWindowOptionButton::clicked, q, &DTitlebar::optionClicked);
@@ -120,7 +119,6 @@ DTitlebar::DTitlebar(QWidget *parent) :
     DObject(*new DTitlebarPrivate(this))
 {
     d_func()->init();
-//    this->setStyleSheet("background-color: white;");
 }
 
 ///
@@ -140,9 +138,39 @@ void DTitlebar::setWindowFlags(Qt::WindowFlags type)
     d->titlePadding->setFixedSize(d->buttonArea->size());
 }
 
+void DTitlebar::setCustomWidget(QWidget *w, bool fixCenterPos)
+{
+    D_D(DTitlebar);
+    if (!w || w == d->titleArea) {
+        return;
+    }
+
+    QSize old = d->buttonArea->size();
+
+
+    QHBoxLayout *l = new QHBoxLayout;
+    l->setSpacing(0);
+    l->setMargin(0);
+
+    if (fixCenterPos) {
+        d->titlePadding = new QWidget;
+        d->titlePadding->setFixedSize(old);
+        l->addWidget(d->titlePadding);
+    }
+
+    l->addWidget(w);
+    l->setAlignment(w, Qt::AlignCenter);
+    qDeleteAll(d->coustomAtea->children());
+    d->coustomAtea->setLayout(l);
+    d->buttonArea->setFixedSize(old);
+}
+
 void DTitlebar::setFixedHeight(int h)
 {
+    D_D(DTitlebar);
     QWidget::setFixedHeight(h);
+    d->coustomAtea->setFixedHeight(h);
+    d->buttonArea->setFixedHeight(h);
 }
 
 void DTitlebar::setTitle(const QString &title)
@@ -155,6 +183,12 @@ void DTitlebar::setIcon(const QPixmap &icon)
 {
     D_D(DTitlebar);
     d->iconLabel->setPixmap(icon.scaled(DefaultIconWidth, DefaultIconHeight, Qt::KeepAspectRatio));
+}
+
+int DTitlebar::buttonAreaWidth() const
+{
+    D_DC(DTitlebar);
+    return d->buttonArea->width();
 }
 
 DWIDGET_END_NAMESPACE
