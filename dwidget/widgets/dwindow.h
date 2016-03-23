@@ -6,9 +6,11 @@
 #include <libdui_global.h>
 
 #include "dwidget.h"
+#include <DMenu>
 
 DWIDGET_BEGIN_NAMESPACE
 
+class DMenu;
 class DWindowPrivate;
 
 class LIBDTKWIDGETSHARED_EXPORT DWindow : public DWidget
@@ -17,10 +19,15 @@ class LIBDTKWIDGETSHARED_EXPORT DWindow : public DWidget
 public:
     explicit DWindow(DWidget *parent = 0);
 
+    DMenu *dbusMenu();
+
     void setContentLayout(QLayout *l);
     void setContentWidget(QWidget *w);
 
+protected slots:
+
 private:
+    D_DECLARE_PRIVATE(DWindow)
     Q_DISABLE_COPY(DWindow)
 };
 

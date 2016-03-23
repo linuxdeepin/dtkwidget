@@ -13,6 +13,8 @@
 #include "dwindowoptionbutton.h"
 #include "dlabel.h"
 
+#include <DMenu>
+
 DWIDGET_BEGIN_NAMESPACE
 
 const int DefaultTitlebarHeight = 32;
@@ -39,6 +41,8 @@ private:
     QWidget             *buttonArea;
     QWidget             *titleArea;
     QWidget             *titlePadding;
+
+    DMenu               *menu;
     Q_DECLARE_PUBLIC(DTitlebar)
 };
 
@@ -138,6 +142,23 @@ void DTitlebar::setWindowFlags(Qt::WindowFlags type)
     d->titlePadding->setFixedSize(d->buttonArea->size());
 }
 
+void DTitlebar::setMenu(DMenu *menu)
+{
+    D_D(DTitlebar);
+
+    d->menu = menu;
+    if (d->menu) {
+        disconnect(this, &DTitlebar::optionClicked, 0, 0);
+        connect(this, &DTitlebar::optionClicked, this, &DTitlebar::showMenu);
+    }
+}
+
+void DTitlebar::showMenu()
+{
+    D_D(DTitlebar);
+    d->menu->show(d->optionButton->mapToGlobal(d->optionButton->rect().bottomLeft()));
+}
+
 void DTitlebar::setCustomWidget(QWidget *w, bool fixCenterPos)
 {
     D_D(DTitlebar);
@@ -146,7 +167,6 @@ void DTitlebar::setCustomWidget(QWidget *w, bool fixCenterPos)
     }
 
     QSize old = d->buttonArea->size();
-
 
     QHBoxLayout *l = new QHBoxLayout;
     l->setSpacing(0);

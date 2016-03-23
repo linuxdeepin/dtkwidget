@@ -8,6 +8,7 @@
 DWIDGET_BEGIN_NAMESPACE
 
 class DTitlebarPrivate;
+class DMenu;
 
 ///
 /// \brief The DTitlebar class is an universal title bar on the top of windows.
@@ -18,6 +19,7 @@ class LIBDTKWIDGETSHARED_EXPORT DTitlebar : public QWidget , public DObject
 public:
     explicit DTitlebar(QWidget *parent = 0);
 
+    void setMenu(DMenu*);
     void setCustomWidget(QWidget *, bool fixCenterPos = false);
     void setWindowFlags(Qt::WindowFlags type);
     int buttonAreaWidth() const;
@@ -32,6 +34,9 @@ public slots:
     void setFixedHeight(int h);
     void setTitle(const QString& title);
     void setIcon(const QPixmap& icon);
+
+private slots:
+    void showMenu();
 
 private:
     D_DECLARE_PRIVATE(DTitlebar)

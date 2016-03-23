@@ -17,6 +17,7 @@ includes.path = $${DTK_INCLUDEPATH}/DWidget
 includes.files += libdui_global.h widgets/*.h
 includes.files += widgets/DTitlebar \
     widgets/DWindow \
+    widgets/DMenu \
     widgets/DApplication \
     widgets/DGraphicsDropShadowEffect
 

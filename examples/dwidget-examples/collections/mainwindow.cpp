@@ -9,6 +9,7 @@
 
 #include <QHBoxLayout>
 #include <QPushButton>
+#include <QMessageBox>
 #include <QDebug>
 
 #include "dslider.h"
@@ -30,21 +31,21 @@ DWIDGET_USE_NAMESPACE
 MainWindow::MainWindow(DWindow *parent)
     : DWindow(parent)
 {
-    DThemeManager * themeManager = DThemeManager::instance();
+    DThemeManager *themeManager = DThemeManager::instance();
 
     initTabWidget();
 
-    QVBoxLayout * mainLayout = new QVBoxLayout();
+    QVBoxLayout *mainLayout = new QVBoxLayout();
     mainLayout->setMargin(0);
     mainLayout->addWidget(m_mainTab);
 
-    QHBoxLayout * styleLayout = new QHBoxLayout();
-    QPushButton *darkButton = new QPushButton("Dark",this);
-    QPushButton *lightBUtton = new QPushButton("Light",this);
-    connect(darkButton, &QPushButton::clicked, [=]{
+    QHBoxLayout *styleLayout = new QHBoxLayout();
+    QPushButton *darkButton = new QPushButton("Dark", this);
+    QPushButton *lightBUtton = new QPushButton("Light", this);
+    connect(darkButton, &QPushButton::clicked, [ = ] {
         themeManager->setTheme("dark");
     });
-    connect(lightBUtton, &QPushButton::clicked, [=]{
+    connect(lightBUtton, &QPushButton::clicked, [ = ] {
         themeManager->setTheme("light");
     });
     styleLayout->addWidget(darkButton);
@@ -54,31 +55,42 @@ MainWindow::MainWindow(DWindow *parent)
     mainLayout->addLayout(styleLayout);
 
     this->setContentLayout(mainLayout);
+
+    dbusMenu()->addItem("testmenu1", "test menu1");
+    dbusMenu()->addItem("testmenu2", "test menu2");
+
+    connect(dbusMenu(), &DMenu::itemInvoked, this, &MainWindow::menuItemInvoked);
+}
+
+void MainWindow::menuItemInvoked(const QString &itemId, bool checked)
+{
+    QMessageBox::warning(this, "menu clieck", itemId + " was cliecked");
+    qDebug() << "click" << itemId << checked;
 }
 
 void MainWindow::initTabWidget()
 {
     m_mainTab = new QTabWidget(this);
 
-    ComboBoxTab * comboBoxTab = new ComboBoxTab(this);
+    ComboBoxTab *comboBoxTab = new ComboBoxTab(this);
 
-    LineTab * lineTab = new LineTab(this);
+    LineTab *lineTab = new LineTab(this);
 
-    BarTab * barTab = new BarTab(this);
+    BarTab *barTab = new BarTab(this);
 
-    ButtonTab * buttonTab = new ButtonTab(this);
+    ButtonTab *buttonTab = new ButtonTab(this);
 
-    InputTab * inputTab = new InputTab(this);
+    InputTab *inputTab = new InputTab(this);
 
-    SliderTab * sliderTab = new SliderTab(this);
+    SliderTab *sliderTab = new SliderTab(this);
 
-    IndicatorTab * indicatorTab = new IndicatorTab(this);
+    IndicatorTab *indicatorTab = new IndicatorTab(this);
 
-    ButtonListTab* buttonListGroupTab = new ButtonListTab(this);
+    ButtonListTab *buttonListGroupTab = new ButtonListTab(this);
 
-    ButtonGridTab* buttonGridTab = new ButtonGridTab(this);
+    ButtonGridTab *buttonGridTab = new ButtonGridTab(this);
 
-    ImageButtonGridTab* imageButtonGridTab = new ImageButtonGridTab(this);
+    ImageButtonGridTab *imageButtonGridTab = new ImageButtonGridTab(this);
 
     Segmentedcontrol *segmentedControl = new Segmentedcontrol(this);
 
@@ -93,11 +105,11 @@ void MainWindow::initTabWidget()
     m_mainTab->addTab(effectTab, "GraphicsEffect");
     m_mainTab->addTab(comboBoxTab, "ComboBox");
     m_mainTab->addTab(indicatorTab, "Indicator");
-    m_mainTab->addTab(lineTab,"Line");
-    m_mainTab->addTab(barTab,"Bar");
-    m_mainTab->addTab(buttonTab,"Button");
-    m_mainTab->addTab(inputTab,"Input");
-    m_mainTab->addTab(sliderTab,"Slider");
+    m_mainTab->addTab(lineTab, "Line");
+    m_mainTab->addTab(barTab, "Bar");
+    m_mainTab->addTab(buttonTab, "Button");
+    m_mainTab->addTab(inputTab, "Input");
+    m_mainTab->addTab(sliderTab, "Slider");
 
     m_mainTab->addTab(buttonListGroupTab, "ButtonList");
     m_mainTab->addTab(imageButtonGridTab, "imageButtonGrid");

@@ -72,7 +72,10 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dtitlebar.h \
     $$PWD/dwidget.h \
     $$PWD/dx11widget.h \
-    $$PWD/dwindow.h
+    $$PWD/dwindow.h \
+    $$PWD/dmenu.h \
+    $$PWD/dbusmenumanager.h \
+    $$PWD/dbusmenu.h
 
 SOURCES += $$PWD/dslider.cpp \
     $$PWD/dthememanager.cpp \
@@ -136,7 +139,10 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dtitlebar.cpp \
     $$PWD/dx11widget.cpp \
     $$PWD/dwindow.cpp \
-    $$PWD/dwidget.cpp
+    $$PWD/dwidget.cpp \
+    $$PWD/dmenu.cpp \
+    $$PWD/dbusmenumanager.cpp \
+    $$PWD/dbusmenu.cpp
 
 RESOURCES += \
     $$PWD/themes/dui_theme_dark.qrc \
