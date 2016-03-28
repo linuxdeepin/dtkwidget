@@ -12,7 +12,7 @@
 
 #include <QX11Info>
 
-#if QT_VERSION >= 0x050300
+#if QT_VERSION >= QT_VERSION_CHECK(5, 3, 0)
 #include <QtPlatformHeaders/QXcbWindowFunctions>
 #endif
 
@@ -593,7 +593,6 @@ public:
     QPoint              m_LastMousePos;
     Qt::WindowFlags     dwindowFlags;
 
-    QPixmap             m_Background;
     QVBoxLayout         *rootLayout;
     DTitlebar           *titlebar;
     QWidget             *contentWidget;
@@ -871,18 +870,6 @@ void DX11Widget::setBorder(int b)
     }
 }
 
-const QPixmap &DX11Widget::backgroundImage() const
-{
-    D_DC(DX11Widget);
-    return d->m_Background;
-}
-
-void DX11Widget::setBackgroundImage(const QPixmap &bk)
-{
-    D_D(DX11Widget);
-    d->m_Background = bk;
-}
-
 void DX11Widget::setFixedSize(const QSize &size)
 {
     D_D(DX11Widget);
@@ -969,24 +956,20 @@ void DX11Widget::paintEvent(QPaintEvent */*e*/)
     painter.setRenderHint(QPainter::Antialiasing);
     QRect rect = this->rect().marginsRemoved(QMargins(glowRadius, glowRadius, glowRadius, glowRadius));
 
-    if (! d->m_Background.isNull()) {
-        painter.drawPixmap(rect, d->m_Background);
-    } else {
-        QPoint topLeft(rect.x(), rect.y());
-        QPoint bottomRight(rect.x() + rect.width(), rect.y() + rect.height());
-        QPainterPath border;
-        border.addRoundedRect(rect, radius, radius);
+    QPoint topLeft(rect.x(), rect.y());
+    QPoint bottomRight(rect.x() + rect.width(), rect.y() + rect.height());
+    QPainterPath border;
+    border.addRoundedRect(rect, radius, radius);
 
-        QLinearGradient linearGradient(topLeft, QPoint(topLeft.x(), bottomRight.y()));
-        linearGradient.setColorAt(0.0, BackgroundTopColor);
-        linearGradient.setColorAt(0.2, BackgroundBottonColor);
-        linearGradient.setColorAt(1.0, BackgroundBottonColor);
+    QLinearGradient linearGradient(topLeft, QPoint(topLeft.x(), bottomRight.y()));
+    linearGradient.setColorAt(0.0, BackgroundTopColor);
+    linearGradient.setColorAt(0.2, BackgroundBottonColor);
+    linearGradient.setColorAt(1.0, BackgroundBottonColor);
 
-        QPen borderPen(BorderColor);
-        painter.setBrush(QBrush(linearGradient));
-        painter.strokePath(border, borderPen);
-        painter.fillPath(border, QBrush(linearGradient));
-    }
+    QPen borderPen(BorderColor);
+    painter.setBrush(QBrush(linearGradient));
+    painter.strokePath(border, borderPen);
+    painter.fillPath(border, palette().background());
 }
 
 

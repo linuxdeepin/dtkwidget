@@ -20,7 +20,6 @@ public:
     Q_PROPERTY(int shadowWidth READ shadowWidth WRITE setShadowWidth)
     Q_PROPERTY(int border READ border WRITE setBorder)
     Q_PROPERTY(int titlebarHeight READ titlebarHeight WRITE setTitlebarFixedHeight)
-    Q_PROPERTY(QPixmap backgroundImage READ backgroundImage WRITE setBackgroundImage)
 
     Qt::WindowFlags windowFlags();
     void setWindowFlags(Qt::WindowFlags type);
@@ -44,9 +43,6 @@ public:
     int border() const;
     void setBorder(int b);
 
-    const QPixmap &backgroundImage() const;
-    void setBackgroundImage(const QPixmap &);
-
     void setContentsMargins(int left, int top, int right, int bottom);
     void setContentsMargins(const QMargins &margins);
     void getContentsMargins(int *left, int *top, int *right, int *bottom) const;
@@ -63,13 +59,14 @@ public:
 
     void adjustSize();
 
-    virtual void mouseMoveEvent(QMouseEvent *);
-    virtual void mousePressEvent(QMouseEvent *);
-    virtual void mouseReleaseEvent(QMouseEvent *);
-    virtual void showEvent(QShowEvent *);
-    virtual void paintEvent(QPaintEvent *);
-    virtual void resizeEvent(QResizeEvent *);
-    virtual void closeEvent(QCloseEvent *);
+protected:
+    void mouseMoveEvent(QMouseEvent *) Q_DECL_OVERRIDE;
+    void mousePressEvent(QMouseEvent *) Q_DECL_OVERRIDE;
+    void mouseReleaseEvent(QMouseEvent *) Q_DECL_OVERRIDE;
+    void showEvent(QShowEvent *) Q_DECL_OVERRIDE;
+    void paintEvent(QPaintEvent *) Q_DECL_OVERRIDE;
+    void resizeEvent(QResizeEvent *) Q_DECL_OVERRIDE;
+    void closeEvent(QCloseEvent *) Q_DECL_OVERRIDE;
 
 public slots:
     void showMinimized();
