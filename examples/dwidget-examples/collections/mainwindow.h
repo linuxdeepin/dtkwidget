@@ -34,11 +34,14 @@ public:
     MainWindow(DWindow *parent = 0);
     ~MainWindow();
 
+protected slots:
+    void menuItemInvoked(const QString &itemId, bool checked);
+
 private:
     void initTabWidget();
 
 private:
-    QTabWidget * m_mainTab = NULL;
+    QTabWidget *m_mainTab = NULL;
 };
 
 #endif // MAINWINDOW_H

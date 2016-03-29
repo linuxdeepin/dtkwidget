@@ -23,6 +23,7 @@ int main(int argc, char *argv[])
         qDebug() << "another instance is running!!";
 
     MainWindow w;
+
 //    w.resize(w.size());
     w.show();
 

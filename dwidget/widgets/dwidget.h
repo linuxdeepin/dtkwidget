@@ -10,13 +10,17 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+class DWidgetPrivate;
+
 class LIBDTKWIDGETSHARED_EXPORT DWidget : public DX11Widget
 {
     Q_OBJECT
 public:
-    explicit DWidget(DWidget *parent = 0);
+    explicit DWidget(QWidget *parent = 0);
+    explicit DWidget(DObjectPrivate &dd, QWidget *parent = 0);
 
 private:
+    D_DECLARE_PRIVATE(DWidget)
     Q_DISABLE_COPY(DWidget)
 };
 

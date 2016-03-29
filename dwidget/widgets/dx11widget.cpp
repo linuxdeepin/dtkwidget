@@ -20,6 +20,8 @@
 #include <X11/Xlib.h>
 #include <X11/extensions/shape.h>
 
+#include "private/dwidget_p.h"
+
 namespace XUtils
 {
 // From the WM spec
@@ -573,32 +575,6 @@ const QColor BackgroundBottonColor = QColor(250, 251, 252);
 const QColor TipsBorderColor = QColor(255, 255, 255, 255 * 0.2);
 const QColor TipsBackground = QColor(0, 0, 0);
 
-class DX11WidgetPrivate: public DObjectPrivate
-{
-    D_DECLARE_PUBLIC(DX11Widget)
-public:
-    explicit DX11WidgetPrivate(DX11Widget *q);
-
-    void init();
-
-    QSize externSize(const QSize &size) const;
-    bool leftPressed;
-    bool resizable;
-
-    int                 m_ShadowWidth;
-    int                 m_NormalShadowWidth;
-    int                 m_Radius;
-    int                 m_Border;
-    bool                m_MousePressed;
-    QPoint              m_LastMousePos;
-    Qt::WindowFlags     dwindowFlags;
-
-    QVBoxLayout         *rootLayout;
-    DTitlebar           *titlebar;
-    QWidget             *contentWidget;
-    DGraphicsGlowEffect *m_Shadow;
-};
-
 DX11WidgetPrivate::DX11WidgetPrivate(DX11Widget *q) : DObjectPrivate(q)
 {
     leftPressed = false;
@@ -638,6 +614,8 @@ void DX11WidgetPrivate::init()
     q->connect(titlebar, &DTitlebar::maximumClicked, q, &DX11Widget::showMaximized);
     q->connect(titlebar, &DTitlebar::restoreClicked, q, &DX11Widget::showNormal);
     q->connect(titlebar, &DTitlebar::minimumClicked, q, &DX11Widget::showMinimized);
+    q->connect(titlebar, &DTitlebar::optionClicked, q, &DX11Widget::optionClicked);
+
 }
 
 QSize DX11WidgetPrivate::externSize(const QSize &size) const
@@ -647,10 +625,15 @@ QSize DX11WidgetPrivate::externSize(const QSize &size) const
                  size.height() + (m_ShadowWidth + m_Border) * 2 + q->titlebarHeight());
 }
 
-DX11Widget::DX11Widget(DX11Widget *parent): QWidget(parent), DObject(*new DX11WidgetPrivate(this))
+DX11Widget::DX11Widget(QWidget *parent): DX11Widget(*new DX11WidgetPrivate(this), parent)
+{
+
+}
+
+DX11Widget::DX11Widget(DObjectPrivate &dd, QWidget *parent)
+    : QWidget(parent), DObject(dd)
 {
     D_D(DX11Widget);
-
     d->init();
     QWidget::setLayout(d->rootLayout);
 
@@ -664,12 +647,6 @@ DX11Widget::DX11Widget(DX11Widget *parent): QWidget(parent), DObject(*new DX11Wi
     setShadow();
     XUtils::SetWindowExtents(this, WindowGlowRadius);
     DX11Widget::adjustSize();
-}
-
-DX11Widget::DX11Widget(DObjectPrivate &dd, DX11Widget *parent)
-    : QWidget(parent), DObject(dd)
-{
-
 }
 
 void DX11Widget::mouseMoveEvent(QMouseEvent *event)
@@ -803,6 +780,12 @@ void DX11Widget::setTitleIcon(const QPixmap &icon)
 {
     D_D(DX11Widget);
     d->titlebar->setIcon(icon);
+}
+
+void DX11Widget::setTitlebarMenu(DMenu *menu)
+{
+    D_D(DX11Widget);
+    d->titlebar->setMenu(menu);
 }
 
 void DX11Widget::setTitlebarWidget(QWidget *w, bool fixCenterPos)

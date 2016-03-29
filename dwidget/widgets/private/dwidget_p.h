@@ -13,9 +13,41 @@
 #include "private/dobject_p.h"
 #include "dwidget.h"
 
+class QVBoxLayout;
+class DGraphicsGlowEffect;
+class DX11Widget;
+
 DWIDGET_BEGIN_NAMESPACE
 
-class DWidgetPrivate: public DObjectPrivate
+class DX11WidgetPrivate: public DObjectPrivate
+{
+    D_DECLARE_PUBLIC(DX11Widget)
+public:
+    explicit DX11WidgetPrivate(DX11Widget *q);
+
+    void init();
+
+    QSize externSize(const QSize &size) const;
+    bool leftPressed;
+    bool resizable;
+
+    int                 m_ShadowWidth;
+    int                 m_NormalShadowWidth;
+    int                 m_Radius;
+    int                 m_Border;
+    bool                m_MousePressed;
+    QPoint              m_LastMousePos;
+    Qt::WindowFlags     dwindowFlags;
+
+    QPixmap             m_Background;
+    QVBoxLayout         *rootLayout;
+    DTitlebar           *titlebar;
+    QWidget             *contentWidget;
+    DGraphicsGlowEffect *m_Shadow;
+};
+
+
+class DWidgetPrivate: public DX11WidgetPrivate
 {
     D_DECLARE_PUBLIC(DWidget)
 

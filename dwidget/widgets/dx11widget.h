@@ -8,13 +8,15 @@
 DWIDGET_BEGIN_NAMESPACE
 
 class DX11WidgetPrivate;
+class DTitlebar;
+class DMenu;
 
 class LIBDTKWIDGETSHARED_EXPORT DX11Widget : public QWidget, public DObject
 {
     Q_OBJECT
 public:
-    explicit DX11Widget(DX11Widget *parent = 0);
-    explicit DX11Widget(DObjectPrivate &dd, DX11Widget *parent = 0);
+    explicit DX11Widget(QWidget *parent = 0);
+    explicit DX11Widget(DObjectPrivate &dd, QWidget *parent = 0);
 
     Q_PROPERTY(int radius READ radius WRITE setRadius)
     Q_PROPERTY(int shadowWidth READ shadowWidth WRITE setShadowWidth)
@@ -27,6 +29,7 @@ public:
     void setTitle(const QString &);
     void setTitleIcon(const QPixmap &icon);
 
+    void setTitlebarMenu(DMenu *);
     void setTitlebarWidget(QWidget *, bool fixCenterPos = false);
     int titlebarHeight() const;
     void setTitlebarFixedHeight(int h);
@@ -76,6 +79,9 @@ public slots:
 
 protected:
     void setShadow();
+
+Q_SIGNALS:
+    void optionClicked();
 
 private:
 
