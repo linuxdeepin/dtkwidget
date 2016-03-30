@@ -22,6 +22,7 @@ public:
 
     DAction *addAction(const QString & text);
     DAction *addAction(const QIcon & icon, const QString & text);
+    void addAction(DAction *action);
 
     DAction *addMenu(DMenu *menu);
     DMenu *addMenu(const QString & title);

@@ -135,24 +135,27 @@ void DMenu::attatch(QWidget *)
 
 DAction *DMenu::addAction(const QString &text)
 {
-    D_D(DMenu);
-
     DAction *action = new DAction(text, this);
 
-    d->menuActions << action;
+    addAction(action);
 
     return action;
 }
 
 DAction *DMenu::addAction(const QIcon &icon, const QString &text)
 {
-    D_D(DMenu);
-
     DAction *action = new DAction(icon, text, this);
 
-    d->menuActions << action;
+    addAction(action);
 
     return action;
+}
+
+void DMenu::addAction(DAction *action)
+{
+    D_D(DMenu);
+
+    d->menuActions << action;
 }
 
 DAction *DMenu::addMenu(DMenu *menu)
@@ -170,7 +173,7 @@ DAction *DMenu::addMenu(DMenu *menu)
 
 DMenu *DMenu::addMenu(const QString &title)
 {
-    DMenu *menu = new DMenu();
+    DMenu *menu = new DMenu(this);
 
     DAction *action = addMenu(menu);
 
@@ -181,7 +184,7 @@ DMenu *DMenu::addMenu(const QString &title)
 
 DMenu *DMenu::addMenu(const QIcon &icon, const QString &title)
 {
-    DMenu *menu = new DMenu();
+    DMenu *menu = new DMenu(this);
 
     DAction *action = addMenu(menu);
 

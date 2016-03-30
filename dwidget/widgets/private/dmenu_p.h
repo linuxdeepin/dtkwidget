@@ -20,7 +20,7 @@ private:
     MenuInterface           *menuInterface;
     QVariantMap             menuVariant;
     QList<DAction *>    menuActions;
-    QWidget                 *attatch;
+
     mutable int actionId = 0;
     mutable QMap<DAction*, QString> actionToId;
 
