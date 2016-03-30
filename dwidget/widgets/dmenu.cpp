@@ -83,6 +83,8 @@ void DMenuPrivate::_q_onItemInvoked(const QString &actionId, bool checked)
 {
     DAction *action = actionToId.key(actionId);
 
+    lastTriggerAction = action;
+
     if(!action)
         return;
 
@@ -107,6 +109,10 @@ void DMenuPrivate::_q_onMenuUnregistered()
     if (menuInterface) {
         menuInterface->deleteLater();
         menuInterface = Q_NULLPTR;
+    }
+
+    if(eventLoop) {
+        eventLoop->quit();
     }
 }
 
@@ -212,27 +218,39 @@ DAction *DMenu::actionAt(const QString &text)
     return Q_NULLPTR;
 }
 
-void DMenu::exec()
+DAction *DMenu::exec()
 {
-    exec(QCursor::pos());
+    return exec(QCursor::pos());
 }
 
-void DMenu::exec(const QPoint &p, QAction */*action*/)
-{
-    show(p);
-}
-
-void DMenu::show(const QPoint &pos)
+DAction *DMenu::exec(const QPoint &p, DAction *action)
 {
     D_D(DMenu);
+
+    if(!d->eventLoop && popup(p, action)) {
+        d->eventLoop = new QEventLoop(this);
+        d->eventLoop->exec(QEventLoop::DialogExec);
+        d->eventLoop->deleteLater();
+        d->eventLoop = Q_NULLPTR;
+
+        return d->lastTriggerAction;
+    }
+
+    return Q_NULLPTR;
+}
+
+bool DMenu::popup(const QPoint &pos, DAction */*action*/)
+{
+    D_D(DMenu);
+
     if (d->parent) {
         qWarning() << "Only top DMenu can be show";
-        return;
+        return false;
     }
 
     if (d->menuInterface) {
         qWarning() << "Another menu is active";
-        return;
+        return false;
     }
     d->menuVariant["x"] = pos.x();
     d->menuVariant["y"] = pos.y();
@@ -255,6 +273,8 @@ void DMenu::show(const QPoint &pos)
 
     connect(d->menuInterface, SIGNAL(ItemInvoked(QString,bool)),
             this, SLOT(_q_onItemInvoked(QString,bool)));
+
+    return true;
 }
 
 #include "moc_dmenu.cpp"

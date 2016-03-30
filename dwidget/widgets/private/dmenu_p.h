@@ -7,6 +7,10 @@
 class MenumanagerInterface;
 class MenuInterface;
 
+QT_BEGIN_NAMESPACE
+class QEventLoop;
+QT_END_NAMESPACE
+
 DWIDGET_BEGIN_NAMESPACE
 
 class DMenuPrivate: public DObjectPrivate
@@ -23,6 +27,8 @@ private:
 
     mutable int actionId = 0;
     mutable QMap<DAction*, QString> actionToId;
+    QEventLoop *eventLoop = Q_NULLPTR;
+    DAction *lastTriggerAction = Q_NULLPTR;
 
     QString createActionId(DAction *action) const;
     QVariantMap toVariantMap() const;

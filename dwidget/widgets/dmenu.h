@@ -31,9 +31,9 @@ public:
 
     DAction *actionAt(const QString &text);
 
-    void exec();
-    void exec(const QPoint & p, QAction * action = 0);
-    void show(const QPoint &pos);
+    DAction *exec();
+    DAction *exec(const QPoint & p, DAction *action = 0);
+    bool popup(const QPoint &pos, DAction *action = 0);
 
 Q_SIGNALS:
     void triggered(DAction * action);

@@ -156,7 +156,7 @@ void DTitlebar::setMenu(DMenu *menu)
 void DTitlebar::showMenu()
 {
     D_D(DTitlebar);
-    d->menu->show(d->optionButton->mapToGlobal(d->optionButton->rect().bottomLeft()));
+    d->menu->exec(d->optionButton->mapToGlobal(d->optionButton->rect().bottomLeft()));
 }
 
 void DTitlebar::setCustomWidget(QWidget *w, bool fixCenterPos)
