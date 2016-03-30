@@ -35,7 +35,7 @@ public:
     ~MainWindow();
 
 protected slots:
-    void menuItemInvoked(const QString &itemId, bool checked);
+    void menuItemInvoked(DAction *action);
 
 private:
     void initTabWidget();

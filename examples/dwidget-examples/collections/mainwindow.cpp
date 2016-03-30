@@ -56,16 +56,21 @@ MainWindow::MainWindow(DWindow *parent)
 
     this->setContentLayout(mainLayout);
 
-    dbusMenu()->addItem("testmenu1", "test menu1");
-    dbusMenu()->addItem("testmenu2", "test menu2");
+    dbusMenu()->addAction("testmenu1");
+    dbusMenu()->addAction("testmenu2");
 
-    connect(dbusMenu(), &DMenu::itemInvoked, this, &MainWindow::menuItemInvoked);
+    DMenu *menu = dbusMenu()->addMenu("menu1");
+
+    menu->addAction("menu1->action1");
+    menu->addAction("menu2->action2");
+
+    connect(dbusMenu(), &DMenu::triggered, this, &MainWindow::menuItemInvoked);
 }
 
-void MainWindow::menuItemInvoked(const QString &itemId, bool checked)
+void MainWindow::menuItemInvoked(DAction *action)
 {
-    QMessageBox::warning(this, "menu clieck", itemId + " was cliecked");
-    qDebug() << "click" << itemId << checked;
+    QMessageBox::warning(this, "menu clieck",  action->text() + ", was cliecked");
+    qDebug() << "click" << action << action->isChecked();
 }
 
 void MainWindow::initTabWidget()

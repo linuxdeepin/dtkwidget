@@ -19,7 +19,8 @@ includes.files += widgets/DTitlebar \
     widgets/DWindow \
     widgets/DMenu \
     widgets/DApplication \
-    widgets/DGraphicsDropShadowEffect
+    widgets/DGraphicsDropShadowEffect \
+    widgets/DAction
 
 QMAKE_PKGCONFIG_NAME = DTK_WIDGET
 QMAKE_PKGCONFIG_DESCRIPTION = Deepin Tool Kit UI Module
@@ -31,4 +32,3 @@ else:unix: LIBS += -L$$OUT_PWD/../dbase/ -ldtkbase
 
 INCLUDEPATH += $$PWD/../dbase
 DEPENDPATH += $$PWD/../dbase
-

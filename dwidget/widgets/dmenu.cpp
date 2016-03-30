@@ -1,4 +1,9 @@
 #include "dmenu.h"
+#include "private/dmenu_p.h"
+#include "private/daction_p.h"
+
+#include "dbusmenu.h"
+#include "dbusmenumanager.h"
 
 #include <QDBusPendingCallWatcher>
 #include <QDBusPendingReply>
@@ -7,76 +12,116 @@
 #include <QVariantMap>
 #include <QJsonDocument>
 
-#include "dbusmenu.h"
-#include "dbusmenumanager.h"
-
-#include <private/dobject_p.h>
-
 #define MenuManager_service "com.deepin.menu"
 #define MenuManager_path "/com/deepin/menu"
 
 DWIDGET_BEGIN_NAMESPACE
 
-DMenuItem::DMenuItem(DMenu *parent) : DMenuItem("Undefined", "Undefined", parent)
+DMenuPrivate::DMenuPrivate(DMenu *qq)
+    : DObjectPrivate(qq)
 {
+
 }
 
-DMenuItem::DMenuItem(const QString &itemID, const QString &itemText, DMenu *parent) : QObject(parent)
+QString DMenuPrivate::createActionId(DAction *action) const
 {
-    m_itemID    = itemID;
-    m_itemText  = itemText;
-    m_isActive  = true;
-    m_checked   = false;
-    m_itemSubMenu = nullptr;
+    if(parent)
+        return parent->d_func()->createActionId(action);
+
+    if(actionToId.contains(action))
+        return actionToId.value(action);
+
+    QString id = QString::number(actionId++);
+
+    actionToId[action] = id;
+
+    return id;
 }
 
-const QVariantMap DMenuItem::toVariantMap() const
+QVariantMap DMenuPrivate::toVariantMap() const
 {
-    QVariantMap menuItem;
-    menuItem["itemId"]              = m_itemID;
-    menuItem["itemIcon"]            = m_itemIcon;
-    menuItem["itemIconHover"]       = m_itemIconHover;
-    menuItem["itemIconInactive"]    = m_itemIconInactive;
-    menuItem["itemText"]            = m_itemText;
-    menuItem["itemExtra"]           = m_itemExtra;
-    menuItem["isActive"]            = m_isActive;
-    menuItem["checked"]             = m_checked;
-    if (m_itemSubMenu) {
-        menuItem["itemSubMenu"]     = m_itemSubMenu->toVariantMap();
+    QVariantList items;
+    QVariantMap menuJsonContent;
+    QVariantMap menuMap = menuVariant;
+
+    for (DAction *action : menuActions) {
+        QVariantMap map = action->d_func()->toVariantMap();
+
+        map["itemId"] = createActionId(action);
+
+        items.push_back(map);
     }
-    return menuItem;
+
+    menuJsonContent["items"] = items;
+
+    QJsonDocument menuJsonContentDoc = QJsonDocument::fromVariant(menuJsonContent);
+    auto menuJsonContentStr = menuJsonContentDoc.toJson();
+    menuMap["menuJsonContent"] = menuJsonContentStr;
+
+    return menuMap;
 }
 
-
-class DMenuPrivate: public DObjectPrivate
+QVariantMap DMenuPrivate::toSubVariantMap() const
 {
-protected:
-    DMenuPrivate(DMenu *qq);
+    QVariantList items;
+    QVariantMap menuJsonContent;
 
-private:
-    DMenu                   *parent;
-    MenumanagerInterface    *menuManager;
-    MenuInterface           *menu;
-    QVariantMap             menuVariant;
-    QVector<DMenuItem *>    menuItems;
-    QWidget                 *attatch;
+    for (DAction *action : menuActions) {
+        QVariantMap map = action->d_func()->toVariantMap();
 
-    D_DECLARE_PUBLIC(DMenu)
-};
+        map["itemId"] = createActionId(action);
 
-DMenuPrivate::DMenuPrivate(DMenu *qq): DObjectPrivate(qq)
-{
+        items.push_back(map);
+    }
+
+    menuJsonContent["items"] = items;
+
+    return menuJsonContent;
 }
 
-DMenu::DMenu(DMenu *parent): QObject(parent), DObject(* new DMenuPrivate(this))
+void DMenuPrivate::_q_onItemInvoked(const QString &actionId, bool checked)
+{
+    DAction *action = actionToId.key(actionId);
+
+    if(!action)
+        return;
+
+    action->setChecked(checked);
+    action->trigger();
+
+    D_Q(DMenu);
+
+    Q_EMIT q->triggered(action);
+
+    if(!menuActions.contains(action)) {
+        DMenu *actionMenu = qobject_cast<DMenu*>(action->parent());
+
+        if(actionMenu) {
+            actionMenu->triggered(action);
+        }
+    }
+}
+
+void DMenuPrivate::_q_onMenuUnregistered()
+{
+    if (menuInterface) {
+        menuInterface->deleteLater();
+        menuInterface = Q_NULLPTR;
+    }
+}
+
+DMenu::DMenu(QObject *parent)
+    : QObject(parent)
+    , DObject(* new DMenuPrivate(this))
 {
     D_D(DMenu);
-    d->parent = parent;
+
     d->menuManager = new MenumanagerInterface(MenuManager_service,
             MenuManager_path,
             QDBusConnection::sessionBus(),
             this);
-    d->menu = nullptr;
+
+    d->menuInterface = Q_NULLPTR;
     d->menuVariant["x"] = 0;
     d->menuVariant["y"] = 0;
     d->menuVariant["isDockMenu"] = false;
@@ -88,53 +133,90 @@ void DMenu::attatch(QWidget *)
     D_D(DMenu);
 }
 
-void DMenu::addItem(const QString &id, const QString &text)
-{
-    addItem(new DMenuItem(id, text, this));
-}
-
-void DMenu::addItem(DMenuItem *item)
+DAction *DMenu::addAction(const QString &text)
 {
     D_D(DMenu);
-    d->menuItems.push_back(item);
+
+    DAction *action = new DAction(text, this);
+
+    d->menuActions << action;
+
+    return action;
 }
 
-DMenuItem *DMenu::getItem(const QString &itemID)
+DAction *DMenu::addAction(const QIcon &icon, const QString &text)
 {
     D_D(DMenu);
-    for (auto item : d->menuItems) {
-        if (item->itemID() == itemID) {
-            return item;
+
+    DAction *action = new DAction(icon, text, this);
+
+    d->menuActions << action;
+
+    return action;
+}
+
+DAction *DMenu::addMenu(DMenu *menu)
+{
+    D_D(DMenu);
+
+    DAction *action = new DAction(this);
+
+    menu->d_func()->parent = this;
+    action->setMenu(menu);
+    d->menuActions << action;
+
+    return action;
+}
+
+DMenu *DMenu::addMenu(const QString &title)
+{
+    DMenu *menu = new DMenu();
+
+    DAction *action = addMenu(menu);
+
+    action->setText(title);
+
+    return menu;
+}
+
+DMenu *DMenu::addMenu(const QIcon &icon, const QString &title)
+{
+    DMenu *menu = new DMenu();
+
+    DAction *action = addMenu(menu);
+
+    action->setIcon(icon);
+    action->setText(title);
+
+    return menu;
+}
+
+DAction *DMenu::addSeparator()
+{
+    return addAction("");
+}
+
+DAction *DMenu::actionAt(const QString &text)
+{
+    D_D(DMenu);
+
+    for (DAction *action : d->menuActions) {
+        if (action->text() == text) {
+            return action;
         }
     }
-    return nullptr;
+
+    return Q_NULLPTR;
 }
 
-void DMenu::onMenuUnregistered()
+void DMenu::exec()
 {
-    D_D(DMenu);
-    if (d->menu) {
-        d->menu->deleteLater();
-        d->menu = nullptr;
-    }
+    exec(QCursor::pos());
 }
 
-const QVariantMap DMenu::toVariantMap() const
+void DMenu::exec(const QPoint &p, QAction */*action*/)
 {
-    D_DC(DMenu);
-    QVariantList items;
-    QVariantMap menuJsonContent;
-    QVariantMap menu = d->menuVariant;
-
-    for (auto item : d->menuItems) {
-        items.push_back(item->toVariantMap());
-    }
-
-    menuJsonContent["items"] = items;
-    QJsonDocument menuJsonContentDoc = QJsonDocument::fromVariant(menuJsonContent);
-    auto menuJsonContentStr = menuJsonContentDoc.toJson();
-    menu["menuJsonContent"] = menuJsonContentStr;
-    return menu;
+    show(p);
 }
 
 void DMenu::show(const QPoint &pos)
@@ -145,16 +227,15 @@ void DMenu::show(const QPoint &pos)
         return;
     }
 
-    if (d->menu) {
+    if (d->menuInterface) {
         qWarning() << "Another menu is active";
         return;
     }
     d->menuVariant["x"] = pos.x();
     d->menuVariant["y"] = pos.y();
 
-    QVariantMap content = this->toVariantMap();
-
-    QJsonDocument jsonDoc = QJsonDocument::fromVariant(toVariantMap());
+    QVariantMap content = d->toVariantMap();
+    QJsonDocument jsonDoc = QJsonDocument::fromVariant(content);
     auto menuStr = jsonDoc.toJson();
 
     QDBusPendingReply<QDBusObjectPath> reply = d->menuManager->RegisterMenu();
@@ -163,15 +244,16 @@ void DMenu::show(const QPoint &pos)
         qDebug() << "Call deepin-menu dbus failed: " << reply.error();
     }
     QString menuPath = reply.value().path();
-    d->menu = new MenuInterface(MenuManager_service, menuPath, QDBusConnection::sessionBus(), this);
-    d->menu->ShowMenu(menuStr);
+    d->menuInterface = new MenuInterface(MenuManager_service, menuPath, QDBusConnection::sessionBus(), this);
+    d->menuInterface->ShowMenu(menuStr);
 
-    connect(d->menu, &MenuInterface::MenuUnregistered,
-            this, &DMenu::onMenuUnregistered);
+    connect(d->menuInterface, SIGNAL(MenuUnregistered()),
+            this, SLOT(_q_onMenuUnregistered()));
 
-    connect(d->menu, &MenuInterface::ItemInvoked,
-            this, &DMenu::itemInvoked);
-
+    connect(d->menuInterface, SIGNAL(ItemInvoked(QString,bool)),
+            this, SLOT(_q_onItemInvoked(QString,bool)));
 }
+
+#include "moc_dmenu.cpp"
 
 DWIDGET_END_NAMESPACE

@@ -33,6 +33,8 @@ HEADERS += \
     $$PWD/dtextedit_p.h \
     $$PWD/dapplication_p.h \
     $$PWD/dwidget_p.h \
+    $$PWD/daction_p.h \
+    $$PWD/dmenu_p.h
 
 SOURCES += \
     $$PWD/dthemehelper.cpp
