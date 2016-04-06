@@ -791,7 +791,7 @@ void DX11Widget::setTitlebarMenu(DMenu *menu)
 void DX11Widget::setTitlebarWidget(QWidget *w, bool fixCenterPos)
 {
     D_D(DX11Widget);
-    d->titlebar->setCustomWidget(w, fixCenterPos);
+    d->titlebar->setCustomWidget(w, Qt::AlignCenter, fixCenterPos);
 }
 
 QLayout *DX11Widget::layout() const

@@ -82,6 +82,7 @@ void DTitlebarPrivate::init()
     buttonAreaLayout->addWidget(closeButton);
     buttonArea->setLayout(buttonAreaLayout);
 
+
     QHBoxLayout *titleAreaLayout = new QHBoxLayout;
     titleAreaLayout->setMargin(0);
     titleAreaLayout->setSpacing(0);
@@ -139,6 +140,7 @@ void DTitlebar::setWindowFlags(Qt::WindowFlags type)
     d->maxButton->setVisible(type & Qt::WindowMaximizeButtonHint);
     d->optionButton->setVisible(type & Qt::WindowSystemMenuHint);
     d->buttonArea->adjustSize();
+    d->buttonArea->setFixedSize(d->buttonArea->size());
     d->titlePadding->setFixedSize(d->buttonArea->size());
 }
 
@@ -161,6 +163,12 @@ void DTitlebar::showMenu()
 
 void DTitlebar::setCustomWidget(QWidget *w, bool fixCenterPos)
 {
+    setCustomWidget(w, Qt::AlignCenter, fixCenterPos);
+}
+
+
+void DTitlebar::setCustomWidget(QWidget *w, Qt::AlignmentFlag wflag, bool fixCenterPos)
+{
     D_D(DTitlebar);
     if (!w || w == d->titleArea) {
         return;
@@ -179,7 +187,7 @@ void DTitlebar::setCustomWidget(QWidget *w, bool fixCenterPos)
     }
 
     l->addWidget(w);
-    l->setAlignment(w, Qt::AlignCenter);
+    l->setAlignment(w, wflag);
     qDeleteAll(d->coustomAtea->children());
     d->coustomAtea->setLayout(l);
     d->buttonArea->setFixedSize(old);

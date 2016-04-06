@@ -21,6 +21,7 @@ public:
 
     void setMenu(DMenu*);
     void setCustomWidget(QWidget *, bool fixCenterPos = false);
+    void setCustomWidget(QWidget *, Qt::AlignmentFlag flag = Qt::AlignCenter, bool fixCenterPos = false);
     void setWindowFlags(Qt::WindowFlags type);
     int buttonAreaWidth() const;
 signals:
