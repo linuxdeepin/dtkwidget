@@ -138,6 +138,7 @@ void DTitlebar::setWindowFlags(Qt::WindowFlags type)
     d->iconLabel->setVisible(type & Qt::WindowTitleHint);
     d->minButton->setVisible(type & Qt::WindowMinimizeButtonHint);
     d->maxButton->setVisible(type & Qt::WindowMaximizeButtonHint);
+    d->closeButton->setVisible(type & Qt::WindowCloseButtonHint);
     d->optionButton->setVisible(type & Qt::WindowSystemMenuHint);
     d->buttonArea->adjustSize();
     d->buttonArea->setFixedSize(d->buttonArea->size());

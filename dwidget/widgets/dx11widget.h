@@ -22,6 +22,7 @@ public:
     Q_PROPERTY(int shadowWidth READ shadowWidth WRITE setShadowWidth)
     Q_PROPERTY(int border READ border WRITE setBorder)
     Q_PROPERTY(int titlebarHeight READ titlebarHeight WRITE setTitlebarFixedHeight)
+    Q_PROPERTY(QPixmap backgroundImage READ backgroundImage WRITE setBackgroundImage)
 
     Qt::WindowFlags windowFlags();
     void setWindowFlags(Qt::WindowFlags type);
@@ -45,6 +46,9 @@ public:
 
     int border() const;
     void setBorder(int b);
+
+    const QPixmap &backgroundImage() const;
+    void setBackgroundImage(const QPixmap &);
 
     void setContentsMargins(int left, int top, int right, int bottom);
     void setContentsMargins(const QMargins &margins);

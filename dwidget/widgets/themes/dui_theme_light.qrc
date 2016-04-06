@@ -33,6 +33,7 @@
         <file>light/DWindowMaxButton.theme</file>
         <file>light/DWindowCloseButton.theme</file>
         <file>light/DWindow.theme</file>
+        <file>light/dialogs/DDialog.theme</file>
     </qresource>
     <qresource prefix="/images">
         <file>light/images/arrow_down_hover.png</file>
@@ -111,5 +112,16 @@
         <file>light/images/window_max_press.png</file>
         <file>light/images/window_max_normal.png</file>
         <file>light/images/window_max_hover.png</file>
+        <file>light/dialogs/images/light_minimise_small_hover.png</file>
+        <file>light/dialogs/images/light_minimise_small_press.png</file>
+        <file>light/dialogs/images/light_minimise_small_normal.png</file>
+        <file>light/dialogs/images/light_close_small_normal.png</file>
+        <file>light/dialogs/images/light_check.png</file>
+        <file>light/dialogs/images/check_focus.png</file>
+        <file>light/dialogs/images/light_close_small_hover.png</file>
+        <file>light/dialogs/images/light_close_small_press.png</file>
+        <file>light/dialogs/images/light_check_checked.png</file>
+        <file>light/dialogs/images/light_check_checked_hover.png</file>
+        <file>light/dialogs/images/user-trash-full.png</file>
     </qresource>
 </RCC>
