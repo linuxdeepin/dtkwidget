@@ -105,6 +105,7 @@ void DTitlebarPrivate::init()
 
     mainLayout->addWidget(coustomAtea);
     mainLayout->addWidget(buttonArea);
+    mainLayout->setAlignment(buttonArea, Qt::AlignRight |  Qt::AlignVCenter);
 
     q->setLayout(mainLayout);
     q->setFixedHeight(DefaultTitlebarHeight);
@@ -123,7 +124,11 @@ DTitlebar::DTitlebar(QWidget *parent) :
     QWidget(parent),
     DObject(*new DTitlebarPrivate(this))
 {
-    d_func()->init();
+    D_D(DTitlebar);
+    d->init();
+    d->buttonArea->adjustSize();
+    d->buttonArea->resize(d->buttonArea->size());
+    d->titlePadding->setFixedSize(d->buttonArea->size());
 }
 
 ///
@@ -141,7 +146,7 @@ void DTitlebar::setWindowFlags(Qt::WindowFlags type)
     d->closeButton->setVisible(type & Qt::WindowCloseButtonHint);
     d->optionButton->setVisible(type & Qt::WindowSystemMenuHint);
     d->buttonArea->adjustSize();
-    d->buttonArea->setFixedSize(d->buttonArea->size());
+    d->buttonArea->resize(d->buttonArea->size());
     d->titlePadding->setFixedSize(d->buttonArea->size());
 }
 
@@ -191,7 +196,7 @@ void DTitlebar::setCustomWidget(QWidget *w, Qt::AlignmentFlag wflag, bool fixCen
     l->setAlignment(w, wflag);
     qDeleteAll(d->coustomAtea->children());
     d->coustomAtea->setLayout(l);
-    d->buttonArea->setFixedSize(old);
+    d->buttonArea->resize(old);
 }
 
 void DTitlebar::setFixedHeight(int h)
