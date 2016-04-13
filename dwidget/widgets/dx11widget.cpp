@@ -5,6 +5,8 @@
 #include <QWidget>
 #include <QMouseEvent>
 #include <QLayout>
+#include <QTemporaryFile>
+#include <QImage>
 
 #include <DObjectPrivate>
 #include <DGraphicsDropShadowEffect>
@@ -642,8 +644,6 @@ DX11Widget::DX11Widget(DObjectPrivate &dd, QWidget *parent)
 
     setWindowFlags(windowFlags());
 
-//    resize(size());
-
     setShadow();
     XUtils::SetWindowExtents(this, WindowGlowRadius);
     DX11Widget::adjustSize();
@@ -862,7 +862,43 @@ const QPixmap &DX11Widget::backgroundImage() const
 void DX11Widget::setBackgroundImage(const QPixmap &bk)
 {
     D_D(DX11Widget);
-    d->m_Background = bk;
+
+    QImage bkImage = bk.toImage();
+    QPixmap maskPixmap(bkImage.size());
+    maskPixmap.fill(Qt::transparent);
+    QPainterPath path;
+    path.addRoundRect(QRectF(0, 0, bkImage.width(), bkImage.height()), 2);
+    QPainter bkPainter(&maskPixmap);
+    bkPainter.setRenderHint(QPainter::Antialiasing);
+    bkPainter.setPen(QPen(Qt::black, 1));
+    bkPainter.fillPath(path, QBrush(Qt::red));
+
+    QImage maskImage = maskPixmap.toImage();
+    int nDepth = bkImage.depth();
+    int nWidth = maskImage.width();
+    int nHeight = maskImage.height();
+    switch (nDepth) {
+    case 32:
+        for (int y = 0; y < nHeight; ++y) {
+            quint32 *pMaskData = (quint32 *)(maskImage.scanLine(y));
+            quint32 *pWaveData = (quint32 *)(bkImage.scanLine(y));
+            quint32 alpha;
+            for (int x = 0; x < nWidth; ++x) {
+                alpha = (pMaskData[x] >> 24) << 24 | 0x00FFFFFF;
+                pMaskData[x] = pWaveData[x] & (alpha);
+            }
+        }
+        break;
+    default:
+        break;
+    }
+
+    // TODO: fixme , only export as png file can work
+    QTemporaryFile bkTmp;
+    maskImage.save(&bkTmp, "png");
+    bkTmp.close();
+
+    d->m_Background = QPixmap(bkTmp.fileName());
 }
 
 void DX11Widget::setFixedSize(const QSize &size)
