@@ -8,9 +8,7 @@ CONFIG += c++11
 
 unix{
     QT += x11extras dbus
-
     CONFIG += link_pkgconfig
-    PKGCONFIG += x11
 }
 
 SOURCES += main.cpp\
