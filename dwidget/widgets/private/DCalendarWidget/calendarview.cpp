@@ -104,6 +104,7 @@ void CalendarView::setCurrentDate(const QDate &date)
         m_days[i] = date.addDays(i - currentIndex);
 
     setSelectedCell(currentIndex);
+    update();
 }
 
 void CalendarView::setLunarVisible(bool visible)
@@ -139,6 +140,14 @@ void CalendarView::setCellSelectable(bool selectable)
     m_cellSelectable = selectable;
 
     emit cellSelectableChanged(m_cellSelectable);
+}
+
+void CalendarView::paintEvent(QPaintEvent *e)
+{
+    for (QWidget *w : m_cellList)
+        w->update();
+
+    QWidget::paintEvent(e);
 }
 
 int CalendarView::getDateIndex(const QDate &date) const

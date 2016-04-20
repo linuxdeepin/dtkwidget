@@ -64,6 +64,9 @@ public slots:
     void setLunarFestivalHighlight(bool highlight);
     void setCellSelectable(bool selectable);
 
+protected:
+    void paintEvent(QPaintEvent *e);
+
 private:
     int getDateIndex(const QDate &date) const;
     const QString getCellDayNum(int pos);

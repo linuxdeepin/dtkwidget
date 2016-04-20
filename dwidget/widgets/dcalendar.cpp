@@ -211,6 +211,8 @@ bool DCalendar::eventFilter(QObject *o, QEvent *e)
             m_viewInnerWidget->setGeometry(0, 0, m_viewSize.width() * 2, m_viewSize.height());
         else
             m_viewInnerWidget->setGeometry(-m_viewSize.width(), 0, m_viewSize.width() * 2, m_viewSize.height());
+
+        m_viewInnerWidget->update();
     }
 
     return false;
@@ -218,7 +220,10 @@ bool DCalendar::eventFilter(QObject *o, QEvent *e)
 
 void DCalendar::showEvent(QShowEvent *)
 {
-    updateCurrentDate();
+    m_viewSize = m_viewOuterWidget->size();
+
+//    updateCurrentDate();
+    m_viewInnerWidget->update();
 }
 
 void DCalendar::viewDateChanged(const QDate &date, const CaLunarDayInfo &lunarInfo)
