@@ -144,8 +144,8 @@ void CalendarView::setCellSelectable(bool selectable)
 
 void CalendarView::paintEvent(QPaintEvent *e)
 {
-    for (QWidget *w : m_cellList)
-        w->update();
+//    for (QWidget *w : m_cellList)
+//        w->update();
 
     QWidget::paintEvent(e);
 }

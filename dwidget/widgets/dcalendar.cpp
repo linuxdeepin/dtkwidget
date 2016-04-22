@@ -108,6 +108,7 @@ DCalendar::DCalendar(QWidget *parent) : QWidget(parent)
     mainLayout->addSpacing(10);
     mainLayout->addWidget(m_viewOuterWidget);
 
+    connect(m_animation, &QPropertyAnimation::finished, m_viewInnerWidget, static_cast<void (QWidget::*)()>(&QWidget::update));
     connect(m_viewLeft, &CalendarView::dateSelected, this, &DCalendar::viewDateChanged, Qt::QueuedConnection);
     connect(m_viewRight, &CalendarView::dateSelected, this, &DCalendar::viewDateChanged, Qt::QueuedConnection);
     connect(m_resetBtn, &DLinkButton::clicked, [this] {selectDate(m_currentDate);});
@@ -211,8 +212,6 @@ bool DCalendar::eventFilter(QObject *o, QEvent *e)
             m_viewInnerWidget->setGeometry(0, 0, m_viewSize.width() * 2, m_viewSize.height());
         else
             m_viewInnerWidget->setGeometry(-m_viewSize.width(), 0, m_viewSize.width() * 2, m_viewSize.height());
-
-        m_viewInnerWidget->update();
     }
 
     return false;
@@ -231,7 +230,6 @@ void DCalendar::viewDateChanged(const QDate &date, const CaLunarDayInfo &lunarIn
 //    qDebug() << date << lunarInfo;
     if (sender() != m_viewCurrent)
         return;
-
 
     QString detail;
     detail = QString(tr("%1%2").arg(lunarInfo.mLunarMonthName)
