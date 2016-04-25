@@ -45,6 +45,9 @@ QVariantMap DMenuPrivate::toVariantMap() const
     QVariantMap menuMap = menuVariant;
 
     for (DAction *action : menuActions) {
+        if (action->menu())
+            action->menu()->d_func()->parent = const_cast<DMenu*>(q_func());
+
         QVariantMap map = action->d_func()->toVariantMap();
 
         map["itemId"] = createActionId(action);
@@ -252,6 +255,7 @@ bool DMenu::popup(const QPoint &pos, DAction */*action*/)
         qWarning() << "Another menu is active";
         return false;
     }
+
     d->menuVariant["x"] = pos.x();
     d->menuVariant["y"] = pos.y();
 

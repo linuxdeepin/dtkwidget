@@ -16,7 +16,7 @@ class LIBDTKWIDGETSHARED_EXPORT DMenu:  public QObject, public DObject
     Q_OBJECT
 
 public:
-    DMenu(QObject *parent = nullptr);
+    explicit DMenu(QObject *parent = Q_NULLPTR);
 
     void attatch(QWidget *);
 
@@ -44,6 +44,7 @@ private:
     Q_PRIVATE_SLOT(d_func(), void _q_onMenuUnregistered())
     Q_PRIVATE_SLOT(d_func(), void _q_onItemInvoked(const QString &, bool))
     D_DECLARE_PRIVATE(DMenu)
+    Q_DISABLE_COPY(DMenu)
 };
 
 DWIDGET_END_NAMESPACE
