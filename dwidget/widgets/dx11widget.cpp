@@ -596,7 +596,7 @@ void DX11WidgetPrivate::init()
     m_Border = WindowsBorder;
     m_MousePressed = false;
     m_Shadow = nullptr;
-
+    m_backgroundColor = BackgroundTopColor;
     rootLayout = new QVBoxLayout;
     rootLayout->setMargin(0);
     rootLayout->setSpacing(0);
@@ -836,6 +836,24 @@ void DX11Widget::setShadowWidth(int r)
     d->m_Radius = r;
 }
 
+QColor DX11Widget::backgroundColor() const
+{
+    D_DC(DX11Widget);
+
+    return d->m_backgroundColor;
+}
+
+void DX11Widget::setBackgroundColor(QColor backgroundColor)
+{
+    D_D(DX11Widget);
+
+    if (d->m_backgroundColor == backgroundColor) {
+        return;
+    }
+
+    d->m_backgroundColor = backgroundColor;
+    emit backgroundColorChanged(backgroundColor);
+}
 
 int DX11Widget::border() const
 {
@@ -996,14 +1014,14 @@ void DX11Widget::paintEvent(QPaintEvent */*e*/)
         border.addRoundedRect(rect, radius, radius);
 
         QLinearGradient linearGradient(topLeft, QPoint(topLeft.x(), bottomRight.y()));
-        linearGradient.setColorAt(0.0, BackgroundTopColor);
-        linearGradient.setColorAt(0.2, BackgroundBottonColor);
-        linearGradient.setColorAt(1.0, BackgroundBottonColor);
+        linearGradient.setColorAt(0.0, d->m_backgroundColor);
+        linearGradient.setColorAt(0.2, d->m_backgroundColor);
+        linearGradient.setColorAt(1.0, d->m_backgroundColor);
 
         QPen borderPen(BorderColor);
         painter.setBrush(QBrush(linearGradient));
         painter.strokePath(border, borderPen);
-        painter.fillPath(border, palette().background());
+        painter.fillPath(border, /*palette().background()*/QBrush(linearGradient));
     }
 }
 
