@@ -44,6 +44,7 @@ public:
     DTitlebar           *titlebar;
     QWidget             *contentWidget;
     DGraphicsGlowEffect *m_Shadow;
+    QColor              m_backgroundColor;
 };
 
 

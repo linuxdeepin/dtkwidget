@@ -23,6 +23,7 @@ public:
     Q_PROPERTY(int border READ border WRITE setBorder)
     Q_PROPERTY(int titlebarHeight READ titlebarHeight WRITE setTitlebarFixedHeight)
     Q_PROPERTY(QPixmap backgroundImage READ backgroundImage WRITE setBackgroundImage)
+    Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged)
 
     Qt::WindowFlags windowFlags();
     void setWindowFlags(Qt::WindowFlags type);
@@ -66,6 +67,8 @@ public:
 
     void adjustSize();
 
+    QColor backgroundColor() const;
+
 protected:
     void mouseMoveEvent(QMouseEvent *) Q_DECL_OVERRIDE;
     void mousePressEvent(QMouseEvent *) Q_DECL_OVERRIDE;
@@ -81,11 +84,13 @@ public slots:
     void showFullScreen();
     void showNormal();
 
+    void setBackgroundColor(QColor backgroundColor);
 protected:
     void setShadow();
 
 Q_SIGNALS:
     void optionClicked();
+    void backgroundColorChanged(QColor backgroundColor);
 
 private:
 
