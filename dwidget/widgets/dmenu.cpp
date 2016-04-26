@@ -208,9 +208,9 @@ DAction *DMenu::addSeparator()
     return addAction("");
 }
 
-DAction *DMenu::actionAt(const QString &text)
+DAction *DMenu::actionAt(const QString &text) const
 {
-    D_D(DMenu);
+    D_DC(DMenu);
 
     for (DAction *action : d->menuActions) {
         if (action->text() == text) {
@@ -219,6 +219,20 @@ DAction *DMenu::actionAt(const QString &text)
     }
 
     return Q_NULLPTR;
+}
+
+DAction *DMenu::actionAt(int index) const
+{
+    D_DC(DMenu);
+
+    return d->menuActions.value(index);
+}
+
+QList<DAction *> DMenu::actionList() const
+{
+    D_DC(DMenu);
+
+    return d->menuActions;
 }
 
 DAction *DMenu::exec()
