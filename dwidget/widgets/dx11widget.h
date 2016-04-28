@@ -67,6 +67,8 @@ public:
 
     void adjustSize();
 
+    const QSize size() const ;
+
     QColor backgroundColor() const;
 
 protected:

@@ -970,6 +970,12 @@ void DX11Widget::adjustSize()
     }
 }
 
+const QSize DX11Widget::size() const
+{
+    D_DC(DX11Widget);
+    return QSize(d->contentWidget->size().width(), d->contentWidget->size().height()/* + titlebarHeight()*/);
+}
+
 void DX11Widget::showEvent(QShowEvent *e)
 {
     D_D(DX11Widget);
@@ -1004,11 +1010,11 @@ void DX11Widget::paintEvent(QPaintEvent */*e*/)
 {
     D_D(DX11Widget);
     int radius = d->m_Radius;
-    int glowRadius = d->m_ShadowWidth;
+    int windowExtern = d->m_ShadowWidth + d->m_Border;
 
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-    QRect rect = this->rect().marginsRemoved(QMargins(glowRadius, glowRadius, glowRadius, glowRadius));
+    QRect rect = this->rect().marginsRemoved(QMargins(windowExtern, windowExtern, windowExtern, windowExtern));
 
     if (! d->m_Background.isNull()) {
         painter.drawPixmap(rect, d->m_Background);
