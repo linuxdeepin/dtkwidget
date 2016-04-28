@@ -12,7 +12,7 @@
 
 #include <QListWidget>
 #include <QPushButton>
-#include "libdui_global.h"
+#include "dwidget_global.h"
 
 class QButtonGroup;
 class QLabel;

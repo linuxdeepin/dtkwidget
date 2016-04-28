@@ -15,7 +15,7 @@
 #include <QLineEdit>
 #include <QPropertyAnimation>
 
-#include "libdui_global.h"
+#include "dwidget_global.h"
 #include "dimagebutton.h"
 
 DWIDGET_BEGIN_NAMESPACE

@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <dobject.h>
-#include <libdui_global.h>
+#include <dwidget_global.h>
 
 #include "dwidget.h"
 #include <DMenu>
@@ -17,7 +17,7 @@ class LIBDTKWIDGETSHARED_EXPORT DWindow : public DWidget
 {
     Q_OBJECT
 public:
-    explicit DWindow(DWidget *parent = 0);
+    explicit DWindow(QWidget *parent = 0);
 
     DMenu *dbusMenu();
 

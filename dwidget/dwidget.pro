@@ -12,9 +12,9 @@ unix{
     QT += x11extras dbus
 }
 
-HEADERS += libdui_global.h
+HEADERS += dwidget_global.h
 includes.path = $${DTK_INCLUDEPATH}/DWidget
-includes.files += libdui_global.h widgets/*.h
+includes.files += dwidget_global.h widgets/*.h
 includes.files += widgets/DTitlebar \
     widgets/DWindow \
     widgets/DMenu \

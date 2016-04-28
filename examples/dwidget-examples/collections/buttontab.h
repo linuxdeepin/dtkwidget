@@ -13,7 +13,7 @@
 #include <QWidget>
 #include <QLabel>
 
-#include "libdui_global.h"
+#include "dwidget_global.h"
 #include "dtextbutton.h"
 #include "dimagebutton.h"
 #include "dheaderline.h"

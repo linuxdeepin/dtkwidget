@@ -10,7 +10,7 @@
 #ifndef DCIRCLEPROGRESS_H
 #define DCIRCLEPROGRESS_H
 
-#include "libdui_global.h"
+#include "dwidget_global.h"
 #include "dthememanager.h"
 #include "dobject.h"
 

@@ -17,7 +17,7 @@
 #include <QSize>
 #include <QPropertyAnimation>
 
-#include "libdui_global.h"
+#include "dwidget_global.h"
 #include "dlinkbutton.h"
 #include "dimagebutton.h"
 

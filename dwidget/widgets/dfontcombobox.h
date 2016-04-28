@@ -20,7 +20,7 @@
 #include <QCursor>
 #include <QColor>
 
-#include "libdui_global.h"
+#include "dwidget_global.h"
 #include "dcombobox.h"
 #include "dcomboboxmodel.h"
 #include "dabstractcomboboxdelegate.h"

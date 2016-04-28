@@ -22,7 +22,7 @@
 #include <QEasingCurve>
 #include <QDebug>
 
-#include "libdui_global.h"
+#include "dwidget_global.h"
 #include "dobject.h"
 
 DWIDGET_BEGIN_NAMESPACE

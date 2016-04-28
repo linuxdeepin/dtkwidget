@@ -20,7 +20,7 @@
 #include <QTimer>
 #include <QDebug>
 
-#include "libdui_global.h"
+#include "dwidget_global.h"
 #include "dthememanager.h"
 #include "dgraphicsgloweffect.h"
 

@@ -9,7 +9,7 @@
 
 
 #include "doptionlist.h"
-#include "libdui_global.h"
+#include "dwidget_global.h"
 #include "dthememanager.h"
 #include "private/doptionlist_p.h"
 

@@ -14,7 +14,7 @@
 #include <QLabel>
 #include <QHBoxLayout>
 
-#include "libdui_global.h"
+#include "dwidget_global.h"
 #include "dconstants.h"
 
 DWIDGET_BEGIN_NAMESPACE

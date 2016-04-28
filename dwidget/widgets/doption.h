@@ -10,7 +10,7 @@
 #ifndef DOPTION_H
 #define DOPTION_H
 
-#include "libdui_global.h"
+#include "dwidget_global.h"
 #include "dobject.h"
 
 #include <QFrame>

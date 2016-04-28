@@ -14,7 +14,7 @@
 
 #include "dslider.h"
 #include "dthememanager.h"
-#include "libdui_global.h"
+#include "dwidget_global.h"
 #include "dswitchbutton.h"
 #include "segmentedcontrol.h"
 #include "dcolorpicker.h"

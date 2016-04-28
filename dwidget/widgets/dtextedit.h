@@ -1,7 +1,7 @@
 #ifndef DTEXTEDIT_H
 #define DTEXTEDIT_H
 
-#include "libdui_global.h"
+#include "dwidget_global.h"
 
 #include <dobject.h>
 

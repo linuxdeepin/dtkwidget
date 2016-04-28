@@ -12,7 +12,7 @@
 
 #include <QWidget>
 
-#include "libdui_global.h"
+#include "dwidget_global.h"
 #include "dbaseexpand.h"
 #include "darrowbutton.h"
 #include "dbaseline.h"

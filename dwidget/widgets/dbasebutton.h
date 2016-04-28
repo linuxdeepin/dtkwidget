@@ -13,7 +13,7 @@
 #include <QFrame>
 #include <QHBoxLayout>
 #include <QPushButton>
-#include "libdui_global.h"
+#include "dwidget_global.h"
 
 DWIDGET_BEGIN_NAMESPACE
 

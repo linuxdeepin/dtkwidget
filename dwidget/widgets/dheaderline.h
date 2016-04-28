@@ -13,7 +13,7 @@
 #include <QWidget>
 #include <QLabel>
 
-#include "libdui_global.h"
+#include "dwidget_global.h"
 #include "dbaseline.h"
 
 DWIDGET_BEGIN_NAMESPACE

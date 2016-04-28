@@ -2,7 +2,7 @@
 #define DACTION_H
 
 #include <DObject>
-#include <libdui_global.h>
+#include <dwidget_global.h>
 
 #include <QAction>
 

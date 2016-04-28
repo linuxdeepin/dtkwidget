@@ -21,7 +21,7 @@
 #include <QModelIndex>
 #include <QColor>
 
-#include "libdui_global.h"
+#include "dwidget_global.h"
 #include "dcomboboxmodel.h"
 #include "dcombobox.h"
 #include "dabstractcomboboxdelegate.h"

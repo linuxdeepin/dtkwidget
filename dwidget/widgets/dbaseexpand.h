@@ -15,7 +15,7 @@
 #include <QVBoxLayout>
 #include <QPropertyAnimation>
 
-#include "libdui_global.h"
+#include "dwidget_global.h"
 #include "dseparatorhorizontal.h"
 #include "dconstants.h"
 

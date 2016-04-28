@@ -14,7 +14,7 @@
 #include <QPushButton>
 #include <QResizeEvent>
 
-#include "libdui_global.h"
+#include "dwidget_global.h"
 #include "dconstants.h"
 #include "dimagebutton.h"
 

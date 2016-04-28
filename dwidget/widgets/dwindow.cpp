@@ -22,7 +22,7 @@ DWindowPrivate::DWindowPrivate(DWindow *q): DWidgetPrivate(q)
 
 }
 
-DWindow::DWindow(DWidget *parent): DWidget(*(new DWindowPrivate(this)), parent)
+DWindow::DWindow(QWidget *parent): DWidget(*(new DWindowPrivate(this)), parent)
 {
     D_D(DWindow);
     d->dbusMenu = new DMenu;

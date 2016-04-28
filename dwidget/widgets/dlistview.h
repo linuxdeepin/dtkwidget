@@ -10,7 +10,7 @@
 #ifndef DLISTVIEW_H
 #define DLISTVIEW_H
 
-#include "libdui_global.h"
+#include "dwidget_global.h"
 
 #include <dobject.h>
 

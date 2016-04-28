@@ -18,7 +18,7 @@
 #include <QAbstractItemView>
 #include <QPointer>
 
-#include "libdui_global.h"
+#include "dwidget_global.h"
 #include "dobject.h"
 #include "dconstants.h"
 #include "dcomboboxmodel.h"

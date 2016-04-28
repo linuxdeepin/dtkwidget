@@ -17,7 +17,7 @@
 #include <QState>
 #include <QDebug>
 
-#include "libdui_global.h"
+#include "dwidget_global.h"
 #include "dconstants.h"
 
 DWIDGET_BEGIN_NAMESPACE

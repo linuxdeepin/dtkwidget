@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <dobject.h>
-#include <libdui_global.h>
+#include <dwidget_global.h>
 
 
 #include <dx11widget.h>

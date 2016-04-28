@@ -10,7 +10,7 @@
 #ifndef DSCROLLAREA_P_H
 #define DSCROLLAREA_P_H
 
-#include "libdui_global.h"
+#include "dwidget_global.h"
 #include "dscrollarea.h"
 
 #include <private/dobject_p.h>

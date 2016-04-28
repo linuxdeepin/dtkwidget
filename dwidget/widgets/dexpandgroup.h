@@ -14,7 +14,7 @@
 #include <QList>
 #include <QMap>
 
-#include "libdui_global.h"
+#include "dwidget_global.h"
 #include "dbaseexpand.h"
 
 DWIDGET_BEGIN_NAMESPACE

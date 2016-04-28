@@ -10,7 +10,7 @@
 #ifndef BUTTON_CONSTANTS_H
 #define BUTTON_CONSTANTS_H
 
-#include "libdui_global.h"
+#include "dwidget_global.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
