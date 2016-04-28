@@ -14,7 +14,9 @@
 #include "dwidget.h"
 
 class QVBoxLayout;
-class DGraphicsGlowEffect;
+
+class QGraphicsDropShadowEffect;
+
 class DX11Widget;
 
 DWIDGET_BEGIN_NAMESPACE
@@ -43,8 +45,9 @@ public:
     QVBoxLayout         *rootLayout;
     DTitlebar           *titlebar;
     QWidget             *contentWidget;
-    DGraphicsGlowEffect *m_Shadow;
     QColor              m_backgroundColor;
+
+    QGraphicsDropShadowEffect *m_Shadow;
 };
 
 

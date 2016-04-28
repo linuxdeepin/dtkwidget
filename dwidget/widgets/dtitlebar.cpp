@@ -66,12 +66,13 @@ void DTitlebarPrivate::init()
     titleArea       = new QWidget;
     titlePadding    = new QWidget;
 
-    mainLayout->setContentsMargins(10, 7, 10, 0);
+    mainLayout->setContentsMargins(5, 2, 5, 0);
     mainLayout->setSpacing(0);
 
     titleLabel->setText(qApp->applicationName());
     // TODO: use QSS
-    titleLabel->setStyleSheet("font-size: 14px");
+    titleLabel->setStyleSheet("font-size: 14px;");
+//    q->setStyleSheet("background-color: green;");
 
     QHBoxLayout *buttonAreaLayout = new QHBoxLayout;
     buttonAreaLayout->setMargin(0);
@@ -81,7 +82,6 @@ void DTitlebarPrivate::init()
     buttonAreaLayout->addWidget(maxButton);
     buttonAreaLayout->addWidget(closeButton);
     buttonArea->setLayout(buttonAreaLayout);
-
 
     QHBoxLayout *titleAreaLayout = new QHBoxLayout;
     titleAreaLayout->setMargin(0);

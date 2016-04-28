@@ -8,6 +8,10 @@
 #include <QTemporaryFile>
 #include <QImage>
 
+
+#include <QGraphicsDropShadowEffect>
+#include <QGraphicsEffect>
+
 #include <DObjectPrivate>
 #include <DGraphicsDropShadowEffect>
 #include <DTitlebar>
@@ -566,14 +570,15 @@ void DisableResize(QWidget *w)
 }
 DWIDGET_BEGIN_NAMESPACE
 
-const int WindowGlowRadius = 8;
+const int WindowGlowRadius = 40;
 const int WindowsRadius = 4;
-const int WindowsBorder = 0;
+const int WindowsBorder = 1;
 
-const QColor BorderColor = QColor(216, 216, 216);
-const QColor ShadowColor = QColor(23, 23, 23, 128);
-const QColor BackgroundTopColor = QColor(250, 251, 252);
-const QColor BackgroundBottonColor = QColor(250, 251, 252);
+const QColor BorderColor = QColor(0, 0, 0, 60);
+const QColor ShadowColor = QColor(0, 0, 0, 40);
+const QColor BackgroundTopColor = QColor(255, 255, 255);
+const QColor BackgroundBottonColor = QColor(255, 255, 255);
+
 const QColor TipsBorderColor = QColor(255, 255, 255, 255 * 0.2);
 const QColor TipsBackground = QColor(0, 0, 0);
 
@@ -598,7 +603,7 @@ void DX11WidgetPrivate::init()
     m_Shadow = nullptr;
     m_backgroundColor = BackgroundTopColor;
     rootLayout = new QVBoxLayout;
-    rootLayout->setMargin(0);
+    rootLayout->setMargin(WindowGlowRadius);
     rootLayout->setSpacing(0);
 
     titlebar = new DTitlebar;
@@ -988,9 +993,9 @@ void DX11Widget::closeEvent(QCloseEvent *e)
 void DX11Widget::setShadow()
 {
     D_D(DX11Widget);
-
-    d->m_Shadow = new DGraphicsGlowEffect(this);
-    d->m_Shadow->setOffset(0, 0);
+    d->m_Shadow = new QGraphicsDropShadowEffect(this);
+    d->m_Shadow->setColor(ShadowColor);
+    d->m_Shadow->setOffset(0, 10);
     d->m_Shadow->setBlurRadius(d->m_ShadowWidth);
     this->setGraphicsEffect(d->m_Shadow);
 }
@@ -998,8 +1003,8 @@ void DX11Widget::setShadow()
 void DX11Widget::paintEvent(QPaintEvent */*e*/)
 {
     D_D(DX11Widget);
-    int glowRadius = d->m_ShadowWidth;
     int radius = d->m_Radius;
+    int glowRadius = d->m_ShadowWidth;
 
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
