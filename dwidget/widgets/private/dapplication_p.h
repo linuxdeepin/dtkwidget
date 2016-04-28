@@ -28,11 +28,19 @@ public:
     QString theme() const;
     void setTheme(const QString & theme);
 
+#ifdef Q_OS_UNIX
+    QString currentStartupAppId() const;
+    void setCurrentStartupAppId(const QString &currentStartupAppId);
+#endif
+
     bool setSingleInstance(const QString &key);
 
 public:
 //    int m_pidLockFD = 0;
     QLocalServer *m_localServer = nullptr;
+#ifdef Q_OS_UNIX
+    QString m_currentStartupAppId = "";
+#endif
 };
 
 DWIDGET_END_NAMESPACE

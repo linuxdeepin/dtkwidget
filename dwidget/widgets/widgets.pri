@@ -1,6 +1,10 @@
 include(private/private.pri)
 include(dialogs.pri)
 
+unix {
+    include(startupnotifications/startupnotifications.pri)
+}
+
 unix{
     HEADERS += \
         $$PWD/dcalendar.h
