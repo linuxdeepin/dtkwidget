@@ -30,12 +30,13 @@ DApplicationPrivate::DApplicationPrivate(DApplication *q) :
 #ifdef Q_OS_UNIX
     StartupNotificationMonitor *monitor = StartupNotificationMonitor::instance();
     QObject::connect(monitor, &StartupNotificationMonitor::appStartup, [this, q](const QString id){
-        setCurrentStartupAppId(id);
+        m_monitoredStartupApps.append(id);
         q->setOverrideCursor(Qt::WaitCursor);
     });
     QObject::connect(monitor, &StartupNotificationMonitor::appStartupCompleted, [this, q](const QString id){
-        if (currentStartupAppId() == id) {
-            q->restoreOverrideCursor();
+        m_monitoredStartupApps.removeAll(id);
+        if (m_monitoredStartupApps.isEmpty()) {
+            q->setOverrideCursor(Qt::ArrowCursor);
         }
     });
 #endif
@@ -81,18 +82,6 @@ bool DApplicationPrivate::setSingleInstance(const QString &key)
 
     return m_localServer->listen(key);
 }
-
-#ifdef Q_OS_UNIX
-QString DApplicationPrivate::currentStartupAppId() const
-{
-    return m_currentStartupAppId;
-}
-
-void DApplicationPrivate::setCurrentStartupAppId(const QString &currentStartupAppId)
-{
-    m_currentStartupAppId = currentStartupAppId;
-}
-#endif
 
 DApplication::DApplication(int &argc, char **argv) :
     QApplication(argc, argv),
