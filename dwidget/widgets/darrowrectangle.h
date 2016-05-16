@@ -91,6 +91,7 @@ protected:
     void paintEvent(QPaintEvent *);
 
 private:
+    const QRect currentScreenRect(const int x, const int y);
     QPainterPath getLeftCornerPath();
     QPainterPath getRightCornerPath();
     QPainterPath getTopCornerPath();

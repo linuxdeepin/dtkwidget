@@ -14,6 +14,7 @@
 #include <QtX11Extras/QX11Info>
 #endif
 #include <QApplication>
+#include <QScreen>
 
 DWIDGET_USE_NAMESPACE
 
@@ -170,6 +171,14 @@ void DArrowRectangle::paintEvent(QPaintEvent *)
     strokePen.setWidth(m_borderWidth);
     painter.strokePath(border, strokePen);
 }
+
+const QRect DArrowRectangle::currentScreenRect(const int x, const int y)
+{
+    for (QScreen *screen : qApp->screens())
+        if (screen->geometry().contains(x, y))
+            return screen->geometry();
+}
+
 qreal DArrowRectangle::shadowYOffset() const
 {
     return m_shadowYOffset;
@@ -443,7 +452,7 @@ QPainterPath DArrowRectangle::getBottomCornerPath()
 
 void DArrowRectangle::verticalMove(int x, int y)
 {
-    QRect dRect = QApplication::desktop()->geometry();
+    const QRect dRect = currentScreenRect(x, y);
     qreal delta = shadowBlurRadius() - shadowDistance();
 
     int lRelativeY = y - dRect.y() - (height() - delta) / 2;
@@ -479,7 +488,7 @@ void DArrowRectangle::verticalMove(int x, int y)
 
 void DArrowRectangle::horizontalMove(int x, int y)
 {
-    QRect dRect = QApplication::desktop()->geometry();
+    const QRect dRect = currentScreenRect(x, y);
     qreal delta = shadowBlurRadius() - shadowDistance();
 
     int lRelativeX = x - dRect.x() - (width() - delta) / 2;
