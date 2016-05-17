@@ -38,7 +38,7 @@ DSwitchLineExpand::DSwitchLineExpand(QWidget *parent) :
     m_headerLine = new SwitchHeaderLine(this);
     m_headerLine->setExpand(expand());
     connect(m_headerLine, &SwitchHeaderLine::mousePress, [=]{
-        setExpand(!expand());
+        DBaseExpand::setExpand(!expand());
     });
     setHeader(m_headerLine);
 }
@@ -52,7 +52,6 @@ void DSwitchLineExpand::setExpand(bool value)
 {
     //Header's arrow direction change here
     m_headerLine->setExpand(value);
-    DBaseExpand::setExpand(value);
 }
 
 DBaseLine *DSwitchLineExpand::header()
