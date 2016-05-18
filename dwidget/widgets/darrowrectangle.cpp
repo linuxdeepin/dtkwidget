@@ -498,7 +498,7 @@ void DArrowRectangle::horizontalMove(int x, int y)
     if (lRelativeX < 0)//out of screen in left side
     {
         //arrowX use relative coordinates
-        setArrowX(width() / 2 - delta + lRelativeX);
+        setArrowX((width() - delta) / 2 + lRelativeX);
         absoluteX = dRect.x() - delta;
     }
     else if(rRelativeX > 0)//out of screen in right side
@@ -507,7 +507,9 @@ void DArrowRectangle::horizontalMove(int x, int y)
         absoluteX = dRect.x() + dRect.width() - width() + delta;
     }
     else
+    {
         absoluteX = x - width() / 2;
+    }
 
     switch (m_arrowDirection)
     {
