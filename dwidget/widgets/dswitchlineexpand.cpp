@@ -18,7 +18,7 @@ SwitchHeaderLine::SwitchHeaderLine(QWidget *parent) :
     DHeaderLine(parent)
 {
     m_switchButton = new DSwitchButton(this);
-    connect(m_switchButton, &DSwitchButton::checkedChanged, this, &SwitchHeaderLine::mousePress);
+    connect(m_switchButton, &DSwitchButton::checkedChanged, this, &SwitchHeaderLine::checkedChanged);
     setContent(m_switchButton);
 }
 
@@ -29,7 +29,8 @@ void SwitchHeaderLine::setExpand(bool value)
 
 void SwitchHeaderLine::mousePressEvent(QMouseEvent *)
 {
-    emit mousePress();
+    m_switchButton->setChecked(!m_switchButton->checked());
+//    emit mousePress();
 }
 
 DSwitchLineExpand::DSwitchLineExpand(QWidget *parent) :
@@ -37,8 +38,8 @@ DSwitchLineExpand::DSwitchLineExpand(QWidget *parent) :
 {
     m_headerLine = new SwitchHeaderLine(this);
     m_headerLine->setExpand(expand());
-    connect(m_headerLine, &SwitchHeaderLine::mousePress, [=]{
-        DBaseExpand::setExpand(!expand());
+    connect(m_headerLine, &SwitchHeaderLine::checkedChanged, [ = ](bool arg) {
+        DBaseExpand::setExpand(arg);
     });
     setHeader(m_headerLine);
 }

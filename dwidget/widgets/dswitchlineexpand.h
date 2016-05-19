@@ -27,7 +27,7 @@ public:
     void setExpand(bool value);
 
 signals:
-    void mousePress();
+    void checkedChanged(bool arg);
 
 protected:
     void mousePressEvent(QMouseEvent *);
