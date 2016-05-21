@@ -6,6 +6,8 @@ TARGET = collections
 TEMPLATE = app
 CONFIG += c++11
 
+DEFINES += QT_MESSAGELOGCONTEXT
+
 unix{
     QT += x11extras dbus
     CONFIG += link_pkgconfig
@@ -64,3 +66,11 @@ else:unix: LIBS += -L$$OUT_PWD/../../../dwidget/ -ldtkwidget
 INCLUDEPATH += $$PWD/../../../dwidget
 INCLUDEPATH += $$PWD/../../../dwidget/widgets
 DEPENDPATH += $$PWD/../../../dwidget
+
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../../dutil/release/ -ldtkutil
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../../dutil/debug/ -ldtkutil
+else:unix: LIBS += -L$$OUT_PWD/../../../dutil/ -ldtkutil
+
+INCLUDEPATH += $$PWD/../../../dutil
+INCLUDEPATH += $$PWD/../../../dutil/dlog
+DEPENDPATH += $$PWD/../../../dutil

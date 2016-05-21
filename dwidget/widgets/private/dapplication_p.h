@@ -13,7 +13,8 @@
 #include "private/dobject_p.h"
 #include "dapplication.h"
 
-#include <QLocalServer>
+class QLocalServer;
+class QTranslator;
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -26,12 +27,13 @@ public:
     ~DApplicationPrivate();
 
     QString theme() const;
-    void setTheme(const QString & theme);
+    void setTheme(const QString &theme);
 
     bool setSingleInstance(const QString &key);
 
 public:
 //    int m_pidLockFD = 0;
+    QTranslator *m_translator     = nullptr;
     QLocalServer *m_localServer = nullptr;
 #ifdef Q_OS_UNIX
     QStringList m_monitoredStartupApps;

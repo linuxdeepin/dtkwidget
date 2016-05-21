@@ -34,3 +34,5 @@ else:unix: LIBS += -L$$OUT_PWD/../dbase/ -ldtkbase
 
 INCLUDEPATH += $$PWD/../dbase
 DEPENDPATH += $$PWD/../dbase
+INCLUDEPATH += $$PWD/../dutil
+DEPENDPATH += $$PWD/../dutil

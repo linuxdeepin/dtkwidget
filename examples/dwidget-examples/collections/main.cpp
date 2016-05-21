@@ -12,6 +12,7 @@
 #include "dapplication.h"
 
 #include <QDebug>
+#include <DLog>
 
 DWIDGET_USE_NAMESPACE
 
@@ -19,8 +20,11 @@ int main(int argc, char *argv[])
 {
     DApplication a(argc, argv);
     a.setTheme("dark");
-    if (!a.setSingleInstance("libdui-examples"))
+    Dtk::Util::DLogManager::registerConsoleAppender();
+
+    if (!a.setSingleInstance("libdui-examples")) {
         qDebug() << "another instance is running!!";
+    }
 
     MainWindow w;
 

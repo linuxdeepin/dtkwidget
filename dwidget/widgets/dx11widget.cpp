@@ -314,9 +314,6 @@ QLayout *DX11Widget::layout() const
 void DX11Widget::setLayout(QLayout *l)
 {
     D_D(DX11Widget);
-    const auto filter = new FilterMouseMove(this);
-    qDebug() << l->widget();
-    l->installEventFilter(filter);
 
     qDeleteAll(d->contentWidget->children());
     d->contentWidget->setLayout(l);

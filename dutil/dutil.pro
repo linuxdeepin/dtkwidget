@@ -9,10 +9,13 @@ TARGET = dtkutil
 DEFINES += LIBDTKUTIL_LIBRARY
 
 HEADERS += \
-    dutil_global.h
+    dutil_global.h \
+    dpathbuf.h
 
 includes.path = $${DTK_INCLUDEPATH}/DUtil
 includes.files += \
+    $$PWD/DPathBuf \
+    $$PWD/dpathbuf.h \
     $$PWD/dutil_global.h \
     $$PWD/dlog/DLog \
     $$PWD/dlog/CuteLogger_global.h \

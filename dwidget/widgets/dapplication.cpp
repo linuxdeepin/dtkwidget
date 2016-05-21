@@ -8,7 +8,11 @@
  **/
 
 #include <QDebug>
+#include <QDir>
 #include <QLocalSocket>
+#include <QStandardPaths>
+#include <QTranslator>
+#include <QLocalServer>
 
 #include "dapplication.h"
 #include "dthememanager.h"
@@ -19,8 +23,9 @@
 #include "startupnotificationmonitor.h"
 #endif
 
-//#include <sys/file.h>
-//#include <unistd.h>
+#include <DPathBuf>
+
+DUTIL_USE_NAMESPACE
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -29,23 +34,25 @@ DApplicationPrivate::DApplicationPrivate(DApplication *q) :
 {
 #ifdef Q_OS_UNIX
     StartupNotificationMonitor *monitor = StartupNotificationMonitor::instance();
-    QObject::connect(monitor, &StartupNotificationMonitor::appStartup, [this, q](const QString id){
+    QObject::connect(monitor, &StartupNotificationMonitor::appStartup, [this, q](const QString id) {
         m_monitoredStartupApps.append(id);
         q->setOverrideCursor(Qt::WaitCursor);
     });
-    QObject::connect(monitor, &StartupNotificationMonitor::appStartupCompleted, [this, q](const QString id){
+    QObject::connect(monitor, &StartupNotificationMonitor::appStartupCompleted, [this, q](const QString id) {
         m_monitoredStartupApps.removeAll(id);
         if (m_monitoredStartupApps.isEmpty()) {
             q->setOverrideCursor(Qt::ArrowCursor);
         }
     });
 #endif
+    m_translator = new QTranslator(q);
 }
 
 DApplicationPrivate::~DApplicationPrivate()
 {
-    if (m_localServer)
+    if (m_localServer) {
         m_localServer->close();
+    }
 }
 
 QString DApplicationPrivate::theme() const
@@ -63,8 +70,9 @@ bool DApplicationPrivate::setSingleInstance(const QString &key)
 {
     D_Q(DApplication);
 
-    if (m_localServer)
+    if (m_localServer) {
         return m_localServer->isListening();
+    }
 
     QLocalSocket *localSocket = new QLocalSocket;
     localSocket->connectToServer(key);
@@ -73,8 +81,9 @@ bool DApplicationPrivate::setSingleInstance(const QString &key)
     bool result = localSocket->waitForConnected(1000);
     localSocket->deleteLater();
 
-    if (result)
+    if (result) {
         return false;
+    }
 
     // create local server
     m_localServer = new QLocalServer(q);
@@ -96,7 +105,7 @@ QString DApplication::theme() const
     return d->theme();
 }
 
-void DApplication::setTheme(const QString & theme)
+void DApplication::setTheme(const QString &theme)
 {
     D_D(DApplication);
 
@@ -108,6 +117,47 @@ bool DApplication::setSingleInstance(const QString &key)
     D_D(DApplication);
 
     return d->setSingleInstance(key);
+}
+
+//! load translate file form system or application data path;
+/*!
+  \param localeFallback, a list of fallback locale you want load.
+  \return load success
+*/
+bool DApplication::loadTranslator(QList<QLocale> localeFallback)
+{
+    D_D(DApplication);
+
+    QList<DPathBuf> translateDirs;
+    auto appName = applicationName();
+
+    //("/home/user/.local/share", "/usr/local/share", "/usr/share")
+    auto dataDirs = QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation);
+    for (const auto &path : dataDirs) {
+        DPathBuf DPathBuf(path);
+        translateDirs << DPathBuf / appName / "translations";
+    }
+
+    DPathBuf runDir(this->applicationDirPath());
+    translateDirs << runDir.join("translations");
+
+    DPathBuf currentDir(QDir::currentPath());
+    translateDirs << currentDir.join("translations");
+
+    for (auto &locale : localeFallback) {
+        QString translateFilename = QString("%1_%2").arg(appName).arg(locale.name());
+        for (auto &path : translateDirs) {
+            QString translatePath = (path / translateFilename).toString();
+            if (QFile::exists(translatePath + ".qm")) {
+                qDebug() << "load translate" << translatePath;
+                d->m_translator->load(translatePath);
+                this->installTranslator(d->m_translator);
+                return true;
+            }
+        }
+    }
+    qWarning() << "load translate failed" << "can not find qm files";
+    return false;
 }
 
 DWIDGET_END_NAMESPACE

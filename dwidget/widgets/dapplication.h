@@ -30,6 +30,7 @@ public:
     void setTheme(const QString &theme);
 
     bool setSingleInstance(const QString &key);
+    bool loadTranslator(QList<QLocale> localeFallback = QList<QLocale>() << QLocale::system());
 };
 
 DWIDGET_END_NAMESPACE
