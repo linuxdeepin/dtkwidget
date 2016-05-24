@@ -225,4 +225,15 @@ int DTitlebar::buttonAreaWidth() const
     return d->buttonArea->width();
 }
 
+void DTitlebar::mouseMoveEvent(QMouseEvent */*event*/)
+{
+    emit mouseMoving();
+}
+
+void DTitlebar::mouseDoubleClickEvent(QMouseEvent */*event*/)
+{
+    emit doubleClicked();
+}
+
+
 DWIDGET_END_NAMESPACE

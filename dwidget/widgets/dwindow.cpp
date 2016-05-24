@@ -3,7 +3,7 @@
 #include <QHBoxLayout>
 #include <DMenu>
 #include <DTitlebar>
-
+#include <QDebug>
 #include <private/dwidget_p.h>
 
 DWIDGET_BEGIN_NAMESPACE
@@ -14,8 +14,8 @@ class DWindowPrivate: public DWidgetPrivate
 
 public:
     explicit DWindowPrivate(DWindow *q);
-    DMenu       *dbusMenu   = nullptr;
-    QWidget     *parent     = nullptr;
+    DMenu   *dbusMenu   = nullptr;
+    QWidget *m_parent   = nullptr;
 };
 
 DWindowPrivate::DWindowPrivate(DWindow *q): DWidgetPrivate(q)
@@ -26,23 +26,25 @@ DWindowPrivate::DWindowPrivate(DWindow *q): DWidgetPrivate(q)
 DWindow::DWindow(QWidget *parent): DWidget(*(new DWindowPrivate(this)))
 {
     D_D(DWindow);
+
     setParent(parent);
     d->dbusMenu = new DMenu;
     d->dbusMenu->attatch(this);
     setTitlebarMenu(d->dbusMenu);
+
 }
 
 void DWindow::setParent(QWidget *parent)
 {
     D_D(DWindow);
-    d->parent = parent;
+    d->m_parent = parent;
     QObject::setParent(parent);
 }
 
 QWidget *DWindow::parentWidget() const
 {
     D_DC(DWindow);
-    return d->parent;
+    return d->m_parent;
 }
 
 DMenu *DWindow::dbusMenu()

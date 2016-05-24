@@ -12,6 +12,7 @@
 
 #include "private/dobject_p.h"
 #include "dwidget.h"
+#include "../../platforms/x11/xutil.h"
 
 class QVBoxLayout;
 
@@ -30,6 +31,7 @@ public:
     void init();
 
     QSize externSize(const QSize &size) const;
+    QMargins externMargins() const;
     bool leftPressed;
     bool resizable;
 
@@ -40,14 +42,16 @@ public:
     bool                m_MousePressed;
     QPoint              m_LastMousePos;
     Qt::WindowFlags     dwindowFlags;
-
-    QPixmap             m_Background;
-    QVBoxLayout         *rootLayout;
-    DTitlebar           *titlebar;
-    QWidget             *contentWidget;
     QColor              m_backgroundColor;
 
-    QGraphicsDropShadowEffect *m_Shadow;
+    QPixmap             m_Background;
+    QWidget             *windowWidget     = nullptr;
+    QVBoxLayout         *rootLayout     = nullptr;
+    DTitlebar           *titlebar       = nullptr;
+    QWidget             *contentWidget  = nullptr;
+    QGraphicsDropShadowEffect *m_Shadow = nullptr;
+
+    XUtils::CornerEdge resizingCornerEdge = XUtils::CornerEdge::kInvalid;
 };
 
 

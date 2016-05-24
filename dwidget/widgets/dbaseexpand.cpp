@@ -19,7 +19,7 @@ DBaseExpand::DBaseExpand(QWidget *parent) : QWidget(parent)
 {
     D_THEME_INIT_WIDGET(DBaseExpand);
 
-    QVBoxLayout * mainLayout = new QVBoxLayout(this);
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
     mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->setSpacing(0);
 
@@ -61,7 +61,8 @@ DBaseExpand::DBaseExpand(QWidget *parent) : QWidget(parent)
     setLayout(mainLayout);
 
     connect(m_boxWidget, &DBoxWidget::sizeChanged, this, [this] {
-        if (m_expand) {
+        if (m_expand)
+        {
             int endHeight = 0;
             endHeight = m_boxWidget->height();
 
@@ -75,20 +76,25 @@ DBaseExpand::DBaseExpand(QWidget *parent) : QWidget(parent)
 
 DBaseExpand::~DBaseExpand()
 {
-    if (m_headerLayout)
+    if (m_headerLayout) {
         m_headerLayout->deleteLater();
-    if (m_contentLayout)
+    }
+    if (m_contentLayout) {
         m_contentLayout->deleteLater();
-    if (m_contentLoader)
+    }
+    if (m_contentLoader) {
         m_contentLoader->deleteLater();
-    if (m_animation)
+    }
+    if (m_animation) {
         m_animation->deleteLater();
+    }
 }
 
 void DBaseExpand::setHeader(QWidget *header)
 {
-    if (!header)
+    if (!header) {
         return;
+    }
 
     QLayoutItem *child;
     while ((child = m_headerLayout->takeAt(0)) != 0) {
@@ -101,8 +107,9 @@ void DBaseExpand::setHeader(QWidget *header)
 
 void DBaseExpand::setContent(QWidget *content, Qt::Alignment alignment)
 {
-    if (!content)
+    if (!content) {
         return;
+    }
 
     QLayoutItem *child;
     while ((child = m_contentLayout->takeAt(0)) != 0) {
@@ -116,25 +123,24 @@ void DBaseExpand::setContent(QWidget *content, Qt::Alignment alignment)
 
 void DBaseExpand::setHeaderHeight(int height)
 {
-    if (m_header)
+    if (m_header) {
         m_header->setFixedHeight(height);
+    }
 }
 
 void DBaseExpand::setExpand(bool value)
 {
-    if(m_expand == value)
+    if (m_expand == value) {
         return;
+    }
 
     m_expand = value;
     emit expandChange(value);
 
-    if (value)
-    {
+    if (value) {
         m_animation->setStartValue(0);
         m_animation->setEndValue(m_boxWidget->height());
-    }
-    else
-    {
+    } else {
         m_animation->setStartValue(m_boxWidget->height());
         m_animation->setEndValue(0);
     }
@@ -165,10 +171,10 @@ void DBaseExpand::setSeparatorVisible(bool arg)
 
 void DBaseExpand::setExpandedSeparatorVisible(bool arg)
 {
-    if(arg){
+    if (arg) {
         connect(this, &DBaseExpand::expandChange, m_bottom_separator, &DSeparatorHorizontal::setVisible);
         m_bottom_separator->show();
-    }else{
+    } else {
         disconnect(this, &DBaseExpand::expandChange, m_bottom_separator, &DSeparatorHorizontal::setVisible);
         m_bottom_separator->hide();
     }

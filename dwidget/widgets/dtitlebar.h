@@ -19,22 +19,28 @@ class LIBDTKWIDGETSHARED_EXPORT DTitlebar : public QWidget , public DObject
 public:
     explicit DTitlebar(QWidget *parent = 0);
 
-    void setMenu(DMenu*);
+    void setMenu(DMenu *);
     void setCustomWidget(QWidget *, bool fixCenterPos = false);
     void setCustomWidget(QWidget *, Qt::AlignmentFlag flag = Qt::AlignCenter, bool fixCenterPos = false);
     void setWindowFlags(Qt::WindowFlags type);
     int buttonAreaWidth() const;
+
+    void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void mouseDoubleClickEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+
 signals:
     void minimumClicked();
     void maximumClicked();
     void restoreClicked();
     void closeClicked();
     void optionClicked();
+    void doubleClicked();
+    void mouseMoving();
 
 public slots:
     void setFixedHeight(int h);
-    void setTitle(const QString& title);
-    void setIcon(const QPixmap& icon);
+    void setTitle(const QString &title);
+    void setIcon(const QPixmap &icon);
 
 private slots:
     void showMenu();

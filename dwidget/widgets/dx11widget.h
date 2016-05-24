@@ -79,12 +79,16 @@ protected:
     void paintEvent(QPaintEvent *) Q_DECL_OVERRIDE;
     void resizeEvent(QResizeEvent *) Q_DECL_OVERRIDE;
     void closeEvent(QCloseEvent *) Q_DECL_OVERRIDE;
-
+    void enterEvent(QEvent *)Q_DECL_OVERRIDE;
+    void leaveEvent(QEvent *)Q_DECL_OVERRIDE;
 public slots:
     void showMinimized();
     void showMaximized();
     void showFullScreen();
     void showNormal();
+
+    void moveWindow();
+    void toggleMaximizedWindow();
 
     void setBackgroundColor(QColor backgroundColor);
 protected:
@@ -97,6 +101,20 @@ Q_SIGNALS:
 private:
 
     D_DECLARE_PRIVATE(DX11Widget)
+};
+
+class FilterMouseMove : public QObject
+{
+    Q_OBJECT
+
+public:
+    explicit FilterMouseMove(QObject *object = nullptr);
+    ~FilterMouseMove();
+
+    bool eventFilter(QObject *obj, QEvent *event);
+
+//private:
+    QWidget *m_rootWidget = nullptr;
 };
 
 DWIDGET_END_NAMESPACE
