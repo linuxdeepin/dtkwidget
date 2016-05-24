@@ -16,6 +16,7 @@ HEADERS += dwidget_global.h
 includes.path = $${DTK_INCLUDEPATH}/DWidget
 includes.files += dwidget_global.h widgets/*.h
 includes.files += widgets/DTitlebar \
+    widgets/DAboutDialog \
     widgets/DWindow \
     widgets/DMenu \
     widgets/DApplication \
