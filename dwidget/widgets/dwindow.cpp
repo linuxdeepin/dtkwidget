@@ -14,7 +14,8 @@ class DWindowPrivate: public DWidgetPrivate
 
 public:
     explicit DWindowPrivate(DWindow *q);
-    DMenu   *dbusMenu;
+    DMenu       *dbusMenu   = nullptr;
+    QWidget     *parent     = nullptr;
 };
 
 DWindowPrivate::DWindowPrivate(DWindow *q): DWidgetPrivate(q)
@@ -22,15 +23,29 @@ DWindowPrivate::DWindowPrivate(DWindow *q): DWidgetPrivate(q)
 
 }
 
-DWindow::DWindow(QWidget *parent): DWidget(*(new DWindowPrivate(this)), parent)
+DWindow::DWindow(QWidget *parent): DWidget(*(new DWindowPrivate(this)))
 {
     D_D(DWindow);
+    setParent(parent);
     d->dbusMenu = new DMenu;
     d->dbusMenu->attatch(this);
     setTitlebarMenu(d->dbusMenu);
 }
 
-DMenu * DWindow::dbusMenu()
+void DWindow::setParent(QWidget *parent)
+{
+    D_D(DWindow);
+    d->parent = parent;
+    QObject::setParent(parent);
+}
+
+QWidget *DWindow::parentWidget() const
+{
+    D_DC(DWindow);
+    return d->parent;
+}
+
+DMenu *DWindow::dbusMenu()
 {
     D_D(DWindow);
     return d->dbusMenu;

@@ -24,6 +24,9 @@ public:
     void setContentLayout(QLayout *l);
     void setContentWidget(QWidget *w);
 
+    void setParent(QWidget *parent);
+    QWidget *parentWidget() const;
+
 protected slots:
 
 private:
