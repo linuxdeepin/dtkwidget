@@ -29,8 +29,9 @@ DAboutDialog::DAboutDialog(
     setWindowIcon(QIcon(windowIcon));
 
     QLabel *logoLabel = new QLabel("logo");
-    logoLabel->setPixmap(QPixmap(productIcon));
     logoLabel->setFixedSize(96, 96);
+    logoLabel->setPixmap(QPixmap(productIcon).scaled(logoLabel->size(), Qt::KeepAspectRatio));
+
 
     QLabel *productNameLabel = new QLabel(productName);
     productNameLabel->setStyleSheet("font-size:18px;");
