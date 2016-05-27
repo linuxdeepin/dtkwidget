@@ -69,9 +69,11 @@ void DTitlebarPrivate::init()
     mainLayout->setContentsMargins(5, 2, 5, 0);
     mainLayout->setSpacing(0);
 
+    iconLabel->setFixedSize(DefaultIconWidth, DefaultIconHeight);
     titleLabel->setText(qApp->applicationName());
     // TODO: use QSS
     titleLabel->setStyleSheet("font-size: 14px;");
+    titleLabel->setContentsMargins(0, 0, DefaultIconWidth + 10, 0);
 //    q->setStyleSheet("background-color: green;");
 
     QHBoxLayout *buttonAreaLayout = new QHBoxLayout;
@@ -94,6 +96,7 @@ void DTitlebarPrivate::init()
     titleAreaLayout->addSpacing(10);
     titleAreaLayout->addWidget(titleLabel);
     titleAreaLayout->setAlignment(titleLabel, Qt::AlignCenter);
+
     titleAreaLayout->addStretch();
     titleArea->setLayout(titleAreaLayout);
 
@@ -216,6 +219,7 @@ void DTitlebar::setTitle(const QString &title)
 void DTitlebar::setIcon(const QPixmap &icon)
 {
     D_D(DTitlebar);
+    d->titleLabel->setContentsMargins(0, 0, 0, 0);
     d->iconLabel->setPixmap(icon.scaled(DefaultIconWidth, DefaultIconHeight, Qt::KeepAspectRatio));
 }
 
