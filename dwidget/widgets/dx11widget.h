@@ -58,7 +58,7 @@ public:
 
     void setFixedSize(const QSize &);
     void setFixedSize(int w, int h);
-//    void setFixedWidth(int w);
+    void setFixedWidth(int w);
 //    void setFixedHeight(int h);
 
     void resize(const QSize &);
@@ -67,7 +67,38 @@ public:
 
     void adjustSize();
 
-    const QSize size() const ;
+    void move(int x, int y);
+    void move(const QPoint &);
+
+    QRect frameGeometry() const;
+    const QRect &geometry() const;
+    QRect normalGeometry() const;
+
+    int x() const;
+    int y() const;
+    QPoint pos() const;
+    QSize frameSize() const;
+    QSize size() const;
+    int width() const;
+    int height() const;
+    QRect rect() const;
+    QRect childrenRect() const;
+    QRegion childrenRegion() const;
+
+    QSize minimumSize() const;
+    QSize maximumSize() const;
+    int minimumWidth() const;
+    int minimumHeight() const;
+    int maximumWidth() const;
+    int maximumHeight() const;
+    void setMinimumSize(const QSize &);
+    void setMinimumSize(int minw, int minh);
+    void setMaximumSize(const QSize &);
+    void setMaximumSize(int maxw, int maxh);
+    void setMinimumWidth(int minw);
+    void setMinimumHeight(int minh);
+    void setMaximumWidth(int maxw);
+    void setMaximumHeight(int maxh);
 
     QColor backgroundColor() const;
 

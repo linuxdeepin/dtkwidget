@@ -32,6 +32,8 @@ public:
 
     QSize externSize(const QSize &size) const;
     QMargins externMargins() const;
+    int externWidth() const;
+
     bool leftPressed;
     bool resizable;
 

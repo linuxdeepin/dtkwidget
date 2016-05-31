@@ -87,9 +87,26 @@ DAboutDialog::DAboutDialog(
 
     this->setFixedWidth(420);
     this->adjustSize();
+    qDebug()<<this->size();
     this->setFixedSize(this->size());
 
     setFocus();
+}
+
+DAboutDialog::DAboutDialog(
+    const QString &windowTitle,
+    const QString &windowIcon,
+    const QString &productIcon,
+    const QString &productName,
+    const QString &version,
+    const QString &description,
+    QWidget *parent,
+    const QString &companyLogo,
+    const QString &website,
+    const QString &websiteLink)
+    : DAboutDialog(windowIcon, productIcon, productName, version, description, parent, companyLogo, website, websiteLink)
+{
+    setWindowTitle(windowTitle);
 }
 
 void DAboutDialog::focusOutEvent(QFocusEvent */*e*/)

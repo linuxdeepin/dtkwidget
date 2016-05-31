@@ -98,12 +98,18 @@ QSize DX11WidgetPrivate::externSize(const QSize &size) const
 {
     D_QC(DX11Widget);
     return QSize(size.width() + (m_ShadowWidth + m_Border) * 2,
-                 size.height() + (m_ShadowWidth + m_Border) * 2 + q->titlebarHeight());
+                 size.height() + (m_ShadowWidth + m_Border) * 2);
 }
 
 QMargins DX11WidgetPrivate::externMargins() const
 {
-    return QMargins(m_ShadowWidth, m_ShadowWidth, m_ShadowWidth, m_ShadowWidth);
+    return QMargins(m_ShadowWidth + m_Border, m_ShadowWidth + m_Border,
+                    m_ShadowWidth + m_Border, m_ShadowWidth + m_Border);
+}
+
+int DX11WidgetPrivate::externWidth() const
+{
+    return m_ShadowWidth + m_Border;
 }
 
 DX11Widget::DX11Widget(QWidget *parent): DX11Widget(*new DX11WidgetPrivate(this), parent)
@@ -305,6 +311,7 @@ void DX11Widget::setTitlebarWidget(QWidget *w, bool fixCenterPos)
     d->titlebar->setCustomWidget(w, Qt::AlignCenter, fixCenterPos);
 }
 
+// TODO: fix layout
 QLayout *DX11Widget::layout() const
 {
     D_DC(DX11Widget);
@@ -318,7 +325,8 @@ void DX11Widget::setLayout(QLayout *l)
     qDeleteAll(d->contentWidget->children());
     d->contentWidget->setLayout(l);
     d->contentWidget->adjustSize();
-    DX11Widget::resize(d->contentWidget->size());
+    d->windowWidget->adjustSize();
+    DX11Widget::resize(d->windowWidget->size());
 }
 
 int DX11Widget::radius() const
@@ -435,11 +443,11 @@ void DX11Widget::setFixedSize(const QSize &size)
 {
     D_D(DX11Widget);
     d->resizable = false;
-    d->titlebar->setMinimumWidth(size.width() + d->m_Border * 2);
-    d->contentWidget->setFixedSize(size);
+    d->titlebar->setMinimumWidth(size.width());
+    d->windowWidget->setFixedSize(size);
+    d->contentWidget->setFixedSize(size.width(), size.height() - titlebarHeight());
     QSize externSize = d->externSize(size);
-    QWidget::resize(externSize);
-    QWidget::setMaximumSize(externSize);
+    QWidget::setFixedSize(externSize);
     setWindowFlags(windowFlags() & ~ Qt::WindowMaximizeButtonHint);
 
     XUtils::DisableResize(this);
@@ -450,10 +458,18 @@ void DX11Widget::setFixedSize(int w, int h)
     DX11Widget::setFixedSize(QSize(w, h));
 }
 
+void DX11Widget::setFixedWidth(int w)
+{
+    D_D(DX11Widget);
+    d->titlebar->setFixedWidth(w);
+    d->windowWidget->setFixedWidth(w);
+    QWidget::setFixedWidth(w + d->m_ShadowWidth + d->m_Border);
+}
+
 void DX11Widget::resize(const QSize &size)
 {
     D_D(DX11Widget);
-    d->contentWidget->resize(size);
+    d->windowWidget->resize(size);
     QSize externSize = d->externSize(size);
     if (d->resizable) {
         QWidget::setMinimumSize(externSize);
@@ -466,8 +482,8 @@ void DX11Widget::resize(const QSize &size)
 void DX11Widget::adjustSize()
 {
     D_D(DX11Widget);
-    d->contentWidget->adjustSize();
-    QSize externSize = d->externSize(d->contentWidget->size());
+    d->windowWidget->adjustSize();
+    QSize externSize = d->externSize(d->windowWidget->size());
     if (d->resizable) {
         QWidget::setMinimumSize(externSize);
         QWidget::resize(externSize);
@@ -477,10 +493,96 @@ void DX11Widget::adjustSize()
     }
 }
 
-const QSize DX11Widget::size() const
+QSize DX11Widget::size() const
 {
     D_DC(DX11Widget);
-    return QSize(d->contentWidget->size().width(), d->contentWidget->size().height()/* + titlebarHeight()*/);
+    return d->windowWidget->size();
+//    return QSize(d->contentWidget->size().width(), d->contentWidget->size().height()/* + titlebarHeight()*/);
+}
+
+
+void DX11Widget::move(int x, int y)
+{
+    D_D(DX11Widget);
+    qDebug() << "move to " << x << y;
+    QWidget::move(x - d->externWidth(), y - d->externWidth());
+}
+
+void DX11Widget::move(const QPoint &p)
+{
+    DX11Widget::move(p.x(), p.y());
+}
+
+QRect DX11Widget::frameGeometry() const
+{
+    D_DC(DX11Widget);
+    return d->windowWidget->frameGeometry();
+}
+
+const QRect &DX11Widget::geometry() const
+{
+    D_DC(DX11Widget);
+    return d->windowWidget->geometry();
+}
+
+QRect DX11Widget::normalGeometry() const
+{
+    D_DC(DX11Widget);
+    return d->windowWidget->normalGeometry();
+}
+
+int DX11Widget::x() const
+{
+    D_DC(DX11Widget);
+    return d->windowWidget->x();
+}
+
+int DX11Widget::y() const
+{
+    D_DC(DX11Widget);
+    return d->windowWidget->y();
+}
+
+QPoint DX11Widget::pos() const
+{
+    D_DC(DX11Widget);
+    return d->windowWidget->pos();
+}
+
+QSize DX11Widget::frameSize() const
+{
+    D_DC(DX11Widget);
+    return d->windowWidget->frameSize();
+}
+
+int DX11Widget::width() const
+{
+    D_DC(DX11Widget);
+    return d->windowWidget->width();
+}
+
+int DX11Widget::height() const
+{
+    D_DC(DX11Widget);
+    return d->windowWidget->height();
+}
+
+inline QRect DX11Widget::rect() const
+{
+    D_DC(DX11Widget);
+    return d->windowWidget->rect();
+}
+
+QRect DX11Widget::childrenRect() const
+{
+    D_DC(DX11Widget);
+    return d->windowWidget->childrenRect();
+}
+
+QRegion DX11Widget::childrenRegion() const
+{
+    D_DC(DX11Widget);
+    return d->windowWidget->childrenRegion();
 }
 
 void DX11Widget::showEvent(QShowEvent *e)
@@ -517,19 +619,22 @@ void DX11Widget::paintEvent(QPaintEvent */*e*/)
 {
     D_D(DX11Widget);
     int radius = d->m_Radius;
+    //. TODO: border not  part of window?
     int windowExtern = d->m_ShadowWidth + d->m_Border;
+    int contentExtern = d->m_ShadowWidth + d->m_Border;
 
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-    QRect rect = this->rect().marginsRemoved(QMargins(windowExtern, windowExtern, windowExtern, windowExtern));
+    QRect contentRect = QWidget::rect().marginsRemoved(QMargins(contentExtern, contentExtern, contentExtern, contentExtern));
+    QRect windowRect = QWidget::rect().marginsRemoved(QMargins(windowExtern, windowExtern, windowExtern, windowExtern));
 
     if (! d->m_Background.isNull()) {
-        painter.drawPixmap(rect, d->m_Background);
+        painter.drawPixmap(contentRect, d->m_Background);
     } else {
-        QPoint topLeft(rect.x(), rect.y());
-        QPoint bottomRight(rect.x() + rect.width(), rect.y() + rect.height());
+        QPoint topLeft(windowRect.x(), windowRect.y());
+        QPoint bottomRight(windowRect.x() + windowRect.width(), windowRect.y() + windowRect.height());
         QPainterPath border;
-        border.addRoundedRect(rect, radius, radius);
+        border.addRoundedRect(windowRect, radius, radius);
 
         QLinearGradient linearGradient(topLeft, QPoint(topLeft.x(), bottomRight.y()));
         linearGradient.setColorAt(0.0, d->m_backgroundColor);

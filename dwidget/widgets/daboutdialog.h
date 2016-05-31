@@ -19,6 +19,18 @@ public:
         const QString &website = "www.deepin.org",
         const QString &websiteLink = "https://www.deepin.org");
 
+    DAboutDialog(
+        const QString &windowTitle,
+        const QString &windowIcon,
+        const QString &productIcon,
+        const QString &productName,
+        const QString &version,
+        const QString &description,
+        QWidget *parent = nullptr,
+        const QString &companyLogo = ":/images/deepin-logo.png",
+        const QString &website = "www.deepin.org",
+        const QString &websiteLink = "https://www.deepin.org");
+
 protected:
     void focusOutEvent(QFocusEvent *event) Q_DECL_OVERRIDE;
 
