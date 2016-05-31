@@ -40,7 +40,7 @@ bool UpdateCursorShape(QWidget *widget, int x, int y, const QMargins &margins, i
 bool IsCornerEdget(QWidget *widget, int x, int y, const QMargins &margins, int border_width);
 void MoveResizeWindow(QWidget *widget, int x, int y, const QMargins &margins, int border_width);
 
-void StartResizing(QWidget *w, const QPoint& globalPoint, const CornerEdge& ce);
+void StartResizing(QWidget *w, const QPoint &globalPoint, const CornerEdge &ce);
 void SendMoveResizeMessage(QWidget *widget, int action, int button);
 void MoveWindow(QWidget *widget);
 
@@ -54,7 +54,7 @@ void ToggleMaximizedWindow(QWidget *widget);
 void SkipTaskbarPager(QWidget *widget);
 void SetStayOnTop(QWidget *widget, bool on);
 void SetMouseTransparent(QWidget *widget, bool on);
-void SetWindowExtents(QWidget *widget, unsigned long WindowGlowRadius);
+void SetWindowExtents(QWidget *widget, unsigned long WindowGlowRadius, const int resizeHandlSize);
 void PropagateSizeHints(QWidget *w);
 void DisableResize(QWidget *w);
 

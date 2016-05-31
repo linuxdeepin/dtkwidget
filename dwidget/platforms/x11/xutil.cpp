@@ -434,14 +434,14 @@ void SetMouseTransparent(QWidget *widget, bool on)
                             &XRect, nRects, ShapeSet, YXBanded);
 }
 
-void SetWindowExtents(QWidget *widget, unsigned long WindowGlowRadius)
+void SetWindowExtents(QWidget *widget, unsigned long windowExtentWidth, const int resizeHandleWidth)
 {
     Atom frameExtents;
     unsigned long value[4] = {
-        WindowGlowRadius,
-        WindowGlowRadius,
-        WindowGlowRadius,
-        WindowGlowRadius
+        windowExtentWidth,
+        windowExtentWidth,
+        windowExtentWidth,
+        windowExtentWidth
     };
     frameExtents = XInternAtom(QX11Info::display(), "_GTK_FRAME_EXTENTS", False);
     if (frameExtents == None) {
@@ -456,6 +456,18 @@ void SetWindowExtents(QWidget *widget, unsigned long WindowGlowRadius)
                     PropModeReplace,
                     (unsigned char *)value,
                     4);
+
+    XRectangle contentXRect;
+    contentXRect.x = 0;
+    contentXRect.y = 0;
+    contentXRect.width = widget->width() - windowExtentWidth * 2 + resizeHandleWidth * 2;
+    contentXRect.height = widget->height() - windowExtentWidth * 2 + resizeHandleWidth * 2;
+    XShapeCombineRectangles(QX11Info::display(),
+                            widget->winId(),
+                            ShapeInput,
+                            windowExtentWidth - resizeHandleWidth,
+                            windowExtentWidth - resizeHandleWidth,
+                            &contentXRect, 1, ShapeSet, YXBanded);
 }
 
 

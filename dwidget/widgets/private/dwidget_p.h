@@ -41,6 +41,7 @@ public:
     int                 m_NormalShadowWidth;
     int                 m_Radius;
     int                 m_Border;
+    int                 m_ResizeHandleWidth;
     bool                m_MousePressed;
     QPoint              m_LastMousePos;
     Qt::WindowFlags     dwindowFlags;

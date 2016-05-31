@@ -23,9 +23,9 @@
 DWIDGET_BEGIN_NAMESPACE
 
 const int WindowGlowRadius = 40;
-const int WindowsRadius = 4;
-const int WindowsBorder = 1;
-const int WindwosHandleWidth = 10;
+const int WindowRadius = 4;
+const int WindowBorder = 1;
+const int WindowHandleWidth = 10;
 
 const QColor BorderColor = QColor(0, 0, 0, 60);
 const QColor ShadowColor = QColor(0, 0, 0, 40);
@@ -50,8 +50,9 @@ void DX11WidgetPrivate::init()
                    Qt::WindowCloseButtonHint | Qt::WindowFullscreenButtonHint;
     m_NormalShadowWidth = WindowGlowRadius;
     m_ShadowWidth = WindowGlowRadius;
-    m_Radius = WindowsRadius;
-    m_Border = WindowsBorder;
+    m_Radius = WindowRadius;
+    m_Border = WindowBorder;
+    m_ResizeHandleWidth = WindowHandleWidth;
     m_MousePressed = false;
     m_Shadow = nullptr;
     m_backgroundColor = BackgroundTopColor;
@@ -130,8 +131,8 @@ DX11Widget::DX11Widget(DObjectPrivate &dd, QWidget *parent)
     setWindowFlags(windowFlags());
 
     setShadow();
-    XUtils::SetWindowExtents(this, WindowGlowRadius);
     DX11Widget::adjustSize();
+    XUtils::SetMouseTransparent(this, true);
 }
 
 void DX11Widget::enterEvent(QEvent *e)
@@ -152,8 +153,8 @@ void DX11Widget::mouseMoveEvent(QMouseEvent *event)
 
     const int x = event->x();
     const int y = event->y();
-    if (d->resizingCornerEdge == XUtils::CornerEdge::kInvalid) {
-        XUtils::UpdateCursorShape(this, x, y, d->externMargins(), WindwosHandleWidth);
+    if (d->resizingCornerEdge == XUtils::CornerEdge::kInvalid && d->resizable) {
+        XUtils::UpdateCursorShape(this, x, y, d->externMargins(), d->m_ResizeHandleWidth);
     }
 
     return QWidget::mouseMoveEvent(event);
@@ -166,7 +167,7 @@ void DX11Widget::mousePressEvent(QMouseEvent *event)
     const int x = event->x();
     const int y = event->y();
     if (event->button() == Qt::LeftButton) {
-        const XUtils::CornerEdge ce = XUtils::GetCornerEdge(this, x, y, d->externMargins(), WindwosHandleWidth);
+        const XUtils::CornerEdge ce = XUtils::GetCornerEdge(this, x, y, d->externMargins(), d->m_ResizeHandleWidth);
         if (ce != XUtils::CornerEdge::kInvalid) {
             d->resizingCornerEdge = ce;
             XUtils::StartResizing(this, QCursor::pos(), ce);
@@ -497,14 +498,12 @@ QSize DX11Widget::size() const
 {
     D_DC(DX11Widget);
     return d->windowWidget->size();
-//    return QSize(d->contentWidget->size().width(), d->contentWidget->size().height()/* + titlebarHeight()*/);
 }
 
 
 void DX11Widget::move(int x, int y)
 {
     D_D(DX11Widget);
-    qDebug() << "move to " << x << y;
     QWidget::move(x - d->externWidth(), y - d->externWidth());
 }
 
@@ -594,9 +593,8 @@ void DX11Widget::showEvent(QShowEvent *e)
 void DX11Widget::resizeEvent(QResizeEvent *e)
 {
     D_D(DX11Widget);
-    if (!d->resizable) {
-        return;
-    }
+    int resizeHandleWidth = d->resizable ? d->m_ResizeHandleWidth : 0;
+    XUtils::SetWindowExtents(this, d->externWidth(), resizeHandleWidth);
     QWidget::resizeEvent(e);
 }
 

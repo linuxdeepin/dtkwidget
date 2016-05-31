@@ -106,7 +106,7 @@ DAboutDialog::DAboutDialog(
     const QString &websiteLink)
     : DAboutDialog(windowIcon, productIcon, productName, version, description, parent, companyLogo, website, websiteLink)
 {
-    setWindowTitle(windowTitle);
+    setTitle(windowTitle);
 }
 
 void DAboutDialog::focusOutEvent(QFocusEvent */*e*/)
