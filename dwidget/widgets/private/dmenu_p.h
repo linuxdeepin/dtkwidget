@@ -20,8 +20,10 @@ protected:
 
 private:
     DMenu *parent = Q_NULLPTR;
+#ifdef Q_OS_LINUX
     MenumanagerInterface    *menuManager;
     MenuInterface           *menuInterface;
+#endif
     QVariantMap             menuVariant;
     QList<DAction *>    menuActions;
 

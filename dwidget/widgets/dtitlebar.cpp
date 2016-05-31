@@ -13,7 +13,7 @@
 #include "dwindowoptionbutton.h"
 #include "dlabel.h"
 
-#include <DMenu>
+#include  "dmenu.h"
 
 DWIDGET_BEGIN_NAMESPACE
 

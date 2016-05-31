@@ -21,8 +21,6 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-#include "dwindowclosebutton.h"
-
 ImageButton::ImageButton(const QString &icon, const QString text,
                          bool isNameVisible, QWidget *parent):
     QPushButton(parent),

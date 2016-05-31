@@ -8,7 +8,6 @@
  **/
 
 #pragma once
-
 #include <dtk_global.h>
 
 #include <QtCore/QMetaMethod>
@@ -30,10 +29,14 @@ namespace Widget
 }
 }
 
-#if defined(LIBDTKWIDGET_LIBRARY)
-#  define LIBDTKWIDGETSHARED_EXPORT Q_DECL_EXPORT
+#if defined(STATIC_LIB)
+    #  define LIBDTKWIDGETSHARED_EXPORT
 #else
-#  define LIBDTKWIDGETSHARED_EXPORT Q_DECL_IMPORT
+    #if defined(LIBDTKWIDGET_LIBRARY)
+    #  define LIBDTKWIDGETSHARED_EXPORT Q_DECL_EXPORT
+    #else
+    #  define LIBDTKWIDGETSHARED_EXPORT Q_DECL_IMPORT
+    #endif
 #endif
 
 #define DTKWIDGET_DECL_DEPRECATED Q_DECL_DEPRECATED

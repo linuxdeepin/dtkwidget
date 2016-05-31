@@ -26,7 +26,7 @@ DTK_BEGIN_NAMESPACE
 
 class DObjectPrivate;
 
-class DObject
+class LIBDTKBASESHARED_EXPORT DObject
 {
 protected:
     DObject(DObject * parent = nullptr);

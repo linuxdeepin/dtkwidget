@@ -23,10 +23,11 @@ QVariantMap DActionPrivate::toVariantMap() const
     menuItem["checked"]             = q->isChecked();
     menuItem["isCheckable"]         = q->isCheckable();
 
+#ifdef Q_OS_LINUX
     if (menu) {
         menuItem["itemSubMenu"]     = menu->d_func()->toSubVariantMap();
     }
-
+#endif
     return menuItem;
 }
 

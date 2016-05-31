@@ -132,11 +132,15 @@ const QVideoFrame *DCameraView::currentFrame() const
     }
 }
 
+//! 返回当前帧
+//!
 QPixmap DCameraView::capture()
 {
     return grab();
 }
 
+//! 获取视频截图
+//!
 bool DCameraView::round() const
 {
     return m_round;

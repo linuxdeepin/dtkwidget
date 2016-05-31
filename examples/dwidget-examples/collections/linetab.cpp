@@ -24,7 +24,7 @@ LineTab::LineTab(QWidget *parent) : QLabel(parent)
         DHeaderLine *headerLine = new DHeaderLine(this);
         headerLine->setFixedSize(400, 30);
         headerLine->move(20,30);
-        headerLine->setTitle("控件库");
+        headerLine->setTitle("Control Libary");
 
         //////////////////////////////////////////////////////////////--DBaseLine
         DBaseLine * baseLine = new DBaseLine(this);

@@ -1,5 +1,6 @@
 include(private/private.pri)
 include(dialogs.pri)
+include($$PWD/../platforms/platforms.pri)
 
 unix {
     include(startupnotifications/startupnotifications.pri)
@@ -11,6 +12,7 @@ unix{
 
     SOURCES += \
         $$PWD/dcalendar.cpp
+
 }
 
 HEADERS += $$PWD/dslider.h\
@@ -75,11 +77,9 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dtextedit.h \
     $$PWD/dtitlebar.h \
     $$PWD/dwidget.h \
-    $$PWD/dx11widget.h \
     $$PWD/dwindow.h \
     $$PWD/dmenu.h \
-    $$PWD/dbusmenumanager.h \
-    $$PWD/dbusmenu.h \
+    $$PWD/dx11widget.h \
     $$PWD/daction.h
 
 SOURCES += $$PWD/dslider.cpp \
@@ -142,12 +142,9 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/denhancedwidget.cpp \
     $$PWD/dtextedit.cpp \
     $$PWD/dtitlebar.cpp \
-    $$PWD/dx11widget.cpp \
     $$PWD/dwindow.cpp \
     $$PWD/dwidget.cpp \
-    $$PWD/dmenu.cpp \
-    $$PWD/dbusmenumanager.cpp \
-    $$PWD/dbusmenu.cpp \
+    $$PWD/dx11widget.cpp \
     $$PWD/daction.cpp
 
 RESOURCES += \

@@ -60,6 +60,12 @@ QString DLogManager::getlogFilePath(){
     return DLogManager::instance()->m_logPath;
 }
 
+void DLogManager::setLogFormat(const QString &format)
+{
+    //m_format = "%{time}{yyyy-MM-dd, HH:mm:ss.zzz} [%{type:-7}] [%{file:-20} %{function:-35} %{line}] %{message}\n";
+    DLogManager::instance()->m_format = format;
+}
+
 QString DLogManager::joinPath(const QString &path, const QString &fileName){
     QString separator(QDir::separator());
     return QString("%1%2%3").arg(path, separator, fileName);

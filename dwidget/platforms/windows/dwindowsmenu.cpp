@@ -1,19 +1,12 @@
-#include "dmenu.h"
+#include "dwindowsmenu.h"
 #include "private/dmenu_p.h"
 #include "private/daction_p.h"
 
-#include "dbusmenu.h"
-#include "dbusmenumanager.h"
-
-#include <QDBusPendingCallWatcher>
-#include <QDBusPendingReply>
 #include <QDebug>
 #include <QVariant>
 #include <QVariantMap>
 #include <QJsonDocument>
-
-#define MenuManager_service "com.deepin.menu"
-#define MenuManager_path "/com/deepin/menu"
+#include <QEventLoop>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -109,14 +102,20 @@ void DMenuPrivate::_q_onItemInvoked(const QString &actionId, bool checked)
 
 void DMenuPrivate::_q_onMenuUnregistered()
 {
-    if (menuInterface) {
-        menuInterface->deleteLater();
-        menuInterface = Q_NULLPTR;
-    }
+//    if (menuInterface) {
+//        menuInterface->deleteLater();
+//        menuInterface = Q_NULLPTR;
+//    }
 
     if(eventLoop) {
         eventLoop->quit();
     }
+}
+
+void DMenu::attatch(QWidget *w)
+{
+    //D_D(DMenu);
+    this->setParent(w);
 }
 
 DMenu::DMenu(QObject *parent)
@@ -125,21 +124,16 @@ DMenu::DMenu(QObject *parent)
 {
     D_D(DMenu);
 
-    d->menuManager = new MenumanagerInterface(MenuManager_service,
-            MenuManager_path,
-            QDBusConnection::sessionBus(),
-            this);
+//    d->menuManager = new MenumanagerInterface(MenuManager_service,
+//            MenuManager_path,
+//            QDBusConnection::sessionBus(),
+//            this);
 
-    d->menuInterface = Q_NULLPTR;
+//    d->menuInterface = Q_NULLPTR;
     d->menuVariant["x"] = 0;
     d->menuVariant["y"] = 0;
     d->menuVariant["isDockMenu"] = false;
     d->menuVariant["menuJsonContent"] = "";
-}
-
-void DMenu::attatch(QWidget *)
-{
-    D_D(DMenu);
 }
 
 DAction *DMenu::addAction(const QString &text)
@@ -265,10 +259,10 @@ bool DMenu::popup(const QPoint &pos, DAction */*action*/)
         return false;
     }
 
-    if (d->menuInterface) {
-        qWarning() << "Another menu is active";
-        return false;
-    }
+//    if (d->menuInterface) {
+//        qWarning() << "Another menu is active";
+//        return false;
+//    }
 
     d->menuVariant["x"] = pos.x();
     d->menuVariant["y"] = pos.y();
@@ -277,24 +271,28 @@ bool DMenu::popup(const QPoint &pos, DAction */*action*/)
     QJsonDocument jsonDoc = QJsonDocument::fromVariant(content);
     auto menuStr = jsonDoc.toJson();
 
-    QDBusPendingReply<QDBusObjectPath> reply = d->menuManager->RegisterMenu();
-    reply.waitForFinished();
-    if (reply.isError()) {
-        qDebug() << "Call deepin-menu dbus failed: " << reply.error();
-    }
-    QString menuPath = reply.value().path();
-    d->menuInterface = new MenuInterface(MenuManager_service, menuPath, QDBusConnection::sessionBus(), this);
-    d->menuInterface->ShowMenu(menuStr);
+//    QDBusPendingReply<QDBusObjectPath> reply = d->menuManager->RegisterMenu();
+//    reply.waitForFinished();
+//    if (reply.isError()) {
+//        qDebug() << "Call deepin-menu dbus failed: " << reply.error();
+//    }
+//    QString menuPath = reply.value().path();
+//    d->menuInterface = new MenuInterface(MenuManager_service, menuPath, QDBusConnection::sessionBus(), this);
+//    d->menuInterface->ShowMenu(menuStr);
 
-    connect(d->menuInterface, SIGNAL(MenuUnregistered()),
-            this, SLOT(_q_onMenuUnregistered()));
+//    qDebug()<<d;
+//    connect(d->menuInterface, &MenuInterface::MenuUnregistered, this, [&] {
+//        D_D(DMenu);
+//        d->_q_onMenuUnregistered();
+//    });
 
-    connect(d->menuInterface, SIGNAL(ItemInvoked(QString,bool)),
-            this, SLOT(_q_onItemInvoked(QString,bool)));
+//    connect(d->menuInterface, &MenuInterface::ItemInvoked, this, [&] (const QString &itemId, bool checked) {
+//        D_D(DMenu);
+//        d->_q_onItemInvoked(itemId, checked);
+//    });
 
     return true;
 }
 
-#include "moc_dmenu.cpp"
-
 DWIDGET_END_NAMESPACE
+

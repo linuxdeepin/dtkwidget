@@ -8,7 +8,7 @@
  **/
 
 #include "mainwindow.h"
-
+#include "dlabel.h"
 #include "dapplication.h"
 
 #include <QDebug>
@@ -26,8 +26,12 @@ int main(int argc, char *argv[])
         qDebug() << "another instance is running!!";
     }
 
+    // TODO: DWindow crash on windows
+#ifdef Q_OS_LINUX
     MainWindow w;
-
+#else
+    DLabel w;
+#endif
 //    w.resize(w.size());
     w.show();
 

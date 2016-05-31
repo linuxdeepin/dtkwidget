@@ -3,6 +3,10 @@ VERSION = 1.0
 CONFIG += c++11 create_pc create_prl no_install_prl
 DEFINES += LIBDTK_LIBRARY
 
+win {
+    CONFIG += staticlib
+    LIB_DIR =
+}
 isEmpty(LIB_INSTALL_DIR) {
     target.path = /usr/lib
 } else {
@@ -19,6 +23,6 @@ isEmpty(INCLUDE_INSTALL_DIR) {
     DTK_INCLUDEPATH = $$INCLUDE_INSTALL_DIR/libdtk-$$VERSION
 }
 
-unix{
+#unix{
     INSTALLS += includes target
-}
+#}

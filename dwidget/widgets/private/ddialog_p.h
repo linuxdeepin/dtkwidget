@@ -11,7 +11,6 @@
 #define DDIALOG_P_H
 
 #include <QPointer>
-
 #include "ddialog.h"
 #include "dabstractdialogprivate_p.h"
 

@@ -1,6 +1,5 @@
 include($$PWD/../common/lib.pri)
 include(widgets/widgets.pri)
-include(platforms/x11/x11.pri)
 
 TARGET = dtkwidget
 

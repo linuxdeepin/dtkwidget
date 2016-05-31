@@ -18,7 +18,9 @@
 
 #include "private/dwidget_p.h"
 
+#ifdef Q_OS_LINUX
 #include "../platforms/x11/xutil.h"
+#endif
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -132,7 +134,9 @@ DX11Widget::DX11Widget(DObjectPrivate &dd, QWidget *parent)
 
     setShadow();
     DX11Widget::adjustSize();
+#ifdef Q_OS_LINUX
     XUtils::SetMouseTransparent(this, true);
+#endif
 }
 
 void DX11Widget::enterEvent(QEvent *e)
@@ -153,9 +157,11 @@ void DX11Widget::mouseMoveEvent(QMouseEvent *event)
 
     const int x = event->x();
     const int y = event->y();
+#ifdef Q_OS_LINUX
     if (d->resizingCornerEdge == XUtils::CornerEdge::kInvalid && d->resizable) {
         XUtils::UpdateCursorShape(this, x, y, d->externMargins(), d->m_ResizeHandleWidth);
     }
+#endif
 
     return QWidget::mouseMoveEvent(event);
 }
@@ -167,11 +173,13 @@ void DX11Widget::mousePressEvent(QMouseEvent *event)
     const int x = event->x();
     const int y = event->y();
     if (event->button() == Qt::LeftButton) {
+#ifdef Q_OS_LINUX
         const XUtils::CornerEdge ce = XUtils::GetCornerEdge(this, x, y, d->externMargins(), d->m_ResizeHandleWidth);
         if (ce != XUtils::CornerEdge::kInvalid) {
             d->resizingCornerEdge = ce;
             XUtils::StartResizing(this, QCursor::pos(), ce);
         }
+#endif
     }
 
     return QWidget::mousePressEvent(event);
@@ -180,13 +188,17 @@ void DX11Widget::mousePressEvent(QMouseEvent *event)
 void DX11Widget::mouseReleaseEvent(QMouseEvent *event)
 {
     D_D(DX11Widget);
+#ifdef Q_OS_LINUX
     d->resizingCornerEdge = XUtils::CornerEdge::kInvalid;
+#endif
     return QWidget::mouseReleaseEvent(event);
 }
 
 void DX11Widget::showMinimized()
 {
+#ifdef Q_OS_LINUX
     XUtils::ShowMinimizedWindow(this, true);
+#endif
     QWidget::showMinimized();
 }
 
@@ -194,7 +206,9 @@ void DX11Widget::showMaximized()
 {
     D_D(DX11Widget);
     d->m_ShadowWidth = 0;
+#ifdef Q_OS_LINUX
     XUtils::ShowMaximizedWindow(this);
+#endif
     this->show();
     this->activateWindow();
     this->raise();
@@ -229,7 +243,9 @@ void DX11Widget::showFullScreen()
     D_D(DX11Widget);
     d->m_ShadowWidth = 0;
 
+#ifdef Q_OS_LINUX
     XUtils::ShowFullscreenWindow(this, true);
+#endif
     this->show();
     this->activateWindow();
     this->raise();
@@ -237,19 +253,25 @@ void DX11Widget::showFullScreen()
 
 void DX11Widget::moveWindow()
 {
+#ifdef Q_OS_LINUX
     XUtils::MoveWindow(this);
+#endif
 }
 
 void DX11Widget::toggleMaximizedWindow()
 {
+#ifdef Q_OS_LINUX
     XUtils::ToggleMaximizedWindow(this);
+#endif
 }
 
 void DX11Widget::showNormal()
 {
     D_D(DX11Widget);
     d->m_ShadowWidth = d->m_NormalShadowWidth;
+#ifdef Q_OS_LINUX
     XUtils::ShowNormalWindow(this);
+#endif
 }
 
 
@@ -451,7 +473,9 @@ void DX11Widget::setFixedSize(const QSize &size)
     QWidget::setFixedSize(externSize);
     setWindowFlags(windowFlags() & ~ Qt::WindowMaximizeButtonHint);
 
+#ifdef Q_OS_LINUX
     XUtils::DisableResize(this);
+#endif
 }
 
 void DX11Widget::setFixedSize(int w, int h)
@@ -594,7 +618,9 @@ void DX11Widget::resizeEvent(QResizeEvent *e)
 {
     D_D(DX11Widget);
     int resizeHandleWidth = d->resizable ? d->m_ResizeHandleWidth : 0;
+#ifdef Q_OS_LINUX
     XUtils::SetWindowExtents(this, d->externWidth(), resizeHandleWidth);
+#endif
     QWidget::resizeEvent(e);
 }
 
@@ -613,7 +639,7 @@ void DX11Widget::setShadow()
     this->setGraphicsEffect(d->m_Shadow);
 }
 
-void DX11Widget::paintEvent(QPaintEvent */*e*/)
+void DX11Widget::paintEvent(QPaintEvent * /*e*/)
 {
     D_D(DX11Widget);
     int radius = d->m_Radius;
@@ -664,7 +690,9 @@ bool FilterMouseMove::eventFilter(QObject *obj, QEvent *event)
             break;
         }
         if (m_rootWidget) {
+#ifdef Q_OS_LINUX
             XUtils::ResetCursorShape(m_rootWidget);
+#endif
         }
         break;
     }

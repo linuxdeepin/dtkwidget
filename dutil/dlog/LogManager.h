@@ -16,6 +16,7 @@ public:
     static void registerConsoleAppender();
     static void registerFileAppender();
     static QString getlogFilePath();
+    static void setLogFormat(const QString& format);
 
 signals:
 

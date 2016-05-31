@@ -172,7 +172,7 @@ QWidget *DListView::getFooterWidget(int index) const
 
 bool DListView::isActiveRect(const QRect &rect) const
 {
-    D_DC(DListView);
+//    D_DC(DListView);
 
     QRect area = viewport()->geometry();
 

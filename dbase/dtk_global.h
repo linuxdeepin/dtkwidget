@@ -14,6 +14,16 @@
 #   define DTK_USE_NAMESPACE using namespace DTK_NAMESPACE;
 #endif
 
+#if defined(STATIC_LIB)
+    #  define LIBDTKBASESHARED_EXPORT
+#else
+    #if defined(LIBDTKBASE_LIBRARY)
+    #  define LIBDTKBASESHARED_EXPORT Q_DECL_EXPORT
+    #else
+    #  define LIBDTKBASESHARED_EXPORT Q_DECL_IMPORT
+    #endif
+#endif
+
 //! Dtk contians deepin tool kit
 namespace Dtk {
 }
