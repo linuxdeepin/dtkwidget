@@ -6,7 +6,7 @@
 
 #include <QX11Info>
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 3, 0)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
 #include <QtPlatformHeaders/QXcbWindowFunctions>
 #endif
 
@@ -341,7 +341,7 @@ void SkipTaskbarPager(QWidget *widget)
     // DEs like XFCE, will require the following codes to hide the window in the TaskBar
     QTimer::singleShot(0, [widget]() { // Wait till the window is ready
         // DEs like KDE, setting _NET_WM_WINDOW_TYPE to Utility will surfice.
-#if QT_VERSION >= 0x050300
+#if QT_VERSION >= 0x050400
         QXcbWindowFunctions::setWmWindowType(widget->windowHandle(),
                                              QXcbWindowFunctions::Utility);
 #endif
