@@ -32,8 +32,9 @@ public:
     bool setSingleInstance(const QString &key);
 
 public:
-//    int m_pidLockFD = 0;
-    QTranslator *m_translator     = nullptr;
+// int m_pidLockFD = 0;
+    QTranslator *m_translator = nullptr;
+    QTranslator *m_qtTranslator = nullptr;
     QLocalServer *m_localServer = nullptr;
 #ifdef Q_OS_UNIX
     QStringList m_monitoredStartupApps;

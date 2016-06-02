@@ -11,6 +11,7 @@
 #include <QDir>
 #include <QLocalSocket>
 #include <QStandardPaths>
+#include <QLibraryInfo>
 #include <QTranslator>
 #include <QLocalServer>
 
@@ -46,6 +47,7 @@ DApplicationPrivate::DApplicationPrivate(DApplication *q) :
     });
 #endif
     m_translator = new QTranslator(q);
+    m_qtTranslator = new QTranslator(q);
 }
 
 DApplicationPrivate::~DApplicationPrivate()
@@ -127,6 +129,9 @@ bool DApplication::setSingleInstance(const QString &key)
 bool DApplication::loadTranslator(QList<QLocale> localeFallback)
 {
     D_D(DApplication);
+
+    d->m_qtTranslator->load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    this->installTranslator(d->m_qtTranslator);
 
     QList<DPathBuf> translateDirs;
     auto appName = applicationName();
