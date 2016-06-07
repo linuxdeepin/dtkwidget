@@ -34,4 +34,9 @@ void DHeaderLine::setContent(QWidget *content)
     setFixedHeight(CONTENT_HEADER_HEIGHT);
 }
 
+QString DHeaderLine::title() const
+{
+    return m_titleLabel->text();
+}
+
 DWIDGET_END_NAMESPACE

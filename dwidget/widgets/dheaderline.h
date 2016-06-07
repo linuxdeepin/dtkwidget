@@ -26,6 +26,8 @@ public:
     void setTitle(const QString &title);
     void setContent(QWidget *content);
 
+    QString title() const;
+
 private:
     void setLeftContent(QWidget *content);
     void setRightContent(QWidget *content);
