@@ -6,10 +6,6 @@
 
 #include <QX11Info>
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
-#include <QtPlatformHeaders/QXcbWindowFunctions>
-#endif
-
 #include <X11/Xatom.h>
 #include <X11/Xlib.h>
 #include <X11/extensions/shape.h>
@@ -338,41 +334,33 @@ void SkipTaskbarPager(QWidget *widget)
 {
     Q_ASSERT(widget);
 
-    // DEs like XFCE, will require the following codes to hide the window in the TaskBar
-    QTimer::singleShot(0, [widget]() { // Wait till the window is ready
-        // DEs like KDE, setting _NET_WM_WINDOW_TYPE to Utility will surfice.
-#if QT_VERSION >= 0x050400
-        QXcbWindowFunctions::setWmWindowType(widget->windowHandle(),
-                                             QXcbWindowFunctions::Utility);
-#endif
-        const auto display = QX11Info::display();
-        const auto screen = QX11Info::appScreen();
+    const auto display = QX11Info::display();
+    const auto screen = QX11Info::appScreen();
 
-        const auto wmStateAtom = XInternAtom(display, kAtomNameWmState, false);
-        const auto taskBarAtom = XInternAtom(display, kAtomNameWmSkipTaskbar, false);
-        const auto noPagerAtom = XInternAtom(display, kAtomNameWmSkipPager, false);
+    const auto wmStateAtom = XInternAtom(display, kAtomNameWmState, false);
+    const auto taskBarAtom = XInternAtom(display, kAtomNameWmSkipTaskbar, false);
+    const auto noPagerAtom = XInternAtom(display, kAtomNameWmSkipPager, false);
 
-        XEvent xev;
-        memset(&xev, 0, sizeof(xev));
+    XEvent xev;
+    memset(&xev, 0, sizeof(xev));
 
-        xev.xclient.type = ClientMessage;
-        xev.xclient.message_type = wmStateAtom;
-        xev.xclient.display = display;
-        xev.xclient.window = widget->winId();;
-        xev.xclient.format = 32;
+    xev.xclient.type = ClientMessage;
+    xev.xclient.message_type = wmStateAtom;
+    xev.xclient.display = display;
+    xev.xclient.window = widget->winId();;
+    xev.xclient.format = 32;
 
-        xev.xclient.data.l[0] = _NET_WM_STATE_ADD;
-        xev.xclient.data.l[1] = taskBarAtom;
-        xev.xclient.data.l[2] = noPagerAtom;
-        xev.xclient.data.l[3] = 1;
+    xev.xclient.data.l[0] = _NET_WM_STATE_ADD;
+    xev.xclient.data.l[1] = taskBarAtom;
+    xev.xclient.data.l[2] = noPagerAtom;
+    xev.xclient.data.l[3] = 1;
 
-        XSendEvent(display,
-                   QX11Info::appRootWindow(screen),
-                   false,
-                   SubstructureRedirectMask | SubstructureNotifyMask,
-                   &xev);
-        XFlush(display);
-    });
+    XSendEvent(display,
+               QX11Info::appRootWindow(screen),
+               false,
+               SubstructureRedirectMask | SubstructureNotifyMask,
+               &xev);
+    XFlush(display);
 }
 
 void SetStayOnTop(QWidget *widget, bool on)
