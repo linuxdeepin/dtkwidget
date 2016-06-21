@@ -34,6 +34,7 @@
         <file>light/DWindowCloseButton.theme</file>
         <file>light/DWindow.theme</file>
         <file>light/dialogs/DDialog.theme</file>
+        <file>light/DCheckBox.theme</file>
     </qresource>
     <qresource prefix="/images">
         <file>light/images/arrow_down_hover.png</file>
