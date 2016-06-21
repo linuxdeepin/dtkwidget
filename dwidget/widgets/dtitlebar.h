@@ -41,6 +41,7 @@ public slots:
     void setFixedHeight(int h);
     void setTitle(const QString &title);
     void setIcon(const QPixmap &icon);
+    void setWindowState(Qt::WindowState windowState);
 
 private slots:
     void showMenu();

@@ -27,6 +27,7 @@ public:
 
     bool isMaximized() const;
 
+    void setWindowState(Qt::WindowState windowState);
 signals:
     void maximum();
     void restore();

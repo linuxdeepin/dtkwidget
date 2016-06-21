@@ -223,6 +223,12 @@ void DTitlebar::setIcon(const QPixmap &icon)
     d->iconLabel->setPixmap(icon.scaled(DefaultIconWidth, DefaultIconHeight, Qt::KeepAspectRatio));
 }
 
+void DTitlebar::setWindowState(Qt::WindowState windowState)
+{
+    D_D(DTitlebar);
+    d->maxButton->setWindowState(windowState);
+}
+
 int DTitlebar::buttonAreaWidth() const
 {
     D_DC(DTitlebar);

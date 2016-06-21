@@ -53,6 +53,14 @@ void DWindowMaxButton::tirgger() {
     style()->polish(this);// force a stylesheet recomputation
 }
 
+void DWindowMaxButton::setWindowState(Qt::WindowState windowState)
+{
+        D_D(DWindowMaxButton);
+     d->m_isMaximized = windowState == Qt::WindowMaximized;
+     style()->unpolish(this);
+     style()->polish(this);// force a stylesheet recomputation
+}
+
 DWIDGET_END_NAMESPACE
 
 
