@@ -12,9 +12,17 @@ unix{
     QT += x11extras dbus
 }
 
+
+
 HEADERS += dwidget_global.h
 includes.path = $${DTK_INCLUDEPATH}/DWidget
 includes.files += dwidget_global.h widgets/*.h
+unix{
+    includes.files += $$PWD/platforms/linux/*.h
+}
+win32* {
+    includes.files += $$PWD/platforms/windows/*.h
+}
 includes.files += widgets/DTitlebar \
     widgets/DAboutDialog \
     widgets/DWindow \

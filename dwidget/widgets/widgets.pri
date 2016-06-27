@@ -7,6 +7,13 @@ unix {
 }
 
 unix{
+    INCLUDEPATH += $$PWD/../platforms/linux
+}
+win32* {
+    INCLUDEPATH += $$PWD/../platforms/windows
+}
+
+unix{
     HEADERS += \
         $$PWD/dcalendar.h
 

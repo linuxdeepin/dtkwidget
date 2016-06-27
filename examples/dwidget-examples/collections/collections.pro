@@ -53,6 +53,13 @@ RESOURCES += \
 FORMS += \
     cameraform.ui
 
+unix{
+    INCLUDEPATH += $$PWD/../../../dwidget/platforms/linux
+}
+win32* {
+    INCLUDEPATH += $$PWD/../../../dwidget/platforms/windows
+}
+
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../../dbase/release/ -ldtkbase
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../../dbase/debug/ -ldtkbase
 else:unix: LIBS += -L$$OUT_PWD/../../../dbase/ -ldtkbase
