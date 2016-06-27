@@ -22,6 +22,7 @@ DAboutDialog::DAboutDialog(
     const QString &website,
     const QString &websiteLink): DWindow(parent)
 {
+    setTitlebarFixedHeight(30);
     setWindowFlags(windowFlags() & ~ Qt::WindowMinimizeButtonHint);
     setWindowFlags(windowFlags() & ~ Qt::WindowSystemMenuHint);
     setWindowFlags(windowFlags() & ~ Qt::WindowMaximizeButtonHint);
@@ -29,9 +30,9 @@ DAboutDialog::DAboutDialog(
     setWindowIcon(QIcon(windowIcon));
 
     QLabel *logoLabel = new QLabel("logo");
+    logoLabel->setContentsMargins(0,0,0,0);
     logoLabel->setFixedSize(96, 96);
     logoLabel->setPixmap(QPixmap(productIcon).scaled(logoLabel->size(), Qt::KeepAspectRatio));
-
 
     QLabel *productNameLabel = new QLabel(productName);
     productNameLabel->setStyleSheet("font-size:18px;");
@@ -57,11 +58,12 @@ DAboutDialog::DAboutDialog(
     QLabel *descriptionLabel = new QLabel(descriptionText);
     descriptionLabel->setStyleSheet("font-size:12px; color: #1A1A1A; border: 0px solid;");
     descriptionLabel->setWordWrap(true);
+    descriptionLabel->setFixedWidth(400-76);
     descriptionLabel->adjustSize();
-    descriptionLabel->setFixedSize(400 - 38 * 2, descriptionLabel->height() + 16);
+    descriptionLabel->setAlignment(Qt::AlignTop);
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
-    mainLayout->setMargin(10);
+    mainLayout->setMargin(0);
     mainLayout->setSpacing(0);
     mainLayout->addWidget(logoLabel);
     mainLayout->setAlignment(logoLabel, Qt::AlignCenter);
@@ -71,30 +73,29 @@ DAboutDialog::DAboutDialog(
     mainLayout->addSpacing(12);
     mainLayout->addWidget(versionLabel);
     mainLayout->setAlignment(versionLabel, Qt::AlignCenter);
-    mainLayout->addSpacing(16);
+    mainLayout->addSpacing(12);
     mainLayout->addWidget(companyLogoLabel);
     mainLayout->setAlignment(companyLogoLabel, Qt::AlignCenter);
-    mainLayout->addSpacing(6);
+    mainLayout->addSpacing(2);
     mainLayout->addWidget(websiteLabel);
     mainLayout->setAlignment(websiteLabel, Qt::AlignCenter);
-    mainLayout->addSpacing(16);
+    mainLayout->addSpacing(26);
     mainLayout->addWidget(descriptionLabel);
     mainLayout->setAlignment(descriptionLabel, Qt::AlignCenter);
-    mainLayout->addSpacing(16);
+    mainLayout->addSpacing(26);
     mainLayout->addStretch();
 
     setLayout(mainLayout);
 
-    this->setFixedWidth(420);
+    this->setFixedWidth(400);
     this->adjustSize();
-    qDebug()<<this->size();
     this->setFixedSize(this->size());
 
     setFocus();
 }
 
 DAboutDialog::DAboutDialog(
-    const QString &windowTitle,
+    const QString &/*windowTitle*/,
     const QString &windowIcon,
     const QString &productIcon,
     const QString &productName,
@@ -106,12 +107,7 @@ DAboutDialog::DAboutDialog(
     const QString &websiteLink)
     : DAboutDialog(windowIcon, productIcon, productName, version, description, parent, companyLogo, website, websiteLink)
 {
-    setTitle(windowTitle);
-}
-
-void DAboutDialog::focusOutEvent(QFocusEvent */*e*/)
-{
-    hide();
+    setTitle("");
 }
 
 void DAboutDialog::onLogLinkActivated(const QString &link)

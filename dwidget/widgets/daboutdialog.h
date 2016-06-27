@@ -31,8 +31,6 @@ public:
         const QString &website = "www.deepin.org",
         const QString &websiteLink = "https://www.deepin.org");
 
-protected:
-    void focusOutEvent(QFocusEvent *event) Q_DECL_OVERRIDE;
 
 public slots:
     void onLogLinkActivated(const QString &link);
