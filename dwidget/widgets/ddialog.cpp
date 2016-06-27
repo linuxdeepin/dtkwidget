@@ -36,7 +36,6 @@ DDialogPrivate::DDialogPrivate(DDialog *qq) :
 void DDialogPrivate::init()
 {
     D_Q(DDialog);
-
     buttonLayout = new QHBoxLayout;
 
     buttonLayout->setMargin(0);
@@ -153,7 +152,7 @@ void DDialogPrivate::_q_updateLabelMaxWidth()
     QFontMetrics fm = titleLabel->fontMetrics();
 
     if (fm.width(title) > labelMaxWidth){
-        QString text = fm.elidedText(title, Qt::ElideRight, labelMaxWidth);
+        QString text = fm.elidedText(title, Qt::ElideMiddle, labelMaxWidth);
 
         titleLabel->setText(text);
     }
@@ -161,7 +160,7 @@ void DDialogPrivate::_q_updateLabelMaxWidth()
     fm = messageLabel->fontMetrics();
 
     if (fm.width(message) > labelMaxWidth){
-        QString text = fm.elidedText(message, Qt::ElideRight, labelMaxWidth);
+        QString text = fm.elidedText(message, Qt::ElideMiddle, labelMaxWidth);
 
         messageLabel->setText(text);
     }
