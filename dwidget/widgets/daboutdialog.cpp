@@ -26,6 +26,7 @@ DAboutDialog::DAboutDialog(
     setWindowFlags(windowFlags() & ~ Qt::WindowMinimizeButtonHint);
     setWindowFlags(windowFlags() & ~ Qt::WindowSystemMenuHint);
     setWindowFlags(windowFlags() & ~ Qt::WindowMaximizeButtonHint);
+    setWindowModality(Qt::ApplicationModal);
 
     setWindowIcon(QIcon(windowIcon));
 
@@ -56,14 +57,13 @@ DAboutDialog::DAboutDialog(
     QString textFormat = "<p style='text-indent: 24px;'>%1</p>";
     QString descriptionText =  textFormat.arg(description);
     QLabel *descriptionLabel = new QLabel(descriptionText);
-    descriptionLabel->setStyleSheet("font-size:12px; color: #1A1A1A; border: 0px solid;");
+    descriptionLabel->setStyleSheet("font-size:11px; color: #1A1A1A; border: 0px solid;");
     descriptionLabel->setWordWrap(true);
-    descriptionLabel->setFixedWidth(400-76);
     descriptionLabel->adjustSize();
-    descriptionLabel->setAlignment(Qt::AlignTop);
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->setMargin(0);
+    mainLayout->setContentsMargins(38,0,38,26);
     mainLayout->setSpacing(0);
     mainLayout->addWidget(logoLabel);
     mainLayout->setAlignment(logoLabel, Qt::AlignCenter);
@@ -81,9 +81,6 @@ DAboutDialog::DAboutDialog(
     mainLayout->setAlignment(websiteLabel, Qt::AlignCenter);
     mainLayout->addSpacing(26);
     mainLayout->addWidget(descriptionLabel);
-    mainLayout->setAlignment(descriptionLabel, Qt::AlignCenter);
-    mainLayout->addSpacing(26);
-    mainLayout->addStretch();
 
     setLayout(mainLayout);
 
