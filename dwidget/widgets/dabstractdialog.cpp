@@ -36,7 +36,7 @@ void DAbstractDialogPrivate::init()
     q->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
     q->setAttribute(Qt::WA_TranslucentBackground);
     q->resize(DIALOG::DEFAULT_WIDTH, DIALOG::DEFAULT_HEIGHT);
-    q->setMaximumWidth(getParentGeometry().width() / 1.5);
+    q->setMaximumWidth(480);
 }
 
 QRect DAbstractDialogPrivate::getParentGeometry() const
@@ -202,6 +202,9 @@ void DAbstractDialog::paintEvent(QPaintEvent *event)
 
 void DAbstractDialog::resizeEvent(QResizeEvent *event)
 {
+    if (event->size().width() >= maximumWidth()){
+        setFixedWidth(maximumWidth());
+    }
     QDialog::resizeEvent(event);
 
     D_DC(DAbstractDialog);
