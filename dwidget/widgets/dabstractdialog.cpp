@@ -37,6 +37,7 @@ void DAbstractDialogPrivate::init()
     q->setAttribute(Qt::WA_TranslucentBackground);
     q->resize(DIALOG::DEFAULT_WIDTH, DIALOG::DEFAULT_HEIGHT);
     q->setMaximumWidth(480);
+    q->setBorderColor(QColor(0, 0, 0));
 }
 
 QRect DAbstractDialogPrivate::getParentGeometry() const
@@ -195,7 +196,7 @@ void DAbstractDialog::paintEvent(QPaintEvent *event)
     painter.setRenderHint(QPainter::Antialiasing, true);
     QRectF r(DIALOG::BORDER_SHADOW_WIDTH / 2.0, DIALOG::BORDER_SHADOW_WIDTH / 2.0,
             width() - DIALOG::BORDER_SHADOW_WIDTH, height() - DIALOG::BORDER_SHADOW_WIDTH);
-    painter.drawRoundedRect(r, DIALOG::BORDER_SHADOW_WIDTH, DIALOG::BORDER_SHADOW_WIDTH);
+    painter.drawRoundedRect(r, DIALOG::BORDER_RADIUS, DIALOG::BORDER_RADIUS);
 
     QDialog::paintEvent(event);
 }

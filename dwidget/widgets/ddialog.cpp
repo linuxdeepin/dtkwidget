@@ -48,7 +48,7 @@ void DDialogPrivate::init()
     closeButton = new QPushButton(q);
 
     closeButton->setObjectName("CloseButton");
-    closeButton->setFixedSize(DIALOG::CLOSE_BUTTON_WIDTH, DIALOG::CLOSE_BUTTON_WIDTH);
+    closeButton->setFixedSize(DIALOG::CLOSE_BUTTON_WIDTH, DIALOG::CLOSE_BUTTON_HEIGHT);
     closeButton->setAttribute(Qt::WA_NoMousePropagation);
 
     iconLabel = new QLabel;
@@ -69,11 +69,14 @@ void DDialogPrivate::init()
 
     label_hlayout->setMargin(0);
     label_hlayout->setSpacing(0);
+    label_hlayout->setContentsMargins(0, 0, 0, 0);
     label_vlayout->setMargin(0);
     label_vlayout->setSpacing(0);
+    label_vlayout->setContentsMargins(0, 0, 0, 0);
 
     label_vlayout->addWidget(titleLabel);
     label_vlayout->addWidget(messageLabel);
+    label_vlayout->addStretch();
     label_hlayout->addLayout(label_vlayout);
     label_hlayout->addStretch();
 
@@ -95,6 +98,7 @@ void DDialogPrivate::init()
     QVBoxLayout *main_layout = new QVBoxLayout;
 
     main_layout->setMargin(0);
+    main_layout->setContentsMargins(0, 0, 0, 0);
     main_layout->addWidget(closeButton, 0, Qt::AlignRight);
     main_layout->addLayout(iconLayout);
     main_layout->addLayout(buttonLayout);
@@ -557,11 +561,11 @@ void DDialog::setIcon(const QIcon &icon)
 
     if(!icon.isNull()) {
         const QList<QSize> &sizes = icon.availableSizes();
-
+        setIconPixmap(icon.pixmap(sizes.first()));
         if(!sizes.isEmpty())
             setIconPixmap(icon.pixmap(sizes.first()));
         else
-            setIconPixmap(icon.pixmap(height() / 3));
+            setIconPixmap(icon.pixmap(64, 64));
     }
 }
 

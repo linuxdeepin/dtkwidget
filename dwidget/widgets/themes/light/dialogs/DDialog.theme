@@ -1,6 +1,6 @@
 Dtk--Widget--DDialog{
-    qproperty-backgroundColor: rgba(243, 243, 245, 1);
-    qproperty-borderColor: rgba(0, 0, 0, 0.1);
+    qproperty-backgroundColor: white;
+    qproperty-borderColor: rgba(0, 0, 0, 0.2);
 }
 
 QFrame#ButtonFrame{
@@ -26,12 +26,12 @@ QPushButton#CloseButton{
 }
 
 QPushButton#CloseButton:hover{
-    border-image: url(":/images/light/dialogs/images/light_close_small_hover.png")
+    border-image: url(":/images/light/images/window_close_hover.png")
 }
 
 
 QPushButton#CloseButton:pressed{
-    border-image: url(":/images/light/dialogs/images/light_close_small_press.png")
+    border-image: url(":/images/light/images/window_close_press.png")
 }
 
 QPushButton#NormalButton{
@@ -58,18 +58,18 @@ QPushButton#ActionButton{
     border-right: none;
     border-left: none;
     border-bottom: none;
-    color: #000000;
+    color: #303030;
     text-align: center;
 }
 
 QPushButton#ActionButton:hover{
-    background-color: transparent;
-    color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.01);
+    color: #000000;
 }
 
 QPushButton#ActionButton:pressed{
-    background-color: transparent;
-    color: #01bdff;
+    background-color: rgba(0, 0, 0, 0.03);;
+    color: #2ca7f8;
 }
 
 QPushButton#ConflictButton{

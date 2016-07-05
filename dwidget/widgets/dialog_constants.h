@@ -17,19 +17,21 @@ DWIDGET_BEGIN_NAMESPACE
 namespace DIALOG {
     const int DEFAULT_WIDTH = 380;
     const int DEFAULT_HEIGHT = 120;
-    const int BORDER_SHADOW_WIDTH = 2;
+    const int BORDER_SHADOW_WIDTH = 0;
+    const int BORDER_RADIUS = 4;
     const int CONTENT_INSERT_OFFSET = 2;
     const int BUTTON_HEIGHT = 28;
-    const int CLOSE_BUTTON_WIDTH = 25;
+    const int CLOSE_BUTTON_WIDTH = 27;
+    const int CLOSE_BUTTON_HEIGHT = 23;
     const int ICON_LAYOUT_TOP_MARGIN = 0;
     const int ICON_LAYOUT_BOTTOM_MARGIN = 10;
     const int ICON_LAYOUT_LEFT_MARGIN = 25;
-    const int ICON_LAYOUT_RIGHT_MARGIN = 25;
+    const int ICON_LAYOUT_RIGHT_MARGIN = 0;
     const int ICON_LAYOUT_SPACING = 10;
-    const int BUTTON_LAYOUT_TOP_MARGIN = 10;
-    const int BUTTON_LAYOUT_BOTTOM_MARGIN = 2;
-    const int BUTTON_LAYOUT_LEFT_MARGIN = 2;
-    const int BUTTON_LAYOUT_RIGHT_MARGIN = 2;
+    const int BUTTON_LAYOUT_TOP_MARGIN = 0;
+    const int BUTTON_LAYOUT_BOTTOM_MARGIN = 0;
+    const int BUTTON_LAYOUT_LEFT_MARGIN = 0;
+    const int BUTTON_LAYOUT_RIGHT_MARGIN = 0;
 }
 
 DWIDGET_END_NAMESPACE
