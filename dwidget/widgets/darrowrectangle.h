@@ -71,6 +71,7 @@ public:
     virtual void show(int x, int y);
 
     void setContent(QWidget *content);
+    QWidget *getContent() const;
     void resizeWithContent();
     void move(int x,int y);
     QSize getFixedSize();

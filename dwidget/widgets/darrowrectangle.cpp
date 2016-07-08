@@ -77,6 +77,11 @@ void DArrowRectangle::setContent(QWidget *content)
     update();
 }
 
+QWidget *DArrowRectangle::getContent() const
+{
+    return m_content;
+}
+
 void DArrowRectangle::resizeWithContent()
 {
     setFixedSize(getFixedSize());
