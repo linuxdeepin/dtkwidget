@@ -36,12 +36,13 @@ DArrowRectangle::DArrowRectangle(ArrowDirection direction, QWidget * parent) :
 
 void DArrowRectangle::show(int x, int y)
 {
+    resizeWithContent();
+
     m_lastPos = QPoint(x, y);
     move(x, y);//Overload function
     if (isHidden())
         QWidget::show();
 
-    resizeWithContent();
     update();
 }
 
@@ -182,6 +183,8 @@ const QRect DArrowRectangle::currentScreenRect(const int x, const int y)
     for (QScreen *screen : qApp->screens())
         if (screen->geometry().contains(x, y))
             return screen->geometry();
+
+    return QRect();
 }
 
 qreal DArrowRectangle::shadowYOffset() const
@@ -472,19 +475,22 @@ void DArrowRectangle::verticalMove(int x, int y)
     }
     else if(rRelativeY > 0)//out of screen in bottom side
     {
-        setArrowY(height() / 2 - delta * 2 + rRelativeY);
+        setArrowY(height() / 2 - delta / 2 + rRelativeY);
         absoluteY = dRect.y() + dRect.height() - height() + delta;
     }
     else
+    {
+        setArrowY(0);
         absoluteY = y - height() / 2;
+    }
 
     switch (m_arrowDirection)
     {
     case ArrowLeft:
-        QWidget::move(x, absoluteY);
+        QWidget::move(x - delta, absoluteY);
         break;
-    case ArrowBottom:
-        QWidget::move(x - width(), absoluteY);
+    case ArrowRight:
+        QWidget::move(x - width() + delta, absoluteY);
         break;
     default:
         break;
@@ -513,16 +519,17 @@ void DArrowRectangle::horizontalMove(int x, int y)
     }
     else
     {
+        setArrowX(0);
         absoluteX = x - width() / 2;
     }
 
     switch (m_arrowDirection)
     {
     case ArrowTop:
-        QWidget::move(absoluteX, y);
+        QWidget::move(absoluteX, y - delta);
         break;
     case ArrowBottom:
-        QWidget::move(absoluteX, y - height());
+        QWidget::move(absoluteX, y - height() + delta);
         break;
     default:
         break;
