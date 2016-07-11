@@ -13,18 +13,38 @@
 #include <QScrollBar>
 
 #include "dwidget_global.h"
+#include "dobject.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDTKWIDGETSHARED_EXPORT DScrollBar : public QScrollBar
+class DScrollBarPrivate;
+class LIBDTKWIDGETSHARED_EXPORT DScrollBar : public QScrollBar, public DObject
 {
     Q_OBJECT
+
+    Q_PROPERTY(bool autoHide READ autoHide WRITE setAutoHide NOTIFY autoHideChanged)
+
 public:
     explicit DScrollBar(QWidget *parent = 0);
 
-signals:
+    bool autoHide() const;
 
 public slots:
+    void setAutoHide(bool autoHide);
+
+signals:
+    void autoHideChanged(bool autoHide);
+
+protected:
+    void enterEvent(QEvent *event) Q_DECL_OVERRIDE;
+    void leaveEvent(QEvent *event) Q_DECL_OVERRIDE;
+    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
+
+private:
+    Q_DISABLE_COPY(DScrollBar)
+    D_DECLARE_PRIVATE(DScrollBar)
+    D_PRIVATE_SLOT(void _q_hidden())
+    D_PRIVATE_SLOT(void _q_updateOpacity())
 };
 
 DWIDGET_END_NAMESPACE

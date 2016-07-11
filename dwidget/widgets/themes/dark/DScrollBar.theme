@@ -9,7 +9,31 @@ Dtk--Widget--DScrollBar{
 }
 
 Dtk--Widget--DScrollBar::handle{
-    background-color: #33000000;
-    border: 0.5px solid #11FFFFFF;
-    border-radius: 3px;
+    background-color: rgba(255,255,255,0.2);
+    border-radius: 2px;
+    margin: 4px 2px 4px 2px;
+}
+
+Dtk--Widget--DScrollBar::handle:vertical{
+    min-height: 20px;
+    width: 8px;
+}
+
+Dtk--Widget--DScrollBar::handle:horizontal{
+    min-width: 20px;
+    height: 8px;
+}
+
+Dtk--Widget--DScrollBar::handle:hover{
+    background-color: rgba(255,255,255,0.4);
+}
+
+Dtk--Widget--DScrollBar::add-line {
+    border: none;
+    background: none;
+}
+
+Dtk--Widget--DScrollBar::sub-line {
+    border: none;
+    background: none;
 }
