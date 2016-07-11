@@ -30,7 +30,7 @@ public:
     void init();
 
     void play();
-    void setPictureSequence(const QStringList &sequence);
+    void setPictureSequence(const QStringList &sequence, DPictureSequenceView::PaintMode paintMode);
 
     int speed() const;
     void setSpeed(int speed);

@@ -32,6 +32,7 @@ void DPictureSequenceViewPrivate::init()
     q->setScene(m_scene);
     q->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     q->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    q->setFrameShape(QFrame::NoFrame);
 
     q->connect(m_refreshTimer, &QTimer::timeout, [this] {refreshPicture();});
 }
@@ -41,10 +42,19 @@ void DPictureSequenceViewPrivate::play()
     m_refreshTimer->start();
 }
 
-void DPictureSequenceViewPrivate::setPictureSequence(const QStringList &sequence)
+void DPictureSequenceViewPrivate::setPictureSequence(const QStringList &sequence,
+                                                     DPictureSequenceView::PaintMode paintMode)
 {
-    for (const QString &pic : sequence)
-        addPicture(QPixmap(pic));
+    D_QC(DPictureSequenceView);
+
+    for (const QString &pic : sequence) {
+        QPixmap pixmap(pic);
+
+        if (paintMode == DPictureSequenceView::AutoScaleMode)
+            pixmap = pixmap.scaled(q->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
+        addPicture(pixmap);
+    }
 }
 
 int DPictureSequenceViewPrivate::speed() const
@@ -104,9 +114,14 @@ DPictureSequenceView::DPictureSequenceView(QWidget *parent) :
 
 void DPictureSequenceView::setPictureSequence(const QStringList &sequence)
 {
+    setPictureSequence(sequence, NormalMode);
+}
+
+void DPictureSequenceView::setPictureSequence(const QStringList &sequence, PaintMode paintMode)
+{
     D_D(DPictureSequenceView);
 
-    d->setPictureSequence(sequence);
+    d->setPictureSequence(sequence, paintMode);
 
     setStyleSheet("background-color:transparent;");
 }

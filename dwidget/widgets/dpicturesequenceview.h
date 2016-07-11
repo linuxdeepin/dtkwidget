@@ -21,15 +21,21 @@ class DPictureSequenceViewPrivate;
 class DPictureSequenceView : public QGraphicsView, public DObject
 {
     Q_OBJECT
-    Q_DISABLE_COPY(DPictureSequenceView)
-    D_DECLARE_PRIVATE(DPictureSequenceView)
     Q_PROPERTY(int speed READ speed WRITE setSpeed NOTIFY speedChanged)
     Q_PROPERTY(bool singleShot READ singleShot WRITE setSingleShot)
 
 public:
+    enum PaintMode {
+        NormalMode,
+        AutoScaleMode
+    };
+
+    Q_ENUM(PaintMode)
+
     DPictureSequenceView(QWidget *parent = nullptr);
 
     void setPictureSequence(const QStringList &sequence);
+    void setPictureSequence(const QStringList &sequence, PaintMode paintMode);
     void play();
 
     int speed() const;
@@ -41,6 +47,10 @@ public:
 Q_SIGNALS:
     void speedChanged(int speed) const;
     void playEnd() const;
+
+private:
+    Q_DISABLE_COPY(DPictureSequenceView)
+    D_DECLARE_PRIVATE(DPictureSequenceView)
 };
 
 DWIDGET_END_NAMESPACE
