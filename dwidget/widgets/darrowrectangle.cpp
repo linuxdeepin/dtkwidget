@@ -11,10 +11,11 @@
 
 #ifdef Q_OS_UNIX
 #include <X11/extensions/shape.h>
-#include <QtX11Extras/QX11Info>
+#include <QX11Info>
 #endif
 #include <QApplication>
 #include <QScreen>
+#include <QEvent>
 
 DWIDGET_USE_NAMESPACE
 
@@ -176,6 +177,17 @@ void DArrowRectangle::paintEvent(QPaintEvent *)
     strokePen.setColor(m_borderColor);
     strokePen.setWidth(m_borderWidth);
     painter.strokePath(border, strokePen);
+}
+
+bool DArrowRectangle::event(QEvent *e)
+{
+    switch (e->type())
+    {
+    case QEvent::WindowDeactivate:  emit windowDeactivate();    break;
+    default:;
+    }
+
+    return QWidget::event(e);
 }
 
 const QRect DArrowRectangle::currentScreenRect(const int x, const int y)

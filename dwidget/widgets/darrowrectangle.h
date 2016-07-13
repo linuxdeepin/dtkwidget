@@ -33,6 +33,7 @@ class LIBDTKWIDGETSHARED_EXPORT DArrowRectangle : public QWidget
     Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor)
     Q_PROPERTY(int borderWidth READ borderWidth WRITE setBorderWidth)
     Q_PROPERTY(int radius READ radius WRITE setRadius)
+
 public:
     enum ArrowDirection {
         ArrowLeft,
@@ -88,8 +89,12 @@ public:
     qreal shadowYOffset() const;
     void setShadowYOffset(const qreal &shadowYOffset);
 
+signals:
+    void windowDeactivate() const;
+
 protected:
     void paintEvent(QPaintEvent *);
+    bool event(QEvent *e);
 
 private:
     const QRect currentScreenRect(const int x, const int y);
