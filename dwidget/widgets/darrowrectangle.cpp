@@ -88,20 +88,15 @@ void DArrowRectangle::resizeWithContent()
 {
     setFixedSize(getFixedSize());
 
-    update();
-
 #ifdef Q_OS_UNIX
-    //Shadow Transparent For MouseEvents
-    qreal delta = shadowBlurRadius() + shadowDistance();
-
     XRectangle m_contentXRect;
-    m_contentXRect.x = 0;
-    m_contentXRect.y = 0;
-    m_contentXRect.width = width() - delta * 2;
-    m_contentXRect.height = height() - delta * 2;
+    m_contentXRect.x = m_content->pos().x();
+    m_contentXRect.y = m_content->pos().y();
+    m_contentXRect.width = m_content->width();
+    m_contentXRect.height = m_content->height();
     XShapeCombineRectangles(QX11Info::display(), winId(), ShapeInput,
-                            delta + shadowXOffset(),
-                            delta + shadowYOffset(),
+                            0,
+                            0,
                             &m_contentXRect, 1, ShapeSet, YXBanded);
 #endif
 }
@@ -109,7 +104,7 @@ void DArrowRectangle::resizeWithContent()
 QSize DArrowRectangle::getFixedSize()
 {
     if (m_content)
-    {        
+    {
         qreal delta = shadowBlurRadius() + shadowDistance() + margin();
 
         switch(m_arrowDirection)
