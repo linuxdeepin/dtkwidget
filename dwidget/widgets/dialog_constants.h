@@ -26,7 +26,7 @@ namespace DIALOG {
     const int ICON_LAYOUT_TOP_MARGIN = 0;
     const int ICON_LAYOUT_BOTTOM_MARGIN = 10;
     const int ICON_LAYOUT_LEFT_MARGIN = 25;
-    const int ICON_LAYOUT_RIGHT_MARGIN = 0;
+    const int ICON_LAYOUT_RIGHT_MARGIN = 25;
     const int ICON_LAYOUT_SPACING = 10;
     const int BUTTON_LAYOUT_TOP_MARGIN = 0;
     const int BUTTON_LAYOUT_BOTTOM_MARGIN = 0;
