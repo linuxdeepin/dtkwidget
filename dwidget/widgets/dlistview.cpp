@@ -200,6 +200,25 @@ Qt::Orientation DListView::orientation() const
     return isVerticalLayout ? Qt::Vertical : Qt::Horizontal;
 }
 
+void DListView::setModel(QAbstractItemModel *model)
+{
+    QAbstractItemModel *old_model = this->model();
+
+    if (old_model) {
+        disconnect(old_model, &QAbstractItemModel::rowsInserted, this, &DListView::rowCountChanged);
+        disconnect(old_model, &QAbstractItemModel::rowsRemoved, this, &DListView::rowCountChanged);
+    }
+
+    QListView::setModel(model);
+
+    model = this->model();
+
+    if (model) {
+        connect(model, &QAbstractItemModel::rowsInserted, this, &DListView::rowCountChanged);
+        connect(model, &QAbstractItemModel::rowsRemoved, this, &DListView::rowCountChanged);
+    }
+}
+
 bool DListView::addItem(const QVariant &data)
 {
     return insertItem(count(), data);

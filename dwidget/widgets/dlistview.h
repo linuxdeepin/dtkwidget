@@ -61,6 +61,8 @@ public:
 
     Qt::Orientation orientation() const;
 
+    void setModel(QAbstractItemModel * model) Q_DECL_OVERRIDE;
+
 public Q_SLOTS:
     bool addItem(const QVariant &data);
     bool addItems(const QVariantList &datas);
@@ -80,7 +82,8 @@ public Q_SLOTS:
     void edit(const QModelIndex &index);
 
 Q_SIGNALS:
-    void countChanged(int count);
+    void countChanged(int count) Q_DECL_DEPRECATED;
+    void rowCountChanged();
     void orientationChanged(Qt::Orientation orientation);
     void currentChanged(const QModelIndex &previous);
     void triggerEdit(const QModelIndex &index);
