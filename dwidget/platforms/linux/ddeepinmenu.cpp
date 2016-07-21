@@ -288,7 +288,6 @@ bool DMenu::popup(const QPoint &pos, DAction */*action*/)
     d->menuInterface = new MenuInterface(MenuManager_service, menuPath, QDBusConnection::sessionBus(), this);
     d->menuInterface->ShowMenu(menuStr);
 
-    qDebug()<<d;
     connect(d->menuInterface, &MenuInterface::MenuUnregistered, this, [&] {
         D_D(DMenu);
         d->_q_onMenuUnregistered();
