@@ -13,6 +13,7 @@
 #include "dwidget_global.h"
 #include "dobject.h"
 
+#include <QtGlobal>
 #include <QGraphicsView>
 
 DWIDGET_BEGIN_NAMESPACE
@@ -30,7 +31,11 @@ public:
         AutoScaleMode
     };
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0))
     Q_ENUM(PaintMode)
+#else
+    Q_ENUMS(PaintMode)
+#endif
 
     DPictureSequenceView(QWidget *parent = nullptr);
 
