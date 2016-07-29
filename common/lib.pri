@@ -3,6 +3,8 @@ VERSION = 1.0
 CONFIG += c++11 create_pc create_prl no_install_prl
 DEFINES += LIBDTK_LIBRARY
 
+DEFINES += QT_MESSAGELOGCONTEXT
+
 win {
     CONFIG += staticlib
     LIB_DIR =

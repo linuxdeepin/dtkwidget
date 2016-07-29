@@ -18,6 +18,7 @@
 #include "dswitchbutton.h"
 #include "segmentedcontrol.h"
 #include "dcolorpicker.h"
+#include "daction.h"
 
 #include "mainwindow.h"
 #include "buttonlisttab.h"
@@ -58,15 +59,12 @@ MainWindow::MainWindow(DWindow *parent)
 
     dbusMenu()->addAction("testmenu1");
     dbusMenu()->addAction("testmenu2");
-
-#ifdef Q_OS_LINUX
     DMenu *menu = dbusMenu()->addMenu("menu1");
-
     menu->addAction("menu1->action1");
-    menu->addAction("menu2->action2");
+    menu->addAction("menu1->action2");
 
     connect(dbusMenu(), &DMenu::triggered, this, &MainWindow::menuItemInvoked);
-#endif
+
 }
 
 void MainWindow::menuItemInvoked(DAction *action)
