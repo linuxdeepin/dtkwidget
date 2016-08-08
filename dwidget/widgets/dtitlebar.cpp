@@ -206,38 +206,6 @@ void DTitlebar::mouseReleaseEvent(QMouseEvent *event)
         d->mousePressed = false;
 }
 
-void DTitlebar::changeEvent(QEvent *event)
-{
-    D_D(DTitlebar);
-
-    if (event->type() == QEvent::ParentAboutToChange) {
-        if (!d->parentWindow)
-            return QWidget::changeEvent(event);
-
-        d->parentWindow->removeEventFilter(this);
-
-        disconnect(d->maxButton, SIGNAL(clicked()), this, SLOT(_q_toggleWindowState()));
-        disconnect(this, SIGNAL(doubleClicked()), this, SLOT(_q_toggleWindowState()));
-        disconnect(d->minButton, &DWindowMinButton::clicked, d->parentWindow, &QWidget::showMinimized);
-        disconnect(d->closeButton, &DWindowCloseButton::clicked, d->parentWindow, &QWidget::close);
-    } else if (event->type() == QEvent::ParentChange) {
-        d->parentWindow = parentWidget();
-
-        if (!d->parentWindow)
-            return QWidget::changeEvent(event);
-
-        d->parentWindow = d->parentWindow->window();
-        d->parentWindow->installEventFilter(this);
-
-        connect(d->maxButton, SIGNAL(clicked()), this, SLOT(_q_toggleWindowState()));
-        connect(this, SIGNAL(doubleClicked()), this, SLOT(_q_toggleWindowState()));
-        connect(d->minButton, &DWindowMinButton::clicked, d->parentWindow, &QWidget::showMinimized);
-        connect(d->closeButton, &DWindowCloseButton::clicked, d->parentWindow, &QWidget::close);
-    }
-
-    return QWidget::changeEvent(event);
-}
-
 bool DTitlebar::eventFilter(QObject *obj, QEvent *event)
 {
     D_D(DTitlebar);
@@ -314,6 +282,41 @@ int DTitlebar::buttonAreaWidth() const
 {
     D_DC(DTitlebar);
     return d->buttonArea->width();
+}
+
+void DTitlebar::setVisible(bool visible)
+{
+    D_D(DTitlebar);
+
+    if (visible == isVisible())
+        return;
+
+    QWidget::setVisible(visible);
+
+    if (visible) {
+        d->parentWindow = parentWidget();
+
+        if (!d->parentWindow)
+            return;
+
+        d->parentWindow = d->parentWindow->window();
+        d->parentWindow->installEventFilter(this);
+
+        connect(d->maxButton, SIGNAL(clicked()), this, SLOT(_q_toggleWindowState()));
+        connect(this, SIGNAL(doubleClicked()), this, SLOT(_q_toggleWindowState()));
+        connect(d->minButton, &DWindowMinButton::clicked, d->parentWindow, &QWidget::showMinimized);
+        connect(d->closeButton, &DWindowCloseButton::clicked, d->parentWindow, &QWidget::close);
+    } else {
+        if (!d->parentWindow)
+            return;
+
+        d->parentWindow->removeEventFilter(this);
+
+        disconnect(d->maxButton, SIGNAL(clicked()), this, SLOT(_q_toggleWindowState()));
+        disconnect(this, SIGNAL(doubleClicked()), this, SLOT(_q_toggleWindowState()));
+        disconnect(d->minButton, &DWindowMinButton::clicked, d->parentWindow, &QWidget::showMinimized);
+        disconnect(d->closeButton, &DWindowCloseButton::clicked, d->parentWindow, &QWidget::close);
+    }
 }
 
 void DTitlebar::mouseMoveEvent(QMouseEvent *event)

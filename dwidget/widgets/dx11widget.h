@@ -62,6 +62,7 @@ public:
     void setFixedWidth(int w);
 //    void setFixedHeight(int h);
 
+    void resize(int width, int height);
     void resize(const QSize &);
 
     void removeLayout();
@@ -131,7 +132,7 @@ public slots:
     void setShadowOffset(QPoint shadowOffset);
 
 protected:
-    explicit DX11Widget(DObjectPrivate &dd, QWidget *parent = 0);
+    explicit DX11Widget(DX11WidgetPrivate &dd, QWidget *parent = 0);
 
     virtual void drawShadowPixmap();
 

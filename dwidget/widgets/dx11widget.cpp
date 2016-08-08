@@ -134,7 +134,7 @@ DX11Widget::DX11Widget(QWidget *parent): DX11Widget(*new DX11WidgetPrivate(this)
 
 }
 
-DX11Widget::DX11Widget(DObjectPrivate &dd, QWidget *parent)
+DX11Widget::DX11Widget(DX11WidgetPrivate &dd, QWidget *parent)
     : QWidget(parent), DObject(dd)
 {
     D_D(DX11Widget);
@@ -576,6 +576,11 @@ void DX11Widget::setFixedWidth(int w)
     d->titlebar->setFixedWidth(w);
     d->windowWidget->setFixedWidth(w);
     QWidget::setFixedWidth(w + d->m_ShadowWidth + d->m_Border);
+}
+
+void DX11Widget::resize(int width, int height)
+{
+    resize(QSize(width, height));
 }
 
 void DX11Widget::resize(const QSize &size)

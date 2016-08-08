@@ -25,6 +25,8 @@ public:
     void setWindowFlags(Qt::WindowFlags type);
     int buttonAreaWidth() const;
 
+    void setVisible(bool visible) Q_DECL_OVERRIDE;
+
 signals:
     Q_DECL_DEPRECATED void minimumClicked();
     Q_DECL_DEPRECATED void maximumClicked();
@@ -48,7 +50,6 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     void mouseDoubleClickEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
-    void changeEvent(QEvent *event) Q_DECL_OVERRIDE;
     bool eventFilter(QObject *obj, QEvent *event) Q_DECL_OVERRIDE;
 
 private:
