@@ -90,7 +90,11 @@ void DImageButton::leaveEvent(QEvent *event)
 
 void DImageButton::mousePressEvent(QMouseEvent *event)
 {
+    if (event->button() != Qt::LeftButton)
+        return;
+
     m_state = Press;
+
     changeState();
 
     event->accept();
@@ -102,7 +106,8 @@ void DImageButton::mouseReleaseEvent(QMouseEvent *event)
     m_state = Hover;
     changeState();
 
-    emit clicked();
+    if (event->button() == Qt::LeftButton)
+        emit clicked();
 
     if (m_isCheckable){
         m_isChecked = !m_isChecked;
