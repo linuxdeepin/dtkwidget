@@ -39,6 +39,10 @@ win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../dbase/release/ -ldt
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../dbase/debug/ -ldtkbase
 else:unix: LIBS += -L$$OUT_PWD/../dbase/ -ldtkbase
 
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../dutil/release/ -ldtkutil
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../dutil/debug/ -ldtkutil
+else:unix: LIBS += -L$$OUT_PWD/../dutil/ -ldtkutil
+
 INCLUDEPATH += $$PWD/../dbase
 DEPENDPATH += $$PWD/../dbase
 INCLUDEPATH += $$PWD/../dutil
