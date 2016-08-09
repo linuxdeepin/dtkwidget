@@ -324,7 +324,7 @@ void DTitlebar::mouseMoveEvent(QMouseEvent *event)
     Q_UNUSED(event)
     D_DC(DTitlebar);
 
-    if (d->mousePressed)
+    if (d->mousePressed && event->button() == Qt::LeftButton)
         emit mouseMoving();
 }
 
