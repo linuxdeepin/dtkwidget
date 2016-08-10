@@ -32,6 +32,8 @@ public:
     void setTitle(const QString &);
     void setTitleIcon(const QPixmap &icon);
 
+    DTitlebar *titlebar() const;
+
     void setTitlebarMenu(DMenu *);
     void setTitlebarWidget(QWidget *, bool fixCenterPos = false);
     int titlebarHeight() const;

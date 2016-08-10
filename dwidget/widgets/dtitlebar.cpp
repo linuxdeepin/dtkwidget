@@ -39,6 +39,7 @@ private:
     DWindowCloseButton  *closeButton;
     DWindowOptionButton *optionButton;
 
+    QWidget             *customWidget = Q_NULLPTR;
     QWidget             *coustomAtea;
     QWidget             *buttonArea;
     QWidget             *titleArea;
@@ -155,6 +156,20 @@ DTitlebar::DTitlebar(QWidget *parent) :
     d->titlePadding->setFixedSize(d->buttonArea->size());
 }
 
+DMenu *DTitlebar::menu() const
+{
+    D_DC(DTitlebar);
+
+    return d->menu;
+}
+
+QWidget *DTitlebar::customWidget() const
+{
+    D_DC(DTitlebar);
+
+    return d->customWidget;
+}
+
 ///
 /// \brief setWindowFlags
 /// \param type
@@ -249,6 +264,7 @@ void DTitlebar::setCustomWidget(QWidget *w, Qt::AlignmentFlag wflag, bool fixCen
     qDeleteAll(d->coustomAtea->children());
     d->coustomAtea->setLayout(l);
     d->buttonArea->resize(old);
+    d->customWidget = w;
 }
 
 void DTitlebar::setFixedHeight(int h)

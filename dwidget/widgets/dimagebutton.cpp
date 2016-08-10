@@ -102,9 +102,6 @@ void DImageButton::mouseReleaseEvent(QMouseEvent *event)
     if (!rect().contains(event->pos()))
         return;
 
-    if (event->button() == Qt::LeftButton)
-        emit clicked();
-
     if (m_isCheckable){
         m_isChecked = !m_isChecked;
         if (m_isChecked){
@@ -118,6 +115,9 @@ void DImageButton::mouseReleaseEvent(QMouseEvent *event)
 
     event->accept();
     //QLabel::mouseReleaseEvent(event);
+
+    if (event->button() == Qt::LeftButton)
+        emit clicked();
 }
 
 void DImageButton::mouseMoveEvent(QMouseEvent *event)

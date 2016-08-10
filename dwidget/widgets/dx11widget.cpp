@@ -345,6 +345,13 @@ void DX11Widget::setTitleIcon(const QPixmap &icon)
     d->titlebar->setIcon(icon);
 }
 
+DTitlebar *DX11Widget::titlebar() const
+{
+    D_DC(DX11Widget);
+
+    return d->titlebar;
+}
+
 void DX11Widget::setTitlebarMenu(DMenu *menu)
 {
     D_D(DX11Widget);
