@@ -82,9 +82,10 @@ void DX11WidgetPrivate::init()
     contentWidgetLayout->setMargin(0);
     contentWidget->setLayout(contentWidgetLayout);
     contentWidget->setContentsMargins(m_Border, 0, m_Border, m_Border);
+    contentWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
     windowLayout->addWidget(titlebar);
     windowLayout->addWidget(contentWidget);
-    windowLayout->setAlignment(contentWidget, Qt::AlignCenter);
 
     auto filter = new FilterMouseMove(windowWidget);
     windowWidget->installEventFilter(filter);
