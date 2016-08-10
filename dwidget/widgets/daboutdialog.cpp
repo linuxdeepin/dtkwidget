@@ -56,10 +56,10 @@ DAboutDialog::DAboutDialog(
     connect(websiteLabel, SIGNAL(linkActivated(QString)),
             this, SLOT(onLogLinkActivated(QString)));
 
-    QString textFormat = "<p style='text-indent: 24px;'>%1</p>";
+    QString textFormat = "        %1"; // the spaces are used to get 24px indent.
     QString descriptionText =  textFormat.arg(description);
     QLabel *descriptionLabel = new QLabel(descriptionText);
-    descriptionLabel->setStyleSheet("font-size:11px; color: #1A1A1A; border: 0px solid;");
+    descriptionLabel->setStyleSheet("font-size:11px; color: #1A1A1A; border: none;");
     descriptionLabel->setWordWrap(true);
     descriptionLabel->adjustSize();
 
@@ -83,6 +83,7 @@ DAboutDialog::DAboutDialog(
     mainLayout->setAlignment(websiteLabel, Qt::AlignCenter);
     mainLayout->addSpacing(26);
     mainLayout->addWidget(descriptionLabel);
+    mainLayout->setAlignment(descriptionLabel, Qt::AlignHCenter);
 
     setLayout(mainLayout);
 
