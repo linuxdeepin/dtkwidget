@@ -57,7 +57,8 @@ DAboutDialog::DAboutDialog(
             this, SLOT(onLogLinkActivated(QString)));
 
     QString textFormat = "        %1"; // the spaces are used to get 24px indent.
-    QString descriptionText =  textFormat.arg(description);
+    //TODO: if without '\n' the text will be cut;
+    QString descriptionText =  textFormat.arg(QString("%1\n").arg(description));
     QLabel *descriptionLabel = new QLabel(descriptionText);
     descriptionLabel->setStyleSheet("font-size:11px; color: #1A1A1A; border: none;");
     descriptionLabel->setWordWrap(true);
@@ -65,7 +66,7 @@ DAboutDialog::DAboutDialog(
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->setMargin(0);
-    mainLayout->setContentsMargins(38,0,38,26);
+    mainLayout->setContentsMargins(38,0,38,10);
     mainLayout->setSpacing(0);
     mainLayout->addWidget(logoLabel);
     mainLayout->setAlignment(logoLabel, Qt::AlignCenter);
