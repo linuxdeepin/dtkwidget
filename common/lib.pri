@@ -5,10 +5,12 @@ DEFINES += LIBDTK_LIBRARY
 
 DEFINES += QT_MESSAGELOGCONTEXT
 
-win {
+win32* {
+    DEFINES += STATIC_LIB
     CONFIG += staticlib
     LIB_DIR =
 }
+
 isEmpty(LIB_INSTALL_DIR) {
     target.path = /usr/lib
 } else {
