@@ -52,7 +52,6 @@ void DInputDialogPrivate::init()
     q->connect(lineEdit, &DLineEdit::textChanged, q, &DInputDialog::textValueChanged);
     q->connect(lineEdit, &DLineEdit::alertChanged, q, &DInputDialog::textAlertChanged);
     q->connect(comboBox, &DComboBox::currentTextChanged, q, &DInputDialog::textValueChanged);
-    q->connect(comboBox->lineEdit(), &QLineEdit::textChanged, q, &DInputDialog::textValueChanged);
     q->connect(comboBox, SIGNAL(currentTextChanged(QString)), q, SIGNAL(textValueChanged(QString)));
     q->connect(spinBox, SIGNAL(valueChanged(int)), q, SIGNAL(intValueChanged(int)));
     q->connect(doubleSpinBox, SIGNAL(valueChanged(double)), q, SIGNAL(doubleValueChanged(double)));
@@ -188,6 +187,9 @@ void DInputDialog::setComboBoxEditable(bool editable)
     D_D(DInputDialog);
 
     d->comboBox->setEditable(editable);
+
+    if (editable)
+        connect(d->comboBox->lineEdit(), &QLineEdit::textChanged, this, &DInputDialog::textValueChanged, Qt::UniqueConnection);
 }
 
 bool DInputDialog::isComboBoxEditable() const
