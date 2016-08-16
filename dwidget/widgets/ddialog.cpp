@@ -35,6 +35,11 @@ DDialogPrivate::DDialogPrivate(DDialog *qq) :
 
 }
 
+QBoxLayout *DDialogPrivate::getContentLayout()
+{
+    return contentLayout;
+}
+
 void DDialogPrivate::init()
 {
     D_Q(DDialog);

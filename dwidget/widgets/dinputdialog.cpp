@@ -169,8 +169,8 @@ void DInputDialog::setTextEchoMode(QLineEdit::EchoMode mode)
     connect(edit, &DLineEdit::alertChanged, this, &DInputDialog::textAlertChanged);
 
     edit->setText(d->lineEdit->text());
+    insertContent(d->getContentLayout()->indexOf(d->lineEdit), edit);
     removeContent(d->lineEdit);
-    addContent(edit);
 
     d->lineEdit = edit;
 }

@@ -25,6 +25,8 @@ class DDialogPrivate : public DAbstractDialogPrivate
 protected:
     DDialogPrivate(DDialog *qq);
 
+    QBoxLayout *getContentLayout();
+
 private:
     bool onButtonClickedClose = true;
     QIcon icon;
