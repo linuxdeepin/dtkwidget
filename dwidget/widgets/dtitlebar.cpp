@@ -213,6 +213,8 @@ void DTitlebar::mousePressEvent(QMouseEvent *event)
 {
     D_D(DTitlebar);
     d->mousePressed = (event->buttons() == Qt::LeftButton);
+
+    emit mousePressed(event->buttons());
 }
 
 void DTitlebar::mouseReleaseEvent(QMouseEvent *event)

@@ -94,6 +94,8 @@ void DX11WidgetPrivate::init()
     q->connect(titlebar, &DTitlebar::optionClicked, q, &DX11Widget::optionClicked);
     q->connect(titlebar, &DTitlebar::mouseMoving, q, &DX11Widget::moveWindow);
 
+    q->connect(titlebar, SIGNAL(mousePressed(Qt::MouseButtons)), q, SLOT(_q_onTitleBarMousePressed(Qt::MouseButtons)));
+
     q->connect(qApp, &QGuiApplication::focusWindowChanged, q, [q] {
         if (q->isActiveWindow())
         {
@@ -126,6 +128,18 @@ void DX11WidgetPrivate::updateContentsMargins()
                                    m_ShadowWidth + m_Border - shadowOffset.y(),
                                    m_ShadowWidth + shadowOffset.x(),
                                    m_ShadowWidth + shadowOffset.y());
+}
+
+void DX11WidgetPrivate::_q_onTitleBarMousePressed(Qt::MouseButtons buttons) const
+{
+#ifdef Q_OS_LINUX
+    D_QC(DX11Widget);
+
+    if (buttons != Qt::LeftButton)
+        XUtils::CancelMoveWindow(q, Qt::LeftButton);
+#else
+    Q_UNUSED(buttons);
+#endif
 }
 
 DX11Widget::DX11Widget(QWidget *parent): DX11Widget(*new DX11WidgetPrivate(this), parent)
@@ -805,3 +819,5 @@ bool FilterMouseMove::eventFilter(QObject *obj, QEvent *event)
 }
 
 DWIDGET_END_NAMESPACE
+
+#include "moc_dx11widget.cpp"

@@ -146,6 +146,7 @@ Q_SIGNALS:
     void shadowOffsetChanged(QPoint shadowOffset);
 
 private:
+    D_PRIVATE_SLOT(void _q_onTitleBarMousePressed(Qt::MouseButtons) const)
 
     D_DECLARE_PRIVATE(DX11Widget)
 };

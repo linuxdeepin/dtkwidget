@@ -37,6 +37,7 @@ signals:
     Q_DECL_DEPRECATED void closeClicked();
     void optionClicked();
     void doubleClicked();
+    void mousePressed(Qt::MouseButtons buttons);
     void mouseMoving(Qt::MouseButton botton);
 
 public slots:
