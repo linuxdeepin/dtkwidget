@@ -36,6 +36,7 @@ public:
 
     void setTitlebarMenu(DMenu *);
     void setTitlebarWidget(QWidget *, bool fixCenterPos = false);
+    void setTitlebarWidget(QWidget *w, Qt::AlignmentFlag wflag, bool fixCenterPos = false);
     int titlebarHeight() const;
     void setTitlebarFixedHeight(int h);
 

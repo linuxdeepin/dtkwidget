@@ -179,7 +179,9 @@ QWidget *DTitlebar::customWidget() const
 void DTitlebar::setWindowFlags(Qt::WindowFlags type)
 {
     D_D(DTitlebar);
-    d->titleLabel->setVisible(type & Qt::WindowTitleHint);
+    if (d->titleLabel) {
+        d->titleLabel->setVisible(type & Qt::WindowTitleHint);
+    }
     d->iconLabel->setVisible(type & Qt::WindowTitleHint);
     d->minButton->setVisible(type & Qt::WindowMinimizeButtonHint);
     d->maxButton->setVisible(type & Qt::WindowMaximizeButtonHint);
@@ -262,6 +264,7 @@ void DTitlebar::setCustomWidget(QWidget *w, Qt::AlignmentFlag wflag, bool fixCen
     l->addWidget(w);
     l->setAlignment(w, wflag);
     qDeleteAll(d->coustomAtea->children());
+    d->titleLabel = nullptr;
     d->coustomAtea->setLayout(l);
     d->buttonArea->resize(old);
     d->customWidget = w;
@@ -278,14 +281,18 @@ void DTitlebar::setFixedHeight(int h)
 void DTitlebar::setTitle(const QString &title)
 {
     D_D(DTitlebar);
-    d->titleLabel->setText(title);
+    if (d->titleLabel) {
+        d->titleLabel->setText(title);
+    }
 }
 
 void DTitlebar::setIcon(const QPixmap &icon)
 {
     D_D(DTitlebar);
-    d->titleLabel->setContentsMargins(0, 0, 0, 0);
-    d->iconLabel->setPixmap(icon.scaled(DefaultIconWidth, DefaultIconHeight, Qt::KeepAspectRatio));
+    if (d->titleLabel) {
+        d->titleLabel->setContentsMargins(0, 0, 0, 0);
+        d->iconLabel->setPixmap(icon.scaled(DefaultIconWidth, DefaultIconHeight, Qt::KeepAspectRatio));
+    }
 }
 
 void DTitlebar::setWindowState(Qt::WindowState windowState)

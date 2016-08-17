@@ -95,7 +95,8 @@ void DX11WidgetPrivate::init()
     q->connect(titlebar, &DTitlebar::mouseMoving, q, &DX11Widget::moveWindow);
 
     q->connect(qApp, &QGuiApplication::focusWindowChanged, q, [q] {
-        if (q->isActiveWindow()) {
+        if (q->isActiveWindow())
+        {
             q->setShadowColor(SHADOW_COLOR_ACTIVE);
         } else {
             q->setShadowColor(SHADOW_COLOR_NORMAL);
@@ -358,6 +359,12 @@ void DX11Widget::setTitlebarWidget(QWidget *w, bool fixCenterPos)
     d->titlebar->setCustomWidget(w, Qt::AlignCenter, fixCenterPos);
 }
 
+void DX11Widget::setTitlebarWidget(QWidget *w, Qt::AlignmentFlag wflag, bool fixCenterPos)
+{
+    D_D(DX11Widget);
+    d->titlebar->setCustomWidget(w, wflag, fixCenterPos);
+}
+
 // TODO: fix layout
 QLayout *DX11Widget::layout() const
 {
@@ -401,8 +408,9 @@ void DX11Widget::setShadowWidth(int r)
 {
     D_D(DX11Widget);
 
-    if (d->m_ShadowWidth == r)
+    if (d->m_ShadowWidth == r) {
         return;
+    }
 
     d->m_Radius = r;
     d->m_ShadowWidth = r;
@@ -449,8 +457,9 @@ void DX11Widget::setShadowColor(QColor shadowColor)
 {
     D_D(DX11Widget);
 
-    if (d->shadowColor == shadowColor)
+    if (d->shadowColor == shadowColor) {
         return;
+    }
 
     d->shadowColor = shadowColor;
 
@@ -464,8 +473,9 @@ void DX11Widget::setShadowOffset(QPoint shadowOffset)
 {
     D_D(DX11Widget);
 
-    if (d->shadowOffset == shadowOffset)
+    if (d->shadowOffset == shadowOffset) {
         return;
+    }
 
     d->shadowOffset = shadowOffset;
 
