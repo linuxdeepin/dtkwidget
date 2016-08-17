@@ -37,7 +37,7 @@ signals:
     Q_DECL_DEPRECATED void closeClicked();
     void optionClicked();
     void doubleClicked();
-    void mouseMoving();
+    void mouseMoving(Qt::MouseButton botton);
 
 public slots:
     void setFixedHeight(int h);

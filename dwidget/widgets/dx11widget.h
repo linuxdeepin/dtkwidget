@@ -126,7 +126,7 @@ public slots:
     void showFullScreen();
     void showNormal();
 
-    void moveWindow();
+    void moveWindow(Qt::MouseButton botton);
     void toggleMaximizedWindow();
 
     void setBackgroundColor(QColor backgroundColor);

@@ -133,8 +133,9 @@ void DTitlebarPrivate::_q_toggleWindowState()
 
     QWidget *parentWindow = q->parentWidget();
 
-    if (!parentWindow)
+    if (!parentWindow) {
         return;
+    }
 
     parentWindow = parentWindow->window();
 
@@ -209,16 +210,15 @@ void DTitlebar::showMenu()
 void DTitlebar::mousePressEvent(QMouseEvent *event)
 {
     D_D(DTitlebar);
-
     d->mousePressed = (event->buttons() == Qt::LeftButton);
 }
 
 void DTitlebar::mouseReleaseEvent(QMouseEvent *event)
 {
     D_D(DTitlebar);
-
-    if (event->buttons() == Qt::LeftButton)
+    if (event->buttons() == Qt::LeftButton) {
         d->mousePressed = false;
+    }
 }
 
 bool DTitlebar::eventFilter(QObject *obj, QEvent *event)
@@ -304,16 +304,18 @@ void DTitlebar::setVisible(bool visible)
 {
     D_D(DTitlebar);
 
-    if (visible == isVisible())
+    if (visible == isVisible()) {
         return;
+    }
 
     QWidget::setVisible(visible);
 
     if (visible) {
         d->parentWindow = parentWidget();
 
-        if (!d->parentWindow)
+        if (!d->parentWindow) {
             return;
+        }
 
         d->parentWindow = d->parentWindow->window();
         d->parentWindow->installEventFilter(this);
@@ -323,8 +325,9 @@ void DTitlebar::setVisible(bool visible)
         connect(d->minButton, &DWindowMinButton::clicked, d->parentWindow, &QWidget::showMinimized);
         connect(d->closeButton, &DWindowCloseButton::clicked, d->parentWindow, &QWidget::close);
     } else {
-        if (!d->parentWindow)
+        if (!d->parentWindow) {
             return;
+        }
 
         d->parentWindow->removeEventFilter(this);
 
@@ -337,11 +340,13 @@ void DTitlebar::setVisible(bool visible)
 
 void DTitlebar::mouseMoveEvent(QMouseEvent *event)
 {
-    Q_UNUSED(event)
     D_DC(DTitlebar);
 
-    if (d->mousePressed)
-        emit mouseMoving();
+    if (event->buttons() == Qt::LeftButton /*&& d->mousePressed*/) {
+        Qt::MouseButton button = event->buttons() & Qt::LeftButton ? Qt::LeftButton : Qt::NoButton;
+        emit mouseMoving(button);
+    }
+    QWidget::mouseMoveEvent(event);
 }
 
 void DTitlebar::mouseDoubleClickEvent(QMouseEvent *event)

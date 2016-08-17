@@ -164,10 +164,14 @@ CornerEdge GetCornerEdge(QWidget *widget, int x, int y, const QMargins &margins,
     return static_cast<CornerEdge>(ce);
 }
 
-void SendMoveResizeMessage(QWidget *widget, int action)
+void SendMoveResizeMessage(QWidget *widget, int qbutton, int action)
 {
     const auto display = QX11Info::display();
     const auto screen = QX11Info::appScreen();
+
+    int xbtn = qbutton == Qt::LeftButton ? Button1 :
+               qbutton == Qt::RightButton ? Button3 :
+               AnyButton;
 
     XEvent xev;
     memset(&xev, 0, sizeof(xev));
@@ -182,7 +186,7 @@ void SendMoveResizeMessage(QWidget *widget, int action)
     xev.xclient.data.l[0] = global_position.x();
     xev.xclient.data.l[1] = global_position.y();
     xev.xclient.data.l[2] = action;
-    xev.xclient.data.l[3] = 0;
+    xev.xclient.data.l[3] = xbtn;
     xev.xclient.data.l[4] = 0;
     XUngrabPointer(display, QX11Info::appTime());
 
@@ -199,17 +203,17 @@ bool IsCornerEdget(QWidget *widget, int x, int y, const QMargins &margins, int b
     return GetCornerEdge(widget, x, y, margins, border_width) != CornerEdge::kInvalid;
 }
 
-void MoveWindow(QWidget *widget)
+void MoveWindow(QWidget *widget, int qbutton)
 {
-    SendMoveResizeMessage(widget, _NET_WM_MOVERESIZE_MOVE);
+    SendMoveResizeMessage(widget, qbutton, _NET_WM_MOVERESIZE_MOVE);
 }
 
-void MoveResizeWindow(QWidget *widget, int x, int y, const QMargins &margins, int border_width)
+void MoveResizeWindow(QWidget *widget, int qbutton, int x, int y, const QMargins &margins, int border_width)
 {
     const CornerEdge ce = GetCornerEdge(widget, x, y, margins, border_width);
     if (ce != CornerEdge::kInvalid) {
         const int action = CornerEdge2WmGravity(ce);
-        SendMoveResizeMessage(widget, action);
+        SendMoveResizeMessage(widget, qbutton, action);
     }
 }
 

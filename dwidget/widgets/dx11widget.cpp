@@ -270,10 +270,10 @@ void DX11Widget::showFullScreen()
     this->raise();
 }
 
-void DX11Widget::moveWindow()
+void DX11Widget::moveWindow(Qt::MouseButton botton)
 {
 #ifdef Q_OS_LINUX
-    XUtils::MoveWindow(this);
+    XUtils::MoveWindow(this, botton);
 #endif
 }
 

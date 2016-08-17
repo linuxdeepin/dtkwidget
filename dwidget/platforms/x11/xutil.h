@@ -38,11 +38,11 @@ void ChangeWindowMaximizedState(QWidget *widget, int wm_state);
 CornerEdge GetCornerEdge(QWidget *widget, int x, int y, const QMargins &margins, int border_width);
 bool UpdateCursorShape(QWidget *widget, int x, int y, const QMargins &margins, int border_width);
 bool IsCornerEdget(QWidget *widget, int x, int y, const QMargins &margins, int border_width);
-void MoveResizeWindow(QWidget *widget, int x, int y, const QMargins &margins, int border_width);
+void MoveResizeWindow(QWidget *widget, int qbutton, int x, int y, const QMargins &margins, int border_width);
 
 void StartResizing(QWidget *w, const QPoint &globalPoint, const CornerEdge &ce);
-void SendMoveResizeMessage(QWidget *widget, int action, int button);
-void MoveWindow(QWidget *widget);
+void SendMoveResizeMessage(QWidget *widget, int qbutton, int action);
+void MoveWindow(QWidget *widget, int qbutton);
 
 void ResetCursorShape(QWidget *widget);
 bool SetCursorShape(QWidget *widget, int cursor_id);
