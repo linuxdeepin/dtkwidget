@@ -503,11 +503,11 @@ void DX11Widget::drawShadowPixmap()
 {
     D_D(DX11Widget);
 
-    QPixmap pixmap(QWidget::size());
+    QPixmap pixmap(QWidget::size() - QSize(d->m_ShadowWidth * 2, d->m_ShadowWidth * 2));
 
     pixmap.fill(Qt::black);
 
-    d->shadowPixmap = QPixmap::fromImage(DUTIL_NAMESPACE::dropShadow(pixmap, d->m_ShadowWidth, d->shadowColor));
+    d->shadowPixmap = QPixmap::fromImage(DUtility::dropShadow(pixmap, d->m_ShadowWidth, d->shadowColor));
 }
 
 int DX11Widget::border() const

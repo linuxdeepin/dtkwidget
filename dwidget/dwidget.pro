@@ -14,9 +14,12 @@ unix{
     PKGCONFIG += x11 xext
 }
 
-HEADERS += dwidget_global.h
+HEADERS += dwidget_global.h \
+    dutility.h
 includes.path = $${DTK_INCLUDEPATH}/DWidget
-includes.files += dwidget_global.h widgets/*.h
+includes.files += dwidget_global.h \
+            widgets/*.h \
+            dutility.h
 unix{
     includes.files += $$PWD/platforms/linux/*.h
 }
@@ -47,3 +50,6 @@ INCLUDEPATH += $$PWD/../dbase
 DEPENDPATH += $$PWD/../dbase
 INCLUDEPATH += $$PWD/../dutil
 DEPENDPATH += $$PWD/../dutil
+
+SOURCES += \
+    dutility.cpp

@@ -1,5 +1,7 @@
 #include "daboutdialog.h"
 
+#include <dutility.h>
+
 #include <QDesktopServices>
 #include <QUrl>
 #include <QDebug>
@@ -56,10 +58,26 @@ DAboutDialog::DAboutDialog(
     connect(websiteLabel, SIGNAL(linkActivated(QString)),
             this, SLOT(onLogLinkActivated(QString)));
 
-    QString textFormat = "        %1"; // the spaces are used to get 24px indent.
-    //TODO: if without '\n' the text will be cut;
-    QString descriptionText =  textFormat.arg(QString("%1\n").arg(description));
-    QLabel *descriptionLabel = new QLabel(descriptionText);
+    QLabel *descriptionLabel = new QLabel();
+
+    int line_count = 0;
+
+    //! 38 is mainLayout left/right margin
+    QStringList list_description = DUtility::wordWrapText(description, width() - 38 * 2, QTextOption::WrapAtWordBoundaryOrAnywhere, &line_count);
+
+    if (line_count == 1)  {
+        //TODO: if without '\n' the text will be cut;
+        descriptionLabel->setText(description + '\n');
+        descriptionLabel->setAlignment(Qt::AlignHCenter);
+    } else {
+        //TODO: if without '\n' the text will be cut;
+        QString textFormat = "<p style='text-indent: %1px;'>%2\n</p>";
+
+        int first_line_indent = descriptionLabel->fontMetrics().width(QChar(0x6df1)) * 2;
+
+        descriptionLabel->setText(textFormat.arg(first_line_indent).arg(description));
+    }
+
     descriptionLabel->setStyleSheet("font-size:11px; color: #1A1A1A; border: none;");
     descriptionLabel->setWordWrap(true);
     descriptionLabel->adjustSize();
@@ -83,8 +101,7 @@ DAboutDialog::DAboutDialog(
     mainLayout->addWidget(websiteLabel);
     mainLayout->setAlignment(websiteLabel, Qt::AlignCenter);
     mainLayout->addSpacing(26);
-    mainLayout->addWidget(descriptionLabel);
-    mainLayout->setAlignment(descriptionLabel, Qt::AlignHCenter);
+    mainLayout->addWidget(descriptionLabel, Qt::AlignHCenter);
 
     setLayout(mainLayout);
 
