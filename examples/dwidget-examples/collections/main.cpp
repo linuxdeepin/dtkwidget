@@ -10,6 +10,7 @@
 #include "mainwindow.h"
 #include "dlabel.h"
 #include "dapplication.h"
+#include "dplatformwindowhandle.h"
 
 #include <QDebug>
 #include <DLog>
@@ -22,6 +23,8 @@ int main(int argc, char *argv[])
 #if defined(STATIC_LIB)
     DWIDGET_INIT_RESOURCE();
 #endif
+
+    DApplication::loadDXcbPlugin();
 
     DApplication a(argc, argv);
     a.setTheme("light");
