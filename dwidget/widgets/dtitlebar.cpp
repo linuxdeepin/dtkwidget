@@ -146,9 +146,9 @@ void DTitlebarPrivate::_q_toggleWindowState()
 
     parentWindow = parentWindow->window();
 
-    if (parentWindow->windowState() == Qt::WindowMaximized) {
+    if (parentWindow->isMaximized()) {
         parentWindow->showNormal();
-    } else if (parentWindow->windowState() == Qt::WindowNoState) {
+    } else if (!parentWindow->isFullScreen()) {
         parentWindow->showMaximized();
     }
 }
@@ -327,6 +327,13 @@ void DTitlebar::setWindowState(Qt::WindowState windowState)
 {
     D_D(DTitlebar);
     d->maxButton->setWindowState(windowState);
+}
+
+void DTitlebar::toggleWindowState()
+{
+    D_D(DTitlebar);
+
+    d->_q_toggleWindowState();
 }
 
 int DTitlebar::buttonAreaWidth() const

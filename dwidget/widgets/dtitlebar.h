@@ -47,6 +47,8 @@ public slots:
     void setTitle(const QString &title);
     void setIcon(const QPixmap &icon);
     Q_DECL_DEPRECATED void setWindowState(Qt::WindowState windowState);
+    /// Maximized/Minumized
+    void toggleWindowState();
 
 private slots:
     void showMenu();
