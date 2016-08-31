@@ -13,7 +13,10 @@
 #include "dwindowrestorebutton.h"
 #include "dwindowoptionbutton.h"
 #include "dlabel.h"
-#include "dx11widget.h"
+#include "dplatformwindowhandle.h"
+#ifdef Q_OS_LINUX
+#include "../platforms/x11/xutil.h"
+#endif
 
 #include  "dmenu.h"
 
@@ -157,12 +160,14 @@ void DTitlebarPrivate::_q_toggleWindowState()
 
 void DTitlebarPrivate::_q_showMinimized()
 {
-    DX11Widget *x11Widget = qobject_cast<DX11Widget*>(parentWindow);
-
-    if (x11Widget) {
-        x11Widget->showMinimized();
-    } else {
+    if (DPlatformWindowHandle::isEnabledDXcb(parentWindow)) {
         parentWindow->showMinimized();
+    } else {
+#ifdef Q_OS_LINUX
+        XUtils::ShowMinimizedWindow(parentWindow, true);
+#else
+        parentWindow->showMinimized();
+#endif
     }
 }
 
