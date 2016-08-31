@@ -64,6 +64,7 @@ protected:
 private:
     D_DECLARE_PRIVATE(DTitlebar)
     D_PRIVATE_SLOT(void _q_toggleWindowState())
+    D_PRIVATE_SLOT(void _q_showMinimized())
 };
 
 DWIDGET_END_NAMESPACE
