@@ -66,7 +66,8 @@ DLoadingIndicator::~DLoadingIndicator()
 {
     D_DC(DLoadingIndicator);
 
-    d->widgetSource->deleteLater();
+    if(d->widgetSource)
+        d->widgetSource->deleteLater();
 }
 
 QColor DLoadingIndicator::backgroundColor() const
