@@ -13,6 +13,7 @@ public:
 
     int radius = 10;
     DBlurEffectWidget::BlurMode mode = DBlurEffectWidget::GaussianBlur;
+    QImage sourceImage;
 
 private:
     D_DECLARE_PUBLIC(DBlurEffectWidget)

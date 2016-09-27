@@ -42,6 +42,7 @@ protected:
     DBlurEffectWidget(DBlurEffectWidgetPrivate &dd, QWidget *parent = 0);
 
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
+    void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
 
 private:
     D_DECLARE_PRIVATE(DBlurEffectWidget)

@@ -75,19 +75,46 @@ DBlurEffectWidget::DBlurEffectWidget(DBlurEffectWidgetPrivate &dd, QWidget *pare
 
 void DBlurEffectWidget::paintEvent(QPaintEvent *event)
 {
-    D_DC(DBlurEffectWidget);
+    if (isTopLevel())
+        return QWidget::paintEvent(event);
+
+    D_D(DBlurEffectWidget);
+
+    int radius = d->radius;
+    QPoint point_offset = mapTo(window(), QPoint(0, 0));
+    const QRect paintRect = event->rect();
+
+    if (d->sourceImage.isNull()) {
+        const QRect &tmp_rect = rect().translated(point_offset);
+
+        d->sourceImage = window()->backingStore()->handle()->toImage().copy(tmp_rect);
+    } else {
+        QPainter pa_image(&d->sourceImage);
+
+        pa_image.setCompositionMode(QPainter::CompositionMode_Source);
+
+        for (const QRect &rect : event->region().rects()) {
+            pa_image.drawImage(rect.topLeft(),
+                               window()->backingStore()->handle()->toImage().copy(rect.translated(point_offset)));
+        }
+
+        pa_image.end();
+    }
+
+    QImage image = d->sourceImage.copy(paintRect.adjusted(-radius, -radius, radius, radius));
 
     QPainter pa(this);
-
-    QPoint point_offset = mapTo(window(), QPoint(0, 0));
-    int radius = d->radius;
-
-    const QRect &tmp_rect = event->rect().translated(point_offset).adjusted(-radius, -radius, radius, radius);
-
-    QImage image = window()->backingStore()->handle()->toImage().copy(tmp_rect);
-
-    pa.translate(event->rect().topLeft() - QPoint(radius, radius));
+    pa.translate(paintRect.topLeft() - QPoint(radius, radius));
     qt_blurImage(&pa, image, radius, false, false);
+}
+
+void DBlurEffectWidget::resizeEvent(QResizeEvent *event)
+{
+    D_D(DBlurEffectWidget);
+
+    d->sourceImage = QImage();
+
+    QWidget::resizeEvent(event);
 }
 
 DWIDGET_END_NAMESPACE
