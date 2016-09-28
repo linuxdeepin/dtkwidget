@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 unix{
     QT += x11extras dbus
-    CONFIG += libk_pkgconfig
+    CONFIG += link_pkgconfig
     PKGCONFIG += x11 xext
 }
 
