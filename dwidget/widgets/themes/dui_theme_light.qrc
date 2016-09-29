@@ -124,5 +124,7 @@
         <file>light/dialogs/images/light_check_checked.png</file>
         <file>light/dialogs/images/light_check_checked_hover.png</file>
         <file>light/dialogs/images/user-trash-full.png</file>
+        <file>light/images/combobox_arrow.png</file>
+        <file>light/images/combobox_arrow_active.png</file>
     </qresource>
 </RCC>

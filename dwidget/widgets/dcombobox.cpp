@@ -56,6 +56,8 @@ void DComboBoxPrivate::init()
 
         hoverIndex = index;
     });
+
+    restylePopupEnds();
 }
 
 //Bypassing the problem here
@@ -85,28 +87,34 @@ void DComboBoxPrivate::restylePopupEnds()
     D_Q(DComboBox);
 
     QList<QWidget *> childs = q->findChildren<QWidget *>();
-    QList<QWidget *> ends;  //end of popup frame
-    for (QWidget * w : childs) {
-        if (QString(w->metaObject()->className()) == "QComboBoxPrivateScroller") {
-            ends << w;
-            w->setFixedHeight(12);
-        }
-    }
+    bool isPopupTopEnd = true;
 
-    for (int i = 0; i < ends.length(); i ++) {
-        QWidget *w  = ends.at(i);
-        w->parentWidget()->setAttribute(Qt::WA_TranslucentBackground);
-        w->setStyleSheet("background: transparent");
-        QHBoxLayout *layout = new QHBoxLayout(w);
-        layout->setContentsMargins(0, 0, 0, 0);
-        QFrame *f = new QFrame(w);
-        if (i == 0)
-            f->setObjectName("ComboboxPopupTopEnd");
-        else
-            f->setObjectName("ComboboxPopupBottomEnd");
-        f->setStyleSheet(q->styleSheet());
-        f->resize(w->size());
-        layout->addWidget(f);
+    for (QWidget * w : childs) {
+        if (w->metaObject()->className() == QLatin1String("QComboBoxPrivateScroller")) {
+            w->setFixedHeight(12);
+            w->setStyleSheet("background: transparent");
+            QHBoxLayout *layout = new QHBoxLayout(w);
+            layout->setContentsMargins(0, 0, 0, 0);
+            QFrame *f = new QFrame(w);
+            if (isPopupTopEnd) {
+                isPopupTopEnd = false;
+
+                f->setObjectName("ComboboxPopupTopEnd");
+            } else {
+                f->setObjectName("ComboboxPopupBottomEnd");
+            }
+            f->setStyleSheet(q->styleSheet());
+            f->resize(w->size());
+            layout->addWidget(f);
+
+            q->connect(DThemeManager::instance(), &DThemeManager::themeChanged,
+                       f, [f, q] {
+                f->setStyleSheet(q->styleSheet());
+                f->parentWidget()->setStyleSheet(q->styleSheet());
+            });
+        } else if (w->metaObject()->className() == QLatin1String("QComboBoxPrivateContainer")) {
+            w->setStyleSheet(q->styleSheet());
+        }
     }
 }
 
@@ -231,7 +239,6 @@ DComboBox::DComboBox(QWidget *parent) :
     D_THEME_INIT_WIDGET(DComboBox, alert);
 
     d_func()->init();
-    d_func()->restylePopupEnds();
 }
 
 void DComboBox::setFixedSize(int w, int h)

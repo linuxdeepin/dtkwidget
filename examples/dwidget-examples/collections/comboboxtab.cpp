@@ -12,7 +12,7 @@
 
 ComboBoxTab::ComboBoxTab(QWidget *parent) : QLabel(parent)
 {
-    setStyleSheet("ComboBoxTab{background-color: #252627;}");
+//    setStyleSheet("ComboBoxTab{background-color: #252627;}");
 
     ////////////////////////////////////////////////Font ComboBox
     DFontComboBox *fcb = new DFontComboBox(this);
