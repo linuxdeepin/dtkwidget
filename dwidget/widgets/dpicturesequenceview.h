@@ -42,6 +42,8 @@ public:
     void setPictureSequence(const QStringList &sequence);
     void setPictureSequence(const QStringList &sequence, PaintMode paintMode);
     void play();
+    void pause();
+    void stop();
 
     int speed() const;
     void setSpeed(int speed);

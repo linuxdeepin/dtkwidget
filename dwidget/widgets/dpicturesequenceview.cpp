@@ -135,6 +135,23 @@ void DPictureSequenceView::play()
     d->play();
 }
 
+void DPictureSequenceView::pause()
+{
+    D_D(DPictureSequenceView);
+
+    d->m_refreshTimer->stop();
+}
+
+void DPictureSequenceView::stop()
+{
+    D_D(DPictureSequenceView);
+
+    d->m_refreshTimer->stop();
+    d->m_pictureList[d->m_lastItemPos]->hide();
+    d->m_pictureList[0]->show();
+    d->m_lastItemPos = 0;
+}
+
 int DPictureSequenceView::speed() const
 {
     D_DC(DPictureSequenceView);
