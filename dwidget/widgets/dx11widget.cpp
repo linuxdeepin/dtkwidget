@@ -631,6 +631,8 @@ void DX11Widget::resize(const QSize &size)
 {
     D_D(DX11Widget);
     d->windowWidget->resize(size);
+    d->titlebar->resize(size.width(), d->titlebar->height());
+
     QSize externSize = d->externSize(size);
     if (d->resizable) {
         QWidget::setMinimumSize(externSize);
@@ -751,14 +753,14 @@ void DX11Widget::showEvent(QShowEvent *e)
 
 void DX11Widget::resizeEvent(QResizeEvent *e)
 {
-#ifdef Q_OS_LINUX
     D_D(DX11Widget);
+#ifdef Q_OS_LINUX
     int resizeHandleWidth = d->resizable ? d->m_ResizeHandleWidth : 0;
     XUtils::SetWindowExtents(this, d->externMargins(), resizeHandleWidth);
 #endif
 
     drawShadowPixmap();
-
+    d->titlebar->resize(e->size().width(), d->titlebar->height());
     QWidget::resizeEvent(e);
 }
 
@@ -772,8 +774,8 @@ void DX11Widget::paintEvent(QPaintEvent * /*e*/)
     D_D(DX11Widget);
     int radius = d->m_Radius;
     //. TODO: border not  part of window?
-    int windowExtern = d->m_ShadowWidth + d->m_Border;
-    int contentExtern = d->m_ShadowWidth + d->m_Border;
+    int windowExtern = d->m_ShadowWidth + d->m_Border*2;
+    int contentExtern = d->m_ShadowWidth + d->m_Border*2;
 
     QPainter painter(this);
 

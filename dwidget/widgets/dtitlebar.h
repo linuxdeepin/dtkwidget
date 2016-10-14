@@ -31,6 +31,8 @@ public:
 
     void setVisible(bool visible) Q_DECL_OVERRIDE;
 
+    void resize(int width, int height);
+    void resize(const QSize &);
 signals:
     Q_DECL_DEPRECATED void minimumClicked();
     Q_DECL_DEPRECATED void maximumClicked();

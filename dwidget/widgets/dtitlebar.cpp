@@ -96,7 +96,7 @@ void DTitlebarPrivate::init()
     separator->hide();
 
     QHBoxLayout *buttonAreaLayout = new QHBoxLayout;
-	buttonAreaLayout->setContentsMargins(0, 1, 0, 0);
+    buttonAreaLayout->setContentsMargins(0, 1, 0, 0);
     buttonAreaLayout->setMargin(0);
     buttonAreaLayout->setSpacing(0);
     buttonAreaLayout->addWidget(optionButton);
@@ -208,8 +208,9 @@ void DTitlebar::setWindowFlags(Qt::WindowFlags type)
         d->titleLabel->setVisible(type & Qt::WindowTitleHint);
     }
 
-    if (d->iconLabel)
+    if (d->iconLabel) {
         d->iconLabel->setVisible(type & Qt::WindowTitleHint);
+    }
 
     d->minButton->setVisible(type & Qt::WindowMinimizeButtonHint);
     d->maxButton->setVisible(type & Qt::WindowMaximizeButtonHint);
@@ -218,8 +219,9 @@ void DTitlebar::setWindowFlags(Qt::WindowFlags type)
     d->buttonArea->adjustSize();
     d->buttonArea->resize(d->buttonArea->size());
 
-    if (d->titlePadding)
+    if (d->titlePadding) {
         d->titlePadding->setFixedSize(d->buttonArea->size());
+    }
 }
 
 void DTitlebar::setMenu(DMenu *menu)
@@ -301,8 +303,7 @@ void DTitlebar::setCustomWidget(QWidget *w, Qt::AlignmentFlag wflag, bool fixCen
         l->addWidget(d->titlePadding);
     }
 
-    l->addWidget(w);
-    l->setAlignment(w, wflag);
+    l->addWidget(w, 0, wflag);
     qDeleteAll(d->coustomAtea->children());
     d->titleLabel = Q_NULLPTR;
     d->titleArea = Q_NULLPTR;
@@ -311,6 +312,8 @@ void DTitlebar::setCustomWidget(QWidget *w, Qt::AlignmentFlag wflag, bool fixCen
     d->coustomAtea->setLayout(l);
     d->buttonArea->resize(old);
     d->customWidget = w;
+
+    w->setFixedSize(d->coustomAtea->size());
 }
 
 void DTitlebar::setFixedHeight(int h)
@@ -410,6 +413,19 @@ void DTitlebar::setVisible(bool visible)
         disconnect(d->minButton, SIGNAL(clicked()), this, SLOT(_q_showMinimized()));
         disconnect(d->closeButton, &DWindowCloseButton::clicked, d->parentWindow, &QWidget::close);
     }
+}
+
+void DTitlebar::resize(int w, int h)
+{
+    D_DC(DTitlebar);
+    if (d->customWidget) {
+        d->customWidget->setFixedSize(w - d->buttonArea->width(),h);
+    }
+}
+
+void DTitlebar::resize(const QSize &sz)
+{
+    DTitlebar::resize(sz.width(), sz.height());
 }
 
 void DTitlebar::mouseMoveEvent(QMouseEvent *event)
