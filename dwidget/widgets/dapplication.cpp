@@ -102,6 +102,7 @@ DApplication::DApplication(int &argc, char **argv) :
     QApplication(argc, argv),
     DObject(*new DApplicationPrivate(this))
 {
+    qputenv("QT_QPA_PLATFORM", QByteArray());
 }
 
 QString DApplication::theme() const
