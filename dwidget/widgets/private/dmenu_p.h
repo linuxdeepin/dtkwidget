@@ -4,6 +4,8 @@
 #include "doption_p.h"
 #include "dmenu.h"
 
+#include <QPointer>
+
 class MenumanagerInterface;
 class MenuInterface;
 
@@ -29,7 +31,7 @@ private:
 
     mutable int actionId = 0;
     mutable QMap<DAction*, QString> actionToId;
-    QEventLoop *eventLoop = Q_NULLPTR;
+    QPointer<QEventLoop> eventLoop;
     DAction *lastTriggerAction = Q_NULLPTR;
 
     QString createActionId(DAction *action) const;

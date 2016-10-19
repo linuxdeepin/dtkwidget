@@ -284,11 +284,11 @@ DAction *DMenu::exec(const QPoint &p, DAction *action)
 {
     D_D(DMenu);
 
-    if(!d->eventLoop && popup(p, action)) {
-        d->eventLoop = new QEventLoop(this);
-        d->eventLoop->exec(QEventLoop::DialogExec);
-        d->eventLoop->deleteLater();
-        d->eventLoop = Q_NULLPTR;
+    if (!d->eventLoop && popup(p, action)) {
+        QEventLoop eventLoop;
+
+        d->eventLoop = &eventLoop;
+        d->eventLoop->exec(QEventLoop::ExcludeSocketNotifiers);
 
         return d->lastTriggerAction;
     }
