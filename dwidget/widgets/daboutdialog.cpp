@@ -50,6 +50,7 @@ DAboutDialog::DAboutDialog(
     companyLogoLabel->setFixedSize(companyLogoPixmap.size());
 
     QLabel *websiteLabel = new QLabel(website);
+    websiteLabel->setContextMenuPolicy(Qt::NoContextMenu);
     websiteLabel->setFixedHeight(24);
     websiteLabel->setStyleSheet("font-size:13px; color: #004EE5");
     websiteLabel->setOpenExternalLinks(false);
