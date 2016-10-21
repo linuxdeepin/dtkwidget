@@ -313,7 +313,7 @@ void DTitlebar::setCustomWidget(QWidget *w, Qt::AlignmentFlag wflag, bool fixCen
     d->buttonArea->resize(old);
     d->customWidget = w;
 
-    w->setFixedSize(d->coustomAtea->size());
+    w->resize(d->coustomAtea->size());
 }
 
 void DTitlebar::setFixedHeight(int h)
@@ -419,7 +419,7 @@ void DTitlebar::resize(int w, int h)
 {
     D_DC(DTitlebar);
     if (d->customWidget) {
-        d->customWidget->setFixedSize(w - d->buttonArea->width(),h);
+        d->customWidget->resize(w - d->buttonArea->width(),h);
     }
 }
 
