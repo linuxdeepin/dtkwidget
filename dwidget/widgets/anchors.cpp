@@ -474,7 +474,8 @@ void AnchorsBase::clearAnchors(const QWidget *w)
 {
     AnchorsBase *base = AnchorsBasePrivate::getWidgetAnchorsBase(w);
     if (base) {
-        base->deleteLater();
+        AnchorsBasePrivate::removeWidgetAnchorsBase(base->target(), base);
+        delete base;
     }
 }
 
