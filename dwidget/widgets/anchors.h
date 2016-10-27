@@ -232,13 +232,12 @@ signals:
     void alignWhenCenteredChanged(bool alignWhenCentered);
 
 protected:
-    explicit AnchorsBase(AnchorsBasePrivate *dd);
     void init(QWidget *w);
 
 private:
     AnchorsBase(QWidget *w, bool);
 
-    AnchorsBasePrivate *d_ptr = NULL;
+    QExplicitlySharedDataPointer<QSharedData> d_ptr;
 
     Q_DECLARE_PRIVATE(AnchorsBase)
 };

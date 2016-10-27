@@ -14,7 +14,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class AnchorsBasePrivate
+class AnchorsBasePrivate : public QSharedData
 {
     AnchorsBasePrivate(AnchorsBase *qq): q_ptr(qq) {}
     ~AnchorsBasePrivate()
@@ -286,9 +286,6 @@ AnchorsBase::~AnchorsBase()
     Q_D(AnchorsBase);
 
     d->removeWidgetAnchorsBase(target(), this);
-    if (d->q_func() == this) {
-        delete d;
-    }
 }
 
 QWidget *AnchorsBase::target() const
@@ -474,7 +471,6 @@ void AnchorsBase::clearAnchors(const QWidget *w)
 {
     AnchorsBase *base = AnchorsBasePrivate::getWidgetAnchorsBase(w);
     if (base) {
-        AnchorsBasePrivate::removeWidgetAnchorsBase(base->target(), base);
         delete base;
     }
 }
@@ -1006,12 +1002,6 @@ void AnchorsBase::updateCenterIn()
     moveCenter(rect.center());
 }
 
-AnchorsBase::AnchorsBase(AnchorsBasePrivate *dd):
-    QObject(dd->extendWidget->target()),
-    d_ptr(dd)
-{
-}
-
 void AnchorsBase::init(QWidget *w)
 {
     Q_D(AnchorsBase);
@@ -1019,18 +1009,14 @@ void AnchorsBase::init(QWidget *w)
     AnchorsBase *base = AnchorsBasePrivate::getWidgetAnchorsBase(w);
 
     if (base) {
-        if (d && d->q_func() == this) {
-            delete d;
-        }
-
-        d_ptr = base->d_func();
+        d_ptr = base->d_ptr;
     } else if (d && d->q_func() == this) {
         d->removeWidgetAnchorsBase(target(), this);
         d->setWidgetAnchorsBase(w, this);
         d->extendWidget->setTarget(w);
     } else {
         base = new AnchorsBase(w, false);
-        d_ptr = base->d_func();
+        d_ptr = base->d_ptr;
     }
 }
 
