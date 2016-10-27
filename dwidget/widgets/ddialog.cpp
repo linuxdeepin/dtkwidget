@@ -218,7 +218,13 @@ void DDialogPrivate::_q_updateLabelMaxWidth()
 
 void DDialogPrivate::_q_defaultButtonTriggered()
 {
-    if(defaultButton)
+    D_QC(DDialog);
+
+    QAbstractButton *button = qobject_cast<QAbstractButton*>(q->focusWidget());
+
+    if (button)
+        button->click();
+    else if (defaultButton)
         defaultButton->click();
 }
 
