@@ -249,7 +249,7 @@ class AnchorsBasePrivate : public QSharedData
 
     AnchorsBase *q_ptr;
 
-    DEnhancedWidget *extendWidget = NULL;
+    QPointer<DEnhancedWidget> extendWidget;
     AnchorInfo *top = new AnchorInfo(q_ptr, Qt::AnchorTop);
     AnchorInfo *bottom = new AnchorInfo(q_ptr, Qt::AnchorBottom);
     AnchorInfo *left = new AnchorInfo(q_ptr, Qt::AnchorLeft);
@@ -292,6 +292,9 @@ QWidget *AnchorsBase::target() const
 {
     Q_D(const AnchorsBase);
 
+    if (!d->extendWidget)
+        return 0;
+
     return d->extendWidget->target();
 }
 
@@ -305,6 +308,9 @@ DEnhancedWidget *AnchorsBase::enhancedWidget() const
 bool AnchorsBase::enabled() const
 {
     Q_D(const AnchorsBase);
+
+    if (!d->extendWidget)
+        return false;
 
     return d->extendWidget->enabled();
 }
@@ -483,6 +489,9 @@ AnchorsBase *AnchorsBase::getAnchorBaseByWidget(const QWidget *w)
 void AnchorsBase::setEnabled(bool enabled)
 {
     Q_D(AnchorsBase);
+
+    if (!d->extendWidget)
+        return;
 
     d->extendWidget->setEnabled(enabled);
 }
