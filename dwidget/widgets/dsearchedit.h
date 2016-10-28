@@ -47,6 +47,8 @@ public slots:
 signals:
     void textChanged();
     void editingFinished();
+    void focusOut();
+    void focusIn();
 
 private slots:
     void toEditMode();

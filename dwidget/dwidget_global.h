@@ -48,7 +48,7 @@ namespace Widget
 
 #define DTKWIDGET_DECL_DEPRECATED Q_DECL_DEPRECATED
 
-#define D_THEME_INIT_WIDGET(className, ...) \
+#define D_THEME_INIT_WIDGET(className, ...) do{\
     DThemeManager * manager = DThemeManager::instance(); \
     this->setStyleSheet(this->styleSheet() + manager->getQssForWidget(#className)); \
     connect(manager, &DThemeManager::themeChanged, this, [this, manager] (QString) { \
@@ -61,4 +61,5 @@ namespace Widget
             continue;\
         connect(this, self->property(self->indexOfProperty(str.toLatin1().data())).notifySignal(),\
         manager, manager->metaObject()->method(manager->metaObject()->indexOfMethod("updateQss()")));\
-    }
+    } \
+} while (0);

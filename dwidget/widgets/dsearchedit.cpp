@@ -103,6 +103,17 @@ bool DSearchEdit::eventFilter(QObject *o, QEvent *e)
 
         QTimer::singleShot(200, m_placeHolder, SLOT(show()));
 //        m_placeHolder->show();
+        emit focusOut();
+    }
+
+    if (o == m_edt) {
+        if (e->type() == QEvent::FocusOut) {
+            emit focusOut();
+        }
+
+        if (e->type() == QEvent::FocusIn) {
+            emit focusIn();
+        }
     }
 
     return QFrame::eventFilter(o, e);
