@@ -43,6 +43,11 @@ signals:
     void mousePressed(Qt::MouseButtons buttons);
     void mouseMoving(Qt::MouseButton botton);
 
+#ifdef Q_OS_WIN
+    void mousePosPressed(Qt::MouseButtons buttons, QPoint pos);
+    void mousePosMoving(Qt::MouseButton botton, QPoint pos);
+#endif
+
 public slots:
     void setFixedHeight(int h);
     void setSeparatorVisible(bool visible);

@@ -183,6 +183,19 @@ DX11Widget::DX11Widget(DX11WidgetPrivate &dd, QWidget *parent)
 #ifdef Q_OS_LINUX
     XUtils::SetMouseTransparent(this, true);
 #endif
+#ifdef Q_OS_WIN
+    connect(d->titlebar, &DTitlebar::mousePosMoving,
+               this, [=](Qt::MouseButton /*botton*/, QPoint pos){
+        move(pos - d->m_LastMousePos);
+    });
+
+    connect(d->titlebar, &DTitlebar::mousePosPressed,
+               this, [=](Qt::MouseButtons /*botton*/, QPoint pos){
+        // TODO: fix margin
+        pos.setY(pos.y()-10);
+        d->m_LastMousePos = pos - this->mapToParent(this->pos());
+    });
+#endif
 }
 
 void DX11Widget::enterEvent(QEvent *e)

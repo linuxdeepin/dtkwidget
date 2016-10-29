@@ -14,9 +14,9 @@ DMenuPrivate::DMenuPrivate(DMenu *qq): DObjectPrivate(qq)
 
 DMenu::DMenu(QWidget *parent): QMenu(parent), DObject(*new DMenuPrivate(this))
 {
-    setAttribute(Qt::WA_TranslucentBackground);
+//    setAttribute(Qt::WA_TranslucentBackground);
     setContentsMargins(1, 1, 1, 1);
-    setStyle(new PopupMenuStyle());
+//    setStyle(new PopupMenuStyle());
 
     connect(this, &QMenu::triggered,
             [&](QAction *action){
