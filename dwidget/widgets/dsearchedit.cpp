@@ -66,6 +66,7 @@ DSearchEdit::DSearchEdit(QWidget *parent)
     connect(m_edt, &QLineEdit::textChanged, [this] {m_clearBtn->setVisible(!m_edt->text().isEmpty());});
     connect(m_edt, &QLineEdit::textChanged, this, &DSearchEdit::textChanged, Qt::DirectConnection);
     connect(m_edt, &QLineEdit::editingFinished, this, &DSearchEdit::editingFinished, Qt::DirectConnection);
+    connect(m_edt, &QLineEdit::returnPressed, this, &DSearchEdit::returnPressed, Qt::DirectConnection);
     connect(m_searchBtn, &DImageButton::clicked, this, &DSearchEdit::toEditMode);
 }
 
@@ -103,7 +104,6 @@ bool DSearchEdit::eventFilter(QObject *o, QEvent *e)
 
         QTimer::singleShot(200, m_placeHolder, SLOT(show()));
 //        m_placeHolder->show();
-        emit focusOut();
     }
 
     if (o == m_edt) {

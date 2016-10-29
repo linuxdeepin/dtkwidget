@@ -46,6 +46,7 @@ public slots:
 
 signals:
     void textChanged();
+    void returnPressed();
     void editingFinished();
     void focusOut();
     void focusIn();
