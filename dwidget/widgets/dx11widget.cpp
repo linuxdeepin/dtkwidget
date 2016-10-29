@@ -135,8 +135,9 @@ void DX11WidgetPrivate::_q_onTitleBarMousePressed(Qt::MouseButtons buttons) cons
 #ifdef Q_OS_LINUX
     D_QC(DX11Widget);
 
-    if (buttons != Qt::LeftButton)
+    if (buttons != Qt::LeftButton) {
         XUtils::CancelMoveWindow(q, Qt::LeftButton);
+    }
 #else
     Q_UNUSED(buttons);
 #endif
@@ -555,13 +556,19 @@ void DX11Widget::setBackgroundImage(const QPixmap &bk)
 {
     D_D(DX11Widget);
 
-    QImage bkImage = bk.toImage();
+    int radius = d->m_Radius;
+    int windowExtern = d->m_ShadowWidth + d->m_Border * 2;
+    QRect windowRect = QWidget::rect().marginsRemoved(QMargins(windowExtern, windowExtern, windowExtern, windowExtern));
+
+    QImage bkImage = bk.scaled(windowRect.size()).toImage();
     QPixmap maskPixmap(bkImage.size());
     maskPixmap.fill(Qt::transparent);
     QPainterPath path;
-    path.addRoundRect(QRectF(0, 0, bkImage.width(), bkImage.height()), 2);
+    path.addRoundedRect(0, 0, bkImage.width(), bkImage.height(), radius, radius);
+
     QPainter bkPainter(&maskPixmap);
     bkPainter.setRenderHint(QPainter::Antialiasing);
+    bkPainter.setRenderHint(QPainter::HighQualityAntialiasing);
     bkPainter.setPen(QPen(Qt::black, 1));
     bkPainter.fillPath(path, QBrush(Qt::red));
 
@@ -774,8 +781,8 @@ void DX11Widget::paintEvent(QPaintEvent * /*e*/)
     D_D(DX11Widget);
     int radius = d->m_Radius;
     //. TODO: border not  part of window?
-    int windowExtern = d->m_ShadowWidth + d->m_Border*2;
-    int contentExtern = d->m_ShadowWidth + d->m_Border*2;
+    int windowExtern = d->m_ShadowWidth + d->m_Border * 2;
+    int contentExtern = d->m_ShadowWidth + d->m_Border * 2;
 
     QPainter painter(this);
 
