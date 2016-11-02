@@ -161,7 +161,7 @@ void DAbstractDialog::setDisplayPostion(DAbstractDialog::DisplayPostion displayP
 
 void DAbstractDialog::moveToCenterByRect(const QRect &rect)
 {
-    QRect qr = frameGeometry();
+    QRect qr = geometry();
     qr.moveCenter(rect.center());
     move(qr.topLeft());
 }

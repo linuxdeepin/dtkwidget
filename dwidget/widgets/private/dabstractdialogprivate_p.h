@@ -37,7 +37,7 @@ private:
     QPoint dragPosition;
     QColor backgroundColor;
     QColor borderColor;
-    DAbstractDialog::DisplayPostion displayPostion;
+    DAbstractDialog::DisplayPostion displayPostion = DAbstractDialog::DisplayCenter;
 
     DPlatformWindowHandle *handle = Q_NULLPTR;
 
