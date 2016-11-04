@@ -62,7 +62,7 @@ public:
     void setBorder(int b);
 
     const QPixmap &backgroundImage() const;
-    void setBackgroundImage(const QPixmap &);
+    void setBackgroundImage(const QPixmap &srcPixmap);
 
     void setContentsMargins(int left, int top, int right, int bottom);
     void setContentsMargins(const QMargins &margins);

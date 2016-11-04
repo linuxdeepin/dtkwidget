@@ -185,14 +185,14 @@ DX11Widget::DX11Widget(DX11WidgetPrivate &dd, QWidget *parent)
 #endif
 #ifdef Q_OS_WIN
     connect(d->titlebar, &DTitlebar::mousePosMoving,
-               this, [=](Qt::MouseButton /*botton*/, QPoint pos){
+    this, [ = ](Qt::MouseButton /*botton*/, QPoint pos) {
         move(pos - d->m_LastMousePos);
     });
 
     connect(d->titlebar, &DTitlebar::mousePosPressed,
-               this, [=](Qt::MouseButtons /*botton*/, QPoint pos){
+    this, [ = ](Qt::MouseButtons /*botton*/, QPoint pos) {
         // TODO: fix margin
-        pos.setY(pos.y()-10);
+        pos.setY(pos.y() - 10);
         d->m_LastMousePos = pos - this->mapToParent(this->pos());
     });
 #endif
@@ -565,52 +565,39 @@ const QPixmap &DX11Widget::backgroundImage() const
     return d->m_Background;
 }
 
-void DX11Widget::setBackgroundImage(const QPixmap &bk)
+void DX11Widget::setBackgroundImage(const QPixmap &srcPixmap)
 {
     D_D(DX11Widget);
 
     int radius = d->m_Radius;
     int windowExtern = d->m_ShadowWidth + d->m_Border * 2;
-    QRect windowRect = QWidget::rect().marginsRemoved(QMargins(windowExtern, windowExtern, windowExtern, windowExtern));
+    QRect windowRect = QWidget::rect().marginsRemoved(
+                           QMargins(windowExtern, windowExtern, windowExtern, windowExtern));
+    QSize sz = windowRect.size();
+    QPixmap backgroundPixmap = srcPixmap.scaled(sz, Qt::KeepAspectRatioByExpanding);
 
-    QImage bkImage = bk.scaled(windowRect.size()).toImage();
-    QPixmap maskPixmap(bkImage.size());
+    QPixmap maskPixmap(sz);
     maskPixmap.fill(Qt::transparent);
     QPainterPath path;
-    path.addRoundedRect(0, 0, bkImage.width(), bkImage.height(), radius, radius);
-
+    path.addRoundRect(QRectF(0, 0, sz.width(), sz.height()), radius / 2);
     QPainter bkPainter(&maskPixmap);
     bkPainter.setRenderHint(QPainter::Antialiasing);
-    bkPainter.setRenderHint(QPainter::HighQualityAntialiasing);
-    bkPainter.setPen(QPen(Qt::black, 1));
+    bkPainter.setPen(QPen(Qt::white, 1));
     bkPainter.fillPath(path, QBrush(Qt::red));
 
-    QImage maskImage = maskPixmap.toImage();
-    int nDepth = bkImage.depth();
-    int nWidth = maskImage.width();
-    int nHeight = maskImage.height();
-    switch (nDepth) {
-    case 32:
-        for (int y = 0; y < nHeight; ++y) {
-            quint32 *pMaskData = (quint32 *)(maskImage.scanLine(y));
-            quint32 *pWaveData = (quint32 *)(bkImage.scanLine(y));
-            quint32 alpha;
-            for (int x = 0; x < nWidth; ++x) {
-                alpha = (pMaskData[x] >> 24) << 24 | 0x00FFFFFF;
-                pMaskData[x] = pWaveData[x] & (alpha);
-            }
-        }
-        break;
-    default:
-        break;
-    }
+    QPainter::CompositionMode mode = QPainter::CompositionMode_SourceIn;
+    QImage resultImage = QImage(sz, QImage::Format_ARGB32_Premultiplied);
+    QPainter painter(&resultImage);
+    painter.setCompositionMode(QPainter::CompositionMode_Source);
+    painter.fillRect(resultImage.rect(), Qt::transparent);
+    painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+    painter.drawImage(0, 0, maskPixmap.toImage());
+    painter.setCompositionMode(mode);
+    painter.drawImage(0, 0, backgroundPixmap.toImage());
+    painter.setCompositionMode(QPainter::CompositionMode_DestinationOver);
+    painter.end();
 
-    // TODO: fixme , only export as png file can work
-    QTemporaryFile bkTmp;
-    maskImage.save(&bkTmp, "png");
-    bkTmp.close();
-
-    d->m_Background = QPixmap(bkTmp.fileName());
+    d->m_Background = QPixmap::fromImage(resultImage);
 }
 
 void DX11Widget::setFixedSize(const QSize &size)
