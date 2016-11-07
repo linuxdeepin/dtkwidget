@@ -59,10 +59,8 @@ void DPlatformWindowHandle::enableDXcbForWindow(QWidget *widget)
         Q_ASSERT_X(!window->windowHandle(), "DPlatformWindowHandler:",
                    "Must be called before window handle has been created. See also QWidget::windowHandle()");
 
-        if (window->parentWidget()) {
-            /// TODO: Avoid call parentWidget()->enforceNativeChildren().
-            qApp->setAttribute(Qt::AA_DontCreateNativeWidgetSiblings, true);
-        }
+        /// TODO: Avoid call parentWidget()->enforceNativeChildren().
+        qApp->setAttribute(Qt::AA_DontCreateNativeWidgetSiblings, true);
         window->setAttribute(Qt::WA_NativeWindow);
 
         Q_ASSERT_X(window->windowHandle(), "DPlatformWindowHandler:",
