@@ -1,0 +1,23 @@
+deepin-tool-kit (0.1.3-1) stable; urgency=low
+
+  * Autobuild Tag 0.1.3 
+
+ -- TagBuilder <tagbuilder@deepin.com>  Fri, 12 Aug 2016 16:05:06 +0000
+
+deepin-tool-kit (0.1.2-1) stable; urgency=low
+
+  * Autobuild Tag 0.1.2 
+
+ -- TagBuilder <tagbuilder@deepin.com>  Wed, 13 Jul 2016 07:50:14 +0000
+
+deepin-tool-kit (0.1.1-1) stable; urgency=low
+
+  * Autobuild Tag 0.1.1 
+
+ -- TagBuilder <tagbuilder@linuxdeepin.com>  Mon, 23 May 2016 12:16:06 +0000
+
+deepin-tool-kit (1.0-1) unstable; urgency=low
+
+  * Initial release 
+
+ -- Deepin Packages Builder <packages@linuxdeepin.com>  Wed, 12 Aug 2015 18:57:22 +0800

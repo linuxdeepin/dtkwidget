@@ -1,0 +1,3 @@
+usr/include/libdtk-1.0/DBase/
+usr/lib/*/pkgconfig/dtkbase.pc
+usr/lib/*/libdtkbase.so
