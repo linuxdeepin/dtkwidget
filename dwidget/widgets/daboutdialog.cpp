@@ -12,7 +12,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-const QString DAboutDialog::websiteLinkTemplate = "<a href='%1' style='text-decoration: none;'>%2</a>";
+const QString DAboutDialog::websiteLinkTemplate = "<a href='%1' style='text-decoration: none; font-size:13px; color: #004EE5;'>%2</a>";
 
 DAboutDialog::DAboutDialog(
     const QString &windowIcon,
@@ -67,6 +67,8 @@ DAboutDialog::DAboutDialog(
     descriptionLabel->setWordWrap(true);
     descriptionLabel->adjustSize();
 
+    connect(descriptionLabel, &QLabel::linkActivated, this, &DAboutDialog::onLogLinkActivated);
+
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->setMargin(0);
     mainLayout->setContentsMargins(38, 0, 38, 10);
@@ -85,7 +87,7 @@ DAboutDialog::DAboutDialog(
     mainLayout->addSpacing(2);
     mainLayout->addWidget(websiteLabel);
     mainLayout->setAlignment(websiteLabel, Qt::AlignCenter);
-    mainLayout->addSpacing(26);
+    mainLayout->addSpacing(10);
     mainLayout->addWidget(descriptionLabel, Qt::AlignHCenter);
 
     setLayout(mainLayout);
