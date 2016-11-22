@@ -18,13 +18,16 @@ class DPasswordEditPrivate;
 class LIBDTKWIDGETSHARED_EXPORT DPasswordEdit : public DLineEdit
 {
     Q_OBJECT
-    Q_PROPERTY(bool isEchoMode READ isEchoMode)
+    Q_PROPERTY(bool isEchoMode READ isEchoMode NOTIFY echoModeChanged)
 
 public:
     DPasswordEdit(QWidget *parent = nullptr);
 
     bool isEchoMode() const;
     void setEchoMode(EchoMode mode);
+
+signals:
+    void echoModeChanged(bool echoOn);
 
 protected:
     Q_DISABLE_COPY(DPasswordEdit)

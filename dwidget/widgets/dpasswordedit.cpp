@@ -12,13 +12,16 @@
 #include "private/dpasswordedit_p.h"
 
 #include <QDebug>
+#include <QTimer>
 
 DWIDGET_BEGIN_NAMESPACE
 
 DPasswordEdit::DPasswordEdit(QWidget *parent)
     : DLineEdit(*new DPasswordEditPrivate(this), parent)
 {
-    D_THEME_INIT_WIDGET(DPasswordEdit);
+    // This will do the trick refreshing your style sheet for you
+    // after your registered property changed.
+    D_THEME_INIT_WIDGET(DPasswordEdit, isEchoMode);
     D_D(DPasswordEdit);
 
     d->init();
@@ -31,9 +34,13 @@ bool DPasswordEdit::isEchoMode() const
 
 void DPasswordEdit::setEchoMode(QLineEdit::EchoMode mode)
 {
-    QLineEdit::setEchoMode(mode);
+    if (mode != echoMode()) {
+        QLineEdit::setEchoMode(mode);
 
-    setStyleSheet(styleSheet());
+        // To inform the style sheet system that our style sheet needs
+        // to be recalculated.
+        emit echoModeChanged(mode == Normal);
+    }
 }
 
 DPasswordEditPrivate::DPasswordEditPrivate(DPasswordEdit *q)
@@ -49,6 +56,10 @@ void DPasswordEditPrivate::init()
     q->setEchoMode(q->Password);
     q->setTextMargins(0, 0, 16, 0);
     q->setIconVisible(true);
+
+    // FIXME: DPasswordEdit instances that initialized with a parent will fail
+    // to load the little eye icon if we don't do the below thing.
+    QTimer::singleShot(0, [q] { q->setStyleSheet(q->styleSheet()); });
 
     q->connect(q, SIGNAL(iconClicked()), q, SLOT(_q_toggleEchoMode()));
 }
