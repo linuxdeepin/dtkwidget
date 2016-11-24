@@ -248,6 +248,17 @@ DAction *DMenu::addSeparator()
     return addAction("");
 }
 
+void DMenu::insertAction(DAction *before, DAction *action)
+{
+    if (!before)
+        addAction(action);
+
+    D_D(DMenu);
+
+    auto pos = d->menuActions.indexOf(before);
+    d->menuActions.insert(pos, action);
+}
+
 DAction *DMenu::actionAt(const QString &text) const
 {
     D_DC(DMenu);

@@ -42,6 +42,8 @@ public:
     DMenu *addMenu(const QIcon & icon, const QString & title);
     DAction *addSeparator();
 
+    void insertAction(DAction *before, DAction *action);
+
     DAction *actionAt(const QString &text) const;
     DAction *actionAt(int index) const;
     QList<DAction*> actionList() const;
