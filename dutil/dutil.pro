@@ -10,10 +10,12 @@ DEFINES += LIBDTKUTIL_LIBRARY
 
 HEADERS += \
     dutil_global.h \
-    dpathbuf.h
+    dpathbuf.h \
+    dutil.h
 
 includes.path = $${DTK_INCLUDEPATH}/DUtil
 includes.files += \
+    $$PWD/DUtil \
     $$PWD/DPathBuf \
     $$PWD/dpathbuf.h \
     $$PWD/dutil_global.h \
@@ -39,3 +41,6 @@ INCLUDEPATH += $$PWD/../dbase
 DEPENDPATH += $$PWD/../dbase
 
 SOURCES +=
+
+DISTFILES += \
+    DUtil

@@ -11,8 +11,11 @@
 #include "dthememanager.h"
 #include "private/dpasswordedit_p.h"
 
+#include <DUtil>
+
 #include <QDebug>
 #include <QTimer>
+
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -59,7 +62,7 @@ void DPasswordEditPrivate::init()
 
     // FIXME: DPasswordEdit instances that initialized with a parent will fail
     // to load the little eye icon if we don't do the below thing.
-    QTimer::singleShot(0, [q] { q->setStyleSheet(q->styleSheet()); });
+    DUtil::TimerSingleShot(0,  [q] { q->setStyleSheet(q->styleSheet()); });
 
     q->connect(q, SIGNAL(iconClicked()), q, SLOT(_q_toggleEchoMode()));
 }
