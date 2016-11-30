@@ -11,7 +11,7 @@ DWIDGET_BEGIN_NAMESPACE
 class DMenuPrivate;
 class DMenuItem;
 
-class LIBDTKWIDGETSHARED_EXPORT DMenu:  public QObject, public DObject
+class Q_DECL_DEPRECATED_X("Plase use QMenu") LIBDTKWIDGETSHARED_EXPORT DMenu:  public QObject, public DObject
 {
     Q_OBJECT
 

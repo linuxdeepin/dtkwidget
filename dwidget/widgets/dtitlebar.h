@@ -2,6 +2,8 @@
 #define DTITLEBAR_H
 
 #include <QWidget>
+#include <QMenu>
+
 #include <dobject.h>
 #include "dwidget_global.h"
 
@@ -19,10 +21,16 @@ class LIBDTKWIDGETSHARED_EXPORT DTitlebar : public QWidget , public DObject
 public:
     explicit DTitlebar(QWidget *parent = 0);
 
-    DMenu *menu() const;
+#ifndef QT_NO_MENU
+    Q_DECL_DEPRECATED DMenu *menu() const;
+    QMenu *getMenu() const;
+#endif
     QWidget *customWidget() const;
 
-    void setMenu(DMenu *);
+#ifndef QT_NO_MENU
+    Q_DECL_DEPRECATED_X("Plase use void setMenu(QMenu *)") void setMenu(DMenu *);
+    void setMenu(QMenu *menu);
+#endif
     void setCustomWidget(QWidget *, bool fixCenterPos = false);
     void setCustomWidget(QWidget *, Qt::AlignmentFlag flag = Qt::AlignCenter, bool fixCenterPos = false);
     void setWindowFlags(Qt::WindowFlags type);
@@ -58,7 +66,9 @@ public slots:
     void toggleWindowState();
 
 private slots:
+#ifndef QT_NO_MENU
     void showMenu();
+#endif
 
 protected:
     void showEvent(QShowEvent *event) Q_DECL_OVERRIDE;

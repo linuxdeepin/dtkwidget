@@ -51,7 +51,10 @@ private:
     QWidget             *titlePadding;
     QLabel              *separator;
 
-    DMenu               *menu;
+#ifndef QT_NO_MENU
+    DMenu               *menu = Q_NULLPTR;
+    QMenu               *qmenu = Q_NULLPTR;
+#endif
 
     QWidget             *parentWindow = Q_NULLPTR;
 
@@ -182,12 +185,21 @@ DTitlebar::DTitlebar(QWidget *parent) :
     d->titlePadding->setFixedSize(d->buttonArea->size());
 }
 
+#ifndef QT_NO_MENU
 DMenu *DTitlebar::menu() const
 {
     D_DC(DTitlebar);
 
     return d->menu;
 }
+
+QMenu *DTitlebar::getMenu() const
+{
+    D_DC(DTitlebar);
+
+    return d->qmenu;
+}
+#endif
 
 QWidget *DTitlebar::customWidget() const
 {
@@ -224,6 +236,7 @@ void DTitlebar::setWindowFlags(Qt::WindowFlags type)
     }
 }
 
+#ifndef QT_NO_MENU
 void DTitlebar::setMenu(DMenu *menu)
 {
     D_D(DTitlebar);
@@ -235,11 +248,28 @@ void DTitlebar::setMenu(DMenu *menu)
     }
 }
 
+void DTitlebar::setMenu(QMenu *menu)
+{
+    D_D(DTitlebar);
+
+    d->qmenu = menu;
+
+    if (d->qmenu) {
+        disconnect(this, &DTitlebar::optionClicked, 0, 0);
+        connect(this, &DTitlebar::optionClicked, this, &DTitlebar::showMenu);
+    }
+}
+
 void DTitlebar::showMenu()
 {
     D_D(DTitlebar);
-    d->menu->exec(d->optionButton->mapToGlobal(d->optionButton->rect().bottomLeft()));
+
+    if (d->qmenu)
+        d->qmenu->exec(d->optionButton->mapToGlobal(d->optionButton->rect().bottomLeft()));
+    else
+        d->menu->exec(d->optionButton->mapToGlobal(d->optionButton->rect().bottomLeft()));
 }
+#endif
 
 void DTitlebar::showEvent(QShowEvent *event)
 {

@@ -70,20 +70,19 @@ MainWindow::MainWindow(QWidget *parent)
     DTitlebar *titlebar = this->titleBar();
 
     if (titlebar) {
-
-        titlebar->setMenu(new DMenu(titlebar));
+        titlebar->setMenu(new QMenu(titlebar));
         titlebar->setSeparatorVisible(true);
-        titlebar->menu()->addAction("testmenu1");
-        titlebar->menu()->addAction("testmenu2");
-        DMenu *menu = titlebar->menu()->addMenu("menu1");
+        titlebar->getMenu()->addAction("testmenu1");
+        titlebar->getMenu()->addAction("testmenu2");
+        QMenu *menu = titlebar->getMenu()->addMenu("menu1");
         menu->addAction("menu1->action1");
         menu->addAction("menu1->action2");
 
-        connect(titlebar->menu(), &DMenu::triggered, this, &MainWindow::menuItemInvoked);
+        connect(titlebar->getMenu(), &QMenu::triggered, this, &MainWindow::menuItemInvoked);
     }
 }
 
-void MainWindow::menuItemInvoked(DAction *action)
+void MainWindow::menuItemInvoked(QAction *action)
 {
     QMessageBox::warning(this, "menu clieck",  action->text() + ", was cliecked");
     qDebug() << "click" << action << action->isChecked();

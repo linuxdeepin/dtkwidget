@@ -41,7 +41,7 @@ public:
     ~MainWindow();
 
 protected slots:
-    void menuItemInvoked(DAction *action);
+    void menuItemInvoked(QAction *action);
 
 private:
     void initTabWidget();

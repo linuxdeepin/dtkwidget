@@ -11,7 +11,7 @@ DWIDGET_BEGIN_NAMESPACE
 class DMenu;
 class DActionPrivate;
 
-class DAction : public QAction, public DObject
+class Q_DECL_DEPRECATED DAction : public QAction, public DObject
 {
     Q_OBJECT
 
