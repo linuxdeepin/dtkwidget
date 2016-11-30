@@ -24,6 +24,7 @@ InputTab::InputTab(QWidget *parent) : QLabel(parent)
     DTK_WIDGET_NAMESPACE::DPasswordEdit *pwdEdit = new DTK_WIDGET_NAMESPACE::DPasswordEdit(this);
     pwdEdit->setText("password");
     pwdEdit->move(20, 20);
+    pwdEdit->setContextMenuPolicy(Qt::DefaultContextMenu);
 
     DTK_WIDGET_NAMESPACE::DPasswordEdit *pwdEdit2 = new DTK_WIDGET_NAMESPACE::DPasswordEdit(this);
     pwdEdit2->setText("password");

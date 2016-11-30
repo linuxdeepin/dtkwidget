@@ -9,6 +9,7 @@
 
 #include <QFile>
 #include <QWidget>
+#include <QStyleFactory>
 
 #include "dthememanager.h"
 #include "dapplication.h"
@@ -37,6 +38,16 @@ void DThemeManager::setTheme(const QString theme)
 {
     if (m_theme != theme) {
         m_theme = theme;
+
+        if (m_theme == "light") {
+            if (QStyle *style = QStyleFactory::create("dlight")) {
+                qApp->setStyle(style);
+            }
+        } else if (m_theme == "dark") {
+            if (QStyle *style = QStyleFactory::create("ddark")) {
+                qApp->setStyle(style);
+            }
+        }
 
         emit themeChanged(theme);
     }
