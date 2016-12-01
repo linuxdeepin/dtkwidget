@@ -17,6 +17,7 @@ includes.path = $${DTK_INCLUDEPATH}/DUtil
 includes.files += \
     $$PWD/DUtil \
     $$PWD/DPathBuf \
+    $$PWD/dutil.h \
     $$PWD/dpathbuf.h \
     $$PWD/dutil_global.h \
     $$PWD/dlog/DLog \
