@@ -26,8 +26,6 @@
 #include "startupnotificationmonitor.h"
 #endif
 
-#include <DPathBuf>
-
 #define DXCB_PLUGIN_KEY "dxcb"
 
 DUTIL_USE_NAMESPACE
@@ -135,17 +133,55 @@ bool DApplication::loadTranslator(QList<QLocale> localeFallback)
 {
     D_D(DApplication);
 
-    d->m_qtTranslator->load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-    this->installTranslator(d->m_qtTranslator);
+    loadDtkTranslator(localeFallback);
 
     QList<DPathBuf> translateDirs;
     auto appName = applicationName();
-
     //("/home/user/.local/share", "/usr/local/share", "/usr/share")
     auto dataDirs = QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation);
     for (const auto &path : dataDirs) {
         DPathBuf DPathBuf(path);
         translateDirs << DPathBuf / appName / "translations";
+    }
+    DPathBuf runDir(this->applicationDirPath());
+    translateDirs << runDir.join("translations");
+    DPathBuf currentDir(QDir::currentPath());
+    translateDirs << currentDir.join("translations");
+
+    return loadTranslator(translateDirs, appName, localeFallback);
+}
+
+bool DApplication::loadDXcbPlugin()
+{
+    Q_ASSERT_X(!qApp, "DApplication::loadDxcbPlugin", "Must call before QGuiApplication defined object");
+
+    if (!QPlatformIntegrationFactory::keys().contains(DXCB_PLUGIN_KEY)) {
+        return false;
+    }
+
+    return qputenv("QT_QPA_PLATFORM", DXCB_PLUGIN_KEY);
+}
+
+bool DApplication::isDXcbPlatform()
+{
+    return qApp && qApp->platformName() == "dxcb";
+}
+
+bool DApplication::loadDtkTranslator(QList<QLocale> localeFallback)
+{
+    D_D(DApplication);
+
+    d->m_qtTranslator->load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    this->installTranslator(d->m_qtTranslator);
+
+    QList<DPathBuf> translateDirs;
+    auto dtkwidgetName = "dtkwidget";
+
+    //("/home/user/.local/share", "/usr/local/share", "/usr/share")
+    auto dataDirs = QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation);
+    for (const auto &path : dataDirs) {
+        DPathBuf DPathBuf(path);
+        translateDirs << DPathBuf / dtkwidgetName / "translations";
     }
 
     DPathBuf runDir(this->applicationDirPath());
@@ -154,8 +190,15 @@ bool DApplication::loadTranslator(QList<QLocale> localeFallback)
     DPathBuf currentDir(QDir::currentPath());
     translateDirs << currentDir.join("translations");
 
+    return loadTranslator(translateDirs, dtkwidgetName, localeFallback);
+}
+
+bool DApplication::loadTranslator(QList<DPathBuf> translateDirs, const QString &name, QList<QLocale> localeFallback)
+{
+    D_D(DApplication);
+
     for (auto &locale : localeFallback) {
-        QString translateFilename = QString("%1_%2").arg(appName).arg(locale.name());
+        QString translateFilename = QString("%1_%2").arg(name).arg(locale.name());
         for (auto &path : translateDirs) {
             QString translatePath = (path / translateFilename).toString();
             if (QFile::exists(translatePath + ".qm")) {
@@ -166,23 +209,8 @@ bool DApplication::loadTranslator(QList<QLocale> localeFallback)
             }
         }
     }
-    qWarning() << "load translate failed" << "can not find qm files";
+    qWarning() << name << "can not find qm files" ;
     return false;
-}
-
-bool DApplication::loadDXcbPlugin()
-{
-    Q_ASSERT_X(!qApp, "DApplication::loadDxcbPlugin", "Must call before QGuiApplication defined object");
-
-    if (!QPlatformIntegrationFactory::keys().contains(DXCB_PLUGIN_KEY))
-        return false;
-
-    return qputenv("QT_QPA_PLATFORM", DXCB_PLUGIN_KEY);
-}
-
-bool DApplication::isDXcbPlatform()
-{
-    return qApp && qApp->platformName() == "dxcb";
 }
 
 DWIDGET_END_NAMESPACE

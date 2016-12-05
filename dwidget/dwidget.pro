@@ -55,3 +55,13 @@ DEPENDPATH += $$PWD/../dutil
 
 SOURCES += \
     dutility.cpp
+
+system($$PWD/../tool/translate_generation.sh)
+
+TRANSLATIONS += $$PWD/translations/$${TARGET}.ts \
+                $$PWD/translations/$${TARGET}_zh_CN.ts
+
+translations.path = $$PREFIX/share/$${TARGET}/translations
+translations.files = translations/*.qm
+
+INSTALLS += translations

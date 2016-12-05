@@ -11,8 +11,12 @@ win32* {
     LIB_DIR =
 }
 
+isEmpty(PREFIX){
+    PREFIX = /usr
+}
+
 isEmpty(LIB_INSTALL_DIR) {
-    target.path = /usr/lib
+    target.path = $$PREFIX/lib
 } else {
     target.path = $$LIB_INSTALL_DIR
 }
@@ -22,7 +26,7 @@ QMAKE_PKGCONFIG_VERSION = $$VERSION
 QMAKE_PKGCONFIG_DESTDIR = pkgconfig
 
 isEmpty(INCLUDE_INSTALL_DIR) {
-    DTK_INCLUDEPATH = /usr/include/libdtk-$$VERSION
+    DTK_INCLUDEPATH = $$PREFIX/include/libdtk-$$VERSION
 } else {
     DTK_INCLUDEPATH = $$INCLUDE_INSTALL_DIR/libdtk-$$VERSION
 }
