@@ -35,6 +35,12 @@ class DDialog : public DAbstractDialog
     Q_PROPERTY(bool onButtonClickedClose READ onButtonClickedClose WRITE setOnButtonClickedClose)
 
 public:
+    enum ButtonType {
+        ButtonNormal,
+        ButtonWarning,
+        ButtonRecommend
+    };
+
     explicit DDialog(QWidget *parent = 0);
     explicit DDialog(const QString &title, const QString& message, QWidget *parent = 0);
 
@@ -63,9 +69,9 @@ signals:
     void visibleChanged(bool visible);
 
 public slots:
-    int addButton(const QString &text, bool isDefault = false);
+    int addButton(const QString &text, bool isDefault = false, ButtonType type = ButtonNormal);
     int addButtons(const QStringList &text);
-    void insertButton(int index, const QString &text, bool isDefault = false);
+    void insertButton(int index, const QString &text, bool isDefault = false, ButtonType type = ButtonNormal);
     void insertButton(int index, QAbstractButton* button, bool isDefault = false);
     void insertButtons(int index, const QStringList &text);
     void removeButton(int index);

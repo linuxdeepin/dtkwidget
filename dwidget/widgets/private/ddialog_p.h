@@ -11,6 +11,7 @@
 #define DDIALOG_P_H
 
 #include <QPointer>
+#include <QPushButton>
 #include "ddialog.h"
 #include "dabstractdialogprivate_p.h"
 
@@ -20,6 +21,25 @@ DWIDGET_BEGIN_NAMESPACE
 
 class DVBoxWidget;
 class DHBoxWidget;
+
+class DialogButton : public QPushButton {
+    Q_OBJECT
+    Q_PROPERTY(int buttonType READ buttonType WRITE setButtonType NOTIFY buttonTypeChanged)
+
+public:
+    explicit DialogButton(const QString &text, QWidget *parent = 0);
+    int buttonType() const;
+
+public slots:
+    void setButtonType(int buttonType);
+
+signals:
+    void buttonTypeChanged(int buttonType);
+
+private:
+    int m_buttonType;
+};
+
 class DDialogPrivate : public DAbstractDialogPrivate
 {
 protected:

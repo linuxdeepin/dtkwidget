@@ -29,6 +29,26 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+DialogButton::DialogButton(const QString &text, QWidget *parent)
+    :QPushButton(text, parent)
+{
+
+}
+
+int DialogButton::buttonType() const
+{
+    return m_buttonType;
+}
+
+void DialogButton::setButtonType(int buttonType)
+{
+    if (m_buttonType == buttonType)
+        return;
+
+    m_buttonType = buttonType;
+    emit buttonTypeChanged(buttonType);
+}
+
 DDialogPrivate::DDialogPrivate(DDialog *qq) :
     DAbstractDialogPrivate(qq)
 {
@@ -43,72 +63,77 @@ QBoxLayout *DDialogPrivate::getContentLayout()
 void DDialogPrivate::init()
 {
     D_Q(DDialog);
-    buttonLayout = new QHBoxLayout;
 
-    buttonLayout->setMargin(0);
-    buttonLayout->setSpacing(0);
-    buttonLayout->setContentsMargins(DIALOG::BUTTON_LAYOUT_LEFT_MARGIN,
-                                     DIALOG::BUTTON_LAYOUT_TOP_MARGIN,
-                                     DIALOG::BUTTON_LAYOUT_RIGHT_MARGIN,
-                                     DIALOG::BUTTON_LAYOUT_BOTTOM_MARGIN);
+    // TopLayout
+    QHBoxLayout *topLayout = new QHBoxLayout;
+    topLayout->setContentsMargins(0, 0, 0, 0);
+    topLayout->setSpacing(0);
 
-    closeButton = new QPushButton(q);
 
-    closeButton->setObjectName("CloseButton");
-    closeButton->setFixedSize(DIALOG::CLOSE_BUTTON_WIDTH, DIALOG::CLOSE_BUTTON_HEIGHT);
-    closeButton->setAttribute(Qt::WA_NoMousePropagation);
-
+    // TopLayout--Icon
     iconLabel = new QLabel;
+    iconLabel->setContentsMargins(DIALOG::ICON_LAYOUT_LEFT_MARGIN,
+                                  DIALOG::ICON_LAYOUT_TOP_MARGIN,
+                                  DIALOG::ICON_LAYOUT_RIGHT_MARGIN,
+                                  DIALOG::ICON_LAYOUT_BOTTOM_MARGIN);
     iconLabel->hide();
+    topLayout->addWidget(iconLabel);
+
+
+    // TopLayout--TextLabel
+    titleLabel = new QLabel;
+    titleLabel->setObjectName("TitleLabel");
+    titleLabel->hide();
+    titleLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
 
     messageLabel = new QLabel;
     messageLabel->setObjectName("MessageLabel");
     messageLabel->hide();
     messageLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
 
-    titleLabel = new QLabel;
-    titleLabel->setObjectName("TitleLabel");
-    titleLabel->hide();
-    titleLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
+    QVBoxLayout *textLayout = new QVBoxLayout;
+    textLayout->setContentsMargins(0, 0, 0, 0);
+    textLayout->setSpacing(5);
+    textLayout->addStretch();
+    textLayout->addWidget(titleLabel);
+    textLayout->addWidget(messageLabel);
+    textLayout->addStretch();
 
-    QHBoxLayout *label_hlayout = new QHBoxLayout;
-    QVBoxLayout *label_vlayout = new QVBoxLayout;
+    topLayout->addLayout(textLayout);
 
-    label_hlayout->setMargin(0);
-    label_hlayout->setSpacing(0);
-    label_hlayout->setContentsMargins(0, 0, 0, 0);
-    label_vlayout->setMargin(0);
-    label_vlayout->setSpacing(0);
-    label_vlayout->setContentsMargins(0, 0, 0, 0);
 
-    label_vlayout->addWidget(titleLabel);
-    label_vlayout->addWidget(messageLabel);
-    label_vlayout->addStretch();
-    label_hlayout->addLayout(label_vlayout);
-    label_hlayout->addStretch();
-
+    // TopLayout--ContentLayout
     contentLayout = new QVBoxLayout;
-
-    contentLayout->setMargin(0);
+    contentLayout->setContentsMargins(0, 0, 0, 0);
     contentLayout->setSpacing(0);
-    contentLayout->addLayout(label_hlayout);
+    topLayout->addLayout(contentLayout);
 
-    iconLayout = new QHBoxLayout;
 
-    iconLayout->setContentsMargins(DIALOG::ICON_LAYOUT_LEFT_MARGIN,
-                                   DIALOG::ICON_LAYOUT_TOP_MARGIN,
-                                   DIALOG::ICON_LAYOUT_RIGHT_MARGIN,
-                                   DIALOG::ICON_LAYOUT_BOTTOM_MARGIN);
-    iconLayout->addWidget(iconLabel, 0, Qt::AlignLeft);
-    iconLayout->addLayout(contentLayout);
+    // TopLayout--Close button
+    closeButton = new QPushButton(q);
+    closeButton->setObjectName("CloseButton");
+    closeButton->setFixedSize(DIALOG::CLOSE_BUTTON_WIDTH, DIALOG::CLOSE_BUTTON_HEIGHT);
+    closeButton->setAttribute(Qt::WA_NoMousePropagation);
+    topLayout->addWidget(closeButton, 0, Qt::AlignRight | Qt::AlignTop);
 
-    QVBoxLayout *main_layout = new QVBoxLayout;
 
-    main_layout->setMargin(0);
-    main_layout->setContentsMargins(0, 0, 0, 0);
-    main_layout->addWidget(closeButton, 0, Qt::AlignRight);
-    main_layout->addLayout(iconLayout);
-    main_layout->addLayout(buttonLayout);
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    mainLayout->setContentsMargins(0, 0, 0, 0);
+    mainLayout->setSpacing(0);
+
+    // MainLayout--TopLayout
+    mainLayout->addLayout(topLayout);
+
+    // MainLayout--ButtonLayout
+    buttonLayout = new QHBoxLayout;
+    buttonLayout->setMargin(0);
+    buttonLayout->setSpacing(0);
+    buttonLayout->setContentsMargins(DIALOG::BUTTON_LAYOUT_LEFT_MARGIN,
+                                     DIALOG::BUTTON_LAYOUT_TOP_MARGIN,
+                                     DIALOG::BUTTON_LAYOUT_RIGHT_MARGIN,
+                                     DIALOG::BUTTON_LAYOUT_BOTTOM_MARGIN);
+    mainLayout->addLayout(buttonLayout);
+
 
     QAction *button_action = new QAction(q);
 
@@ -119,7 +144,7 @@ void DDialogPrivate::init()
     QObject::connect(q, SIGNAL(sizeChanged(QSize)), q, SLOT(_q_updateLabelMaxWidth()));
     QObject::connect(button_action, SIGNAL(triggered(bool)), q, SLOT(_q_defaultButtonTriggered()));
 
-    q->setLayout(main_layout);
+    q->setLayout(mainLayout);
     q->addAction(button_action);
     q->setFocusPolicy(Qt::ClickFocus);
     q->setFocus();
@@ -345,11 +370,11 @@ bool DDialog::onButtonClickedClose() const
     return d->onButtonClickedClose;
 }
 
-int DDialog::addButton(const QString &text, bool isDefault)
+int DDialog::addButton(const QString &text, bool isDefault, ButtonType type)
 {
     int index = buttonCount();
 
-    insertButton(index, text, isDefault);
+    insertButton(index, text, isDefault, type);
 
     return index;
 }
@@ -363,11 +388,11 @@ int DDialog::addButtons(const QStringList &text)
     return index;
 }
 
-void DDialog::insertButton(int index, const QString &text, bool isDefault)
+void DDialog::insertButton(int index, const QString &text, bool isDefault, ButtonType type)
 {
-    QPushButton *button = new QPushButton(text);
-
+    DialogButton *button = new DialogButton(text);
     button->setObjectName("ActionButton");
+    button->setButtonType(type);
     button->setAttribute(Qt::WA_NoMousePropagation);
     button->setFixedHeight(DIALOG::BUTTON_HEIGHT);
 
@@ -628,9 +653,7 @@ void DDialog::setIconPixmap(const QPixmap &iconPixmap)
     d->iconLabel->setPixmap(iconPixmap);
     if(iconPixmap.isNull()) {
         d->iconLabel->hide();
-        d->iconLayout->setSpacing(0);
     } else {
-        d->iconLayout->setSpacing(DIALOG::ICON_LAYOUT_SPACING);
         d->iconLabel->show();
     }
 }

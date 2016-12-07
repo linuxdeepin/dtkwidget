@@ -23,10 +23,10 @@ namespace DIALOG {
     const int BUTTON_HEIGHT = 28;
     const int CLOSE_BUTTON_WIDTH = 27;
     const int CLOSE_BUTTON_HEIGHT = 23;
-    const int ICON_LAYOUT_TOP_MARGIN = 0;
-    const int ICON_LAYOUT_BOTTOM_MARGIN = 10;
-    const int ICON_LAYOUT_LEFT_MARGIN = 25;
-    const int ICON_LAYOUT_RIGHT_MARGIN = 25;
+    const int ICON_LAYOUT_TOP_MARGIN = 14;
+    const int ICON_LAYOUT_BOTTOM_MARGIN = 14;
+    const int ICON_LAYOUT_LEFT_MARGIN = 20;
+    const int ICON_LAYOUT_RIGHT_MARGIN = 20;
     const int ICON_LAYOUT_SPACING = 10;
     const int BUTTON_LAYOUT_TOP_MARGIN = 0;
     const int BUTTON_LAYOUT_BOTTOM_MARGIN = 0;

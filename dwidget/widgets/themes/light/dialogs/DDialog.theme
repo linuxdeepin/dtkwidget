@@ -60,16 +60,27 @@ QPushButton#ActionButton{
     border-bottom: none;
     color: #303030;
     text-align: center;
+    outline: none;
+}
+
+QPushButton#ActionButton[buttonType="1"] {/*warning*/
+    color: #ff5a5a;
+}
+
+QPushButton#ActionButton[buttonType="2"] {/*recommend*/
+    color: #0087ff;
 }
 
 QPushButton#ActionButton:hover{
-    background-color: rgba(0, 0, 0, 0.01);
-    color: #000000;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #8ccfff, stop:1 #4bb8ff);
+    color: #ffffff;
 }
 
 QPushButton#ActionButton:pressed{
-    background-color: rgba(0, 0, 0, 0.03);;
-    color: #2ca7f8;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                stop:0 #0b8cff, stop:1 #0aa1ff);
+    color: #ffffff;
 }
 
 QPushButton#ConflictButton{
