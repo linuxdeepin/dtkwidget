@@ -14,7 +14,6 @@
 
 #include "dwidget_global.h"
 #include "dobject.h"
-#include "dpathbuf.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -43,11 +42,6 @@ public:
     //! warning: Must call before QGuiApplication defined object
     static bool loadDXcbPlugin();
     static bool isDXcbPlatform();
-
-private:
-    bool loadDtkTranslator(QList<QLocale> localeFallback);
-
-    bool loadTranslator(QList<Dtk::Util::DPathBuf> translateDirs, const QString &name, QList<QLocale> localeFallback);
 };
 
 DWIDGET_END_NAMESPACE

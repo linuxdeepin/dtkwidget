@@ -12,6 +12,7 @@
 
 #include "private/dobject_p.h"
 #include "dapplication.h"
+#include "dpathbuf.h"
 
 class QLocalServer;
 class QTranslator;
@@ -30,6 +31,9 @@ public:
     void setTheme(const QString &theme);
 
     bool setSingleInstance(const QString &key);
+
+    bool loadDtkTranslator(QList<QLocale> localeFallback);
+    bool loadTranslator(QList<Dtk::Util::DPathBuf> translateDirs, const QString &name, QList<QLocale> localeFallback);
 
 public:
 // int m_pidLockFD = 0;

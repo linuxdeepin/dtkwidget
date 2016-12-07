@@ -2,7 +2,7 @@ Source: deepin-tool-kit
 Section: devel
 Priority: optional
 Maintainer: Deepin Sysdev <sysdev@deepin.com>
-Build-Depends: debhelper (>= 9), qt5-default, pkg-config, 
+Build-Depends: debhelper (>= 9), qt5-default, pkg-config,
  qtmultimedia5-dev, libqt5x11extras5-dev, libxext-dev,
  x11proto-xext-dev, libxcb-util0-dev, libstartup-notification0-dev,
  libmtdev-dev, qtbase5-private-dev, libegl1-mesa-dev, libudev-dev,
@@ -45,7 +45,7 @@ Description: Deepin Tool Kit Util library
 
 Package: libdtkwidget
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libqt5dxcb-plugin
+Depends: ${shlibs:Depends}, ${misc:Depends}, libqt5dxcb-plugin, libdtkutil
 Multi-Arch: same
 Description: Deepin graphical user interface library
  DtkWidget is Deepin graphical user interface for deepin desktop development.
@@ -55,7 +55,7 @@ Description: Deepin graphical user interface library
 Package: libdtkwidget-dev
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, libdtkwidget( =${binary:Version}),
- qtmultimedia5-dev, libqt5x11extras5-dev
+ qtmultimedia5-dev, libqt5x11extras5-dev, libdtkutil-dev
 Description: Deepin graphical user interface library
  DtkWidget is Deepin graphical user interface for deepin desktop development.
  .
