@@ -1,5 +1,7 @@
 #include "daboutdialog.h"
+#include "private/daboutdialog_p.h"
 
+#include "dthememanager.h"
 #include <dutility.h>
 
 #include <QDesktopServices>
@@ -12,182 +14,281 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-const QString DAboutDialog::websiteLinkTemplate = "<a href='%1' style='text-decoration: none; font-size:13px; color: #004EE5;'>%2</a>";
+const QString DAboutDialogPrivate::websiteLinkTemplate = "<a href='%1' style='text-decoration: none; font-size:13px; color: #004EE5;'>%2</a>";
 
-DAboutDialog::DAboutDialog(const QPixmap &windowIcon,
-                           const QPixmap &productIcon,
-                           const QString &productName,
-                           const QString &version,
-                           const QString &description,
-                           const QString &acknowledgementLink,
-                           QWidget *parent): DWindow(parent)
+DAboutDialogPrivate::DAboutDialogPrivate(DAboutDialog *qq)
+    : DDialogPrivate(qq)
+    , websiteName("www.deepin.org")
+    , websiteLink("https://www.deepin.org")
 {
-    m_windowIcon = QPixmap(windowIcon);
-    m_productIcon = QPixmap(productIcon);
-    m_productName = productName;
-    m_version = version;
-    m_description = description;
-    m_acknowledgementLink = acknowledgementLink;
-    m_companyLogo = QPixmap(":/images/deepin-logo.png");
-    m_websiteName = "www.deepin.org";
-    m_websiteLink = "https://www.deepin.org";
-    initUI();
+
 }
 
-DAboutDialog::DAboutDialog(
-    const QString &windowIcon,
-    const QString &productIcon,
-    const QString &productName,
-    const QString &version,
-    const QString &description,
-    QWidget *parent,
-    const QString &companyLogo,
-    const QString &websiteName,
-    const QString &websiteLink): DWindow(parent)
+void DAboutDialogPrivate::init()
 {
-    m_windowIcon = QPixmap(windowIcon);
-    m_productIcon = QPixmap(productIcon);
-    m_productName = productName;
-    m_version = version;
-    m_description = description;
-    m_companyLogo = QPixmap(companyLogo);;
-    m_websiteName = websiteName;
-    m_websiteLink = websiteLink;
-    initUI();
+    D_Q(DAboutDialog);
+
+    logoLabel = new QLabel();
+    logoLabel->setContentsMargins(0, 0, 0, 0);
+
+    productNameLabel = new QLabel();
+    productNameLabel->setObjectName("ProductNameLabel");
+
+    versionLabel = new QLabel();
+    versionLabel->setObjectName("VersionLabel");
+
+    companyLogoLabel = new QLabel();
+    companyLogoLabel->setPixmap(QPixmap(":/images/deepin-logo.png"));
+
+    websiteLabel = new QLabel();
+    websiteLabel->setObjectName("WebsiteLabel");
+    websiteLabel->setContextMenuPolicy(Qt::NoContextMenu);
+    websiteLabel->setFixedHeight(24);
+    websiteLabel->setOpenExternalLinks(false);
+    updateWebsiteLabel();
+
+    acknowledgementLabel = new QLabel();
+    acknowledgementLabel->setObjectName("AcknowledgementLabel");
+    acknowledgementLabel->setContextMenuPolicy(Qt::NoContextMenu);
+    acknowledgementLabel->setFixedHeight(24);
+    acknowledgementLabel->setOpenExternalLinks(false);
+    updateAcknowledgementLabel();
+
+    descriptionLabel = new QLabel();
+    descriptionLabel->setObjectName("DescriptionLabel");
+    descriptionLabel->setAlignment(Qt::AlignHCenter);
+    descriptionLabel->setWordWrap(true);
+    descriptionLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+
+    licenseLabel = new QLabel();
+    licenseLabel->setObjectName("LicenseLabel");
+    licenseLabel->setAlignment(Qt::AlignHCenter);
+    licenseLabel->setWordWrap(true);
+    licenseLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+
+    q->connect(websiteLabel, SIGNAL(linkActivated(QString)), q, SLOT(_q_onLinkActivated(QString)));
+    q->connect(acknowledgementLabel, SIGNAL(linkActivated(QString)), q, SLOT(_q_onLinkActivated(QString)));
+    q->connect(descriptionLabel, SIGNAL(linkActivated(QString)), q, SLOT(_q_onLinkActivated(QString)));
+    q->connect(licenseLabel, SIGNAL(linkActivated(QString)), q, SLOT(_q_onLinkActivated(QString)));
+
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    // CloseButton take up some space at the right
+    mainLayout->setContentsMargins(38, 30, 11, 25);
+    mainLayout->setSpacing(0);
+    mainLayout->addWidget(logoLabel);
+    mainLayout->setAlignment(logoLabel, Qt::AlignCenter);
+    mainLayout->addSpacing(3);
+    mainLayout->addWidget(productNameLabel);
+    mainLayout->setAlignment(productNameLabel, Qt::AlignCenter);
+    mainLayout->addSpacing(6);
+    mainLayout->addWidget(versionLabel);
+    mainLayout->setAlignment(versionLabel, Qt::AlignCenter);
+    mainLayout->addSpacing(8);
+    mainLayout->addWidget(companyLogoLabel);
+    mainLayout->setAlignment(companyLogoLabel, Qt::AlignCenter);
+//    mainLayout->addSpacing(6);
+    mainLayout->addWidget(websiteLabel);
+    mainLayout->setAlignment(websiteLabel, Qt::AlignCenter);
+    mainLayout->addSpacing(5);
+    mainLayout->addWidget(acknowledgementLabel);
+    mainLayout->setAlignment(acknowledgementLabel, Qt::AlignCenter);
+    mainLayout->addSpacing(12);
+    mainLayout->addWidget(descriptionLabel, Qt::AlignHCenter);
+    mainLayout->addSpacing(7);
+    mainLayout->addWidget(licenseLabel, Qt::AlignHCenter);
+
+    QWidget *mainContent = new QWidget;
+    mainContent->setLayout(mainLayout);
+    q->addContent(mainContent);
+
+    q->setFixedWidth(400);
+    q->adjustSize();
+    q->setFixedSize(q->size());
+
+    if (q->parentWidget() && q->parentWidget()->isTopLevel()) {
+        QPoint pCenterGlobal = q->mapToGlobal(q->parentWidget()->geometry().center());
+        q->move(pCenterGlobal.x() - q->width() / 2,
+                pCenterGlobal.y() - q->height() / 2);
+    }
+
+    // make active
+    q->setFocus();
 }
 
-DAboutDialog::DAboutDialog(
-    const QString &/*windowTitle*/,
-    const QString &windowIcon,
-    const QString &productIcon,
-    const QString &productName,
-    const QString &version,
-    const QString &description,
-    QWidget *parent,
-    const QString &companyLogo,
-    const QString &website,
-    const QString &websiteLink)
-    : DAboutDialog(windowIcon, productIcon, productName, version, description, parent, companyLogo, website, websiteLink)
+void DAboutDialogPrivate::updateWebsiteLabel()
 {
-    setTitle("");
+    QString websiteText = QString(websiteLinkTemplate).arg(websiteLink).arg(websiteName);
+    websiteLabel->setText(websiteText);
 }
 
-void DAboutDialog::onLinkActivated(const QString &link)
+void DAboutDialogPrivate::updateAcknowledgementLabel()
+{
+    QString acknowledgementText = QString(websiteLinkTemplate).arg(acknowledgementLink).arg(QObject::tr("Acknowledgements"));
+    acknowledgementLabel->setText(acknowledgementText);
+}
+
+void DAboutDialogPrivate::_q_onLinkActivated(const QString &link)
 {
     QDesktopServices::openUrl(QUrl(link));
 }
 
-void DAboutDialog::initUI()
+DAboutDialog::DAboutDialog(QWidget *parent)
+    : DDialog(*new DAboutDialogPrivate(this), parent)
 {
-    setTitlebarFixedHeight(30);
-    setWindowFlags(windowFlags() & ~ Qt::WindowMinimizeButtonHint);
-    setWindowFlags(windowFlags() & ~ Qt::WindowSystemMenuHint);
-    setWindowFlags(windowFlags() & ~ Qt::WindowMaximizeButtonHint);
-    setWindowModality(Qt::ApplicationModal);
+    D_THEME_INIT_WIDGET(dialogs/DAboutDialog);
 
-    DWindow::setWindowIcon(m_windowIcon);
+    D_D(DAboutDialog);
 
-    QLabel *logoLabel = new QLabel("logo");
-    logoLabel->setContentsMargins(0, 0, 0, 0);
-    logoLabel->setFixedSize(96, 96);
-    logoLabel->setPixmap(m_productIcon.scaled(logoLabel->size(), Qt::KeepAspectRatio));
+    d->init();
+    d->productNameLabel->setStyleSheet(styleSheet());
+    d->versionLabel->setStyleSheet(styleSheet());
+    d->websiteLabel->setStyleSheet(styleSheet());
+    d->acknowledgementLabel->setStyleSheet(styleSheet());
+    d->descriptionLabel->setStyleSheet(styleSheet());
+    d->licenseLabel->setStyleSheet(styleSheet());
+}
 
-    QLabel *productNameLabel = new QLabel(m_productName);
-    productNameLabel->setStyleSheet("font-size:18px;");
+QString DAboutDialog::windowTitle() const
+{
+    return title();
+}
 
-    QLabel *versionLabel = new QLabel(m_version);
-    versionLabel->setStyleSheet("font-size:12px; color: #666666");
+QString DAboutDialog::productName() const
+{
+    D_DC(DAboutDialog);
 
-    QLabel *companyLogoLabel = new QLabel();
-    companyLogoLabel->setPixmap(m_companyLogo);
-    companyLogoLabel->setFixedSize(m_companyLogo.size());
+    return d->productNameLabel->text();
+}
 
-    QLabel *websiteLabel = new QLabel(m_websiteName);
-    websiteLabel->setContextMenuPolicy(Qt::NoContextMenu);
-    websiteLabel->setFixedHeight(24);
-    websiteLabel->setStyleSheet("font-size:13px; color: #004EE5");
-    websiteLabel->setOpenExternalLinks(false);
-    QString websiteText = QString(websiteLinkTemplate).arg(m_websiteLink).arg(m_websiteName);
-    websiteLabel->setText(websiteText);
+QString DAboutDialog::version() const
+{
+    D_DC(DAboutDialog);
 
-    QLabel *acknowledgementLabel = new QLabel();
-    acknowledgementLabel->setContextMenuPolicy(Qt::NoContextMenu);
-    acknowledgementLabel->setFixedHeight(24);
-    acknowledgementLabel->setStyleSheet("font-size:13px; color: #004EE5");
-    acknowledgementLabel->setOpenExternalLinks(false);
-    QString acknowledgementText = QString(websiteLinkTemplate).arg(m_acknowledgementLink).arg(tr("Acknowledgements"));
-    acknowledgementLabel->setText(acknowledgementText);
+    return d->versionLabel->text();
+}
 
-    QLabel *descriptionLabel = new QLabel();
-    descriptionLabel->setText(m_description + '\n');
-    descriptionLabel->setAlignment(Qt::AlignHCenter);
+QString DAboutDialog::description() const
+{
+    D_DC(DAboutDialog);
 
-    descriptionLabel->setStyleSheet("font-size:11px; color: #1A1A1A; border: none;");
-    descriptionLabel->setWordWrap(true);
-    descriptionLabel->adjustSize();
+    return d->descriptionLabel->text();
+}
 
-    connect(websiteLabel, &QLabel::linkActivated, this, &DAboutDialog::onLinkActivated);
-    connect(acknowledgementLabel, &QLabel::linkActivated, this, &DAboutDialog::onLinkActivated);
-    connect(descriptionLabel, &QLabel::linkActivated, this, &DAboutDialog::onLinkActivated);
+const QPixmap *DAboutDialog::companyLogo() const
+{
+    D_DC(DAboutDialog);
 
-    QVBoxLayout *mainLayout = new QVBoxLayout;
-    mainLayout->setMargin(0);
-    mainLayout->setContentsMargins(38, 0, 38, 10);
-    mainLayout->setSpacing(0);
-    mainLayout->addWidget(logoLabel);
-    mainLayout->setAlignment(logoLabel, Qt::AlignCenter);
-    mainLayout->addSpacing(8);
-    mainLayout->addWidget(productNameLabel);
-    mainLayout->setAlignment(productNameLabel, Qt::AlignCenter);
-    mainLayout->addSpacing(12);
-    mainLayout->addWidget(versionLabel);
-    mainLayout->setAlignment(versionLabel, Qt::AlignCenter);
-    mainLayout->addSpacing(12);
-    mainLayout->addWidget(companyLogoLabel);
-    mainLayout->setAlignment(companyLogoLabel, Qt::AlignCenter);
-    mainLayout->addSpacing(2);
-    mainLayout->addWidget(websiteLabel);
-    mainLayout->setAlignment(websiteLabel, Qt::AlignCenter);
-    mainLayout->addSpacing(10);
-    mainLayout->addWidget(acknowledgementLabel);
-    mainLayout->setAlignment(acknowledgementLabel, Qt::AlignCenter);
-    mainLayout->addSpacing(10);
-    mainLayout->addWidget(descriptionLabel, Qt::AlignHCenter);
+    return d->companyLogoLabel->pixmap();
+}
 
-    setLayout(mainLayout);
+QString DAboutDialog::websiteName() const
+{
+    D_DC(DAboutDialog);
 
-    this->setFixedWidth(400);
-    this->adjustSize();
-    this->setFixedSize(this->size());
-    if (parentWidget() && parentWidget()->isTopLevel()) {
-        QPoint pCenterGlobal = mapToGlobal(parentWidget()->geometry().center());
-        this->move(pCenterGlobal.x() - width() / 2,
-                   pCenterGlobal.y() - height() / 2);
-    }
+    return d->websiteName;
+}
 
-    setFocus();
+QString DAboutDialog::websiteLink() const
+{
+    D_DC(DAboutDialog);
 
-    connect(this, &DAboutDialog::windowTitleChanged, this, &DAboutDialog::setTitle);
-    connect(this, &DAboutDialog::windowIconChanged, this, [=](QPixmap windowIcon){
-        DWindow::setWindowIcon(windowIcon);
-    });
-    connect(this, &DAboutDialog::productIconChanged, logoLabel, &QLabel::setPixmap);
-    connect(this, &DAboutDialog::productNameChanged, productNameLabel, &QLabel::setText);
-    connect(this, &DAboutDialog::versionChanged, versionLabel, &QLabel::setText);
-    connect(this, &DAboutDialog::descriptionChanged, descriptionLabel, &QLabel::setText);
+    return d->websiteLink;
+}
 
-    connect(this, &DAboutDialog::websiteNameChanged, this, [=](const QString websiteName){
-        QString websiteText = QString(websiteLinkTemplate).arg(m_websiteLink).arg(websiteName);
-        websiteLabel->setText(websiteText);
-    });
-    connect(this, &DAboutDialog::websiteLinkChanged, this, [=](const QString websiteLink){
-        QString websiteText = QString(websiteLinkTemplate).arg(websiteLink).arg(m_websiteName);
-        websiteLabel->setText(websiteText);
-    });
-    connect(this, &DAboutDialog::acknowledgementLinkChanged,  this, [=](const QString acknowledgementLink){
-        QString websiteText = QString(websiteLinkTemplate).arg(acknowledgementLink).arg(tr("Acknowledgements"));
-        acknowledgementLabel->setText(websiteText);
-    });
+QString DAboutDialog::acknowledgementLink() const
+{
+    D_DC(DAboutDialog);
+
+    return d->acknowledgementLink;
+}
+
+QString DAboutDialog::license() const
+{
+    D_DC(DAboutDialog);
+
+    return d->licenseLabel->text();
+}
+
+void DAboutDialog::setWindowTitle(const QString &windowTitle)
+{
+    setTitle(windowTitle);
+}
+
+void DAboutDialog::setProductIcon(const QIcon &icon)
+{
+    D_D(DAboutDialog);
+
+    // NOTE: DO NOT use setFixedSize with setSizePolicy
+//    logoLabel->setFixedSize(96, 96);
+    d->logoLabel->setPixmap(icon.pixmap(QSize(96, 96)));
+}
+
+void DAboutDialog::setProductName(const QString &productName)
+{
+    D_D(DAboutDialog);
+
+    d->productNameLabel->setText(productName);
+}
+
+void DAboutDialog::setVersion(const QString &version)
+{
+    D_D(DAboutDialog);
+
+    d->versionLabel->setText(version);
+}
+
+void DAboutDialog::setDescription(const QString &description)
+{
+    D_D(DAboutDialog);
+
+    d->descriptionLabel->setText(description);
+}
+
+void DAboutDialog::setCompanyLogo(const QPixmap &companyLogo)
+{
+    D_D(DAboutDialog);
+
+    d->companyLogoLabel->setPixmap(companyLogo);
+    d->companyLogoLabel->setFixedSize(companyLogo.size());
+}
+
+void DAboutDialog::setWebsiteName(const QString &websiteName)
+{
+    D_D(DAboutDialog);
+
+    if (d->websiteName == websiteName)
+        return;
+
+    d->websiteName = websiteName;
+    d->updateWebsiteLabel();
+    emit websiteNameChanged(websiteName);
+}
+
+void DAboutDialog::setWebsiteLink(const QString &websiteLink)
+{
+    D_D(DAboutDialog);
+
+    if (d->websiteLink == websiteLink)
+        return;
+
+    d->websiteLink = websiteLink;
+    d->updateWebsiteLabel();
+    emit websiteLinkChanged(websiteLink);
+}
+
+void DAboutDialog::setAcknowledgementLink(const QString &acknowledgementLink)
+{
+    D_D(DAboutDialog);
+
+    d->acknowledgementLink = acknowledgementLink;
+    d->updateAcknowledgementLabel();
+}
+
+void DAboutDialog::setLicense(const QString &license)
+{
+    D_D(DAboutDialog);
+
+    d->licenseLabel->setText(license);
 }
 
 void DAboutDialog::keyPressEvent(QKeyEvent *event)
@@ -197,7 +298,9 @@ void DAboutDialog::keyPressEvent(QKeyEvent *event)
         event->accept();
     }
 
-    DWindow::keyPressEvent(event);
+    DDialog::keyPressEvent(event);
 }
+
+#include "moc_daboutdialog.cpp"
 
 DWIDGET_END_NAMESPACE

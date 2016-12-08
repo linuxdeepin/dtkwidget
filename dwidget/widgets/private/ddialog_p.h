@@ -15,7 +15,9 @@
 #include "ddialog.h"
 #include "dabstractdialogprivate_p.h"
 
+QT_BEGIN_NAMESPACE
 class QHBoxLayout;
+QT_END_NAMESPACE
 
 DWIDGET_BEGIN_NAMESPACE
 

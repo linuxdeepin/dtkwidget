@@ -2,15 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
-    <name>DAboutDialog</name>
-    <message>
-        <location filename="../widgets/daboutdialog.cpp" line="118"/>
-        <location filename="../widgets/daboutdialog.cpp" line="188"/>
-        <source>Acknowledgements</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>DCalendar</name>
     <message>
         <location filename="../widgets/dcalendar.cpp" line="235"/>
@@ -46,6 +37,11 @@
     <message>
         <location filename="../widgets/dinputdialog.cpp" line="33"/>
         <source>Confirm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/daboutdialog.cpp" line="126"/>
+        <source>Acknowledgements</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

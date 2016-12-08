@@ -4,10 +4,8 @@
 <context>
     <name>DAboutDialog</name>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="118"/>
-        <location filename="../widgets/daboutdialog.cpp" line="188"/>
         <source>Acknowledgements</source>
-        <translation>致谢</translation>
+        <translation type="vanished">致谢</translation>
     </message>
 </context>
 <context>
@@ -47,6 +45,11 @@
         <location filename="../widgets/dinputdialog.cpp" line="33"/>
         <source>Confirm</source>
         <translation>确认</translation>
+    </message>
+    <message>
+        <location filename="../widgets/daboutdialog.cpp" line="126"/>
+        <source>Acknowledgements</source>
+        <translation>致谢</translation>
     </message>
 </context>
 </TS>

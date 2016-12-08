@@ -38,7 +38,8 @@ HEADERS += \
     $$PWD/dscrollbar_p.h \
     $$PWD/dmainwindow_p.h \
     $$PWD/dblureffectwidget_p.h \
-    $$PWD/dpageindicator_p.h
+    $$PWD/dpageindicator_p.h \
+    $$PWD/daboutdialog_p.h
 
 SOURCES += \
     $$PWD/dthemehelper.cpp

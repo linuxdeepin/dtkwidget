@@ -1,241 +1,63 @@
-#pragma once
+#ifndef DABOUTDIALOG_H
+#define DABOUTDIALOG_H
 
-#include <DWindow>
+#include <ddialog.h>
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DAboutDialog : public DWindow
+class DAboutDialogPrivate;
+class DAboutDialog : public DDialog
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString windowTitle READ windowTitle WRITE setWindowTitle NOTIFY windowTitleChanged)
-    Q_PROPERTY(QPixmap windowIcon READ windowIcon WRITE setWindowIcon NOTIFY windowIconChanged)
-    Q_PROPERTY(QPixmap productIcon READ productIcon WRITE setProductIcon NOTIFY productIconChanged)
-    Q_PROPERTY(QString productName READ productName WRITE setProductName NOTIFY productNameChanged)
-    Q_PROPERTY(QString version READ version WRITE setVersion NOTIFY versionChanged)
-    Q_PROPERTY(QString description READ description WRITE setDescription NOTIFY descriptionChanged)
-    Q_PROPERTY(QPixmap companyLogo READ companyLogo WRITE setCompanyLogo NOTIFY companyLogoChanged)
+    Q_PROPERTY(QString windowTitle READ windowTitle WRITE setWindowTitle)
+    Q_PROPERTY(QString productName READ productName WRITE setProductName)
+    Q_PROPERTY(QString version READ version WRITE setVersion)
+    Q_PROPERTY(QString description READ description WRITE setDescription)
+    Q_PROPERTY(QString license READ license WRITE setLicense)
     Q_PROPERTY(QString websiteName READ websiteName WRITE setWebsiteName NOTIFY websiteNameChanged)
     Q_PROPERTY(QString websiteLink READ websiteLink WRITE setWebsiteLink NOTIFY websiteLinkChanged)
-    Q_PROPERTY(QString acknowledgementLink READ acknowledgementLink WRITE setAcknowledgementLink NOTIFY acknowledgementLinkChanged)
-
-
-public:
-    DAboutDialog(const QPixmap &windowIcon,
-                 const QPixmap &productIcon,
-                 const QString &productName,
-                 const QString &version,
-                 const QString &description,
-                 const QString &acknowledgementLink,
-                 QWidget *parent = nullptr);
-
-
-    DAboutDialog(const QString &windowIcon,
-                 const QString &productIcon,
-                 const QString &productName,
-                 const QString &version,
-                 const QString &description,
-                 QWidget *parent = nullptr,
-                 const QString &companyLogo = ":/images/deepin-logo.png",
-                 const QString &websiteName = "www.deepin.org",
-                 const QString &websiteLink = "https://www.deepin.org");
-
-    DAboutDialog(
-        const QString &windowTitle,
-        const QString &windowIcon,
-        const QString &productIcon,
-        const QString &productName,
-        const QString &version,
-        const QString &description,
-        QWidget *parent = nullptr,
-        const QString &companyLogo = ":/images/deepin-logo.png",
-        const QString &website = "www.deepin.org",
-        const QString &websiteLink = "https://www.deepin.org");
+    Q_PROPERTY(QString acknowledgementLink READ acknowledgementLink WRITE setAcknowledgementLink)
 
 public:
-    QString windowTitle() const
-    {
-        return m_windowTitle;
-    }
+    DAboutDialog(QWidget *parent = 0);
 
-    QPixmap windowIcon() const
-    {
-        return m_windowIcon;
-    }
-
-    QPixmap productIcon() const
-    {
-        return m_productIcon;
-    }
-
-    QString productName() const
-    {
-        return m_productName;
-    }
-
-    QString version() const
-    {
-        return m_version;
-    }
-
-    QString description() const
-    {
-        return m_description;
-    }
-
-    QPixmap companyLogo() const
-    {
-        return m_companyLogo;
-    }
-
-    QString websiteName() const
-    {
-        return m_websiteName;
-    }
-
-    QString websiteLink() const
-    {
-        return m_websiteLink;
-    }
-
-    QString acknowledgementLink() const
-    {
-        return m_acknowledgementLink;
-    }
+    QString windowTitle() const;
+    QString productName() const;
+    QString version() const;
+    QString description() const;
+    const QPixmap *companyLogo() const;
+    QString websiteName() const;
+    QString websiteLink() const;
+    QString acknowledgementLink() const;
+    QString license() const;
 
 public slots:
-    void setWindowTitle(QString windowTitle)
-    {
-        if (m_windowTitle == windowTitle) {
-            return;
-        }
-
-        m_windowTitle = windowTitle;
-        emit windowTitleChanged(windowTitle);
-    }
-
-    void setWindowIcon(QPixmap windowIcon)
-    {
-//        if (m_windowIcon == windowIcon) {
-//            return;
-//        }
-
-        m_windowIcon = windowIcon;
-        emit windowIconChanged(windowIcon);
-    }
-
-    void setProductIcon(QPixmap productIcon)
-    {
-//        if (m_productIcon == productIcon) {
-//            return;
-//        }
-
-        m_productIcon = productIcon;
-        emit productIconChanged(productIcon);
-    }
-
-    void setProductName(QString productName)
-    {
-        if (m_productName == productName) {
-            return;
-        }
-
-        m_productName = productName;
-        emit productNameChanged(productName);
-    }
-
-    void setVersion(QString version)
-    {
-        if (m_version == version) {
-            return;
-        }
-
-        m_version = version;
-        emit versionChanged(version);
-    }
-
-    void setDescription(QString description)
-    {
-        if (m_description == description) {
-            return;
-        }
-
-        m_description = description;
-        emit descriptionChanged(description);
-    }
-
-    void setCompanyLogo(QPixmap companyLogo)
-    {
-//        if (m_companyLogo == companyLogo) {
-//            return;
-//        }
-
-        m_companyLogo = companyLogo;
-        emit companyLogoChanged(companyLogo);
-    }
-
-    void setWebsiteName(QString websiteName)
-    {
-        if (m_websiteName == websiteName) {
-            return;
-        }
-
-        m_websiteName = websiteName;
-        emit websiteNameChanged(websiteName);
-    }
-
-    void setWebsiteLink(QString websiteLink)
-    {
-        if (m_websiteLink == websiteLink) {
-            return;
-        }
-
-        m_websiteLink = websiteLink;
-        emit websiteLinkChanged(websiteLink);
-    }
-
-    void setAcknowledgementLink(QString acknowledgementLink)
-    {
-        if (m_acknowledgementLink == acknowledgementLink) {
-            return;
-        }
-
-        m_acknowledgementLink = acknowledgementLink;
-        emit acknowledgementLinkChanged(acknowledgementLink);
-    }
+    void setWindowTitle(const QString &windowTitle);
+    void setProductIcon(const QIcon &icon);
+    void setProductName(const QString &productName);
+    void setVersion(const QString &version);
+    void setDescription(const QString &description);
+    void setCompanyLogo(const QPixmap &companyLogo);
+    void setWebsiteName(const QString &websiteName);
+    void setWebsiteLink(const QString &websiteLink);
+    void setAcknowledgementLink(const QString &acknowledgementLink);
+    void setLicense(const QString &license);
 
 signals:
-    void windowTitleChanged(QString windowTitle);
-    void windowIconChanged(QPixmap windowIcon);
-    void productIconChanged(QPixmap productIcon);
-    void productNameChanged(QString productName);
-    void versionChanged(QString version);
-    void descriptionChanged(QString description);
-    void companyLogoChanged(QPixmap companyLogo);
     void websiteNameChanged(QString websiteName);
     void websiteLinkChanged(QString websiteLink);
-    void acknowledgementLinkChanged(QString acknowledgementLink);
 
 protected:
-    void keyPressEvent(QKeyEvent *event);
-
-private slots:
-    void onLinkActivated(const QString &link);
+    void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
 
 private:
-    void initUI();
-    static const QString websiteLinkTemplate;
+    Q_PRIVATE_SLOT(d_func(), void _q_onLinkActivated(const QString &link))
 
-    QString m_windowTitle;
-    QPixmap m_windowIcon;
-    QPixmap m_productIcon;
-    QString m_productName;
-    QString m_version;
-    QString m_description;
-    QPixmap m_companyLogo;
-    QString m_websiteName;
-    QString m_websiteLink;
-    QString m_acknowledgementLink;
+    Q_DISABLE_COPY(DAboutDialog)
+    D_DECLARE_PRIVATE(DAboutDialog)
 };
 
 DWIDGET_END_NAMESPACE
+
+#endif // DABOUTDIALOG_H
