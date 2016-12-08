@@ -58,6 +58,7 @@ QPushButton#ActionButton{
     border-right: none;
     border-left: none;
     border-bottom: none;
+    font-size: 13px;
     color: #303030;
     text-align: center;
     outline: none;
@@ -65,10 +66,12 @@ QPushButton#ActionButton{
 
 QPushButton#ActionButton[buttonType="1"] {/*warning*/
     color: #ff5a5a;
+    font-weight: 500;
 }
 
 QPushButton#ActionButton[buttonType="2"] {/*recommend*/
     color: #0087ff;
+    font-weight: 500;
 }
 
 QPushButton#ActionButton:hover{
@@ -127,6 +130,7 @@ QCheckBox::indicator:checked:hover {
 QLabel#TitleLabel{
     padding-top: 2px;
     padding-bottom: 2px;
+    font-size: 12px;
     color: #000000;
 }
 
