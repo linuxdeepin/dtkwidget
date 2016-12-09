@@ -48,8 +48,6 @@ DApplicationPrivate::DApplicationPrivate(DApplication *q) :
         }
     });
 #endif
-    m_translator = new QTranslator(q);
-    m_qtTranslator = new QTranslator(q);
 }
 
 DApplicationPrivate::~DApplicationPrivate()
@@ -100,8 +98,9 @@ bool DApplicationPrivate::loadDtkTranslator(QList<QLocale> localeFallback)
 {
     D_Q(DApplication);
 
-    m_qtTranslator->load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-    q->installTranslator(m_qtTranslator);
+    auto qtTranslator = new QTranslator(q);
+    qtTranslator->load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    q->installTranslator(qtTranslator);
 
     QList<DPathBuf> translateDirs;
     auto dtkwidgetName = "dtkwidget";
@@ -132,8 +131,9 @@ bool DApplicationPrivate::loadTranslator(QList<DPathBuf> translateDirs, const QS
             QString translatePath = (path / translateFilename).toString();
             if (QFile::exists(translatePath + ".qm")) {
                 qDebug() << "load translate" << translatePath;
-                m_translator->load(translatePath);
-                q->installTranslator(m_translator);
+                auto translator = new QTranslator(q);
+                translator->load(translatePath);
+                q->installTranslator(translator);
                 return true;
             }
         }

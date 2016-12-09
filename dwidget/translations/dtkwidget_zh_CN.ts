@@ -2,13 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN">
 <context>
-    <name>DAboutDialog</name>
-    <message>
-        <source>Acknowledgements</source>
-        <translation type="vanished">致谢</translation>
-    </message>
-</context>
-<context>
     <name>DCalendar</name>
     <message>
         <location filename="../widgets/dcalendar.cpp" line="235"/>

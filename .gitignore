@@ -17,3 +17,4 @@ build*/
 *.DS_Store
 
 # executeable files
+*.qm
