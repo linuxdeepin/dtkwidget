@@ -62,6 +62,6 @@ TRANSLATIONS += $$PWD/translations/$${TARGET}.ts \
                 $$PWD/translations/$${TARGET}_zh_CN.ts
 
 translations.path = $$PREFIX/share/$${TARGET}/translations
-translations.files = translations/*.qm
+translations.files = $$PWD/translations/*.qm
 
 INSTALLS += translations
