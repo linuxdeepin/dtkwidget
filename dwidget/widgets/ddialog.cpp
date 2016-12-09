@@ -91,23 +91,21 @@ void DDialogPrivate::init()
     messageLabel->hide();
     messageLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
 
+    // TopLayout--ContentLayout
+    contentLayout = new QVBoxLayout;
+    contentLayout->setContentsMargins(0, 0, 0, 0);
+    contentLayout->setSpacing(0);
+
     QVBoxLayout *textLayout = new QVBoxLayout;
     textLayout->setContentsMargins(0, 0, 0, 0);
     textLayout->setSpacing(5);
     textLayout->addStretch();
     textLayout->addWidget(titleLabel);
     textLayout->addWidget(messageLabel);
+    textLayout->addLayout(contentLayout);
     textLayout->addStretch();
 
     topLayout->addLayout(textLayout);
-
-
-    // TopLayout--ContentLayout
-    contentLayout = new QVBoxLayout;
-    contentLayout->setContentsMargins(0, 0, 0, 0);
-    contentLayout->setSpacing(0);
-    topLayout->addLayout(contentLayout);
-
 
     // TopLayout--Close button
     closeButton = new QPushButton(q);
