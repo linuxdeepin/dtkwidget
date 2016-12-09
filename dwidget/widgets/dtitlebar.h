@@ -10,7 +10,6 @@
 DWIDGET_BEGIN_NAMESPACE
 
 class DTitlebarPrivate;
-class DMenu;
 
 ///
 /// \brief The DTitlebar class is an universal title bar on the top of windows.
@@ -22,15 +21,11 @@ public:
     explicit DTitlebar(QWidget *parent = 0);
 
 #ifndef QT_NO_MENU
-    Q_DECL_DEPRECATED DMenu *menu() const;
-    QMenu *getMenu() const;
-#endif
-    QWidget *customWidget() const;
-
-#ifndef QT_NO_MENU
-    Q_DECL_DEPRECATED_X("Plase use void setMenu(QMenu *)") void setMenu(DMenu *);
+    QMenu *menu() const;
     void setMenu(QMenu *menu);
 #endif
+
+    QWidget *customWidget() const;
     void setCustomWidget(QWidget *, bool fixCenterPos = false);
     void setCustomWidget(QWidget *, Qt::AlignmentFlag flag = Qt::AlignCenter, bool fixCenterPos = false);
     void setWindowFlags(Qt::WindowFlags type);

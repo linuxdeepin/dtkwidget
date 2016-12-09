@@ -10,6 +10,7 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QMessageBox>
+#include <QMenu>
 #include <QDebug>
 
 #include "dslider.h"
@@ -18,12 +19,10 @@
 #include "dswitchbutton.h"
 #include "segmentedcontrol.h"
 #include "dcolorpicker.h"
-#include "daction.h"
 #include "dplatformwindowhandle.h"
 #include "dtitlebar.h"
 
 #include <DApplication>
-#include <DMenu>
 
 #include "mainwindow.h"
 #include "buttonlisttab.h"
@@ -72,13 +71,13 @@ MainWindow::MainWindow(QWidget *parent)
     if (titlebar) {
         titlebar->setMenu(new QMenu(titlebar));
         titlebar->setSeparatorVisible(true);
-        titlebar->getMenu()->addAction("testmenu1");
-        titlebar->getMenu()->addAction("testmenu2");
-        QMenu *menu = titlebar->getMenu()->addMenu("menu1");
+        titlebar->menu()->addAction("testmenu1");
+        titlebar->menu()->addAction("testmenu2");
+        QMenu *menu = titlebar->menu()->addMenu("menu1");
         menu->addAction("menu1->action1");
         menu->addAction("menu1->action2");
 
-        connect(titlebar->getMenu(), &QMenu::triggered, this, &MainWindow::menuItemInvoked);
+        connect(titlebar->menu(), &QMenu::triggered, this, &MainWindow::menuItemInvoked);
     }
 }
 

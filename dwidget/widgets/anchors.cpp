@@ -283,9 +283,7 @@ AnchorsBase::AnchorsBase(QWidget *w):
 
 AnchorsBase::~AnchorsBase()
 {
-    Q_D(AnchorsBase);
-
-    d->removeWidgetAnchorsBase(target(), this);
+    AnchorsBasePrivate::removeWidgetAnchorsBase(target(), this);
 }
 
 QWidget *AnchorsBase::target() const

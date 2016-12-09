@@ -85,9 +85,7 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dtitlebar.h \
     $$PWD/dwidget.h \
     $$PWD/dwindow.h \
-    $$PWD/dmenu.h \
     $$PWD/dx11widget.h \
-    $$PWD/daction.h \
     $$PWD/dplatformwindowhandle.h \
     $$PWD/dmainwindow.h \
     $$PWD/dblureffectwidget.h \
@@ -156,7 +154,6 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dwindow.cpp \
     $$PWD/dwidget.cpp \
     $$PWD/dx11widget.cpp \
-    $$PWD/daction.cpp \
     $$PWD/dplatformwindowhandle.cpp \
     $$PWD/dmainwindow.cpp \
     $$PWD/dblureffectwidget.cpp \

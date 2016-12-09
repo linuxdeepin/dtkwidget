@@ -5,11 +5,12 @@
 #include <dobject.h>
 #include <dwidget_global.h>
 
+class QMenu;
+
 DWIDGET_BEGIN_NAMESPACE
 
 class DX11WidgetPrivate;
 class DTitlebar;
-class DMenu;
 
 class LIBDTKWIDGETSHARED_EXPORT DX11Widget : public QWidget, public DObject
 {
@@ -43,7 +44,8 @@ public:
 
     DTitlebar *titlebar() const;
 
-    void setTitlebarMenu(DMenu *);
+    void setTitlebarMenu(QMenu *);
+    QMenu *titleBarMenu() const;
     void setTitlebarWidget(QWidget *, bool fixCenterPos = false);
     void setTitlebarWidget(QWidget *w, Qt::AlignmentFlag wflag, bool fixCenterPos = false);
     int titlebarHeight() const;

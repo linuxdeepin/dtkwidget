@@ -1,7 +1,7 @@
 #include "dwindow.h"
 
 #include <QHBoxLayout>
-#include <DMenu>
+#include <QMenu>
 #include <DTitlebar>
 #include <QDebug>
 #include <private/dwidget_p.h>
@@ -14,7 +14,7 @@ class DWindowPrivate: public DWidgetPrivate
 
 public:
     explicit DWindowPrivate(DWindow *q);
-    DMenu   *dbusMenu   = nullptr;
+    QMenu   *m_menu     = nullptr;
     QWidget *m_parent   = nullptr;
 };
 
@@ -28,10 +28,8 @@ DWindow::DWindow(QWidget *parent): DWidget(*(new DWindowPrivate(this)))
     D_D(DWindow);
 
     setParent(parent);
-    d->dbusMenu = new DMenu;
-    d->dbusMenu->attatch(this);
-    setTitlebarMenu(d->dbusMenu);
-
+    d->m_menu = new QMenu(this);
+    setTitlebarMenu(d->m_menu);
 }
 
 void DWindow::setParent(QWidget *parent)
@@ -45,12 +43,6 @@ QWidget *DWindow::parentWidget() const
 {
     D_DC(DWindow);
     return d->m_parent;
-}
-
-DMenu *DWindow::dbusMenu()
-{
-    D_D(DWindow);
-    return d->dbusMenu;
 }
 
 void DWindow::setContentLayout(QLayout *l)

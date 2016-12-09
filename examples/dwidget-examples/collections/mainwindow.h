@@ -15,6 +15,8 @@
 #include <QTabWidget>
 #include <QVBoxLayout>
 
+#include <DMainWindow>
+
 #include "bartab.h"
 #include "buttontab.h"
 #include "inputtab.h"
@@ -24,13 +26,10 @@
 #include "widgetstab.h"
 #include "comboboxtab.h"
 
-#include <DMainWindow>
+
+class QAction;
 
 DWIDGET_USE_NAMESPACE
-
-DWIDGET_BEGIN_NAMESPACE
-class DAction;
-DWIDGET_END_NAMESPACE
 
 class MainWindow : public DMainWindow
 {

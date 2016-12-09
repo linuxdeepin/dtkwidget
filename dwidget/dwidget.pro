@@ -26,15 +26,14 @@ unix{
 win32* {
     includes.files += $$PWD/platforms/windows/*.h
 }
-includes.files += widgets/DTitlebar \
-    widgets/DAboutDialog \
+includes.files += \
+    widgets/DTitlebar \
     widgets/DWindow \
-    widgets/DMenu \
-    widgets/DApplication \
-    widgets/DGraphicsDropShadowEffect \
-    widgets/DAction \
     widgets/DMainWindow \
-    widgets/DBlurEffectWidget
+    widgets/DAboutDialog \
+    widgets/DApplication \
+    widgets/DBlurEffectWidget \
+    widgets/DGraphicsDropShadowEffect
 
 QMAKE_PKGCONFIG_NAME = DTK_WIDGET
 QMAKE_PKGCONFIG_DESCRIPTION = Deepin Tool Kit UI Module

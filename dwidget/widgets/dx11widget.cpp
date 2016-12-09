@@ -394,10 +394,16 @@ DTitlebar *DX11Widget::titlebar() const
     return d->titlebar;
 }
 
-void DX11Widget::setTitlebarMenu(DMenu *menu)
+void DX11Widget::setTitlebarMenu(QMenu *menu)
 {
     D_D(DX11Widget);
     d->titlebar->setMenu(menu);
+}
+
+QMenu *DX11Widget::titleBarMenu() const
+{
+    D_DC(DX11Widget);
+    return d->titlebar->menu();
 }
 
 void DX11Widget::setTitlebarWidget(QWidget *w, bool fixCenterPos)

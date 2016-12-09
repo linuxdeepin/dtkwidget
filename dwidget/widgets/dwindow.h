@@ -6,11 +6,11 @@
 #include <dwidget_global.h>
 
 #include "dwidget.h"
-#include <DMenu>
+
+class QMenu;
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DMenu;
 class DWindowPrivate;
 
 class LIBDTKWIDGETSHARED_EXPORT DWindow : public DWidget
@@ -18,8 +18,6 @@ class LIBDTKWIDGETSHARED_EXPORT DWindow : public DWidget
     Q_OBJECT
 public:
     explicit DWindow(QWidget *parent = 0);
-
-    DMenu *dbusMenu();
 
     void setContentLayout(QLayout *l);
     void setContentWidget(QWidget *w);

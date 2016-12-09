@@ -1,6 +1,7 @@
 #include "dtitlebar.h"
 
 #include <QDebug>
+#include <QMenu>
 #include <QHBoxLayout>
 #include <QApplication>
 #include <QMouseEvent>
@@ -17,8 +18,6 @@
 #ifdef Q_OS_LINUX
 #include "../platforms/x11/xutil.h"
 #endif
-
-#include  "dmenu.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -52,8 +51,7 @@ private:
     QLabel              *separator;
 
 #ifndef QT_NO_MENU
-    DMenu               *menu = Q_NULLPTR;
-    QMenu               *qmenu = Q_NULLPTR;
+    QMenu               *menu = Q_NULLPTR;
 #endif
 
     QWidget             *parentWindow = Q_NULLPTR;
@@ -186,18 +184,22 @@ DTitlebar::DTitlebar(QWidget *parent) :
 }
 
 #ifndef QT_NO_MENU
-DMenu *DTitlebar::menu() const
+QMenu *DTitlebar::menu() const
 {
     D_DC(DTitlebar);
 
     return d->menu;
 }
 
-QMenu *DTitlebar::getMenu() const
+void DTitlebar::setMenu(QMenu *menu)
 {
-    D_DC(DTitlebar);
+    D_D(DTitlebar);
 
-    return d->qmenu;
+    d->menu = menu;
+    if (d->menu) {
+        disconnect(this, &DTitlebar::optionClicked, 0, 0);
+        connect(this, &DTitlebar::optionClicked, this, &DTitlebar::showMenu);
+    }
 }
 #endif
 
@@ -237,37 +239,15 @@ void DTitlebar::setWindowFlags(Qt::WindowFlags type)
 }
 
 #ifndef QT_NO_MENU
-void DTitlebar::setMenu(DMenu *menu)
-{
-    D_D(DTitlebar);
-
-    d->menu = menu;
-    if (d->menu) {
-        disconnect(this, &DTitlebar::optionClicked, 0, 0);
-        connect(this, &DTitlebar::optionClicked, this, &DTitlebar::showMenu);
-    }
-}
-
-void DTitlebar::setMenu(QMenu *menu)
-{
-    D_D(DTitlebar);
-
-    d->qmenu = menu;
-
-    if (d->qmenu) {
-        disconnect(this, &DTitlebar::optionClicked, 0, 0);
-        connect(this, &DTitlebar::optionClicked, this, &DTitlebar::showMenu);
-    }
-}
-
 void DTitlebar::showMenu()
 {
     D_D(DTitlebar);
 
-    if (d->qmenu)
-        d->qmenu->exec(d->optionButton->mapToGlobal(d->optionButton->rect().bottomLeft()));
-    else
+    if (d->menu) {
         d->menu->exec(d->optionButton->mapToGlobal(d->optionButton->rect().bottomLeft()));
+    } else {
+        d->menu->exec(d->optionButton->mapToGlobal(d->optionButton->rect().bottomLeft()));
+    }
 }
 #endif
 
@@ -452,7 +432,7 @@ void DTitlebar::resize(int w, int h)
 {
     D_DC(DTitlebar);
     if (d->customWidget) {
-        d->customWidget->resize(w - d->buttonArea->width(),h);
+        d->customWidget->resize(w - d->buttonArea->width(), h);
     }
 }
 
@@ -471,7 +451,7 @@ void DTitlebar::mouseMoveEvent(QMouseEvent *event)
     }
 
 #ifdef Q_OS_WIN
-    if(d->mousePressed) {
+    if (d->mousePressed) {
         emit mousePosMoving(button, event->globalPos());
     }
 #endif

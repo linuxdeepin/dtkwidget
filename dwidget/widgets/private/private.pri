@@ -33,8 +33,6 @@ HEADERS += \
     $$PWD/dtextedit_p.h \
     $$PWD/dapplication_p.h \
     $$PWD/dwidget_p.h \
-    $$PWD/daction_p.h \
-    $$PWD/dmenu_p.h \
     $$PWD/dscrollbar_p.h \
     $$PWD/dmainwindow_p.h \
     $$PWD/dblureffectwidget_p.h \
