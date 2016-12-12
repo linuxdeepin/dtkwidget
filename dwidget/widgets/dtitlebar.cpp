@@ -154,7 +154,8 @@ void DTitlebarPrivate::_q_toggleWindowState()
 
     if (parentWindow->isMaximized()) {
         parentWindow->showNormal();
-    } else if (!parentWindow->isFullScreen()) {
+    }else if (!parentWindow->isFullScreen()
+              && (parentWindow->windowFlags() & Qt::WindowMaximizeButtonHint )) {
         parentWindow->showMaximized();
     }
 }
