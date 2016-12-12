@@ -42,7 +42,7 @@
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="126"/>
         <source>Acknowledgements</source>
-        <translation>致谢</translation>
+        <translation>鸣谢</translation>
     </message>
 </context>
 </TS>
