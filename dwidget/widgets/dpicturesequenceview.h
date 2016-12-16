@@ -56,6 +56,8 @@ Q_SIGNALS:
     void playEnd() const;
 
 private:
+    D_PRIVATE_SLOT(void _q_refreshPicture())
+
     Q_DISABLE_COPY(DPictureSequenceView)
     D_DECLARE_PRIVATE(DPictureSequenceView)
 };

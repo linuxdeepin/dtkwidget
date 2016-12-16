@@ -24,85 +24,47 @@ void DPictureSequenceViewPrivate::init()
 {
     D_Q(DPictureSequenceView);
 
-    m_scene = new QGraphicsScene(q);
-    m_refreshTimer = new QTimer(q);
-    m_refreshTimer->setInterval(33);
-//    m_refreshTimer->start();
+    scene = new QGraphicsScene(q);
+    refreshTimer = new QTimer(q);
+    refreshTimer->setInterval(33);
 
-    q->setScene(m_scene);
+    q->setScene(scene);
     q->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     q->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     q->setFrameShape(QFrame::NoFrame);
 
-    q->connect(m_refreshTimer, &QTimer::timeout, [this] {refreshPicture();});
+    q->connect(refreshTimer, SIGNAL(timeout()), q, SLOT(_q_refreshPicture()));
 }
 
 void DPictureSequenceViewPrivate::play()
 {
-    m_refreshTimer->start();
+    D_Q(DPictureSequenceView);
+
+    refreshTimer->start();
 }
 
-void DPictureSequenceViewPrivate::setPictureSequence(const QStringList &sequence,
-                                                     DPictureSequenceView::PaintMode paintMode)
+void DPictureSequenceViewPrivate::_q_refreshPicture()
 {
-    D_QC(DPictureSequenceView);
+    QGraphicsPixmapItem *item = pictureItemList.value(lastItemPos++);
 
-    for (const QString &pic : sequence) {
-        QPixmap pixmap(pic);
+    if (item)
+        item->hide();
 
-        if (paintMode == DPictureSequenceView::AutoScaleMode)
-            pixmap = pixmap.scaled(q->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    if (lastItemPos == pictureItemList.count()) {
+        lastItemPos = 0;
 
-        addPicture(pixmap);
-    }
-}
-
-int DPictureSequenceViewPrivate::speed() const
-{
-    return m_refreshTimer->interval();
-}
-
-void DPictureSequenceViewPrivate::setSpeed(int speed)
-{
-    m_refreshTimer->setInterval(speed);
-}
-
-bool DPictureSequenceViewPrivate::singleShot() const
-{
-    return m_singleShot;
-}
-
-void DPictureSequenceViewPrivate::setSingleShot(bool singleShot)
-{
-    m_singleShot = singleShot;
-}
-
-void DPictureSequenceViewPrivate::refreshPicture()
-{
-    Q_ASSERT(!m_pictureList.isEmpty());
-
-    m_pictureList[m_lastItemPos++]->hide();
-
-    if (m_lastItemPos == m_pictureList.count())
-    {
-        m_lastItemPos = 0;
-
-        if (m_singleShot)
-            m_refreshTimer->stop();
+        if (singleShot)
+            refreshTimer->stop();
 
         D_QC(DPictureSequenceView);
 
         emit q->playEnd();
     }
 
-    m_pictureList[m_lastItemPos]->show();
-}
+    item = pictureItemList.value(lastItemPos);
 
-void DPictureSequenceViewPrivate::addPicture(const QPixmap &pixmap)
-{
-    QGraphicsPixmapItem *item = m_scene->addPixmap(pixmap);
-    item->hide();
-    m_pictureList.append(item);
+    if (item)
+        item->show();
 }
 
 DPictureSequenceView::DPictureSequenceView(QWidget *parent) :
@@ -123,7 +85,22 @@ void DPictureSequenceView::setPictureSequence(const QStringList &sequence, Paint
 {
     D_D(DPictureSequenceView);
 
-    d->setPictureSequence(sequence, paintMode);
+    stop();
+    d->scene->clear();
+    d->pictureItemList.clear();
+
+    for (const QString &path : sequence) {
+        QPixmap pixmap(path);
+
+        if (paintMode == DPictureSequenceView::AutoScaleMode)
+            pixmap = pixmap.scaled(size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
+        d->pictureItemList << d->scene->addPixmap(pixmap);
+        d->pictureItemList.last()->hide();
+    }
+
+    if (!d->pictureItemList.isEmpty())
+        d->pictureItemList.first()->show();
 
     setStyleSheet("background-color:transparent;");
 }
@@ -139,45 +116,47 @@ void DPictureSequenceView::pause()
 {
     D_D(DPictureSequenceView);
 
-    d->m_refreshTimer->stop();
+    d->refreshTimer->stop();
 }
 
 void DPictureSequenceView::stop()
 {
     D_D(DPictureSequenceView);
 
-    d->m_refreshTimer->stop();
-    d->m_pictureList[d->m_lastItemPos]->hide();
-    d->m_pictureList[0]->show();
-    d->m_lastItemPos = 0;
+    d->refreshTimer->stop();
+    if (d->pictureItemList.count() > d->lastItemPos)
+        d->pictureItemList[d->lastItemPos]->hide();
+    if (!d->pictureItemList.isEmpty())
+        d->pictureItemList[0]->show();
+    d->lastItemPos = 0;
 }
 
 int DPictureSequenceView::speed() const
 {
     D_DC(DPictureSequenceView);
 
-    return d->speed();
+    return d->refreshTimer->interval();
 }
 
 void DPictureSequenceView::setSpeed(int speed)
 {
     D_D(DPictureSequenceView);
 
-    d->setSpeed(speed);
+    d->refreshTimer->setInterval(speed);
 }
 
 bool DPictureSequenceView::singleShot() const
 {
     D_DC(DPictureSequenceView);
 
-    return d->singleShot();
+    return d->singleShot;
 }
 
 void DPictureSequenceView::setSingleShot(bool singleShot)
 {
     D_D(DPictureSequenceView);
 
-    d->setSingleShot(singleShot);
+    d->singleShot = singleShot;
 }
 
 DWIDGET_END_NAMESPACE
