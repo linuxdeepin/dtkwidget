@@ -60,7 +60,7 @@ private:
     QLabel* messageLabel;
     QLabel* titleLabel;
 
-    QPushButton* closeButton;
+    QPushButton* closeButton = Q_NULLPTR;
     QHBoxLayout *iconLayout;
     QVBoxLayout *contentLayout;
     QHBoxLayout *buttonLayout;

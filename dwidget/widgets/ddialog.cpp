@@ -26,6 +26,7 @@
 #include "ddialog.h"
 #include "dthememanager.h"
 #include "dboxwidget.h"
+#include "anchors.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -66,19 +67,19 @@ void DDialogPrivate::init()
 
     // TopLayout
     QHBoxLayout *topLayout = new QHBoxLayout;
-    topLayout->setContentsMargins(0, 0, 0, 0);
-    topLayout->setSpacing(0);
+    topLayout->setContentsMargins(DIALOG::ICON_LAYOUT_LEFT_MARGIN,
+                                  DIALOG::ICON_LAYOUT_TOP_MARGIN,
+                                  DIALOG::ICON_LAYOUT_RIGHT_MARGIN,
+                                  DIALOG::ICON_LAYOUT_BOTTOM_MARGIN);
+    topLayout->setSpacing(DIALOG::ICON_LAYOUT_SPACING);
 
 
     // TopLayout--Icon
     iconLabel = new QLabel;
-    iconLabel->setContentsMargins(DIALOG::ICON_LAYOUT_LEFT_MARGIN,
-                                  DIALOG::ICON_LAYOUT_TOP_MARGIN,
-                                  DIALOG::ICON_LAYOUT_RIGHT_MARGIN,
-                                  DIALOG::ICON_LAYOUT_BOTTOM_MARGIN);
     iconLabel->hide();
-    topLayout->addWidget(iconLabel);
+    iconLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
+    topLayout->addWidget(iconLabel);
 
     // TopLayout--TextLabel
     titleLabel = new QLabel;
@@ -91,29 +92,29 @@ void DDialogPrivate::init()
     messageLabel->hide();
     messageLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
 
-    // TopLayout--ContentLayout
-    contentLayout = new QVBoxLayout;
-    contentLayout->setContentsMargins(0, 0, 0, 0);
-    contentLayout->setSpacing(0);
-
     QVBoxLayout *textLayout = new QVBoxLayout;
     textLayout->setContentsMargins(0, 0, 0, 0);
     textLayout->setSpacing(5);
     textLayout->addStretch();
-    textLayout->addWidget(titleLabel);
-    textLayout->addWidget(messageLabel);
-    textLayout->addLayout(contentLayout);
+    textLayout->addWidget(titleLabel, 0, Qt::AlignLeft);
+    textLayout->addWidget(messageLabel, 0, Qt::AlignLeft);
     textLayout->addStretch();
 
-    topLayout->addLayout(textLayout);
+    // TopLayout--ContentLayout
+    contentLayout = new QVBoxLayout;
+    contentLayout->setContentsMargins(0, 0, 0, 0);
+    contentLayout->setSpacing(0);
+    contentLayout->addLayout(textLayout);
+
+    topLayout->addLayout(contentLayout);
 
     // TopLayout--Close button
     closeButton = new QPushButton(q);
     closeButton->setObjectName("CloseButton");
     closeButton->setFixedSize(DIALOG::CLOSE_BUTTON_WIDTH, DIALOG::CLOSE_BUTTON_HEIGHT);
     closeButton->setAttribute(Qt::WA_NoMousePropagation);
-    topLayout->addWidget(closeButton, 0, Qt::AlignRight | Qt::AlignTop);
 
+    AnchorsBase::setAnchor(closeButton, Qt::AnchorRight, q, Qt::AnchorRight);
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->setContentsMargins(0, 0, 0, 0);
@@ -717,6 +718,16 @@ void DDialog::hideEvent(QHideEvent *event)
 
     emit visibleChanged(isVisible());
     emit closed();
+}
+
+void DDialog::childEvent(QChildEvent *event)
+{
+    DAbstractDialog::childEvent(event);
+
+    D_D(DDialog);
+
+    if (event->added() && d->closeButton)
+        d->closeButton->raise();
 }
 
 DWIDGET_END_NAMESPACE
