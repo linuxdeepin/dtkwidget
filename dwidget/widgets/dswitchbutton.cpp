@@ -25,7 +25,7 @@ DSwitchButton::DSwitchButton(QWidget *parent) :
 {
     setObjectName("DSwitchButton");
 
-    setMaximumSize(39, 18);
+    setMaximumSize(38, 18);
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     D_THEME_INIT_WIDGET(DSwitchButton);
@@ -106,31 +106,13 @@ void DSwitchButton::setAnimationType(QEasingCurve::Type arg)
 bool DSwitchButton::setDisabledImageSource(const QString &arg)
 {
     m_disabledImageSource = arg;
-
-    if(m_disabledImage.load(arg)){
-        m_disabledImage = m_disabledImage.scaled(width(), height()*1.2,
-                                                Qt::KeepAspectRatioByExpanding,
-                                                Qt::SmoothTransformation);
-
-        return true;
-    }
-
-    return false;
+    return m_disabledImage.load(arg);
 }
 
 bool DSwitchButton::setEnabledImageSource(const QString &arg)
 {
     m_enabledImageSource = arg;
-
-    if(m_enabledImage.load(arg)){
-        m_enabledImage = m_enabledImage.scaled(width(), height()*1.2,
-                                                Qt::KeepAspectRatioByExpanding,
-                                                Qt::SmoothTransformation);
-
-        return true;
-    }
-
-    return false;
+    return m_enabledImage.load(arg);
 }
 
 void DSwitchButton::setAnimationStartValue(double animationStartValue)
@@ -145,8 +127,6 @@ void DSwitchButton::setAnimationEndValue(double animationEndValue)
 
 void DSwitchButton::paintEvent(QPaintEvent *e)
 {
-    QFrame::paintEvent(e);
-
     QPixmap *m_innerImage;
 
     if(isEnabled()){
@@ -162,7 +142,7 @@ void DSwitchButton::paintEvent(QPaintEvent *e)
     p.setRenderHints(QPainter::Antialiasing);
 
     QPainterPath path;
-    path.addRoundedRect(rect(), m_innerImage->height()/2.3, m_innerImage->height()/2.3);
+    path.addRoundedRect(rect(), m_innerImage->height() / 2.0, m_innerImage->height() / 2.0);
     path.closeSubpath();
 
     p.setClipPath(path);
@@ -177,12 +157,7 @@ void DSwitchButton::paintEvent(QPaintEvent *e)
         m_innerImageX = m_innerAnimation->currentValue().toDouble();
     }
 
-    p.drawPixmap(m_innerImageX,
-                 height()/2.0-m_innerImage->height()/2.0,
-                 *m_innerImage);
-
-    p.setPen(QPen(QColor("#aa000000"), 2));
-    p.drawPath(path);
+    p.drawPixmap(m_innerImageX, 0, *m_innerImage);
 }
 
 void DSwitchButton::mousePressEvent(QMouseEvent *e)
