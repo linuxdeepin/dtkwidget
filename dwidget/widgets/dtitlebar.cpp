@@ -82,6 +82,11 @@ void DTitlebarPrivate::init()
     titlePadding    = new QWidget;
     separator       = new QLabel(q);
 
+    optionButton->setObjectName("DTitlebarDWindowOptionButton");
+    minButton->setObjectName("DTitlebarDWindowMinButton");
+    maxButton->setObjectName("DTitlebarDWindowMaxButton");
+    closeButton->setObjectName("DTitlebarDWindowCloseButton");
+
     mainLayout->setContentsMargins(6, 0, 6, 0);
     mainLayout->setSpacing(0);
 
