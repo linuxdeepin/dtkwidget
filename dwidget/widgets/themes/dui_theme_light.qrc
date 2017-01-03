@@ -127,5 +127,6 @@
         <file>light/dialogs/images/user-trash-full.png</file>
         <file>light/images/combobox_arrow.png</file>
         <file>light/images/combobox_arrow_active.png</file>
+        <file>light/images/search.png</file>
     </qresource>
 </RCC>

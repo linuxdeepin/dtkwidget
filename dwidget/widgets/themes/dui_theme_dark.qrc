@@ -184,5 +184,6 @@
         <file>dark/images/combobox_up_arrow.png</file>
         <file>dark/images/combobox_down_arrow.png</file>
         <file>dark/images/tick_transparent.png</file>
+        <file>dark/images/search.png</file>
     </qresource>
 </RCC>

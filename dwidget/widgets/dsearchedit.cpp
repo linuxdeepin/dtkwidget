@@ -27,8 +27,9 @@ DSearchEdit::DSearchEdit(QWidget *parent)
 
     initInsideFrame();
 
-    m_searchBtn = new DImageButton;
+    m_searchBtn = new QLabel;
     m_searchBtn->setObjectName("SearchIcon");
+    m_searchBtn->setFixedSize(16,16);
     m_clearBtn = new DImageButton;
     m_clearBtn->setObjectName("ClearIcon");
     m_clearBtn->hide();
@@ -67,7 +68,7 @@ DSearchEdit::DSearchEdit(QWidget *parent)
     connect(m_edt, &QLineEdit::textChanged, this, &DSearchEdit::textChanged, Qt::DirectConnection);
     connect(m_edt, &QLineEdit::editingFinished, this, &DSearchEdit::editingFinished, Qt::DirectConnection);
     connect(m_edt, &QLineEdit::returnPressed, this, &DSearchEdit::returnPressed, Qt::DirectConnection);
-    connect(m_searchBtn, &DImageButton::clicked, this, &DSearchEdit::toEditMode);
+//    connect(m_searchBtn, &DImageButton::clicked, this, &DSearchEdit::toEditMode);
 }
 
 DSearchEdit::~DSearchEdit()

@@ -4,9 +4,8 @@ Dtk--Widget--DSearchEdit {
 
 Dtk--Widget--DSearchEdit #SearchIcon {
     background-color:transparent;
-    qproperty-normalPic:url(:/images/light/images/search_normal.png);
-    qproperty-hoverPic:url(:/images/light/images/search_hover.png);
-    qproperty-pressPic:url(:/images/light/images/search_press.png);
+    margin: 2 0 2 3 px;
+    border-image:url(:/images/light/images/search.png);
 }
 
 Dtk--Widget--DSearchEdit #ClearIcon {

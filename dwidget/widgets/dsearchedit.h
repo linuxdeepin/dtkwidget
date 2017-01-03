@@ -62,7 +62,7 @@ private:
 private:
     QSize m_size;
     QLineEdit *m_edt;
-    DImageButton *m_searchBtn;
+    QLabel *m_searchBtn;
     DImageButton *m_clearBtn;
     QLabel *m_placeHolder;
     QFrame *m_insideFrame = NULL;
