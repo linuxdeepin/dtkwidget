@@ -20,8 +20,8 @@ class DCheckBox : public QCheckBox
 {
     Q_OBJECT
 public:
-    explicit DCheckBox(QWidget *parent = 0);
-    explicit DCheckBox(const QString &text, QWidget *parent=0);
+    Q_DECL_DEPRECATED_X("Please use QCheckBox directly") explicit DCheckBox(QWidget *parent = 0);
+    Q_DECL_DEPRECATED_X("Please use QCheckBox directly") explicit DCheckBox(const QString &text, QWidget *parent=0);
 };
 
 DWIDGET_END_NAMESPACE

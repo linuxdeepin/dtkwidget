@@ -9,7 +9,10 @@
 
 #include <QFile>
 #include <QWidget>
+#include <QStyle>
 #include <QStyleFactory>
+
+#include <QDebug>
 
 #include "dthememanager.h"
 #include "dapplication.h"
@@ -37,19 +40,31 @@ QString DThemeManager::theme() const
 void DThemeManager::setTheme(const QString theme)
 {
     if (m_theme != theme) {
-        m_theme = theme;
 
-        if (m_theme == "light") {
-            if (QStyle *style = QStyleFactory::create("dlight")) {
-                qApp->setStyle(style);
-            }
-        } else if (m_theme == "dark") {
-            if (QStyle *style = QStyleFactory::create("ddark")) {
-                qApp->setStyle(style);
-            }
+        QStyle *style = Q_NULLPTR;
+
+        // TODO: remove this shit in the future.
+        // It's just a trick to make all DApplications use dde qt5 styles,
+        // if dlight or ddark style is set to default style of dde, those
+        // ugly code will no longer needed.
+        if (theme == "light") {
+            style = QStyleFactory::create("dlight");
+            m_theme = theme;
+        } else if (theme == "dark") {
+            style = QStyleFactory::create("ddark");
+            m_theme = theme;
+        } else if (theme == "semilight") {
+            style = QStyleFactory::create("dsemilight");
+            m_theme = "light";
+        } else if (theme == "semidark") {
+            style = QStyleFactory::create("dsemidark");
+            m_theme = "dark";
         }
 
-        emit themeChanged(theme);
+        if (style)
+            qApp->setStyle(style);
+
+        emit themeChanged(m_theme);
     }
 }
 

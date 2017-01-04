@@ -20,6 +20,9 @@
 #include <QRegExp>
 #include <QRegularExpression>
 
+#include <QStyle>
+#include <QStyleFactory>
+
 #include "private/ddialog_p.h"
 
 #include "dialog_constants.h"
@@ -51,7 +54,8 @@ void DialogButton::setButtonType(int buttonType)
 }
 
 DDialogPrivate::DDialogPrivate(DDialog *qq) :
-    DAbstractDialogPrivate(qq)
+    DAbstractDialogPrivate(qq),
+    fixedStyle(Q_NULLPTR)
 {
 
 }
@@ -726,8 +730,27 @@ void DDialog::childEvent(QChildEvent *event)
 
     D_D(DDialog);
 
-    if (event->added() && d->closeButton)
-        d->closeButton->raise();
+    if (event->added()) {
+        if (d->closeButton) {
+            d->closeButton->raise();
+        }
+
+        QStyle *style = d->fixedStyle;
+        if (!style) {
+            style = QStyleFactory::create("dlight");
+            if (style) {
+                d->fixedStyle = style;
+                style->setParent(this);
+            }
+        }
+
+        if (style) {
+            QWidget *child = qobject_cast<QWidget*>(event->child());
+            if (child) {
+                child->setStyle(style);
+            }
+        }
+    }
 }
 
 DWIDGET_END_NAMESPACE

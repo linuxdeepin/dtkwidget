@@ -102,31 +102,6 @@ QLabel#VLine{
     background-color:rgba(0, 0, 0, 0.1);
 }
 
-QCheckBox{
-  color: white;
-}
-
-QCheckBox::indicator {
-    width: 13px;
-    height: 13px;
-}
-
-QCheckBox::indicator:unchecked {
-    image: url(:/images/light/dialogs/images/light_check.png);
-}
-
-QCheckBox::indicator:unchecked:hover {
-    image: url(:/images/light/dialogs/images/check_focus.png);
-}
-
-QCheckBox::indicator:checked {
-    image: url(:/images/light/dialogs/images/light_check_checked.png);
-}
-
-QCheckBox::indicator:checked:hover {
-    image: url(:/images/light/dialogs/images/light_check_checked_hover.png);
-}
-
 QLabel#TitleLabel{
     padding-top: 2px;
     padding-bottom: 2px;
@@ -146,11 +121,6 @@ QLabel#TaskTitleLabel{
    padding-bottom: 2px;
    font-size: 10px;
    color: #b4b4b4;
-}
-
-QLabel#titleLable{
-  color: white;
-  font-size: 12px;
 }
 
 QListWidget{

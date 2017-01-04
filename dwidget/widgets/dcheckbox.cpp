@@ -15,13 +15,13 @@ DWIDGET_BEGIN_NAMESPACE
 DCheckBox::DCheckBox(QWidget *parent) :
     QCheckBox(parent)
 {
-    D_THEME_INIT_WIDGET(DCheckBox)
+
 }
 
 DCheckBox::DCheckBox(const QString &text, QWidget *parent):
     QCheckBox(text, parent)
 {
-    D_THEME_INIT_WIDGET(DCheckBox)
+
 }
 
 DWIDGET_END_NAMESPACE
