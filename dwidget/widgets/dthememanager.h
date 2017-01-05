@@ -28,7 +28,7 @@ public:
     QString theme() const;
     void setTheme(const QString theme);
 
-    QString getQssForWidget(QString className);
+    QString getQssForWidget(const QString className, const QString &theme = "");
 
 public slots:
     void updateQss();

@@ -744,10 +744,22 @@ void DDialog::childEvent(QChildEvent *event)
             }
         }
 
-        if (style) {
-            QWidget *child = qobject_cast<QWidget*>(event->child());
-            if (child) {
+
+        QWidget *child = qobject_cast<QWidget*>(event->child());
+        if (child) {
+            if (style) {
                 child->setStyle(style);
+            }
+
+            // TODO(hualet): apply the rule to all dwidgets.
+            // Just tried with no luck, DPsswordWidget's style goes wrong,
+            // no time to deal with this detail, leave it alone for now.
+            if (child->inherits("Dtk::Widget::DLineEdit")) {
+                DThemeManager *dtm = DThemeManager::instance();
+                QString qss = dtm->getQssForWidget("DLineEdit", "light");
+
+                child->setStyleSheet(qss);
+                dtm->disconnect(child);
             }
         }
     }

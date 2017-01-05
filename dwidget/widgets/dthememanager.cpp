@@ -68,11 +68,12 @@ void DThemeManager::setTheme(const QString theme)
     }
 }
 
-QString DThemeManager::getQssForWidget(QString className)
+QString DThemeManager::getQssForWidget(const QString className, const QString &theme)
 {
     QString qss;
 
-    QFile themeFile(QString(":/%1/%2.theme").arg(m_theme).arg(className));
+    QString themeName = theme.isEmpty() ? m_theme : theme;
+    QFile themeFile(QString(":/%1/%2.theme").arg(themeName).arg(className));
 
     if (themeFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qss = themeFile.readAll();
