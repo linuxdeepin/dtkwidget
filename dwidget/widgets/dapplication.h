@@ -42,6 +42,10 @@ public:
     //! warning: Must call before QGuiApplication defined object
     static bool loadDXcbPlugin();
     static bool isDXcbPlatform();
+
+signals:
+    //###(zccrs): Depend the Qt platform theme plugin(from the package: dde-qt5integration)
+    void iconThemeChanged();
 };
 
 DWIDGET_END_NAMESPACE
