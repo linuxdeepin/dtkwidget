@@ -15,6 +15,7 @@
 #include <QPropertyAnimation>
 #include <QDebug>
 #include <QEvent>
+#include <QFocusEvent>
 #include <QResizeEvent>
 #include <QTimer>
 
@@ -29,7 +30,7 @@ DSearchEdit::DSearchEdit(QWidget *parent)
 
     m_searchBtn = new QLabel;
     m_searchBtn->setObjectName("SearchIcon");
-    m_searchBtn->setFixedSize(16,16);
+    m_searchBtn->setFixedSize(16, 16);
     m_clearBtn = new DImageButton;
     m_clearBtn->setObjectName("ClearIcon");
     m_clearBtn->hide();
@@ -95,16 +96,18 @@ void DSearchEdit::mouseReleaseEvent(QMouseEvent *e)
 
 bool DSearchEdit::eventFilter(QObject *o, QEvent *e)
 {
-    if (o == m_edt && e->type() == QEvent::FocusOut && m_edt->text().isEmpty())
-    {
-        m_animation->stop();
-        m_animation->setStartValue(m_edt->width());
-        m_animation->setEndValue(0);
-        m_animation->setEasingCurve(m_hideCurve);
-        m_animation->start();
+    if (o == m_edt && e->type() == QEvent::FocusOut && m_edt->text().isEmpty()) {
+        auto fe = dynamic_cast<QFocusEvent *>(e);
+        if (fe && fe->reason() != Qt::PopupFocusReason) {
+            m_animation->stop();
+            m_animation->setStartValue(m_edt->width());
+            m_animation->setEndValue(0);
+            m_animation->setEasingCurve(m_hideCurve);
+            m_animation->start();
 
-        QTimer::singleShot(200, m_placeHolder, SLOT(show()));
-//        m_placeHolder->show();
+            QTimer::singleShot(200, m_placeHolder, SLOT(show()));
+            //        m_placeHolder->show();
+        }
     }
 
     if (o == m_edt) {
@@ -123,8 +126,9 @@ bool DSearchEdit::eventFilter(QObject *o, QEvent *e)
 void DSearchEdit::toEditMode()
 {
     // already in edit mode
-    if (!m_placeHolder->isVisible())
+    if (!m_placeHolder->isVisible()) {
         return;
+    }
 
     m_animation->stop();
     m_animation->setStartValue(0);
@@ -156,8 +160,9 @@ void DSearchEdit::resizeEvent(QResizeEvent *e)
 
 bool DSearchEdit::event(QEvent *e)
 {
-    if (e->type() == QEvent::FocusIn)
+    if (e->type() == QEvent::FocusIn) {
         toEditMode();
+    }
 
     return QFrame::event(e);
 }
