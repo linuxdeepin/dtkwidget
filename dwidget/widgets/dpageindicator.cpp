@@ -10,7 +10,6 @@ DPageIndicator::DPageIndicator(QWidget *parent)
     : QWidget(parent),
       DObject(*new DPageIndicatorPrivate(this), this)
 {
-
 }
 
 int DPageIndicator::pageCount() const
@@ -55,6 +54,20 @@ int DPageIndicator::currentPageIndex() const
     return d->m_currentPage;
 }
 
+QColor DPageIndicator::pointColor() const
+{
+    D_DC(DPageIndicator);
+
+    return d->m_color;
+}
+
+void DPageIndicator::setPointColor(QColor color)
+{
+    D_D(DPageIndicator);
+
+    d->m_color = color;
+}
+
 void DPageIndicator::paintEvent(QPaintEvent *e)
 {
     QWidget::paintEvent(e);
@@ -73,7 +86,7 @@ void DPageIndicator::paintEvent(QPaintEvent *e)
 
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-    painter.setBrush(Qt::red);
+    painter.setBrush(d->m_color);
     painter.setPen(Qt::transparent);
     for (int i(0); i != d->m_pageCount; ++i)
     {
@@ -87,7 +100,8 @@ void DPageIndicator::paintEvent(QPaintEvent *e)
 DPageIndicatorPrivate::DPageIndicatorPrivate(DPageIndicator *q) :
     DObjectPrivate(q),
     m_pageCount(0),
-    m_currentPage(-1)
+    m_currentPage(-1),
+    m_color(Qt::red)
 {
 
 }
