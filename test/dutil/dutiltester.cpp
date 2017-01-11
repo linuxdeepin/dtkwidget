@@ -3,9 +3,11 @@
 #include <QCoreApplication>
 #include <QtTest/QtTest>
 #include <QStandardPaths>
+#include <QThread>
 
 #include "dlog/LogManager.h"
 #include "dpathbuf.h"
+#include "singletontester.h"
 
 DUTIL_USE_NAMESPACE
 
@@ -37,5 +39,23 @@ void TestDUtil::testPathChange()
 
     root /= "../usr";
     QCOMPARE(root.toString(), usr.toString());
+}
+
+void TestDUtil::testDSingleton()
+{
+    auto threadA = new QThread;
+    auto testerA = new MultiSingletonTester;
+    connect(threadA, &QThread::started, testerA, &MultiSingletonTester::run);
+    testerA->moveToThread(threadA);
+
+    auto threadB = new QThread;
+    auto testerB = new MultiSingletonTester;
+    testerB->moveToThread(threadB);
+    connect(threadB, &QThread::started, testerB, &MultiSingletonTester::run);
+
+    threadA->start();
+    threadB->start();
+
+    QThread::sleep(5);
 }
 

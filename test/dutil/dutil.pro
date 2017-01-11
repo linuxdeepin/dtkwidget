@@ -5,10 +5,12 @@ CONFIG += testcase c++11
 
 SOURCES += \
     dutiltester.cpp \
-    main.cpp
+    main.cpp \
+    singletontester.cpp
 
 HEADERS += \
-    dutiltester.h
+    dutiltester.h \
+    singletontester.h
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../dbase/release/ -ldtkbase
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../dbase/debug/ -ldtkbase

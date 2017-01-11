@@ -15,3 +15,6 @@ includes.files += DObject
 QMAKE_PKGCONFIG_NAME = DTK_BASE
 QMAKE_PKGCONFIG_DESCRIPTION = Deepin Tool Kit Base Header Files
 QMAKE_PKGCONFIG_INCDIR = $$includes.path
+
+DISTFILES += \
+    DSingleton

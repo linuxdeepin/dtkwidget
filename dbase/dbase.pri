@@ -1,9 +1,9 @@
 HEADERS += \
-    $$PWD\dtk_global.h \
-    $$PWD\dobject.h
-
+    $$PWD/dtk_global.h \
+    $$PWD/dobject.h \
+    $$PWD/dsingleton.h
 
 SOURCES += \
-    $$PWD\dobject.cpp
+    $$PWD/dobject.cpp
 
 include($$PWD/private/private.pri)
