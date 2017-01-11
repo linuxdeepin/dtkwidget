@@ -65,6 +65,7 @@ void DAboutDialogPrivate::init()
     licenseLabel->setAlignment(Qt::AlignHCenter);
     licenseLabel->setWordWrap(true);
     licenseLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    licenseLabel->hide();
 
     q->connect(websiteLabel, SIGNAL(linkActivated(QString)), q, SLOT(_q_onLinkActivated(QString)));
     q->connect(acknowledgementLabel, SIGNAL(linkActivated(QString)), q, SLOT(_q_onLinkActivated(QString)));
@@ -96,19 +97,11 @@ void DAboutDialogPrivate::init()
     mainLayout->addSpacing(7);
     mainLayout->addWidget(licenseLabel, Qt::AlignHCenter);
 
-    auto  *mainContent = new QWidget;
+    QWidget  *mainContent = new QWidget;
     mainContent->setLayout(mainLayout);
     q->addContent(mainContent);
 
     q->setFixedWidth(400);
-    q->adjustSize();
-    q->setFixedSize(q->size());
-
-    if (q->parentWidget() && q->parentWidget()->isTopLevel()) {
-        QPoint pCenterGlobal = q->mapToGlobal(q->parentWidget()->geometry().center());
-        q->move(pCenterGlobal.x() - q->width() / 2,
-                pCenterGlobal.y() - q->height() / 2);
-    }
 
     // make active
     q->setFocus();
@@ -217,8 +210,6 @@ void DAboutDialog::setProductIcon(const QIcon &icon)
 {
     D_D(DAboutDialog);
 
-    // NOTE: DO NOT use setFixedSize with setSizePolicy
-//    logoLabel->setFixedSize(96, 96);
     d->logoLabel->setPixmap(icon.pixmap(QSize(96, 96)));
 }
 
@@ -288,6 +279,7 @@ void DAboutDialog::setLicense(const QString &license)
     D_D(DAboutDialog);
 
     d->licenseLabel->setText(license);
+    d->licenseLabel->setVisible(!license.isEmpty());
 }
 
 void DAboutDialog::keyPressEvent(QKeyEvent *event)
@@ -298,6 +290,13 @@ void DAboutDialog::keyPressEvent(QKeyEvent *event)
     }
 
     DDialog::keyPressEvent(event);
+}
+
+void DAboutDialog::showEvent(QShowEvent *event)
+{
+    DDialog::showEvent(event);
+
+    adjustSize();
 }
 
 #include "moc_daboutdialog.cpp"

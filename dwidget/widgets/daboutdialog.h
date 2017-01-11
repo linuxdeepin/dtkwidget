@@ -50,6 +50,7 @@ signals:
 
 protected:
     void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
+    void showEvent(QShowEvent *event) Q_DECL_OVERRIDE;
 
 private:
     Q_PRIVATE_SLOT(d_func(), void _q_onLinkActivated(const QString &link))
