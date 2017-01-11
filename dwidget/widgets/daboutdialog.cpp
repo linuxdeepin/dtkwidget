@@ -72,8 +72,7 @@ void DAboutDialogPrivate::init()
     q->connect(licenseLabel, SIGNAL(linkActivated(QString)), q, SLOT(_q_onLinkActivated(QString)));
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
-    // CloseButton take up some space at the right
-    mainLayout->setContentsMargins(38, 30, 11, 25);
+    mainLayout->setContentsMargins(11, 20, 11, 10);
     mainLayout->setSpacing(0);
     mainLayout->addWidget(logoLabel);
     mainLayout->setAlignment(logoLabel, Qt::AlignCenter);
@@ -97,7 +96,7 @@ void DAboutDialogPrivate::init()
     mainLayout->addSpacing(7);
     mainLayout->addWidget(licenseLabel, Qt::AlignHCenter);
 
-    QWidget *mainContent = new QWidget;
+    auto  *mainContent = new QWidget;
     mainContent->setLayout(mainLayout);
     q->addContent(mainContent);
 
