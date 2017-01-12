@@ -43,7 +43,7 @@ void DAbstractDialogPrivate::init()
         handle->setEnableSystemResize(false);
     }
 
-    q->setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+    q->setWindowFlags(Qt::FramelessWindowHint  | Qt::WindowCloseButtonHint | Qt::Dialog);
     q->setAttribute(Qt::WA_TranslucentBackground);
     q->resize(DIALOG::DEFAULT_WIDTH, DIALOG::DEFAULT_HEIGHT);
     q->setMaximumWidth(480);
@@ -170,8 +170,9 @@ void DAbstractDialog::mousePressEvent(QMouseEvent *event)
 {
     D_DC(DAbstractDialog);
 
-    if (d->handle)
+    if (d->handle) {
         return QDialog::mousePressEvent(event);
+    }
 
     if (event->button() == Qt::LeftButton) {
         D_D(DAbstractDialog);
@@ -187,8 +188,9 @@ void DAbstractDialog::mouseReleaseEvent(QMouseEvent *event)
 {
     D_D(DAbstractDialog);
 
-    if (d->handle)
+    if (d->handle) {
         return QDialog::mouseReleaseEvent(event);
+    }
 
     d->mousePressed = false;
 
@@ -205,7 +207,7 @@ void DAbstractDialog::mouseMoveEvent(QMouseEvent *event)
         return QDialog::mouseMoveEvent(event);
     }
 
-    if(d->mousePressed) {
+    if (d->mousePressed) {
         move(event->globalPos() - d->dragPosition);
         d->mouseMoved = true;
     }
@@ -226,7 +228,7 @@ void DAbstractDialog::paintEvent(QPaintEvent *event)
         painter.setBrush(d->backgroundColor);
         painter.setRenderHint(QPainter::Antialiasing, true);
         QRectF r(DIALOG::BORDER_SHADOW_WIDTH / 2.0, DIALOG::BORDER_SHADOW_WIDTH / 2.0,
-                width() - DIALOG::BORDER_SHADOW_WIDTH, height() - DIALOG::BORDER_SHADOW_WIDTH);
+                 width() - DIALOG::BORDER_SHADOW_WIDTH, height() - DIALOG::BORDER_SHADOW_WIDTH);
         painter.drawRoundedRect(r, DIALOG::BORDER_RADIUS, DIALOG::BORDER_RADIUS);
     }
 
@@ -235,15 +237,16 @@ void DAbstractDialog::paintEvent(QPaintEvent *event)
 
 void DAbstractDialog::resizeEvent(QResizeEvent *event)
 {
-    if (event->size().width() >= maximumWidth()){
+    if (event->size().width() >= maximumWidth()) {
         setFixedWidth(maximumWidth());
     }
     QDialog::resizeEvent(event);
 
     D_DC(DAbstractDialog);
 
-    if(!d->mouseMoved)
+    if (!d->mouseMoved) {
         setDisplayPostion(displayPostion());
+    }
 
     emit sizeChanged(event->size());
 }
