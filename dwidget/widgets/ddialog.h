@@ -111,7 +111,6 @@ private:
     D_DECLARE_PRIVATE(DDialog)
 
     Q_PRIVATE_SLOT(d_func(), void _q_onButtonClicked())
-    Q_PRIVATE_SLOT(d_func(), void _q_updateLabelMaxWidth())
     Q_PRIVATE_SLOT(d_func(), void _q_defaultButtonTriggered())
 };
 

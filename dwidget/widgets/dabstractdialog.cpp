@@ -47,6 +47,7 @@ void DAbstractDialogPrivate::init()
     q->setAttribute(Qt::WA_TranslucentBackground);
     q->resize(DIALOG::DEFAULT_WIDTH, DIALOG::DEFAULT_HEIGHT);
     q->setMaximumWidth(480);
+    q->setAttribute(Qt::WA_Resized, false);
     q->setBorderColor(QColor(0, 0, 0));
 }
 
@@ -238,7 +239,12 @@ void DAbstractDialog::paintEvent(QPaintEvent *event)
 void DAbstractDialog::resizeEvent(QResizeEvent *event)
 {
     if (event->size().width() >= maximumWidth()) {
+        bool resized = testAttribute(Qt::WA_Resized);
+
         setFixedWidth(maximumWidth());
+
+        if (!resized)
+            setAttribute(Qt::WA_Resized, false);
     }
     QDialog::resizeEvent(event);
 

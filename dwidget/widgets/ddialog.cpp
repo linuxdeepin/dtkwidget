@@ -90,11 +90,13 @@ void DDialogPrivate::init()
     titleLabel->setObjectName("TitleLabel");
     titleLabel->hide();
     titleLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
+    titleLabel->setWordWrap(true);
 
     messageLabel = new QLabel;
     messageLabel->setObjectName("MessageLabel");
     messageLabel->hide();
     messageLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
+    messageLabel->setWordWrap(true);
 
     QVBoxLayout *textLayout = new QVBoxLayout;
     textLayout->setContentsMargins(0, 0, 0, 0);
@@ -144,7 +146,6 @@ void DDialogPrivate::init()
     button_action->setAutoRepeat(false);
 
     QObject::connect(closeButton, SIGNAL(clicked()), q, SLOT(close()));
-    QObject::connect(q, SIGNAL(sizeChanged(QSize)), q, SLOT(_q_updateLabelMaxWidth()));
     QObject::connect(button_action, SIGNAL(triggered(bool)), q, SLOT(_q_defaultButtonTriggered()));
 
     q->setLayout(mainLayout);
@@ -216,6 +217,21 @@ QString DDialogPrivate::elideString(QString str, const QFontMetrics &fm, int wid
     }
 }
 
+void DDialogPrivate::updateSize()
+{
+    D_Q(DDialog);
+
+    if (!q->testAttribute(Qt::WA_Resized)) {
+        QSize size = q->sizeHint();
+
+        size.setWidth(qMax(size.width(), DIALOG::DEFAULT_WIDTH));
+        size.setHeight(qMax(size.height(), DIALOG::DEFAULT_HEIGHT));
+
+        q->resize(size);
+        q->setAttribute(Qt::WA_Resized, false);
+    }
+}
+
 void DDialogPrivate::_q_onButtonClicked()
 {
     D_Q(DDialog);
@@ -229,19 +245,6 @@ void DDialogPrivate::_q_onButtonClicked()
         if(onButtonClickedClose)
             q->done(clickedButtonIndex);
     }
-}
-
-void DDialogPrivate::_q_updateLabelMaxWidth()
-{
-    D_Q(DDialog);
-
-    int labelMaxWidth = q->maximumWidth() - titleLabel->x() - DIALOG::CLOSE_BUTTON_WIDTH;
-
-    QFontMetrics fm = titleLabel->fontMetrics();
-    titleLabel->setText(elideString(title, fm, labelMaxWidth));
-
-    fm = messageLabel->fontMetrics();
-    messageLabel->setText(elideString(message, fm, labelMaxWidth));
 }
 
 void DDialogPrivate::_q_defaultButtonTriggered()
@@ -613,7 +616,6 @@ void DDialog::setTitle(const QString &title)
     d->title = title;
     d->titleLabel->setText(title);
     d->titleLabel->setHidden(title.isEmpty());
-    d->_q_updateLabelMaxWidth();
 
     emit titleChanged(title);
 }
@@ -628,7 +630,6 @@ void DDialog::setMessage(const QString &message)
     d->message = message;
     d->messageLabel->setText(message);
     d->messageLabel->setHidden(message.isEmpty());
-    d->_q_updateLabelMaxWidth();
 
     emit messageChanged(message);
 }
@@ -707,7 +708,8 @@ void DDialog::showEvent(QShowEvent *event)
 
     DAbstractDialog::showEvent(event);
 
-    d->_q_updateLabelMaxWidth();
+    setAttribute(Qt::WA_Resized, false);
+    d->updateSize();
 
     emit visibleChanged(isVisible());
 }
@@ -763,6 +765,8 @@ void DDialog::childEvent(QChildEvent *event)
             }
         }
     }
+
+    d->updateSize();
 }
 
 DWIDGET_END_NAMESPACE

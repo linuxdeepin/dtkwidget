@@ -81,8 +81,9 @@ private:
     QMap<int, QString> scanTags(const QString origin) const;
     QString elideString(QString str, const QFontMetrics &fm, int width) const;
 
+    void updateSize();
+
     void _q_onButtonClicked();
-    void _q_updateLabelMaxWidth();
     void _q_defaultButtonTriggered();
 
     Q_DECLARE_PUBLIC(DDialog)
