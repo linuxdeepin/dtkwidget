@@ -90,13 +90,11 @@ void DDialogPrivate::init()
     titleLabel->setObjectName("TitleLabel");
     titleLabel->hide();
     titleLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
-    titleLabel->setWordWrap(true);
 
     messageLabel = new QLabel;
     messageLabel->setObjectName("MessageLabel");
     messageLabel->hide();
     messageLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
-    messageLabel->setWordWrap(true);
 
     QVBoxLayout *textLayout = new QVBoxLayout;
     textLayout->setContentsMargins(0, 0, 0, 0);
@@ -765,8 +763,32 @@ void DDialog::childEvent(QChildEvent *event)
             }
         }
     }
+}
 
-    d->updateSize();
+void DDialog::resizeEvent(QResizeEvent *event)
+{
+    DAbstractDialog::resizeEvent(event);
+
+    D_D(DDialog);
+
+
+    d->titleLabel->setWordWrap(false);
+    int labelMaxWidth = maximumWidth() - d->closeButton->width() - d->titleLabel->x();
+
+    if (d->titleLabel->sizeHint().width() > labelMaxWidth) {
+        d->titleLabel->setFixedWidth(labelMaxWidth);
+        d->titleLabel->setWordWrap(true);
+        d->titleLabel->setFixedHeight(d->titleLabel->sizeHint().height());
+    }
+
+    d->messageLabel->setWordWrap(false);
+    labelMaxWidth = maximumWidth() - d->closeButton->width() - d->messageLabel->x();
+
+    if (d->messageLabel->sizeHint().width() > labelMaxWidth) {
+        d->messageLabel->setFixedWidth(labelMaxWidth);
+        d->messageLabel->setWordWrap(true);
+        d->messageLabel->setFixedHeight(d->messageLabel->sizeHint().height());
+    }
 }
 
 DWIDGET_END_NAMESPACE
