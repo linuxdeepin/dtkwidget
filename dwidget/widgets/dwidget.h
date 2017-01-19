@@ -5,8 +5,7 @@
 #include <dobject.h>
 #include <dwidget_global.h>
 
-
-#include <dx11widget.h>
+#include "dx11widget.h"
 
 DWIDGET_BEGIN_NAMESPACE
 

@@ -11,7 +11,14 @@
 #include <QPushButton>
 #include <QMessageBox>
 #include <QMenu>
+#include <QFontDatabase>
+#include <QTextCodec>
 #include <QDebug>
+
+#include <option.h>
+#include <settings.h>
+
+#include "dsettingsdialog.h"
 
 #include "dslider.h"
 #include "dthememanager.h"
@@ -71,6 +78,8 @@ MainWindow::MainWindow(QWidget *parent)
     if (titlebar) {
         titlebar->setMenu(new QMenu(titlebar));
         titlebar->setSeparatorVisible(true);
+        titlebar->menu()->addAction("dfm-settings");
+        titlebar->menu()->addAction("dt-settings");
         titlebar->menu()->addAction("testmenu1");
         titlebar->menu()->addAction("testmenu2");
         QMenu *menu = titlebar->menu()->addMenu("menu1");
@@ -83,6 +92,35 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::menuItemInvoked(QAction *action)
 {
+    if (action->text() == "dfm-settings") {
+        auto settings = Settings::fromJsonFile(":/resources/data/dfm-settings.json");
+        DSettingsDialog dsd(this);
+        dsd.updateSettings(settings);
+        dsd.exec();
+        return;
+    }
+
+    if (action->text() == "dt-settings") {
+        auto settings = Settings::fromJsonFile(":/resources/data/dt-settings.json");
+        QFontDatabase fontDatabase;
+        auto fontFamliy = settings->option("base.font.family");
+        fontFamliy->setData("items", fontDatabase.families());
+        fontFamliy->setValue(0);
+
+        QStringList codings;
+        for (auto coding: QTextCodec::availableCodecs())
+            codings << coding;
+
+        auto encoding = settings->option("advance.encoding.encoding");
+        encoding->setData("items", codings);
+        encoding->setValue(0);
+
+        DSettingsDialog dsd(this);
+        dsd.updateSettings(settings);
+        dsd.exec();
+        return;
+    }
+
     QMessageBox::warning(this, "menu clieck",  action->text() + ", was cliecked");
     qDebug() << "click" << action << action->isChecked();
 }

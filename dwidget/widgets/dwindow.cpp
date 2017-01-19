@@ -1,10 +1,11 @@
 #include "dwindow.h"
 
+#include <QDebug>
 #include <QHBoxLayout>
 #include <QMenu>
-#include <DTitlebar>
-#include <QDebug>
-#include <private/dwidget_p.h>
+
+#include "dtitlebar.h"
+#include "private/dwidget_p.h"
 
 DWIDGET_BEGIN_NAMESPACE
 

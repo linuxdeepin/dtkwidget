@@ -1,7 +1,7 @@
 #ifndef DABOUTDIALOG_H
 #define DABOUTDIALOG_H
 
-#include <ddialog.h>
+#include "ddialog.h"
 
 DWIDGET_BEGIN_NAMESPACE
 

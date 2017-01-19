@@ -11,6 +11,7 @@ DEFINES += QT_MESSAGELOGCONTEXT
 unix{
     QT += x11extras dbus
     CONFIG += link_pkgconfig
+    PKGCONFIG += dtksettings dtksettingsview
 }
 
 win32* {
@@ -51,7 +52,8 @@ HEADERS  += mainwindow.h \
     graphicseffecttab.h
 
 RESOURCES += \
-    images.qrc
+    images.qrc \
+    resources.qrc
 
 FORMS += \
     cameraform.ui
@@ -89,3 +91,15 @@ DEPENDPATH += $$PWD/../../../dutil
 unix:QMAKE_RPATHDIR += $$OUT_PWD/../../../dbase/
 unix:QMAKE_RPATHDIR += $$OUT_PWD/../../../dutil/
 unix:QMAKE_RPATHDIR += $$OUT_PWD/../../../dwidget/
+
+win32* {
+    #DEPENDS dtksettings
+    INCLUDEPATH += $$INCLUDE_INSTALL_DIR\libdtk-0.1.0\DSettings
+    DEPENDPATH += $$INCLUDE_INSTALL_DIR\libdtk-0.1.0\DSettings
+    LIBS += -L$$LIB_INSTALL_DIR -ldtksettings
+
+    #DEPENDS dtksettingsview
+    INCLUDEPATH += $$INCLUDE_INSTALL_DIR\libdtk-0.1.0\DSettingsView
+    DEPENDPATH += $$INCLUDE_INSTALL_DIR\libdtk-0.1.0\DSettingsView
+    LIBS += -L$$LIB_INSTALL_DIR -ldtksettingsview
+}

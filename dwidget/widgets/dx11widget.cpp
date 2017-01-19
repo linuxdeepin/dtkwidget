@@ -12,8 +12,8 @@
 #include <QWindow>
 
 #include <DObjectPrivate>
-#include <DTitlebar>
 
+#include "dtitlebar.h"
 #include "private/dwidget_p.h"
 
 #ifdef Q_OS_LINUX

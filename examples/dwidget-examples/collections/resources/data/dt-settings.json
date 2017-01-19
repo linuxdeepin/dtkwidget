@@ -1,0 +1,211 @@
+{
+    "groups": [
+        {
+            "key": "base",
+            "name": "Basic settings",
+            "groups": [
+                {
+                    "key": "theme",
+                    "name": "Theme",
+                    "options": [
+                        {
+                            "key": "theme",
+                            "type": "checkpicture",
+                            "default": 0
+                        },
+                        {
+                            "key": "opticy",
+                            "name": "Opticy",
+                            "type": "slider",
+                            "max": 100,
+                            "min": 0,
+                            "default": 90
+                        }
+                    ]
+                },
+                {
+                    "key": "font",
+                    "name": "Font Style",
+                    "options": [
+                        {
+                            "key": "family",
+                            "name": "Font",
+                            "type": "combobox",
+                            "default": ""
+                        },
+                        {
+                            "key": "size",
+                            "name": "Font Size",
+                            "type": "spinbutton",
+                            "default": 12
+                        },
+                        {
+                            "key": "style",
+                            "name": "Font Style",
+                            "type": "buttongroup",
+                            "items": ["B","/"],
+                            "default": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "key": "shortcuts",
+            "name": "Shortcuts",
+            "groups": [
+                {
+                    "key": "ternimal",
+                    "name": "Ternimal",
+                    "options": [
+                        {
+                            "key": "copy",
+                            "name": "Copy",
+                            "type": "shortcut",
+                            "default":  ["100663296", "67"]
+                        },
+                        {
+                            "key": "paste",
+                            "name": "Paste",
+                            "type": "shortcut",
+                            "default":  ["100663296", "86"]
+                        },
+                        {
+                            "key": "scroll_up",
+                            "name": "Scroll Up",
+                            "type": "shortcut",
+                            "default":  ["134217728", "46"]
+                        },
+                        {
+                            "key": "scroll_down",
+                            "name": "Scroll down",
+                            "type": "shortcut",
+                            "default":  ["134217728", "44"]
+                        }
+                    ]
+                },
+                {
+                    "key": "workspace",
+                    "name": "Workspace",
+                    "options": [
+                        {
+                            "key": "new_window",
+                            "name": "New Window",
+                            "type": "shortcut",
+                            "default":  ["100663296", "60"]
+                        },
+                        {
+                            "key": "next_tab",
+                            "name": "Next Tab",
+                            "type": "shortcut",
+                            "default":  ["67108864", "78"]
+                        },
+                        {
+                            "key": "prev_up",
+                            "name": "Previous Tab",
+                            "type": "shortcut",
+                            "default":  ["67108864", "87"]
+                        },
+                        {
+                            "key": "close_tab",
+                            "name": "Close Tab",
+                            "type": "shortcut",
+                            "default":  ["100663296", "62"]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "key": "advance",
+            "name": "Advance",
+            "groups": [
+                {
+                    "key": "cursor",
+                    "name": "Cursor",
+                    "options": [
+                        {
+                            "key": "shrap",
+                            "name": "Cursor Shrap",
+                            "type": "buttongroup",
+                            "items": ["█","_","|"],
+                            "default": 0
+                        },
+                        {
+                            "key": "blink",
+                            "type": "checkbox",
+                            "text": "Cursor blink",
+                            "default": true
+                        }
+                    ]
+                },
+                {
+                    "key": "encoding",
+                    "name": "Default encoding",
+                    "options": [
+                        {
+                            "key": "encoding",
+                            "name": "Encoding",
+                            "type": "combobox",
+                            "default": "utf-8"
+                        }
+                    ]
+                },
+                {
+                    "key": "coustom",
+                    "name": "Coustom",
+                    "options": [
+                        {
+                            "key": "coustom_command",
+                            "name": "Coustom Command",
+                            "type": "lineedit",
+                            "default": ""
+                        },
+                        {
+                            "key": "coustom_directory",
+                            "name": "Coustom Directory",
+                            "type": "lineedit",
+                            "default": ""
+                        }
+                    ]
+                },
+                {
+                    "key": "scroll",
+                    "name": "Scroll",
+                    "options": [
+                        {
+                            "key": "scroll_bottom",
+                            "text": "Scroll Bottom",
+                            "type": "checkbox",
+                            "default": ""
+                        },
+                        {
+                            "key": "scroll_line_count",
+                            "name": "Scroll line count",
+                            "type": "spinbutton",
+                            "default": 10
+                        }
+                    ]
+                },
+                {
+                    "key": "compatibility",
+                    "name": "Compatibility",
+                    "options": [
+                        {
+                            "key": "breakspce_action",
+                            "name": "Breakspce Action",
+                            "type": "combobox",
+                            "default": ""
+                        },
+                        {
+                            "key": "delete_action",
+                            "name": "Delete Action",
+                            "type": "combobox",
+                            "default": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

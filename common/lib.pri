@@ -5,12 +5,6 @@ DEFINES += LIBDTK_LIBRARY
 
 DEFINES += QT_MESSAGELOGCONTEXT
 
-win32* {
-    DEFINES += STATIC_LIB
-    CONFIG += staticlib
-    LIB_DIR =
-}
-
 isEmpty(PREFIX){
     PREFIX = /usr
 }
@@ -34,3 +28,8 @@ isEmpty(INCLUDE_INSTALL_DIR) {
 #unix{
     INSTALLS += includes target
 #}
+
+win32* {
+    DEFINES += STATIC_LIB
+    CONFIG += staticlib
+}
