@@ -68,7 +68,7 @@ DEPENDPATH += $$PWD/../dutil
 SOURCES += \
     dutility.cpp
 
-system($$PWD/../tool/translate_generation.sh)
+!system($$PWD/../tool/translate_generation.sh): error("Failed to generate translation")
 
 TRANSLATIONS += $$PWD/translations/$${TARGET}.ts \
                 $$PWD/translations/$${TARGET}_zh_CN.ts
