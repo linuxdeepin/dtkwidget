@@ -38,6 +38,7 @@
 #include "cameraform.h"
 #include "graphicseffecttab.h"
 
+DTK_USE_NAMESPACE
 DWIDGET_USE_NAMESPACE
 
 MainWindow::MainWindow(QWidget *parent)
@@ -90,10 +91,19 @@ MainWindow::MainWindow(QWidget *parent)
     }
 }
 
+#include <QTemporaryFile>
+#include <qsettingbackend.h>
+
 void MainWindow::menuItemInvoked(QAction *action)
 {
     if (action->text() == "dfm-settings") {
+        QTemporaryFile tmpFile;
+        tmpFile.open();
+        auto backend = new QSettingBackend(tmpFile.fileName());
+
         auto settings = Settings::fromJsonFile(":/resources/data/dfm-settings.json");
+        settings->setBackend(backend);
+
         DSettingsDialog dsd(this);
         dsd.updateSettings(settings);
         dsd.exec();
@@ -101,7 +111,13 @@ void MainWindow::menuItemInvoked(QAction *action)
     }
 
     if (action->text() == "dt-settings") {
+        QTemporaryFile tmpFile;
+        tmpFile.open();
+        auto backend = new QSettingBackend(tmpFile.fileName());
+
         auto settings = Settings::fromJsonFile(":/resources/data/dt-settings.json");
+        settings->setBackend(backend);
+
         QFontDatabase fontDatabase;
         auto fontFamliy = settings->option("base.font.family");
         fontFamliy->setData("items", fontDatabase.families());

@@ -136,7 +136,7 @@ void DUtility::moveToCenter(QWidget *w)
     Q_ASSERT(w != nullptr);
 
     QDesktopWidget *dw = QApplication::desktop();
-    QRect parentRect = dw->screenGeometry(dw->primaryScreen());
+    QRect parentRect = dw->availableGeometry(dw->primaryScreen());
 
     if (w->parentWidget()) {
         parentRect = w->parentWidget()->geometry();

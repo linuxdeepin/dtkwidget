@@ -76,7 +76,7 @@ DSettingsDialog::~DSettingsDialog()
 
 }
 
-void DSettingsDialog::updateSettings(QPointer<Settings> settings)
+void DSettingsDialog::updateSettings(QPointer<Dtk::Settings> settings)
 {
     Q_D(DSettingsDialog);
     d->leftFrame->updateSettings(settings);
