@@ -37,7 +37,7 @@ public:
 
     QFrame *m_insideFrame;
     DImageButton *m_rightIcon;
-    QHBoxLayout *m_centeralHLayout;
+    QHBoxLayout *m_centralHLayout;
 };
 
 DWIDGET_END_NAMESPACE

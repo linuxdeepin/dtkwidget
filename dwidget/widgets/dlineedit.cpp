@@ -146,13 +146,13 @@ void DLineEditPrivate::init()
     m_insideFrame->setObjectName("LineEditInsideFrame");
     m_rightIcon = new DImageButton;
     m_rightIcon->hide();
-    m_centeralHLayout = new QHBoxLayout;
-    m_centeralHLayout->addStretch();
-    m_centeralHLayout->addWidget(m_rightIcon);
-    m_centeralHLayout->setSpacing(0);
-    m_centeralHLayout->setMargin(0);
+    m_centralHLayout = new QHBoxLayout;
+    m_centralHLayout->addStretch();
+    m_centralHLayout->addWidget(m_rightIcon);
+    m_centralHLayout->setSpacing(0);
+    m_centralHLayout->setMargin(0);
 
-    q->setLayout(m_centeralHLayout);
+    q->setLayout(m_centralHLayout);
     q->setContextMenuPolicy(Qt::NoContextMenu);
 
     q->connect(m_rightIcon, &DImageButton::clicked, q, &DLineEdit::iconClicked);
