@@ -14,6 +14,17 @@ public:
     int radius = 10;
     DBlurEffectWidget::BlurMode mode = DBlurEffectWidget::GaussianBlur;
     QImage sourceImage;
+    DBlurEffectWidget::BlendMode blendMode = DBlurEffectWidget::InWindowBlend;
+    int blurRectXRadius = 0;
+    int blurRectYRadius = 0;
+
+    bool isBehindWindowBlendMode() const;
+
+    void addToBlurEffectWidgetHash();
+    void removeFromBlurEffectWidgetHash();
+
+    static QMultiHash<QWidget*, const DBlurEffectWidget*> blurEffectWidgetHash;
+    static bool updateWindowBlurArea(QWidget *topLevelWidget);
 
 private:
     D_DECLARE_PUBLIC(DBlurEffectWidget)

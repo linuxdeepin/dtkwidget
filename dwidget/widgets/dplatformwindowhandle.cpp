@@ -26,6 +26,9 @@ DEFINE_CONST_CHAR(translucentBackground);
 DEFINE_CONST_CHAR(enableSystemResize);
 DEFINE_CONST_CHAR(enableSystemMove);
 
+// functions
+DEFINE_CONST_CHAR(setWmBlurWindowBackgroundArea);
+
 DPlatformWindowHandle::DPlatformWindowHandle(QWindow *window, QObject *parent)
     : QObject(parent)
     , m_window(window)
@@ -94,6 +97,42 @@ bool DPlatformWindowHandle::isEnabledDXcb(QWidget *widget)
 bool DPlatformWindowHandle::isEnabledDXcb(QWindow *window)
 {
     return window->property(_useDxcb).toBool();
+}
+
+bool DPlatformWindowHandle::setWindowBlurAreaByWM(QWidget *widget, const QVector<DPlatformWindowHandle::WMBlurArea> &area)
+{
+    Q_ASSERT(widget);
+
+    /// TODO: Avoid call parentWidget()->enforceNativeChildren().
+    qApp->setAttribute(Qt::AA_DontCreateNativeWidgetSiblings, true);
+    widget->setAttribute(Qt::WA_NativeWindow);
+
+    return setWindowBlurAreaByWM(widget->windowHandle(), area);
+}
+
+bool DPlatformWindowHandle::setWindowBlurAreaByWM(QWindow *window, const QVector<DPlatformWindowHandle::WMBlurArea> &area)
+{
+    if (!window)
+        return false;
+
+    QFunctionPointer setWmBlurWindowBackgroundArea = Q_NULLPTR;
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+    setWmBlurWindowBackgroundArea = qApp->platformFunction(_setWmBlurWindowBackgroundArea);
+#endif
+
+    if (!setWmBlurWindowBackgroundArea) {
+        qWarning("setWindowBlurAreaByWM is not support");
+
+        return false;
+    }
+
+    QSurfaceFormat format = window->format();
+
+    format.setAlphaBufferSize(8);
+    window->setFormat(format);
+
+    return reinterpret_cast<bool(*)(const uint, const QVector<WMBlurArea>&)>(setWmBlurWindowBackgroundArea)(window->winId(), area);
 }
 
 int DPlatformWindowHandle::windowRadius() const
@@ -243,3 +282,21 @@ bool DPlatformWindowHandle::eventFilter(QObject *obj, QEvent *event)
 }
 
 DWIDGET_END_NAMESPACE
+
+QT_BEGIN_NAMESPACE
+QDebug operator<<(QDebug deg, const DPlatformWindowHandle::WMBlurArea &area)
+{
+    QDebugStateSaver saver(deg);
+    Q_UNUSED(saver)
+
+    deg.setAutoInsertSpaces(true);
+    deg << "x:" << area.x
+        << "y:" << area.y
+        << "width:" << area.width
+        << "height:" << area.height
+        << "xRadius:" << area.xRadius
+        << "yRadius:" << area.yRaduis;
+
+    return deg;
+}
+QT_END_NAMESPACE

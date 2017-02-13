@@ -173,7 +173,7 @@ void MainWindow::initTabWidget()
 
     CameraForm *cameraform = new CameraForm(this);
 
-    GraphicsEffectTab *effectTab = new GraphicsEffectTab;
+    GraphicsEffectTab *effectTab = new GraphicsEffectTab(this);
 
     m_mainTab->addTab(effectTab, "GraphicsEffect");
     m_mainTab->addTab(comboBoxTab, "ComboBox");

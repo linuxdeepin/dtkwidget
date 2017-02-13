@@ -41,6 +41,18 @@ public:
     static bool isEnabledDXcb(QWidget *widget);
     static bool isEnabledDXcb(QWindow *window);
 
+    struct WMBlurArea {
+        quint32 x = 0;
+        quint32 y = 0;
+        quint32 width = 0;
+        quint32 height = 0;
+        quint32 xRadius = 0;
+        quint32 yRaduis = 0;
+    };
+
+    static bool setWindowBlurAreaByWM(QWidget *widget, const QVector<WMBlurArea> &area);
+    static bool setWindowBlurAreaByWM(QWindow *window, const QVector<WMBlurArea> &area);
+
     int windowRadius() const;
 
     int borderWidth() const;
@@ -96,7 +108,26 @@ private:
     QWindow *m_window;
 };
 
+inline DPlatformWindowHandle::WMBlurArea dMakeWMBlurArea(quint32 x, quint32 y, quint32 width, quint32 height, quint32 xr = 0, quint32 yr = 0)
+{
+    DPlatformWindowHandle::WMBlurArea a;
+
+    a.x = x;
+    a.y = y;
+    a.width = width;
+    a.height = height;
+    a.xRadius = xr;
+    a.yRaduis = yr;
+
+    return a;
+}
+
 DWIDGET_END_NAMESPACE
+
+QT_BEGIN_NAMESPACE
+DWIDGET_USE_NAMESPACE
+QDebug operator<<(QDebug deg, const DPlatformWindowHandle::WMBlurArea &area);
+QT_END_NAMESPACE
 
 Q_DECLARE_METATYPE(QPainterPath)
 Q_DECLARE_METATYPE(QRegion)

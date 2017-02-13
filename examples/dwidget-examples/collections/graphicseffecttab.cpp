@@ -38,6 +38,15 @@ GraphicsEffectTab::GraphicsEffectTab(QWidget *parent) : QWidget(parent)
     blurLayout->addWidget(glowEffectButton, 0, Qt::AlignCenter);
 
     mainLayout->addWidget(blurWidget, 0, Qt::AlignCenter);
+
+    DBlurEffectWidget *blurWidget_behind = new DBlurEffectWidget(this);
+
+    blurWidget_behind->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
+    blurWidget_behind->setFixedSize(100, 100);
+    blurWidget_behind->setBlurRectXRadius(10);
+    blurWidget_behind->setBlurRectYRadius(20);
+
+    mainLayout->addWidget(blurWidget_behind);
 }
 
 GraphicsEffectTab::~GraphicsEffectTab()
