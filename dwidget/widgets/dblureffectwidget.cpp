@@ -58,6 +58,9 @@ void DBlurEffectWidgetPrivate::removeFromBlurEffectWidgetHash()
 
     QWidget *topLevelWidget = windowOfBlurEffectHash.value(q);
 
+    if (!topLevelWidget)
+        return;
+
     blurEffectWidgetHash.remove(topLevelWidget, q);
     windowOfBlurEffectHash.remove(q);
     updateWindowBlurArea(topLevelWidget);
@@ -207,6 +210,9 @@ void DBlurEffectWidget::setBlendMode(DBlurEffectWidget::BlendMode blendMode)
     }
 
     d->blendMode = blendMode;
+
+    update();
+
     emit blendModeChanged(blendMode);
 }
 
@@ -218,6 +224,9 @@ void DBlurEffectWidget::setBlurRectXRadius(int blurRectXRadius)
         return;
 
     d->blurRectXRadius = blurRectXRadius;
+
+    update();
+
     emit blurRectXRadiusChanged(blurRectXRadius);
 }
 
@@ -229,6 +238,9 @@ void DBlurEffectWidget::setBlurRectYRadius(int blurRectYRadius)
         return;
 
     d->blurRectYRadius = blurRectYRadius;
+
+    update();
+
     emit blurRectYRadiusChanged(blurRectYRadius);
 }
 
@@ -250,6 +262,9 @@ void DBlurEffectWidget::setMaskColor(QColor maskColor)
         return;
 
     d->maskColor = maskColor;
+
+    update();
+
     emit maskColorChanged(maskColor);
 }
 

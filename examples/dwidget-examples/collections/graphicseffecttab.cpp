@@ -45,10 +45,10 @@ GraphicsEffectTab::GraphicsEffectTab(QWidget *parent) : QWidget(parent)
     DBlurEffectWidget *blurWidget_behind = new DBlurEffectWidget(this);
 
     blurWidget_behind->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
-    blurWidget_behind->setFixedSize(100, 100);
+    blurWidget_behind->setFixedSize(300, 300);
     blurWidget_behind->setBlurRectXRadius(10);
     blurWidget_behind->setBlurRectYRadius(20);
-    blurWidget_behind->setMaskColor(Qt::red);
+    blurWidget_behind->setMaskColor(Qt::black);
 
     mainLayout->addWidget(blurWidget_behind);
 }

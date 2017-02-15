@@ -25,6 +25,7 @@ DEFINE_CONST_CHAR(frameMargins);
 DEFINE_CONST_CHAR(translucentBackground);
 DEFINE_CONST_CHAR(enableSystemResize);
 DEFINE_CONST_CHAR(enableSystemMove);
+DEFINE_CONST_CHAR(windowBlurAreas);
 
 // functions
 DEFINE_CONST_CHAR(setWmBlurWindowBackgroundArea);
@@ -122,6 +123,12 @@ bool DPlatformWindowHandle::setWindowBlurAreaByWM(QWindow *window, const QVector
 {
     if (!window)
         return false;
+
+    if (isEnabledDXcb(window)) {
+        window->setProperty(_windowBlurAreas, QVariant::fromValue(*(reinterpret_cast<const QVector<quint32>*>(&area))));
+
+        return true;
+    }
 
     QFunctionPointer setWmBlurWindowBackgroundArea = Q_NULLPTR;
 
