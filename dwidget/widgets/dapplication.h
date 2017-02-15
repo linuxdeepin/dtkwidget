@@ -44,6 +44,8 @@ public:
     static bool isDXcbPlatform();
 
 signals:
+    void newInstanceStarted();
+
     //###(zccrs): Depend the Qt platform theme plugin(from the package: dde-qt5integration)
     void iconThemeChanged();
 };

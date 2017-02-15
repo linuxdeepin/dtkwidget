@@ -91,6 +91,8 @@ bool DApplicationPrivate::setSingleInstance(const QString &key)
     m_localServer = new QLocalServer(q);
     m_localServer->removeServer(key);
 
+    QObject::connect(m_localServer, &QLocalServer::newConnection, q, &DApplication::newInstanceStarted);
+
     return m_localServer->listen(key);
 }
 
