@@ -50,6 +50,7 @@ public:
         quint32 yRaduis = 0;
     };
 
+    static bool hasBlurWindow();
     static bool setWindowBlurAreaByWM(QWidget *widget, const QVector<WMBlurArea> &area);
     static bool setWindowBlurAreaByWM(QWindow *window, const QVector<WMBlurArea> &area);
 

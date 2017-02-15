@@ -20,6 +20,9 @@ class DBlurEffectWidget : public QWidget, public DObject
     Q_PROPERTY(BlendMode blendMode READ blendMode WRITE setBlendMode NOTIFY blendModeChanged)
     Q_PROPERTY(int blurRectXRadius READ blurRectXRadius WRITE setBlurRectXRadius NOTIFY blurRectXRadiusChanged)
     Q_PROPERTY(int blurRectYRadius READ blurRectYRadius WRITE setBlurRectYRadius NOTIFY blurRectYRadiusChanged)
+    // ###(zccrs): The alpha channel of the color is fixed.
+    // The alpha channel is 102 if the DPlatformWindowHandle::hasBlurWindow() is true, otherwise is 204).
+    Q_PROPERTY(QColor maskColor READ maskColor WRITE setMaskColor NOTIFY maskColorChanged)
 
 public:
     /// TODO: To support MeanBlur, MedianBlur, BilateralFilter
@@ -46,6 +49,8 @@ public:
     int blurRectXRadius() const;
     int blurRectYRadius() const;
 
+    QColor maskColor() const;
+
 public slots:
     void setRadius(int radius);
     void setMode(BlurMode mode);
@@ -54,6 +59,8 @@ public slots:
     void setBlurRectXRadius(int blurRectXRadius);
     void setBlurRectYRadius(int blurRectYRadius);
 
+    void setMaskColor(QColor maskColor);
+
 signals:
     void radiusChanged(int radius);
     void modeChanged(BlurMode mode);
@@ -61,6 +68,8 @@ signals:
     void blendModeChanged(BlendMode blendMode);
     void blurRectXRadiusChanged(int blurRectXRadius);
     void blurRectYRadiusChanged(int blurRectYRadius);
+
+    void maskColorChanged(QColor maskColor);
 
 protected:
     DBlurEffectWidget(DBlurEffectWidgetPrivate &dd, QWidget *parent = 0);

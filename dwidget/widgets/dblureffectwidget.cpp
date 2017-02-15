@@ -8,6 +8,9 @@
 
 #include <qpa/qplatformbackingstore.h>
 
+#define MASK_COLOR_ALPHA_BLUR_MODE 102
+#define MASK_COLOR_ALPHA_DEFAULT 204
+
 QT_BEGIN_NAMESPACE
 Q_WIDGETS_EXPORT void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, bool quality, bool alphaOnly, int transposed = 0);
 QT_END_NAMESPACE
@@ -15,6 +18,7 @@ QT_END_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
 QMultiHash<QWidget*, const DBlurEffectWidget*> DBlurEffectWidgetPrivate::blurEffectWidgetHash;
+QHash<const DBlurEffectWidget*, QWidget*> DBlurEffectWidgetPrivate::windowOfBlurEffectHash;
 
 DBlurEffectWidgetPrivate::DBlurEffectWidgetPrivate(DBlurEffectWidget *qq)
     : DObjectPrivate(qq)
@@ -34,20 +38,45 @@ void DBlurEffectWidgetPrivate::addToBlurEffectWidgetHash()
 {
     D_QC(DBlurEffectWidget);
 
-    blurEffectWidgetHash.insertMulti(q->topLevelWidget(), q);
-    updateWindowBlurArea(q->topLevelWidget());
+    QWidget *oldTopLevelWidget = windowOfBlurEffectHash.value(q);
+
+    if (oldTopLevelWidget) {
+        blurEffectWidgetHash.remove(oldTopLevelWidget, q);
+        updateWindowBlurArea(oldTopLevelWidget);
+    }
+
+    QWidget *topLevelWidget = q->topLevelWidget();
+
+    blurEffectWidgetHash.insertMulti(topLevelWidget, q);
+    windowOfBlurEffectHash[q] = topLevelWidget;
+    updateWindowBlurArea(topLevelWidget);
 }
 
 void DBlurEffectWidgetPrivate::removeFromBlurEffectWidgetHash()
 {
     D_QC(DBlurEffectWidget);
 
-    blurEffectWidgetHash.remove(q->topLevelWidget(), q);
-    updateWindowBlurArea(q->topLevelWidget());
+    QWidget *topLevelWidget = windowOfBlurEffectHash.value(q);
+
+    blurEffectWidgetHash.remove(topLevelWidget, q);
+    windowOfBlurEffectHash.remove(q);
+    updateWindowBlurArea(topLevelWidget);
+}
+
+bool DBlurEffectWidgetPrivate::updateWindowBlurArea()
+{
+    D_QC(DBlurEffectWidget);
+
+    QWidget *topLevelWidget = windowOfBlurEffectHash.value(q);
+
+    return topLevelWidget && updateWindowBlurArea(topLevelWidget);
 }
 
 bool DBlurEffectWidgetPrivate::updateWindowBlurArea(QWidget *topLevelWidget)
 {
+    if (!topLevelWidget->isVisible())
+        return false;
+
     QList<const DBlurEffectWidget*> blurEffectWidgetList = blurEffectWidgetHash.values(topLevelWidget);
     QVector<DPlatformWindowHandle::WMBlurArea> areaList;
 
@@ -59,7 +88,7 @@ bool DBlurEffectWidgetPrivate::updateWindowBlurArea(QWidget *topLevelWidget)
 
         QRect r = w->rect();
 
-        r.moveTopLeft(w->mapTo(w->topLevelWidget(), r.topLeft()));
+        r.moveTopLeft(w->mapTo(topLevelWidget, r.topLeft()));
 
         areaList << dMakeWMBlurArea(r.x(), r.y(), r.width(), r.height(), w->blurRectXRadius(), w->blurRectYRadius());
     }
@@ -125,6 +154,13 @@ int DBlurEffectWidget::blurRectYRadius() const
     return d->blurRectYRadius;
 }
 
+QColor DBlurEffectWidget::maskColor() const
+{
+    D_DC(DBlurEffectWidget);
+
+    return d->maskColor;
+}
+
 void DBlurEffectWidget::setRadius(int radius)
 {
     D_D(DBlurEffectWidget);
@@ -160,8 +196,14 @@ void DBlurEffectWidget::setBlendMode(DBlurEffectWidget::BlendMode blendMode)
 
     if (blendMode == BehindWindowBlend) {
         d->addToBlurEffectWidgetHash();
-    } else if (d->blendMode == BehindWindowBlend) {
-        d->removeFromBlurEffectWidgetHash();
+    } else {
+        if (blendMode == InWindowBlend) {
+            d->maskColor.setAlpha(MASK_COLOR_ALPHA_BLUR_MODE);
+        }
+
+        if (d->blendMode == BehindWindowBlend) {
+            d->removeFromBlurEffectWidgetHash();
+        }
     }
 
     d->blendMode = blendMode;
@@ -190,6 +232,27 @@ void DBlurEffectWidget::setBlurRectYRadius(int blurRectYRadius)
     emit blurRectYRadiusChanged(blurRectYRadius);
 }
 
+void DBlurEffectWidget::setMaskColor(QColor maskColor)
+{
+    D_D(DBlurEffectWidget);
+
+    if (!maskColor.isValid()) {
+        maskColor = Qt::transparent;
+    } else {
+        if (d->blendMode == InWindowBlend || DPlatformWindowHandle::hasBlurWindow()) {
+            maskColor.setAlpha(MASK_COLOR_ALPHA_BLUR_MODE);
+        } else {
+            maskColor.setAlpha(MASK_COLOR_ALPHA_DEFAULT);
+        }
+    }
+
+    if (d->maskColor == maskColor)
+        return;
+
+    d->maskColor = maskColor;
+    emit maskColorChanged(maskColor);
+}
+
 DBlurEffectWidget::DBlurEffectWidget(DBlurEffectWidgetPrivate &dd, QWidget *parent)
     : QWidget(parent)
     , DObject(dd)
@@ -201,46 +264,47 @@ void DBlurEffectWidget::paintEvent(QPaintEvent *event)
 {
     D_D(DBlurEffectWidget);
 
-    if (d->isBehindWindowBlendMode()) {
-        QPainter pa(this);
+    QPainter pa(this);
+
+    if (d->blurRectXRadius > 0 || d->blurRectYRadius > 0) {
         QPainterPath path;
 
         path.addRoundedRect(rect(), d->blurRectXRadius, d->blurRectYRadius);
-
         pa.setRenderHint(QPainter::Antialiasing);
-        pa.setCompositionMode(QPainter::CompositionMode_Clear);
-        pa.fillPath(path, Qt::transparent);
-        pa.end();
-
-        return;
+        pa.setClipPath(path);
     }
 
-    int radius = d->radius;
-    QPoint point_offset = mapTo(window(), QPoint(0, 0));
-    const QRect paintRect = event->rect();
-
-    if (d->sourceImage.isNull()) {
-        const QRect &tmp_rect = rect().translated(point_offset);
-
-        d->sourceImage = window()->backingStore()->handle()->toImage().copy(tmp_rect);
+    if (d->isBehindWindowBlendMode()) {
+        pa.setCompositionMode(QPainter::CompositionMode_Source);
     } else {
-        QPainter pa_image(&d->sourceImage);
+        int radius = d->radius;
+        QPoint point_offset = mapTo(window(), QPoint(0, 0));
+        const QRect paintRect = event->rect();
 
-        pa_image.setCompositionMode(QPainter::CompositionMode_Source);
+        if (d->sourceImage.isNull()) {
+            const QRect &tmp_rect = rect().translated(point_offset);
 
-        for (const QRect &rect : event->region().rects()) {
-            pa_image.drawImage(rect.topLeft(),
-                               window()->backingStore()->handle()->toImage().copy(rect.translated(point_offset)));
+            d->sourceImage = window()->backingStore()->handle()->toImage().copy(tmp_rect);
+        } else {
+            QPainter pa_image(&d->sourceImage);
+
+            pa_image.setCompositionMode(QPainter::CompositionMode_Source);
+
+            for (const QRect &rect : event->region().rects()) {
+                pa_image.drawImage(rect.topLeft(),
+                                   window()->backingStore()->handle()->toImage().copy(rect.translated(point_offset)));
+            }
+
+            pa_image.end();
         }
 
-        pa_image.end();
+        QImage image = d->sourceImage.copy(paintRect.adjusted(-radius, -radius, radius, radius));
+
+        pa.translate(paintRect.topLeft() - QPoint(radius, radius));
+        qt_blurImage(&pa, image, radius, false, false);
     }
 
-    QImage image = d->sourceImage.copy(paintRect.adjusted(-radius, -radius, radius, radius));
-
-    QPainter pa(this);
-    pa.translate(paintRect.topLeft() - QPoint(radius, radius));
-    qt_blurImage(&pa, image, radius, false, false);
+    pa.fillRect(event->rect(), d->maskColor);
 }
 
 void DBlurEffectWidget::moveEvent(QMoveEvent *event)
@@ -250,7 +314,7 @@ void DBlurEffectWidget::moveEvent(QMoveEvent *event)
     if (!d->isBehindWindowBlendMode())
         return QWidget::moveEvent(event);
 
-    d->updateWindowBlurArea(topLevelWidget());
+    d->updateWindowBlurArea();
 
     QWidget::moveEvent(event);
 }
@@ -264,7 +328,7 @@ void DBlurEffectWidget::resizeEvent(QResizeEvent *event)
     if (!d->isBehindWindowBlendMode())
         return QWidget::resizeEvent(event);
 
-    d->updateWindowBlurArea(topLevelWidget());
+    d->updateWindowBlurArea();
 
     QWidget::resizeEvent(event);
 }
@@ -276,7 +340,7 @@ void DBlurEffectWidget::showEvent(QShowEvent *event)
     if (!d->isBehindWindowBlendMode())
         return QWidget::showEvent(event);
 
-    d->updateWindowBlurArea(topLevelWidget());
+    d->addToBlurEffectWidgetHash();
 
     QWidget::showEvent(event);
 }
@@ -288,7 +352,7 @@ void DBlurEffectWidget::hideEvent(QHideEvent *event)
     if (!d->isBehindWindowBlendMode())
         return QWidget::hideEvent(event);
 
-    d->updateWindowBlurArea(topLevelWidget());
+    d->removeFromBlurEffectWidgetHash();
 
     QWidget::hideEvent(event);
 }

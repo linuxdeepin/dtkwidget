@@ -22,6 +22,9 @@ GraphicsEffectTab::GraphicsEffectTab(QWidget *parent) : QWidget(parent)
     DBlurEffectWidget *blurWidget = new DBlurEffectWidget(this);
     blurWidget->setRadius(30);
     blurWidget->setFixedSize(200, 200);
+    blurWidget->setBlurRectXRadius(10);
+    blurWidget->setBlurRectYRadius(10);
+    blurWidget->setMaskColor(Qt::white);
 
     QVBoxLayout *blurLayout = new QVBoxLayout(blurWidget);
 
@@ -45,6 +48,7 @@ GraphicsEffectTab::GraphicsEffectTab(QWidget *parent) : QWidget(parent)
     blurWidget_behind->setFixedSize(100, 100);
     blurWidget_behind->setBlurRectXRadius(10);
     blurWidget_behind->setBlurRectYRadius(20);
+    blurWidget_behind->setMaskColor(Qt::red);
 
     mainLayout->addWidget(blurWidget_behind);
 }

@@ -18,12 +18,17 @@ public:
     int blurRectXRadius = 0;
     int blurRectYRadius = 0;
 
+    QColor maskColor = Qt::transparent;
+
     bool isBehindWindowBlendMode() const;
 
     void addToBlurEffectWidgetHash();
     void removeFromBlurEffectWidgetHash();
 
+    bool updateWindowBlurArea();
+
     static QMultiHash<QWidget*, const DBlurEffectWidget*> blurEffectWidgetHash;
+    static QHash<const DBlurEffectWidget*, QWidget*> windowOfBlurEffectHash;
     static bool updateWindowBlurArea(QWidget *topLevelWidget);
 
 private:

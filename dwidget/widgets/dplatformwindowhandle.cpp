@@ -28,6 +28,7 @@ DEFINE_CONST_CHAR(enableSystemMove);
 
 // functions
 DEFINE_CONST_CHAR(setWmBlurWindowBackgroundArea);
+DEFINE_CONST_CHAR(hasBlurWindow);
 
 DPlatformWindowHandle::DPlatformWindowHandle(QWindow *window, QObject *parent)
     : QObject(parent)
@@ -99,15 +100,22 @@ bool DPlatformWindowHandle::isEnabledDXcb(QWindow *window)
     return window->property(_useDxcb).toBool();
 }
 
+bool DPlatformWindowHandle::hasBlurWindow()
+{
+    QFunctionPointer wmHasBlurWindow = Q_NULLPTR;
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+    wmHasBlurWindow = qApp->platformFunction(_hasBlurWindow);
+#endif
+
+    return wmHasBlurWindow && reinterpret_cast<bool(*)()>(wmHasBlurWindow)();
+}
+
 bool DPlatformWindowHandle::setWindowBlurAreaByWM(QWidget *widget, const QVector<DPlatformWindowHandle::WMBlurArea> &area)
 {
     Q_ASSERT(widget);
 
-    /// TODO: Avoid call parentWidget()->enforceNativeChildren().
-    qApp->setAttribute(Qt::AA_DontCreateNativeWidgetSiblings, true);
-    widget->setAttribute(Qt::WA_NativeWindow);
-
-    return setWindowBlurAreaByWM(widget->windowHandle(), area);
+    return widget->windowHandle() && setWindowBlurAreaByWM(widget->windowHandle(), area);
 }
 
 bool DPlatformWindowHandle::setWindowBlurAreaByWM(QWindow *window, const QVector<DPlatformWindowHandle::WMBlurArea> &area)
