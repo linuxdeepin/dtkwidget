@@ -25,6 +25,7 @@ DEFINE_CONST_CHAR(frameMargins);
 DEFINE_CONST_CHAR(translucentBackground);
 DEFINE_CONST_CHAR(enableSystemResize);
 DEFINE_CONST_CHAR(enableSystemMove);
+DEFINE_CONST_CHAR(enableBlurWindow);
 DEFINE_CONST_CHAR(windowBlurAreas);
 
 // functions
@@ -222,6 +223,11 @@ bool DPlatformWindowHandle::enableSystemMove() const
     return m_window->property(_enableSystemMove).toBool();
 }
 
+bool DPlatformWindowHandle::enableBlurWindow() const
+{
+    return m_window->property(_enableBlurWindow).toBool();
+}
+
 void DPlatformWindowHandle::setWindowRadius(int windowRadius)
 {
     m_window->setProperty(_windowRadius, windowRadius);
@@ -277,6 +283,11 @@ void DPlatformWindowHandle::setEnableSystemMove(bool enableSystemMove)
     m_window->setProperty(_enableSystemMove, enableSystemMove);
 }
 
+void DPlatformWindowHandle::setEnableBlurWindow(bool enableBlurWindow)
+{
+    m_window->setProperty(_enableBlurWindow, enableBlurWindow);
+}
+
 bool DPlatformWindowHandle::eventFilter(QObject *obj, QEvent *event)
 {
     if (obj == m_window) {
@@ -301,6 +312,14 @@ bool DPlatformWindowHandle::eventFilter(QObject *obj, QEvent *event)
                 emit frameMaskChanged();
             } else if (e->propertyName() == _frameMargins) {
                 emit frameMarginsChanged();
+            } else if (e->propertyName() == _translucentBackground) {
+                emit translucentBackgroundChanged();
+            } else if (e->propertyName() == _enableSystemResize) {
+                emit enableSystemResizeChanged();
+            } else if (e->propertyName() == _enableSystemMove) {
+                emit enableSystemMoveChanged();
+            } else if (e->propertyName() == _enableBlurWindow) {
+                emit enableBlurWindowChanged();
             }
         }
     }

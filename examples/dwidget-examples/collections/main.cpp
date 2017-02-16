@@ -11,10 +11,12 @@
 #include "dlabel.h"
 #include "dapplication.h"
 #include "dplatformwindowhandle.h"
+#include "dblureffectwidget.h"
 
 #include <QDebug>
 #include <DLog>
 #include <dutility.h>
+#include <QWindow>
 
 DWIDGET_USE_NAMESPACE
 
@@ -35,8 +37,16 @@ int main(int argc, char *argv[])
         qDebug() << "another instance is running!!";
     }
 
-    MainWindow w;
-    DUtility::moveToCenter(&w);
+//    MainWindow w;
+//    DUtility::moveToCenter(&w);
+//    w.show();
+
+    QFrame w;
+
+    DPlatformWindowHandle enableDXcbForWindow(&w);
+    enableDXcbForWindow.setEnableBlurWindow(true);
+    w.setWindowFlags(Qt::FramelessWindowHint);
+    w.setAttribute(Qt::WA_TranslucentBackground);
     w.show();
 
     return a.exec();
