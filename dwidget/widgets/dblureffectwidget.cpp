@@ -5,6 +5,7 @@
 #include <QPainter>
 #include <QBackingStore>
 #include <QPaintEvent>
+#include <QDebug>
 
 #include <qpa/qplatformbackingstore.h>
 
@@ -112,6 +113,10 @@ DBlurEffectWidget::DBlurEffectWidget(QWidget *parent)
 
         d->addToBlurEffectWidgetHash();
     }
+
+    DPlatformWindowHandle::connectWindowManagerChangedSignal([this] {
+        setMaskColor(maskColor());
+    });
 }
 
 DBlurEffectWidget::~DBlurEffectWidget()
@@ -326,7 +331,7 @@ void DBlurEffectWidget::moveEvent(QMoveEvent *event)
 {
     D_D(DBlurEffectWidget);
 
-    if (!d->isBehindWindowBlendMode())
+    if (isTopLevel() || d->blendMode != DBlurEffectWidget::BehindWindowBlend)
         return QWidget::moveEvent(event);
 
     d->updateWindowBlurArea();
