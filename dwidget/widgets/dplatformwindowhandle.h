@@ -41,8 +41,8 @@ public:
 
     static void enableDXcbForWindow(QWidget *widget);
     static void enableDXcbForWindow(QWindow *window);
-    static bool isEnabledDXcb(QWidget *widget);
-    static bool isEnabledDXcb(QWindow *window);
+    static bool isEnabledDXcb(const QWidget *widget);
+    static bool isEnabledDXcb(const QWindow *window);
 
     struct WMBlurArea {
         quint32 x = 0;

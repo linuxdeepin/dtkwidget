@@ -93,12 +93,12 @@ void DPlatformWindowHandle::enableDXcbForWindow(QWindow *window)
     }
 }
 
-bool DPlatformWindowHandle::isEnabledDXcb(QWidget *widget)
+bool DPlatformWindowHandle::isEnabledDXcb(const QWidget *widget)
 {
     return widget->windowHandle() && widget->windowHandle()->property(_useDxcb).toBool();
 }
 
-bool DPlatformWindowHandle::isEnabledDXcb(QWindow *window)
+bool DPlatformWindowHandle::isEnabledDXcb(const QWindow *window)
 {
     return window->property(_useDxcb).toBool();
 }
