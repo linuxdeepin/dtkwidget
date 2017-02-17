@@ -114,7 +114,7 @@ DBlurEffectWidget::DBlurEffectWidget(QWidget *parent)
         d->addToBlurEffectWidgetHash();
     }
 
-    DPlatformWindowHandle::connectWindowManagerChangedSignal([this] {
+    DPlatformWindowHandle::connectWindowManagerChangedSignal(this, [this] {
         setMaskColor(maskColor());
     });
 }

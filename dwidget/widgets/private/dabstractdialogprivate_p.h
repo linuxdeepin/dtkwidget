@@ -19,6 +19,7 @@ class QBoxLayout;
 DWIDGET_BEGIN_NAMESPACE
 
 class DPlatformWindowHandle;
+class DBlurEffectWidget;
 
 class DAbstractDialogPrivate : public DObjectPrivate
 {
@@ -40,6 +41,7 @@ private:
     DAbstractDialog::DisplayPostion displayPostion = DAbstractDialog::DisplayCenter;
 
     DPlatformWindowHandle *handle = Q_NULLPTR;
+    DBlurEffectWidget *bgBlurWidget = Q_NULLPTR;
 
     Q_DECLARE_PUBLIC(DAbstractDialog)
 };

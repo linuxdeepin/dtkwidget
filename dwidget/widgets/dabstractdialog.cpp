@@ -22,6 +22,7 @@
 #include "dthememanager.h"
 #include "dplatformwindowhandle.h"
 #include "dapplication.h"
+#include "dblureffectwidget.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -41,6 +42,15 @@ void DAbstractDialogPrivate::init()
         handle->setTranslucentBackground(true);
         handle->setEnableSystemMove(false);
         handle->setEnableSystemResize(false);
+
+        bgBlurWidget = new DBlurEffectWidget(q);
+        bgBlurWidget->lower();
+        bgBlurWidget->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
+        bgBlurWidget->setVisible(DPlatformWindowHandle::hasBlurWindow());
+
+        DPlatformWindowHandle::connectWindowManagerChangedSignal(q, [this] {
+            bgBlurWidget->setVisible(DPlatformWindowHandle::hasBlurWindow());
+        });
     }
 
     q->setWindowFlags(Qt::FramelessWindowHint  | Qt::WindowCloseButtonHint | Qt::Dialog);
@@ -125,6 +135,9 @@ void DAbstractDialog::setBackgroundColor(QColor backgroundColor)
     D_D(DAbstractDialog);
 
     d->backgroundColor = backgroundColor;
+
+    if (d->bgBlurWidget)
+        d->bgBlurWidget->setMaskColor(backgroundColor);
 
     update();
 }
@@ -253,6 +266,9 @@ void DAbstractDialog::resizeEvent(QResizeEvent *event)
     if (!d->mouseMoved) {
         setDisplayPostion(displayPostion());
     }
+
+    if (d->bgBlurWidget)
+        d->bgBlurWidget->resize(event->size());
 
     emit sizeChanged(event->size());
 }

@@ -152,7 +152,7 @@ bool DPlatformWindowHandle::setWindowBlurAreaByWM(QWindow *window, const QVector
     return reinterpret_cast<bool(*)(const uint, const QVector<WMBlurArea>&)>(setWmBlurWindowBackgroundArea)(window->winId(), area);
 }
 
-bool DPlatformWindowHandle::connectWindowManagerChangedSignal(std::function<void ()> slot)
+bool DPlatformWindowHandle::connectWindowManagerChangedSignal(QObject *object, std::function<void ()> slot)
 {
     QFunctionPointer connectWindowManagerChangedSignal = Q_NULLPTR;
 
@@ -160,7 +160,7 @@ bool DPlatformWindowHandle::connectWindowManagerChangedSignal(std::function<void
     connectWindowManagerChangedSignal = qApp->platformFunction(_connectWindowManagerChangedSignal);
 #endif
 
-    return connectWindowManagerChangedSignal && reinterpret_cast<bool(*)(std::function<void ()>)>(connectWindowManagerChangedSignal)(slot);
+    return connectWindowManagerChangedSignal && reinterpret_cast<bool(*)(QObject *object, std::function<void ()>)>(connectWindowManagerChangedSignal)(object, slot);
 }
 
 int DPlatformWindowHandle::windowRadius() const
