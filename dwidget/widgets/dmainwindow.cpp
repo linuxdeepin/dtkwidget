@@ -42,6 +42,7 @@ void DMainWindowPrivate::init()
         q->connect(handle, &DPlatformWindowHandle::translucentBackgroundChanged, q, &DMainWindow::translucentBackgroundChanged);
         q->connect(handle, &DPlatformWindowHandle::enableSystemMoveChanged, q, &DMainWindow::enableSystemMoveChanged);
         q->connect(handle, &DPlatformWindowHandle::enableSystemResizeChanged, q, &DMainWindow::enableSystemResizeChanged);
+        q->connect(handle, &DPlatformWindowHandle::enableBlurWindowChanged, q, &DMainWindow::enableBlurWindowChanged);
 
         q->connect(qApp, &QGuiApplication::focusWindowChanged, q, [q] {
             if (q->isActiveWindow()) {
@@ -194,6 +195,16 @@ bool DMainWindow::enableSystemMove() const
     return d->handle->enableSystemResize();
 }
 
+bool DMainWindow::enableBlurWindow() const
+{
+    D_DC(DMainWindow);
+
+    if (!d->handle)
+        return false;
+
+    return d->handle->enableBlurWindow();
+}
+
 void DMainWindow::setWindowRadius(int windowRadius)
 {
     D_D(DMainWindow);
@@ -302,6 +313,16 @@ void DMainWindow::setEnableSystemMove(bool enableSystemMove)
         return;
 
     d->handle->setEnableSystemMove(enableSystemMove);
+}
+
+void DMainWindow::setEnableBlurWindow(bool enableBlurWindow)
+{
+    D_D(DMainWindow);
+
+    if (!d->handle)
+        return;
+
+    d->handle->setEnableBlurWindow(enableBlurWindow);
 }
 
 DMainWindow::DMainWindow(DMainWindowPrivate &dd, QWidget *parent)

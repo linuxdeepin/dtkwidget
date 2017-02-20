@@ -32,6 +32,7 @@ DEFINE_CONST_CHAR(windowBlurAreas);
 DEFINE_CONST_CHAR(setWmBlurWindowBackgroundArea);
 DEFINE_CONST_CHAR(hasBlurWindow);
 DEFINE_CONST_CHAR(connectWindowManagerChangedSignal);
+DEFINE_CONST_CHAR(connectHasBlurWindowChanged);
 
 DPlatformWindowHandle::DPlatformWindowHandle(QWindow *window, QObject *parent)
     : QObject(parent)
@@ -161,6 +162,17 @@ bool DPlatformWindowHandle::connectWindowManagerChangedSignal(QObject *object, s
 #endif
 
     return connectWindowManagerChangedSignal && reinterpret_cast<bool(*)(QObject *object, std::function<void ()>)>(connectWindowManagerChangedSignal)(object, slot);
+}
+
+bool DPlatformWindowHandle::connectHasBlurWindowChanged(QObject *object, std::function<void ()> slot)
+{
+    QFunctionPointer connectHasBlurWindowChanged = Q_NULLPTR;
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+    connectHasBlurWindowChanged = qApp->platformFunction(_connectHasBlurWindowChanged);
+#endif
+
+    return connectHasBlurWindowChanged && reinterpret_cast<bool(*)(QObject *object, std::function<void ()>)>(connectHasBlurWindowChanged)(object, slot);
 }
 
 int DPlatformWindowHandle::windowRadius() const

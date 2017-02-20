@@ -115,6 +115,11 @@ DBlurEffectWidget::DBlurEffectWidget(QWidget *parent)
     }
 
     DPlatformWindowHandle::connectWindowManagerChangedSignal(this, [this] {
+        D_D(DBlurEffectWidget);
+
+        d->updateWindowBlurArea();
+    });
+    DPlatformWindowHandle::connectHasBlurWindowChanged(this, [this] {
         setMaskColor(maskColor());
     });
 }

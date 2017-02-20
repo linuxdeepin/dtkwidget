@@ -27,6 +27,7 @@ class LIBDTKWIDGETSHARED_EXPORT DMainWindow : public QMainWindow, public DObject
     Q_PROPERTY(bool translucentBackground READ translucentBackground WRITE setTranslucentBackground NOTIFY translucentBackgroundChanged)
     Q_PROPERTY(bool enableSystemResize READ enableSystemResize WRITE setEnableSystemResize NOTIFY enableSystemResizeChanged)
     Q_PROPERTY(bool enableSystemMove READ enableSystemMove WRITE setEnableSystemMove NOTIFY enableSystemMoveChanged)
+    Q_PROPERTY(bool enableBlurWindow READ enableBlurWindow WRITE setEnableBlurWindow NOTIFY enableBlurWindowChanged)
 
 public:
     explicit DMainWindow(QWidget *parent = 0);
@@ -51,6 +52,7 @@ public:
     bool translucentBackground() const;
     bool enableSystemResize() const;
     bool enableSystemMove() const;
+    bool enableBlurWindow() const;
 
 public slots:
     void setWindowRadius(int windowRadius);
@@ -68,6 +70,7 @@ public slots:
     void setTranslucentBackground(bool translucentBackground);
     void setEnableSystemResize(bool enableSystemResize);
     void setEnableSystemMove(bool enableSystemMove);
+    void setEnableBlurWindow(bool enableBlurWindow);
 
 signals:
     void windowRadiusChanged();
@@ -82,6 +85,7 @@ signals:
     void translucentBackgroundChanged();
     void enableSystemResizeChanged();
     void enableSystemMoveChanged();
+    void enableBlurWindowChanged();
 
 protected:
     DMainWindow(DMainWindowPrivate &dd, QWidget *parent = 0);
