@@ -261,7 +261,7 @@ void DBlurEffectWidget::setMaskColor(QColor maskColor)
     if (!maskColor.isValid()) {
         maskColor = Qt::transparent;
     } else {
-        if (d->blendMode == InWindowBlend || DPlatformWindowHandle::hasBlurWindow()) {
+        if (!d->isBehindWindowBlendMode() || DPlatformWindowHandle::hasBlurWindow()) {
             maskColor.setAlpha(MASK_COLOR_ALPHA_BLUR_MODE);
         } else {
             maskColor.setAlpha(MASK_COLOR_ALPHA_DEFAULT);
