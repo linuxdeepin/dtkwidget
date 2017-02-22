@@ -68,6 +68,20 @@ void DPageIndicator::setPointColor(QColor color)
     d->m_color = color;
 }
 
+QColor DPageIndicator::secondaryPointColor() const
+{
+    D_DC(DPageIndicator);
+
+    return d->m_secondaryColor;
+}
+
+void DPageIndicator::setSecondaryPointColor(QColor color)
+{
+    D_D(DPageIndicator);
+
+    d->m_secondaryColor = color;
+}
+
 void DPageIndicator::paintEvent(QPaintEvent *e)
 {
     QWidget::paintEvent(e);
@@ -84,16 +98,21 @@ void DPageIndicator::paintEvent(QPaintEvent *e)
     const int total_w = d->m_pageCount * item_size;
     const QPoint offset = QPoint((w - total_w) / 2, h / 2);
 
+    QColor currentPtColor = d->m_color;
+    QColor nonCurrentPtColor = d->m_secondaryColor;
+
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-    painter.setBrush(d->m_color);
     painter.setPen(Qt::transparent);
     for (int i(0); i != d->m_pageCount; ++i)
     {
-        if (d->m_currentPage == i)
+        if (d->m_currentPage == i) {
+            painter.setBrush(currentPtColor);
             painter.drawEllipse(offset + QPoint(item_size / 2 + item_size * i, 0), active_size, active_size);
-        else
+        } else {
+            painter.setBrush(nonCurrentPtColor);
             painter.drawEllipse(offset + QPoint(item_size / 2 + item_size * i, 0), inactive_size, inactive_size);
+        }
     }
 }
 

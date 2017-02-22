@@ -15,6 +15,7 @@ class LIBDTKWIDGETSHARED_EXPORT DPageIndicator : public QWidget, public DObject
     Q_DISABLE_COPY(DPageIndicator)
     D_DECLARE_PRIVATE(DPageIndicator)
     Q_PROPERTY(QColor pointColor READ pointColor WRITE setPointColor DESIGNABLE true)
+    Q_PROPERTY(QColor secondaryPointColor READ secondaryPointColor WRITE setSecondaryPointColor DESIGNABLE true)
 
 public:
     explicit DPageIndicator(QWidget *parent = 0);
@@ -26,8 +27,12 @@ public:
     void previousPage();
     void setCurrentPage(const int index);
     int currentPageIndex() const;
+
     QColor pointColor() const;
     void setPointColor(QColor color);
+
+    QColor secondaryPointColor() const;
+    void setSecondaryPointColor(QColor color);
 
 protected:
     void paintEvent(QPaintEvent *e) override;
