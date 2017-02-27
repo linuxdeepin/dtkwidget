@@ -43,14 +43,14 @@ void DAbstractDialogPrivate::init()
         handle->setEnableSystemMove(false);
         handle->setEnableSystemResize(false);
 
-        bgBlurWidget = new DBlurEffectWidget(q);
-        bgBlurWidget->lower();
-        bgBlurWidget->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
-        bgBlurWidget->setVisible(DPlatformWindowHandle::hasBlurWindow());
+//        bgBlurWidget = new DBlurEffectWidget(q);
+//        bgBlurWidget->lower();
+//        bgBlurWidget->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
+//        bgBlurWidget->setVisible(DPlatformWindowHandle::hasBlurWindow());
 
-        DPlatformWindowHandle::connectWindowManagerChangedSignal(q, [this] {
-            bgBlurWidget->setVisible(DPlatformWindowHandle::hasBlurWindow());
-        });
+//        DPlatformWindowHandle::connectWindowManagerChangedSignal(q, [this] {
+//            bgBlurWidget->setVisible(DPlatformWindowHandle::hasBlurWindow());
+//        });
     }
 
     q->setWindowFlags(Qt::FramelessWindowHint  | Qt::WindowCloseButtonHint | Qt::Dialog);
