@@ -19,6 +19,7 @@ public:
     int blurRectYRadius = 0;
 
     QColor maskColor = Qt::transparent;
+    QPainterPath maskPath;
 
     bool isBehindWindowBlendMode() const;
 

@@ -174,6 +174,19 @@ QColor DBlurEffectWidget::maskColor() const
     return d->maskColor;
 }
 
+void DBlurEffectWidget::setMaskPath(const QPainterPath &path)
+{
+    D_D(DBlurEffectWidget);
+
+    if (d->maskPath == path)
+        return;
+
+    d->maskPath = path;
+
+    if (!d->isBehindWindowBlendMode())
+        update();
+}
+
 void DBlurEffectWidget::setRadius(int radius)
 {
     D_D(DBlurEffectWidget);
@@ -302,6 +315,18 @@ void DBlurEffectWidget::paintEvent(QPaintEvent *event)
     if (d->isBehindWindowBlendMode()) {
         pa.setCompositionMode(QPainter::CompositionMode_Source);
     } else {
+        if (!d->maskPath.isEmpty()) {
+            QPainterPath path = pa.clipPath();
+
+            if (path.isEmpty()) {
+                path = d->maskPath;
+            } else {
+                path &= d->maskPath;
+            }
+
+            pa.setClipPath(path);
+        }
+
         int radius = d->radius;
         QPoint point_offset = mapTo(window(), QPoint(0, 0));
         const QRect paintRect = event->rect();

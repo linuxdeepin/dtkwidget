@@ -22,9 +22,14 @@ GraphicsEffectTab::GraphicsEffectTab(QWidget *parent) : QWidget(parent)
     DBlurEffectWidget *blurWidget = new DBlurEffectWidget(this);
     blurWidget->setRadius(30);
     blurWidget->setFixedSize(200, 200);
-    blurWidget->setBlurRectXRadius(10);
-    blurWidget->setBlurRectYRadius(10);
+    blurWidget->setBlurRectXRadius(100);
+    blurWidget->setBlurRectYRadius(100);
     blurWidget->setMaskColor(Qt::white);
+
+    QPainterPath clipPath;
+
+    clipPath.addRect(0, 150, 200, 50);
+    blurWidget->setMaskPath(clipPath);
 
     QVBoxLayout *blurLayout = new QVBoxLayout(blurWidget);
 

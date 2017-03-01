@@ -51,6 +51,9 @@ public:
 
     QColor maskColor() const;
 
+    // Only support the InWindowBlend mode
+    void setMaskPath(const QPainterPath &path);
+
 public slots:
     void setRadius(int radius);
     void setMode(BlurMode mode);
