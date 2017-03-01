@@ -15,10 +15,12 @@ win32* {
 
 unix{
     HEADERS += \
-        $$PWD/dcalendar.h
+        $$PWD/dcalendar.h \
+        $$PWD/dmpriscontrol.h
 
     SOURCES += \
-        $$PWD/dcalendar.cpp
+        $$PWD/dcalendar.cpp \
+        $$PWD/dmpriscontrol.cpp
 
 }
 

@@ -9,6 +9,7 @@
 
 #include "widgetstab.h"
 #include "darrowrectangle.h"
+#include "dmpriscontrol.h"
 #ifdef Q_OS_UNIX
 #include "dcalendar.h"
 #endif
@@ -65,5 +66,13 @@ WidgetsTab::WidgetsTab(QWidget *parent) : QLabel(parent)
     button->setFixedSize(200, 30);
     rectangle->setContent(button);
     rectangle->show(200, 200);
+
+#ifdef Q_OS_UNIX
+    // mpris
+    DMPRISControl *control = new DMPRISControl(this);
+    control->setFixedSize(300, 100);
+    control->move(500, 0);
+    control->setStyleSheet("background-color:red;");
+#endif
 }
 

@@ -1,0 +1,75 @@
+  <interface name="org.mpris.MediaPlayer2.Player">
+    <method name="Next">
+    </method>
+    <method name="Previous">
+    </method>
+    <method name="Pause">
+    </method>
+    <method name="PlayPause">
+    </method>
+    <method name="Stop">
+    </method>
+    <method name="Play">
+    </method>
+    <method name="Seek">
+      <arg direction="in" type="x" name="Offset"/>
+    </method>
+    <method name="SetPosition">
+      <arg direction="in" type="o" name="TrackId"/>
+      <arg direction="in" type="x" name="Position"/>
+    </method>
+    <method name="OpenUri">
+      <arg direction="in" type="s" name="Uri"/>
+    </method>
+    <property access="read" type="s" name="PlaybackStatus">
+      <annotation value="true" name="org.freedesktop.DBus.Property.EmitsChangedSignal"/>
+    </property>
+    <property access="readwrite" type="s" name="LoopStatus">
+      <annotation value="true" name="org.freedesktop.DBus.Property.EmitsChangedSignal"/>
+      <annotation value="true" name="org.mpris.MediaPlayer2.property.optional"/>
+    </property>
+    <property access="readwrite" type="d" name="Rate">
+      <annotation value="true" name="org.freedesktop.DBus.Property.EmitsChangedSignal"/>
+    </property>
+    <property access="readwrite" type="b" name="Shuffle">
+      <annotation value="true" name="org.freedesktop.DBus.Property.EmitsChangedSignal"/>
+      <annotation value="true" name="org.mpris.MediaPlayer2.property.optional"/>
+    </property>
+    <property access="read" type="a{sv}" name="Metadata">
+      <annotation value="QVariantMap" name="org.qtproject.QtDBus.QtTypeName"/>
+    </property>
+    <property access="readwrite" type="d" name="Volume">
+      <annotation value="true" name="org.freedesktop.DBus.Property.EmitsChangedSignal"/>
+    </property>
+    <property access="read" type="x" name="Position">
+      <annotation value="false" name="org.freedesktop.DBus.Property.EmitsChangedSignal"/>
+    </property>
+    <property access="read" type="d" name="MinimumRate">
+      <annotation value="true" name="org.freedesktop.DBus.Property.EmitsChangedSignal"/>
+    </property>
+    <property access="read" type="d" name="MaximumRate">
+      <annotation value="true" name="org.freedesktop.DBus.Property.EmitsChangedSignal"/>
+    </property>
+    <property access="read" type="b" name="CanGoNext">
+      <annotation value="true" name="org.freedesktop.DBus.Property.EmitsChangedSignal"/>
+    </property>
+    <property access="read" type="b" name="CanGoPrevious">
+      <annotation value="true" name="org.freedesktop.DBus.Property.EmitsChangedSignal"/>
+    </property>
+    <property access="read" type="b" name="CanPlay">
+      <annotation value="true" name="org.freedesktop.DBus.Property.EmitsChangedSignal"/>
+    </property>
+    <property access="read" type="b" name="CanPause">
+      <annotation value="true" name="org.freedesktop.DBus.Property.EmitsChangedSignal"/>
+    </property>
+    <property access="read" type="b" name="CanSeek">
+      <annotation value="true" name="org.freedesktop.DBus.Property.EmitsChangedSignal"/>
+    </property>
+    <property access="read" type="b" name="CanControl">
+      <annotation value="false" name="org.freedesktop.DBus.Property.EmitsChangedSignal"/>
+    </property>
+    <signal name="Seeked">
+      <arg type="x" name="Position"/>
+    </signal>
+  </interface>
+

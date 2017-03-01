@@ -1,11 +1,18 @@
 unix{
     HEADERS += \
         $$PWD/DCalendarWidget/dcalendardbus.h \
-        $$PWD/DCalendarWidget/calendarview.h
+        $$PWD/DCalendarWidget/calendarview.h \
+        $$PWD/mpris/dmprismonitor.h \
+        $$PWD/mpris/dbusinterface.h \
+        $$PWD/dmpriscontrol_p.h \
+        $$PWD/mpris/dbusmpris.h
 
     SOURCES += \
         $$PWD/DCalendarWidget/dcalendardbus.cpp \
-        $$PWD/DCalendarWidget/calendarview.cpp
+        $$PWD/DCalendarWidget/calendarview.cpp \
+        $$PWD/mpris/dmprismonitor.cpp \
+        $$PWD/mpris/dbusinterface.cpp \
+        $$PWD/mpris/dbusmpris.cpp
 }
 
 HEADERS += \

@@ -175,6 +175,7 @@ void MainWindow::initTabWidget()
 
     GraphicsEffectTab *effectTab = new GraphicsEffectTab(this);
 
+    m_mainTab->addTab(widgetsTab, "Widgets");
     m_mainTab->addTab(effectTab, "GraphicsEffect");
     m_mainTab->addTab(comboBoxTab, "ComboBox");
     m_mainTab->addTab(indicatorTab, "Indicator");
@@ -188,7 +189,6 @@ void MainWindow::initTabWidget()
     m_mainTab->addTab(imageButtonGridTab, "imageButtonGrid");
     m_mainTab->addTab(buttonGridTab, "ButtonGrid");
     m_mainTab->addTab(segmentedControl, "Segmented Control");
-    m_mainTab->addTab(widgetsTab, "Widgets");
     m_mainTab->addTab(picker, "Color Picker");
     m_mainTab->addTab(cameraform, "Camera View");
 
