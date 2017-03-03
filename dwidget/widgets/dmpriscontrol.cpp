@@ -17,6 +17,13 @@ DMPRISControl::DMPRISControl(QWidget *parent)
     d->init();
 }
 
+bool DMPRISControl::isWorking() const
+{
+    D_DC(DMPRISControl);
+
+    return d->m_mprisInter;
+}
+
 DMPRISControlPrivate::DMPRISControlPrivate(DMPRISControl *q)
     : DObjectPrivate(q),
 
@@ -36,6 +43,8 @@ void DMPRISControlPrivate::init()
     m_prevBtn->setObjectName("PrevBtn");
     m_pauseBtn = new DImageButton;
     m_pauseBtn->setObjectName("PauseBtn");
+    m_playBtn = new DImageButton;
+    m_playBtn->setObjectName("PlayBtn");
     m_nextBtn = new DImageButton;
     m_nextBtn->setObjectName("NextBtn");
 
@@ -43,6 +52,7 @@ void DMPRISControlPrivate::init()
     m_title->setText("MPRIS Title");
     m_nextBtn->setNormalPic("://images/arrow_right_normal.png");
     m_pauseBtn->setNormalPic("://images/arrow_left_white.png");
+    m_playBtn->setNormalPic("://images/arrow_right_white.png");
     m_prevBtn->setNormalPic("://images/arrow_left_normal.png");
 #endif
 
@@ -50,6 +60,7 @@ void DMPRISControlPrivate::init()
     controlLayout->addWidget(m_prevBtn);
     controlLayout->addStretch();
     controlLayout->addWidget(m_pauseBtn);
+    controlLayout->addWidget(m_playBtn);
     controlLayout->addStretch();
     controlLayout->addWidget(m_nextBtn);
 
@@ -63,6 +74,7 @@ void DMPRISControlPrivate::init()
     q->connect(m_mprisMonitor, SIGNAL(mprisLost(const QString &)), q, SLOT(_q_removeMPRISPath(const QString &)));
     q->connect(m_prevBtn, SIGNAL(clicked()), q, SLOT(_q_onPrevClicked()));
     q->connect(m_pauseBtn, SIGNAL(clicked()), q, SLOT(_q_onPauseClicked()));
+    q->connect(m_playBtn, SIGNAL(clicked()), q, SLOT(_q_onPlayClicked()));
     q->connect(m_nextBtn, SIGNAL(clicked()), q, SLOT(_q_onNextClicked()));
 
     m_mprisMonitor->init();
@@ -76,12 +88,20 @@ void DMPRISControlPrivate::_q_onPrevClicked()
     m_mprisInter->Previous();
 }
 
+void DMPRISControlPrivate::_q_onPlayClicked()
+{
+    if (!m_mprisInter)
+        return;
+
+    m_mprisInter->Play();
+}
+
 void DMPRISControlPrivate::_q_onPauseClicked()
 {
     if (!m_mprisInter)
         return;
 
-    m_mprisInter->PlayPause();
+    m_mprisInter->Pause();
 }
 
 void DMPRISControlPrivate::_q_onNextClicked()
@@ -98,10 +118,32 @@ void DMPRISControlPrivate::_q_onMetaDataChanged()
         return;
 
     const auto meta = m_mprisInter->metadata();
-    if (meta.contains("xesam:title"))
-        m_title->setText(meta.value("xesam:title").toString());
-    else
+    const QString title = meta.value("xesam:title").toString();
+    const QString artist = meta.value("xesam:artist").toString();
+
+    if (title.isEmpty())
         m_title->clear();
+    else
+    {
+        if (artist.isEmpty())
+            m_title->setText(title);
+        else
+            m_title->setText(QString("%1 - %2").arg(title).arg(artist));
+    }
+}
+
+void DMPRISControlPrivate::_q_onPlaybackStatusChanged()
+{
+    const QString stat = m_mprisInter->playbackStatus();
+
+    if (stat == "Playing")
+    {
+        m_pauseBtn->setVisible(true);
+        m_playBtn->setVisible(false);
+    } else {
+        m_pauseBtn->setVisible(false);
+        m_playBtn->setVisible(true);
+    }
 }
 
 void DMPRISControlPrivate::_q_loadMPRISPath(const QString &path)
@@ -117,8 +159,10 @@ void DMPRISControlPrivate::_q_loadMPRISPath(const QString &path)
     m_mprisInter = new DBusMPRIS(path, "/org/mpris/MediaPlayer2", QDBusConnection::sessionBus(), q);
 
     q->connect(m_mprisInter, SIGNAL(MetadataChanged(QVariantMap)), q, SLOT(_q_onMetaDataChanged()));
+    q->connect(m_mprisInter, SIGNAL(PlaybackStatusChanged(QString)), q, SLOT(_q_onPlaybackStatusChanged()));
 
     _q_onMetaDataChanged();
+    _q_onPlaybackStatusChanged();
 
     if (hasOld)
         emit q->mprisChanged();

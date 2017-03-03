@@ -18,6 +18,8 @@ class LIBDTKWIDGETSHARED_EXPORT DMPRISControl : public QFrame, public DObject
 public:
     explicit DMPRISControl(QWidget *parent = 0);
 
+    bool isWorking() const;
+
 signals:
     void mprisAcquired() const;
     void mprisChanged() const;
@@ -25,7 +27,9 @@ signals:
 
 protected:
     D_PRIVATE_SLOT(void _q_onMetaDataChanged())
+    D_PRIVATE_SLOT(void _q_onPlaybackStatusChanged())
     D_PRIVATE_SLOT(void _q_onPrevClicked())
+    D_PRIVATE_SLOT(void _q_onPlayClicked())
     D_PRIVATE_SLOT(void _q_onPauseClicked())
     D_PRIVATE_SLOT(void _q_onNextClicked())
     D_PRIVATE_SLOT(void _q_loadMPRISPath(const QString &))

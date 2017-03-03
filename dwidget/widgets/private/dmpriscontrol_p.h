@@ -21,10 +21,12 @@ public:
 
 public slots:
     void _q_onPrevClicked();
+    void _q_onPlayClicked();
     void _q_onPauseClicked();
     void _q_onNextClicked();
 
     void _q_onMetaDataChanged();
+    void _q_onPlaybackStatusChanged();
 
     void _q_loadMPRISPath(const QString &path);
     void _q_removeMPRISPath(const QString &path);
@@ -35,6 +37,7 @@ public:
 
     QLabel *m_title;
     DImageButton *m_prevBtn;
+    DImageButton *m_playBtn;
     DImageButton *m_pauseBtn;
     DImageButton *m_nextBtn;
 

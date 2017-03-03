@@ -14,7 +14,7 @@ void DMPRISMonitor::init()
     connect(m_dbusInter, &DBusInterface::NameOwnerChanged, this, &DMPRISMonitor::onNameOwnerChanged);
 
     for (const auto &name : m_dbusInter->ListNames().value())
-        onNameOwnerChanged(name, name, QString());
+        onNameOwnerChanged(name, QString(), name);
 }
 
 void DMPRISMonitor::onNameOwnerChanged(const QString &name, const QString &oldOwner, const QString &newOwner)
