@@ -350,8 +350,10 @@ void DBlurEffectWidget::paintEvent(QPaintEvent *event)
 
         QImage image = d->sourceImage.copy(paintRect.adjusted(-radius, -radius, radius, radius));
 
+        QTransform old_transform = pa.transform();
         pa.translate(paintRect.topLeft() - QPoint(radius, radius));
         qt_blurImage(&pa, image, radius, false, false);
+        pa.setTransform(old_transform);
     }
 
     pa.fillRect(event->rect(), d->maskColor);

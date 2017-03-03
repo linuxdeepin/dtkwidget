@@ -28,7 +28,7 @@ GraphicsEffectTab::GraphicsEffectTab(QWidget *parent) : QWidget(parent)
 
     QPainterPath clipPath;
 
-    clipPath.addRect(0, 150, 200, 50);
+    clipPath.addRect(0, 50, 200, 150);
     blurWidget->setMaskPath(clipPath);
 
     QVBoxLayout *blurLayout = new QVBoxLayout(blurWidget);
