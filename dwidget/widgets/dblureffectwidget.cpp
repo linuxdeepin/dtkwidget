@@ -195,6 +195,7 @@ void DBlurEffectWidget::setRadius(int radius)
         return;
 
     d->radius = radius;
+    d->sourceImage = QImage();
 
     update();
 
@@ -329,10 +330,10 @@ void DBlurEffectWidget::paintEvent(QPaintEvent *event)
 
         int radius = d->radius;
         QPoint point_offset = mapTo(window(), QPoint(0, 0));
-        const QRect paintRect = event->rect();
+        const QRect &paintRect = event->rect();
 
         if (d->sourceImage.isNull()) {
-            const QRect &tmp_rect = rect().translated(point_offset);
+            const QRect &tmp_rect = rect().translated(point_offset).adjusted(-radius, -radius, radius, radius);
 
             d->sourceImage = window()->backingStore()->handle()->toImage().copy(tmp_rect);
         } else {
@@ -341,14 +342,14 @@ void DBlurEffectWidget::paintEvent(QPaintEvent *event)
             pa_image.setCompositionMode(QPainter::CompositionMode_Source);
 
             for (const QRect &rect : event->region().rects()) {
-                pa_image.drawImage(rect.topLeft(),
+                pa_image.drawImage(rect.topLeft() + QPoint(radius, radius),
                                    window()->backingStore()->handle()->toImage().copy(rect.translated(point_offset)));
             }
 
             pa_image.end();
         }
 
-        QImage image = d->sourceImage.copy(paintRect.adjusted(-radius, -radius, radius, radius));
+        QImage image = d->sourceImage.copy(paintRect.adjusted(0, 0, 2 * radius, 2 * radius));
 
         QTransform old_transform = pa.transform();
         pa.translate(paintRect.topLeft() - QPoint(radius, radius));
