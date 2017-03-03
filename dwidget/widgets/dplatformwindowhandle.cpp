@@ -49,7 +49,7 @@ DPlatformWindowHandle::DPlatformWindowHandle(QWidget *widget, QObject *parent)
 {
     enableDXcbForWindow(widget);
 
-    m_window = widget->windowHandle();
+    m_window = widget->window()->windowHandle();
     m_window->installEventFilter(this);
 }
 
