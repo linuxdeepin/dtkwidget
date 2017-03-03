@@ -3,20 +3,11 @@ DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/default.mk
 export QT_SELECT = qt5
 DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
-ARCH := $(shell dpkg-architecture -qDEB_BUILD_ARCH)
 %:
-	dh $@ 
+	dh $@ --parallel
 
 override_dh_auto_configure:
 	dh_auto_configure -- LIB_INSTALL_DIR=/usr/lib/$(DEB_HOST_MULTIARCH)
 
-override_dh_auto_build:
-	make -j `nproc`
-
-ifeq ($(ARCH), alpha)
-override_dh_strip:
-	dh_strip
-else
-override_dh_strip:
-	dh_strip 
-endif
+override_dh_makeshlibs:
+	dh_makeshlibs -- -V
