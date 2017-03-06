@@ -106,7 +106,7 @@ private:
     void verticalMove(int x, int y);
     void horizontalMove(int x, int y);
 
-private:
+protected:
     int m_radius = 3;
     int m_arrowHeight = 8;
     int m_arrowWidth = 12;
