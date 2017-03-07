@@ -53,7 +53,8 @@ void DAbstractDialogPrivate::init()
 //        });
     }
 
-    q->setWindowFlags(Qt::FramelessWindowHint  | Qt::WindowCloseButtonHint | Qt::Dialog);
+    q->setWindowFlags(q->windowFlags() | Qt::FramelessWindowHint  | Qt::WindowCloseButtonHint);
+
     q->setAttribute(Qt::WA_TranslucentBackground);
     q->resize(DIALOG::DEFAULT_WIDTH, DIALOG::DEFAULT_HEIGHT);
     q->setMaximumWidth(480);
