@@ -42,6 +42,7 @@ public:
     DImageButton *m_nextBtn;
 
     QString m_lastPath;
+    QStringList m_mprisPaths;
 };
 
 DWIDGET_END_NAMESPACE

@@ -153,6 +153,10 @@ void DMPRISControlPrivate::_q_loadMPRISPath(const QString &path)
     const bool hasOld = m_mprisInter;
     m_lastPath = path;
 
+    // save paths
+    if (!m_mprisPaths.contains(path))
+        m_mprisPaths.append(path);
+
     if (m_mprisInter)
         m_mprisInter->deleteLater();
 
@@ -174,11 +178,16 @@ void DMPRISControlPrivate::_q_removeMPRISPath(const QString &path)
 {
     D_QC(DMPRISControl);
 
+    m_mprisPaths.removeOne(path);
+
     if (m_lastPath != path)
         return;
 
     if (!m_mprisInter)
         return;
+
+    if (!m_mprisPaths.isEmpty())
+        return _q_loadMPRISPath(m_mprisPaths.last());
 
     m_mprisInter->deleteLater();
     m_mprisInter = nullptr;
