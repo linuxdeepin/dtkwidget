@@ -91,7 +91,8 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dplatformwindowhandle.h \
     $$PWD/dmainwindow.h \
     $$PWD/dblureffectwidget.h \
-    $$PWD/dpageindicator.h
+    $$PWD/dpageindicator.h \
+    $$PWD/dclipeffectwidget.h
 
 SOURCES += $$PWD/dslider.cpp \
     $$PWD/dthememanager.cpp \
@@ -159,7 +160,8 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dplatformwindowhandle.cpp \
     $$PWD/dmainwindow.cpp \
     $$PWD/dblureffectwidget.cpp \
-    $$PWD/dpageindicator.cpp
+    $$PWD/dpageindicator.cpp \
+    $$PWD/dclipeffectwidget.cpp
 
 RESOURCES += \
     $$PWD/themes/dui_theme_dark.qrc \

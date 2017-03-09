@@ -82,26 +82,63 @@ bool DBlurEffectWidgetPrivate::updateWindowBlurArea(QWidget *topLevelWidget)
         return false;
 
     QList<const DBlurEffectWidget*> blurEffectWidgetList = blurEffectWidgetHash.values(topLevelWidget);
-    QVector<DPlatformWindowHandle::WMBlurArea> areaList;
 
-    areaList.reserve(blurEffectWidgetList.size());
+    bool isExistMaskPath = false;
 
     foreach (const DBlurEffectWidget *w, blurEffectWidgetList) {
-        if (!w->isVisible())
-            continue;
+        if (!w->d_func()->maskPath.isEmpty() && w->isVisible()) {
+            isExistMaskPath = true;
+            break;
+        }
+    }
 
-        QRect r = w->rect();
+    bool ok = false;
 
-        r.moveTopLeft(w->mapTo(topLevelWidget, r.topLeft()));
+    if (isExistMaskPath) {
+        QList<QPainterPath> pathList;
 
-        areaList << dMakeWMBlurArea(r.x(), r.y(), r.width(), r.height(), w->blurRectXRadius(), w->blurRectYRadius());
+        foreach (const DBlurEffectWidget *w, blurEffectWidgetList) {
+            if (!w->isVisible())
+                continue;
+
+            QPainterPath p;
+            QRect r = w->rect();
+
+            r.moveTopLeft(w->mapTo(topLevelWidget, r.topLeft()));
+            p.addRoundedRect(r, w->blurRectXRadius(), w->blurRectYRadius());
+
+            if (!w->d_func()->maskPath.isEmpty()) {
+                p &= w->d_func()->maskPath.translated(r.topLeft());
+            }
+
+            pathList << p;
+        }
+
+        ok = DPlatformWindowHandle::setWindowBlurAreaByWM(topLevelWidget, pathList);
+    } else {
+        QVector<DPlatformWindowHandle::WMBlurArea> areaList;
+
+        areaList.reserve(blurEffectWidgetList.size());
+
+        foreach (const DBlurEffectWidget *w, blurEffectWidgetList) {
+            if (!w->isVisible())
+                continue;
+
+            QRect r = w->rect();
+
+            r.moveTopLeft(w->mapTo(topLevelWidget, r.topLeft()));
+
+            areaList << dMakeWMBlurArea(r.x(), r.y(), r.width(), r.height(), w->blurRectXRadius(), w->blurRectYRadius());
+        }
+
+        ok = DPlatformWindowHandle::setWindowBlurAreaByWM(topLevelWidget, areaList);
     }
 
     if (blurEffectWidgetList.isEmpty()) {
         blurEffectWidgetHash.remove(topLevelWidget);
     }
 
-    return DPlatformWindowHandle::setWindowBlurAreaByWM(topLevelWidget, areaList);
+    return ok;
 }
 
 DBlurEffectWidget::DBlurEffectWidget(QWidget *parent)
@@ -183,8 +220,7 @@ void DBlurEffectWidget::setMaskPath(const QPainterPath &path)
 
     d->maskPath = path;
 
-    if (!d->isBehindWindowBlendMode())
-        update();
+    update();
 }
 
 void DBlurEffectWidget::setRadius(int radius)
@@ -313,21 +349,21 @@ void DBlurEffectWidget::paintEvent(QPaintEvent *event)
         pa.setClipPath(path);
     }
 
+    if (!d->maskPath.isEmpty()) {
+        QPainterPath path = pa.clipPath();
+
+        if (path.isEmpty()) {
+            path = d->maskPath;
+        } else {
+            path &= d->maskPath;
+        }
+
+        pa.setClipPath(path);
+    }
+
     if (d->isBehindWindowBlendMode()) {
         pa.setCompositionMode(QPainter::CompositionMode_Source);
     } else {
-        if (!d->maskPath.isEmpty()) {
-            QPainterPath path = pa.clipPath();
-
-            if (path.isEmpty()) {
-                path = d->maskPath;
-            } else {
-                path &= d->maskPath;
-            }
-
-            pa.setClipPath(path);
-        }
-
         int radius = d->radius;
         QPoint point_offset = mapTo(window(), QPoint(0, 0));
         const QRect &paintRect = event->rect();

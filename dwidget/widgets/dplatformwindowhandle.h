@@ -55,9 +55,14 @@ public:
 
     static bool hasBlurWindow();
     static bool setWindowBlurAreaByWM(QWidget *widget, const QVector<WMBlurArea> &area);
+    static bool setWindowBlurAreaByWM(QWidget *widget, const QList<QPainterPath> &paths);
     static bool setWindowBlurAreaByWM(QWindow *window, const QVector<WMBlurArea> &area);
+    static bool setWindowBlurAreaByWM(QWindow *window, const QList<QPainterPath> &paths);
     static bool connectWindowManagerChangedSignal(QObject *object, std::function<void ()> slot);
     static bool connectHasBlurWindowChanged(QObject *object, std::function<void ()> slot);
+
+    bool setWindowBlurAreaByWM(const QVector<WMBlurArea> &area);
+    bool setWindowBlurAreaByWM(const QList<QPainterPath> &paths);
 
     int windowRadius() const;
 

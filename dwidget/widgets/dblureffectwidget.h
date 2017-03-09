@@ -51,7 +51,6 @@ public:
 
     QColor maskColor() const;
 
-    // Only support the InWindowBlend mode
     void setMaskPath(const QPainterPath &path);
 
 public slots:
