@@ -66,6 +66,7 @@ WidgetsTab::WidgetsTab(QWidget *parent) : QLabel(parent)
     button->setFixedSize(200, 30);
     rectangle->setContent(button);
     rectangle->show(200, 200);
+    rectangle->setBackgroundColor(QColor(255, 255, 255, 0.5));
 
 #ifdef Q_OS_UNIX
     // mpris

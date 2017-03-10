@@ -8,6 +8,9 @@
  **/
 
 #include "darrowrectangle.h"
+#include "dplatformwindowhandle.h"
+#include "dapplication.h"
+#include "dblureffectwidget.h"
 
 #ifdef Q_OS_UNIX
 #include <X11/extensions/shape.h>
@@ -24,15 +27,25 @@ DArrowRectangle::DArrowRectangle(ArrowDirection direction, QWidget * parent) :
 {
     D_THEME_INIT_WIDGET(DArrowRectangle);
 
-    setWindowFlags(Qt::SplashScreen);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::ToolTip);
     setAttribute(Qt::WA_TranslucentBackground);
 
-    DGraphicsGlowEffect *glowEffect = new DGraphicsGlowEffect(this);
-    glowEffect->setBlurRadius(shadowBlurRadius());
-    glowEffect->setDistance(shadowDistance());
-    glowEffect->setXOffset(shadowXOffset());
-    glowEffect->setYOffset(shadowYOffset());
-    setGraphicsEffect(glowEffect);
+    if (DApplication::isDXcbPlatform()) {
+        handle = new DPlatformWindowHandle(this);
+        handle->setTranslucentBackground(true);
+        handle->setAutoInputMaskByClipPath(false);
+
+        blurBackground = new DBlurEffectWidget(this);
+        blurBackground->setMaskColor(m_backgroundColor);
+        blurBackground->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
+    } else {
+        DGraphicsGlowEffect *glowEffect = new DGraphicsGlowEffect(this);
+        glowEffect->setBlurRadius(shadowBlurRadius());
+        glowEffect->setDistance(shadowDistance());
+        glowEffect->setXOffset(shadowXOffset());
+        glowEffect->setYOffset(shadowYOffset());
+        setGraphicsEffect(glowEffect);
+    }
 }
 
 void DArrowRectangle::show(int x, int y)
@@ -48,6 +61,7 @@ void DArrowRectangle::show(int x, int y)
     }
 
     update();
+    updateClipPath();
 }
 
 void DArrowRectangle::setContent(QWidget *content)
@@ -59,7 +73,7 @@ void DArrowRectangle::setContent(QWidget *content)
     m_content->setParent(this);
     m_content->show();
 
-    qreal delta = shadowBlurRadius() + shadowDistance() + margin();
+    qreal delta = (handle ? 0 : shadowBlurRadius() + shadowDistance()) + margin();
 
     resizeWithContent();
 
@@ -89,18 +103,23 @@ QWidget *DArrowRectangle::getContent() const
 
 void DArrowRectangle::resizeWithContent()
 {
+    if (!m_content)
+        return;
+
     setFixedSize(getFixedSize());
 
 #ifdef Q_OS_UNIX
-    XRectangle m_contentXRect;
-    m_contentXRect.x = m_content->pos().x();
-    m_contentXRect.y = m_content->pos().y();
-    m_contentXRect.width = m_content->width();
-    m_contentXRect.height = m_content->height();
-    XShapeCombineRectangles(QX11Info::display(), winId(), ShapeInput,
-                            0,
-                            0,
-                            &m_contentXRect, 1, ShapeSet, YXBanded);
+    if (!handle) {
+        XRectangle m_contentXRect;
+        m_contentXRect.x = m_content->pos().x();
+        m_contentXRect.y = m_content->pos().y();
+        m_contentXRect.width = m_content->width();
+        m_contentXRect.height = m_content->height();
+        XShapeCombineRectangles(QX11Info::display(), winId(), ShapeInput,
+                                0,
+                                0,
+                                &m_contentXRect, 1, ShapeSet, YXBanded);
+    }
 #endif
 }
 
@@ -108,7 +127,7 @@ QSize DArrowRectangle::getFixedSize()
 {
     if (m_content)
     {
-        qreal delta = shadowBlurRadius() + shadowDistance() + margin();
+        qreal delta = (handle ? 0 : shadowBlurRadius() + shadowDistance()) + margin();
 
         switch(m_arrowDirection)
         {
@@ -143,38 +162,57 @@ void DArrowRectangle::move(int x, int y)
 }
 
 // override methods
-void DArrowRectangle::paintEvent(QPaintEvent *)
+void DArrowRectangle::paintEvent(QPaintEvent *e)
 {
+    if (blurBackground)
+        return;
+
     QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing);
 
-    QPainterPath border;
+    if (handle) {
+        painter.fillRect(e->rect(), m_backgroundColor);
+    } else {
+        painter.setRenderHint(QPainter::Antialiasing);
 
-    switch (m_arrowDirection)
-    {
-    case DArrowRectangle::ArrowLeft:
-        border = getLeftCornerPath();
-        break;
-    case DArrowRectangle::ArrowRight:
-        border = getRightCornerPath();
-        break;
-    case DArrowRectangle::ArrowTop:
-        border = getTopCornerPath();
-        break;
-    case DArrowRectangle::ArrowBottom:
-        border = getBottomCornerPath();
-        break;
-    default:
-        border = getRightCornerPath();
+        QPainterPath border;
+
+        switch (m_arrowDirection)
+        {
+        case DArrowRectangle::ArrowLeft:
+            border = getLeftCornerPath();
+            break;
+        case DArrowRectangle::ArrowRight:
+            border = getRightCornerPath();
+            break;
+        case DArrowRectangle::ArrowTop:
+            border = getTopCornerPath();
+            break;
+        case DArrowRectangle::ArrowBottom:
+            border = getBottomCornerPath();
+            break;
+        default:
+            border = getRightCornerPath();
+        }
+
+        painter.setClipPath(border);
+        painter.fillPath(border, QBrush(m_backgroundColor));
+
+        QPen strokePen;
+        strokePen.setColor(m_borderColor);
+        strokePen.setWidth(m_borderWidth);
+        painter.strokePath(border, strokePen);
+    }
+}
+
+void DArrowRectangle::resizeEvent(QResizeEvent *event)
+{
+    QWidget::resizeEvent(event);
+
+    if (blurBackground) {
+        blurBackground->resize(event->size());
     }
 
-    painter.setClipPath(border);
-    painter.fillPath(border, QBrush(m_backgroundColor));
-
-    QPen strokePen;
-    strokePen.setColor(m_borderColor);
-    strokePen.setWidth(m_borderWidth);
-    painter.strokePath(border, strokePen);
+    updateClipPath();
 }
 
 bool DArrowRectangle::event(QEvent *e)
@@ -205,6 +243,9 @@ qreal DArrowRectangle::shadowYOffset() const
 void DArrowRectangle::setShadowYOffset(const qreal &shadowYOffset)
 {
     m_shadowYOffset = shadowYOffset;
+
+    if (handle)
+        handle->setShadowOffset(QPoint(m_shadowXOffset, m_shadowYOffset));
 }
 
 qreal DArrowRectangle::shadowXOffset() const
@@ -215,6 +256,9 @@ qreal DArrowRectangle::shadowXOffset() const
 void DArrowRectangle::setShadowXOffset(const qreal &shadowXOffset)
 {
     m_shadowXOffset = shadowXOffset;
+
+    if (handle)
+        handle->setShadowOffset(QPoint(shadowXOffset, m_shadowYOffset));
 }
 
 qreal DArrowRectangle::shadowDistance() const
@@ -235,6 +279,9 @@ qreal DArrowRectangle::shadowBlurRadius() const
 void DArrowRectangle::setShadowBlurRadius(const qreal &shadowBlurRadius)
 {
     m_shadowBlurRadius = shadowBlurRadius;
+
+    if (handle)
+        handle->setShadowRadius(shadowBlurRadius);
 }
 
 QColor DArrowRectangle::borderColor() const
@@ -245,6 +292,9 @@ QColor DArrowRectangle::borderColor() const
 void DArrowRectangle::setBorderColor(const QColor &borderColor)
 {
     m_borderColor = borderColor;
+
+    if (handle)
+        handle->setBorderColor(borderColor);
 }
 
 int DArrowRectangle::borderWidth() const
@@ -255,6 +305,9 @@ int DArrowRectangle::borderWidth() const
 void DArrowRectangle::setBorderWidth(int borderWidth)
 {
     m_borderWidth = borderWidth;
+
+    if (handle)
+        handle->setBorderWidth(borderWidth);
 }
 
 QColor DArrowRectangle::backgroundColor() const
@@ -270,6 +323,25 @@ DArrowRectangle::ArrowDirection DArrowRectangle::arrowDirection() const
 void DArrowRectangle::setBackgroundColor(const QColor &backgroundColor)
 {
     m_backgroundColor = backgroundColor;
+
+    if (handle && m_backgroundColor.toRgb().alpha() < 255) {
+        if (!blurBackground) {
+            blurBackground = new DBlurEffectWidget(this);
+            blurBackground->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
+            blurBackground->resize(size());
+            blurBackground->lower();
+            blurBackground->show();
+        }
+
+        blurBackground->setMaskColor(m_backgroundColor);
+    } else {
+        if (blurBackground) {
+            blurBackground->hide();
+            blurBackground->setParent(0);
+            delete blurBackground;
+            blurBackground = Q_NULLPTR;
+        }
+    }
 }
 
 int DArrowRectangle::radius() const
@@ -349,9 +421,13 @@ void DArrowRectangle::setMargin(int value)
 
 QPainterPath DArrowRectangle::getLeftCornerPath()
 {
-    qreal delta = shadowBlurRadius() + shadowDistance();
+    QRect rect = this->rect();
 
-    QRect rect = this->rect().marginsRemoved(QMargins(delta, delta, delta, delta));
+    if (!handle) {
+        qreal delta = shadowBlurRadius() + shadowDistance();
+
+        rect = rect.marginsRemoved(QMargins(delta, delta, delta, delta));
+    }
 
     QPoint cornerPoint(rect.x(), rect.y() + (m_arrowY > 0 ? m_arrowY : (rect.height() / 2)));
     QPoint topLeft(rect.x() + m_arrowHeight, rect.y());
@@ -361,28 +437,31 @@ QPainterPath DArrowRectangle::getLeftCornerPath()
     int radius = this->m_radius > (rect.height() / 2) ? (rect.height() / 2) : this->m_radius;
 
     QPainterPath border;
-    border.moveTo(topLeft.x() - radius,topLeft.y());
+    border.moveTo(topLeft.x() + radius,topLeft.y());
     border.lineTo(topRight.x() - radius, topRight.y());
     border.arcTo(topRight.x() - 2 * radius, topRight.y(), 2 * radius, 2 * radius, 90, -90);
     border.lineTo(bottomRight.x(), bottomRight.y() - radius);
     border.arcTo(bottomRight.x() - 2 * radius, bottomRight.y() - 2 * radius, 2 * radius, 2 * radius, 0, -90);
-    border.lineTo(bottomLeft.x() - radius,bottomLeft.y());
+    border.lineTo(bottomLeft.x() + radius,bottomLeft.y());
     border.arcTo(bottomLeft.x(),bottomLeft.y() - 2 * radius,2 * radius,2 * radius,-90,-90);
     border.lineTo(cornerPoint.x() + m_arrowHeight,cornerPoint.y() + m_arrowWidth / 2);
     border.lineTo(cornerPoint);
     border.lineTo(cornerPoint.x() + m_arrowHeight,cornerPoint.y() - m_arrowWidth / 2);
     border.lineTo(topLeft.x(),topLeft.y() + radius);
     border.arcTo(topLeft.x(),topLeft.y(),2 * radius,2 * radius,-180,-90);
-    border.lineTo(topLeft.x() - radius,topLeft.y());
 
     return border;
 }
 
 QPainterPath DArrowRectangle::getRightCornerPath()
 {
-    qreal delta = shadowBlurRadius() + shadowDistance();
+    QRect rect = this->rect();
 
-    QRect rect = this->rect().marginsRemoved(QMargins(delta, delta, delta, delta));
+    if (!handle) {
+        qreal delta = shadowBlurRadius() + shadowDistance();
+
+        rect = rect.marginsRemoved(QMargins(delta, delta, delta, delta));
+    }
 
     QPoint cornerPoint(rect.x() + rect.width(), rect.y() + (m_arrowY > 0 ? m_arrowY : rect.height() / 2));
     QPoint topLeft(rect.x(), rect.y());
@@ -410,9 +489,13 @@ QPainterPath DArrowRectangle::getRightCornerPath()
 
 QPainterPath DArrowRectangle::getTopCornerPath()
 {
-    qreal delta = shadowBlurRadius() + shadowDistance();
+    QRect rect = this->rect();
 
-    QRect rect = this->rect().marginsRemoved(QMargins(delta, delta, delta, delta));
+    if (!handle) {
+        qreal delta = shadowBlurRadius() + shadowDistance();
+
+        rect = rect.marginsRemoved(QMargins(delta, delta, delta, delta));
+    }
 
     QPoint cornerPoint(rect.x() + (m_arrowX > 0 ? m_arrowX : rect.width() / 2), rect.y());
     QPoint topLeft(rect.x(), rect.y() + m_arrowHeight);
@@ -440,9 +523,13 @@ QPainterPath DArrowRectangle::getTopCornerPath()
 
 QPainterPath DArrowRectangle::getBottomCornerPath()
 {
-    qreal delta = shadowBlurRadius() + shadowDistance();
+    QRect rect = this->rect();
 
-    QRect rect = this->rect().marginsRemoved(QMargins(delta, delta, delta, delta));
+    if (!handle) {
+        qreal delta = shadowBlurRadius() + shadowDistance();
+
+        rect = rect.marginsRemoved(QMargins(delta, delta, delta, delta));
+    }
 
     QPoint cornerPoint(rect.x() + (m_arrowX > 0 ? m_arrowX : rect.width() / 2), rect.y()  + rect.height());
     QPoint topLeft(rect.x(), rect.y());
@@ -471,7 +558,7 @@ QPainterPath DArrowRectangle::getBottomCornerPath()
 void DArrowRectangle::verticalMove(int x, int y)
 {
     const QRect dRect = currentScreenRect(x, y);
-    qreal delta = shadowBlurRadius() - shadowDistance();
+    qreal delta = handle ? 0 : shadowBlurRadius() - shadowDistance();
 
     int lRelativeY = y - dRect.y() - (height() - delta) / 2;
     int rRelativeY = y - dRect.y() + (height() - delta) / 2 - dRect.height();
@@ -510,7 +597,7 @@ void DArrowRectangle::verticalMove(int x, int y)
 void DArrowRectangle::horizontalMove(int x, int y)
 {
     const QRect dRect = currentScreenRect(x, y);
-    qreal delta = shadowBlurRadius() - shadowDistance();
+    qreal delta = handle ? 0 : shadowBlurRadius() - shadowDistance();
 
     int lRelativeX = x - dRect.x() - (width() - delta) / 2;
     int rRelativeX = x - dRect.x() + (width() - delta) / 2 - dRect.width();
@@ -544,6 +631,34 @@ void DArrowRectangle::horizontalMove(int x, int y)
     default:
         break;
     }
+}
+
+void DArrowRectangle::updateClipPath()
+{
+    if (!handle)
+        return;
+
+    QPainterPath path;
+
+    switch (m_arrowDirection)
+    {
+    case DArrowRectangle::ArrowLeft:
+        path = getLeftCornerPath();
+        break;
+    case DArrowRectangle::ArrowRight:
+        path = getRightCornerPath();
+        break;
+    case DArrowRectangle::ArrowTop:
+        path = getTopCornerPath();
+        break;
+    case DArrowRectangle::ArrowBottom:
+        path = getBottomCornerPath();
+        break;
+    default:
+        path = getRightCornerPath();
+    }
+
+    handle->setClipPath(path);
 }
 
 DArrowRectangle::~DArrowRectangle()

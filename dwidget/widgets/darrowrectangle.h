@@ -26,6 +26,8 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+class DPlatformWindowHandle;
+class DBlurEffectWidget;
 class LIBDTKWIDGETSHARED_EXPORT DArrowRectangle : public QWidget
 {
     Q_OBJECT
@@ -94,6 +96,7 @@ signals:
 
 protected:
     void paintEvent(QPaintEvent *);
+    void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
     bool event(QEvent *e);
 
 private:
@@ -105,6 +108,8 @@ private:
 
     void verticalMove(int x, int y);
     void horizontalMove(int x, int y);
+
+    void updateClipPath();
 
 protected:
     int m_radius = 3;
@@ -127,6 +132,8 @@ protected:
     QPoint m_lastPos = QPoint(0, 0);
 
     QWidget *m_content = NULL;
+    DPlatformWindowHandle *handle = NULL;
+    DBlurEffectWidget *blurBackground = NULL;
 };
 
 DWIDGET_END_NAMESPACE
