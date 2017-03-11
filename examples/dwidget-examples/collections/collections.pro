@@ -16,6 +16,16 @@ unix{
 
 win32* {
     DEFINES += STATIC_LIB
+
+    #DEPENDS dtksettings
+    INCLUDEPATH += $$INCLUDE_INSTALL_DIR\libdtk-1.0\DSettings
+    DEPENDPATH += $$INCLUDE_INSTALL_DIR\libdtk-1.0\DSettings
+    LIBS += -L$$LIB_INSTALL_DIR -ldtksettings
+
+    #DEPENDS dtksettingsview
+    INCLUDEPATH += $$INCLUDE_INSTALL_DIR\libdtk-1.0\DSettingsView
+    DEPENDPATH += $$INCLUDE_INSTALL_DIR\libdtk-1.0\DSettingsView
+    LIBS += -L$$LIB_INSTALL_DIR -ldtksettingsview
 }
 
 SOURCES += main.cpp\

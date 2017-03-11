@@ -17,17 +17,20 @@ unix{
     QT += x11extras dbus
     CONFIG += link_pkgconfig
     PKGCONFIG += x11 xext dtksettings dtksettingsview
+
+
+    !system($$PWD/../tool/translate_generation.sh): error("Failed to generate translation")
 }
 
 win32* {
     #DEPENDS dtksettings
-    INCLUDEPATH += $$INCLUDE_INSTALL_DIR\libdtk-0.1.0\DSettings
-    DEPENDPATH += $$INCLUDE_INSTALL_DIR\libdtk-0.1.0\DSettings
+    INCLUDEPATH += $$INCLUDE_INSTALL_DIR\libdtk-1.0\DSettings
+    DEPENDPATH += $$INCLUDE_INSTALL_DIR\libdtk-1.0\DSettings
     LIBS += -L$$LIB_INSTALL_DIR -ldtksettings
 
     #DEPENDS dtksettingsview
-    INCLUDEPATH += $$INCLUDE_INSTALL_DIR\libdtk-0.1.0\DSettingsView
-    DEPENDPATH += $$INCLUDE_INSTALL_DIR\libdtk-0.1.0\DSettingsView
+    INCLUDEPATH += $$INCLUDE_INSTALL_DIR\libdtk-1.0\DSettingsView
+    DEPENDPATH += $$INCLUDE_INSTALL_DIR\libdtk-1.0\DSettingsView
     LIBS += -L$$LIB_INSTALL_DIR -ldtksettingsview
 }
 
@@ -74,8 +77,6 @@ DEPENDPATH += $$PWD/../dutil
 
 SOURCES += \
     dutility.cpp
-
-!system($$PWD/../tool/translate_generation.sh): error("Failed to generate translation")
 
 TRANSLATIONS += $$PWD/translations/$${TARGET}.ts \
                 $$PWD/translations/$${TARGET}_zh_CN.ts
