@@ -296,7 +296,10 @@ void DAboutDialog::showEvent(QShowEvent *event)
 {
     DDialog::showEvent(event);
 
-    adjustSize();
+    if (minimumWidth() == maximumWidth())
+        resize(width(), heightForWidth(width()));
+    else
+        adjustSize();
 }
 
 #include "moc_daboutdialog.cpp"
