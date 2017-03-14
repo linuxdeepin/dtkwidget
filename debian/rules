@@ -10,4 +10,4 @@ override_dh_auto_configure:
 	dh_auto_configure -- LIB_INSTALL_DIR=/usr/lib/$(DEB_HOST_MULTIARCH)
 
 override_dh_makeshlibs:
-	dh_makeshlibs -- -V
+	dh_makeshlibs -V
