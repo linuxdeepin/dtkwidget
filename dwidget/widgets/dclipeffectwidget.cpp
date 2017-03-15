@@ -19,8 +19,11 @@ public:
     void updateImage();
 
     QImage image;
+    QRect imageGeometry;
     QPainterPath path;
     QMargins margins;
+
+    QWidgetList parentList;
 
     Q_DECLARE_PUBLIC(DClipEffectWidget)
 };
@@ -37,9 +40,35 @@ DClipEffectWidget::DClipEffectWidget(QWidget *parent)
 {
     Q_ASSERT(parent);
 
-    parent->installEventFilter(this);
     setAttribute(Qt::WA_TransparentForMouseEvents);
     setFocusPolicy(Qt::NoFocus);
+}
+
+QMargins DClipEffectWidget::margins() const
+{
+    D_DC(DClipEffectWidget);
+
+    return d->margins;
+}
+
+QPainterPath DClipEffectWidget::clipPath() const
+{
+    D_DC(DClipEffectWidget);
+
+    return d->path;
+}
+
+void DClipEffectWidget::setMargins(QMargins margins)
+{
+    D_D(DClipEffectWidget);
+
+    if (d->margins == margins)
+        return;
+
+    d->margins = margins;
+    update();
+
+    emit marginsChanged(margins);
 }
 
 void DClipEffectWidget::setClipPath(const QPainterPath &path)
@@ -52,50 +81,39 @@ void DClipEffectWidget::setClipPath(const QPainterPath &path)
     d->path = path;
     d->image = QImage();
 
+    emit clipPathChanged(d->path);
+
     update();
-}
-
-QMargins DClipEffectWidget::margins() const
-{
-    D_DC(DClipEffectWidget);
-
-    return d->margins;
-}
-
-void DClipEffectWidget::setMargins(QMargins margins)
-{
-    D_D(DClipEffectWidget);
-
-    if (d->margins == margins)
-        return;
-
-    d->margins = margins;
-    d->image = QImage();
-
-    emit marginsChanged(margins);
 }
 
 bool DClipEffectWidget::eventFilter(QObject *watched, QEvent *event)
 {
+    D_D(DClipEffectWidget);
+
+    if (event->type() == QEvent::Move) {
+        d->image = QImage();
+    }
+
     if (watched != parent())
         return false;
 
-    D_D(DClipEffectWidget);
-
     if (event->type() == QEvent::Paint) {
         const QPoint &offset = mapTo(window(), QPoint(0, 0));
-        QPainter p;
+        const QImage &image = window()->backingStore()->handle()->toImage();
 
         if (d->image.isNull()) {
-            d->image = window()->backingStore()->handle()->toImage().copy(rect().marginsRemoved(d->margins).translated(offset));
-            p.begin(&d->image);
+            d->imageGeometry = image.rect() & parentWidget()->rect().translated(offset);
+            d->image = image.copy(d->imageGeometry);
         } else {
-            p.begin(&d->image);
-            p.drawImage(0, 0, window()->backingStore()->handle()->toImage().copy(static_cast<QPaintEvent*>(event)->rect().translated(offset + QPoint(d->margins.left(), d->margins.top()))));
-        }
+            QPaintEvent *e = static_cast<QPaintEvent*>(event);
+            QPainter p;
+            const QRect &rect = image.rect() & e->rect().translated(offset);
 
-        p.setCompositionMode(QPainter::CompositionMode_Clear);
-        p.fillPath(d->path, Qt::transparent);
+            p.begin(&d->image);
+            p.setCompositionMode(QPainter::CompositionMode_Source);
+            p.drawImage(rect.topLeft() - d->imageGeometry.topLeft(), image.copy(rect));
+            p.end();
+        }
     } else if (event->type() == QEvent::Resize) {
         resize(parentWidget()->size());
     }
@@ -107,18 +125,66 @@ void DClipEffectWidget::paintEvent(QPaintEvent *event)
 {
     D_DC(DClipEffectWidget);
 
-    QPainter p(this);
-    const QRect &rect = event->rect();
+    if (d->image.isNull())
+        return;
 
-    p.drawImage(rect, d->image, rect.translated(-d->margins.left(), -d->margins.top()));
+    const QRect &rect = event->rect() & this->rect().marginsRemoved(d->margins);
+    const QRect &imageRect = rect.translated(mapTo(window(), QPoint(0, 0)) - d->imageGeometry.topLeft()) & d->imageGeometry;
+
+    if (!imageRect.isValid())
+        return;
+
+    QPainter p(this);
+    QPainterPath newPath;
+
+    newPath.addRect(this->rect());
+    newPath -= d->path;
+
+    p.setRenderHint(QPainter::Antialiasing);
+    p.setClipPath(newPath);
+    p.setCompositionMode(QPainter::CompositionMode_Source);
+    p.drawImage(rect, d->image, imageRect);
 }
 
 void DClipEffectWidget::resizeEvent(QResizeEvent *event)
 {
-    Q_UNUSED(event)
     D_D(DClipEffectWidget);
 
     d->image = QImage();
+
+    QWidget::resizeEvent(event);
+}
+
+void DClipEffectWidget::showEvent(QShowEvent *event)
+{
+    D_D(DClipEffectWidget);
+
+    d->parentList.clear();
+
+    QWidget *pw = parentWidget();
+
+    while (pw && !pw->isTopLevel()) {
+        d->parentList << pw;
+
+        pw->installEventFilter(this);
+        pw = pw->parentWidget();
+    }
+
+    resize(parentWidget()->size());
+
+    QWidget::showEvent(event);
+}
+
+void DClipEffectWidget::hideEvent(QHideEvent *event)
+{
+    D_D(DClipEffectWidget);
+
+    for (QWidget *w : d->parentList)
+        w->removeEventFilter(this);
+
+    d->parentList.clear();
+
+    QWidget::hideEvent(event);
 }
 
 DWIDGET_END_NAMESPACE
