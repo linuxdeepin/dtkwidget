@@ -43,6 +43,7 @@ void DMainWindowPrivate::init()
         q->connect(handle, &DPlatformWindowHandle::enableSystemMoveChanged, q, &DMainWindow::enableSystemMoveChanged);
         q->connect(handle, &DPlatformWindowHandle::enableSystemResizeChanged, q, &DMainWindow::enableSystemResizeChanged);
         q->connect(handle, &DPlatformWindowHandle::enableBlurWindowChanged, q, &DMainWindow::enableBlurWindowChanged);
+        q->connect(handle, &DPlatformWindowHandle::autoInputMaskByClipPathChanged, q, &DMainWindow::autoInputMaskByClipPathChanged);
 
         q->connect(qApp, &QGuiApplication::focusWindowChanged, q, [q] {
             if (q->isActiveWindow()) {
@@ -205,6 +206,16 @@ bool DMainWindow::enableBlurWindow() const
     return d->handle->enableBlurWindow();
 }
 
+bool DMainWindow::autoInputMaskByClipPath() const
+{
+    D_DC(DMainWindow);
+
+    if (!d->handle)
+        return false;
+
+    return d->handle->autoInputMaskByClipPath();
+}
+
 void DMainWindow::setWindowRadius(int windowRadius)
 {
     D_D(DMainWindow);
@@ -323,6 +334,16 @@ void DMainWindow::setEnableBlurWindow(bool enableBlurWindow)
         return;
 
     d->handle->setEnableBlurWindow(enableBlurWindow);
+}
+
+void DMainWindow::setAutoInputMaskByClipPath(bool autoInputMaskByClipPath)
+{
+    D_D(DMainWindow);
+
+    if (!d->handle)
+        return;
+
+    d->handle->setAutoInputMaskByClipPath(autoInputMaskByClipPath);
 }
 
 DMainWindow::DMainWindow(DMainWindowPrivate &dd, QWidget *parent)

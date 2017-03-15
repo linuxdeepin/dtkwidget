@@ -28,6 +28,7 @@ DEFINE_CONST_CHAR(enableSystemMove);
 DEFINE_CONST_CHAR(enableBlurWindow);
 DEFINE_CONST_CHAR(windowBlurAreas);
 DEFINE_CONST_CHAR(windowBlurPaths);
+DEFINE_CONST_CHAR(autoInputMaskByClipPath);
 
 // functions
 DEFINE_CONST_CHAR(setWmBlurWindowBackgroundArea);
@@ -291,6 +292,11 @@ bool DPlatformWindowHandle::enableBlurWindow() const
     return m_window->property(_enableBlurWindow).toBool();
 }
 
+bool DPlatformWindowHandle::autoInputMaskByClipPath() const
+{
+    return m_window->property(_autoInputMaskByClipPath).toBool();
+}
+
 void DPlatformWindowHandle::setWindowRadius(int windowRadius)
 {
     m_window->setProperty(_windowRadius, windowRadius);
@@ -351,6 +357,11 @@ void DPlatformWindowHandle::setEnableBlurWindow(bool enableBlurWindow)
     m_window->setProperty(_enableBlurWindow, enableBlurWindow);
 }
 
+void DPlatformWindowHandle::setAutoInputMaskByClipPath(bool autoInputMaskByClipPath)
+{
+    m_window->setProperty(_autoInputMaskByClipPath, autoInputMaskByClipPath);
+}
+
 bool DPlatformWindowHandle::eventFilter(QObject *obj, QEvent *event)
 {
     if (obj == m_window) {
@@ -383,6 +394,8 @@ bool DPlatformWindowHandle::eventFilter(QObject *obj, QEvent *event)
                 emit enableSystemMoveChanged();
             } else if (e->propertyName() == _enableBlurWindow) {
                 emit enableBlurWindowChanged();
+            } else if (e->propertyName() == _autoInputMaskByClipPath) {
+                emit autoInputMaskByClipPathChanged();
             }
         }
     }

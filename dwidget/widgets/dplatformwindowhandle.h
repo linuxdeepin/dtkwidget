@@ -34,6 +34,7 @@ class DPlatformWindowHandle : public QObject
     Q_PROPERTY(bool enableSystemResize READ enableSystemResize WRITE setEnableSystemResize NOTIFY enableSystemResizeChanged)
     Q_PROPERTY(bool enableSystemMove READ enableSystemMove WRITE setEnableSystemMove NOTIFY enableSystemMoveChanged)
     Q_PROPERTY(bool enableBlurWindow READ enableBlurWindow WRITE setEnableBlurWindow NOTIFY enableBlurWindowChanged)
+    Q_PROPERTY(bool autoInputMaskByClipPath READ autoInputMaskByClipPath WRITE setAutoInputMaskByClipPath NOTIFY autoInputMaskByClipPathChanged)
 
 public:
     explicit DPlatformWindowHandle(QWindow *window, QObject *parent = 0);
@@ -81,6 +82,7 @@ public:
     bool enableSystemResize() const;
     bool enableSystemMove() const;
     bool enableBlurWindow() const;
+    bool autoInputMaskByClipPath() const;
 
 public slots:
     void setWindowRadius(int windowRadius);
@@ -99,6 +101,7 @@ public slots:
     void setEnableSystemResize(bool enableSystemResize);
     void setEnableSystemMove(bool enableSystemMove);
     void setEnableBlurWindow(bool enableBlurWindow);
+    void setAutoInputMaskByClipPath(bool autoInputMaskByClipPath);
 
 signals:
     void frameMarginsChanged();
@@ -114,6 +117,7 @@ signals:
     void enableSystemResizeChanged();
     void enableSystemMoveChanged();
     void enableBlurWindowChanged();
+    void autoInputMaskByClipPathChanged();
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) Q_DECL_OVERRIDE;
