@@ -139,7 +139,8 @@ void DMPRISControlPrivate::_q_onMetaDataChanged()
     }
 
     m_picture->setPixmap(picture);
-    m_picture->setVisible(!picture.isNull());
+    m_picture->setVisible(false);
+//    m_picture->setVisible(!picture.isNull());
 }
 
 void DMPRISControlPrivate::_q_onPlaybackStatusChanged()
