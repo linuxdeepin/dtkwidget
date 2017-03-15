@@ -56,7 +56,8 @@ includes.files += \
     widgets/DBlurEffectWidget \
     widgets/DClipEffectWidget \
     widgets/DGraphicsDropShadowEffect \
-    widgets/DPlatformWindowHandle
+    widgets/DPlatformWindowHandle \
+    widgets/DGraphicsClipEffect
 
 QMAKE_PKGCONFIG_NAME = DTK_WIDGET
 QMAKE_PKGCONFIG_DESCRIPTION = Deepin Tool Kit UI Module
