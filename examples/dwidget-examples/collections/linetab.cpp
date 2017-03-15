@@ -11,7 +11,7 @@
 
 LineTab::LineTab(QWidget *parent) : QLabel(parent)
 {
-        setStyleSheet("LineTab{background-color: #252627;}");
+//        setStyleSheet("LineTab{background-color: #252627;}");
         //////////////////////////////////////////////////////////////--DSeparator
         DSeparatorHorizontal *dsHorizontal = new DSeparatorHorizontal(this);
         dsHorizontal->setFixedSize(200,2);
