@@ -39,6 +39,8 @@ void DMPRISControlPrivate::init()
 
     m_title = new QLabel;
     m_title->setAlignment(Qt::AlignCenter);
+    m_picture = new QLabel;
+    m_picture->setFixedSize(200, 200);
     m_prevBtn = new DImageButton;
     m_prevBtn->setObjectName("PrevBtn");
     m_pauseBtn = new DImageButton;
@@ -63,9 +65,12 @@ void DMPRISControlPrivate::init()
     controlLayout->addWidget(m_playBtn);
     controlLayout->addStretch();
     controlLayout->addWidget(m_nextBtn);
+    controlLayout->setContentsMargins(0, 10, 0, 0);
 
     QVBoxLayout *centralLayout = new QVBoxLayout;
     centralLayout->addWidget(m_title);
+    centralLayout->addWidget(m_picture);
+    centralLayout->setAlignment(m_picture, Qt::AlignCenter);
     centralLayout->addLayout(controlLayout);
 
     q->setLayout(centralLayout);
@@ -120,6 +125,8 @@ void DMPRISControlPrivate::_q_onMetaDataChanged()
     const auto meta = m_mprisInter->metadata();
     const QString title = meta.value("xesam:title").toString();
     const QString artist = meta.value("xesam:artist").toString();
+    const QUrl pictureUrl = meta.value("mpris:artUrl").toString();
+    const QPixmap picture = QPixmap(pictureUrl.toLocalFile());
 
     if (title.isEmpty())
         m_title->clear();
@@ -130,6 +137,9 @@ void DMPRISControlPrivate::_q_onMetaDataChanged()
         else
             m_title->setText(QString("%1 - %2").arg(title).arg(artist));
     }
+
+    m_picture->setPixmap(picture);
+    m_picture->setVisible(!picture.isNull());
 }
 
 void DMPRISControlPrivate::_q_onPlaybackStatusChanged()

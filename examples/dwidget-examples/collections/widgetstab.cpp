@@ -70,7 +70,7 @@ WidgetsTab::WidgetsTab(QWidget *parent) : QLabel(parent)
 #ifdef Q_OS_UNIX
     // mpris
     DMPRISControl *control = new DMPRISControl(this);
-    control->setFixedSize(300, 100);
+    control->setFixedSize(300, 300);
     control->move(500, 0);
     control->setStyleSheet("background-color:red;");
 #endif

@@ -36,6 +36,7 @@ public:
     DBusMPRIS *m_mprisInter;
 
     QLabel *m_title;
+    QLabel *m_picture;
     DImageButton *m_prevBtn;
     DImageButton *m_playBtn;
     DImageButton *m_pauseBtn;
