@@ -72,6 +72,7 @@ void DMPRISControlPrivate::init()
     centralLayout->addWidget(m_picture);
     centralLayout->setAlignment(m_picture, Qt::AlignCenter);
     centralLayout->addLayout(controlLayout);
+    centralLayout->setMargin(0);
 
     q->setLayout(centralLayout);
 
