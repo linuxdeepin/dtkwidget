@@ -11,7 +11,9 @@ DEFINES += LIBDTKUTIL_LIBRARY
 HEADERS += \
     dutil_global.h \
     dpathbuf.h \
-    dutil.h
+    dutil.h \
+    ddesktopservices.h \
+    DDesktopServices
 
 includes.path = $${DTK_INCLUDEPATH}/DUtil
 includes.files += \
@@ -41,7 +43,12 @@ else:unix: LIBS += -L$$OUT_PWD/../dbase/ -ldtkbase
 INCLUDEPATH += $$PWD/../dbase
 DEPENDPATH += $$PWD/../dbase
 
-SOURCES +=
+linux|qtHaveModule(dbus) {
+    QT += dbus
+
+    SOURCES += \
+        ddesktopservices_linux.cpp
+}
 
 DISTFILES += \
     DUtil
