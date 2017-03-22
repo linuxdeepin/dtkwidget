@@ -64,6 +64,7 @@ private:
     QHBoxLayout *iconLayout;
     QVBoxLayout *contentLayout;
     QHBoxLayout *buttonLayout;
+    QHBoxLayout *topLayout;
     const QScreen *targetScreen = nullptr;
 
     QList<QAbstractButton*> buttonList;

@@ -58,6 +58,9 @@ public:
     Qt::TextFormat textFormat() const;
     bool onButtonClickedClose() const;
 
+    void setContentLayoutContentsMargins(const QMargins &margins);
+    QMargins contentLayoutContentsMargins() const;
+
 signals:
     void aboutToClose();
     void closed();

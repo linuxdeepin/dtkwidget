@@ -70,7 +70,7 @@ void DDialogPrivate::init()
     D_Q(DDialog);
 
     // TopLayout
-    QHBoxLayout *topLayout = new QHBoxLayout;
+    topLayout = new QHBoxLayout;
     topLayout->setContentsMargins(DIALOG::ICON_LAYOUT_LEFT_MARGIN,
                                   DIALOG::ICON_LAYOUT_TOP_MARGIN,
                                   DIALOG::ICON_LAYOUT_RIGHT_MARGIN,
@@ -372,6 +372,20 @@ bool DDialog::onButtonClickedClose() const
     D_DC(DDialog);
 
     return d->onButtonClickedClose;
+}
+
+void DDialog::setContentLayoutContentsMargins(const QMargins &margins)
+{
+    D_D(DDialog);
+
+    d->topLayout->setContentsMargins(margins);
+}
+
+QMargins DDialog::contentLayoutContentsMargins() const
+{
+    D_DC(DDialog);
+
+    return d->topLayout->contentsMargins();
 }
 
 int DDialog::addButton(const QString &text, bool isDefault, ButtonType type)
