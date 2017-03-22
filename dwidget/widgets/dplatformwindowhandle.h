@@ -46,12 +46,12 @@ public:
     static bool isEnabledDXcb(const QWindow *window);
 
     struct WMBlurArea {
-        quint32 x = 0;
-        quint32 y = 0;
-        quint32 width = 0;
-        quint32 height = 0;
-        quint32 xRadius = 0;
-        quint32 yRaduis = 0;
+        qint32 x = 0;
+        qint32 y = 0;
+        qint32 width = 0;
+        qint32 height = 0;
+        qint32 xRadius = 0;
+        qint32 yRaduis = 0;
     };
 
     static bool hasBlurWindow();
