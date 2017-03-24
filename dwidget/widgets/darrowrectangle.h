@@ -20,6 +20,7 @@
 #include <QTimer>
 #include <QDebug>
 
+#include "dobject.h"
 #include "dwidget_global.h"
 #include "dthememanager.h"
 #include "dgraphicsgloweffect.h"
@@ -28,9 +29,12 @@ DWIDGET_BEGIN_NAMESPACE
 
 class DPlatformWindowHandle;
 class DBlurEffectWidget;
-class LIBDTKWIDGETSHARED_EXPORT DArrowRectangle : public QWidget
+class DArrowRectanglePrivate;
+class LIBDTKWIDGETSHARED_EXPORT DArrowRectangle : public QWidget, public DObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(DArrowRectangle)
+    D_DECLARE_PRIVATE(DArrowRectangle)
     Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor)
     Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor)
     Q_PROPERTY(int borderWidth READ borderWidth WRITE setBorderWidth)
@@ -79,16 +83,14 @@ public:
     void move(int x,int y);
     QSize getFixedSize();
 
-    qreal shadowBlurRadius() const;
-    void setShadowBlurRadius(const qreal &shadowBlurRadius);
-
-    qreal shadowDistance() const;
-    void setShadowDistance(const qreal &shadowDistance);
-
     qreal shadowXOffset() const;
-    void setShadowXOffset(const qreal &shadowXOffset);
-
     qreal shadowYOffset() const;
+    qreal shadowDistance() const;
+    qreal shadowBlurRadius() const;
+
+    void setShadowBlurRadius(const qreal &shadowBlurRadius);
+    void setShadowDistance(const qreal &shadowDistance);
+    void setShadowXOffset(const qreal &shadowXOffset);
     void setShadowYOffset(const qreal &shadowYOffset);
 
 signals:
@@ -96,44 +98,8 @@ signals:
 
 protected:
     void paintEvent(QPaintEvent *);
-    void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
+    void resizeEvent(QResizeEvent *e) Q_DECL_OVERRIDE;
     bool event(QEvent *e);
-
-private:
-    const QRect currentScreenRect(const int x, const int y);
-    QPainterPath getLeftCornerPath();
-    QPainterPath getRightCornerPath();
-    QPainterPath getTopCornerPath();
-    QPainterPath getBottomCornerPath();
-
-    void verticalMove(int x, int y);
-    void horizontalMove(int x, int y);
-
-    void updateClipPath();
-
-protected:
-    int m_radius = 3;
-    int m_arrowHeight = 8;
-    int m_arrowWidth = 12;
-    int m_margin = 5;
-    int m_arrowX = 0;
-    int m_arrowY = 0;
-
-    qreal m_shadowBlurRadius = 20;
-    qreal m_shadowDistance = 1;
-    qreal m_shadowXOffset = 0;
-    qreal m_shadowYOffset = 5;
-    int m_shadowWidth = 5; //Abandoned
-    int m_borderWidth = 1;
-    QColor m_borderColor = QColor(255,255,255,130);
-    QColor m_backgroundColor = QColor(0,0,0,200);
-
-    ArrowDirection m_arrowDirection;
-    QPoint m_lastPos = QPoint(0, 0);
-
-    QWidget *m_content = NULL;
-    DPlatformWindowHandle *handle = NULL;
-    DBlurEffectWidget *blurBackground = NULL;
 };
 
 DWIDGET_END_NAMESPACE
