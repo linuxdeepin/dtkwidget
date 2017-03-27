@@ -48,8 +48,8 @@ public:
     qreal m_shadowYOffset = 5;
     int m_shadowWidth = 5; //Abandoned
     int m_borderWidth = 1;
-    QColor m_borderColor = QColor(255,255,255,130);
-    QColor m_backgroundColor = QColor(0,0,0,200);
+    QColor m_borderColor = QColor(0, 0, 0, 255 * 0.1);
+    QColor m_backgroundColor = QColor(255, 255, 255, 255);
 
     DArrowRectangle::ArrowDirection m_arrowDirection;
     QPoint m_lastPos = QPoint(0, 0);

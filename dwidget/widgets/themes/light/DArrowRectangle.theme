@@ -1,6 +1,0 @@
-Dtk--Widget--DArrowRectangle{
-    qproperty-backgroundColor: rgba(255,255,255,255);
-    qproperty-borderColor: rgba(0,0,0,0.1);
-    qproperty-borderWidth: 1;
-    qproperty-radius: 3;
-}

@@ -27,7 +27,6 @@ DArrowRectangle::DArrowRectangle(ArrowDirection direction, QWidget * parent) :
     QWidget(parent),
     DObject(*new DArrowRectanglePrivate(direction, this))
 {
-    D_THEME_INIT_WIDGET(DArrowRectangle);
     D_D(DArrowRectangle);
 
     d->init();

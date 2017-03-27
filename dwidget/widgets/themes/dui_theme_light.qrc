@@ -19,7 +19,6 @@
         <file>light/DLinkButton.theme</file>
         <file>light/DScrollBar.theme</file>
         <file>light/DScrollArea.theme</file>
-        <file>light/DArrowRectangle.theme</file>
         <file>light/DSearchEdit.theme</file>
         <file>light/DLineEdit.theme</file>
         <file>light/DPasswordEdit.theme</file>
