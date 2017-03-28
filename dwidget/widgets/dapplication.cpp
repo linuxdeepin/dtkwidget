@@ -137,9 +137,27 @@ bool DApplicationPrivate::loadTranslator(QList<DPathBuf> translateDirs, const QS
                 translator->load(translatePath);
                 q->installTranslator(translator);
                 return true;
+
+            }
+        }
+
+        QStringList parseLocalNameList = locale.name().split("_", QString::SkipEmptyParts);
+        if (parseLocalNameList.length() > 0) {
+            translateFilename = QString("%1_%2").arg(name)
+                    .arg(parseLocalNameList.at(0));
+            for (auto &path : translateDirs) {
+                QString translatePath= (path / translateFilename).toString();
+                if (QFile::exists(translatePath + ".qm")) {
+                    qDebug() << "translatePath after feedback:" << translatePath;
+                    auto translator = new QTranslator(q);
+                    translator->load(translatePath);
+                    q->installTranslator(translator);
+                    return true;
+                }
             }
         }
     }
+
     qWarning() << name << "can not find qm files" ;
     return false;
 }
