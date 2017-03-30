@@ -13,7 +13,7 @@ HEADERS += \
     dpathbuf.h \
     dutil.h \
     ddesktopservices.h \
-    DDesktopServices
+    dtrashmanager.h
 
 includes.path = $${DTK_INCLUDEPATH}/DUtil
 includes.files += \
@@ -30,7 +30,9 @@ includes.files += \
     $$PWD/dlog/FileAppender.h \
     $$PWD/dlog/ConsoleAppender.h \
     $$PWD/dlog/AbstractStringAppender.h \
-    $$PWD/dlog/AbstractAppender.h
+    $$PWD/dlog/AbstractAppender.h \
+    $$PWD/DDesktopServices
+    $$PWD/DTrashManager
 
 QMAKE_PKGCONFIG_NAME = DTK_UTIL
 QMAKE_PKGCONFIG_DESCRIPTION = Deepin Tool Kit Util Module
@@ -43,11 +45,14 @@ else:unix: LIBS += -L$$OUT_PWD/../dbase/ -ldtkbase
 INCLUDEPATH += $$PWD/../dbase
 DEPENDPATH += $$PWD/../dbase
 
-linux|qtHaveModule(dbus) {
-    QT += dbus
+linux {
+    qtHaveModule(dbus) {
+        QT += dbus
+        SOURCES += ddesktopservices_linux.cpp
+    }
 
     SOURCES += \
-        ddesktopservices_linux.cpp
+        dtrashmanager_linux.cpp
 }
 
 DISTFILES += \
