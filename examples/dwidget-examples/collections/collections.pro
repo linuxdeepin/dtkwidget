@@ -88,6 +88,7 @@ else:unix: LIBS += -L$$OUT_PWD/../../../dwidget/ -ldtkwidget
 
 INCLUDEPATH += $$PWD/../../../dwidget
 INCLUDEPATH += $$PWD/../../../dwidget/widgets
+INCLUDEPATH += $$PWD/../../../dwidget/util
 DEPENDPATH += $$PWD/../../../dwidget
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../../dutil/release/ -ldtkutil

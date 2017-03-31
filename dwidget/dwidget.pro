@@ -1,5 +1,6 @@
 include($$PWD/../common/lib.pri)
 include(widgets/widgets.pri)
+include(util/util.pri)
 
 TARGET = dtkwidget
 
@@ -40,6 +41,7 @@ HEADERS += dwidget_global.h \
 includes.path = $${DTK_INCLUDEPATH}/DWidget
 includes.files += dwidget_global.h \
             widgets/*.h \
+            util/*.h \
             dutility.h
 unix{
     includes.files += $$PWD/platforms/linux/*.h
@@ -58,7 +60,8 @@ includes.files += \
     widgets/DGraphicsDropShadowEffect \
     widgets/DPlatformWindowHandle \
     widgets/DGraphicsClipEffect \
-    widgets/DThumbnailProvider
+    util/DThumbnailProvider \
+    util/DFileIconProvider
 
 QMAKE_PKGCONFIG_NAME = DTK_WIDGET
 QMAKE_PKGCONFIG_DESCRIPTION = Deepin Tool Kit UI Module
