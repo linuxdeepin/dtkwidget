@@ -14,9 +14,10 @@
 #include <QStorageInfo>
 #include <QCryptographicHash>
 #include <QDateTime>
+#include <QStandardPaths>
 #include <QDebug>
 
-#define TRASH_PATH QDir::homePath() + "/.local/share/Trash"
+#define TRASH_PATH QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/Trash"
 #define TRASH_INFO_PATH TRASH_PATH"/info"
 #define TRASH_FILES_PATH TRASH_PATH"/files"
 

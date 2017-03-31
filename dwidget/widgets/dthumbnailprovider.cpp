@@ -1,3 +1,12 @@
+/**
+ * Copyright (C) 2017 Deepin Technology Co., Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ **/
+
 #include "dthumbnailprovider.h"
 #include "private/dobject_p.h"
 
@@ -12,12 +21,13 @@
 #include <QWaitCondition>
 #include <QPainter>
 #include <QUrl>
+#include <QStandardPaths>
 #include <QDebug>
 
 DWIDGET_BEGIN_NAMESPACE
 
 #define FORMAT ".png"
-#define THUMBNAIL_PATH QDir::homePath() + "/.cache/thumbnails"
+#define THUMBNAIL_PATH QStandardPaths::writableLocation(QStandardPaths::GenericCacheLocation) + "/thumbnails"
 #define THUMBNAIL_FAIL_PATH THUMBNAIL_PATH"/fail"
 #define THUMBNAIL_LARGE_PATH THUMBNAIL_PATH"/large"
 #define THUMBNAIL_NORMAL_PATH THUMBNAIL_PATH"/normal"
