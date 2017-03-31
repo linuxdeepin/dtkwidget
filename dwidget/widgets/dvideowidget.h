@@ -1,47 +1,33 @@
-﻿/**
- * Copyright (C) 2015 Deepin Technology Co., Ltd.
+/**
+ * Copyright (C) 2017 Deepin Technology Co., Ltd.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  **/
+#ifndef DVIDEOWIDGET_H
+#define DVIDEOWIDGET_H
 
-#ifndef DCAMERAVIEW_H
-#define DCAMERAVIEW_H
+#include "dwidget_global.h"
+#include "dobject.h"
 
-#include <QFrame>
-#include <QCamera>
+#include <QWidget>
+#include <QVideoWidget>
 
-#include <QAbstractVideoSurface>
+QT_BEGIN_NAMESPACE
+class QCamera;
+class QMediaPlayer;
+class QVideoFrame;
+QT_END_NAMESPACE
 
-class DCameraView;
+DWIDGET_BEGIN_NAMESPACE
 
-class Q_DECL_DEPRECATED_X("See: DVideoWidget") CameraFormatProxy : public QAbstractVideoSurface
+class DVideoWidgetPrivate;
+class DVideoWidget : public QWidget, public DObject
 {
     Q_OBJECT
 
-public:
-    CameraFormatProxy(QObject *parent);
-    QVideoFrame& currentFrame() const;
-protected:
-    bool present(const QVideoFrame &frame);
-    QList<QVideoFrame::PixelFormat> supportedPixelFormats(
-                QAbstractVideoBuffer::HandleType handleType = QAbstractVideoBuffer::NoHandle) const;
-    bool isFormatSupported(const QVideoSurfaceFormat &format) const;
-private:
-    QVideoFrame m_currentFrame;
-
-Q_SIGNALS:
-    void currentFrameChanged();
-};
-
-class Q_DECL_DEPRECATED_X("See: DVideoWidget") DCameraView : public QFrame
-{
-    Q_OBJECT
-
-    Q_PROPERTY(QCamera* source READ source WRITE setSource NOTIFY sourceChanged)
-    //设置要绘制的摄像头对象
     Q_PROPERTY(bool mirroredHorizontal READ mirroredHorizontal WRITE setMirroredHorizontal NOTIFY mirroredHorizontalChanged)
     //是否开启水平翻转
     Q_PROPERTY(bool mirroredVertical READ mirroredVertical WRITE setMirroredVertical NOTIFY mirroredVerticalChanged)
@@ -62,9 +48,8 @@ class Q_DECL_DEPRECATED_X("See: DVideoWidget") DCameraView : public QFrame
     //是否剪切成圆形
 
 public:
-    explicit DCameraView(QWidget *parent = 0);
+    explicit DVideoWidget(QWidget *parent = 0);
 
-    QCamera* source() const;
     bool mirroredHorizontal() const;
     bool mirroredVertical() const;
     void paint(const QVideoFrame& frame);
@@ -83,7 +68,6 @@ public:
     bool round() const;
 
 Q_SIGNALS:
-    void sourceChanged(QCamera *source);
     void mirroredHorizontalChanged(bool mirroredHorizontal);
     void mirroredVerticalChanged(bool mirroredVertical);
     void scaleChanged(qreal scale);
@@ -91,11 +75,12 @@ Q_SIGNALS:
     void contrastChanged(int contrast);
     void hueChanged(int hue);
     void saturationChanged(int saturation);
-
     void roundChanged(bool round);
+    void loopChanged(bool loop);
 
 public Q_SLOTS:
     void setSource(QCamera *source);
+    void setSource(QMediaPlayer *source);
     void setMirroredHorizontal(bool mirroredHorizontal);
     void setMirroredVertical(bool mirroredVertical);
 
@@ -108,20 +93,12 @@ public Q_SLOTS:
     void setRound(bool round);
 
 protected:
-    void paintEvent(QPaintEvent *event);
+    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
 
 private:
-    QCamera *m_source;
-    CameraFormatProxy *cameraFormatProxy;
-    bool m_mirroredHorizontal;
-    bool m_mirroredVertical;
-    qreal m_scale;
-    Qt::AspectRatioMode m_aspectRatioMode;
-    int m_brightness;
-    int m_contrast;
-    int m_hue;
-    int m_saturation;
-    bool m_round;
+    D_DECLARE_PRIVATE(DVideoWidget)
 };
 
-#endif // DCAMERAVIEW_H
+DWIDGET_END_NAMESPACE
+
+#endif // DVIDEOWIDGET_H

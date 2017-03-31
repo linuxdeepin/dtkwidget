@@ -60,6 +60,7 @@ includes.files += \
     widgets/DGraphicsDropShadowEffect \
     widgets/DPlatformWindowHandle \
     widgets/DGraphicsClipEffect \
+    widgets/DVideoWidget \
     util/DThumbnailProvider \
     util/DFileIconProvider
 

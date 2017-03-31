@@ -26,7 +26,7 @@ CameraForm::CameraForm(QWidget *parent) :
     ui->setupUi(this);
 
     camera = new QCamera(QCameraInfo::defaultCamera(), this);
-    viewfinder = new DCameraView(ui->widget);
+    viewfinder = new DVideoWidget(ui->widget);
     viewfinder->resize(150,150);
     viewfinder->setAspectRatioMode(Qt::KeepAspectRatioByExpanding);
 

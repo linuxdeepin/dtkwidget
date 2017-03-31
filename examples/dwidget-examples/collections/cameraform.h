@@ -12,7 +12,10 @@
 
 #include <QWidget>
 #include <QVideoFrame>
-#include "dcameraview.h"
+
+#include <DVideoWidget>
+
+DWIDGET_USE_NAMESPACE
 
 namespace Ui {
 class CameraForm;
@@ -40,7 +43,7 @@ private Q_SLOTS:
 private:
     Ui::CameraForm *ui;
     QCamera *camera;
-    DCameraView *viewfinder;
+    DVideoWidget *viewfinder;
 };
 
 #endif // FORM_H
