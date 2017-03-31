@@ -1,6 +1,7 @@
 DCOMMON_DIR = $$PWD/../common
 include($$DCOMMON_DIR/lib.pri)
 include(dlog/dlog.pri)
+include(private/private.pri)
 
 QT -= gui
 
@@ -13,7 +14,11 @@ HEADERS += \
     dpathbuf.h \
     dutil.h \
     ddesktopservices.h \
-    dtrashmanager.h
+    dtrashmanager.h \
+    dfilesystemwatcher.h \
+    dfilewatcher.h \
+    dfilewatchermanager.h \
+    dbasefilewatcher.h
 
 includes.path = $${DTK_INCLUDEPATH}/DUtil
 includes.files += \
@@ -31,8 +36,12 @@ includes.files += \
     $$PWD/dlog/ConsoleAppender.h \
     $$PWD/dlog/AbstractStringAppender.h \
     $$PWD/dlog/AbstractAppender.h \
-    $$PWD/DDesktopServices
-    $$PWD/DTrashManager
+    $$PWD/DDesktopServices \
+    $$PWD/DTrashManager \
+    $$PWD/DBaseFileWatcher \
+    $$PWD/DFileSystemWatcher \
+    $$PWD/DFileWatcher \
+    $$PWD/DFileWatcherManager
 
 QMAKE_PKGCONFIG_NAME = DTK_UTIL
 QMAKE_PKGCONFIG_DESCRIPTION = Deepin Tool Kit Util Module
@@ -52,8 +61,14 @@ linux {
     }
 
     SOURCES += \
-        dtrashmanager_linux.cpp
+        dtrashmanager_linux.cpp \
+        dfilesystemwatcher_linux.cpp
 }
 
 DISTFILES += \
     DUtil
+
+SOURCES += \
+    dfilewatcher.cpp \
+    dfilewatchermanager.cpp \
+    dbasefilewatcher.cpp
