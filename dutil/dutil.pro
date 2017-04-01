@@ -24,9 +24,7 @@ includes.path = $${DTK_INCLUDEPATH}/DUtil
 includes.files += \
     $$PWD/DUtil \
     $$PWD/DPathBuf \
-    $$PWD/dutil.h \
-    $$PWD/dpathbuf.h \
-    $$PWD/dutil_global.h \
+    $$PWD/*.h \
     $$PWD/dlog/DLog \
     $$PWD/dlog/CuteLogger_global.h \
     $$PWD/dlog/RollingFileAppender.h \
