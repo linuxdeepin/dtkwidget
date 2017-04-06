@@ -24,7 +24,7 @@
     #endif
 #endif
 
-//! Dtk contians deepin tool kit
+//! Dtk contains deepin tool kit
 namespace Dtk {
 }
 

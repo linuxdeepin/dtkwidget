@@ -17,7 +17,7 @@
 
 DTK_BEGIN_NAMESPACE
 
-//! Util contians base tool lib like log, config
+//! Util contains base tool lib like log, config
 namespace Util {
 
 }
