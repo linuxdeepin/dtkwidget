@@ -928,7 +928,7 @@ void Logger::write(const QDateTime& timeStamp, LogLevel logLevel, const char* fi
 }
 
 /**
- * This is the overloaded function provided for the convinience. It behaves similar to the above function.
+ * This is the overloaded function provided for the convenience. It behaves similar to the above function.
  *
  * This function uses the current timestamp obtained with \c QDateTime::currentDateTime().
  *
@@ -942,7 +942,7 @@ void Logger::write(LogLevel logLevel, const char* file, int line, const char* fu
 
 
 /**
- * This is the overloaded function provided for the convinience. It behaves similar to the above function.
+ * This is the overloaded function provided for the convenience. It behaves similar to the above function.
  *
  * This function doesn't accept any log message as argument. It returns the \c QDebug object that can be written
  * using the stream functions. For example, you may like to write:
