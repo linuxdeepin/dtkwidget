@@ -8,7 +8,7 @@
  **/
 
 #include "dfilesystemwatcher.h"
-#include "private/dfilesystemwatcher_p.h"
+#include "private/dfilesystemwatcher_linux_p.h"
 
 #include <QFileInfo>
 #include <QDir>

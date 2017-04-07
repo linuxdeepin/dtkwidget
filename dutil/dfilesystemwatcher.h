@@ -46,7 +46,9 @@ Q_SIGNALS:
     void fileModified(const QString &path, const QString &name, QPrivateSignal);
 
 private:
+#ifdef Q_OS_LINUX
     Q_PRIVATE_SLOT(d_func(), void _q_readFromInotify())
+#endif
 };
 
 DUTIL_END_NAMESPACE

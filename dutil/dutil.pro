@@ -61,6 +61,11 @@ linux {
     SOURCES += \
         dtrashmanager_linux.cpp \
         dfilesystemwatcher_linux.cpp
+} else:win* {
+    SOURCES += \
+        ddesktopservices_win.cpp \
+        dfilesystemwatcher_win.cpp \
+        dtrashmanager_win.cpp
 }
 
 DISTFILES += \
