@@ -729,7 +729,7 @@ void DArrowRectanglePrivate::resizeWithContent()
 {
     D_Q(DArrowRectangle);
 
-    if (!m_content)
+    if (m_content.isNull())
         return;
 
     q->setFixedSize(q->getFixedSize());

@@ -5,6 +5,8 @@
 
 #include "private/dobject_p.h"
 
+#include <QPointer>
+
 DWIDGET_BEGIN_NAMESPACE
 
 class DArrowRectanglePrivate : public DObjectPrivate
@@ -54,7 +56,7 @@ public:
     DArrowRectangle::ArrowDirection m_arrowDirection;
     QPoint m_lastPos = QPoint(0, 0);
 
-    QWidget *m_content = NULL;
+    QPointer<QWidget> m_content;
     DPlatformWindowHandle *m_handle = NULL;
     DBlurEffectWidget *m_blurBackground = NULL;
 };
