@@ -2,18 +2,16 @@ include(private/private.pri)
 include(dialogs.pri)
 include($$PWD/../platforms/platforms.pri)
 
-unix {
+linux {
     include(startupnotifications/startupnotifications.pri)
-}
-
-unix{
     INCLUDEPATH += $$PWD/../platforms/linux
 }
+
 win32* {
     INCLUDEPATH += $$PWD/../platforms/windows
 }
 
-unix{
+linux{
     HEADERS += \
         $$PWD/dcalendar.h \
         $$PWD/dmpriscontrol.h

@@ -14,11 +14,16 @@ greaterThan(QT_MAJOR_VERSION, 4) {
   else: QT += platformsupport-private
 }
 
-unix{
+macos{
+    CONFIG += link_pkgconfig
+    PKGCONFIG += dtksettings dtksettingsview
+    !system($$PWD/../tool/translate_generation.sh): error("Failed to generate translation")
+}
+
+linux{
     QT += x11extras dbus
     CONFIG += link_pkgconfig
     PKGCONFIG += x11 xext dtksettings dtksettingsview
-
 
     !system($$PWD/../tool/translate_generation.sh): error("Failed to generate translation")
 }
@@ -43,12 +48,13 @@ includes.files += dwidget_global.h \
             widgets/*.h \
             util/*.h \
             dutility.h
-unix{
+linux{
     includes.files += $$PWD/platforms/linux/*.h
 }
 win32* {
     includes.files += $$PWD/platforms/windows/*.h
 }
+
 includes.files += \
     widgets/DTitlebar \
     widgets/DWindow \

@@ -66,6 +66,11 @@ linux {
         ddesktopservices_win.cpp \
         dfilesystemwatcher_win.cpp \
         dtrashmanager_win.cpp
+} else:mac* {
+    SOURCES += \
+        ddesktopservices_win.cpp \
+        dfilesystemwatcher_win.cpp \
+        dtrashmanager_win.cpp
 }
 
 DISTFILES += \

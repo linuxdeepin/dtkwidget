@@ -8,8 +8,11 @@ CONFIG += c++11
 
 DEFINES += QT_MESSAGELOGCONTEXT
 
-unix{
+linux{
     QT += x11extras dbus
+}
+
+unix {
     CONFIG += link_pkgconfig
     PKGCONFIG += dtksettings dtksettingsview
 }
@@ -68,7 +71,7 @@ RESOURCES += \
 FORMS += \
     cameraform.ui
 
-unix{
+linux{
     INCLUDEPATH += $$PWD/../../../dwidget/platforms/linux
 }
 win32* {

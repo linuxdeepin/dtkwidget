@@ -1,5 +1,5 @@
 
-unix {
+linux {
     include($$PWD/x11/x11.pri)
     include($$PWD/linux/linux.pri)
 }

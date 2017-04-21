@@ -22,7 +22,7 @@
 #include "private/dthemehelper.h"
 #include "private/dapplication_p.h"
 
-#ifdef Q_OS_UNIX
+#ifdef Q_OS_LINUX
 #include "startupnotificationmonitor.h"
 #endif
 
@@ -35,7 +35,7 @@ DWIDGET_BEGIN_NAMESPACE
 DApplicationPrivate::DApplicationPrivate(DApplication *q) :
     DObjectPrivate(q)
 {
-#ifdef Q_OS_UNIX
+#ifdef Q_OS_LINUX
     StartupNotificationMonitor *monitor = StartupNotificationMonitor::instance();
     QObject::connect(monitor, &StartupNotificationMonitor::appStartup, [this, q](const QString id) {
         m_monitoredStartupApps.append(id);

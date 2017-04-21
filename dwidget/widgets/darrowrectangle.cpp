@@ -13,7 +13,7 @@
 #include "dblureffectwidget.h"
 #include "private/darrowrectangle_p.h"
 
-#ifdef Q_OS_UNIX
+#ifdef Q_OS_LINUX
 #include <X11/extensions/shape.h>
 #include <QX11Info>
 #endif
@@ -734,7 +734,7 @@ void DArrowRectanglePrivate::resizeWithContent()
 
     q->setFixedSize(q->getFixedSize());
 
-#ifdef Q_OS_UNIX
+#ifdef Q_OS_LINUX
     if (!m_handle) {
         XRectangle m_contentXRect;
         m_contentXRect.x = m_content->pos().x();

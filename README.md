@@ -50,3 +50,5 @@ We encourage you to report issues and contribute changes
 ## License
 
 deepin-tool-kit is licensed under [GPLv3](LICENSE).
+
+

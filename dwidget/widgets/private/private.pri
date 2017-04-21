@@ -1,4 +1,4 @@
-unix{
+linux{
     HEADERS += \
         $$PWD/DCalendarWidget/dcalendardbus.h \
         $$PWD/DCalendarWidget/calendarview.h \
