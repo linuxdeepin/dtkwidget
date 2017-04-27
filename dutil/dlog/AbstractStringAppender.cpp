@@ -87,7 +87,7 @@ QString AbstractStringAppender::format() const
  *
  * Supported marker commands are:
  *   \arg \c %{time} - timestamp. You may specify your custom timestamp format using the second {} brackets after the marker,
- *           timestamp format here will be similiar to those used in QDateTime::toString() function. For example,
+ *           timestamp format here will be similar to those used in QDateTime::toString() function. For example,
  *           "%{time}{dd-MM-yyyy, HH:mm}" may be replaced with "17-12-2010, 20:17" depending on current date and time.
  *           The default format used here is "HH:mm:ss.zzz".
  *   \arg \c %{type} - Log level. Possible log levels are shown in the Logger::LogLevel enumerator.
@@ -100,7 +100,7 @@ QString AbstractStringAppender::format() const
  *   \arg \c %{line} - Line number in the source file. Uses the \c __LINE__ preprocessor macro.
  *   \arg \c %{Function} - Name of function that called on of the LOG_* macros. Uses the \c Q_FUNC_INFO macro provided with
  *           Qt.
- *   \arg \c %{function} - Similiar to the %{Function}, but the function name is stripped using stripFunctionName
+ *   \arg \c %{function} - Similar to the %{Function}, but the function name is stripped using stripFunctionName
  *   \arg \c %{message} - The log message sent by the caller.
  *   \arg \c %{category} - The log category.
  *   \arg \c %{appname} - Application name (returned by QCoreApplication::applicationName() function).
