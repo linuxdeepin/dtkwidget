@@ -24,11 +24,11 @@
 #include "dwidget_global.h"
 #include "dthememanager.h"
 #include "dgraphicsgloweffect.h"
+#include "dblureffectwidget.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
 class DPlatformWindowHandle;
-class DBlurEffectWidget;
 class DArrowRectanglePrivate;
 class LIBDTKWIDGETSHARED_EXPORT DArrowRectangle : public QWidget, public DObject
 {
@@ -71,6 +71,7 @@ public:
     void setBorderWidth(int borderWidth);
     void setBorderColor(const QColor &borderColor);
     void setBackgroundColor(const QColor &backgroundColor);
+    void setBackgroundColor(DBlurEffectWidget::MaskColorType type);
     void setArrowDirection(ArrowDirection value);
     void setWidth(int value);
     void setHeight(int value);

@@ -54,12 +54,14 @@ public:
         qint32 yRaduis = 0;
     };
 
-    static bool hasBlurWindow();
+    Q_DECL_DEPRECATED_X("See: DWindowManagerHelper::hasBlurWindow") static bool hasBlurWindow();
     static bool setWindowBlurAreaByWM(QWidget *widget, const QVector<WMBlurArea> &area);
     static bool setWindowBlurAreaByWM(QWidget *widget, const QList<QPainterPath> &paths);
     static bool setWindowBlurAreaByWM(QWindow *window, const QVector<WMBlurArea> &area);
     static bool setWindowBlurAreaByWM(QWindow *window, const QList<QPainterPath> &paths);
+    Q_DECL_DEPRECATED_X("See: DWindowManagerHelper::windowManagerChanged")
     static bool connectWindowManagerChangedSignal(QObject *object, std::function<void ()> slot);
+    Q_DECL_DEPRECATED_X("See: DWindowManagerHelper::hasBlurWindowChanged")
     static bool connectHasBlurWindowChanged(QObject *object, std::function<void ()> slot);
 
     bool setWindowBlurAreaByWM(const QVector<WMBlurArea> &area);

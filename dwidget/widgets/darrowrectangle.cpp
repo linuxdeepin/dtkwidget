@@ -10,7 +10,6 @@
 #include "darrowrectangle.h"
 #include "dplatformwindowhandle.h"
 #include "dapplication.h"
-#include "dblureffectwidget.h"
 #include "private/darrowrectangle_p.h"
 
 #ifdef Q_OS_LINUX
@@ -274,6 +273,14 @@ void DArrowRectangle::setBackgroundColor(const QColor &backgroundColor)
             d->m_blurBackground = Q_NULLPTR;
         }
     }
+}
+
+void DArrowRectangle::setBackgroundColor(DBlurEffectWidget::MaskColorType type)
+{
+    D_D(DArrowRectangle);
+
+    if (d->m_blurBackground)
+        d->m_blurBackground->setMaskColor(type);
 }
 
 int DArrowRectangle::radius() const
@@ -658,10 +665,9 @@ void DArrowRectanglePrivate::init()
     if (DApplication::isDXcbPlatform()) {
         m_handle = new DPlatformWindowHandle(q);
         m_handle->setTranslucentBackground(true);
-        m_handle->setAutoInputMaskByClipPath(false);
 
         m_blurBackground = new DBlurEffectWidget(q);
-        m_blurBackground->setMaskColor(m_backgroundColor);
+        m_blurBackground->setMaskColor(DBlurEffectWidget::DarkColor);
         m_blurBackground->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
     } else {
         DGraphicsGlowEffect *glowEffect = new DGraphicsGlowEffect;

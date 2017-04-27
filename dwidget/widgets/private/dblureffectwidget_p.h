@@ -19,6 +19,7 @@ public:
     int blurRectYRadius = 0;
 
     QColor maskColor = Qt::transparent;
+    DBlurEffectWidget::MaskColorType maskColorType = DBlurEffectWidget::CustomColor;
     QPainterPath maskPath;
 
     bool isBehindWindowBlendMode() const;
@@ -27,6 +28,7 @@ public:
     void removeFromBlurEffectWidgetHash();
 
     bool updateWindowBlurArea();
+    void setMaskColor(const QColor &color);
 
     static QMultiHash<QWidget*, const DBlurEffectWidget*> blurEffectWidgetHash;
     static QHash<const DBlurEffectWidget*, QWidget*> windowOfBlurEffectHash;

@@ -39,6 +39,14 @@ public:
 
     Q_ENUMS(BlendMode)
 
+    enum MaskColorType {
+        DarkColor,
+        LightColor,
+        CustomColor
+    };
+
+    Q_ENUMS(MaskColorType)
+
     explicit DBlurEffectWidget(QWidget *parent = 0);
     ~DBlurEffectWidget();
 
@@ -62,6 +70,7 @@ public slots:
     void setBlurRectYRadius(int blurRectYRadius);
 
     void setMaskColor(QColor maskColor);
+    void setMaskColor(MaskColorType type);
 
 signals:
     void radiusChanged(int radius);

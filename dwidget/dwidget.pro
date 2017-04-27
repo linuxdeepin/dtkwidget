@@ -68,7 +68,8 @@ includes.files += \
     widgets/DGraphicsClipEffect \
     widgets/DVideoWidget \
     util/DThumbnailProvider \
-    util/DFileIconProvider
+    util/DFileIconProvider \
+    util/DWindowManagerHelper
 
 QMAKE_PKGCONFIG_NAME = DTK_WIDGET
 QMAKE_PKGCONFIG_DESCRIPTION = Deepin Tool Kit UI Module

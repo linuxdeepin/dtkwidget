@@ -1,5 +1,5 @@
 #include "dplatformwindowhandle.h"
-
+#include "dwindowmanagerhelper.h"
 #include "dapplication.h"
 
 #include <QWindow>
@@ -34,9 +34,6 @@ DEFINE_CONST_CHAR(autoInputMaskByClipPath);
 DEFINE_CONST_CHAR(setWmBlurWindowBackgroundArea);
 DEFINE_CONST_CHAR(setWmBlurWindowBackgroundPathList);
 DEFINE_CONST_CHAR(setWmBlurWindowBackgroundMaskImage);
-DEFINE_CONST_CHAR(hasBlurWindow);
-DEFINE_CONST_CHAR(connectWindowManagerChangedSignal);
-DEFINE_CONST_CHAR(connectHasBlurWindowChanged);
 
 DPlatformWindowHandle::DPlatformWindowHandle(QWindow *window, QObject *parent)
     : QObject(parent)
@@ -110,13 +107,7 @@ bool DPlatformWindowHandle::isEnabledDXcb(const QWindow *window)
 
 bool DPlatformWindowHandle::hasBlurWindow()
 {
-    QFunctionPointer wmHasBlurWindow = Q_NULLPTR;
-
-#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
-    wmHasBlurWindow = qApp->platformFunction(_hasBlurWindow);
-#endif
-
-    return wmHasBlurWindow && reinterpret_cast<bool(*)()>(wmHasBlurWindow)();
+    return DWindowManagerHelper::instance()->hasBlurWindow();
 }
 
 bool DPlatformWindowHandle::setWindowBlurAreaByWM(QWidget *widget, const QVector<DPlatformWindowHandle::WMBlurArea> &area)
@@ -197,24 +188,18 @@ bool DPlatformWindowHandle::setWindowBlurAreaByWM(QWindow *window, const QList<Q
 
 bool DPlatformWindowHandle::connectWindowManagerChangedSignal(QObject *object, std::function<void ()> slot)
 {
-    QFunctionPointer connectWindowManagerChangedSignal = Q_NULLPTR;
+    if (object)
+        return QObject::connect(DWindowManagerHelper::instance(), &DWindowManagerHelper::windowManagerChanged, object, slot);
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
-    connectWindowManagerChangedSignal = qApp->platformFunction(_connectWindowManagerChangedSignal);
-#endif
-
-    return connectWindowManagerChangedSignal && reinterpret_cast<bool(*)(QObject *object, std::function<void ()>)>(connectWindowManagerChangedSignal)(object, slot);
+    return QObject::connect(DWindowManagerHelper::instance(), &DWindowManagerHelper::windowManagerChanged, slot);
 }
 
 bool DPlatformWindowHandle::connectHasBlurWindowChanged(QObject *object, std::function<void ()> slot)
 {
-    QFunctionPointer connectHasBlurWindowChanged = Q_NULLPTR;
+    if (object)
+        return QObject::connect(DWindowManagerHelper::instance(), &DWindowManagerHelper::hasBlurWindowChanged, object, slot);
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
-    connectHasBlurWindowChanged = qApp->platformFunction(_connectHasBlurWindowChanged);
-#endif
-
-    return connectHasBlurWindowChanged && reinterpret_cast<bool(*)(QObject *object, std::function<void ()>)>(connectHasBlurWindowChanged)(object, slot);
+    return QObject::connect(DWindowManagerHelper::instance(), &DWindowManagerHelper::hasBlurWindowChanged, slot);
 }
 
 bool DPlatformWindowHandle::setWindowBlurAreaByWM(const QVector<DPlatformWindowHandle::WMBlurArea> &area)
