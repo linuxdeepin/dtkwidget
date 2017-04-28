@@ -233,7 +233,7 @@ QColor DBlurEffectWidget::maskColor() const
         if (DWindowManagerHelper::instance()->hasComposite()) {
             return QColor(0, 0, 0, DWindowManagerHelper::instance()->hasBlurWindow() ? MASK_COLOR_ALPHA_BLUR_MODE : MASK_COLOR_ALPHA_DEFAULT);
         } else {
-            return Qt::darkGray;
+            return QColor("#373F47");
         }
     }
     case LightColor: {
