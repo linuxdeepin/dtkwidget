@@ -169,12 +169,12 @@ DBlurEffectWidget::DBlurEffectWidget(QWidget *parent)
         d->updateWindowBlurArea();
     });
     QObject::connect(DWindowManagerHelper::instance(), &DWindowManagerHelper::hasBlurWindowChanged, this, [this] {
-        setMaskColor(maskColor());
+        D_D(DBlurEffectWidget);
+
+        d->setMaskColor(d->maskColor);
     });
     QObject::connect(DWindowManagerHelper::instance(), &DWindowManagerHelper::hasCompositeChanged, this, [this] {
         D_D(const DBlurEffectWidget);
-
-        qDebug() << d->maskColor << d->maskColorType << this;
 
         if (d->maskColorType != CustomColor)
             update();
