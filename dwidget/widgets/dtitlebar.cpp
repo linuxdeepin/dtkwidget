@@ -5,6 +5,7 @@
 #include <QHBoxLayout>
 #include <QApplication>
 #include <QMouseEvent>
+#include <QProcess>
 
 #include <private/dobject_p.h>
 
@@ -18,6 +19,8 @@
 #ifdef Q_OS_LINUX
 #include "../platforms/x11/xutil.h"
 #endif
+#include "daboutdialog.h"
+#include "dapplication.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -34,6 +37,15 @@ private:
     void init();
     void _q_toggleWindowState();
     void _q_showMinimized();
+
+#ifndef QT_NO_MENU
+    void _q_addDefaultMenuItems();
+    void _q_helpActionTriggered();
+    void _q_aboutActionTriggered();
+    void _q_quitActionTriggered();
+
+    bool isUserManualExists() const;
+#endif
 
     QHBoxLayout         *mainLayout;
     DLabel              *iconLabel;
@@ -52,6 +64,9 @@ private:
 
 #ifndef QT_NO_MENU
     QMenu               *menu = Q_NULLPTR;
+    QAction             *helpAction = Q_NULLPTR;
+    QAction             *aboutAction = Q_NULLPTR;
+    QAction             *quitAction = Q_NULLPTR;
 #endif
 
     QWidget             *parentWindow = Q_NULLPTR;
@@ -178,6 +193,68 @@ void DTitlebarPrivate::_q_showMinimized()
     }
 }
 
+#ifndef QT_NO_MENU
+
+void DTitlebarPrivate::_q_addDefaultMenuItems()
+{
+    D_Q(DTitlebar);
+
+    if (!menu)
+        q->setMenu(new QMenu(q));
+
+    // add help menu item.
+    if (!helpAction && isUserManualExists()) {
+        helpAction = new QAction(qApp->translate("TitleBarMenu", "Help"), menu);
+        QObject::connect(helpAction, SIGNAL(triggered(bool)), q, SLOT(_q_helpActionTriggered()));
+        menu->addAction(helpAction);
+    }
+
+    // add about menu item.
+    if (!aboutAction) {
+        aboutAction = new QAction(qApp->translate("TitleBarMenu", "About"), menu);
+        QObject::connect(aboutAction, SIGNAL(triggered(bool)), q, SLOT(_q_aboutActionTriggered()));
+        menu->addAction(aboutAction);
+    }
+
+    // add quit menu item.
+    if (!quitAction) {
+        quitAction = new QAction(qApp->translate("TitleBarMenu", "Exit"), menu);
+        QObject::connect(quitAction, SIGNAL(triggered(bool)), q, SLOT(_q_quitActionTriggered()));
+        menu->addAction(quitAction);
+    }
+}
+
+void DTitlebarPrivate::_q_helpActionTriggered()
+{
+    DApplication *dapp = qobject_cast<DApplication*>(qApp);
+    if (dapp)
+        dapp->handleHelpAction();
+}
+
+void DTitlebarPrivate::_q_aboutActionTriggered()
+{
+    DApplication *dapp = qobject_cast<DApplication*>(qApp);
+    if (dapp)
+        dapp->handleAboutAction();
+}
+
+void DTitlebarPrivate::_q_quitActionTriggered()
+{
+    DApplication *dapp = qobject_cast<DApplication*>(qApp);
+    if (dapp)
+        dapp->handleQuitAction();
+}
+
+bool DTitlebarPrivate::isUserManualExists() const
+{
+    const QString appName = qApp->applicationName();
+
+    return QFile::exists("/usr/bin/dman") && \
+            QFile::exists("/usr/share/dman/" + appName);
+}
+
+#endif
+
 DTitlebar::DTitlebar(QWidget *parent) :
     QWidget(parent),
     DObject(*new DTitlebarPrivate(this))
@@ -207,6 +284,7 @@ void DTitlebar::setMenu(QMenu *menu)
         connect(this, &DTitlebar::optionClicked, this, &DTitlebar::showMenu);
     }
 }
+
 #endif
 
 QWidget *DTitlebar::customWidget() const
@@ -227,7 +305,6 @@ void DTitlebar::setWindowFlags(Qt::WindowFlags type)
     if (d->titleLabel) {
         d->titleLabel->setVisible(type & Qt::WindowTitleHint);
     }
-
     if (d->iconLabel) {
         d->iconLabel->setVisible(type & Qt::WindowTitleHint);
     }
@@ -262,6 +339,11 @@ void DTitlebar::showEvent(QShowEvent *event)
     D_D(DTitlebar);
     d->separator->setFixedWidth(width());
     d->separator->move(0, height() - d->separator->height());
+
+#ifndef QT_NO_MENU
+    d->_q_addDefaultMenuItems();
+#endif
+
     QWidget::showEvent(event);
 }
 

@@ -19,6 +19,7 @@ DWIDGET_BEGIN_NAMESPACE
 
 class DApplication;
 class DApplicationPrivate;
+class DAboutDialog;
 
 #if defined(qApp)
 #undef qApp
@@ -43,11 +44,36 @@ public:
     static bool loadDXcbPlugin();
     static bool isDXcbPlatform();
 
+    // meta information that necessary to create a about dialog for the application.
+    const QString &productName() const;
+    void setProductName(const QString &productName);
+
+    const QPixmap &productIcon() const;
+    void setProductIcon(const QPixmap &productIcon);
+
+    const QString &applicationDescription() const;
+    void setApplicationDescription(const QString &description);
+
+    const QString &applicationHomePage() const;
+    void setApplicationHomePage(const QString &link);
+
+    const QString &applicationAcknowledgementPage() const;
+    void setApplicationAcknowledgementPage(const QString &link);
+
+    DAboutDialog *aboutDialog();
+    void setAboutDialog(DAboutDialog *aboutDialog);
+
 signals:
     void newInstanceStarted();
 
     //###(zccrs): Depend the Qt platform theme plugin(from the package: dde-qt5integration)
     void iconThemeChanged();
+
+private:
+    friend class DTitlebarPrivate;
+    virtual void handleHelpAction();
+    virtual void handleAboutAction();
+    virtual void handleQuitAction();
 };
 
 DWIDGET_END_NAMESPACE

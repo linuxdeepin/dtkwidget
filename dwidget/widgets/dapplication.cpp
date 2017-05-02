@@ -14,6 +14,7 @@
 #include <QLibraryInfo>
 #include <QTranslator>
 #include <QLocalServer>
+#include <QProcess>
 
 #include <qpa/qplatformintegrationfactory_p.h>
 
@@ -21,6 +22,7 @@
 #include "dthememanager.h"
 #include "private/dthemehelper.h"
 #include "private/dapplication_p.h"
+#include "daboutdialog.h"
 
 #ifdef Q_OS_LINUX
 #include "startupnotificationmonitor.h"
@@ -231,6 +233,149 @@ bool DApplication::loadDXcbPlugin()
 bool DApplication::isDXcbPlatform()
 {
     return qApp && qApp->platformName() == "dxcb";
+}
+
+const QString &DApplication::productName() const
+{
+    D_DC(DApplication);
+
+    return d->productName;
+}
+
+void DApplication::setProductName(const QString &productName)
+{
+    D_D(DApplication);
+
+    d->productName = productName;
+}
+
+const QPixmap &DApplication::productIcon() const
+{
+    D_DC(DApplication);
+
+    return d->productIcon;
+}
+
+void DApplication::setProductIcon(const QPixmap &productIcon)
+{
+    D_D(DApplication);
+
+    d->productIcon = productIcon;
+}
+
+const QString &DApplication::applicationDescription() const
+{
+    D_DC(DApplication);
+
+    return d->appDescription;
+}
+
+void DApplication::setApplicationDescription(const QString &description)
+{
+    D_D(DApplication);
+
+    d->appDescription = description;
+}
+
+const QString &DApplication::applicationHomePage() const
+{
+    D_DC(DApplication);
+
+    return d->homePage;
+}
+
+void DApplication::setApplicationHomePage(const QString &link)
+{
+    D_D(DApplication);
+
+    d->homePage = link;
+}
+
+const QString &DApplication::applicationAcknowledgementPage() const
+{
+    D_DC(DApplication);
+
+    return d->acknowledgementPage;
+}
+
+void DApplication::setApplicationAcknowledgementPage(const QString &link)
+{
+    D_D(DApplication);
+
+    d->acknowledgementPage = link;
+}
+
+DAboutDialog *DApplication::aboutDialog()
+{
+    D_D(DApplication);
+
+    return d->aboutDialog;
+}
+
+void DApplication::setAboutDialog(DAboutDialog *aboutDialog)
+{
+    D_D(DApplication);
+
+    if (d->aboutDialog && d->aboutDialog != aboutDialog)
+        d->aboutDialog->deleteLater();
+
+    d->aboutDialog = aboutDialog;
+}
+
+/**
+ * @brief DApplication::helpActionHandler
+ *
+ * Triggered when user clicked the help menu item of this window's titlebar,
+ * default action is to open the user manual of this program, override this
+ * method if you want to change the default action.
+ *
+ */
+void DApplication::handleHelpAction()
+{
+    const QString appName = applicationName();
+    QProcess::startDetached("dman", QStringList() << appName);
+}
+
+/**
+ * @brief DApplication::aboutActionHandler
+ *
+ * Triggered when user clicked the about menu item of this window's titlebar,
+ * default action is to show the about dialog of this window(if there is one),
+ * override this method if you want to change the default action.
+ *
+ */
+void DApplication::handleAboutAction()
+{
+    D_D(DApplication);
+
+    if (d->aboutDialog)
+        d->aboutDialog->show();
+
+    // deleted in setAboutDialog, so there's no need(way) to set parent.
+    DAboutDialog *aboutDialog = new DAboutDialog;
+    aboutDialog->setProductName(productName());
+    aboutDialog->setProductIcon(productIcon());
+    aboutDialog->setVersion(tr("Version: %1").arg(applicationVersion()));
+    aboutDialog->setDescription(applicationDescription());
+    aboutDialog->setLicense(tr("%1 is released under GPL v3").arg(productName()));
+    aboutDialog->setAcknowledgementLink(applicationAcknowledgementPage());
+
+    d->aboutDialog = aboutDialog;
+    d->aboutDialog->show();
+}
+
+/**
+ * @brief DApplication::quitActionHandler
+ *
+ * Triggered when user clicked the exit menu item of this window's titlebar,
+ * default action is to quit this program, you can try to save your data before
+ * the program quitting by connecting to the aboutToQuit signal of this application.
+ * override this method if you want to change the default action.
+ *
+ */
+void DApplication::handleQuitAction()
+{
+    quit();
 }
 
 DWIDGET_END_NAMESPACE

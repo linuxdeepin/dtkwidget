@@ -14,10 +14,14 @@
 #include "dapplication.h"
 #include "dpathbuf.h"
 
+#include <QPixmap>
+
 class QLocalServer;
 class QTranslator;
 
 DWIDGET_BEGIN_NAMESPACE
+
+class DAboutDialog;
 
 class DApplicationPrivate : public DObjectPrivate
 {
@@ -41,6 +45,14 @@ public:
 #ifdef Q_OS_UNIX
     QStringList m_monitoredStartupApps;
 #endif
+
+    QString productName;
+    QPixmap productIcon;
+    QString appDescription;
+    QString homePage;
+    QString acknowledgementPage;
+
+    DAboutDialog *aboutDialog = Q_NULLPTR;
 };
 
 DWIDGET_END_NAMESPACE

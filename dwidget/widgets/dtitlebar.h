@@ -36,6 +36,7 @@ public:
 
     void resize(int width, int height);
     void resize(const QSize &);
+
 signals:
     Q_DECL_DEPRECATED void minimumClicked();
     Q_DECL_DEPRECATED void maximumClicked();
@@ -77,6 +78,13 @@ private:
     D_DECLARE_PRIVATE(DTitlebar)
     D_PRIVATE_SLOT(void _q_toggleWindowState())
     D_PRIVATE_SLOT(void _q_showMinimized())
+
+#ifndef QT_NO_MENU
+    D_PRIVATE_SLOT(void _q_addDefaultMenuItems())
+    D_PRIVATE_SLOT(void _q_helpActionTriggered())
+    D_PRIVATE_SLOT(void _q_aboutActionTriggered())
+    D_PRIVATE_SLOT(void _q_quitActionTriggered())
+#endif
 };
 
 DWIDGET_END_NAMESPACE
