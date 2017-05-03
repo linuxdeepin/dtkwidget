@@ -504,7 +504,7 @@ QPainterPath DArrowRectanglePrivate::getBottomCornerPath()
         rect = rect.marginsRemoved(QMargins(delta, delta, delta, delta));
     }
 
-    QPoint cornerPoint(rect.x() + (m_arrowX > 0 ? m_arrowX : rect.width() / 2), rect.y()  + rect.height());
+    QPoint cornerPoint(rect.x() + (m_arrowX > 0 ? m_arrowX : qRound(double(rect.width()) / 2)), rect.y()  + rect.height());
     QPoint topLeft(rect.x(), rect.y());
     QPoint topRight(rect.x() + rect.width(), rect.y());
     QPoint bottomRight(rect.x() + rect.width(), rect.y() + rect.height() - m_arrowHeight);
