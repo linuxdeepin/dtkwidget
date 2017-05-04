@@ -235,11 +235,11 @@ bool DApplication::isDXcbPlatform()
     return qApp && qApp->platformName() == "dxcb";
 }
 
-const QString &DApplication::productName() const
+QString DApplication::productName() const
 {
     D_DC(DApplication);
 
-    return d->productName;
+    return d->productName.isEmpty() ? applicationDisplayName() : d->productName;
 }
 
 void DApplication::setProductName(const QString &productName)
@@ -263,7 +263,7 @@ void DApplication::setProductIcon(const QPixmap &productIcon)
     d->productIcon = productIcon;
 }
 
-const QString &DApplication::applicationDescription() const
+QString DApplication::applicationDescription() const
 {
     D_DC(DApplication);
 
@@ -277,7 +277,7 @@ void DApplication::setApplicationDescription(const QString &description)
     d->appDescription = description;
 }
 
-const QString &DApplication::applicationHomePage() const
+QString DApplication::applicationHomePage() const
 {
     D_DC(DApplication);
 
@@ -291,7 +291,7 @@ void DApplication::setApplicationHomePage(const QString &link)
     d->homePage = link;
 }
 
-const QString &DApplication::applicationAcknowledgementPage() const
+QString DApplication::applicationAcknowledgementPage() const
 {
     D_DC(DApplication);
 
@@ -348,20 +348,21 @@ void DApplication::handleAboutAction()
 {
     D_D(DApplication);
 
-    if (d->aboutDialog)
+    if (d->aboutDialog) {
         d->aboutDialog->show();
+        return;
+    }
 
     // deleted in setAboutDialog, so there's no need(way) to set parent.
-    DAboutDialog *aboutDialog = new DAboutDialog;
+    DAboutDialog *aboutDialog = new DAboutDialog(activeWindow());
     aboutDialog->setProductName(productName());
     aboutDialog->setProductIcon(productIcon());
     aboutDialog->setVersion(tr("Version: %1").arg(applicationVersion()));
     aboutDialog->setDescription(applicationDescription());
     aboutDialog->setLicense(tr("%1 is released under GPL v3").arg(productName()));
     aboutDialog->setAcknowledgementLink(applicationAcknowledgementPage());
-
-    d->aboutDialog = aboutDialog;
-    d->aboutDialog->show();
+    aboutDialog->exec();
+    aboutDialog->deleteLater();
 }
 
 /**

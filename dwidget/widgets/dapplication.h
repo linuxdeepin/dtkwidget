@@ -45,19 +45,19 @@ public:
     static bool isDXcbPlatform();
 
     // meta information that necessary to create a about dialog for the application.
-    const QString &productName() const;
+    QString productName() const;
     void setProductName(const QString &productName);
 
     const QPixmap &productIcon() const;
     void setProductIcon(const QPixmap &productIcon);
 
-    const QString &applicationDescription() const;
+    QString applicationDescription() const;
     void setApplicationDescription(const QString &description);
 
-    const QString &applicationHomePage() const;
+    QString applicationHomePage() const;
     void setApplicationHomePage(const QString &link);
 
-    const QString &applicationAcknowledgementPage() const;
+    QString applicationAcknowledgementPage() const;
     void setApplicationAcknowledgementPage(const QString &link);
 
     DAboutDialog *aboutDialog();
@@ -69,11 +69,13 @@ signals:
     //###(zccrs): Depend the Qt platform theme plugin(from the package: dde-qt5integration)
     void iconThemeChanged();
 
-private:
-    friend class DTitlebarPrivate;
+protected:
     virtual void handleHelpAction();
     virtual void handleAboutAction();
     virtual void handleQuitAction();
+
+private:
+    friend class DTitlebarPrivate;
 };
 
 DWIDGET_END_NAMESPACE
