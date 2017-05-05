@@ -51,6 +51,9 @@ public:
     const QPixmap &productIcon() const;
     void setProductIcon(const QPixmap &productIcon);
 
+    QString applicationLicense() const;
+    void setApplicationLicense(const QString &license);
+
     QString applicationDescription() const;
     void setApplicationDescription(const QString &description);
 

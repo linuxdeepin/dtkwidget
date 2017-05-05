@@ -48,6 +48,7 @@ public:
 
     QString productName;
     QPixmap productIcon;
+    QString appLicense;
     QString appDescription;
     QString homePage;
     QString acknowledgementPage;

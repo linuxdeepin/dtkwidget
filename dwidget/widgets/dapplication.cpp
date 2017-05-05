@@ -263,6 +263,20 @@ void DApplication::setProductIcon(const QPixmap &productIcon)
     d->productIcon = productIcon;
 }
 
+QString DApplication::applicationLicense() const
+{
+    D_DC(DApplication);
+
+    return d->appLicense;
+}
+
+void DApplication::setApplicationLicense(const QString &license)
+{
+    D_D(DApplication);
+
+    d->appLicense = license;
+}
+
 QString DApplication::applicationDescription() const
 {
     D_DC(DApplication);
@@ -359,8 +373,12 @@ void DApplication::handleAboutAction()
     aboutDialog->setProductIcon(productIcon());
     aboutDialog->setVersion(tr("Version: %1").arg(applicationVersion()));
     aboutDialog->setDescription(applicationDescription());
-    aboutDialog->setLicense(tr("%1 is released under GPL v3").arg(productName()));
-    aboutDialog->setAcknowledgementLink(applicationAcknowledgementPage());
+
+    if (!applicationLicense().isEmpty())
+        aboutDialog->setLicense(tr("%1 is released under %2").arg(productName()).arg(applicationLicense()));
+    if (!applicationAcknowledgementPage().isEmpty())
+        aboutDialog->setAcknowledgementLink(applicationAcknowledgementPage());
+
     aboutDialog->exec();
     aboutDialog->deleteLater();
 }
