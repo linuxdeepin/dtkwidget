@@ -10,6 +10,7 @@
 #include <QAbstractButton>
 #include <QHBoxLayout>
 #include <QShowEvent>
+#include <QApplication>
 
 #include "dinputdialog.h"
 #include "private/dinputdialog_p.h"
@@ -30,7 +31,8 @@ void DInputDialogPrivate::init()
 {
     D_Q(DInputDialog);
 
-    q->addButtons(QStringList() << QObject::tr("Cancel") << QObject::tr("Confirm"));
+    q->addButtons(QStringList() << QApplication::translate("DInputDialog", "Cancel")
+                                << QApplication::translate("DInputDialog", "Confirm"));
     q->setOnButtonClickedClose(false);
     q->setDefaultButton(1);
 

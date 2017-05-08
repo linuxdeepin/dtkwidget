@@ -232,8 +232,8 @@ void DCalendar::viewDateChanged(const QDate &date, const CaLunarDayInfo &lunarIn
         return;
 
     QString detail;
-    detail = QString(tr("%1%2").arg(lunarInfo.mLunarMonthName)
-                               .arg(lunarInfo.mLunarDayName));
+    detail = QString("%1%2").arg(lunarInfo.mLunarMonthName)
+                            .arg(lunarInfo.mLunarDayName);
 
     if (!lunarInfo.mSolarFestival.isEmpty())
         detail += ' ' + lunarInfo.mSolarFestival;
@@ -242,8 +242,8 @@ void DCalendar::viewDateChanged(const QDate &date, const CaLunarDayInfo &lunarIn
 
     m_detailLabel->setText(detail);
     m_solarLabel->setText(date.toString(m_solarDisplayFormat));
-    m_lunarLabel->setText(QString(tr("农历%1%2")).arg(lunarInfo.mLunarMonthName)
-                                                .arg(lunarInfo.mLunarDayName));
+    m_lunarLabel->setText(QString("%1%2").arg(lunarInfo.mLunarMonthName)
+                                         .arg(lunarInfo.mLunarDayName));
 
     selectDate(date);
 }

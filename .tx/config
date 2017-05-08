@@ -1,0 +1,10 @@
+[main]
+host = https://www.transifex.com
+minimum_perc = 80
+mode = developer
+
+[deepin-tool-kit.dwidget]
+file_filter = translations/dwidget_<lang>.ts
+source_file = translations/dwidget.ts
+source_lang = en
+type = QT

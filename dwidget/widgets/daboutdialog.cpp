@@ -11,6 +11,7 @@
 #include <QLabel>
 #include <QIcon>
 #include <QKeyEvent>
+#include <QApplication>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -115,7 +116,7 @@ void DAboutDialogPrivate::updateWebsiteLabel()
 
 void DAboutDialogPrivate::updateAcknowledgementLabel()
 {
-    QString acknowledgementText = QString(websiteLinkTemplate).arg(acknowledgementLink).arg(QObject::tr("Acknowledgements"));
+    QString acknowledgementText = QString(websiteLinkTemplate).arg(acknowledgementLink).arg(QApplication::translate("DAboutDialog", "Acknowledgements"));
     acknowledgementLabel->setText(acknowledgementText);
 }
 

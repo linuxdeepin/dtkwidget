@@ -20,7 +20,7 @@
 DWIDGET_USE_NAMESPACE
 
 // static const varibles
-const QString DShortcutEdit::DefaultTips = tr("请输入新的快捷键");
+const QString DShortcutEdit::DefaultTips = tr("Please input a new shortcut");
 
 DShortcutEdit::DShortcutEdit(QWidget *parent)
     : QFrame(parent)
