@@ -6,6 +6,7 @@
 #include "private/dobject_p.h"
 
 #include <QPointer>
+#include <DWindowManagerHelper>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -36,6 +37,8 @@ public:
 
     void updateClipPath();
 
+    bool radiusEnabled();
+
 public:
     int m_radius = 3;
     int m_arrowHeight = 8;
@@ -59,6 +62,7 @@ public:
     QPointer<QWidget> m_content;
     DPlatformWindowHandle *m_handle = NULL;
     DBlurEffectWidget *m_blurBackground = NULL;
+    DWindowManagerHelper *m_wmHelper;
 };
 
 DWIDGET_END_NAMESPACE

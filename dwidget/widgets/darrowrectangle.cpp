@@ -401,7 +401,9 @@ QPainterPath DArrowRectanglePrivate::getLeftCornerPath()
     QPoint topRight(rect.x() + rect.width(), rect.y());
     QPoint bottomRight(rect.x() + rect.width(), rect.y() + rect.height());
     QPoint bottomLeft(rect.x() + m_arrowHeight, rect.y() + rect.height());
-    int radius = this->m_radius > (rect.height() / 2) ? (rect.height() / 2) : this->m_radius;
+    int radius =  m_radius > (rect.height() / 2) ? (rect.height() / 2) : m_radius;
+    if (!radiusEnabled())
+        radius = 0;
 
     QPainterPath border;
     border.moveTo(topLeft.x() + radius,topLeft.y());
@@ -438,6 +440,8 @@ QPainterPath DArrowRectanglePrivate::getRightCornerPath()
     QPoint bottomRight(rect.x() + rect.width() - m_arrowHeight, rect.y() + rect.height());
     QPoint bottomLeft(rect.x(), rect.y() + rect.height());
     int radius = this->m_radius > (rect.height() / 2) ? rect.height() / 2 : this->m_radius;
+    if (!radiusEnabled())
+        radius = 0;
 
     QPainterPath border;
     border.moveTo(topLeft.x() + radius, topLeft.y());
@@ -474,6 +478,8 @@ QPainterPath DArrowRectanglePrivate::getTopCornerPath()
     QPoint bottomRight(rect.x() + rect.width(), rect.y() + rect.height());
     QPoint bottomLeft(rect.x(), rect.y() + rect.height());
     int radius = this->m_radius > (rect.height() / 2 - m_arrowHeight) ? rect.height() / 2 -m_arrowHeight : this->m_radius;
+    if (!radiusEnabled())
+        radius = 0;
 
     QPainterPath border;
     border.moveTo(topLeft.x() + radius, topLeft.y());
@@ -510,6 +516,8 @@ QPainterPath DArrowRectanglePrivate::getBottomCornerPath()
     QPoint bottomRight(rect.x() + rect.width(), rect.y() + rect.height() - m_arrowHeight);
     QPoint bottomLeft(rect.x(), rect.y() + rect.height() - m_arrowHeight);
     int radius = this->m_radius > (rect.height() / 2 - m_arrowHeight) ? rect.height() / 2 -m_arrowHeight : this->m_radius;
+    if (!radiusEnabled())
+        radius = 0;
 
     QPainterPath border;
     border.moveTo(topLeft.x() + radius, topLeft.y());
@@ -640,12 +648,18 @@ void DArrowRectanglePrivate::updateClipPath()
     m_handle->setClipPath(path);
 }
 
+bool DArrowRectanglePrivate::radiusEnabled()
+{
+    if (m_wmHelper && !m_wmHelper->hasComposite())
+        return false;
+
+    return true;
+}
+
 DArrowRectangle::~DArrowRectangle()
 {
 
 }
-
-
 
 Dtk::Widget::DArrowRectanglePrivate::DArrowRectanglePrivate(DArrowRectangle::ArrowDirection direction, DArrowRectangle *q)
     : DObjectPrivate(q),
@@ -669,6 +683,10 @@ void DArrowRectanglePrivate::init()
         m_blurBackground = new DBlurEffectWidget(q);
         m_blurBackground->setMaskColor(DBlurEffectWidget::DarkColor);
         m_blurBackground->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
+
+        m_wmHelper = DWindowManagerHelper::instance();
+
+        q->connect(m_wmHelper, &DWindowManagerHelper::hasCompositeChanged, q, static_cast<void (DArrowRectangle::*)()>(&DArrowRectangle::update), Qt::QueuedConnection);
     } else {
         DGraphicsGlowEffect *glowEffect = new DGraphicsGlowEffect;
         glowEffect->setBlurRadius(q->shadowBlurRadius());
@@ -676,6 +694,8 @@ void DArrowRectanglePrivate::init()
         glowEffect->setXOffset(q->shadowXOffset());
         glowEffect->setYOffset(q->shadowYOffset());
         q->setGraphicsEffect(glowEffect);
+
+        m_wmHelper = nullptr;
     }
 }
 
