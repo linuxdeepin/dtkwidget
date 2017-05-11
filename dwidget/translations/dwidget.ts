@@ -4,7 +4,7 @@
 <context>
     <name>DAboutDialog</name>
     <message>
-        <location filename="../dwidget/widgets/daboutdialog.cpp" line="119"/>
+        <location filename="../widgets/daboutdialog.cpp" line="119"/>
         <source>Acknowledgements</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12,12 +12,12 @@
 <context>
     <name>DApplication</name>
     <message>
-        <location filename="../dwidget/widgets/dapplication.cpp" line="374"/>
+        <location filename="../widgets/dapplication.cpp" line="374"/>
         <source>Version: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dwidget/widgets/dapplication.cpp" line="378"/>
+        <location filename="../widgets/dapplication.cpp" line="378"/>
         <source>%1 is released under %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25,12 +25,12 @@
 <context>
     <name>DInputDialog</name>
     <message>
-        <location filename="../dwidget/widgets/dinputdialog.cpp" line="34"/>
+        <location filename="../widgets/dinputdialog.cpp" line="34"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dwidget/widgets/dinputdialog.cpp" line="35"/>
+        <location filename="../widgets/dinputdialog.cpp" line="35"/>
         <source>Confirm</source>
         <translation type="unfinished"></translation>
     </message>
@@ -38,12 +38,12 @@
 <context>
     <name>DShortcutEdit</name>
     <message>
-        <location filename="../dwidget/widgets/dshortcutedit.cpp" line="23"/>
+        <location filename="../widgets/dshortcutedit.cpp" line="23"/>
         <source>Please input a new shortcut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dwidget/widgets/dshortcutedit.cpp" line="94"/>
+        <location filename="../widgets/dshortcutedit.cpp" line="94"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
@@ -51,17 +51,17 @@
 <context>
     <name>TitleBarMenu</name>
     <message>
-        <location filename="../dwidget/widgets/dtitlebar.cpp" line="207"/>
+        <location filename="../widgets/dtitlebar.cpp" line="207"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dwidget/widgets/dtitlebar.cpp" line="214"/>
+        <location filename="../widgets/dtitlebar.cpp" line="214"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dwidget/widgets/dtitlebar.cpp" line="221"/>
+        <location filename="../widgets/dtitlebar.cpp" line="221"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
