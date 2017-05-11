@@ -127,14 +127,13 @@ void DTitlebarPrivate::init()
     buttonArea->setLayout(buttonAreaLayout);
 
     QHBoxLayout *titleAreaLayout = new QHBoxLayout;
-    titleAreaLayout->setMargin(0);
+    titleAreaLayout->setContentsMargins(10, 0, 10 + iconLabel->width(), 0);
     titleAreaLayout->setSpacing(0);
+    titleAreaLayout->addWidget(iconLabel);
+    titleAreaLayout->setAlignment(iconLabel, Qt::AlignLeft);
     titlePadding->setFixedSize(buttonArea->size());
     titleAreaLayout->addWidget(titlePadding);
     titleAreaLayout->addStretch();
-    titleAreaLayout->addWidget(iconLabel);
-    titleAreaLayout->setAlignment(iconLabel, Qt::AlignCenter);
-    titleAreaLayout->addSpacing(10);
     titleAreaLayout->addWidget(titleLabel);
     titleAreaLayout->setAlignment(titleLabel, Qt::AlignCenter);
 
@@ -199,8 +198,9 @@ void DTitlebarPrivate::_q_addDefaultMenuItems()
 {
     D_Q(DTitlebar);
 
-    if (!menu)
+    if (!menu) {
         q->setMenu(new QMenu(q));
+    }
 
     // add help menu item.
     if (!helpAction && isUserManualExists()) {
@@ -226,23 +226,26 @@ void DTitlebarPrivate::_q_addDefaultMenuItems()
 
 void DTitlebarPrivate::_q_helpActionTriggered()
 {
-    DApplication *dapp = qobject_cast<DApplication*>(qApp);
-    if (dapp)
+    DApplication *dapp = qobject_cast<DApplication *>(qApp);
+    if (dapp) {
         dapp->handleHelpAction();
+    }
 }
 
 void DTitlebarPrivate::_q_aboutActionTriggered()
 {
-    DApplication *dapp = qobject_cast<DApplication*>(qApp);
-    if (dapp)
+    DApplication *dapp = qobject_cast<DApplication *>(qApp);
+    if (dapp) {
         dapp->handleAboutAction();
+    }
 }
 
 void DTitlebarPrivate::_q_quitActionTriggered()
 {
-    DApplication *dapp = qobject_cast<DApplication*>(qApp);
-    if (dapp)
+    DApplication *dapp = qobject_cast<DApplication *>(qApp);
+    if (dapp) {
         dapp->handleQuitAction();
+    }
 }
 
 bool DTitlebarPrivate::isUserManualExists() const
@@ -250,7 +253,7 @@ bool DTitlebarPrivate::isUserManualExists() const
     const QString appName = qApp->applicationName();
 
     return QFile::exists("/usr/bin/dman") && \
-            QFile::exists("/usr/share/dman/" + appName);
+           QFile::exists("/usr/share/dman/" + appName);
 }
 
 #endif
