@@ -367,15 +367,14 @@ void DApplication::handleAboutAction()
         return;
     }
 
-    // deleted in setAboutDialog, so there's no need(way) to set parent.
     DAboutDialog *aboutDialog = new DAboutDialog(activeWindow());
     aboutDialog->setProductName(productName());
     aboutDialog->setProductIcon(productIcon());
-    aboutDialog->setVersion(tr("Version: %1").arg(applicationVersion()));
+    aboutDialog->setVersion(translate("DAboutDialog", "Version: %1").arg(applicationVersion()));
     aboutDialog->setDescription(applicationDescription());
 
     if (!applicationLicense().isEmpty())
-        aboutDialog->setLicense(tr("%1 is released under %2").arg(productName()).arg(applicationLicense()));
+        aboutDialog->setLicense(translate("DAboutDialog", "%1 is released under %2").arg(productName()).arg(applicationLicense()));
     if (!applicationAcknowledgementPage().isEmpty())
         aboutDialog->setAcknowledgementLink(applicationAcknowledgementPage());
 

@@ -8,16 +8,13 @@
         <source>Acknowledgements</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>DApplication</name>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="374"/>
+        <location filename="../widgets/dapplication.cpp" line="373"/>
         <source>Version: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="378"/>
+        <location filename="../widgets/dapplication.cpp" line="377"/>
         <source>%1 is released under %2</source>
         <translation type="unfinished"></translation>
     </message>
