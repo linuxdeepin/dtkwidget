@@ -69,6 +69,13 @@ DTitlebar *DMainWindow::titleBar() const
     return d->titlebar;
 }
 
+DTitlebar *DMainWindow::titlebar() const
+{
+    D_DC(DMainWindow);
+
+    return d->titlebar;
+}
+
 bool DMainWindow::isDXcbWindow() const
 {
     D_DC(DMainWindow);
