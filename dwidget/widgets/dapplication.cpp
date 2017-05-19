@@ -106,6 +106,10 @@ bool DApplicationPrivate::loadDtkTranslator(QList<QLocale> localeFallback)
     qtTranslator->load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
     q->installTranslator(qtTranslator);
 
+    auto qtbaseTranslator = new QTranslator(q);
+    qtTranslator->load("qtbase_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    q->installTranslator(qtbaseTranslator);
+
     QList<DPathBuf> translateDirs;
     auto dtkwidgetName = "dtkwidget";
 
