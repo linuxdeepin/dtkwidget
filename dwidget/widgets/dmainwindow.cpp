@@ -29,6 +29,13 @@ void DMainWindowPrivate::init()
 {
     D_Q(DMainWindow);
 
+    const DApplication *dapp = qobject_cast<DApplication*>(qApp);
+    if (dapp) {
+        q->setWindowTitle(dapp->productName());
+    } else {
+        q->setWindowTitle(qApp->applicationDisplayName());
+    }
+
     if (handle) {
         q->connect(handle, &DPlatformWindowHandle::borderColorChanged, q, &DMainWindow::borderColorChanged);
         q->connect(handle, &DPlatformWindowHandle::borderWidthChanged, q, &DMainWindow::borderWidthChanged);

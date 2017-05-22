@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QHBoxLayout>
 #include <QMenu>
+#include <DApplication>
 
 #include "dtitlebar.h"
 #include "private/dwidget_p.h"
@@ -15,6 +16,8 @@ class DWindowPrivate: public DWidgetPrivate
 
 public:
     explicit DWindowPrivate(DWindow *q);
+    void init();
+
     QMenu   *m_menu     = nullptr;
     QWidget *m_parent   = nullptr;
 };
@@ -24,13 +27,28 @@ DWindowPrivate::DWindowPrivate(DWindow *q): DWidgetPrivate(q)
 
 }
 
+void DWindowPrivate::init()
+{
+    D_Q(DWindow);
+
+    m_menu = new QMenu(q);
+    q->setTitlebarMenu(m_menu);
+
+    const DApplication *dapp = qobject_cast<DApplication*>(qApp);
+    if (dapp) {
+        q->setWindowTitle(dapp->productName());
+    } else {
+        q->setWindowTitle(qApp->applicationDisplayName());
+    }
+}
+
 DWindow::DWindow(QWidget *parent): DWidget(*(new DWindowPrivate(this)))
 {
     D_D(DWindow);
 
     setParent(parent);
-    d->m_menu = new QMenu(this);
-    setTitlebarMenu(d->m_menu);
+
+    d->init();
 }
 
 void DWindow::setParent(QWidget *parent)
