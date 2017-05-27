@@ -81,10 +81,8 @@ void DBlurEffectWidgetPrivate::setMaskColor(const QColor &color)
 {
     maskColor = color;
 
-    if (!isBehindWindowBlendMode() || DWindowManagerHelper::instance()->hasBlurWindow()) {
-        maskColor.setAlpha(MASK_COLOR_ALPHA_BLUR_MODE);
-    } else {
-        maskColor.setAlpha(MASK_COLOR_ALPHA_DEFAULT);
+    if (isBehindWindowBlendMode()) {
+        maskColor.setAlpha(DWindowManagerHelper::instance()->hasBlurWindow() ? MASK_COLOR_ALPHA_BLUR_MODE : MASK_COLOR_ALPHA_DEFAULT);
     }
 }
 
@@ -230,6 +228,10 @@ QColor DBlurEffectWidget::maskColor() const
 
     switch ((int)d->maskColorType) {
     case DarkColor: {
+        if (!d->isBehindWindowBlendMode()) {
+            return QColor(0, 0, 0, MASK_COLOR_ALPHA_BLUR_MODE);
+        }
+
         if (DWindowManagerHelper::instance()->hasComposite()) {
             return QColor(0, 0, 0, DWindowManagerHelper::instance()->hasBlurWindow() ? MASK_COLOR_ALPHA_BLUR_MODE : MASK_COLOR_ALPHA_DEFAULT);
         } else {
@@ -237,6 +239,10 @@ QColor DBlurEffectWidget::maskColor() const
         }
     }
     case LightColor: {
+        if (!d->isBehindWindowBlendMode()) {
+            return QColor(255, 255, 255, MASK_COLOR_ALPHA_BLUR_MODE);
+        }
+
         if (DWindowManagerHelper::instance()->hasComposite()) {
             return QColor(255, 255, 255, DWindowManagerHelper::instance()->hasBlurWindow() ? MASK_COLOR_ALPHA_BLUR_MODE : MASK_COLOR_ALPHA_DEFAULT);
         } else {
@@ -443,8 +449,14 @@ void DBlurEffectWidget::moveEvent(QMoveEvent *event)
 {
     D_D(DBlurEffectWidget);
 
-    if (isTopLevel() || d->blendMode != DBlurEffectWidget::BehindWindowBlend)
+    if (isTopLevel())
         return QWidget::moveEvent(event);
+
+    if (d->blendMode == DBlurEffectWidget::InWindowBlend) {
+        d->sourceImage = QImage();
+
+        return QWidget::moveEvent(event);
+    }
 
     d->updateWindowBlurArea();
 

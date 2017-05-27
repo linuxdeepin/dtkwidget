@@ -24,7 +24,7 @@ GraphicsEffectTab::GraphicsEffectTab(QWidget *parent) : QWidget(parent)
     blurWidget->setFixedSize(200, 200);
     blurWidget->setBlurRectXRadius(100);
     blurWidget->setBlurRectYRadius(100);
-    blurWidget->setMaskColor(Qt::white);
+    blurWidget->setMaskColor(DBlurEffectWidget::LightColor);
 
     QPainterPath clipPath;
 
