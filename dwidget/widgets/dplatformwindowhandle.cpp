@@ -152,7 +152,7 @@ bool DPlatformWindowHandle::setWindowBlurAreaByWM(QWindow *window, const QVector
     format.setAlphaBufferSize(8);
     window->setFormat(format);
 
-    return reinterpret_cast<bool(*)(const uint, const QVector<WMBlurArea>&)>(setWmBlurWindowBackgroundArea)(window->winId(), area);
+    return reinterpret_cast<bool(*)(const quint32, const QVector<WMBlurArea>&)>(setWmBlurWindowBackgroundArea)(window->winId(), area);
 }
 
 bool DPlatformWindowHandle::setWindowBlurAreaByWM(QWindow *window, const QList<QPainterPath> &paths)
@@ -183,7 +183,7 @@ bool DPlatformWindowHandle::setWindowBlurAreaByWM(QWindow *window, const QList<Q
     format.setAlphaBufferSize(8);
     window->setFormat(format);
 
-    return reinterpret_cast<bool(*)(const uint, const QList<QPainterPath>&)>(setWmBlurWindowBackgroundPathList)(window->winId(), paths);
+    return reinterpret_cast<bool(*)(const quint32, const QList<QPainterPath>&)>(setWmBlurWindowBackgroundPathList)(window->winId(), paths);
 }
 
 bool DPlatformWindowHandle::connectWindowManagerChangedSignal(QObject *object, std::function<void ()> slot)

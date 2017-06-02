@@ -9,7 +9,7 @@
 #ifndef DWINDOWMANAGERHELPER_H
 #define DWINDOWMANAGERHELPER_H
 
-#include <QObject>
+#include <QWindow>
 
 #include "dwidget_global.h"
 #include "dobject.h"
@@ -25,15 +25,20 @@ class DWindowManagerHelper : public QObject, public DObject
     Q_PROPERTY(bool hasComposite READ hasComposite NOTIFY hasCompositeChanged)
 
 public:
+    ~DWindowManagerHelper();
+
     static DWindowManagerHelper *instance();
 
     bool hasBlurWindow() const;
     bool hasComposite() const;
 
+    QWindowList currentWorkspaceWindows() const;
+
 signals:
     void windowManagerChanged();
     void hasBlurWindowChanged();
     void hasCompositeChanged();
+    void windowListChanged();
 
 protected:
     explicit DWindowManagerHelper(QObject *parent = 0);
