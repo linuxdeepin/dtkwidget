@@ -1,11 +1,10 @@
 Dtk--Widget--DSearchEdit {
-    border-radius: 3;
-    background-color: rgba(255, 255, 255, 26);/*use as outside border*/
+    border-radius: 4px;
 }
 
 Dtk--Widget--DSearchEdit #SearchIcon {
     background-color:transparent;
-    margin: 2 0 2 3 px;
+    margin: 2 -1 2 4 px;
     border-image:url(:/images/dark/images/search.png);
 }
 
@@ -20,19 +19,20 @@ Dtk--Widget--DSearchEdit #Edit {
     background-color:transparent;
     border-radius:0;
     color:#fff;
-    border:none;
+    border: 5px solid;
+    border-color: transparent;
     padding-right:15px;
 }
 
 Dtk--Widget--DSearchEdit QFrame#DEditInsideFrame {
-    background-color: rgba(0, 0, 0, 50);
-    border: 1px solid;
-    border-radius: 3;
-    border-color: black;
+    background-color: rgba(255,255,255,15%);
+    border: 0px solid;
+    border-radius: 4px;
+    border-color: rgba(0, 0, 0, 0.08);
 }
 
 Dtk--Widget--DSearchEdit #PlaceHolder {
-    color:#525252;
+    color:white;
     margin:0 0 0 3px;
     font-size:12px;
 }
