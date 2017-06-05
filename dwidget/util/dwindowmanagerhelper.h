@@ -16,6 +16,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+class DForeignWindow;
 class DWindowManagerHelperPrivate;
 class DWindowManagerHelper : public QObject, public DObject
 {
@@ -32,7 +33,7 @@ public:
     bool hasBlurWindow() const;
     bool hasComposite() const;
 
-    QWindowList currentWorkspaceWindows() const;
+    QList<DForeignWindow*> currentWorkspaceWindows() const;
 
 signals:
     void windowManagerChanged();

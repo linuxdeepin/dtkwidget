@@ -67,6 +67,7 @@ includes.files += \
     widgets/DPlatformWindowHandle \
     widgets/DGraphicsClipEffect \
     widgets/DVideoWidget \
+    widgets/DForeignWindow \
     util/DThumbnailProvider \
     util/DFileIconProvider \
     util/DWindowManagerHelper

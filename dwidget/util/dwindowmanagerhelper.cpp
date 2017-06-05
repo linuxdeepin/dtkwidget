@@ -8,6 +8,7 @@
  **/
 #include "dwindowmanagerhelper.h"
 #include "private/dobject_p.h"
+#include "dforeignwindow.h"
 
 #include <QGuiApplication>
 
@@ -76,7 +77,7 @@ public:
     DWindowManagerHelperPrivate(DWindowManagerHelper *qq)
         : DObjectPrivate(qq) {}
 
-    mutable QWindowList windowList;
+    mutable QList<DForeignWindow*> windowList;
 };
 
 class DWindowManagerHelper_ : public DWindowManagerHelper {};
@@ -117,7 +118,7 @@ bool DWindowManagerHelper::hasComposite() const
     return hasComposite && reinterpret_cast<bool(*)()>(hasComposite)();
 }
 
-QWindowList DWindowManagerHelper::currentWorkspaceWindows() const
+QList<DForeignWindow*> DWindowManagerHelper::currentWorkspaceWindows() const
 {
     D_DC(DWindowManagerHelper);
 
@@ -134,7 +135,7 @@ QWindowList DWindowManagerHelper::currentWorkspaceWindows() const
 
     if (wmClientList) {
         for (WId wid : reinterpret_cast<QVector<quint32>(*)()>(wmClientList)()) {
-            if (QWindow *w = QWindow::fromWinId(wid)) {
+            if (DForeignWindow *w = DForeignWindow::fromWinId(wid)) {
                 d->windowList << w;
             }
         }
