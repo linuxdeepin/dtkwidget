@@ -45,7 +45,8 @@ HEADERS += \
     $$PWD/dblureffectwidget_p.h \
     $$PWD/dpageindicator_p.h \
     $$PWD/daboutdialog_p.h \
-    $$PWD/darrowrectangle_p.h
+    $$PWD/darrowrectangle_p.h \
+    $$PWD/dpushbutton_p.h
 
 SOURCES += \
     $$PWD/dthemehelper.cpp
