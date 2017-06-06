@@ -39,6 +39,8 @@ public:
     inline void setAniShowCurve(const QEasingCurve curve) {m_showCurve = curve;}
     inline void setAniHideCurve(const QEasingCurve curve) {m_hideCurve = curve;}
 
+    QLineEdit *getLineEdit() const;
+
 public slots:
     void setText(const QString & text) {if (m_edt) m_edt->setText(text);}
     inline void clear() {m_edt->clear();}

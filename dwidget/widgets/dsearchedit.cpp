@@ -123,6 +123,11 @@ bool DSearchEdit::eventFilter(QObject *o, QEvent *e)
     return QFrame::eventFilter(o, e);
 }
 
+QLineEdit *DSearchEdit::getLineEdit() const
+{
+    return m_edt;
+}
+
 void DSearchEdit::toEditMode()
 {
     // already in edit mode
