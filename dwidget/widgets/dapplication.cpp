@@ -15,6 +15,8 @@
 #include <QTranslator>
 #include <QLocalServer>
 #include <QProcess>
+#include <QMenu>
+#include <QStyleFactory>
 
 #include <qpa/qplatformintegrationfactory_p.h>
 
@@ -398,6 +400,21 @@ void DApplication::handleAboutAction()
 void DApplication::handleQuitAction()
 {
     quit();
+}
+
+bool DApplication::notify(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::PolishRequest) {
+        // Fixed the style for the menu widget to dlight
+        // ugly code will no longer needed.
+        if (QMenu *menu = qobject_cast<QMenu*>(obj)) {
+            if (!menu->testAttribute(Qt::WA_SetStyle))
+                if (QStyle *style = QStyleFactory::create("dlight"))
+                    menu->setStyle(style);
+        }
+    }
+
+    return QApplication::notify(obj, event);
 }
 
 DWIDGET_END_NAMESPACE
