@@ -13,6 +13,8 @@
 #include "dipv4lineedit.h"
 #include "dspinbox.h"
 
+#include <dthememanager.h>
+
 #include <QPixmap>
 #include <QDebug>
 
@@ -39,6 +41,7 @@ InputTab::InputTab(QWidget *parent) : QLabel(parent)
     //searchEdit->setFixedWidth(300);
     searchEdit->move(20, 120);
     searchEdit->setPlaceHolder("Tes");
+    Dtk::Widget::DThemeManager::instance()->setTheme(searchEdit, "dark");
 
     DTK_WIDGET_NAMESPACE::DLineEdit *lineEdit = new DTK_WIDGET_NAMESPACE::DLineEdit(this);
     lineEdit->setText("LineEdit");

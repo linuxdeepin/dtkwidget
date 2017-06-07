@@ -56,6 +56,9 @@ MainWindow::MainWindow(QWidget *parent)
     QHBoxLayout *styleLayout = new QHBoxLayout();
     QPushButton *darkButton = new QPushButton("Dark", this);
     QPushButton *lightBUtton = new QPushButton("Light", this);
+
+    themeManager->setTheme(lightBUtton, "light");
+
     connect(darkButton, &QPushButton::clicked, [ = ] {
         themeManager->setTheme("dark");
     });

@@ -68,7 +68,45 @@ void DThemeManager::setTheme(const QString theme)
     }
 }
 
-QString DThemeManager::getQssForWidget(const QString className, const QString &theme)
+static QString getObjectClassName(const QObject *obj)
+{
+    const QString &type_name = QString::fromLocal8Bit(obj->metaObject()->className());
+    const QStringList &widget_type_list = type_name.split("::");
+
+    return widget_type_list.isEmpty() ? type_name : widget_type_list.last();
+}
+
+void DThemeManager::setTheme(QWidget *widget, const QString theme)
+{
+    Q_ASSERT(widget);
+
+    QStyle *style = Q_NULLPTR;
+
+    // TODO: remove this shit in the future.
+    // It's just a trick to make all DApplications use dde qt5 styles,
+    // if dlight or ddark style is set to default style of dde, those
+    // ugly code will no longer needed.
+    if (theme == "light") {
+        style = QStyleFactory::create("dlight");
+        widget->setProperty("_d_dtk_theme", theme);
+    } else if (theme == "dark") {
+        style = QStyleFactory::create("ddark");
+        widget->setProperty("_d_dtk_theme", theme);
+    } else if (theme == "semilight") {
+        style = QStyleFactory::create("dsemilight");
+        widget->setProperty("_d_dtk_theme", "light");
+    } else if (theme == "semidark") {
+        style = QStyleFactory::create("dsemidark");
+        widget->setProperty("_d_dtk_theme", "dark");
+    }
+
+    if (style)
+        widget->setStyle(style);
+
+    widget->setStyleSheet(getQssForWidget(getObjectClassName(widget), theme));
+}
+
+QString DThemeManager::getQssForWidget(const QString className, const QString &theme) const
 {
     QString qss;
 
@@ -82,6 +120,26 @@ QString DThemeManager::getQssForWidget(const QString className, const QString &t
     }
 
     return qss;
+}
+
+QString DThemeManager::getQssForWidget(const QString className, const QWidget *widget) const
+{
+    Q_ASSERT(widget);
+
+    QString theme;
+
+    do {
+        theme = widget->property("_d_dtk_theme").toString();
+        if (!theme.isEmpty()) break;
+        widget = widget->parentWidget();
+    } while(widget);
+
+    return getQssForWidget(className, theme);
+}
+
+QString DThemeManager::getQssForWidget(const QWidget *widget) const
+{
+    return getQssForWidget(getObjectClassName(widget), widget);
 }
 
 void DThemeManager::updateQss()

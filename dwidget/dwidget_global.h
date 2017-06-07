@@ -50,9 +50,9 @@ namespace Widget
 
 #define D_THEME_INIT_WIDGET(className, ...) do{\
     DThemeManager * manager = DThemeManager::instance(); \
-    this->setStyleSheet(this->styleSheet() + manager->getQssForWidget(#className)); \
+    this->setStyleSheet(this->styleSheet() + manager->getQssForWidget(#className, this)); \
     connect(manager, &DThemeManager::themeChanged, this, [this, manager] (QString) { \
-        this->setStyleSheet(manager->getQssForWidget(#className)); \
+        this->setStyleSheet(manager->getQssForWidget(#className, this)); \
     });\
     QStringList list = QString(#__VA_ARGS__).replace(" ", "").split(",");\
     const QMetaObject *self = metaObject();\
