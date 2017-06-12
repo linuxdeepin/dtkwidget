@@ -4,6 +4,7 @@ include(dlog/dlog.pri)
 include(private/private.pri)
 
 QT -= gui
+QT += multimedia
 
 TARGET = dtkutil
 
@@ -57,6 +58,9 @@ linux {
         QT += dbus
         SOURCES += ddesktopservices_linux.cpp
     }
+
+    CONFIG += link_pkgconfig
+    PKGCONFIG += gsettings-qt
 
     SOURCES += \
         dtrashmanager_linux.cpp \

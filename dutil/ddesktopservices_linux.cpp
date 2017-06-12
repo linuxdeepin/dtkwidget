@@ -12,6 +12,9 @@
 #include <QDBusInterface>
 #include <QDBusPendingCall>
 #include <QDebug>
+#include <QFile>
+#include <QMediaPlayer>
+#include <QGSettings>
 
 DUTIL_BEGIN_NAMESPACE
 
@@ -49,6 +52,36 @@ static QList<QUrl> path2urls(const QList<QString> &paths)
         list << QUrl::fromLocalFile(path);
 
     return list;
+}
+
+static QMediaPlayer *soundEffectPlayer()
+{
+    static QMediaPlayer *player = Q_NULLPTR;
+
+    if (!player) {
+        player = new QMediaPlayer;
+        player->setVolume(70);
+    }
+
+    return player;
+}
+
+static QString soundEffectFilePath(const QString &name)
+{
+    // TODO: super simple version of sound theme file search shema :)
+    // will need to be replaced by more advanced approch like libcanberra.
+    const QString temp = QString("/usr/share/sounds/deepin/stereo/%1.ogg").arg(name);
+
+    if (QFile::exists(temp))
+        return temp;
+    else
+        return QString();
+}
+
+static bool systemSoundEffectEnabled()
+{
+    QGSettings settings("com.deepin.dde.daemon");
+    return settings.get("soundeffect").toBool();
 }
 
 bool DDesktopServices::showFolder(QString localFilePath, const QString &startupId)
@@ -109,6 +142,39 @@ bool DDesktopServices::showFileItem(QUrl url, const QString &startupId)
 bool DDesktopServices::showFileItems(const QList<QUrl> urls, const QString &startupId)
 {
     EASY_CALL_DBUS(ShowItems)
+}
+
+bool DDesktopServices::playSystemSoundEffect(const DDesktopServices::SystemSoundEffect &effect)
+{
+    switch (effect) {
+    case SSE_Notifications:
+        return playSystemSoundEffect("message-out");
+    case SSE_Screenshot:
+        return playSystemSoundEffect("camera-shutter");
+    case SSE_EmptyTrash:
+        return playSystemSoundEffect("trash-empty");
+    case SSE_SendFileComplete:
+        return playSystemSoundEffect("send-to");
+    default:
+        return false;
+    }
+}
+
+bool DDesktopServices::playSystemSoundEffect(const QString &name)
+{
+    const bool enabled = systemSoundEffectEnabled();
+    if (!enabled)
+        return false;
+
+    const QString path = soundEffectFilePath(name);
+    if (path.isEmpty())
+        return false;
+
+    QMediaPlayer *player = soundEffectPlayer();
+    player->setMedia(QUrl::fromLocalFile(path));
+    player->play();
+
+    return true;
 }
 
 QString DDesktopServices::errorMessage()

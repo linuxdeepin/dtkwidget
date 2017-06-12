@@ -19,6 +19,16 @@ DUTIL_BEGIN_NAMESPACE
 class DDesktopServices
 {
 public:
+
+#ifdef Q_OS_LINUX
+    enum SystemSoundEffect {
+        SSE_Notifications,
+        SSE_Screenshot,
+        SSE_EmptyTrash,
+        SSE_SendFileComplete
+    };
+#endif
+
     static bool showFolder(QString localFilePath, const QString &startupId = QString());
     static bool showFolders(const QList<QString> localFilePaths, const QString &startupId = QString());
     static bool showFolder(QUrl url, const QString &startupId = QString());
@@ -33,6 +43,11 @@ public:
     static bool showFileItems(const QList<QString> localFilePaths, const QString &startupId = QString());
     static bool showFileItem(QUrl url, const QString &startupId = QString());
     static bool showFileItems(const QList<QUrl> urls, const QString &startupId = QString());
+
+#ifdef Q_OS_UNIX
+    static bool playSystemSoundEffect(const SystemSoundEffect &effect);
+    static bool playSystemSoundEffect(const QString &name);
+#endif
 
     static QString errorMessage();
 };
