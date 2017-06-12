@@ -42,6 +42,7 @@
         <file>dark/DListView.theme</file>
         <file>dark/DTextEdit.theme</file>
         <file>dark/dialogs/DAboutDialog.theme</file>
+        <file>dark/DAbstractDialog.theme</file>
     </qresource>
     <qresource prefix="/images">
         <file>dark/images/add_hover.png</file>
