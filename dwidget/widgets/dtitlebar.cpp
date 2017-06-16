@@ -21,6 +21,7 @@
 #endif
 #include "daboutdialog.h"
 #include "dapplication.h"
+#include "dthememanager.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -102,7 +103,7 @@ void DTitlebarPrivate::init()
     maxButton->setObjectName("DTitlebarDWindowMaxButton");
     closeButton->setObjectName("DTitlebarDWindowCloseButton");
 
-    mainLayout->setContentsMargins(6, 0, 6, 0);
+    mainLayout->setContentsMargins(6, 0, 0, 0);
     mainLayout->setSpacing(0);
 
     iconLabel->setFixedSize(DefaultIconWidth, DefaultIconHeight);
@@ -262,6 +263,8 @@ DTitlebar::DTitlebar(QWidget *parent) :
     QWidget(parent),
     DObject(*new DTitlebarPrivate(this))
 {
+    D_THEME_INIT_WIDGET(DTitlebar)
+
     D_D(DTitlebar);
     d->init();
     d->buttonArea->adjustSize();
@@ -380,6 +383,18 @@ bool DTitlebar::eventFilter(QObject *obj, QEvent *event)
     }
 
     return QWidget::eventFilter(obj, event);
+}
+
+void DTitlebar::resizeEvent(QResizeEvent *event)
+{
+    D_D(DTitlebar);
+
+    d->optionButton->setFixedHeight(event->size().height());
+    d->minButton->setFixedHeight(event->size().height());
+    d->maxButton->setFixedHeight(event->size().height());
+    d->closeButton->setFixedHeight(event->size().height());
+
+    return QWidget::resizeEvent(event);
 }
 
 void DTitlebar::setCustomWidget(QWidget *w, bool fixCenterPos)

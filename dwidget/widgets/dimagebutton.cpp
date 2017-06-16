@@ -136,6 +136,8 @@ void DImageButton::updateIcon()
     default:        if (!m_normalPic.isEmpty()) setPixmap(QPixmap(m_normalPic));    break;
     }
 
+    setAlignment(Qt::AlignCenter);
+
     emit stateChanged();
 }
 

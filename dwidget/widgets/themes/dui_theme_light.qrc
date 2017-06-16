@@ -36,6 +36,7 @@
         <file>light/dialogs/DAboutDialog.theme</file>
         <file>light/dialogs/DSettingsDialog.theme</file>
         <file>light/DSpinBox.theme</file>
+        <file>light/DTitlebar.theme</file>
     </qresource>
     <qresource prefix="/images">
         <file>light/images/arrow_down_hover.png</file>
