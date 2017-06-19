@@ -1,5 +1,5 @@
 Dtk--Widget--DAbstractDialog {
-    qproperty-backgroundColor: white;
+    qproperty-backgroundColor: rgba(0, 0, 0, 0.8);
     qproperty-borderColor: rgba(0, 0, 0, 0.2);
     border-width: 1;
     border-radius: 4px;
