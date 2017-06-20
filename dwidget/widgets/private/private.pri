@@ -46,7 +46,8 @@ HEADERS += \
     $$PWD/dpageindicator_p.h \
     $$PWD/daboutdialog_p.h \
     $$PWD/darrowrectangle_p.h \
-    $$PWD/dpushbutton_p.h
+    $$PWD/dpushbutton_p.h \
+    $$PWD/dtickwidget_p.h
 
 SOURCES += \
     $$PWD/dthemehelper.cpp
