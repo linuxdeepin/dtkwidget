@@ -28,7 +28,7 @@ DFileSystemWatcherPrivate::DFileSystemWatcherPrivate(int fd, DFileSystemWatcher 
     , notifier(fd, QSocketNotifier::Read, qq)
 {
     fcntl(inotifyFd, F_SETFD, FD_CLOEXEC);
-    qq->connect(&notifier, SIGNAL(activated(int)), q_func(), SLOT(_q_readFromInotify()));
+    qq->connect(&notifier, SIGNAL(activated(int)), qq, SLOT(_q_readFromInotify()));
 }
 
 DFileSystemWatcherPrivate::~DFileSystemWatcherPrivate()

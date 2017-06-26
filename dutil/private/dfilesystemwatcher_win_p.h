@@ -21,7 +21,15 @@ class DFileSystemWatcherPrivate : public DObjectPrivate
 public:
     DFileSystemWatcherPrivate(int fd, DFileSystemWatcher *qq);
     ~DFileSystemWatcherPrivate();
+
+    // private slots
+    void _q_readFromInotify();
 };
+
+void DFileSystemWatcherPrivate::_q_readFromInotify()
+{
+
+}
 
 DUTIL_END_NAMESPACE
 
