@@ -80,8 +80,8 @@ static QString soundEffectFilePath(const QString &name)
 
 static bool systemSoundEffectEnabled()
 {
-    QGSettings settings("com.deepin.dde.daemon");
-    return settings.get("soundeffect").toBool();
+    QGSettings settings("com.deepin.dde.sound-effect");
+    return settings.get("enabled").toBool();
 }
 
 bool DDesktopServices::showFolder(QString localFilePath, const QString &startupId)
