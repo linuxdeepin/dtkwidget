@@ -84,6 +84,9 @@ const QString DSearchEdit::text() const
 
 void DSearchEdit::mousePressEvent(QMouseEvent *e)
 {
+    if (e->button() != Qt::LeftButton)
+        return QFrame::mousePressEvent(e);
+
     toEditMode();
 
     e->accept();
@@ -105,8 +108,7 @@ bool DSearchEdit::eventFilter(QObject *o, QEvent *e)
             m_animation->setEasingCurve(m_hideCurve);
             m_animation->start();
 
-            QTimer::singleShot(200, m_placeHolder, SLOT(show()));
-            //        m_placeHolder->show();
+            connect(m_animation, &QPropertyAnimation::finished, m_placeHolder, &QLabel::show);
         }
     }
 
@@ -134,6 +136,8 @@ void DSearchEdit::toEditMode()
     if (!m_placeHolder->isVisible()) {
         return;
     }
+
+    disconnect(m_animation, &QPropertyAnimation::finished, m_placeHolder, &QLabel::show);
 
     m_animation->stop();
     m_animation->setStartValue(0);
@@ -166,7 +170,12 @@ void DSearchEdit::resizeEvent(QResizeEvent *e)
 bool DSearchEdit::event(QEvent *e)
 {
     if (e->type() == QEvent::FocusIn) {
-        toEditMode();
+        const QFocusEvent *event = static_cast<QFocusEvent*>(e);
+
+        if (event->reason() == Qt::TabFocusReason
+                || event->reason() == Qt::BacktabFocusReason) {
+            toEditMode();
+        }
     }
 
     return QFrame::event(e);
