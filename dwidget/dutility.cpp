@@ -142,7 +142,7 @@ void DUtility::moveToCenter(QWidget *w)
         parentRect = w->parentWidget()->geometry();
     }
 
-    w->move(parentRect.center() - w->geometry().center());
+    w->move(parentRect.center() - w->rect().center());
 }
 
 DWIDGET_END_NAMESPACE
