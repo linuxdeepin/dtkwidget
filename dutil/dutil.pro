@@ -45,6 +45,7 @@ includes.files += \
 QMAKE_PKGCONFIG_NAME = DTK_UTIL
 QMAKE_PKGCONFIG_DESCRIPTION = Deepin Tool Kit Util Module
 QMAKE_PKGCONFIG_INCDIR = $$includes.path
+QMAKE_PKGCONFIG_REQUIRES += dtkbase
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../dbase/release/ -ldtkbase
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../dbase/debug/ -ldtkbase
