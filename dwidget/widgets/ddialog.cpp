@@ -50,7 +50,7 @@ void DialogButton::setButtonType(int buttonType)
         return;
 
     m_buttonType = buttonType;
-    emit buttonTypeChanged(buttonType);
+    Q_EMIT buttonTypeChanged(buttonType);
 }
 
 DDialogPrivate::DDialogPrivate(DDialog *qq) :
@@ -629,7 +629,7 @@ void DDialog::setTitle(const QString &title)
     d->titleLabel->setText(title);
     d->titleLabel->setHidden(title.isEmpty());
 
-    emit titleChanged(title);
+    Q_EMIT titleChanged(title);
 }
 
 void DDialog::setMessage(const QString &message)
@@ -643,7 +643,7 @@ void DDialog::setMessage(const QString &message)
     d->messageLabel->setText(message);
     d->messageLabel->setHidden(message.isEmpty());
 
-    emit messageChanged(message);
+    Q_EMIT messageChanged(message);
 }
 
 void DDialog::setIcon(const QIcon &icon)
@@ -685,7 +685,7 @@ void DDialog::setTextFormat(Qt::TextFormat textFormat)
     d->titleLabel->setTextFormat(textFormat);
     d->messageLabel->setTextFormat(textFormat);
 
-    emit textFormatChanged(textFormat);
+    Q_EMIT textFormatChanged(textFormat);
 }
 
 void DDialog::setOnButtonClickedClose(bool onButtonClickedClose)
@@ -723,19 +723,19 @@ void DDialog::showEvent(QShowEvent *event)
     setAttribute(Qt::WA_Resized, false);
     d->updateSize();
 
-    emit visibleChanged(isVisible());
+    Q_EMIT visibleChanged(isVisible());
 }
 
 void DDialog::hideEvent(QHideEvent *event)
 {
-    emit aboutToClose();
+    Q_EMIT aboutToClose();
 
     DAbstractDialog::hideEvent(event);
 
     done(-1);
 
-    emit visibleChanged(isVisible());
-    emit closed();
+    Q_EMIT visibleChanged(isVisible());
+    Q_EMIT closed();
 }
 
 void DDialog::childEvent(QChildEvent *event)

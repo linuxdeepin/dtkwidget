@@ -26,7 +26,7 @@ public:
     SwitchHeaderLine(QWidget *parent = 0);
     void setExpand(bool value);
 
-signals:
+Q_SIGNALS:
     void checkedChanged(bool arg);
 
 protected:

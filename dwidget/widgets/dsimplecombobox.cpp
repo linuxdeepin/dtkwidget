@@ -91,7 +91,7 @@ void DSimpleComboBox::addItem(const QString &text)
 
 void DSimpleComboBox::addItems(const QStringList &texts)
 {
-    foreach (QString text, texts) {
+    Q_FOREACH (QString text, texts) {
         this->addItem(text);
     }
 }
@@ -100,7 +100,7 @@ void DSimpleComboBox::onCurrentIndexChange(int index)
 {
     QJsonObject nameObj = dcomboBoxModel()->getJsonData(index);
 
-    emit currentTextChanged(nameObj["itemText"].toString());
+    Q_EMIT currentTextChanged(nameObj["itemText"].toString());
 }
 
 DWIDGET_END_NAMESPACE

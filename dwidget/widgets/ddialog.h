@@ -61,7 +61,7 @@ public:
     void setContentLayoutContentsMargins(const QMargins &margins);
     QMargins contentLayoutContentsMargins() const;
 
-signals:
+Q_SIGNALS:
     void aboutToClose();
     void closed();
     void buttonClicked(int index, const QString &text);
@@ -71,7 +71,7 @@ signals:
     void sizeChanged(QSize size);
     void visibleChanged(bool visible);
 
-public slots:
+public Q_SLOTS:
     int addButton(const QString &text, bool isDefault = false, ButtonType type = ButtonNormal);
     int addButtons(const QStringList &text);
     void insertButton(int index, const QString &text, bool isDefault = false, ButtonType type = ButtonNormal);

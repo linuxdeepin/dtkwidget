@@ -20,9 +20,9 @@ public:
     explicit Singleton(QObject *parent = 0);
 
     void test();
-signals:
+Q_SIGNALS:
 
-public slots:
+public Q_SLOTS:
 
 };
 
@@ -33,9 +33,9 @@ public:
     explicit MultiSingletonTester(QObject *parent = 0);
 
     void run();
-signals:
+Q_SIGNALS:
 
-public slots:
+public Q_SLOTS:
 
 };
 

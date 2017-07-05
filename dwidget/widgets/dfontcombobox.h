@@ -34,10 +34,10 @@ public:
     explicit DFontComboBox(QWidget *parent = 0);
     void addFontItem(const QString &family, const QString &title = "");
 
-signals:
+Q_SIGNALS:
     void currentFontNameChange(QString name);
 
-private slots:
+private Q_SLOTS:
     void onCurrentIndexChange(int index);
 };
 

@@ -43,7 +43,7 @@ public:
 
     void sizeChanged(QResizeEvent *e);
 
-public slots:
+public Q_SLOTS:
     void _q_itemStateChanged(QListWidgetItem* item);
 
 public:

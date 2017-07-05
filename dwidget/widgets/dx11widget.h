@@ -132,7 +132,7 @@ protected:
     void leaveEvent(QEvent *)Q_DECL_OVERRIDE;
     void changeEvent(QEvent *event) Q_DECL_OVERRIDE;
 
-public slots:
+public Q_SLOTS:
     void showMinimized();
     void showMaximized();
     void showFullScreen();

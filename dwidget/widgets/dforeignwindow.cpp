@@ -68,11 +68,11 @@ bool DForeignWindow::event(QEvent *e)
         QDynamicPropertyChangeEvent *event = static_cast<QDynamicPropertyChangeEvent*>(e);
 
         if (event->propertyName() == _WmClass) {
-            emit wmClassChanged();
+            Q_EMIT wmClassChanged();
 
             return true;
         } else if (event->propertyName() == _ProcessId) {
-            emit pidChanged();
+            Q_EMIT pidChanged();
 
             return true;
         }

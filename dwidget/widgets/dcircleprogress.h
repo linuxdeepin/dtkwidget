@@ -28,7 +28,7 @@ class LIBDTKWIDGETSHARED_EXPORT DCircleProgress : public QWidget, public DObject
     Q_PROPERTY(QColor chunkColor READ chunkColor WRITE setChunkColor DESIGNABLE true)
     Q_PROPERTY(int lineWidth READ lineWidth WRITE setLineWidth DESIGNABLE true)
 
-signals:
+Q_SIGNALS:
     void clicked();
     void mouseEntered();
     void mouseLeaved();
@@ -54,7 +54,7 @@ public:
     QLabel *topLabel();
     QLabel *bottomLabel();
 
-signals:
+Q_SIGNALS:
     void valueChanged(const int value) const;
 
 protected:

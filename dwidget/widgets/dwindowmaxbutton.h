@@ -30,10 +30,10 @@ public:
 
     Q_DECL_DEPRECATED void setWindowState(Qt::WindowState windowState);
 
-public slots:
+public Q_SLOTS:
     void setMaximized(bool isMaximized);
 
-signals:
+Q_SIGNALS:
     Q_DECL_DEPRECATED void maximum();
     Q_DECL_DEPRECATED void restore();
 

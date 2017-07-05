@@ -72,12 +72,12 @@ void IconButton::updateStyle(){
 }
 
 void IconButton::enterEvent(QEvent *event){
-    emit mouseEntered(text());
+    Q_EMIT mouseEntered(text());
     QPushButton::enterEvent(event);
 }
 
 void IconButton::leaveEvent(QEvent *event){
-    emit mouseLeaved(text());
+    Q_EMIT mouseLeaved(text());
     QPushButton::leaveEvent(event);
 }
 
@@ -186,8 +186,8 @@ void DButtonList::setButtonChecked(int id){
             button->setProperty("state", "normal");
        }
        button->updateStyle();
-       emit buttonCheckedIndexChanged(id);
-       emit buttonChecked(button->text());
+       Q_EMIT buttonCheckedIndexChanged(id);
+       Q_EMIT buttonChecked(button->text());
    }
 }
 
@@ -209,7 +209,7 @@ IconButton* DButtonList::getButtonByIndex(int index){
 }
 
 void DButtonList::clear(){
-    foreach (QAbstractButton* button, m_buttonGroup->buttons()) {
+    Q_FOREACH (QAbstractButton* button, m_buttonGroup->buttons()) {
         qDebug() << static_cast<IconButton*>(button)->text();
         static_cast<IconButton*>(button)->disconnect();
         m_buttonGroup->removeButton(static_cast<IconButton*>(button));

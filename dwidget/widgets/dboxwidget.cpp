@@ -81,7 +81,7 @@ void DBoxWidget::setDirection(QBoxLayout::Direction direction)
         return;
 
     d->layout->setDirection(direction);
-    emit directionChanged(direction);
+    Q_EMIT directionChanged(direction);
 }
 
 void DBoxWidget::updateSize(const QSize &size)
@@ -109,7 +109,7 @@ bool DBoxWidget::event(QEvent *ee)
             updateGeometry();
         }
     } else if(ee->type() == QEvent::Resize) {
-        emit sizeChanged(size());
+        Q_EMIT sizeChanged(size());
     } else if(ee->type() == QEvent::ChildAdded) {
         updateSize(d->layout->sizeHint());
     } else if(ee->type() == QEvent::ChildRemoved) {

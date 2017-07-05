@@ -310,7 +310,7 @@ void DStackWidget::setCurrentIndex(int currentIndex, DAbstractStackWidgetTransit
             currentWidget()->show();
         }
 
-        emit switchWidgetFinished();
+        Q_EMIT switchWidgetFinished();
     }
 }
 
@@ -338,7 +338,7 @@ void DStackWidget::setTransition(DAbstractStackWidgetTransition *transition)
             qDeleteAll(d->trashWidgetList);
             d->trashWidgetList.clear();
 
-            emit switchWidgetFinished();
+            Q_EMIT switchWidgetFinished();
         } else if(oldState == QVariantAnimation::Stopped) {
             busyChanged(true);
         }

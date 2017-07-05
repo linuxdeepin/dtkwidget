@@ -22,7 +22,7 @@ class DFileWatcher : public DBaseFileWatcher
 public:
     explicit DFileWatcher(const QString &filePath, QObject *parent = 0);
 
-private slots:
+private Q_SLOTS:
     void onFileDeleted(const QString &path, const QString &name);
     void onFileAttributeChanged(const QString &path, const QString &name);
     void onFileMoved(const QString &fromPath, const QString &fromName,

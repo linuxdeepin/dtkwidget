@@ -60,7 +60,7 @@ public:
     QColor hoverValueColor() const;
     int hoverShowValueInterval() const;
 
-public slots:
+public Q_SLOTS:
     void setHoverShowValue(bool hoverShowValue);
     void setHoverValueColor(QColor hoverValueColor);
     void setHoverShowValueInterval(int hoverShowValueInterval);
@@ -72,7 +72,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
 
-private slots:
+private Q_SLOTS:
     void hoverTimout();
 
 private:

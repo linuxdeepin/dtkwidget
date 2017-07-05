@@ -67,7 +67,7 @@ protected:
     void enterEvent(QEvent *);
     void leaveEvent(QEvent *);
 
-signals:
+Q_SIGNALS:
     void mousePress();
     void mouseRelease();
     void mouseEnter();

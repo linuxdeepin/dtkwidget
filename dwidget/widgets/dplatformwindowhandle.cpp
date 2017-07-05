@@ -354,33 +354,33 @@ bool DPlatformWindowHandle::eventFilter(QObject *obj, QEvent *event)
             QDynamicPropertyChangeEvent *e = static_cast<QDynamicPropertyChangeEvent*>(event);
 
             if (e->propertyName() == _windowRadius) {
-                emit windowRadiusChanged();
+                Q_EMIT windowRadiusChanged();
             } else if (e->propertyName() == _borderWidth) {
-                emit borderWidthChanged();
+                Q_EMIT borderWidthChanged();
             } else if (e->propertyName() == _borderColor) {
-                emit borderColorChanged();
+                Q_EMIT borderColorChanged();
             } else if (e->propertyName() == _shadowRadius) {
-                emit shadowRadiusChanged();
+                Q_EMIT shadowRadiusChanged();
             } else if (e->propertyName() == _shadowOffset) {
-                emit shadowOffsetChanged();
+                Q_EMIT shadowOffsetChanged();
             } else if (e->propertyName() == _shadowColor) {
-                emit shadowColorChanged();
+                Q_EMIT shadowColorChanged();
             } else if (e->propertyName() == _clipPath) {
-                emit clipPathChanged();
+                Q_EMIT clipPathChanged();
             } else if (e->propertyName() == _frameMask) {
-                emit frameMaskChanged();
+                Q_EMIT frameMaskChanged();
             } else if (e->propertyName() == _frameMargins) {
-                emit frameMarginsChanged();
+                Q_EMIT frameMarginsChanged();
             } else if (e->propertyName() == _translucentBackground) {
-                emit translucentBackgroundChanged();
+                Q_EMIT translucentBackgroundChanged();
             } else if (e->propertyName() == _enableSystemResize) {
-                emit enableSystemResizeChanged();
+                Q_EMIT enableSystemResizeChanged();
             } else if (e->propertyName() == _enableSystemMove) {
-                emit enableSystemMoveChanged();
+                Q_EMIT enableSystemMoveChanged();
             } else if (e->propertyName() == _enableBlurWindow) {
-                emit enableBlurWindowChanged();
+                Q_EMIT enableBlurWindowChanged();
             } else if (e->propertyName() == _autoInputMaskByClipPath) {
-                emit autoInputMaskByClipPathChanged();
+                Q_EMIT autoInputMaskByClipPathChanged();
             }
         }
     }

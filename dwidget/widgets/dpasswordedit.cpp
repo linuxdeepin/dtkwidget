@@ -42,7 +42,7 @@ void DPasswordEdit::setEchoMode(QLineEdit::EchoMode mode)
 
         // To inform the style sheet system that our style sheet needs
         // to be recalculated.
-        emit echoModeChanged(mode == Normal);
+        Q_EMIT echoModeChanged(mode == Normal);
     }
 }
 

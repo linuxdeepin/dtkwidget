@@ -22,11 +22,11 @@ public:
     QMargins margins() const;
     QPainterPath clipPath() const;
 
-public slots:
+public Q_SLOTS:
     void setMargins(const QMargins &margins);
     void setClipPath(const QPainterPath &clipPath);
 
-signals:
+Q_SIGNALS:
     void marginsChanged(QMargins margins);
     void clipPathChanged(QPainterPath clipPath);
 

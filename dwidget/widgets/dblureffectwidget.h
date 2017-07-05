@@ -61,7 +61,7 @@ public:
 
     void setMaskPath(const QPainterPath &path);
 
-public slots:
+public Q_SLOTS:
     void setRadius(int radius);
     void setMode(BlurMode mode);
 
@@ -72,7 +72,7 @@ public slots:
     void setMaskColor(QColor maskColor);
     void setMaskColor(MaskColorType type);
 
-signals:
+Q_SIGNALS:
     void radiusChanged(int radius);
     void modeChanged(BlurMode mode);
 

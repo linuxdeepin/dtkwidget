@@ -19,7 +19,7 @@ public:
 
     void init();
 
-public slots:
+public Q_SLOTS:
     void _q_onPrevClicked();
     void _q_onPlayClicked();
     void _q_onPauseClicked();

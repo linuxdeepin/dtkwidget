@@ -175,7 +175,7 @@ QByteArray AbstractStringAppender::qCleanupFuncinfo(const char* name)
   info.replace("operator ", "operator");
 
   // remove argument list
-  forever {
+  Q_FOREVER {
       int parencount = 0;
       pos = info.lastIndexOf(')');
       if (pos == -1) {

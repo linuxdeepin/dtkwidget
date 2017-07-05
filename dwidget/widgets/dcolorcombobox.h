@@ -37,10 +37,10 @@ public:
     void addData(const QColor &color, const QString &title);
     void addData(const QString &color, const QString &title);
 
-signals:
+Q_SIGNALS:
     void currentColorChange(QColor color);
 
-public slots:
+public Q_SLOTS:
     void onCurrentIndexChange(int index);
 
 private:

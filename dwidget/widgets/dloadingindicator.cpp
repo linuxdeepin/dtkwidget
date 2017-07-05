@@ -157,7 +157,7 @@ void DLoadingIndicator::setDirection(DLoadingIndicator::RotationDirection direct
         d->rotateAni.setEndValue(QVariant(qreal(-360.0)));
     }
 
-    emit directionChanged(direction);
+    Q_EMIT directionChanged(direction);
 }
 
 void DLoadingIndicator::resizeEvent(QResizeEvent *e)

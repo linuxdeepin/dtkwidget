@@ -30,7 +30,7 @@ void SwitchHeaderLine::setExpand(bool value)
 void SwitchHeaderLine::mousePressEvent(QMouseEvent *)
 {
     m_switchButton->setChecked(!m_switchButton->checked());
-//    emit mousePress();
+//    Q_EMIT mousePress();
 }
 
 DSwitchLineExpand::DSwitchLineExpand(QWidget *parent) :

@@ -108,7 +108,7 @@ void DFontComboBox::onCurrentIndexChange(int index)
 {
     QJsonObject nameObj = dcomboBoxModel()->getJsonData(index);
 
-    emit currentFontNameChange(nameObj["itemFont"].toString());
+    Q_EMIT currentFontNameChange(nameObj["itemFont"].toString());
 }
 
 DWIDGET_END_NAMESPACE

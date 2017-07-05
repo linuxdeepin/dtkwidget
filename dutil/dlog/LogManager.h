@@ -18,9 +18,9 @@ public:
     static QString getlogFilePath();
     static void setLogFormat(const QString& format);
 
-signals:
+Q_SIGNALS:
 
-public slots:
+public Q_SLOTS:
 
 private:
     QString m_format;

@@ -503,7 +503,7 @@ void DX11Widget::setBackgroundColor(QColor backgroundColor)
     }
 
     d->m_backgroundColor = backgroundColor;
-    emit backgroundColorChanged(backgroundColor);
+    Q_EMIT backgroundColorChanged(backgroundColor);
 }
 
 void DX11Widget::setShadowColor(QColor shadowColor)
@@ -519,7 +519,7 @@ void DX11Widget::setShadowColor(QColor shadowColor)
     drawShadowPixmap();
     update();
 
-    emit shadowColorChanged(shadowColor);
+    Q_EMIT shadowColorChanged(shadowColor);
 }
 
 void DX11Widget::setShadowOffset(QPoint shadowOffset)
@@ -535,7 +535,7 @@ void DX11Widget::setShadowOffset(QPoint shadowOffset)
     d->updateContentsMargins();
     update();
 
-    emit shadowOffsetChanged(shadowOffset);
+    Q_EMIT shadowOffsetChanged(shadowOffset);
 }
 
 void DX11Widget::drawShadowPixmap()

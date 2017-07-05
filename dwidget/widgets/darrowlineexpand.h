@@ -27,7 +27,7 @@ public:
     ArrowHeaderLine(QWidget *parent = 0);
     void setExpand(bool value);
 
-signals:
+Q_SIGNALS:
     void mousePress();
 
 protected:

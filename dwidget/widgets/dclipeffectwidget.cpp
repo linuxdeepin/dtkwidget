@@ -68,7 +68,7 @@ void DClipEffectWidget::setMargins(QMargins margins)
     d->margins = margins;
     update();
 
-    emit marginsChanged(margins);
+    Q_EMIT marginsChanged(margins);
 }
 
 void DClipEffectWidget::setClipPath(const QPainterPath &path)
@@ -81,7 +81,7 @@ void DClipEffectWidget::setClipPath(const QPainterPath &path)
     d->path = path;
     d->image = QImage();
 
-    emit clipPathChanged(d->path);
+    Q_EMIT clipPathChanged(d->path);
 
     update();
 }

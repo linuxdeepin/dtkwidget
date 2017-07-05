@@ -28,7 +28,7 @@ public:
     void addItem(const QString &text);
     void addItems(const QStringList &texts);
 
-signals:
+Q_SIGNALS:
     void currentTextChanged(const QString &);
 
 private:

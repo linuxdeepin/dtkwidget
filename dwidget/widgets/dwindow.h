@@ -25,7 +25,7 @@ public:
     void setParent(QWidget *parent);
     QWidget *parentWidget() const;
 
-protected slots:
+protected Q_SLOTS:
 
 private:
     D_DECLARE_PRIVATE(DWindow)

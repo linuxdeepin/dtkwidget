@@ -29,10 +29,10 @@ public:
 
     bool autoHide() const;
 
-public slots:
+public Q_SLOTS:
     void setAutoHide(bool autoHide);
 
-signals:
+Q_SIGNALS:
     void autoHideChanged(bool autoHide);
 
 protected:

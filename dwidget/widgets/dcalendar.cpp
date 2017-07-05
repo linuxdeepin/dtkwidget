@@ -167,7 +167,7 @@ void DCalendar::selectDate(const QDate &date)
     m_yearEdt->setText(QString::number(date.year()));
     m_viewCurrent->setCurrentDate(m_showDate);
 
-    emit selectedDateChanged(date);
+    Q_EMIT selectedDateChanged(date);
 }
 
 void DCalendar::setControlPanelVisible(bool visible)

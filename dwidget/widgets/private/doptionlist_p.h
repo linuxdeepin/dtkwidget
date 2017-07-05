@@ -33,7 +33,7 @@ public:
     void setCurrentSelected(int pos);
     void setCurrentSelected(const QString &value);
 
-public slots:
+public Q_SLOTS:
     void _q_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
 
 protected:

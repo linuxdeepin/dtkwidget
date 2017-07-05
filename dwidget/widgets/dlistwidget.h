@@ -44,7 +44,7 @@ public:
     explicit DListWidget(CheckMode checkMode = Radio, QWidget *parent = 0);
     explicit DListWidget(QBoxLayout::Direction direction, CheckMode checkMode = Radio, QWidget *parent = 0);
 
-public slots:
+public Q_SLOTS:
     int addWidget(QWidget *w, Qt::Alignment a = Qt::AlignHCenter);
     void addWidgets(const QList<QWidget*> &ws, Qt::Alignment a = Qt::AlignHCenter);
     void insertWidget(int index, QWidget *w, Qt::Alignment a = Qt::AlignHCenter);
@@ -89,7 +89,7 @@ public:
 
     QSize sizeHint() const Q_DECL_OVERRIDE;
 
-signals:
+Q_SIGNALS:
     void firstCheckedChanged(int index);
     void checkedChanged(int index, bool checked);
     void countChanged(int count);
@@ -100,7 +100,7 @@ signals:
     void enableHorizontalScrollChanged(bool enableHorizontalScroll);
     void enableVerticalScrollChanged(bool enableVerticalScroll);
 
-private slots:
+private Q_SLOTS:
     void updateSize();
 
 protected:

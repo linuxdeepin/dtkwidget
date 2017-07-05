@@ -64,7 +64,7 @@ public:
     RotationDirection direction() const;
     qreal rotate() const;
 
-public slots:
+public Q_SLOTS:
     void start();
     void stop();
     void setLoading(bool flag);
@@ -78,7 +78,7 @@ public slots:
     void setSmooth(bool smooth);
     void setDirection(RotationDirection direction);
 
-signals:
+Q_SIGNALS:
     void directionChanged(RotationDirection direction);
     void rotateChanged(qreal rotate);
 

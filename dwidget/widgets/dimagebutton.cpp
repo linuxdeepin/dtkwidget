@@ -117,7 +117,7 @@ void DImageButton::mouseReleaseEvent(QMouseEvent *event)
     //QLabel::mouseReleaseEvent(event);
 
     if (event->button() == Qt::LeftButton)
-        emit clicked();
+        Q_EMIT clicked();
 }
 
 void DImageButton::mouseMoveEvent(QMouseEvent *event)
@@ -138,7 +138,7 @@ void DImageButton::updateIcon()
 
     setAlignment(Qt::AlignCenter);
 
-    emit stateChanged();
+    Q_EMIT stateChanged();
 }
 
 void DImageButton::setState(DImageButton::State state)

@@ -62,7 +62,7 @@ public:
 
     void beginTransition(const TransitionInfo &info) Q_DECL_OVERRIDE;
 
-private slots:
+private Q_SLOTS:
     void updateVariant(const QVariant &variant) Q_DECL_OVERRIDE;
 };
 
@@ -94,7 +94,7 @@ public:
     int animationDuration() const;
     QEasingCurve::Type animationType() const;
 
-public slots:
+public Q_SLOTS:
     int pushWidget(QWidget *widget, bool enableTransition = true);
     void insertWidget(int depth, QWidget *widget, bool enableTransition = true);
 
@@ -118,7 +118,7 @@ public slots:
     void setAnimationDuration(int animationDuration);
     void setAnimationType(QEasingCurve::Type animationType);
 
-signals:
+Q_SIGNALS:
     void busyChanged(bool busy);
     void depthChanged(int depth);
 

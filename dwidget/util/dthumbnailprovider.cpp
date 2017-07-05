@@ -176,7 +176,7 @@ QString DThumbnailProvider::thumbnailFilePath(const QFileInfo &info, Size size) 
     if (image.text(QT_STRINGIFY(Thumb::MTime)).toInt() != (int)info.lastModified().toTime_t()) {
         QFile::remove(thumbnail);
 
-        emit thumbnailChanged(absoluteFilePath, QString());
+        Q_EMIT thumbnailChanged(absoluteFilePath, QString());
 
         return QString();
     }
@@ -269,14 +269,14 @@ QString DThumbnailProvider::createThumbnail(const QFileInfo &info, DThumbnailPro
     }
 
     if (d->errorString.isEmpty()) {
-        emit createThumbnailFinished(absoluteFilePath, thumbnail);
-        emit thumbnailChanged(absoluteFilePath, thumbnail);
+        Q_EMIT createThumbnailFinished(absoluteFilePath, thumbnail);
+        Q_EMIT thumbnailChanged(absoluteFilePath, thumbnail);
 
         return thumbnail;
     }
 
     // fail
-    emit createThumbnailFailed(absoluteFilePath);
+    Q_EMIT createThumbnailFailed(absoluteFilePath);
 
     return QString();
 }
@@ -369,7 +369,7 @@ void DThumbnailProvider::run()
 {
     Q_D(DThumbnailProvider);
 
-    forever {
+    Q_FOREVER {
         QWriteLocker locker(&d->dataReadWriteLock);
 
         if (d->produceQueue.isEmpty()) {

@@ -32,7 +32,7 @@ public:
     void hideIconLabel();
     void updateStyle();
 
-signals:
+Q_SIGNALS:
     void mouseEntered(QString label);
     void mouseLeaved(QString label);
 
@@ -60,7 +60,7 @@ public:
     void initMargins(int leftMargin, int rightMargin, int imageLeftMargin);
     IconButton* getButtonByIndex(int index);
 
-public slots:
+public Q_SLOTS:
     void addButton(const QString &label);
     void addButton(const QString& label, int index);
     void addButtons(const QStringList& listLabels);
@@ -71,10 +71,10 @@ public slots:
     void checkButtonByIndex(int index);
     void clear();
 
-private slots:
+private Q_SLOTS:
     void setButtonChecked(int id);
 
-signals:
+Q_SIGNALS:
     void buttonChecked(QString label);
     void buttonCheckedIndexChanged(int index);
     void buttonMouseEntered(QString label);

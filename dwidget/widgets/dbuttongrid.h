@@ -38,7 +38,7 @@ public:
     bool isDeletable();
 
 
-public slots:
+public Q_SLOTS:
     void setId(QString id);
     void handleChecked(bool checked);
     void handleHover(bool hovered);
@@ -49,7 +49,7 @@ public slots:
     void setDeletable(bool flag);
     void handleClose();
 
-signals:
+Q_SIGNALS:
     void mouseEnter();
     void mouseLeave();
     void closed(QString url);
@@ -76,7 +76,7 @@ class ItemButton: public QPushButton
 public:
     ItemButton(QString text, QWidget *parent=0);
     ~ItemButton();
-signals:
+Q_SIGNALS:
     void mouseEntered(QString buttonId);
     void mouseLeaved(QString buttonId);
     void mouseEntered(int index);
@@ -101,7 +101,7 @@ public:
     void setItemSize(int width, int height);
     int getCurrentCheckedIndex() const;
 
-public slots:
+public Q_SLOTS:
     void addButton(const QString& label, int index);
     void addButtons(const QStringList& listLabels);
     void addImageButton(const QMap<QString, QString>& imageInfo, int index, bool isNameVisible=true);
@@ -112,11 +112,11 @@ public slots:
     void clear();
     void handleClosed(QString url);
 
-private slots:
+private Q_SLOTS:
     void setButtonChecked(int id);
     int getButtonEnteredIndex(QString text);
     int getButtonLeavedIndex(QString text);
-signals:
+Q_SIGNALS:
     void buttonChecked(QString label);
     void buttonCheckedIndexChanged(int index);
 

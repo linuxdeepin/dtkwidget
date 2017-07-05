@@ -181,9 +181,9 @@ void DMPRISControlPrivate::_q_loadMPRISPath(const QString &path)
     _q_onPlaybackStatusChanged();
 
     if (hasOld)
-        emit q->mprisChanged();
+        Q_EMIT q->mprisChanged();
     else
-        emit q->mprisAcquired();
+        Q_EMIT q->mprisAcquired();
 }
 
 void DMPRISControlPrivate::_q_removeMPRISPath(const QString &path)
@@ -204,7 +204,7 @@ void DMPRISControlPrivate::_q_removeMPRISPath(const QString &path)
     m_mprisInter->deleteLater();
     m_mprisInter = nullptr;
 
-    emit q->mprisLosted();
+    Q_EMIT q->mprisLosted();
 }
 
 #include "moc_dmpriscontrol.cpp"

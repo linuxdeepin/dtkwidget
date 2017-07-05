@@ -86,7 +86,7 @@ public:
     bool enableBlurWindow() const;
     bool autoInputMaskByClipPath() const;
 
-public slots:
+public Q_SLOTS:
     void setWindowRadius(int windowRadius);
 
     void setBorderWidth(int borderWidth);
@@ -105,7 +105,7 @@ public slots:
     void setEnableBlurWindow(bool enableBlurWindow);
     void setAutoInputMaskByClipPath(bool autoInputMaskByClipPath);
 
-signals:
+Q_SIGNALS:
     void frameMarginsChanged();
     void windowRadiusChanged();
     void borderWidthChanged();

@@ -114,17 +114,17 @@ void DListWidget::insertWidget(int index, QWidget *w, Qt::Alignment a)
 
     setVisibleCount(d->visibleCount + 1);
 
-    emit countChanged(count());
+    Q_EMIT countChanged(count());
 }
 
 void DListWidget::insertWidgets(int index, const QList<QWidget*> &ws, Qt::Alignment a)
 {
     if(index < 0) {
-        foreach (QWidget *w, ws) {
+        Q_FOREACH (QWidget *w, ws) {
             insertWidget(-1, w, a);
         }
     } else {
-        foreach (QWidget *w, ws) {
+        Q_FOREACH (QWidget *w, ws) {
             insertWidget(index++, w, a);
         }
     }
@@ -140,7 +140,7 @@ void DListWidget::setItemSize(int w, int h)
     if(d->itemWidth <= 0 && d->itemHeight <= 0)
         return;
 
-    foreach (QWidget *w, d->widgetList) {
+    Q_FOREACH (QWidget *w, d->widgetList) {
         if(d->itemWidth>0)
             w->setFixedWidth(d->itemWidth);
         if(d->itemHeight>0){
@@ -167,7 +167,7 @@ void DListWidget::clear(bool isDelete)
     resize(0, 0);
     setVisibleCount(0);
 
-    emit countChanged(count());
+    Q_EMIT countChanged(count());
 }
 
 void DListWidget::removeWidget(int index, bool isDelete)
@@ -189,7 +189,7 @@ void DListWidget::removeWidget(int index, bool isDelete)
     if(isDelete)
         w->deleteLater();
 
-    emit countChanged(count());
+    Q_EMIT countChanged(count());
 }
 
 void DListWidget::showWidget(int index)
@@ -245,10 +245,10 @@ void DListWidget::setChecked(int index, bool checked)
     }
 
     if(d->checkMode == Radio && checked){
-        emit firstCheckedChanged(index);
+        Q_EMIT firstCheckedChanged(index);
     }
 
-    emit checkedChanged(index, checked);
+    Q_EMIT checkedChanged(index, checked);
 }
 
 void DListWidget::setCheckMode(DListWidget::CheckMode checkMode)
@@ -276,7 +276,7 @@ void DListWidget::setToggleable(bool enableUncheck)
         return;
 
     d->toggleable = enableUncheck;
-    emit toggleableChanged(enableUncheck);
+    Q_EMIT toggleableChanged(enableUncheck);
 }
 
 void DListWidget::setEnableHorizontalScroll(bool enableHorizontalScroll)
@@ -290,7 +290,7 @@ void DListWidget::setEnableHorizontalScroll(bool enableHorizontalScroll)
 
     updateSize();
 
-    emit enableHorizontalScrollChanged(enableHorizontalScroll);
+    Q_EMIT enableHorizontalScrollChanged(enableHorizontalScroll);
 }
 
 void DListWidget::setEnableVerticalScroll(bool enableVerticalScroll)
@@ -304,7 +304,7 @@ void DListWidget::setEnableVerticalScroll(bool enableVerticalScroll)
 
     updateSize();
 
-    emit enableVerticalScrollChanged(enableVerticalScroll);
+    Q_EMIT enableVerticalScrollChanged(enableVerticalScroll);
 }
 
 void DListWidget::setSpacing(int spacing)
@@ -426,7 +426,7 @@ void DListWidget::mouseReleaseEvent(QMouseEvent *e)
         else
             setChecked(index, true);
 
-        emit clicked(index);
+        Q_EMIT clicked(index);
     }
 }
 
@@ -439,7 +439,7 @@ void DListWidget::setVisibleCount(int count)
 
     d->visibleCount = count;
 
-    emit visibleCountChanged(count);
+    Q_EMIT visibleCountChanged(count);
 }
 
 void DListWidget::updateSize()

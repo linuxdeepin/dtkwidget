@@ -31,7 +31,7 @@ public:
     DFileWatcher *add(const QString &filePath);
     void remove(const QString &filePath);
 
-signals:
+Q_SIGNALS:
     void fileDeleted(const QString &filePath);
     void fileAttributeChanged(const QString &filePath);
     void fileMoved(const QString &fromFilePath, const QString &toFilePath);

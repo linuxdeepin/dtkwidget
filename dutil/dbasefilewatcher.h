@@ -38,7 +38,7 @@ public:
     static bool ghostSignal(const QUrl &targetUrl, SignalType1 signal, const QUrl &arg1);
     static bool ghostSignal(const QUrl &targetUrl, SignalType2 signal, const QUrl &arg1, const QUrl &arg2);
 
-signals:
+Q_SIGNALS:
     void fileDeleted(const QUrl &url);
     void fileAttributeChanged(const QUrl &url);
     void fileMoved(const QUrl &fromUrl, const QUrl &toUrl);

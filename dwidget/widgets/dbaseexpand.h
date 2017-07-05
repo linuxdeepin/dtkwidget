@@ -49,7 +49,7 @@ public:
     void setSeparatorVisible(bool arg);
     void setExpandedSeparatorVisible(bool arg);
 
-signals:
+Q_SIGNALS:
     void expandChange(bool e);
     void sizeChanged(QSize s);
 

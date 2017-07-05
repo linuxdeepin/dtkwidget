@@ -13,7 +13,7 @@ public:
     ~StartupNotificationMonitor();
     bool nativeEventFilter(const QByteArray &eventType, void *message, long *result);
 
-signals:
+Q_SIGNALS:
     void appStartup(QString id);
     void appStartupCompleted(QString id);
 

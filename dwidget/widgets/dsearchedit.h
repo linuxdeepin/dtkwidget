@@ -41,19 +41,19 @@ public:
 
     QLineEdit *getLineEdit() const;
 
-public slots:
+public Q_SLOTS:
     void setText(const QString & text) {if (m_edt) m_edt->setText(text);}
     inline void clear() {m_edt->clear();}
     inline void setPlaceHolder(const QString &text) {m_placeHolder->setText(text);}
 
-signals:
+Q_SIGNALS:
     void textChanged();
     void returnPressed();
     void editingFinished();
     void focusOut();
     void focusIn();
 
-private slots:
+private Q_SLOTS:
     void toEditMode();
 
 private:

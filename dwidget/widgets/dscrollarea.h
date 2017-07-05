@@ -30,13 +30,13 @@ public:
 
     bool autoHideScrollBar() const;
 
-public slots:
+public Q_SLOTS:
     void setAutoHideScrollBar(bool autoHideScrollBar);
 
-signals:
+Q_SIGNALS:
     void autoHideScrollBarChanged(bool autoHideScrollBar);
 
-private slots:
+private Q_SLOTS:
     void hideScrollBar(QScrollBar *bar);
     void showScrollBar(QScrollBar *bar);
 

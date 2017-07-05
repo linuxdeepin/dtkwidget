@@ -32,7 +32,7 @@ public:
     QString acknowledgementLink() const;
     QString license() const;
 
-public slots:
+public Q_SLOTS:
     void setWindowTitle(const QString &windowTitle);
     void setProductIcon(const QIcon &icon);
     void setProductName(const QString &productName);
@@ -44,7 +44,7 @@ public slots:
     void setAcknowledgementLink(const QString &acknowledgementLink);
     void setLicense(const QString &license);
 
-signals:
+Q_SIGNALS:
     void websiteNameChanged(QString websiteName);
     void websiteLinkChanged(QString websiteLink);
 

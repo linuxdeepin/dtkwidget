@@ -136,7 +136,7 @@ protected:
     void showEvent(QShowEvent *e);
 
 Q_SIGNALS:
-    // ### emit signals!
+    // ### Q_EMIT signals!
     void textValueChanged(const QString &text);
     void textValueSelected(const QString &text);
     void intValueChanged(int value);

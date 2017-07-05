@@ -271,7 +271,7 @@ void DAbstractDialog::resizeEvent(QResizeEvent *event)
     if (d->bgBlurWidget)
         d->bgBlurWidget->resize(event->size());
 
-    emit sizeChanged(event->size());
+    Q_EMIT sizeChanged(event->size());
 }
 
 DAbstractDialog::DAbstractDialog(DAbstractDialogPrivate &dd, QWidget *parent):

@@ -33,7 +33,7 @@ void ArrowHeaderLine::setExpand(bool value)
 
 void ArrowHeaderLine::mousePressEvent(QMouseEvent *)
 {
-    emit mousePress();
+    Q_EMIT mousePress();
 }
 
 void ArrowHeaderLine::reverseArrowDirection()

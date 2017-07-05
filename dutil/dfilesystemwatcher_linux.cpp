@@ -34,7 +34,7 @@ DFileSystemWatcherPrivate::DFileSystemWatcherPrivate(int fd, DFileSystemWatcher 
 DFileSystemWatcherPrivate::~DFileSystemWatcherPrivate()
 {
     notifier.setEnabled(false);
-    foreach (int id, pathToID)
+    Q_FOREACH (int id, pathToID)
         inotify_rm_watch(inotifyFd, id < 0 ? -id : id);
 
     ::close(inotifyFd);
@@ -237,7 +237,7 @@ void DFileSystemWatcherPrivate::_q_readFromInotify()
 //                else
 //                    onFileChanged(path, true);
 
-                emit q->fileDeleted(path, QString(), DFileSystemWatcher::QPrivateSignal());
+                Q_EMIT q->fileDeleted(path, QString(), DFileSystemWatcher::QPrivateSignal());
             } while (false);
         } else {
             if (id < 0)
@@ -268,13 +268,13 @@ void DFileSystemWatcherPrivate::_q_readFromInotify()
                 q->addPath(filePath);
             }
 
-            emit q->fileCreated(path, name, DFileSystemWatcher::QPrivateSignal());
+            Q_EMIT q->fileCreated(path, name, DFileSystemWatcher::QPrivateSignal());
         }
 
         if (event.mask & IN_DELETE) {
 //            qDebug() << "IN_DELETE" << filePath;
 
-            emit q->fileDeleted(path, name, DFileSystemWatcher::QPrivateSignal());
+            Q_EMIT q->fileDeleted(path, name, DFileSystemWatcher::QPrivateSignal());
         }
 
         if (event.mask & IN_MOVED_FROM) {
@@ -283,33 +283,33 @@ void DFileSystemWatcherPrivate::_q_readFromInotify()
 
 //            qDebug() << "IN_MOVED_FROM" << filePath << "to path:" << toPath << "to name:" << toName;
 
-            emit q->fileMoved(path, name, toPath, toName, DFileSystemWatcher::QPrivateSignal());
+            Q_EMIT q->fileMoved(path, name, toPath, toName, DFileSystemWatcher::QPrivateSignal());
         }
 
         if (event.mask & IN_MOVED_TO) {
 //            qDebug() << "IN_MOVED_TO" << filePath;
 
             if (!hasMoveFromByCookie.contains(event.cookie))
-                emit q->fileMoved(QString(), QString(), path, name, DFileSystemWatcher::QPrivateSignal());
+                Q_EMIT q->fileMoved(QString(), QString(), path, name, DFileSystemWatcher::QPrivateSignal());
         }
 
         if (event.mask & IN_ATTRIB) {
 //            qDebug() << "IN_ATTRIB" <<  event.mask << filePath;
 
-            emit q->fileAttributeChanged(path, name, DFileSystemWatcher::QPrivateSignal());
+            Q_EMIT q->fileAttributeChanged(path, name, DFileSystemWatcher::QPrivateSignal());
         }
 
         /*only monitor file close event which is opend by write mode*/
         if (event.mask & IN_CLOSE_WRITE) {
 //            qDebug() << "IN_CLOSE_WRITE" <<  event.mask << filePath;
 
-            emit q->fileClosed(path, id < 0 ? name : QString(), DFileSystemWatcher::QPrivateSignal());
+            Q_EMIT q->fileClosed(path, id < 0 ? name : QString(), DFileSystemWatcher::QPrivateSignal());
         }
 
         if (event.mask & IN_MODIFY) {
 //            qDebug() << "IN_MODIFY" <<  event.mask << filePath << name;
 
-            emit q->fileModified(path, name, DFileSystemWatcher::QPrivateSignal());
+            Q_EMIT q->fileModified(path, name, DFileSystemWatcher::QPrivateSignal());
         }
     }
 }
@@ -336,7 +336,7 @@ void DFileSystemWatcherPrivate::onFileChanged(const QString &path, bool removed)
     if (removed) {
         files.removeAll(path);
     }
-//    emit q->fileChanged(path, DFileSystemWatcher::QPrivateSignal());
+//    Q_EMIT q->fileChanged(path, DFileSystemWatcher::QPrivateSignal());
 }
 
 void DFileSystemWatcherPrivate::onDirectoryChanged(const QString &path, bool removed)
@@ -349,7 +349,7 @@ void DFileSystemWatcherPrivate::onDirectoryChanged(const QString &path, bool rem
     if (removed) {
         directories.removeAll(path);
     }
-//    emit q->directoryChanged(path, DFileSystemWatcher::QPrivateSignal());
+//    Q_EMIT q->directoryChanged(path, DFileSystemWatcher::QPrivateSignal());
 }
 
 /*!
@@ -590,7 +590,7 @@ QStringList DFileSystemWatcher::removePaths(const QStringList &paths)
     This signal is emitted when the directory at a specified \a path
     is modified (e.g., when a file is added or deleted) or removed
     from disk. Note that if there are several changes during a short
-    period of time, some of the changes might not emit this signal.
+    period of time, some of the changes might not Q_EMIT this signal.
     However, the last change in the sequence of changes will always
     generate this signal.
 

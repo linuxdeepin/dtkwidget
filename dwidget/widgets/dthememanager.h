@@ -34,10 +34,10 @@ public:
     QString getQssForWidget(const QString className, const QWidget *widget) const;
     QString getQssForWidget(const QWidget *widget) const;
 
-public slots:
+public Q_SLOTS:
     void updateQss();
 
-signals:
+Q_SIGNALS:
     void themeChanged(QString theme);
 
 protected:

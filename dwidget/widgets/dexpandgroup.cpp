@@ -39,7 +39,7 @@ void DExpandGroup::addExpand(DBaseExpand *expand, int id)
     if (m_expandMap.values().indexOf(expand) == -1){
         if (id == -1){
             int maxId = -1;
-            foreach (int tmp, m_expandMap.keys()) {
+            Q_FOREACH (int tmp, m_expandMap.keys()) {
                 maxId = qMax(tmp, maxId);
             }
 

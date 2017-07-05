@@ -97,7 +97,7 @@ void DShortcutEdit::setShortcutKey(const QString &key)
     m_keysEdit->setText(convertShortcutKeys(key));
     m_shortcutKeys = key;
 
-    emit shortcutKeysChanged(m_shortcutKeys);
+    Q_EMIT shortcutKeysChanged(m_shortcutKeys);
 }
 
 void DShortcutEdit::setKeyMapping(const QMap<QString, QString> &mapping)
@@ -163,10 +163,10 @@ void DShortcutEdit::toEchoMode()
     m_keysLabel->show();
     m_keysEdit->hide();
 
-    emit shortcutKeysFinished(m_shortcutKeys);
+    Q_EMIT shortcutKeysFinished(m_shortcutKeys);
 
     if (!m_shortcutKeys.isEmpty() && !isValidShortcutKey(m_shortcutKeys))
-        emit invalidShortcutKey(m_shortcutKeys);
+        Q_EMIT invalidShortcutKey(m_shortcutKeys);
 }
 
 void DShortcutEdit::toInputMode() const

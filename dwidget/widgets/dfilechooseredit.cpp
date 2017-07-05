@@ -86,7 +86,7 @@ void DFileChooserEditPrivate::_q_showFileChooserDialog()
         const QString fileName = dialog.selectedFiles().first();
 
         q->setText(fileName);
-        emit q->fileChoosed(fileName);
+        Q_EMIT q->fileChoosed(fileName);
     }
 
     q->dialogClosed(code);

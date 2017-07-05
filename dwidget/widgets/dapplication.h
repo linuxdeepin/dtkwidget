@@ -66,7 +66,7 @@ public:
     DAboutDialog *aboutDialog();
     void setAboutDialog(DAboutDialog *aboutDialog);
 
-signals:
+Q_SIGNALS:
     void newInstanceStarted();
 
     //###(zccrs): Depend the Qt platform theme plugin(from the package: dde-qt5integration)

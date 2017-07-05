@@ -169,7 +169,7 @@ public:
     static void clearAnchors(const QWidget *w);
     static AnchorsBase *getAnchorBaseByWidget(const QWidget *w);
 
-public slots:
+public Q_SLOTS:
     void setEnabled(bool enabled);
     bool setAnchor(const Qt::AnchorPoint &p, QWidget *target, const Qt::AnchorPoint &point);
     bool setTop(const AnchorInfo *top);
@@ -206,13 +206,13 @@ public slots:
     void moveVerticalCenter(int arg);
     void moveCenter(const QPoint &arg);
 
-private slots:
+private Q_SLOTS:
     void updateVertical();
     void updateHorizontal();
     void updateFill();
     void updateCenterIn();
 
-signals:
+Q_SIGNALS:
     void enabledChanged(bool enabled);
     void topChanged(const AnchorInfo *top);
     void bottomChanged(const AnchorInfo *bottom);

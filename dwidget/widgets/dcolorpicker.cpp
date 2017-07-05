@@ -125,7 +125,7 @@ void DColorPicker::setCurrentColor(QColor currentColor)
 
     update();
 
-    emit currentColorChanged(currentColor);
+    Q_EMIT currentColorChanged(currentColor);
 }
 
 void DColorPicker::setRow(int row)
@@ -135,7 +135,7 @@ void DColorPicker::setRow(int row)
 
     m_row = row;
     resize();
-    emit rowChanged(row);
+    Q_EMIT rowChanged(row);
 }
 
 void DColorPicker::setColumn(int column)
@@ -145,7 +145,7 @@ void DColorPicker::setColumn(int column)
 
     m_column = column;
     resize();
-    emit columnChanged(column);
+    Q_EMIT columnChanged(column);
 }
 
 void DColorPicker::setCellSize(int cellSize)
@@ -156,7 +156,7 @@ void DColorPicker::setCellSize(int cellSize)
     m_cellSize = cellSize;
     resize();
 
-    emit cellSizeChanged(cellSize);
+    Q_EMIT cellSizeChanged(cellSize);
 }
 
 void DColorPicker::setSpacing(int spacing)
@@ -167,7 +167,7 @@ void DColorPicker::setSpacing(int spacing)
     m_spacing = spacing;
     resize();
 
-    emit spacingChanged(spacing);
+    Q_EMIT spacingChanged(spacing);
 }
 
 void DColorPicker::setMargin(int margin)
@@ -178,7 +178,7 @@ void DColorPicker::setMargin(int margin)
     m_margin = margin;
     resize();
 
-    emit marginChanged(margin);
+    Q_EMIT marginChanged(margin);
 }
 
 int DColorPicker::addColorGradient(const QPoint &begin, const QPoint &end,
@@ -214,14 +214,14 @@ void DColorPicker::setSelectedBorderColor(QColor selectedColor)
     m_selectedBorderColor = selectedColor;
     update();
 
-    emit selectedBorderColorChanged(selectedColor);
+    Q_EMIT selectedBorderColorChanged(selectedColor);
 }
 
 void DColorPicker::paintEvent(QPaintEvent *e)
 {
     QPainter pa(this);
 
-    foreach (const Gradient &gradient, m_gradientList) {
+    Q_FOREACH (const Gradient &gradient, m_gradientList) {
         int row = gradient.end.x()-gradient.begin.x()+1;
         int column = gradient.end.y()-gradient.begin.y()+1;
 

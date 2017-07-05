@@ -57,7 +57,7 @@ public:
 
     State getState() const;
 
-signals:
+Q_SIGNALS:
     void clicked();
     void stateChanged();
 

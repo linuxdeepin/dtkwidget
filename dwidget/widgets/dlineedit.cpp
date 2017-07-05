@@ -46,7 +46,7 @@ void DLineEdit::setAlert(bool isAlert)
 
     d->m_isAlert = isAlert;
 
-    emit alertChanged(isAlert);
+    Q_EMIT alertChanged(isAlert);
 }
 
 bool DLineEdit::isAlert() const
@@ -117,13 +117,13 @@ void DLineEdit::setPressIcon(const QString &pressIcon)
 
 void DLineEdit::focusInEvent(QFocusEvent *e)
 {
-    emit focusChanged(true);
+    Q_EMIT focusChanged(true);
     QLineEdit::focusInEvent(e);
 }
 
 void DLineEdit::focusOutEvent(QFocusEvent *e)
 {
-    emit focusChanged(false);
+    Q_EMIT focusChanged(false);
     QLineEdit::focusOutEvent(e);
 }
 
@@ -131,7 +131,7 @@ void DLineEdit::resizeEvent(QResizeEvent *e)
 {
     QLineEdit::resizeEvent(e);
 
-    emit sizeChanged(e->size());
+    Q_EMIT sizeChanged(e->size());
 }
 
 DLineEditPrivate::DLineEditPrivate(DLineEdit *q)

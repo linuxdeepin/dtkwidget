@@ -14,11 +14,11 @@ public:
 
     void init();
 
-signals:
+Q_SIGNALS:
     void mprisAcquired(const QString &path) const;
     void mprisLost(const QString &path) const;
 
-private slots:
+private Q_SLOTS:
     void onNameOwnerChanged(const QString &name, const QString &oldOwner, const QString &newOwner);
 
 private:

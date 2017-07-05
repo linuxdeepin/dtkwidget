@@ -171,7 +171,7 @@ void DColorComboBox::onCurrentIndexChange(int index)
 {
     QJsonObject colorObj = dcomboBoxModel()->getJsonData(index);
 
-    emit currentColorChange(QColor(colorObj["itemColor"].toString()));
+    Q_EMIT currentColorChange(QColor(colorObj["itemColor"].toString()));
 }
 
 DWIDGET_END_NAMESPACE

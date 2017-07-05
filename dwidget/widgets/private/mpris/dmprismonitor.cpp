@@ -25,7 +25,7 @@ void DMPRISMonitor::onNameOwnerChanged(const QString &name, const QString &oldOw
         return;
 
     if (newOwner.isEmpty())
-        emit mprisLost(name);
+        Q_EMIT mprisLost(name);
     else
-        emit mprisAcquired(name);
+        Q_EMIT mprisAcquired(name);
 }

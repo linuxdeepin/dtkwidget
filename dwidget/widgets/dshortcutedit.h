@@ -35,12 +35,12 @@ public:
     const QMap<QString, QString> &getKeyMapping() const;
     const QList<QRegExp> &getBlockShortcutKeysList() const;
 
-signals:
+Q_SIGNALS:
     void shortcutKeysChanged(const QString & shortcutKeys);
     void shortcutKeysFinished(const QString & shortcutKeys);
     void invalidShortcutKey(const QString & shortcutKeys);
 
-public slots:
+public Q_SLOTS:
     void clearShortcutKey();
     void setShortcutKey(const QString & key);
     void setKeyMapping(const QMap<QString, QString> & mapping);
@@ -48,7 +48,7 @@ public slots:
     void setInValidState() const;
     void setNormalState() const;
 
-private slots:
+private Q_SLOTS:
     void toEchoMode();
     void toInputMode() const;
     void shortcutKeyPress(QKeyEvent *e);
@@ -82,7 +82,7 @@ public:
 
     void setEchoState(const EchoState state);
 
-signals:
+Q_SIGNALS:
     void colorSettingChange();
 
 private:

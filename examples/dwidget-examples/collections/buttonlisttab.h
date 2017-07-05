@@ -24,7 +24,7 @@ public:
     void initUI();
     void initConnect();
 
-public slots:
+public Q_SLOTS:
     void handleEnter(QString text);
     void handleLeave(QString text);
 private:

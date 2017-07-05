@@ -74,7 +74,7 @@ bool DFileWatcherPrivate::start()
 
     started = true;
 
-    foreach (const QString &path, parentPathList(this->path)) {
+    Q_FOREACH (const QString &path, parentPathList(this->path)) {
         if (watchFileList.contains(path))
             continue;
 
@@ -115,7 +115,7 @@ bool DFileWatcherPrivate::stop()
 
     bool ok = true;
 
-    foreach (const QString &path, watchFileList) {
+    Q_FOREACH (const QString &path, watchFileList) {
         int count = filePathToWatcherCount.value(path, 0);
 
         --count;
@@ -139,7 +139,7 @@ void DFileWatcherPrivate::_q_handleFileDeleted(const QString &path, const QStrin
 
     Q_Q(DFileWatcher);
 
-    emit q->fileDeleted(QUrl::fromLocalFile(path));
+    Q_EMIT q->fileDeleted(QUrl::fromLocalFile(path));
 }
 
 void DFileWatcherPrivate::_q_handleFileAttributeChanged(const QString &path, const QString &parentPath)
@@ -149,7 +149,7 @@ void DFileWatcherPrivate::_q_handleFileAttributeChanged(const QString &path, con
 
     Q_Q(DFileWatcher);
 
-    emit q->fileAttributeChanged(QUrl::fromLocalFile(path));
+    Q_EMIT q->fileAttributeChanged(QUrl::fromLocalFile(path));
 }
 
 void DFileWatcherPrivate::_q_handleFileMoved(const QString &from, const QString &fromParent, const QString &to, const QString &toParent)
@@ -157,13 +157,13 @@ void DFileWatcherPrivate::_q_handleFileMoved(const QString &from, const QString 
     Q_Q(DFileWatcher);
 
     if ((fromParent == this->path && toParent == this->path) || from == this->path) {
-        emit q->fileMoved(QUrl::fromLocalFile(from), QUrl::fromLocalFile(to));
+        Q_EMIT q->fileMoved(QUrl::fromLocalFile(from), QUrl::fromLocalFile(to));
     } else if (fromParent == this->path) {
-        emit q->fileDeleted(QUrl::fromLocalFile(from));
+        Q_EMIT q->fileDeleted(QUrl::fromLocalFile(from));
     } else if (watchFileList.contains(from)) {
-        emit q->fileDeleted(url);
+        Q_EMIT q->fileDeleted(url);
     } else if (toParent == this->path) {
-        emit q->subfileCreated(QUrl::fromLocalFile(to));
+        Q_EMIT q->subfileCreated(QUrl::fromLocalFile(to));
     }
 }
 
@@ -174,7 +174,7 @@ void DFileWatcherPrivate::_q_handleFileCreated(const QString &path, const QStrin
 
     Q_Q(DFileWatcher);
 
-    emit q->subfileCreated(QUrl::fromLocalFile(path));
+    Q_EMIT q->subfileCreated(QUrl::fromLocalFile(path));
 }
 
 void DFileWatcherPrivate::_q_handleFileModified(const QString &path, const QString &parentPath)
@@ -184,7 +184,7 @@ void DFileWatcherPrivate::_q_handleFileModified(const QString &path, const QStri
 
     Q_Q(DFileWatcher);
 
-    emit q->fileModified(QUrl::fromLocalFile(path));
+    Q_EMIT q->fileModified(QUrl::fromLocalFile(path));
 }
 
 void DFileWatcherPrivate::_q_handleFileClose(const QString &path, const QString &parentPath)
@@ -194,7 +194,7 @@ void DFileWatcherPrivate::_q_handleFileClose(const QString &path, const QString 
 
     Q_Q(DFileWatcher);
 
-    emit q->fileClosed(QUrl::fromLocalFile(path));
+    Q_EMIT q->fileClosed(QUrl::fromLocalFile(path));
 }
 
 QString DFileWatcherPrivate::formatPath(const QString &path)

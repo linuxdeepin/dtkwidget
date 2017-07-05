@@ -107,7 +107,7 @@ void DSpinBox::setAlert(bool alert)
 
     d->alert = alert;
 
-    emit alertChanged(alert);
+    Q_EMIT alertChanged(alert);
 }
 
 void DSpinBox::setDefaultValue(int defaultValue)
@@ -119,7 +119,7 @@ void DSpinBox::setDefaultValue(int defaultValue)
 
     d->defaultValue = defaultValue;
 
-    emit defaultValueChanged(defaultValue);
+    Q_EMIT defaultValueChanged(defaultValue);
 }
 
 void DSpinBox::resizeEvent(QResizeEvent *e)
@@ -201,7 +201,7 @@ void DDoubleSpinBox::setAlert(bool alert)
 
     d->alert = alert;
 
-    emit alertChanged(alert);
+    Q_EMIT alertChanged(alert);
 }
 
 void DDoubleSpinBox::setDefaultValue(double defaultValue)
@@ -213,7 +213,7 @@ void DDoubleSpinBox::setDefaultValue(double defaultValue)
 
     d->defaultValue = defaultValue;
 
-    emit defaultValueChanged(defaultValue);
+    Q_EMIT defaultValueChanged(defaultValue);
 }
 
 void DDoubleSpinBox::resizeEvent(QResizeEvent *e)

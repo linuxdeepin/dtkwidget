@@ -28,7 +28,7 @@ public:
 
     void init();
 
-public slots:
+public Q_SLOTS:
     void _q_resizeInsideFrame(const QSize &size);
     void _q_resizeInputableRegion();
 

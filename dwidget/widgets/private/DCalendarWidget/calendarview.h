@@ -54,11 +54,11 @@ public:
     int getDateType(const QDate &date) const;
     inline bool cellSelectable() const {return m_cellSelectable;}
 
-signals:
+Q_SIGNALS:
     void dateSelected(const QDate &date, const CaLunarDayInfo &detail) const;
     void cellSelectableChanged(bool cellSelectable) const;
 
-public slots:
+public Q_SLOTS:
     void setCurrentDate(const QDate &date);
     void setLunarVisible(bool visible);
     void setLunarFestivalHighlight(bool highlight);
@@ -75,7 +75,7 @@ private:
     void paintCell(QWidget *cell);
     bool eventFilter(QObject *o, QEvent *e);
 
-private slots:
+private Q_SLOTS:
     void cellClicked(QWidget *cell);
     void setSelectedCell(int index);
     void getDbusData() const;

@@ -27,7 +27,7 @@ public:
     const QString hoverIcon() const;
     const QString pressIcon() const;
 
-public slots:
+public Q_SLOTS:
     void setNormalIcon(const QString &normalIcon);
     void setHoverIcon(const QString &hoverIcon);
     void setPressIcon(const QString &pressIcon);

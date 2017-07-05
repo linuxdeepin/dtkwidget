@@ -39,7 +39,7 @@ public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-protected slots:
+protected Q_SLOTS:
     void menuItemInvoked(QAction *action);
 
 private:

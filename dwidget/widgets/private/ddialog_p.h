@@ -32,10 +32,10 @@ public:
     explicit DialogButton(const QString &text, QWidget *parent = 0);
     int buttonType() const;
 
-public slots:
+public Q_SLOTS:
     void setButtonType(int buttonType);
 
-signals:
+Q_SIGNALS:
     void buttonTypeChanged(int buttonType);
 
 private:

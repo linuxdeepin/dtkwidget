@@ -89,7 +89,7 @@ void DSwitchButton::setChecked(bool arg)
         }
         m_innerAnimation->start();
 
-        emit checkedChanged(arg);
+        Q_EMIT checkedChanged(arg);
     }
 }
 

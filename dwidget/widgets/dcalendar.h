@@ -45,10 +45,10 @@ public:
     inline void setAnimationDuration(const int duration) {m_animation->setDuration(duration);}
     inline void setAnimationEasingCurve(const QEasingCurve curve) {m_animation->setEasingCurve(curve);}
 
-signals:
+Q_SIGNALS:
     void selectedDateChanged(const QDate & date);
 
-public slots:
+public Q_SLOTS:
     void setResetButtonText(const QString & resetText);
     void setCurrentDate(const QDate &date);
     void selectDate(const QDate &date);
@@ -63,7 +63,7 @@ public slots:
 private:
     bool eventFilter(QObject *o, QEvent *e) Q_DECL_OVERRIDE;
 
-private slots:
+private Q_SLOTS:
     void showEvent(QShowEvent *) Q_DECL_OVERRIDE;
     void viewDateChanged(const QDate &date, const CaLunarDayInfo &detail);
     void aniToPrev();

@@ -79,7 +79,7 @@ void DOptionPrivate::setChecked(bool checked)
 
     D_QC(DOption);
 
-    emit q->checkedChanged(m_checked);
+    Q_EMIT q->checkedChanged(m_checked);
 }
 
 const QString DOptionPrivate::checkedIcon() const
@@ -96,14 +96,14 @@ void DOptionPrivate::setCheckedIcon(const QString &icon)
 
     D_QC(DOption);
 
-    emit q->checkedIconChanged(icon);
+    Q_EMIT q->checkedIconChanged(icon);
 }
 
 void DOptionPrivate::sizeChanged(QResizeEvent *e)
 {
     D_Q(DOption);
 
-    emit q->sizeChanged(e->size());
+    Q_EMIT q->sizeChanged(e->size());
 }
 
 DOption::DOption(QWidget *parent) :

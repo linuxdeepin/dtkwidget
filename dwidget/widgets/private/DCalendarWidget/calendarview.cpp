@@ -139,7 +139,7 @@ void CalendarView::setCellSelectable(bool selectable)
         return;
     m_cellSelectable = selectable;
 
-    emit cellSelectableChanged(m_cellSelectable);
+    Q_EMIT cellSelectableChanged(m_cellSelectable);
 }
 
 void CalendarView::paintEvent(QPaintEvent *e)
@@ -232,7 +232,7 @@ void CalendarView::getDbusData() const
         QDBusReply<CaLunarMonthInfo> reply = m_DBusInter->GetLunarMonthCalendar(date.year(), date.month(), false, o1);
         QDate cacheDate;
         cacheDate.setDate(date.year(), date.month(), 1);
-        foreach(const CaLunarDayInfo & dayInfo, reply.value().mCaLunarDayInfo) {
+        Q_FOREACH(const CaLunarDayInfo & dayInfo, reply.value().mCaLunarDayInfo) {
             lunarCache->insert(cacheDate, dayInfo);
             if (cacheDate == m_currentDate) {
                 currentDayInfo = dayInfo;
@@ -248,7 +248,7 @@ void CalendarView::getDbusData() const
     // refersh lunar info
     if (date == m_currentDate) {
 //        qDebug() << date << currentDayInfo;
-        emit dateSelected(date, currentDayInfo);
+        Q_EMIT dateSelected(date, currentDayInfo);
     }
 }
 
@@ -361,5 +361,5 @@ void CalendarView::setSelectedCell(int index)
     m_cellList.at(prevPos)->update();
     m_cellList.at(index)->update();
 
-    emit dateSelected(m_days[index], getCaLunarDayInfo(index));
+    Q_EMIT dateSelected(m_days[index], getCaLunarDayInfo(index));
 }

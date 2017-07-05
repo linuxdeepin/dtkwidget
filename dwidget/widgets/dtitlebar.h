@@ -37,7 +37,7 @@ public:
     void resize(int width, int height);
     void resize(const QSize &);
 
-signals:
+Q_SIGNALS:
     Q_DECL_DEPRECATED void minimumClicked();
     Q_DECL_DEPRECATED void maximumClicked();
     Q_DECL_DEPRECATED void restoreClicked();
@@ -52,7 +52,7 @@ signals:
     void mousePosMoving(Qt::MouseButton botton, QPoint pos);
 #endif
 
-public slots:
+public Q_SLOTS:
     void setFixedHeight(int h);
     void setSeparatorVisible(bool visible);
     void setTitle(const QString &title);
@@ -61,7 +61,7 @@ public slots:
     /// Maximized/Minumized
     void toggleWindowState();
 
-private slots:
+private Q_SLOTS:
 #ifndef QT_NO_MENU
     void showMenu();
 #endif

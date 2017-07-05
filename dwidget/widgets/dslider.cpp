@@ -234,7 +234,7 @@ void DSlider::mousePressEvent(QMouseEvent *event)
         d->clickOffset = d->pick(event->pos() - sr.topLeft());
         d->mousePressed = true;
 
-        emit sliderPressed();
+        Q_EMIT sliderPressed();
     }
 }
 
@@ -245,7 +245,7 @@ void DSlider::mouseReleaseEvent(QMouseEvent *event)
     if(event->button() == Qt::LeftButton) {
         d_func()->mousePressed = false;
 
-        emit sliderReleased();
+        Q_EMIT sliderReleased();
     }
 }
 
@@ -279,7 +279,7 @@ void DSlider::paintEvent(QPaintEvent *event)
     pen.setColor(d->m_scaleColor);
     painter.setPen(pen);
 
-    foreach(int scale, d->m_scales) {
+    Q_FOREACH(int scale, d->m_scales) {
         int x = d->getScalePosition(scale);
         int y = height() - 8;
         painter.drawLine(x, y, x, y - CustomDrawingScaleHeight);
@@ -305,7 +305,7 @@ void DSlider::mouseMoveEvent(QMouseEvent *event)
         int newPosition = d->pixelPosToRangeValue(d->pick(event->pos()) - d->clickOffset);
         setSliderPosition(newPosition);
 
-        emit sliderMoved(newPosition);
+        Q_EMIT sliderMoved(newPosition);
     }
 
     if (!d->m_hoverShowValue) {

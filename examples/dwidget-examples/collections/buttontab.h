@@ -33,7 +33,7 @@ class ButtonTab : public QLabel
 public:
     explicit ButtonTab(QWidget *parent = 0);
 
-public slots:
+public Q_SLOTS:
     void buttonClickTest();
 };
 

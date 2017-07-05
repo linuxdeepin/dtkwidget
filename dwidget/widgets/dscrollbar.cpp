@@ -99,7 +99,7 @@ void DScrollBar::setAutoHide(bool autoHide)
         return;
 
     d->autoHide = autoHide;
-    emit autoHideChanged(autoHide);
+    Q_EMIT autoHideChanged(autoHide);
 
     update();
 }

@@ -56,7 +56,7 @@ void DWindowMaxButton::setMaximized(bool isMaximized)
         return;
 
     d->m_isMaximized = isMaximized;
-    emit maximizedChanged(isMaximized);
+    Q_EMIT maximizedChanged(isMaximized);
 }
 
 DWIDGET_END_NAMESPACE

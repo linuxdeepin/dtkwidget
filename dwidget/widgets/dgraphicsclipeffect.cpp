@@ -52,7 +52,7 @@ void DGraphicsClipEffect::setMargins(const QMargins &margins)
         return;
 
     d->margins = margins;
-    emit marginsChanged(margins);
+    Q_EMIT marginsChanged(margins);
 }
 
 void DGraphicsClipEffect::setClipPath(const QPainterPath &clipPath)
@@ -63,7 +63,7 @@ void DGraphicsClipEffect::setClipPath(const QPainterPath &clipPath)
         return;
 
     d->clipPath = clipPath;
-    emit clipPathChanged(clipPath);
+    Q_EMIT clipPathChanged(clipPath);
 }
 
 void DGraphicsClipEffect::draw(QPainter *painter)

@@ -135,7 +135,7 @@ void DBaseExpand::setExpand(bool value)
     }
 
     m_expand = value;
-    emit expandChange(value);
+    Q_EMIT expandChange(value);
 
     if (value) {
         m_animation->setStartValue(0);

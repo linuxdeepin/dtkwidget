@@ -74,7 +74,7 @@ void DEnhancedWidget::setTarget(QWidget *target)
         target->installEventFilter(this);
     }
     d->target = target;
-    emit targetChanged(target);
+    Q_EMIT targetChanged(target);
 }
 
 void DEnhancedWidget::setEnabled(bool enabled)
@@ -94,7 +94,7 @@ void DEnhancedWidget::setEnabled(bool enabled)
     }
 
     d->enabled = enabled;
-    emit enabledChanged(enabled);
+    Q_EMIT enabledChanged(enabled);
 }
 
 bool DEnhancedWidget::eventFilter(QObject *o, QEvent *e)
@@ -109,15 +109,15 @@ bool DEnhancedWidget::eventFilter(QObject *o, QEvent *e)
                 QSize size = event->size();
 
                 if (size.width() != d->old_size.width()) {
-                    emit widthChanged(size.width());
+                    Q_EMIT widthChanged(size.width());
                 }
 
                 if (size.height() != d->old_size.height()) {
-                    emit heightChanged(size.height());
+                    Q_EMIT heightChanged(size.height());
                 }
 
                 if (size != d->old_size) {
-                    emit sizeChanged(size);
+                    Q_EMIT sizeChanged(size);
                 }
 
                 d->old_size = size;
@@ -132,15 +132,15 @@ bool DEnhancedWidget::eventFilter(QObject *o, QEvent *e)
                 QPoint pos = event->pos();
 
                 if (pos.x() != d->old_pos.x()) {
-                    emit xChanged(pos.x());
+                    Q_EMIT xChanged(pos.x());
                 }
 
                 if (pos.y() != d->old_pos.y()) {
-                    emit yChanged(pos.y());
+                    Q_EMIT yChanged(pos.y());
                 }
 
                 if (pos != d->old_pos) {
-                    emit positionChanged(pos);
+                    Q_EMIT positionChanged(pos);
                 }
 
                 d->old_pos = pos;
@@ -149,7 +149,7 @@ bool DEnhancedWidget::eventFilter(QObject *o, QEvent *e)
             break;
         }
         case QEvent::Show: {
-            emit showed();
+            Q_EMIT showed();
 
             break;
         }

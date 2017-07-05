@@ -21,9 +21,9 @@ public:
     void initData();
     void initUI();
     void initConnect();
-signals:
+Q_SIGNALS:
 
-public slots:
+public Q_SLOTS:
     void handleClicked(QString label);
     void handleEnterEvent(QString label);
     void handleLeaveEvent(QString label);

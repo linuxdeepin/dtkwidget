@@ -37,7 +37,7 @@ public:
     bool hasAcceptableInput() const;
     bool isReadOnly() const;
 
-public slots:
+public Q_SLOTS:
     void setCursorPosition(int cursorPosition);
     void setReadOnly(bool readOnly);
     void setSelection(int start, int length);

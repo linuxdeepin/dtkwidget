@@ -85,7 +85,7 @@ bool DComboBoxModel::setData(const QModelIndex &index, const QVariant &value, in
     if (index.isValid() && role == Qt::EditRole)
     {
         m_dataArray.replace(index.row(),QJsonValue(value.toJsonObject()));
-        emit dataChanged(index, index);
+        Q_EMIT dataChanged(index, index);
         return true;
     }
     return false;

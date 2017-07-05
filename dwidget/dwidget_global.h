@@ -56,7 +56,7 @@ namespace Widget
     });\
     QStringList list = QString(#__VA_ARGS__).replace(" ", "").split(",");\
     const QMetaObject *self = metaObject();\
-    foreach (const QString &str, list) {\
+    Q_FOREACH (const QString &str, list) {\
         if(str.isEmpty())\
             continue;\
         connect(this, self->property(self->indexOfProperty(str.toLatin1().data())).notifySignal(),\

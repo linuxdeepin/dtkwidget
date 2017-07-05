@@ -95,7 +95,7 @@ bool DBlurEffectWidgetPrivate::updateWindowBlurArea(QWidget *topLevelWidget)
 
     bool isExistMaskPath = false;
 
-    foreach (const DBlurEffectWidget *w, blurEffectWidgetList) {
+    Q_FOREACH (const DBlurEffectWidget *w, blurEffectWidgetList) {
         if (!w->d_func()->maskPath.isEmpty() && w->isVisible()) {
             isExistMaskPath = true;
             break;
@@ -107,7 +107,7 @@ bool DBlurEffectWidgetPrivate::updateWindowBlurArea(QWidget *topLevelWidget)
     if (isExistMaskPath) {
         QList<QPainterPath> pathList;
 
-        foreach (const DBlurEffectWidget *w, blurEffectWidgetList) {
+        Q_FOREACH (const DBlurEffectWidget *w, blurEffectWidgetList) {
             if (!w->isVisible())
                 continue;
 
@@ -130,7 +130,7 @@ bool DBlurEffectWidgetPrivate::updateWindowBlurArea(QWidget *topLevelWidget)
 
         areaList.reserve(blurEffectWidgetList.size());
 
-        foreach (const DBlurEffectWidget *w, blurEffectWidgetList) {
+        Q_FOREACH (const DBlurEffectWidget *w, blurEffectWidgetList) {
             if (!w->isVisible())
                 continue;
 
@@ -278,7 +278,7 @@ void DBlurEffectWidget::setRadius(int radius)
 
     update();
 
-    emit radiusChanged(radius);
+    Q_EMIT radiusChanged(radius);
 }
 
 void DBlurEffectWidget::setMode(DBlurEffectWidget::BlurMode mode)
@@ -290,7 +290,7 @@ void DBlurEffectWidget::setMode(DBlurEffectWidget::BlurMode mode)
 
     d->mode = mode;
 
-    emit modeChanged(mode);
+    Q_EMIT modeChanged(mode);
 }
 
 void DBlurEffectWidget::setBlendMode(DBlurEffectWidget::BlendMode blendMode)
@@ -316,7 +316,7 @@ void DBlurEffectWidget::setBlendMode(DBlurEffectWidget::BlendMode blendMode)
 
     update();
 
-    emit blendModeChanged(blendMode);
+    Q_EMIT blendModeChanged(blendMode);
 }
 
 void DBlurEffectWidget::setBlurRectXRadius(int blurRectXRadius)
@@ -330,7 +330,7 @@ void DBlurEffectWidget::setBlurRectXRadius(int blurRectXRadius)
 
     update();
 
-    emit blurRectXRadiusChanged(blurRectXRadius);
+    Q_EMIT blurRectXRadiusChanged(blurRectXRadius);
 }
 
 void DBlurEffectWidget::setBlurRectYRadius(int blurRectYRadius)
@@ -344,7 +344,7 @@ void DBlurEffectWidget::setBlurRectYRadius(int blurRectYRadius)
 
     update();
 
-    emit blurRectYRadiusChanged(blurRectYRadius);
+    Q_EMIT blurRectYRadiusChanged(blurRectYRadius);
 }
 
 void DBlurEffectWidget::setMaskColor(QColor maskColor)
@@ -362,7 +362,7 @@ void DBlurEffectWidget::setMaskColor(QColor maskColor)
     d->setMaskColor(maskColor);
     update();
 
-    emit maskColorChanged(maskColor);
+    Q_EMIT maskColorChanged(maskColor);
 }
 
 void DBlurEffectWidget::setMaskColor(DBlurEffectWidget::MaskColorType type)

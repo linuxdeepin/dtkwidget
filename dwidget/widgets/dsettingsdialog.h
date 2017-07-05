@@ -18,7 +18,7 @@ public:
     DSettingsDialog(QWidget *parent = 0);
     ~DSettingsDialog();
 
-public slots:
+public Q_SLOTS:
     void updateSettings(QPointer<Dtk::Settings> settings);
 
 private:

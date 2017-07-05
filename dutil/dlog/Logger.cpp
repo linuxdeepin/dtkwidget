@@ -845,7 +845,7 @@ void Logger::write(const QDateTime& timeStamp, LogLevel logLevel, const char* fi
     }
     else
     {
-      foreach (AbstractAppender* appender, appenders)
+      Q_FOREACH (AbstractAppender* appender, appenders)
         appender->write(timeStamp, logLevel, file, line, function, logCategory, message);
       wasWritten = true;
     }
@@ -857,7 +857,7 @@ void Logger::write(const QDateTime& timeStamp, LogLevel logLevel, const char* fi
   {
     if (!d->appenders.isEmpty())
     {
-      foreach (AbstractAppender* appender, d->appenders)
+      Q_FOREACH (AbstractAppender* appender, d->appenders)
         appender->write(timeStamp, logLevel, file, line, function, logCategory, message);
       wasWritten = true;
     }

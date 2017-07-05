@@ -177,7 +177,7 @@ void DFlowLayout::insertItem(int index, QLayoutItem *item)
 {
     d_func()->itemList.insert(index, item);
 
-    emit countChanged(count());
+    Q_EMIT countChanged(count());
 }
 
 void DFlowLayout::insertWidget(int index, QWidget *widget)
@@ -311,7 +311,7 @@ QLayoutItem *DFlowLayout::takeAt(int index)
             l->setParent(0);
     }
 
-    emit countChanged(count());
+    Q_EMIT countChanged(count());
 
     return item;
 }
@@ -347,7 +347,7 @@ void DFlowLayout::setHorizontalSpacing(int horizontalSpacing)
 
     d->horizontalSpacing = horizontalSpacing;
 
-    emit horizontalSpacingChanged(horizontalSpacing);
+    Q_EMIT horizontalSpacingChanged(horizontalSpacing);
 
     invalidate();
 }
@@ -361,7 +361,7 @@ void DFlowLayout::setVerticalSpacing(int verticalSpacing)
 
     d->verticalSpacing = verticalSpacing;
 
-    emit verticalSpacingChanged(verticalSpacing);
+    Q_EMIT verticalSpacingChanged(verticalSpacing);
 
     invalidate();
 }
@@ -380,7 +380,7 @@ void DFlowLayout::setFlow(Flow direction)
         return;
 
     d->flow = direction;
-    emit flowChanged(direction);
+    Q_EMIT flowChanged(direction);
 
     invalidate();
 }

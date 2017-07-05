@@ -33,11 +33,11 @@ public:
     bool isAlert() const;
     int defaultValue() const;
 
-public slots:
+public Q_SLOTS:
     void setAlert(bool alert);
     void setDefaultValue(int defaultValue);
 
-signals:
+Q_SIGNALS:
     void alertChanged(bool alert);
     void defaultValueChanged(int defaultValue);
 
@@ -62,11 +62,11 @@ public:
     bool isAlert() const;
     double defaultValue() const;
 
-public slots:
+public Q_SLOTS:
     void setAlert(bool alert);
     void setDefaultValue(double defaultValue);
 
-signals:
+Q_SIGNALS:
     void alertChanged(bool alert);
     void defaultValueChanged(double defaultValue);
 

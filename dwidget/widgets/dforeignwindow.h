@@ -31,7 +31,7 @@ public:
     QString wmClass() const;
     quint32 pid() const;
 
-signals:
+Q_SIGNALS:
     void wmClassChanged();
     void pidChanged();
 

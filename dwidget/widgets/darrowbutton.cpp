@@ -95,7 +95,7 @@ void DArrowButton::mousePressEvent(QMouseEvent *event)
 {
     Q_UNUSED(event)
 
-    emit mousePress();
+    Q_EMIT mousePress();
     m_normalLabel->setVisible(false);
     m_hoverLabel->setVisible(false);
     m_pressLabel->setVisible(true);
@@ -107,7 +107,7 @@ void DArrowButton::mouseReleaseEvent(QMouseEvent *event)
 {
     Q_UNUSED(event)
 
-    emit mouseRelease();
+    Q_EMIT mouseRelease();
     m_normalLabel->setVisible(true);
     m_hoverLabel->setVisible(false);
     m_pressLabel->setVisible(false);
@@ -117,12 +117,12 @@ void DArrowButton::mouseReleaseEvent(QMouseEvent *event)
 
 void DArrowButton::enterEvent(QEvent *)
 {
-    emit mouseEnter();
+    Q_EMIT mouseEnter();
 }
 
 void DArrowButton::leaveEvent(QEvent *)
 {
-    emit mouseLeave();
+    Q_EMIT mouseLeave();
 }
 
 void DArrowButton::initButtonState()

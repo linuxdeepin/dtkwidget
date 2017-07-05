@@ -109,7 +109,7 @@ void DScrollArea::setAutoHideScrollBar(bool autoHideScrollBar)
         showScrollBar(d->hBar);
     }
 
-    emit autoHideScrollBarChanged(autoHideScrollBar);
+    Q_EMIT autoHideScrollBarChanged(autoHideScrollBar);
 }
 
 void DScrollArea::hideScrollBar(QScrollBar *bar)

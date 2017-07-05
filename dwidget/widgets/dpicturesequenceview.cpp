@@ -58,7 +58,7 @@ void DPictureSequenceViewPrivate::_q_refreshPicture()
 
         D_QC(DPictureSequenceView);
 
-        emit q->playEnd();
+        Q_EMIT q->playEnd();
     }
 
     item = pictureItemList.value(lastItemPos);

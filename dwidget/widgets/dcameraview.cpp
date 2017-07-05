@@ -27,7 +27,7 @@ QVideoFrame& CameraFormatProxy::currentFrame() const
 bool CameraFormatProxy::present(const QVideoFrame &frame)
 {
     m_currentFrame = frame;
-    emit currentFrameChanged();
+    Q_EMIT currentFrameChanged();
     return true;
 }
 
@@ -155,7 +155,7 @@ void DCameraView::setSource(QCamera *source)
     m_source->setCaptureMode(QCamera::CaptureStillImage);
     m_source->setViewfinder(cameraFormatProxy);
 
-    emit sourceChanged(source);
+    Q_EMIT sourceChanged(source);
 }
 
 void DCameraView::setMirroredHorizontal(bool mirroredHorizontal)
@@ -164,7 +164,7 @@ void DCameraView::setMirroredHorizontal(bool mirroredHorizontal)
         return;
 
     m_mirroredHorizontal = mirroredHorizontal;
-    emit mirroredHorizontalChanged(mirroredHorizontal);
+    Q_EMIT mirroredHorizontalChanged(mirroredHorizontal);
 }
 
 void DCameraView::setMirroredVertical(bool mirroredVertical)
@@ -173,7 +173,7 @@ void DCameraView::setMirroredVertical(bool mirroredVertical)
         return;
 
     m_mirroredVertical = mirroredVertical;
-    emit mirroredVerticalChanged(mirroredVertical);
+    Q_EMIT mirroredVerticalChanged(mirroredVertical);
 }
 
 void DCameraView::setScale(qreal scale)
@@ -182,7 +182,7 @@ void DCameraView::setScale(qreal scale)
         return;
 
     m_scale = scale;
-    emit scaleChanged(scale);
+    Q_EMIT scaleChanged(scale);
 }
 
 void DCameraView::setAspectRatioMode(Qt::AspectRatioMode mode)
@@ -220,7 +220,7 @@ void DCameraView::setRound(bool round)
         return;
 
     m_round = round;
-    emit roundChanged(round);
+    Q_EMIT roundChanged(round);
 }
 
 void DCameraView::paintEvent(QPaintEvent *)

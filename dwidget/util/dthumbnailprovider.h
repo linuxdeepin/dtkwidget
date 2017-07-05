@@ -56,7 +56,7 @@ public:
     qint64 sizeLimit(const QMimeType &mimeType) const;
     void setSizeLimit(const QMimeType &mimeType, qint64 size);
 
-signals:
+Q_SIGNALS:
     void thumbnailChanged(const QString &sourceFilePath, const QString &thumbnailPath) const;
     void createThumbnailFinished(const QString &sourceFilePath, const QString &thumbnailPath) const;
     void createThumbnailFailed(const QString &sourceFilePath) const;

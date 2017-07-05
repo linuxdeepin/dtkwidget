@@ -56,22 +56,22 @@ DFileWatcher *DFileWatcherManager::add(const QString &filePath)
     watcher = new DFileWatcher(filePath, this);
 
     connect(watcher, &DFileWatcher::fileAttributeChanged, this, [this](const QUrl &url) {
-        emit fileAttributeChanged(url.toLocalFile());
+        Q_EMIT fileAttributeChanged(url.toLocalFile());
     });
     connect(watcher, &DFileWatcher::fileClosed, this, [this](const QUrl &url) {
-        emit fileClosed(url.toLocalFile());
+        Q_EMIT fileClosed(url.toLocalFile());
     });
     connect(watcher, &DFileWatcher::fileDeleted, this, [this](const QUrl &url) {
-        emit fileDeleted(url.toLocalFile());
+        Q_EMIT fileDeleted(url.toLocalFile());
     });
     connect(watcher, &DFileWatcher::fileModified, this, [this](const QUrl &url) {
-        emit fileModified(url.toLocalFile());
+        Q_EMIT fileModified(url.toLocalFile());
     });
     connect(watcher, &DFileWatcher::fileMoved, this, [this](const QUrl &fromUrl, const QUrl &toUrl) {
-        emit fileMoved(fromUrl.toLocalFile(), toUrl.toLocalFile());
+        Q_EMIT fileMoved(fromUrl.toLocalFile(), toUrl.toLocalFile());
     });
     connect(watcher, &DFileWatcher::subfileCreated, this, [this](const QUrl &url) {
-        emit subfileCreated(url.toLocalFile());
+        Q_EMIT subfileCreated(url.toLocalFile());
     });
 
     d->watchersMap[filePath] = watcher;

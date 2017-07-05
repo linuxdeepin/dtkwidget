@@ -28,7 +28,7 @@ class ComboBoxTab : public QLabel
 public:
     explicit ComboBoxTab(QWidget *parent = 0);
 
-signals:
+Q_SIGNALS:
 
 private:
     DComboBox *colorCB;

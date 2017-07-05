@@ -431,7 +431,7 @@ void DListView::setOrientation(QListView::Flow flow, bool wrapping)
 
         d->onOrientationChanged();
 
-        emit orientationChanged(orientation);
+        Q_EMIT orientationChanged(orientation);
     }
 }
 
@@ -496,7 +496,7 @@ void DListView::currentChanged(const QModelIndex &current, const QModelIndex &pr
 {
     QListView::currentChanged(current, previous);
 
-    emit currentChanged(previous);
+    Q_EMIT currentChanged(previous);
 }
 
 bool DListView::edit(const QModelIndex &index, QAbstractItemView::EditTrigger trigger, QEvent *event)

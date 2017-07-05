@@ -85,7 +85,7 @@ void ImageButton::setDeletable(bool flag){
 }
 
 void ImageButton::handleClose(){
-    emit closed(m_icon);
+    Q_EMIT closed(m_icon);
 }
 
 void ImageButton::showCloseButton(){
@@ -151,7 +151,7 @@ void ImageButton::enterEvent(QEvent *event){
     }
     updateChildWidgets();
     QPushButton::enterEvent(event);
-    emit mouseEnter();
+    Q_EMIT mouseEnter();
 }
 void ImageButton::leaveEvent(QEvent *event){
     if (m_iconLabel->property("state").isValid()){
@@ -172,7 +172,7 @@ void ImageButton::leaveEvent(QEvent *event){
     }
     updateChildWidgets();
     QPushButton::leaveEvent(event);
-    emit mouseLeave();
+    Q_EMIT mouseLeave();
 }
 
 void ImageButton::resizeEvent(QResizeEvent *event){
@@ -199,11 +199,11 @@ ItemButton::~ItemButton()
 
 void ItemButton::enterEvent(QEvent* event) {
     Q_UNUSED(event);
-    emit mouseEntered(m_text);
+    Q_EMIT mouseEntered(m_text);
 }
 void ItemButton::leaveEvent(QEvent* event) {
     Q_UNUSED(event);
-    emit mouseLeaved(m_text);
+    Q_EMIT mouseLeaved(m_text);
 }
 DButtonGrid::DButtonGrid(QWidget *parent) : QTableWidget(parent)
 {
@@ -297,7 +297,7 @@ void DButtonGrid::addButton(const QString &label, int index){
 void DButtonGrid::addButtons(const QStringList &listLabels){
     int length = m_buttonLabels.length();
     m_buttonLabels.append(listLabels);
-    foreach (QString label, listLabels) {
+    Q_FOREACH (QString label, listLabels) {
         int index = listLabels.indexOf(label);
         addButton(label, length + index);
     }
@@ -346,26 +346,26 @@ int DButtonGrid::getCurrentCheckedIndex() const{
 
 void DButtonGrid::setButtonChecked(int id){
    QPushButton* button = reinterpret_cast<QPushButton*>(m_buttonGroup->button(id));
-   emit buttonCheckedIndexChanged(id);
+   Q_EMIT buttonCheckedIndexChanged(id);
    m_currentCheckedIndex = id;
    if (button->property("type").isValid() && button->property("type").toString() == "ImageButton"){
        if (button->property("key").isValid()){
-           emit buttonChecked(button->property("key").toString());
+           Q_EMIT buttonChecked(button->property("key").toString());
        }
    }else{
-       emit buttonChecked(button->text());
+       Q_EMIT buttonChecked(button->text());
    }
 }
 
 int DButtonGrid::getButtonEnteredIndex(QString text) {
     int tmpIndex = m_buttonLabels.indexOf(text);
-    emit buttonEnteredIndexChanged(tmpIndex);
+    Q_EMIT buttonEnteredIndexChanged(tmpIndex);
     return tmpIndex;
 }
 
 int DButtonGrid::getButtonLeavedIndex(QString text) {
     int tmpIndex = m_buttonLabels.indexOf(text);
-    emit buttonLeavedIndexChanged(tmpIndex);
+    Q_EMIT buttonLeavedIndexChanged(tmpIndex);
     return tmpIndex;
 }
 
@@ -402,7 +402,7 @@ void DButtonGrid::setItemUnChecked(){
 }
 
 void DButtonGrid::clearData(){
-    foreach (QAbstractButton* button, m_buttonGroup->buttons()) {
+    Q_FOREACH (QAbstractButton* button, m_buttonGroup->buttons()) {
         m_buttonGroup->removeButton(button);
     }
     m_buttonLabels.clear();
@@ -423,7 +423,7 @@ void DButtonGrid::clear()
 
 void DButtonGrid::handleClosed(QString url){
     Q_UNUSED(url)
-    emit requestRefreshed(static_cast<ImageButton*>(sender())->getId());
+    Q_EMIT requestRefreshed(static_cast<ImageButton*>(sender())->getId());
 }
 
 DButtonGrid::~DButtonGrid()

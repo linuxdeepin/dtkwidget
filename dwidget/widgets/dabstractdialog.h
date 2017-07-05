@@ -45,7 +45,7 @@ public:
     QColor borderColor() const;
     DisplayPostion displayPostion() const;
 
-public slots:
+public Q_SLOTS:
     void moveToCenter();
     void moveToTopRight();
     void moveToCenterByRect(const QRect &rect);
@@ -55,7 +55,7 @@ public slots:
     void setBorderColor(QColor borderColor);
     void setDisplayPostion(DisplayPostion displayPostion);
 
-signals:
+Q_SIGNALS:
     void sizeChanged(QSize size);
 
 protected:

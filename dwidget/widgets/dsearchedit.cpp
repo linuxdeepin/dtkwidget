@@ -114,11 +114,11 @@ bool DSearchEdit::eventFilter(QObject *o, QEvent *e)
 
     if (o == m_edt) {
         if (e->type() == QEvent::FocusOut) {
-            emit focusOut();
+            Q_EMIT focusOut();
         }
 
         if (e->type() == QEvent::FocusIn) {
-            emit focusIn();
+            Q_EMIT focusIn();
         }
     }
 

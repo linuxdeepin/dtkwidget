@@ -9,7 +9,7 @@ class TestDUtil: public QObject
 public:
     TestDUtil();
 
-private slots:
+private Q_SLOTS:
     void testLogPath();
     void testPathChange();
 

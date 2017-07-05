@@ -58,7 +58,7 @@ bool VideoFormatProxy::present(const QVideoFrame &frame)
     if (frame.isValid())
         m_lastFrame = frame;
 
-    emit currentFrameChanged();
+    Q_EMIT currentFrameChanged();
     return true;
 }
 
@@ -238,7 +238,7 @@ void DVideoWidget::setMirroredHorizontal(bool mirroredHorizontal)
         return;
 
     d->mirroredHorizontal = mirroredHorizontal;
-    emit mirroredHorizontalChanged(mirroredHorizontal);
+    Q_EMIT mirroredHorizontalChanged(mirroredHorizontal);
 }
 
 void DVideoWidget::setMirroredVertical(bool mirroredVertical)
@@ -249,7 +249,7 @@ void DVideoWidget::setMirroredVertical(bool mirroredVertical)
         return;
 
     d->mirroredVertical = mirroredVertical;
-    emit mirroredVerticalChanged(mirroredVertical);
+    Q_EMIT mirroredVerticalChanged(mirroredVertical);
 }
 
 void DVideoWidget::setScale(qreal scale)
@@ -260,7 +260,7 @@ void DVideoWidget::setScale(qreal scale)
         return;
 
     d->scale = scale;
-    emit scaleChanged(scale);
+    Q_EMIT scaleChanged(scale);
 }
 
 void DVideoWidget::setAspectRatioMode(Qt::AspectRatioMode mode)
@@ -278,7 +278,7 @@ void DVideoWidget::setBrightness(int brightness)
         return;
 
     d->brightness = brightness;
-    emit brightnessChanged(brightness);
+    Q_EMIT brightnessChanged(brightness);
 }
 
 void DVideoWidget::setContrast(int contrast)
@@ -289,7 +289,7 @@ void DVideoWidget::setContrast(int contrast)
         return;
 
     d->contrast = contrast;
-    emit contrastChanged(contrast);
+    Q_EMIT contrastChanged(contrast);
 }
 
 void DVideoWidget::setHue(int hue)
@@ -300,7 +300,7 @@ void DVideoWidget::setHue(int hue)
         return;
 
     d->hue = hue;
-    emit hueChanged(hue);
+    Q_EMIT hueChanged(hue);
 }
 
 void DVideoWidget::setSaturation(int saturation)
@@ -311,7 +311,7 @@ void DVideoWidget::setSaturation(int saturation)
         return;
 
     d->saturation = saturation;
-    emit saturationChanged(saturation);
+    Q_EMIT saturationChanged(saturation);
 }
 
 void DVideoWidget::setRound(bool round)
@@ -322,7 +322,7 @@ void DVideoWidget::setRound(bool round)
         return;
 
     d->round = round;
-    emit roundChanged(round);
+    Q_EMIT roundChanged(round);
 }
 
 void DVideoWidget::paintEvent(QPaintEvent *)

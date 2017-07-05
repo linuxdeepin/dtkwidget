@@ -35,10 +35,10 @@ public:
     void addWidget(QWidget *widget);
     QSize sizeHint() const Q_DECL_OVERRIDE;
 
-public slots:
+public Q_SLOTS:
     void setDirection(QBoxLayout::Direction direction);
 
-signals:
+Q_SIGNALS:
     void sizeChanged(QSize size);
     void directionChanged(QBoxLayout::Direction direction);
 

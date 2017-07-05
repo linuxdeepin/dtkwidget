@@ -26,7 +26,7 @@ public:
     bool isEchoMode() const;
     void setEchoMode(EchoMode mode);
 
-signals:
+Q_SIGNALS:
     void echoModeChanged(bool echoOn);
 
 protected:

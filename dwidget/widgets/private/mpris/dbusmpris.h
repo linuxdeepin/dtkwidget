@@ -36,13 +36,13 @@ class DBusMPRIS: public QDBusAbstractInterface
         if (interfaceName != "org.mpris.MediaPlayer2.Player")
             return;
         QVariantMap changedProps = qdbus_cast<QVariantMap>(arguments.at(1).value<QDBusArgument>());
-        foreach(const QString &prop, changedProps.keys()) {
+        Q_FOREACH(const QString &prop, changedProps.keys()) {
             const QMetaObject* self = metaObject();
             for (int i=self->propertyOffset(); i < self->propertyCount(); ++i) {
                 QMetaProperty p = self->property(i);
                 QGenericArgument value(QMetaType::typeName(p.type()), const_cast<void*>(changedProps[prop].constData()));
                 if (p.name() == prop) {
-                    emit p.notifySignal().invoke(this, value);
+                    Q_EMIT p.notifySignal().invoke(this, value);
                 }
             }
         }

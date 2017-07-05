@@ -20,7 +20,7 @@ public:
 
     bool isWorking() const;
 
-signals:
+Q_SIGNALS:
     void mprisAcquired() const;
     void mprisChanged() const;
     void mprisLosted() const;

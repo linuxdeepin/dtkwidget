@@ -94,7 +94,7 @@ void DIpv4LineEditPrivate::setFocus(bool focus)
 
     this->focus = focus;
 
-    emit q_func()->focusChanged(focus);
+    Q_EMIT q_func()->focusChanged(focus);
 }
 
 void DIpv4LineEditPrivate::_q_updateLineEditText()
@@ -112,14 +112,14 @@ void DIpv4LineEditPrivate::_q_updateLineEditText()
     if(text == "....") {
         if(!q->text().isEmpty()) {
             q->setText("");
-            emit q->textEdited(q->text());
+            Q_EMIT q->textEdited(q->text());
         }
     } else {
         text = text.mid(1);
 
         if(text != q->text()) {
             q->setText(text);
-            emit q->textEdited(q->text());
+            Q_EMIT q->textEdited(q->text());
         }
     }
 

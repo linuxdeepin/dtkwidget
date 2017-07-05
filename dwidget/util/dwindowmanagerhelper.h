@@ -35,7 +35,7 @@ public:
 
     QList<DForeignWindow*> currentWorkspaceWindows() const;
 
-signals:
+Q_SIGNALS:
     void windowManagerChanged();
     void hasBlurWindowChanged();
     void hasCompositeChanged();

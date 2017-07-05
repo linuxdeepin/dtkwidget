@@ -31,11 +31,11 @@ public:
     QWidget *target() const;
     bool enabled() const;
 
-public slots:
+public Q_SLOTS:
     void setTarget(QWidget *target);
     void setEnabled(bool enabled);
 
-signals:
+Q_SIGNALS:
     void xChanged(int x);
     void yChanged(int y);
     void positionChanged(const QPoint &point);

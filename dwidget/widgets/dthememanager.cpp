@@ -64,7 +64,7 @@ void DThemeManager::setTheme(const QString theme)
         if (style)
             qApp->setStyle(style);
 
-        emit themeChanged(m_theme);
+        Q_EMIT themeChanged(m_theme);
     }
 }
 

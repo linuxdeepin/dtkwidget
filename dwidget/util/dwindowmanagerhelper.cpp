@@ -149,16 +149,16 @@ DWindowManagerHelper::DWindowManagerHelper(QObject *parent)
     , DObject(*new DWindowManagerHelperPrivate(this))
 {
     connectWindowManagerChangedSignal(this, [this] {
-        emit windowManagerChanged();
+        Q_EMIT windowManagerChanged();
     });
     connectHasBlurWindowChanged(this, [this] {
-        emit hasBlurWindowChanged();
+        Q_EMIT hasBlurWindowChanged();
     });
     connectHasCompositeChanged(this, [this] {
-        emit hasCompositeChanged();
+        Q_EMIT hasCompositeChanged();
     });
     connectWindowListChanged(this, [this] {
-        emit windowListChanged();
+        Q_EMIT windowListChanged();
     });
 }
 

@@ -120,7 +120,7 @@ bool DArrowRectangle::event(QEvent *e)
 {
     switch (e->type())
     {
-    case QEvent::WindowDeactivate:  emit windowDeactivate();    break;
+    case QEvent::WindowDeactivate:  Q_EMIT windowDeactivate();    break;
     default:;
     }
 

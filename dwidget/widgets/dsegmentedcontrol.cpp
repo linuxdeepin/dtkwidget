@@ -87,7 +87,7 @@ int DSegmentedControl::animationDuration() const
 int DSegmentedControl::indexByTitle(const QString &title) const
 {
     int i=0;
-    foreach (QToolButton *button, m_tabList) {
+    Q_FOREACH (QToolButton *button, m_tabList) {
         if(button->text() == title)
             return i;
         ++i;
@@ -117,7 +117,7 @@ int DSegmentedControl::addSegmented(const QIcon &icon, const QString &title)
 
 void DSegmentedControl::addSegmented(const QStringList &titleList)
 {
-    foreach (const QString &title, titleList) {
+    Q_FOREACH (const QString &title, titleList) {
         addSegmented(title);
     }
 }
@@ -193,7 +193,7 @@ bool DSegmentedControl::setCurrentIndex(int currentIndex)
 
     m_currentIndex = currentIndex;
 
-    foreach (QToolButton *button, m_tabList) {
+    Q_FOREACH (QToolButton *button, m_tabList) {
         button->setEnabled(true);
     }
 
@@ -202,8 +202,8 @@ bool DSegmentedControl::setCurrentIndex(int currentIndex)
 
     updateHighlightGeometry();
 
-    emit currentChanged(currentIndex);
-    emit currentTitleChanged(at(currentIndex)->text());
+    Q_EMIT currentChanged(currentIndex);
+    Q_EMIT currentTitleChanged(at(currentIndex)->text());
 
     return true;
 }

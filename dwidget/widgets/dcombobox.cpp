@@ -194,7 +194,7 @@ void DComboBoxItem::setChecked(bool value)
     style()->unpolish(this);
     style()->polish(this);
 
-    emit checkedChanged(m_checked);
+    Q_EMIT checkedChanged(m_checked);
 }
 
 bool DComboBoxItem::hovered() const
@@ -212,7 +212,7 @@ void DComboBoxItem::setHovered(bool value)
     style()->unpolish(this);
     style()->polish(this);
 
-    emit hoveredChanged(m_hovered);
+    Q_EMIT hoveredChanged(m_hovered);
 }
 
 QVariantMap DComboBoxItem::data() const
@@ -300,7 +300,7 @@ void DComboBox::setAlert(bool alert)
         return;
 
     d->alert = alert;
-    emit alertChanged(alert);
+    Q_EMIT alertChanged(alert);
 }
 
 void DComboBox::setEditable(bool editable)
@@ -362,14 +362,14 @@ void DComboBox::focusInEvent(QFocusEvent *e)
 {
     QComboBox::focusInEvent(e);
 
-    emit focusChanged(true);
+    Q_EMIT focusChanged(true);
 }
 
 void DComboBox::focusOutEvent(QFocusEvent *e)
 {
     QComboBox::focusOutEvent(e);
 
-    emit focusChanged(false);
+    Q_EMIT focusChanged(false);
 }
 
 DWIDGET_END_NAMESPACE

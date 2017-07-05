@@ -32,7 +32,7 @@ static void monitor_event_func (SnMonitorEvent *event, void *user_data)
     {
     case SN_MONITOR_EVENT_INITIATED:
         qDebug() << "startup notification initiated: " << app_id;
-        emit monitor->appStartup(app_id);
+        Q_EMIT monitor->appStartup(app_id);
         break;
 
     case SN_MONITOR_EVENT_CHANGED:
@@ -40,7 +40,7 @@ static void monitor_event_func (SnMonitorEvent *event, void *user_data)
 
     case SN_MONITOR_EVENT_COMPLETED:
         qDebug() << "startup notification completed: " << app_id;
-        emit monitor->appStartupCompleted(app_id);
+        Q_EMIT monitor->appStartupCompleted(app_id);
         break;
 
     case SN_MONITOR_EVENT_CANCELED:
