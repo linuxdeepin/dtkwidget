@@ -38,7 +38,7 @@ Description: Deepin Tool Kit Util library
 
 Package: libdtkutil-dev
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libdtkutil( =${binary:Version})
+Depends: ${shlibs:Depends}, ${misc:Depends}, libdtkutil( =${binary:Version}), libdtkbase-dev( =${binary:Version})
 Description: Deepin Tool Kit Util library
  DtkUtil is standard utils library of Deepin Qt/C++ applications.
  .
