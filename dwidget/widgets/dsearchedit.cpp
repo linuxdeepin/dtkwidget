@@ -173,7 +173,9 @@ bool DSearchEdit::event(QEvent *e)
         const QFocusEvent *event = static_cast<QFocusEvent*>(e);
 
         if (event->reason() == Qt::TabFocusReason
-                || event->reason() == Qt::BacktabFocusReason) {
+                || event->reason() == Qt::BacktabFocusReason
+                || event->reason() == Qt::OtherFocusReason
+                || event->reason() == Qt::ShortcutFocusReason) {
             toEditMode();
         }
     }
