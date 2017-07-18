@@ -47,7 +47,7 @@ HEADERS += \
     $$PWD/daboutdialog_p.h \
     $$PWD/darrowrectangle_p.h \
     $$PWD/dpushbutton_p.h \
-    $$PWD/dtickwidget_p.h
+    $$PWD/dtickeffect_p.h
 
 SOURCES += \
     $$PWD/dthemehelper.cpp

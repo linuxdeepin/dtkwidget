@@ -1,5 +1,5 @@
-#ifndef DTICKWIDGET_H
-#define DTICKWIDGET_H
+#ifndef DTICKEFFECT_H
+#define DTICKEFFECT_H
 
 #include "dwidget_global.h"
 #include "dobject.h"
@@ -8,12 +8,12 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DTickWidgetPrivate;
-class LIBDTKWIDGETSHARED_EXPORT DTickWidget : public QGraphicsEffect, public DObject
+class DTickEffectPrivate;
+class LIBDTKWIDGETSHARED_EXPORT DTickEffect : public QGraphicsEffect, public DObject
 {
     Q_OBJECT
 public:
-    explicit DTickWidget(QWidget *widget, QWidget *parent = 0);
+    explicit DTickEffect(QWidget *widget, QWidget *parent = 0);
 
     enum Direction{
         LeftToRight,
@@ -38,9 +38,9 @@ protected:
     void draw(QPainter *painter) Q_DECL_OVERRIDE;
 
 private:
-    D_DECLARE_PRIVATE(DTickWidget)
+    D_DECLARE_PRIVATE(DTickEffect)
 };
 
 DWIDGET_END_NAMESPACE
 
-#endif // DTICKWIDGET_H
+#endif // DTICKEFFECT_H

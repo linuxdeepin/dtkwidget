@@ -1,5 +1,5 @@
-#include "dtickwidget.h"
-#include "private/dtickwidget_p.h"
+#include "dtickeffect.h"
+#include "private/dtickeffect_p.h"
 
 #include <QHBoxLayout>
 #include <QPixmap>
@@ -8,53 +8,50 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-DTickWidget::DTickWidget(QWidget *widget, QWidget *parent)
+DTickEffect::DTickEffect(QWidget *widget, QWidget *parent)
     : QGraphicsEffect(parent)
-    , DObject(*new DTickWidgetPrivate(this))
+    , DObject(*new DTickEffectPrivate(this))
 {
-    D_D(DTickWidget);
+    D_D(DTickEffect);
 
     widget->setGraphicsEffect(this);
+
     d->content = widget;
     d->init();
-    d->initDirection();
+    setDirection(DTickEffect::LeftToRight);
 
     setDuration(1000);
 
-    connect(d->runAnimation, &QVariantAnimation::valueChanged, this, &DTickWidget::update);
-    connect(d->runAnimation, &QVariantAnimation::finished, this, &DTickWidget::finished);
+    connect(d->runAnimation, &QVariantAnimation::valueChanged, this, &DTickEffect::update);
+    connect(d->runAnimation, &QVariantAnimation::finished, this, &DTickEffect::finished);
 }
 
-void DTickWidget::draw(QPainter *painter)
+void DTickEffect::draw(QPainter *painter)
 {
-    D_D(DTickWidget);
-
-    painter->eraseRect(d->content->rect());
+    D_D(DTickEffect);
 
     QPoint offset;
     QPixmap pixmap;
 
-    if (sourceIsPixmap()) {
-        pixmap = sourcePixmap(Qt::LogicalCoordinates, &offset);
-    } else {
-        pixmap = sourcePixmap(Qt::DeviceCoordinates, &offset);
-        painter->setWorldTransform(QTransform());
-    }
+    if (sourceIsPixmap())
+        pixmap = sourcePixmap(Qt::LogicalCoordinates, &offset, QGraphicsEffect::NoPad);
+    else
+        pixmap = sourcePixmap(Qt::DeviceCoordinates, &offset, QGraphicsEffect::NoPad);
 
     QPoint p = d->runAnimation->currentValue().toPoint();
 
     switch (d->direction) {
     case LeftToRight:
-        offset = QPoint(pixmap.width() + p.x(), p.y());
-        break;
-    case RightToLeft:
         offset = QPoint(-pixmap.width() + p.x(), p.y());
         break;
+    case RightToLeft:
+        offset = QPoint(pixmap.width() + p.x(), p.y());
+        break;
     case TopToBottom:
-        offset = QPoint(p.x(), pixmap.height() + p.y());
+        offset = QPoint(p.x(), -pixmap.height() + p.y());
         break;
     case BottomToTop:
-        offset = QPoint(p.x(), -pixmap.height() + p.y());
+        offset = QPoint(p.x(), pixmap.height() + p.y());
         break;
     default:
         break;
@@ -64,45 +61,45 @@ void DTickWidget::draw(QPainter *painter)
     painter->drawPixmap(offset, pixmap);
 }
 
-void DTickWidget::play()
+void DTickEffect::play()
 {
-    D_D(DTickWidget);
+    D_D(DTickEffect);
 
     d->runAnimation->start();
 
     Q_EMIT stateChanged();
 }
 
-void DTickWidget::stop()
+void DTickEffect::stop()
 {
-    D_D(DTickWidget);
+    D_D(DTickEffect);
 
     d->runAnimation->stop();
 
     Q_EMIT stateChanged();
 }
 
-void DTickWidget::pause()
+void DTickEffect::pause()
 {
-    D_D(DTickWidget);
+    D_D(DTickEffect);
 
     d->runAnimation->pause();
 
     Q_EMIT stateChanged();
 }
 
-void DTickWidget::resume()
+void DTickEffect::resume()
 {
-    D_D(DTickWidget);
+    D_D(DTickEffect);
 
     d->runAnimation->resume();
 
     Q_EMIT stateChanged();
 }
 
-void DTickWidget::setDirection(DTickWidget::Direction direction)
+void DTickEffect::setDirection(DTickEffect::Direction direction)
 {
-    D_D(DTickWidget);
+    D_D(DTickEffect);
 
     if (d->direction == direction)
         return;
@@ -112,9 +109,9 @@ void DTickWidget::setDirection(DTickWidget::Direction direction)
     d->initDirection();
 }
 
-void DTickWidget::setDuration(const int duration)
+void DTickEffect::setDuration(const int duration)
 {
-    D_D(DTickWidget);
+    D_D(DTickEffect);
 
     if (d->duration == duration)
         return;
@@ -124,40 +121,40 @@ void DTickWidget::setDuration(const int duration)
     d->runAnimation->setDuration(duration);
 }
 
-DTickWidgetPrivate::DTickWidgetPrivate(DTickWidget *qq)
+DTickEffectPrivate::DTickEffectPrivate(DTickEffect *qq)
     : DObjectPrivate(qq)
 {
 }
 
-DTickWidgetPrivate::~DTickWidgetPrivate()
+DTickEffectPrivate::~DTickEffectPrivate()
 {
     runAnimation->deleteLater();
 }
 
-void DTickWidgetPrivate::init()
+void DTickEffectPrivate::init()
 {
     runAnimation = new QVariantAnimation;
     runAnimation->setLoopCount(-1);
 }
 
-void DTickWidgetPrivate::initDirection()
+void DTickEffectPrivate::initDirection()
 {
-    D_Q(DTickWidget);
+    D_Q(DTickEffect);
 
     switch (direction) {
-    case DTickWidget::LeftToRight:
+    case DTickEffect::LeftToRight:
         runAnimation->setStartValue(QPoint(content->x(), content->y()));
         runAnimation->setEndValue(QPoint(content->width(), content->y()));
         break;
-    case DTickWidget::RightToLeft:
+    case DTickEffect::RightToLeft:
         runAnimation->setStartValue(QPoint(content->x(), content->y()));
         runAnimation->setEndValue(QPoint(-content->width(), content->y()));
         break;
-    case DTickWidget::TopToBottom:
+    case DTickEffect::TopToBottom:
         runAnimation->setStartValue(QPoint(content->x(), content->y()));
         runAnimation->setEndValue(QPoint(content->x(), content->height()));
         break;
-    case DTickWidget::BottomToTop:
+    case DTickEffect::BottomToTop:
         runAnimation->setStartValue(QPoint(content->x(), content->y()));
         runAnimation->setEndValue(QPoint(content->x(), -content->height()));
         break;
