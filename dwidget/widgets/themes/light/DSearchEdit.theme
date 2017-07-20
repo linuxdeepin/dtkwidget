@@ -17,11 +17,10 @@ Dtk--Widget--DSearchEdit #ClearIcon {
 
 Dtk--Widget--DSearchEdit #Edit {
     background-color:transparent;
-    border-radius:0;
+    border-radius:0px;
     color:#303030;
-    border: 5px solid;
-    border-color: transparent;
     padding-right:15px;
+    padding-bottom: 3px;
 }
 
 Dtk--Widget--DSearchEdit QFrame#DEditInsideFrame {

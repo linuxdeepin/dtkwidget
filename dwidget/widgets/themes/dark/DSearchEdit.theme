@@ -19,9 +19,8 @@ Dtk--Widget--DSearchEdit #Edit {
     background-color:transparent;
     border-radius:0;
     color:#fff;
-    border: 5px solid;
-    border-color: transparent;
     padding-right:15px;
+    padding-bottom: 1px;
 }
 
 Dtk--Widget--DSearchEdit QFrame#DEditInsideFrame {

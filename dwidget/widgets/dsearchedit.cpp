@@ -165,6 +165,7 @@ void DSearchEdit::initInsideFrame()
 void DSearchEdit::resizeEvent(QResizeEvent *e)
 {
     m_size = e->size();
+    m_edt->setFixedHeight(m_size.height());
 }
 
 bool DSearchEdit::event(QEvent *e)
