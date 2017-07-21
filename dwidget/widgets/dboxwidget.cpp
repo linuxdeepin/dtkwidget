@@ -12,7 +12,7 @@
     \brief The DBoxWidget widget provides a Adaptive child widget size
     when child widget size changed.
 
-    \inmodule libdui
+    \inmodule deepin-tool-kit
 */
 
 #include <QBoxLayout>

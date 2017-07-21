@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
     a.setTheme("light");
     Dtk::Util::DLogManager::registerConsoleAppender();
 
-    if (!a.setSingleInstance("libdui-examples")) {
+    if (!a.setSingleInstance("deepin-tool-kit-examples")) {
         qDebug() << "another instance is running!!";
     }
 
