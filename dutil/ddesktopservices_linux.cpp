@@ -22,6 +22,13 @@ DUTIL_BEGIN_NAMESPACE
     QDBusInterface *interface = fileManager1DBusInterface();\
     return interface && interface->call(#name, urls2uris(urls), startupId).type() != QDBusMessage::ErrorMessage;
 
+static QMap<QString, QString> soundFileKeyMap = {{"sys-login", "login"},{"sys-logout", "logout"},{"sys-shutdown", "shutdown"},
+                                          {"suspend-resume", "wakeup"},{"message-out", "notification"},{"app-error", "unable-operate"},
+                                          {"trash-empty", "empty-trash"},{"audio-volume-change", "volume-change"},{"power-unplug-battery-low", "battery-low"},
+                                          {"power-plug", "power-plug"},{"power-unplug", "power-unplug"},{"device-added", "device-plug"},
+                                          {"device-removed", "device-unplug"},{"send-to", "icon-to-desktop"},{"camera-shutter", "camera-shutter"},{"screen-capture", "screenshot"},
+                                          {"screen-capture-complete", "screenshot"}};
+
 static QDBusInterface *fileManager1DBusInterface()
 {
     static QDBusInterface interface(QStringLiteral("org.freedesktop.FileManager1"),
@@ -78,10 +85,16 @@ static QString soundEffectFilePath(const QString &name)
         return QString();
 }
 
-static bool systemSoundEffectEnabled()
+static bool systemSoundEffectEnabled(const QString &name)
 {
     QGSettings settings("com.deepin.dde.sound-effect");
-    return settings.get("enabled").toBool();
+
+    const bool effEnabled = settings.get("enabled").toBool();
+
+    if (effEnabled)
+        return settings.get(soundFileKeyMap[name]).toBool();
+
+    return effEnabled;
 }
 
 bool DDesktopServices::showFolder(QString localFilePath, const QString &startupId)
@@ -162,8 +175,7 @@ bool DDesktopServices::playSystemSoundEffect(const DDesktopServices::SystemSound
 
 bool DDesktopServices::playSystemSoundEffect(const QString &name)
 {
-    const bool enabled = systemSoundEffectEnabled();
-    if (!enabled)
+    if (!systemSoundEffectEnabled(name))
         return false;
 
     const QString path = soundEffectFilePath(name);
