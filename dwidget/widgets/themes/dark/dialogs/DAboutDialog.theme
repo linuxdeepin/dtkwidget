@@ -1,5 +1,6 @@
 QLabel#ProductNameLabel {
     font-size:18px;
+    color: black;
 }
 
 QLabel#VersionLabel {
