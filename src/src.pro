@@ -34,7 +34,7 @@ win32* {
 HEADERS += dtkwidget_global.h
 
 includes.path = $${DTK_INCLUDEPATH}/DWidget
-includes.files += $$PWD/dwidget_global.h
+includes.files += $$PWD/dtkwidget_global.h
 
 include($$PWD/util/util.pri)
 include($$PWD/widgets/widgets.pri)
@@ -49,6 +49,6 @@ win32* {
 QMAKE_PKGCONFIG_NAME = DTK_WIDGET
 QMAKE_PKGCONFIG_DESCRIPTION = Deepin Tool Kit UI Module
 QMAKE_PKGCONFIG_INCDIR = $$includes.path
-QMAKE_PKGCONFIG_REQUIRES += dtkbase dtkutil
+QMAKE_PKGCONFIG_REQUIRES += dtkcore
 
 
