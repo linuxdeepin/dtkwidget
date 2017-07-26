@@ -69,13 +69,6 @@ DMainWindow::DMainWindow(QWidget *parent)
     d_func()->init();
 }
 
-DTitlebar *DMainWindow::titleBar() const
-{
-    D_DC(DMainWindow);
-
-    return d->titlebar;
-}
-
 DTitlebar *DMainWindow::titlebar() const
 {
     D_DC(DMainWindow);

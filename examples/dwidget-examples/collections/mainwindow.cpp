@@ -77,7 +77,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     setCentralWidget(centralWidget);
 
-    DTitlebar *titlebar = this->titleBar();
+    DTitlebar *titlebar = this->titlebar();
 
     if (titlebar) {
         titlebar->setMenu(new QMenu(titlebar));
@@ -107,9 +107,9 @@ void MainWindow::menuItemInvoked(QAction *action)
         auto settings = Dtk::Core::DSettings::fromJsonFile(":/resources/data/dfm-settings.json");
         settings->setBackend(backend);
 
-//        DSettingsDialog dsd(this);
-//        dsd.updateSettings(settings);
-//        dsd.exec();
+        DSettingsDialog dsd(this);
+        dsd.updateSettings(settings);
+        dsd.exec();
         return;
     }
 
@@ -135,9 +135,9 @@ void MainWindow::menuItemInvoked(QAction *action)
         encoding->setData("items", codings);
         encoding->setValue(0);
 
-//        DSettingsDialog dsd(this);
-//        dsd.updateSettings(settings);
-//        dsd.exec();
+        DSettingsDialog dsd(this);
+        dsd.updateSettings(settings);
+        dsd.exec();
         return;
     }
 

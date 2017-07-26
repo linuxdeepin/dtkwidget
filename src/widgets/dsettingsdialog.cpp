@@ -3,12 +3,12 @@
 #include <QDebug>
 #include <QHBoxLayout>
 
-#include <option.h>
-#include <settings.h>
-#include <content.h>
-#include <navigation.h>
-#include <widgetfactory.h>
-#include <buttongroup.h>
+#include <DSettingsOption>
+#include <DSettings>
+
+#include "private/settings/content.h"
+#include "private/settings/navigation.h"
+#include "private/settings/widgetfactory.h"
 
 #include "dthememanager.h"
 #include "dwindowclosebutton.h"
@@ -16,12 +16,13 @@
 #include "dbuttonlist.h"
 #include "doptionlist.h"
 
+
 DWIDGET_BEGIN_NAMESPACE
 
 class DSettingsDialogPrivate
 {
 public:
-    DSettingsDialogPrivate(DSettingsDialog *parent) : q_ptr(parent){}
+    DSettingsDialogPrivate(DSettingsDialog *parent) : q_ptr(parent) {}
 
     Navigation      *leftFrame;
 
@@ -33,10 +34,13 @@ public:
     Q_DECLARE_PUBLIC(DSettingsDialog)
 };
 
+
 DSettingsDialog::DSettingsDialog(QWidget *parent) :
     DAbstractDialog(parent), d_ptr(new DSettingsDialogPrivate(this))
 {
     Q_D(DSettingsDialog);
+
+    D_THEME_INIT_WIDGET(dialogs/DSettingsDialog);
 
     setObjectName("DSettingsDialog");
 
@@ -61,8 +65,6 @@ DSettingsDialog::DSettingsDialog(QWidget *parent) :
     d->rightLayout->addWidget(closeBt, 0, Qt::AlignVCenter | Qt::AlignRight);
     d->rightLayout->addWidget(d->content);
 
-    D_THEME_INIT_WIDGET(dialogs/DSettingsDialog);
-
     layout->addWidget(d->rightFrame);
     setFixedWidth(680);
 
@@ -76,7 +78,7 @@ DSettingsDialog::~DSettingsDialog()
 
 }
 
-void DSettingsDialog::updateSettings(QPointer<Dtk::Settings> settings)
+void DSettingsDialog::updateSettings(Dtk::Core::DSettings *settings)
 {
     Q_D(DSettingsDialog);
     d->leftFrame->updateSettings(settings);

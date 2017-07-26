@@ -13,8 +13,9 @@
 #include <QDialog>
 #include <QPoint>
 
+#include <DObject>
+
 #include "dtkwidget_global.h"
-#include "dobject.h"
 
 class QMouseEvent;
 class QPushButton;

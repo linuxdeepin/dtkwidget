@@ -33,7 +33,6 @@ class LIBDTKWIDGETSHARED_EXPORT DMainWindow : public QMainWindow, public DTK_COR
 public:
     explicit DMainWindow(QWidget *parent = 0);
 
-    Q_DECL_DEPRECATED_X("Please use titlebar") DTitlebar *titleBar() const;
     DTitlebar *titlebar() const;
 
     bool isDXcbWindow() const;
