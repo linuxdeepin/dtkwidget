@@ -15,14 +15,14 @@
 #include <QTextCodec>
 #include <QDebug>
 
-#include <option.h>
-#include <settings.h>
+#include <DOption>
+#include <DSettings>
 
 #include "dsettingsdialog.h"
 
 #include "dslider.h"
 #include "dthememanager.h"
-#include "dwidget_global.h"
+#include "dtkwidget_global.h"
 #include "dswitchbutton.h"
 #include "segmentedcontrol.h"
 #include "dcolorpicker.h"
@@ -102,23 +102,23 @@ void MainWindow::menuItemInvoked(QAction *action)
     if (action->text() == "dfm-settings") {
         QTemporaryFile tmpFile;
         tmpFile.open();
-        auto backend = new QSettingBackend(tmpFile.fileName());
+        auto backend = new Dtk::Core::QSettingBackend(tmpFile.fileName());
 
-        auto settings = Settings::fromJsonFile(":/resources/data/dfm-settings.json");
+        auto settings = Dtk::Core::DSettings::fromJsonFile(":/resources/data/dfm-settings.json");
         settings->setBackend(backend);
 
-        DSettingsDialog dsd(this);
-        dsd.updateSettings(settings);
-        dsd.exec();
+//        DSettingsDialog dsd(this);
+//        dsd.updateSettings(settings);
+//        dsd.exec();
         return;
     }
 
     if (action->text() == "dt-settings") {
         QTemporaryFile tmpFile;
         tmpFile.open();
-        auto backend = new QSettingBackend(tmpFile.fileName());
+        auto backend = new Dtk::Core::QSettingBackend(tmpFile.fileName());
 
-        auto settings = Settings::fromJsonFile(":/resources/data/dt-settings.json");
+        auto settings = Dtk::Core::DSettings::fromJsonFile(":/resources/data/dt-settings.json");
         settings->setBackend(backend);
 
         QFontDatabase fontDatabase;
@@ -127,16 +127,17 @@ void MainWindow::menuItemInvoked(QAction *action)
         fontFamliy->setValue(0);
 
         QStringList codings;
-        for (auto coding: QTextCodec::availableCodecs())
+        for (auto coding : QTextCodec::availableCodecs()) {
             codings << coding;
+        }
 
         auto encoding = settings->option("advance.encoding.encoding");
         encoding->setData("items", codings);
         encoding->setValue(0);
 
-        DSettingsDialog dsd(this);
-        dsd.updateSettings(settings);
-        dsd.exec();
+//        DSettingsDialog dsd(this);
+//        dsd.updateSettings(settings);
+//        dsd.exec();
         return;
     }
 

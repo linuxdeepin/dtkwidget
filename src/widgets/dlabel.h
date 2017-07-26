@@ -7,23 +7,25 @@
  * (at your option) any later version.
  **/
 
-#ifndef SEGMENTEDCONTROL_H
-#define SEGMENTEDCONTROL_H
+#ifndef DLABEL_H
+#define DLABEL_H
 
-#include <QFrame>
-#include "dsegmentedcontrol.h"
+
+#include <QLabel>
+
 #include "dtkwidget_global.h"
 
-DWIDGET_USE_NAMESPACE
+DWIDGET_BEGIN_NAMESPACE
 
-class Segmentedcontrol : public QFrame
+class LIBDTKWIDGETSHARED_EXPORT DLabel : public QLabel
 {
     Q_OBJECT
-public:
-    explicit Segmentedcontrol(QWidget *parent = 0);
 
-private:
-    DSegmentedControl *segmentedControl;
+public:
+    DLabel(QWidget * parent = 0, Qt::WindowFlags f = 0);
+    DLabel(const QString & text, QWidget * parent = 0, Qt::WindowFlags f = 0);
 };
 
-#endif // SEGMENTEDCONTROL_H
+DWIDGET_END_NAMESPACE
+
+#endif // DLABEL_H

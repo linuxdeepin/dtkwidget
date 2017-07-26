@@ -7,23 +7,27 @@
  * (at your option) any later version.
  **/
 
-#ifndef SEGMENTEDCONTROL_H
-#define SEGMENTEDCONTROL_H
+#ifndef DSEPARATORHORIZONTAL_H
+#define DSEPARATORHORIZONTAL_H
 
-#include <QFrame>
-#include "dsegmentedcontrol.h"
+#include <QWidget>
+#include <QVBoxLayout>
+
 #include "dtkwidget_global.h"
 
-DWIDGET_USE_NAMESPACE
+DWIDGET_BEGIN_NAMESPACE
 
-class Segmentedcontrol : public QFrame
+class LIBDTKWIDGETSHARED_EXPORT DSeparatorHorizontal : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Segmentedcontrol(QWidget *parent = 0);
+    explicit DSeparatorHorizontal(QWidget *parent = 0);
 
 private:
-    DSegmentedControl *segmentedControl;
+    QWidget *m_topRec = NULL;
+    QWidget *m_bottomRec = NULL;
 };
 
-#endif // SEGMENTEDCONTROL_H
+DWIDGET_END_NAMESPACE
+
+#endif // DSEPARATORHORIZONTAL_H

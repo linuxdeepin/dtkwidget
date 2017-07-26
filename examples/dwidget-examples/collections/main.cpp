@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 
     DApplication a(argc, argv);
     a.setTheme("light");
-    Dtk::Util::DLogManager::registerConsoleAppender();
+    Dtk::Core::DLogManager::registerConsoleAppender();
 
     if (!a.setSingleInstance("deepin-tool-kit-examples")) {
         qDebug() << "another instance is running!!";

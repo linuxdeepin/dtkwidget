@@ -1,4 +1,4 @@
-QT       += core gui multimedia multimediawidgets
+QT += core gui multimedia multimediawidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -8,27 +8,10 @@ CONFIG += c++11
 
 DEFINES += QT_MESSAGELOGCONTEXT
 
-linux{
-    QT += x11extras dbus
-}
-
 unix {
+    QT += x11extras dbus
     CONFIG += link_pkgconfig
-    PKGCONFIG += dtksettings dtksettingsview
-}
-
-win32* {
-    DEFINES += STATIC_LIB
-
-    #DEPENDS dtksettings
-    INCLUDEPATH += $$INCLUDE_INSTALL_DIR\libdtk-1.0\DSettings
-    DEPENDPATH += $$INCLUDE_INSTALL_DIR\libdtk-1.0\DSettings
-    LIBS += -L$$LIB_INSTALL_DIR -ldtksettings
-
-    #DEPENDS dtksettingsview
-    INCLUDEPATH += $$INCLUDE_INSTALL_DIR\libdtk-1.0\DSettingsView
-    DEPENDPATH += $$INCLUDE_INSTALL_DIR\libdtk-1.0\DSettingsView
-    LIBS += -L$$LIB_INSTALL_DIR -ldtksettingsview
+    PKGCONFIG += dtkcore
 }
 
 SOURCES += main.cpp\
@@ -78,42 +61,24 @@ win32* {
     INCLUDEPATH += $$PWD/../../../dwidget/platforms/windows
 }
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../../dbase/release/ -ldtkbase
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../../dbase/debug/ -ldtkbase
-else:unix: LIBS += -L$$OUT_PWD/../../../dbase/ -ldtkbase
-
-INCLUDEPATH += $$PWD/../../../dbase
-DEPENDPATH += $$PWD/../../../dbase
-
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../../dwidget/release/ -ldtkwidget
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../../dwidget/debug/ -ldtkwidget
-else:unix: LIBS += -L$$OUT_PWD/../../../dwidget/ -ldtkwidget
-
-INCLUDEPATH += $$PWD/../../../dwidget
-INCLUDEPATH += $$PWD/../../../dwidget/widgets
-INCLUDEPATH += $$PWD/../../../dwidget/util
-DEPENDPATH += $$PWD/../../../dwidget
-
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../../dutil/release/ -ldtkutil
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../../dutil/debug/ -ldtkutil
-else:unix: LIBS += -L$$OUT_PWD/../../../dutil/ -ldtkutil
-
-INCLUDEPATH += $$PWD/../../../dutil
-INCLUDEPATH += $$PWD/../../../dutil/dlog
-DEPENDPATH += $$PWD/../../../dutil
-
-unix:QMAKE_RPATHDIR += $$OUT_PWD/../../../dbase/
-unix:QMAKE_RPATHDIR += $$OUT_PWD/../../../dutil/
-unix:QMAKE_RPATHDIR += $$OUT_PWD/../../../dwidget/
-
 win32* {
+    DEFINES += STATIC_LIB
+
     #DEPENDS dtksettings
-    INCLUDEPATH += $$INCLUDE_INSTALL_DIR\libdtk-0.1.0\DSettings
-    DEPENDPATH += $$INCLUDE_INSTALL_DIR\libdtk-0.1.0\DSettings
+    INCLUDEPATH += $$INCLUDE_INSTALL_DIR\libdtk-1.0\DSettings
+    DEPENDPATH += $$INCLUDE_INSTALL_DIR\libdtk-1.0\DSettings
     LIBS += -L$$LIB_INSTALL_DIR -ldtksettings
 
     #DEPENDS dtksettingsview
-    INCLUDEPATH += $$INCLUDE_INSTALL_DIR\libdtk-0.1.0\DSettingsView
-    DEPENDPATH += $$INCLUDE_INSTALL_DIR\libdtk-0.1.0\DSettingsView
+    INCLUDEPATH += $$INCLUDE_INSTALL_DIR\libdtk-1.0\DSettingsView
+    DEPENDPATH += $$INCLUDE_INSTALL_DIR\libdtk-1.0\DSettingsView
     LIBS += -L$$LIB_INSTALL_DIR -ldtksettingsview
 }
+
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../../src/ -ldtkwidget
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../../src/ -ldtkwidgetd
+else:unix: LIBS += -L$$OUT_PWD/../../../src/ -ldtkwidget
+
+INCLUDEPATH += $$PWD/../../../src
+INCLUDEPATH += $$PWD/../../../src/widgets
+DEPENDPATH += $$PWD/../../../src

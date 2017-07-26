@@ -7,23 +7,24 @@
  * (at your option) any later version.
  **/
 
-#ifndef SEGMENTEDCONTROL_H
-#define SEGMENTEDCONTROL_H
+#ifndef DTEXTBUTTON_H
+#define DTEXTBUTTON_H
 
-#include <QFrame>
-#include "dsegmentedcontrol.h"
+#include <QPushButton>
+#include <QPainter>
+
 #include "dtkwidget_global.h"
 
-DWIDGET_USE_NAMESPACE
+DWIDGET_BEGIN_NAMESPACE
 
-class Segmentedcontrol : public QFrame
+class LIBDTKWIDGETSHARED_EXPORT DTextButton : public QPushButton
 {
     Q_OBJECT
 public:
-    explicit Segmentedcontrol(QWidget *parent = 0);
-
-private:
-    DSegmentedControl *segmentedControl;
+    DTextButton(const QString & text, QWidget * parent = 0);
+    ~DTextButton();
 };
 
-#endif // SEGMENTEDCONTROL_H
+DWIDGET_END_NAMESPACE
+
+#endif // DTEXTBUTTON_H

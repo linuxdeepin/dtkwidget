@@ -15,7 +15,7 @@
 #include <QTabWidget>
 #include <QVBoxLayout>
 
-#include <DMainWindow>
+#include "widgets/dmainwindow.h"
 
 #include "bartab.h"
 #include "buttontab.h"
