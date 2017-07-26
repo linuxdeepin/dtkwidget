@@ -105,11 +105,6 @@ bool DPlatformWindowHandle::isEnabledDXcb(const QWindow *window)
     return window->property(_useDxcb).toBool();
 }
 
-bool DPlatformWindowHandle::hasBlurWindow()
-{
-    return DWindowManagerHelper::instance()->hasBlurWindow();
-}
-
 bool DPlatformWindowHandle::setWindowBlurAreaByWM(QWidget *widget, const QVector<DPlatformWindowHandle::WMBlurArea> &area)
 {
     Q_ASSERT(widget);

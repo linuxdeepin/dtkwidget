@@ -29,7 +29,6 @@ public:
     void setTheme(const QString theme);
     void setTheme(QWidget *widget, const QString theme);
 
-    Q_DECL_DEPRECATED QString getQssForWidget(const QString className, const QString &theme = "");
     QString getQssForWidget(const QString className, const QString &theme = "") const;
     QString getQssForWidget(const QString className, const QWidget *widget) const;
     QString getQssForWidget(const QWidget *widget) const;

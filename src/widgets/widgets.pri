@@ -59,7 +59,6 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dexpandgroup.h \
     $$PWD/dlabel.h \
     $$PWD/dlinkbutton.h \
-    $$PWD/dcameraview.h \
     $$PWD/dscrollbar.h \
     $$PWD/dscrollarea.h \
     $$PWD/darrowrectangle.h \
@@ -70,7 +69,6 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dboxwidget.h \
     $$PWD/dcircleprogress.h \
     $$PWD/dstackwidget.h \
-    $$PWD/dcheckbox.h \
     $$PWD/dfilechooseredit.h \
     $$PWD/dpasswordedit.h \
     $$PWD/dipv4lineedit.h \
@@ -133,7 +131,6 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dexpandgroup.cpp \
     $$PWD/dlabel.cpp \
     $$PWD/dlinkbutton.cpp \
-    $$PWD/dcameraview.cpp \
     $$PWD/dscrollbar.cpp \
     $$PWD/dscrollarea.cpp \
     $$PWD/darrowrectangle.cpp \
@@ -144,7 +141,6 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dboxwidget.cpp \
     $$PWD/dcircleprogress.cpp \
     $$PWD/dstackwidget.cpp \
-    $$PWD/dcheckbox.cpp \
     $$PWD/dfilechooseredit.cpp \
     $$PWD/dpasswordedit.cpp \
     $$PWD/dipv4lineedit.cpp \

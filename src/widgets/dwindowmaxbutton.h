@@ -28,15 +28,10 @@ public:
 
     bool isMaximized() const;
 
-    Q_DECL_DEPRECATED void setWindowState(Qt::WindowState windowState);
-
 public Q_SLOTS:
     void setMaximized(bool isMaximized);
 
 Q_SIGNALS:
-    Q_DECL_DEPRECATED void maximum();
-    Q_DECL_DEPRECATED void restore();
-
     void maximizedChanged(bool isMaximized);
 
 private:

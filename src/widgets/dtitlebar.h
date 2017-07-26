@@ -38,10 +38,6 @@ public:
     void resize(const QSize &);
 
 Q_SIGNALS:
-    Q_DECL_DEPRECATED void minimumClicked();
-    Q_DECL_DEPRECATED void maximumClicked();
-    Q_DECL_DEPRECATED void restoreClicked();
-    Q_DECL_DEPRECATED void closeClicked();
     void optionClicked();
     void doubleClicked();
     void mousePressed(Qt::MouseButtons buttons);

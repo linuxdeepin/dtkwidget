@@ -106,11 +106,6 @@ void DThemeManager::setTheme(QWidget *widget, const QString theme)
     widget->setStyleSheet(getQssForWidget(getObjectClassName(widget), theme));
 }
 
-QString DThemeManager::getQssForWidget(const QString className, const QString &theme)
-{
-    return const_cast<const DThemeManager*>(this)->getQssForWidget(className, theme);
-}
-
 QString DThemeManager::getQssForWidget(const QString className, const QString &theme) const
 {
     QString qss;

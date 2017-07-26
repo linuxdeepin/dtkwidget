@@ -41,7 +41,7 @@ class LIBDTKWIDGETSHARED_EXPORT DListView : public QListView, public DTK_CORE_NA
     Q_OBJECT
 
     /// item count.
-    Q_PROPERTY(int count READ count NOTIFY countChanged)
+    Q_PROPERTY(int count READ count NOTIFY rowCountChanged)
     /// list layout orientation
     Q_PROPERTY(Qt::Orientation orientation READ orientation NOTIFY orientationChanged)
 
@@ -82,7 +82,6 @@ public Q_SLOTS:
     void edit(const QModelIndex &index);
 
 Q_SIGNALS:
-    Q_DECL_DEPRECATED void countChanged(int count);
     void rowCountChanged();
     void orientationChanged(Qt::Orientation orientation);
     void currentChanged(const QModelIndex &previous);

@@ -62,6 +62,7 @@ win32* {
 }
 
 win32* {
+    CONFIG += no_lflags_merge
     DEFINES += STATIC_LIB
     #DEPENDS dtkcore
     INCLUDEPATH += $$INCLUDE_INSTALL_DIR\libdtk-1.2\DCore

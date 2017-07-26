@@ -43,11 +43,6 @@ bool DWindowMaxButton::isMaximized() const
     return d->m_isMaximized;
 }
 
-void DWindowMaxButton::setWindowState(Qt::WindowState windowState)
-{
-    setMaximized(windowState == Qt::WindowMaximized);
-}
-
 void DWindowMaxButton::setMaximized(bool isMaximized)
 {
     D_D(DWindowMaxButton);

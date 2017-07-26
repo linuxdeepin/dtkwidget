@@ -123,15 +123,6 @@ public:
                             double minValue = -2147483647, double maxValue = 2147483647,
                             int decimals = 1, bool *ok = 0, Qt::WindowFlags flags = 0);
 
-#if QT_DEPRECATED_SINCE(5, 0)
-    QT_DEPRECATED static inline int getInteger(QWidget *parent, const QString &title, const QString &label, int value = 0,
-                          int minValue = -2147483647, int maxValue = 2147483647,
-                          int step = 1, bool *ok = 0, Qt::WindowFlags flags = 0)
-    {
-        return getInt(parent, title, label, value, minValue, maxValue, step, ok, flags);
-    }
-#endif
-
 protected:
     void showEvent(QShowEvent *e);
 
