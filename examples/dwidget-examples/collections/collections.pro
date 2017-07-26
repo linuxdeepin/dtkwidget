@@ -63,20 +63,13 @@ win32* {
 
 win32* {
     DEFINES += STATIC_LIB
-
-    #DEPENDS dtksettings
-    INCLUDEPATH += $$INCLUDE_INSTALL_DIR\libdtk-1.0\DSettings
-    DEPENDPATH += $$INCLUDE_INSTALL_DIR\libdtk-1.0\DSettings
-    LIBS += -L$$LIB_INSTALL_DIR -ldtksettings
-
-    #DEPENDS dtksettingsview
-    INCLUDEPATH += $$INCLUDE_INSTALL_DIR\libdtk-1.0\DSettingsView
-    DEPENDPATH += $$INCLUDE_INSTALL_DIR\libdtk-1.0\DSettingsView
-    LIBS += -L$$LIB_INSTALL_DIR -ldtksettingsview
+    #DEPENDS dtkcore
+    INCLUDEPATH += $$INCLUDE_INSTALL_DIR\libdtk-1.2\DCore
+    LIBS += -L$$LIB_INSTALL_DIR -ldtkcore
 }
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../../src/ -ldtkwidget
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../../src/ -ldtkwidgetd
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../../src/release -ldtkwidget
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../../src/debug -ldtkwidgetd
 else:unix: LIBS += -L$$OUT_PWD/../../../src/ -ldtkwidget
 
 INCLUDEPATH += $$PWD/../../../src

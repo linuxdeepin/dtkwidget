@@ -26,15 +26,9 @@ linux* {
 }
 
 win32* {
-    #DEPENDS dtksettings
-    INCLUDEPATH += $$INCLUDE_INSTALL_DIR\libdtk-1.0\DSettings
-    DEPENDPATH += $$INCLUDE_INSTALL_DIR\libdtk-1.0\DSettings
-    LIBS += -L$$LIB_INSTALL_DIR -ldtksettings
-
-    #DEPENDS dtksettingsview
-    INCLUDEPATH += $$INCLUDE_INSTALL_DIR\libdtk-1.0\DSettingsView
-    DEPENDPATH += $$INCLUDE_INSTALL_DIR\libdtk-1.0\DSettingsView
-    LIBS += -L$$LIB_INSTALL_DIR -ldtksettingsview
+    #DEPENDS dtkcore
+    INCLUDEPATH += $$INCLUDE_INSTALL_DIR\libdtk-1.2\DCore
+    LIBS += -L$$LIB_INSTALL_DIR -ldtkcore
 }
 
 HEADERS += dtkwidget_global.h

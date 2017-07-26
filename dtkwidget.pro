@@ -10,7 +10,7 @@ linux* {
 }
 
 win32* {
-    !system(python $$PWD/tool/translate_generation.py $$PWD/dwidget): error("Failed to generate translation")
+    !system(python $$PWD/tool/translate_generation.py $$PWD): error("Failed to generate translation")
 }
 
 macx* {

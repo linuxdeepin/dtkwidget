@@ -8,7 +8,8 @@
  **/
 
 #include "dtrashmanager.h"
-#include "base/private/dobject_p.h"
+
+#include <DObjectPrivate>
 
 #include <QDirIterator>
 #include <QStorageInfo>
@@ -29,18 +30,21 @@ static QString getNotExistsFileName(const QString &fileName, const QString &targ
     int index = name.lastIndexOf('.');
     QByteArray suffix;
 
-    if (index >= 0) {
+    if (index >= 0)
+    {
         suffix = name.mid(index);
     }
 
-    if (suffix.size() > 200) {
+    if (suffix.size() > 200)
+    {
         suffix = suffix.left(200);
     }
 
     name.chop(suffix.size());
     name = name.left(200 - suffix.size());
 
-    while (QFile::exists(targetPath + "/" + name + suffix)) {
+    while (QFile::exists(targetPath + "/" + name + suffix))
+    {
         name = QCryptographicHash::hash(name, QCryptographicHash::Md5).toHex();
     }
 
@@ -49,11 +53,14 @@ static QString getNotExistsFileName(const QString &fileName, const QString &targ
 
 static bool renameFile(const QFileInfo &fileInfo, const QString &target, QString *errorString = NULL)
 {
-    if (fileInfo.isFile() || fileInfo.isSymLink()) {
+    if (fileInfo.isFile() || fileInfo.isSymLink())
+    {
         QFile file(fileInfo.filePath());
 
-        if (!file.rename(target)) {
-            if (errorString) {
+        if (!file.rename(target))
+        {
+            if (errorString)
+            {
                 *errorString = file.errorString();
             }
 
@@ -61,30 +68,38 @@ static bool renameFile(const QFileInfo &fileInfo, const QString &target, QString
         }
 
         return true;
-    } else {
+    }
+    else
+    {
         QDirIterator iterator(fileInfo.filePath(),
                               QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System);
 
-        while (iterator.hasNext()) {
+        while (iterator.hasNext())
+        {
             iterator.next();
 
             const QString newFile = iterator.filePath().replace(0, fileInfo.filePath().length(), target);
 
-            if (!QDir().mkpath(QFileInfo(newFile).path())) {
-                if (errorString) {
+            if (!QDir().mkpath(QFileInfo(newFile).path()))
+            {
+                if (errorString)
+                {
                     *errorString = QString("Make the %1 path is failed").arg(QFileInfo(newFile).path());
                 }
 
                 return false;
             }
 
-            if (!renameFile(iterator.fileInfo(), newFile, errorString)) {
+            if (!renameFile(iterator.fileInfo(), newFile, errorString))
+            {
                 return false;
             }
         }
 
-        if (!QDir().rmdir(fileInfo.filePath())) {
-            if (errorString) {
+        if (!QDir().rmdir(fileInfo.filePath()))
+        {
+            if (errorString)
+            {
                 *errorString = QString("Cannot remove the %1 dir").arg(fileInfo.filePath());
             }
 
@@ -95,7 +110,7 @@ static bool renameFile(const QFileInfo &fileInfo, const QString &target, QString
     return true;
 }
 
-class DTrashManagerPrivate : public DObjectPrivate
+class DTrashManagerPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 {
 public:
     DTrashManagerPrivate(DTrashManager *q_ptr)
