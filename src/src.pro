@@ -37,20 +37,10 @@ win32* {
     LIBS += -L$$LIB_INSTALL_DIR -ldtksettingsview
 }
 
-HEADERS += \
-    dutility.h \
-    dtkwidget_global.h
-
-SOURCES += \
-    dutility.cpp
+HEADERS += dtkwidget_global.h
 
 includes.path = $${DTK_INCLUDEPATH}/DWidget
-includes.files += $$PWD/dwidget_global.h \
-            $$PWD/dutility.h\
-            $$PWD/util/*.h \
-            $$PWD/util/DThumbnailProvider \
-            $$PWD/util/DFileIconProvider \
-            $$PWD/util/DWindowManagerHelper
+includes.files += $$PWD/dwidget_global.h
 
 include($$PWD/util/util.pri)
 include($$PWD/widgets/widgets.pri)

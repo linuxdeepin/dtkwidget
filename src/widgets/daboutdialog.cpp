@@ -2,7 +2,7 @@
 #include "private/daboutdialog_p.h"
 
 #include "dthememanager.h"
-#include <dutility.h>
+#include <dwidgetutil.h>
 
 #include <QDesktopServices>
 #include <QUrl>

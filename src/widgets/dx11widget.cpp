@@ -20,7 +20,7 @@
 #include "../platforms/x11/xutil.h"
 #endif
 
-#include "dutility.h"
+#include "dwidgetutil.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -100,7 +100,8 @@ void DX11WidgetPrivate::init()
         if (q->isActiveWindow())
         {
             q->setShadowColor(SHADOW_COLOR_ACTIVE);
-        } else {
+        } else
+        {
             q->setShadowColor(SHADOW_COLOR_NORMAL);
         }
     });
@@ -546,7 +547,7 @@ void DX11Widget::drawShadowPixmap()
 
     pixmap.fill(Qt::black);
 
-    d->shadowPixmap = QPixmap::fromImage(DUtility::dropShadow(pixmap, d->m_ShadowWidth, d->shadowColor));
+    d->shadowPixmap = QPixmap::fromImage(Dtk::Widget::dropShadow(pixmap, d->m_ShadowWidth, d->shadowColor));
 }
 
 int DX11Widget::border() const
