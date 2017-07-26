@@ -15,7 +15,7 @@
 #include <QTextCodec>
 #include <QDebug>
 
-#include <DOption>
+#include <DSettingsOption>
 #include <DSettings>
 
 #include "dsettingsdialog.h"
