@@ -54,7 +54,7 @@ RESOURCES += \
 FORMS += \
     cameraform.ui
 
-linux{
+linux* {
     INCLUDEPATH += $$PWD/../../../dwidget/platforms/linux
 }
 win32* {
