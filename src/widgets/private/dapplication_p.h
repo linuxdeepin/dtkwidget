@@ -20,11 +20,12 @@
 class QLocalServer;
 class QTranslator;
 
+DCORE_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
 class DAboutDialog;
 
-class DApplicationPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
+class DApplicationPrivate : public DObjectPrivate
 {
     D_DECLARE_PUBLIC(DApplication)
 
@@ -36,11 +37,10 @@ public:
     void setTheme(const QString &theme);
 
     bool setSingleInstance(const QString &key);
+    bool setSingleInstanceBySemaphore(const QString &key);
 
     bool loadDtkTranslator(QList<QLocale> localeFallback);
-    bool loadTranslator(QList<Dtk::Core::DPathBuf> translateDirs,
-                        const QString &name,
-                        QList<QLocale> localeFallback);
+    bool loadTranslator(QList<DPathBuf> translateDirs, const QString &name, QList<QLocale> localeFallback);
 
 public:
 // int m_pidLockFD = 0;
