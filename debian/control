@@ -22,7 +22,7 @@ Description: Deepin graphical user interface library
 
 Package: libdtkwidget-dev
 Architecture: any
-Depends: ${misc:Depends},
+Depends: ${misc:Depends}, libdtkwidget1,
  qtmultimedia5-dev, libqt5x11extras5-dev, libdtkcore-dev
 Description: Deepin graphical user interface library
  DtkWidget is Deepin graphical user interface for deepin desktop development.
