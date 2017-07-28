@@ -37,12 +37,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/dapplication.cpp" line="379"/>
+        <location filename="../src/widgets/dapplication.cpp" line="421"/>
         <source>Version: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/dapplication.cpp" line="383"/>
+        <location filename="../src/widgets/dapplication.cpp" line="425"/>
         <source>%1 is released under %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -70,6 +70,22 @@
     <message>
         <location filename="../src/widgets/dshortcutedit.cpp" line="94"/>
         <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="../src/widgets/private/settings/content.cpp" line="172"/>
+        <source>Restore Defaults</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ShortcutEdit</name>
+    <message>
+        <location filename="../src/widgets/private/settings/shortcutedit.cpp" line="99"/>
+        <source>Please enter a new shortcut</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

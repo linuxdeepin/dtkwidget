@@ -104,8 +104,9 @@ bool DApplicationPrivate::setSingleInstance(const QString &key)
 
 static bool tryAcquireSystemSemaphore(QSystemSemaphore *ss, qint64 timeout = 10)
 {
-    if (ss->error() != QSystemSemaphore::NoError)
+    if (ss->error() != QSystemSemaphore::NoError) {
         return false;
+    }
 
     QSystemSemaphore _tmp_ss(QString("%1-%2").arg("DTK::tryAcquireSystemSemaphore").arg(ss->key()), 1, QSystemSemaphore::Open);
 
@@ -118,12 +119,14 @@ static bool tryAcquireSystemSemaphore(QSystemSemaphore *ss, qint64 timeout = 10)
 
     while (Q_LIKELY(t.elapsed() < timeout && !request.isFinished()));
 
-    if (request.isFinished())
+    if (request.isFinished()) {
         return true;
+    }
 
     if (Q_LIKELY(request.isRunning())) {
-        if (Q_LIKELY(ss->release(1)))
+        if (Q_LIKELY(ss->release(1))) {
             request.waitForFinished();
+        }
     }
 
     return false;
@@ -151,7 +154,7 @@ bool DApplicationPrivate::loadDtkTranslator(QList<QLocale> localeFallback)
     q->installTranslator(qtbaseTranslator);
 
     QList<DPathBuf> translateDirs;
-    auto dtkwidgetName = "dtkwidget";
+    auto dtkwidgetName = "dtkwidget2";
 
     //("/home/user/.local/share", "/usr/local/share", "/usr/share")
     auto dataDirs = QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation);
@@ -190,9 +193,9 @@ bool DApplicationPrivate::loadTranslator(QList<DPathBuf> translateDirs, const QS
         QStringList parseLocalNameList = locale.name().split("_", QString::SkipEmptyParts);
         if (parseLocalNameList.length() > 0) {
             translateFilename = QString("%1_%2").arg(name)
-                    .arg(parseLocalNameList.at(0));
+                                .arg(parseLocalNameList.at(0));
             for (auto &path : translateDirs) {
-                QString translatePath= (path / translateFilename).toString();
+                QString translatePath = (path / translateFilename).toString();
                 if (QFile::exists(translatePath + ".qm")) {
                     qDebug() << "translatePath after feedback:" << translatePath;
                     auto translator = new QTranslator(q);
@@ -374,8 +377,9 @@ void DApplication::setAboutDialog(DAboutDialog *aboutDialog)
 {
     D_D(DApplication);
 
-    if (d->aboutDialog && d->aboutDialog != aboutDialog)
+    if (d->aboutDialog && d->aboutDialog != aboutDialog) {
         d->aboutDialog->deleteLater();
+    }
 
     d->aboutDialog = aboutDialog;
 }
@@ -417,10 +421,12 @@ void DApplication::handleAboutAction()
     aboutDialog->setVersion(translate("DAboutDialog", "Version: %1").arg(applicationVersion()));
     aboutDialog->setDescription(applicationDescription());
 
-    if (!applicationLicense().isEmpty())
+    if (!applicationLicense().isEmpty()) {
         aboutDialog->setLicense(translate("DAboutDialog", "%1 is released under %2").arg(productName()).arg(applicationLicense()));
-    if (!applicationAcknowledgementPage().isEmpty())
+    }
+    if (!applicationAcknowledgementPage().isEmpty()) {
         aboutDialog->setAcknowledgementLink(applicationAcknowledgementPage());
+    }
 
     aboutDialog->exec();
     aboutDialog->deleteLater();
@@ -445,10 +451,11 @@ bool DApplication::notify(QObject *obj, QEvent *event)
     if (event->type() == QEvent::PolishRequest) {
         // Fixed the style for the menu widget to dlight
         // ugly code will no longer needed.
-        if (QMenu *menu = qobject_cast<QMenu*>(obj)) {
+        if (QMenu *menu = qobject_cast<QMenu *>(obj)) {
             if (!menu->testAttribute(Qt::WA_SetStyle))
-                if (QStyle *style = QStyleFactory::create("dlight"))
+                if (QStyle *style = QStyleFactory::create("dlight")) {
                     menu->setStyle(style);
+                }
         }
     }
 

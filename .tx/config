@@ -4,7 +4,7 @@ minimum_perc = 80
 mode = developer
 
 [deepin-tool-kit.dwidget]
-file_filter = translations/dtkwidget_<lang>.ts
-source_file = translations/dtkwidget.ts
+file_filter = translations/dtkwidget2_<lang>.ts
+source_file = translations/dtkwidget2.ts
 source_lang = en
 type = QT
