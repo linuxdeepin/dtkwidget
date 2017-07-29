@@ -18,7 +18,6 @@ macx* {
     !system($$PWD/tool/translate_generation.sh): error("Failed to generate translation")
 }
 
-message($${TARGET})
 TRANSLATIONS += $$PWD/translations/$${TARGET}2.ts \
                 $$PWD/translations/$${TARGET}2_zh_CN.ts
 

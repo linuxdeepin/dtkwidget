@@ -15,7 +15,6 @@
 #include <QStorageInfo>
 #include <QCryptographicHash>
 #include <QDateTime>
-#include <QStandardPaths>
 #include <QDebug>
 
 DWIDGET_BEGIN_NAMESPACE

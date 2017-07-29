@@ -27,7 +27,7 @@ linux* {
 
 win32* {
     #DEPENDS dtkcore
-    INCLUDEPATH += $$INCLUDE_INSTALL_DIR\libdtk-1.2\DCore
+    INCLUDEPATH += $$INCLUDE_INSTALL_DIR\libdtk-$$VERSION\DCore
     LIBS += -L$$LIB_INSTALL_DIR -ldtkcore
 }
 

@@ -21,13 +21,15 @@
 #include <QWaitCondition>
 #include <QPainter>
 #include <QUrl>
-#include <QStandardPaths>
 #include <QDebug>
+
+#include <DStandardPaths>
 
 DWIDGET_BEGIN_NAMESPACE
 
 #define FORMAT ".png"
-#define THUMBNAIL_PATH QStandardPaths::writableLocation(QStandardPaths::GenericCacheLocation) + "/thumbnails"
+#define THUMBNAIL_PATH \
+    DCORE_NAMESPACE::DStandardPaths::writableLocation(QStandardPaths::GenericCacheLocation) + "/thumbnails"
 #define THUMBNAIL_FAIL_PATH THUMBNAIL_PATH"/fail"
 #define THUMBNAIL_LARGE_PATH THUMBNAIL_PATH"/large"
 #define THUMBNAIL_NORMAL_PATH THUMBNAIL_PATH"/normal"
@@ -55,7 +57,8 @@ public:
 
     static QSet<QString> hasThumbnailMimeHash;
 
-    struct ProduceInfo {
+    struct ProduceInfo
+    {
         QFileInfo fileInfo;
         DThumbnailProvider::Size size;
         DThumbnailProvider::CallBack callback;
@@ -87,7 +90,8 @@ void DThumbnailProviderPrivate::init()
 
 QString DThumbnailProviderPrivate::sizeToFilePath(DThumbnailProvider::Size size) const
 {
-    switch (size) {
+    switch (size)
+    {
     case DThumbnailProvider::Small:
         return THUMBNAIL_SMALL_PATH;
     case DThumbnailProvider::Normal:
@@ -111,19 +115,22 @@ bool DThumbnailProvider::hasThumbnail(const QFileInfo &info) const
 {
     Q_D(const DThumbnailProvider);
 
-    if (!info.isReadable() || !info.isFile()) {
+    if (!info.isReadable() || !info.isFile())
+    {
         return false;
     }
 
     qint64 fileSize = info.size();
 
-    if (fileSize <= 0) {
+    if (fileSize <= 0)
+    {
         return false;
     }
 
     const QMimeType &mime = d->mimeDatabase.mimeTypeForFile(info);
 
-    if (fileSize > sizeLimit(mime)) {
+    if (fileSize > sizeLimit(mime))
+    {
         return false;
     }
 
@@ -134,10 +141,12 @@ bool DThumbnailProvider::hasThumbnail(const QMimeType &mimeType) const
 {
     const QString &mime = mimeType.name();
 
-    if (DThumbnailProviderPrivate::hasThumbnailMimeHash.isEmpty()) {
+    if (DThumbnailProviderPrivate::hasThumbnailMimeHash.isEmpty())
+    {
         const QList<QByteArray> &mimeTypes = QImageReader::supportedMimeTypes();
 
-        if (mimeTypes.isEmpty()) {
+        if (mimeTypes.isEmpty())
+        {
             DThumbnailProviderPrivate::hasThumbnailMimeHash.insert("");
 
             return false;
@@ -145,7 +154,8 @@ bool DThumbnailProvider::hasThumbnail(const QMimeType &mimeType) const
 
         DThumbnailProviderPrivate::hasThumbnailMimeHash.reserve(mimeTypes.size());
 
-        for (const QByteArray &t : mimeTypes) {
+        for (const QByteArray &t : mimeTypes)
+        {
             DThumbnailProviderPrivate::hasThumbnailMimeHash.insert(QString::fromLocal8Bit(t));
         }
     }
@@ -163,20 +173,23 @@ QString DThumbnailProvider::thumbnailFilePath(const QFileInfo &info, Size size) 
     if (absolutePath == d->sizeToFilePath(Small)
             || absolutePath == d->sizeToFilePath(Normal)
             || absolutePath == d->sizeToFilePath(Large)
-            || absolutePath == THUMBNAIL_FAIL_PATH) {
+            || absolutePath == THUMBNAIL_FAIL_PATH)
+    {
         return absoluteFilePath;
     }
 
     const QString thumbnailName = dataToMd5Hex(QUrl::fromLocalFile(absoluteFilePath).toString(QUrl::FullyEncoded).toLocal8Bit()) + FORMAT;
     QString thumbnail = d->sizeToFilePath(size) + QDir::separator() + thumbnailName;
 
-    if (!QFile::exists(thumbnail)) {
+    if (!QFile::exists(thumbnail))
+    {
         return QString();
     }
 
     QImage image(thumbnail);
 
-    if (image.text(QT_STRINGIFY(Thumb::MTime)).toInt() != (int)info.lastModified().toTime_t()) {
+    if (image.text(QT_STRINGIFY(Thumb::MTime)).toInt() != (int)info.lastModified().toTime_t())
+    {
         QFile::remove(thumbnail);
 
         Q_EMIT thumbnailChanged(absoluteFilePath, QString());
@@ -199,11 +212,13 @@ QString DThumbnailProvider::createThumbnail(const QFileInfo &info, DThumbnailPro
     if (absolutePath == d->sizeToFilePath(Small)
             || absolutePath == d->sizeToFilePath(Normal)
             || absolutePath == d->sizeToFilePath(Large)
-            || absolutePath == THUMBNAIL_FAIL_PATH) {
+            || absolutePath == THUMBNAIL_FAIL_PATH)
+    {
         return absoluteFilePath;
     }
 
-    if (!hasThumbnail(info)) {
+    if (!hasThumbnail(info))
+    {
         d->errorString = QStringLiteral("This file has not support thumbnail: ") + absoluteFilePath;
 
         //!Warnning: Do not store thumbnails to the fail path
@@ -216,12 +231,16 @@ QString DThumbnailProvider::createThumbnail(const QFileInfo &info, DThumbnailPro
     // the file is in fail path
     QString thumbnail = THUMBNAIL_FAIL_PATH + QDir::separator() + thumbnailName;
 
-    if (QFile::exists(thumbnail)) {
+    if (QFile::exists(thumbnail))
+    {
         QImage image(thumbnail);
 
-        if (image.text(QT_STRINGIFY(Thumb::MTime)).toInt() != (int)info.lastModified().toTime_t()) {
+        if (image.text(QT_STRINGIFY(Thumb::MTime)).toInt() != (int)info.lastModified().toTime_t())
+        {
             QFile::remove(thumbnail);
-        } else {
+        }
+        else
+        {
             return QString();
         }
     }// end
@@ -229,34 +248,45 @@ QString DThumbnailProvider::createThumbnail(const QFileInfo &info, DThumbnailPro
     QScopedPointer<QImage> image(new QImage(QSize(size, size), QImage::Format_ARGB32_Premultiplied));
     QImageReader reader(absoluteFilePath);
 
-    if (!reader.canRead()) {
+    if (!reader.canRead())
+    {
         reader.setFormat(d->mimeDatabase.mimeTypeForFile(info).name().toLocal8Bit());
 
-        if (!reader.canRead()) {
+        if (!reader.canRead())
+        {
             d->errorString = reader.errorString();
         }
     }
 
-    if (d->errorString.isEmpty()) {
+    if (d->errorString.isEmpty())
+    {
         const QSize &imageSize = reader.size();
 
-        if (imageSize.isValid()) {
-            if (imageSize.width() >= size || imageSize.height() >= size) {
+        if (imageSize.isValid())
+        {
+            if (imageSize.width() >= size || imageSize.height() >= size)
+            {
                 reader.setScaledSize(reader.size().scaled(size, size, Qt::KeepAspectRatio));
             }
 
-            if (!reader.read(image.data())) {
+            if (!reader.read(image.data()))
+            {
                 d->errorString = reader.errorString();
             }
-        } else {
+        }
+        else
+        {
             d->errorString = "Fail to read image file attribute data:" + info.absoluteFilePath();
         }
     }
 
     // successful
-    if (d->errorString.isEmpty()) {
+    if (d->errorString.isEmpty())
+    {
         thumbnail = d->sizeToFilePath(size) + QDir::separator() + thumbnailName;
-    } else {
+    }
+    else
+    {
         //fail
         image.reset(new QImage(1, 1, QImage::Format_Mono));
     }
@@ -267,11 +297,13 @@ QString DThumbnailProvider::createThumbnail(const QFileInfo &info, DThumbnailPro
     // create path
     QFileInfo(thumbnail).absoluteDir().mkpath(".");
 
-    if (!image->save(thumbnail, Q_NULLPTR, 80)) {
+    if (!image->save(thumbnail, Q_NULLPTR, 80))
+    {
         d->errorString = QStringLiteral("Can not save image to ") + thumbnail;
     }
 
-    if (d->errorString.isEmpty()) {
+    if (d->errorString.isEmpty())
+    {
         Q_EMIT createThumbnailFinished(absoluteFilePath, thumbnail);
         Q_EMIT thumbnailChanged(absoluteFilePath, thumbnail);
 
@@ -294,12 +326,15 @@ void DThumbnailProvider::appendToProduceQueue(const QFileInfo &info, DThumbnailP
 
     Q_D(DThumbnailProvider);
 
-    if (isRunning()) {
+    if (isRunning())
+    {
         QWriteLocker locker(&d->dataReadWriteLock);
         d->produceQueue.append(std::move(produceInfo));
         locker.unlock();
         d->waitCondition.wakeAll();
-    } else {
+    }
+    else
+    {
         d->produceQueue.append(std::move(produceInfo));
         start();
     }
@@ -309,7 +344,8 @@ void DThumbnailProvider::removeInProduceQueue(const QFileInfo &info, DThumbnailP
 {
     Q_D(DThumbnailProvider);
 
-    if (isRunning()) {
+    if (isRunning())
+    {
         QWriteLocker locker(&d->dataReadWriteLock);
         Q_UNUSED(locker)
     }
@@ -372,21 +408,25 @@ void DThumbnailProvider::run()
 {
     Q_D(DThumbnailProvider);
 
-    Q_FOREVER {
+    Q_FOREVER
+    {
         QWriteLocker locker(&d->dataReadWriteLock);
 
-        if (d->produceQueue.isEmpty()) {
+        if (d->produceQueue.isEmpty())
+        {
             d->waitCondition.wait(&d->dataReadWriteLock);
         }
 
-        if (!d->running) {
+        if (!d->running)
+        {
             return;
         }
 
         const DThumbnailProviderPrivate::ProduceInfo &task = d->produceQueue.dequeue();
         const QPair<QString, DThumbnailProvider::Size> &tmpKey = qMakePair(task.fileInfo.absoluteFilePath(), task.size);
 
-        if (d->discardedProduceInfos.contains(tmpKey)) {
+        if (d->discardedProduceInfos.contains(tmpKey))
+        {
             d->discardedProduceInfos.remove(tmpKey);
             locker.unlock();
             continue;
@@ -396,7 +436,8 @@ void DThumbnailProvider::run()
 
         const QString &thumbnail = createThumbnail(task.fileInfo, task.size);
 
-        if (task.callback) {
+        if (task.callback)
+        {
             task.callback(thumbnail);
         }
     }

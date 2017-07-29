@@ -8,16 +8,18 @@
  **/
 
 #include "dtrashmanager.h"
+
 #include <DObjectPrivate>
+#include <DStandardPaths>
 
 #include <QDirIterator>
 #include <QStorageInfo>
 #include <QCryptographicHash>
 #include <QDateTime>
-#include <QStandardPaths>
 #include <QDebug>
 
-#define TRASH_PATH QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/Trash"
+#define TRASH_PATH \
+    DCORE_NAMESPACE::DStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/Trash"
 #define TRASH_INFO_PATH TRASH_PATH"/info"
 #define TRASH_FILES_PATH TRASH_PATH"/files"
 

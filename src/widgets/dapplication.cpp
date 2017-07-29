@@ -10,7 +10,6 @@
 #include <QDebug>
 #include <QDir>
 #include <QLocalSocket>
-#include <QStandardPaths>
 #include <QLibraryInfo>
 #include <QTranslator>
 #include <QLocalServer>
@@ -21,6 +20,8 @@
 #include <QtConcurrent/QtConcurrent>
 
 #include <qpa/qplatformintegrationfactory_p.h>
+
+#include <DStandardPaths>
 
 #include "dapplication.h"
 #include "dthememanager.h"
@@ -154,13 +155,14 @@ bool DApplicationPrivate::loadDtkTranslator(QList<QLocale> localeFallback)
     q->installTranslator(qtbaseTranslator);
 
     QList<DPathBuf> translateDirs;
+    auto dtkwidgetDir = "dtkwidget";
     auto dtkwidgetName = "dtkwidget2";
 
     //("/home/user/.local/share", "/usr/local/share", "/usr/share")
-    auto dataDirs = QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation);
+    auto dataDirs = DStandardPaths::standardLocations(QStandardPaths::GenericDataLocation);
     for (const auto &path : dataDirs) {
         DPathBuf DPathBuf(path);
-        translateDirs << DPathBuf / dtkwidgetName / "translations";
+        translateDirs << DPathBuf / dtkwidgetDir / "translations";
     }
 
     DPathBuf runDir(q->applicationDirPath());
@@ -186,7 +188,6 @@ bool DApplicationPrivate::loadTranslator(QList<DPathBuf> translateDirs, const QS
                 translator->load(translatePath);
                 q->installTranslator(translator);
                 return true;
-
             }
         }
 
@@ -253,7 +254,7 @@ bool DApplication::loadTranslator(QList<QLocale> localeFallback)
     QList<DPathBuf> translateDirs;
     auto appName = applicationName();
     //("/home/user/.local/share", "/usr/local/share", "/usr/share")
-    auto dataDirs = QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation);
+    auto dataDirs = DStandardPaths::standardLocations(QStandardPaths::GenericDataLocation);
     for (const auto &path : dataDirs) {
         DPathBuf DPathBuf(path);
         translateDirs << DPathBuf / appName / "translations";

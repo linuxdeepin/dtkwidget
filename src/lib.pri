@@ -1,7 +1,6 @@
-VERSION = 2.0
-CONFIG += c++11 create_pc create_prl no_install_prl
+include($$PWD/config.pri)
 
-DEFINES += QT_MESSAGELOGCONTEXT
+CONFIG += c++11 create_pc create_prl no_install_prl
 
 isEmpty(PREFIX){
     PREFIX = /usr
@@ -26,6 +25,5 @@ isEmpty(INCLUDE_INSTALL_DIR) {
 INSTALLS += includes target
 
 win32* {
-    DEFINES += STATIC_LIB
     CONFIG += staticlib
 }
