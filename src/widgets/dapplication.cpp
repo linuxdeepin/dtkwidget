@@ -136,10 +136,33 @@ static bool tryAcquireSystemSemaphore(QSystemSemaphore *ss, qint64 timeout = 10)
 bool DApplicationPrivate::setSingleInstanceBySemaphore(const QString &key)
 {
     static QSystemSemaphore ss(key, 1, QSystemSemaphore::Open);
+    static bool singleInstance = false;
+
+    if (singleInstance)
+        return true;
 
     Q_ASSERT_X(ss.error() == QSystemSemaphore::NoError, "DApplicationPrivate::setSingleInstanceBySemaphore:", ss.errorString().toLocal8Bit().constData());
 
-    return tryAcquireSystemSemaphore(&ss);
+    singleInstance = tryAcquireSystemSemaphore(&ss);
+
+    if (singleInstance) {
+        QtConcurrent::run([] {
+            while (ss.acquire()) {
+                if (qApp->startingUp())
+                    break;
+
+                ss.release(1);
+
+                Q_EMIT qApp->newInstanceStarted();
+            }
+        });
+
+        qAddPostRoutine([] {
+            ss.release(1);
+        });
+    }
+
+    return singleInstance;
 }
 
 bool DApplicationPrivate::loadDtkTranslator(QList<QLocale> localeFallback)
