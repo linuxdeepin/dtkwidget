@@ -14,17 +14,15 @@ greaterThan(QT_MAJOR_VERSION, 4) {
   else: QT += platformsupport-private
 }
 
-macx{
+macx* {
     CONFIG += link_pkgconfig
     PKGCONFIG += dtkcore
 }
-
 linux* {
     QT += x11extras dbus
     CONFIG += link_pkgconfig
     PKGCONFIG += x11 xext dtkcore
 }
-
 win32* {
     #DEPENDS dtkcore
     INCLUDEPATH += $$INCLUDE_INSTALL_DIR\libdtk-$$VERSION\DCore
@@ -39,7 +37,7 @@ includes.files += $$PWD/dtkwidget_global.h
 include($$PWD/util/util.pri)
 include($$PWD/widgets/widgets.pri)
 
-linux{
+linux* {
     includes.files += $$PWD/platforms/linux/*.h
 }
 win32* {
@@ -51,4 +49,12 @@ QMAKE_PKGCONFIG_DESCRIPTION = Deepin Tool Kit Widget Module
 QMAKE_PKGCONFIG_INCDIR = $$includes.path
 QMAKE_PKGCONFIG_REQUIRES += dtkcore
 
+# add translations
+TRANSLATIONS += $$PWD/../translations/$${TARGET}2.ts \
+                $$PWD/../translations/$${TARGET}2_zh_CN.ts
+
+translations.path = $$PREFIX/share/$${TARGET}/translations
+translations.files = $$PWD/../translations/*.qm
+
+INSTALLS += translations
 

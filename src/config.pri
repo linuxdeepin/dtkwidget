@@ -2,6 +2,10 @@ VERSION = 2.0
 CONFIG += c++11
 DEFINES += QT_MESSAGELOGCONTEXT
 
+isEmpty(PREFIX){
+    PREFIX = /usr
+}
+
 win32* {
     DEFINES += STATIC_LIB
 }

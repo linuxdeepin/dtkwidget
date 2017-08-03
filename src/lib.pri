@@ -2,10 +2,6 @@ include($$PWD/config.pri)
 
 CONFIG += c++11 create_pc create_prl no_install_prl
 
-isEmpty(PREFIX){
-    PREFIX = /usr
-}
-
 isEmpty(LIB_INSTALL_DIR) {
     target.path = $$PREFIX/lib
 } else {
