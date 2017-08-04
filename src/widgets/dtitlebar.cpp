@@ -393,7 +393,7 @@ void DTitlebar::resizeEvent(QResizeEvent *event)
     d->minButton->setFixedHeight(event->size().height());
     d->maxButton->setFixedHeight(event->size().height());
     d->closeButton->setFixedHeight(event->size().height());
-
+    d->separator->setFixedWidth(event->size().width());
     return QWidget::resizeEvent(event);
 }
 
