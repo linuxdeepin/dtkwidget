@@ -53,6 +53,9 @@ Q_SIGNALS:
     void expandChange(bool e);
     void sizeChanged(QSize s);
 
+protected:
+    void resizeEvent(QResizeEvent *e) Q_DECL_OVERRIDE;
+
 private:
     QWidget *m_header = NULL;
     QWidget *m_content = NULL;

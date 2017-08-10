@@ -26,8 +26,8 @@
 DWIDGET_BEGIN_NAMESPACE
 
 const int DefaultTitlebarHeight = 40;
-const int DefaultIconHeight = 20;
-const int DefaultIconWidth = 20;
+const int DefaultIconHeight = 24;
+const int DefaultIconWidth = 24;
 
 class DTitlebarPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 {

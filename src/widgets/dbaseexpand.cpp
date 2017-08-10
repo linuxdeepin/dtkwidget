@@ -116,7 +116,7 @@ void DBaseExpand::setContent(QWidget *content, Qt::Alignment alignment)
         delete child;
     }
 
-    m_contentLayout->addWidget(content, 0, alignment);
+    m_contentLayout->addWidget(content, 1, alignment);
     m_contentLayout->addStretch(1);
     m_content = content;
 }
@@ -178,6 +178,14 @@ void DBaseExpand::setExpandedSeparatorVisible(bool arg)
         disconnect(this, &DBaseExpand::expandChange, m_bottom_separator, &DSeparatorHorizontal::setVisible);
         m_bottom_separator->hide();
     }
+}
+
+void DBaseExpand::resizeEvent(QResizeEvent *e)
+{
+    if (m_content) {
+        m_content->setFixedWidth(e->size().width());
+    }
+    QWidget::resizeEvent(e);
 }
 
 
