@@ -27,7 +27,7 @@ class DThemeManagerPrivate : public DThemeManager
 
 Q_GLOBAL_STATIC(DThemeManagerPrivate, DThemeManagerStatic)
 
-DThemeManager * DThemeManager::instance()
+DThemeManager *DThemeManager::instance()
 {
     return DThemeManagerStatic;
 }
@@ -61,8 +61,9 @@ void DThemeManager::setTheme(const QString theme)
             m_theme = "dark";
         }
 
-        if (style)
+        if (style) {
             qApp->setStyle(style);
+        }
 
         Q_EMIT themeChanged(m_theme);
     }
@@ -100,8 +101,9 @@ void DThemeManager::setTheme(QWidget *widget, const QString theme)
         widget->setProperty("_d_dtk_theme", "dark");
     }
 
-    if (style)
+    if (style) {
         widget->setStyle(style);
+    }
 
     widget->setStyleSheet(getQssForWidget(getObjectClassName(widget), theme));
 }
@@ -111,12 +113,14 @@ QString DThemeManager::getQssForWidget(const QString className, const QString &t
     QString qss;
 
     QString themeName = theme.isEmpty() ? m_theme : theme;
-    QFile themeFile(QString(":/%1/%2.theme").arg(themeName).arg(className));
+    QString themeURL = QString(":/%1/%2.theme").arg(themeName).arg(className);
+    QFile themeFile(themeURL);
 
     if (themeFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qss = themeFile.readAll();
-
         themeFile.close();
+    } else {
+        qWarning() << "open qss file failed" << themeURL;
     }
 
     return qss;
@@ -130,9 +134,9 @@ QString DThemeManager::getQssForWidget(const QString className, const QWidget *w
 
     do {
         theme = widget->property("_d_dtk_theme").toString();
-        if (!theme.isEmpty()) break;
+        if (!theme.isEmpty()) { break; }
         widget = widget->parentWidget();
-    } while(widget);
+    } while (widget);
 
     return getQssForWidget(className, theme);
 }
@@ -142,10 +146,41 @@ QString DThemeManager::getQssForWidget(const QWidget *widget) const
     return getQssForWidget(getObjectClassName(widget), widget);
 }
 
+/*!
+    \since 2.0
+    \relates DThemeManager
+    Find QSS file on the qrc by getQssForWidget, className is form metaObject
+ */
+void DThemeManager::registerWidget(QWidget *widget, QStringList propertys)
+{
+    auto meta = widget->metaObject();
+    Q_ASSERT(meta);
+
+    auto className = meta->className();
+    auto dtm = DThemeManager::instance();
+    auto qss = dtm->getQssForWidget(className, widget);
+    widget->setStyleSheet(widget->styleSheet() + qss);
+
+    connect(dtm, &DThemeManager::themeChanged,
+    widget, [widget, dtm, className](QString) {
+        widget->setStyleSheet(dtm->getQssForWidget(className, widget));
+    });
+
+    for (auto property : propertys) {
+        auto propertyIndex = meta->indexOfProperty(property.toLatin1().data());
+        if (-1 == propertyIndex) {
+            continue;
+        }
+
+        connect(widget, meta->property(propertyIndex).notifySignal(),
+                dtm, dtm->metaObject()->method(dtm->metaObject()->indexOfMethod("updateQss()")));
+    }
+}
+
 void DThemeManager::updateQss()
 {
-    QWidget *w = qobject_cast<QWidget*>(sender());
-    if(w){
+    QWidget *w = qobject_cast<QWidget *>(sender());
+    if (w) {
         w->setStyleSheet(w->styleSheet());
     }
 }

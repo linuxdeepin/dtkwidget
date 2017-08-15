@@ -23,7 +23,7 @@ class DThemeManager : public QObject
     Q_OBJECT
 
 public:
-    static DThemeManager * instance();
+    static DThemeManager *instance();
 
     QString theme() const;
     void setTheme(const QString theme);
@@ -32,6 +32,8 @@ public:
     QString getQssForWidget(const QString className, const QString &theme = "") const;
     QString getQssForWidget(const QString className, const QWidget *widget) const;
     QString getQssForWidget(const QWidget *widget) const;
+
+    static void registerWidget(QWidget *widget, QStringList propertys = QStringList());
 
 public Q_SLOTS:
     void updateQss();

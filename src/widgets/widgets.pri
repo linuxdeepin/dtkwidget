@@ -189,5 +189,7 @@ includes.files += \
     $$PWD/DVideoWidget \
     $$PWD/DForeignWindow \
     $$PWD/DExpandGroup \
-    $$PWD/DArrowLineExpand
+    $$PWD/DArrowButton \
+    $$PWD/DArrowLineExpand \
+    $$PWD/DThemeManager
 
