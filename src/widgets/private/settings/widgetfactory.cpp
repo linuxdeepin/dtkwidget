@@ -19,6 +19,8 @@
 #include <QSlider>
 #include <QSpinBox>
 #include <QGridLayout>
+#include <QRadioButton>
+#include <QGroupBox>
 
 #include <DSettingsOption>
 
@@ -38,7 +40,6 @@ QWidget *WidgetFactory::createTwoColumHandle(DTK_CORE_NAMESPACE::DSettingsOption
     auto optionLayout = new QGridLayout(optionFrame);
     optionLayout->setContentsMargins(0, 0, 0, 0);
     optionLayout->setSpacing(0);
-
 
     rightWidget->setMinimumWidth(240);
     rightWidget->setStyleSheet("QWidget{font-size: 12px;}");
@@ -112,7 +113,7 @@ QWidget *createCheckboxOptionHandle(QObject *opt)
     auto checkboxFrame = new QWidget;
     auto checkboxLayout = new QHBoxLayout(checkboxFrame);
     checkboxLayout->setSpacing(0);
-    checkboxLayout->setContentsMargins(0,0,0,0);
+    checkboxLayout->setContentsMargins(0, 0, 0, 0);
     auto rightWidget = new QCheckBox("");
     auto checkboxLabel = new QLabel(trName);
     checkboxLabel->setWordWrap(true);
@@ -238,6 +239,57 @@ QWidget *createButtonGroupOptionHandle(QObject *opt)
     return  optionWidget;
 }
 
+QWidget *createRadioGroupOptionHandle(QObject *opt)
+{
+    auto option = qobject_cast<DTK_CORE_NAMESPACE::DSettingsOption *>(opt);
+    auto items = option->data("items").toStringList();
+
+    auto rightWidget = new QGroupBox;
+    rightWidget->setContentsMargins(0, 0, 0, 0);
+    rightWidget->setObjectName("OptionRadioGroup");
+    rightWidget->setAlignment(Qt::AlignLeft);
+    rightWidget->setFixedHeight(24 * items.length() + 8);
+
+    auto rgLayout = new QVBoxLayout;
+    rgLayout->setContentsMargins(0, 0, 0, 0);
+    auto index = 0;
+    QList<QRadioButton *> buttonList;
+    for (auto item : items)  {
+        auto rb = new QRadioButton(QObject::tr(item.toStdString().c_str()));
+        rb->setFixedHeight(24);
+        rb->setProperty("_dtk_widget_settings_radiogroup_index", index);
+        rgLayout->addWidget(rb);
+        ++index;
+
+        option->connect(rb, &QRadioButton::clicked,
+        option, [ = ](int) {
+            auto index = rb->property("_dtk_widget_settings_radiogroup_index").toInt();
+            option->setValue(index);
+        });
+        buttonList << rb;
+    }
+    rightWidget->setLayout(rgLayout);
+
+    auto optionWidget = WidgetFactory::createTwoColumHandle(option, rightWidget);
+    rightWidget->setParent(optionWidget);
+
+    option->connect(option, &DTK_CORE_NAMESPACE::DSettingsOption::valueChanged,
+    rightWidget, [ buttonList ](const QVariant & value) {
+        auto index = value.toInt();
+        if (buttonList.length() > index) {
+            buttonList.value(index)->setChecked(true);
+        }
+    });
+
+    index = option->value().toInt();
+    if (buttonList.length() > index) {
+        buttonList.value(index)->setChecked(true);
+    }
+
+    rightWidget->setStyleSheet("QGroupBox{border: none;} QRadioButton{font-size:12px;}");
+    return  optionWidget;
+}
+
 QWidget *createSpinButtonOptionHandle(QObject *opt)
 {
     auto option = qobject_cast<DTK_CORE_NAMESPACE::DSettingsOption *>(opt);
@@ -312,6 +364,7 @@ public:
         widgetCreateHandles.insert("shortcut", createShortcutEditOptionHandle);
         widgetCreateHandles.insert("spinbutton", createSpinButtonOptionHandle);
         widgetCreateHandles.insert("buttongroup", createButtonGroupOptionHandle);
+        widgetCreateHandles.insert("radiogroup", createRadioGroupOptionHandle);
         widgetCreateHandles.insert("slider", createSliderOptionHandle);
     }
 

@@ -1,3 +1,9 @@
+dtkwidget (2.0.0-0) unstable; urgency=medium
+
+  * Release 2.0.0.
+
+ -- Iceyer <me@iceyer.net>  Tue, 22 Aug 2017 19:38:45 +0800
+
 dtkwidget (0.3.3-1) unstable; urgency=low
 
   * Initial release. Merge from deepin-tool-kit.

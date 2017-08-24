@@ -136,6 +136,13 @@
                             "type": "checkbox",
                             "text": "Cursor blink",
                             "default": true
+                        },
+                        {
+                            "key": "radiogroup",
+                            "name": "  ",
+                            "type": "radiogroup",
+                            "items": ["Minimize to tray","Exit Deepin Music"],
+                            "default": 0
                         }
                     ]
                 },
