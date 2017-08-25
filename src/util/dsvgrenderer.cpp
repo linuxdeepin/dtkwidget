@@ -199,6 +199,8 @@ void DSvgRenderer::render(QPainter *p, const QString &elementId, const QRectF &b
 
     QImage image(p->device()->width(), p->device()->height(), QImage::Format_ARGB32);
 
+    image.fill(Qt::transparent);
+
     cairo_surface_t *surface = cairo_image_surface_create_for_data(image.bits(), CAIRO_FORMAT_ARGB32, image.width(), image.height(), image.bytesPerLine());
     cairo_t *cairo = cairo_create(surface);
     cairo_scale(cairo, image.width() / d->viewBox.width(), image.height() / d->viewBox.height());
