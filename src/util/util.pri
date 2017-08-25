@@ -6,7 +6,8 @@ HEADERS += \
     $$PWD/dwindowmanagerhelper.h \
     $$PWD/dwidgetutil.h \
     $$PWD/ddesktopservices.h \
-    $$PWD/dtrashmanager.h
+    $$PWD/dtrashmanager.h \
+    $$PWD/dsvgrenderer.h
 
 SOURCES += \
     $$PWD/dfileiconprovider.cpp \
@@ -16,11 +17,12 @@ SOURCES += \
 
 linux* {
 CONFIG += link_pkgconfig
-PKGCONFIG += gsettings-qt
+PKGCONFIG += gsettings-qt librsvg-2.0
 
 SOURCES += \
     $$PWD/ddesktopservices_linux.cpp \
-    $$PWD/dtrashmanager_linux.cpp
+    $$PWD/dtrashmanager_linux.cpp \
+    $$PWD/dsvgrenderer.cpp
 }
 
 win32* | macx* {
@@ -41,7 +43,8 @@ includes.files += $$PWD/*.h \
             $$PWD/DTrashManager \
             $$PWD/DThumbnailProvider \
             $$PWD/DFileIconProvider \
-            $$PWD/DWindowManagerHelper
+            $$PWD/DWindowManagerHelper \
+            $$PWD/DSvgRenderer
 
 DISTFILES += \
     $$PWD/desktop.pri
