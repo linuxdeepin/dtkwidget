@@ -187,17 +187,8 @@ void DSvgRenderer::render(QPainter *p, const QString &elementId, const QRectF &b
         return;
 
     p->save();
-    //sets default style on the painter
-    //### not the most optimal way
 
-    QPen pen(Qt::NoBrush, 1, Qt::SolidLine, Qt::FlatCap, Qt::SvgMiterJoin);
-    pen.setMiterLimit(4);
-    p->setPen(pen);
-    p->setBrush(Qt::black);
-    p->setRenderHint(QPainter::Antialiasing);
-    p->setRenderHint(QPainter::SmoothPixmapTransform);
-
-    QImage image(p->device()->width(), p->device()->height(), QImage::Format_ARGB32);
+    QImage image(p->device()->width(), p->device()->height(), QImage::Format_ARGB32_Premultiplied);
 
     image.fill(Qt::transparent);
 

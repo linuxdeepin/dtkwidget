@@ -70,7 +70,7 @@ else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../../src/debug 
 else:unix: LIBS += -L$$OUT_PWD/../../../src/ -ldtkwidget
 
 INCLUDEPATH += $$PWD/../../../src
-INCLUDEPATH += $$PWD/../../../src/widgets
+INCLUDEPATH += $$PWD/../../../src/widgets $$PWD/../../../src/util
 DEPENDPATH += $$PWD/../../../src
 
 CONFIG(debug, debug|release) {
