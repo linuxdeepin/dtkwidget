@@ -109,7 +109,7 @@ void DTitlebarPrivate::init()
     iconLabel->setFixedSize(DefaultIconWidth, DefaultIconHeight);
     titleLabel->setText(qApp->applicationName());
     // TODO: use QSS
-    titleLabel->setStyleSheet("font-size: 14px;");
+    titleLabel->setStyleSheet("font-size: 12px;");
     titleLabel->setContentsMargins(0, 0, DefaultIconWidth + 10, 0);
 //    q->setStyleSheet("background-color: green;");
 
