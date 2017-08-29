@@ -100,6 +100,9 @@ public:
     Q_SLOT void setOkButtonText(const QString &text);
     QString okButtonText() const;
 
+    Q_SLOT void setOkButtonEnabled(const bool enable);
+    bool okButtonIsEnabled() const;
+
     Q_SLOT void setCancelButtonText(const QString &text);
     QString cancelButtonText() const;
 

@@ -169,7 +169,9 @@ void DInputDialog::setTextEchoMode(QLineEdit::EchoMode mode)
     }
 
     disconnect(d->lineEdit, &DLineEdit::alertChanged, this, &DInputDialog::textAlertChanged);
+    disconnect(d->lineEdit, &DLineEdit::textChanged, this, &DInputDialog::textValueChanged);
     connect(edit, &DLineEdit::alertChanged, this, &DInputDialog::textAlertChanged);
+    connect(edit, &DLineEdit::textChanged, this, &DInputDialog::textValueChanged);
 
     edit->setText(d->lineEdit->text());
     insertContent(d->getContentLayout()->indexOf(d->lineEdit), edit);
@@ -375,6 +377,20 @@ QString DInputDialog::okButtonText() const
     D_DC(DInputDialog);
 
     return d->okButton->text();
+}
+
+void DInputDialog::setOkButtonEnabled(const bool enable)
+{
+    D_DC(DInputDialog);
+
+    d->okButton->setEnabled(enable);
+}
+
+bool DInputDialog::okButtonIsEnabled() const
+{
+    D_DC(DInputDialog);
+
+    return d->okButton->isEnabled();
 }
 
 void DInputDialog::setCancelButtonText(const QString &text)
