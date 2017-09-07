@@ -13,7 +13,6 @@
 #include "dobject.h"
 
 #include <QWidget>
-#include <QVideoWidget>
 
 QT_BEGIN_NAMESPACE
 class QCamera;
