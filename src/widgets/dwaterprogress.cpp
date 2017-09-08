@@ -5,13 +5,11 @@
 #include <QPainter>
 
 #include <DObjectPrivate>
-
 #include <DSvgRenderer>
 
 DCORE_USE_NAMESPACE
 
 DWIDGET_BEGIN_NAMESPACE
-
 
 struct Pop {
     Pop(double s, double xs, double ys):

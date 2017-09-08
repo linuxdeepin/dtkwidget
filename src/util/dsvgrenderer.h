@@ -11,8 +11,8 @@ QT_BEGIN_NAMESPACE
 class QPainter;
 QT_END_NAMESPACE
 
+#ifdef Q_OS_LINUX
 DWIDGET_BEGIN_NAMESPACE
-
 class DSvgRendererPrivate;
 class DSvgRenderer : public QObject, public DTK_CORE_NAMESPACE::DObject
 {
@@ -42,12 +42,19 @@ public Q_SLOTS:
     void render(QPainter *p, const QRectF &bounds);
 
     void render(QPainter *p, const QString &elementId,
-                const QRectF &bounds=QRectF());
+                const QRectF &bounds = QRectF());
 
 private:
     D_DECLARE_PRIVATE(DSvgRenderer)
 };
-
 DWIDGET_END_NAMESPACE
+#else
+
+#include <QSvgRenderer>
+DWIDGET_BEGIN_NAMESPACE
+typedef  QSvgRenderer DSvgRenderer;
+DWIDGET_END_NAMESPACE
+
+#endif
 
 #endif // DSVGRENDERER_H

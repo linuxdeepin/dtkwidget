@@ -22,6 +22,8 @@ linux* {
     QT += x11extras dbus
     CONFIG += link_pkgconfig
     PKGCONFIG += x11 xext dtkcore
+} else {
+    QT += svg
 }
 win32* {
     #DEPENDS dtkcore
