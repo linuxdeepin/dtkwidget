@@ -9,7 +9,10 @@
 
 #include "bartab.h"
 
+#include <QBoxLayout>
+
 #include "dcircleprogress.h"
+#include "dwaterprogress.h"
 #include "dslider.h"
 
 BarTab::BarTab(QWidget *parent) : QFrame(parent)
@@ -18,18 +21,47 @@ BarTab::BarTab(QWidget *parent) : QFrame(parent)
 
     DTK_WIDGET_NAMESPACE::DCircleProgress *circleProgess = new DTK_WIDGET_NAMESPACE::DCircleProgress(this);
     circleProgess->setFixedSize(100, 100);
-    circleProgess->move(50, 50);
 
-    DTK_WIDGET_NAMESPACE::DSlider * slider = new DTK_WIDGET_NAMESPACE::DSlider(Qt::Horizontal, this);
+    DTK_WIDGET_NAMESPACE::DWaterProgress *waterProgess = new DTK_WIDGET_NAMESPACE::DWaterProgress(this);
+    waterProgess->setFixedSize(100, 100);
+
+    DTK_WIDGET_NAMESPACE::DSlider *slider = new DTK_WIDGET_NAMESPACE::DSlider(Qt::Horizontal, this);
     slider->setMinimum(0);
     slider->setMaximum(100);
     slider->setFixedWidth(100);
     slider->setFixedHeight(20);
-    slider->move(50, 150);
 
-    connect(slider, &DTK_WIDGET_NAMESPACE::DSlider::valueChanged, circleProgess, &DTK_WIDGET_NAMESPACE::DCircleProgress::setValue);
-    connect(slider, &DTK_WIDGET_NAMESPACE::DSlider::valueChanged, [circleProgess] (const int value) {
+    DTK_WIDGET_NAMESPACE::DSlider *sliderSize = new DTK_WIDGET_NAMESPACE::DSlider(Qt::Horizontal, this);
+    sliderSize->setMinimum(100);
+    sliderSize->setMaximum(400);
+    sliderSize->setFixedWidth(100);
+    sliderSize->setFixedHeight(20);
+
+    auto layout = new QVBoxLayout(this);
+    auto sliderLayout = new QHBoxLayout;
+    sliderLayout->addWidget(slider, 0, Qt::AlignHCenter | Qt::AlignTop);
+    sliderLayout->addWidget(sliderSize, 0, Qt::AlignHCenter | Qt::AlignTop);
+
+    auto progressLayout = new QHBoxLayout;
+    progressLayout->addWidget(circleProgess, 0, Qt::AlignHCenter | Qt::AlignTop);
+    progressLayout->addWidget(waterProgess, 0, Qt::AlignHCenter | Qt::AlignTop);
+
+    layout->addLayout(sliderLayout);
+    layout->addLayout(progressLayout);
+    layout->addStretch();
+
+    connect(slider, &DTK_WIDGET_NAMESPACE::DSlider::valueChanged, [circleProgess, waterProgess](const int value) {
         circleProgess->setText(QString::number(value) + "%");
+        waterProgess->setValue(value);
+        circleProgess->setValue(value);
     });
+    connect(sliderSize, &DTK_WIDGET_NAMESPACE::DSlider::valueChanged, [circleProgess, waterProgess](const int value) {
+        waterProgess->setFixedSize(value, value);
+        circleProgess->setFixedSize(value, value);
+    });
+
+    waterProgess->setValue(60);
+    waterProgess->start();
+    sliderSize->setValue(100);
 }
 
