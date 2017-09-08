@@ -82,6 +82,32 @@ void DPageIndicator::setSecondaryPointColor(QColor color)
     d->m_secondaryColor = color;
 }
 
+int DPageIndicator::activeSize() const
+{
+    D_DC(DPageIndicator);
+    return  d->activeSize;
+}
+
+void DPageIndicator::setActiveSize(int size)
+{
+    D_D(DPageIndicator);
+    d->activeSize = size;
+    d->updateItemSize();
+}
+
+int DPageIndicator::inactiveSize() const
+{
+    D_DC(DPageIndicator);
+    return  d->inactiveSize;
+}
+
+void DPageIndicator::setInactiveSize(int size)
+{
+    D_D(DPageIndicator);
+    d->inactiveSize = size;
+    d->updateItemSize();
+}
+
 void DPageIndicator::paintEvent(QPaintEvent *e)
 {
     QWidget::paintEvent(e);
@@ -89,13 +115,9 @@ void DPageIndicator::paintEvent(QPaintEvent *e)
     const int w = width();
     const int h = height();
 
-    const int item_size = 12;
-    const int inactive_size = 3;
-    const int active_size = 5;
-
     D_DC(DPageIndicator);
 
-    const int total_w = d->m_pageCount * item_size;
+    const int total_w = d->m_pageCount * d->itemSize;
     const QPoint offset = QPoint((w - total_w) / 2, h / 2);
 
     QColor currentPtColor = d->m_color;
@@ -104,14 +126,15 @@ void DPageIndicator::paintEvent(QPaintEvent *e)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(Qt::transparent);
-    for (int i(0); i != d->m_pageCount; ++i)
-    {
+    for (int i(0); i != d->m_pageCount; ++i) {
         if (d->m_currentPage == i) {
             painter.setBrush(currentPtColor);
-            painter.drawEllipse(offset + QPoint(item_size / 2 + item_size * i, 0), active_size, active_size);
+            painter.drawEllipse(offset + QPoint(d->itemSize / 2 + d->itemSize * i, 0),
+                                d->activeSize, d->activeSize);
         } else {
             painter.setBrush(nonCurrentPtColor);
-            painter.drawEllipse(offset + QPoint(item_size / 2 + item_size * i, 0), inactive_size, inactive_size);
+            painter.drawEllipse(offset + QPoint(d->itemSize / 2 + d->itemSize * i, 0),
+                                d->inactiveSize, d->inactiveSize);
         }
     }
 }
@@ -154,8 +177,7 @@ void DPageIndicatorPrivate::previousPage()
 
 void DPageIndicatorPrivate::setCurrentPage(const int index)
 {
-    if (index < -1 || index >= m_pageCount)
-    {
+    if (index < -1 || index >= m_pageCount) {
         qWarning() << "index out of bounds: " << index << ", max is " << m_pageCount;
         return;
     }
@@ -165,4 +187,10 @@ void DPageIndicatorPrivate::setCurrentPage(const int index)
     D_Q(DPageIndicator);
 
     q->update();
+}
+
+void DPageIndicatorPrivate::updateItemSize()
+{
+    int space = (activeSize + inactiveSize) / 4;
+    itemSize = activeSize + space + inactiveSize;
 }

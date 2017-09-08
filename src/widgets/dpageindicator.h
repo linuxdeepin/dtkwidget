@@ -25,6 +25,8 @@ class LIBDTKWIDGETSHARED_EXPORT DPageIndicator : public QWidget, public DTK_CORE
     D_DECLARE_PRIVATE(DPageIndicator)
     Q_PROPERTY(QColor pointColor READ pointColor WRITE setPointColor DESIGNABLE true)
     Q_PROPERTY(QColor secondaryPointColor READ secondaryPointColor WRITE setSecondaryPointColor DESIGNABLE true)
+    Q_PROPERTY(int activeSize READ activeSize WRITE setActiveSize)
+    Q_PROPERTY(int inactiveSize READ inactiveSize WRITE setInactiveSize)
 
 public:
     explicit DPageIndicator(QWidget *parent = 0);
@@ -42,6 +44,12 @@ public:
 
     QColor secondaryPointColor() const;
     void setSecondaryPointColor(QColor color);
+
+    int activeSize() const;
+    void setActiveSize(int size);
+
+    int inactiveSize() const;
+    void setInactiveSize(int size);
 
 protected:
     void paintEvent(QPaintEvent *e) override;

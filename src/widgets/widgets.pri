@@ -195,5 +195,6 @@ includes.files += \
     $$PWD/DArrowLineExpand \
     $$PWD/DThemeManager \
     $$PWD/DWaterProgress \
-    $$PWD/DSearchEdit
+    $$PWD/DSearchEdit \
+    $$PWD/DPageIndicator
 

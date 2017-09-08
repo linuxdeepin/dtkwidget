@@ -27,7 +27,11 @@ public:
     void previousPage();
     void setCurrentPage(const int index);
 
+    void updateItemSize();
 public:
+    int activeSize = 5;
+    int inactiveSize = 3;
+    int itemSize = 12;
     int m_pageCount;
     int m_currentPage;
     QColor m_color;
