@@ -13,7 +13,7 @@
 #include <QDBusPendingCall>
 #include <QDebug>
 #include <QFile>
-//#include <QMediaPlayer>
+#include <QMediaPlayer>
 #include <QGSettings>
 
 DWIDGET_BEGIN_NAMESPACE
@@ -21,14 +21,6 @@ DWIDGET_BEGIN_NAMESPACE
 #define EASY_CALL_DBUS(name)\
     QDBusInterface *interface = fileManager1DBusInterface();\
     return interface && interface->call(#name, urls2uris(urls), startupId).type() != QDBusMessage::ErrorMessage;
-
-static QMap<QString, QString> soundFileKeyMap = {{"sys-login", "login"}, {"sys-logout", "logout"}, {"sys-shutdown", "shutdown"},
-    {"suspend-resume", "wakeup"}, {"message-out", "notification"}, {"app-error", "unable-operate"},
-    {"trash-empty", "empty-trash"}, {"audio-volume-change", "volume-change"}, {"power-unplug-battery-low", "battery-low"},
-    {"power-plug", "power-plug"}, {"power-unplug", "power-unplug"}, {"device-added", "device-plug"},
-    {"device-removed", "device-unplug"}, {"send-to", "icon-to-desktop"}, {"camera-shutter", "camera-shutter"}, {"screen-capture", "screenshot"},
-    {"screen-capture-complete", "screenshot"}
-};
 
 static QDBusInterface *fileManager1DBusInterface()
 {
@@ -64,17 +56,17 @@ static QList<QUrl> path2urls(const QList<QString> &paths)
     return list;
 }
 
-//static QMediaPlayer *soundEffectPlayer()
-//{
-//    static QMediaPlayer *player = Q_NULLPTR;
+static QMediaPlayer *soundEffectPlayer()
+{
+    static QMediaPlayer *player = Q_NULLPTR;
 
-//    if (!player) {
-//        player = new QMediaPlayer;
-//        player->setVolume(70);
-//    }
+    if (!player) {
+        player = new QMediaPlayer;
+        player->setVolume(70);
+    }
 
-//    return player;
-//}
+    return player;
+}
 
 static QString soundEffectFilePath(const QString &name)
 {
@@ -96,7 +88,11 @@ static bool systemSoundEffectEnabled(const QString &name)
     const bool effEnabled = settings.get("enabled").toBool();
 
     if (effEnabled) {
-        return settings.get(soundFileKeyMap[name]).toBool();
+        const QStringList list = settings.keys();
+        if (!list.contains(name))
+            return false;
+
+        return settings.get(name).toBool();
     }
 
     return effEnabled;
@@ -166,13 +162,13 @@ bool DDesktopServices::playSystemSoundEffect(const DDesktopServices::SystemSound
 {
     switch (effect) {
     case SSE_Notifications:
-        return playSystemSoundEffect("message-out");
+        return playSystemSoundEffect("message");
     case SSE_Screenshot:
         return playSystemSoundEffect("camera-shutter");
     case SSE_EmptyTrash:
         return playSystemSoundEffect("trash-empty");
     case SSE_SendFileComplete:
-        return playSystemSoundEffect("send-to");
+        return playSystemSoundEffect("complete-copy");
     default:
         return false;
     }
@@ -189,9 +185,9 @@ bool DDesktopServices::playSystemSoundEffect(const QString &name)
         return false;
     }
 
-//    QMediaPlayer *player = soundEffectPlayer();
-//    player->setMedia(QUrl::fromLocalFile(path));
-//    player->play();
+    QMediaPlayer *player = soundEffectPlayer();
+    player->setMedia(QUrl::fromLocalFile(path));
+    player->play();
 
     return true;
 }
