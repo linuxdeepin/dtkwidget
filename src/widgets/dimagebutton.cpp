@@ -13,6 +13,8 @@
 
 #include <QMouseEvent>
 #include <QEvent>
+#include <QIcon>
+#include <QApplication>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -130,10 +132,10 @@ void DImageButton::mouseMoveEvent(QMouseEvent *event)
 void DImageButton::updateIcon()
 {
     switch (m_state) {
-    case Hover:     if (!m_hoverPic.isEmpty()) setPixmap(QPixmap(m_hoverPic));      break;
-    case Press:     if (!m_pressPic.isEmpty()) setPixmap(QPixmap(m_pressPic));      break;
-    case Checked:   if (!m_checkedPic.isEmpty()) setPixmap(QPixmap(m_checkedPic));  break;
-    default:        if (!m_normalPic.isEmpty()) setPixmap(QPixmap(m_normalPic));    break;
+    case Hover:     if (!m_hoverPic.isEmpty()) setPixmap(loadPixmap(m_hoverPic));      break;
+    case Press:     if (!m_pressPic.isEmpty()) setPixmap(loadPixmap(m_pressPic));      break;
+    case Checked:   if (!m_checkedPic.isEmpty()) setPixmap(loadPixmap(m_checkedPic));  break;
+    default:        if (!m_normalPic.isEmpty()) setPixmap(loadPixmap(m_normalPic));    break;
     }
 
     setAlignment(Qt::AlignCenter);
@@ -149,6 +151,29 @@ void DImageButton::setState(DImageButton::State state)
     m_state = state;
 
     updateIcon();
+}
+
+QPixmap DImageButton::loadPixmap(const QString &path)
+{
+    qreal ratio = 1.0;
+
+    const qreal devicePixelRatio = qApp->devicePixelRatio();
+
+    QPixmap pixmap;
+
+    if (devicePixelRatio > ratio) {
+        pixmap.load(qt_findAtNxFile(path, devicePixelRatio, &ratio));
+
+        pixmap = pixmap.scaled(devicePixelRatio / ratio * pixmap.width(),
+                               devicePixelRatio / ratio * pixmap.height(),
+                               Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+
+        pixmap.setDevicePixelRatio(devicePixelRatio);
+    } else {
+        pixmap.load(path);
+    }
+
+    return pixmap;
 }
 
 void DImageButton::setCheckable(bool flag)

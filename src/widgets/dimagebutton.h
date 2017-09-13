@@ -71,6 +71,7 @@ protected:
 private:
     void updateIcon();
     void setState(State state);
+    QPixmap loadPixmap(const QString &path);
 
 private:
 
