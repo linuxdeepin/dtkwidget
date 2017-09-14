@@ -20,6 +20,7 @@
 #include <QtMath>
 #include <QTimer>
 #include <QPainter>
+#include <QGraphicsDropShadowEffect>
 
 #include <DObjectPrivate>
 #include <DSvgRenderer>
@@ -74,6 +75,13 @@ DWaterProgress::DWaterProgress(QWidget *parent) :
 {
     D_D(DWaterProgress);
     d->initUI();
+
+    // apply effect
+    auto effect = new QGraphicsDropShadowEffect(this);
+    effect->setOffset(0, 6);
+    effect->setColor(QColor(1, 153, 248, 255 * 3 / 10));
+    effect->setBlurRadius(6);
+    this->setGraphicsEffect(effect);
 }
 
 DWaterProgress::~DWaterProgress()
@@ -217,14 +225,14 @@ void DWaterProgressPrivate::paint(QPainter *p)
     // draw water
     QImage waterImage = QImage(sz, QImage::Format_ARGB32_Premultiplied);
     QPainter waterPinter(&waterImage);
+    waterPinter.setRenderHint(QPainter::Antialiasing);
     waterPinter.setCompositionMode(QPainter::CompositionMode_Source);
-    waterPinter.fillRect(waterImage.rect(), QColor(26, 27, 27, 255 / 10));
+    waterPinter.fillRect(waterImage.rect(), QColor(43, 146, 255, 255 * 3 / 10));
     waterPinter.setCompositionMode(QPainter::CompositionMode_SourceOver);
     waterPinter.drawImage(static_cast<int>(backXOffset), yOffset, waterBackImage);
     waterPinter.drawImage(static_cast<int>(backXOffset) - waterBackImage.width(), yOffset, waterBackImage);
     waterPinter.drawImage(static_cast<int>(frontXOffset), yOffset, waterFrontImage);
     waterPinter.drawImage(static_cast<int>(frontXOffset) - waterFrontImage.width(), yOffset, waterFrontImage);
-
     //drwa pop
     if (value > 30) {
         for (auto &pop : pops) {
@@ -234,6 +242,22 @@ void DWaterProgressPrivate::paint(QPainter *p)
             waterPinter.fillPath(popPath, QColor(77, 208, 255));
         }
     }
+
+    double borderWidth = 2.0 * sz.width() / 100.0;
+    auto outRect = QRectF(0, 0, sz.width(), sz.height());
+    QPainterPath pathBorder;
+    auto factor = 0.5;
+    auto margin = QMarginsF(borderWidth * factor, borderWidth * factor,
+                            borderWidth * factor, borderWidth * factor);
+    pathBorder.addEllipse(outRect.marginsRemoved(margin));
+    waterPinter.strokePath(pathBorder, QPen(QColor(43, 146, 255, 255 * 8 / 10), borderWidth));
+    QPainterPath pathInnerBorder;
+    auto interFactor = 1.5;
+    auto innerMargin = QMarginsF(borderWidth * interFactor, borderWidth * interFactor,
+                                 borderWidth * interFactor, borderWidth * interFactor);
+    pathInnerBorder.addEllipse(outRect.marginsRemoved(innerMargin));
+    waterPinter.strokePath(pathInnerBorder, QPen(QColor(234, 242, 255, 255 * 2 / 10), borderWidth));
+
     auto font = waterPinter.font();
     font.setPixelSize(sz.height() * 20 / 100);
     waterPinter.setFont(font);
@@ -246,7 +270,7 @@ void DWaterProgressPrivate::paint(QPainter *p)
     QPainterPath path;
     path.addEllipse(QRectF(0, 0, sz.width(), sz.height()));
     QPainter maskPainter(&maskPixmap);
-    maskPainter.setRenderHint(QPainter::HighQualityAntialiasing);
+    maskPainter.setRenderHint(QPainter::Antialiasing);
     maskPainter.setPen(QPen(Qt::white, 1));
     maskPainter.fillPath(path, QBrush(Qt::white));
 
@@ -263,7 +287,6 @@ void DWaterProgressPrivate::paint(QPainter *p)
     contentPainter.end();
 
     p->drawImage(0, 0, contentImage);
-
 }
 
 DWIDGET_END_NAMESPACE
