@@ -79,8 +79,8 @@ DWaterProgress::DWaterProgress(QWidget *parent) :
     // apply effect
     auto effect = new QGraphicsDropShadowEffect(this);
     effect->setOffset(0, 6);
-    effect->setColor(QColor(1, 153, 248, 255 * 3 / 10));
-    effect->setBlurRadius(6);
+    effect->setColor(QColor(1, 153, 248, 255 * 5 / 20));
+    effect->setBlurRadius(12);
     this->setGraphicsEffect(effect);
 }
 
@@ -250,13 +250,13 @@ void DWaterProgressPrivate::paint(QPainter *p)
     auto margin = QMarginsF(borderWidth * factor, borderWidth * factor,
                             borderWidth * factor, borderWidth * factor);
     pathBorder.addEllipse(outRect.marginsRemoved(margin));
-    waterPinter.strokePath(pathBorder, QPen(QColor(43, 146, 255, 255 * 8 / 10), borderWidth));
+    waterPinter.strokePath(pathBorder, QPen(QColor(43, 146, 255, 255 * 7 / 10), borderWidth));
     QPainterPath pathInnerBorder;
     auto interFactor = 1.5;
     auto innerMargin = QMarginsF(borderWidth * interFactor, borderWidth * interFactor,
                                  borderWidth * interFactor, borderWidth * interFactor);
     pathInnerBorder.addEllipse(outRect.marginsRemoved(innerMargin));
-    waterPinter.strokePath(pathInnerBorder, QPen(QColor(234, 242, 255, 255 * 2 / 10), borderWidth));
+    waterPinter.strokePath(pathInnerBorder, QPen(QColor(234, 242, 255, 255 * 5 / 10), borderWidth));
 
     auto font = waterPinter.font();
     font.setPixelSize(sz.height() * 20 / 100);

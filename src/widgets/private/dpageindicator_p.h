@@ -35,15 +35,14 @@ public:
     void previousPage();
     void setCurrentPage(const int index);
 
-    void updateItemSize();
 public:
-    int activeSize = 5;
-    int inactiveSize = 3;
-    int itemSize = 12;
-    int m_pageCount;
-    int m_currentPage;
-    QColor m_color;
-    QColor m_secondaryColor;
+    int pointRadius = 5;
+    int secondaryPointRadius = 3;
+    int pointDistance = 12;
+    int pageCount;
+    int currentPage;
+    QColor pointColor;
+    QColor secondaryPointColor;
 };
 
 DWIDGET_END_NAMESPACE
