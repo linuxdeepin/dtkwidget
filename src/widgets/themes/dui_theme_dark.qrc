@@ -185,5 +185,7 @@
         <file>dark/images/combobox_down_arrow.png</file>
         <file>dark/images/tick_transparent.png</file>
         <file>dark/images/search.png</file>
+        <file>dark/images/switch_inner_insensitive@2x.png</file>
+        <file>dark/images/switch_inner@2x.png</file>
     </qresource>
 </RCC>

@@ -22,11 +22,13 @@
 #include <QPixmap>
 #include <QVariantAnimation>
 #include <QUrl>
+
 #include "dtkwidget_global.h"
+#include "dobject.h"
 
 DWIDGET_BEGIN_NAMESPACE
-
-class DSwitchButton : public QFrame
+class DSwitchButtonPrivate;
+class LIBDTKWIDGETSHARED_EXPORT DSwitchButton : public QFrame, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
 
@@ -70,17 +72,9 @@ Q_SIGNALS:
 protected:
     void paintEvent(QPaintEvent *e) Q_DECL_OVERRIDE;
     void mousePressEvent(QMouseEvent *) Q_DECL_OVERRIDE;
+
 private:
-    bool m_checked;
-
-    QPixmap m_enabledImage;
-    QPixmap m_disabledImage;
-    QVariantAnimation *m_innerAnimation;
-
-    double m_animationStartValue;
-    double m_animationEndValue;
-    QString m_disabledImageSource;
-    QString m_enabledImageSource;
+    D_DECLARE_PRIVATE(DSwitchButton)
 };
 
 DWIDGET_END_NAMESPACE
