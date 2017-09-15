@@ -94,7 +94,8 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dforeignwindow.h \
     $$PWD/dpushbutton.h \
     $$PWD/dtickeffect.h \
-    $$PWD/dwaterprogress.h
+    $$PWD/dwaterprogress.h \
+    $$PWD/dsettingswidgetfactory.h
 
 SOURCES += $$PWD/dslider.cpp \
     $$PWD/dthememanager.cpp \
@@ -167,7 +168,8 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dforeignwindow.cpp \
     $$PWD/dpushbutton.cpp \
     $$PWD/dtickeffect.cpp \
-    $$PWD/dwaterprogress.cpp
+    $$PWD/dwaterprogress.cpp \
+    $$PWD/dsettingswidgetfactory.cpp
 
 RESOURCES += \
     $$PWD/themes/dui_theme_dark.qrc \
@@ -196,5 +198,8 @@ includes.files += \
     $$PWD/DThemeManager \
     $$PWD/DWaterProgress \
     $$PWD/DSearchEdit \
-    $$PWD/DPageIndicator
+    $$PWD/DPageIndicator \
+    $$PWD/DSettingsWidgetFactory \
+    $$PWD/DSettingsDialog
+
 

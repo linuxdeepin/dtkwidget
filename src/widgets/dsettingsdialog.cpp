@@ -23,15 +23,17 @@
 #include <DSettingsOption>
 #include <DSettings>
 
+#include "dsettingswidgetfactory.h"
+
 #include "private/settings/content.h"
 #include "private/settings/navigation.h"
-#include "private/settings/widgetfactory.h"
 
 #include "dthememanager.h"
 #include "dwindowclosebutton.h"
 #include "dspinbox.h"
 #include "dbuttonlist.h"
 #include "doptionlist.h"
+
 
 
 DWIDGET_BEGIN_NAMESPACE
@@ -93,6 +95,12 @@ DSettingsDialog::DSettingsDialog(QWidget *parent) :
 DSettingsDialog::~DSettingsDialog()
 {
 
+}
+
+DSettingsWidgetFactory *DSettingsDialog::widgetFactory() const
+{
+    Q_D(const DSettingsDialog);
+    return  d->content->widgetFactory();
 }
 
 void DSettingsDialog::updateSettings(Dtk::Core::DSettings *settings)

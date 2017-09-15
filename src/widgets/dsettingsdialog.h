@@ -26,6 +26,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+class DSettingsWidgetFactory;
 class DSettingsDialogPrivate;
 class DSettingsDialog : public DAbstractDialog
 {
@@ -33,6 +34,8 @@ class DSettingsDialog : public DAbstractDialog
 public:
     DSettingsDialog(QWidget *parent = 0);
     ~DSettingsDialog();
+
+    DSettingsWidgetFactory* widgetFactory() const;
 
 public Q_SLOTS:
     void updateSettings(DTK_CORE_NAMESPACE::DSettings *settings);

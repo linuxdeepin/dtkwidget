@@ -28,8 +28,9 @@
 #include <DSettingsGroup>
 #include <DSettingsOption>
 
+#include "dsettingswidgetfactory.h"
+
 #include "contenttitle.h"
-#include "widgetfactory.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -38,7 +39,7 @@ class ContentPrivate
 public:
     ContentPrivate(Content *parent) : q_ptr(parent)
     {
-        widgetFactory = new WidgetFactory;
+        widgetFactory = new DSettingsWidgetFactory;
     }
 
 
@@ -48,7 +49,7 @@ public:
 
     QMap<QString, QWidget *> titles;
 
-    WidgetFactory       *widgetFactory;
+    DSettingsWidgetFactory       *widgetFactory;
 
     Content *q_ptr;
     Q_DECLARE_PUBLIC(Content)
@@ -113,9 +114,9 @@ Content::~Content()
 
 }
 
-WidgetFactory *Content::widgetFactory()
+DSettingsWidgetFactory *Content::widgetFactory() const
 {
-    Q_D(Content);
+    Q_D(const Content);
     return d->widgetFactory;
 }
 

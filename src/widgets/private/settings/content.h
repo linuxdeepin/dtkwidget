@@ -29,7 +29,7 @@ DCORE_END_NAMESPACE
 
 DWIDGET_BEGIN_NAMESPACE
 
-class WidgetFactory;
+class DSettingsWidgetFactory;
 class ContentPrivate;
 class LIBDTKWIDGETSHARED_EXPORT Content : public QFrame
 {
@@ -38,7 +38,7 @@ public:
     explicit Content(QWidget *parent = 0);
     ~Content();
 
-    WidgetFactory* widgetFactory();
+    DSettingsWidgetFactory* widgetFactory() const;
 Q_SIGNALS:
     void scrollToGroup(const QString &key);
 

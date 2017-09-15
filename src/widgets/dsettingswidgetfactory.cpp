@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "widgetfactory.h"
+#include "dsettingswidgetfactory.h"
 
 #include <QDebug>
 #include <QMap>
@@ -32,13 +32,13 @@
 
 #include <DSettingsOption>
 
-#include "shortcutedit.h"
-#include "buttongroup.h"
-#include "combobox.h"
+#include "private/settings/shortcutedit.h"
+#include "private/settings/buttongroup.h"
+#include "private/settings/combobox.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
-QWidget *WidgetFactory::createTwoColumHandle(DTK_CORE_NAMESPACE::DSettingsOption *option, QWidget *rightWidget)
+QWidget *DSettingsWidgetFactory::createTwoColumWidget(DTK_CORE_NAMESPACE::DSettingsOption *option, QWidget *rightWidget)
 {
     auto optionFrame = new QFrame;
     optionFrame->setMinimumHeight(30);
@@ -90,7 +90,7 @@ QWidget *createShortcutEditOptionHandle(QObject *opt)
         rightWidget->setShortCut(modifier, key);
     }
 
-    auto optionWidget = WidgetFactory::createTwoColumHandle(option, rightWidget);
+    auto optionWidget = DSettingsWidgetFactory::createTwoColumWidget(option, rightWidget);
 
     option->connect(rightWidget, &ShortcutEdit::shortcutChanged,
     option, [ = ](Qt::KeyboardModifiers modifier, Qt::Key key) {
@@ -134,7 +134,7 @@ QWidget *createCheckboxOptionHandle(QObject *opt)
     rightWidget->setObjectName("OptionCheckbox");
     rightWidget->setChecked(option->value().toBool());
 
-    auto optionWidget = WidgetFactory::createTwoColumHandle(option, checkboxFrame);
+    auto optionWidget = DSettingsWidgetFactory::createTwoColumWidget(option, checkboxFrame);
 
     option->connect(rightWidget, &QCheckBox::stateChanged,
     option, [ = ](int status) {
@@ -159,7 +159,7 @@ QWidget *createLineEditOptionHandle(QObject *opt)
     rightWidget->setObjectName("OptionLineEdit");
     rightWidget->setText(option->value().toString());
 
-    auto optionWidget = WidgetFactory::createTwoColumHandle(option, rightWidget);
+    auto optionWidget = DSettingsWidgetFactory::createTwoColumWidget(option, rightWidget);
 
     option->connect(rightWidget, &QLineEdit::editingFinished,
     option, [ = ]() {
@@ -191,7 +191,7 @@ QWidget *createComboBoxOptionHandle(QObject *opt)
     auto current = option->value().toInt();
     rightWidget->setCurrentIndex(current);
 
-    auto optionWidget = WidgetFactory::createTwoColumHandle(option, rightWidget);
+    auto optionWidget = DSettingsWidgetFactory::createTwoColumWidget(option, rightWidget);
 
     option->connect(rightWidget, static_cast<void (QComboBox::*)(int index)>(&QComboBox::currentIndexChanged),
     option, [ = ](int index) {
@@ -232,7 +232,7 @@ QWidget *createButtonGroupOptionHandle(QObject *opt)
     rightWidget->setButtons(items);
     rightWidget->setCheckedButton(0);
 
-    auto optionWidget = WidgetFactory::createTwoColumHandle(option, rightWidget);
+    auto optionWidget = DSettingsWidgetFactory::createTwoColumWidget(option, rightWidget);
     rightWidget->setParent(optionWidget);
 
     option->connect(rightWidget, &ButtonGroup::buttonChecked,
@@ -278,7 +278,7 @@ QWidget *createRadioGroupOptionHandle(QObject *opt)
     }
     rightWidget->setLayout(rgLayout);
 
-    auto optionWidget = WidgetFactory::createTwoColumHandle(option, rightWidget);
+    auto optionWidget = DSettingsWidgetFactory::createTwoColumWidget(option, rightWidget);
     rightWidget->setParent(optionWidget);
 
     option->connect(option, &DTK_CORE_NAMESPACE::DSettingsOption::valueChanged,
@@ -306,7 +306,7 @@ QWidget *createSpinButtonOptionHandle(QObject *opt)
     rightWidget->setObjectName("OptionDSpinBox");
     rightWidget->setValue(option->value().toInt());
 
-    auto optionWidget = WidgetFactory::createTwoColumHandle(option, rightWidget);
+    auto optionWidget = DSettingsWidgetFactory::createTwoColumWidget(option, rightWidget);
 
     option->connect(rightWidget, static_cast<void (QSpinBox::*)(int value)>(&QSpinBox::valueChanged),
     option, [ = ](int value) {
@@ -331,7 +331,7 @@ QWidget *createSliderOptionHandle(QObject *opt)
     rightWidget->setMinimum(option->data("min").toInt());
     rightWidget->setValue(option->value().toInt());
 
-    auto optionWidget = WidgetFactory::createTwoColumHandle(option, rightWidget);
+    auto optionWidget = DSettingsWidgetFactory::createTwoColumWidget(option, rightWidget);
 
     option->connect(rightWidget, &QSlider::valueChanged,
     option, [ = ](int value) {
@@ -355,16 +355,16 @@ QWidget *createUnsupportHandle(QObject *opt)
     rightWidget->setObjectName("OptionUnsupport");
     rightWidget->setText("Unsupport option type: " + option->viewType());
 
-    auto optionWidget = WidgetFactory::createTwoColumHandle(option, rightWidget);
+    auto optionWidget = DSettingsWidgetFactory::createTwoColumWidget(option, rightWidget);
 
 //    optionWidget->setStyleSheet("QFrame{border: 1px solid red;}");
     return  optionWidget;
 }
 
-class WidgetFactoryPrivate
+class DSettingsWidgetFactoryPrivate
 {
 public:
-    WidgetFactoryPrivate(WidgetFactory *parent) : q_ptr(parent)
+    DSettingsWidgetFactoryPrivate(DSettingsWidgetFactory *parent) : q_ptr(parent)
     {
         widgetCreateHandles.insert("checkbox", createCheckboxOptionHandle);
         widgetCreateHandles.insert("lineedit", createLineEditOptionHandle);
@@ -376,32 +376,32 @@ public:
         widgetCreateHandles.insert("slider", createSliderOptionHandle);
     }
 
-    QMap<QString, WidgetCreateHandle> widgetCreateHandles;
+    QMap<QString, std::function<DSettingsWidgetFactory::WidgetCreateHandler> > widgetCreateHandles;
 
-    WidgetFactory *q_ptr;
-    Q_DECLARE_PUBLIC(WidgetFactory)
+    DSettingsWidgetFactory *q_ptr;
+    Q_DECLARE_PUBLIC(DSettingsWidgetFactory)
 };
 
-WidgetFactory::WidgetFactory(QObject *parent) :
-    QObject(parent), d_ptr(new WidgetFactoryPrivate(this))
+DSettingsWidgetFactory::DSettingsWidgetFactory(QObject *parent) :
+    QObject(parent), d_ptr(new DSettingsWidgetFactoryPrivate(this))
 {
 
 }
 
-WidgetFactory::~WidgetFactory()
+DSettingsWidgetFactory::~DSettingsWidgetFactory()
 {
 
 }
 
-void WidgetFactory::registerWidget(const QString &viewType, WidgetCreateHandle handle)
+void DSettingsWidgetFactory::registerWidget(const QString &viewType, std::function<WidgetCreateHandler> handler)
 {
-    Q_D(WidgetFactory);
-    d->widgetCreateHandles.insert(viewType, handle);
+    Q_D(DSettingsWidgetFactory);
+    d->widgetCreateHandles.insert(viewType, handler);
 }
 
-QWidget *WidgetFactory::createWidget(QPointer<DTK_CORE_NAMESPACE::DSettingsOption> option)
+QWidget *DSettingsWidgetFactory::createWidget(QPointer<DTK_CORE_NAMESPACE::DSettingsOption> option)
 {
-    Q_D(WidgetFactory);
+    Q_D(DSettingsWidgetFactory);
     auto handle = d->widgetCreateHandles.value(option->viewType());
     if (handle) {
         return handle(option.data());

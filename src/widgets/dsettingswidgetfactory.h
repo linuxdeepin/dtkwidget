@@ -17,6 +17,8 @@
 
 #pragma once
 
+#include <functional>
+
 #include <QObject>
 #include <QScopedPointer>
 
@@ -28,26 +30,25 @@ DCORE_END_NAMESPACE
 
 DWIDGET_BEGIN_NAMESPACE
 
-typedef QWidget *(*WidgetCreateHandle)(QObject *);
-
-class WidgetFactoryPrivate;
-class LIBDTKWIDGETSHARED_EXPORT WidgetFactory : public QObject
+class DSettingsWidgetFactoryPrivate;
+class LIBDTKWIDGETSHARED_EXPORT DSettingsWidgetFactory : public QObject
 {
     Q_OBJECT
 public:
-    explicit WidgetFactory(QObject *parent = 0);
-    ~WidgetFactory();
+    typedef QWidget *(WidgetCreateHandler)(QObject *);
 
-    void registerWidget(const QString &viewType, WidgetCreateHandle handle);
+    explicit DSettingsWidgetFactory(QObject *parent = 0);
+    ~DSettingsWidgetFactory();
+
+    void registerWidget(const QString &viewType, std::function<WidgetCreateHandler> handler);
+
     QWidget *createWidget(QPointer<DTK_CORE_NAMESPACE::DSettingsOption> settings);
-Q_SIGNALS:
 
-public Q_SLOTS:
-    static QWidget *createTwoColumHandle(DTK_CORE_NAMESPACE::DSettingsOption *option, QWidget *rightWidget);
+    static QWidget *createTwoColumWidget(DTK_CORE_NAMESPACE::DSettingsOption *option, QWidget *rightWidget);
 
 private:
-    QScopedPointer<WidgetFactoryPrivate> d_ptr;
-    Q_DECLARE_PRIVATE_D(qGetPtrHelper(d_ptr), WidgetFactory)
+    QScopedPointer<DSettingsWidgetFactoryPrivate> d_ptr;
+    Q_DECLARE_PRIVATE_D(qGetPtrHelper(d_ptr), DSettingsWidgetFactory)
 };
 
 DWIDGET_END_NAMESPACE
