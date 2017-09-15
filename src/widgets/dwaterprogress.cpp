@@ -170,16 +170,18 @@ void DWaterProgressPrivate::initUI()
         double frontXDeta = 40.0 / (1000.0 / interval);
         // move 90% per second
         double backXDeta = 60.0 / (1000.0 / interval);
-        frontXOffset -= frontXDeta * q->width() / 100;
-        backXOffset += backXDeta * q->width() / 100;
 
-        if (frontXOffset > q->width())
+        int canvasWidth = static_cast<int>(q->width() * q->devicePixelRatioF());
+        frontXOffset -= frontXDeta *canvasWidth / 100;
+        backXOffset += backXDeta *canvasWidth / 100;
+
+        if (frontXOffset > canvasWidth)
         {
-            frontXOffset = q->width();
+            frontXOffset = canvasWidth;
         }
-        if (frontXOffset < - (waterFrontImage.width() - q->width()))
+        if (frontXOffset < - (waterFrontImage.width() - canvasWidth))
         {
-            frontXOffset = q->width();
+            frontXOffset = canvasWidth;
         }
 
         if (backXOffset > waterBackImage.width())
@@ -216,11 +218,13 @@ void DWaterProgressPrivate::paint(QPainter *p)
     D_Q(DWaterProgress);
     p->setRenderHint(QPainter::Antialiasing);
 
-    auto rect = q->rect();
-    auto sz = q->size();
+    qreal pixelRatio = q->devicePixelRatioF();
+    QRectF rect = QRectF(0, 0, q->width() * pixelRatio, q->height() * pixelRatio);
+    QSize sz = QSizeF(q->width() * pixelRatio, q->height() * pixelRatio).toSize();
+
     resizePixmap(sz);
 
-    int yOffset = rect.topLeft().y() + (100 - value - 10)  * sz.height() / 100;
+    int yOffset = rect.toRect().topLeft().y() + (100 - value - 10)  * sz.height() / 100;
 
     // draw water
     QImage waterImage = QImage(sz, QImage::Format_ARGB32_Premultiplied);
@@ -233,6 +237,7 @@ void DWaterProgressPrivate::paint(QPainter *p)
     waterPinter.drawImage(static_cast<int>(backXOffset) - waterBackImage.width(), yOffset, waterBackImage);
     waterPinter.drawImage(static_cast<int>(frontXOffset), yOffset, waterFrontImage);
     waterPinter.drawImage(static_cast<int>(frontXOffset) - waterFrontImage.width(), yOffset, waterFrontImage);
+
     //drwa pop
     if (value > 30) {
         for (auto &pop : pops) {
@@ -286,7 +291,8 @@ void DWaterProgressPrivate::paint(QPainter *p)
     contentPainter.setCompositionMode(QPainter::CompositionMode_DestinationOver);
     contentPainter.end();
 
-    p->drawImage(0, 0, contentImage);
+    contentImage.setDevicePixelRatio(pixelRatio);
+    p->drawImage(q->rect(), contentImage);
 }
 
 DWIDGET_END_NAMESPACE

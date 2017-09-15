@@ -37,6 +37,7 @@ int main(int argc, char *argv[])
     DApplication::loadDXcbPlugin();
 
     DApplication a(argc, argv);
+    a.setAttribute(Qt::AA_EnableHighDpiScaling, true);
     a.setTheme("light");
     Dtk::Core::DLogManager::registerConsoleAppender();
 
