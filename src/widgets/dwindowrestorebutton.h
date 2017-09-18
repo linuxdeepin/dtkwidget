@@ -25,7 +25,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDTKWIDGETSHARED_EXPORT DWindowRestoreButton : public DImageButton
+class Q_DECL_DEPRECATED_X("DWindowMaxButton is sufficient representing the two states.") DWindowRestoreButton : public DImageButton
 {
     Q_OBJECT
 public:

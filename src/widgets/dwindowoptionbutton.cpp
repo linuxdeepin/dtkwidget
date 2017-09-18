@@ -21,6 +21,12 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+/*!
+ * \class DWindowOptionButton
+ * \brief The DWindowOptionButton class is used as the unified window option button.
+ *
+ * It's actually a special DImageButton which has the appearance of option button.
+ */
 DWindowOptionButton::DWindowOptionButton(QWidget * parent) :
     DImageButton(parent)
 {

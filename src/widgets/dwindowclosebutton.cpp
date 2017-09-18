@@ -21,6 +21,12 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+/*!
+ * \class DWindowCloseButton
+ * \brief The DWindowCloseButton class is used as the unified window close button.
+ *
+ * It's actually a special DImageButton which has the appearance of close button.
+ */
 DWindowCloseButton::DWindowCloseButton(QWidget * parent) :
     DImageButton(parent)
 {

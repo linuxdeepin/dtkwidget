@@ -35,6 +35,12 @@ private:
     Q_DECLARE_PUBLIC(DWindowMaxButton)
 };
 
+/*!
+ * \class DWindowMaxButton
+ * \brief The DWindowMaxButton class is used as the unified window maximize button.
+ *
+ * It's actually a special DImageButton which has the appearance of maximize button.
+ */
 DWindowMaxButton::DWindowMaxButton(QWidget * parent) :
     DImageButton(parent),
     DObject(*new DWindowMaxButtonPrivate(this))
@@ -44,6 +50,12 @@ DWindowMaxButton::DWindowMaxButton(QWidget * parent) :
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }
 
+/*!
+ * \property isMaximized
+ * \brief isMaximized indicates whether the button state is maximized or not.
+ *
+ * It's true if it's set to maximized, otherwise false.
+ */
 bool DWindowMaxButton::isMaximized() const
 {
     D_DC(DWindowMaxButton);

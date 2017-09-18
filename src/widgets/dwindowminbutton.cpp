@@ -21,6 +21,12 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+/*!
+ * \class DWindowMinButton
+ * \brief The DWindowMinButton class is used as the unified window minimize button.
+ *
+ * It's actually a special DImageButton which has the appearance of minimize button.
+ */
 DWindowMinButton::DWindowMinButton(QWidget * parent) :
     DImageButton(parent)
 {
