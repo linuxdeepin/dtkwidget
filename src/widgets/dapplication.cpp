@@ -247,6 +247,11 @@ bool DApplicationPrivate::loadTranslator(QList<DPathBuf> translateDirs, const QS
     return false;
 }
 
+/**
+ * @brief DApplication::DApplication constructs an instance of DApplication.
+ * @param argc is the same as in the main function.
+ * @param argv is the same as in the main function.
+ */
 DApplication::DApplication(int &argc, char **argv) :
     QApplication(argc, argv),
     DObject(*new DApplicationPrivate(this))
@@ -254,6 +259,13 @@ DApplication::DApplication(int &argc, char **argv) :
     qputenv("QT_QPA_PLATFORM", QByteArray());
 }
 
+/**
+ * @brief DApplication::theme returns name of the theme that the application is currently using.
+ *
+ * theme name can be one of light, dark, semidark or semilight.
+ *
+ * @return the theme name.
+ */
 QString DApplication::theme() const
 {
     D_DC(DApplication);
@@ -261,6 +273,10 @@ QString DApplication::theme() const
     return d->theme();
 }
 
+/**
+ * @brief DApplication::setTheme for the application to use the theme we provide.
+ * @param theme is the name of the theme we want to set.
+ */
 void DApplication::setTheme(const QString &theme)
 {
     D_D(DApplication);
@@ -268,6 +284,14 @@ void DApplication::setTheme(const QString &theme)
     d->setTheme(theme);
 }
 
+/**
+ * @brief DApplication::setSingleInstance marks this application to be single instanced.
+ * @param key is used as the unique ID of every application.
+ *
+ * It should be in form of dde-dock, dde-desktop or dde-control-center etc.
+ *
+ * @return true if succeed, otherwise false.
+ */
 bool DApplication::setSingleInstance(const QString &key)
 {
     D_D(DApplication);
@@ -318,6 +342,13 @@ bool DApplication::isDXcbPlatform()
     return qApp && qApp->platformName() == "dxcb";
 }
 
+/**
+ * @brief DApplication::productName returns the product name of this application.
+ *
+ * It's mainly used to construct an about dialog of the application.
+ *
+ * @return the product name of this application if set, otherwise the applicationDisplayName.
+ */
 QString DApplication::productName() const
 {
     D_DC(DApplication);
@@ -325,6 +356,10 @@ QString DApplication::productName() const
     return d->productName.isEmpty() ? applicationDisplayName() : d->productName;
 }
 
+/**
+ * @brief DApplication::setProductName sets the product name of this application.
+ * @param productName is the product name to be set.
+ */
 void DApplication::setProductName(const QString &productName)
 {
     D_D(DApplication);
@@ -332,6 +367,13 @@ void DApplication::setProductName(const QString &productName)
     d->productName = productName;
 }
 
+/**
+ * @brief DApplication::productIcon returns the product icon of this application.
+ *
+ * It's mainly used to construct an about dialog of the application.
+ *
+ * @return the product icon of this application if set, otherwise empty.
+ */
 const QPixmap &DApplication::productIcon() const
 {
     D_DC(DApplication);
@@ -339,6 +381,10 @@ const QPixmap &DApplication::productIcon() const
     return d->productIcon;
 }
 
+/**
+ * @brief DApplication::setProductIcon sets the product icon of this application.
+ * @param productIcon is the product icon to be set.
+ */
 void DApplication::setProductIcon(const QPixmap &productIcon)
 {
     D_D(DApplication);
@@ -346,6 +392,13 @@ void DApplication::setProductIcon(const QPixmap &productIcon)
     d->productIcon = productIcon;
 }
 
+/**
+ * @brief DApplication::applicationLicense returns the license used by this application.
+ *
+ * It's mainly used to construct an about dialog of the application.
+ *
+ * @return the license used by this application.
+ */
 QString DApplication::applicationLicense() const
 {
     D_DC(DApplication);
@@ -353,6 +406,10 @@ QString DApplication::applicationLicense() const
     return d->appLicense;
 }
 
+/**
+ * @brief DApplication::setApplicationLicense sets the license of this application.
+ * @param license is the license to be set.
+ */
 void DApplication::setApplicationLicense(const QString &license)
 {
     D_D(DApplication);
@@ -360,6 +417,13 @@ void DApplication::setApplicationLicense(const QString &license)
     d->appLicense = license;
 }
 
+/**
+ * @brief DApplication::applicationDescription returns the long description of the application.
+ *
+ * It's mainly used to construct an about dialog of the application.
+ *
+ * @return the description of the application if set, otherwise empty.
+ */
 QString DApplication::applicationDescription() const
 {
     D_DC(DApplication);
@@ -367,6 +431,10 @@ QString DApplication::applicationDescription() const
     return d->appDescription;
 }
 
+/**
+ * @brief DApplication::setApplicationDescription sets the description of the application.
+ * @param description is description to be set.
+ */
 void DApplication::setApplicationDescription(const QString &description)
 {
     D_D(DApplication);
@@ -388,6 +456,13 @@ void DApplication::setApplicationHomePage(const QString &link)
     d->homePage = link;
 }
 
+/**
+ * @brief DApplication::applicationAcknowledgementPage returns the acknowlegement page of the application.
+ *
+ * It's mainly used to construct an about dialog of the application.
+ *
+ * @return the acknowlegement page of the application if set, otherwise empty.
+ */
 QString DApplication::applicationAcknowledgementPage() const
 {
     D_DC(DApplication);
@@ -395,6 +470,10 @@ QString DApplication::applicationAcknowledgementPage() const
     return d->acknowledgementPage;
 }
 
+/**
+ * @brief DApplication::setApplicationAcknowledgementPage sets the acknowlegement page of the application.
+ * @param link is the acknowlegement page link to be shown in the about dialog.
+ */
 void DApplication::setApplicationAcknowledgementPage(const QString &link)
 {
     D_D(DApplication);
@@ -402,6 +481,13 @@ void DApplication::setApplicationAcknowledgementPage(const QString &link)
     d->acknowledgementPage = link;
 }
 
+/**
+ * @brief DApplication::aboutDialog returns the about dialog of this application.
+ *
+ * If the about dialog is not set, it will automatically construct one.
+ *
+ * @return the about dialog instance.
+ */
 DAboutDialog *DApplication::aboutDialog()
 {
     D_D(DApplication);
@@ -409,6 +495,14 @@ DAboutDialog *DApplication::aboutDialog()
     return d->aboutDialog;
 }
 
+/**
+ * @brief DApplication::setAboutDialog sets the about dialog of this application.
+ *
+ * It's mainly used to override the auto-constructed about dialog which is not
+ * a common case, so please do double check before using this method.
+ *
+ * @param aboutDialog
+ */
 void DApplication::setAboutDialog(DAboutDialog *aboutDialog)
 {
     D_D(DApplication);
