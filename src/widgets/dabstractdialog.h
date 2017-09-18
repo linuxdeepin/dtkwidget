@@ -41,9 +41,12 @@ class DAbstractDialog : public QDialog, public DTK_CORE_NAMESPACE::DObject
     Q_PROPERTY(DisplayPostion displayPostion READ displayPostion WRITE setDisplayPostion)
 
 public:
+    /**
+     * @brief The DisplayPostion enum contains the position options that can be specified by all dialogs.
+     */
     enum DisplayPostion {
-        DisplayCenter,
-        DisplayTopRight
+        DisplayCenter, /*!< display this dialog in the center of the screen */
+        DisplayTopRight /*!< display this dialog in the top right of the screen */
     };
 
     Q_ENUMS(DisplayPostion)
@@ -65,6 +68,10 @@ public Q_SLOTS:
     void setDisplayPostion(DisplayPostion displayPostion);
 
 Q_SIGNALS:
+    /**
+     * @brief sizeChanged is emitted when the size of this dialog changed.
+     * @param size is the target size.
+     */
     void sizeChanged(QSize size);
 
 protected:

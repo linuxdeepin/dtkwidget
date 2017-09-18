@@ -158,11 +158,21 @@ DAboutDialog::DAboutDialog(QWidget *parent)
     d->licenseLabel->setStyleSheet(styleSheet());
 }
 
+/*!
+ * \property DAboutDialog::windowTitle
+ *
+ * \brief the title of the dialog.
+ */
 QString DAboutDialog::windowTitle() const
 {
     return title();
 }
 
+/*!
+ * \property DAboutDialog::productName
+ *
+ * \brief the product name to be shown on the dialog.
+ */
 QString DAboutDialog::productName() const
 {
     D_DC(DAboutDialog);
@@ -170,6 +180,11 @@ QString DAboutDialog::productName() const
     return d->productNameLabel->text();
 }
 
+/*!
+ * \property DAboutDialog::version
+ *
+ * \brief the version number to be shown on the dialog.
+ */
 QString DAboutDialog::version() const
 {
     D_DC(DAboutDialog);
@@ -177,6 +192,10 @@ QString DAboutDialog::version() const
     return d->versionLabel->text();
 }
 
+/*!
+ * \property DAboutDialog::description
+ * \brief the description to be show on the dialog.
+ */
 QString DAboutDialog::description() const
 {
     D_DC(DAboutDialog);
@@ -184,6 +203,10 @@ QString DAboutDialog::description() const
     return d->descriptionLabel->text();
 }
 
+/*!
+ * \property DAboutDialog::companyLogo
+ * \brief the vendor logo to be shown on the dialog.
+ */
 const QPixmap *DAboutDialog::companyLogo() const
 {
     D_DC(DAboutDialog);
@@ -191,6 +214,12 @@ const QPixmap *DAboutDialog::companyLogo() const
     return d->companyLogoLabel->pixmap();
 }
 
+/*!
+ * \property DAboutDialog::websiteName
+ * \brief the vendor website name to be shown on the dialog.
+ *
+ * Usually be in form like www.deepin.org.
+ */
 QString DAboutDialog::websiteName() const
 {
     D_DC(DAboutDialog);
@@ -198,6 +227,13 @@ QString DAboutDialog::websiteName() const
     return d->websiteName;
 }
 
+/*!
+ * \property DAboutDialog::websiteLink
+ * \brief the corresponding web address of websiteName()
+ *
+ * The website link will be open in the browser if the user clicks on
+ * the website text shown on the dialog.
+ */
 QString DAboutDialog::websiteLink() const
 {
     D_DC(DAboutDialog);
@@ -205,6 +241,11 @@ QString DAboutDialog::websiteLink() const
     return d->websiteLink;
 }
 
+/*!
+ * \property DAboutDialog::acknowledgementLink
+ * \brief the web address to be open open when user clicks on the "Acknowlegement"
+ * text show on the dialog.
+ */
 QString DAboutDialog::acknowledgementLink() const
 {
     D_DC(DAboutDialog);
@@ -212,6 +253,10 @@ QString DAboutDialog::acknowledgementLink() const
     return d->acknowledgementLink;
 }
 
+/*!
+ * \property DAboutDialog::license
+ * \brief the license to be shown on the dialog.
+ */
 QString DAboutDialog::license() const
 {
     D_DC(DAboutDialog);
