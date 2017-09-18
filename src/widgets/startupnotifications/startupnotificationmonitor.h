@@ -28,14 +28,24 @@ public:
     static StartupNotificationMonitor* instance();
 
     ~StartupNotificationMonitor();
-    bool nativeEventFilter(const QByteArray &eventType, void *message, long *result);
 
 Q_SIGNALS:
+    /**
+     * @brief appStartup is emitted when an application is starting up.
+     * @param id is the startup id associated with the startup.
+     */
     void appStartup(QString id);
+
+    /**
+     * @brief appStartupCompleted is emitted when the start up process of an applciation is finished.
+     * @param id is the startup id associated with the startup.
+     */
     void appStartupCompleted(QString id);
 
 protected:
     StartupNotificationMonitor();
+
+    bool nativeEventFilter(const QByteArray &eventType, void *message, long *result);
 };
 
 #endif // STARTUPNOTIFICATIONMONITOR_H

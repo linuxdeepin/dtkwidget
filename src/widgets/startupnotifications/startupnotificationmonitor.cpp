@@ -66,6 +66,15 @@ static void monitor_event_func (SnMonitorEvent *event, void *user_data)
     }
 }
 
+/*!
+ * \class StartupNotificationMonitor
+ * \brief The StartupNotificationMonitor class is used to monitor the startup of applications on the system.
+ *
+ * As the stated in https://specifications.freedesktop.org/startup-notification-spec/startup-notification-0.1.txt, \n
+ * StartupNotificationMonitor monitors all the startup events on the system and notifies the user of application \n
+ * startup and startup finish.
+ */
+
 StartupNotificationMonitor::StartupNotificationMonitor() :
     QObject()
 {
@@ -85,6 +94,10 @@ StartupNotificationMonitor::StartupNotificationMonitor() :
     qApp->installNativeEventFilter(this);
 }
 
+/**
+ * @brief StartupNotificationMonitor::StartupNotificationMonitor::instance
+ * @return an instance of the StartupNotificationMonitor instance.
+ */
 StartupNotificationMonitor* StartupNotificationMonitor::StartupNotificationMonitor::instance()
 {
     return StartupNotificationMonitorInstance;
