@@ -155,8 +155,8 @@ bool DApplicationPrivate::setSingleInstanceBySemaphore(const QString &key)
 
     if (singleInstance) {
         QtConcurrent::run([] {
-            while (ss.acquire()) {
-                if (qApp->startingUp())
+            while (ss.acquire() && singleInstance) {
+                if (qApp->startingUp() || qApp->closingDown())
                     break;
 
                 ss.release(1);
@@ -165,9 +165,13 @@ bool DApplicationPrivate::setSingleInstanceBySemaphore(const QString &key)
             }
         });
 
-        qAddPostRoutine([] {
+        auto clean_fun = [] {
             ss.release(1);
-        });
+            singleInstance = false;
+        };
+
+        qAddPostRoutine(clean_fun);
+        atexit(clean_fun);
     }
 
     return singleInstance;
