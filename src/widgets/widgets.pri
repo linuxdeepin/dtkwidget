@@ -41,7 +41,6 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dsearchedit.h \
     $$PWD/dswitchbutton.h \
     $$PWD/dsegmentedcontrol.h \
-    $$PWD/dcolorpicker.h \
     $$PWD/dlineedit.h \
     $$PWD/dcombobox.h \
     $$PWD/dbuttongrid.h\
@@ -115,7 +114,6 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dsearchedit.cpp \
     $$PWD/dswitchbutton.cpp\
     $$PWD/dsegmentedcontrol.cpp \
-    $$PWD/dcolorpicker.cpp \
     $$PWD/dlineedit.cpp \
     $$PWD/dcombobox.cpp \
     $$PWD/dbuttongrid.cpp\

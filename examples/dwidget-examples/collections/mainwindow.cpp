@@ -33,7 +33,6 @@
 #include "dtkwidget_global.h"
 #include "dswitchbutton.h"
 #include "segmentedcontrol.h"
-#include "dcolorpicker.h"
 #include "dplatformwindowhandle.h"
 #include "dtitlebar.h"
 
@@ -181,8 +180,6 @@ void MainWindow::initTabWidget()
 
     WidgetsTab *widgetsTab = new WidgetsTab(this);
 
-    DColorPicker *picker = new DColorPicker(1, this);
-
     CameraForm *cameraform = new CameraForm(this);
 
     GraphicsEffectTab *effectTab = new GraphicsEffectTab(this);
@@ -201,7 +198,6 @@ void MainWindow::initTabWidget()
     m_mainTab->addTab(imageButtonGridTab, "imageButtonGrid");
     m_mainTab->addTab(buttonGridTab, "ButtonGrid");
     m_mainTab->addTab(segmentedControl, "Segmented Control");
-    m_mainTab->addTab(picker, "Color Picker");
     m_mainTab->addTab(cameraform, "Camera View");
 
     m_mainTab->setCurrentIndex(0);
