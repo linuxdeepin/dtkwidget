@@ -25,6 +25,22 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+/*!
+ * \class DLineEdit
+ * \brief The DLineEdit class provides a styled QLineEdit.
+ *
+ * DLineEdit has an optional action button (DImageButton) at the right side which can be used
+ * to provide extra user interaction, for example: to change the echo mode of
+ * the line edit.
+ *
+ * Also, DLineEdit can be set on or off alert mode, warning the user of some
+ * errors.
+ */
+
+/*!
+ * \brief DLineEdit::DLineEdit constructs an instance of DLineEdit.
+ * \param parent is passed to QLineEdit constructor.
+ */
 DLineEdit::DLineEdit(QWidget *parent)
     : QLineEdit(parent),
       DObject(*new DLineEditPrivate(this))
@@ -57,6 +73,13 @@ void DLineEdit::setAlert(bool isAlert)
     Q_EMIT alertChanged(isAlert);
 }
 
+/*!
+ * \property DLineEdit::alert
+ * \brief This property shows whether the line edit is in alert mode or not.
+ *
+ * There'll be a extra frame colored in orage like color showing if the alert
+ * mode is on, to remind the user that the input is wrong.
+ */
 bool DLineEdit::isAlert() const
 {
     D_DC(DLineEdit);
@@ -74,6 +97,10 @@ void DLineEdit::setIconVisible(bool visible)
     d->m_rightIcon->setVisible(visible);
 }
 
+/*!
+ * \property DLineEdit::iconVisible
+ * \brief This property holds whether the action button can be seen.
+ */
 bool DLineEdit::iconVisible() const
 {
     D_DC(DLineEdit);
@@ -81,6 +108,10 @@ bool DLineEdit::iconVisible() const
     return d->m_rightIcon->isVisible();
 }
 
+/*!
+ * \property DLineEdit::normalIcon
+ * \brief This property holds the image used as the normal state of the action button.
+ */
 QString DLineEdit::normalIcon() const
 {
     D_DC(DLineEdit);
@@ -95,6 +126,10 @@ void DLineEdit::setNormalIcon(const QString &normalIcon)
     d->m_rightIcon->setNormalPic(normalIcon);
 }
 
+/*!
+ * \property DLineEdit::hoverIcon
+ * \brief This property holds the image used as the hover state of the action button.
+ */
 QString DLineEdit::hoverIcon() const
 {
     D_DC(DLineEdit);
@@ -109,6 +144,10 @@ void DLineEdit::setHoverIcon(const QString &hoverIcon)
     d->m_rightIcon->setHoverPic(hoverIcon);
 }
 
+/*!
+ * \property DLineEdit::pressIcon
+ * \brief This property holds the image used as the pressed state of the action button.
+ */
 QString DLineEdit::pressIcon() const
 {
     D_DC(DLineEdit);

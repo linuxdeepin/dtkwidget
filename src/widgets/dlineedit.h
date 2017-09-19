@@ -35,6 +35,7 @@ class LIBDTKWIDGETSHARED_EXPORT DLineEdit : public QLineEdit, public DTK_CORE_NA
     Q_PROPERTY(QString normalIcon READ normalIcon WRITE setNormalIcon DESIGNABLE true)
     Q_PROPERTY(QString hoverIcon READ hoverIcon WRITE setHoverIcon DESIGNABLE true)
     Q_PROPERTY(QString pressIcon READ pressIcon WRITE setPressIcon DESIGNABLE true)
+    Q_PROPERTY(bool iconVisible READ iconVisible WRITE setIconVisible)
 
 public:
     DLineEdit(QWidget *parent = 0);
