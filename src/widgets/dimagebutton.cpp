@@ -24,6 +24,7 @@
 #include <QEvent>
 #include <QIcon>
 #include <QApplication>
+#include <QImageReader>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -323,13 +324,13 @@ QPixmap DImageButtonPrivate::loadPixmap(const QString &path)
     QPixmap pixmap;
 
     if (!qFuzzyCompare(ratio, devicePixelRatio)) {
-        pixmap.load(qt_findAtNxFile(path, devicePixelRatio, &ratio));
-
-        pixmap = pixmap.scaled(devicePixelRatio / ratio * pixmap.width(),
-                               devicePixelRatio / ratio * pixmap.height(),
-                               Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-
-        pixmap.setDevicePixelRatio(devicePixelRatio);
+        QImageReader reader;
+        reader.setFileName(qt_findAtNxFile(path, devicePixelRatio, &ratio));
+        if (reader.canRead()) {
+            reader.setScaledSize(reader.size() * (devicePixelRatio / ratio));
+            pixmap = QPixmap::fromImage(reader.read());
+            pixmap.setDevicePixelRatio(devicePixelRatio);
+        }
     } else {
         pixmap.load(path);
     }
