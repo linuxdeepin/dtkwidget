@@ -314,7 +314,6 @@ void DAboutDialog::setWebsiteName(const QString &websiteName)
 
     d->websiteName = websiteName;
     d->updateWebsiteLabel();
-    Q_EMIT websiteNameChanged(websiteName);
 }
 
 void DAboutDialog::setWebsiteLink(const QString &websiteLink)
@@ -326,7 +325,6 @@ void DAboutDialog::setWebsiteLink(const QString &websiteLink)
 
     d->websiteLink = websiteLink;
     d->updateWebsiteLabel();
-    Q_EMIT websiteLinkChanged(websiteLink);
 }
 
 void DAboutDialog::setAcknowledgementLink(const QString &acknowledgementLink)

@@ -32,8 +32,8 @@ class DAboutDialog : public DDialog
     Q_PROPERTY(QString version READ version WRITE setVersion)
     Q_PROPERTY(QString description READ description WRITE setDescription)
     Q_PROPERTY(QString license READ license WRITE setLicense)
-    Q_PROPERTY(QString websiteName READ websiteName WRITE setWebsiteName NOTIFY websiteNameChanged)
-    Q_PROPERTY(QString websiteLink READ websiteLink WRITE setWebsiteLink NOTIFY websiteLinkChanged)
+    Q_PROPERTY(QString websiteName READ websiteName WRITE setWebsiteName)
+    Q_PROPERTY(QString websiteLink READ websiteLink WRITE setWebsiteLink)
     Q_PROPERTY(QString acknowledgementLink READ acknowledgementLink WRITE setAcknowledgementLink)
 
 public:
@@ -60,10 +60,6 @@ public Q_SLOTS:
     void setWebsiteLink(const QString &websiteLink);
     void setAcknowledgementLink(const QString &acknowledgementLink);
     void setLicense(const QString &license);
-
-Q_SIGNALS:
-    void websiteNameChanged(QString websiteName);
-    void websiteLinkChanged(QString websiteLink);
 
 protected:
     void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
