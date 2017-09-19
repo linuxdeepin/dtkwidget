@@ -24,7 +24,6 @@
 #include "dtkwidget_global.h"
 #include "dtextbutton.h"
 #include "dimagebutton.h"
-#include "dheaderline.h"
 #include "darrowbutton.h"
 #include "dswitchbutton.h"
 #include "dwindowmaxbutton.h"
