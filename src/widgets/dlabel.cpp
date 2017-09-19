@@ -20,13 +20,29 @@
 
 DWIDGET_USE_NAMESPACE
 
+/*!
+ * \class DLabel
+ * \brief The DLabel class is a direct subclass of QLabel, styled by deepin to
+ * provide better style unification.
+ */
+
+/*!
+ * \brief DLabel::DLabel constructs an instance of DLabel.
+ * \param parent is passed to QLabel constructor.
+ * \param f is passed to QLabel constructor.
+ */
 DLabel::DLabel(QWidget *parent, Qt::WindowFlags f)
     : QLabel(parent, f)
 {
     D_THEME_INIT_WIDGET(DLabel);
 }
 
-
+/*!
+ * \brief DLabel::DLabel constructs an instance of DLabel.
+ * \param text is used to initialize the content, passed to QLabel constructor.
+ * \param parent is passed to QLabel constructor.
+ * \param f is passed to QLabel constructor.
+ */
 DLabel::DLabel(const QString &text, QWidget *parent, Qt::WindowFlags f)
     : QLabel(text, parent, f)
 {
