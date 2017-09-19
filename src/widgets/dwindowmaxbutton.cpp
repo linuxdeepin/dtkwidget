@@ -19,14 +19,14 @@
 
 #include "dthememanager.h"
 #include "dwindowmaxbutton.h"
-
+#include "private/dimagebutton_p.h"
 #include <QStyle>
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DWindowMaxButtonPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate{
+class DWindowMaxButtonPrivate : public DImageButtonPrivate{
 public:
-    DWindowMaxButtonPrivate(DWindowMaxButton* qq):DObjectPrivate(qq) {
+    DWindowMaxButtonPrivate(DWindowMaxButton* qq):DImageButtonPrivate(qq) {
         m_isMaximized = false;
     }
 
@@ -42,8 +42,7 @@ private:
  * It's actually a special DImageButton which has the appearance of maximize button.
  */
 DWindowMaxButton::DWindowMaxButton(QWidget * parent) :
-    DImageButton(parent),
-    DObject(*new DWindowMaxButtonPrivate(this))
+    DImageButton(*new DWindowMaxButtonPrivate(this), parent)
 {
     D_THEME_INIT_WIDGET(DWindowMaxButton, isMaximized);
 

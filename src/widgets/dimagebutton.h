@@ -24,10 +24,11 @@
 #include <QPixmap>
 
 #include "dtkwidget_global.h"
+#include "dobject.h"
 
 DWIDGET_BEGIN_NAMESPACE
-
-class LIBDTKWIDGETSHARED_EXPORT DImageButton : public QLabel
+class DImageButtonPrivate;
+class LIBDTKWIDGETSHARED_EXPORT DImageButton : public QLabel, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
     Q_PROPERTY(QString normalPic READ getNormalPic WRITE setNormalPic DESIGNABLE true)
@@ -48,18 +49,18 @@ public:
 
     void setChecked(bool flag);
     void setCheckable(bool flag);
-    bool isChecked();
-    bool isCheckable();
+    bool isChecked() const;
+    bool isCheckable() const;
 
     void setNormalPic(const QString & normalPic);
     void setHoverPic(const QString & hoverPic);
     void setPressPic(const QString & pressPic);
     void setCheckedPic(const QString & checkedPic);
 
-    inline const QString getNormalPic() const {return m_normalPic;}
-    inline const QString getHoverPic() const {return m_hoverPic;}
-    inline const QString getPressPic() const {return m_pressPic;}
-    inline const QString getCheckedPic() const {return m_checkedPic;}
+    const QString getNormalPic() const;
+    const QString getHoverPic() const;
+    const QString getPressPic() const;
+    const QString getCheckedPic() const;
 
     enum State {Normal, Hover, Press, Checked};
 
@@ -70,6 +71,7 @@ Q_SIGNALS:
     void stateChanged();
 
 protected:
+    DImageButton(DImageButtonPrivate &q, QWidget *parent);
     void enterEvent(QEvent * event) Q_DECL_OVERRIDE;
     void leaveEvent(QEvent * event) Q_DECL_OVERRIDE;
     void mousePressEvent(QMouseEvent * event) Q_DECL_OVERRIDE;
@@ -77,20 +79,8 @@ protected:
     void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 
 private:
-    void updateIcon();
-    void setState(State state);
-    QPixmap loadPixmap(const QString &path);
-
-private:
-
-    State m_state = Normal;
-
-    bool m_isChecked = false;
-    bool m_isCheckable = false;
-    QString m_normalPic;
-    QString m_hoverPic;
-    QString m_pressPic;
-    QString m_checkedPic;
+    Q_DISABLE_COPY(DImageButton)
+    D_DECLARE_PRIVATE(DImageButton)
 };
 
 DWIDGET_END_NAMESPACE

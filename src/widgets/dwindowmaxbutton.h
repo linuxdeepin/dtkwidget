@@ -21,12 +21,13 @@
 #include <dobject.h>
 
 #include "dimagebutton.h"
+#include "private/dimagebutton_p.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
 class DWindowMaxButtonPrivate;
 
-class LIBDTKWIDGETSHARED_EXPORT DWindowMaxButton : public DImageButton, public DTK_CORE_NAMESPACE::DObject
+class LIBDTKWIDGETSHARED_EXPORT DWindowMaxButton : public DImageButton
 {
     Q_OBJECT
 public:
