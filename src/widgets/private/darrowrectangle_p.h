@@ -66,7 +66,7 @@ public:
     int m_arrowY = 0;
 
     qreal m_shadowBlurRadius = 20;
-    qreal m_shadowDistance = 1;
+    qreal m_shadowDistance = 0;
     qreal m_shadowXOffset = 0;
     qreal m_shadowYOffset = 5;
     int m_shadowWidth = 5; //Abandoned
