@@ -41,6 +41,7 @@ DImageButton::DImageButton(QWidget *parent)
 
 DImageButton::DImageButton(const QString &normalPic, const QString &hoverPic, const QString &pressPic, QWidget *parent)
     : QLabel(parent)
+    , DObject(*new DImageButtonPrivate(this))
 {
     D_THEME_INIT_WIDGET(DImageButton);
 
@@ -61,6 +62,7 @@ DImageButton::DImageButton(const QString &normalPic, const QString &hoverPic, co
 DImageButton::DImageButton(const QString &normalPic, const QString &hoverPic,
                            const QString &pressPic, const QString &checkedPic, QWidget *parent)
     : QLabel(parent)
+    , DObject(*new DImageButtonPrivate(this))
 {
     D_THEME_INIT_WIDGET(DImageButton);
 
