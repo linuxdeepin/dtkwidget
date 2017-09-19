@@ -28,6 +28,18 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+/*!
+ * \class DImageButton
+ * \brief The DImageButton class provides an easy way to create image based buttons.
+ *
+ * A DImageButton has four states: normal, hover, pressed and checked, developers
+ * should provide at least the normal state image to get it to work properly.
+ */
+
+/*!
+ * \brief DImageButton::DImageButton constructs an instance of DImageButton
+ * \param parent is the parent widget that the button will be attached to.
+ */
 DImageButton::DImageButton(QWidget *parent)
     : QLabel(parent)
     , DObject(*new DImageButtonPrivate(this))
@@ -39,6 +51,16 @@ DImageButton::DImageButton(QWidget *parent)
     d->updateIcon();
 }
 
+/*!
+ * \brief DImageButton::DImageButton This is an overloaded function.
+ *
+ * It's convinient to provide the images that used at the initialize stage.
+ *
+ * \param normalPic is the path of image to be used as the normal state.
+ * \param hoverPic is the path of image to be used as the hover state.
+ * \param pressPic is the path of image to be used as the pressed state.
+ * \param parent is the parent widget that the button will be attached to.
+ */
 DImageButton::DImageButton(const QString &normalPic, const QString &hoverPic, const QString &pressPic, QWidget *parent)
     : QLabel(parent)
     , DObject(*new DImageButtonPrivate(this))
@@ -59,6 +81,17 @@ DImageButton::DImageButton(const QString &normalPic, const QString &hoverPic, co
     d->updateIcon();
 }
 
+/*!
+ * \brief DImageButton::DImageButton This is an overloaded function.
+ *
+ * It's convinient to provide the images that used at the initialize stage.
+ *
+ * \param normalPic is the path of image to be used as the normal state.
+ * \param hoverPic is the path of image to be used as the hover state.
+ * \param pressPic is the path of image to be used as the pressed state.
+ * \param checkedPic is the path of image to be used as the checked state.
+ * \param parent is the parent widget that the button will be attached to.
+ */
 DImageButton::DImageButton(const QString &normalPic, const QString &hoverPic,
                            const QString &pressPic, const QString &checkedPic, QWidget *parent)
     : QLabel(parent)
@@ -186,12 +219,22 @@ void DImageButton::setChecked(bool flag)
     }
 }
 
+/*!
+ * \property DImageButton::checked
+ * \brief This property indicates the DImageButton is in checked state of not.
+ */
+
 bool DImageButton::isChecked() const
 {
     D_DC(DImageButton);
 
     return d->m_isChecked;
 }
+
+/*!
+ * \property DImageButton::isCheckable
+ * \brief This property indicates the DImageButton can be checked or not.
+ */
 
 bool DImageButton::isCheckable() const
 {
@@ -232,6 +275,10 @@ void DImageButton::setCheckedPic(const QString &checkedPicPixmap)
     d->updateIcon();
 }
 
+/*!
+ * \property DImageButton::getNormalPic
+ * \brief This property holds the path of the image used as the normal state.
+ */
 const QString DImageButton::getNormalPic() const
 {
     D_DC(DImageButton);
@@ -239,6 +286,10 @@ const QString DImageButton::getNormalPic() const
     return d->m_normalPic;
 }
 
+/*!
+ * \property DImageButton::getHoverPic
+ * \brief This property holds the path of the image used as the hover state.
+ */
 const QString DImageButton::getHoverPic() const
 {
     D_DC(DImageButton);
@@ -246,6 +297,10 @@ const QString DImageButton::getHoverPic() const
     return d->m_hoverPic;
 }
 
+/*!
+ * \property DImageButton::getPressPic
+ * \brief This property holds the path of the image used as the pressed state.
+ */
 const QString DImageButton::getPressPic() const
 {
     D_DC(DImageButton);
@@ -253,6 +308,10 @@ const QString DImageButton::getPressPic() const
     return d->m_pressPic;
 }
 
+/*!
+ * \property DImageButton::getCheckedPic
+ * \brief This property holds the path of the image used as the checked state.
+ */
 const QString DImageButton::getCheckedPic() const
 {
     D_DC(DImageButton);
@@ -260,6 +319,10 @@ const QString DImageButton::getCheckedPic() const
     return d->m_checkedPic;
 }
 
+/*!
+ * \brief DImageButton::getState
+ * \return the state that the DImageButton is in.
+ */
 DImageButton::State DImageButton::getState() const
 {
     D_DC(DImageButton);

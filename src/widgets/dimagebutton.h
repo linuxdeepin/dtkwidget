@@ -35,6 +35,8 @@ class LIBDTKWIDGETSHARED_EXPORT DImageButton : public QLabel, public DTK_CORE_NA
     Q_PROPERTY(QString hoverPic READ getHoverPic WRITE setHoverPic DESIGNABLE true)
     Q_PROPERTY(QString pressPic READ getPressPic WRITE setPressPic DESIGNABLE true)
     Q_PROPERTY(QString checkedPic READ getCheckedPic WRITE setCheckedPic DESIGNABLE true)
+    Q_PROPERTY(bool checked READ isChecked WRITE setChecked)
+    Q_PROPERTY(bool checkable READ isCheckable WRITE setCheckable)
 
 public:
     DImageButton(QWidget * parent=0);
@@ -62,7 +64,15 @@ public:
     const QString getPressPic() const;
     const QString getCheckedPic() const;
 
-    enum State {Normal, Hover, Press, Checked};
+    /*!
+     * \brief The State enum contains the four possible states of DImageButton.
+     */
+    enum State {
+        Normal, /*!< normal state */
+        Hover, /*!< hover state */
+        Press, /*!< pressed state */
+        Checked /*!< checked state */
+    };
 
     State getState() const;
 
