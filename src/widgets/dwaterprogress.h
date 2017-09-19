@@ -44,7 +44,7 @@ Q_SIGNALS:
 public Q_SLOTS:
     void start();
     void stop();
-    void setValue(int);
+    void setValue(int value);
     void setTextVisible(bool visible);
 
 protected:

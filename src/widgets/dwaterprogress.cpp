@@ -72,6 +72,10 @@ public:
     D_DECLARE_PUBLIC(DWaterProgress)
 };
 
+//!
+//! \brief DWaterProgress::DWaterProgress create an new water animation progress
+//! \param parent
+//!
 DWaterProgress::DWaterProgress(QWidget *parent) :
     QWidget(parent), DObject(*new DWaterProgressPrivate(this))
 {
@@ -86,40 +90,62 @@ DWaterProgress::DWaterProgress(QWidget *parent) :
     this->setGraphicsEffect(effect);
 }
 
+//!
+//! \brief DWaterProgress::~DWaterProgress
+//!
 DWaterProgress::~DWaterProgress()
 {
 
 }
 
+//!
+//! \brief DWaterProgress::value
+//! \return return the current progress value
+//!
 int DWaterProgress::value() const
 {
     D_DC(DWaterProgress);
     return d->value;
 }
 
+//!
+//! \brief DWaterProgress::start will begin water movie
+//!
 void DWaterProgress::start()
 {
     D_DC(DWaterProgress);
     d->timer->start();
 }
 
+//!
+//! \brief DWaterProgress::stop will stop water movie
+//!
 void DWaterProgress::stop()
 {
     D_DC(DWaterProgress);
     d->timer->stop();
 }
 
-void DWaterProgress::setValue(int v)
+//!
+//! \brief DWaterProgress::setValue
+//! \param set progress value, must range 0 ~ 100
+//!
+void DWaterProgress::setValue(int value)
 {
     D_D(DWaterProgress);
-    if (d->value == v) {
+    if (d->value == value) {
         return;
     }
-    d->setValue(v);
+    d->setValue(value);
     Q_EMIT valueChanged();
 }
 
-void DWaterProgress::setTextVisible(bool visible) {
+//!
+//! \brief DWaterProgress::setTextVisible
+//! \param set the progress text value(like 50% when value is 50) visible.
+//!
+void DWaterProgress::setTextVisible(bool visible)
+{
     D_D(DWaterProgress);
     d->textVisible = visible;
 }
