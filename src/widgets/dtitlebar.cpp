@@ -276,6 +276,14 @@ bool DTitlebarPrivate::isUserManualExists() const
 
 #endif
 
+/*!
+ * \class DTitlebar::DTitlebar
+ * \brief The DTitlebar class is an universal title bar on the top of windows.
+ * \param parent is the parent widget to be attached on.
+ *
+ * Usually you don't need to construct a DTitlebar instance by your self, you
+ * can get an DTitlebar instance by DMainWindow::titlebar .
+ */
 DTitlebar::DTitlebar(QWidget *parent) :
     QWidget(parent),
     DObject(*new DTitlebarPrivate(this))
@@ -290,6 +298,10 @@ DTitlebar::DTitlebar(QWidget *parent) :
 }
 
 #ifndef QT_NO_MENU
+/**
+ * @brief DTitlebar::menu holds the QMenu object attached to this title bar.
+ * @return the QMenu object it holds, returns null if there's no one set.
+ */
 QMenu *DTitlebar::menu() const
 {
     D_DC(DTitlebar);
@@ -297,6 +309,10 @@ QMenu *DTitlebar::menu() const
     return d->menu;
 }
 
+/**
+ * @brief DTitlebar::setMenu attaches a QMenu object to the title bar.
+ * @param menu is the target menu.
+ */
 void DTitlebar::setMenu(QMenu *menu)
 {
     D_D(DTitlebar);
@@ -310,6 +326,13 @@ void DTitlebar::setMenu(QMenu *menu)
 
 #endif
 
+/**
+ * @brief DTitlebar::customWidget
+ * @return the customized widget used in this title bar.
+ *
+ * One can set customized widget to show some extra widgets on the title bar.
+ * \see DTitlebar::setCustomWidget()
+ */
 QWidget *DTitlebar::customWidget() const
 {
     D_DC(DTitlebar);
@@ -414,12 +437,27 @@ void DTitlebar::resizeEvent(QResizeEvent *event)
     return QWidget::resizeEvent(event);
 }
 
+/**
+ * @brief DTitlebar::setCustomWidget is an overloaded function.
+ * @param w is the widget to be used as the customize widget shown in the title
+ * bar.
+ * @param fixCenterPos indicates whether it should automatically move the
+ * customize widget to the horizontal center of the title bar or not.
+ */
 void DTitlebar::setCustomWidget(QWidget *w, bool fixCenterPos)
 {
     setCustomWidget(w, Qt::AlignCenter, fixCenterPos);
 }
 
-
+/**
+ * @brief DTitlebar::setCustomWidget sets a customized widget to be used as the
+ * central content of the title bar.
+ * @param w is the widget to be used as the customize widget shown in the title
+ * bar.
+ * @param wflag is used to vertically align the widget.
+ * @param fixCenterPos indicates whether it should automatically move the
+ * customize widget to the horizontal center of the title bar or not.
+ */
 void DTitlebar::setCustomWidget(QWidget *w, Qt::AlignmentFlag wflag, bool fixCenterPos)
 {
     D_D(DTitlebar);
@@ -452,6 +490,11 @@ void DTitlebar::setCustomWidget(QWidget *w, Qt::AlignmentFlag wflag, bool fixCen
     w->resize(d->coustomAtea->size());
 }
 
+/**
+ * @brief DTitlebar::setFixedHeight change the height of the title bar to
+ * another value.
+ * @param h is the target height.
+ */
 void DTitlebar::setFixedHeight(int h)
 {
     D_D(DTitlebar);
@@ -460,6 +503,11 @@ void DTitlebar::setFixedHeight(int h)
     d->buttonArea->setFixedHeight(h);
 }
 
+/**
+ * @brief DTitlebar::setSeparatorVisible sets the bottom separator of the title
+ * bar and the window contents to be visible or not.
+ * @param visible is the targeting value.
+ */
 void DTitlebar::setSeparatorVisible(bool visible)
 {
     D_D(DTitlebar);
@@ -471,6 +519,10 @@ void DTitlebar::setSeparatorVisible(bool visible)
     }
 }
 
+/**
+ * @brief DTitlebar::setTitle sets the title to be shown on the title bar.
+ * @param title is the text to be used as the window title.
+ */
 void DTitlebar::setTitle(const QString &title)
 {
     D_D(DTitlebar);
@@ -479,6 +531,10 @@ void DTitlebar::setTitle(const QString &title)
     }
 }
 
+/**
+ * @brief DTitlebar::setIcon sets the icon to be shown on the title bar.
+ * @param icon is the pixmap to be used as the window icon.
+ */
 void DTitlebar::setIcon(const QPixmap &icon)
 {
     D_D(DTitlebar);
@@ -501,18 +557,29 @@ void DTitlebar::toggleWindowState()
     d->_q_toggleWindowState();
 }
 
+/**
+ * @brief DTitlebar::buttonAreaWidth returns the width of the area that all the
+ * window buttons occupies.
+ */
 int DTitlebar::buttonAreaWidth() const
 {
     D_DC(DTitlebar);
     return d->buttonArea->width();
 }
 
+/**
+ * @brief DTitlebar::separatorVisible returns the visibility of the bottom
+ * separator of the titlebar.
+ */
 bool DTitlebar::separatorVisible() const
 {
     D_DC(DTitlebar);
     return d->separator->isVisible();
 }
 
+/**
+ * @brief DTitlebar::setVisible overrides QWidget::setVisible(bool visible)
+ */
 void DTitlebar::setVisible(bool visible)
 {
     D_D(DTitlebar);
@@ -551,6 +618,11 @@ void DTitlebar::setVisible(bool visible)
     }
 }
 
+/**
+ * @brief DTitlebar::resize resizes the title bar.
+ * @param w is the target width.
+ * @param h is the target height.
+ */
 void DTitlebar::resize(int w, int h)
 {
     D_DC(DTitlebar);
@@ -559,6 +631,12 @@ void DTitlebar::resize(int w, int h)
     }
 }
 
+/**
+ * @brief DTitlebar::resize is an overloaded function.
+ * @param sz the target size.
+ *
+ * @see DTitlebar::resize(int w, int h)
+ */
 void DTitlebar::resize(const QSize &sz)
 {
     DTitlebar::resize(sz.width(), sz.height());

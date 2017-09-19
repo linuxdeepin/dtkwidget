@@ -28,9 +28,6 @@ DWIDGET_BEGIN_NAMESPACE
 
 class DTitlebarPrivate;
 
-///
-/// \brief The DTitlebar class is an universal title bar on the top of windows.
-///
 class LIBDTKWIDGETSHARED_EXPORT DTitlebar : public QWidget , public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
