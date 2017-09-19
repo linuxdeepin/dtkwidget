@@ -67,6 +67,8 @@ public:
     double  frontXOffset        = 0;
     double  backXOffset         = 0;
 
+    bool    textVisible         = true;
+
     D_DECLARE_PUBLIC(DWaterProgress)
 };
 
@@ -115,6 +117,11 @@ void DWaterProgress::setValue(int v)
     }
     d->setValue(v);
     Q_EMIT valueChanged();
+}
+
+void DWaterProgress::setTextVisible(bool visible) {
+    D_D(DWaterProgress);
+    d->textVisible = visible;
 }
 
 void DWaterProgress::paintEvent(QPaintEvent *)
@@ -263,11 +270,13 @@ void DWaterProgressPrivate::paint(QPainter *p)
     pathInnerBorder.addEllipse(outRect.marginsRemoved(innerMargin));
     waterPinter.strokePath(pathInnerBorder, QPen(QColor(234, 242, 255, 255 * 5 / 10), borderWidth));
 
-    auto font = waterPinter.font();
-    font.setPixelSize(sz.height() * 20 / 100);
-    waterPinter.setFont(font);
-    waterPinter.setPen(Qt::white);
-    waterPinter.drawText(rect, Qt::AlignCenter, progressText);
+    if (textVisible) {
+        auto font = waterPinter.font();
+        font.setPixelSize(sz.height() * 20 / 100);
+        waterPinter.setFont(font);
+        waterPinter.setPen(Qt::white);
+        waterPinter.drawText(rect, Qt::AlignCenter, progressText);
+    }
     waterPinter.end();
 
     QPixmap maskPixmap(sz);

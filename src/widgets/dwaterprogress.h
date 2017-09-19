@@ -45,6 +45,7 @@ public Q_SLOTS:
     void start();
     void stop();
     void setValue(int);
+    void setTextVisible(bool visible);
 
 protected:
     void paintEvent(QPaintEvent *) Q_DECL_OVERRIDE;
