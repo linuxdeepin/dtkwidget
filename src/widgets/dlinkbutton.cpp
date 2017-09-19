@@ -20,6 +20,17 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+/*!
+ * \class DLinkButton
+ * \brief The DLinkButton class provides a styled QPushButton to mini the style
+ * and behavior of links displayed on the internet.
+ */
+
+/*!
+ * \brief DLinkButton::DLinkButton constructs an instance of DLinkButton.
+ * \param text is passed to QPushButton constructor.
+ * \param parent is passed to QPushButton constructor.
+ */
 DLinkButton::DLinkButton(const QString &text, QWidget *parent) :
     QPushButton(text, parent)
 {
