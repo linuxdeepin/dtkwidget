@@ -27,6 +27,15 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+/*!
+ * \class DPasswordEdit
+ * \brief The DPasswordEdit class provides a widget to let user input password.
+ */
+
+/*!
+ * \brief DPasswordEdit::DPasswordEdit constructs an instance of DPasswordEdit.
+ * \param parent is passed to DLineEdit constructor.
+ */
 DPasswordEdit::DPasswordEdit(QWidget *parent)
     : DLineEdit(*new DPasswordEditPrivate(this), parent)
 {
@@ -38,6 +47,13 @@ DPasswordEdit::DPasswordEdit(QWidget *parent)
     d->init();
 }
 
+/*!
+ * \property DPasswordEdit::isEchoMode
+ * \brief This property holds whether the user input should be displayed directly
+ * or show as dots.
+ *
+ * \see QLineEdit::EchoMode
+ */
 bool DPasswordEdit::isEchoMode() const
 {
     return echoMode() == Normal;
