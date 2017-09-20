@@ -172,6 +172,28 @@ bool DBlurEffectWidgetPrivate::updateWindowBlurArea(QWidget *topLevelWidget)
     return ok;
 }
 
+/*!
+ * \class DBlurEffectWidget
+ * \brief The DBlurEffectWidget class provides widget that backgrounds are blurred and semitranslucent.
+ *
+ * DBlurEffectWidget is QWidget that has blurry background. With different
+ * blend mode set, DBlurEffectWidget can do in-window-blend, which means the
+ * the widget is blended with the widgets between the top level window and the
+ * widget itself, and behind-window-blend, which means the widget is blended with
+ * the scene behind the window (with the help of WM).
+ *
+ * The effect has optional styles can choose from: DBlurEffectWidget::DarkColor, DBlurEffectWidget::LightColor, and
+ * DBlurEffectWidget::CustomColor. Usually the first two are sufficient, you can also choose
+ * CustomColor and set the color you want by setting DBlurEffectWidget::maskColor.
+ *
+ * \note DBlurEffectWidget with BehindWindowBlend mode will become opaque if
+ * WM supports no X11 composite protocol.
+ */
+
+/*!
+ * \brief DBlurEffectWidget::DBlurEffectWidget constructs an instance of DBlurEffectWidget.
+ * \param parent is passed to QWidget constructor.
+ */
 DBlurEffectWidget::DBlurEffectWidget(QWidget *parent)
     : QWidget(parent)
     , DObject(*new DBlurEffectWidgetPrivate(this))
@@ -209,6 +231,13 @@ DBlurEffectWidget::~DBlurEffectWidget()
     }
 }
 
+/*!
+ * \property DBlurEffectWidget::radius
+ * \brief This property holds the radius of the blur effect.
+ *
+ * \note This property has no effect with the DBlurEffectWidget::blendMode set
+ * to DBlurEffectWidget::BehindWindowBlend.
+ */
 int DBlurEffectWidget::radius() const
 {
     D_DC(DBlurEffectWidget);
@@ -216,6 +245,12 @@ int DBlurEffectWidget::radius() const
     return d->radius;
 }
 
+/*!
+ * \property DBlurEffectWidget::mode
+ * \brief This property holds which blur alghorithm to be used.
+ *
+ * Currently it only supports DBlurEffectWidget::GaussianBlur.
+ */
 DBlurEffectWidget::BlurMode DBlurEffectWidget::mode() const
 {
     D_DC(DBlurEffectWidget);
@@ -223,6 +258,10 @@ DBlurEffectWidget::BlurMode DBlurEffectWidget::mode() const
     return d->mode;
 }
 
+/*!
+ * \property DBlurEffectWidget::blendMode
+ * \brief This property holds which mode is used to blend the widget and its background scene.
+ */
 DBlurEffectWidget::BlendMode DBlurEffectWidget::blendMode() const
 {
     D_DC(DBlurEffectWidget);
@@ -230,6 +269,15 @@ DBlurEffectWidget::BlendMode DBlurEffectWidget::blendMode() const
     return d->blendMode;
 }
 
+/*!
+ * \property DBlurEffectWidget::blurRectXRadius
+ * \brief This property holds the xRadius of the effective background.
+ *
+ * The xRadius and yRadius specify the radius of the ellipses defining
+ * the corners of the effective background.
+ *
+ * \see DBlurEffectWidget::blurRectYRadius
+ */
 int DBlurEffectWidget::blurRectXRadius() const
 {
     D_DC(DBlurEffectWidget);
@@ -237,6 +285,15 @@ int DBlurEffectWidget::blurRectXRadius() const
     return d->blurRectXRadius;
 }
 
+/*!
+ * \property DBlurEffectWidget::blurRectYRadius
+ * \brief This property holds the yRadius of the effective background.
+ *
+ * The xRadius and yRadius specify the radius of the ellipses defining
+ * the corners of the effective background.
+ *
+ * \see DBlurEffectWidget::blurRectXRadius
+ */
 int DBlurEffectWidget::blurRectYRadius() const
 {
     D_DC(DBlurEffectWidget);
@@ -244,6 +301,15 @@ int DBlurEffectWidget::blurRectYRadius() const
     return d->blurRectYRadius;
 }
 
+/*!
+ * \property DBlurEffectWidget::maskColor
+ * \brief This property holds the background color of this widget.
+ *
+ * It returns predefined colors if the DBlurEffectWidget::maskColorType is set
+ * to DBlurEffectWidget::DarkColor or BlurEffectWidget::LightColor, returns
+ * the color set by DBlurEffectWidget::setMaskColor if
+ * DBlurEffectWidget::maskColorType is set to BlurEffectWidget::CustomColor.
+ */
 QColor DBlurEffectWidget::maskColor() const
 {
     D_DC(DBlurEffectWidget);
@@ -276,6 +342,10 @@ QColor DBlurEffectWidget::maskColor() const
     return d->maskColor;
 }
 
+/*!
+ * \brief DBlurEffectWidget::setMaskPath set custom area as the effective background.
+ * \param path a QPainterPath to be used as the effectvie background.
+ */
 void DBlurEffectWidget::setMaskPath(const QPainterPath &path)
 {
     D_D(DBlurEffectWidget);
