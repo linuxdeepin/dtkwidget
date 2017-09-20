@@ -51,6 +51,8 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dwindowrestorebutton.h \
     $$PWD/dwindowoptionbutton.h \
     $$PWD/dshortcutedit.h \
+    $$PWD/dsimplelistview.h \
+    $$PWD/dsimplelistitem.h \
     $$PWD/dabstractcomboboxdelegate.h \
     $$PWD/dexpandgroup.h \
     $$PWD/dlabel.h \
@@ -123,6 +125,8 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dwindowrestorebutton.cpp \
     $$PWD/dwindowoptionbutton.cpp \
     $$PWD/dshortcutedit.cpp \
+    $$PWD/dsimplelistview.cpp \
+    $$PWD/dsimplelistitem.cpp \
     $$PWD/dabstractcomboboxdelegate.cpp \
     $$PWD/dexpandgroup.cpp \
     $$PWD/dlabel.cpp \
