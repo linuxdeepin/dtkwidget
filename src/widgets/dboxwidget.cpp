@@ -52,6 +52,24 @@ void DBoxWidgetPrivate::init()
     q->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
 
+/*!
+ * \class DBoxWidget
+ * \brief The DBoxWidget class provides widget born with QBoxLayout set.
+ *
+ * Since an widget with QBoxLayout set is very common use case in Qt programming,
+ * yet very tedious, DBoxWidget is built to ease that pain.
+ *
+ * Also, DBoxWidget will calculate the size it needs automatically, so you don't
+ * need to set width for DHBoxWidget or height for DVBoxLayout.
+ *
+ * \see DHBoxWidget and DVBoxWidget
+ */
+
+/*!
+ * \brief DBoxWidget::DBoxWidget constructs an instance of DBoxWidget.
+ * \param direction is the direction used by the internal QBoxLayout.
+ * \param parent is passed to QFrame constructor.
+ */
 DBoxWidget::DBoxWidget(QBoxLayout::Direction direction, QWidget *parent):
     QFrame(parent),
     DObject(*new DBoxWidgetPrivate(this))
@@ -62,6 +80,10 @@ DBoxWidget::DBoxWidget(QBoxLayout::Direction direction, QWidget *parent):
     d_func()->init();
 }
 
+/*!
+ * \property DBoxWidget::direction
+ * \brief This property holds the direction of the internal QBoxLayout.
+ */
 QBoxLayout::Direction DBoxWidget::direction() const
 {
     Q_D(const DBoxWidget);
@@ -69,6 +91,13 @@ QBoxLayout::Direction DBoxWidget::direction() const
     return d->layout->direction();
 }
 
+/*!
+ * \property DBoxWidget::layout
+ * \brief This property holds the internal layout object.
+ *
+ * This property can be used to get the internal layout, so you can set
+ * some extra properties on the layout to match the custom needs.
+ */
 QBoxLayout *DBoxWidget::layout() const
 {
     Q_D(const DBoxWidget);
@@ -76,6 +105,10 @@ QBoxLayout *DBoxWidget::layout() const
     return d->layout;
 }
 
+/*!
+ * \brief DBoxWidget::addWidget adds widget to the internal layout.
+ * \param widget is the widget to be added.
+ */
 void DBoxWidget::addWidget(QWidget *widget)
 {
     layout()->addWidget(widget);
@@ -129,6 +162,10 @@ bool DBoxWidget::event(QEvent *ee)
     return QWidget::event(ee);
 }
 
+/*!
+ * \brief DBoxWidget::sizeHint reimplemented from QWidget::sizeHint().
+ * \return the recommended size of this widget.
+ */
 QSize DBoxWidget::sizeHint() const
 {
     Q_D(const DBoxWidget);
@@ -136,12 +173,32 @@ QSize DBoxWidget::sizeHint() const
     return d->layout->sizeHint();
 }
 
+/*!
+ * \class DHBoxWidget
+ * \brief The DHBoxWidget class is DBoxWidget with DBoxWidget::direction set to
+ *  QBoxLayout::LeftToRight.
+ */
+
+/*!
+ * \brief DHBoxWidget::DHBoxWidget constructs an instance of DHBoxWidget.
+ * \param parent is passed to DBoxWidget constructor.
+ */
 DHBoxWidget::DHBoxWidget(QWidget *parent):
     DBoxWidget(QBoxLayout::LeftToRight, parent)
 {
 
 }
 
+/*!
+ * \class DVBoxWidget
+ * \brief The DVBoxWidget class is DBoxWidget with DBoxWidget::direction set to
+ *  QBoxLayout::TopToBottom.
+ */
+
+/*!
+ * \brief DVBoxWidget::DVBoxWidget constructs an instance of DVBoxWidget.
+ * \param parent is passed to DBoxWidget constructor.
+ */
 DVBoxWidget::DVBoxWidget(QWidget *parent):
     DBoxWidget(QBoxLayout::TopToBottom, parent)
 {
