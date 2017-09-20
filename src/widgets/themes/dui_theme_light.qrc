@@ -10,7 +10,6 @@
         <file>light/DTextButton.theme</file>
         <file>light/DImageButton.theme</file>
         <file>light/DLoadingIndicator.theme</file>
-        <file>light/DCalendar.theme</file>
         <file>light/DButtonList.theme</file>
         <file>light/DLabel.theme</file>
         <file>light/DSwitchButton.theme</file>

@@ -13,7 +13,6 @@
         <file>dark/DButtonList.theme</file>
         <file>dark/DSwitchButton.theme</file>
         <file>dark/DSegmentedControl.theme</file>
-        <file>dark/DCalendar.theme</file>
         <file>dark/DLineEdit.theme</file>
         <file>dark/DPasswordEdit.theme</file>
         <file>dark/DSearchEdit.theme</file>

@@ -13,11 +13,9 @@ win32* {
 
 linux{
     HEADERS += \
-        $$PWD/dcalendar.h \
         $$PWD/dmpriscontrol.h
 
     SOURCES += \
-        $$PWD/dcalendar.cpp \
         $$PWD/dmpriscontrol.cpp
 
 }

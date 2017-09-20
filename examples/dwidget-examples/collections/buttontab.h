@@ -33,7 +33,6 @@
 #include "dwindowclosebutton.h"
 #include "dwindowoptionbutton.h"
 #include "dlinkbutton.h"
-#include "dcalendar.h"
 
 class ButtonTab : public QLabel
 {
