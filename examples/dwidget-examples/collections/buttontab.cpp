@@ -36,6 +36,9 @@ ButtonTab::ButtonTab(QWidget *parent) : QLabel(parent)
     DWindowMaxButton * maxButton = new DWindowMaxButton(this);
     maxButton->move(50, 5);
 
+    DWindowRestoreButton * restoreButton = new DWindowRestoreButton(this);
+    restoreButton->move(70, 5);
+
     DWindowCloseButton * closeButton = new DWindowCloseButton(this);
     closeButton->move(90, 5);
 

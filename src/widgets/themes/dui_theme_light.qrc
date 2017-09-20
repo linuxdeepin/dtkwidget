@@ -1,6 +1,9 @@
 <RCC>
     <qresource prefix="/">
         <file>light/DArrowButton.theme</file>
+        <file>light/DBaseLine.theme</file>
+        <file>light/DBaseExpand.theme</file>
+        <file>light/DHeaderLine.theme</file>
         <file>light/DSeparatorHorizontal.theme</file>
         <file>light/DSeparatorVertical.theme</file>
         <file>light/DSlider.theme</file>

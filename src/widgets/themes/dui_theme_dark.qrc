@@ -1,6 +1,9 @@
 <RCC>
     <qresource prefix="/">
         <file>dark/DArrowButton.theme</file>
+        <file>dark/DBaseLine.theme</file>
+        <file>dark/DBaseExpand.theme</file>
+        <file>dark/DHeaderLine.theme</file>
         <file>dark/DSeparatorHorizontal.theme</file>
         <file>dark/DSeparatorVertical.theme</file>
         <file>dark/DSlider.theme</file>

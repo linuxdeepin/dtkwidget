@@ -15,29 +15,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef LINETAB_H
-#define LINETAB_H
+#ifndef DHEADERLINE_H
+#define DHEADERLINE_H
 
 #include <QWidget>
-#include <QPushButton>
-#include <QTimer>
+#include <QLabel>
 
-#include "dheaderline.h"
+#include "dtkwidget_global.h"
 #include "dbaseline.h"
-#include "dseparatorhorizontal.h"
-#include "dseparatorvertical.h"
-#include "dbaseexpand.h"
-#include "darrowlineexpand.h"
-#include "dswitchlineexpand.h"
-#include "dexpandgroup.h"
 
-DWIDGET_USE_NAMESPACE
+DWIDGET_BEGIN_NAMESPACE
 
-class LineTab : public QLabel
+class LIBDTKWIDGETSHARED_EXPORT DHeaderLine : public DBaseLine
 {
     Q_OBJECT
 public:
-    explicit LineTab(QWidget *parent = 0);
+    explicit DHeaderLine(QWidget *parent = 0);
+    void setTitle(const QString &title);
+    void setContent(QWidget *content);
+
+    QString title() const;
+
+private:
+    void setLeftContent(QWidget *content);
+    void setRightContent(QWidget *content);
+
+private:
+    QLabel *m_titleLabel = NULL;
 };
 
-#endif // LINETAB_H
+DWIDGET_END_NAMESPACE
+
+#endif // DHEADERLINE_H

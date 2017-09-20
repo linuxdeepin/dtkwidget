@@ -15,34 +15,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BUTTONTAB_H
-#define BUTTONTAB_H
-
-#include <QWidget>
-#include <QLabel>
-
-#include "dtkwidget_global.h"
-#include "dtextbutton.h"
-#include "dimagebutton.h"
 #include "dheaderline.h"
-#include "darrowbutton.h"
-#include "dswitchbutton.h"
-#include "dwindowmaxbutton.h"
-#include "dwindowminbutton.h"
-#include "dwindowrestorebutton.h"
-#include "dwindowclosebutton.h"
-#include "dwindowoptionbutton.h"
-#include "dlinkbutton.h"
-#include "dcalendar.h"
+#include "dthememanager.h"
 
-class ButtonTab : public QLabel
+DWIDGET_BEGIN_NAMESPACE
+
+DHeaderLine::DHeaderLine(QWidget *parent) : DBaseLine(parent)
 {
-    Q_OBJECT
-public:
-    explicit ButtonTab(QWidget *parent = 0);
+    D_THEME_INIT_WIDGET(DHeaderLine);
 
-public Q_SLOTS:
-    void buttonClickTest();
-};
+    setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
+    setFixedHeight(EXPAND_HEADER_HEIGHT);
+    m_titleLabel = new QLabel(this);
+    m_titleLabel->setObjectName("DHeaderLineTitle");
+    DBaseLine::setLeftContent(m_titleLabel);
+}
 
-#endif // BUTTONTAB_H
+void DHeaderLine::setTitle(const QString &title)
+{
+    m_titleLabel->setText(title);
+}
+
+void DHeaderLine::setContent(QWidget *content)
+{
+    DBaseLine::setRightContent(content);
+    setFixedHeight(CONTENT_HEADER_HEIGHT);
+}
+
+QString DHeaderLine::title() const
+{
+    return m_titleLabel->text();
+}
+
+DWIDGET_END_NAMESPACE

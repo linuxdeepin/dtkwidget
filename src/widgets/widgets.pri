@@ -28,7 +28,12 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dconstants.h \
     $$PWD/dseparatorhorizontal.h \
     $$PWD/dseparatorvertical.h \
+    $$PWD/dbaseline.h \
+    $$PWD/dheaderline.h \
+    $$PWD/dbaseexpand.h \
     $$PWD/darrowbutton.h \
+    $$PWD/darrowlineexpand.h \
+    $$PWD/dswitchlineexpand.h \
     $$PWD/dbuttonlist.h \
     $$PWD/dimagebutton.h \
     $$PWD/dtextbutton.h \
@@ -50,6 +55,7 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dwindowoptionbutton.h \
     $$PWD/dshortcutedit.h \
     $$PWD/dabstractcomboboxdelegate.h \
+    $$PWD/dexpandgroup.h \
     $$PWD/dlabel.h \
     $$PWD/dlinkbutton.h \
     $$PWD/dscrollbar.h \
@@ -95,7 +101,12 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dapplication.cpp \
     $$PWD/dseparatorhorizontal.cpp \
     $$PWD/dseparatorvertical.cpp \
+    $$PWD/dbaseline.cpp \
+    $$PWD/dheaderline.cpp \
+    $$PWD/dbaseexpand.cpp \
     $$PWD/darrowbutton.cpp \
+    $$PWD/darrowlineexpand.cpp \
+    $$PWD/dswitchlineexpand.cpp \
     $$PWD/dbuttonlist.cpp \
     $$PWD/dimagebutton.cpp \
     $$PWD/dtextbutton.cpp \
@@ -117,6 +128,7 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dwindowoptionbutton.cpp \
     $$PWD/dshortcutedit.cpp \
     $$PWD/dabstractcomboboxdelegate.cpp \
+    $$PWD/dexpandgroup.cpp \
     $$PWD/dlabel.cpp \
     $$PWD/dlinkbutton.cpp \
     $$PWD/dscrollbar.cpp \
