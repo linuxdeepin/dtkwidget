@@ -195,6 +195,8 @@ includes.files += \
     $$PWD/DArrowLineExpand \
     $$PWD/DThemeManager \
     $$PWD/DWaterProgress \
+    $$PWD/DSimpleListView \
+    $$PWD/DSimpleListItem \
     $$PWD/DSearchEdit \
     $$PWD/DPageIndicator \
     $$PWD/DSettingsWidgetFactory \
