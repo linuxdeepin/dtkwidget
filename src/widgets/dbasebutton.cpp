@@ -20,6 +20,19 @@
 
 DWIDGET_USE_NAMESPACE
 
+/*!
+ * \class DBaseButton
+ * \brief The DBaseButton class provides deepin style QPushButton.
+ *
+ * DBaseButton will be deprecated and removed in the future, please use
+ * QPushButton, together with dstyle Qt style plugin, QPushButton should have
+ * the same visual effect as DBaseButton.
+ */
+
+/*!
+ * \brief DBaseButton::DBaseButton constructs an instance of DBaseButton.
+ * \param parent is passed to QPushButton constructor.
+ */
 DBaseButton::DBaseButton(QWidget *parent) :
     QPushButton(parent)
 {
@@ -28,6 +41,11 @@ DBaseButton::DBaseButton(QWidget *parent) :
     initInsideFrame();
 }
 
+/*!
+ * \brief DBaseButton::DBaseButton constructs an instance of DBaseButton.
+ * \param text is passed to QPushButton constructor.
+ * \param parent is passed to QPushButton constructor.
+ */
 DBaseButton::DBaseButton(const QString &text, QWidget *parent) :
     QPushButton(text, parent)
 {
@@ -36,6 +54,12 @@ DBaseButton::DBaseButton(const QString &text, QWidget *parent) :
     initInsideFrame();
 }
 
+/*!
+ * \brief DBaseButton::DBaseButton constructs an instance of DBaseButton.
+ * \param icon is passed to QPushButton constructor.
+ * \param text is passed to QPushButton constructor.
+ * \param parent is passed to QPushButton constructor.
+ */
 DBaseButton::DBaseButton(const QIcon &icon, const QString &text, QWidget *parent) :
     QPushButton(icon, text, parent)
 {
