@@ -40,8 +40,6 @@
 
 #include "mainwindow.h"
 #include "buttonlisttab.h"
-#include "buttongridtab.h"
-#include "imagebuttongridtab.h"
 #include "cameraform.h"
 #include "graphicseffecttab.h"
 
@@ -172,10 +170,6 @@ void MainWindow::initTabWidget()
 
     ButtonListTab *buttonListGroupTab = new ButtonListTab(this);
 
-    ButtonGridTab *buttonGridTab = new ButtonGridTab(this);
-
-    ImageButtonGridTab *imageButtonGridTab = new ImageButtonGridTab(this);
-
     Segmentedcontrol *segmentedControl = new Segmentedcontrol(this);
 
     WidgetsTab *widgetsTab = new WidgetsTab(this);
@@ -195,8 +189,6 @@ void MainWindow::initTabWidget()
     m_mainTab->addTab(sliderTab, "Slider");
 
     m_mainTab->addTab(buttonListGroupTab, "ButtonList");
-    m_mainTab->addTab(imageButtonGridTab, "imageButtonGrid");
-    m_mainTab->addTab(buttonGridTab, "ButtonGrid");
     m_mainTab->addTab(segmentedControl, "Segmented Control");
     m_mainTab->addTab(cameraform, "Camera View");
 

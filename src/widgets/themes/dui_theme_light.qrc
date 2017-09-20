@@ -12,7 +12,6 @@
         <file>light/DLoadingIndicator.theme</file>
         <file>light/DCalendar.theme</file>
         <file>light/DButtonList.theme</file>
-        <file>light/DButtonGrid.theme</file>
         <file>light/DLabel.theme</file>
         <file>light/DSwitchButton.theme</file>
         <file>light/DSegmentedControl.theme</file>

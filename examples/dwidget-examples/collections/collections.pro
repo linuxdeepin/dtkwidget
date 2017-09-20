@@ -26,8 +26,6 @@ SOURCES += main.cpp\
     indicatortab.cpp \
     widgetstab.cpp \
     comboboxtab.cpp \
-    buttongridtab.cpp \
-    imagebuttongridtab.cpp \
     cameraform.cpp \
     graphicseffecttab.cpp
 
@@ -42,8 +40,6 @@ HEADERS  += mainwindow.h \
     indicatortab.h \
     widgetstab.h \
     comboboxtab.h \
-    buttongridtab.h \
-    imagebuttongridtab.h \
     cameraform.h \
     graphicseffecttab.h
 

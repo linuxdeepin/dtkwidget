@@ -18,7 +18,6 @@
         <file>dark/DPasswordEdit.theme</file>
         <file>dark/DSearchEdit.theme</file>
         <file>dark/DComboBox.theme</file>
-        <file>dark/DButtonGrid.theme</file>
         <file>dark/DWindowMaxButton.theme</file>
         <file>dark/DWindowCloseButton.theme</file>
         <file>dark/DWindowMinButton.theme</file>

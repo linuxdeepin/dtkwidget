@@ -43,7 +43,6 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dsegmentedcontrol.h \
     $$PWD/dlineedit.h \
     $$PWD/dcombobox.h \
-    $$PWD/dbuttongrid.h\
     $$PWD/dcomboboxmodel.h \
     $$PWD/dcolorcombobox.h \
     $$PWD/dfontcombobox.h \
@@ -116,7 +115,6 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dsegmentedcontrol.cpp \
     $$PWD/dlineedit.cpp \
     $$PWD/dcombobox.cpp \
-    $$PWD/dbuttongrid.cpp\
     $$PWD/dcomboboxmodel.cpp \
     $$PWD/dcolorcombobox.cpp \
     $$PWD/dfontcombobox.cpp \
