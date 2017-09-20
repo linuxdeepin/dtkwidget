@@ -51,9 +51,13 @@ class LIBDTKWIDGETSHARED_EXPORT DLoadingIndicator : public QGraphicsView, public
     Q_PROPERTY(qreal rotate READ rotate WRITE setRotate NOTIFY rotateChanged)
 
 public:
+    /*!
+     * \brief The RotationDirection enum contains the possible rotation
+     * directions of the DLoadingIndicator widget.
+     */
     enum RotationDirection{
-        Clockwise,
-        Counterclockwise
+        Clockwise, /*!< the rotation is clockwise */
+        Counterclockwise /*!< the rotation is counterclockwise */
     };
 
     Q_ENUMS(RotationDirection)
