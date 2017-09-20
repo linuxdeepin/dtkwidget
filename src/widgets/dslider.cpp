@@ -74,6 +74,27 @@ class DSliderPrivate
     Q_DECLARE_PUBLIC(DSlider)
 };
 
+
+/*!
+ * \class DSlider
+ * \brief The DSlider class provides an extended QSlider widget.
+ *
+ * DSlider has optional vernier type handle type, scale marks that can be placed at
+ * any position and corresponding scale tips.
+ *
+ * DSlider also supports showing texts, value of the slider, when
+ * user hovers on the slider handle.
+ *
+ * \note This class relies on dstyle Qt style plugin to work properly.
+ *
+ * \note This class is not working very well while orientaion is set to vertical.
+ */
+
+
+/*!
+ * \brief DSlider::DSlider constructs an instance of DSlider.
+ * \param parent is passed to QSlider constructor.
+ */
 DSlider::DSlider(QWidget *parent) :
     QSlider(parent),
     d_ptr(new DSliderPrivate(this))
@@ -81,6 +102,11 @@ DSlider::DSlider(QWidget *parent) :
     init();
 }
 
+/*!
+ * \brief DSlider::DSlider constructs an instance of DSlider.
+ * \param orientation is passed to QSlider constructor.
+ * \param parent is passed to QSldier constructor.
+ */
 DSlider::DSlider(Qt::Orientation orientation, QWidget *parent) :
     QSlider(orientation, parent),
     d_ptr(new DSliderPrivate(this))
@@ -93,6 +119,12 @@ DSlider::~DSlider()
     delete d_ptr;
 }
 
+/*!
+ * \property DSlider::handleType
+ * \brief This property holds the handle type used by this slider.
+ *
+ * Default value is DSlider::RoundHandle.
+ */
 int DSlider::handleType() const
 {
     Q_D(const DSlider);
@@ -133,6 +165,14 @@ void DSlider::setRightTip(const QString &rightTip)
     repaint();
 }
 
+/*!
+ * \property DSlider::leftTip
+ * \brief This property holds the text to be display on the left side of the slider.
+ *
+ * DSlider::leftTip and DSlider::rightTip are used to help the user understand
+ * how the slider works, for example: leftTip set to Low and rightTip set to High
+ * tells the user that drag the handle to left lower the value and vice versa.
+ */
 QString DSlider::leftTip() const
 {
     Q_D(const DSlider);
@@ -158,6 +198,10 @@ void DSlider::setLeftTip(const QString &leftTip)
     repaint();
 }
 
+/*!
+ * \property DSlider::scaleColor
+ * \brief This property holds the color to paint the scale marks.
+ */
 QColor DSlider::scaleColor() const
 {
     Q_D(const DSlider);
@@ -174,6 +218,10 @@ void DSlider::setScaleColor(const QColor &scaleColor)
     repaint();
 }
 
+/*!
+ * \property DSlider::tipColor
+ * \brief This property holds the color to paint the scale tips.
+ */
 QColor DSlider::tipColor() const
 {
     Q_D(const DSlider);
@@ -190,6 +238,13 @@ void DSlider::setTipColor(const QColor &tipColor)
     repaint();
 }
 
+/*!
+ * \brief DSlider::addScale adds a scale mark on the slider.
+ * \param value is the position that the scale mark to be added.
+ *
+ * The scale added can be removed using DSlider::removeScale passing the
+ * value as the parameter.
+ */
 void DSlider::addScale(int value)
 {
     Q_D(DSlider);
@@ -203,6 +258,10 @@ void DSlider::addScale(int value)
     repaint();
 }
 
+/*!
+ * \brief DSlider::removeScale removes a scale mark on the slider.
+ * \param value is the value used to add the scale mark.
+ */
 void DSlider::removeScale(int value)
 {
     Q_D(DSlider);
@@ -373,6 +432,11 @@ QSize DSlider::sizeHint() const
     return size;
 }
 
+/*!
+ * \property DSlider::hoverShowValue
+ * \brief This property holds whether the value should be displayed when user
+ * hovers on the slider handle.
+ */
 bool DSlider::hoverShowValue() const
 {
     Q_D(const DSlider);
@@ -380,6 +444,10 @@ bool DSlider::hoverShowValue() const
     return d->m_hoverShowValue;
 }
 
+/*!
+ * \property DSlider::hoverValueColor
+ * \brief This property holds the color to be used to display the texts.
+ */
 QColor DSlider::hoverValueColor() const
 {
     Q_D(const DSlider);
@@ -387,6 +455,11 @@ QColor DSlider::hoverValueColor() const
     return d->m_hoverValueColor;
 }
 
+/*!
+ * \property DSlider::hoverShowValueInterval
+ * \brief This property holds the interval of how long the value will be displayed
+ * if the user keeps hovering on the slider handle.
+ */
 int DSlider::hoverShowValueInterval() const
 {
     Q_D(const DSlider);

@@ -36,9 +36,12 @@ class LIBDTKWIDGETSHARED_EXPORT DSlider : public QSlider
     Q_PROPERTY(int hoverShowValueInterval READ hoverShowValueInterval WRITE setHoverShowValueInterval)
 
 public:
+    /*!
+     * \brief The HandleType enum contains the handle types can be used by DSlider.
+     */
     enum HandleType {
-        SharpHandler,
-        RoundHandle
+        SharpHandler, /*!< Rectangle with one side replaced by an arrow, like handle on verniers */
+        RoundHandle /*!< Round shape handle */
     };
 
     DSlider(QWidget *parent = 0);
@@ -63,7 +66,6 @@ public:
     void addScale(int value);
     void removeScale(int value);
 
-    QSize sizeHint() const;
     bool hoverShowValue() const;
     QColor hoverValueColor() const;
     int hoverShowValueInterval() const;
@@ -75,10 +77,11 @@ public Q_SLOTS:
 
 protected:
     DSlider(DSliderPrivate &d);
-    void paintEvent(QPaintEvent *event);
-    void mousePressEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
+    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
+    void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    QSize sizeHint() const Q_DECL_OVERRIDE;
 
 private Q_SLOTS:
     void hoverTimout();
