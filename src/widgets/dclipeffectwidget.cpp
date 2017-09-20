@@ -51,6 +51,17 @@ DClipEffectWidgetPrivate::DClipEffectWidgetPrivate(DClipEffectWidget *qq)
 
 }
 
+/*!
+ * \class DClipEffectWidget
+ * \brief The DClipEffectWidget class clips itself and its content according to a given clip path.
+ *
+ * This class is useful when you want to make rounded widget or things like that.
+ */
+
+/*!
+ * \brief DClipEffectWidget::DClipEffectWidget constructs an instance of DClipEffectWidget.
+ * \param parent is passed to QWidget constructor.
+ */
 DClipEffectWidget::DClipEffectWidget(QWidget *parent)
     : QWidget(parent)
     , DObject(*new DClipEffectWidgetPrivate(this))
@@ -61,6 +72,10 @@ DClipEffectWidget::DClipEffectWidget(QWidget *parent)
     setFocusPolicy(Qt::NoFocus);
 }
 
+/*!
+ * \property DClipEffectWidget::margins
+ * \brief This property holds the margin need to be removed before the clip.
+ */
 QMargins DClipEffectWidget::margins() const
 {
     D_DC(DClipEffectWidget);
@@ -68,6 +83,10 @@ QMargins DClipEffectWidget::margins() const
     return d->margins;
 }
 
+/*!
+ * \property DClipEffectWidget::clipPath
+ * \brief This property holds the path used to clip the widget.
+ */
 QPainterPath DClipEffectWidget::clipPath() const
 {
     D_DC(DClipEffectWidget);
