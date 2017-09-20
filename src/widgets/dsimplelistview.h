@@ -24,6 +24,7 @@
 #ifndef DSIMPLELISTVIEW_H
 #define DSIMPLELISTVIEW_H
 
+#include "dobject.h"
 #include "dsimplelistitem.h"
 #include <dtkwidget_global.h>
 #include <QImage>
@@ -35,12 +36,13 @@ DWIDGET_BEGIN_NAMESPACE
 typedef bool (* SortAlgorithm) (const DSimpleListItem *item1, const DSimpleListItem *item2, bool descendingSort);
 typedef bool (* SearchAlgorithm) (const DSimpleListItem *item, QString searchContent);
 
-class DSimpleListView : public QWidget
+class DSimpleListViewPrivate;
+class LIBDTKWIDGETSHARED_EXPORT DSimpleListView : public QWidget, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
     
 public:
-    DSimpleListView(QWidget *parent = 0);
+    explicit DSimpleListView(QWidget *parent = 0);
     ~DSimpleListView();
 
     // DSimpleListView interfaces.
@@ -204,75 +206,45 @@ signals:
     void changeColumnVisible(int index, bool visible, QList<bool> columnVisibles);
     void changeSortingStatus(int index, bool sortingOrder);
     void changeHoverItem(QPoint pos, DSimpleListItem* item, int columnIndex);
-    
-private slots:
-    void hideScrollbar();
-    
-private:
+                                                                            
+protected:                                                                            
     bool eventFilter(QObject *, QEvent *event);
     void keyPressEvent(QKeyEvent *keyEvent);
     void mouseMoveEvent(QMouseEvent *mouseEvent);
     void mousePressEvent(QMouseEvent *mouseEvent);
     void mouseReleaseEvent(QMouseEvent *mouseEvent);
     void paintEvent(QPaintEvent *);
+    void wheelEvent(QWheelEvent *event);
+    
     void paintScrollbar(QPainter *painter);
-    void selectNextItemWithOffset(int scrollOffset);
+    
     void selectPrevItemWithOffset(int scrollOffset);
-    void shiftSelectItemsWithBound(int selectionStartIndex, int selectionEndIndex);
+    void selectNextItemWithOffset(int scrollOffset);
     void shiftSelectNextItemWithOffset(int scrollOffset);
     void shiftSelectPrevItemWithOffset(int scrollOffset);
-    void wheelEvent(QWheelEvent *event);
-                        
-    QList<DSimpleListItem*> getSearchItems(QList<DSimpleListItem*> items);
-    QList<int> getRenderWidths();
-    bool isMouseAtScrollArea(int x);
-    bool isMouseAtTitleArea(int y);
-    int adjustRenderOffset(int offset);
+                                                        
     int getBottomRenderOffset();
-    int getItemsTotalHeight();
+    int getScrollbarY();
     int getScrollAreaHeight();
     int getScrollbarHeight();
-    int getScrollbarY();
-    int getTopRenderOffset();
-    void sortItemsByColumn(int column, bool descendingSort);
+    
+    QList<int> getRenderWidths();
+
+    void shiftSelectItemsWithBound(int selectionStartIndex, int selectionEndIndex);
+    int adjustRenderOffset(int offset);
+    
     void startScrollbarHideTimer();
     
-    DSimpleListItem *lastHoverItem;
-    DSimpleListItem *lastSelectItem;
-    QList<DSimpleListItem*> *listItems;
-    QList<DSimpleListItem*> *renderItems;
-    QList<DSimpleListItem*> *selectionItems;
-    QList<QString> columnTitles;
-    QList<SortAlgorithm> *sortingAlgorithms;
-    QList<bool> *sortingOrderes;
+    bool isMouseAtScrollArea(int x);
+    bool isMouseAtTitleArea(int y);
+                                  
     QList<bool> columnVisibles;
-    QList<int> columnWidths;
-    QString searchContent;
-    QTimer *hideScrollbarTimer;
-    SearchAlgorithm searchAlgorithm;
-    bool defaultSortingOrder;
-    bool mouseAtScrollArea;
-    bool mouseDragScrollbar;
-    int alwaysVisibleColumn;
-    int clipRadius;
-    int defaultSortingColumn;
-    int hideScrollbarDuration;
-    int lastHoverColumnIndex;
-    int oldRenderOffset;
-    int renderOffset;
-    int rowHeight;
-    int scrollDistance;
-    int scrollStartY;
-    int scrollUnit;
-    int scrollbarDefaultWidth;
-    int scrollbarDragWidth;
-    int scrollbarMinHeight;
-    int scrollbarPadding;
-    int titleArrowPadding;
-    int titleHeight;
-    int titleHoverColumn;
-    int titlePadding;
-    int titlePressColumn;
+    
+private slots:
+    void hideScrollbar();
+    
+private:
+    D_DECLARE_PRIVATE(DSimpleListView)
 };
 
 DWIDGET_END_NAMESPACE
