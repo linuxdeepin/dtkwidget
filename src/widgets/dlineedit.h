@@ -42,6 +42,7 @@ public:
 
     void setAlert(bool isAlert);
     bool isAlert() const;
+    void showAlertMessage(const QString &text, int duration = 3000);
 
     void setIconVisible(bool visible);
     bool iconVisible() const;

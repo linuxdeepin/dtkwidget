@@ -18,6 +18,7 @@
 #include "dlineedit.h"
 #include "dthememanager.h"
 #include "private/dlineedit_p.h"
+#include "darrowrectangle.h"
 
 #include <QHBoxLayout>
 #include <QDebug>
@@ -85,6 +86,42 @@ bool DLineEdit::isAlert() const
     D_DC(DLineEdit);
 
     return d->m_isAlert;
+}
+
+void DLineEdit::showAlertMessage(const QString &text, int duration)
+{
+    D_D(DLineEdit);
+
+    if (!d->tooltip) {
+        d->tooltip = new DArrowRectangle(DArrowRectangle::ArrowTop, this);
+        d->tooltip->setObjectName("AlertTooltip");
+
+        QLabel *label = new QLabel(d->tooltip);
+
+        label->setWordWrap(true);
+        label->setMaximumWidth(width());
+        d->tooltip->setContent(label);
+        d->tooltip->setBackgroundColor(DThemeManager::instance()->theme() == "light" ? Qt::white : Qt::black);
+        d->tooltip->setArrowX(15);
+        d->tooltip->setArrowHeight(5);
+
+        QTimer::singleShot(duration, d->tooltip, [d] {
+            d->tooltip->deleteLater();
+            d->tooltip = Q_NULLPTR;
+        });
+    }
+
+    QLabel *label = qobject_cast<QLabel*>(d->tooltip->getContent());
+
+    if (!label)
+        return;
+
+    label->setText(text);
+    label->adjustSize();
+
+    const QPoint &pos = mapToGlobal(QPoint(15, height()));
+
+    d->tooltip->show(pos.x(), pos.y());
 }
 
 void DLineEdit::setIconVisible(bool visible)
@@ -166,12 +203,22 @@ void DLineEdit::focusInEvent(QFocusEvent *e)
 {
     Q_EMIT focusChanged(true);
     QLineEdit::focusInEvent(e);
+
+    Q_D(DLineEdit);
+
+    d->clearButton->show();
+    d->m_rightIcon->hide();
 }
 
 void DLineEdit::focusOutEvent(QFocusEvent *e)
 {
     Q_EMIT focusChanged(false);
     QLineEdit::focusOutEvent(e);
+
+    Q_D(DLineEdit);
+
+    d->clearButton->hide();
+    d->m_rightIcon->show();
 }
 
 void DLineEdit::resizeEvent(QResizeEvent *e)
@@ -191,11 +238,16 @@ void DLineEditPrivate::init()
     Q_Q(DLineEdit);
     m_insideFrame = new QFrame(q);
     m_insideFrame->setObjectName("LineEditInsideFrame");
-    m_rightIcon = new DImageButton;
+    m_rightIcon = new DImageButton(q);
+    m_rightIcon->setObjectName("IconButton");
     m_rightIcon->hide();
+    clearButton = new DImageButton(q);
+    clearButton->setObjectName("ClearButton");
+    clearButton->hide();
     m_centralHLayout = new QHBoxLayout;
     m_centralHLayout->addStretch();
     m_centralHLayout->addWidget(m_rightIcon);
+    m_centralHLayout->addWidget(clearButton);
     m_centralHLayout->setSpacing(0);
     m_centralHLayout->setMargin(0);
 
@@ -204,6 +256,9 @@ void DLineEditPrivate::init()
 
     q->connect(m_rightIcon, &DImageButton::clicked, q, &DLineEdit::iconClicked);
     q->connect(q, SIGNAL(sizeChanged(QSize)), q, SLOT(_q_resizeInsideFrame(QSize)));
+    q->connect(clearButton, &DImageButton::clicked, q, [q] {
+        q->setText(QString());
+    });
 }
 
 void DLineEditPrivate::_q_resizeInsideFrame(const QSize &size)

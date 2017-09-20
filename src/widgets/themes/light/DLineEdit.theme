@@ -14,3 +14,24 @@ QFrame#LineEditInsideFrame {/*outside frame*/
     border-radius: 3;
     border-color: rgba(0, 0, 0, 20%);
 }
+
+Dtk--Widget--DLineEdit #IconButton {
+    border: 0px solid;
+    border-left: 1px solid rgba(0, 0, 0, 20%);
+    margin: 1px 0px 2px 0px;
+}
+
+Dtk--Widget--DLineEdit[alert="true"] #IconButton{
+    border-color: #FF8F00;
+}
+
+Dtk--Widget--DLineEdit #ClearButton {
+    qproperty-normalPic: ":/images/light/images/clear_content_normal.png";
+    qproperty-hoverPic: ":/images/light/images/clear_content_hover.png";
+    qproperty-pressPic: "/images/light/images/clear_content_press.png";
+    margin-right: 4px;
+}
+
+#AlertTooltip QLabel {
+    color: #FF8F00;
+}

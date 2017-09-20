@@ -27,6 +27,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+class DArrowRectangle;
 class DLineEditPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 {
     Q_DECLARE_PUBLIC(DLineEdit)
@@ -45,7 +46,9 @@ public:
 
     QFrame *m_insideFrame;
     DImageButton *m_rightIcon;
+    DImageButton *clearButton;
     QHBoxLayout *m_centralHLayout;
+    DArrowRectangle *tooltip = Q_NULLPTR;
 };
 
 DWIDGET_END_NAMESPACE
