@@ -79,6 +79,22 @@ void DMainWindowPrivate::init()
     }
 }
 
+/*!
+ * \class DMainWindow
+ * \brief The DMainWindow class provides a main application window.
+ *
+ * A main window provides a framework for building an application's user
+ * interface. DMainWindow has its own layout compared to QMainWindow,
+ * it has only title bar and content area, simpler and cleaner.
+ *
+ * Developers can provide customized title bar and content to make the
+ * application rich functional.
+ */
+
+/*!
+ * \brief DMainWindow::DMainWindow constructs an instance of DMainWindow
+ * \param parent is passed to QMainWindow construtor.
+ */
 DMainWindow::DMainWindow(QWidget *parent)
     : QMainWindow(parent)
     , DObject(*new DMainWindowPrivate(this))
@@ -86,6 +102,10 @@ DMainWindow::DMainWindow(QWidget *parent)
     d_func()->init();
 }
 
+/*!
+ * \brief DMainWindow::titlebar
+ * \return a DTitlebar instance used by the main window.
+ */
 DTitlebar *DMainWindow::titlebar() const
 {
     D_DC(DMainWindow);
@@ -93,6 +113,13 @@ DTitlebar *DMainWindow::titlebar() const
     return d->titlebar;
 }
 
+/*!
+ * \brief DMainWindow::isDXcbWindow
+ * \return Whether this window is dxcb backended.
+ *
+ * Many features like blurred background and window clipping are supported
+ * only if the window is using the dxcb Qt platform plugin.
+ */
 bool DMainWindow::isDXcbWindow() const
 {
     D_DC(DMainWindow);
@@ -100,6 +127,10 @@ bool DMainWindow::isDXcbWindow() const
     return d->handle;
 }
 
+/*!
+ * \property DMainWindow::windowRadius
+ * \brief This property holds the radius of the main window.
+ */
 int DMainWindow::windowRadius() const
 {
     D_DC(DMainWindow);
@@ -110,6 +141,10 @@ int DMainWindow::windowRadius() const
     return d->handle->windowRadius();
 }
 
+/*!
+ * \property DMainWindow::borderWidth
+ * \brief This property holds the width of the main window's border.
+ */
 int DMainWindow::borderWidth() const
 {
     D_DC(DMainWindow);
@@ -120,6 +155,10 @@ int DMainWindow::borderWidth() const
     return d->handle->borderWidth();
 }
 
+/*!
+ * \property DMainWindow::borderColor
+ * \brief This property holds the color of the main window's border.
+ */
 QColor DMainWindow::borderColor() const
 {
     D_DC(DMainWindow);
@@ -130,6 +169,10 @@ QColor DMainWindow::borderColor() const
     return d->handle->borderColor();
 }
 
+/*!
+ * \property DMainWindow::shadowRadius
+ * \brief This property holds the shadow radius of the main widnow.
+ */
 int DMainWindow::shadowRadius() const
 {
     D_DC(DMainWindow);
@@ -140,6 +183,10 @@ int DMainWindow::shadowRadius() const
     return d->handle->shadowRadius();
 }
 
+/*!
+ * \property DMainWindow::shadowOffset
+ * \brief This property holds the offset applied on the window shadow.
+ */
 QPoint DMainWindow::shadowOffset() const
 {
     D_DC(DMainWindow);
@@ -150,6 +197,10 @@ QPoint DMainWindow::shadowOffset() const
     return d->handle->shadowOffset();
 }
 
+/*!
+ * \property DMainWindow::shadowColor
+ * \brief This property holds the color of the window shadow.
+ */
 QColor DMainWindow::shadowColor() const
 {
     D_DC(DMainWindow);
@@ -160,6 +211,15 @@ QColor DMainWindow::shadowColor() const
     return d->handle->shadowColor();
 }
 
+/*!
+ * \property DMainWindow::clipPath
+ * \brief This property holds the custom QPainterPath to be used to clip the window.
+ *
+ * By default DMainWindow is clipped as a corner-rounded rectangle, but you can
+ * supply a custom QPainterPath to do custom shaped window.
+ *
+ * \see DMainWindow::frameMask
+ */
 QPainterPath DMainWindow::clipPath() const
 {
     D_DC(DMainWindow);
@@ -170,6 +230,13 @@ QPainterPath DMainWindow::clipPath() const
     return d->handle->clipPath();
 }
 
+/*!
+ * \property DMainWindow::frameMask
+ * \brief This property holds the mask to be applied on the window.
+ *
+ * For better clip quality, for example antialiasing, use property
+ * DMainWindow::clipPath instead.
+ */
 QRegion DMainWindow::frameMask() const
 {
     D_DC(DMainWindow);
@@ -190,6 +257,10 @@ QMargins DMainWindow::frameMargins() const
     return d->handle->frameMargins();
 }
 
+/*!
+ * \property DMainWindow::translucentBackground
+ * \brief This property holds whether the window has translucent background.
+ */
 bool DMainWindow::translucentBackground() const
 {
     D_DC(DMainWindow);
@@ -200,6 +271,15 @@ bool DMainWindow::translucentBackground() const
     return d->handle->translucentBackground();
 }
 
+/*!
+ * \brief DMainWindow::enableSystemResize
+ * \return This property holds whether the window can be resized by the user.
+ *
+ * The default value of this property is true.
+ *
+ * You can set this property to false and implement the resize polizy of this
+ * window by you self.
+ */
 bool DMainWindow::enableSystemResize() const
 {
     D_DC(DMainWindow);
@@ -210,6 +290,14 @@ bool DMainWindow::enableSystemResize() const
     return d->handle->enableSystemResize();
 }
 
+/*!
+ * \property DMainWindow::enableSystemMove
+ * \brief This property holds whether the window can be moved by the user.
+ *
+ * The default value of this property is true.
+ *
+ * You can set this property to false and choose the effective area to drag and move.
+ */
 bool DMainWindow::enableSystemMove() const
 {
     D_DC(DMainWindow);
@@ -220,6 +308,10 @@ bool DMainWindow::enableSystemMove() const
     return d->handle->enableSystemResize();
 }
 
+/*!
+ * \property DMainWindow::enableBlurWindow
+ * \brief This property holds whether the window background is blurred.
+ */
 bool DMainWindow::enableBlurWindow() const
 {
     D_DC(DMainWindow);
@@ -230,6 +322,15 @@ bool DMainWindow::enableBlurWindow() const
     return d->handle->enableBlurWindow();
 }
 
+/*!
+ * \property DMainWindow::autoInputMaskByClipPath
+ * \brief This property holds whether the user input is masked by the clip path.
+ *
+ * Sometimes you may want to handle events happening in the areas that are
+ * visually clipped by the setting DMainWindow::clipPath.
+ *
+ * The default value of this property is true.
+ */
 bool DMainWindow::autoInputMaskByClipPath() const
 {
     D_DC(DMainWindow);
