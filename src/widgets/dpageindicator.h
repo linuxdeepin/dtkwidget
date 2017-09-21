@@ -35,6 +35,9 @@ class LIBDTKWIDGETSHARED_EXPORT DPageIndicator : public QWidget, public DTK_CORE
     Q_PROPERTY(QColor secondaryPointColor READ secondaryPointColor WRITE setSecondaryPointColor DESIGNABLE true)
     Q_PROPERTY(int pointRadius READ pointRadius WRITE setPointRadius)
     Q_PROPERTY(int secondaryPointRadius READ secondaryPointRadius WRITE setSecondaryPointRadius)
+    Q_PROPERTY(int pageCount READ pageCount WRITE setPageCount)
+    Q_PROPERTY(int currentPage READ currentPageIndex WRITE setCurrentPage)
+    Q_PROPERTY(int pointDistance READ pointDistance WRITE setPointDistance)
 
 public:
     explicit DPageIndicator(QWidget *parent = 0);

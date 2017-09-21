@@ -21,14 +21,36 @@
 #include <QDebug>
 #include <QPainter>
 
-DWIDGET_USE_NAMESPACE
+DWIDGET_BEGIN_NAMESPACE
 
+/*!
+ * \class DPageIndicator
+ * \brief The DPageIndicator class provides indicator of which page is currently showing.
+ *
+ * DPageIndicator is control that displays a horizontal series of dots,
+ * each of which corresponds to a page/widget may appear on top of it.
+ *
+ * It's inspired by UIPageControl of Apple.
+ * See https://developer.apple.com/documentation/uikit/uipagecontrol.
+ *
+ * \note The design of this control is that it's just used to display, not
+ * to control which page is currently visible.
+ */
+
+/*!
+ * \brief DPageIndicator::DPageIndicator constructs an instance of DPageIndicator.
+ * \param parent is passed to QWidget constructor.
+ */
 DPageIndicator::DPageIndicator(QWidget *parent)
     : QWidget(parent),
       DObject(*new DPageIndicatorPrivate(this), this)
 {
 }
 
+/*!
+ * \property DPageIndicator::pageCount
+ * \brief This property holds the number of pages that are represented by this widget.
+ */
 int DPageIndicator::pageCount() const
 {
     D_DC(DPageIndicator);
@@ -43,6 +65,11 @@ void DPageIndicator::setPageCount(const int count)
     d->setPageCount(count);
 }
 
+/*!
+ * \brief DPageIndicator::nextPage highlights the next dot.
+ *
+ * \see DPageIndicator::setCurrentPage.
+ */
 void DPageIndicator::nextPage()
 {
     D_D(DPageIndicator);
@@ -50,6 +77,11 @@ void DPageIndicator::nextPage()
     d->nextPage();
 }
 
+/*!
+ * \brief DPageIndicator::previousPage hightlights the previous dot.
+ *
+ * \see DPageIndicator::setCurrentPage.
+ */
 void DPageIndicator::previousPage()
 {
     D_D(DPageIndicator);
@@ -64,6 +96,10 @@ void DPageIndicator::setCurrentPage(const int index)
     d->setCurrentPage(index);
 }
 
+/*!
+ * \property DPageIndicator::currentPage
+ * \brief This property holds the index of currently highlighted dot.
+ */
 int DPageIndicator::currentPageIndex() const
 {
     D_DC(DPageIndicator);
@@ -71,6 +107,10 @@ int DPageIndicator::currentPageIndex() const
     return d->currentPage;
 }
 
+/*!
+ * \property DPageIndicator::pointColor
+ * \brief This property holds the color used to draw the highlighted dot.
+ */
 QColor DPageIndicator::pointColor() const
 {
     D_DC(DPageIndicator);
@@ -85,6 +125,10 @@ void DPageIndicator::setPointColor(QColor color)
     d->pointColor = color;
 }
 
+/*!
+ * \property DPageIndicator::secondaryPointColor
+ * \brief This property holds the color used to draw the noraml dots.
+ */
 QColor DPageIndicator::secondaryPointColor() const
 {
     D_DC(DPageIndicator);
@@ -99,6 +143,10 @@ void DPageIndicator::setSecondaryPointColor(QColor color)
     d->secondaryPointColor = color;
 }
 
+/*!
+ * \property DPageIndicator::pointRadius
+ * \brief This property holds the radius of the highlighted dot.
+ */
 int DPageIndicator::pointRadius() const
 {
     D_DC(DPageIndicator);
@@ -111,6 +159,10 @@ void DPageIndicator::setPointRadius(int size)
     d->pointRadius = size;
 }
 
+/*!
+ * \property DPageIndicator::secondaryPointRadius
+ * \brief This property holds the radius of the normal dot.
+ */
 int DPageIndicator::secondaryPointRadius() const
 {
     D_DC(DPageIndicator);
@@ -123,6 +175,10 @@ void DPageIndicator::setSecondaryPointRadius(int size)
     d->secondaryPointRadius = size;
 }
 
+/*!
+ * \property DPageIndicator::pointDistance
+ * \brief This property holds the distance between two dots.
+ */
 int DPageIndicator::pointDistance() const
 {
     D_DC(DPageIndicator);
@@ -216,3 +272,4 @@ void DPageIndicatorPrivate::setCurrentPage(const int index)
     q->update();
 }
 
+DWIDGET_END_NAMESPACE
