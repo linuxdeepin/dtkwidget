@@ -196,6 +196,8 @@ void DSwitchButton::setAnimationEndValue(double animationEndValue)
 
 void DSwitchButton::paintEvent(QPaintEvent *e)
 {
+    Q_UNUSED(e);
+
     D_D(DSwitchButton);
 
     QPixmap m_innerImage;
@@ -212,8 +214,12 @@ void DSwitchButton::paintEvent(QPaintEvent *e)
     QPainter p(this);
     p.setRenderHints(QPainter::Antialiasing);
 
+    const qreal ratio = m_innerImage.devicePixelRatioF();
+
     QPainterPath path;
-    path.addRoundedRect(rect(), m_innerImage.height() / 2.0, m_innerImage.height() / 2.0);
+    path.addRoundedRect(rect(),
+                        (m_innerImage.height() / 2.0) / ratio,
+                        (m_innerImage.height() / 2.0) / ratio);
     path.closeSubpath();
 
     p.setClipPath(path);
