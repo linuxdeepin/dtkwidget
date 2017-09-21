@@ -27,6 +27,20 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+/*!
+ * \class DSwitchButton
+ * \brief The DSwitchButton class provides switch like widget.
+ *
+ * User can put the switch on/off the turn some feature on/off.
+ *
+ * It's inspired by UISwitch of Apple,
+ * see https://developer.apple.com/documentation/uikit/uiswitch.
+ */
+
+/*!
+ * \brief DSwitchButton::DSwitchButton constructs an instance of DSwitchButton.
+ * \param parent is passed to QFrame constructor.
+ */
 DSwitchButton::DSwitchButton(QWidget *parent) :
     QFrame(parent),
     DObject(*new DSwitchButtonPrivate(this))
@@ -47,6 +61,12 @@ DSwitchButton::DSwitchButton(QWidget *parent) :
     });
 }
 
+/*!
+ * \property DSwitchButton::checked
+ * \brief This property holds whether the switch is on or off.
+ *
+ * True if the switch is on, otherwise false.
+ */
 bool DSwitchButton::checked() const
 {
     D_DC(DSwitchButton);

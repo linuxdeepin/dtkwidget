@@ -45,26 +45,25 @@ public:
 
     bool checked() const;
 
-    int animationDuration() const;
+    Q_DECL_DEPRECATED int animationDuration() const;
+    Q_DECL_DEPRECATED QEasingCurve::Type animationType() const;
+    Q_DECL_DEPRECATED QString backgroundImageSource() const;
+    Q_DECL_DEPRECATED double animationStartValue() const;
+    Q_DECL_DEPRECATED double animationEndValue() const;
+    Q_DECL_DEPRECATED QString disabledImageSource() const;
+    Q_DECL_DEPRECATED QString enabledImageSource() const;
 
-    QEasingCurve::Type animationType() const;
-    QString backgroundImageSource() const;
-
-    double animationStartValue() const;
-    double animationEndValue() const;
-    QString disabledImageSource() const;
-    QString enabledImageSource() const;
     QSize sizeHint() const Q_DECL_OVERRIDE;
 
 public Q_SLOTS:
     void setChecked(bool arg);
-    void setAnimationDuration(int arg);
-    void setAnimationType(QEasingCurve::Type arg);
 
-    void setAnimationStartValue(double animationStartValue);
-    void setAnimationEndValue(double animationEndValue);
-    bool setDisabledImageSource(const QString &arg);
-    bool setEnabledImageSource(const QString &arg);
+    Q_DECL_DEPRECATED void setAnimationDuration(int arg);
+    Q_DECL_DEPRECATED void setAnimationType(QEasingCurve::Type arg);
+    Q_DECL_DEPRECATED void setAnimationStartValue(double animationStartValue);
+    Q_DECL_DEPRECATED void setAnimationEndValue(double animationEndValue);
+    Q_DECL_DEPRECATED bool setDisabledImageSource(const QString &arg);
+    Q_DECL_DEPRECATED bool setEnabledImageSource(const QString &arg);
 
 Q_SIGNALS:
     void checkedChanged(bool arg);
