@@ -20,6 +20,17 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+/*!
+ * \class DSeparatorVertical
+ * \brief The DSeparatorVertical class provides an vertical separator.
+ *
+ * DSeparatorVertical has fixed two pixels in width.
+ */
+
+/*!
+ * \brief DSeparatorVertical::DSeparatorVertical constructs an instance of DSeparatorVertical.
+ * \param parent is passed to QWidget constructor.
+ */
 DSeparatorVertical::DSeparatorVertical(QWidget *parent) : QWidget(parent)
 {
     D_THEME_INIT_WIDGET(DSeparatorVertical);

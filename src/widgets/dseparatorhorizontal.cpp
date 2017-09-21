@@ -20,6 +20,17 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+/*!
+ * \class DSeparatorHorizontal
+ * \brief The DSeparatorHorizontal class provides an horizontal separator.
+ *
+ * DSeparatorHorizontal has fixed two pixels in height.
+ */
+
+/*!
+ * \brief DSeparatorHorizontal::DSeparatorHorizontal constructs an instance of DSeparatorHorizontal.
+ * \param parent is passed to QWidget constructor.
+ */
 DSeparatorHorizontal::DSeparatorHorizontal(QWidget *parent) : QWidget(parent)
 {
     D_THEME_INIT_WIDGET(DSeparatorHorizontal);
