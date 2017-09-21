@@ -80,6 +80,19 @@ void DSpinBoxPrivate::_q_resizeInsideFrame(const QSize &size)
     insideFrame->setFixedHeight(size.height() - 1);
 }
 
+/*!
+ * \class DSpinBox
+ * \brief The DSpinBox class provides deepin style QSpinBox.
+ *
+ * Like DLineEdit, this widget can be set on alert to warn the user that the
+ * input is not correct. In addition, there's a DSpinBox::defaultValue property
+ * can be used to set a default value on the widget.
+ */
+
+/*!
+ * \brief DSpinBox::DSpinBox constructs an instance of DSpinBox
+ * \param parent is passed to QSpinBox constructor
+ */
 DSpinBox::DSpinBox(QWidget *parent) :
     QSpinBox(parent),
     DObject(*new DSpinBoxPrivate(this))
@@ -89,11 +102,19 @@ DSpinBox::DSpinBox(QWidget *parent) :
     d_func()->init();
 }
 
+/*!
+ * \brief DSpinBox::lineEdit
+ * \return the QLineEdit used by this spin box.
+ */
 QLineEdit *DSpinBox::lineEdit() const
 {
     return QSpinBox::lineEdit();
 }
 
+/*!
+ * \property DSpinBox::isAlert
+ * \brief This property holds whether the widget on alert mode.
+ */
 bool DSpinBox::isAlert() const
 {
     D_DC(DSpinBox);
@@ -101,6 +122,10 @@ bool DSpinBox::isAlert() const
     return d->alert;
 }
 
+/*!
+ * \property DSpinBox::defaultValue
+ * \brief This property holds the default value of this spin box.
+ */
 int DSpinBox::defaultValue() const
 {
     return d_func()->defaultValue;
