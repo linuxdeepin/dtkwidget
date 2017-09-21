@@ -44,8 +44,8 @@ public:
     QString theme() const;
     void setTheme(const QString &theme);
 
-    bool setSingleInstance(const QString &key);
     bool setSingleInstanceBySemaphore(const QString &key);
+    bool setSingleInstanceByDbus(const QString &key);
 
     bool loadDtkTranslator(QList<QLocale> localeFallback);
     bool loadTranslator(QList<DPathBuf> translateDirs, const QString &name, QList<QLocale> localeFallback);

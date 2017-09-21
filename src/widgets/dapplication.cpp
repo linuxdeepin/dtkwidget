@@ -16,6 +16,8 @@
  */
 
 #include <QDebug>
+#include <QDBusError>
+#include <QDBusConnection>
 #include <QDir>
 #include <QLocalSocket>
 #include <QLibraryInfo>
@@ -82,34 +84,6 @@ void DApplicationPrivate::setTheme(const QString &theme)
     themeManager->setTheme(theme);
 }
 
-bool DApplicationPrivate::setSingleInstance(const QString &key)
-{
-    D_Q(DApplication);
-
-    if (m_localServer) {
-        return m_localServer->isListening();
-    }
-
-    QLocalSocket *localSocket = new QLocalSocket;
-    localSocket->connectToServer(key);
-
-    // if connect success, another instance is running.
-    bool result = localSocket->waitForConnected(1000);
-    localSocket->deleteLater();
-
-    if (result) {
-        return false;
-    }
-
-    // create local server
-    m_localServer = new QLocalServer(q);
-    m_localServer->removeServer(key);
-
-    QObject::connect(m_localServer, &QLocalServer::newConnection, q, &DApplication::newInstanceStarted);
-
-    return m_localServer->listen(key);
-}
-
 static bool tryAcquireSystemSemaphore(QSystemSemaphore *ss, qint64 timeout = 10)
 {
     if (ss->error() != QSystemSemaphore::NoError) {
@@ -145,8 +119,9 @@ bool DApplicationPrivate::setSingleInstanceBySemaphore(const QString &key)
     static QSystemSemaphore ss(key, 1, QSystemSemaphore::Open);
     static bool singleInstance = false;
 
-    if (singleInstance)
+    if (singleInstance) {
         return true;
+    }
 
     Q_ASSERT_X(ss.error() == QSystemSemaphore::NoError, "DApplicationPrivate::setSingleInstanceBySemaphore:", ss.errorString().toLocal8Bit().constData());
 
@@ -154,9 +129,11 @@ bool DApplicationPrivate::setSingleInstanceBySemaphore(const QString &key)
 
     if (singleInstance) {
         QtConcurrent::run([] {
-            while (ss.acquire() && singleInstance) {
-                if (qApp->startingUp() || qApp->closingDown())
+            while (ss.acquire() && singleInstance)
+            {
+                if (qApp->startingUp() || qApp->closingDown()) {
                     break;
+                }
 
                 ss.release(1);
 
@@ -174,6 +151,24 @@ bool DApplicationPrivate::setSingleInstanceBySemaphore(const QString &key)
     }
 
     return singleInstance;
+}
+
+/**
+* \brief DApplicationPrivate::setSingleInstanceByDbus will check singleinstance by
+* register dbus service
+* \param key is the last of dbus service name, like "com.deepin.SingleInstance.key"
+* \return
+*/
+bool DApplicationPrivate::setSingleInstanceByDbus(const QString &key)
+{
+    auto basename = "com.deepin.SingleInstance.";
+    QString name = basename + key;
+    auto sessionBus = QDBusConnection::sessionBus();
+    if (!sessionBus.registerService(name)) {
+        qDebug() << "register service failed:" << sessionBus.lastError();
+        return  false;
+    }
+    return true;
 }
 
 bool DApplicationPrivate::loadDtkTranslator(QList<QLocale> localeFallback)
@@ -289,13 +284,19 @@ void DApplication::setTheme(const QString &theme)
  *
  * It should be in form of dde-dock, dde-desktop or dde-control-center etc.
  *
+ * You can use dbus implement if you use an sandbox like flatpak and so on, just
+ * build with DTK_DBUS_SINGLEINSTANCE
+ *
  * @return true if succeed, otherwise false.
  */
 bool DApplication::setSingleInstance(const QString &key)
 {
     D_D(DApplication);
-
+#ifdef DTK_DBUS_SINGLEINSTANCE
+    return d->setSingleInstanceByDbus(key);
+#else
     return d->setSingleInstanceBySemaphore(key);
+#endif
 }
 
 //! load translate file form system or application data path;
