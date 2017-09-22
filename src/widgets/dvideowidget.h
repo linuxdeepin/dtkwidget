@@ -55,6 +55,9 @@ public:
     qreal scale() const;
     Qt::AspectRatioMode aspectRatioMode() const;
 
+    void setSourceVideoPixelRatio(const qreal ratio);
+    const qreal sourceVideoPixelRatio() const;
+
     int brightness() const;
     int contrast() const;
     int hue() const;

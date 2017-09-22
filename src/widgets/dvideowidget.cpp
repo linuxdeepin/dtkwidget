@@ -103,6 +103,7 @@ public:
     int hue = 0;
     int saturation = 0;
     bool round = false;
+    qreal ratio = 1;
 
     D_DECLARE_PUBLIC(DVideoWidget)
 };
@@ -200,6 +201,20 @@ Qt::AspectRatioMode DVideoWidget::aspectRatioMode() const
     D_DC(DVideoWidget);
 
     return d->aspectRatioMode;
+}
+
+void DVideoWidget::setSourceVideoPixelRatio(const qreal ratio)
+{
+    D_D(DVideoWidget);
+
+    d->ratio = ratio;
+}
+
+const qreal DVideoWidget::sourceVideoPixelRatio() const
+{
+    D_DC(DVideoWidget);
+
+    return d->ratio;
 }
 
 /*!
@@ -436,7 +451,8 @@ void DVideoWidget::paintEvent(QPaintEvent *)
         return;
     }
 
-    image = image.scaled(size()*d->scale, d->aspectRatioMode, Qt::SmoothTransformation);
+    image.setDevicePixelRatio(d->ratio);
+    image = image.scaled(size() * d->scale * d->ratio, d->aspectRatioMode, Qt::SmoothTransformation);
     image = image.mirrored(d->mirroredHorizontal, d->mirroredVertical);
 
     if (d->round) {
@@ -448,7 +464,7 @@ void DVideoWidget::paintEvent(QPaintEvent *)
         painter.setClipPath(path);
     }
 
-    painter.drawImage(rect().center() - image.rect().center(), image);
+    painter.drawImage(QRectF(rect()).center() - QRectF(image.rect()).center() / d->ratio, image);
 }
 
 DWIDGET_END_NAMESPACE
