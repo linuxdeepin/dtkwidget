@@ -38,6 +38,8 @@ public:
     void init();
     void play();
 
+    QPixmap loadPixmap(const QString &path);
+
 public:
     void _q_refreshPicture();
 

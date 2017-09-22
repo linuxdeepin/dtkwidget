@@ -19,6 +19,8 @@
 #include "private/dpicturesequenceview_p.h"
 
 #include <QGraphicsPixmapItem>
+#include <QImageReader>
+#include <QIcon>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -49,6 +51,31 @@ void DPictureSequenceViewPrivate::play()
     D_Q(DPictureSequenceView);
 
     refreshTimer->start();
+}
+
+QPixmap DPictureSequenceViewPrivate::loadPixmap(const QString &path)
+{
+    D_Q(DPictureSequenceView);
+
+    qreal ratio = 1.0;
+
+    const qreal devicePixelRatio = q->devicePixelRatioF();
+
+    QPixmap pixmap;
+
+    if (!qFuzzyCompare(ratio, devicePixelRatio)) {
+        QImageReader reader;
+        reader.setFileName(qt_findAtNxFile(path, devicePixelRatio, &ratio));
+        if (reader.canRead()) {
+            reader.setScaledSize(reader.size() * (devicePixelRatio / ratio));
+            pixmap = QPixmap::fromImage(reader.read());
+            pixmap.setDevicePixelRatio(devicePixelRatio);
+        }
+    } else {
+        pixmap.load(path);
+    }
+
+    return pixmap;
 }
 
 void DPictureSequenceViewPrivate::_q_refreshPicture()
@@ -98,7 +125,7 @@ void DPictureSequenceView::setPictureSequence(const QStringList &sequence, Paint
     d->pictureItemList.clear();
 
     for (const QString &path : sequence) {
-        QPixmap pixmap(path);
+        QPixmap pixmap = d->loadPixmap(path);
 
         if (paintMode == DPictureSequenceView::AutoScaleMode)
             pixmap = pixmap.scaled(size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
