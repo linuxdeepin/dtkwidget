@@ -95,9 +95,9 @@
         <file>dark/images/checkbox_unchecked_hover.png</file>
         <file>dark/images/checkbox_unchecked_insensitive.png</file>
         <file>dark/images/checkbox_unchecked.png</file>
-        <file>dark/images/clear_content_hover.png</file>
-        <file>dark/images/clear_content_normal.png</file>
-        <file>dark/images/clear_content_press.png</file>
+        <file>dark/images/input_clear_hover.svg</file>
+        <file>dark/images/input_clear_normal.svg</file>
+        <file>dark/images/input_clear_press.svg</file>
         <file>dark/images/clear_white.png</file>
         <file>dark/images/delete_hover.png</file>
         <file>dark/images/delete_multi_hover.png</file>
@@ -120,12 +120,12 @@
         <file>dark/images/multiselect_active_normal.png</file>
         <file>dark/images/multiselect_inactive_hover.png</file>
         <file>dark/images/multiselect_inactive_normal.png</file>
-        <file>dark/images/password_hide_hover.png</file>
-        <file>dark/images/password_hide_normal.png</file>
-        <file>dark/images/password_hide_press.png</file>
-        <file>dark/images/password_show_hover.png</file>
-        <file>dark/images/password_show_normal.png</file>
-        <file>dark/images/password_show_press.png</file>
+        <file>dark/images/hide_password_hover.svg</file>
+        <file>dark/images/hide_password_normal.svg</file>
+        <file>dark/images/hide_password_press.svg</file>
+        <file>dark/images/show_password_hover.svg</file>
+        <file>dark/images/show_password_normal.svg</file>
+        <file>dark/images/show_password_press.svg</file>
         <file>dark/images/radio_selected_hover.png</file>
         <file>dark/images/radio_selected_insensitive.png</file>
         <file>dark/images/radio_selected.png</file>

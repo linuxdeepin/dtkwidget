@@ -10,9 +10,9 @@ Dtk--Widget--DSearchEdit #SearchIcon {
 
 Dtk--Widget--DSearchEdit #ClearIcon {
     background-color:transparent;
-    qproperty-normalPic:url(:/images/light/images/clear_content_normal.png);
-    qproperty-hoverPic:url(:/images/light/images/clear_content_hover.png);
-    qproperty-pressPic:url(:/images/light/images/clear_content_press.png);
+    qproperty-normalPic:url(:/images/light/images/input_clear_normal.svg);
+    qproperty-hoverPic:url(:/images/light/images/input_clear_hover.svg);
+    qproperty-pressPic:url(:/images/light/images/input_clear_press.svg);
 }
 
 Dtk--Widget--DSearchEdit #Edit {

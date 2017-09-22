@@ -21,7 +21,6 @@
 #include "darrowrectangle.h"
 
 #include <QHBoxLayout>
-#include <QDebug>
 #include <QResizeEvent>
 
 DWIDGET_BEGIN_NAMESPACE
@@ -66,8 +65,9 @@ void DLineEdit::setAlert(bool isAlert)
 {
     Q_D(DLineEdit);
 
-    if (isAlert == d->m_isAlert)
+    if (isAlert == d->m_isAlert) {
         return;
+    }
 
     d->m_isAlert = isAlert;
 
@@ -111,10 +111,11 @@ void DLineEdit::showAlertMessage(const QString &text, int duration)
         });
     }
 
-    QLabel *label = qobject_cast<QLabel*>(d->tooltip->getContent());
+    QLabel *label = qobject_cast<QLabel *>(d->tooltip->getContent());
 
-    if (!label)
+    if (!label) {
         return;
+    }
 
     label->setText(text);
     label->adjustSize();
@@ -128,8 +129,9 @@ void DLineEdit::setIconVisible(bool visible)
 {
     Q_D(DLineEdit);
 
-    if (visible == d->m_rightIcon->isVisible())
+    if (visible == d->m_rightIcon->isVisible()) {
         return;
+    }
 
     d->m_rightIcon->setVisible(visible);
 }
@@ -207,7 +209,6 @@ void DLineEdit::focusInEvent(QFocusEvent *e)
     Q_D(DLineEdit);
 
     d->clearButton->show();
-    d->m_rightIcon->hide();
 }
 
 void DLineEdit::focusOutEvent(QFocusEvent *e)
@@ -218,7 +219,6 @@ void DLineEdit::focusOutEvent(QFocusEvent *e)
     Q_D(DLineEdit);
 
     d->clearButton->hide();
-    d->m_rightIcon->show();
 }
 
 void DLineEdit::resizeEvent(QResizeEvent *e)
@@ -246,8 +246,8 @@ void DLineEditPrivate::init()
     clearButton->hide();
     m_centralHLayout = new QHBoxLayout;
     m_centralHLayout->addStretch();
-    m_centralHLayout->addWidget(m_rightIcon);
     m_centralHLayout->addWidget(clearButton);
+    m_centralHLayout->addWidget(m_rightIcon);
     m_centralHLayout->setSpacing(0);
     m_centralHLayout->setMargin(0);
 

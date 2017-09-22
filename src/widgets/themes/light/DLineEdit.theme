@@ -26,9 +26,9 @@ Dtk--Widget--DLineEdit[alert="true"] #IconButton{
 }
 
 Dtk--Widget--DLineEdit #ClearButton {
-    qproperty-normalPic: ":/images/light/images/clear_content_normal.png";
-    qproperty-hoverPic: ":/images/light/images/clear_content_hover.png";
-    qproperty-pressPic: "/images/light/images/clear_content_press.png";
+    qproperty-normalPic: ":/images/light/images/input_clear_normal.svg";
+    qproperty-hoverPic: ":/images/light/images/input_clear_hover.svg";
+    qproperty-pressPic: "/images/light/images/input_clear_press.svg";
     margin-right: 4px;
 }
 
