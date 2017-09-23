@@ -35,16 +35,37 @@ class DThemeManagerPrivate : public DThemeManager
 
 Q_GLOBAL_STATIC(DThemeManagerPrivate, DThemeManagerStatic)
 
+
+/*!
+ * \class DThemeManager
+ * \brief The DThemeManager class provides helper to manage theme files of widgets.
+ *
+ * The DThemeManager is singleton class, DThemeManager::instance is used to
+ * get an instance of DThemeManager.
+ *
+ * DThemeManager can be used to get the current application theme, find the
+ * corresponding theme file of a widget.
+ */
+
 DThemeManager *DThemeManager::instance()
 {
     return DThemeManagerStatic;
 }
 
+/*!
+ * \brief DThemeManager::theme
+ * \return the theme name currently be used by this application, the possible
+ * value are "light" and "dark".
+ */
 QString DThemeManager::theme() const
 {
     return m_theme;
 }
 
+/*!
+ * \brief DThemeManager::setTheme sets the application theme.
+ * \param theme is the theme name to be set.
+ */
 void DThemeManager::setTheme(const QString theme)
 {
     if (m_theme != theme) {
@@ -85,6 +106,11 @@ static QString getObjectClassName(const QObject *obj)
     return widget_type_list.isEmpty() ? type_name : widget_type_list.last();
 }
 
+/*!
+ * \brief DThemeManager::setTheme sets theme on a widget.
+ * \param widget is the target widget.
+ * \param theme is the name of theme to be set.
+ */
 void DThemeManager::setTheme(QWidget *widget, const QString theme)
 {
     Q_ASSERT(widget);
@@ -116,6 +142,14 @@ void DThemeManager::setTheme(QWidget *widget, const QString theme)
     widget->setStyleSheet(getQssForWidget(getObjectClassName(widget), theme));
 }
 
+/*!
+ * \brief DThemeManager::getQssForWidget searches for the theme file of one class in a specific theme.
+ * \param className is the name of the class.
+ * \param theme is the name of the theme to be applied.
+ * \return The content of the theme file.
+ *
+ * \note The class name should have no namespace prefixes.
+ */
 QString DThemeManager::getQssForWidget(const QString className, const QString &theme) const
 {
     QString qss;
@@ -134,6 +168,14 @@ QString DThemeManager::getQssForWidget(const QString className, const QString &t
     return qss;
 }
 
+/*!
+ * \brief DThemeManager::getQssForWidget This function is overloaded.
+ * \param className is the name of the target class.
+ * \param widget is the widget from which to read the theme name.
+ * \return The content of the theme file.
+ *
+ * \note The class name should have no namespace prefixes.
+ */
 QString DThemeManager::getQssForWidget(const QString className, const QWidget *widget) const
 {
     Q_ASSERT(widget);
@@ -149,6 +191,11 @@ QString DThemeManager::getQssForWidget(const QString className, const QWidget *w
     return getQssForWidget(className, theme);
 }
 
+/*!
+ * \brief DThemeManager::getQssForWidget This function is overloaded.
+ * \param widget is the target widget.
+ * \return The content of the theme file to be applied on the widget.
+ */
 QString DThemeManager::getQssForWidget(const QWidget *widget) const
 {
     return getQssForWidget(getObjectClassName(widget), widget);
@@ -185,6 +232,14 @@ void DThemeManager::registerWidget(QWidget *widget, QStringList propertys)
     }
 }
 
+/*!
+ * \brief DThemeManager::updateQss This slot repolishes the theme applied on
+ * the sender widget.
+ *
+ * This slot is triggered when the property of a registered widget changes,
+ * it's useful because Qt has no support of repolishing the style if some
+ * custom properties used in the QSS file has changed.
+ */
 void DThemeManager::updateQss()
 {
     QWidget *w = qobject_cast<QWidget *>(sender());
