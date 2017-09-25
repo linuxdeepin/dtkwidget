@@ -21,7 +21,6 @@
 #include <dobject.h>
 
 #include "dimagebutton.h"
-#include "private/dimagebutton_p.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
