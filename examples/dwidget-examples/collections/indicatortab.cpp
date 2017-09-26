@@ -38,7 +38,7 @@ IndicatorTab::IndicatorTab(QWidget *parent) :
     loadingContainer->setFixedSize(200, 200);
 
     DLoadingIndicator *loadingIndicator = new DLoadingIndicator(this);
-    loadingIndicator->setImageSource(QPixmap(":/images/test.png"));
+    loadingIndicator->setImageSource(QPixmap(":/images/loading_indicator.png"));
     loadingIndicator->setLoading(true);
     loadingIndicator->setAniDuration(2000);
     loadingIndicator->setAniEasingCurve(QEasingCurve::OutInCubic);

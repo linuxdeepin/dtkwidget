@@ -25,7 +25,7 @@ DWIDGET_USE_NAMESPACE
 
 GraphicsEffectTab::GraphicsEffectTab(QWidget *parent) : QWidget(parent)
 {
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    auto *mainLayout = new QHBoxLayout(this);
 
     DBlurEffectWidget *blurWidget = new DBlurEffectWidget(this);
     blurWidget->setRadius(30);
@@ -53,17 +53,17 @@ GraphicsEffectTab::GraphicsEffectTab(QWidget *parent) : QWidget(parent)
 
     blurLayout->addWidget(glowEffectButton, 0, Qt::AlignCenter);
 
-    mainLayout->addWidget(blurWidget, 0, Qt::AlignCenter);
 
     DBlurEffectWidget *blurWidget_behind = new DBlurEffectWidget(this);
 
     blurWidget_behind->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
-    blurWidget_behind->setFixedSize(300, 300);
+    blurWidget_behind->setFixedSize(200, 200);
     blurWidget_behind->setBlurRectXRadius(10);
     blurWidget_behind->setBlurRectYRadius(20);
     blurWidget_behind->setMaskColor(Qt::black);
 
-    mainLayout->addWidget(blurWidget_behind);
+    mainLayout->addWidget(blurWidget, 0, Qt::AlignRight | Qt::AlignVCenter);
+    mainLayout->addWidget(blurWidget_behind, 0, Qt::AlignLeft | Qt::AlignVCenter);
 }
 
 GraphicsEffectTab::~GraphicsEffectTab()
@@ -74,9 +74,9 @@ GraphicsEffectTab::~GraphicsEffectTab()
 void GraphicsEffectTab::paintEvent(QPaintEvent *pe)
 {
     QPainter paint(this);
-    QPixmap bkgnd(":/images/wallpaper/time 14.jpg");
+    QPixmap bkgnd(":/images/default_background.jpg");
     bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
-    paint.drawPixmap(0, 0, bkgnd);
+    paint.drawPixmap(this->rect(), bkgnd);
     QWidget::paintEvent(pe);
 }
 

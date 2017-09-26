@@ -4,8 +4,7 @@
         <file>images/buttonChecked.png</file>
         <file>images/buttonHover.png</file>
         <file>images/buttonPress.png</file>
-        <file>images/test.png</file>
-        <file>images/wallpaper/1.jpg</file>
+        <file>images/loading_indicator.png</file>
         <file>images/reload_normal.png</file>
         <file>images/Spinner/Spinner01.png</file>
         <file>images/Spinner/Spinner02.png</file>
@@ -157,6 +156,6 @@
         <file>images/eLoading/eLoading_58.png</file>
         <file>images/eLoading/eLoading_59.png</file>
         <file>images/eLoading/eLoading_60.png</file>
-        <file>images/wallpaper/time 14.jpg</file>
+        <file>images/default_background.jpg</file>
     </qresource>
 </RCC>
