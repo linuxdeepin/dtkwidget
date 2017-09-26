@@ -662,7 +662,6 @@ void DDialog::setIcon(const QIcon &icon)
 
     if(!icon.isNull()) {
         const QList<QSize> &sizes = icon.availableSizes();
-        setIconPixmap(icon.pixmap(sizes.first()));
         if(!sizes.isEmpty())
             setIconPixmap(icon.pixmap(sizes.first()));
         else
