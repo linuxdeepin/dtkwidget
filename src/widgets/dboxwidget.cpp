@@ -15,14 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*!
-    \class DBoxWidget
-    \brief The DBoxWidget widget provides a Adaptive child widget size
-    when child widget size changed.
-
-    \inmodule deepin-tool-kit
-*/
-
 #include <QBoxLayout>
 #include <QEvent>
 #include <QDebug>
@@ -33,6 +25,12 @@
 #include "private/dboxwidget_p.h"
 
 DWIDGET_BEGIN_NAMESPACE
+
+/*!
+    \class DBoxWidget
+    \brief The DBoxWidget widget provides a Adaptive child widget size
+    when child widget size changed.
+*/
 
 DBoxWidgetPrivate::DBoxWidgetPrivate(DBoxWidget *qq):
     DObjectPrivate(qq),

@@ -18,7 +18,7 @@
 #include "dbasebutton.h"
 #include "dthememanager.h"
 
-DWIDGET_USE_NAMESPACE
+DWIDGET_BEGIN_NAMESPACE
 
 /*!
  * \class DBaseButton
@@ -80,3 +80,5 @@ void DBaseButton::initInsideFrame()
     insideLayout->setContentsMargins(0, 1, 0, 0);
     insideLayout->addWidget(insideFrame);
 }
+
+DWIDGET_END_NAMESPACE

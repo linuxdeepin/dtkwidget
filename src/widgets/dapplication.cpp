@@ -33,7 +33,6 @@
 
 #include "dapplication.h"
 #include "dthememanager.h"
-#include "private/dthemehelper.h"
 #include "private/dapplication_p.h"
 #include "daboutdialog.h"
 

@@ -117,7 +117,7 @@ DVideoWidgetPrivate::DVideoWidgetPrivate(DVideoWidget *qq)
 }
 
 /*!
- * \class DVideoWidget::DVideoWidget
+ * \class DVideoWidget
  * \brief The DVideoWidget class provides a widget which presents video produced
  * by a media object.
  *
@@ -161,7 +161,7 @@ bool DVideoWidget::mirroredVertical() const
     return d->mirroredVertical;
 }
 
-/**
+/*!
  * @brief DVideoWidget::paint paints a specific QVideoFrame onto the widget.
  * @param frame is the target video frame.
  */

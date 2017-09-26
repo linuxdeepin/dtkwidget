@@ -276,13 +276,18 @@ bool DTitlebarPrivate::isUserManualExists() const
 
 #endif
 
-/*!
- * \class DTitlebar::DTitlebar
+/**
+ * \class DTitlebar
  * \brief The DTitlebar class is an universal title bar on the top of windows.
  * \param parent is the parent widget to be attached on.
  *
  * Usually you don't need to construct a DTitlebar instance by your self, you
  * can get an DTitlebar instance by DMainWindow::titlebar .
+ */
+
+/**
+ * @brief DTitlebar::DTitlebar create an default widget with icon/title/and bottons
+ * @param parent
  */
 DTitlebar::DTitlebar(QWidget *parent) :
     QWidget(parent),

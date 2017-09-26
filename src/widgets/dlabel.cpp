@@ -18,7 +18,7 @@
 #include "dlabel.h"
 #include "dthememanager.h"
 
-DWIDGET_USE_NAMESPACE
+DWIDGET_BEGIN_NAMESPACE
 
 /*!
  * \class DLabel
@@ -49,3 +49,4 @@ DLabel::DLabel(const QString &text, QWidget *parent, Qt::WindowFlags f)
     D_THEME_INIT_WIDGET(DLabel);
 }
 
+DWIDGET_END_NAMESPACE

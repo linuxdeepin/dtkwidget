@@ -24,7 +24,6 @@
 
 #include "dthememanager.h"
 #include "dapplication.h"
-#include "private/dthemehelper.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
