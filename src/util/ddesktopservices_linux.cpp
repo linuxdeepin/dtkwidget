@@ -33,8 +33,8 @@ DWIDGET_BEGIN_NAMESPACE
 static QDBusInterface *fileManager1DBusInterface()
 {
     static QDBusInterface interface(QStringLiteral("org.freedesktop.FileManager1"),
-                                        QStringLiteral("/org/freedesktop/FileManager1"));
-
+                                        QStringLiteral("/org/freedesktop/FileManager1"),
+                                        QStringLiteral("org.freedesktop.FileManager1"));
     return &interface;
 }
 
@@ -44,7 +44,7 @@ static QStringList urls2uris(const QList<QUrl> &urls)
 
     list.reserve(urls.size());
 
-    for (const QUrl url : urls) {
+    for (const QUrl &url : urls) {
         list << url.toString();
     }
 
@@ -97,8 +97,9 @@ static bool systemSoundEffectEnabled(const QString &name)
 
     if (effEnabled) {
         const QStringList list = settings.keys();
-        if (!list.contains(name))
+        if (!list.contains(name)) {
             return false;
+        }
 
         return settings.get(name).toBool();
     }
