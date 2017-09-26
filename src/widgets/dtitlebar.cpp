@@ -536,9 +536,8 @@ void DTitlebar::setTitle(const QString &title)
     }
 }
 
-/**
- * @brief DTitlebar::setIcon sets the icon to be shown on the title bar.
- * @param icon is the pixmap to be used as the window icon.
+/*!
+ * \brief Use setIcon(const QIcon &icon) instead
  */
 void DTitlebar::setIcon(const QPixmap &icon)
 {
@@ -546,6 +545,22 @@ void DTitlebar::setIcon(const QPixmap &icon)
     if (d->titleLabel) {
         d->titleLabel->setContentsMargins(0, 0, 0, 0);
         d->iconLabel->setPixmap(icon.scaled(DefaultIconWidth, DefaultIconHeight, Qt::KeepAspectRatio));
+    }
+}
+
+/*!
+ * @brief DTitlebar::setIcon sets the icon to be shown on the title bar.
+ * @param icon is to be used as the window icon.
+ */
+void DTitlebar::setIcon(const QIcon &icon)
+{
+    D_D(DTitlebar);
+    if (d->titleLabel) {
+        d->titleLabel->setContentsMargins(0, 0, 0, 0);
+        auto size = QSize(DefaultIconWidth, DefaultIconHeight) * devicePixelRatioF();
+        auto pixmap = icon.pixmap(size);
+        pixmap.setDevicePixelRatio(devicePixelRatioF());
+        d->iconLabel->setPixmap(pixmap);
     }
 }
 

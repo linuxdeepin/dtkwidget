@@ -661,11 +661,11 @@ void DDialog::setIcon(const QIcon &icon)
     d->icon = icon;
 
     if(!icon.isNull()) {
-        const QList<QSize> &sizes = icon.availableSizes();
-        if(!sizes.isEmpty())
-            setIconPixmap(icon.pixmap(sizes.first()));
-        else
-            setIconPixmap(icon.pixmap(64, 64));
+        auto size = QSize(64, 64)*devicePixelRatioF();
+        size = icon.availableSizes().value(0, size);
+        auto pixmap = icon.pixmap(size);
+        pixmap.setDevicePixelRatio(devicePixelRatioF());
+        setIconPixmap(pixmap);
     }
 }
 
