@@ -29,6 +29,7 @@ QT_END_NAMESPACE
 
 DWIDGET_BEGIN_NAMESPACE
 
+class DImageButton;
 class DVBoxWidget;
 class DHBoxWidget;
 
@@ -68,7 +69,7 @@ private:
     QLabel* messageLabel;
     QLabel* titleLabel;
 
-    QPushButton* closeButton = Q_NULLPTR;
+    DImageButton* closeButton = Q_NULLPTR;
     QHBoxLayout *iconLayout;
     QVBoxLayout *contentLayout;
     QHBoxLayout *buttonLayout;

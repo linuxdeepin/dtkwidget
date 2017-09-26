@@ -33,6 +33,7 @@
 
 #include "private/ddialog_p.h"
 
+#include "dimagebutton.h"
 #include "dialog_constants.h"
 #include "ddialog.h"
 #include "dthememanager.h"
@@ -121,7 +122,7 @@ void DDialogPrivate::init()
     topLayout->addLayout(contentLayout);
 
     // TopLayout--Close button
-    closeButton = new QPushButton(q);
+    closeButton = new DImageButton(q);
     closeButton->setObjectName("CloseButton");
     closeButton->setFixedSize(DIALOG::CLOSE_BUTTON_WIDTH, DIALOG::CLOSE_BUTTON_HEIGHT);
     closeButton->setAttribute(Qt::WA_NoMousePropagation);

@@ -1,5 +1,5 @@
 Dtk--Widget--DWindowOptionButton {
-    qproperty-normalPic: url(:/images/dark/images/window_option_normal.png);
-    qproperty-hoverPic: url(:/images/dark/images/window_option_hover.png);
-    qproperty-pressPic: url(:/images/dark/images/window_option_press.png);
+    qproperty-normalPic: url(:/images/dark/images/window/menu_normal.svg);
+    qproperty-hoverPic: url(:/images/dark/images/window/menu_hover.svg);
+    qproperty-pressPic: url(:/images/dark/images/window/menu_press.svg);
 }

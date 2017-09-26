@@ -42,6 +42,26 @@
         <file>dark/dialogs/DAboutDialog.theme</file>
         <file>dark/DAbstractDialog.theme</file>
         <file>dark/DTitlebar.theme</file>
+        <file>dark/images/window/close_disabled.svg</file>
+        <file>dark/images/window/close_hover.svg</file>
+        <file>dark/images/window/close_normal.svg</file>
+        <file>dark/images/window/close_press.svg</file>
+        <file>dark/images/window/maximize_disabled.svg</file>
+        <file>dark/images/window/maximize_hover.svg</file>
+        <file>dark/images/window/maximize_normal.svg</file>
+        <file>dark/images/window/maximize_press.svg</file>
+        <file>dark/images/window/menu_disabled.svg</file>
+        <file>dark/images/window/menu_hover.svg</file>
+        <file>dark/images/window/menu_normal.svg</file>
+        <file>dark/images/window/menu_press.svg</file>
+        <file>dark/images/window/minimise_disabled.svg</file>
+        <file>dark/images/window/minimise_hover.svg</file>
+        <file>dark/images/window/minimise_normal.svg</file>
+        <file>dark/images/window/minimise_press.svg</file>
+        <file>dark/images/window/unmaximize_disabled.svg</file>
+        <file>dark/images/window/unmaximize_hover.svg</file>
+        <file>dark/images/window/unmaximize_normal.svg</file>
+        <file>dark/images/window/unmaximize_press.svg</file>
     </qresource>
     <qresource prefix="/images">
         <file>dark/images/add_hover.png</file>
@@ -143,21 +163,6 @@
         <file>dark/images/up_hover.png</file>
         <file>dark/images/up_normal.png</file>
         <file>dark/images/up_press.png</file>
-        <file>dark/images/window_close_hover.png</file>
-        <file>dark/images/window_close_normal.png</file>
-        <file>dark/images/window_close_press.png</file>
-        <file>dark/images/window_max_hover.png</file>
-        <file>dark/images/window_max_normal.png</file>
-        <file>dark/images/window_max_press.png</file>
-        <file>dark/images/window_min_hover.png</file>
-        <file>dark/images/window_min_normal.png</file>
-        <file>dark/images/window_min_press.png</file>
-        <file>dark/images/window_option_hover.png</file>
-        <file>dark/images/window_option_normal.png</file>
-        <file>dark/images/window_option_press.png</file>
-        <file>dark/images/window_unmax_hover.png</file>
-        <file>dark/images/window_unmax_normal.png</file>
-        <file>dark/images/window_unmax_press.png</file>
         <file>dark/images/switch_inner_insensitive.png</file>
         <file>dark/images/switch_inner.png</file>
         <file>dark/images/slider_bg.png</file>
@@ -185,5 +190,25 @@
         <file>dark/images/search.png</file>
         <file>dark/images/switch_inner_insensitive@2x.png</file>
         <file>dark/images/switch_inner@2x.png</file>
+        <file>dark/images/window/close_disabled.svg</file>
+        <file>dark/images/window/close_hover.svg</file>
+        <file>dark/images/window/close_normal.svg</file>
+        <file>dark/images/window/close_press.svg</file>
+        <file>dark/images/window/maximize_disabled.svg</file>
+        <file>dark/images/window/maximize_hover.svg</file>
+        <file>dark/images/window/maximize_normal.svg</file>
+        <file>dark/images/window/maximize_press.svg</file>
+        <file>dark/images/window/menu_disabled.svg</file>
+        <file>dark/images/window/menu_hover.svg</file>
+        <file>dark/images/window/menu_normal.svg</file>
+        <file>dark/images/window/menu_press.svg</file>
+        <file>dark/images/window/minimise_disabled.svg</file>
+        <file>dark/images/window/minimise_hover.svg</file>
+        <file>dark/images/window/minimise_normal.svg</file>
+        <file>dark/images/window/minimise_press.svg</file>
+        <file>dark/images/window/unmaximize_disabled.svg</file>
+        <file>dark/images/window/unmaximize_hover.svg</file>
+        <file>dark/images/window/unmaximize_normal.svg</file>
+        <file>dark/images/window/unmaximize_press.svg</file>
     </qresource>
 </RCC>

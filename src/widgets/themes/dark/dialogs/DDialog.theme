@@ -8,30 +8,10 @@ QFrame#ButtonFrame{
     border-radius: 2px;
 }
 
-QPushButton#MinimizeButton{
-    border-image: url(":/images/light/dialogs/images/light_minimise_small_normal.png")
-}
-
-QPushButton#MinimizeButton:hover{
-    border-image: url(":/images/light/dialogs/images/light_minimise_small_hover.png")
-}
-
-
-QPushButton#MinimizeButton:pressed{
-    border-image: url(":/images/light/dialogs/images/light_minimise_small_press.png")
-}
-
-QPushButton#CloseButton{
-    border-image: url(":/images/light/images/window_close_normal.png")
-}
-
-QPushButton#CloseButton:hover{
-    border-image: url(":/images/light/images/window_close_hover.png")
-}
-
-
-QPushButton#CloseButton:pressed{
-    border-image: url(":/images/light/images/window_close_press.png")
+#CloseButton {
+    qproperty-normalPic: url(:/images/dark/images/window/close_normal.svg);
+    qproperty-hoverPic: url(:/images/dark/images/window/close_hover.svg);
+    qproperty-pressPic: url(:/images/dark/images/window/close_press.svg);
 }
 
 QPushButton#NormalButton{

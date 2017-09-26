@@ -92,18 +92,6 @@
         <file>light/images/tick_hover.png</file>
         <file>light/images/tick_insensitive.png</file>
         <file>light/images/tick_normal.png</file>
-        <file>light/images/window_close_hover.png</file>
-        <file>light/images/window_close_normal.png</file>
-        <file>light/images/window_close_press.png</file>
-        <file>light/images/window_min_hover.png</file>
-        <file>light/images/window_min_normal.png</file>
-        <file>light/images/window_min_press.png</file>
-        <file>light/images/window_option_hover.png</file>
-        <file>light/images/window_option_normal.png</file>
-        <file>light/images/window_option_press.png</file>
-        <file>light/images/window_unmax_hover.png</file>
-        <file>light/images/window_unmax_normal.png</file>
-        <file>light/images/window_unmax_press.png</file>
         <file>light/images/slider_bg_active.png</file>
         <file>light/images/slider_bg.png</file>
         <file>light/images/slider_round.png</file>
@@ -111,9 +99,6 @@
         <file>light/images/button_press_bg.png</file>
         <file>light/images/button_normal_bg.png</file>
         <file>light/images/button_hover_bg.png</file>
-        <file>light/images/window_max_press.png</file>
-        <file>light/images/window_max_normal.png</file>
-        <file>light/images/window_max_hover.png</file>
         <file>light/dialogs/images/light_minimise_small_hover.png</file>
         <file>light/dialogs/images/light_minimise_small_press.png</file>
         <file>light/dialogs/images/light_minimise_small_normal.png</file>
@@ -130,5 +115,25 @@
         <file>light/images/search.png</file>
         <file>light/images/water_back.svg</file>
         <file>light/images/water_front.svg</file>
+        <file>light/images/window/close_disabled.svg</file>
+        <file>light/images/window/close_hover.svg</file>
+        <file>light/images/window/close_normal.svg</file>
+        <file>light/images/window/close_press.svg</file>
+        <file>light/images/window/maximize_disabled.svg</file>
+        <file>light/images/window/maximize_hover.svg</file>
+        <file>light/images/window/maximize_normal.svg</file>
+        <file>light/images/window/maximize_press.svg</file>
+        <file>light/images/window/menu_disabled.svg</file>
+        <file>light/images/window/menu_hover.svg</file>
+        <file>light/images/window/menu_normal.svg</file>
+        <file>light/images/window/menu_press.svg</file>
+        <file>light/images/window/minimise_hover.svg</file>
+        <file>light/images/window/minimise_normal.svg</file>
+        <file>light/images/window/minimise_press.svg</file>
+        <file>light/images/window/minimize_disabled.svg</file>
+        <file>light/images/window/unmaximize_disabled.svg</file>
+        <file>light/images/window/unmaximize_hover.svg</file>
+        <file>light/images/window/unmaximize_normal.svg</file>
+        <file>light/images/window/unmaximize_press.svg</file>
     </qresource>
 </RCC>
