@@ -246,16 +246,27 @@ bool DApplicationPrivate::loadTranslator(QList<DPathBuf> translateDirs, const QS
     return false;
 }
 
+/*!
+ * \class DApplication
+ * \brief The DApplication class provides customized QApplication with features
+ * that most DTK applications relies on.
+ *
+ * To get better HiDPI support, the AA::UseHighDpiPixmaps property is set by
+ * default on DApplications.
+ */
+
 /**
  * @brief DApplication::DApplication constructs an instance of DApplication.
- * @param argc is the same as in the main function.
- * @param argv is the same as in the main function.
+ * @param argc is passed to QApplication constructor.
+ * @param argv is passed to QApplication constructor.
  */
 DApplication::DApplication(int &argc, char **argv) :
     QApplication(argc, argv),
     DObject(*new DApplicationPrivate(this))
 {
     qputenv("QT_QPA_PLATFORM", QByteArray());
+
+    setAttribute(Qt::AA_UseHighDpiPixmaps);
 }
 
 /**
