@@ -2,47 +2,19 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
-    <name>CameraForm</name>
-    <message>
-        <location filename="../examples/dwidget-examples/collections/cameraform.ui" line="14"/>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../examples/dwidget-examples/collections/cameraform.ui" line="52"/>
-        <source>ok</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../examples/dwidget-examples/collections/cameraform.ui" line="78"/>
-        <source>mirrored</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../examples/dwidget-examples/collections/cameraform.ui" line="91"/>
-        <source>Round</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../examples/dwidget-examples/collections/cameraform.ui" line="104"/>
-        <source>start</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>DAboutDialog</name>
     <message>
-        <location filename="../src/widgets/daboutdialog.cpp" line="119"/>
+        <location filename="../src/widgets/daboutdialog.cpp" line="136"/>
         <source>Acknowledgements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/dapplication.cpp" line="421"/>
+        <location filename="../src/widgets/dapplication.cpp" line="551"/>
         <source>Version: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/dapplication.cpp" line="425"/>
+        <location filename="../src/widgets/dapplication.cpp" line="555"/>
         <source>%1 is released under %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -50,12 +22,12 @@
 <context>
     <name>DInputDialog</name>
     <message>
-        <location filename="../src/widgets/dinputdialog.cpp" line="34"/>
+        <location filename="../src/widgets/dinputdialog.cpp" line="42"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/dinputdialog.cpp" line="35"/>
+        <location filename="../src/widgets/dinputdialog.cpp" line="43"/>
         <source>Confirm</source>
         <translation type="unfinished"></translation>
     </message>
@@ -63,20 +35,28 @@
 <context>
     <name>DShortcutEdit</name>
     <message>
-        <location filename="../src/widgets/dshortcutedit.cpp" line="23"/>
+        <location filename="../src/widgets/dshortcutedit.cpp" line="31"/>
         <source>Please input a new shortcut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/dshortcutedit.cpp" line="94"/>
+        <location filename="../src/widgets/dshortcutedit.cpp" line="102"/>
         <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DSimpleListView</name>
+    <message>
+        <location filename="../src/widgets/dsimplelistview.cpp" line="1081"/>
+        <source>No search result</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/widgets/private/settings/content.cpp" line="172"/>
+        <location filename="../src/widgets/private/settings/content.cpp" line="181"/>
         <source>Restore Defaults</source>
         <translation type="unfinished"></translation>
     </message>
@@ -84,7 +64,7 @@
 <context>
     <name>ShortcutEdit</name>
     <message>
-        <location filename="../src/widgets/private/settings/shortcutedit.cpp" line="99"/>
+        <location filename="../src/widgets/private/settings/shortcutedit.cpp" line="107"/>
         <source>Please enter a new shortcut</source>
         <translation type="unfinished"></translation>
     </message>
@@ -92,17 +72,17 @@
 <context>
     <name>TitleBarMenu</name>
     <message>
-        <location filename="../src/widgets/dtitlebar.cpp" line="208"/>
+        <location filename="../src/widgets/dtitlebar.cpp" line="225"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/dtitlebar.cpp" line="215"/>
+        <location filename="../src/widgets/dtitlebar.cpp" line="232"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/widgets/dtitlebar.cpp" line="222"/>
+        <location filename="../src/widgets/dtitlebar.cpp" line="239"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
