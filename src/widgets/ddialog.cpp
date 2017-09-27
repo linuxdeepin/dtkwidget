@@ -662,10 +662,9 @@ void DDialog::setIcon(const QIcon &icon)
     d->icon = icon;
 
     if(!icon.isNull()) {
-        auto size = QSize(64, 64)*devicePixelRatioF();
+        auto size = QSize(64, 64);
         size = icon.availableSizes().value(0, size);
         auto pixmap = icon.pixmap(size);
-        pixmap.setDevicePixelRatio(devicePixelRatioF());
         setIconPixmap(pixmap);
     }
 }
