@@ -16,8 +16,6 @@
  */
 
 #include <QDebug>
-#include <QDBusError>
-#include <QDBusConnection>
 #include <QDir>
 #include <QLocalSocket>
 #include <QLibraryInfo>
@@ -28,6 +26,11 @@
 #include <QStyleFactory>
 #include <QSystemSemaphore>
 #include <QtConcurrent/QtConcurrent>
+
+#ifdef DTK_DBUS_SINGLEINSTANCE
+#include <QDBusError>
+#include <QDBusConnection>
+#endif
 
 #include <qpa/qplatformintegrationfactory_p.h>
 
@@ -153,6 +156,7 @@ bool DApplicationPrivate::setSingleInstanceBySemaphore(const QString &key)
     return singleInstance;
 }
 
+#ifdef DTK_DBUS_SINGLEINSTANCE
 /**
 * \brief DApplicationPrivate::setSingleInstanceByDbus will check singleinstance by
 * register dbus service
@@ -170,6 +174,7 @@ bool DApplicationPrivate::setSingleInstanceByDbus(const QString &key)
     }
     return true;
 }
+#endif
 
 bool DApplicationPrivate::loadDtkTranslator(QList<QLocale> localeFallback)
 {

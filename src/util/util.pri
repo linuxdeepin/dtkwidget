@@ -7,25 +7,27 @@ HEADERS += \
     $$PWD/dwidgetutil.h \
     $$PWD/ddesktopservices.h \
     $$PWD/dtrashmanager.h \
-    $$PWD/dsvgrenderer.h \
-    $$PWD/dregionmonitor.h \
-    $$PWD/private/dregionmonitor_p.h
+    $$PWD/dsvgrenderer.h
 
 SOURCES += \
     $$PWD/dfileiconprovider.cpp \
     $$PWD/dthumbnailprovider.cpp \
     $$PWD/dwindowmanagerhelper.cpp \
-    $$PWD/dwidgetutil.cpp \
-    $$PWD/dregionmonitor.cpp
+    $$PWD/dwidgetutil.cpp
 
 linux* {
 CONFIG += link_pkgconfig
 PKGCONFIG += gsettings-qt librsvg-2.0 dframeworkdbus
 
+HEADERS += \
+    $$PWD/dregionmonitor.h \
+    $$PWD/private/dregionmonitor_p.h
+
 SOURCES += \
     $$PWD/ddesktopservices_linux.cpp \
     $$PWD/dtrashmanager_linux.cpp \
-    $$PWD/dsvgrenderer.cpp
+    $$PWD/dsvgrenderer.cpp\
+    $$PWD/dregionmonitor.cpp
 }
 
 win32* | macx* {

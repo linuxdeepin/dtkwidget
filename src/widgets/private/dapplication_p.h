@@ -45,7 +45,9 @@ public:
     void setTheme(const QString &theme);
 
     bool setSingleInstanceBySemaphore(const QString &key);
+#ifdef DTK_DBUS_SINGLEINSTANCE
     bool setSingleInstanceByDbus(const QString &key);
+#endif
 
     bool loadDtkTranslator(QList<QLocale> localeFallback);
     bool loadTranslator(QList<DPathBuf> translateDirs, const QString &name, QList<QLocale> localeFallback);

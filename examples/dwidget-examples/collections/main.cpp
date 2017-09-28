@@ -46,7 +46,6 @@ int main(int argc, char *argv[])
     }
 
     MainWindow w;
-    w.resize(600, 400);
     w.show();
     Dtk::Widget::moveToCenter(&w);
 

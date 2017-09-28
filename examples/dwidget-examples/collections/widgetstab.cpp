@@ -19,24 +19,26 @@
 #include "darrowrectangle.h"
 #ifdef Q_OS_LINUX
 #include "dmpriscontrol.h"
+#include "dregionmonitor.h"
+using Dtk::Widget::DRegionMonitor;
 #endif
 
-#include "dregionmonitor.h"
 
 #include <QCheckBox>
 
-using Dtk::Widget::DRegionMonitor;
 
 WidgetsTab::WidgetsTab(QWidget *parent) : QLabel(parent)
 {
     setStyleSheet("WidgetsTab {background-color:#252627;} QCheckBox {color:#666;}");
 
+#ifdef Q_OS_LINUX
     DRegionMonitor *rm = new DRegionMonitor(this);
     rm->registerRegion(QRegion(0, 0, 500, 500));
     Q_ASSERT(rm->registered());
 
     connect(rm, &DRegionMonitor::buttonPress, [=](const QPoint &p, const int flag) { qDebug() << "btn press:" << p << flag; });
     connect(rm, &DRegionMonitor::buttonRelease, [=](const QPoint &p, const int flag) { qDebug() << "btn release:" << p << flag; });
+#endif
 
     QCheckBox *lunarVisible = new QCheckBox(this);
     lunarVisible->setText("lunar visible");
