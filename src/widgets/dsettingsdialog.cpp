@@ -80,7 +80,8 @@ DSettingsDialog::DSettingsDialog(QWidget *parent) :
 
     d->content = new Content;
 
-    auto closeBt = new DWindowCloseButton;
+    auto closeBt = new DImageButton;
+    closeBt->setObjectName("DSettingsDialogClose");
     d->rightLayout->addWidget(closeBt, 0, Qt::AlignVCenter | Qt::AlignRight);
     d->rightLayout->addWidget(d->content);
 
