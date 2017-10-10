@@ -1,4 +1,4 @@
-#include <QCoreApplication>
+#include <QApplication>
 #include <QCommandLineParser>
 #include <QCommandLineOption>
 #include <QSvgRenderer>
@@ -42,7 +42,7 @@ static QSize parseSize(QString sizeString, QSize origin = QSize(128, 128))
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication app(argc, argv);
+    QApplication app(argc, argv);
     app.setOrganizationName("deepin");
     app.setApplicationName("dtk-scgc");
 
