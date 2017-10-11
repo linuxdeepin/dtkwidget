@@ -435,7 +435,7 @@ void DDialog::insertButton(int index, QAbstractButton *button, bool isDefault)
     label->setFixedWidth(1);
     label->hide();
 
-    if(index > 0 && index >= buttonCount()) {
+    if (index > 0 && index >= buttonCount()) {
         QLabel *label = qobject_cast<QLabel*>(d->buttonLayout->itemAt(d->buttonLayout->count() - 1)->widget());
         if(label)
             label->show();
@@ -447,8 +447,26 @@ void DDialog::insertButton(int index, QAbstractButton *button, bool isDefault)
 
     connect(button, SIGNAL(clicked(bool)), this, SLOT(_q_onButtonClicked()));
 
-    if(isDefault) {
+    if (isDefault) {
         setDefaultButton(button);
+    }
+
+    const QString &text = button->text();
+
+    if (text.count() == 2) {
+        for (const QChar &ch : text) {
+            switch (ch.script()) {
+            case QChar::Script_Han:
+            case QChar::Script_Katakana:
+            case QChar::Script_Hiragana:
+            case QChar::Script_Hangul:
+                break;
+            default:
+                return;
+            }
+        }
+
+        button->setText(QString().append(text.at(0)).append(QChar::Nbsp).append(text.at(1)));
     }
 }
 
