@@ -23,6 +23,7 @@
 #include <QPainter>
 #include <QFile>
 #include <QDebug>
+#include <QApplication>
 
 DCORE_USE_NAMESPACE
 
@@ -143,6 +144,18 @@ bool DSvgRenderer::elementExists(const QString &id) const
         return false;
 
     return rsvg_handle_has_sub(d->handle, id.toUtf8().constData());
+}
+
+QPixmap DSvgRenderer::render(const QString &svgPath, const QSize &sz)
+{
+    QImage ret(sz, QImage::Format_ARGB32);
+    ret.fill(Qt::transparent);
+
+    QPainter ptr(&ret);
+    DSvgRenderer rdr(svgPath);
+    rdr.render(&ptr);
+
+    return QPixmap::fromImage(ret);
 }
 
 bool DSvgRenderer::load(const QString &filename)
