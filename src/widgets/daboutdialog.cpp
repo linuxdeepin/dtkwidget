@@ -29,6 +29,7 @@
 #include <QIcon>
 #include <QKeyEvent>
 #include <QApplication>
+#include<QImageReader>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -56,7 +57,7 @@ void DAboutDialogPrivate::init()
     versionLabel->setObjectName("VersionLabel");
 
     companyLogoLabel = new QLabel();
-    companyLogoLabel->setPixmap(QPixmap(":/images/deepin-logo.png"));
+    companyLogoLabel->setPixmap(loadPixmap(":/images/deepin-logo.svg"));
 
     websiteLabel = new QLabel();
     websiteLabel->setObjectName("WebsiteLabel");
@@ -140,6 +141,31 @@ void DAboutDialogPrivate::updateAcknowledgementLabel()
 void DAboutDialogPrivate::_q_onLinkActivated(const QString &link)
 {
     QDesktopServices::openUrl(QUrl(link));
+}
+
+QPixmap DAboutDialogPrivate::loadPixmap(const QString &file)
+{
+    D_Q(DAboutDialog);
+
+    qreal ratio = 1.0;
+
+    const qreal devicePixelRatio = q->devicePixelRatioF();
+
+    QPixmap pixmap;
+
+    if (!qFuzzyCompare(ratio, devicePixelRatio)) {
+        QImageReader reader;
+        reader.setFileName(qt_findAtNxFile(file, devicePixelRatio, &ratio));
+        if (reader.canRead()) {
+            reader.setScaledSize(reader.size() * (devicePixelRatio / ratio));
+            pixmap = QPixmap::fromImage(reader.read());
+            pixmap.setDevicePixelRatio(devicePixelRatio);
+        }
+    } else {
+        pixmap.load(file);
+    }
+
+    return pixmap;
 }
 
 DAboutDialog::DAboutDialog(QWidget *parent)

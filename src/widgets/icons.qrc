@@ -8,6 +8,6 @@
         <file>images/arrow_left_press.png</file>
         <file>images/arrow_left_normal.png</file>
         <file>images/arrow_left_hover.png</file>
-        <file>images/deepin-logo.png</file>
+        <file>images/deepin-logo.svg</file>
     </qresource>
 </RCC>
