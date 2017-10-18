@@ -7,13 +7,15 @@ HEADERS += \
     $$PWD/dwidgetutil.h \
     $$PWD/ddesktopservices.h \
     $$PWD/dtrashmanager.h \
-    $$PWD/dsvgrenderer.h
+    $$PWD/dsvgrenderer.h \
+    $$PWD/dhidpihelper.h
 
 SOURCES += \
     $$PWD/dfileiconprovider.cpp \
     $$PWD/dthumbnailprovider.cpp \
     $$PWD/dwindowmanagerhelper.cpp \
-    $$PWD/dwidgetutil.cpp
+    $$PWD/dwidgetutil.cpp \
+    $$PWD/dhidpihelper.cpp
 
 linux* {
 CONFIG += link_pkgconfig
@@ -52,4 +54,5 @@ includes.files += $$PWD/*.h \
             $$PWD/DSvgRenderer
 
 DISTFILES += \
-    $$PWD/desktop.pri
+    $$PWD/desktop.pri \
+    $$PWD/DHiDPIHelper
