@@ -72,6 +72,10 @@
         <file>dark/images/arrow_down_normal.png</file>
         <file>dark/images/arrow_down_press.png</file>
         <file>dark/images/arrow_down_white.png</file>
+        <file>dark/images/arrow_down_hover.svg</file>
+        <file>dark/images/arrow_down_normal.svg</file>
+        <file>dark/images/arrow_down_press.svg</file>
+        <file>dark/images/arrow_down_insensitive.svg</file>
         <file>dark/images/arrow_left_hover.png</file>
         <file>dark/images/arrow_left_normal.png</file>
         <file>dark/images/arrow_left_press.png</file>
@@ -84,6 +88,10 @@
         <file>dark/images/arrow_up_normal.png</file>
         <file>dark/images/arrow_up_press.png</file>
         <file>dark/images/arrow_up_white.png</file>
+        <file>dark/images/arrow_up_hover.svg</file>
+        <file>dark/images/arrow_up_normal.svg</file>
+        <file>dark/images/arrow_up_press.svg</file>
+        <file>dark/images/arrow_up_insensitive.svg</file>
         <file>dark/images/button_center_normal.png</file>
         <file>dark/images/button_center_press.png</file>
         <file>dark/images/button_left_normal.png</file>
