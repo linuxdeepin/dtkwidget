@@ -5,7 +5,7 @@
 #include <QApplication>
 #include <QIcon>
 
-DTK_BEGIN_NAMESPACE
+DWIDGET_BEGIN_NAMESPACE
 
 /*!
  * \class DHiDPIHelper
@@ -38,4 +38,4 @@ QPixmap DHiDPIHelper::loadNxPixmap(const QString &fileName)
     return pixmap;
 }
 
-DTK_END_NAMESPACE
+DWIDGET_END_NAMESPACE

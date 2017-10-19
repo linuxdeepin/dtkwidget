@@ -51,6 +51,7 @@ includes.files += $$PWD/*.h \
             $$PWD/DThumbnailProvider \
             $$PWD/DFileIconProvider \
             $$PWD/DWindowManagerHelper \
+            $$PWD/DHiDPIHelper \
             $$PWD/DSvgRenderer
 
 DISTFILES += \
