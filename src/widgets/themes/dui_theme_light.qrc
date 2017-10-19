@@ -41,10 +41,10 @@
         <file>light/images/arrow_down_hover.png</file>
         <file>light/images/arrow_down_normal.png</file>
         <file>light/images/arrow_down_press.png</file>
-        <file>dark/images/arrow_down_hover.svg</file>
-        <file>dark/images/arrow_down_normal.svg</file>
-        <file>dark/images/arrow_down_press.svg</file>
-        <file>dark/images/arrow_down_insensitive.svg</file>
+        <file>light/images/arrow_down_hover.svg</file>
+        <file>light/images/arrow_down_normal.svg</file>
+        <file>light/images/arrow_down_press.svg</file>
+        <file>light/images/arrow_down_insensitive.svg</file>
         <file>light/images/arrow_left_hover.png</file>
         <file>light/images/arrow_left_normal.png</file>
         <file>light/images/arrow_left_press.png</file>
@@ -54,10 +54,10 @@
         <file>light/images/arrow_up_hover.png</file>
         <file>light/images/arrow_up_normal.png</file>
         <file>light/images/arrow_up_press.png</file>
-        <file>dark/images/arrow_up_hover.svg</file>
-        <file>dark/images/arrow_up_normal.svg</file>
-        <file>dark/images/arrow_up_press.svg</file>
-        <file>dark/images/arrow_up_insensitive.svg</file>
+        <file>light/images/arrow_up_hover.svg</file>
+        <file>light/images/arrow_up_normal.svg</file>
+        <file>light/images/arrow_up_press.svg</file>
+        <file>light/images/arrow_up_insensitive.svg</file>
         <file>light/images/checkbox_checked_hover.png</file>
         <file>light/images/checkbox_checked_insensitive.png</file>
         <file>light/images/checkbox_checked.png</file>

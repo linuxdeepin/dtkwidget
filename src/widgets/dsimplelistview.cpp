@@ -192,7 +192,7 @@ void DSimpleListView::setColumnTitleInfo(QList<QString> titles, QList<int> width
         if (widths[i] == -1) {
             d->columnWidths << widths[i];
         } else {
-            int renderTitleWidth = fm.width(titles[i]) + d->titlePadding + arrowUpNormalImage.width() + d->titleArrowPadding * 2;
+            int renderTitleWidth = fm.width(titles[i]) + d->titlePadding + arrowUpNormalImage.width() / arrowUpNormalImage.devicePixelRatio() + d->titleArrowPadding * 2;
             d->columnWidths << std::max(widths[i], renderTitleWidth);
         }
     }
@@ -990,8 +990,8 @@ void DSimpleListView::paintEvent(QPaintEvent *)
                 // Draw sort arrow.
                 if (d->defaultSortingColumn == columnCounter) {
                     painter.setOpacity(1);
-                    int arrowX = rect().x() + columnRenderX - d->titleArrowPadding - arrowUpNormalImage.width();
-                    int arrowY = rect().y() + (d->titleHeight - arrowDownNormalImage.height()) / 2;
+                    int arrowX = rect().x() + columnRenderX - d->titleArrowPadding - arrowUpNormalImage.width() / arrowUpNormalImage.devicePixelRatio();
+                    int arrowY = rect().y() + (d->titleHeight - arrowDownNormalImage.height() / arrowUpNormalImage.devicePixelRatio()) / 2;
 
                     if (d->defaultSortingOrder) {
                         if (d->titlePressColumn == d->defaultSortingColumn) {
