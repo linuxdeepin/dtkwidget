@@ -299,7 +299,8 @@ void DAboutDialog::setProductIcon(const QIcon &icon)
 {
     D_D(DAboutDialog);
 
-    d->logoLabel->setPixmap(icon.pixmap(QSize(96, 96)));
+    const qreal dpr = devicePixelRatioF();
+    d->logoLabel->setPixmap(icon.pixmap(QSize(96 * dpr, 96 * dpr)));
 }
 
 void DAboutDialog::setProductName(const QString &productName)
