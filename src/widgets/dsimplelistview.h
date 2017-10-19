@@ -27,7 +27,7 @@
 #include "dobject.h"
 #include "dsimplelistitem.h"
 #include <dtkwidget_global.h>
-#include <QImage>
+#include <QPixmap>
 #include <QTimer>
 #include <QWidget>
 
@@ -165,24 +165,24 @@ public:
 protected:
     virtual void leaveEvent(QEvent * event);
     
-    QImage arrowDownDarkHoverImage;
-    QImage arrowDownDarkNormalImage;
-    QImage arrowDownDarkPressImage;
-    QImage arrowDownHoverImage;
-    QImage arrowDownLightHoverImage;
-    QImage arrowDownLightNormalImage;
-    QImage arrowDownLightPressImage;
-    QImage arrowDownNormalImage;
-    QImage arrowDownPressImage;
-    QImage arrowUpDarkHoverImage;
-    QImage arrowUpDarkNormalImage;
-    QImage arrowUpDarkPressImage;
-    QImage arrowUpHoverImage;
-    QImage arrowUpLightHoverImage;
-    QImage arrowUpLightNormalImage;
-    QImage arrowUpLightPressImage;
-    QImage arrowUpNormalImage;
-    QImage arrowUpPressImage;
+    QPixmap arrowDownDarkHoverImage;
+    QPixmap arrowDownDarkNormalImage;
+    QPixmap arrowDownDarkPressImage;
+    QPixmap arrowDownHoverImage;
+    QPixmap arrowDownLightHoverImage;
+    QPixmap arrowDownLightNormalImage;
+    QPixmap arrowDownLightPressImage;
+    QPixmap arrowDownNormalImage;
+    QPixmap arrowDownPressImage;
+    QPixmap arrowUpDarkHoverImage;
+    QPixmap arrowUpDarkNormalImage;
+    QPixmap arrowUpDarkPressImage;
+    QPixmap arrowUpHoverImage;
+    QPixmap arrowUpLightHoverImage;
+    QPixmap arrowUpLightNormalImage;
+    QPixmap arrowUpLightPressImage;
+    QPixmap arrowUpNormalImage;
+    QPixmap arrowUpPressImage;
     QString backgroundColor = "#ffffff";
     QString frameColor = "#000000";
     QString scrollbarColor = "#ffffff";

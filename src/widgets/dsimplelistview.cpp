@@ -30,6 +30,7 @@
 #include <QStyleFactory>
 #include <QWheelEvent>
 #include <QtMath>
+#include "dhidpihelper.h"
 
 DCORE_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
@@ -106,19 +107,19 @@ DSimpleListView::DSimpleListView(QWidget *parent) : QWidget(parent), DObject(*ne
     d->titleHoverColumn = -1;
     d->titlePressColumn = -1;
 
-    arrowUpDarkNormalImage = QImage(":/images/dark/images/arrow_up_normal.png");
-    arrowUpDarkHoverImage = QImage(":/images/dark/images/arrow_up_hover.png");
-    arrowUpDarkPressImage = QImage(":/images/dark/images/arrow_up_press.png");
-    arrowDownDarkNormalImage = QImage(":/images/dark/images/arrow_down_normal.png");
-    arrowDownDarkHoverImage = QImage(":/images/dark/images/arrow_down_hover.png");
-    arrowDownDarkPressImage = QImage(":/images/dark/images/arrow_down_press.png");
+    arrowUpDarkNormalImage = DHiDPIHelper::loadNxPixmap(":/images/dark/images/arrow_up_normal.svg");
+    arrowUpDarkHoverImage = DHiDPIHelper::loadNxPixmap(":/images/dark/images/arrow_up_hover.svg");
+    arrowUpDarkPressImage = DHiDPIHelper::loadNxPixmap(":/images/dark/images/arrow_up_press.svg");
+    arrowDownDarkNormalImage = DHiDPIHelper::loadNxPixmap(":/images/dark/images/arrow_down_normal.svg");
+    arrowDownDarkHoverImage = DHiDPIHelper::loadNxPixmap(":/images/dark/images/arrow_down_hover.svg");
+    arrowDownDarkPressImage = DHiDPIHelper::loadNxPixmap(":/images/dark/images/arrow_down_press.svg");
 
-    arrowUpLightNormalImage = QImage(":/images/light/images/arrow_up_normal.png");
-    arrowUpLightHoverImage = QImage(":/images/light/images/arrow_up_hover.png");
-    arrowUpLightPressImage = QImage(":/images/light/images/arrow_up_press.png");
-    arrowDownLightNormalImage = QImage(":/images/light/images/arrow_down_normal.png");
-    arrowDownLightHoverImage = QImage(":/images/light/images/arrow_down_hover.png");
-    arrowDownLightPressImage = QImage(":/images/light/images/arrow_down_press.png");
+    arrowUpLightNormalImage = DHiDPIHelper::loadNxPixmap(":/images/light/images/arrow_up_normal.svg");
+    arrowUpLightHoverImage = DHiDPIHelper::loadNxPixmap(":/images/light/images/arrow_up_hover.svg");
+    arrowUpLightPressImage = DHiDPIHelper::loadNxPixmap(":/images/light/images/arrow_up_press.svg");
+    arrowDownLightNormalImage = DHiDPIHelper::loadNxPixmap(":/images/light/images/arrow_down_normal.svg");
+    arrowDownLightHoverImage = DHiDPIHelper::loadNxPixmap(":/images/light/images/arrow_down_hover.svg");
+    arrowDownLightPressImage = DHiDPIHelper::loadNxPixmap(":/images/light/images/arrow_down_press.svg");
 
     arrowUpNormalImage = arrowUpLightNormalImage;
     arrowUpHoverImage = arrowUpLightHoverImage;
@@ -994,19 +995,19 @@ void DSimpleListView::paintEvent(QPaintEvent *)
 
                     if (d->defaultSortingOrder) {
                         if (d->titlePressColumn == d->defaultSortingColumn) {
-                            painter.drawImage(QPoint(arrowX, arrowY), arrowDownPressImage);
+                            painter.drawPixmap(QPoint(arrowX, arrowY), arrowDownPressImage);
                         } else if (d->titleHoverColumn == d->defaultSortingColumn) {
-                            painter.drawImage(QPoint(arrowX, arrowY), arrowDownHoverImage);
+                            painter.drawPixmap(QPoint(arrowX, arrowY), arrowDownHoverImage);
                         } else {
-                            painter.drawImage(QPoint(arrowX, arrowY), arrowDownNormalImage);
+                            painter.drawPixmap(QPoint(arrowX, arrowY), arrowDownNormalImage);
                         }
                     } else {
                         if (d->titlePressColumn == d->defaultSortingColumn) {
-                            painter.drawImage(QPoint(arrowX, arrowY), arrowUpPressImage);
+                            painter.drawPixmap(QPoint(arrowX, arrowY), arrowUpPressImage);
                         } else if (d->titleHoverColumn == d->defaultSortingColumn) {
-                            painter.drawImage(QPoint(arrowX, arrowY), arrowUpHoverImage);
+                            painter.drawPixmap(QPoint(arrowX, arrowY), arrowUpHoverImage);
                         } else {
-                            painter.drawImage(QPoint(arrowX, arrowY), arrowUpNormalImage);
+                            painter.drawPixmap(QPoint(arrowX, arrowY), arrowUpNormalImage);
                         }
                     }
                 }
