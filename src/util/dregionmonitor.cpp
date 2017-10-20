@@ -115,7 +115,6 @@ void DRegionMonitorPrivate::unregisterMonitorRegion()
 
 void DRegionMonitorPrivate::_q_ButtonPress(const int flag, const int x, const int y, const QString &key)
 {
-    Q_ASSERT(registerKey == key);
     if (registerKey != key)
         return;
 
@@ -126,7 +125,6 @@ void DRegionMonitorPrivate::_q_ButtonPress(const int flag, const int x, const in
 
 void DRegionMonitorPrivate::_q_ButtonRelease(const int flag, const int x, const int y, const QString &key)
 {
-    Q_ASSERT(registerKey == key);
     if (registerKey != key)
         return;
 
