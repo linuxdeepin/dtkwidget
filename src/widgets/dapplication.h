@@ -56,8 +56,9 @@ public:
     QString productName() const;
     void setProductName(const QString &productName);
 
-    const QPixmap &productIcon() const;
-    void setProductIcon(const QPixmap &productIcon);
+    const QIcon &productIcon() const;
+    void Q_DECL_DEPRECATED_X("Use void setProductIcon(const QIcon &productIcon).")setProductIcon(const QPixmap &productIconPixmap);
+    void setProductIcon(const QIcon &productIcon);
 
     QString applicationLicense() const;
     void setApplicationLicense(const QString &license);

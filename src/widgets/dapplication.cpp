@@ -379,7 +379,7 @@ void DApplication::setProductName(const QString &productName)
  *
  * @return the product icon of this application if set, otherwise empty.
  */
-const QPixmap &DApplication::productIcon() const
+const QIcon &DApplication::productIcon() const
 {
     D_DC(DApplication);
 
@@ -390,7 +390,19 @@ const QPixmap &DApplication::productIcon() const
  * @brief DApplication::setProductIcon sets the product icon of this application.
  * @param productIcon is the product icon to be set.
  */
-void DApplication::setProductIcon(const QPixmap &productIcon)
+void DApplication::setProductIcon(const QPixmap &productIconPixmap)
+{
+    D_D(DApplication);
+
+    d->productIcon = productIconPixmap;
+}
+
+
+/**
+ * @brief DApplication::setProductIcon sets the product icon of this application.
+ * @param productIcon is the product icon to be set.
+ */
+void DApplication::setProductIcon(const QIcon &productIcon)
 {
     D_D(DApplication);
 

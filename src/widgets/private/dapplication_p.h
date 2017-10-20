@@ -23,7 +23,7 @@
 #include "dapplication.h"
 #include "dpathbuf.h"
 
-#include <QPixmap>
+#include <QIcon>
 
 class QLocalServer;
 class QTranslator;
@@ -60,7 +60,7 @@ public:
 #endif
 
     QString productName;
-    QPixmap productIcon;
+    QIcon   productIcon;
     QString appLicense;
     QString appDescription;
     QString homePage;

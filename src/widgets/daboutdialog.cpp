@@ -299,8 +299,7 @@ void DAboutDialog::setProductIcon(const QIcon &icon)
 {
     D_D(DAboutDialog);
 
-    const qreal dpr = devicePixelRatioF();
-    d->logoLabel->setPixmap(icon.pixmap(QSize(96 * dpr, 96 * dpr)));
+    d->logoLabel->setPixmap(icon.pixmap(QSizeF(96, 96).toSize()));
 }
 
 void DAboutDialog::setProductName(const QString &productName)
@@ -336,8 +335,9 @@ void DAboutDialog::setWebsiteName(const QString &websiteName)
 {
     D_D(DAboutDialog);
 
-    if (d->websiteName == websiteName)
+    if (d->websiteName == websiteName) {
         return;
+    }
 
     d->websiteName = websiteName;
     d->updateWebsiteLabel();
@@ -347,8 +347,9 @@ void DAboutDialog::setWebsiteLink(const QString &websiteLink)
 {
     D_D(DAboutDialog);
 
-    if (d->websiteLink == websiteLink)
+    if (d->websiteLink == websiteLink) {
         return;
+    }
 
     d->websiteLink = websiteLink;
     d->updateWebsiteLabel();
@@ -384,10 +385,11 @@ void DAboutDialog::showEvent(QShowEvent *event)
 {
     DDialog::showEvent(event);
 
-    if (minimumWidth() == maximumWidth())
+    if (minimumWidth() == maximumWidth()) {
         resize(width(), heightForWidth(width()));
-    else
+    } else {
         adjustSize();
+    }
 }
 
 #include "moc_daboutdialog.cpp"
