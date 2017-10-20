@@ -5,7 +5,7 @@ Dtk--Widget--DSearchEdit {
 Dtk--Widget--DSearchEdit #SearchIcon {
     background-color:transparent;
     margin: 2 -1 2 4 px;
-    border-image:url(:/images/light/images/search.png);
+    border-image:url(:/images/light/images/search.svg);
 }
 
 Dtk--Widget--DSearchEdit #ClearIcon {

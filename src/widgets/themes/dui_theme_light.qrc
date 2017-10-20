@@ -120,7 +120,7 @@
         <file>light/dialogs/images/user-trash-full.png</file>
         <file>light/images/combobox_arrow.png</file>
         <file>light/images/combobox_arrow_active.png</file>
-        <file>light/images/search.png</file>
+        <file>light/images/search.svg</file>
         <file>light/images/water_back.svg</file>
         <file>light/images/water_front.svg</file>
         <file>light/images/window/close_disabled.svg</file>
