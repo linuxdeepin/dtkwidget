@@ -557,10 +557,7 @@ void DTitlebar::setIcon(const QIcon &icon)
     D_D(DTitlebar);
     if (d->titleLabel) {
         d->titleLabel->setContentsMargins(0, 0, 0, 0);
-        auto size = QSize(DefaultIconWidth, DefaultIconHeight) * devicePixelRatioF();
-        auto pixmap = icon.pixmap(size);
-        pixmap.setDevicePixelRatio(devicePixelRatioF());
-        d->iconLabel->setPixmap(pixmap);
+        d->iconLabel->setPixmap(icon.pixmap(QSize(DefaultIconWidth, DefaultIconHeight)));
     }
 }
 
