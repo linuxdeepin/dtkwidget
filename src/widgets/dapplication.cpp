@@ -390,6 +390,18 @@ const QIcon &DApplication::productIcon() const
  * @brief DApplication::setProductIcon sets the product icon of this application.
  * @param productIcon is the product icon to be set.
  */
+void DApplication::setProductIcon(const QPixmap &productIconPixmap)
+{
+    D_D(DApplication);
+
+    d->productIcon = productIconPixmap;
+}
+
+
+/**
+ * @brief DApplication::setProductIcon sets the product icon of this application.
+ * @param productIcon is the product icon to be set.
+ */
 void DApplication::setProductIcon(const QIcon &productIcon)
 {
     D_D(DApplication);
