@@ -1,4 +1,8 @@
 {
+    "gsettings": {
+        "id": "com.deepin.filemanager",
+        "path": "/com/deepin/filemanager/"
+    },
     "groups": [
         {
             "key": "base",

@@ -105,6 +105,27 @@ bool DDesktopServices::showFileItems(const QList<QUrl> urls, const QString &star
     return false;
 }
 
+bool DDesktopServices::trash(QString localFilePath)
+{
+    return false;
+}
+
+bool DDesktopServices::trash(const QList<QString> localFilePaths)
+{
+    return false;
+}
+
+bool DDesktopServices::trash(QUrl url)
+{
+    return false;
+}
+
+bool DDesktopServices::trash(const QList<QUrl> urls)
+{
+    return false;
+}
+
+
 QString DDesktopServices::errorMessage()
 {
     return QString();

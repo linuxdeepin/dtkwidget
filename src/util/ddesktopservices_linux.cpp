@@ -167,6 +167,27 @@ bool DDesktopServices::showFileItems(const QList<QUrl> urls, const QString &star
     EASY_CALL_DBUS(ShowItems)
 }
 
+bool DDesktopServices::trash(QString localFilePath)
+{
+    return trash(QUrl::fromLocalFile(localFilePath));
+}
+
+bool DDesktopServices::trash(const QList<QString> localFilePaths)
+{
+    return trash(path2urls(localFilePaths));
+}
+
+bool DDesktopServices::trash(QUrl url)
+{
+    return trash(QList<QUrl>() << url);
+}
+
+bool DDesktopServices::trash(const QList<QUrl> urls)
+{
+    QDBusInterface *interface = fileManager1DBusInterface();
+    return interface && interface->call("Trash", urls2uris(urls)).type() != QDBusMessage::ErrorMessage;
+}
+
 bool DDesktopServices::playSystemSoundEffect(const DDesktopServices::SystemSoundEffect &effect)
 {
     switch (effect) {

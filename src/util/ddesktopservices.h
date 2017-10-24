@@ -52,6 +52,11 @@ public:
     static bool showFileItem(QUrl url, const QString &startupId = QString());
     static bool showFileItems(const QList<QUrl> urls, const QString &startupId = QString());
 
+    static bool trash(QString localFilePath);
+    static bool trash(const QList<QString> localFilePaths);
+    static bool trash(QUrl urlstartupId);
+    static bool trash(const QList<QUrl> urls);
+
 #ifdef Q_OS_UNIX
     static bool playSystemSoundEffect(const SystemSoundEffect &effect);
     static bool playSystemSoundEffect(const QString &name);
