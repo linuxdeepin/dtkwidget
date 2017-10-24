@@ -39,6 +39,7 @@
 #include "daboutdialog.h"
 #include "dapplication.h"
 #include "dthememanager.h"
+#include "util/dwindowmanagerhelper.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -55,6 +56,7 @@ private:
     void init();
     void _q_toggleWindowState();
     void _q_showMinimized();
+    void _q_onTopWindowMotifHintsChanged(quint32 winId);
 
 #ifndef QT_NO_MENU
     void _q_addDefaultMenuItems();
@@ -175,6 +177,8 @@ void DTitlebarPrivate::init()
     buttonArea->setFixedHeight(q->height());
 
     q->connect(optionButton, &DWindowOptionButton::clicked, q, &DTitlebar::optionClicked);
+    q->connect(DWindowManagerHelper::instance(), SIGNAL(windowMotifWMHintsChanged(quint32)),
+               q, SLOT(_q_onTopWindowMotifHintsChanged(quint32)));
 }
 
 void DTitlebarPrivate::_q_toggleWindowState()
@@ -207,6 +211,38 @@ void DTitlebarPrivate::_q_showMinimized()
 #else
         parentWindow->showMinimized();
 #endif
+    }
+}
+
+void DTitlebarPrivate::_q_onTopWindowMotifHintsChanged(quint32 winId)
+{
+    D_QC(DTitlebar);
+
+    if (winId != q->window()->internalWinId())
+        return;
+
+    DWindowManagerHelper::MotifFunctions functions_hints = DWindowManagerHelper::getMotifFunctions(q->window()->windowHandle());
+    DWindowManagerHelper::MotifDecorations decorations_hints = DWindowManagerHelper::getMotifDecorations(q->window()->windowHandle());
+
+    if (titleLabel) {
+        titleLabel->setVisible(decorations_hints.testFlag(DWindowManagerHelper::DECOR_TITLE));
+    }
+
+    if (iconLabel) {
+        iconLabel->setVisible(decorations_hints.testFlag(DWindowManagerHelper::DECOR_TITLE));
+    }
+
+    minButton->setVisible(decorations_hints.testFlag(DWindowManagerHelper::DECOR_MINIMIZE));
+    minButton->setEnabled(functions_hints.testFlag(DWindowManagerHelper::FUNC_MINIMIZE));
+    maxButton->setVisible(decorations_hints.testFlag(DWindowManagerHelper::DECOR_MAXIMIZE));
+    maxButton->setEnabled(functions_hints.testFlag(DWindowManagerHelper::FUNC_MAXIMIZE));
+    closeButton->setEnabled(functions_hints.testFlag(DWindowManagerHelper::FUNC_CLOSE));
+    optionButton->setVisible(decorations_hints.testFlag(DWindowManagerHelper::DECOR_MENU));
+    buttonArea->adjustSize();
+    buttonArea->resize(buttonArea->size());
+
+    if (titlePadding) {
+        titlePadding->setFixedSize(buttonArea->size());
     }
 }
 
@@ -396,6 +432,7 @@ void DTitlebar::showEvent(QShowEvent *event)
 #endif
 
     QWidget::showEvent(event);
+    d->_q_onTopWindowMotifHintsChanged(window()->internalWinId());
 }
 
 void DTitlebar::mousePressEvent(QMouseEvent *event)

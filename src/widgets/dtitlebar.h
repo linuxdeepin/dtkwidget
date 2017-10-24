@@ -42,7 +42,7 @@ public:
     QWidget *customWidget() const;
     void setCustomWidget(QWidget *, bool fixCenterPos = false);
     void setCustomWidget(QWidget *, Qt::AlignmentFlag flag = Qt::AlignCenter, bool fixCenterPos = false);
-    void setWindowFlags(Qt::WindowFlags type);
+    Q_DECL_DEPRECATED void setWindowFlags(Qt::WindowFlags type);
     int buttonAreaWidth() const;
     bool separatorVisible() const;
 
@@ -90,6 +90,7 @@ private:
     D_DECLARE_PRIVATE(DTitlebar)
     D_PRIVATE_SLOT(void _q_toggleWindowState())
     D_PRIVATE_SLOT(void _q_showMinimized())
+    D_PRIVATE_SLOT(void _q_onTopWindowMotifHintsChanged(quint32))
 
 #ifndef QT_NO_MENU
     D_PRIVATE_SLOT(void _q_addDefaultMenuItems())
