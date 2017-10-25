@@ -38,24 +38,30 @@ class DAbstractDialog : public QDialog, public DTK_CORE_NAMESPACE::DObject
 
     Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor)
     Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor)
-    Q_PROPERTY(DisplayPostion displayPostion READ displayPostion WRITE setDisplayPostion)
+    Q_PROPERTY(DisplayPosition displayPosition READ displayPosition WRITE setDisplayPosition)
 
 public:
     /**
-     * @brief The DisplayPostion enum contains the position options that can be specified by all dialogs.
+     * @brief The DisplayPosition enum contains the position options that can be specified by all dialogs.
      */
+    enum DisplayPosition {
+        Center, /*!< display this dialog in the center of the screen */
+        TopRight /*!< display this dialog in the top right of the screen */
+    };
     enum DisplayPostion {
-        DisplayCenter, /*!< display this dialog in the center of the screen */
-        DisplayTopRight /*!< display this dialog in the top right of the screen */
+        DisplayCenter = Center, /*!< display this dialog in the center of the screen */
+        DisplayTopRight = TopRight /*!< display this dialog in the top right of the screen */
     };
 
+    Q_ENUMS(DisplayPosition)
     Q_ENUMS(DisplayPostion)
 
     DAbstractDialog(QWidget *parent = 0);
 
     QColor backgroundColor() const;
     QColor borderColor() const;
-    DisplayPostion displayPostion() const;
+    DisplayPosition displayPosition() const;
+    D_DECL_DEPRECATED DisplayPostion displayPostion() const;
 
 public Q_SLOTS:
     void moveToCenter();
@@ -65,7 +71,8 @@ public Q_SLOTS:
 
     void setBackgroundColor(QColor backgroundColor);
     void setBorderColor(QColor borderColor);
-    void setDisplayPostion(DisplayPostion displayPostion);
+    void setDisplayPosition(DisplayPosition displayPosition);
+    D_DECL_DEPRECATED void setDisplayPostion(DisplayPostion displayPosition);
 
 Q_SIGNALS:
     /**

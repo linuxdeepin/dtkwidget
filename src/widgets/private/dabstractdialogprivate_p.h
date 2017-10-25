@@ -46,7 +46,7 @@ private:
     QPoint dragPosition;
     QColor backgroundColor;
     QColor borderColor;
-    DAbstractDialog::DisplayPostion displayPostion = DAbstractDialog::DisplayCenter;
+    DAbstractDialog::DisplayPosition displayPosition = DAbstractDialog::Center;
 
     DPlatformWindowHandle *handle = Q_NULLPTR;
     DBlurEffectWidget *bgBlurWidget = Q_NULLPTR;

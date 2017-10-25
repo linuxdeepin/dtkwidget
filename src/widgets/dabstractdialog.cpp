@@ -125,14 +125,19 @@ QColor DAbstractDialog::borderColor() const
 }
 
 /**
- * @brief DAbstractDialog::displayPostion
+ * @brief DAbstractDialog::displayPosition
  * @return the display position of this dialog.
  */
-DAbstractDialog::DisplayPostion DAbstractDialog::displayPostion() const
+DAbstractDialog::DisplayPosition DAbstractDialog::displayPosition() const
 {
     D_DC(DAbstractDialog);
 
-    return d->displayPostion;
+    return d->displayPosition;
+}
+
+DAbstractDialog::DisplayPostion DAbstractDialog::displayPostion() const
+{
+    return static_cast<DisplayPostion>(displayPosition());
 }
 
 /**
@@ -199,16 +204,16 @@ void DAbstractDialog::setBorderColor(QColor borderColor)
 }
 
 /**
- * @brief DAbstractDialog::setDisplayPostion sets the position of the dialog.
- * @param displayPostion is the target position.
+ * @brief DAbstractDialog::setDisplayPosition sets the position of the dialog.
+ * @param displayPosition is the target position.
  */
-void DAbstractDialog::setDisplayPostion(DAbstractDialog::DisplayPostion displayPostion)
+void DAbstractDialog::setDisplayPosition(DAbstractDialog::DisplayPosition displayPosition)
 {
     D_D(DAbstractDialog);
 
-    d->displayPostion = displayPostion;
+    d->displayPosition = displayPosition;
 
-    switch (displayPostion) {
+    switch (displayPosition) {
     case DisplayCenter:
         moveToCenter();
         break;
@@ -218,6 +223,11 @@ void DAbstractDialog::setDisplayPostion(DAbstractDialog::DisplayPostion displayP
     default:
         break;
     }
+}
+
+void DAbstractDialog::setDisplayPostion(DAbstractDialog::DisplayPostion displayPosition)
+{
+    setDisplayPosition(static_cast<DisplayPosition>(displayPosition));
 }
 
 /**
@@ -315,7 +325,7 @@ void DAbstractDialog::resizeEvent(QResizeEvent *event)
     D_DC(DAbstractDialog);
 
     if (!d->mouseMoved) {
-        setDisplayPostion(displayPostion());
+        setDisplayPosition(displayPosition());
     }
 
     if (d->bgBlurWidget)
