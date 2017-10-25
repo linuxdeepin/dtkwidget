@@ -484,6 +484,11 @@ DBlurEffectWidget::DBlurEffectWidget(DBlurEffectWidgetPrivate &dd, QWidget *pare
 
 }
 
+inline QRect operator *(const QRect &rect, qreal scale)
+{
+    return QRect(rect.left() * scale, rect.top() * scale, rect.width() * scale, rect.height() * scale);
+}
+
 void DBlurEffectWidget::paintEvent(QPaintEvent *event)
 {
     D_D(DBlurEffectWidget);
@@ -516,19 +521,28 @@ void DBlurEffectWidget::paintEvent(QPaintEvent *event)
         int radius = d->radius;
         QPoint point_offset = mapTo(window(), QPoint(0, 0));
         const QRect &paintRect = event->rect();
+        qreal device_pixel_ratio = devicePixelRatioF();
 
         if (d->sourceImage.isNull()) {
             const QRect &tmp_rect = rect().translated(point_offset).adjusted(-radius, -radius, radius, radius);
 
-            d->sourceImage = window()->backingStore()->handle()->toImage().copy(tmp_rect);
+            d->sourceImage = window()->backingStore()->handle()->toImage().copy(tmp_rect * device_pixel_ratio);
+            d->sourceImage = d->sourceImage.scaledToWidth(d->sourceImage.width() / device_pixel_ratio);
         } else {
             QPainter pa_image(&d->sourceImage);
 
             pa_image.setCompositionMode(QPainter::CompositionMode_Source);
 
             for (const QRect &rect : event->region().rects()) {
-                pa_image.drawImage(rect.topLeft() + QPoint(radius, radius),
-                                   window()->backingStore()->handle()->toImage().copy(rect.translated(point_offset)));
+                if (device_pixel_ratio > 1) {
+                    const QRect &tmp_rect = this->rect().translated(point_offset);
+                    const QImage &area = window()->backingStore()->handle()->toImage().copy(tmp_rect * device_pixel_ratio);
+
+                    pa_image.drawImage(rect.topLeft() + QPoint(radius, radius), area.scaledToWidth(area.width() / device_pixel_ratio).copy(rect));
+                } else {
+                    pa_image.drawImage(rect.topLeft() + QPoint(radius, radius),
+                                       window()->backingStore()->handle()->toImage().copy(rect.translated(point_offset)));
+                }
             }
 
             pa_image.end();
@@ -542,7 +556,7 @@ void DBlurEffectWidget::paintEvent(QPaintEvent *event)
         pa.setTransform(old_transform);
     }
 
-    pa.fillRect(event->rect(), maskColor());
+    pa.fillRect(rect(), maskColor());
 }
 
 void DBlurEffectWidget::moveEvent(QMoveEvent *event)
