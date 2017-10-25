@@ -37,7 +37,6 @@ DMainWindowPrivate::DMainWindowPrivate(DMainWindow *qq)
         handle = new DPlatformWindowHandle(qq, qq);
         titlebar = new DTitlebar(qq);
 
-        qq->setWindowFlags(Qt::FramelessWindowHint);
         qq->setMenuWidget(titlebar);
     }
 }
