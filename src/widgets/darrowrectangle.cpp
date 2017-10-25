@@ -670,7 +670,7 @@ void DArrowRectanglePrivate::verticalMove(int x, int y)
     D_Q(DArrowRectangle);
 
     const QRect dRect = currentScreenRect(x, y);
-    qreal delta = m_handle ? 0 : q->shadowBlurRadius() - m_shadowDistance;
+    qreal delta = m_handle ? 0 : (q->shadowBlurRadius() - m_shadowDistance);
 
     int lRelativeY = y - dRect.y() - (q->height() - delta) / 2;
     int rRelativeY = y - dRect.y() + (q->height() - delta) / 2 - dRect.height();
@@ -711,7 +711,7 @@ void DArrowRectanglePrivate::horizontalMove(int x, int y)
     D_Q(DArrowRectangle);
 
     const QRect dRect = currentScreenRect(x, y);
-    qreal delta = m_handle ? 0 : q->shadowBlurRadius() - m_shadowDistance;
+    qreal delta = m_handle ? 0 : (q->shadowBlurRadius() - m_shadowDistance);
 
     int lRelativeX = x - dRect.x() - (q->width() - delta) / 2;
     int rRelativeX = x - dRect.x() + (q->width() - delta) / 2 - dRect.width();
@@ -730,9 +730,9 @@ void DArrowRectanglePrivate::horizontalMove(int x, int y)
     }
     else
     {
-//        q->setArrowX(0);
+        q->setArrowX(m_arrowX);
 //        absoluteX = x - q->width() / 2;
-        absoluteX = x - (m_arrowX > 0 ? m_arrowX : q->width() / 2);
+        absoluteX = x - (m_arrowX > 0 ? m_arrowX : (q->width() / 2));
     }
 
     switch (m_arrowDirection)

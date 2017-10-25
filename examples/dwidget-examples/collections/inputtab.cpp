@@ -25,6 +25,7 @@
 
 #include <QPixmap>
 #include <QDebug>
+#include <QTimer>
 
 InputTab::InputTab(QWidget *parent) : QLabel(parent)
 {
@@ -52,11 +53,12 @@ InputTab::InputTab(QWidget *parent) : QLabel(parent)
     Dtk::Widget::DThemeManager::instance()->setTheme(searchEdit, "dark");
 
     DTK_WIDGET_NAMESPACE::DLineEdit *lineEdit = new DTK_WIDGET_NAMESPACE::DLineEdit(this);
-    lineEdit->setText("LineEdit");
+    lineEdit->setText("Test Alert Message");
     lineEdit->move(20, 180);
 //    lineEdit->setAlert(true);
 //    lineEdit->setFixedSize(200, 30);
     connect(lineEdit, &DTK_WIDGET_NAMESPACE::DLineEdit::focusChanged, [](bool focus) {qDebug() << "focus: " << focus;});
+    QTimer::singleShot(2000, nullptr, [=] {lineEdit->showAlertMessage("Test Alert Message !!");});
 
     DTK_WIDGET_NAMESPACE::DFileChooserEdit *fileChooser = new DTK_WIDGET_NAMESPACE::DFileChooserEdit(this);
     fileChooser->move(150, 180);
