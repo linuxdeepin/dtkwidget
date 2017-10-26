@@ -589,7 +589,8 @@ void DTitlebar::setIcon(const QPixmap &icon)
     D_D(DTitlebar);
     if (d->titleLabel) {
         d->titleLabel->setContentsMargins(0, 0, 0, 0);
-        d->iconLabel->setPixmap(icon.scaled(DefaultIconWidth, DefaultIconHeight, Qt::KeepAspectRatio));
+        d->iconLabel->setPixmap(icon.scaled(DefaultIconWidth * icon.devicePixelRatio(),
+                                            DefaultIconHeight * icon.devicePixelRatio(), Qt::KeepAspectRatio));
     }
 }
 
