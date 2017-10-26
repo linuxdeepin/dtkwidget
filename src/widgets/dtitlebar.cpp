@@ -218,6 +218,12 @@ void DTitlebarPrivate::_q_onTopWindowMotifHintsChanged(quint32 winId)
 {
     D_QC(DTitlebar);
 
+    if (!DPlatformWindowHandle::isEnabledDXcb(q->window())) {
+        q->disconnect(DWindowManagerHelper::instance(), SIGNAL(windowMotifWMHintsChanged(quint32)),
+                      q, SLOT(_q_onTopWindowMotifHintsChanged(quint32)));
+        return;
+    }
+
     if (winId != q->window()->internalWinId())
         return;
 
@@ -432,7 +438,9 @@ void DTitlebar::showEvent(QShowEvent *event)
 #endif
 
     QWidget::showEvent(event);
-    d->_q_onTopWindowMotifHintsChanged(window()->internalWinId());
+
+    if (DPlatformWindowHandle::isEnabledDXcb(window()))
+        d->_q_onTopWindowMotifHintsChanged(window()->internalWinId());
 }
 
 void DTitlebar::mousePressEvent(QMouseEvent *event)
