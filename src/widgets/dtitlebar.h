@@ -27,8 +27,7 @@
 DWIDGET_BEGIN_NAMESPACE
 
 class DTitlebarPrivate;
-
-class LIBDTKWIDGETSHARED_EXPORT DTitlebar : public QWidget , public DTK_CORE_NAMESPACE::DObject
+class LIBDTKWIDGETSHARED_EXPORT DTitlebar : public QWidget, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
 public:
@@ -47,6 +46,7 @@ public:
     bool separatorVisible() const;
 
     void setVisible(bool visible) Q_DECL_OVERRIDE;
+    void setEmbedMode(bool embed);
 
     void resize(int width, int height);
     void resize(const QSize &);
