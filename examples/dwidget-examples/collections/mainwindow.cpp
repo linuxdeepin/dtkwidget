@@ -61,6 +61,8 @@ MainWindow::MainWindow(QWidget *parent)
     QHBoxLayout *styleLayout = new QHBoxLayout();
     QPushButton *darkButton = new QPushButton("Dark", this);
     QPushButton *lightBUtton = new QPushButton("Light", this);
+    QPushButton *enableButtons = new QPushButton("Enable Titlebar ", this);
+    QPushButton *disableButtons = new QPushButton("Disable Titlebar", this);
 
     themeManager->setTheme(lightBUtton, "light");
 
@@ -70,8 +72,19 @@ MainWindow::MainWindow(QWidget *parent)
     connect(lightBUtton, &QPushButton::clicked, [ = ] {
         themeManager->setTheme("light");
     });
+    connect(enableButtons, &QPushButton::clicked, [ = ] {
+        titlebar()->setDisableFlags(Qt::Widget);
+    });
+    connect(disableButtons, &QPushButton::clicked, [ = ] {
+        titlebar()->setDisableFlags(Qt::WindowMinimizeButtonHint
+        | Qt::WindowCloseButtonHint
+        | Qt::WindowMaximizeButtonHint
+        | Qt::WindowSystemMenuHint);
+    });
     styleLayout->addWidget(darkButton);
     styleLayout->addWidget(lightBUtton);
+    styleLayout->addWidget(enableButtons);
+    styleLayout->addWidget(disableButtons);
     styleLayout->addStretch();
 
     mainLayout->addLayout(styleLayout);
@@ -94,8 +107,11 @@ MainWindow::MainWindow(QWidget *parent)
         QMenu *menu = titlebar->menu()->addMenu("menu1");
         menu->addAction("menu1->action1");
         menu->addAction("menu1->action2");
-
         connect(titlebar->menu(), &QMenu::triggered, this, &MainWindow::menuItemInvoked);
+
+        titlebar->setDisableFlags(Qt::WindowMinimizeButtonHint
+                                  | Qt::WindowMaximizeButtonHint
+                                  | Qt::WindowSystemMenuHint);
     }
 }
 

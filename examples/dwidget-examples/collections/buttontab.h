@@ -29,7 +29,6 @@
 #include "dswitchbutton.h"
 #include "dwindowmaxbutton.h"
 #include "dwindowminbutton.h"
-#include "dwindowrestorebutton.h"
 #include "dwindowclosebutton.h"
 #include "dwindowoptionbutton.h"
 #include "dlinkbutton.h"

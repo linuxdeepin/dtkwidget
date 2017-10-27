@@ -2,10 +2,12 @@ Dtk--Widget--DWindowMaxButton[isMaximized=true] {
     qproperty-normalPic: url(:/images/dark/images/window/unmaximize_normal.svg);
     qproperty-hoverPic: url(:/images/dark/images/window/unmaximize_hover.svg);
     qproperty-pressPic: url(:/images/dark/images/window/unmaximize_press.svg);
+    qproperty-disabledPic: url(:/images/dark/images/window/unmaximize_disabled.svg);
 }
 
 Dtk--Widget--DWindowMaxButton[isMaximized=false] {
     qproperty-normalPic: url(:/images/dark/images/window/maximize_normal.svg);
     qproperty-hoverPic: url(:/images/dark/images/window/maximize_hover.svg);
     qproperty-pressPic: url(:/images/dark/images/window/maximize_press.svg);
+    qproperty-disabledPic: url(:/images/dark/images/window/maximize_disabled.svg);
 }

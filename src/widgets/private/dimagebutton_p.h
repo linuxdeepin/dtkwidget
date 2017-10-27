@@ -43,6 +43,7 @@ public:
     QString m_hoverPic;
     QString m_pressPic;
     QString m_checkedPic;
+    QString m_disabledPic;
 
     D_DECLARE_PUBLIC(DImageButton)
 };

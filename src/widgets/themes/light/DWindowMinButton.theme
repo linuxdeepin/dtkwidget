@@ -2,4 +2,5 @@ Dtk--Widget--DWindowMinButton {
     qproperty-normalPic: url(:/images/light/images/window/minimise_normal.svg);
     qproperty-hoverPic: url(:/images/light/images/window/minimise_hover.svg);
     qproperty-pressPic: url(:/images/light/images/window/minimise_press.svg);
+    qproperty-disabledPic: url(:/images/light/images/window/minimize_disabled.svg);
 }

@@ -36,9 +36,6 @@ ButtonTab::ButtonTab(QWidget *parent) : QLabel(parent)
     DWindowMaxButton * maxButton = new DWindowMaxButton(this);
     maxButton->move(50, 5);
 
-    DWindowRestoreButton * restoreButton = new DWindowRestoreButton(this);
-    restoreButton->move(70, 5);
-
     DWindowCloseButton * closeButton = new DWindowCloseButton(this);
     closeButton->move(90, 5);
 
@@ -48,7 +45,7 @@ ButtonTab::ButtonTab(QWidget *parent) : QLabel(parent)
     //////////////////////////////////////////////////////////////--DTextButton
     DTextButton *textButton = new DTextButton("Test Text", this);
     textButton->move(5, 40);
-    
+
     DTextButton *textComplexButton = new DTextButton("Checked Button", this);
     textComplexButton->setCheckable(true);
     textComplexButton->setChecked(true);

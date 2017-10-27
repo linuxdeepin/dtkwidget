@@ -42,6 +42,7 @@ public:
     void setCustomWidget(QWidget *, bool fixCenterPos = false);
     void setCustomWidget(QWidget *, Qt::AlignmentFlag flag = Qt::AlignCenter, bool fixCenterPos = false);
     Q_DECL_DEPRECATED void setWindowFlags(Qt::WindowFlags type);
+
     int buttonAreaWidth() const;
     bool separatorVisible() const;
 
@@ -51,6 +52,8 @@ public:
     void resize(int width, int height);
     void resize(const QSize &);
 
+    void setDisableFlags(Qt::WindowFlags flags);
+    Qt::WindowFlags disableFlags() const;
 Q_SIGNALS:
     void optionClicked();
     void doubleClicked();
@@ -78,12 +81,12 @@ private Q_SLOTS:
 #endif
 
 protected:
+    bool eventFilter(QObject *obj, QEvent *event) Q_DECL_OVERRIDE;
     void showEvent(QShowEvent *event) Q_DECL_OVERRIDE;
     void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     void mouseDoubleClickEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
-    bool eventFilter(QObject *obj, QEvent *event) Q_DECL_OVERRIDE;
     void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
 
 private:
