@@ -92,6 +92,7 @@ private:
     QWidget             *parentWindow = Q_NULLPTR;
 
     bool                mousePressed = false;
+    bool                useWindowFlags = false;
 
     Q_DECLARE_PUBLIC(DTitlebar)
 };
@@ -217,6 +218,9 @@ void DTitlebarPrivate::_q_showMinimized()
 void DTitlebarPrivate::_q_onTopWindowMotifHintsChanged(quint32 winId)
 {
     D_QC(DTitlebar);
+
+    if (useWindowFlags)
+        return;
 
     if (!DPlatformWindowHandle::isEnabledDXcb(q->window())) {
         q->disconnect(DWindowManagerHelper::instance(), SIGNAL(windowMotifWMHintsChanged(quint32)),
@@ -395,6 +399,9 @@ QWidget *DTitlebar::customWidget() const
 void DTitlebar::setWindowFlags(Qt::WindowFlags type)
 {
     D_D(DTitlebar);
+
+    d->useWindowFlags = true;
+
     if (d->titleLabel) {
         d->titleLabel->setVisible(type & Qt::WindowTitleHint);
     }
