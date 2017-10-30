@@ -81,7 +81,7 @@ void DPasswordEditPrivate::init()
     D_Q(DPasswordEdit);
 
     q->setEchoMode(q->Password);
-    q->setTextMargins(0, 0, 16, 0);
+    q->setTextMargins(0, 0, 16 + 22 + 5, 0);
     q->setIconVisible(true);
 
     // FIXME: DPasswordEdit instances that initialized with a parent will fail

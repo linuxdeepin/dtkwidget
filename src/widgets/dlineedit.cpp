@@ -249,7 +249,7 @@ void DLineEditPrivate::init()
     m_centralHLayout->addWidget(clearButton);
     m_centralHLayout->addWidget(m_rightIcon);
     m_centralHLayout->setSpacing(0);
-    m_centralHLayout->setMargin(0);
+    m_centralHLayout->setContentsMargins(0, 0, 2, 0);
 
     q->setLayout(m_centralHLayout);
     q->setContextMenuPolicy(Qt::NoContextMenu);
