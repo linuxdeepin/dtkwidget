@@ -730,8 +730,7 @@ void DArrowRectanglePrivate::horizontalMove(int x, int y)
     }
     else
     {
-        q->setArrowX(m_arrowX);
-//        absoluteX = x - q->width() / 2;
+        q->setArrowX(0);
         absoluteX = x - (m_arrowX > 0 ? m_arrowX : (q->width() / 2));
     }
 
