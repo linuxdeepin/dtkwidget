@@ -1288,7 +1288,9 @@ void DSimpleListView::shiftSelectPrevItemWithOffset(int scrollOffset)
 
             shiftSelectItemsWithBound(selectionStartIndex, selectionEndIndex);
 
-            d->renderOffset = adjustRenderOffset((selectionStartIndex - 1) * d->rowHeight + d->titleHeight);
+            if (d->renderOffset / d->rowHeight >= selectionStartIndex) {
+                d->renderOffset = adjustRenderOffset((selectionStartIndex - 1) * d->rowHeight + d->titleHeight);
+            }
 
             repaint();
         }
@@ -1333,7 +1335,10 @@ void DSimpleListView::shiftSelectNextItemWithOffset(int scrollOffset)
 
             shiftSelectItemsWithBound(selectionStartIndex, selectionEndIndex);
 
-            d->renderOffset = adjustRenderOffset((selectionEndIndex + 1) * d->rowHeight + d->titleHeight - rect().height());
+            if ((d->renderOffset + rect().height()) / d->rowHeight <= selectionEndIndex + 1) {
+                d->renderOffset = adjustRenderOffset((selectionEndIndex + 1) * d->rowHeight + d->titleHeight - rect().height());
+            }
+            
 
             repaint();
         }
