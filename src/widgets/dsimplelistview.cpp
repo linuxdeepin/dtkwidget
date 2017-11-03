@@ -1350,38 +1350,45 @@ QList<int> DSimpleListView::getRenderWidths()
     D_D(DSimpleListView);
     
     QList<int> renderWidths;
-    if (d->columnWidths.contains(-1)) {
-        for (int i = 0; i < d->columnWidths.count(); i++) {
-            if (d->columnWidths[i] != -1) {
+    if (d->columnWidths.length() > 0) {
+        if (d->columnWidths.contains(-1)) {
+            for (int i = 0; i < d->columnWidths.count(); i++) {
+                if (d->columnWidths[i] != -1) {
+                    if (columnVisibles[i]) {
+                        renderWidths << d->columnWidths[i];
+                    } else {
+                        renderWidths << 0;
+                    }
+                } else {
+                    if (columnVisibles[i]) {
+                        int totalWidthOfOtherColumns = 0;
+
+                        for (int j = 0; j < d->columnWidths.count(); j++) {
+                            if (d->columnWidths[j] != -1 && columnVisibles[j]) {
+                                totalWidthOfOtherColumns += d->columnWidths[j];
+                            }
+                        }
+
+                        renderWidths << rect().width() - totalWidthOfOtherColumns;
+                    } else {
+                        renderWidths << 0;
+                    }
+                }
+            }
+        } else {
+            for (int i = 0; i < d->columnWidths.count(); i++) {
                 if (columnVisibles[i]) {
                     renderWidths << d->columnWidths[i];
                 } else {
                     renderWidths << 0;
                 }
-            } else {
-                if (columnVisibles[i]) {
-                    int totalWidthOfOtherColumns = 0;
-
-                    for (int j = 0; j < d->columnWidths.count(); j++) {
-                        if (d->columnWidths[j] != -1 && columnVisibles[j]) {
-                            totalWidthOfOtherColumns += d->columnWidths[j];
-                        }
-                    }
-
-                    renderWidths << rect().width() - totalWidthOfOtherColumns;
-                } else {
-                    renderWidths << 0;
-                }
             }
-        }
-    } else {
-        for (int i = 0; i < d->columnWidths.count(); i++) {
-            if (columnVisibles[i]) {
-                renderWidths << d->columnWidths[i];
-            } else {
-                renderWidths << 0;
-            }
-        }
+        }        
+    }
+    // Return widget width if user don't set column withs throught function 'setColumnTitleInfo'.
+    // Avoid listview don't draw item's foregound cause by emptry 'columnWidths'.
+    else {
+        renderWidths << rect().width();
     }
 
     return renderWidths;
