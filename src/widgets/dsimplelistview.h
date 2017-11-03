@@ -94,9 +94,18 @@ public:
     /*
      * Set radius to clip listview.
      * 
-     * @radius the radius of clip area, default is 8 pixel.
+     * @radius the radius of clip area, default is 0 pixel.
      */
     void setClipRadius(int radius);
+    
+    /*
+     * Set frame details.
+     * 
+     * @enableFrame draw frame if enableFrame is true, default is false
+     * @color the frame color, default is black
+     * @opacity the frame opacity, default is 0.1
+     */
+    void setFrame(bool enableFrame, QColor color=QColor("#000000"), double opacity=0.1);
     
     /* 
      * Add DSimpleListItem list to ListView.
@@ -184,12 +193,12 @@ protected:
     QPixmap arrowUpNormalImage;
     QPixmap arrowUpPressImage;
     QString backgroundColor = "#ffffff";
-    QString frameColor = "#000000";
     QString scrollbarColor = "#ffffff";
     QString searchColor = "#000000";
     QString titleAreaColor = "#ffffff";
     QString titleColor = "#000000";
     QString titleLineColor = "#000000";
+    QColor frameColor = QColor("#000000");
     double backgroundOpacity = 0.03;
     double frameOpacity = 0.1;
     double titleAreaOpacity = 0.02;

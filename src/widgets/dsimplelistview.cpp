@@ -63,6 +63,7 @@ public:
     bool defaultSortingOrder;
     bool mouseAtScrollArea;
     bool mouseDragScrollbar;
+    bool drawFrame;
     int alwaysVisibleColumn;
     int clipRadius;
     int defaultSortingColumn;
@@ -138,6 +139,7 @@ DSimpleListView::DSimpleListView(QWidget *parent) : QWidget(parent), DObject(*ne
 
     d->mouseAtScrollArea = false;
     d->mouseDragScrollbar = false;
+    d->drawFrame = false;
     d->scrollbarDefaultWidth = 4;
     d->scrollbarDragWidth = 8;
     d->scrollbarMinHeight = 30;
@@ -145,7 +147,7 @@ DSimpleListView::DSimpleListView(QWidget *parent) : QWidget(parent), DObject(*ne
     d->hideScrollbarDuration = 2000;
 
     d->oldRenderOffset = 0;
-    d->clipRadius = 8;
+    d->clipRadius = 0;
 
     d->hideScrollbarTimer = NULL;
 
@@ -247,6 +249,14 @@ void DSimpleListView::setClipRadius(int radius)
     d->clipRadius = radius;
 }
 
+void DSimpleListView::setFrame(bool enableFrame, QColor color, double opacity)
+{
+    D_D(DSimpleListView);
+    
+    d->drawFrame = enableFrame;
+    frameColor = color;
+    frameOpacity = opacity;
+}
 
 void DSimpleListView::addItems(QList<DSimpleListItem*> items)
 {
@@ -1086,11 +1096,12 @@ void DSimpleListView::paintEvent(QPaintEvent *)
     }
 
     // Draw frame.
-    QPen framePen;
-    framePen.setColor(frameColor);
-
-    painter.setOpacity(frameOpacity);
-    painter.drawPath(framePath);
+    if (d->drawFrame) {
+        QPen framePen;
+        framePen.setColor(frameColor);
+        painter.setOpacity(frameOpacity);
+        painter.drawPath(framePath);
+    }
 
     // Draw scrollbar.
     if (d->mouseAtScrollArea) {
