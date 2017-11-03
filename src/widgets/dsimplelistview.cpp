@@ -958,10 +958,12 @@ void DSimpleListView::paintEvent(QPaintEvent *)
     painter.setClipPath(framePath);
 
     // Draw title.
-    QPainterPath titlePath;
-    titlePath.addRect(QRectF(rect().x(), rect().y(), rect().width(), d->titleHeight));
-    painter.setOpacity(titleAreaOpacity);
-    painter.fillPath(titlePath, QColor(titleAreaColor));
+    if (d->titleHeight > 0) {
+        QPainterPath titlePath;
+        titlePath.addRect(QRectF(rect().x(), rect().y(), rect().width(), d->titleHeight));
+        painter.setOpacity(titleAreaOpacity);
+        painter.fillPath(titlePath, QColor(titleAreaColor));
+    }
 
     int renderY = 0;
     int renderHeight = 0;
