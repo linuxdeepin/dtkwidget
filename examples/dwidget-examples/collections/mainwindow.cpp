@@ -42,6 +42,7 @@
 #include "buttonlisttab.h"
 #include "cameraform.h"
 #include "graphicseffecttab.h"
+#include "simplelistviewtab.h"
 
 DTK_USE_NAMESPACE
 DWIDGET_USE_NAMESPACE
@@ -194,6 +195,8 @@ void MainWindow::initTabWidget()
 
     GraphicsEffectTab *effectTab = new GraphicsEffectTab(this);
 
+    SimpleListViewTab *simplelistviewTab = new SimpleListViewTab(this);
+    
     m_mainTab->addTab(widgetsTab, "Widgets");
     m_mainTab->addTab(effectTab, "GraphicsEffect");
     m_mainTab->addTab(comboBoxTab, "ComboBox");
@@ -207,6 +210,7 @@ void MainWindow::initTabWidget()
     m_mainTab->addTab(buttonListGroupTab, "ButtonList");
     m_mainTab->addTab(segmentedControl, "Segmented Control");
     m_mainTab->addTab(cameraform, "Camera View");
+    m_mainTab->addTab(simplelistviewTab, "SimpleListView");
 
     m_mainTab->setCurrentIndex(0);
 }

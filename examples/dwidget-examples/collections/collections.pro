@@ -27,6 +27,11 @@ SOURCES += main.cpp\
     widgetstab.cpp \
     comboboxtab.cpp \
     cameraform.cpp \
+    simplelistviewtab.cpp \
+    singlelistview.cpp \
+    singlelistitem.cpp \
+    multilistview.cpp \
+    multilistitem.cpp \
     graphicseffecttab.cpp
 
 HEADERS  += mainwindow.h \
@@ -41,6 +46,11 @@ HEADERS  += mainwindow.h \
     widgetstab.h \
     comboboxtab.h \
     cameraform.h \
+    simplelistviewtab.h \
+    singlelistview.h \
+    singlelistitem.h \
+    multilistview.h \
+    multilistitem.h \
     graphicseffecttab.h
 
 RESOURCES += \
