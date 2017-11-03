@@ -100,6 +100,7 @@ DSimpleListView::DSimpleListView(QWidget *parent) : QWidget(parent), DObject(*ne
     d->titleHeight = 0;
     d->titleArrowPadding = 4;
     d->titlePadding = 14;
+    d->rowHeight = 36;
 
     d->searchContent = "";
     d->searchAlgorithm = NULL;
