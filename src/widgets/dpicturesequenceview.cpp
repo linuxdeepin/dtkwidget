@@ -111,12 +111,17 @@ DPictureSequenceView::DPictureSequenceView(QWidget *parent) :
     d->init();
 }
 
-void DPictureSequenceView::setPictureSequence(const QStringList &sequence)
+void DPictureSequenceView::setPictureSequence(const QString &src, const QPair<int, int> &range, const int fieldWidth, const bool auto_scale)
 {
-    setPictureSequence(sequence, NormalMode);
+    QStringList pics;
+
+    for (int i(range.first); i != range.second; ++i)
+        pics << src.arg(i, fieldWidth, 10, QChar('0'));
+
+    setPictureSequence(pics, auto_scale);
 }
 
-void DPictureSequenceView::setPictureSequence(const QStringList &sequence, PaintMode paintMode)
+void DPictureSequenceView::setPictureSequence(const QStringList &sequence, const bool auto_scale)
 {
     D_D(DPictureSequenceView);
 
@@ -127,7 +132,7 @@ void DPictureSequenceView::setPictureSequence(const QStringList &sequence, Paint
     for (const QString &path : sequence) {
         QPixmap pixmap = d->loadPixmap(path);
 
-        if (paintMode == DPictureSequenceView::AutoScaleMode)
+        if (auto_scale)
             pixmap = pixmap.scaled(size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
         d->pictureItemList << d->scene->addPixmap(pixmap);

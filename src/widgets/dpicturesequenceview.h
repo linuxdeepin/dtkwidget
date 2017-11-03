@@ -22,6 +22,7 @@
 #include "dobject.h"
 
 #include <QtGlobal>
+#include <QPair>
 #include <QGraphicsView>
 
 DWIDGET_BEGIN_NAMESPACE
@@ -34,21 +35,10 @@ class DPictureSequenceView : public QGraphicsView, public DTK_CORE_NAMESPACE::DO
     Q_PROPERTY(bool singleShot READ singleShot WRITE setSingleShot)
 
 public:
-    enum PaintMode {
-        NormalMode,
-        AutoScaleMode
-    };
-
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0))
-    Q_ENUM(PaintMode)
-#else
-    Q_ENUMS(PaintMode)
-#endif
-
     DPictureSequenceView(QWidget *parent = nullptr);
 
-    void setPictureSequence(const QStringList &sequence);
-    void setPictureSequence(const QStringList &sequence, PaintMode paintMode);
+    void setPictureSequence(const QString &src, const QPair<int, int> &range, const int fieldWidth = 0, const bool auto_scale = false);
+    void setPictureSequence(const QStringList &sequence, const bool auto_scale = false);
     void play();
     void pause();
     void stop();

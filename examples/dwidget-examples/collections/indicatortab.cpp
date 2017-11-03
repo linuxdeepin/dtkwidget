@@ -66,7 +66,7 @@ IndicatorTab::IndicatorTab(QWidget *parent) :
         seq2.append(QString(":/images/eLoading/eLoading_%1.png").arg(i, 2, 10, QChar('0')));
 
     DPictureSequenceView *seqView = new DPictureSequenceView(this);
-    seqView->setPictureSequence(seq);
+    seqView->setPictureSequence(":/images/Spinner/Spinner%1.png", QPair<int, int>(1, 91), 2);
     seqView->move(200, 200);
     seqView->setFixedSize(50, 50);
     seqView->setSpeed(20);
