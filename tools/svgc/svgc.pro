@@ -1,3 +1,5 @@
+include($$PWD/../../src/config.pri)
+
 QT += gui svg
 
 TARGET = dtk-svgc
@@ -17,8 +19,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp
 
-CONFIG+=link_pkgconfig
-PKGCONFIG += dtkcore
+unix {
+    CONFIG+=link_pkgconfig
+    PKGCONFIG += dtkcore
+}
+
+win32* {
+    #DEPENDS dtkcore
+    INCLUDEPATH += $$INCLUDE_INSTALL_DIR\libdtk-$$VERSION\DCore
+    LIBS += -L$$LIB_INSTALL_DIR -ldtkcore
+}
 
 isEmpty(PREFIX){
     PREFIX = /usr

@@ -194,10 +194,10 @@ void DTitlebarPrivate::init()
 void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
 {
     if (titleLabel) {
-        titleLabel->setVisible(type & Qt::WindowTitleHint & !embedMode);
+        titleLabel->setVisible((type & Qt::WindowTitleHint) && !embedMode);
     }
     if (iconLabel) {
-        iconLabel->setVisible(type & Qt::WindowTitleHint & !embedMode);
+        iconLabel->setVisible((type & Qt::WindowTitleHint) && !embedMode);
     }
 
     minButton->setVisible((type & Qt::WindowMinimizeButtonHint) && !embedMode);
@@ -823,6 +823,7 @@ void DTitlebar::mouseMoveEvent(QMouseEvent *event)
     }
 
 #ifdef Q_OS_WIN
+    D_D(DTitlebar);
     if (d->mousePressed) {
         Q_EMIT mousePosMoving(button, event->globalPos());
     }

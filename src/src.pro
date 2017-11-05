@@ -25,6 +25,7 @@ linux* {
 } else {
     QT += svg
 }
+
 win32* {
     #DEPENDS dtkcore
     INCLUDEPATH += $$INCLUDE_INSTALL_DIR\libdtk-$$VERSION\DCore
