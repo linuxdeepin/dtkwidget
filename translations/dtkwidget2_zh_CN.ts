@@ -1,20 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="zh_CN">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_CN" version="2.1">
 <context>
     <name>DAboutDialog</name>
     <message>
-        <location filename="../src/widgets/daboutdialog.cpp" line="136"/>
+        <location filename="../src/widgets/daboutdialog.cpp" line="137"/>
         <source>Acknowledgements</source>
         <translation>鸣谢</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dapplication.cpp" line="551"/>
+        <location filename="../src/widgets/dapplication.cpp" line="568"/>
         <source>Version: %1</source>
         <translation>版本：%1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dapplication.cpp" line="555"/>
+        <location filename="../src/widgets/dapplication.cpp" line="572"/>
         <source>%1 is released under %2</source>
         <translation>%1遵循%2协议发布</translation>
     </message>
@@ -48,9 +46,9 @@
 <context>
     <name>DSimpleListView</name>
     <message>
-        <location filename="../src/widgets/dsimplelistview.cpp" line="1081"/>
+        <location filename="../src/widgets/dsimplelistview.cpp" line="1082"/>
         <source>No search result</source>
-        <translation type="unfinished"></translation>
+        <translation>无搜索结果</translation>
     </message>
 </context>
 <context>
@@ -58,7 +56,7 @@
     <message>
         <location filename="../src/widgets/private/settings/content.cpp" line="181"/>
         <source>Restore Defaults</source>
-        <translation>恢复默认</translation>
+        <translation>恢复默认设置</translation>
     </message>
 </context>
 <context>
@@ -72,17 +70,17 @@
 <context>
     <name>TitleBarMenu</name>
     <message>
-        <location filename="../src/widgets/dtitlebar.cpp" line="225"/>
+        <location filename="../src/widgets/dtitlebar.cpp" line="342"/>
         <source>Help</source>
         <translation>帮助</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dtitlebar.cpp" line="232"/>
+        <location filename="../src/widgets/dtitlebar.cpp" line="349"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dtitlebar.cpp" line="239"/>
+        <location filename="../src/widgets/dtitlebar.cpp" line="356"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>

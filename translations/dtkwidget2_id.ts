@@ -1,10 +1,10 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="he" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="id" version="2.1">
 <context>
     <name>DAboutDialog</name>
     <message>
         <location filename="../src/widgets/daboutdialog.cpp" line="137"/>
         <source>Acknowledgements</source>
-        <translation>הוקרת תודה</translation>
+        <translation>Ucapan terima kasih</translation>
     </message>
     <message>
         <location filename="../src/widgets/dapplication.cpp" line="568"/>
@@ -22,12 +22,12 @@
     <message>
         <location filename="../src/widgets/dinputdialog.cpp" line="42"/>
         <source>Cancel</source>
-        <translation>ביטול</translation>
+        <translation>Batal</translation>
     </message>
     <message>
         <location filename="../src/widgets/dinputdialog.cpp" line="43"/>
         <source>Confirm</source>
-        <translation>אישור</translation>
+        <translation>Konfirmasi</translation>
     </message>
 </context>
 <context>
@@ -35,12 +35,12 @@
     <message>
         <location filename="../src/widgets/dshortcutedit.cpp" line="31"/>
         <source>Please input a new shortcut</source>
-        <translation>נא להקליד צירוף מקשים חדש</translation>
+        <translation>Silakan masukan pintasan baru</translation>
     </message>
     <message>
         <location filename="../src/widgets/dshortcutedit.cpp" line="102"/>
         <source>None</source>
-        <translation>ללא</translation>
+        <translation>Tidak ada</translation>
     </message>
 </context>
 <context>
@@ -72,17 +72,17 @@
     <message>
         <location filename="../src/widgets/dtitlebar.cpp" line="342"/>
         <source>Help</source>
-        <translation>עזרה</translation>
+        <translation>Bantuan</translation>
     </message>
     <message>
         <location filename="../src/widgets/dtitlebar.cpp" line="349"/>
         <source>About</source>
-        <translation>על אודות</translation>
+        <translation>Tentang</translation>
     </message>
     <message>
         <location filename="../src/widgets/dtitlebar.cpp" line="356"/>
         <source>Exit</source>
-        <translation>יציאה</translation>
+        <translation>Keluar</translation>
     </message>
 </context>
 </TS>
