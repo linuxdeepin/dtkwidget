@@ -62,7 +62,7 @@ void DRegionMonitor::setWatchedRegion(const QRegion &region)
 DRegionMonitorPrivate::DRegionMonitorPrivate(DRegionMonitor *q)
     : DObjectPrivate(q),
 
-      mouseAreaInter(new XMousAreaInter("com.deepin.api.XMouseArea", "/com/deepin/api/XMouseArea", QDBusConnection::sessionBus(), q))
+      mouseAreaInter(new XMousAreaInter("com.deepin.api.XMouseArea", "/com/deepin/api/XMouseArea", QDBusConnection::sessionBus()))
 {
 }
 
