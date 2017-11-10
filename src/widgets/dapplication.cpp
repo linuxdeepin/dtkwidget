@@ -46,6 +46,7 @@
 #endif
 
 #define DXCB_PLUGIN_KEY "dxcb"
+#define DXCB_PLUGIN_SYMBOLIC_PROPERTY "_d_isDxcb"
 
 DCORE_USE_NAMESPACE
 
@@ -344,7 +345,7 @@ bool DApplication::loadDXcbPlugin()
 
 bool DApplication::isDXcbPlatform()
 {
-    return qApp && qApp->platformName() == "dxcb";
+    return qApp && (qApp->platformName() == DXCB_PLUGIN_KEY || qApp->property(DXCB_PLUGIN_SYMBOLIC_PROPERTY).toBool());
 }
 
 /**
