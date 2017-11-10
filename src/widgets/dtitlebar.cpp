@@ -250,12 +250,15 @@ void DTitlebarPrivate::_q_toggleWindowState()
         parentWindow->showNormal();
     } else if (!parentWindow->isFullScreen()
                && (maxButton->isVisible())) {
+        maxButton->setState(DImageButton::Normal);
         parentWindow->showMaximized();
     }
 }
 
 void DTitlebarPrivate::_q_showMinimized()
 {
+    minButton->setState(DImageButton::Normal);
+
     if (DPlatformWindowHandle::isEnabledDXcb(parentWindow)) {
         parentWindow->showMinimized();
     } else {
@@ -480,8 +483,7 @@ void DTitlebar::showMenu()
     D_D(DTitlebar);
 
     if (d->menu) {
-        d->menu->exec(d->optionButton->mapToGlobal(d->optionButton->rect().bottomLeft()));
-    } else {
+        d->optionButton->setState(DImageButton::Normal);
         d->menu->exec(d->optionButton->mapToGlobal(d->optionButton->rect().bottomLeft()));
     }
 }

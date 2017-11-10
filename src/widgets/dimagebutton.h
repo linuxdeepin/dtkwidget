@@ -40,13 +40,13 @@ class LIBDTKWIDGETSHARED_EXPORT DImageButton : public QLabel, public DTK_CORE_NA
     Q_PROPERTY(bool checkable READ isCheckable WRITE setCheckable)
 
 public:
-    DImageButton(QWidget * parent=0);
+    DImageButton(QWidget *parent = 0);
 
-    DImageButton(const QString & normalPic, const QString & hoverPic,
-                 const QString & pressPic, QWidget *parent = 0);
+    DImageButton(const QString &normalPic, const QString &hoverPic,
+                 const QString &pressPic, QWidget *parent = 0);
 
-    DImageButton(const QString & normalPic, const QString & hoverPic,
-                 const QString & pressPic, const QString & checkedPic, QWidget * parent = 0);
+    DImageButton(const QString &normalPic, const QString &hoverPic,
+                 const QString &pressPic, const QString &checkedPic, QWidget *parent = 0);
 
     ~DImageButton();
 
@@ -58,11 +58,11 @@ public:
     bool isChecked() const;
     bool isCheckable() const;
 
-    void setNormalPic(const QString & normalPic);
-    void setHoverPic(const QString & hoverPic);
-    void setPressPic(const QString & pressPic);
-    void setCheckedPic(const QString & checkedPic);
-    void setDisabledPic(const QString & disabledPic);
+    void setNormalPic(const QString &normalPic);
+    void setHoverPic(const QString &hoverPic);
+    void setPressPic(const QString &pressPic);
+    void setCheckedPic(const QString &checkedPic);
+    void setDisabledPic(const QString &disabledPic);
 
     const QString getNormalPic() const;
     const QString getHoverPic() const;
@@ -81,6 +81,7 @@ public:
         Disabled /*!< disabled state */
     };
 
+    void setState(State state);
     State getState() const;
 
 Q_SIGNALS:
@@ -89,10 +90,10 @@ Q_SIGNALS:
 
 protected:
     DImageButton(DImageButtonPrivate &q, QWidget *parent);
-    void enterEvent(QEvent * event) Q_DECL_OVERRIDE;
-    void leaveEvent(QEvent * event) Q_DECL_OVERRIDE;
-    void mousePressEvent(QMouseEvent * event) Q_DECL_OVERRIDE;
-    void mouseReleaseEvent(QMouseEvent * event) Q_DECL_OVERRIDE;
+    void enterEvent(QEvent *event) Q_DECL_OVERRIDE;
+    void leaveEvent(QEvent *event) Q_DECL_OVERRIDE;
+    void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 
 private:

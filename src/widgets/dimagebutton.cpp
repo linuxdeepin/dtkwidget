@@ -362,6 +362,18 @@ const QString DImageButton::getDisabledPic() const
 }
 
 /*!
+ * \brief DImageButton::setState change the image by state
+ * \param state: see DImageButton::State
+ */
+void DImageButton::setState(DImageButton::State state)
+{
+    D_D(DImageButton);
+
+    d->setState(state);
+}
+
+
+/*!
  * \brief DImageButton::getState
  * \return the state that the DImageButton is in.
  */
