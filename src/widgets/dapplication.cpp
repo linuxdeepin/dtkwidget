@@ -340,6 +340,9 @@ bool DApplication::loadDXcbPlugin()
         return false;
     }
 
+    // fix QGuiApplication::platformName() to xcb
+    qputenv("DXCB_FAKE_PLATFORM_NAME_XCB", "true");
+
     return qputenv("QT_QPA_PLATFORM", DXCB_PLUGIN_KEY);
 }
 
