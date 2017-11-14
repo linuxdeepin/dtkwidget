@@ -52,6 +52,7 @@ public:
     bool loadDtkTranslator(QList<QLocale> localeFallback);
     bool loadTranslator(QList<DPathBuf> translateDirs, const QString &name, QList<QLocale> localeFallback);
 
+    static bool isUserManualExists();
 public:
 // int m_pidLockFD = 0;
     QLocalServer *m_localServer = nullptr;

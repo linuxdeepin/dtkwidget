@@ -27,6 +27,7 @@
 #include <QSystemSemaphore>
 #include <QtConcurrent/QtConcurrent>
 
+#include <QDBusInterface>
 #ifdef DTK_DBUS_SINGLEINSTANCE
 #include <QDBusError>
 #include <QDBusConnection>
@@ -245,6 +246,15 @@ bool DApplicationPrivate::loadTranslator(QList<DPathBuf> translateDirs, const QS
 
     qWarning() << name << "can not find qm files" ;
     return false;
+}
+
+bool DApplicationPrivate::isUserManualExists()
+{
+    const QString appName = qApp->applicationName();
+    bool dmanAppExists = QFile::exists("/usr/bin/dman");
+    bool dmanDataExists = QFile::exists("/usr/share/dman/" + appName) ||
+                          QFile::exists("/app/share/dman/" + appName);
+    return  dmanAppExists && dmanDataExists;
 }
 
 /**
@@ -545,8 +555,26 @@ void DApplication::setAboutDialog(DAboutDialog *aboutDialog)
  */
 void DApplication::handleHelpAction()
 {
-    const QString appName = applicationName();
-    QProcess::startDetached("dman", QStringList() << appName);
+    QString appid = applicationName();
+#ifdef DTK_DMAN_PORTAL
+    if (!qgetenv("FLATPAK_APPID").isEmpty()) {
+        appid = qgetenv("FLATPAK_APPID");
+    }
+
+    QDBusInterface dmanInterface("com.deepin.dman",
+                                 "/com/deepin/dman",
+                                 "com.deepin.dman");
+    if (dmanInterface.isValid()) {
+        auto reply = dmanInterface.call("ShowManual", appid);
+        if (dmanInterface.lastError().isValid()) {
+            qCritical() << "failed call ShowManual" << appid << dmanInterface.lastError();
+        }
+    } else {
+        qCritical() << "can not create dman dbus interface";
+    }
+#else
+    QProcess::startDetached("dman", QStringList() << appid);
+#endif
 }
 
 /**

@@ -21,6 +21,7 @@
 #include "dtitlebar.h"
 
 #include "private/dmainwindow_p.h"
+#include "private/dapplication_p.h"
 
 #include <QKeySequence>
 #include <QShortcut>
@@ -83,7 +84,7 @@ void DMainWindowPrivate::init()
         });
     }
 
-    if (!help) {
+    if (!help && DApplicationPrivate::isUserManualExists()) {
         help = new QShortcut(QKeySequence(Qt::Key_F1), q);
         help->setContext(Qt::ApplicationShortcut);
         QObject::connect(help, &QShortcut::activated,

@@ -37,6 +37,7 @@
 #endif
 #include "daboutdialog.h"
 #include "dapplication.h"
+#include "private/dapplication_p.h"
 #include "dthememanager.h"
 #include "util/dwindowmanagerhelper.h"
 
@@ -65,7 +66,6 @@ private:
     void _q_aboutActionTriggered();
     void _q_quitActionTriggered();
 
-    bool isUserManualExists() const;
 #endif
 
     QHBoxLayout         *mainLayout;
@@ -341,7 +341,7 @@ void DTitlebarPrivate::_q_addDefaultMenuItems()
     }
 
     // add help menu item.
-    if (!helpAction && isUserManualExists()) {
+    if (!helpAction && DApplicationPrivate::isUserManualExists()) {
         helpAction = new QAction(qApp->translate("TitleBarMenu", "Help"), menu);
         QObject::connect(helpAction, SIGNAL(triggered(bool)), q, SLOT(_q_helpActionTriggered()));
         menu->addAction(helpAction);
@@ -384,14 +384,6 @@ void DTitlebarPrivate::_q_quitActionTriggered()
     if (dapp) {
         dapp->handleQuitAction();
     }
-}
-
-bool DTitlebarPrivate::isUserManualExists() const
-{
-    const QString appName = qApp->applicationName();
-
-    return QFile::exists("/usr/bin/dman") && \
-           QFile::exists("/usr/share/dman/" + appName);
 }
 
 #endif
