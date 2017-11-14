@@ -23,6 +23,8 @@
 #include <QApplication>
 #include <QMouseEvent>
 #include <QProcess>
+#include <QKeySequence>
+#include <QShortcut>
 
 #include <DObjectPrivate>
 
@@ -185,6 +187,11 @@ void DTitlebarPrivate::init()
     q->setMinimumHeight(DefaultTitlebarHeight);
     coustomAtea->setFixedHeight(q->height());
     buttonArea->setFixedHeight(q->height());
+
+    // add F1 shortcurt
+    auto shortcut = new QShortcut(QKeySequence(Qt::Key_F1), q);
+    shortcut->setContext(Qt::ApplicationShortcut);
+    QObject::connect(shortcut, SIGNAL(activated()), q, SLOT(_q_helpActionTriggered()));
 
     q->connect(optionButton, &DWindowOptionButton::clicked, q, &DTitlebar::optionClicked);
     q->connect(DWindowManagerHelper::instance(), SIGNAL(windowMotifWMHintsChanged(quint32)),
