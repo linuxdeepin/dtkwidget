@@ -90,6 +90,7 @@ protected:
 
 private:
     friend class DTitlebarPrivate;
+    friend class DMainWindowPrivate;
 };
 
 DWIDGET_END_NAMESPACE

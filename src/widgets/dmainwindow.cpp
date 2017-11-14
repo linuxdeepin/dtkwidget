@@ -22,6 +22,8 @@
 
 #include "private/dmainwindow_p.h"
 
+#include <QKeySequence>
+#include <QShortcut>
 #include <QWindow>
 
 /// shadow
@@ -77,6 +79,18 @@ void DMainWindowPrivate::init()
             } else
             {
                 q->setShadowColor(SHADOW_COLOR_NORMAL);
+            }
+        });
+    }
+
+    if (!help) {
+        help = new QShortcut(QKeySequence(Qt::Key_F1), q);
+        help->setContext(Qt::ApplicationShortcut);
+        QObject::connect(help, &QShortcut::activated,
+        q, [ = ]() {
+            DApplication *dapp = qobject_cast<DApplication *>(qApp);
+            if (dapp) {
+                dapp->handleHelpAction();
             }
         });
     }

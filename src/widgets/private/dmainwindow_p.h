@@ -22,11 +22,12 @@
 #include "dtkwidget_global.h"
 #include "dmainwindow.h"
 
+class QShortcut;
+
 DWIDGET_BEGIN_NAMESPACE
 
 class DPlatformWindowHandle;
 class DTitlebar;
-
 class DMainWindowPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 {
 public:
@@ -34,8 +35,9 @@ public:
 
     void init();
 
-    DPlatformWindowHandle *handle = Q_NULLPTR;
-    DTitlebar *titlebar = Q_NULLPTR;
+    DPlatformWindowHandle   *handle     = Q_NULLPTR;
+    DTitlebar               *titlebar   = Q_NULLPTR;
+    QShortcut               *help       = Q_NULLPTR;
 
 private:
     D_DECLARE_PUBLIC(DMainWindow)
