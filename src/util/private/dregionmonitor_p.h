@@ -6,6 +6,7 @@
 #include "../dregionmonitor.h"
 
 #include <QRegion>
+#include <QScreen>
 
 #include <com_deepin_api_xmousearea.h>
 
@@ -30,6 +31,8 @@ public:
 
     void _q_ButtonPress(const int flag, const int x, const int y, const QString &key);
     void _q_ButtonRelease(const int flag, const int x, const int y, const QString &key);
+
+    const QPoint deviceScaledCoordinate(const QPoint &p, const double ratio) const;
 
     XMousAreaInter *mouseAreaInter;
     QRegion watchedRegion;

@@ -120,7 +120,7 @@ void DRegionMonitorPrivate::_q_ButtonPress(const int flag, const int x, const in
 
     D_Q(DRegionMonitor);
 
-    emit q->buttonPress(QPoint(x, y) / qApp->devicePixelRatio(), flag);
+    emit q->buttonPress(deviceScaledCoordinate(QPoint(x, y), qApp->devicePixelRatio()), flag);
 }
 
 void DRegionMonitorPrivate::_q_ButtonRelease(const int flag, const int x, const int y, const QString &key)
@@ -130,7 +130,21 @@ void DRegionMonitorPrivate::_q_ButtonRelease(const int flag, const int x, const 
 
     D_Q(DRegionMonitor);
 
-    emit q->buttonRelease(QPoint(x, y) / qApp->devicePixelRatio(), flag);
+    emit q->buttonRelease(deviceScaledCoordinate(QPoint(x, y), qApp->devicePixelRatio()), flag);
+}
+
+const QPoint DRegionMonitorPrivate::deviceScaledCoordinate(const QPoint &p, const double ratio) const
+{
+    for (const auto *s : qApp->screens())
+    {
+        const QRect &g(s->geometry());
+        const QRect realRect(g.topLeft(), g.size() * ratio);
+
+        if (realRect.contains(p))
+            return QPoint(realRect.topLeft() + (p - realRect.topLeft()) / ratio);
+    }
+
+    return p / ratio;
 }
 
 #include "moc_dregionmonitor.cpp"
