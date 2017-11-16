@@ -36,6 +36,10 @@
 
 #include <DStandardPaths>
 
+#ifdef Q_OS_UNIX
+#include <unistd.h>
+#endif
+
 #include "dapplication.h"
 #include "dthememanager.h"
 #include "private/dapplication_p.h"
@@ -307,7 +311,25 @@ void DApplication::setTheme(const QString &theme)
  */
 bool DApplication::setSingleInstance(const QString &key)
 {
+    return setSingleInstance(key, SystemScope);
+}
+
+bool DApplication::setSingleInstance(const QString &key, SingleScope singleScope)
+{
     D_D(DApplication);
+
+    QString k = key;
+
+#ifdef Q_OS_UNIX
+    switch (singleScope) {
+    case DApplication::UserScope:
+        k += QString("_%1").arg(getuid());
+        break;
+    default:
+        break;
+    }
+#endif
+
 #ifdef DTK_DBUS_SINGLEINSTANCE
     return d->setSingleInstanceByDbus(key);
 #else

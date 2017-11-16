@@ -42,10 +42,19 @@ class LIBDTKWIDGETSHARED_EXPORT DApplication : public QApplication, public DTK_C
 public:
     DApplication(int &argc, char **argv);
 
+    enum SingleScope
+    {
+        UserScope,
+        SystemScope
+    };
+
     QString theme() const;
     void setTheme(const QString &theme);
 
     bool setSingleInstance(const QString &key);
+
+    bool setSingleInstance(const QString &key, SingleScope singleScope);
+
     bool loadTranslator(QList<QLocale> localeFallback = QList<QLocale>() << QLocale::system());
 
     //! warning: Must call before QGuiApplication defined object
