@@ -1,3 +1,24 @@
+<a name="2.0.5.1"></a>
+## 2.0.5.1 (2017-11-16)
+
+
+#### Bug Fixes
+
+*   add DTK_DMAN_PORTAL support ([3c03ee65](3c03ee65))
+*   change the QGuiApplication::platformName() to "xcb" on dxcb platform ([4356268d](4356268d))
+*   isDXcbPlatform for new version dxcb plugin ([d8b5c040](d8b5c040))
+* **DRegionMonitor:**
+  *  properly handle scale ([95766b45](95766b45))
+  *  possible double freed object ([708a5fbe](708a5fbe))
+
+#### Features
+
+*   add shortcut to DMainWindow ([5e9d5b6c](5e9d5b6c))
+*   add F1 shortcut ([7e311564](7e311564))
+*   add setState to DImageButton ([fcf9c3ef](fcf9c3ef))
+
+
+
 <a name="2.0.5"></a>
 ## 2.0.5 (2017-11-06)
 
