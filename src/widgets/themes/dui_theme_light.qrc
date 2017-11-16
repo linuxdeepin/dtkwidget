@@ -36,6 +36,7 @@
         <file>light/DSpinBox.theme</file>
         <file>light/DTitlebar.theme</file>
         <file>light/DBoxWidget.theme</file>
+        <file>light/DFileChooserEdit.theme</file>
     </qresource>
     <qresource prefix="/images">
         <file>light/images/arrow_down_hover.png</file>
@@ -143,5 +144,8 @@
         <file>light/images/window/unmaximize_hover.svg</file>
         <file>light/images/window/unmaximize_normal.svg</file>
         <file>light/images/window/unmaximize_press.svg</file>
+        <file>light/images/loadfile_hover.svg</file>
+        <file>light/images/loadfile_normal.svg</file>
+        <file>light/images/loadfile_press.svg</file>
     </qresource>
 </RCC>
