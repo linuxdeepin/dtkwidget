@@ -26,6 +26,7 @@
 #include <QKeySequence>
 #include <QShortcut>
 #include <QWindow>
+#include <QMouseEvent>
 
 /// shadow
 #define SHADOW_COLOR_NORMAL QColor(0, 0, 0, 255 * 35/100)
@@ -521,6 +522,14 @@ DMainWindow::DMainWindow(DMainWindowPrivate &dd, QWidget *parent)
     , DObject(dd)
 {
     d_func()->init();
+}
+
+void DMainWindow::mousePressEvent(QMouseEvent *event)
+{
+    if (!titlebar()->isAncestorOf(childAt(event->pos())))
+        return;
+
+    QMainWindow::mousePressEvent(event);
 }
 
 DWIDGET_END_NAMESPACE

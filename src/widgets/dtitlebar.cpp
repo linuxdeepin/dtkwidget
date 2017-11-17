@@ -132,19 +132,23 @@ void DTitlebarPrivate::init()
     mainLayout->setSpacing(0);
 
     iconLabel->setFixedSize(DefaultIconWidth, DefaultIconHeight);
+    iconLabel->setWindowFlags(Qt::WindowTransparentForInput);
     titleLabel->setText(qApp->applicationName());
     // TODO: use QSS
     titleLabel->setStyleSheet("font-size: 12px;");
     titleLabel->setContentsMargins(0, 0, DefaultIconWidth + 10, 0);
+    titleLabel->setWindowFlags(Qt::WindowTransparentForInput);
 //    q->setStyleSheet("background-color: green;");
 
     separatorTop->setFixedHeight(1);
     separatorTop->setStyleSheet("background: rgba(0, 0, 0, 20);");
     separatorTop->hide();
+    separatorTop->setWindowFlags(Qt::WindowTransparentForInput);
 
     separator->setFixedHeight(1);
     separator->setStyleSheet("background: rgba(0, 0, 0, 20);");
     separator->hide();
+    separator->setWindowFlags(Qt::WindowTransparentForInput);
 
     QHBoxLayout *buttonAreaLayout = new QHBoxLayout;
     buttonAreaLayout->setContentsMargins(0, 1, 0, 0);
@@ -162,6 +166,7 @@ void DTitlebarPrivate::init()
     titleAreaLayout->addWidget(iconLabel);
     titleAreaLayout->setAlignment(iconLabel, Qt::AlignLeft);
     titlePadding->setFixedSize(buttonArea->size());
+    titlePadding->setWindowFlags(Qt::WindowTransparentForInput);
     titleAreaLayout->addWidget(titlePadding);
     titleAreaLayout->addStretch();
     titleAreaLayout->addWidget(titleLabel);
@@ -169,6 +174,7 @@ void DTitlebarPrivate::init()
 
     titleAreaLayout->addStretch();
     titleArea->setLayout(titleAreaLayout);
+    titleArea->setWindowFlags(Qt::WindowTransparentForInput);
 
     QHBoxLayout *coustomAteaLayout = new QHBoxLayout;
     coustomAteaLayout->setMargin(0);
@@ -510,6 +516,9 @@ void DTitlebar::mousePressEvent(QMouseEvent *event)
     Q_EMIT mousePosPressed(event->buttons(), event->globalPos());
 #endif
     Q_EMIT mousePressed(event->buttons());
+
+    if (event->button() == Qt::RightButton)
+        event->ignore();
 }
 
 void DTitlebar::mouseReleaseEvent(QMouseEvent *event)
