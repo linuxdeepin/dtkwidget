@@ -14,7 +14,7 @@
     <message>
         <location filename="../src/widgets/dapplication.cpp" line="572"/>
         <source>%1 is released under %2</source>
-        <translation>%1 se libera en %2</translation>
+        <translation>%1 está lanzado bajo %2</translation>
     </message>
 </context>
 <context>
@@ -48,7 +48,7 @@
     <message>
         <location filename="../src/widgets/dsimplelistview.cpp" line="1082"/>
         <source>No search result</source>
-        <translation>Búsqueda sin resultado</translation>
+        <translation>Sin resultado de búsqueda</translation>
     </message>
 </context>
 <context>

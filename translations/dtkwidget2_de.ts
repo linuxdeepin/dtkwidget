@@ -9,12 +9,12 @@
     <message>
         <location filename="../src/widgets/dapplication.cpp" line="568"/>
         <source>Version: %1</source>
-        <translation type="unfinished"/>
+        <translation>Version: %1</translation>
     </message>
     <message>
         <location filename="../src/widgets/dapplication.cpp" line="572"/>
         <source>%1 is released under %2</source>
-        <translation type="unfinished"/>
+        <translation>%1 wurde unter %2 veröffentlicht.</translation>
     </message>
 </context>
 <context>
@@ -48,7 +48,7 @@
     <message>
         <location filename="../src/widgets/dsimplelistview.cpp" line="1082"/>
         <source>No search result</source>
-        <translation type="unfinished"/>
+        <translation>Kein Suchergebnis</translation>
     </message>
 </context>
 <context>
@@ -56,7 +56,7 @@
     <message>
         <location filename="../src/widgets/private/settings/content.cpp" line="181"/>
         <source>Restore Defaults</source>
-        <translation type="unfinished"/>
+        <translation>Standardwerte wiederherstellen</translation>
     </message>
 </context>
 <context>
@@ -64,7 +64,7 @@
     <message>
         <location filename="../src/widgets/private/settings/shortcutedit.cpp" line="107"/>
         <source>Please enter a new shortcut</source>
-        <translation type="unfinished"/>
+        <translation>Bitte geben Sie ein neues Tastenkürzel ein</translation>
     </message>
 </context>
 <context>

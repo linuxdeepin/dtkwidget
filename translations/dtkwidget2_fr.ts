@@ -14,7 +14,7 @@
     <message>
         <location filename="../src/widgets/dapplication.cpp" line="572"/>
         <source>%1 is released under %2</source>
-        <translation type="unfinished"/>
+        <translation>%1 est publié sous %2</translation>
     </message>
 </context>
 <context>
@@ -56,7 +56,7 @@
     <message>
         <location filename="../src/widgets/private/settings/content.cpp" line="181"/>
         <source>Restore Defaults</source>
-        <translation type="unfinished"/>
+        <translation>Réinitialiser</translation>
     </message>
 </context>
 <context>
@@ -64,7 +64,7 @@
     <message>
         <location filename="../src/widgets/private/settings/shortcutedit.cpp" line="107"/>
         <source>Please enter a new shortcut</source>
-        <translation type="unfinished"/>
+        <translation>Veuillez entrer un nouveau raccourci</translation>
     </message>
 </context>
 <context>
