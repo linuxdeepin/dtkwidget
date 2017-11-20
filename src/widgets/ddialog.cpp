@@ -795,7 +795,8 @@ void DDialog::childEvent(QChildEvent *event)
             // no time to deal with this detail, leave it alone for now.
             if (child->inherits("Dtk::Widget::DLineEdit")) {
                 DThemeManager *dtm = DThemeManager::instance();
-                QString qss = dtm->getQssForWidget("DLineEdit", "light");
+                // NOTE(sbw): want to force reset to light theme.
+                QString qss = dtm->getQssForWidget(child->metaObject()->className(), "light");
 
                 child->setStyleSheet(qss);
                 dtm->disconnect(child);
