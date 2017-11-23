@@ -35,7 +35,7 @@ DWIDGET_BEGIN_NAMESPACE
 
 class DComboBoxPrivate;
 
-class Q_DECL_DEPRECATED_X("Use QCombobBox directly.") DComboBox : public QComboBox, public DTK_CORE_NAMESPACE::DObject
+class D_DECL_DEPRECATED_X("Use QCombobBox directly.") DComboBox : public QComboBox, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
 

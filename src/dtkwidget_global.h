@@ -54,7 +54,7 @@ namespace Widget
 #endif
 #endif
 
-#define DTKWIDGET_DECL_DEPRECATED Q_DECL_DEPRECATED
+#define DTKWIDGET_DECL_DEPRECATED D_DECL_DEPRECATED
 
 #define D_THEME_INIT_WIDGET(className, ...) do{\
         DThemeManager * manager = DThemeManager::instance(); \

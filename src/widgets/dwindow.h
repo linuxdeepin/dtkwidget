@@ -30,7 +30,7 @@ DWIDGET_BEGIN_NAMESPACE
 
 class DWindowPrivate;
 
-class Q_DECL_DEPRECATED_X("Use DMainWindow instead.") DWindow : public DWidget
+class D_DECL_DEPRECATED_X("Use DMainWindow instead.") DWindow : public DWidget
 {
     Q_OBJECT
 public:

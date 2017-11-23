@@ -57,7 +57,7 @@ public:
     void setProductName(const QString &productName);
 
     const QIcon &productIcon() const;
-    void Q_DECL_DEPRECATED_X("Use void setProductIcon(const QIcon &productIcon).")setProductIcon(const QPixmap &productIconPixmap);
+    void D_DECL_DEPRECATED_X("Use void setProductIcon(const QIcon &productIcon).")setProductIcon(const QPixmap &productIconPixmap);
     void setProductIcon(const QIcon &productIcon);
 
     QString applicationLicense() const;
