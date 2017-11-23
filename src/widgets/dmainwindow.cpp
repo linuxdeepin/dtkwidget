@@ -524,12 +524,4 @@ DMainWindow::DMainWindow(DMainWindowPrivate &dd, QWidget *parent)
     d_func()->init();
 }
 
-void DMainWindow::mousePressEvent(QMouseEvent *event)
-{
-    if (!titlebar()->isAncestorOf(childAt(event->pos())))
-        return;
-
-    QMainWindow::mousePressEvent(event);
-}
-
 DWIDGET_END_NAMESPACE

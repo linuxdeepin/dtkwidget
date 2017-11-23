@@ -68,6 +68,8 @@ public:
     static MotifDecorations setMotifDecorations(const QWindow *window, MotifDecorations hints, bool on);
     static MotifDecorations getMotifDecorations(const QWindow *window);
 
+    static void popupSystemWindowMenu(const QWindow *window);
+
     bool hasBlurWindow() const;
     bool hasComposite() const;
 

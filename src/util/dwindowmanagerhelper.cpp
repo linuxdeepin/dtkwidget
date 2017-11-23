@@ -44,6 +44,7 @@ DEFINE_CONST_CHAR(getMWMFunctions);
 DEFINE_CONST_CHAR(setMWMDecorations);
 DEFINE_CONST_CHAR(getMWMDecorations);
 DEFINE_CONST_CHAR(connectWindowMotifWMHintsChanged);
+DEFINE_CONST_CHAR(popupSystemWindowMenu);
 
 static bool connectWindowManagerChangedSignal(QObject *object, std::function<void ()> slot)
 {
@@ -220,6 +221,19 @@ DWindowManagerHelper::MotifDecorations DWindowManagerHelper::getMotifDecorations
     }
 
     return DECOR_ALL;
+}
+
+void DWindowManagerHelper::popupSystemWindowMenu(const QWindow *window)
+{
+    QFunctionPointer popupSystemWindowMenu = Q_NULLPTR;
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+    popupSystemWindowMenu = qApp->platformFunction(_popupSystemWindowMenu);
+#endif
+
+    if (popupSystemWindowMenu && window->handle()) {
+        reinterpret_cast<void(*)(quint32)>(popupSystemWindowMenu)(window->handle()->winId());
+    }
 }
 
 bool DWindowManagerHelper::hasBlurWindow() const

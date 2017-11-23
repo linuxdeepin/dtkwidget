@@ -111,8 +111,6 @@ Q_SIGNALS:
 protected:
     DMainWindow(DMainWindowPrivate &dd, QWidget *parent = 0);
 
-    void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
-
 private:
     D_DECLARE_PRIVATE(DMainWindow)
 };

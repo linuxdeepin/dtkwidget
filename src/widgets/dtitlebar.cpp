@@ -512,13 +512,16 @@ void DTitlebar::mousePressEvent(QMouseEvent *event)
     D_D(DTitlebar);
     d->mousePressed = (event->buttons() == Qt::LeftButton);
 
+    if (event->button() == Qt::RightButton) {
+        DWindowManagerHelper::popupSystemWindowMenu(window()->windowHandle());
+
+        return;
+    }
+
 #ifdef Q_OS_WIN
     Q_EMIT mousePosPressed(event->buttons(), event->globalPos());
 #endif
     Q_EMIT mousePressed(event->buttons());
-
-    if (event->button() == Qt::RightButton)
-        event->ignore();
 }
 
 void DTitlebar::mouseReleaseEvent(QMouseEvent *event)
