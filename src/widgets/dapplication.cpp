@@ -27,7 +27,6 @@
 #include <QSystemSemaphore>
 #include <QtConcurrent/QtConcurrent>
 
-#include <QDBusInterface>
 #ifdef DTK_DBUS_SINGLEINSTANCE
 #include <QDBusError>
 #include <QDBusConnection>
@@ -43,6 +42,7 @@
 #include "daboutdialog.h"
 
 #ifdef Q_OS_LINUX
+#include <QDBusInterface>
 #include "startupnotificationmonitor.h"
 #endif
 
