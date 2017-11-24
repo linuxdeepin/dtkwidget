@@ -9,7 +9,7 @@ CONFIG += c++11
 DEFINES += QT_MESSAGELOGCONTEXT
 
 unix {
-    QT += x11extras dbus
+    QT += dbus
     CONFIG += link_pkgconfig
     PKGCONFIG += dtkcore
 }

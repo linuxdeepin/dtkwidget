@@ -57,7 +57,7 @@ public:
     static bool trash(QUrl urlstartupId);
     static bool trash(const QList<QUrl> urls);
 
-#ifdef Q_OS_UNIX
+#ifdef Q_OS_LINUX
     static bool playSystemSoundEffect(const SystemSoundEffect &effect);
     static bool playSystemSoundEffect(const QString &name);
 #endif
