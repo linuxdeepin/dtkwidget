@@ -92,6 +92,11 @@ public Q_SLOTS:
     void setEnableBlurWindow(bool enableBlurWindow);
     void setAutoInputMaskByClipPath(bool autoInputMaskByClipPath);
 
+    // TODO: remove it if there is an batter sulotion
+#ifdef Q_OS_MAC
+    void setWindowFlags(Qt::WindowFlags type);
+#endif
+
 Q_SIGNALS:
     void windowRadiusChanged();
     void borderWidthChanged();

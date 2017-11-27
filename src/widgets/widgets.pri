@@ -20,6 +20,18 @@ linux{
 
 }
 
+mac{
+    HEADERS  +=\
+        $$PWD/../platforms/mac/osxwindow.h
+
+    OBJECTIVE_SOURCES += \
+        $$PWD/../platforms/mac/osxwindow.mm
+
+    INCLUDEPATH += $$PWD/../platforms/mac
+
+    LIBS += -framework Foundation -framework Cocoa
+}
+
 HEADERS += $$PWD/dslider.h\
     $$PWD/dthememanager.h \
     $$PWD/dapplication.h \

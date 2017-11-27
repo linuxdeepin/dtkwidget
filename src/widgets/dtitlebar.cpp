@@ -543,14 +543,6 @@ bool DTitlebar::eventFilter(QObject *obj, QEvent *event)
             d->maxButton->setMaximized(d->parentWindow->windowState() == Qt::WindowMaximized);
 //            }
             break;
-        case QEvent::Resize:
-        case QEvent::Show:
-            if (d->embedMode) {
-                const auto margins = d->parentWindow->contentsMargins();
-                auto horizontalOffset = margins.left() + margins.right();
-                setFixedWidth(d->parentWindow->width() - horizontalOffset);
-            }
-            break;
         case QEvent::ShowToParent:
             d->updateButtonsFunc();
             break;
