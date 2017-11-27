@@ -60,7 +60,7 @@ Q_SIGNALS:
     void mousePressed(Qt::MouseButtons buttons);
     void mouseMoving(Qt::MouseButton botton);
 
-#ifdef Q_OS_WIN
+#ifdef DTK_TITLE_DRAG_WINDOW
     void mousePosPressed(Qt::MouseButtons buttons, QPoint pos);
     void mousePosMoving(Qt::MouseButton botton, QPoint pos);
 #endif

@@ -518,7 +518,7 @@ void DTitlebar::mousePressEvent(QMouseEvent *event)
         return;
     }
 
-#ifdef Q_OS_WIN
+#ifdef DTK_TITLE_DRAG_WINDOW
     Q_EMIT mousePosPressed(event->buttons(), event->globalPos());
 #endif
     Q_EMIT mousePressed(event->buttons());
@@ -828,7 +828,7 @@ void DTitlebar::mouseMoveEvent(QMouseEvent *event)
         Q_EMIT mouseMoving(button);
     }
 
-#ifdef Q_OS_WIN
+#ifdef DTK_TITLE_DRAG_WINDOW
     D_D(DTitlebar);
     if (d->mousePressed) {
         Q_EMIT mousePosMoving(button, event->globalPos());

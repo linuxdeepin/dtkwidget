@@ -201,7 +201,7 @@ DX11Widget::DX11Widget(DX11WidgetPrivate &dd, QWidget *parent)
 #ifdef Q_OS_LINUX
     XUtils::SetMouseTransparent(this, true);
 #endif
-#ifdef Q_OS_WIN
+#ifdef DTK_TITLE_DRAG_WINDOW
     connect(d->titlebar, &DTitlebar::mousePosMoving,
     this, [ = ](Qt::MouseButton /*botton*/, QPoint pos) {
         move(pos - d->m_LastMousePos);

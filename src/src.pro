@@ -13,20 +13,23 @@ greaterThan(QT_MAJOR_VERSION, 4) {
   greaterThan(QT_MAJOR_VERSION, 5)|greaterThan(QT_MINOR_VERSION, 7): QT += gui-private
   else: QT += platformsupport-private
 }
-
-macx* {
-    CONFIG += link_pkgconfig
-    PKGCONFIG += dtkcore
-}
 linux* {
     QT += x11extras dbus
     CONFIG += link_pkgconfig
     PKGCONFIG += x11 xext dtkcore
-} else {
-    QT += svg
 }
 
-win32* {
+mac* {
+    QT += svg
+    DEFINES += DTK_TITLE_DRAG_WINDOW
+    CONFIG += link_pkgconfig
+    PKGCONFIG += dtkcore
+}
+
+win* {
+    QT += svg
+    DEFINES += DTK_TITLE_DRAG_WINDOW
+
     #DEPENDS dtkcore
     INCLUDEPATH += $$INCLUDE_INSTALL_DIR\libdtk-$$VERSION\DCore
     LIBS += -L$$LIB_INSTALL_DIR -ldtkcore
