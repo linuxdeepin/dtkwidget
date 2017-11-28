@@ -1,3 +1,25 @@
+<a name="2.0.5.2"></a>
+## 2.0.5.2 (2017-11-28)
+
+
+#### Features
+
+*   add bordless window on mac ([5f47b896](https://github.com/linuxdeepin/dtkwidget/commit/5f47b89671cdf84133eed6c908cb06d66a8cc2ff))
+*   support DTK_TITLE_DRAG_WINDOW on mac ([20782b55](https://github.com/linuxdeepin/dtkwidget/commit/20782b5502b0452bc17f15b4736043d53d42a878))
+*   use D_DECL_DEPRECATED ([fe75e70f](https://github.com/linuxdeepin/dtkwidget/commit/fe75e70ffa45865a969cc3c6cb7adc033f52bb0f))
+*   add DFileChooserEdit light theme ([0c77c6f9](https://github.com/linuxdeepin/dtkwidget/commit/0c77c6f99a432cac949391042551a8a54dec23f3))
+*   show system menu on right mouse button press of DTitlebar ([52ccd1e9](https://github.com/linuxdeepin/dtkwidget/commit/52ccd1e9fb81a7fd71081411c2d1428a303d0535))
+
+#### Bug Fixes
+
+*   window motif hints is error of DMainWindow ([8f90556f](https://github.com/linuxdeepin/dtkwidget/commit/8f90556f6a8380f977f09a8bedc95a5cdd7ae760))
+*   fix macos build failed ([63ee2247](https://github.com/linuxdeepin/dtkwidget/commit/63ee2247367ed2fca109beda82530e2a9242e921))
+*   popup system menu in window content ([c481eec6](https://github.com/linuxdeepin/dtkwidget/commit/c481eec63da02acaf77d7847e403f0e5f5028688))
+*   correct typos in multiple files ([be8ea417](https://github.com/linuxdeepin/dtkwidget/commit/be8ea417b337a2b2c34a3523c3b73b5627d18e71))
+*   windows build failed ([4dd39533](https://github.com/linuxdeepin/dtkwidget/commit/4dd3953353c1ce32145e9b3da5e89e7603099d03))
+
+
+
 <a name="2.0.5.1"></a>
 ## 2.0.5.1 (2017-11-16)
 

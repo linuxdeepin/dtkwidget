@@ -1,0 +1,5 @@
+[clog]
+repository = "https://github.com/linuxdeepin/dtkwidget"
+from-latest-tag = true
+
+changelog = "CHANGELOG.md"
