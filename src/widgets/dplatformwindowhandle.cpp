@@ -330,7 +330,8 @@ void DPlatformWindowHandle::setShadowColor(const QColor &shadowColor)
 
 void DPlatformWindowHandle::setClipPath(const QPainterPath &clipPath)
 {
-    m_window->setProperty(_clipPath, QVariant::fromValue(clipPath));
+    if (m_window->property(_clipPath).value<QPainterPath>() != clipPath)
+        m_window->setProperty(_clipPath, QVariant::fromValue(clipPath));
 }
 
 void DPlatformWindowHandle::setFrameMask(const QRegion &frameMask)
