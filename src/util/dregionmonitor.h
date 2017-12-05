@@ -30,6 +30,9 @@ public:
 Q_SIGNALS:
     void buttonPress(const QPoint &p, const int flag) const;
     void buttonRelease(const QPoint &p, const int flag) const;
+    void cursorMove(const QPoint &p) const;
+    void keyPress(const QString &keyname) const;
+    void keyRelease(const QString &keyname) const;
 
 public Q_SLOTS:
     void registerRegion();
@@ -40,6 +43,9 @@ public Q_SLOTS:
 private:
     Q_PRIVATE_SLOT(d_func(), void _q_ButtonPress(const int, const int, const int, const QString&))
     Q_PRIVATE_SLOT(d_func(), void _q_ButtonRelease(const int, const int, const int, const QString&))
+    Q_PRIVATE_SLOT(d_func(), void _q_CursorMove(const int, const int, const QString &))
+    Q_PRIVATE_SLOT(d_func(), void _q_KeyPress(const QString &, const int, const int, const QString &))
+    Q_PRIVATE_SLOT(d_func(), void _q_KeyRelease(const QString &, const int, const int, const QString &))
 };
 
 DWIDGET_END_NAMESPACE

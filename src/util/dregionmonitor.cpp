@@ -62,7 +62,7 @@ void DRegionMonitor::setWatchedRegion(const QRegion &region)
 DRegionMonitorPrivate::DRegionMonitorPrivate(DRegionMonitor *q)
     : DObjectPrivate(q),
 
-      mouseAreaInter(new XMousAreaInter("com.deepin.api.XMouseArea", "/com/deepin/api/XMouseArea", QDBusConnection::sessionBus()))
+      eventInter(new XEventMonitor("com.deepin.api.XEventMonitor", "/com/deepin/api/XEventMonitor", QDBusConnection::sessionBus()))
 {
 }
 
@@ -71,15 +71,18 @@ DRegionMonitorPrivate::~DRegionMonitorPrivate()
     if (registered())
         unregisterMonitorRegion();
 
-    mouseAreaInter->deleteLater();
+    eventInter->deleteLater();
 }
 
 void DRegionMonitorPrivate::init()
 {
     D_Q(DRegionMonitor);
 
-    QObject::connect(mouseAreaInter, SIGNAL(ButtonPress(int,int,int,QString)), q, SLOT(_q_ButtonPress(const int, const int, const int, const QString&)));
-    QObject::connect(mouseAreaInter, SIGNAL(ButtonRelease(int,int,int,QString)), q, SLOT(_q_ButtonRelease(const int, const int, const int, const QString&)));
+    QObject::connect(eventInter, SIGNAL(ButtonPress(int,int,int,QString)), q, SLOT(_q_ButtonPress(const int, const int, const int, const QString&)));
+    QObject::connect(eventInter, SIGNAL(ButtonRelease(int,int,int,QString)), q, SLOT(_q_ButtonRelease(const int, const int, const int, const QString&)));
+    QObject::connect(eventInter, SIGNAL(CursorMove(int,int,QString)), q, SLOT(_q_CursorMove(const int, const int, const QString&)));
+    QObject::connect(eventInter, SIGNAL(KeyPress(QString,int,int,QString)), q, SLOT(_q_KeyPress(const QString&, const int, const int, const QString&)));
+    QObject::connect(eventInter, SIGNAL(KeyRelease(QString,int,int,QString)), q, SLOT(_q_KeyRelease(const QString&, const int, const int, const QString&)));
 }
 
 void DRegionMonitorPrivate::registerMonitorRegion()
@@ -89,7 +92,7 @@ void DRegionMonitorPrivate::registerMonitorRegion()
 
     if (watchedRegion.isEmpty())
     {
-        registerKey = mouseAreaInter->RegisterFullScreen();
+        registerKey = eventInter->RegisterFullScreen();
     } else {
         const QRect r = watchedRegion.boundingRect();
         const int x1 = r.x();
@@ -98,9 +101,9 @@ void DRegionMonitorPrivate::registerMonitorRegion()
         const int y2 = y1 + r.height();
 
         // TODO:
-        const int flags = 2;
+        const int flags = Motion | Button | Key;
 
-        registerKey = mouseAreaInter->RegisterArea(x1, y1, x2, y2, flags);
+        registerKey = eventInter->RegisterArea(x1, y1, x2, y2, flags);
     }
 }
 
@@ -109,7 +112,7 @@ void DRegionMonitorPrivate::unregisterMonitorRegion()
     if (registerKey.isEmpty())
         return;
 
-    mouseAreaInter->UnregisterArea(registerKey);
+    eventInter->UnregisterArea(registerKey);
     registerKey.clear();
 }
 
@@ -131,6 +134,42 @@ void DRegionMonitorPrivate::_q_ButtonRelease(const int flag, const int x, const 
     D_Q(DRegionMonitor);
 
     emit q->buttonRelease(deviceScaledCoordinate(QPoint(x, y), qApp->devicePixelRatio()), flag);
+}
+
+void DRegionMonitorPrivate::_q_CursorMove(const int x, const int y, const QString &key)
+{
+    if (registerKey != key)
+        return;
+
+    D_Q(DRegionMonitor);
+
+    emit q->cursorMove(deviceScaledCoordinate(QPoint(x, y), qApp->devicePixelRatio()));
+}
+
+void DRegionMonitorPrivate::_q_KeyPress(const QString &keyname, const int x, const int y, const QString &key)
+{
+    if (registerKey != key)
+        return;
+
+    Q_UNUSED(x);
+    Q_UNUSED(y);
+
+    D_Q(DRegionMonitor);
+
+    emit q->keyPress(keyname);
+}
+
+void DRegionMonitorPrivate::_q_KeyRelease(const QString &keyname, const int x, const int y, const QString &key)
+{
+    if (registerKey != key)
+        return;
+
+    Q_UNUSED(x);
+    Q_UNUSED(y);
+
+    D_Q(DRegionMonitor);
+
+    emit q->keyRelease(keyname);
 }
 
 const QPoint DRegionMonitorPrivate::deviceScaledCoordinate(const QPoint &p, const double ratio) const
