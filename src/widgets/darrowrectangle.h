@@ -57,7 +57,16 @@ public:
         ArrowBottom /*!< indicates the arrow of this rectangle will point down */
     };
 
-    explicit DArrowRectangle(ArrowDirection direction, QWidget * parent = 0);
+    /*!
+     * \brief The FloatMode enum decide the WindowType when DArrowRectangle show
+     */
+    enum FloatMode {
+        FloatWindow, /*!< Window will show a separate window */
+        FloatWidget, /*!< Widget must by show in the rect of parentWidget*/
+    };
+
+    explicit DArrowRectangle(ArrowDirection direction, QWidget *parent = 0);
+    explicit DArrowRectangle(ArrowDirection direction, FloatMode floatMode, QWidget *parent = 0);
     ~DArrowRectangle();
 
     Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor)
@@ -106,7 +115,7 @@ public:
     void setContent(QWidget *content);
     QWidget *getContent() const;
     void resizeWithContent();
-    void move(int x,int y);
+    void move(int x, int y);
     QSize getFixedSize();
 
     qreal shadowXOffset() const;

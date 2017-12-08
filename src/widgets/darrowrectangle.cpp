@@ -45,14 +45,31 @@ DWIDGET_BEGIN_NAMESPACE
  * points to.
  * \param parent is the parent widget the arrow rectangle will be attached to.
  */
-DArrowRectangle::DArrowRectangle(ArrowDirection direction, QWidget * parent) :
+DArrowRectangle::DArrowRectangle(ArrowDirection direction, QWidget *parent) :
     QWidget(parent),
     DObject(*new DArrowRectanglePrivate(direction, this))
 {
     D_D(DArrowRectangle);
 
-    d->init();
+    d->init(FloatWindow);
 }
+
+/*!
+ * \brief DArrowRectangle::DArrowRectangle can set DArrowRectangle show as a window or
+ * a widget in parentWidget by floatMode
+ * \param direction
+ * \param floatMode
+ * \param parent
+ */
+DArrowRectangle::DArrowRectangle(ArrowDirection direction, FloatMode floatMode, QWidget *parent) :
+    QWidget(parent),
+    DObject(*new DArrowRectanglePrivate(direction, this))
+{
+    D_D(DArrowRectangle);
+
+    d->init(floatMode);
+}
+
 
 /*!
  * \brief DArrowRectangle::show shows the widget at the given coordinate.
@@ -111,18 +128,16 @@ QSize DArrowRectangle::getFixedSize()
 {
     D_D(DArrowRectangle);
 
-    if (d->m_content)
-    {
+    if (d->m_content) {
         qreal delta = (d->m_handle ? 0 : shadowBlurRadius() + d->m_shadowDistance) + margin();
 
-        switch(d->m_arrowDirection)
-        {
+        switch (d->m_arrowDirection) {
         case ArrowLeft:
         case ArrowRight:
-            return QSize(d->m_content->width() + delta * 2 + d->m_arrowHeight, d->m_content->height() + delta * 2);
+            return QSize(d->m_content->width() + delta * 2 + d->m_arrowHeight, d->m_content->height() + delta * 1);
         case ArrowTop:
         case ArrowBottom:
-            return QSize(d->m_content->width() + delta * 2, d->m_content->height() + delta * 2 + d->m_arrowHeight);
+            return QSize(d->m_content->width() + delta * 2, d->m_content->height() + delta * 1 + d->m_arrowHeight);
         }
     }
 
@@ -144,8 +159,7 @@ void DArrowRectangle::move(int x, int y)
 {
     D_D(DArrowRectangle);
 
-    switch (d->m_arrowDirection)
-    {
+    switch (d->m_arrowDirection) {
     case ArrowLeft:
     case ArrowRight:
         d->verticalMove(x, y);
@@ -177,8 +191,7 @@ void DArrowRectangle::resizeEvent(QResizeEvent *e)
 
 bool DArrowRectangle::event(QEvent *e)
 {
-    switch (e->type())
-    {
+    switch (e->type()) {
     case QEvent::WindowDeactivate:  Q_EMIT windowDeactivate();    break;
     default:;
     }
@@ -189,8 +202,9 @@ bool DArrowRectangle::event(QEvent *e)
 const QRect DArrowRectanglePrivate::currentScreenRect(const int x, const int y)
 {
     for (QScreen *screen : qApp->screens())
-        if (screen->geometry().contains(x, y))
+        if (screen->geometry().contains(x, y)) {
             return screen->geometry();
+        }
 
     return QRect();
 }
@@ -212,8 +226,9 @@ void DArrowRectangle::setShadowYOffset(const qreal &shadowYOffset)
 
     d->m_shadowYOffset = shadowYOffset;
 
-    if (d->m_handle)
+    if (d->m_handle) {
         d->m_handle->setShadowOffset(QPoint(d->m_shadowXOffset, shadowYOffset));
+    }
 }
 
 /*!
@@ -233,8 +248,9 @@ void DArrowRectangle::setShadowXOffset(const qreal &shadowXOffset)
 
     d->m_shadowXOffset = shadowXOffset;
 
-    if (d->m_handle)
+    if (d->m_handle) {
         d->m_handle->setShadowOffset(QPoint(shadowXOffset, d->m_shadowYOffset));
+    }
 }
 
 qreal DArrowRectangle::shadowDistance() const
@@ -268,8 +284,9 @@ void DArrowRectangle::setShadowBlurRadius(const qreal &shadowBlurRadius)
 
     d->m_shadowBlurRadius = shadowBlurRadius;
 
-    if (d->m_handle)
+    if (d->m_handle) {
         d->m_handle->setShadowRadius(shadowBlurRadius);
+    }
 }
 
 /*!
@@ -289,8 +306,9 @@ void DArrowRectangle::setBorderColor(const QColor &borderColor)
 
     d->m_borderColor = borderColor;
 
-    if (d->m_handle)
+    if (d->m_handle) {
         d->m_handle->setBorderColor(borderColor);
+    }
 }
 
 /*!
@@ -310,8 +328,9 @@ void DArrowRectangle::setBorderWidth(int borderWidth)
 
     d->m_borderWidth = borderWidth;
 
-    if (d->m_handle)
+    if (d->m_handle) {
         d->m_handle->setBorderWidth(borderWidth);
+    }
 }
 
 /*!
@@ -379,8 +398,9 @@ void DArrowRectangle::setBackgroundColor(DBlurEffectWidget::MaskColorType type)
 {
     D_D(DArrowRectangle);
 
-    if (d->m_blurBackground)
+    if (d->m_blurBackground) {
         d->m_blurBackground->setMaskColor(type);
+    }
 }
 
 /*!
@@ -522,7 +542,7 @@ QPainterPath DArrowRectanglePrivate::getLeftCornerPath()
     if (!m_handle) {
         qreal delta = q->shadowBlurRadius() + m_shadowDistance;
 
-        rect = rect.marginsRemoved(QMargins(delta, delta, delta, delta));
+        rect = rect.marginsRemoved(QMargins(0, delta, delta, delta));
     }
 
     QPoint cornerPoint(rect.x(), rect.y() + (m_arrowY > 0 ? m_arrowY : (rect.height() / 2)));
@@ -531,22 +551,23 @@ QPainterPath DArrowRectanglePrivate::getLeftCornerPath()
     QPoint bottomRight(rect.x() + rect.width(), rect.y() + rect.height());
     QPoint bottomLeft(rect.x() + m_arrowHeight, rect.y() + rect.height());
     int radius =  m_radius > (rect.height() / 2) ? (rect.height() / 2) : m_radius;
-    if (!radiusEnabled())
+    if (!radiusEnabled()) {
         radius = 0;
+    }
 
     QPainterPath border;
-    border.moveTo(topLeft.x() + radius,topLeft.y());
+    border.moveTo(topLeft.x() + radius, topLeft.y());
     border.lineTo(topRight.x() - radius, topRight.y());
     border.arcTo(topRight.x() - 2 * radius, topRight.y(), 2 * radius, 2 * radius, 90, -90);
     border.lineTo(bottomRight.x(), bottomRight.y() - radius);
     border.arcTo(bottomRight.x() - 2 * radius, bottomRight.y() - 2 * radius, 2 * radius, 2 * radius, 0, -90);
-    border.lineTo(bottomLeft.x() + radius,bottomLeft.y());
-    border.arcTo(bottomLeft.x(),bottomLeft.y() - 2 * radius,2 * radius,2 * radius,-90,-90);
-    border.lineTo(cornerPoint.x() + m_arrowHeight,cornerPoint.y() + m_arrowWidth / 2);
+    border.lineTo(bottomLeft.x() + radius, bottomLeft.y());
+    border.arcTo(bottomLeft.x(), bottomLeft.y() - 2 * radius, 2 * radius, 2 * radius, -90, -90);
+    border.lineTo(cornerPoint.x() + m_arrowHeight, cornerPoint.y() + m_arrowWidth / 2);
     border.lineTo(cornerPoint);
-    border.lineTo(cornerPoint.x() + m_arrowHeight,cornerPoint.y() - m_arrowWidth / 2);
-    border.lineTo(topLeft.x(),topLeft.y() + radius);
-    border.arcTo(topLeft.x(),topLeft.y(),2 * radius,2 * radius,-180,-90);
+    border.lineTo(cornerPoint.x() + m_arrowHeight, cornerPoint.y() - m_arrowWidth / 2);
+    border.lineTo(topLeft.x(), topLeft.y() + radius);
+    border.arcTo(topLeft.x(), topLeft.y(), 2 * radius, 2 * radius, -180, -90);
 
     return border;
 }
@@ -560,7 +581,7 @@ QPainterPath DArrowRectanglePrivate::getRightCornerPath()
     if (!m_handle) {
         qreal delta = q->shadowBlurRadius() + m_shadowDistance;
 
-        rect = rect.marginsRemoved(QMargins(delta, delta, delta, delta));
+        rect = rect.marginsRemoved(QMargins(delta, delta, 0, delta));
     }
 
     QPoint cornerPoint(rect.x() + rect.width(), rect.y() + (m_arrowY > 0 ? m_arrowY : rect.height() / 2));
@@ -569,18 +590,19 @@ QPainterPath DArrowRectanglePrivate::getRightCornerPath()
     QPoint bottomRight(rect.x() + rect.width() - m_arrowHeight, rect.y() + rect.height());
     QPoint bottomLeft(rect.x(), rect.y() + rect.height());
     int radius = this->m_radius > (rect.height() / 2) ? rect.height() / 2 : this->m_radius;
-    if (!radiusEnabled())
+    if (!radiusEnabled()) {
         radius = 0;
+    }
 
     QPainterPath border;
     border.moveTo(topLeft.x() + radius, topLeft.y());
-    border.lineTo(topRight.x() - radius,topRight.y());
-    border.arcTo(topRight.x() - 2 * radius,topRight.y(),2 * radius,2 * radius,90,-90);
-    border.lineTo(cornerPoint.x() - m_arrowHeight,cornerPoint.y() - m_arrowWidth / 2);
+    border.lineTo(topRight.x() - radius, topRight.y());
+    border.arcTo(topRight.x() - 2 * radius, topRight.y(), 2 * radius, 2 * radius, 90, -90);
+    border.lineTo(cornerPoint.x() - m_arrowHeight, cornerPoint.y() - m_arrowWidth / 2);
     border.lineTo(cornerPoint);
-    border.lineTo(cornerPoint.x() - m_arrowHeight,cornerPoint.y() + m_arrowWidth / 2);
-    border.lineTo(bottomRight.x(),bottomRight.y() - radius);
-    border.arcTo(bottomRight.x() - 2 * radius,bottomRight.y() - 2 * radius,2 * radius,2 * radius,0,-90);
+    border.lineTo(cornerPoint.x() - m_arrowHeight, cornerPoint.y() + m_arrowWidth / 2);
+    border.lineTo(bottomRight.x(), bottomRight.y() - radius);
+    border.arcTo(bottomRight.x() - 2 * radius, bottomRight.y() - 2 * radius, 2 * radius, 2 * radius, 0, -90);
     border.lineTo(bottomLeft.x() + radius, bottomLeft.y());
     border.arcTo(bottomLeft.x(), bottomLeft.y() - 2 * radius, 2 * radius, 2 * radius, -90, -90);
     border.lineTo(topLeft.x(), topLeft.y() + radius);
@@ -597,8 +619,7 @@ QPainterPath DArrowRectanglePrivate::getTopCornerPath()
 
     if (!m_handle) {
         qreal delta = q->shadowBlurRadius() + m_shadowDistance;
-
-        rect = rect.marginsRemoved(QMargins(delta, delta, delta, delta));
+        rect = rect.marginsRemoved(QMargins(delta, 0, delta, delta));
     }
 
     QPoint cornerPoint(rect.x() + (m_arrowX > 0 ? m_arrowX : rect.width() / 2), rect.y());
@@ -606,9 +627,10 @@ QPainterPath DArrowRectanglePrivate::getTopCornerPath()
     QPoint topRight(rect.x() + rect.width(), rect.y() + m_arrowHeight);
     QPoint bottomRight(rect.x() + rect.width(), rect.y() + rect.height());
     QPoint bottomLeft(rect.x(), rect.y() + rect.height());
-    int radius = this->m_radius > (rect.height() / 2 - m_arrowHeight) ? rect.height() / 2 -m_arrowHeight : this->m_radius;
-    if (!radiusEnabled())
+    int radius = this->m_radius > (rect.height() / 2 - m_arrowHeight) ? rect.height() / 2 - m_arrowHeight : this->m_radius;
+    if (!radiusEnabled()) {
         radius = 0;
+    }
 
     QPainterPath border;
     border.moveTo(topLeft.x() + radius, topLeft.y());
@@ -636,7 +658,7 @@ QPainterPath DArrowRectanglePrivate::getBottomCornerPath()
     if (!m_handle) {
         qreal delta = q->shadowBlurRadius() + m_shadowDistance;
 
-        rect = rect.marginsRemoved(QMargins(delta, delta, delta, delta));
+        rect = rect.marginsRemoved(QMargins(delta, delta, delta, 0));
     }
 
     QPoint cornerPoint(rect.x() + (m_arrowX > 0 ? m_arrowX : qRound(double(rect.width()) / 2)), rect.y()  + rect.height());
@@ -644,9 +666,10 @@ QPainterPath DArrowRectanglePrivate::getBottomCornerPath()
     QPoint topRight(rect.x() + rect.width(), rect.y());
     QPoint bottomRight(rect.x() + rect.width(), rect.y() + rect.height() - m_arrowHeight);
     QPoint bottomLeft(rect.x(), rect.y() + rect.height() - m_arrowHeight);
-    int radius = this->m_radius > (rect.height() / 2 - m_arrowHeight) ? rect.height() / 2 -m_arrowHeight : this->m_radius;
-    if (!radiusEnabled())
+    int radius = this->m_radius > (rect.height() / 2 - m_arrowHeight) ? rect.height() / 2 - m_arrowHeight : this->m_radius;
+    if (!radiusEnabled()) {
         radius = 0;
+    }
 
     QPainterPath border;
     border.moveTo(topLeft.x() + radius, topLeft.y());
@@ -676,30 +699,24 @@ void DArrowRectanglePrivate::verticalMove(int x, int y)
     int rRelativeY = y - dRect.y() + (q->height() - delta) / 2 - dRect.height();
     int absoluteY = 0;
 
-    if (lRelativeY < 0)//out of screen in top side
-    {
+    if (lRelativeY < 0) { //out of screen in top side
         //arrowY use relative coordinates
         q->setArrowY(q->height() / 2 - delta + lRelativeY);
         absoluteY = dRect.y() - delta;
-    }
-    else if(rRelativeY > 0)//out of screen in bottom side
-    {
+    } else if (rRelativeY > 0) { //out of screen in bottom side
         q->setArrowY(q->height() / 2 - delta / 2 + rRelativeY);
         absoluteY = dRect.y() + dRect.height() - q->height() + delta;
-    }
-    else
-    {
+    } else {
         q->setArrowY(0);
         absoluteY = y - q->height() / 2;
     }
 
-    switch (m_arrowDirection)
-    {
+    switch (m_arrowDirection) {
     case DArrowRectangle::ArrowLeft:
-        q->QWidget::move(x - delta, absoluteY);
+        q->QWidget::move(x, absoluteY);
         break;
     case DArrowRectangle::ArrowRight:
-        q->QWidget::move(x - q->width() + delta, absoluteY);
+        q->QWidget::move(x - q->width(), absoluteY);
         break;
     default:
         break;
@@ -717,30 +734,24 @@ void DArrowRectanglePrivate::horizontalMove(int x, int y)
     int rRelativeX = x - dRect.x() + (q->width() - delta) / 2 - dRect.width();
     int absoluteX = 0;
 
-    if (lRelativeX < 0)//out of screen in left side
-    {
+    if (lRelativeX < 0) { //out of screen in left side
         //arrowX use relative coordinates
         q->setArrowX((q->width() - delta) / 2 + lRelativeX);
         absoluteX = dRect.x() - delta;
-    }
-    else if(rRelativeX > 0)//out of screen in right side
-    {
+    } else if (rRelativeX > 0) { //out of screen in right side
         q->setArrowX(q->width() / 2 - delta * 2 + rRelativeX);
         absoluteX = dRect.x() + dRect.width() - q->width() + delta;
-    }
-    else
-    {
+    } else {
         q->setArrowX(0);
         absoluteX = x - (m_arrowX > 0 ? m_arrowX : (q->width() / 2));
     }
 
-    switch (m_arrowDirection)
-    {
+    switch (m_arrowDirection) {
     case DArrowRectangle::ArrowTop:
-        q->QWidget::move(absoluteX, y - delta);
+        q->QWidget::move(absoluteX, y);
         break;
     case DArrowRectangle::ArrowBottom:
-        q->QWidget::move(absoluteX, y - q->height() + delta);
+        q->QWidget::move(absoluteX, y - q->height());
         break;
     default:
         break;
@@ -751,13 +762,13 @@ void DArrowRectanglePrivate::updateClipPath()
 {
     D_Q(DArrowRectangle);
 
-    if (!m_handle)
+    if (!m_handle) {
         return;
+    }
 
     QPainterPath path;
 
-    switch (m_arrowDirection)
-    {
+    switch (m_arrowDirection) {
     case DArrowRectangle::ArrowLeft:
         path = getLeftCornerPath();
         break;
@@ -779,8 +790,9 @@ void DArrowRectanglePrivate::updateClipPath()
 
 bool DArrowRectanglePrivate::radiusEnabled()
 {
-    if (m_wmHelper && !m_wmHelper->hasComposite())
+    if (m_wmHelper && !m_wmHelper->hasComposite()) {
         return false;
+    }
 
     return true;
 }
@@ -798,14 +810,21 @@ Dtk::Widget::DArrowRectanglePrivate::DArrowRectanglePrivate(DArrowRectangle::Arr
 
 }
 
-void DArrowRectanglePrivate::init()
+void DArrowRectanglePrivate::init(DArrowRectangle::FloatMode mode)
 {
     D_Q(DArrowRectangle);
 
-    q->setWindowFlags(Qt::FramelessWindowHint | Qt::ToolTip);
-    q->setAttribute(Qt::WA_TranslucentBackground);
+    floatMode = mode;
 
-    if (DApplication::isDXcbPlatform()) {
+    if (floatMode) {
+        q->setWindowFlags(Qt::Widget);
+        q->setAttribute(Qt::WA_TranslucentBackground);
+    } else {
+        q->setWindowFlags(Qt::FramelessWindowHint | Qt::ToolTip);
+        q->setAttribute(Qt::WA_TranslucentBackground);
+    }
+
+    if (DApplication::isDXcbPlatform() && (DArrowRectangle::FloatWindow == floatMode)) {
         m_handle = new DPlatformWindowHandle(q);
         m_handle->setTranslucentBackground(true);
 
@@ -832,12 +851,17 @@ void DArrowRectanglePrivate::show(int x, int y)
 {
     D_Q(DArrowRectangle);
 
+    // if show with FloatMode, must has a parent
+    if (DArrowRectangle::FloatWidget == floatMode && !q->parentWidget()) {
+        qCritical() << q << "Must has parentWidget when show in FloatWidget mode";
+        Q_ASSERT_X(q->parentWidget(), "DArrowRectanglePrivate::show", "Must has parentWidget when show in FloatWidget mode");
+    }
+
     q->resizeWithContent();
 
     m_lastPos = QPoint(x, y);
     q->move(x, y);//Overload function
-    if (!q->isVisible())
-    {
+    if (!q->isVisible()) {
         q->QWidget::show();
         q->QWidget::activateWindow();
     }
@@ -850,8 +874,9 @@ void DArrowRectanglePrivate::setContent(QWidget *content)
 {
     D_Q(DArrowRectangle);
 
-    if (!content)
+    if (!content) {
         return;
+    }
 
     m_content = content;
     m_content->setParent(q);
@@ -861,8 +886,7 @@ void DArrowRectanglePrivate::setContent(QWidget *content)
 
     q->resizeWithContent();
 
-    switch(m_arrowDirection)
-    {
+    switch (m_arrowDirection) {
     case DArrowRectangle::ArrowLeft:
         m_content->move(m_arrowHeight + delta, delta);
         break;
@@ -870,7 +894,7 @@ void DArrowRectanglePrivate::setContent(QWidget *content)
         m_content->move(delta, delta);
         break;
     case DArrowRectangle::ArrowTop:
-        m_content->move(delta, delta + m_arrowHeight);
+        m_content->move(delta, 0 + m_arrowHeight);
         break;
     case DArrowRectangle::ArrowBottom:
         m_content->move(delta, delta);
@@ -884,14 +908,15 @@ void DArrowRectanglePrivate::resizeWithContent()
 {
     D_Q(DArrowRectangle);
 
-    if (m_content.isNull())
+    if (m_content.isNull()) {
         return;
+    }
 
     q->setFixedSize(q->getFixedSize());
 
 #ifdef Q_OS_LINUX
     const qreal ratio = qApp->devicePixelRatio();
-    if (!m_handle) {
+    if (!m_handle && !floatMode) {
         XRectangle m_contentXRect;
         m_contentXRect.x = m_content->pos().x() * ratio;
         m_contentXRect.y = m_content->pos().y() * ratio;
@@ -908,9 +933,9 @@ void DArrowRectanglePrivate::resizeWithContent()
 void DArrowRectanglePrivate::paintEvent(QPaintEvent *e)
 {
     D_Q(DArrowRectangle);
-
-    if (m_blurBackground)
+    if (m_blurBackground) {
         return;
+    }
 
     QPainter painter(q);
 
@@ -921,8 +946,7 @@ void DArrowRectanglePrivate::paintEvent(QPaintEvent *e)
 
         QPainterPath border;
 
-        switch (m_arrowDirection)
-        {
+        switch (m_arrowDirection) {
         case DArrowRectangle::ArrowLeft:
             border = getLeftCornerPath();
             break;

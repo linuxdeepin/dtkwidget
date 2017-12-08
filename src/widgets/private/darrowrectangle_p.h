@@ -35,7 +35,7 @@ class DArrowRectanglePrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 public:
     explicit DArrowRectanglePrivate(DArrowRectangle::ArrowDirection direction, DArrowRectangle *q);
 
-    void init();
+    void init(DArrowRectangle::FloatMode floatMode);
 
     virtual void show(int x, int y);
     void setContent(QWidget *content);
@@ -77,6 +77,7 @@ public:
     DArrowRectangle::ArrowDirection m_arrowDirection;
     QPoint m_lastPos = QPoint(0, 0);
 
+    DArrowRectangle::FloatMode floatMode = DArrowRectangle::FloatWindow;
     QPointer<QWidget> m_content;
     DPlatformWindowHandle *m_handle = NULL;
     DBlurEffectWidget *m_blurBackground = NULL;
