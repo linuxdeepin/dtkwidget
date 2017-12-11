@@ -134,10 +134,12 @@ QSize DArrowRectangle::getFixedSize()
         switch (d->m_arrowDirection) {
         case ArrowLeft:
         case ArrowRight:
-            return QSize(d->m_content->width() + delta * 2 + d->m_arrowHeight, d->m_content->height() + delta * 1);
+            return QSize(d->m_content->width() + delta * 2 + d->m_arrowHeight - ((d->floatMode == FloatWidget) ? delta : 0),
+                         d->m_content->height() + delta * 2);
         case ArrowTop:
         case ArrowBottom:
-            return QSize(d->m_content->width() + delta * 2, d->m_content->height() + delta * 1 + d->m_arrowHeight);
+            return QSize(d->m_content->width() + delta * 2,
+                         d->m_content->height() + delta * 2 + d->m_arrowHeight - ((d->floatMode == FloatWidget) ? delta : 0));
         }
     }
 
@@ -542,7 +544,7 @@ QPainterPath DArrowRectanglePrivate::getLeftCornerPath()
     if (!m_handle) {
         qreal delta = q->shadowBlurRadius() + m_shadowDistance;
 
-        rect = rect.marginsRemoved(QMargins(0, delta, delta, delta));
+        rect = rect.marginsRemoved(QMargins((DArrowRectangle::FloatWidget == floatMode) ? 0 : delta, delta, delta, delta));
     }
 
     QPoint cornerPoint(rect.x(), rect.y() + (m_arrowY > 0 ? m_arrowY : (rect.height() / 2)));
@@ -581,7 +583,7 @@ QPainterPath DArrowRectanglePrivate::getRightCornerPath()
     if (!m_handle) {
         qreal delta = q->shadowBlurRadius() + m_shadowDistance;
 
-        rect = rect.marginsRemoved(QMargins(delta, delta, 0, delta));
+        rect = rect.marginsRemoved(QMargins(delta, delta, (DArrowRectangle::FloatWidget == floatMode) ? 0 : delta, delta));
     }
 
     QPoint cornerPoint(rect.x() + rect.width(), rect.y() + (m_arrowY > 0 ? m_arrowY : rect.height() / 2));
@@ -619,7 +621,7 @@ QPainterPath DArrowRectanglePrivate::getTopCornerPath()
 
     if (!m_handle) {
         qreal delta = q->shadowBlurRadius() + m_shadowDistance;
-        rect = rect.marginsRemoved(QMargins(delta, 0, delta, delta));
+        rect = rect.marginsRemoved(QMargins(delta, (DArrowRectangle::FloatWidget == floatMode) ? 0 : delta, delta, delta));
     }
 
     QPoint cornerPoint(rect.x() + (m_arrowX > 0 ? m_arrowX : rect.width() / 2), rect.y());
@@ -658,7 +660,7 @@ QPainterPath DArrowRectanglePrivate::getBottomCornerPath()
     if (!m_handle) {
         qreal delta = q->shadowBlurRadius() + m_shadowDistance;
 
-        rect = rect.marginsRemoved(QMargins(delta, delta, delta, 0));
+        rect = rect.marginsRemoved(QMargins(delta, delta, delta, (DArrowRectangle::FloatWidget == floatMode) ?  0 : delta));
     }
 
     QPoint cornerPoint(rect.x() + (m_arrowX > 0 ? m_arrowX : qRound(double(rect.width()) / 2)), rect.y()  + rect.height());
@@ -888,13 +890,13 @@ void DArrowRectanglePrivate::setContent(QWidget *content)
 
     switch (m_arrowDirection) {
     case DArrowRectangle::ArrowLeft:
-        m_content->move(m_arrowHeight + delta, delta);
+        m_content->move(m_arrowHeight + ((DArrowRectangle::FloatWidget == floatMode) ? 0 : delta), delta);
         break;
     case DArrowRectangle::ArrowRight:
         m_content->move(delta, delta);
         break;
     case DArrowRectangle::ArrowTop:
-        m_content->move(delta, 0 + m_arrowHeight);
+        m_content->move(delta, ((DArrowRectangle::FloatWidget == floatMode) ? 0 : delta) + m_arrowHeight);
         break;
     case DArrowRectangle::ArrowBottom:
         m_content->move(delta, delta);
