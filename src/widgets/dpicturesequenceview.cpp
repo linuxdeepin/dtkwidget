@@ -125,22 +125,40 @@ void DPictureSequenceView::setPictureSequence(const QStringList &sequence, const
 {
     D_D(DPictureSequenceView);
 
+    QList<QPixmap> pixmapSequence;
+    for (const QString &path : sequence) {
+        pixmapSequence << d->loadPixmap(path);
+    }
+
+    setPictureSequence(pixmapSequence, auto_scale);
+}
+
+//!
+//! \brief DPictureSequenceView::setPictureSequence accept a list of pixmap as picture sequence,
+//! if set auto scale, the pixmap will scale as view size.
+//! \param sequence
+//! \param auto_scale
+//!
+void DPictureSequenceView::setPictureSequence(const QList<QPixmap> &sequence, const bool auto_scale)
+{
+    D_D(DPictureSequenceView);
+
     stop();
     d->scene->clear();
     d->pictureItemList.clear();
 
-    for (const QString &path : sequence) {
-        QPixmap pixmap = d->loadPixmap(path);
-
-        if (auto_scale)
+    for (QPixmap pixmap : sequence) {
+        if (auto_scale) {
             pixmap = pixmap.scaled(size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        }
 
         d->pictureItemList << d->scene->addPixmap(pixmap);
         d->pictureItemList.last()->hide();
     }
 
-    if (!d->pictureItemList.isEmpty())
+    if (!d->pictureItemList.isEmpty()) {
         d->pictureItemList.first()->show();
+    }
 
     setStyleSheet("background-color:transparent;");
 }

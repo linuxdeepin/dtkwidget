@@ -39,6 +39,7 @@ public:
 
     void setPictureSequence(const QString &src, const QPair<int, int> &range, const int fieldWidth = 0, const bool auto_scale = false);
     void setPictureSequence(const QStringList &sequence, const bool auto_scale = false);
+    void setPictureSequence(const QList<QPixmap> &sequence, const bool auto_scale = false);
     void play();
     void pause();
     void stop();
