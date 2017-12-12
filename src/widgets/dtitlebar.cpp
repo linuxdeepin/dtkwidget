@@ -229,11 +229,11 @@ void DTitlebarPrivate::updateButtonsFunc()
     DWindowManagerHelper::setMotifFunctions(
         q->topLevelWidget()->windowHandle(),
         DWindowManagerHelper::FUNC_MAXIMIZE,
-        !disableFlags.testFlag(Qt::WindowMinimizeButtonHint));
+        !disableFlags.testFlag(Qt::WindowMaximizeButtonHint));
     DWindowManagerHelper::setMotifFunctions(
         q->topLevelWidget()->windowHandle(),
         DWindowManagerHelper::FUNC_MINIMIZE,
-        !disableFlags.testFlag(Qt::WindowMaximizeButtonHint));
+        !disableFlags.testFlag(Qt::WindowMinimizeButtonHint));
     DWindowManagerHelper::setMotifFunctions(
         q->topLevelWidget()->windowHandle(),
         DWindowManagerHelper::FUNC_CLOSE,
