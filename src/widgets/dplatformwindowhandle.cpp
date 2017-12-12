@@ -51,6 +51,24 @@ DEFINE_CONST_CHAR(autoInputMaskByClipPath);
 DEFINE_CONST_CHAR(setWmBlurWindowBackgroundArea);
 DEFINE_CONST_CHAR(setWmBlurWindowBackgroundPathList);
 DEFINE_CONST_CHAR(setWmBlurWindowBackgroundMaskImage);
+DEFINE_CONST_CHAR(setWindowProperty);
+
+static void setWindowProperty(QWindow *window, const char *name, const QVariant &value)
+{
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+    static QFunctionPointer setWindowProperty = qApp->platformFunction(_setWindowProperty);
+#else
+    constexpr QFunctionPointer setWindowProperty = nullptr;
+#endif
+
+    if (!setWindowProperty) {
+        window->setProperty(name, value);
+
+        return;
+    }
+
+    reinterpret_cast<void(*)(QWindow *, const char *, const QVariant &)>(setWindowProperty)(window, name, value);
+}
 
 DPlatformWindowHandle::DPlatformWindowHandle(QWindow *window, QObject *parent)
     : QObject(parent)
@@ -143,7 +161,7 @@ bool DPlatformWindowHandle::setWindowBlurAreaByWM(QWindow *window, const QVector
     }
 
     if (isEnabledDXcb(window)) {
-        window->setProperty(_windowBlurAreas, QVariant::fromValue(*(reinterpret_cast<const QVector<quint32>*>(&area))));
+        setWindowProperty(window, _windowBlurAreas, QVariant::fromValue(*(reinterpret_cast<const QVector<quint32>*>(&area))));
 
         return true;
     }
@@ -175,7 +193,7 @@ bool DPlatformWindowHandle::setWindowBlurAreaByWM(QWindow *window, const QList<Q
     }
 
     if (isEnabledDXcb(window)) {
-        window->setProperty(_windowBlurPaths, QVariant::fromValue(paths));
+        setWindowProperty(window, _windowBlurPaths, QVariant::fromValue(paths));
 
         return true;
     }
@@ -300,68 +318,67 @@ bool DPlatformWindowHandle::autoInputMaskByClipPath() const
 
 void DPlatformWindowHandle::setWindowRadius(int windowRadius)
 {
-    m_window->setProperty(_windowRadius, windowRadius);
+    setWindowProperty(m_window, _windowRadius, windowRadius);
 }
 
 void DPlatformWindowHandle::setBorderWidth(int borderWidth)
 {
-    m_window->setProperty(_borderWidth, borderWidth);
+    setWindowProperty(m_window, _borderWidth, borderWidth);
 }
 
 void DPlatformWindowHandle::setBorderColor(const QColor &borderColor)
 {
-    m_window->setProperty(_borderColor, QVariant::fromValue(borderColor));
+    setWindowProperty(m_window, _borderColor, QVariant::fromValue(borderColor));
 }
 
 void DPlatformWindowHandle::setShadowRadius(int shadowRadius)
 {
-    m_window->setProperty(_shadowRadius, shadowRadius);
+    setWindowProperty(m_window, _shadowRadius, shadowRadius);
 }
 
 void DPlatformWindowHandle::setShadowOffset(const QPoint &shadowOffset)
 {
-    m_window->setProperty(_shadowOffset, shadowOffset);
+    setWindowProperty(m_window, _shadowOffset, shadowOffset);
 }
 
 void DPlatformWindowHandle::setShadowColor(const QColor &shadowColor)
 {
-    m_window->setProperty(_shadowColor, QVariant::fromValue(shadowColor));
+    setWindowProperty(m_window, _shadowColor, QVariant::fromValue(shadowColor));
 }
 
 void DPlatformWindowHandle::setClipPath(const QPainterPath &clipPath)
 {
-    if (m_window->property(_clipPath).value<QPainterPath>() != clipPath)
-        m_window->setProperty(_clipPath, QVariant::fromValue(clipPath));
+    setWindowProperty(m_window, _clipPath, QVariant::fromValue(clipPath));
 }
 
 void DPlatformWindowHandle::setFrameMask(const QRegion &frameMask)
 {
-    m_window->setProperty(_frameMask, QVariant::fromValue(frameMask));
+    setWindowProperty(m_window, _frameMask, QVariant::fromValue(frameMask));
 }
 
 void DPlatformWindowHandle::setTranslucentBackground(bool translucentBackground)
 {
-    m_window->setProperty(_translucentBackground, translucentBackground);
+    setWindowProperty(m_window, _translucentBackground, translucentBackground);
 }
 
 void DPlatformWindowHandle::setEnableSystemResize(bool enableSystemResize)
 {
-    m_window->setProperty(_enableSystemResize, enableSystemResize);
+    setWindowProperty(m_window, _enableSystemResize, enableSystemResize);
 }
 
 void DPlatformWindowHandle::setEnableSystemMove(bool enableSystemMove)
 {
-    m_window->setProperty(_enableSystemMove, enableSystemMove);
+    setWindowProperty(m_window, _enableSystemMove, enableSystemMove);
 }
 
 void DPlatformWindowHandle::setEnableBlurWindow(bool enableBlurWindow)
 {
-    m_window->setProperty(_enableBlurWindow, enableBlurWindow);
+    setWindowProperty(m_window, _enableBlurWindow, enableBlurWindow);
 }
 
 void DPlatformWindowHandle::setAutoInputMaskByClipPath(bool autoInputMaskByClipPath)
 {
-    m_window->setProperty(_autoInputMaskByClipPath, autoInputMaskByClipPath);
+    setWindowProperty(m_window, _autoInputMaskByClipPath, autoInputMaskByClipPath);
 }
 
 bool DPlatformWindowHandle::eventFilter(QObject *obj, QEvent *event)
