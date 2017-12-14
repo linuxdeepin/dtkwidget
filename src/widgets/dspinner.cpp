@@ -1,14 +1,17 @@
 #include "dspinner.h"
 
-#include <QDebug>
 #include <QtMath>
 #include <QPainter>
 #include <QTimer>
 
-class DSpinnerPrivate
+#include <DObjectPrivate>
+
+DWIDGET_BEGIN_NAMESPACE
+
+class DSpinnerPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 {
 public:
-    DSpinnerPrivate(DSpinner *parent) : q_ptr(parent) {}
+    explicit DSpinnerPrivate(DSpinner *qq);
 
     QList<QColor> createDefaultIndicatorColorList(QColor color);
 
@@ -19,12 +22,17 @@ public:
 
     QList<QList<QColor>> indicatorColors;
 
-    DSpinner *q_ptr;
-    Q_DECLARE_PUBLIC(DSpinner)
+    D_DECLARE_PUBLIC(DSpinner)
 };
 
+DSpinnerPrivate::DSpinnerPrivate(DSpinner *qq)
+    : DObjectPrivate(qq)
+{
+
+}
+
 DSpinner::DSpinner(QWidget *parent) :
-    QWidget(parent), d_ptr(new DSpinnerPrivate(this))
+    QWidget(parent), DObject(*new DSpinnerPrivate(this))
 {
     Q_D(DSpinner);
 
@@ -117,3 +125,5 @@ QList<QColor> DSpinnerPrivate::createDefaultIndicatorColorList(QColor color)
     }
     return colors;
 }
+
+DWIDGET_END_NAMESPACE

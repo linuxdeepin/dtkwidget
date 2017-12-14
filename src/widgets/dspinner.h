@@ -4,10 +4,14 @@
 #include <QScopedPointer>
 #include <QWidget>
 
+#include <DObject>
+
 #include "dtkwidget_global.h"
 
+DWIDGET_BEGIN_NAMESPACE
+
 class DSpinnerPrivate;
-class DSpinner : public QWidget
+class LIBDTKWIDGETSHARED_EXPORT DSpinner : public QWidget, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
 public:
@@ -25,8 +29,9 @@ protected:
     void paintEvent(QPaintEvent *) Q_DECL_OVERRIDE;
 
 private:
-    QScopedPointer<DSpinnerPrivate> d_ptr;
-    Q_DECLARE_PRIVATE_D(qGetPtrHelper(d_ptr), DSpinner)
+    D_DECLARE_PRIVATE(DSpinner)
 };
+
+DWIDGET_END_NAMESPACE
 
 #endif
