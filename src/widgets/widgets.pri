@@ -106,7 +106,8 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dtickeffect.h \
     $$PWD/dwaterprogress.h \
     $$PWD/dsettingswidgetfactory.h \
-    $$PWD/dspinner.h
+    $$PWD/dspinner.h \
+    $$PWD/dcrumbedit.h
 
 SOURCES += $$PWD/dslider.cpp \
     $$PWD/dthememanager.cpp \
@@ -181,7 +182,8 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dtickeffect.cpp \
     $$PWD/dwaterprogress.cpp \
     $$PWD/dsettingswidgetfactory.cpp \
-    $$PWD/dspinner.cpp
+    $$PWD/dspinner.cpp \
+    $$PWD/dcrumbedit.cpp
 
 RESOURCES += \
     $$PWD/themes/dui_theme_dark.qrc \
