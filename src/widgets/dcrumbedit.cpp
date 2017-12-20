@@ -26,6 +26,10 @@
 #include <QTextBlock>
 #include <QStyleOptionFrame>
 #include <QMouseEvent>
+#include <QMimeData>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 #include <QDebug>
 
 DWIDGET_BEGIN_NAMESPACE
@@ -190,6 +194,57 @@ public:
         return true;
     }
 
+    QByteArray crumbMapToData(const QList<DCrumbTextFormat> &list) const
+    {
+        QJsonArray array;
+
+        for (const DCrumbTextFormat &f : list) {
+            if (!f.isValid() || f.isEmpty())
+                continue;
+
+            QJsonObject object;
+            object["text"] = f.text();
+
+            if (f.tagColor().isValid())
+                object["tag color"] = f.tagColor().name();
+
+            array.append(QJsonValue(object));
+        }
+
+        QJsonDocument document;
+        document.setArray(array);
+
+        return document.toJson(QJsonDocument::Compact);
+    }
+
+    QList<DCrumbTextFormat> crumbListFromData(const QByteArray &format) const
+    {
+        const QJsonDocument &document = QJsonDocument::fromJson(format);
+        const QJsonArray &array = document.array();
+
+        QList<DCrumbTextFormat> list;
+
+        D_QC(DCrumbEdit);
+
+        for (const QJsonValue &v : array) {
+            const QJsonObject &object = v.toObject();
+
+            if (object.isEmpty())
+                continue;
+
+            DCrumbTextFormat format = q->makeTextFormat();
+
+            format.setText(object["text"].toString());
+
+            if (object.contains("tag color"))
+                format.setTagColor(QColor(object["tag color"].toString()));
+
+            list << format;
+        }
+
+        return list;
+    }
+
     void _q_onDocumentLayoutChanged()
     {
         D_Q(DCrumbEdit);
@@ -228,6 +283,7 @@ public:
         int last_pos = 0;
 
         cursor.setPosition(0);
+        formatList.clear();
 
         while (!cursor.atEnd()) {
             cursor.setPosition(last_pos + 1);
@@ -244,6 +300,7 @@ public:
 
                 if (!text.isEmpty()) {
                     crumbList << text;
+                    formatList << text;
 
                     if (!formats.contains(text)) {
                         formats[text] = format;
@@ -271,6 +328,7 @@ public:
     CrumbObjectInterface *object;
     int objectType;
     bool crumbReadOnly = false;
+    QStringList formatList;
     QMap<QString, DCrumbTextFormat> formats;
 };
 
@@ -346,9 +404,7 @@ bool DCrumbEdit::insertCrumb(const DCrumbTextFormat &format, int pos)
 
     QTextCursor cursor = textCursor();
 
-    if (pos < 0)
-        cursor.movePosition(QTextCursor::End);
-    else
+    if (pos >= 0)
         cursor.setPosition(pos);
 
     cursor.insertText(QString(QChar::ObjectReplacementCharacter), format);
@@ -356,21 +412,40 @@ bool DCrumbEdit::insertCrumb(const DCrumbTextFormat &format, int pos)
     return true;
 }
 
-void DCrumbEdit::insertCrumb(const QString &text, int pos)
+bool DCrumbEdit::appendCrumb(const DCrumbTextFormat &format)
+{
+    if (format.text().isEmpty())
+        return false;
+
+    D_DC(DCrumbEdit);
+
+    if (!d->canAddCrumb(format.text()))
+        return false;
+
+    QTextCursor cursor = textCursor();
+
+    cursor.movePosition(QTextCursor::End);
+    cursor.insertText(QString(QChar::ObjectReplacementCharacter), format);
+
+    return true;
+}
+
+bool DCrumbEdit::insertCrumb(const QString &text, int pos)
 {
     DCrumbTextFormat format = makeTextFormat();
 
     format.setText(text);
-    insertCrumb(format, pos);
+
+    return insertCrumb(format, pos);
 }
 
-void DCrumbEdit::appendCrumb(const QString &text)
+bool DCrumbEdit::appendCrumb(const QString &text)
 {
-    QTextCursor crusor = textCursor();
+    DCrumbTextFormat format = makeTextFormat();
 
-    crusor.movePosition(QTextCursor::End);
-    setTextCursor(crusor);
-    insertCrumb(text);
+    format.setText(text);
+
+    return appendCrumb(text);
 }
 
 bool DCrumbEdit::containCrumb(const QString &text) const
@@ -384,7 +459,7 @@ QStringList DCrumbEdit::crumbList() const
 {
     D_DC(DCrumbEdit);
 
-    return d->formats.keys();
+    return d->formatList;
 }
 
 DCrumbTextFormat DCrumbEdit::crumbTextFormat(const QString &text) const
@@ -529,6 +604,103 @@ void DCrumbEdit::focusOutEvent(QFocusEvent *event)
     d->makeCrumb();
 
     QTextEdit::focusOutEvent(event);
+}
+
+QMimeData *DCrumbEdit::createMimeDataFromSelection() const
+{
+    D_DC(DCrumbEdit);
+
+    QMimeData *mime = new QMimeData();
+    const QTextCursor &cursor = textCursor();
+    QStringList::const_iterator current_format = d->formatList.constBegin();
+
+    const QString &plain_text = toPlainText();
+    const QString &selected_text = cursor.selectedText();
+    int pos = -1;
+    QString text;
+    QList<DCrumbTextFormat> format_list;
+
+    for (const QChar &ch : plain_text) {
+        ++pos;
+
+        if (pos >= cursor.selectionEnd())
+            break;
+
+        if (ch == QChar::ObjectReplacementCharacter) {
+            if (pos < cursor.selectionStart()) {
+                ++current_format;
+                continue;
+            }
+
+            const DCrumbTextFormat &f = d->formats.value(*current_format);
+
+            ++current_format;
+
+            if (f.text().isEmpty())
+                continue;
+
+            if (!text.isEmpty())
+                text.append(" ").append(f.text());
+            else
+                text.append(f.text());
+
+            format_list << f;
+        } else if (pos < cursor.selectionStart()) {
+            text.append(ch);
+        }
+    }
+
+    mime->setText(text);
+    mime->setData("deepin/dtkwidget-DCrumbTextFormat-data", selected_text.toUtf8());
+    mime->setData("deepin/dtkwidget-DCrumbTextFormat-list", d->crumbMapToData(format_list));
+
+    return mime;
+}
+
+bool DCrumbEdit::canInsertFromMimeData(const QMimeData *source) const
+{
+    if (source->hasFormat("deepin/dtkwidget-DCrumbTextFormat-data"))
+        return true;
+
+    return QTextEdit::canInsertFromMimeData(source);
+}
+
+void DCrumbEdit::insertFromMimeData(const QMimeData *source)
+{
+    if (!source->hasFormat("deepin/dtkwidget-DCrumbTextFormat-data"))
+        QTextEdit::insertFromMimeData(source);
+
+    const QString &plain_text = QString::fromUtf8(source->data("deepin/dtkwidget-DCrumbTextFormat-data"));
+
+    if (plain_text.isEmpty())
+        return;
+
+    D_DC(DCrumbEdit);
+
+    const QList<DCrumbTextFormat> &list = d->crumbListFromData(source->data("deepin/dtkwidget-DCrumbTextFormat-list"));
+    QList<DCrumbTextFormat>::const_iterator current_format = list.constBegin();
+    QString text;
+
+    textCursor().beginEditBlock();
+
+    for (const QChar &ch : plain_text) {
+        if (ch == QChar::ObjectReplacementCharacter) {
+            if (!text.isEmpty()) {
+                textCursor().insertText(text);
+                text.clear();
+            }
+
+            insertCrumb(*current_format);
+            ++current_format;
+        } else {
+            text.append(ch);
+        }
+    }
+
+    if (!text.isEmpty())
+        textCursor().insertText(text);
+
+    textCursor().endEditBlock();
 }
 
 DWIDGET_END_NAMESPACE

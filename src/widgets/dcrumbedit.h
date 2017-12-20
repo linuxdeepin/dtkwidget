@@ -81,8 +81,9 @@ public:
     explicit DCrumbEdit(QWidget *parent = 0);
 
     bool insertCrumb(const DCrumbTextFormat &format, int pos = -1);
-    void insertCrumb(const QString &text, int pos = -1);
-    void appendCrumb(const QString &text);
+    bool insertCrumb(const QString &text, int pos = -1);
+    bool appendCrumb(const DCrumbTextFormat &format);
+    bool appendCrumb(const QString &text);
 
     bool containCrumb(const QString &text) const;
     QStringList crumbList() const;
@@ -106,6 +107,10 @@ protected:
     void keyPressEvent(QKeyEvent *event) override;
     void mouseDoubleClickEvent(QMouseEvent *event) override;
     void focusOutEvent(QFocusEvent *event) override;
+
+    QMimeData *createMimeDataFromSelection() const override;
+    bool canInsertFromMimeData(const QMimeData *source) const override;
+    void insertFromMimeData(const QMimeData *source) override;
 
 private:
     using QTextEdit::setDocument;
