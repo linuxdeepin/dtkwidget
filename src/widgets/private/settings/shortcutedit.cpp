@@ -177,6 +177,7 @@ void ShortcutEdit::mouseDoubleClickEvent(QMouseEvent *event)
         d->canSet = true;
         d->key = Qt::Key_unknown;
         d->keyModifiers = Qt::NoModifier;
+        shortcutChanged(d->keyModifiers, d->key);
     }
     this->update();
 }
