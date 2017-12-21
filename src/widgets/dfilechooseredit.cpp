@@ -49,6 +49,19 @@ void DFileChooserEdit::setDialogDisplayPosition(DFileChooserEdit::DialogDisplayP
     d->dialogDisplayPosition = dialogDisplayPosition;
 }
 
+
+void  DFileChooserEdit::setFileMode(QFileDialog::FileMode mode)
+{
+    D_D(DFileChooserEdit);
+    d->fileMode = mode;
+}
+
+QFileDialog::FileMode  DFileChooserEdit::fileMode() const
+{
+    D_DC(DFileChooserEdit);
+    return d->fileMode;
+}
+
 DFileChooserEditPrivate::DFileChooserEditPrivate(DFileChooserEdit *q)
     : DLineEditPrivate(q)
 {
@@ -58,7 +71,7 @@ void DFileChooserEditPrivate::init()
 {
     D_Q(DFileChooserEdit);
 
-    q->setTextMargins(0, 0, 16, 0);
+    q->setTextMargins(0, 0, 24, 0);
     q->setReadOnly(true);
     q->setIconVisible(true);
     q->connect(q, SIGNAL(iconClicked()), q, SLOT(_q_showFileChooserDialog()));
@@ -71,13 +84,13 @@ void DFileChooserEditPrivate::_q_showFileChooserDialog()
     QFileDialog dialog(q);
 
     dialog.setAcceptMode(QFileDialog::AcceptOpen);
-    dialog.setFileMode(QFileDialog::ExistingFile);
+    dialog.setFileMode(fileMode);
 
-    if(dialogDisplayPosition == DFileChooserEdit::CurrentMonitorCenter) {
+    if (dialogDisplayPosition == DFileChooserEdit::CurrentMonitorCenter) {
         QPoint pos = QCursor::pos();
 
-        for(QScreen *screen : qApp->screens()) {
-            if(screen->geometry().contains(pos)) {
+        for (QScreen *screen : qApp->screens()) {
+            if (screen->geometry().contains(pos)) {
                 QRect rect = dialog.geometry();
                 rect.moveCenter(screen->geometry().center());
                 dialog.move(rect.topLeft());
@@ -90,7 +103,7 @@ void DFileChooserEditPrivate::_q_showFileChooserDialog()
     int code = dialog.exec();
 
 
-    if(code == QDialog::Accepted && !dialog.selectedFiles().isEmpty()) {
+    if (code == QDialog::Accepted && !dialog.selectedFiles().isEmpty()) {
         const QString fileName = dialog.selectedFiles().first();
 
         q->setText(fileName);

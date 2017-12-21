@@ -19,6 +19,7 @@
 #define DFILECHOOSEREDIT_H
 
 #include "dlineedit.h"
+#include <QFileDialog>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -40,6 +41,9 @@ public:
     DFileChooserEdit(QWidget *parent = nullptr);
 
     DialogDisplayPosition dialogDisplayPosition() const;
+
+    void setFileMode(QFileDialog::FileMode mode);
+    QFileDialog::FileMode fileMode() const;
 
 public Q_SLOTS:
     void setDialogDisplayPosition(DialogDisplayPosition dialogDisplayPosition);
