@@ -4,17 +4,17 @@
     <message>
         <location filename="../src/widgets/daboutdialog.cpp" line="137"/>
         <source>Acknowledgements</source>
-        <translation>Expresiones de gratitud</translation>
+        <translation>Agradecimientos</translation>
     </message>
     <message>
         <location filename="../src/widgets/dapplication.cpp" line="568"/>
         <source>Version: %1</source>
-        <translation type="unfinished"/>
+        <translation>Versión %1</translation>
     </message>
     <message>
         <location filename="../src/widgets/dapplication.cpp" line="572"/>
         <source>%1 is released under %2</source>
-        <translation type="unfinished"/>
+        <translation>%1 está lanzado bajo %2</translation>
     </message>
 </context>
 <context>
@@ -35,7 +35,7 @@
     <message>
         <location filename="../src/widgets/dshortcutedit.cpp" line="31"/>
         <source>Please input a new shortcut</source>
-        <translation>Introduzca un nuevo acceso directo</translation>
+        <translation>Introduzca un nuevo atajo</translation>
     </message>
     <message>
         <location filename="../src/widgets/dshortcutedit.cpp" line="102"/>
@@ -48,7 +48,7 @@
     <message>
         <location filename="../src/widgets/dsimplelistview.cpp" line="1082"/>
         <source>No search result</source>
-        <translation type="unfinished"/>
+        <translation>Sin resultado de búsqueda</translation>
     </message>
 </context>
 <context>
@@ -56,7 +56,7 @@
     <message>
         <location filename="../src/widgets/private/settings/content.cpp" line="181"/>
         <source>Restore Defaults</source>
-        <translation type="unfinished"/>
+        <translation>Restaurar valores predeterminados</translation>
     </message>
 </context>
 <context>
@@ -64,7 +64,7 @@
     <message>
         <location filename="../src/widgets/private/settings/shortcutedit.cpp" line="107"/>
         <source>Please enter a new shortcut</source>
-        <translation type="unfinished"/>
+        <translation>Ingrese un nuevo atajo</translation>
     </message>
 </context>
 <context>
@@ -77,7 +77,7 @@
     <message>
         <location filename="../src/widgets/dtitlebar.cpp" line="349"/>
         <source>About</source>
-        <translation>acerca de</translation>
+        <translation>Acerca de</translation>
     </message>
     <message>
         <location filename="../src/widgets/dtitlebar.cpp" line="356"/>

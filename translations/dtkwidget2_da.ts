@@ -82,7 +82,7 @@
     <message>
         <location filename="../src/widgets/dtitlebar.cpp" line="356"/>
         <source>Exit</source>
-        <translation>Forlad</translation>
+        <translation>Afslut</translation>
     </message>
 </context>
 </TS>

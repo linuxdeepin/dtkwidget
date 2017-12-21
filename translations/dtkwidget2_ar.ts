@@ -9,12 +9,12 @@
     <message>
         <location filename="../src/widgets/dapplication.cpp" line="568"/>
         <source>Version: %1</source>
-        <translation type="unfinished"/>
+        <translation>إصدار: 1%</translation>
     </message>
     <message>
         <location filename="../src/widgets/dapplication.cpp" line="572"/>
         <source>%1 is released under %2</source>
-        <translation type="unfinished"/>
+        <translation>%1 أطلق بموجب 2%</translation>
     </message>
 </context>
 <context>
@@ -48,7 +48,7 @@
     <message>
         <location filename="../src/widgets/dsimplelistview.cpp" line="1082"/>
         <source>No search result</source>
-        <translation type="unfinished"/>
+        <translation>لا توجد نتائج بحث</translation>
     </message>
 </context>
 <context>
@@ -56,7 +56,7 @@
     <message>
         <location filename="../src/widgets/private/settings/content.cpp" line="181"/>
         <source>Restore Defaults</source>
-        <translation type="unfinished"/>
+        <translation>استعادة الاعدادت الإفتراضية</translation>
     </message>
 </context>
 <context>
@@ -64,7 +64,7 @@
     <message>
         <location filename="../src/widgets/private/settings/shortcutedit.cpp" line="107"/>
         <source>Please enter a new shortcut</source>
-        <translation type="unfinished"/>
+        <translation>يرجى إدراج مختصر جديد</translation>
     </message>
 </context>
 <context>
