@@ -125,6 +125,15 @@ void DLineEdit::showAlertMessage(const QString &text, int duration)
     d->tooltip->show(pos.x(), pos.y());
 }
 
+void DLineEdit:: hideAlertMessage()
+{
+    Q_D(DLineEdit);
+
+    if (d->tooltip) {
+        d->tooltip->hide();
+    }
+}
+
 void DLineEdit::setIconVisible(bool visible)
 {
     Q_D(DLineEdit);
