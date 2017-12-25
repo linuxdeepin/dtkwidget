@@ -41,6 +41,8 @@ public:
     void setTextColor(const QColor &color);
     QBrush background() const;
     void setBackground(const QBrush &background);
+    int backgroundRadius() const;
+    void setBackgroundRadius(int radius);
 
 protected:
     DCrumbTextFormat(int objectType);
@@ -56,6 +58,8 @@ class DCrumbEdit : public QTextEdit, public DCORE_NAMESPACE::DObject
     Q_OBJECT
 
     Q_PROPERTY(bool crumbReadOnly READ crumbReadOnly WRITE setCrumbReadOnly)
+    Q_PROPERTY(int crumbRadius READ crumbRadius WRITE setCrumbRadius)
+    Q_PROPERTY(QString splitter READ splitter WRITE setSplitter)
 
 public:
     enum CrumbType {
@@ -93,6 +97,8 @@ public:
     DCrumbTextFormat makeTextFormat(CrumbType type) const;
 
     bool crumbReadOnly() const;
+    int crumbRadius() const;
+    QString splitter() const;
 
 Q_SIGNALS:
     void crumbAdded(const QString &text);
@@ -101,6 +107,8 @@ Q_SIGNALS:
 
 public Q_SLOTS:
     void setCrumbReadOnly(bool crumbReadOnly);
+    void setCrumbRadius(int crumbRadius);
+    void setSplitter(const QString &splitter);
 
 protected:
     void paintEvent(QPaintEvent *event) override;

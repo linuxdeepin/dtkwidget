@@ -99,6 +99,16 @@ void DCrumbTextFormat::setBackground(const QBrush &background)
     setProperty(QTextFormat::UserProperty + 3, background);
 }
 
+int DCrumbTextFormat::backgroundRadius() const
+{
+    return intProperty(QTextFormat::UserProperty + 4);
+}
+
+void DCrumbTextFormat::setBackgroundRadius(int radius)
+{
+    setProperty(QTextFormat::UserProperty + 4, radius);
+}
+
 DCrumbTextFormat::DCrumbTextFormat(int objectType)
 {
     setObjectType(objectType);
@@ -144,17 +154,31 @@ public:
         return !formats.contains(text);
     }
 
+    void makeCrumb(QTextCursor &cursor, const QString &text)
+    {
+        const QString tag_text = text.simplified();
+
+        if (tag_text.isEmpty())
+            return;
+
+        if (!canAddCrumb(tag_text))
+            return;
+
+        D_Q(DCrumbEdit);
+
+        DCrumbTextFormat format = q->makeTextFormat();
+
+        format.setText(tag_text);
+        cursor.insertText(QString(QChar::ObjectReplacementCharacter), format);
+    }
+
     void makeCrumb()
     {
         D_Q(DCrumbEdit);
 
-        QString text = q->toPlainText().trimmed().remove(QChar::ObjectReplacementCharacter);
+        QString text = q->toPlainText().remove(QChar::ObjectReplacementCharacter);
 
-        if (text.isEmpty()) {
-            return;
-        }
-
-        if (!canAddCrumb(text))
+        if (text.isEmpty())
             return;
 
         QTextCursor cursor = q->document()->find(text);
@@ -162,10 +186,13 @@ public:
         if (cursor.isNull())
             return;
 
-        DCrumbTextFormat format = q->makeTextFormat();
+        if (splitter.isEmpty()) {
+            return makeCrumb(cursor, text);
+        }
 
-        format.setText(text);
-        cursor.insertText(QString(QChar::ObjectReplacementCharacter), format);
+        for (const QString &tag_text : text.split(splitter)) {
+            makeCrumb(cursor, tag_text);
+        }
     }
 
     bool editCrumb(const QPoint &mousePos)
@@ -328,6 +355,8 @@ public:
     CrumbObjectInterface *object;
     int objectType;
     bool crumbReadOnly = false;
+    int crumbRadius = 2;
+    QString splitter = ",";
     QStringList formatList;
     QMap<QString, DCrumbTextFormat> formats;
 };
@@ -339,11 +368,12 @@ QSizeF CrumbObjectInterface::intrinsicSize(QTextDocument *doc, int posInDocument
 
     const DCrumbTextFormat crumb_format(format);
     const QFontMetricsF font_metrics(crumb_format.font());
+    int radius = crumb_format.backgroundRadius();
 
     if (crumb_format.tagColor().isValid())
-        return QSizeF(font_metrics.width(crumb_format.text()) + font_metrics.height() + 4, font_metrics.height() + 2);
+        return QSizeF(font_metrics.width(crumb_format.text()) + font_metrics.height() + radius + 2, font_metrics.height() + 2);
 
-    return QSizeF(font_metrics.width(crumb_format.text()) + 8, font_metrics.height() + 2);
+    return QSizeF(font_metrics.width(crumb_format.text()) + 2 * radius + 2, font_metrics.height() + 2);
 }
 
 void CrumbObjectInterface::drawObject(QPainter *painter, const QRectF &rect,
@@ -355,13 +385,14 @@ void CrumbObjectInterface::drawObject(QPainter *painter, const QRectF &rect,
     const QRectF new_rect = rect.adjusted(1, 1, -1, -1);
     const DCrumbTextFormat crumb_format(format);
     const QFontMetricsF font_metrics(crumb_format.font());
+    const int radius = crumb_format.backgroundRadius();
 
     QPainterPath background_path;
     QPainterPath tag_path;
     const QRectF tag_rect(new_rect.x() + 2, new_rect.y() + 2, font_metrics.height() - 4, font_metrics.height() - 4);
 
     tag_path.addEllipse(tag_rect);
-    background_path.addRoundedRect(new_rect, 4, 4);
+    background_path.addRoundedRect(new_rect, radius, crumb_format.backgroundRadius());
 
     painter->setRenderHint(QPainter::Antialiasing);
     painter->fillPath(background_path, crumb_format.background());
@@ -370,11 +401,11 @@ void CrumbObjectInterface::drawObject(QPainter *painter, const QRectF &rect,
         painter->fillPath(tag_path, crumb_format.tagColor());
 
         painter->setPen(crumb_format.textColor());
-        painter->drawText(new_rect.marginsRemoved(QMarginsF(tag_rect.width() + 2, 0, 2, 0)),
+        painter->drawText(new_rect.adjusted(tag_rect.width() + 2, 0, -radius, 0),
                           crumb_format.text(), Qt::AlignVCenter | Qt::AlignRight);
     } else {
         painter->setPen(crumb_format.textColor());
-        painter->drawText(new_rect.adjusted(3, 0, 0, 0), crumb_format.text());
+        painter->drawText(new_rect.adjusted(radius, 0, -radius, 0), crumb_format.text());
     }
 }
 
@@ -476,6 +507,7 @@ DCrumbTextFormat DCrumbEdit::makeTextFormat() const
     DCrumbTextFormat format(d->objectType);
 
     format.setFontFamily(font().family());
+    format.setBackgroundRadius(d->crumbRadius);
 
     return format;
 }
@@ -485,7 +517,7 @@ DCrumbTextFormat DCrumbEdit::makeTextFormat(DCrumbEdit::CrumbType type) const
     D_DC(DCrumbEdit);
 
     QString text;
-    DCrumbTextFormat format(d->objectType);
+    DCrumbTextFormat format = makeTextFormat();
 
     switch (type) {
     case black:
@@ -556,11 +588,39 @@ bool DCrumbEdit::crumbReadOnly() const
     return d->crumbReadOnly;
 }
 
+int DCrumbEdit::crumbRadius() const
+{
+    D_DC(DCrumbEdit);
+
+    return d->crumbRadius;
+}
+
+QString DCrumbEdit::splitter() const
+{
+    D_DC(DCrumbEdit);
+
+    return d->splitter;
+}
+
 void DCrumbEdit::setCrumbReadOnly(bool crumbReadOnly)
 {
     D_D(DCrumbEdit);
 
     d->crumbReadOnly = crumbReadOnly;
+}
+
+void DCrumbEdit::setCrumbRadius(int crumbRadius)
+{
+    D_D(DCrumbEdit);
+
+    d->crumbRadius = crumbRadius;
+}
+
+void DCrumbEdit::setSplitter(const QString &splitter)
+{
+    D_D(DCrumbEdit);
+
+    d->splitter = splitter;
 }
 
 void DCrumbEdit::paintEvent(QPaintEvent *event)
