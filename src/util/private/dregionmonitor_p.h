@@ -8,12 +8,20 @@
 #include <QRegion>
 #include <QScreen>
 
+#ifndef DBUS_VERSION_0_4_2
 #include <com_deepin_api_xeventmonitor.h>
+#else
+#include <com_deepin_api_xmousearea.h>
+#endif
 
 DCORE_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
-using XEventMonitor = com::deepin::api::XEventMonitor;
+#ifndef DBUS_VERSION_0_4_2
+using XEventMonitor = ::com::deepin::api::XEventMonitor;
+#else
+using XMousAreaInter = ::com::deepin::api::XMouseArea;
+#endif
 
 class DRegionMonitorPrivate : public DObjectPrivate
 {
@@ -43,7 +51,11 @@ public:
 
     const QPoint deviceScaledCoordinate(const QPoint &p, const double ratio) const;
 
+#ifndef DBUS_VERSION_0_4_2
     XEventMonitor *eventInter;
+#else
+    XMousAreaInter *eventInter;
+#endif
     QRegion watchedRegion;
     QString registerKey;
 };

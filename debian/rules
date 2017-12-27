@@ -3,11 +3,22 @@ DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/default.mk
 export QT_SELECT = qt5
 DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+version=$(shell dpkg-query --showformat='$${Version}' --show libdframeworkdbus-dev)
+COMPARE_VERSION=$(shell dpkg --compare-versions 0.4.2-1 ge-nl $(version); echo $$?)
+
 %:
 	dh $@ --parallel
 
+ifeq ($(COMPARE_VERSION), 1)
 override_dh_auto_configure:
 	dh_auto_configure -- LIB_INSTALL_DIR=/usr/lib/$(DEB_HOST_MULTIARCH)
+endif
+
+ifeq ($(COMPARE_VERSION), 0)
+override_dh_auto_configure:
+	dh_auto_configure -- LIB_INSTALL_DIR=/usr/lib/$(DEB_HOST_MULTIARCH) DBUS_VERSION_0_4_2=YES
+endif
 
 override_dh_makeshlibs:
 	dh_makeshlibs -V

@@ -18,6 +18,10 @@ isEmpty(INCLUDE_INSTALL_DIR) {
     DTK_INCLUDEPATH = $$INCLUDE_INSTALL_DIR/libdtk-$$VERSION
 }
 
+isEqual(DBUS_VERSION_0_4_2, YES) {
+    DEFINES += DBUS_VERSION_0_4_2
+}
+
 INSTALLS += includes target
 
 win32* {

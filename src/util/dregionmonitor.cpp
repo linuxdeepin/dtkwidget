@@ -60,9 +60,12 @@ void DRegionMonitor::setWatchedRegion(const QRegion &region)
 }
 
 DRegionMonitorPrivate::DRegionMonitorPrivate(DRegionMonitor *q)
-    : DObjectPrivate(q),
-
-      eventInter(new XEventMonitor("com.deepin.api.XEventMonitor", "/com/deepin/api/XEventMonitor", QDBusConnection::sessionBus()))
+    : DObjectPrivate(q)
+#ifndef DBUS_VERSION_0_4_2
+    , eventInter(new XEventMonitor("com.deepin.api.XEventMonitor", "/com/deepin/api/XEventMonitor", QDBusConnection::sessionBus()))
+#else
+    , eventInter(new XMousAreaInter("com.deepin.api.XMouseArea", "/com/deepin/api/XMouseArea", QDBusConnection::sessionBus()))
+#endif
 {
 }
 
