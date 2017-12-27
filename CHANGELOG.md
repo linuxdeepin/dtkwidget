@@ -1,3 +1,32 @@
+<a name="2.0.5.3"></a>
+## 2.0.5.3 (2017-12-27)
+
+
+#### Bug Fixes
+
+*   double click shortcutedit not sync data ([70336737](https://github.com/linuxdeepin/dtkwidget/commit/70336737ff2759245c7f1b49de6fa18b97884d9a))
+*   Adapt lintian ([2709dc6d](https://github.com/linuxdeepin/dtkwidget/commit/2709dc6d574e74ae4ec1d225d77a6a221534e25e))
+*   test correct hint for corresponding function ([8d250da3](https://github.com/linuxdeepin/dtkwidget/commit/8d250da39870332200fe0d3949c776e225f37c13))
+*   margin of window mode ([982940f2](https://github.com/linuxdeepin/dtkwidget/commit/982940f26b911599acb8998f862d1043cbe6335a))
+*   add build depend libudev-dev ([3ddffd8b](https://github.com/linuxdeepin/dtkwidget/commit/3ddffd8b5a30c262f006893965921036639d0407))
+
+#### Features
+
+*   add nameFilters to dfilechooseredit ([367d8431](https://github.com/linuxdeepin/dtkwidget/commit/367d84310a42bc71273c59b6525125d5abccff26))
+*   support get buildVersion form marco ([632228d2](https://github.com/linuxdeepin/dtkwidget/commit/632228d25b6b9e5ee0bb365f18a71b54ef7576c6))
+*   add hideAlertMessage to dlineedit ([87aff6ee](https://github.com/linuxdeepin/dtkwidget/commit/87aff6eedfa1f13d0cc15ad0836ef04d8dff1b36))
+*   add setFileMode/fileMode to dfilechooseredit ([770c8a83](https://github.com/linuxdeepin/dtkwidget/commit/770c8a831583f84a52db7c66910a2fdf572eddd9))
+*   support copy/paste for DCrumbEdit ([90a7388d](https://github.com/linuxdeepin/dtkwidget/commit/90a7388dae8c6510b8dd47d9dd5a35ba68187197))
+*   add widget "DCrumbEdit" ([04e21733](https://github.com/linuxdeepin/dtkwidget/commit/04e21733b77096b2b07126722f766ef38cfe28cd))
+*   add namaspace to DSpinner ([454c394d](https://github.com/linuxdeepin/dtkwidget/commit/454c394dc84f17e19e759a5bbcec73e1669fae5b))
+*   add DSpinner ([ad30eabe](https://github.com/linuxdeepin/dtkwidget/commit/ad30eabe456f2e42229dd73bfda25325fef2e557))
+*   add pixmap sequence interface to DPictureSequenceView ([6b568687](https://github.com/linuxdeepin/dtkwidget/commit/6b5686879f35dc038cb5a0b578d5e3267ede8976))
+*   add widget mode to darrowrectangle ([e500b48f](https://github.com/linuxdeepin/dtkwidget/commit/e500b48f6984dff5bff9c12e6bd0ecf467a06804))
+* **DApplication:**  add multi user single Instance parameter ([d35b96e5](https://github.com/linuxdeepin/dtkwidget/commit/d35b96e5a750233a73140e22833d619ae389386a))
+* **DRegion:**  add compatibility macro ([49db18a7](https://github.com/linuxdeepin/dtkwidget/commit/49db18a7b299fc029ba83c4882e1f3148879c47c))
+
+
+
 <a name="2.0.5.2"></a>
 ## 2.0.5.2 (2017-11-28)
 
