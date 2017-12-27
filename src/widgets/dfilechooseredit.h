@@ -45,6 +45,9 @@ public:
     void setFileMode(QFileDialog::FileMode mode);
     QFileDialog::FileMode fileMode() const;
 
+    void setNameFilters(const QStringList &filters);
+    QStringList nameFilters() const;
+
 public Q_SLOTS:
     void setDialogDisplayPosition(DialogDisplayPosition dialogDisplayPosition);
 

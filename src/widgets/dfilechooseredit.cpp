@@ -56,11 +56,24 @@ void  DFileChooserEdit::setFileMode(QFileDialog::FileMode mode)
     d->fileMode = mode;
 }
 
-QFileDialog::FileMode  DFileChooserEdit::fileMode() const
+QFileDialog::FileMode DFileChooserEdit::fileMode() const
 {
     D_DC(DFileChooserEdit);
     return d->fileMode;
 }
+
+void  DFileChooserEdit::setNameFilters(const QStringList &filters)
+{
+    D_D(DFileChooserEdit);
+    d->nameFilters = filters;
+}
+
+QStringList DFileChooserEdit::nameFilters() const
+{
+    D_DC(DFileChooserEdit);
+    return d->nameFilters;
+}
+
 
 DFileChooserEditPrivate::DFileChooserEditPrivate(DFileChooserEdit *q)
     : DLineEditPrivate(q)
@@ -85,6 +98,7 @@ void DFileChooserEditPrivate::_q_showFileChooserDialog()
 
     dialog.setAcceptMode(QFileDialog::AcceptOpen);
     dialog.setFileMode(fileMode);
+    dialog.setNameFilters(nameFilters);
 
     if (dialogDisplayPosition == DFileChooserEdit::CurrentMonitorCenter) {
         QPoint pos = QCursor::pos();
