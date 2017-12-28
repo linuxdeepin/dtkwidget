@@ -30,11 +30,25 @@ DCORE_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
 class DTabBarPrivate;
-class DTabBar : public QTabBar, public DObject
+class DTabBar : public QWidget, public DObject
 {
     Q_OBJECT
 
     Q_PROPERTY(bool visibleAddButton READ visibleAddButton WRITE setVisibleAddButton)
+    Q_PROPERTY(QTabBar::Shape shape READ shape WRITE setShape)
+    Q_PROPERTY(int currentIndex READ currentIndex WRITE setCurrentIndex NOTIFY currentChanged)
+    Q_PROPERTY(int count READ count)
+    Q_PROPERTY(bool drawBase READ drawBase WRITE setDrawBase)
+    Q_PROPERTY(QSize iconSize READ iconSize WRITE setIconSize)
+    Q_PROPERTY(Qt::TextElideMode elideMode READ elideMode WRITE setElideMode)
+    Q_PROPERTY(bool usesScrollButtons READ usesScrollButtons WRITE setUsesScrollButtons)
+    Q_PROPERTY(bool tabsClosable READ tabsClosable WRITE setTabsClosable)
+    Q_PROPERTY(QTabBar::SelectionBehavior selectionBehaviorOnRemove READ selectionBehaviorOnRemove WRITE setSelectionBehaviorOnRemove)
+    Q_PROPERTY(bool expanding READ expanding WRITE setExpanding)
+    Q_PROPERTY(bool movable READ isMovable WRITE setMovable)
+    Q_PROPERTY(bool documentMode READ documentMode WRITE setDocumentMode)
+    Q_PROPERTY(bool autoHide READ autoHide WRITE setAutoHide)
+    Q_PROPERTY(bool changeCurrentOnDrag READ changeCurrentOnDrag WRITE setChangeCurrentOnDrag)
 
 public:
     explicit DTabBar(QWidget *parent = 0);
@@ -42,35 +56,107 @@ public:
     void setTabMinimumSize(int index, const QSize &size);
     void setTabMaximumSize(int index, const QSize &size);
 
-    QSize sizeHint() const override;
     bool visibleAddButton() const;
 
+    QTabBar::Shape shape() const;
+    void setShape(QTabBar::Shape shape);
+
+    int addTab(const QString &text);
+    int addTab(const QIcon &icon, const QString &text);
+
+    int insertTab(int index, const QString &text);
+    int insertTab(int index, const QIcon&icon, const QString &text);
+
+    void removeTab(int index);
+    void moveTab(int from, int to);
+
+    bool isTabEnabled(int index) const;
+    void setTabEnabled(int index, bool);
+
+    QString tabText(int index) const;
+    void setTabText(int index, const QString &text);
+
+    QColor tabTextColor(int index) const;
+    void setTabTextColor(int index, const QColor &color);
+
+    QIcon tabIcon(int index) const;
+    void setTabIcon(int index, const QIcon &icon);
+
+    Qt::TextElideMode elideMode() const;
+    void setElideMode(Qt::TextElideMode mode);
+
+#ifndef QT_NO_TOOLTIP
+    void setTabToolTip(int index, const QString &tip);
+    QString tabToolTip(int index) const;
+#endif
+
+#ifndef QT_NO_WHATSTHIS
+    void setTabWhatsThis(int index, const QString &text);
+    QString tabWhatsThis(int index) const;
+#endif
+
+    void setTabData(int index, const QVariant &data);
+    QVariant tabData(int index) const;
+
+    QRect tabRect(int index) const;
+    int tabAt(const QPoint &pos) const;
+
+    int currentIndex() const;
+    int count() const;
+
+    void setDrawBase(bool drawTheBase);
+    bool drawBase() const;
+
+    QSize iconSize() const;
+    void setIconSize(const QSize &size);
+
+    bool usesScrollButtons() const;
+    void setUsesScrollButtons(bool useButtons);
+
+    bool tabsClosable() const;
+    void setTabsClosable(bool closable);
+
+    void setTabButton(int index, QTabBar::ButtonPosition position, QWidget *widget);
+    QWidget *tabButton(int index, QTabBar::ButtonPosition position) const;
+
+    QTabBar::SelectionBehavior selectionBehaviorOnRemove() const;
+    void setSelectionBehaviorOnRemove(QTabBar::SelectionBehavior behavior);
+
+    bool expanding() const;
+    void setExpanding(bool enabled);
+
+    bool isMovable() const;
+    void setMovable(bool movable);
+
+    bool documentMode() const;
+    void setDocumentMode(bool set);
+
+    bool autoHide() const;
+    void setAutoHide(bool hide);
+
+    bool changeCurrentOnDrag() const;
+    void setChangeCurrentOnDrag(bool change);
+
 Q_SIGNALS:
+    void currentChanged(int index);
+    void tabCloseRequested(int index);
+    void tabMoved(int from, int to);
+    void tabBarClicked(int index);
+    void tabBarDoubleClicked(int index);
     void tabAddRequested();
     void tabReleaseRequested(int index);
 
 public Q_SLOTS:
+    void setCurrentIndex(int index);
     void setVisibleAddButton(bool visibleAddButton);
 
 protected:
-    void paintEvent(QPaintEvent *e) override;
-    void mouseMoveEvent(QMouseEvent *e) override;
-    void resizeEvent(QResizeEvent *e) override;
-    void dragEnterEvent(QDragEnterEvent *e) override;
-    void dragMoveEvent(QDragMoveEvent *e) override;
-    void dropEvent(QDropEvent *e) override;
-
-    QSize tabSizeHint(int index) const override;
-    QSize minimumTabSizeHint(int index) const override;
-    virtual QSize maximumTabSizeHint(int index) const;
-
-    void tabInserted(int index) override;
-    void tabRemoved(int index) override;
-    void tabLayoutChange() override;
+    virtual bool paintTab(QPainter *painter, int index, const QStyleOptionTab &option);
 
 private:
-    D_DECLARE_PRIVATE(DTabBar)
-    Q_PRIVATE_SLOT(d_func(), void _q_startDrag(int))
+    DTabBarPrivate* d_func();
+    const DTabBarPrivate* d_func() const;
+    friend class DTabBarPrivate;
 };
 
 DWIDGET_END_NAMESPACE

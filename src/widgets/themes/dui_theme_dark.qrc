@@ -42,6 +42,7 @@
         <file>dark/dialogs/DAboutDialog.theme</file>
         <file>dark/DAbstractDialog.theme</file>
         <file>dark/DTitlebar.theme</file>
+        <file>dark/DTabBar.theme</file>
         <file>dark/images/window/close_disabled.svg</file>
         <file>dark/images/window/close_hover.svg</file>
         <file>dark/images/window/close_normal.svg</file>

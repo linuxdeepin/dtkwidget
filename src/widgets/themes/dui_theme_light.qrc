@@ -37,6 +37,7 @@
         <file>light/DTitlebar.theme</file>
         <file>light/DBoxWidget.theme</file>
         <file>light/DFileChooserEdit.theme</file>
+        <file>light/DTabBar.theme</file>
     </qresource>
     <qresource prefix="/images">
         <file>light/images/arrow_down_hover.png</file>

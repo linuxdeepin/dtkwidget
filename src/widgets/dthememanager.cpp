@@ -247,10 +247,10 @@ void DThemeManager::updateQss()
     }
 }
 
-DThemeManager::DThemeManager() :
-    QObject()
+DThemeManager::DThemeManager()
+    : QObject()
 {
-    this->setTheme("dark");
+    setTheme("light");
 }
 
 
