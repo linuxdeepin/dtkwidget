@@ -161,7 +161,7 @@ QString DThemeManager::getQssForWidget(const QString className, const QString &t
         qss = themeFile.readAll();
         themeFile.close();
     } else {
-        qWarning() << "open qss file failed" << themeURL;
+        qWarning() << "open qss file failed" << themeURL << themeFile.errorString();
     }
 
     return qss;
