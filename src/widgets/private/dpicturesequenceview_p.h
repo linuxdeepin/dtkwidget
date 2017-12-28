@@ -34,6 +34,7 @@ class DPictureSequenceViewPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 
 public:
     DPictureSequenceViewPrivate(DPictureSequenceView *q);
+    ~DPictureSequenceViewPrivate();
 
     void init();
     void play();

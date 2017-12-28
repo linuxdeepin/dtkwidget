@@ -30,6 +30,17 @@ DPictureSequenceViewPrivate::DPictureSequenceViewPrivate(DPictureSequenceView *q
 
 }
 
+DPictureSequenceViewPrivate::~DPictureSequenceViewPrivate()
+{
+    for (auto *item : pictureItemList)
+    {
+        scene->removeItem(item);
+        delete item;
+    }
+
+    scene->deleteLater();
+}
+
 void DPictureSequenceViewPrivate::init()
 {
     D_Q(DPictureSequenceView);
