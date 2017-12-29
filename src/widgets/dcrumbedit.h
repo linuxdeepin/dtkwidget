@@ -60,6 +60,7 @@ class DCrumbEdit : public QTextEdit, public DCORE_NAMESPACE::DObject
     Q_PROPERTY(bool crumbReadOnly READ crumbReadOnly WRITE setCrumbReadOnly)
     Q_PROPERTY(int crumbRadius READ crumbRadius WRITE setCrumbRadius)
     Q_PROPERTY(QString splitter READ splitter WRITE setSplitter)
+    Q_PROPERTY(bool dualClickMakeCrumb READ dualClickMakeCrumb WRITE setDualClickMakeCrumb)
 
 public:
     enum CrumbType {
@@ -96,6 +97,7 @@ public:
     DCrumbTextFormat makeTextFormat() const;
     DCrumbTextFormat makeTextFormat(CrumbType type) const;
 
+    bool dualClickMakeCrumb() const Q_DECL_NOEXCEPT;
     bool crumbReadOnly() const;
     int crumbRadius() const;
     QString splitter() const;
@@ -109,6 +111,8 @@ public Q_SLOTS:
     void setCrumbReadOnly(bool crumbReadOnly);
     void setCrumbRadius(int crumbRadius);
     void setSplitter(const QString &splitter);
+
+    void setDualClickMakeCrumb(bool flag) Q_DECL_NOEXCEPT;
 
 protected:
     void paintEvent(QPaintEvent *event) override;

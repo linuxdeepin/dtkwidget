@@ -172,27 +172,31 @@ public:
         cursor.insertText(QString(QChar::ObjectReplacementCharacter), format);
     }
 
-    void makeCrumb()
+    bool makeCrumb()
     {
         D_Q(DCrumbEdit);
 
         QString text = q->toPlainText().remove(QChar::ObjectReplacementCharacter);
 
         if (text.isEmpty())
-            return;
+            return false;
 
         QTextCursor cursor = q->document()->find(text);
 
         if (cursor.isNull())
-            return;
+            return false;
 
         if (splitter.isEmpty()) {
-            return makeCrumb(cursor, text);
+            makeCrumb(cursor, text);
+
+            return true;
         }
 
         for (const QString &tag_text : text.split(splitter)) {
             makeCrumb(cursor, tag_text);
         }
+
+        return true;
     }
 
     bool editCrumb(const QPoint &mousePos)
@@ -359,6 +363,8 @@ public:
     QString splitter = ",";
     QStringList formatList;
     QMap<QString, DCrumbTextFormat> formats;
+
+    bool dualClickMakeCrumb = false;
 };
 
 QSizeF CrumbObjectInterface::intrinsicSize(QTextDocument *doc, int posInDocument, const QTextFormat &format)
@@ -581,6 +587,13 @@ DCrumbTextFormat DCrumbEdit::makeTextFormat(DCrumbEdit::CrumbType type) const
     return format;
 }
 
+bool DCrumbEdit::dualClickMakeCrumb() const Q_DECL_NOEXCEPT
+{
+    D_DC(DCrumbEdit);
+
+    return d->dualClickMakeCrumb;
+}
+
 bool DCrumbEdit::crumbReadOnly() const
 {
     D_DC(DCrumbEdit);
@@ -623,6 +636,13 @@ void DCrumbEdit::setSplitter(const QString &splitter)
     d->splitter = splitter;
 }
 
+void DCrumbEdit::setDualClickMakeCrumb(bool flag) Q_DECL_NOEXCEPT
+{
+    D_D(DCrumbEdit);
+
+    d->dualClickMakeCrumb = flag;
+}
+
 void DCrumbEdit::paintEvent(QPaintEvent *event)
 {
     QPainter p(viewport());
@@ -648,10 +668,13 @@ void DCrumbEdit::keyPressEvent(QKeyEvent *event)
 
 void DCrumbEdit::mouseDoubleClickEvent(QMouseEvent *event)
 {
+    D_D(DCrumbEdit);
+
+    if (d->dualClickMakeCrumb && d->makeCrumb())
+        return;
+
     if (crumbReadOnly())
         return QTextEdit::mouseDoubleClickEvent(event);
-
-    D_D(DCrumbEdit);
 
     if (!d->editCrumb(event->pos()))
         return QTextEdit::mouseDoubleClickEvent(event);

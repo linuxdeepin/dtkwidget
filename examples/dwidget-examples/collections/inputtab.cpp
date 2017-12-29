@@ -20,6 +20,7 @@
 #include "dfilechooseredit.h"
 #include "dipv4lineedit.h"
 #include "dspinbox.h"
+#include "dcrumbedit.h"
 
 #include <dthememanager.h>
 
@@ -89,6 +90,13 @@ InputTab::InputTab(QWidget *parent) : QLabel(parent)
     spinbox->resize(100, 22);
 
     spinbox->move(300, 50);
+
+
+    DTK_WIDGET_NAMESPACE::DCrumbEdit* crumbEdit = new DTK_WIDGET_NAMESPACE::DCrumbEdit(this);
+    crumbEdit->resize(100, 50);
+//    crumbEdit->setDualClickCreateCrumb(true);
+//    crumbEdit->setCrumbReadOnly(true);
+    crumbEdit->move(300, 100);
 
 //    searchEdit->setFocus();
     lineEditAlert->setFocus();
