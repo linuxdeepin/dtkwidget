@@ -55,6 +55,14 @@ QMAKE_PKGCONFIG_DESCRIPTION = Deepin Tool Kit Widget Module
 QMAKE_PKGCONFIG_INCDIR = $$includes.path
 QMAKE_PKGCONFIG_REQUIRES += dtkcore
 
+# CMake configure
+INC_DIR = $$replace(includes.path, "/", "\/")
+CMD = sed -i -E \'s/DTKWIDGET_INCLUDE_DIR \".*\"\\)$/DTKWIDGET_INCLUDE_DIR \"$${INC_DIR}\"\\)/\' ../cmake/DtkWidget/DtkWidgetConfig.cmake
+system($$CMD)
+
+cmake_config.path = $$LIB_INSTALL_DIR
+cmake_config.files = $$PWD/../cmake
+
 # add translations
 TRANSLATIONS += $$PWD/../translations/$${TARGET}2.ts \
                 $$PWD/../translations/$${TARGET}2_zh_CN.ts
@@ -62,5 +70,5 @@ TRANSLATIONS += $$PWD/../translations/$${TARGET}2.ts \
 translations.path = $$PREFIX/share/$${TARGET}/translations
 translations.files = $$PWD/../translations/*.qm
 
-INSTALLS += translations
+INSTALLS += translations cmake_config
 

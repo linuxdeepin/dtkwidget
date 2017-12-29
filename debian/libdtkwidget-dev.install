@@ -2,3 +2,4 @@ usr/lib/*/lib*.so
 usr/include
 usr/lib/*/pkgconfig/*.pc
 usr/lib/dtk2/*
+usr/lib/*/cmake/*/*.cmake
