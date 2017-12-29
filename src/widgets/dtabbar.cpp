@@ -115,6 +115,41 @@ public:
         qq->setFocusProxy(this);
     }
 
+    void moveTabOffset(int index, int offset)
+    {
+        QTabBarPrivate *d = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
+
+        if (!d->validIndex(index))
+            return;
+        d->tabList[index].dragOffset = offset;
+        layoutTab(index); // Make buttons follow tab
+        update();
+    }
+
+    struct TabBarAnimation : public QVariantAnimation {
+        TabBarAnimation(QTabBarPrivate::Tab *t,
+                        QTabBarPrivate *_priv,
+                        DTabBarPrivate *_dpriv)
+            : tab(t), priv(_priv), dpriv(_dpriv)
+        { setEasingCurve(QEasingCurve::InOutQuad); }
+
+        void updateCurrentValue(const QVariant &current) Q_DECL_OVERRIDE
+        {
+            dpriv->moveTabOffset(priv->tabList.indexOf(*tab), current.toInt());
+        }
+
+        void updateState(State, State newState) Q_DECL_OVERRIDE
+        {
+            if (newState == Stopped) dpriv->moveTabFinished(priv->tabList.indexOf(*tab));
+        }
+
+    private:
+        //these are needed for the callbacks
+        QTabBarPrivate::Tab *tab;
+        QTabBarPrivate *priv;
+        DTabBarPrivate *dpriv;
+    };
+
     QSize minimumSizeHint() const override;
 
     void paintEvent(QPaintEvent *e) override;
@@ -225,14 +260,15 @@ void DTabBarPrivate::slide(int from, int to)
         return;
     }
 
-//    if (!tab->animation)
-//        tab->animation = new QTabBarPrivate::Tab::TabBarAnimation(tab, d);
-//    tab->animation->setStartValue(tab->dragOffset);
-//    tab->animation->setEndValue(0);
-//    tab->animation->setDuration(ANIMATION_DURATION);
-//    tab->animation->start();
+    QTabBarPrivate::Tab *tab = &d->tabList[to];
 
-    moveTabFinished(to);
+    if (!tab->animation)
+        tab->animation = reinterpret_cast<QTabBarPrivate::Tab::TabBarAnimation*>(new TabBarAnimation(tab, d, this));
+    tab->animation->setStartValue(tab->dragOffset);
+    tab->animation->setEndValue(0);
+    tab->animation->setEasingCurve(QEasingCurve::OutCubic);
+    tab->animation->setDuration(ANIMATION_DURATION);
+    tab->animation->start();
 }
 
 void DTabBarPrivate::layoutTab(int index)
