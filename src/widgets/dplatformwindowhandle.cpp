@@ -154,6 +154,23 @@ bool DPlatformWindowHandle::setWindowBlurAreaByWM(QWidget *widget, const QList<Q
     return widget->windowHandle() && setWindowBlurAreaByWM(widget->windowHandle(), paths);
 }
 
+inline DPlatformWindowHandle::WMBlurArea operator *(const DPlatformWindowHandle::WMBlurArea &area, qreal scale)
+{
+    if (qFuzzyCompare(scale, 1.0))
+        return area;
+
+    DPlatformWindowHandle::WMBlurArea new_area;
+
+    new_area.x = qRound64(area.x * scale);
+    new_area.y = qRound64(area.y * scale);
+    new_area.width = qRound64(area.width * scale);
+    new_area.height = qRound64(area.height * scale);
+    new_area.xRadius = qRound64(area.xRadius * scale);
+    new_area.yRaduis = qRound64(area.yRaduis * scale);
+
+    return new_area;
+}
+
 bool DPlatformWindowHandle::setWindowBlurAreaByWM(QWindow *window, const QVector<DPlatformWindowHandle::WMBlurArea> &area)
 {
     if (!window) {
@@ -183,7 +200,37 @@ bool DPlatformWindowHandle::setWindowBlurAreaByWM(QWindow *window, const QVector
     format.setAlphaBufferSize(8);
     window->setFormat(format);
 
-    return reinterpret_cast<bool(*)(const quint32, const QVector<WMBlurArea>&)>(setWmBlurWindowBackgroundArea)(window->winId(), area);
+    const qreal device_ratio = window->devicePixelRatio();
+
+    if (qFuzzyCompare(device_ratio, 1.0)) {
+        return reinterpret_cast<bool(*)(const quint32, const QVector<WMBlurArea>&)>(setWmBlurWindowBackgroundArea)(window->winId(), area);
+    }
+
+    QVector<WMBlurArea> new_areas;
+
+    new_areas.reserve(area.size());
+
+    for (const WMBlurArea &a : area) {
+        new_areas.append(a * device_ratio);
+    }
+
+    return reinterpret_cast<bool(*)(const quint32, const QVector<WMBlurArea>&)>(setWmBlurWindowBackgroundArea)(window->winId(), new_areas);
+}
+
+inline QPainterPath operator *(const QPainterPath &path, qreal scale)
+{
+    if (qFuzzyCompare(1.0, scale))
+        return path;
+
+    QPainterPath new_path = path;
+
+    for (int i = 0; i < path.elementCount(); ++i) {
+        const QPainterPath::Element &e = path.elementAt(i);
+
+        new_path.setElementPositionAt(i, qRound(e.x * scale), qRound(e.y * scale));
+    }
+
+    return new_path;
 }
 
 bool DPlatformWindowHandle::setWindowBlurAreaByWM(QWindow *window, const QList<QPainterPath> &paths)
@@ -215,7 +262,21 @@ bool DPlatformWindowHandle::setWindowBlurAreaByWM(QWindow *window, const QList<Q
     format.setAlphaBufferSize(8);
     window->setFormat(format);
 
-    return reinterpret_cast<bool(*)(const quint32, const QList<QPainterPath>&)>(setWmBlurWindowBackgroundPathList)(window->winId(), paths);
+    const qreal device_ratio = window->devicePixelRatio();
+
+    if (qFuzzyCompare(device_ratio, 1.0)) {
+        return reinterpret_cast<bool(*)(const quint32, const QList<QPainterPath>&)>(setWmBlurWindowBackgroundPathList)(window->winId(), paths);
+    }
+
+    QList<QPainterPath> new_paths;
+
+    new_paths.reserve(paths.size());
+
+    for (const QPainterPath &p : paths) {
+        new_paths.append(p * device_ratio);
+    }
+
+    return reinterpret_cast<bool(*)(const quint32, const QList<QPainterPath>&)>(setWmBlurWindowBackgroundPathList)(window->winId(), new_paths);
 }
 
 bool DPlatformWindowHandle::connectWindowManagerChangedSignal(QObject *object, std::function<void ()> slot)
