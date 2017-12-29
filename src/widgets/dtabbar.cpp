@@ -326,10 +326,6 @@ void DTabBarPrivate::paintEvent(QPaintEvent *e)
     Q_UNUSED(e)
     D_Q(DTabBar);
 
-    QPainter pa(this);
-
-    pa.fillRect(rect(), Qt::red);
-
     QTabBarPrivate *d = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
 
     QStyleOptionTabBarBase optTabBase;
