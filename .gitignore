@@ -18,3 +18,5 @@ build*/
 
 # executeable files
 *.qm
+
+src/DtkWidgets

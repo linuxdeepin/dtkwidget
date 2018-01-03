@@ -38,7 +38,7 @@ win* {
 HEADERS += dtkwidget_global.h
 
 includes.path = $${DTK_INCLUDEPATH}/DWidget
-includes.files += $$PWD/dtkwidget_global.h
+includes.files += $$PWD/dtkwidget_global.h $$PWD/DtkWidgets
 
 include($$PWD/util/util.pri)
 include($$PWD/widgets/widgets.pri)
@@ -72,3 +72,36 @@ translations.files = $$PWD/../translations/*.qm
 
 INSTALLS += translations cmake_config
 
+# create DtkWidgets file
+defineTest(containIncludeFiles) {
+    header = $$absolute_path($$ARGS)
+    header_dir = $$quote($$dirname(header))
+
+    for (file, includes.files) {
+        file_ap = $$absolute_path($$file)
+        file_dir = $$quote($$dirname(file_ap))
+
+        isEqual(file_dir, $$header_dir):return(true)
+    }
+
+    return(false)
+}
+
+defineTest(updateDtkWidgetsFile) {
+    dtkwidgets_include_files = $$HEADERS
+    dtkwidgets_file_content = $$quote($${LITERAL_HASH}ifndef DTK_WIDGETS_MODULE_H)
+    dtkwidgets_file_content += $$quote($${LITERAL_HASH}defined DTK_WIDGETS_MODULE_H)
+
+    for(header, dtkwidgets_include_files) {
+        containIncludeFiles($$header) {
+            dtkwidgets_file_content += $$quote($${LITERAL_HASH}include \"$$basename(header)\")
+        }
+    }
+
+    dtkwidgets_file_content += $$quote($${LITERAL_HASH}endif)
+    !write_file($$PWD/DtkWidgets, dtkwidgets_file_content, exe):return(false)
+
+    return(true)
+}
+
+!updateDtkWidgetsFile():warning(Cannot create "DtkWidgets" header file)
