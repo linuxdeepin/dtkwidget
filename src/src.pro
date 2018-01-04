@@ -38,7 +38,10 @@ win* {
 HEADERS += dtkwidget_global.h
 
 includes.path = $${DTK_INCLUDEPATH}/DWidget
-includes.files += $$PWD/dtkwidget_global.h $$PWD/DtkWidgets
+includes.files += \
+    $$PWD/dtkwidget_global.h\
+    $$PWD/DtkWidgets\
+    $$PWD/dtkwidget_config.h
 
 include($$PWD/util/util.pri)
 include($$PWD/widgets/widgets.pri)
@@ -90,7 +93,7 @@ defineTest(containIncludeFiles) {
 defineTest(updateDtkWidgetsFile) {
     dtkwidgets_include_files = $$HEADERS
     dtkwidgets_file_content = $$quote($${LITERAL_HASH}ifndef DTK_WIDGETS_MODULE_H)
-    dtkwidgets_file_content += $$quote($${LITERAL_HASH}defined DTK_WIDGETS_MODULE_H)
+    dtkwidgets_file_content += $$quote($${LITERAL_HASH}define DTK_WIDGETS_MODULE_H)
 
     for(header, dtkwidgets_include_files) {
         containIncludeFiles($$header) {
@@ -99,9 +102,26 @@ defineTest(updateDtkWidgetsFile) {
     }
 
     dtkwidgets_file_content += $$quote($${LITERAL_HASH}endif)
-    !write_file($$PWD/DtkWidgets, dtkwidgets_file_content, exe):return(false)
+    !write_file($$PWD/DtkWidgets, dtkwidgets_file_content):return(false)
 
     return(true)
 }
 
 !updateDtkWidgetsFile():warning(Cannot create "DtkWidgets" header file)
+
+# create dtkwidget_config.h file
+defineTest(updateDtkWidgetConfigFile) {
+    for(file, includes.files) {
+        file = $$quote($$basename(file))
+
+        !isEqual(file, DtkWidgets):contains(file, D[A-Za-z0-9_]+) {
+            dtkwidget_config_content += $$quote($${LITERAL_HASH}define DTKWIDGET_CLASS_$$file)
+        }
+    }
+
+    !write_file($$PWD/dtkwidget_config.h, dtkwidget_config_content):return(false)
+
+    return(true)
+}
+
+!updateDtkWidgetConfigFile():warning(Cannot create "dtkwidget_config.h" header file)

@@ -20,3 +20,4 @@ build*/
 *.qm
 
 src/DtkWidgets
+src/dtkwidget_config.h

@@ -18,6 +18,7 @@
 #pragma once
 
 #include <dtkcore_global.h>
+#include <dtkwidget_config.h>
 
 #include <QtCore/QMetaMethod>
 
