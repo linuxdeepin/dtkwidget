@@ -80,6 +80,26 @@ void DMovableTabWidget::paintEvent(QPaintEvent *e)
     pa.drawPixmap(0, 0, m_pixmap);
 }
 
+class DTabBarAddButton : public QToolButton
+{
+public:
+    explicit DTabBarAddButton(QWidget *parent)
+        : QToolButton(parent) {}
+
+private:
+    void paintEvent(QPaintEvent *event) override;
+};
+
+void DTabBarAddButton::paintEvent(QPaintEvent *event)
+{
+    Q_UNUSED(event)
+
+    QStylePainter p(this);
+    QStyleOptionToolButton opt;
+    initStyleOption(&opt);
+    p.drawControl(static_cast<QStyle::ControlElement>(QStyle::CE_CustomBase + 1), opt);
+}
+
 class DTabBarPrivate : public QTabBar, public DObjectPrivate
 {
     Q_OBJECT
@@ -89,11 +109,11 @@ public:
     explicit DTabBarPrivate(DTabBar* qq)
       : QTabBar(qq)
       , DObjectPrivate(qq) {
-        addButton = new DImageButton(qq);
+        addButton = new DTabBarAddButton(qq);
         addButton->setObjectName("AddButton");
         addButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
-        connect(addButton, &DImageButton::clicked,
+        connect(addButton, &DTabBarAddButton::clicked,
                 qq, &DTabBar::tabAddRequested);
         connect(this, &QTabBar::tabMoved, this, [this] (int from, int to) {
             tabMinimumSize.move(from, to);
@@ -101,13 +121,36 @@ public:
         });
 
         setAcceptDrops(true);
-        setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
-        setChangeCurrentOnDrag(true);
+        setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
+
+        QTabBarPrivate *d = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
+
+        leftScrollButton = new QToolButton(qq);
+        rightScrollButton = new QToolButton(qq);
+
+        leftScrollButton->setVisible(d->leftB->isVisible());
+        leftScrollButton->setAutoRepeat(true);
+        leftScrollButton->setArrowType(Qt::LeftArrow);
+        leftScrollButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        rightScrollButton->setVisible(d->rightB->isVisible());
+        rightScrollButton->setAutoRepeat(true);
+        rightScrollButton->setArrowType(Qt::RightArrow);
+        rightScrollButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+
+        d->leftB->setFixedSize(0, 0);
+        d->leftB->installEventFilter(this);
+        d->rightB->setFixedSize(0, 0);
+        d->rightB->installEventFilter(this);
+
+        connect(leftScrollButton, &QToolButton::clicked, d->leftB, &QToolButton::click);
+        connect(rightScrollButton, &QToolButton::clicked, d->rightB, &QToolButton::click);
 
         QHBoxLayout *layout = new QHBoxLayout(qq);
 
         layout->setContentsMargins(0, 0, 0, 0);
         layout->setSpacing(0);
+        layout->addWidget(leftScrollButton);
+        layout->addWidget(rightScrollButton);
         layout->addWidget(this, Qt::AlignLeft);
         layout->addWidget(addButton, Qt::AlignVCenter);
         layout->addStretch();
@@ -150,6 +193,8 @@ public:
         DTabBarPrivate *dpriv;
     };
 
+    bool eventFilter(QObject *watched, QEvent *event) override;
+
     QSize minimumSizeHint() const override;
 
     void paintEvent(QPaintEvent *e) override;
@@ -158,6 +203,7 @@ public:
     void dragMoveEvent(QDragMoveEvent *e) override;
     void dropEvent(QDropEvent *e) override;
     void showEvent(QShowEvent *e) override;
+    void resizeEvent(QResizeEvent *e) override;
 
     QSize tabSizeHint(int index) const override;
     QSize minimumTabSizeHint(int index) const override;
@@ -165,6 +211,7 @@ public:
 
     void tabInserted(int index) override;
     void tabRemoved(int index) override;
+    void tabLayoutChange() override;
 
     Q_SLOT void startDrag(int tabIndex);
 
@@ -174,11 +221,16 @@ public:
     void moveTabFinished(int index);
     void layoutWidgets(int start = 0);
 
+    void updateTabSize();
+
     QList<QSize> tabMinimumSize;
     QList<QSize> tabMaximumSize;
     bool visibleAddButton = true;
-    DImageButton *addButton;
+    DTabBarAddButton *addButton;
     QPointer<QDrag> drag;
+
+    QToolButton *leftScrollButton;
+    QToolButton *rightScrollButton;
 };
 
 void DTabBarPrivate::startDrag(int tabIndex)
@@ -344,6 +396,71 @@ void DTabBarPrivate::layoutWidgets(int start)
     for (int i = start; i < count(); ++i) {
         layoutTab(i);
     }
+}
+
+void DTabBarPrivate::updateTabSize()
+{
+    QTabBarPrivate *d = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
+
+    bool is_vertical = verticalTabs(d->shape);
+
+    for (int i = 0; i < d->tabList.count(); ++i) {
+        QTabBarPrivate::Tab &tab = d->tabList[i];
+        const QSize &size_hint = tabSizeHint(i);
+        const QSize old_size = tab.rect.size();
+
+        if (is_vertical) {
+            tab.rect.setWidth(qMax(size_hint.width(), width()));
+        } else {
+            tab.rect.setHeight(qMax(size_hint.height(), height()));
+        }
+
+        if (tab.rect.size() != old_size)
+            layoutTab(i);
+    }
+}
+
+bool DTabBarPrivate::eventFilter(QObject *watched, QEvent *event)
+{
+    QTabBarPrivate *d = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
+
+    if (watched == d->leftB) {
+        switch (event->type()) {
+        case QEvent::Show:
+            leftScrollButton->show();
+            break;
+        case QEvent::Hide:
+            leftScrollButton->hide();
+            break;
+        case QEvent::EnabledChange:
+            leftScrollButton->setEnabled(d->leftB->isEnabled());
+            break;
+        case QEvent::UpdateRequest:
+            leftScrollButton->setArrowType(d->leftB->arrowType());
+            break;
+        default:
+            break;
+        }
+    } else if (watched == d->rightB) {
+        switch (event->type()) {
+        case QEvent::Show:
+            rightScrollButton->show();
+            break;
+        case QEvent::Hide:
+            rightScrollButton->hide();
+            break;
+        case QEvent::EnabledChange:
+            rightScrollButton->setEnabled(d->rightB->isEnabled());
+            break;
+        case QEvent::UpdateRequest:
+            rightScrollButton->setArrowType(d->rightB->arrowType());
+            break;
+        default:
+            break;
+        }
+    }
+
+    return QTabBar::eventFilter(watched, event);
 }
 
 QSize DTabBarPrivate::minimumSizeHint() const
@@ -571,8 +688,17 @@ void DTabBarPrivate::showEvent(QShowEvent *e)
     QTabBar::showEvent(e);
 }
 
+void DTabBarPrivate::resizeEvent(QResizeEvent *e)
+{
+    updateTabSize();
+
+    QTabBar::resizeEvent(e);
+}
+
 QSize DTabBarPrivate::tabSizeHint(int index) const
 {
+    D_QC(DTabBar);
+
     QSize size = QTabBar::tabSizeHint(index);
 
     if (index >= tabMaximumSize.count())
@@ -628,11 +754,18 @@ void DTabBarPrivate::tabRemoved(int index)
     QTabBar::tabInserted(index);
 }
 
+void DTabBarPrivate::tabLayoutChange()
+{
+    updateTabSize();
+
+    QTabBar::tabLayoutChange();
+}
+
 DTabBar::DTabBar(QWidget *parent)
     : QWidget(parent)
     , DObject(*new DTabBarPrivate(this))
 {
-    D_THEME_INIT_WIDGET(DTabBar)
+
 }
 
 void DTabBar::setTabMinimumSize(int index, const QSize &size)

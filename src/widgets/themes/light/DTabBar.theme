@@ -1,5 +1,0 @@
-Dtk--Widget--DImageButton#AddButton {
-    qproperty-normalPic: ":/images/light/images/spinner_increase_normal.png";
-    qproperty-hoverPic: ":/images/light/images/spinner_increase_hover.png";
-    qproperty-pressPic: ":/images/light/images/spinner_increase_press.png";
-}

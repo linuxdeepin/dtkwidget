@@ -1,5 +1,0 @@
-DImageButton#AddButton {
-    qproperty-normalPic: ":/images/dark/images/spinner_increase_normal.png";
-    qproperty-hoverPic: ":/images/dark/images/spinner_increase_hover.png";
-    qproperty-pressPic: ":/images/dark/images/spinner_increase_press.png";
-}
