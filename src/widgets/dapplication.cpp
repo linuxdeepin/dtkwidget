@@ -331,9 +331,9 @@ bool DApplication::setSingleInstance(const QString &key, SingleScope singleScope
 #endif
 
 #ifdef DTK_DBUS_SINGLEINSTANCE
-    return d->setSingleInstanceByDbus(key);
+    return d->setSingleInstanceByDbus(k);
 #else
-    return d->setSingleInstanceBySemaphore(key);
+    return d->setSingleInstanceBySemaphore(k);
 #endif
 }
 
