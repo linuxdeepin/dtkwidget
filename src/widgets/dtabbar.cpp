@@ -156,6 +156,12 @@ public:
         layout->addStretch();
 
         qq->setFocusProxy(this);
+
+        connect(this, &DTabBarPrivate::currentChanged, qq, &DTabBar::currentChanged);
+        connect(this, &DTabBarPrivate::tabCloseRequested, qq, &DTabBar::tabCloseRequested);
+        connect(this, &DTabBarPrivate::tabMoved, qq, &DTabBar::tabMoved);
+        connect(this, &DTabBarPrivate::tabBarClicked, qq, &DTabBar::tabBarClicked);
+        connect(this, &DTabBarPrivate::tabBarDoubleClicked, qq, &DTabBar::tabBarDoubleClicked);
     }
 
     void moveTabOffset(int index, int offset)
