@@ -94,10 +94,10 @@ void DComboBoxPrivate::restylePopupEnds()
 {
     D_Q(DComboBox);
 
-    QList<QWidget *> childs = q->findChildren<QWidget *>();
+    QList<QWidget *> children = q->findChildren<QWidget *>();
     bool isPopupTopEnd = true;
 
-    for (QWidget * w : childs) {
+    for (QWidget * w : children) {
         if (w->metaObject()->className() == QLatin1String("QComboBoxPrivateScroller")) {
             w->setFixedHeight(12);
             w->setStyleSheet("background: transparent");
