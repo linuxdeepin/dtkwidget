@@ -1,20 +1,20 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="id" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="bn" version="2.1">
 <context>
     <name>DAboutDialog</name>
     <message>
         <location filename="../src/widgets/daboutdialog.cpp" line="191"/>
         <source>Acknowledgements</source>
-        <translation>Ucapan terima kasih</translation>
+        <translation>প্রাপ্তি স্বীকার</translation>
     </message>
     <message>
         <location filename="../src/widgets/dapplication.cpp" line="712"/>
         <source>Version: %1</source>
-        <translation type="unfinished"/>
+        <translation>ভার্সন: %1</translation>
     </message>
     <message>
         <location filename="../src/widgets/dapplication.cpp" line="716"/>
         <source>%1 is released under %2</source>
-        <translation type="unfinished"/>
+        <translation>%1 রিলিজ হয়েছে %2 এর অধীনে</translation>
     </message>
 </context>
 <context>
@@ -110,12 +110,12 @@
     <message>
         <location filename="../src/widgets/dinputdialog.cpp" line="42"/>
         <source>Cancel</source>
-        <translation>Batal</translation>
+        <translation>বাতিল করুন</translation>
     </message>
     <message>
         <location filename="../src/widgets/dinputdialog.cpp" line="43"/>
         <source>Confirm</source>
-        <translation>Konfirmasi</translation>
+        <translation>নিশ্চিত করুন</translation>
     </message>
 </context>
 <context>
@@ -123,12 +123,12 @@
     <message>
         <location filename="../src/widgets/dshortcutedit.cpp" line="31"/>
         <source>Please input a new shortcut</source>
-        <translation>Silakan masukan pintasan baru</translation>
+        <translation>দয়াকরে নতুন শর্টকাট চাপুন</translation>
     </message>
     <message>
         <location filename="../src/widgets/dshortcutedit.cpp" line="102"/>
         <source>None</source>
-        <translation>Tidak ada</translation>
+        <translation>কোনোটিই নয়</translation>
     </message>
 </context>
 <context>
@@ -136,7 +136,7 @@
     <message>
         <location filename="../src/widgets/dsimplelistview.cpp" line="1190"/>
         <source>No search result</source>
-        <translation type="unfinished"/>
+        <translation>অনুসন্ধানের কোনো ফলাফল নেই</translation>
     </message>
 </context>
 <context>
@@ -144,7 +144,7 @@
     <message>
         <location filename="../src/widgets/private/settings/content.cpp" line="189"/>
         <source>Restore Defaults</source>
-        <translation type="unfinished"/>
+        <translation>পূর্বনির্ধারিত জিনিসে ফিরে যান</translation>
     </message>
 </context>
 <context>
@@ -152,7 +152,7 @@
     <message>
         <location filename="../src/widgets/private/settings/shortcutedit.cpp" line="119"/>
         <source>Please enter a new shortcut</source>
-        <translation type="unfinished"/>
+        <translation>দয়াকরে নতুন শর্টকাট চাপুন</translation>
     </message>
 </context>
 <context>
@@ -160,17 +160,17 @@
     <message>
         <location filename="../src/widgets/dtitlebar.cpp" line="449"/>
         <source>Help</source>
-        <translation>Bantuan</translation>
+        <translation>সাহায্য</translation>
     </message>
     <message>
         <location filename="../src/widgets/dtitlebar.cpp" line="456"/>
         <source>About</source>
-        <translation>Tentang</translation>
+        <translation>সম্পর্কে</translation>
     </message>
     <message>
         <location filename="../src/widgets/dtitlebar.cpp" line="463"/>
         <source>Exit</source>
-        <translation>Keluar</translation>
+        <translation>বের হয়ে যান</translation>
     </message>
 </context>
 </TS>

@@ -1,20 +1,20 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="id" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="az" version="2.1">
 <context>
     <name>DAboutDialog</name>
     <message>
         <location filename="../src/widgets/daboutdialog.cpp" line="191"/>
         <source>Acknowledgements</source>
-        <translation>Ucapan terima kasih</translation>
+        <translation>Təşəkkürlər</translation>
     </message>
     <message>
         <location filename="../src/widgets/dapplication.cpp" line="712"/>
         <source>Version: %1</source>
-        <translation type="unfinished"/>
+        <translation>Versiya: %1</translation>
     </message>
     <message>
         <location filename="../src/widgets/dapplication.cpp" line="716"/>
         <source>%1 is released under %2</source>
-        <translation type="unfinished"/>
+        <translation>%1,%2 altında buraxılır</translation>
     </message>
 </context>
 <context>
@@ -110,12 +110,12 @@
     <message>
         <location filename="../src/widgets/dinputdialog.cpp" line="42"/>
         <source>Cancel</source>
-        <translation>Batal</translation>
+        <translation>Ləğv et</translation>
     </message>
     <message>
         <location filename="../src/widgets/dinputdialog.cpp" line="43"/>
         <source>Confirm</source>
-        <translation>Konfirmasi</translation>
+        <translation>Təsdiq edin</translation>
     </message>
 </context>
 <context>
@@ -123,12 +123,12 @@
     <message>
         <location filename="../src/widgets/dshortcutedit.cpp" line="31"/>
         <source>Please input a new shortcut</source>
-        <translation>Silakan masukan pintasan baru</translation>
+        <translation>Xahiş edirik yeni bir kısayol daxil edin</translation>
     </message>
     <message>
         <location filename="../src/widgets/dshortcutedit.cpp" line="102"/>
         <source>None</source>
-        <translation>Tidak ada</translation>
+        <translation>Yoxdur</translation>
     </message>
 </context>
 <context>
@@ -136,7 +136,7 @@
     <message>
         <location filename="../src/widgets/dsimplelistview.cpp" line="1190"/>
         <source>No search result</source>
-        <translation type="unfinished"/>
+        <translation>Axtarış nəticəsi yoxdur</translation>
     </message>
 </context>
 <context>
@@ -144,7 +144,7 @@
     <message>
         <location filename="../src/widgets/private/settings/content.cpp" line="189"/>
         <source>Restore Defaults</source>
-        <translation type="unfinished"/>
+        <translation>Standartları bərpa edin</translation>
     </message>
 </context>
 <context>
@@ -152,7 +152,7 @@
     <message>
         <location filename="../src/widgets/private/settings/shortcutedit.cpp" line="119"/>
         <source>Please enter a new shortcut</source>
-        <translation type="unfinished"/>
+        <translation>Xahiş edirik yeni bir kısayol daxil edin</translation>
     </message>
 </context>
 <context>
@@ -160,17 +160,17 @@
     <message>
         <location filename="../src/widgets/dtitlebar.cpp" line="449"/>
         <source>Help</source>
-        <translation>Bantuan</translation>
+        <translation>Kömək</translation>
     </message>
     <message>
         <location filename="../src/widgets/dtitlebar.cpp" line="456"/>
         <source>About</source>
-        <translation>Tentang</translation>
+        <translation>Haqqında</translation>
     </message>
     <message>
         <location filename="../src/widgets/dtitlebar.cpp" line="463"/>
         <source>Exit</source>
-        <translation>Keluar</translation>
+        <translation>Çıxış</translation>
     </message>
 </context>
 </TS>

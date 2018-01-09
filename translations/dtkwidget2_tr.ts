@@ -2,19 +2,107 @@
 <context>
     <name>DAboutDialog</name>
     <message>
-        <location filename="../src/widgets/daboutdialog.cpp" line="137"/>
+        <location filename="../src/widgets/daboutdialog.cpp" line="191"/>
         <source>Acknowledgements</source>
         <translation>Teşekkürler</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dapplication.cpp" line="568"/>
+        <location filename="../src/widgets/dapplication.cpp" line="712"/>
         <source>Version: %1</source>
         <translation>Sürüm: %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dapplication.cpp" line="572"/>
+        <location filename="../src/widgets/dapplication.cpp" line="716"/>
         <source>%1 is released under %2</source>
         <translation>%2 altında %1 yayınlandı</translation>
+    </message>
+</context>
+<context>
+    <name>DCrumbEdit</name>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="530"/>
+        <source>Black</source>
+        <translation>Siyah</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="533"/>
+        <source>White</source>
+        <translation>Beyaz</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="536"/>
+        <source>Dark Gray</source>
+        <translation>Koyu Gri</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="539"/>
+        <source>Gray</source>
+        <translation>Gri</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="542"/>
+        <source>Light Gray</source>
+        <translation>Açık Gri</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="545"/>
+        <source>Red</source>
+        <translation>Kırmızı</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="548"/>
+        <source>Green</source>
+        <translation>Yeşil</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="551"/>
+        <source>Blue</source>
+        <translation>Mavi</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="554"/>
+        <source>Cyan</source>
+        <translation>Deniz Mavisi</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="557"/>
+        <source>Magenta</source>
+        <translation>Eflatun</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="560"/>
+        <source>Yellow</source>
+        <translation>Sarı</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="563"/>
+        <source>Dark Red</source>
+        <translation>Koyu Kırmızı</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="566"/>
+        <source>Dark Green</source>
+        <translation>Koyu Yeşil</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="569"/>
+        <source>Dark Blue</source>
+        <translation>Koyu Mavi</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="572"/>
+        <source>Dark Cyan</source>
+        <translation>Koyu Deniz Mavisi</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="575"/>
+        <source>Dark Magenta</source>
+        <translation>Koyu Eflatun</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="578"/>
+        <source>Dark Yellow</source>
+        <translation>Koyu Sarı</translation>
     </message>
 </context>
 <context>
@@ -46,7 +134,7 @@
 <context>
     <name>DSimpleListView</name>
     <message>
-        <location filename="../src/widgets/dsimplelistview.cpp" line="1082"/>
+        <location filename="../src/widgets/dsimplelistview.cpp" line="1190"/>
         <source>No search result</source>
         <translation>Arama sonucu yok</translation>
     </message>
@@ -54,7 +142,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/widgets/private/settings/content.cpp" line="181"/>
+        <location filename="../src/widgets/private/settings/content.cpp" line="189"/>
         <source>Restore Defaults</source>
         <translation>Varsayılanları Geri Yükle</translation>
     </message>
@@ -62,7 +150,7 @@
 <context>
     <name>ShortcutEdit</name>
     <message>
-        <location filename="../src/widgets/private/settings/shortcutedit.cpp" line="107"/>
+        <location filename="../src/widgets/private/settings/shortcutedit.cpp" line="119"/>
         <source>Please enter a new shortcut</source>
         <translation>Lütfen yeni bir kısayol giriniz</translation>
     </message>
@@ -70,17 +158,17 @@
 <context>
     <name>TitleBarMenu</name>
     <message>
-        <location filename="../src/widgets/dtitlebar.cpp" line="342"/>
+        <location filename="../src/widgets/dtitlebar.cpp" line="449"/>
         <source>Help</source>
         <translation>Yardım</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dtitlebar.cpp" line="349"/>
+        <location filename="../src/widgets/dtitlebar.cpp" line="456"/>
         <source>About</source>
         <translation>Hakkında</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dtitlebar.cpp" line="356"/>
+        <location filename="../src/widgets/dtitlebar.cpp" line="463"/>
         <source>Exit</source>
         <translation>Çık</translation>
     </message>

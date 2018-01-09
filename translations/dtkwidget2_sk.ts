@@ -2,19 +2,107 @@
 <context>
     <name>DAboutDialog</name>
     <message>
-        <location filename="../src/widgets/daboutdialog.cpp" line="137"/>
+        <location filename="../src/widgets/daboutdialog.cpp" line="191"/>
         <source>Acknowledgements</source>
         <translation>Poďakovanie</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dapplication.cpp" line="568"/>
+        <location filename="../src/widgets/dapplication.cpp" line="712"/>
         <source>Version: %1</source>
         <translation>Verzia: %1</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dapplication.cpp" line="572"/>
+        <location filename="../src/widgets/dapplication.cpp" line="716"/>
         <source>%1 is released under %2</source>
         <translation>%1 je vydaná pod %2</translation>
+    </message>
+</context>
+<context>
+    <name>DCrumbEdit</name>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="530"/>
+        <source>Black</source>
+        <translation>Čierna</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="533"/>
+        <source>White</source>
+        <translation>Biela</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="536"/>
+        <source>Dark Gray</source>
+        <translation>Tmavosivá</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="539"/>
+        <source>Gray</source>
+        <translation>Sivá</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="542"/>
+        <source>Light Gray</source>
+        <translation>Svetlosivá</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="545"/>
+        <source>Red</source>
+        <translation>Červená</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="548"/>
+        <source>Green</source>
+        <translation>Zelená</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="551"/>
+        <source>Blue</source>
+        <translation>Modrá</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="554"/>
+        <source>Cyan</source>
+        <translation>Tyrkysová</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="557"/>
+        <source>Magenta</source>
+        <translation>Purpurová</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="560"/>
+        <source>Yellow</source>
+        <translation>Žltá</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="563"/>
+        <source>Dark Red</source>
+        <translation>Tmavočervená</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="566"/>
+        <source>Dark Green</source>
+        <translation>Tmavozelená</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="569"/>
+        <source>Dark Blue</source>
+        <translation>Tmavomodrá</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="572"/>
+        <source>Dark Cyan</source>
+        <translation>Tmavotyrkysová</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="575"/>
+        <source>Dark Magenta</source>
+        <translation>Tmavopurpurová</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/dcrumbedit.cpp" line="578"/>
+        <source>Dark Yellow</source>
+        <translation>Tmavožltá</translation>
     </message>
 </context>
 <context>
@@ -46,7 +134,7 @@
 <context>
     <name>DSimpleListView</name>
     <message>
-        <location filename="../src/widgets/dsimplelistview.cpp" line="1082"/>
+        <location filename="../src/widgets/dsimplelistview.cpp" line="1190"/>
         <source>No search result</source>
         <translation>Žiadny výsledok vyhľadávania</translation>
     </message>
@@ -54,7 +142,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/widgets/private/settings/content.cpp" line="181"/>
+        <location filename="../src/widgets/private/settings/content.cpp" line="189"/>
         <source>Restore Defaults</source>
         <translation>Obnoviť predvolené nastavenia</translation>
     </message>
@@ -62,7 +150,7 @@
 <context>
     <name>ShortcutEdit</name>
     <message>
-        <location filename="../src/widgets/private/settings/shortcutedit.cpp" line="107"/>
+        <location filename="../src/widgets/private/settings/shortcutedit.cpp" line="119"/>
         <source>Please enter a new shortcut</source>
         <translation>Zadajte novú skratku</translation>
     </message>
@@ -70,17 +158,17 @@
 <context>
     <name>TitleBarMenu</name>
     <message>
-        <location filename="../src/widgets/dtitlebar.cpp" line="342"/>
+        <location filename="../src/widgets/dtitlebar.cpp" line="449"/>
         <source>Help</source>
         <translation>Pomoc</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dtitlebar.cpp" line="349"/>
+        <location filename="../src/widgets/dtitlebar.cpp" line="456"/>
         <source>About</source>
         <translation>O</translation>
     </message>
     <message>
-        <location filename="../src/widgets/dtitlebar.cpp" line="356"/>
+        <location filename="../src/widgets/dtitlebar.cpp" line="463"/>
         <source>Exit</source>
         <translation>Ukončiť</translation>
     </message>

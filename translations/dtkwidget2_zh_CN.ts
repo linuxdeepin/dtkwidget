@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="zh_CN">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_CN" version="2.1">
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -136,8 +134,9 @@
 <context>
     <name>DSimpleListView</name>
     <message>
+        <location filename="../src/widgets/dsimplelistview.cpp" line="1190"/>
         <source>No search result</source>
-        <translation type="vanished">无搜索结果</translation>
+        <translation>无搜索结果</translation>
     </message>
 </context>
 <context>
@@ -146,11 +145,6 @@
         <location filename="../src/widgets/private/settings/content.cpp" line="189"/>
         <source>Restore Defaults</source>
         <translation>恢复默认设置</translation>
-    </message>
-    <message>
-        <location filename="../src/widgets/dsimplelistview.cpp" line="1190"/>
-        <source>No search result</source>
-        <translation>无搜索结果</translation>
     </message>
 </context>
 <context>
