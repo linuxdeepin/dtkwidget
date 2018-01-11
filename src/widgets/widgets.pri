@@ -108,7 +108,9 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dsettingswidgetfactory.h \
     $$PWD/dspinner.h \
     $$PWD/dcrumbedit.h \
-    $$PWD/dtabbar.h
+    $$PWD/dtabbar.h \
+    $$PWD/dsuggestbutton.h \
+    $$PWD/dstyleoption.h
 
 SOURCES += $$PWD/dslider.cpp \
     $$PWD/dthememanager.cpp \
@@ -185,7 +187,9 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dsettingswidgetfactory.cpp \
     $$PWD/dspinner.cpp \
     $$PWD/dcrumbedit.cpp \
-    $$PWD/dtabbar.cpp
+    $$PWD/dtabbar.cpp \
+    $$PWD/dsuggestbutton.cpp \
+    $$PWD/dstyleoption.cpp
 
 RESOURCES += \
     $$PWD/themes/dui_theme_dark.qrc \
@@ -221,6 +225,8 @@ includes.files += \
     $$PWD/DSettingsDialog \
     $$PWD/DSpinner \
     $$PWD/DCrumbEdit \
-    $$PWD/DTabBar
+    $$PWD/DTabBar \
+    $$PWD/DSuggestButton \
+    $$PWD/DStyleOption
 
 
