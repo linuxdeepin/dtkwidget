@@ -59,6 +59,7 @@
 #ifdef Q_OS_LINUX
 #include <QDBusInterface>
 #include <QDBusReply>
+#include <QDBusPendingCall>
 #include "startupnotificationmonitor.h"
 #endif
 
@@ -270,8 +271,16 @@ bool DApplicationPrivate::isUserManualExists()
     QDBusInterface manualSearch("com.deepin.Manual.Search",
                                 "/com/deepin/Manual/Search",
                                 "com.deepin.Manual.Search");
-    QDBusReply<bool> reply = manualSearch.call("ManualExists", qApp->applicationName());
-    return reply.value();
+    if (manualSearch.isValid()) {
+        QDBusReply<bool> reply = manualSearch.call("ManualExists", qApp->applicationName());
+        return reply.value();
+    } else {
+        const QString appName = qApp->applicationName();
+        bool dmanAppExists = QFile::exists("/usr/bin/dman");
+        bool dmanDataExists = QFile::exists("/usr/share/dman/" + appName) ||
+                              QFile::exists("/app/share/dman/" + appName);
+        return  dmanAppExists && dmanDataExists;
+    }
 #else
     return false;
 #endif
@@ -648,11 +657,35 @@ void DApplication::setVisibleMenuIcon(bool value)
 void DApplication::handleHelpAction()
 {
 #ifdef Q_OS_LINUX
+    QString appid = applicationName();
+    if (!qgetenv("FLATPAK_APPID").isEmpty()) {
+        appid = qgetenv("FLATPAK_APPID");
+    }
+
     QDBusInterface manual("com.deepin.Manual.Open",
                           "/com/deepin/Manual/Open",
                           "com.deepin.Manual.Open");
-    manual.asyncCall("ShowManual", qApp->applicationName());
+    if (manual.isValid()) {
+        manual.asyncCall("ShowManual", appid);
+        return;
+    }
+
+#ifdef DTK_DMAN_PORTAL
+    QDBusInterface legacydman("com.deepin.dman",
+                              "/com/deepin/dman",
+                              "com.deepin.dman");
+    if (legacydman.isValid()) {
+        legacydman.asyncCall("ShowManual", appid);
+        return;
+    }
+
+    qWarning() << "can not call dman dbus interface";
 #else
+    QProcess::startDetached("dman", QStringList() << appid);
+#endif
+
+#else
+    qWarning() << "not support dman now";
 #endif
 }
 
