@@ -84,7 +84,6 @@ QLabel#VLine{
 QLabel#TitleLabel{
     padding-top: 2px;
     padding-bottom: 2px;
-    font-size: 12px;
     color: #000000;
 }
 
@@ -92,7 +91,6 @@ QLabel#MessageLabel{
     padding-top: 2px;
     padding-bottom: 2px;
     color: #444444;
-    font-size: 11px;
 }
 
 QLabel#TaskTitleLabel{
