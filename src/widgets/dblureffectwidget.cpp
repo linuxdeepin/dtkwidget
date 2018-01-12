@@ -198,6 +198,8 @@ DBlurEffectWidget::DBlurEffectWidget(QWidget *parent)
     : QWidget(parent)
     , DObject(*new DBlurEffectWidgetPrivate(this))
 {
+    setAttribute(Qt::WA_TranslucentBackground);
+
     if (!parent) {
         D_D(DBlurEffectWidget);
 
