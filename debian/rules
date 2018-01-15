@@ -2,22 +2,35 @@
 DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/default.mk
 export QT_SELECT = qt5
+
 DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 
 version=$(shell dpkg-query --showformat='$${Version}' --show libdframeworkdbus-dev)
 COMPARE_VERSION=$(shell dpkg --compare-versions 0.4.2-1 ge-nl $(version); echo $$?)
 
+ifneq (,$(wildcard .git/config))
+	CONFIG_VERSION=
+else
+	VERSION = $(shell dpkg-parsechangelog -ldebian/changelog -SVersion)
+	_PACK_VER = $(shell echo $(VERSION) | awk -F'[+_~-]' '{print $$1}')
+	_BUILD_VER = $(shell echo $(VERSION) | awk -F'[+_~-]' '{print $$2}' | sed 's/[^0-9]//g')
+	ifeq ($(_BUILD_VER),)
+		CONFIG_VERSION = $(_PACK_VER)
+	else
+		CONFIG_VERSION = $(_PACK_VER).$(_BUILD_VER)
+	endif
+endif
 %:
 	dh $@ --parallel
 
 ifeq ($(COMPARE_VERSION), 1)
 override_dh_auto_configure:
-	dh_auto_configure -- LIB_INSTALL_DIR=/usr/lib/$(DEB_HOST_MULTIARCH)
+	dh_auto_configure -- LIB_INSTALL_DIR=/usr/lib/$(DEB_HOST_MULTIARCH) VERSION=$(CONFIG_VERSION)
 endif
 
 ifeq ($(COMPARE_VERSION), 0)
 override_dh_auto_configure:
-	dh_auto_configure -- LIB_INSTALL_DIR=/usr/lib/$(DEB_HOST_MULTIARCH) DBUS_VERSION_0_4_2=YES
+	dh_auto_configure -- LIB_INSTALL_DIR=/usr/lib/$(DEB_HOST_MULTIARCH) VERSION=$(CONFIG_VERSION) DBUS_VERSION_0_4_2=YES
 endif
 
 override_dh_makeshlibs:
