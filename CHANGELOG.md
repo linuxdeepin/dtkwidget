@@ -1,3 +1,29 @@
+<a name="2.0.6"></a>
+## 2.0.6 (2018-01-15)
+
+
+#### Bug Fixes
+
+*   blur effect widget not set WA_TranslucentBackground ([572ca1fc](https://github.com/linuxdeepin/dtkwidget/commit/572ca1fcb6cba67fe85e8f10fd69e32107a98c04))
+*   connect signals for DTabBar ([44057f46](https://github.com/linuxdeepin/dtkwidget/commit/44057f462860ce11cdb58477c083ab26cc37410d))
+*   blur area not scale on not use dxcb window ([d990cdf6](https://github.com/linuxdeepin/dtkwidget/commit/d990cdf66f3bf62315c14265d4e7989d332eb7b9))
+*   memory leak in DPictureSequenceView ([4693754f](https://github.com/linuxdeepin/dtkwidget/commit/4693754f5cf3702cb58c26d87a73402294238468))
+* **DDialog:**  reset DLineEdit theme error ([bc6b8f33](https://github.com/linuxdeepin/dtkwidget/commit/bc6b8f33d8cfe300d21ea03b95dedeeecc610803))
+
+#### Features
+
+*   support new dman interface ([a3e46a46](https://github.com/linuxdeepin/dtkwidget/commit/a3e46a46d6f7454a6100149e9880b614202dca83))
+*   add DSuggestButton and DStyleOption ([929f2154](https://github.com/linuxdeepin/dtkwidget/commit/929f2154808d4b926200daadcc5f7a5d20225e10))
+*   not fixed font size of DDialog ([0eb76154](https://github.com/linuxdeepin/dtkwidget/commit/0eb761540d3c8581f33aa2a67abaeee95f2812e0))
+*   DTabBar add scroll buttons ([2f44cd29](https://github.com/linuxdeepin/dtkwidget/commit/2f44cd29ed46e3139ff0f02e3095f0249579ee47))
+*   add the "dtkwidget_global.h" header file ([de47120c](https://github.com/linuxdeepin/dtkwidget/commit/de47120c6c93acfc3462d1dc52debb5310537381))
+*   add the "DtkWidgets" header file ([b223577e](https://github.com/linuxdeepin/dtkwidget/commit/b223577e78789d7b6ab21dea8a4596ab95c9a55c))
+*   add animation for DTabBar on drag move tabs ([ec3f6272](https://github.com/linuxdeepin/dtkwidget/commit/ec3f6272d5f2f16297c4d48adb1d92e415d0eda4))
+*   support dual-click to make crumb ([b3eaa0e8](https://github.com/linuxdeepin/dtkwidget/commit/b3eaa0e85a7b9171dccdac074dfc94ba7560ad7c))
+*   add the DTabBar widget ([82a45b61](https://github.com/linuxdeepin/dtkwidget/commit/82a45b6130ad98699d3dc424210611d9fdae0751))
+
+
+
 <a name="2.0.5.3"></a>
 ## 2.0.5.3 (2017-12-27)
 
