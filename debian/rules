@@ -5,9 +5,6 @@ export QT_SELECT = qt5
 
 DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 
-version=$(shell dpkg-query --showformat='$${Version}' --show libdframeworkdbus-dev)
-COMPARE_VERSION=$(shell dpkg --compare-versions 0.4.2-1 ge-nl $(version); echo $$?)
-
 ifneq (,$(wildcard .git/config))
 	CONFIG_VERSION=
 else
@@ -23,15 +20,8 @@ endif
 %:
 	dh $@ --parallel
 
-ifeq ($(COMPARE_VERSION), 1)
 override_dh_auto_configure:
 	dh_auto_configure -- LIB_INSTALL_DIR=/usr/lib/$(DEB_HOST_MULTIARCH) VERSION=$(CONFIG_VERSION)
-endif
-
-ifeq ($(COMPARE_VERSION), 0)
-override_dh_auto_configure:
-	dh_auto_configure -- LIB_INSTALL_DIR=/usr/lib/$(DEB_HOST_MULTIARCH) VERSION=$(CONFIG_VERSION) DBUS_VERSION_0_4_2=YES
-endif
 
 override_dh_makeshlibs:
 	dh_makeshlibs -V
