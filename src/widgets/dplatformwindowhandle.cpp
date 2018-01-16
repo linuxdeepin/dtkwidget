@@ -52,6 +52,7 @@ DEFINE_CONST_CHAR(setWmBlurWindowBackgroundArea);
 DEFINE_CONST_CHAR(setWmBlurWindowBackgroundPathList);
 DEFINE_CONST_CHAR(setWmBlurWindowBackgroundMaskImage);
 DEFINE_CONST_CHAR(setWindowProperty);
+DEFINE_CONST_CHAR(pluginVersion);
 
 static void setWindowProperty(QWindow *window, const char *name, const QVariant &value)
 {
@@ -89,6 +90,20 @@ DPlatformWindowHandle::DPlatformWindowHandle(QWidget *widget, QObject *parent)
     m_window->installEventFilter(this);
 }
 
+QString DPlatformWindowHandle::pluginVersion()
+{
+    QFunctionPointer pv = 0;
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+    pv = qApp->platformFunction(_pluginVersion);
+#endif
+
+    if (Q_UNLIKELY(!pv))
+        return QString();
+
+    return reinterpret_cast<QString(*)()>(pv)();
+}
+
 void DPlatformWindowHandle::enableDXcbForWindow(QWidget *widget)
 {
     Q_ASSERT_X(DApplication::isDXcbPlatform(), "DPlatformWindowHandler:",
@@ -103,8 +118,12 @@ void DPlatformWindowHandle::enableDXcbForWindow(QWidget *widget)
         Q_ASSERT_X(!window->windowHandle(), "DPlatformWindowHandler:",
                    "Must be called before window handle has been created. See also QWidget::windowHandle()");
 
-        /// TODO: Avoid call parentWidget()->enforceNativeChildren().
-        qApp->setAttribute(Qt::AA_DontCreateNativeWidgetSiblings, true);
+        // dxcb version < 1.1.6
+        if (pluginVersion().isEmpty()) {
+            /// TODO: Avoid call parentWidget()->enforceNativeChildren().
+            qApp->setAttribute(Qt::AA_DontCreateNativeWidgetSiblings, true);
+        }
+
         window->setAttribute(Qt::WA_NativeWindow);
 
         Q_ASSERT_X(window->windowHandle(), "DPlatformWindowHandler:",

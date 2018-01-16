@@ -58,6 +58,8 @@ public:
     explicit DPlatformWindowHandle(QWindow *window, QObject *parent = 0);
     explicit DPlatformWindowHandle(QWidget *widget, QObject *parent = 0);
 
+    static QString pluginVersion();
+
     static void enableDXcbForWindow(QWidget *widget);
     static void enableDXcbForWindow(QWindow *window);
     static bool isEnabledDXcb(const QWidget *widget);
