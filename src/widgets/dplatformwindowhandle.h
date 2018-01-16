@@ -52,6 +52,7 @@ class DPlatformWindowHandle : public QObject
     Q_PROPERTY(bool enableSystemMove READ enableSystemMove WRITE setEnableSystemMove NOTIFY enableSystemMoveChanged)
     Q_PROPERTY(bool enableBlurWindow READ enableBlurWindow WRITE setEnableBlurWindow NOTIFY enableBlurWindowChanged)
     Q_PROPERTY(bool autoInputMaskByClipPath READ autoInputMaskByClipPath WRITE setAutoInputMaskByClipPath NOTIFY autoInputMaskByClipPathChanged)
+    Q_PROPERTY(WId realWindowId READ realWindowId CONSTANT)
 
 public:
     explicit DPlatformWindowHandle(QWindow *window, QObject *parent = 0);
@@ -99,6 +100,8 @@ public:
     bool enableSystemMove() const;
     bool enableBlurWindow() const;
     bool autoInputMaskByClipPath() const;
+
+    WId realWindowId() const;
 
 public Q_SLOTS:
     void setWindowRadius(int windowRadius);

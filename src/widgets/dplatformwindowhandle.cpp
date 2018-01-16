@@ -377,6 +377,11 @@ bool DPlatformWindowHandle::autoInputMaskByClipPath() const
     return m_window->property(_autoInputMaskByClipPath).toBool();
 }
 
+WId DPlatformWindowHandle::realWindowId() const
+{
+    return qvariant_cast<WId>(m_window->property("_d_real_content_window"));
+}
+
 void DPlatformWindowHandle::setWindowRadius(int windowRadius)
 {
     setWindowProperty(m_window, _windowRadius, windowRadius);
