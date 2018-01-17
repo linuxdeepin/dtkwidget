@@ -22,8 +22,10 @@
 #include <QScreen>
 #include <QPainter>
 #include <QWidget>
+#include <QLabel>
 #include <QDebug>
 
+#include "anchors.h"
 #include "dialog_constants.h"
 #include "dabstractdialog.h"
 #include "private/dabstractdialogprivate_p.h"
@@ -60,6 +62,13 @@ void DAbstractDialogPrivate::init()
 //            bgBlurWidget->setVisible(DPlatformWindowHandle::hasBlurWindow());
 //        });
     }
+
+    windowTitle = new QLabel(q);
+    windowTitle->setAlignment(Qt::AlignCenter);
+    AnchorsBase::setAnchor(windowTitle, Qt::AnchorHorizontalCenter, q, Qt::AnchorHorizontalCenter);
+    q->connect(q,&QWidget::windowTitleChanged, windowTitle,[=](const QString &title){
+        windowTitle->setText(title);
+    });
 
     q->setWindowFlags(q->windowFlags() | Qt::FramelessWindowHint  | Qt::WindowCloseButtonHint);
 
