@@ -87,7 +87,9 @@ DPlatformWindowHandle::DPlatformWindowHandle(QWidget *widget, QObject *parent)
     enableDXcbForWindow(widget);
 
     m_window = widget->window()->windowHandle();
-    m_window->installEventFilter(this);
+
+    if (m_window)
+        m_window->installEventFilter(this);
 }
 
 QString DPlatformWindowHandle::pluginVersion()
@@ -106,45 +108,49 @@ QString DPlatformWindowHandle::pluginVersion()
 
 void DPlatformWindowHandle::enableDXcbForWindow(QWidget *widget)
 {
-    Q_ASSERT_X(DApplication::isDXcbPlatform(), "DPlatformWindowHandler:",
-               "Must call DPlatformWindowHandler::loadDXcbPlugin before");
+    if (!DApplication::isDXcbPlatform())
+        return;
 
     QWidget *window = widget->window();
+    QWindow *handle = window->windowHandle();
 
-    if (window->windowHandle()) {
-        Q_ASSERT_X(window->windowHandle()->property(_useDxcb).toBool(), "DPlatformWindowHandler:",
-                   "Must be called before window handle has been created. See also QWidget::windowHandle()");
-    } else {
-        Q_ASSERT_X(!window->windowHandle(), "DPlatformWindowHandler:",
-                   "Must be called before window handle has been created. See also QWidget::windowHandle()");
+    if (!handle) {
+        bool save_flag = qApp->testAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
+        qApp->setAttribute(Qt::AA_DontCreateNativeWidgetSiblings, true);
+        window->setAttribute(Qt::WA_NativeWindow);
+        handle = window->windowHandle();
+        window->setAttribute(Qt::WA_NativeWindow, false);
 
-        // dxcb version < 1.1.6
-        if (pluginVersion().isEmpty()) {
+        // dxcb version >= 1.1.6
+        if (!pluginVersion().isEmpty()) {
             /// TODO: Avoid call parentWidget()->enforceNativeChildren().
-            qApp->setAttribute(Qt::AA_DontCreateNativeWidgetSiblings, true);
+            qApp->setAttribute(Qt::AA_DontCreateNativeWidgetSiblings, save_flag);
         }
 
-        window->setAttribute(Qt::WA_NativeWindow);
+        Q_ASSERT_X(handle, "DPlatformWindowHandler:", "widget window handle is NULL.");
 
-        Q_ASSERT_X(window->windowHandle(), "DPlatformWindowHandler:",
-                   "widget window handle is NULL.");
-
-        window->windowHandle()->setProperty(_useDxcb, true);
+        if (Q_UNLIKELY(!handle))
+            return;
     }
+
+    if (handle->property(_useDxcb).toBool())
+        return;
+
+    Q_ASSERT_X(!handle->handle(), "DPlatformWindowHandler:",
+               "Must be called before window handle has been created. See also QWidget::windowHandle()");
+
+    handle->setProperty(_useDxcb, true);
 }
 
 void DPlatformWindowHandle::enableDXcbForWindow(QWindow *window)
 {
-    Q_ASSERT_X(DApplication::isDXcbPlatform(), "DPlatformWindowHandler:",
-               "Must call DPlatformWindowHandler::loadDXcbPlugin before");
+    if (!DApplication::isDXcbPlatform())
+        return;
 
     if (window->handle()) {
         Q_ASSERT_X(window->property(_useDxcb).toBool(), "DPlatformWindowHandler:",
                    "Must be called before window handle has been created. See also QWindow::handle()");
     } else {
-        Q_ASSERT_X(!window->handle(), "DPlatformWindowHandler:",
-                   "Must be called before window handle has been created. See also QWindow::handle()");
-
         window->setProperty(_useDxcb, true);
     }
 }
