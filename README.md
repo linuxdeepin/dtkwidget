@@ -6,7 +6,7 @@ Deepint Tool Kit (Dtk) is the base devlopment tool of all C++/Qt Developer work 
 
 ### Build dependencies
 
-* qmake >= 5.3
+* Qt >= 5.6
 
 ## Installation
 
