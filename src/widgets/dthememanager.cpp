@@ -22,6 +22,8 @@
 
 #include <QDebug>
 
+#include <private/qstylesheetstyle_p.h>
+
 #include "dthememanager.h"
 #include "dapplication.h"
 
@@ -61,6 +63,27 @@ QString DThemeManager::theme() const
     return m_theme;
 }
 
+QString DThemeManager::theme(const QWidget *widget, QWidget **baseWidget) const
+{
+    QString theme;
+
+    if (baseWidget)
+        *baseWidget = nullptr;
+
+    do {
+        theme = widget->property("_d_dtk_theme").toString();
+        if (!theme.isEmpty()) {
+            if (baseWidget)
+                *baseWidget = const_cast<QWidget*>(widget);
+
+            break;
+        }
+        widget = widget->isWindow() ? 0 : widget->parentWidget();
+    } while (widget);
+
+    return theme.isEmpty() ? m_theme : theme;
+}
+
 /*!
  * \brief DThemeManager::setTheme sets the application theme.
  * \param theme is the theme name to be set.
@@ -68,7 +91,6 @@ QString DThemeManager::theme() const
 void DThemeManager::setTheme(const QString theme)
 {
     if (m_theme != theme) {
-
         QStyle *style = Q_NULLPTR;
 
         // TODO: remove this shit in the future.
@@ -105,6 +127,48 @@ static QString getObjectClassName(const QObject *obj)
     return widget_type_list.isEmpty() ? type_name : widget_type_list.last();
 }
 
+static void emitThemeChanged(DThemeManager *manager, QWidget *widget, const QString &theme)
+{
+    Q_EMIT manager->widgetThemeChanged(widget, theme);
+
+    for (QObject *child : widget->children()) {
+        if (QWidget *cw = qobject_cast<QWidget*>(child)) {
+            if (cw->property("_d_dtk_theme").isValid())
+                continue;
+
+            emitThemeChanged(manager, cw, theme);
+        }
+    }
+}
+
+static void setStyle(QWidget *widget, QStyle *style)
+{
+    widget->setStyle(style);
+
+    for (QObject *child : widget->children()) {
+        if (QWidget *cw = qobject_cast<QWidget*>(child)) {
+            if (cw->property("_d_dtk_theme").isValid())
+                continue;
+
+            setStyle(cw, style);
+        }
+    }
+}
+
+static void inseritStyle(QWidget *widget, const QWidget *baseWidget)
+{
+    if (widget == baseWidget)
+        return;
+
+    QStyle *base_style = baseWidget ? baseWidget->style() : qApp->style();
+
+    if (base_style->inherits("QStyleSheetStyle")) {
+        base_style = static_cast<QStyleSheetStyle*>(base_style)->base;
+    }
+
+    widget->setStyle(base_style);
+}
+
 /*!
  * \brief DThemeManager::setTheme sets theme on a widget.
  * \param widget is the target widget.
@@ -114,6 +178,23 @@ void DThemeManager::setTheme(QWidget *widget, const QString theme)
 {
     Q_ASSERT(widget);
 
+    if (theme.isEmpty()) {
+        QString old_theme = this->theme(widget);
+
+        widget->setProperty("_d_dtk_theme", QVariant());
+
+        QWidget *baseWidget = nullptr;
+
+        if (this->theme(widget, &baseWidget) != old_theme) {
+            emitThemeChanged(this, widget, this->theme(widget));
+        }
+
+        inseritStyle(widget, baseWidget);
+
+        return;
+    }
+
+    const QString &old_theme = this->theme(widget);
     QStyle *style = Q_NULLPTR;
 
     // TODO: remove this shit in the future.
@@ -135,10 +216,11 @@ void DThemeManager::setTheme(QWidget *widget, const QString theme)
     }
 
     if (style) {
-        widget->setStyle(style);
+        setStyle(widget, style);
     }
 
-    widget->setStyleSheet(getQssForWidget(getObjectClassName(widget), theme));
+    if (old_theme != theme)
+        emitThemeChanged(this, widget, theme);
 }
 
 /*!
@@ -160,9 +242,9 @@ QString DThemeManager::getQssForWidget(const QString className, const QString &t
     if (themeFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qss = themeFile.readAll();
         themeFile.close();
-    } else {
+    } /*else {
         qWarning() << "open qss file failed" << themeURL << themeFile.errorString();
-    }
+    }*/
 
     return qss;
 }
@@ -179,15 +261,7 @@ QString DThemeManager::getQssForWidget(const QString className, const QWidget *w
 {
     Q_ASSERT(widget);
 
-    QString theme;
-
-    do {
-        theme = widget->property("_d_dtk_theme").toString();
-        if (!theme.isEmpty()) { break; }
-        widget = widget->parentWidget();
-    } while (widget);
-
-    return getQssForWidget(className, theme);
+    return getQssForWidget(className, theme(widget));
 }
 
 /*!

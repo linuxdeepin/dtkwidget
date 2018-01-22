@@ -34,10 +34,11 @@ public:
     static DThemeManager *instance();
 
     QString theme() const;
+    QString theme(const QWidget *widget, QWidget **baseWidget = nullptr) const;
     void setTheme(const QString theme);
     void setTheme(QWidget *widget, const QString theme);
 
-    QString getQssForWidget(const QString className, const QString &theme = "") const;
+    QString getQssForWidget(const QString className, const QString &theme = QString()) const;
     QString getQssForWidget(const QString className, const QWidget *widget) const;
     QString getQssForWidget(const QWidget *widget) const;
 
@@ -48,6 +49,7 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     void themeChanged(QString theme);
+    void widgetThemeChanged(QWidget *widget, QString theme);
 
 protected:
     DThemeManager();
