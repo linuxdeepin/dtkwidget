@@ -54,7 +54,12 @@ Q_SIGNALS:
 protected:
     DThemeManager();
 
+    void updateThemeOnParentChanged(QWidget *widget);
+
     QString m_theme;
+
+private:
+    friend class DApplication;
 };
 
 DWIDGET_END_NAMESPACE

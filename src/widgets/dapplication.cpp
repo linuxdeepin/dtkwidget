@@ -695,6 +695,10 @@ bool DApplication::notify(QObject *obj, QEvent *event)
                     menu->setStyle(style);
                 }
         }
+    } else if (event->type() == QEvent::ParentChange) {
+        if (QWidget *widget = qobject_cast<QWidget*>(obj)) {
+            DThemeManager::instance()->updateThemeOnParentChanged(widget);
+        }
     }
 
     return QApplication::notify(obj, event);

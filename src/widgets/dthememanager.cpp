@@ -327,5 +327,35 @@ DThemeManager::DThemeManager()
     setTheme("light");
 }
 
+static void updateWidgetTheme(DThemeManager *manager, QWidget *widget, QWidget *baseWidget, const QString &theme)
+{
+    inseritStyle(widget, baseWidget);
+
+    Q_EMIT manager->widgetThemeChanged(widget, theme);
+
+    for (QObject *child : widget->children()) {
+        if (QWidget *cw = qobject_cast<QWidget*>(child)) {
+            if (widget->property("_d_dtk_theme").isValid())
+                return;
+
+            updateWidgetTheme(manager, cw, baseWidget, theme);
+        }
+    }
+}
+
+void DThemeManager::updateThemeOnParentChanged(QWidget *widget)
+{
+    if (widget->property("_d_dtk_theme").isValid())
+        return;
+
+    QWidget *base_widget = nullptr;
+    const QString &theme = this->theme(widget, &base_widget);
+
+    if (!base_widget)
+        return;
+
+    updateWidgetTheme(this, widget, base_widget, theme);
+}
+
 
 DWIDGET_END_NAMESPACE
