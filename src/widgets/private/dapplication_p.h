@@ -67,6 +67,10 @@ public:
     QString homePage;
     QString acknowledgementPage;
 
+    bool visibleMenuShortcutText   = false;
+    bool visibleMenuCheckboxWidget = false;
+    bool visibleMenuIcon           = false;
+
     DAboutDialog *aboutDialog = Q_NULLPTR;
 };
 

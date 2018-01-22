@@ -575,6 +575,48 @@ void DApplication::setAboutDialog(DAboutDialog *aboutDialog)
     d->aboutDialog = aboutDialog;
 }
 
+bool DApplication::visibleMenuShortcutText() const
+{
+    D_DC(DApplication);
+
+    return d->visibleMenuShortcutText;
+}
+
+void DApplication::setVisibleMenuShortcutText(bool value)
+{
+    D_D(DApplication);
+
+    d->visibleMenuShortcutText = value;
+}
+
+bool DApplication::visibleMenuCheckboxWidget() const
+{
+    D_DC(DApplication);
+
+    return d->visibleMenuCheckboxWidget;
+}
+
+void DApplication::setVisibleMenuCheckboxWidget(bool value)
+{
+    D_D(DApplication);
+
+    d->visibleMenuCheckboxWidget = value;
+}
+
+bool DApplication::visibleMenuIcon() const
+{
+    D_DC(DApplication);
+
+    return d->visibleMenuIcon;
+}
+
+void DApplication::setVisibleMenuIcon(bool value)
+{
+    D_D(DApplication);
+
+    d->visibleMenuIcon = value;
+}
+
 /**
  * @brief DApplication::helpActionHandler
  *

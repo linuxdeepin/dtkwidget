@@ -41,6 +41,9 @@ class LIBDTKWIDGETSHARED_EXPORT DApplication : public QApplication, public DTK_C
 {
     Q_OBJECT
     D_DECLARE_PRIVATE(DApplication)
+    Q_PROPERTY(bool visibleMenuShortcutText READ visibleMenuShortcutText WRITE setVisibleMenuShortcutText)
+    Q_PROPERTY(bool visibleMenuCheckboxWidget READ visibleMenuCheckboxWidget WRITE setVisibleMenuCheckboxWidget)
+    Q_PROPERTY(bool visibleMenuIcon READ visibleMenuIcon WRITE setVisibleMenuIcon)
 
 public:
     DApplication(int &argc, char **argv);
@@ -85,6 +88,15 @@ public:
 
     DAboutDialog *aboutDialog();
     void setAboutDialog(DAboutDialog *aboutDialog);
+
+    bool visibleMenuShortcutText() const;
+    void setVisibleMenuShortcutText(bool value);
+
+    bool visibleMenuCheckboxWidget() const;
+    void setVisibleMenuCheckboxWidget(bool value);
+
+    bool visibleMenuIcon() const;
+    void setVisibleMenuIcon(bool value);
 
 #ifdef VERSION
     static inline QString buildVersion(const QString &fallbackVersion)
