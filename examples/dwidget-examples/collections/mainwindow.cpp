@@ -22,11 +22,12 @@
 #include <QFontDatabase>
 #include <QTextCodec>
 #include <QDebug>
+#include <QTemporaryFile>
 
-#include <DSettingsOption>
-#include <DSettings>
-
+#include "qsettingbackend.h"
 #include "dsettingsdialog.h"
+#include "dsettingsoption.h"
+#include "dsettings.h"
 
 #include "dslider.h"
 #include "dthememanager.h"
@@ -43,6 +44,7 @@
 #include "cameraform.h"
 #include "graphicseffecttab.h"
 #include "simplelistviewtab.h"
+#include "dtoast.h"
 
 DTK_USE_NAMESPACE
 DWIDGET_USE_NAMESPACE
@@ -114,10 +116,19 @@ MainWindow::MainWindow(QWidget *parent)
                                   | Qt::WindowMaximizeButtonHint
                                   | Qt::WindowSystemMenuHint);
     }
-}
 
-#include <QTemporaryFile>
-#include <qsettingbackend.h>
+    auto toast = new DToast(this);
+    toast->setText("Successfully close window");
+    toast->setIcon(":/images/light/images/window/close_press.svg");
+    QTimer::singleShot(1000, [ = ]() {
+        toast->pop();
+        toast->move((width() - toast->width()) / 2,
+                    (height() - toast->height()) / 2);
+    });
+    QTimer::singleShot(4000, [ = ]() {
+        toast->pop();
+    });
+}
 
 void MainWindow::menuItemInvoked(QAction *action)
 {
@@ -196,7 +207,7 @@ void MainWindow::initTabWidget()
     GraphicsEffectTab *effectTab = new GraphicsEffectTab(this);
 
     SimpleListViewTab *simplelistviewTab = new SimpleListViewTab(this);
-    
+
     m_mainTab->addTab(widgetsTab, "Widgets");
     m_mainTab->addTab(effectTab, "GraphicsEffect");
     m_mainTab->addTab(comboBoxTab, "ComboBox");

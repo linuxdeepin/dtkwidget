@@ -32,8 +32,8 @@ class LIBDTKWIDGETSHARED_EXPORT DGraphicsGlowEffect : public QGraphicsEffect
 public:
     explicit DGraphicsGlowEffect(QObject *parent = 0);
 
-    void draw(QPainter* painter);
-    QRectF boundingRectFor(const QRectF& rect) const;
+    void draw(QPainter *painter);
+    QRectF boundingRectFor(const QRectF &rect) const;
 
     inline void setOffset(qreal dx, qreal dy) {m_xOffset = dx; m_yOffset = dy;}
 
@@ -49,10 +49,15 @@ public:
     inline void setBlurRadius(qreal blurRadius) { m_blurRadius = blurRadius; updateBoundingRect(); }
     inline qreal blurRadius() const { return m_blurRadius; }
 
-    inline void setColor(const QColor& color) { m_color = color; }
+    inline void setColor(const QColor &color) { m_color = color; }
     inline QColor color() const { return m_color; }
 
+    // TODO: refactor with d-pointer;
+    inline qreal opacity() const { return m_opacity; }
+    inline void setOpacity(qreal opacity) { m_opacity = opacity; }
+
 private:
+    qreal m_opacity = 1.0;
     qreal m_xOffset;
     qreal m_yOffset;
     qreal m_distance;

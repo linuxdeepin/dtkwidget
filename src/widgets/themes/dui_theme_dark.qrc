@@ -63,6 +63,7 @@
         <file>dark/images/window/unmaximize_normal.svg</file>
         <file>dark/images/window/unmaximize_press.svg</file>
         <file>dark/dialogs/DSettingsDialog.theme</file>
+        <file>dark/DToast.theme</file>
     </qresource>
     <qresource prefix="/images">
         <file>dark/images/add_hover.png</file>

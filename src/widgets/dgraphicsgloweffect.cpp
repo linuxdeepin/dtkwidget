@@ -30,10 +30,10 @@ DGraphicsGlowEffect::DGraphicsGlowEffect(QObject *parent) :
 }
 
 QT_BEGIN_NAMESPACE
-  extern Q_WIDGETS_EXPORT void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, bool quality, bool alphaOnly, int transposed = 0 );
+extern Q_WIDGETS_EXPORT void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, bool quality, bool alphaOnly, int transposed = 0);
 QT_END_NAMESPACE
 
-void DGraphicsGlowEffect::draw(QPainter* painter)
+void DGraphicsGlowEffect::draw(QPainter *painter)
 {
     // if nothing to show outside the item, just draw source
     if ((blurRadius() + distance()) <= 0) {
@@ -46,8 +46,12 @@ void DGraphicsGlowEffect::draw(QPainter* painter)
     const QPixmap sourcePx = sourcePixmap(Qt::DeviceCoordinates, &offset, mode);
 
     // return if no source
-    if (sourcePx.isNull())
+    if (sourcePx.isNull()) {
         return;
+    }
+
+    qreal restoreOpacity = painter->opacity();
+    painter->setOpacity(m_opacity);
 
     // save world transform
     QTransform restoreTransform = painter->worldTransform();
@@ -87,9 +91,10 @@ void DGraphicsGlowEffect::draw(QPainter* painter)
 
     // restore world transform
     painter->setWorldTransform(restoreTransform);
+    painter->setOpacity(restoreOpacity);
 }
 
-QRectF DGraphicsGlowEffect::boundingRectFor(const QRectF& rect) const
+QRectF DGraphicsGlowEffect::boundingRectFor(const QRectF &rect) const
 {
     qreal delta = blurRadius() + distance();
     return rect.united(rect.adjusted(-delta - xOffset(), -delta - yOffset(), delta - xOffset(), delta - yOffset()));
