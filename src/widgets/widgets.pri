@@ -111,7 +111,8 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dtabbar.h \
     $$PWD/dsuggestbutton.h \
     $$PWD/dstyleoption.h \
-    $$PWD/dtoast.h
+    $$PWD/dtoast.h \
+    $$PWD/danchors.h
 
 SOURCES += $$PWD/dslider.cpp \
     $$PWD/dthememanager.cpp \
@@ -191,7 +192,8 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dtabbar.cpp \
     $$PWD/dsuggestbutton.cpp \
     $$PWD/dstyleoption.cpp \
-    $$PWD/dtoast.cpp
+    $$PWD/dtoast.cpp \
+    $$PWD/danchors.cpp
 
 RESOURCES += \
     $$PWD/themes/dui_theme_dark.qrc \
