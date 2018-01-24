@@ -56,6 +56,9 @@ DEFINE_CONST_CHAR(pluginVersion);
 
 static void setWindowProperty(QWindow *window, const char *name, const QVariant &value)
 {
+    if (!window)
+        return;
+
 #if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
     static QFunctionPointer setWindowProperty = qApp->platformFunction(_setWindowProperty);
 #else
