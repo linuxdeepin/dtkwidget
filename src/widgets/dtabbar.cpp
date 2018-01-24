@@ -110,6 +110,7 @@ public:
       : QTabBar(qq)
       , DObjectPrivate(qq) {
         startDragDistance = qApp->startDragDistance();
+        maskColor = flashColor = QColor(0, 0, 255, 125);
 
         addButton = new DTabBarAddButton(qq);
         addButton->setObjectName("AddButton");
@@ -231,8 +232,10 @@ public:
     void layoutTab(int index);
     void moveTabFinished(int index);
     void layoutWidgets(int start = 0);
+    void makeVisible(int index);
 
     void updateTabSize();
+    void startTabFlash();
 
     void setDragingFromOther(bool v);
     int tabInsertIndexFromMouse(const QPoint &pos);
@@ -248,6 +251,12 @@ public:
     bool dragingFromOther = false;
     // 记录当前drag过来的对象是否可以当做新标签页插入
     bool canInsertFromDrag = false;
+
+    QColor maskColor;
+    QColor flashColor;
+    // 要闪动绘制的Tab
+    qreal opacityOnFlash = 1;
+    int flashTabIndex = -1;
 
     QToolButton *leftScrollButton;
     QToolButton *rightScrollButton;
@@ -452,6 +461,34 @@ void DTabBarPrivate::layoutWidgets(int start)
     }
 }
 
+void DTabBarPrivate::makeVisible(int index)
+{
+    QTabBarPrivate *d = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
+
+    if (!d->validIndex(index))
+        return;
+
+    const QRect tabRect = d->tabList.at(index).rect;
+    const int oldScrollOffset = d->scrollOffset;
+    const bool horiz = !verticalTabs(d->shape);
+    const int extra_width = 2 * qMax(style()->pixelMetric(QStyle::PM_TabBarScrollButtonWidth, 0, this),
+                                     QApplication::globalStrut().width());
+    const int available = (horiz ? width() : height()) - extra_width;
+    const int start = horiz ? tabRect.left() : tabRect.top();
+    const int end = horiz ? tabRect.right() : tabRect.bottom();
+    if (start < d->scrollOffset) // too far left
+        d->scrollOffset = start - (index ? 8 : 0);
+    else if (end > d->scrollOffset + available) // too far right
+        d->scrollOffset = end - available + 1;
+
+    d->leftB->setEnabled(d->scrollOffset > 0);
+    const int last = horiz ? d->tabList.last().rect.right() : d->tabList.last().rect.bottom();
+    d->rightB->setEnabled(last - d->scrollOffset >= available);
+    if (oldScrollOffset != d->scrollOffset) {
+        layoutWidgets();
+    }
+}
+
 void DTabBarPrivate::updateTabSize()
 {
     QTabBarPrivate *d = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
@@ -472,6 +509,36 @@ void DTabBarPrivate::updateTabSize()
         if (tab.rect.size() != old_size)
             layoutTab(i);
     }
+}
+
+void DTabBarPrivate::startTabFlash()
+{
+    QVariantAnimation *animation = new QVariantAnimation(this);
+
+    animation->setStartValue(1.0);
+    animation->setEndValue(0.0);
+    animation->setDuration(500);
+    animation->setLoopCount(3);
+
+    connect(animation, &QVariantAnimation::valueChanged, this, [this] (const QVariant &v) {
+        opacityOnFlash = v.toReal();
+        update();
+    });
+    connect(animation, &QVariantAnimation::finished, this, [this, animation] {
+        animation->deleteLater();
+        flashTabIndex = -1;
+    });
+    connect(animation, &QVariantAnimation::currentLoopChanged, this, [animation] (int loop) {
+        if (loop % 2) {
+            animation->setStartValue(1.0);
+            animation->setEndValue(0.0);
+        } else {
+            animation->setStartValue(0.0);
+            animation->setEndValue(1.0);
+        }
+    });
+
+    animation->start();
 }
 
 void DTabBarPrivate::setDragingFromOther(bool v)
@@ -616,6 +683,12 @@ void DTabBarPrivate::paintEvent(QPaintEvent *e)
             continue;
 
         q->paintTab(&p, i, tab);
+
+        if (i == flashTabIndex) {
+            p.setOpacity(opacityOnFlash);
+            p.fillRect(tab.rect, flashColor);
+            p.setOpacity(1);
+        }
     }
 
     // Draw the selected tab last to get it "on top"
@@ -631,6 +704,12 @@ void DTabBarPrivate::paintEvent(QPaintEvent *e)
         }
         if (!d->dragInProgress) {
             q->paintTab(&p, selected, tab);
+
+            if (selected == flashTabIndex) {
+                p.setOpacity(opacityOnFlash);
+                p.fillRect(tab.rect, flashColor);
+                p.setOpacity(1);
+            }
         } else {
             int taboverlap = style()->pixelMetric(QStyle::PM_TabBarTabOverlap, 0, this);
             d->movingTab->setGeometry(tab.rect.adjusted(-taboverlap, 0, taboverlap, 0));
@@ -645,7 +724,7 @@ void DTabBarPrivate::paintEvent(QPaintEvent *e)
     }
 
     if (dragingFromOther) {
-        p.fillRect(rect(), QColor(0, 0, 255, 128));
+        p.fillRect(rect(), maskColor);
     }
 }
 
@@ -1193,6 +1272,16 @@ int DTabBar::startDragDistance() const
     return d_func()->startDragDistance;
 }
 
+QColor DTabBar::maskColor() const
+{
+    return d_func()->maskColor;
+}
+
+QColor DTabBar::flashColor() const
+{
+    return d_func()->flashColor;
+}
+
 void DTabBar::setCurrentIndex(int index)
 {
     d_func()->setCurrentIndex(index);
@@ -1209,6 +1298,16 @@ void DTabBar::setVisibleAddButton(bool visibleAddButton)
 void DTabBar::setStartDragDistance(int startDragDistance)
 {
     d_func()->startDragDistance = startDragDistance;
+}
+
+void DTabBar::setMaskColor(QColor maskColor)
+{
+    d_func()->maskColor = maskColor;
+}
+
+void DTabBar::setFlashColor(QColor flashColor)
+{
+    d_func()->flashColor = flashColor;
 }
 
 void DTabBar::paintTab(QPainter *painter, int index, const QStyleOptionTab &option) const
@@ -1261,7 +1360,9 @@ bool DTabBar::canInsertFromMimeData(int index, const QMimeData *source) const
 
 void DTabBar::insertFromMimeData(int index, const QMimeData *source)
 {
-    insertTab(index, source->text());
+    d_func()->flashTabIndex = insertTab(index, source->text());
+    d_func()->makeVisible(d_func()->flashTabIndex);
+    d_func()->startTabFlash();
 }
 
 DTabBarPrivate *DTabBar::d_func()

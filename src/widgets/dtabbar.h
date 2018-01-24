@@ -55,6 +55,10 @@ class DTabBar : public QWidget, public DObject
     Q_PROPERTY(bool autoHide READ autoHide WRITE setAutoHide)
     Q_PROPERTY(bool changeCurrentOnDrag READ changeCurrentOnDrag WRITE setChangeCurrentOnDrag)
     Q_PROPERTY(int startDragDistance READ startDragDistance WRITE setStartDragDistance)
+    // on drag enter
+    Q_PROPERTY(QColor maskColor READ maskColor WRITE setMaskColor)
+    // on inserted tab from mime data
+    Q_PROPERTY(QColor flashColor READ flashColor WRITE setFlashColor)
 
 public:
     explicit DTabBar(QWidget *parent = 0);
@@ -148,6 +152,9 @@ public:
 
     int startDragDistance() const;
 
+    QColor maskColor() const;
+    QColor flashColor() const;
+
 Q_SIGNALS:
     void currentChanged(int index);
     void tabCloseRequested(int index);
@@ -162,6 +169,9 @@ public Q_SLOTS:
     void setCurrentIndex(int index);
     void setVisibleAddButton(bool visibleAddButton);
     void setStartDragDistance(int startDragDistance);
+
+    void setMaskColor(QColor maskColor);
+    void setFlashColor(QColor flashColor);
 
 protected:
     virtual void paintTab(QPainter *painter, int index, const QStyleOptionTab &option) const;
