@@ -109,6 +109,8 @@ public:
     explicit DTabBarPrivate(DTabBar* qq)
       : QTabBar(qq)
       , DObjectPrivate(qq) {
+        startDragDistance = qApp->startDragDistance();
+
         addButton = new DTabBarAddButton(qq);
         addButton->setObjectName("AddButton");
         addButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -206,6 +208,7 @@ public:
     void paintEvent(QPaintEvent *e) override;
     void mouseMoveEvent(QMouseEvent *e) override;
     void dragEnterEvent(QDragEnterEvent *e) override;
+    void dragLeaveEvent(QDragLeaveEvent *e) override;
     void dragMoveEvent(QDragMoveEvent *e) override;
     void dropEvent(QDropEvent *e) override;
     void showEvent(QShowEvent *e) override;
@@ -222,6 +225,8 @@ public:
     Q_SLOT void startDrag(int tabIndex);
 
     void setupMovableTab();
+    void stopMoveingTab();
+    void setupDragableTab();
     void slide(int from, int to);
     void layoutTab(int index);
     void moveTabFinished(int index);
@@ -229,11 +234,19 @@ public:
 
     void updateTabSize();
 
+    void setDragingFromOther(bool v);
+
     QList<QSize> tabMinimumSize;
     QList<QSize> tabMaximumSize;
     bool visibleAddButton = true;
     DTabBarAddButton *addButton;
     QPointer<QDrag> drag;
+    bool dragable = false;
+    int startDragDistance;
+    // 有从其它地方drag过来的标签页需要处理
+    bool dragingFromOther = false;
+    // 记录当前drag过来的对象是否可以当做新标签页插入
+    bool canInsertFromDrag = false;
 
     QToolButton *leftScrollButton;
     QToolButton *rightScrollButton;
@@ -262,14 +275,13 @@ void DTabBarPrivate::setupMovableTab()
     QPixmap grabImage(grabRect.size() * devicePixelRatioF());
     grabImage.setDevicePixelRatio(devicePixelRatioF());
     grabImage.fill(Qt::transparent);
-    QStylePainter p(&grabImage, this);
+    QPainter p(&grabImage);
     p.initFrom(this);
 
     QStyleOptionTab tab;
     initStyleOption(&tab, d->pressedIndex);
     tab.rect.moveTopLeft(QPoint(taboverlap, 0));
-    p.drawControl(QStyle::CE_TabBarTab, tab);
-    p.end();
+    q_func()->paintTab(&p, d->pressedIndex, tab);
 
     reinterpret_cast<DMovableTabWidget*>(d->movingTab)->setPixmap(grabImage);
     d->movingTab->setGeometry(grabRect);
@@ -285,12 +297,32 @@ void DTabBarPrivate::setupMovableTab()
     if (d->rightB)
         d->rightB->raise();
     d->movingTab->setVisible(true);
+}
+
+void DTabBarPrivate::setupDragableTab()
+{
+    if (!dragable)
+        return;
+
+    D_Q(DTabBar);
+
+    QTabBarPrivate *d = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
+    QStyleOptionTab opt;
+    initStyleOption(&opt, d->pressedIndex);
+
+    QMimeData *mime_data = q->createMimeDataFromTab(d->pressedIndex, opt);
+
+    if (!mime_data)
+        return;
 
     drag = new QDrag(this);
-    QMimeData *mime_data = new QMimeData();
+
+    QPoint hotspot = drag->hotSpot();
+    const QPixmap &grabImage = q->createDragPixmapFramTab(d->pressedIndex, opt, &hotspot);
 
     drag->setPixmap(grabImage);
     drag->setMimeData(mime_data);
+    drag->setHotSpot(hotspot);
 
     QMetaObject::invokeMethod(this, "startDrag", Qt::QueuedConnection, Q_ARG(int, d->pressedIndex));
 }
@@ -426,6 +458,15 @@ void DTabBarPrivate::updateTabSize()
     }
 }
 
+void DTabBarPrivate::setDragingFromOther(bool v)
+{
+    if (v == dragingFromOther)
+        return;
+
+    dragingFromOther = v;
+    update();
+}
+
 bool DTabBarPrivate::eventFilter(QObject *watched, QEvent *event)
 {
     QTabBarPrivate *d = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
@@ -537,8 +578,7 @@ void DTabBarPrivate::paintEvent(QPaintEvent *e)
         if (i == selected)
             continue;
 
-        if (!q->paintTab(&p, i, tab))
-            p.drawControl(QStyle::CE_TabBarTab, tab);
+        q->paintTab(&p, i, tab);
     }
 
     // Draw the selected tab last to get it "on top"
@@ -553,8 +593,7 @@ void DTabBarPrivate::paintEvent(QPaintEvent *e)
             }
         }
         if (!d->dragInProgress) {
-            if (!q->paintTab(&p, selected, tab))
-                p.drawControl(QStyle::CE_TabBarTab, tab);
+            q->paintTab(&p, selected, tab);
         } else {
             int taboverlap = style()->pixelMetric(QStyle::PM_TabBarTabOverlap, 0, this);
             d->movingTab->setGeometry(tab.rect.adjusted(-taboverlap, 0, taboverlap, 0));
@@ -566,6 +605,10 @@ void DTabBarPrivate::paintEvent(QPaintEvent *e)
         cutTab.rect = rect();
         cutTab.rect = style()->subElementRect(QStyle::SE_TabBarTearIndicator, &cutTab, this);
         p.drawPrimitive(QStyle::PE_IndicatorTabTear, cutTab);
+    }
+
+    if (dragingFromOther) {
+        p.fillRect(rect(), QColor(0, 0, 255, 128));
     }
 }
 
@@ -581,19 +624,28 @@ void DTabBarPrivate::mouseMoveEvent(QMouseEvent *event)
         && event->buttons() == Qt::NoButton)
         moveTabFinished(d->pressedIndex);
 
+    int offset_x = qAbs(event->x() - d->dragStartPosition.x());
+    int offset_y = qAbs(event->y() - d->dragStartPosition.y());
+    bool valid_pressed_index = d->validIndex(d->pressedIndex);
+
     // Start drag
-    if (!d->dragInProgress && d->pressedIndex != -1) {
-        if ((event->pos() - d->dragStartPosition).manhattanLength() > QApplication::startDragDistance()) {
+    if (!drag && valid_pressed_index) {
+        if (offset_y > startDragDistance) {
+            setupDragableTab();
+        }
+    }
+
+    // Start move
+    if (!d->dragInProgress && valid_pressed_index) {
+        if (offset_x > startDragDistance) {
             d->dragInProgress = true;
             setupMovableTab();
         }
     }
 
-    int offset = (event->pos() - d->dragStartPosition).manhattanLength();
-
     if (event->buttons() == Qt::LeftButton
-        && offset > QApplication::startDragDistance()
-        && d->validIndex(d->pressedIndex)) {
+        && offset_x > startDragDistance
+        && valid_pressed_index) {
 
         bool vertical = verticalTabs(d->shape);
         int dragDistance;
@@ -658,7 +710,19 @@ void DTabBarPrivate::dragEnterEvent(QDragEnterEvent *e)
                           e->keyboardModifiers());
 
         mouseMoveEvent(&event);
+    } else {
+        if (q_func()->canInsertFromMimeData(e->mimeData())) {
+            setDragingFromOther(true);
+            e->acceptProposedAction();
+        }
     }
+}
+
+void DTabBarPrivate::dragLeaveEvent(QDragLeaveEvent *e)
+{
+    setDragingFromOther(false);
+
+    QTabBar::dragLeaveEvent(e);
 }
 
 void DTabBarPrivate::dragMoveEvent(QDragMoveEvent *e)
@@ -671,6 +735,11 @@ void DTabBarPrivate::dragMoveEvent(QDragMoveEvent *e)
                           e->keyboardModifiers());
 
         mouseMoveEvent(&event);
+    } else {
+        if (q_func()->canInsertFromMimeData(e->mimeData())) {
+            setDragingFromOther(true);
+            e->acceptProposedAction();
+        }
     }
 }
 
@@ -684,6 +753,8 @@ void DTabBarPrivate::dropEvent(QDropEvent *e)
                           e->keyboardModifiers());
 
         mouseReleaseEvent(&event);
+    } else {
+        setDragingFromOther(false);
     }
 }
 
@@ -1019,6 +1090,16 @@ void DTabBar::setMovable(bool movable)
     d_func()->setMovable(movable);
 }
 
+bool DTabBar::isDragable() const
+{
+    return d_func()->dragable;
+}
+
+void DTabBar::setDragable(bool dragable)
+{
+    d_func()->dragable = dragable;
+}
+
 bool DTabBar::documentMode() const
 {
     return d_func()->documentMode();
@@ -1049,6 +1130,11 @@ void DTabBar::setChangeCurrentOnDrag(bool change)
     d_func()->setChangeCurrentOnDrag(change);
 }
 
+int DTabBar::startDragDistance() const
+{
+    return d_func()->startDragDistance;
+}
+
 void DTabBar::setCurrentIndex(int index)
 {
     d_func()->setCurrentIndex(index);
@@ -1062,13 +1148,60 @@ void DTabBar::setVisibleAddButton(bool visibleAddButton)
     d->addButton->setVisible(visibleAddButton);
 }
 
-bool DTabBar::paintTab(QPainter *painter, int index, const QStyleOptionTab &option)
+void DTabBar::setStartDragDistance(int startDragDistance)
 {
-    Q_UNUSED(painter)
+    d_func()->startDragDistance = startDragDistance;
+}
+
+void DTabBar::paintTab(QPainter *painter, int index, const QStyleOptionTab &option) const
+{
+    Q_UNUSED(index)
+
+    style()->drawControl(QStyle::CE_TabBarTab, &option, painter, this);
+}
+
+QPixmap DTabBar::createDragPixmapFramTab(int index, const QStyleOptionTab &option, QPoint *hotspot) const
+{
+    Q_UNUSED(hotspot)
+
+    QPixmap grabImage(option.rect.size() * devicePixelRatioF());
+    grabImage.setDevicePixelRatio(devicePixelRatioF());
+    grabImage.fill(Qt::transparent);
+
+    QStyleOptionTab tab = option;
+
+    int taboverlap = style()->pixelMetric(QStyle::PM_TabBarTabOverlap, 0, this);
+
+    tab.rect.moveTopLeft(QPoint(taboverlap, 0));
+
+    QPainter p(&grabImage);
+    p.initFrom(d_func());
+    paintTab(&p, index, tab);
+
+    return grabImage;
+}
+
+QMimeData *DTabBar::createMimeDataFromTab(int index, const QStyleOptionTab &option) const
+{
     Q_UNUSED(index)
     Q_UNUSED(option)
 
-    return false;
+    QMimeData *data = new QMimeData();
+
+    data->setText(tabText(index));
+    data->setData("deepin/dtkwidget-DTabBar-data", QByteArray());
+
+    return data;
+}
+
+bool DTabBar::canInsertFromMimeData(const QMimeData *source) const
+{
+    return source->hasFormat("deepin/dtkwidget-DTabBar-data");
+}
+
+void DTabBar::insertFromMimeData(const QMimeData *source)
+{
+    insertTab(0, source->text());
 }
 
 DTabBarPrivate *DTabBar::d_func()

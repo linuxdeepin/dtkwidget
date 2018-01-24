@@ -26,6 +26,10 @@
 #include <dtkwidget_global.h>
 #include <dobject.h>
 
+QT_BEGIN_NAMESPACE
+class QMimeData;
+QT_END_NAMESPACE
+
 DCORE_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
@@ -46,9 +50,11 @@ class DTabBar : public QWidget, public DObject
     Q_PROPERTY(QTabBar::SelectionBehavior selectionBehaviorOnRemove READ selectionBehaviorOnRemove WRITE setSelectionBehaviorOnRemove)
     Q_PROPERTY(bool expanding READ expanding WRITE setExpanding)
     Q_PROPERTY(bool movable READ isMovable WRITE setMovable)
+    Q_PROPERTY(bool dragable READ isDragable WRITE setDragable)
     Q_PROPERTY(bool documentMode READ documentMode WRITE setDocumentMode)
     Q_PROPERTY(bool autoHide READ autoHide WRITE setAutoHide)
     Q_PROPERTY(bool changeCurrentOnDrag READ changeCurrentOnDrag WRITE setChangeCurrentOnDrag)
+    Q_PROPERTY(int startDragDistance READ startDragDistance WRITE setStartDragDistance)
 
 public:
     explicit DTabBar(QWidget *parent = 0);
@@ -128,6 +134,9 @@ public:
     bool isMovable() const;
     void setMovable(bool movable);
 
+    bool isDragable() const;
+    void setDragable(bool dragable);
+
     bool documentMode() const;
     void setDocumentMode(bool set);
 
@@ -136,6 +145,8 @@ public:
 
     bool changeCurrentOnDrag() const;
     void setChangeCurrentOnDrag(bool change);
+
+    int startDragDistance() const;
 
 Q_SIGNALS:
     void currentChanged(int index);
@@ -149,9 +160,15 @@ Q_SIGNALS:
 public Q_SLOTS:
     void setCurrentIndex(int index);
     void setVisibleAddButton(bool visibleAddButton);
+    void setStartDragDistance(int startDragDistance);
 
 protected:
-    virtual bool paintTab(QPainter *painter, int index, const QStyleOptionTab &option);
+    virtual void paintTab(QPainter *painter, int index, const QStyleOptionTab &option) const;
+
+    virtual QPixmap createDragPixmapFramTab(int index, const QStyleOptionTab &option, QPoint *hotspot) const;
+    virtual QMimeData *createMimeDataFromTab(int index, const QStyleOptionTab &option) const;
+    virtual bool canInsertFromMimeData(const QMimeData *source) const;
+    virtual void insertFromMimeData(const QMimeData *source);
 
 private:
     DTabBarPrivate* d_func();
