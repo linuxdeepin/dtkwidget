@@ -40,6 +40,7 @@
 #include "private/dapplication_p.h"
 #include "dthememanager.h"
 #include "util/dwindowmanagerhelper.h"
+#include "dmainwindow.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -54,6 +55,13 @@ protected:
 
 private:
     void init();
+    // FIXME: get a batter salution
+    // hide title will make eventFilter not work, instead set Height to zero
+    bool isVisableOnFullscreen();
+    void hideOnFullscreen();
+    void showOnFullscreen();
+
+    void updateFullscreen();
     void updateButtonsState(Qt::WindowFlags type);
     void updateButtonsFunc();
     void _q_toggleWindowState();
@@ -65,7 +73,6 @@ private:
     void _q_helpActionTriggered();
     void _q_aboutActionTriggered();
     void _q_quitActionTriggered();
-
 #endif
 
     QHBoxLayout         *mainLayout;
@@ -75,6 +82,7 @@ private:
     DWindowMaxButton    *maxButton;
     DWindowCloseButton  *closeButton;
     DWindowOptionButton *optionButton;
+    DImageButton        *quitFullButton;
 
     QWidget             *customWidget = Q_NULLPTR;
     QWidget             *coustomAtea;
@@ -97,6 +105,7 @@ private:
     bool                mousePressed    = false;
     bool                useWindowFlags  = false;
     bool                embedMode       = false;
+    bool                autoHideOnFullscreen = false;
 
     Q_DECLARE_PUBLIC(DTitlebar)
 };
@@ -116,6 +125,7 @@ void DTitlebarPrivate::init()
     maxButton       = new DWindowMaxButton;
     closeButton     = new DWindowCloseButton;
     optionButton    = new DWindowOptionButton;
+    quitFullButton  = new DImageButton;
     coustomAtea     = new QWidget;
     buttonArea      = new QWidget;
     titleArea       = new QWidget;
@@ -127,6 +137,8 @@ void DTitlebarPrivate::init()
     minButton->setObjectName("DTitlebarDWindowMinButton");
     maxButton->setObjectName("DTitlebarDWindowMaxButton");
     closeButton->setObjectName("DTitlebarDWindowCloseButton");
+    quitFullButton->setObjectName("DTitlebarDWindowQuitFullscreenButton");
+    quitFullButton->hide();
 
     mainLayout->setContentsMargins(6, 0, 0, 0);
     mainLayout->setSpacing(0);
@@ -158,6 +170,7 @@ void DTitlebarPrivate::init()
     buttonAreaLayout->addWidget(minButton);
     buttonAreaLayout->addWidget(maxButton);
     buttonAreaLayout->addWidget(closeButton);
+    buttonAreaLayout->addWidget(quitFullButton);
     buttonArea->setLayout(buttonAreaLayout);
 
     QHBoxLayout *titleAreaLayout = new QHBoxLayout;
@@ -192,9 +205,64 @@ void DTitlebarPrivate::init()
     coustomAtea->setFixedHeight(q->height());
     buttonArea->setFixedHeight(q->height());
 
+    q->connect(quitFullButton, &DImageButton::clicked, q, [ = ]() {
+        bool isFullscreen = parentWindow->windowState().testFlag(Qt::WindowFullScreen);
+        if (isFullscreen) {
+            parentWindow->showNormal();
+        } else {
+            parentWindow->showFullScreen();
+        }
+    });
     q->connect(optionButton, &DWindowOptionButton::clicked, q, &DTitlebar::optionClicked);
     q->connect(DWindowManagerHelper::instance(), SIGNAL(windowMotifWMHintsChanged(quint32)),
                q, SLOT(_q_onTopWindowMotifHintsChanged(quint32)));
+}
+
+bool DTitlebarPrivate::isVisableOnFullscreen()
+{
+    D_Q(DTitlebar);
+    return !q->property("_restore_height").isValid();
+}
+
+void DTitlebarPrivate::hideOnFullscreen()
+{
+    D_Q(DTitlebar);
+    q->setProperty("_restore_height", q->height());
+    q->setFixedHeight(0);
+}
+
+void DTitlebarPrivate::showOnFullscreen()
+{
+    D_Q(DTitlebar);
+    if (q->property("_restore_height").isValid()) {
+        q->setFixedHeight(q->property("_restore_height").toInt());
+        q->setProperty("_restore_height", QVariant());
+    }
+}
+
+void DTitlebarPrivate::updateFullscreen()
+{
+    D_Q(DTitlebar);
+
+    if (!autoHideOnFullscreen) {
+        return;
+    }
+
+    bool isFullscreen = parentWindow->windowState().testFlag(Qt::WindowFullScreen);
+    auto mainWindow = qobject_cast<DMainWindow *>(parentWindow);
+    if (!isFullscreen) {
+        quitFullButton->hide();
+        mainWindow->setMenuWidget(q);
+        showOnFullscreen();
+    } else {
+        // must set to empty
+        quitFullButton->show();
+        mainWindow->menuWidget()->setParent(nullptr);
+        mainWindow->setMenuWidget(Q_NULLPTR);
+        q->setParent(mainWindow);
+        q->show();
+        hideOnFullscreen();
+    }
 }
 
 void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
@@ -408,7 +476,7 @@ void DTitlebarPrivate::_q_quitActionTriggered()
  * @param parent
  */
 DTitlebar::DTitlebar(QWidget *parent) :
-    QWidget(parent),
+    QFrame(parent),
     DObject(*new DTitlebarPrivate(this))
 {
     D_THEME_INIT_WIDGET(DTitlebar)
@@ -538,14 +606,32 @@ bool DTitlebar::eventFilter(QObject *obj, QEvent *event)
 
     if (obj == d->parentWindow) {
         switch (event->type()) {
-        case QEvent::WindowStateChange:
-//            if (d->maxButton->isEnabled()) {
+        case QEvent::WindowStateChange: {
             d->maxButton->setMaximized(d->parentWindow->windowState() == Qt::WindowMaximized);
-//            }
+            d->updateFullscreen();
             break;
+        }
         case QEvent::ShowToParent:
             d->updateButtonsFunc();
             break;
+        case QEvent::Resize:
+            if (d->autoHideOnFullscreen) {
+                setFixedWidth(d->parentWindow->width());
+            }
+            break;
+        case QEvent::HoverMove: {
+            auto mouseEvent = reinterpret_cast<QMouseEvent *>(event);
+            bool isFullscreen = d->parentWindow->windowState().testFlag(Qt::WindowFullScreen);
+            if (isFullscreen && d->autoHideOnFullscreen) {
+                if (mouseEvent->pos().y() > height() && d->isVisableOnFullscreen()) {
+                    d->hideOnFullscreen();
+                }
+                if (mouseEvent->pos().y() < 2) {
+                    d->showOnFullscreen();
+                }
+            }
+            break;
+        }
         default:
             break;
         }
@@ -721,6 +807,18 @@ bool DTitlebar::separatorVisible() const
 {
     D_DC(DTitlebar);
     return d->separator->isVisible();
+}
+
+bool DTitlebar::autoHideOnFullscreen() const
+{
+    D_DC(DTitlebar);
+    return d->autoHideOnFullscreen;
+}
+
+void DTitlebar::setAutoHideOnFullscreen(bool autohide)
+{
+    D_D(DTitlebar);
+    d->autoHideOnFullscreen = autohide;
 }
 
 /**

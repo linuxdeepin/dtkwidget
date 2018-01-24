@@ -60,7 +60,8 @@ QMAKE_PKGCONFIG_REQUIRES += dtkcore
 
 # CMake configure
 INC_DIR = $$replace(includes.path, "/", "\/")
-CMD = sed -i -E \'s/DTKWIDGET_INCLUDE_DIR \".*\"\\)$/DTKWIDGET_INCLUDE_DIR \"$${INC_DIR}\"\\)/\' ../cmake/DtkWidget/DtkWidgetConfig.cmake
+CMD = sed -E \'s/DTKWIDGET_INCLUDE_DIR \".*\"\\)$/DTKWIDGET_INCLUDE_DIR \"$${INC_DIR}\"\\)/\' ../cmake/DtkWidget/DtkWidgetConfig.cmake.in > ../cmake/DtkWidget/DtkWidgetConfig.cmake
+message($$CMD)
 system($$CMD)
 
 cmake_config.path = $$LIB_INSTALL_DIR

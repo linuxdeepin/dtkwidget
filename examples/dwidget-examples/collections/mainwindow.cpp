@@ -66,6 +66,7 @@ MainWindow::MainWindow(QWidget *parent)
     QPushButton *lightBUtton = new QPushButton("Light", this);
     QPushButton *enableButtons = new QPushButton("Enable Titlebar ", this);
     QPushButton *disableButtons = new QPushButton("Disable Titlebar", this);
+    QPushButton *fullscreenButtons = new QPushButton("Fullscreen", this);
 
     themeManager->setTheme(lightBUtton, "light");
 
@@ -84,10 +85,14 @@ MainWindow::MainWindow(QWidget *parent)
         | Qt::WindowMaximizeButtonHint
         | Qt::WindowSystemMenuHint);
     });
+    connect(fullscreenButtons, &QPushButton::clicked, [ = ] {
+        showFullScreen();
+    });
+
     styleLayout->addWidget(darkButton);
     styleLayout->addWidget(lightBUtton);
     styleLayout->addWidget(enableButtons);
-    styleLayout->addWidget(disableButtons);
+    styleLayout->addWidget(fullscreenButtons);
     styleLayout->addStretch();
 
     mainLayout->addLayout(styleLayout);
@@ -224,6 +229,7 @@ void MainWindow::initTabWidget()
     m_mainTab->addTab(simplelistviewTab, "SimpleListView");
 
     m_mainTab->setCurrentIndex(0);
+
 }
 
 MainWindow::~MainWindow()

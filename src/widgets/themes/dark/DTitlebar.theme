@@ -1,6 +1,18 @@
+Dtk--Widget--DTitlebar {
+    background: qlineargradient(x1:0 y1:0, x2:0 y2:1,
+        stop:0 rgba(0,0,0,85%),  stop:1 rgba(0,0,0,85%));
+}
+
 Dtk--Widget--DWindowCloseButton {
     qproperty-normalPic: url(:/images/dark/images/window/close_normal.svg);
     qproperty-hoverPic: url(:/images/dark/images/window/close_hover.svg);
     qproperty-pressPic: url(:/images/dark/images/window/close_press.svg);
+    padding-right: 6px;
+}
+
+#DTitlebarDWindowQuitFullscreenButton {
+    qproperty-normalPic: url(:/images/dark/images/window/quit_fullscreen_normal.svg);
+    qproperty-hoverPic: url(:/images/dark/images/window/quit_fullscreen_hover.svg);
+    qproperty-pressPic: url(:/images/dark/images/window/quit_fullscreen_press.svg);
     padding-right: 6px;
 }

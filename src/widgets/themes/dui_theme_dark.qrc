@@ -220,5 +220,8 @@
         <file>dark/images/window/unmaximize_hover.svg</file>
         <file>dark/images/window/unmaximize_normal.svg</file>
         <file>dark/images/window/unmaximize_press.svg</file>
+        <file>dark/images/window/quit_fullscreen_hover.svg</file>
+        <file>dark/images/window/quit_fullscreen_normal.svg</file>
+        <file>dark/images/window/quit_fullscreen_press.svg</file>
     </qresource>
 </RCC>

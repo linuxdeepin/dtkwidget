@@ -18,7 +18,7 @@
 #ifndef DTITLEBAR_H
 #define DTITLEBAR_H
 
-#include <QWidget>
+#include <QFrame>
 #include <QMenu>
 
 #include <dobject.h>
@@ -27,7 +27,7 @@
 DWIDGET_BEGIN_NAMESPACE
 
 class DTitlebarPrivate;
-class LIBDTKWIDGETSHARED_EXPORT DTitlebar : public QWidget, public DTK_CORE_NAMESPACE::DObject
+class LIBDTKWIDGETSHARED_EXPORT DTitlebar : public QFrame, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
 public:
@@ -45,6 +45,9 @@ public:
 
     int buttonAreaWidth() const;
     bool separatorVisible() const;
+
+    bool autoHideOnFullscreen() const;
+    void setAutoHideOnFullscreen(bool autohide);
 
     void setVisible(bool visible) Q_DECL_OVERRIDE;
     void setEmbedMode(bool embed);
@@ -70,7 +73,7 @@ public Q_SLOTS:
     void setSeparatorVisible(bool visible);
     void setTitle(const QString &title);
     void setIcon(const QIcon &icon);
-    void D_DECL_DEPRECATED setIcon(const QPixmap &icon);
+    D_DECL_DEPRECATED void  setIcon(const QPixmap &icon);
     D_DECL_DEPRECATED void setWindowState(Qt::WindowState windowState);
     /// Maximized/Minumized
     void toggleWindowState();

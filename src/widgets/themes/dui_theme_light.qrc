@@ -148,5 +148,8 @@
         <file>light/images/loadfile_hover.svg</file>
         <file>light/images/loadfile_normal.svg</file>
         <file>light/images/loadfile_press.svg</file>
+        <file>light/images/window/quit_fullscreen_hover.svg</file>
+        <file>light/images/window/quit_fullscreen_normal.svg</file>
+        <file>light/images/window/quit_fullscreen_press.svg</file>
     </qresource>
 </RCC>

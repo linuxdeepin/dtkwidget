@@ -21,3 +21,4 @@ build*/
 
 src/DtkWidgets
 src/dtkwidget_config.h
+cmake/DtkWidget/DtkWidgetConfig.cmake
