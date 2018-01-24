@@ -235,6 +235,7 @@ public:
     void updateTabSize();
 
     void setDragingFromOther(bool v);
+    int tabInsertIndexFromMouse(const QPoint &pos);
 
     QList<QSize> tabMinimumSize;
     QList<QSize> tabMaximumSize;
@@ -254,10 +255,22 @@ public:
 
 void DTabBarPrivate::startDrag(int tabIndex)
 {
-    Qt::DropAction action = drag->exec(Qt::MoveAction);
+    Qt::DropAction action = drag->exec(Qt::MoveAction, Qt::MoveAction);
 
-    if (action != Qt::MoveAction) {
+    if (action == Qt::IgnoreAction) {
         Q_EMIT q_func()->tabReleaseRequested(tabIndex);
+    } else if (drag->target() != this) {
+        Q_EMIT q_func()->tabDroped(tabIndex, action);
+    }
+
+    drag->setProperty("_d_DTabBarPrivate_drity", true);
+
+    QTabBarPrivate *d = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
+
+    // Be safe!
+    if (d->dragInProgress && d->pressedIndex != -1) {
+        d->hoverRect = QRect();
+        moveTabFinished(d->pressedIndex);
     }
 }
 
@@ -314,6 +327,9 @@ void DTabBarPrivate::setupDragableTab()
 
     if (!mime_data)
         return;
+
+    if (drag)
+        drag->deleteLater();
 
     drag = new QDrag(this);
 
@@ -465,6 +481,27 @@ void DTabBarPrivate::setDragingFromOther(bool v)
 
     dragingFromOther = v;
     update();
+}
+
+int DTabBarPrivate::tabInsertIndexFromMouse(const QPoint &pos)
+{
+    int current = tabAt(pos);
+
+    QTabBarPrivate *d = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
+
+    if (!d->validIndex(current)){
+        return -1;
+    }
+
+    const QRect &current_rect = tabRect(current);
+    const QPoint &center = current_rect.center();
+    bool vertical = verticalTabs(this->shape());
+
+    if (vertical) {
+        return pos.y() <= center.y() ? current : current + 1;
+    } else {
+        return pos.x() <= center.x() ? current : current + 1;
+    }
 }
 
 bool DTabBarPrivate::eventFilter(QObject *watched, QEvent *event)
@@ -629,6 +666,10 @@ void DTabBarPrivate::mouseMoveEvent(QMouseEvent *event)
     bool valid_pressed_index = d->validIndex(d->pressedIndex);
 
     // Start drag
+    if (drag && drag->property("_d_DTabBarPrivate_drity").toBool()) {
+        drag->deleteLater();
+    }
+
     if (!drag && valid_pressed_index) {
         if (offset_y > startDragDistance) {
             setupDragableTab();
@@ -711,7 +752,9 @@ void DTabBarPrivate::dragEnterEvent(QDragEnterEvent *e)
 
         mouseMoveEvent(&event);
     } else {
-        if (q_func()->canInsertFromMimeData(e->mimeData())) {
+        int index = tabInsertIndexFromMouse(e->pos());
+
+        if (q_func()->canInsertFromMimeData(index, e->mimeData())) {
             setDragingFromOther(true);
             e->acceptProposedAction();
         }
@@ -723,6 +766,11 @@ void DTabBarPrivate::dragLeaveEvent(QDragLeaveEvent *e)
     setDragingFromOther(false);
 
     QTabBar::dragLeaveEvent(e);
+
+    QTabBarPrivate *d = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
+
+    // clean hover state
+    d->hoverRect = QRect();
 }
 
 void DTabBarPrivate::dragMoveEvent(QDragMoveEvent *e)
@@ -736,7 +784,9 @@ void DTabBarPrivate::dragMoveEvent(QDragMoveEvent *e)
 
         mouseMoveEvent(&event);
     } else {
-        if (q_func()->canInsertFromMimeData(e->mimeData())) {
+        int index = tabInsertIndexFromMouse(e->pos());
+
+        if (q_func()->canInsertFromMimeData(index, e->mimeData())) {
             setDragingFromOther(true);
             e->acceptProposedAction();
         }
@@ -755,6 +805,14 @@ void DTabBarPrivate::dropEvent(QDropEvent *e)
         mouseReleaseEvent(&event);
     } else {
         setDragingFromOther(false);
+
+        int index = tabInsertIndexFromMouse(e->pos());
+
+        if (q_func()->canInsertFromMimeData(index, e->mimeData())) {
+            e->acceptProposedAction();
+            e->setDropAction(Qt::MoveAction);
+            q_func()->insertFromMimeData(index, e->mimeData());
+        }
     }
 }
 
@@ -1189,19 +1247,21 @@ QMimeData *DTabBar::createMimeDataFromTab(int index, const QStyleOptionTab &opti
     QMimeData *data = new QMimeData();
 
     data->setText(tabText(index));
-    data->setData("deepin/dtkwidget-DTabBar-data", QByteArray());
+    data->setData("deepin/dtkwidget-DTabBar-tab", QByteArray());
 
     return data;
 }
 
-bool DTabBar::canInsertFromMimeData(const QMimeData *source) const
+bool DTabBar::canInsertFromMimeData(int index, const QMimeData *source) const
 {
-    return source->hasFormat("deepin/dtkwidget-DTabBar-data");
+    Q_UNUSED(index)
+
+    return source->hasFormat("deepin/dtkwidget-DTabBar-tab");
 }
 
-void DTabBar::insertFromMimeData(const QMimeData *source)
+void DTabBar::insertFromMimeData(int index, const QMimeData *source)
 {
-    insertTab(0, source->text());
+    insertTab(index, source->text());
 }
 
 DTabBarPrivate *DTabBar::d_func()

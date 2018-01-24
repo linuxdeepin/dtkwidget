@@ -156,6 +156,7 @@ Q_SIGNALS:
     void tabBarDoubleClicked(int index);
     void tabAddRequested();
     void tabReleaseRequested(int index);
+    void tabDroped(int index, Qt::DropAction action);
 
 public Q_SLOTS:
     void setCurrentIndex(int index);
@@ -167,8 +168,8 @@ protected:
 
     virtual QPixmap createDragPixmapFramTab(int index, const QStyleOptionTab &option, QPoint *hotspot) const;
     virtual QMimeData *createMimeDataFromTab(int index, const QStyleOptionTab &option) const;
-    virtual bool canInsertFromMimeData(const QMimeData *source) const;
-    virtual void insertFromMimeData(const QMimeData *source);
+    virtual bool canInsertFromMimeData(int index, const QMimeData *source) const;
+    virtual void insertFromMimeData(int index, const QMimeData *source);
 
 private:
     DTabBarPrivate* d_func();
