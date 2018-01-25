@@ -10,7 +10,7 @@ win32* {
 }
 
 isEmpty(VERSION) {
-    PKG_CONFIG = $$pkgConfigExecutable()
+    PKG_CONFIG = $$first($$list(($$pkgConfigExecutable()))
 
     isEmpty(LIB_INSTALL_DIR) {
         dtk_version_module = $$system($$PKG_CONFIG --variable=libdir dtkcore)
