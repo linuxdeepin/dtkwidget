@@ -174,7 +174,7 @@ void DTitlebarPrivate::init()
     buttonArea->setLayout(buttonAreaLayout);
 
     QHBoxLayout *titleAreaLayout = new QHBoxLayout;
-    titleAreaLayout->setContentsMargins(10, 0, 10 + iconLabel->width(), 0);
+    titleAreaLayout->setContentsMargins(4, 0, 10 + iconLabel->width(), 0);
     titleAreaLayout->setSpacing(0);
     titleAreaLayout->addWidget(iconLabel);
     titleAreaLayout->setAlignment(iconLabel, Qt::AlignLeft);
