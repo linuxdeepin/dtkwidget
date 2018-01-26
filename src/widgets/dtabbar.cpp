@@ -264,12 +264,15 @@ public:
 
 void DTabBarPrivate::startDrag(int tabIndex)
 {
-    Qt::DropAction action = drag->exec(Qt::MoveAction, Qt::MoveAction);
+    Qt::DropAction action = drag->exec(Qt::MoveAction | Qt::CopyAction, Qt::CopyAction);
 
     if (action == Qt::IgnoreAction) {
         Q_EMIT q_func()->tabReleaseRequested(tabIndex);
     } else if (drag->target() != this) {
-        Q_EMIT q_func()->tabDroped(tabIndex, action);
+        if (DTabBarPrivate *tbp = qobject_cast<DTabBarPrivate*>(drag->target()))
+            Q_EMIT q_func()->tabDroped(tabIndex, action, tbp->q_func());
+        else
+            Q_EMIT q_func()->tabDroped(tabIndex, action, drag->target());
     }
 
     drag->setProperty("_d_DTabBarPrivate_drity", true);

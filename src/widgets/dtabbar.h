@@ -163,7 +163,7 @@ Q_SIGNALS:
     void tabBarDoubleClicked(int index);
     void tabAddRequested();
     void tabReleaseRequested(int index);
-    void tabDroped(int index, Qt::DropAction action);
+    void tabDroped(int index, Qt::DropAction action, QObject *target);
 
 public Q_SLOTS:
     void setCurrentIndex(int index);
