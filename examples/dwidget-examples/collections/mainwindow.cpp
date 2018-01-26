@@ -86,12 +86,19 @@ MainWindow::MainWindow(QWidget *parent)
         | Qt::WindowSystemMenuHint);
     });
     connect(fullscreenButtons, &QPushButton::clicked, [ = ] {
-        showFullScreen();
+        if (!isFullScreen())
+        {
+            showFullScreen();
+        } else
+        {
+            showNormal();
+        }
     });
 
     styleLayout->addWidget(darkButton);
     styleLayout->addWidget(lightBUtton);
     styleLayout->addWidget(enableButtons);
+    styleLayout->addWidget(disableButtons);
     styleLayout->addWidget(fullscreenButtons);
     styleLayout->addStretch();
 
@@ -120,6 +127,7 @@ MainWindow::MainWindow(QWidget *parent)
         titlebar->setDisableFlags(Qt::WindowMinimizeButtonHint
                                   | Qt::WindowMaximizeButtonHint
                                   | Qt::WindowSystemMenuHint);
+        titlebar->setAutoHideOnFullscreen(true);
     }
 
     auto toast = new DToast(this);

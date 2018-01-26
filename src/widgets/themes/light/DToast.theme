@@ -1,5 +1,5 @@
 Dtk--Widget--DToast {
-    qproperty-background: rgba(255,255,255,100%);
-    qproperty-borderColor: rgba(0,0,0,10%);
-    qproperty-radius: 4.0px;
+    border: 4px solid rgba(0,0,0,10%);
+    border-radius: 4px;
+    background: white;
 }

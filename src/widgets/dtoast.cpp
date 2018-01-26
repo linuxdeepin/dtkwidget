@@ -22,7 +22,6 @@
 
 #include <DObjectPrivate>
 
-
 #include <QGraphicsOpacityEffect>
 #include <QPropertyAnimation>
 #include <QHBoxLayout>
@@ -40,9 +39,6 @@ class DToastPrivate: public DTK_CORE_NAMESPACE::DObjectPrivate
 public:
     DToastPrivate(DToast *qq);
 
-    QBrush  background  = Qt::white;
-    int     radius      = 4;
-    QColor  borderColor = QColor(0, 0, 0, 255 / 10);
     QIcon   icon;
     QLabel  *iconLabel = Q_NULLPTR;
     QLabel  *textLabel = Q_NULLPTR;
@@ -86,25 +82,6 @@ qreal DToast::opacity() const
     return d->effect->opacity();
 }
 
-QColor Dtk::Widget::DToast::borderColor() const
-{
-    D_DC(DToast);
-    return d->borderColor;
-}
-
-QBrush DToast::background() const
-{
-    D_DC(DToast);
-    return d->background;
-}
-
-int DToast::radius() const
-{
-    D_DC(DToast);
-    return d->radius;
-
-}
-
 void DToast::setText(QString text)
 {
     D_D(DToast);
@@ -128,69 +105,11 @@ void DToast::setIcon(QIcon icon, QSize defaultSize)
     d->iconLabel->setPixmap(d->icon.pixmap(icon.actualSize(defaultSize)));
 }
 
-void DToast::paintEvent(QPaintEvent *)
-{
-    D_D(DToast);
-
-    QPainter painter(this);
-    painter.setRenderHints(QPainter::Antialiasing | QPainter::HighQualityAntialiasing);
-
-    // draw border outer
-    auto outer = true;
-    auto radius = d->radius;
-    auto penWidthf = 1.0;
-    auto background =  d->background;
-    auto borderColor = d->borderColor;
-    auto margin = 2.0;
-    auto shadowMargins = QMarginsF(margin, margin, margin, margin);
-
-    // draw background
-    auto backgroundRect = QRectF(rect()).marginsRemoved(shadowMargins);
-    QPainterPath backgroundPath;
-    backgroundPath.addRoundedRect(backgroundRect, radius, radius);
-    painter.fillPath(backgroundPath, background);
-
-    // draw border
-    QPainterPath borderPath;
-    QRectF borderRect = QRectF(rect());
-    auto borderRadius = d->radius;//radius;
-    QMarginsF borderMargin(penWidthf / 2, penWidthf / 2, penWidthf / 2, penWidthf / 2);
-    if (outer) {
-        borderRadius += penWidthf / 2;
-        borderRect = borderRect.marginsAdded(borderMargin).marginsRemoved(shadowMargins);
-    } else {
-        borderRadius -= penWidthf / 2;
-        borderRect = borderRect.marginsRemoved(borderMargin).marginsRemoved(shadowMargins);
-    }
-    borderPath.addRoundedRect(borderRect, borderRadius, borderRadius);
-    QPen borderPen(borderColor);
-    borderPen.setWidthF(penWidthf);
-    painter.strokePath(borderPath, borderPen);
-}
-
-void DToast::setBorderColor(QColor borderColor)
-{
-    D_D(DToast);
-    d->borderColor = borderColor;
-}
-
 void DToast::setOpacity(qreal opacity)
 {
     D_D(DToast);
     d->effect->setOpacity(opacity);
     update();
-}
-
-void DToast::setBackground(QBrush background)
-{
-    D_D(DToast);
-    d->background = background;
-}
-
-void DToast::setRadius(int radius)
-{
-    D_D(DToast);
-    d->radius = radius;
 }
 
 void DToast::pop()

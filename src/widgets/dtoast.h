@@ -37,9 +37,6 @@ class DToast : public QFrame, public DTK_CORE_NAMESPACE::DObject
     Q_OBJECT
 
     Q_PROPERTY(qreal opacity READ opacity WRITE setOpacity)
-    Q_PROPERTY(int radius READ radius WRITE setRadius)
-    Q_PROPERTY(QBrush background READ background WRITE setBackground)
-    Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor)
 public:
     explicit DToast(QWidget *parent = 0);
     ~DToast();
@@ -55,19 +52,9 @@ public Q_SLOTS:
     void setIcon(QString icon);
     void setIcon(QIcon icon, QSize defaultSize = QSize(20, 20));
 
-protected:
-    void paintEvent(QPaintEvent *) Q_DECL_OVERRIDE;
-
 private:
     qreal opacity() const;
-    QColor borderColor() const;
-    QBrush background() const;
-    int radius() const;
-
-    void setBorderColor(QColor borderColor);
     void setOpacity(qreal);
-    void setBackground(QBrush background);
-    void setRadius(int radius);
 
     D_DECLARE_PRIVATE(DToast)
 };
