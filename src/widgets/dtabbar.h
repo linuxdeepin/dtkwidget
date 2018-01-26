@@ -174,6 +174,12 @@ public Q_SLOTS:
     void setFlashColor(QColor flashColor);
 
 protected:
+    void dragEnterEvent(QDragEnterEvent *e) override;
+    void dragLeaveEvent(QDragLeaveEvent *e) override;
+    void dragMoveEvent(QDragMoveEvent *e) override;
+    void dropEvent(QDropEvent *e) override;
+    void resizeEvent(QResizeEvent *e) override;
+
     virtual void paintTab(QPainter *painter, int index, const QStyleOptionTab &option) const;
 
     virtual QPixmap createDragPixmapFramTab(int index, const QStyleOptionTab &option, QPoint *hotspot) const;

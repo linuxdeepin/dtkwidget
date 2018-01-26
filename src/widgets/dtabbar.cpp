@@ -260,6 +260,20 @@ public:
 
     QToolButton *leftScrollButton;
     QToolButton *rightScrollButton;
+
+    class FullWidget : public QWidget {
+    public:
+        explicit FullWidget(QWidget *parent = 0)
+            : QWidget(parent) {}
+
+        void paintEvent(QPaintEvent *) override {
+            QPainter pa(this);
+
+            pa.fillRect(rect(), color);
+        }
+
+        QColor color;
+    } *topFullWidget = nullptr;
 };
 
 void DTabBarPrivate::startDrag(int tabIndex)
@@ -550,7 +564,26 @@ void DTabBarPrivate::setDragingFromOther(bool v)
         return;
 
     dragingFromOther = v;
-    update();
+
+    if (!v) {
+        if (topFullWidget) {
+            topFullWidget->hide();
+            topFullWidget->deleteLater();
+            topFullWidget = nullptr;
+        }
+
+        return;
+    }
+
+    D_Q(DTabBar);
+
+    if (!topFullWidget)
+        topFullWidget = new FullWidget(q);
+
+    topFullWidget->color = maskColor;
+    topFullWidget->resize(q->size());
+    topFullWidget->show();
+    topFullWidget->raise();
 }
 
 int DTabBarPrivate::tabInsertIndexFromMouse(const QPoint &pos)
@@ -558,19 +591,22 @@ int DTabBarPrivate::tabInsertIndexFromMouse(const QPoint &pos)
     int current = tabAt(pos);
 
     QTabBarPrivate *d = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
-
-    if (!d->validIndex(current)){
-        return -1;
-    }
-
-    const QRect &current_rect = tabRect(current);
-    const QPoint &center = current_rect.center();
     bool vertical = verticalTabs(this->shape());
 
-    if (vertical) {
-        return pos.y() <= center.y() ? current : current + 1;
+    if (!d->validIndex(current)){
+        if (vertical)
+            current = pos.y() >= height() ? -1 : 0;
+        else
+            current = pos.x() >= width() ? -1 : 0;
     } else {
-        return pos.x() <= center.x() ? current : current + 1;
+        const QRect &current_rect = tabRect(current);
+        const QPoint &center = current_rect.center();
+
+        if (vertical) {
+            return pos.y() <= center.y() ? current : current + 1;
+        } else {
+            return pos.x() <= center.x() ? current : current + 1;
+        }
     }
 }
 
@@ -724,10 +760,6 @@ void DTabBarPrivate::paintEvent(QPaintEvent *e)
         cutTab.rect = rect();
         cutTab.rect = style()->subElementRect(QStyle::SE_TabBarTearIndicator, &cutTab, this);
         p.drawPrimitive(QStyle::PE_IndicatorTabTear, cutTab);
-    }
-
-    if (dragingFromOther) {
-        p.fillRect(rect(), maskColor);
     }
 }
 
@@ -982,7 +1014,7 @@ DTabBar::DTabBar(QWidget *parent)
     : QWidget(parent)
     , DObject(*new DTabBarPrivate(this))
 {
-
+    setAcceptDrops(true);
 }
 
 void DTabBar::setTabMinimumSize(int index, const QSize &size)
@@ -1132,12 +1164,16 @@ QVariant DTabBar::tabData(int index) const
 
 QRect DTabBar::tabRect(int index) const
 {
-    return d_func()->tabRect(index);
+    QRect rect = d_func()->tabRect(index);
+
+    rect.moveTopLeft(d_func()->mapToParent(rect.topLeft()));
+
+    return rect;
 }
 
 int DTabBar::tabAt(const QPoint &pos) const
 {
-    return d_func()->tabAt(pos);
+    return d_func()->tabAt(d_func()->mapFromParent(pos));
 }
 
 int DTabBar::currentIndex() const
@@ -1311,6 +1347,74 @@ void DTabBar::setMaskColor(QColor maskColor)
 void DTabBar::setFlashColor(QColor flashColor)
 {
     d_func()->flashColor = flashColor;
+}
+
+void DTabBar::dragEnterEvent(QDragEnterEvent *e)
+{
+    D_D(DTabBar);
+
+    if (e->source() == d)
+        return QWidget::dragEnterEvent(e);
+
+    int index = d->tabInsertIndexFromMouse(d->mapFromParent(e->pos()));
+
+    if (canInsertFromMimeData(index, e->mimeData())) {
+        d->setDragingFromOther(true);
+        e->acceptProposedAction();
+    }
+}
+
+void DTabBar::dragLeaveEvent(QDragLeaveEvent *e)
+{
+    Q_UNUSED(e)
+    D_D(DTabBar);
+
+    d->setDragingFromOther(false);
+}
+
+void DTabBar::dragMoveEvent(QDragMoveEvent *e)
+{
+    D_D(DTabBar);
+
+    if (e->source() == d)
+        return QWidget::dragMoveEvent(e);
+
+    int index = d->tabInsertIndexFromMouse(d->mapFromParent(e->pos()));
+
+    if (canInsertFromMimeData(index, e->mimeData())) {
+        d->setDragingFromOther(true);
+        e->acceptProposedAction();
+    }
+}
+
+void DTabBar::dropEvent(QDropEvent *e)
+{
+    D_D(DTabBar);
+
+    if (e->source() == d)
+        return QWidget::dropEvent(e);
+
+    d->setDragingFromOther(false);
+
+    int index = d->tabInsertIndexFromMouse(d->mapFromParent(e->pos()));
+
+    if (canInsertFromMimeData(index, e->mimeData())) {
+        e->acceptProposedAction();
+        e->setDropAction(Qt::MoveAction);
+        insertFromMimeData(index, e->mimeData());
+    }
+}
+
+void DTabBar::resizeEvent(QResizeEvent *e)
+{
+    D_D(DTabBar);
+
+    if (d->topFullWidget) {
+        d->topFullWidget->resize(e->size());
+        d->topFullWidget->raise();
+    }
+
+    return QWidget::resizeEvent(e);
 }
 
 void DTabBar::paintTab(QPainter *painter, int index, const QStyleOptionTab &option) const
