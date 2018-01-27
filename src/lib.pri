@@ -8,6 +8,8 @@ isEmpty(LIB_INSTALL_DIR) {
     target.path = $$LIB_INSTALL_DIR
 }
 
+message("Build dtkwidget version: $${VERSION}")
+
 QMAKE_PKGCONFIG_LIBDIR = $$target.path
 QMAKE_PKGCONFIG_VERSION = $$VERSION
 QMAKE_PKGCONFIG_DESTDIR = pkgconfig
