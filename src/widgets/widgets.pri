@@ -231,6 +231,7 @@ includes.files += \
     $$PWD/DCrumbEdit \
     $$PWD/DTabBar \
     $$PWD/DSuggestButton \
-    $$PWD/DStyleOption
+    $$PWD/DStyleOption \
+    $$PWD/DToast
 
 

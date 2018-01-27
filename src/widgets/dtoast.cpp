@@ -108,6 +108,7 @@ int DToast::radius() const
 void DToast::setText(QString text)
 {
     D_D(DToast);
+    d->textLabel->setVisible(true);
     d->textLabel->setText(text);
 }
 
@@ -115,6 +116,7 @@ void DToast::setIcon(QString iconfile)
 {
     D_D(DToast);
     d->icon = QIcon(iconfile);
+    d->iconLabel->setVisible(true);
     d->iconLabel->setPixmap(DHiDPIHelper::loadNxPixmap(iconfile));
 }
 
@@ -122,6 +124,7 @@ void DToast::setIcon(QIcon icon, QSize defaultSize)
 {
     D_D(DToast);
     d->icon = icon;
+    d->iconLabel->setVisible(true);
     d->iconLabel->setPixmap(d->icon.pixmap(icon.actualSize(defaultSize)));
 }
 
@@ -243,7 +246,9 @@ void DToastPrivate::initUI()
     layout->setSpacing(12);
 
     iconLabel = new QLabel;
+    iconLabel->setVisible(false);
     textLabel = new QLabel;
+    textLabel->setVisible(false);
 
     layout->addWidget(iconLabel);
     layout->addWidget(textLabel);
