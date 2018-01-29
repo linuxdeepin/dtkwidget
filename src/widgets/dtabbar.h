@@ -182,7 +182,7 @@ protected:
 
     virtual void paintTab(QPainter *painter, int index, const QStyleOptionTab &option) const;
 
-    virtual QPixmap createDragPixmapFramTab(int index, const QStyleOptionTab &option, QPoint *hotspot) const;
+    virtual QPixmap createDragPixmapFromTab(int index, const QStyleOptionTab &option, QPoint *hotspot) const;
     virtual QMimeData *createMimeDataFromTab(int index, const QStyleOptionTab &option) const;
     virtual bool canInsertFromMimeData(int index, const QMimeData *source) const;
     virtual void insertFromMimeData(int index, const QMimeData *source);

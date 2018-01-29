@@ -360,7 +360,7 @@ void DTabBarPrivate::setupDragableTab()
     drag = new QDrag(this);
 
     QPoint hotspot = drag->hotSpot();
-    const QPixmap &grabImage = q->createDragPixmapFramTab(d->pressedIndex, opt, &hotspot);
+    const QPixmap &grabImage = q->createDragPixmapFromTab(d->pressedIndex, opt, &hotspot);
 
     drag->setPixmap(grabImage);
     drag->setMimeData(mime_data);
@@ -1424,7 +1424,7 @@ void DTabBar::paintTab(QPainter *painter, int index, const QStyleOptionTab &opti
     style()->drawControl(QStyle::CE_TabBarTab, &option, painter, this);
 }
 
-QPixmap DTabBar::createDragPixmapFramTab(int index, const QStyleOptionTab &option, QPoint *hotspot) const
+QPixmap DTabBar::createDragPixmapFromTab(int index, const QStyleOptionTab &option, QPoint *hotspot) const
 {
     Q_UNUSED(hotspot)
 
