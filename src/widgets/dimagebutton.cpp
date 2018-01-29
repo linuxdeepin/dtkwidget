@@ -44,7 +44,7 @@ DImageButton::DImageButton(QWidget *parent)
     : QLabel(parent)
     , DObject(*new DImageButtonPrivate(this))
 {
-    D_THEME_INIT_WIDGET(DImageButton);
+    D_THEME_INIT_WIDGET(DImageButton, checked);
 
     D_D(DImageButton);
 
@@ -65,7 +65,7 @@ DImageButton::DImageButton(const QString &normalPic, const QString &hoverPic, co
     : QLabel(parent)
     , DObject(*new DImageButtonPrivate(this))
 {
-    D_THEME_INIT_WIDGET(DImageButton);
+    D_THEME_INIT_WIDGET(DImageButton, checked);
 
     D_D(DImageButton);
 
@@ -100,7 +100,7 @@ DImageButton::DImageButton(const QString &normalPic, const QString &hoverPic,
     : QLabel(parent)
     , DObject(*new DImageButtonPrivate(this))
 {
-    D_THEME_INIT_WIDGET(DImageButton);
+    D_THEME_INIT_WIDGET(DImageButton, checked);
 
     D_D(DImageButton);
 
@@ -244,6 +244,8 @@ void DImageButton::setChecked(bool flag)
     } else {
         d->setState(Normal);
     }
+
+    emit checkedChanged(d->m_isChecked);
 }
 
 /*!
@@ -388,7 +390,7 @@ DImageButton::DImageButton(DImageButtonPrivate &q, QWidget *parent)
     : QLabel(parent)
     , DObject(q)
 {
-    D_THEME_INIT_WIDGET(DImageButton);
+    D_THEME_INIT_WIDGET(DImageButton, checked);
 
     D_D(DImageButton);
 

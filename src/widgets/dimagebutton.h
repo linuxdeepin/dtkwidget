@@ -36,7 +36,7 @@ class LIBDTKWIDGETSHARED_EXPORT DImageButton : public QLabel, public DTK_CORE_NA
     Q_PROPERTY(QString pressPic READ getPressPic WRITE setPressPic DESIGNABLE true)
     Q_PROPERTY(QString checkedPic READ getCheckedPic WRITE setCheckedPic DESIGNABLE true)
     Q_PROPERTY(QString disabledPic READ getDisabledPic WRITE setDisabledPic DESIGNABLE true)
-    Q_PROPERTY(bool checked READ isChecked WRITE setChecked)
+    Q_PROPERTY(bool checked READ isChecked WRITE setChecked NOTIFY checkedChanged)
     Q_PROPERTY(bool checkable READ isCheckable WRITE setCheckable)
 
 public:
@@ -86,6 +86,7 @@ public:
 
 Q_SIGNALS:
     void clicked();
+    void checkedChanged(bool checked);
     void stateChanged();
 
 protected:
