@@ -1,3 +1,11 @@
+<a name="2.0.6.1"></a>
+## 2.0.6.1 (2018-01-30)
+
+#### Bug Fixes
+
+   Revert "feat: support new dman interface"
+
+
 <a name="2.0.6"></a>
 ## 2.0.6 (2018-01-15)
 
