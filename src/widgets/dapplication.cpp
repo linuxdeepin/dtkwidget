@@ -48,7 +48,6 @@
 
 #ifdef Q_OS_LINUX
 #include <QDBusInterface>
-#include <QDBusReply>
 #include "startupnotificationmonitor.h"
 #endif
 
@@ -256,15 +255,11 @@ bool DApplicationPrivate::loadTranslator(QList<DPathBuf> translateDirs, const QS
 
 bool DApplicationPrivate::isUserManualExists()
 {
-#ifdef Q_OS_LINUX
-    QDBusInterface manualSearch("com.deepin.Manual.Search",
-                                "/com/deepin/Manual/Search",
-                                "com.deepin.Manual.Search");
-    QDBusReply<bool> reply = manualSearch.call("ManualExists", qApp->applicationName());
-    return reply.value();
-#else
-    return false;
-#endif
+    const QString appName = qApp->applicationName();
+    bool dmanAppExists = QFile::exists("/usr/bin/dman");
+    bool dmanDataExists = QFile::exists("/usr/share/dman/" + appName) ||
+                          QFile::exists("/app/share/dman/" + appName);
+    return  dmanAppExists && dmanDataExists;
 }
 
 /**
@@ -585,12 +580,25 @@ void DApplication::setAboutDialog(DAboutDialog *aboutDialog)
  */
 void DApplication::handleHelpAction()
 {
-#ifdef Q_OS_LINUX
-    QDBusInterface manual("com.deepin.Manual.Open",
-                          "/com/deepin/Manual/Open",
-                          "com.deepin.Manual.Open");
-    manual.asyncCall("ShowManual", qApp->applicationName());
+    QString appid = applicationName();
+#ifdef DTK_DMAN_PORTAL
+    if (!qgetenv("FLATPAK_APPID").isEmpty()) {
+        appid = qgetenv("FLATPAK_APPID");
+    }
+
+    QDBusInterface dmanInterface("com.deepin.dman",
+                                 "/com/deepin/dman",
+                                 "com.deepin.dman");
+    if (dmanInterface.isValid()) {
+        auto reply = dmanInterface.call("ShowManual", appid);
+        if (dmanInterface.lastError().isValid()) {
+            qCritical() << "failed call ShowManual" << appid << dmanInterface.lastError();
+        }
+    } else {
+        qCritical() << "can not create dman dbus interface";
+    }
 #else
+    QProcess::startDetached("dman", QStringList() << appid);
 #endif
 }
 
