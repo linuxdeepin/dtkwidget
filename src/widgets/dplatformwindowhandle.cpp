@@ -29,6 +29,7 @@ DWIDGET_BEGIN_NAMESPACE
 #define DEFINE_CONST_CHAR(Name) const char _##Name[] = "_d_" #Name
 
 DEFINE_CONST_CHAR(useDxcb);
+DEFINE_CONST_CHAR(redirectContent);
 DEFINE_CONST_CHAR(netWmStates);
 DEFINE_CONST_CHAR(windowRadius);
 DEFINE_CONST_CHAR(borderWidth);
@@ -155,6 +156,24 @@ void DPlatformWindowHandle::enableDXcbForWindow(QWindow *window)
                    "Must be called before window handle has been created. See also QWindow::handle()");
     } else {
         window->setProperty(_useDxcb, true);
+    }
+}
+
+void DPlatformWindowHandle::enableDXcbForWindow(QWidget *widget, bool redirectContent)
+{
+    enableDXcbForWindow(widget);
+
+    if (isEnabledDXcb(widget)) {
+        widget->windowHandle()->setProperty(_redirectContent, redirectContent);
+    }
+}
+
+void DPlatformWindowHandle::enableDXcbForWindow(QWindow *window, bool redirectContent)
+{
+    enableDXcbForWindow(window);
+
+    if (isEnabledDXcb(window)) {
+        window->setProperty(_redirectContent, redirectContent);
     }
 }
 

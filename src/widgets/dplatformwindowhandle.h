@@ -62,6 +62,8 @@ public:
 
     static void enableDXcbForWindow(QWidget *widget);
     static void enableDXcbForWindow(QWindow *window);
+    static void enableDXcbForWindow(QWidget *widget, bool redirectContent);
+    static void enableDXcbForWindow(QWindow *window, bool redirectContent);
     static bool isEnabledDXcb(const QWidget *widget);
     static bool isEnabledDXcb(const QWindow *window);
 
