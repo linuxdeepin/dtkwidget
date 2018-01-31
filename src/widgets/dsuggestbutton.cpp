@@ -12,6 +12,13 @@ DSuggestButton::DSuggestButton(QWidget *parent)
 
 }
 
+DSuggestButton::DSuggestButton(const QString &text, QWidget *parent)
+    : QPushButton(text, parent)
+{
+
+}
+
+
 void DSuggestButton::paintEvent(QPaintEvent *event)
 {
     QPushButton::paintEvent(event);
