@@ -23,7 +23,7 @@
 DWIDGET_BEGIN_NAMESPACE
 
 class DIpv4LineEditPrivate;
-class DIpv4LineEdit : public DLineEdit
+class LIBDTKWIDGETSHARED_EXPORT DIpv4LineEdit : public DLineEdit
 {
     Q_OBJECT
 

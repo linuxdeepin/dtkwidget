@@ -28,7 +28,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DSegmentedHighlight : public QToolButton
+class LIBDTKWIDGETSHARED_EXPORT DSegmentedHighlight : public QToolButton
 {
     Q_OBJECT
 
@@ -36,7 +36,7 @@ public:
     explicit DSegmentedHighlight(QWidget *parent = 0);
 };
 
-class DSegmentedControl : public QFrame
+class LIBDTKWIDGETSHARED_EXPORT DSegmentedControl : public QFrame
 {
     Q_OBJECT
 

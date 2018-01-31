@@ -28,7 +28,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DCrumbTextFormat : public QTextCharFormat
+class LIBDTKWIDGETSHARED_EXPORT DCrumbTextFormat : public QTextCharFormat
 {
 public:
     DCrumbTextFormat();
@@ -53,7 +53,7 @@ protected:
 };
 
 class DCrumbEditPrivate;
-class DCrumbEdit : public QTextEdit, public DCORE_NAMESPACE::DObject
+class LIBDTKWIDGETSHARED_EXPORT DCrumbEdit : public QTextEdit, public DCORE_NAMESPACE::DObject
 {
     Q_OBJECT
 

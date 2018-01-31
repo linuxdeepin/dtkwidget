@@ -26,7 +26,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DThemeManager : public QObject
+class LIBDTKWIDGETSHARED_EXPORT DThemeManager : public QObject
 {
     Q_OBJECT
 

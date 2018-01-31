@@ -26,7 +26,7 @@
 DWIDGET_BEGIN_NAMESPACE
 
 class DSpinBoxPrivate;
-class DSpinBox : public QSpinBox, public DTK_CORE_NAMESPACE::DObject
+class LIBDTKWIDGETSHARED_EXPORT DSpinBox : public QSpinBox, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
 

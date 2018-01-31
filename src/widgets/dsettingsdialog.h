@@ -28,7 +28,7 @@ DWIDGET_BEGIN_NAMESPACE
 
 class DSettingsWidgetFactory;
 class DSettingsDialogPrivate;
-class DSettingsDialog : public DAbstractDialog
+class LIBDTKWIDGETSHARED_EXPORT DSettingsDialog : public DAbstractDialog
 {
     Q_OBJECT
 public:

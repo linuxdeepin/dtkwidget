@@ -28,7 +28,7 @@
 DWIDGET_BEGIN_NAMESPACE
 
 class DPictureSequenceViewPrivate;
-class DPictureSequenceView : public QGraphicsView, public DTK_CORE_NAMESPACE::DObject
+class LIBDTKWIDGETSHARED_EXPORT DPictureSequenceView : public QGraphicsView, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
     Q_PROPERTY(int speed READ speed WRITE setSpeed NOTIFY speedChanged)

@@ -32,7 +32,7 @@ QT_END_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
 class DVideoWidgetPrivate;
-class DVideoWidget : public QWidget, public DTK_CORE_NAMESPACE::DObject
+class LIBDTKWIDGETSHARED_EXPORT DVideoWidget : public QWidget, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
 

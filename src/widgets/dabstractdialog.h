@@ -32,7 +32,7 @@ class QResizeEvent;
 DWIDGET_BEGIN_NAMESPACE
 
 class DAbstractDialogPrivate;
-class DAbstractDialog : public QDialog, public DTK_CORE_NAMESPACE::DObject
+class LIBDTKWIDGETSHARED_EXPORT DAbstractDialog : public QDialog, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
 

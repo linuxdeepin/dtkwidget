@@ -30,7 +30,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DSimpleListItem : public QObject
+class LIBDTKWIDGETSHARED_EXPORT DSimpleListItem : public QObject
 {
     Q_OBJECT
     

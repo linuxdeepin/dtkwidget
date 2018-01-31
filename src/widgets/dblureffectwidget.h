@@ -27,7 +27,7 @@ DWIDGET_BEGIN_NAMESPACE
 
 class DBlurEffectWidgetPrivate;
 
-class DBlurEffectWidget : public QWidget, public DTK_CORE_NAMESPACE::DObject
+class LIBDTKWIDGETSHARED_EXPORT DBlurEffectWidget : public QWidget, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
 
