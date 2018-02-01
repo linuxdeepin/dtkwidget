@@ -22,11 +22,13 @@
 #include <QString>
 #include <QGlobalStatic>
 
+#include <DObject>
 #include "dtkwidget_global.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDTKWIDGETSHARED_EXPORT DThemeManager : public QObject
+class DThemeManagerPrivate;
+class LIBDTKWIDGETSHARED_EXPORT DThemeManager : public QObject, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
 
@@ -52,14 +54,14 @@ Q_SIGNALS:
     void widgetThemeChanged(QWidget *widget, QString theme);
 
 protected:
+    bool eventFilter(QObject *watched, QEvent *event);
+
     DThemeManager();
-
     void updateThemeOnParentChanged(QWidget *widget);
-
-    QString m_theme;
 
 private:
     friend class DApplication;
+    D_DECLARE_PRIVATE(DThemeManager)
 };
 
 DWIDGET_END_NAMESPACE

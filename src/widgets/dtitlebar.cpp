@@ -479,7 +479,7 @@ DTitlebar::DTitlebar(QWidget *parent) :
     QFrame(parent),
     DObject(*new DTitlebarPrivate(this))
 {
-    D_THEME_INIT_WIDGET(DTitlebar)
+    DThemeManager::registerWidget(this, {"transparent"});
 
     D_D(DTitlebar);
     d->init();
@@ -716,6 +716,15 @@ void DTitlebar::setFixedHeight(int h)
     QWidget::setFixedHeight(h);
     d->coustomAtea->setFixedHeight(h);
     d->buttonArea->setFixedHeight(h);
+}
+
+/**
+ * @brief DTitlebar::setBackgroundTransparent set the title background transparent
+ * @param transparent is the targeting value.
+ */
+void DTitlebar::setBackgroundTransparent(bool transparent)
+{
+    setProperty("transparent", transparent);
 }
 
 /**

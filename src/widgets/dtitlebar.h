@@ -70,6 +70,7 @@ Q_SIGNALS:
 
 public Q_SLOTS:
     void setFixedHeight(int h);
+    void setBackgroundTransparent(bool transparent);
     void setSeparatorVisible(bool visible);
     void setTitle(const QString &title);
     void setIcon(const QIcon &icon);

@@ -15,12 +15,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QDebug>
 #include <QFile>
+#include <QFileInfo>
 #include <QWidget>
 #include <QStyle>
 #include <QStyleFactory>
 
-#include <QDebug>
+#include <DObjectPrivate>
 
 #include <private/qstylesheetstyle_p.h>
 
@@ -29,12 +31,12 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DThemeManagerPrivate : public DThemeManager
+class DThemeManagerStaticPrivate : public DThemeManager
 {
 
 };
 
-Q_GLOBAL_STATIC(DThemeManagerPrivate, DThemeManagerStatic)
+Q_GLOBAL_STATIC(DThemeManagerStaticPrivate, DThemeManagerStatic)
 
 
 /*!
@@ -53,72 +55,6 @@ DThemeManager *DThemeManager::instance()
     return DThemeManagerStatic;
 }
 
-/*!
- * \brief DThemeManager::theme
- * \return the theme name currently be used by this application, the possible
- * value are "light" and "dark".
- */
-QString DThemeManager::theme() const
-{
-    return m_theme;
-}
-
-QString DThemeManager::theme(const QWidget *widget, QWidget **baseWidget) const
-{
-    QString theme;
-
-    if (baseWidget)
-        *baseWidget = nullptr;
-
-    do {
-        theme = widget->property("_d_dtk_theme").toString();
-        if (!theme.isEmpty()) {
-            if (baseWidget)
-                *baseWidget = const_cast<QWidget*>(widget);
-
-            break;
-        }
-        widget = widget->isWindow() ? 0 : widget->parentWidget();
-    } while (widget);
-
-    return theme.isEmpty() ? m_theme : theme;
-}
-
-/*!
- * \brief DThemeManager::setTheme sets the application theme.
- * \param theme is the theme name to be set.
- */
-void DThemeManager::setTheme(const QString theme)
-{
-    if (m_theme != theme) {
-        QStyle *style = Q_NULLPTR;
-
-        // TODO: remove this shit in the future.
-        // It's just a trick to make all DApplications use dde qt5 styles,
-        // if dlight or ddark style is set to default style of dde, those
-        // ugly code will no longer needed.
-        if (theme == "light") {
-            style = QStyleFactory::create("dlight");
-            m_theme = theme;
-        } else if (theme == "dark") {
-            style = QStyleFactory::create("ddark");
-            m_theme = theme;
-        } else if (theme == "semilight") {
-            style = QStyleFactory::create("dsemilight");
-            m_theme = "light";
-        } else if (theme == "semidark") {
-            style = QStyleFactory::create("dsemidark");
-            m_theme = "dark";
-        }
-
-        if (style) {
-            qApp->setStyle(style);
-        }
-
-        Q_EMIT themeChanged(m_theme);
-    }
-}
-
 static QString getObjectClassName(const QObject *obj)
 {
     const QString &type_name = QString::fromLocal8Bit(obj->metaObject()->className());
@@ -132,9 +68,10 @@ static void emitThemeChanged(DThemeManager *manager, QWidget *widget, const QStr
     Q_EMIT manager->widgetThemeChanged(widget, theme);
 
     for (QObject *child : widget->children()) {
-        if (QWidget *cw = qobject_cast<QWidget*>(child)) {
-            if (cw->property("_d_dtk_theme").isValid())
+        if (QWidget *cw = qobject_cast<QWidget *>(child)) {
+            if (cw->property("_d_dtk_theme").isValid()) {
                 continue;
+            }
 
             emitThemeChanged(manager, cw, theme);
         }
@@ -146,9 +83,10 @@ static void setStyle(QWidget *widget, QStyle *style)
     widget->setStyle(style);
 
     for (QObject *child : widget->children()) {
-        if (QWidget *cw = qobject_cast<QWidget*>(child)) {
-            if (cw->property("_d_dtk_theme").isValid())
+        if (QWidget *cw = qobject_cast<QWidget *>(child)) {
+            if (cw->property("_d_dtk_theme").isValid()) {
                 continue;
+            }
 
             setStyle(cw, style);
         }
@@ -157,16 +95,233 @@ static void setStyle(QWidget *widget, QStyle *style)
 
 static void inseritStyle(QWidget *widget, const QWidget *baseWidget)
 {
-    if (widget == baseWidget)
+    if (widget == baseWidget) {
         return;
+    }
 
     QStyle *base_style = baseWidget ? baseWidget->style() : qApp->style();
 
     if (base_style->inherits("QStyleSheetStyle")) {
-        base_style = static_cast<QStyleSheetStyle*>(base_style)->base;
+        base_style = static_cast<QStyleSheetStyle *>(base_style)->base;
     }
 
     widget->setStyle(base_style);
+}
+
+static void updateWidgetTheme(DThemeManager *manager, QWidget *widget, QWidget *baseWidget, const QString &theme)
+{
+    inseritStyle(widget, baseWidget);
+
+    Q_EMIT manager->widgetThemeChanged(widget, theme);
+
+    for (QObject *child : widget->children()) {
+        if (QWidget *cw = qobject_cast<QWidget *>(child)) {
+            if (widget->property("_d_dtk_theme").isValid()) {
+                return;
+            }
+
+            updateWidgetTheme(manager, cw, baseWidget, theme);
+        }
+    }
+}
+
+class DThemeManagerPrivate : public DCORE_NAMESPACE::DObjectPrivate
+{
+    D_DECLARE_PUBLIC(DThemeManager)
+
+    QString themeName;
+    QMap<QWidget *, QStringList > watchedWidgetPropertys;
+
+public:
+    DThemeManagerPrivate(DThemeManager *qq)
+        : DObjectPrivate(qq) {}
+
+    QString getQssContent(const QString &themeURL) const
+    {
+        QString qss;
+        QFile themeFile(themeURL);
+        if (themeFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            qss = themeFile.readAll();
+            themeFile.close();
+        } else {
+            /// !!! if do not privode qss file, do not register it!!!
+//            qCritical() << "open qss file failed" << themeURL << themeFile.errorString();
+        }
+        return qss;
+    }
+
+    bool themeFileExist(const QString &filename) const
+    {
+        QFileInfo fi(filename);
+        return  fi.exists();
+    }
+
+    QString fallbackWidgetThemeName(const QWidget *widget, QWidget **baseWidget = nullptr) const
+    {
+        QString theme;
+
+        if (baseWidget) {
+            *baseWidget = nullptr;
+        }
+
+        do {
+            theme = widget->property("_d_dtk_theme").toString();
+            if (!theme.isEmpty()) {
+                if (baseWidget) {
+                    *baseWidget = const_cast<QWidget *>(widget);
+                }
+
+                break;
+            }
+            widget = widget->isWindow() ? 0 : widget->parentWidget();
+        } while (widget);
+
+        return theme.isEmpty() ? themeName : theme;
+    }
+
+    QString fallbackWidgetThemeURL(QWidget *w) const
+    {
+        QStringList fallbackList;
+
+        QString overriveName = w->property("_d_dtk_theme_filename").toString();
+        if (!overriveName.isEmpty()) {
+            fallbackList << overriveName;
+        }
+
+        QString objectName = w->objectName();
+        if (!objectName.isEmpty()) {
+            fallbackList << objectName;
+        }
+
+        auto themeName = fallbackWidgetThemeName(w, nullptr);
+        for (auto filename : fallbackList) {
+            QString themeURL = QString(":/%1/%2.theme").arg(themeName).arg(filename);
+            if (themeFileExist(themeURL)) {
+                return themeURL;
+            }
+        }
+
+        QString className = getObjectClassName(w);
+        QString themeURL = QString(":/%1/%2.theme").arg(themeName).arg(className);
+        return themeURL;
+    }
+
+    QString fallbackWidgetThemeQSS(QWidget *w) const
+    {
+        QString themeURL = fallbackWidgetThemeURL(w);
+        return getQssContent(themeURL);
+    }
+
+    void setTheme(const QString theme)
+    {
+        D_Q(DThemeManager);
+        if (themeName != theme) {
+            QStyle *style = Q_NULLPTR;
+
+            // TODO: remove this shit in the future.
+            // It's just a trick to make all DApplications use dde qt5 styles,
+            // if dlight or ddark style is set to default style of dde, those
+            // ugly code will no longer needed.
+            if (theme == "light") {
+                style = QStyleFactory::create("dlight");
+                themeName = theme;
+            } else if (theme == "dark") {
+                style = QStyleFactory::create("ddark");
+                themeName = theme;
+            } else if (theme == "semilight") {
+                style = QStyleFactory::create("dsemilight");
+                themeName = "light";
+            } else if (theme == "semidark") {
+                style = QStyleFactory::create("dsemidark");
+                themeName = "dark";
+            }
+
+            if (style) {
+                qApp->setStyle(style);
+            }
+
+            Q_EMIT q->themeChanged(themeName);
+        }
+    }
+
+    void setTheme(QWidget *widget, const QString theme)
+    {
+        D_Q(DThemeManager);
+
+        Q_ASSERT(widget);
+
+        if (theme.isEmpty()) {
+            QString old_theme = fallbackWidgetThemeName(widget);
+
+            widget->setProperty("_d_dtk_theme", QVariant());
+
+            QWidget *baseWidget = nullptr;
+
+            if (fallbackWidgetThemeName(widget, &baseWidget) != old_theme) {
+                emitThemeChanged(q, widget, fallbackWidgetThemeName(widget));
+            }
+
+            inseritStyle(widget, baseWidget);
+
+            return;
+        }
+
+        const QString &old_theme = fallbackWidgetThemeName(widget);
+        QStyle *style = Q_NULLPTR;
+
+        // TODO: remove this shit in the future.
+        // It's just a trick to make all DApplications use dde qt5 styles,
+        // if dlight or ddark style is set to default style of dde, those
+        // ugly code will no longer needed.
+        if (theme == "light") {
+            style = QStyleFactory::create("dlight");
+            widget->setProperty("_d_dtk_theme", theme);
+        } else if (theme == "dark") {
+            style = QStyleFactory::create("ddark");
+            widget->setProperty("_d_dtk_theme", theme);
+        } else if (theme == "semilight") {
+            style = QStyleFactory::create("dsemilight");
+            widget->setProperty("_d_dtk_theme", "light");
+        } else if (theme == "semidark") {
+            style = QStyleFactory::create("dsemidark");
+            widget->setProperty("_d_dtk_theme", "dark");
+        }
+
+        if (style) {
+            setStyle(widget, style);
+        }
+
+        if (old_theme != theme) {
+            emitThemeChanged(q, widget, theme);
+        }
+    }
+};
+
+/*!
+ * \brief DThemeManager::theme
+ * \return the theme name currently be used by this application, the possible
+ * value are "light" and "dark".
+ */
+QString DThemeManager::theme() const
+{
+    D_DC(DThemeManager);
+    return d->themeName;
+}
+
+QString DThemeManager::theme(const QWidget *widget, QWidget **baseWidget) const
+{
+    D_DC(DThemeManager);
+    return d->fallbackWidgetThemeName(widget, baseWidget);
+}
+
+/*!
+ * \brief DThemeManager::setTheme sets the application theme.
+ * \param theme is the theme name to be set.
+ */
+void DThemeManager::setTheme(const QString theme)
+{
+    D_D(DThemeManager);
+    d->setTheme(theme);
 }
 
 /*!
@@ -176,51 +331,8 @@ static void inseritStyle(QWidget *widget, const QWidget *baseWidget)
  */
 void DThemeManager::setTheme(QWidget *widget, const QString theme)
 {
-    Q_ASSERT(widget);
-
-    if (theme.isEmpty()) {
-        QString old_theme = this->theme(widget);
-
-        widget->setProperty("_d_dtk_theme", QVariant());
-
-        QWidget *baseWidget = nullptr;
-
-        if (this->theme(widget, &baseWidget) != old_theme) {
-            emitThemeChanged(this, widget, this->theme(widget));
-        }
-
-        inseritStyle(widget, baseWidget);
-
-        return;
-    }
-
-    const QString &old_theme = this->theme(widget);
-    QStyle *style = Q_NULLPTR;
-
-    // TODO: remove this shit in the future.
-    // It's just a trick to make all DApplications use dde qt5 styles,
-    // if dlight or ddark style is set to default style of dde, those
-    // ugly code will no longer needed.
-    if (theme == "light") {
-        style = QStyleFactory::create("dlight");
-        widget->setProperty("_d_dtk_theme", theme);
-    } else if (theme == "dark") {
-        style = QStyleFactory::create("ddark");
-        widget->setProperty("_d_dtk_theme", theme);
-    } else if (theme == "semilight") {
-        style = QStyleFactory::create("dsemilight");
-        widget->setProperty("_d_dtk_theme", "light");
-    } else if (theme == "semidark") {
-        style = QStyleFactory::create("dsemidark");
-        widget->setProperty("_d_dtk_theme", "dark");
-    }
-
-    if (style) {
-        setStyle(widget, style);
-    }
-
-    if (old_theme != theme)
-        emitThemeChanged(this, widget, theme);
+    D_D(DThemeManager);
+    d->setTheme(widget, theme);
 }
 
 /*!
@@ -233,20 +345,12 @@ void DThemeManager::setTheme(QWidget *widget, const QString theme)
  */
 QString DThemeManager::getQssForWidget(const QString className, const QString &theme) const
 {
+    D_DC(DThemeManager);
     QString qss;
 
-    QString themeName = theme.isEmpty() ? m_theme : theme;
+    QString themeName = theme.isEmpty() ? d->themeName : theme;
     QString themeURL = QString(":/%1/%2.theme").arg(themeName).arg(className);
-    QFile themeFile(themeURL);
-
-    if (themeFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qss = themeFile.readAll();
-        themeFile.close();
-    } /*else {
-        qWarning() << "open qss file failed" << themeURL << themeFile.errorString();
-    }*/
-
-    return qss;
+    return d->getQssContent(themeURL);
 }
 
 /*!
@@ -281,27 +385,22 @@ QString DThemeManager::getQssForWidget(const QWidget *widget) const
  */
 void DThemeManager::registerWidget(QWidget *widget, QStringList propertys)
 {
-    auto meta = widget->metaObject();
-    Q_ASSERT(meta);
-
-    auto className = meta->className();
     auto dtm = DThemeManager::instance();
-    auto qss = dtm->getQssForWidget(className, widget);
-    widget->setStyleSheet(widget->styleSheet() + qss);
+    auto appendQSS = dtm->d_func()->fallbackWidgetThemeQSS(widget);
+    widget->setStyleSheet(widget->styleSheet() + appendQSS);
 
     connect(dtm, &DThemeManager::themeChanged,
-    widget, [widget, dtm, className](QString) {
-        widget->setStyleSheet(dtm->getQssForWidget(className, widget));
+    widget, [widget, dtm](QString) {
+        auto qss = dtm->d_func()->fallbackWidgetThemeQSS(widget);
+        widget->setStyleSheet(qss);
     });
 
-    for (auto property : propertys) {
-        auto propertyIndex = meta->indexOfProperty(property.toLatin1().data());
-        if (-1 == propertyIndex) {
-            continue;
-        }
-
-        connect(widget, meta->property(propertyIndex).notifySignal(),
-                dtm, dtm->metaObject()->method(dtm->metaObject()->indexOfMethod("updateQss()")));
+    if (!propertys.isEmpty()) {
+        widget->installEventFilter(dtm);
+        dtm->d_func()->watchedWidgetPropertys.insert(widget, propertys);
+        connect(widget, &QObject::destroyed, dtm, [ = ]() {
+            dtm->d_func()->watchedWidgetPropertys.remove(widget);
+        });
     }
 }
 
@@ -323,36 +422,52 @@ void DThemeManager::updateQss()
 
 DThemeManager::DThemeManager()
     : QObject()
+    , DObject(*new DThemeManagerPrivate(this))
 {
     setTheme("light");
 }
 
-static void updateWidgetTheme(DThemeManager *manager, QWidget *widget, QWidget *baseWidget, const QString &theme)
+bool DThemeManager::eventFilter(QObject *watched, QEvent *event)
 {
-    inseritStyle(widget, baseWidget);
-
-    Q_EMIT manager->widgetThemeChanged(widget, theme);
-
-    for (QObject *child : widget->children()) {
-        if (QWidget *cw = qobject_cast<QWidget*>(child)) {
-            if (widget->property("_d_dtk_theme").isValid())
-                return;
-
-            updateWidgetTheme(manager, cw, baseWidget, theme);
-        }
+    D_D(DThemeManager);
+    if (event->type() != QEvent::DynamicPropertyChange) {
+        return QObject::eventFilter(watched, event);
     }
+
+    auto widget = qobject_cast<QWidget *>(watched);
+    if (!d->watchedWidgetPropertys.contains(widget)) {
+        return QObject::eventFilter(watched, event);
+    }
+
+    auto propEvent = reinterpret_cast<QDynamicPropertyChangeEvent *>(event);
+    if (!propEvent) {
+        return QObject::eventFilter(watched, event);
+    }
+
+    auto props = d->watchedWidgetPropertys.value(widget);
+    auto propName = QString::fromLatin1(propEvent->propertyName().data());
+    if (props.contains(propName) && widget) {
+        widget->setStyleSheet(widget->styleSheet());
+        widget->style()->unpolish(widget);
+        widget->style()->polish(widget);
+        widget->update();
+    }
+
+    return QObject::eventFilter(watched, event);
 }
 
 void DThemeManager::updateThemeOnParentChanged(QWidget *widget)
 {
-    if (widget->property("_d_dtk_theme").isValid())
+    if (widget->property("_d_dtk_theme").isValid()) {
         return;
+    }
 
     QWidget *base_widget = nullptr;
     const QString &theme = this->theme(widget, &base_widget);
 
-    if (!base_widget)
+    if (!base_widget) {
         return;
+    }
 
     updateWidgetTheme(this, widget, base_widget, theme);
 }

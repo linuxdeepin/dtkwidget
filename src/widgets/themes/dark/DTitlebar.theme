@@ -3,6 +3,10 @@ Dtk--Widget--DTitlebar {
         stop:0 rgba(0,0,0,85%),  stop:1 rgba(0,0,0,85%));
 }
 
+Dtk--Widget--DTitlebar[transparent=true] {
+    background: transparent;
+}
+
 Dtk--Widget--DWindowCloseButton {
     qproperty-normalPic: url(:/images/dark/images/window/close_normal.svg);
     qproperty-hoverPic: url(:/images/dark/images/window/close_hover.svg);
