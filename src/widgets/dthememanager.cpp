@@ -394,6 +394,12 @@ void DThemeManager::registerWidget(QWidget *widget, QStringList propertys)
         auto qss = dtm->d_func()->fallbackWidgetThemeQSS(widget);
         widget->setStyleSheet(qss);
     });
+    connect(dtm, &DThemeManager::widgetThemeChanged, widget, [widget, dtm](QWidget * w, QString) {
+        if (widget == w) {
+            auto qss = dtm->d_func()->fallbackWidgetThemeQSS(widget);
+            widget->setStyleSheet(qss);
+        }
+    });
 
     if (!propertys.isEmpty()) {
         widget->installEventFilter(dtm);
