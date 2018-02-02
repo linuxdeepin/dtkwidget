@@ -8,7 +8,7 @@ DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 ifneq (,$(wildcard .git/config))
 	CONFIG_VERSION=
 else
-	VERSION = $(shell dpkg-parsechangelog -ldebian/changelog -SVersion)
+	VERSION = $(shell dpkg-parsechangelog -ldebian/changelog -SVersion | sed 's/.*.is.//g')
 	_PACK_VER = $(shell echo $(VERSION) | awk -F'[+_~-]' '{print $$1}')
 	_BUILD_VER = $(shell echo $(VERSION) | awk -F'[+_~-]' '{print $$2}' | sed 's/[^0-9]//g')
 	ifeq ($(_BUILD_VER),)
