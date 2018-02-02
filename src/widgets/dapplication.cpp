@@ -391,6 +391,16 @@ bool DApplication::isDXcbPlatform()
     return qApp && (qApp->platformName() == DXCB_PLUGIN_KEY || qApp->property(DXCB_PLUGIN_SYMBOLIC_PROPERTY).toBool());
 }
 
+int DApplication::buildDtkVersion()
+{
+    return DtkBuildVersion::value;
+}
+
+int DApplication::runtimeDtkVersion()
+{
+    return DTK_VERSION;
+}
+
 /**
  * @brief DApplication::productName returns the product name of this application.
  *
@@ -703,5 +713,7 @@ bool DApplication::notify(QObject *obj, QEvent *event)
 
     return QApplication::notify(obj, event);
 }
+
+int DtkBuildVersion::value = 0;
 
 DWIDGET_END_NAMESPACE

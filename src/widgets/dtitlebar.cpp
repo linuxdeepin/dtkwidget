@@ -474,6 +474,10 @@ DTitlebar::DTitlebar(QWidget *parent) :
     QFrame(parent),
     DObject(*new DTitlebarPrivate(this))
 {
+    if (DApplication::buildDtkVersion() < DTK_VERSION_CHECK(2, 0, 6, 1)) {
+        setBackgroundTransparent(true);
+    }
+
     DThemeManager::registerWidget(this, {"transparent"});
 
     D_D(DTitlebar);

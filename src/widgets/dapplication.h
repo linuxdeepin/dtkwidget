@@ -66,6 +66,11 @@ public:
     static bool loadDXcbPlugin();
     static bool isDXcbPlatform();
 
+    // return the libdtkwidget version of build application
+    static int buildDtkVersion();
+    // return the libdtkwidget version of runing application
+    static int runtimeDtkVersion();
+
     // meta information that necessary to create a about dialog for the application.
     QString productName() const;
     void setProductName(const QString &productName);
@@ -131,6 +136,22 @@ private:
     friend class DTitlebarPrivate;
     friend class DMainWindowPrivate;
 };
+
+class DtkBuildVersion {
+public:
+    static int value;
+};
+
+#ifndef LIBDTKWIDGET_LIBRARY
+class Q_DECL_HIDDEN _DtkBuildVersion {
+public:
+    _DtkBuildVersion() {
+        DtkBuildVersion::value = DTK_VERSION;
+    }
+};
+
+static _DtkBuildVersion _dtk_build_version;
+#endif
 
 DWIDGET_END_NAMESPACE
 
