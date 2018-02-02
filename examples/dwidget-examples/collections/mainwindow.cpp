@@ -52,6 +52,10 @@ DWIDGET_USE_NAMESPACE
 MainWindow::MainWindow(QWidget *parent)
     : DMainWindow(parent)
 {
+    auto flags = windowFlags() & ~Qt::WindowMaximizeButtonHint;
+    flags = flags & ~Qt::WindowMinimizeButtonHint;
+    setWindowFlags(flags);
+
     DThemeManager *themeManager = DThemeManager::instance();
 
     initTabWidget();
@@ -66,6 +70,7 @@ MainWindow::MainWindow(QWidget *parent)
     QPushButton *lightBUtton = new QPushButton("Light", this);
     QPushButton *enableButtons = new QPushButton("Enable Titlebar ", this);
     QPushButton *disableButtons = new QPushButton("Disable Titlebar", this);
+    QPushButton *toggleMinMaxButtons = new QPushButton("Toggle MinMax", this);
     QPushButton *fullscreenButtons = new QPushButton("Fullscreen", this);
 
     themeManager->setTheme(lightBUtton, "light");
@@ -95,10 +100,26 @@ MainWindow::MainWindow(QWidget *parent)
         }
     });
 
+    connect(toggleMinMaxButtons, &QPushButton::clicked, [ = ] {
+        auto flags = windowFlags();
+        if (flags.testFlag(Qt::WindowMinimizeButtonHint))
+        {
+            flags  &= ~Qt::WindowMaximizeButtonHint;
+            flags  &= ~Qt::WindowMinimizeButtonHint;
+        } else
+        {
+            flags |= Qt::WindowMaximizeButtonHint;
+            flags |= Qt::WindowMinimizeButtonHint;
+        }
+        setWindowFlags(flags);
+        show();
+    });
+
     styleLayout->addWidget(darkButton);
     styleLayout->addWidget(lightBUtton);
     styleLayout->addWidget(enableButtons);
     styleLayout->addWidget(disableButtons);
+    styleLayout->addWidget(toggleMinMaxButtons);
     styleLayout->addWidget(fullscreenButtons);
     styleLayout->addStretch();
 

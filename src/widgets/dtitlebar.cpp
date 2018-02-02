@@ -103,7 +103,6 @@ private:
 
     Qt::WindowFlags     disableFlags;
     bool                mousePressed    = false;
-    bool                useWindowFlags  = false;
     bool                embedMode       = false;
     bool                autoHideOnFullscreen = false;
 
@@ -267,6 +266,10 @@ void DTitlebarPrivate::updateFullscreen()
 
 void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
 {
+    D_Q(DTitlebar);
+
+    bool isFullscreen = q->topLevelWidget()->windowState().testFlag(Qt::WindowFullScreen);
+
     if (titleLabel) {
         titleLabel->setVisible((type & Qt::WindowTitleHint) && !embedMode);
     }
@@ -274,10 +277,10 @@ void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
         iconLabel->setVisible((type & Qt::WindowTitleHint) && !embedMode);
     }
 
-    minButton->setVisible((type & Qt::WindowMinimizeButtonHint) && !embedMode);
-    maxButton->setVisible((type & Qt::WindowMaximizeButtonHint) && !embedMode);
-    closeButton->setVisible((type & Qt::WindowCloseButtonHint) && !embedMode);
-    optionButton->setVisible(type & Qt::WindowSystemMenuHint);
+    minButton->setVisible((type & Qt::WindowMinimizeButtonHint) && !embedMode && !isFullscreen);
+    maxButton->setVisible(type.testFlag(Qt::WindowMaximizeButtonHint) && !embedMode && !isFullscreen);
+    closeButton->setVisible((type & Qt::WindowCloseButtonHint) && !embedMode && !isFullscreen);
+    optionButton->setVisible(type & Qt::WindowSystemMenuHint && !isFullscreen);
     buttonArea->adjustSize();
     buttonArea->resize(buttonArea->size());
 
@@ -348,10 +351,6 @@ void DTitlebarPrivate::_q_onTopWindowMotifHintsChanged(quint32 winId)
 {
     D_QC(DTitlebar);
 
-    if (useWindowFlags) {
-        return;
-    }
-
     if (!DPlatformWindowHandle::isEnabledDXcb(q->window())) {
         q->disconnect(DWindowManagerHelper::instance(), SIGNAL(windowMotifWMHintsChanged(quint32)),
                       q, SLOT(_q_onTopWindowMotifHintsChanged(quint32)));
@@ -373,11 +372,7 @@ void DTitlebarPrivate::_q_onTopWindowMotifHintsChanged(quint32 winId)
         iconLabel->setVisible(decorations_hints.testFlag(DWindowManagerHelper::DECOR_TITLE));
     }
 
-    minButton->setVisible(decorations_hints.testFlag(DWindowManagerHelper::DECOR_MINIMIZE) && !embedMode);
-    maxButton->setVisible(decorations_hints.testFlag(DWindowManagerHelper::DECOR_MAXIMIZE) && !embedMode);
-    optionButton->setVisible(decorations_hints.testFlag(DWindowManagerHelper::DECOR_MENU));
-    buttonArea->adjustSize();
-    buttonArea->resize(buttonArea->size());
+//    updateButtonsState(q->topLevelWidget()->windowFlags());
 
 //    minButton->setEnabled(functions_hints.testFlag(DWindowManagerHelper::FUNC_MINIMIZE) && !embedMode);
 //    maxButton->setEnabled(functions_hints.testFlag(DWindowManagerHelper::FUNC_MAXIMIZE) && !embedMode);
@@ -538,9 +533,7 @@ QWidget *DTitlebar::customWidget() const
 /// and WindowMinMaxButtonsHint.
 void DTitlebar::setWindowFlags(Qt::WindowFlags type)
 {
-    D_D(DTitlebar);
-    d->useWindowFlags = true;
-    d->updateButtonsState(type);
+    topLevelWidget()->setWindowFlags(type);
 }
 
 #ifndef QT_NO_MENU
@@ -607,12 +600,15 @@ bool DTitlebar::eventFilter(QObject *obj, QEvent *event)
     if (obj == d->parentWindow) {
         switch (event->type()) {
         case QEvent::WindowStateChange: {
+            // TODO: should parentWindow and topLevelWidget merge ???
             d->maxButton->setMaximized(d->parentWindow->windowState() == Qt::WindowMaximized);
             d->updateFullscreen();
+            d->updateButtonsState(topLevelWidget()->windowFlags());
             break;
         }
         case QEvent::ShowToParent:
             d->updateButtonsFunc();
+            d->updateButtonsState(topLevelWidget()->windowFlags());
             break;
         case QEvent::Resize:
             if (d->autoHideOnFullscreen) {

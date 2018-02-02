@@ -218,7 +218,7 @@ IconButton* DButtonList::getButtonByIndex(int index){
 
 void DButtonList::clear(){
     Q_FOREACH (QAbstractButton* button, m_buttonGroup->buttons()) {
-        qDebug() << static_cast<IconButton*>(button)->text();
+//        qDebug() << static_cast<IconButton*>(button)->text();
         static_cast<IconButton*>(button)->disconnect();
         m_buttonGroup->removeButton(static_cast<IconButton*>(button));
     }
