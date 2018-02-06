@@ -114,7 +114,8 @@ public:
 
         addButton = new DTabBarAddButton(qq);
         addButton->setObjectName("AddButton");
-        addButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        addButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+        addButton->setFixedWidth(48);
 
         connect(addButton, &DTabBarAddButton::clicked,
                 qq, &DTabBar::tabAddRequested);
@@ -134,11 +135,11 @@ public:
         leftScrollButton->setVisible(d->leftB->isVisible());
         leftScrollButton->setAutoRepeat(true);
         leftScrollButton->setArrowType(Qt::LeftArrow);
-        leftScrollButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        leftScrollButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
         rightScrollButton->setVisible(d->rightB->isVisible());
         rightScrollButton->setAutoRepeat(true);
         rightScrollButton->setArrowType(Qt::RightArrow);
-        rightScrollButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        rightScrollButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
 
         d->leftB->setFixedSize(0, 0);
         d->leftB->installEventFilter(this);
