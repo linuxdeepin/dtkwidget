@@ -757,11 +757,11 @@ void DTabBarPrivate::paintEvent(QPaintEvent *e)
     }
 
     // Only draw the tear indicator if necessary. Most of the time we don't need too.
-    if (d->leftB->isVisible() && cut >= 0) {
-        cutTab.rect = rect();
-        cutTab.rect = style()->subElementRect(QStyle::SE_TabBarTearIndicator, &cutTab, this);
-        p.drawPrimitive(QStyle::PE_IndicatorTabTear, cutTab);
-    }
+//    if (d->leftB->isVisible() && cut >= 0) {
+//        cutTab.rect = rect();
+//        cutTab.rect = style()->subElementRect(QStyle::SE_TabBarTearIndicator, &cutTab, this);
+//        p.drawPrimitive(QStyle::PE_IndicatorTabTear, cutTab);
+//    }
 }
 
 void DTabBarPrivate::mouseMoveEvent(QMouseEvent *event)
