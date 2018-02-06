@@ -107,7 +107,7 @@ DOptionList::DOptionList(QWidget *parent) :
     QListWidget(parent),
     DObject(*new DOptionListPrivate(this))
 {
-    D_THEME_INIT_WIDGET(DOptionList);
+    DThemeManager::registerWidget(this);
 
     D_D(DOptionList);
 

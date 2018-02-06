@@ -48,7 +48,7 @@ DTextEdit::DTextEdit(QWidget *parent) :
     QTextEdit(parent),
     DObject(*new DTextEditPrivate(this))
 {
-    D_THEME_INIT_WIDGET(DTextEdit);
+    DThemeManager::registerWidget(this);
 
     d_func()->init();
 }

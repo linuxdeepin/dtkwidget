@@ -67,7 +67,7 @@ void DListWidgetPrivate::init()
 DListWidget::DListWidget(CheckMode checkMode, QWidget *parent) :
     DScrollArea(*new DListWidgetPrivate(this), parent)
 {
-    D_THEME_INIT_WIDGET(DListWidget);
+    DThemeManager::registerWidget(this);
 
     d_func()->checkMode = checkMode;
     d_func()->init();
@@ -76,7 +76,7 @@ DListWidget::DListWidget(CheckMode checkMode, QWidget *parent) :
 DListWidget::DListWidget(QBoxLayout::Direction direction, DListWidget::CheckMode checkMode, QWidget *parent) :
     DScrollArea(*new DListWidgetPrivate(this), parent)
 {
-    D_THEME_INIT_WIDGET(DListWidget);
+    DThemeManager::registerWidget(this);
 
     d_func()->mainWidget->setDirection(direction);
     d_func()->checkMode = checkMode;
@@ -544,7 +544,7 @@ QSize DListWidget::sizeHint() const
 DListWidget::DListWidget(DListWidgetPrivate &dd, QWidget *parent):
     DScrollArea(dd, parent)
 {
-    D_THEME_INIT_WIDGET(DListWidget);
+    DThemeManager::registerWidget(this);
 
     d_func()->init();
 }

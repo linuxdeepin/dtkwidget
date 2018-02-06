@@ -45,7 +45,7 @@ DSegmentedControl::DSegmentedControl(QWidget *parent) :
     m_highlight->setObjectName("Highlight");
     m_highlight->installEventFilter(this);
 
-    D_THEME_INIT_WIDGET(DSegmentedControl);
+    DThemeManager::registerWidget(this);
 
     m_highlightMoveAnimation->setDuration(100);
     m_highlightMoveAnimation->setEasingCurve(QEasingCurve::InCubic);

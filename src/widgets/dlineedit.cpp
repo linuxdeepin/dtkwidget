@@ -45,7 +45,7 @@ DLineEdit::DLineEdit(QWidget *parent)
     : QLineEdit(parent),
       DObject(*new DLineEditPrivate(this))
 {
-    D_THEME_INIT_WIDGET(DLineEdit, alert);
+    DThemeManager::registerWidget(this, QStringList({"alert"}));
 
     Q_D(DLineEdit);
     d->init();
@@ -55,7 +55,7 @@ DLineEdit::DLineEdit(DLineEditPrivate &q, QWidget *parent)
     : QLineEdit(parent),
       DObject(q)
 {
-    D_THEME_INIT_WIDGET(DLineEdit, alert);
+    DThemeManager::registerWidget(this, QStringList({"alert"}));
 
     Q_D(DLineEdit);
     d->init();

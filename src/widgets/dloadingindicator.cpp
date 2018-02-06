@@ -80,7 +80,7 @@ DLoadingIndicator::DLoadingIndicator(QWidget *parent) :
     QGraphicsView(parent),
     DObject(*new DLoadingIndicatorPrivate(this))
 {
-    D_THEME_INIT_WIDGET(DLoadingIndicator);
+    DThemeManager::registerWidget(this);
 
     d_func()->init();
 }

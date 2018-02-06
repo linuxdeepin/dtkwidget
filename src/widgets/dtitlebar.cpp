@@ -480,7 +480,7 @@ DTitlebar::DTitlebar(QWidget *parent) :
         setBackgroundTransparent(true);
     }
 
-    DThemeManager::registerWidget(this, {"transparent"});
+    DThemeManager::registerWidget(this, QStringList({"transparent"}));
 
     D_D(DTitlebar);
     d->init();

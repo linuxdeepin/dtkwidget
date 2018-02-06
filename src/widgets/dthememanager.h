@@ -45,19 +45,20 @@ public:
     QString getQssForWidget(const QWidget *widget) const;
 
     static void registerWidget(QWidget *widget, QStringList propertys = QStringList());
+    // TODO: use blow instead, the only thing should do is rebuilding
+    // static void registerWidget(QWidget *widget, const QStringList &propertys = QStringList());
+    static void registerWidget(QWidget *widget, const QString &filename, const QStringList &propertys = QStringList());
 
 public Q_SLOTS:
     void updateQss();
+    void updateThemeOnParentChanged(QWidget *widget);
 
 Q_SIGNALS:
     void themeChanged(QString theme);
     void widgetThemeChanged(QWidget *widget, QString theme);
 
 protected:
-    bool eventFilter(QObject *watched, QEvent *event);
-
     DThemeManager();
-    void updateThemeOnParentChanged(QWidget *widget);
 
 private:
     friend class DApplication;

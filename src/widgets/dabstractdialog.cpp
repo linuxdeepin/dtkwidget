@@ -106,7 +106,7 @@ DAbstractDialog::DAbstractDialog(QWidget *parent) :
     QDialog(parent),
     DObject(*new DAbstractDialogPrivate(this))
 {
-    D_THEME_INIT_WIDGET(DAbstractDialog);
+    DThemeManager::registerWidget(this);
 
     d_func()->init();
 }

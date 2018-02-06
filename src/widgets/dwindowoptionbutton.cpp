@@ -30,7 +30,7 @@ DWIDGET_BEGIN_NAMESPACE
 DWindowOptionButton::DWindowOptionButton(QWidget * parent) :
     DImageButton(parent)
 {
-    D_THEME_INIT_WIDGET(DWindowOptionButton);
+    DThemeManager::registerWidget(this);
 
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }

@@ -408,7 +408,7 @@ void DSlider::init()
 {
     Q_D(DSlider);
 
-    D_THEME_INIT_WIDGET(DSlider);
+    DThemeManager::registerWidget(this);
 
     setMouseTracking(true);
     connect(&d->m_hoverTimer, &QTimer::timeout, this, &DSlider::hoverTimout);

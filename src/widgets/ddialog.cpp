@@ -269,7 +269,7 @@ void DDialogPrivate::_q_defaultButtonTriggered()
 DDialog::DDialog(QWidget *parent) :
     DAbstractDialog(*new DDialogPrivate(this), parent)
 {
-    D_THEME_INIT_WIDGET(dialogs/DDialog);
+    DThemeManager::registerWidget(this);
 
     d_func()->init();
 }
@@ -277,7 +277,7 @@ DDialog::DDialog(QWidget *parent) :
 DDialog::DDialog(const QString &title, const QString &message, QWidget *parent) :
     DAbstractDialog(*new DDialogPrivate(this), parent)
 {
-    D_THEME_INIT_WIDGET(dialogs/DDialog);
+    DThemeManager::registerWidget(this);
 
     d_func()->init();
 
@@ -734,7 +734,7 @@ int DDialog::exec()
 DDialog::DDialog(DDialogPrivate &dd, QWidget *parent) :
     DAbstractDialog(dd, parent)
 {
-    D_THEME_INIT_WIDGET(dialogs/DDialog);
+    DThemeManager::registerWidget(this);
 
     d_func()->init();
 }

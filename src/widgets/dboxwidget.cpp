@@ -72,7 +72,7 @@ DBoxWidget::DBoxWidget(QBoxLayout::Direction direction, QWidget *parent):
     QFrame(parent),
     DObject(*new DBoxWidgetPrivate(this))
 {
-    D_THEME_INIT_WIDGET(DBoxWidget);
+    DThemeManager::registerWidget(this);
 
     d_func()->layout->setDirection(direction);
     d_func()->init();

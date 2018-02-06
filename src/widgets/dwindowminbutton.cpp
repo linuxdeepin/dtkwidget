@@ -30,7 +30,7 @@ DWIDGET_BEGIN_NAMESPACE
 DWindowMinButton::DWindowMinButton(QWidget * parent) :
     DImageButton(parent)
 {
-    D_THEME_INIT_WIDGET(DWindowMinButton);
+    DThemeManager::registerWidget(this);
 
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }

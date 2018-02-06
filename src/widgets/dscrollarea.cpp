@@ -68,7 +68,7 @@ DScrollArea::DScrollArea(QWidget *parent) :
     QScrollArea(parent),
     DObject(*new DScrollAreaPrivate(this))
 {
-    D_THEME_INIT_WIDGET(DScrollArea);
+    DThemeManager::registerWidget(this);
 
     d_func()->init();
 }
@@ -166,7 +166,7 @@ DScrollArea::DScrollArea(DScrollAreaPrivate &dd, QWidget *parent):
     QScrollArea(parent),
     DObject(dd)
 {
-    D_THEME_INIT_WIDGET(DScrollArea);
+    DThemeManager::registerWidget(this);
 
     d_func()->init();
 }

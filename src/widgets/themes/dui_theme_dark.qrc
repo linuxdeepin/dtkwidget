@@ -1,47 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>dark/DArrowButton.theme</file>
-        <file>dark/DBaseLine.theme</file>
-        <file>dark/DBaseExpand.theme</file>
-        <file>dark/DHeaderLine.theme</file>
-        <file>dark/DSeparatorHorizontal.theme</file>
-        <file>dark/DSeparatorVertical.theme</file>
-        <file>dark/DSlider.theme</file>
-        <file>dark/DTextButton.theme</file>
-        <file>dark/DImageButton.theme</file>
-        <file>dark/DLoadingIndicator.theme</file>
-        <file>dark/DButtonList.theme</file>
-        <file>dark/DSwitchButton.theme</file>
-        <file>dark/DSegmentedControl.theme</file>
-        <file>dark/DLineEdit.theme</file>
-        <file>dark/DPasswordEdit.theme</file>
-        <file>dark/DSearchEdit.theme</file>
-        <file>dark/DComboBox.theme</file>
-        <file>dark/DWindowMaxButton.theme</file>
-        <file>dark/DWindowCloseButton.theme</file>
-        <file>dark/DWindowMinButton.theme</file>
-        <file>dark/DWindowRestoreButton.theme</file>
-        <file>dark/DWindowOptionButton.theme</file>
-        <file>dark/DShortcutEdit.theme</file>
-        <file>dark/DLabel.theme</file>
-        <file>dark/DLinkButton.theme</file>
-        <file>dark/DScrollBar.theme</file>
-        <file>dark/DScrollArea.theme</file>
-        <file>dark/DBaseButton.theme</file>
-        <file>dark/DCircleProgress.theme</file>
-        <file>dark/DBoxWidget.theme</file>
-        <file>dark/DStackWidget.theme</file>
-        <file>dark/DFileChooserEdit.theme</file>
-        <file>dark/dialogs/DDialog.theme</file>
-        <file>dark/DSpinBox.theme</file>
-        <file>dark/DIpv4LineEdit.theme</file>
-        <file>dark/DOptionList.theme</file>
-        <file>dark/DOption.theme</file>
-        <file>dark/DListView.theme</file>
-        <file>dark/DTextEdit.theme</file>
-        <file>dark/dialogs/DAboutDialog.theme</file>
-        <file>dark/DAbstractDialog.theme</file>
-        <file>dark/DTitlebar.theme</file>
         <file>dark/images/window/close_disabled.svg</file>
         <file>dark/images/window/close_hover.svg</file>
         <file>dark/images/window/close_normal.svg</file>
@@ -62,8 +20,50 @@
         <file>dark/images/window/unmaximize_hover.svg</file>
         <file>dark/images/window/unmaximize_normal.svg</file>
         <file>dark/images/window/unmaximize_press.svg</file>
-        <file>dark/dialogs/DSettingsDialog.theme</file>
-        <file>dark/DToast.theme</file>
+        <file>dark/Dtk--Widget--DWindowRestoreButton.theme</file>
+        <file>dark/Dtk--Widget--DWindowOptionButton.theme</file>
+        <file>dark/Dtk--Widget--DWindowMinButton.theme</file>
+        <file>dark/Dtk--Widget--DWindowMaxButton.theme</file>
+        <file>dark/Dtk--Widget--DWindowCloseButton.theme</file>
+        <file>dark/Dtk--Widget--DToast.theme</file>
+        <file>dark/Dtk--Widget--DTitlebar.theme</file>
+        <file>dark/Dtk--Widget--DTextEdit.theme</file>
+        <file>dark/Dtk--Widget--DTextButton.theme</file>
+        <file>dark/Dtk--Widget--DSwitchButton.theme</file>
+        <file>dark/Dtk--Widget--DStackWidget.theme</file>
+        <file>dark/Dtk--Widget--DSpinBox.theme</file>
+        <file>dark/Dtk--Widget--DSlider.theme</file>
+        <file>dark/Dtk--Widget--DShortcutEdit.theme</file>
+        <file>dark/Dtk--Widget--DSettingsDialog.theme</file>
+        <file>dark/Dtk--Widget--DSeparatorVertical.theme</file>
+        <file>dark/Dtk--Widget--DSeparatorHorizontal.theme</file>
+        <file>dark/Dtk--Widget--DSegmentedControl.theme</file>
+        <file>dark/Dtk--Widget--DSearchEdit.theme</file>
+        <file>dark/Dtk--Widget--DScrollBar.theme</file>
+        <file>dark/Dtk--Widget--DScrollArea.theme</file>
+        <file>dark/Dtk--Widget--DPasswordEdit.theme</file>
+        <file>dark/Dtk--Widget--DOptionList.theme</file>
+        <file>dark/Dtk--Widget--DOption.theme</file>
+        <file>dark/Dtk--Widget--DLoadingIndicator.theme</file>
+        <file>dark/Dtk--Widget--DListView.theme</file>
+        <file>dark/Dtk--Widget--DLinkButton.theme</file>
+        <file>dark/Dtk--Widget--DLineEdit.theme</file>
+        <file>dark/Dtk--Widget--DLabel.theme</file>
+        <file>dark/Dtk--Widget--DIpv4LineEdit.theme</file>
+        <file>dark/Dtk--Widget--DImageButton.theme</file>
+        <file>dark/Dtk--Widget--DHeaderLine.theme</file>
+        <file>dark/Dtk--Widget--DFileChooserEdit.theme</file>
+        <file>dark/Dtk--Widget--DDialog.theme</file>
+        <file>dark/Dtk--Widget--DComboBox.theme</file>
+        <file>dark/Dtk--Widget--DCircleProgress.theme</file>
+        <file>dark/Dtk--Widget--DButtonList.theme</file>
+        <file>dark/Dtk--Widget--DBoxWidget.theme</file>
+        <file>dark/Dtk--Widget--DBaseLine.theme</file>
+        <file>dark/Dtk--Widget--DBaseExpand.theme</file>
+        <file>dark/Dtk--Widget--DBaseButton.theme</file>
+        <file>dark/Dtk--Widget--DArrowButton.theme</file>
+        <file>dark/Dtk--Widget--DAbstractDialog.theme</file>
+        <file>dark/Dtk--Widget--DAboutDialog.theme</file>
     </qresource>
     <qresource prefix="/images">
         <file>dark/images/add_hover.png</file>

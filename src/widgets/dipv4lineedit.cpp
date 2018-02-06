@@ -169,7 +169,7 @@ void DIpv4LineEditPrivate::_q_setIpLineEditText(const QString &text)
 DIpv4LineEdit::DIpv4LineEdit(QWidget *parent) :
     DLineEdit(*new DIpv4LineEditPrivate(this), parent)
 {
-    D_THEME_INIT_WIDGET(DIpv4LineEdit);
+    DThemeManager::registerWidget(this);
 
     d_func()->init();
 }

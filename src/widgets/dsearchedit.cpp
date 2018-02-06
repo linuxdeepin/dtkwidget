@@ -32,7 +32,7 @@ DWIDGET_USE_NAMESPACE
 DSearchEdit::DSearchEdit(QWidget *parent)
     : QFrame(parent)
 {
-    D_THEME_INIT_WIDGET(DSearchEdit);
+    DThemeManager::registerWidget(this);
 
     initInsideFrame();
 

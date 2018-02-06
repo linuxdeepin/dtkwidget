@@ -51,13 +51,14 @@ void DComboBoxPrivate::init()
     setMaskLabel(new DComboBoxItem(q));
 
     q->connect(q, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_slotCurrentIndexChange(int)));
-    QObject::connect(q->view(), &QAbstractItemView::entered, q, [=] (QModelIndex index) {
-        if(hoveredItem)
+    QObject::connect(q->view(), &QAbstractItemView::entered, q, [ = ](QModelIndex index) {
+        if (hoveredItem) {
             hoveredItem->setHovered(false);
+        }
 
-        DComboBoxItem *item =  qobject_cast<DComboBoxItem*>(q->view()->indexWidget(index));
+        DComboBoxItem *item =  qobject_cast<DComboBoxItem *>(q->view()->indexWidget(index));
 
-        if(item) {
+        if (item) {
             item->setHovered(true);
             hoveredItem = item;
         }
@@ -97,7 +98,7 @@ void DComboBoxPrivate::restylePopupEnds()
     QList<QWidget *> children = q->findChildren<QWidget *>();
     bool isPopupTopEnd = true;
 
-    for (QWidget * w : children) {
+    for (QWidget *w : children) {
         if (w->metaObject()->className() == QLatin1String("QComboBoxPrivateScroller")) {
             w->setFixedHeight(12);
             w->setStyleSheet("background: transparent");
@@ -116,7 +117,7 @@ void DComboBoxPrivate::restylePopupEnds()
             layout->addWidget(f);
 
             q->connect(DThemeManager::instance(), &DThemeManager::themeChanged,
-                       f, [f, q] {
+            f, [f, q] {
                 f->setStyleSheet(q->styleSheet());
                 f->parentWidget()->setStyleSheet(q->styleSheet());
             });
@@ -130,8 +131,8 @@ void DComboBoxPrivate::_q_slotCurrentIndexChange(int index)
 {
     D_Q(DComboBox);
 
-    if(q->isEditable()) {
-        if(q->currentText().isEmpty()) {
+    if (q->isEditable()) {
+        if (q->currentText().isEmpty()) {
             DComboBoxModel *m = static_cast<DComboBoxModel *>(q->model());
 
             q->lineEdit()->setText(m->getJsonData(index)["itemText"].toString());
@@ -148,12 +149,13 @@ void DComboBoxPrivate::_q_slotCurrentIndexChange(int index)
             QRect rect = q->rect();
             rect.setHeight(-1);
 
-            if(checkedItem)
+            if (checkedItem) {
                 checkedItem->setChecked(false);
+            }
 
-            DComboBoxItem *item = qobject_cast<DComboBoxItem*>(w);
+            DComboBoxItem *item = qobject_cast<DComboBoxItem *>(w);
 
-            if(item) {
+            if (item) {
                 item->setChecked(true);
                 checkedItem = item;
 
@@ -169,8 +171,9 @@ void DComboBoxPrivate::setMaskLabel(DComboBoxItem *label)
 {
     D_Q(DComboBox);
 
-    if(maskLabel)
+    if (maskLabel) {
         maskLabel->deleteLater();
+    }
 
     maskLabel = label;
     maskLabel->setObjectName("DComboBoxTitleMask");
@@ -194,8 +197,9 @@ bool DComboBoxItem::checked() const
 
 void DComboBoxItem::setChecked(bool value)
 {
-    if(value == m_checked)
+    if (value == m_checked) {
         return;
+    }
 
     m_checked = value;
 
@@ -212,8 +216,9 @@ bool DComboBoxItem::hovered() const
 
 void DComboBoxItem::setHovered(bool value)
 {
-    if(value == m_hovered)
+    if (value == m_hovered) {
         return;
+    }
 
     m_hovered = value;
 
@@ -234,8 +239,9 @@ QVariantMap DComboBoxItem::data() const
 
 void DComboBoxItem::setData(const QVariantMap &map)
 {
-    if(map.isEmpty())
+    if (map.isEmpty()) {
         return;
+    }
 
     setText(map.values().first().toString());
 }
@@ -244,7 +250,7 @@ DComboBox::DComboBox(QWidget *parent) :
     QComboBox(parent),
     DObject(*new DComboBoxPrivate(this))
 {
-    D_THEME_INIT_WIDGET(DComboBox, alert);
+    DThemeManager::registerWidget(this, QStringList({"alert"}));
 
     d_func()->init();
 }
@@ -290,7 +296,7 @@ bool DComboBox::isAlert() const
 
 DComboBoxModel *DComboBox::dcomboBoxModel() const
 {
-    return qobject_cast<DComboBoxModel*>(QComboBox::model());
+    return qobject_cast<DComboBoxModel *>(QComboBox::model());
 }
 
 void DComboBox::setInsensitiveTickImg(const QString &insensitiveTickImg)
@@ -304,8 +310,9 @@ void DComboBox::setAlert(bool alert)
 {
     D_D(DComboBox);
 
-    if (d->alert == alert)
+    if (d->alert == alert) {
         return;
+    }
 
     d->alert = alert;
     Q_EMIT alertChanged(alert);
@@ -317,8 +324,9 @@ void DComboBox::setEditable(bool editable)
 
     view()->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    if(lineEdit())
+    if (lineEdit()) {
         lineEdit()->setStyleSheet(styleSheet());
+    }
 }
 
 QString DComboBox::hoverTickImg() const
@@ -353,7 +361,7 @@ DComboBox::DComboBox(DComboBoxPrivate &dd, QWidget *parent) :
     QComboBox(parent),
     DObject(dd)
 {
-    D_THEME_INIT_WIDGET(DComboBox, alert);
+    DThemeManager::registerWidget(this, QStringList({"alert"}));
 
     d_func()->init();
 }
@@ -362,8 +370,9 @@ void DComboBox::resizeEvent(QResizeEvent *e)
 {
     QComboBox::resizeEvent(e);
 
-    if(!isEditable())
+    if (!isEditable()) {
         d_func()->_q_slotCurrentIndexChange(currentIndex());
+    }
 }
 
 void DComboBox::focusInEvent(QFocusEvent *e)

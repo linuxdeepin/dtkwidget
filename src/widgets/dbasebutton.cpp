@@ -36,7 +36,7 @@ DWIDGET_BEGIN_NAMESPACE
 DBaseButton::DBaseButton(QWidget *parent) :
     QPushButton(parent)
 {
-    D_THEME_INIT_WIDGET(DBaseButton);
+    DThemeManager::registerWidget(this);
 
     initInsideFrame();
 }
@@ -49,7 +49,7 @@ DBaseButton::DBaseButton(QWidget *parent) :
 DBaseButton::DBaseButton(const QString &text, QWidget *parent) :
     QPushButton(text, parent)
 {
-    D_THEME_INIT_WIDGET(DBaseButton);
+    DThemeManager::registerWidget(this);
 
     initInsideFrame();
 }
@@ -63,7 +63,7 @@ DBaseButton::DBaseButton(const QString &text, QWidget *parent) :
 DBaseButton::DBaseButton(const QIcon &icon, const QString &text, QWidget *parent) :
     QPushButton(icon, text, parent)
 {
-    D_THEME_INIT_WIDGET(DBaseButton);
+    DThemeManager::registerWidget(this);
 
     initInsideFrame();
 }

@@ -41,7 +41,8 @@ DPasswordEdit::DPasswordEdit(QWidget *parent)
 {
     // This will do the trick refreshing your style sheet for you
     // after your registered property changed.
-    D_THEME_INIT_WIDGET(DPasswordEdit, isEchoMode);
+    DThemeManager::registerWidget(this, QStringList({"isEchoMode"}));
+
     D_D(DPasswordEdit);
 
     d->init();
@@ -95,10 +96,11 @@ void DPasswordEditPrivate::_q_toggleEchoMode()
 {
     D_Q(DPasswordEdit);
 
-    if (q->isEchoMode())
+    if (q->isEchoMode()) {
         q->setEchoMode(q->Password);
-    else
+    } else {
         q->setEchoMode(q->Normal);
+    }
 }
 
 DWIDGET_END_NAMESPACE

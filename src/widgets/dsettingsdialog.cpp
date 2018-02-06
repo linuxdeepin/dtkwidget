@@ -59,7 +59,7 @@ DSettingsDialog::DSettingsDialog(QWidget *parent) :
 {
     Q_D(DSettingsDialog);
 
-    D_THEME_INIT_WIDGET(dialogs/DSettingsDialog);
+    DThemeManager::registerWidget(this);
 
     setObjectName("DSettingsDialog");
 

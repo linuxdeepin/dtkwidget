@@ -29,7 +29,7 @@ DWIDGET_BEGIN_NAMESPACE
 DFileChooserEdit::DFileChooserEdit(QWidget *parent)
     : DLineEdit(*new DFileChooserEditPrivate(this), parent)
 {
-    D_THEME_INIT_WIDGET(DFileChooserEdit);
+    DThemeManager::registerWidget(this);
     D_D(DFileChooserEdit);
 
     d->init();

@@ -33,7 +33,7 @@ const QString DShortcutEdit::DefaultTips = tr("Please input a new shortcut");
 DShortcutEdit::DShortcutEdit(QWidget *parent)
     : QFrame(parent)
 {
-    D_THEME_INIT_WIDGET(DShortcutEdit);
+    DThemeManager::registerWidget(this);
 
     m_keysEdit = new QLabel(DefaultTips);
     m_keysEdit->setObjectName("Edit");

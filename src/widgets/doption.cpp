@@ -118,7 +118,7 @@ DOption::DOption(QWidget *parent) :
     QFrame(parent),
     DObject(*new DOptionPrivate(this))
 {
-    D_THEME_INIT_WIDGET(DOption, checked)
+    DThemeManager::registerWidget(this, QStringList({"checked"}));
 
     D_D(DOption);
 

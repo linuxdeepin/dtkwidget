@@ -94,7 +94,7 @@ DWIDGET_BEGIN_NAMESPACE
 
 DButtonList::DButtonList(QWidget *parent) : QListWidget(parent)
 {
-    D_THEME_INIT_WIDGET(DButtonList);
+    DThemeManager::registerWidget(this);
 
     setSelectionMode(DButtonList::NoSelection);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

@@ -148,7 +148,7 @@ DListView::DListView(QWidget *parent) :
     QListView(parent),
     DObject(*new DListViewPrivate(this))
 {
-    D_THEME_INIT_WIDGET(DListView);
+    DThemeManager::registerWidget(this);
 
     d_func()->init();
 }

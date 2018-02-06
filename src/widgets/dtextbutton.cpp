@@ -23,7 +23,7 @@ DWIDGET_BEGIN_NAMESPACE
 DTextButton::DTextButton(const QString & text, QWidget * parent) :
     QPushButton(text, parent)
 {
-    D_THEME_INIT_WIDGET(DTextButton);
+    DThemeManager::registerWidget(this);
 }
 
 DTextButton::~DTextButton()

@@ -24,7 +24,7 @@ DWIDGET_BEGIN_NAMESPACE
 DWindowRestoreButton::DWindowRestoreButton(QWidget * parent) :
     DImageButton(parent)
 {
-    D_THEME_INIT_WIDGET(DWindowRestoreButton);
+    DThemeManager::registerWidget(this);
 }
 
 DWIDGET_END_NAMESPACE

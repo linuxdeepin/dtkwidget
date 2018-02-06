@@ -44,7 +44,7 @@ private:
 DWindowMaxButton::DWindowMaxButton(QWidget * parent) :
     DImageButton(*new DWindowMaxButtonPrivate(this), parent)
 {
-    D_THEME_INIT_WIDGET(DWindowMaxButton, isMaximized);
+    DThemeManager::registerWidget(this, QStringList({"isMaximized"}));
 
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }

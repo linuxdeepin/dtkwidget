@@ -160,7 +160,7 @@ DStackWidget::DStackWidget(QWidget *parent) :
     QWidget(parent),
     DObject(*new DStackWidgetPrivate(this))
 {
-    D_THEME_INIT_WIDGET(DStackWidget)
+    DThemeManager::registerWidget(this);
 
     d_func()->init();
 }
@@ -371,7 +371,7 @@ DStackWidget::DStackWidget(DStackWidgetPrivate &dd, QWidget *parent):
     QWidget(parent),
     DObject(dd)
 {
-    D_THEME_INIT_WIDGET(DStackWidget)
+    DThemeManager::registerWidget(this);
 
     d_func()->init();
 }

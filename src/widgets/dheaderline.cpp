@@ -22,7 +22,7 @@ DWIDGET_BEGIN_NAMESPACE
 
 DHeaderLine::DHeaderLine(QWidget *parent) : DBaseLine(parent)
 {
-    D_THEME_INIT_WIDGET(DHeaderLine);
+    DThemeManager::registerWidget(this);
 
     setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
     setFixedHeight(EXPAND_HEADER_HEIGHT);

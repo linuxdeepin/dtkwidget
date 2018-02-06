@@ -63,6 +63,18 @@ static QString getObjectClassName(const QObject *obj)
     return widget_type_list.isEmpty() ? type_name : widget_type_list.last();
 }
 
+// TODO: just for fix some bug, remove after 2.0.7
+static QString getThemeNameByRawClassName(const QObject *obj)
+{
+    return QString::fromLocal8Bit(obj->metaObject()->className());
+}
+
+static QString getThemeNameByClassName(const QObject *obj)
+{
+    QString type_name = QString::fromLocal8Bit(obj->metaObject()->className());
+    return type_name.replace("::", "--");
+}
+
 static void emitThemeChanged(DThemeManager *manager, QWidget *widget, const QString &theme)
 {
     Q_EMIT manager->widgetThemeChanged(widget, theme);
@@ -188,9 +200,9 @@ public:
             fallbackList << overriveName;
         }
 
-        QString objectName = w->objectName();
-        if (!objectName.isEmpty()) {
-            fallbackList << objectName;
+        QString rawClassName = getThemeNameByRawClassName(w);
+        if (!rawClassName.isEmpty()) {
+            fallbackList << rawClassName;
         }
 
         auto themeName = fallbackWidgetThemeName(w, nullptr);
@@ -201,7 +213,7 @@ public:
             }
         }
 
-        QString className = getObjectClassName(w);
+        QString className = getThemeNameByClassName(w);
         QString themeURL = QString(":/%1/%2.theme").arg(themeName).arg(className);
         return themeURL;
     }
@@ -386,27 +398,37 @@ QString DThemeManager::getQssForWidget(const QWidget *widget) const
 void DThemeManager::registerWidget(QWidget *widget, QStringList propertys)
 {
     auto dtm = DThemeManager::instance();
-    auto appendQSS = dtm->d_func()->fallbackWidgetThemeQSS(widget);
-    widget->setStyleSheet(widget->styleSheet() + appendQSS);
+    auto fallbackUrl = dtm->d_func()->fallbackWidgetThemeURL(widget);
+    registerWidget(widget, fallbackUrl, propertys);
+}
+
+/*!
+ * \brief DThemeManager::registerWidget
+ * \param widget
+ * \param fallbackUrl
+ * \param propertys
+ */
+void DThemeManager::registerWidget(QWidget *widget, const QString &fileName, const QStringList &propertys)
+{
+    auto dtm = DThemeManager::instance();
+    widget->setStyleSheet(dtm->d_func()->getQssContent(fileName));
 
     connect(dtm, &DThemeManager::themeChanged,
-    widget, [widget, dtm](QString) {
-        auto qss = dtm->d_func()->fallbackWidgetThemeQSS(widget);
-        widget->setStyleSheet(qss);
+    widget, [widget, dtm, fileName](QString) {
+        widget->setStyleSheet(dtm->d_func()->getQssContent(fileName));
     });
-    connect(dtm, &DThemeManager::widgetThemeChanged, widget, [widget, dtm](QWidget * w, QString) {
+
+    connect(dtm, &DThemeManager::widgetThemeChanged, widget,
+    [widget, dtm, fileName](QWidget * w, QString) {
         if (widget == w) {
-            auto qss = dtm->d_func()->fallbackWidgetThemeQSS(widget);
-            widget->setStyleSheet(qss);
+            widget->setStyleSheet(dtm->d_func()->getQssContent(fileName));
         }
     });
 
-    if (!propertys.isEmpty()) {
-        widget->installEventFilter(dtm);
-        dtm->d_func()->watchedWidgetPropertys.insert(widget, propertys);
-        connect(widget, &QObject::destroyed, dtm, [ = ]() {
-            dtm->d_func()->watchedWidgetPropertys.remove(widget);
-        });
+    auto meta = widget->metaObject();
+    for (auto &prop : propertys) {
+        connect(widget, meta->property(meta->indexOfProperty(prop.toLatin1().data())).notifySignal(),
+                dtm, dtm->metaObject()->method(dtm->metaObject()->indexOfMethod("updateQss()")));
     }
 }
 
@@ -431,35 +453,6 @@ DThemeManager::DThemeManager()
     , DObject(*new DThemeManagerPrivate(this))
 {
     setTheme("light");
-}
-
-bool DThemeManager::eventFilter(QObject *watched, QEvent *event)
-{
-    D_D(DThemeManager);
-    if (event->type() != QEvent::DynamicPropertyChange) {
-        return QObject::eventFilter(watched, event);
-    }
-
-    auto widget = qobject_cast<QWidget *>(watched);
-    if (!d->watchedWidgetPropertys.contains(widget)) {
-        return QObject::eventFilter(watched, event);
-    }
-
-    auto propEvent = reinterpret_cast<QDynamicPropertyChangeEvent *>(event);
-    if (!propEvent) {
-        return QObject::eventFilter(watched, event);
-    }
-
-    auto props = d->watchedWidgetPropertys.value(widget);
-    auto propName = QString::fromLatin1(propEvent->propertyName().data());
-    if (props.contains(propName) && widget) {
-        widget->setStyleSheet(widget->styleSheet());
-        widget->style()->unpolish(widget);
-        widget->style()->polish(widget);
-        widget->update();
-    }
-
-    return QObject::eventFilter(watched, event);
 }
 
 void DThemeManager::updateThemeOnParentChanged(QWidget *widget)

@@ -79,7 +79,7 @@ DCircleProgress::DCircleProgress(QWidget *parent)
     : QWidget(parent),
       DObject(*new DCircleProgressPrivate(this))
 {
-    D_THEME_INIT_WIDGET(DCircleProgress);
+    DThemeManager::registerWidget(this);
 }
 
 int DCircleProgress::value() const

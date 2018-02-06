@@ -33,7 +33,7 @@ DWIDGET_BEGIN_NAMESPACE
  */
 DSeparatorVertical::DSeparatorVertical(QWidget *parent) : QWidget(parent)
 {
-    D_THEME_INIT_WIDGET(DSeparatorVertical);
+    DThemeManager::registerWidget(this);
 
     this->setFixedWidth(2);
     this->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);

@@ -25,7 +25,7 @@ DWIDGET_BEGIN_NAMESPACE
 
 DBaseExpand::DBaseExpand(QWidget *parent) : QWidget(parent)
 {
-    D_THEME_INIT_WIDGET(DBaseExpand);
+    DThemeManager::registerWidget(this);
 
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
     mainLayout->setContentsMargins(0, 0, 0, 0);

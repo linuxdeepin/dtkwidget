@@ -34,7 +34,7 @@ DWIDGET_BEGIN_NAMESPACE
 DLinkButton::DLinkButton(const QString &text, QWidget *parent) :
     QPushButton(text, parent)
 {
-    D_THEME_INIT_WIDGET(DLinkButton);
+    DThemeManager::registerWidget(this);
 }
 
 DWIDGET_END_NAMESPACE

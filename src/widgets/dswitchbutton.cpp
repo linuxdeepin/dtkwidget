@@ -50,7 +50,7 @@ DSwitchButton::DSwitchButton(QWidget *parent) :
     setMaximumSize(38, 18);
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
-    D_THEME_INIT_WIDGET(DSwitchButton);
+    DThemeManager::registerWidget(this);
 
     D_D(DSwitchButton);
 

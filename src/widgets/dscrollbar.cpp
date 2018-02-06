@@ -87,7 +87,7 @@ DScrollBar::DScrollBar(QWidget *parent)
     : QScrollBar(parent)
     , DObject(*new DScrollBarPrivate(this))
 {
-    D_THEME_INIT_WIDGET(DScrollBar);
+    DThemeManager::registerWidget(this);
 
     d_func()->init();
 }
