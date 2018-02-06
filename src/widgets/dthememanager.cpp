@@ -142,7 +142,7 @@ class DThemeManagerPrivate : public DCORE_NAMESPACE::DObjectPrivate
     D_DECLARE_PUBLIC(DThemeManager)
 
     QString themeName;
-    QMap<QWidget *, QStringList > watchedWidgetPropertys;
+    QMap<QWidget *, QMap<QString, QString> > watchedDynamicPropertys;
 
 public:
     DThemeManagerPrivate(DThemeManager *qq)
@@ -157,7 +157,7 @@ public:
             themeFile.close();
         } else {
             /// !!! if do not privode qss file, do not register it!!!
-//            qCritical() << "open qss file failed" << themeURL << themeFile.errorString();
+            qWarning() << "open qss file failed" << themeURL << themeFile.errorString();
         }
         return qss;
     }
@@ -166,6 +166,14 @@ public:
     {
         QFileInfo fi(filename);
         return  fi.exists();
+    }
+
+    inline QString themeURL(const QString &themename, const QString &filename) const
+    {
+        if (themename.isEmpty() || filename.isEmpty()) {
+            return "";
+        }
+        return QString(":/%1/%2.theme").arg(themename).arg(filename);
     }
 
     QString fallbackWidgetThemeName(const QWidget *widget, QWidget **baseWidget = nullptr) const
@@ -191,7 +199,7 @@ public:
         return theme.isEmpty() ? themeName : theme;
     }
 
-    QString fallbackWidgetThemeURL(QWidget *w) const
+    QString fallbackWidgetThemeFilename(QWidget *w) const
     {
         QStringList fallbackList;
 
@@ -205,23 +213,72 @@ public:
             fallbackList << rawClassName;
         }
 
+        QString className = getThemeNameByClassName(w);
+        if (!className.isEmpty()) {
+            fallbackList << className;
+        }
+
         auto themeName = fallbackWidgetThemeName(w, nullptr);
         for (auto filename : fallbackList) {
-            QString themeURL = QString(":/%1/%2.theme").arg(themeName).arg(filename);
-            if (themeFileExist(themeURL)) {
-                return themeURL;
+            if (themeFileExist(themeURL(themeName, filename))) {
+                return filename;
             }
         }
 
-        QString className = getThemeNameByClassName(w);
-        QString themeURL = QString(":/%1/%2.theme").arg(themeName).arg(className);
-        return themeURL;
+        return "";
     }
 
-    QString fallbackWidgetThemeQSS(QWidget *w) const
+    void registerWidget(QWidget *widget, const QString &filename, const QStringList &propertys)
     {
-        QString themeURL = fallbackWidgetThemeURL(w);
-        return getQssContent(themeURL);
+        if (filename.isEmpty()) {
+            return;
+        }
+
+        auto themeurl = themeURL(fallbackWidgetThemeName(widget), filename);
+
+        auto dtm = DThemeManager::instance();
+        widget->setStyleSheet(dtm->d_func()->getQssContent(themeurl));
+
+        dtm->connect(dtm, &DThemeManager::themeChanged,
+        widget, [this, widget, dtm, filename](QString) {
+            auto themeurl = themeURL(fallbackWidgetThemeName(widget), filename);
+            widget->setStyleSheet(dtm->d_func()->getQssContent(themeurl));
+        });
+
+        dtm->connect(dtm, &DThemeManager::widgetThemeChanged, widget,
+        [this, widget, dtm, filename](QWidget * w, QString) {
+            if (widget == w) {
+                auto themeurl = themeURL(fallbackWidgetThemeName(widget), filename);
+                widget->setStyleSheet(dtm->d_func()->getQssContent(themeurl));
+            }
+        });
+
+        auto meta = widget->metaObject();
+        QMap<QString, QString> dynamicPropertys;
+        for (auto &prop : propertys) {
+            auto propIndex = meta->indexOfProperty(prop.toLatin1().data());
+            if (propIndex < 0) {
+                dynamicPropertys.insert(prop, prop);
+                continue;
+            }
+            dtm->connect(widget, meta->property(propIndex).notifySignal(),
+                         dtm, dtm->metaObject()->method(dtm->metaObject()->indexOfMethod("updateQss()")));
+        }
+
+        if (!dynamicPropertys.isEmpty()) {
+            widget->installEventFilter(dtm);
+            if (dtm->d_func()->watchedDynamicPropertys.contains(widget)) {
+                QMap<QString, QString> oldProps = dtm->d_func()->watchedDynamicPropertys.value(widget);
+                for (auto &key : oldProps.keys()) {
+                    dynamicPropertys.insert(key, oldProps.value(key));
+                }
+            }
+            dtm->d_func()->watchedDynamicPropertys.insert(widget, dynamicPropertys);
+
+            dtm->connect(widget, &QObject::destroyed, dtm, [ = ]() {
+                dtm->d_func()->watchedDynamicPropertys.remove(widget);
+            });
+        }
     }
 
     void setTheme(const QString theme)
@@ -398,38 +455,20 @@ QString DThemeManager::getQssForWidget(const QWidget *widget) const
 void DThemeManager::registerWidget(QWidget *widget, QStringList propertys)
 {
     auto dtm = DThemeManager::instance();
-    auto fallbackUrl = dtm->d_func()->fallbackWidgetThemeURL(widget);
-    registerWidget(widget, fallbackUrl, propertys);
+    auto fileName = dtm->d_func()->fallbackWidgetThemeFilename(widget);
+    registerWidget(widget, fileName, propertys);
 }
 
 /*!
  * \brief DThemeManager::registerWidget
  * \param widget
- * \param fallbackUrl
+ * \param filename
  * \param propertys
  */
-void DThemeManager::registerWidget(QWidget *widget, const QString &fileName, const QStringList &propertys)
+void DThemeManager::registerWidget(QWidget *widget, const QString &filename, const QStringList &propertys)
 {
     auto dtm = DThemeManager::instance();
-    widget->setStyleSheet(dtm->d_func()->getQssContent(fileName));
-
-    connect(dtm, &DThemeManager::themeChanged,
-    widget, [widget, dtm, fileName](QString) {
-        widget->setStyleSheet(dtm->d_func()->getQssContent(fileName));
-    });
-
-    connect(dtm, &DThemeManager::widgetThemeChanged, widget,
-    [widget, dtm, fileName](QWidget * w, QString) {
-        if (widget == w) {
-            widget->setStyleSheet(dtm->d_func()->getQssContent(fileName));
-        }
-    });
-
-    auto meta = widget->metaObject();
-    for (auto &prop : propertys) {
-        connect(widget, meta->property(meta->indexOfProperty(prop.toLatin1().data())).notifySignal(),
-                dtm, dtm->metaObject()->method(dtm->metaObject()->indexOfMethod("updateQss()")));
-    }
+    dtm->d_func()->registerWidget(widget, filename, propertys);
 }
 
 /*!
@@ -453,6 +492,35 @@ DThemeManager::DThemeManager()
     , DObject(*new DThemeManagerPrivate(this))
 {
     setTheme("light");
+}
+
+bool DThemeManager::eventFilter(QObject *watched, QEvent *event)
+{
+    D_D(DThemeManager);
+    if (event->type() != QEvent::DynamicPropertyChange) {
+        return QObject::eventFilter(watched, event);
+    }
+
+    auto widget = qobject_cast<QWidget *>(watched);
+    if (!d->watchedDynamicPropertys.contains(widget)) {
+        return QObject::eventFilter(watched, event);
+    }
+
+    auto propEvent = reinterpret_cast<QDynamicPropertyChangeEvent *>(event);
+    if (!propEvent) {
+        return QObject::eventFilter(watched, event);
+    }
+
+    auto props = d->watchedDynamicPropertys.value(widget);
+    auto propName = QString::fromLatin1(propEvent->propertyName().data());
+    if (props.contains(propName) && widget) {
+        widget->setStyleSheet(widget->styleSheet());
+        widget->style()->unpolish(widget);
+        widget->style()->polish(widget);
+        widget->update();
+    }
+
+    return QObject::eventFilter(watched, event);
 }
 
 void DThemeManager::updateThemeOnParentChanged(QWidget *widget)

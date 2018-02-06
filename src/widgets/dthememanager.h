@@ -59,6 +59,7 @@ Q_SIGNALS:
 
 protected:
     DThemeManager();
+    bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
 
 private:
     friend class DApplication;

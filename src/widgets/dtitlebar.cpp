@@ -291,10 +291,10 @@ void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
     bool showMax = (type.testFlag(Qt::WindowMinimizeButtonHint) || !useDXcb) && !forceHide;
     maxButton->setVisible(showMax);
     ;
-    bool showClose = (type.testFlag(Qt::WindowMinimizeButtonHint) || !useDXcb) && !forceHide;
+    bool showClose = (type.testFlag(Qt::WindowCloseButtonHint) || !useDXcb) && !forceHide;
     closeButton->setVisible(showClose);
 
-    bool showOption = (type.testFlag(Qt::WindowMinimizeButtonHint) || !useDXcb) && !isFullscreen;
+    bool showOption = (type.testFlag(Qt::WindowSystemMenuHint) || !useDXcb) && !isFullscreen;
     optionButton->setVisible(showOption);
 
     buttonArea->adjustSize();
