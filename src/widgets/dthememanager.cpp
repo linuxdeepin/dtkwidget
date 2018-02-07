@@ -237,19 +237,29 @@ public:
         auto themeurl = themeURL(fallbackWidgetThemeName(widget), filename);
 
         auto dtm = DThemeManager::instance();
-        widget->setStyleSheet(dtm->d_func()->getQssContent(themeurl));
+        widget->setStyleSheet(widget->styleSheet() + dtm->d_func()->getQssContent(themeurl));
+
+        auto reloadTheme = [this, dtm](QWidget * widget, const QString & filename, const QString & themename) {
+            const char *baseClassReloadThemeProp = "_dtk_theme_base_calss_reload_theme";
+            auto themeurl = themeURL(fallbackWidgetThemeName(widget), filename);
+            auto reloadTheme = widget->property(baseClassReloadThemeProp).toString();
+            if (reloadTheme != themename) {
+                widget->setStyleSheet(dtm->d_func()->getQssContent(themeurl));
+                widget->setProperty(baseClassReloadThemeProp, themename);
+            } else {
+                widget->setStyleSheet(widget->styleSheet() + dtm->d_func()->getQssContent(themeurl));
+            }
+        };
 
         dtm->connect(dtm, &DThemeManager::themeChanged,
-        widget, [this, widget, dtm, filename](QString) {
-            auto themeurl = themeURL(fallbackWidgetThemeName(widget), filename);
-            widget->setStyleSheet(dtm->d_func()->getQssContent(themeurl));
+        widget, [reloadTheme, widget, filename](QString theme) {
+            reloadTheme(widget, filename, theme);
         });
 
         dtm->connect(dtm, &DThemeManager::widgetThemeChanged, widget,
-        [this, widget, dtm, filename](QWidget * w, QString) {
+        [reloadTheme, widget, filename](QWidget * w, QString theme) {
             if (widget == w) {
-                auto themeurl = themeURL(fallbackWidgetThemeName(widget), filename);
-                widget->setStyleSheet(dtm->d_func()->getQssContent(themeurl));
+                reloadTheme(widget, filename, theme);
             }
         });
 

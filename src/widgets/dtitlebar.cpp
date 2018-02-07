@@ -288,7 +288,7 @@ void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
     bool showMin = (type.testFlag(Qt::WindowMinimizeButtonHint) || !useDXcb) && !forceHide;
     minButton->setVisible(showMin);
 
-    bool showMax = (type.testFlag(Qt::WindowMinimizeButtonHint) || !useDXcb) && !forceHide;
+    bool showMax = (type.testFlag(Qt::WindowMaximizeButtonHint) || !useDXcb) && !forceHide;
     maxButton->setVisible(showMax);
     ;
     bool showClose = (type.testFlag(Qt::WindowCloseButtonHint) || !useDXcb) && !forceHide;
