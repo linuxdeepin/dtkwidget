@@ -181,41 +181,73 @@ QWidget *createComboBoxOptionHandle(QObject *opt)
     rightWidget->setFocusPolicy(Qt::StrongFocus);
     rightWidget->setFixedHeight(24);
     rightWidget->setObjectName("OptionLineEdit");
-
-    auto data = option->data("items").toStringList();
-    for (auto item : data) {
-        auto trName = QObject::tr(item.toStdString().c_str());
-        rightWidget->addItem(trName);
-    }
-
-    auto current = option->value().toInt();
-    rightWidget->setCurrentIndex(current);
-
     auto optionWidget = DSettingsWidgetFactory::createTwoColumWidget(option, rightWidget);
 
-    option->connect(rightWidget, static_cast<void (QComboBox::*)(int index)>(&QComboBox::currentIndexChanged),
-    option, [ = ](int index) {
-        option->setValue(index);
-    });
-    option->connect(option, &DTK_CORE_NAMESPACE::DSettingsOption::valueChanged,
-    rightWidget, [ = ](const QVariant & value) {
-        rightWidget->setCurrentIndex(value.toInt());
-    });
-    option->connect(option, &DTK_CORE_NAMESPACE::DSettingsOption::dataChanged,
-    rightWidget, [ = ](const QString & dataType, const QVariant & value) {
+    auto initComboxList = [ = ](const QStringList & data) {
+        for (auto item : data) {
+            auto trName = QObject::tr(item.toStdString().c_str());
+            rightWidget->addItem(trName);
+        }
+        auto current = option->value().toInt();
+        rightWidget->setCurrentIndex(current);
+        option->connect(rightWidget, static_cast<void (QComboBox::*)(int index)>(&QComboBox::currentIndexChanged),
+        option, [ = ](int index) {
+            option->setValue(index);
+        });
+
+        option->connect(option, &DTK_CORE_NAMESPACE::DSettingsOption::valueChanged,
+        rightWidget, [ = ](const QVariant & value) {
+            rightWidget->setCurrentIndex(value.toInt());
+        });
+    };
+
+    auto initComboxMap = [ = ](const QMap<QString, QVariant> &data) {
+        auto keys = data.value("keys").toStringList();
+        auto values = data.value("values").toStringList();
+
+        for (int i = 0; i < keys.length(); ++i) {
+            auto trName = QObject::tr(values.value(i).toStdString().c_str());
+            rightWidget->addItem(trName, keys.value(i));
+        }
+
+        auto currentData = option->value().toString();
+        auto currentIndex = rightWidget->findData(currentData);
+        rightWidget->setCurrentIndex(currentIndex);
+
+        option->connect(rightWidget, static_cast<void (QComboBox::*)(int index)>(&QComboBox::currentIndexChanged),
+        option, [ = ](int index) {
+            option->setValue(keys.value(index));
+        });
+
+        option->connect(option, &DTK_CORE_NAMESPACE::DSettingsOption::valueChanged,
+        rightWidget, [ = ](const QVariant & value) {
+            auto currentIndex = rightWidget->findData(value.toString());
+            rightWidget->setCurrentIndex(currentIndex);
+        });
+    };
+
+    auto updateData = [ = ](const QString & dataType, const QVariant & data) {
         if ("items" != dataType) {
             return;
         }
 
         rightWidget->clear();
-        auto data = value.toStringList();
-        for (auto item : data) {
-            rightWidget->addItem(item);
+        if (data.type() == QVariant::StringList) {
+            initComboxList(data.toStringList());
         }
-
-        auto current = option->value().toInt();
-        rightWidget->setCurrentIndex(current);
+        if (data.type() == QVariant::Map) {
+            initComboxMap(data.toMap());
+        }
         rightWidget->update();
+    };
+
+    auto initData = option->data("items");
+    qDebug() << initData.type() << (QVariant::Map == initData.type()) << initData.typeName();
+    updateData("items", initData);
+
+    option->connect(option, &DTK_CORE_NAMESPACE::DSettingsOption::dataChanged,
+    rightWidget, [ = ](const QString & dataType, const QVariant & value) {
+        updateData(dataType, value);
     });
 
     return  optionWidget;

@@ -46,7 +46,7 @@
 #include "simplelistviewtab.h"
 #include "dtoast.h"
 
-DTK_USE_NAMESPACE
+DCORE_USE_NAMESPACE
 DWIDGET_USE_NAMESPACE
 
 MainWindow::MainWindow(QWidget *parent)
@@ -190,8 +190,26 @@ void MainWindow::menuItemInvoked(QAction *action)
 
         QFontDatabase fontDatabase;
         auto fontFamliy = settings->option("base.font.family");
-        fontFamliy->setData("items", fontDatabase.families());
-        fontFamliy->setValue(0);
+        QMap<QString, QVariant> fontDatas;
+
+        QStringList values = fontDatabase.families();
+        QStringList keys;
+        for (auto &v : values) {
+            keys << v.toLower().trimmed();
+        }
+        fontDatas.insert("keys", keys);
+        fontDatas.insert("values", values);
+        fontFamliy->setData("items", fontDatas);
+
+        // or you can set default value by json
+        if (fontFamliy->value().toString().isEmpty()) {
+            fontFamliy->setValue("droid serif");
+        }
+
+        connect(fontFamliy, &DSettingsOption::valueChanged,
+        this, [](QVariant value) {
+            qDebug() << "fontFamliy change" << value;
+        });
 
         QStringList codings;
         for (auto coding : QTextCodec::availableCodecs()) {
