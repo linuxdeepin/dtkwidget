@@ -15,6 +15,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QtGlobal>
+#ifdef Q_OS_LINUX
+#ifdef private
+#undef private
+#endif
+#define private public
+#include <QWidget>
+#undef private
+#endif
 #include <QDebug>
 #include <QDir>
 #include <QLocalSocket>
@@ -34,6 +43,7 @@
 #endif
 
 #include <qpa/qplatformintegrationfactory_p.h>
+#include <private/qwidget_p.h>
 
 #include <DStandardPaths>
 
@@ -694,17 +704,65 @@ void DApplication::handleQuitAction()
     quit();
 }
 
+static inline bool basePrintPropertiesDialog(const QWidget *w)
+{
+    while (w) {
+        if (w->inherits("QPrintPropertiesDialog")
+                || w->inherits("QPageSetupDialog")) {
+            return true;
+        }
+
+        w = w->parentWidget();
+    }
+
+    return false;
+}
+
 bool DApplication::notify(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::PolishRequest) {
         // Fixed the style for the menu widget to dlight
         // ugly code will no longer needed.
+        static QStyle *light_style = nullptr;
+
         if (QMenu *menu = qobject_cast<QMenu *>(obj)) {
-            if (!menu->testAttribute(Qt::WA_SetStyle))
-                if (QStyle *style = QStyleFactory::create("dlight")) {
-                    menu->setStyle(style);
+            if (!menu->testAttribute(Qt::WA_SetStyle)) {
+                if (!light_style) {
+                    light_style = QStyleFactory::create("dlight");
                 }
+
+                if (light_style)
+                    menu->setStyle(light_style);
+            }
         }
+#ifdef Q_OS_LINUX
+        else if (QWidget *widget = qobject_cast<QWidget*>(obj)) {
+            if (!widget->testAttribute(Qt::WA_SetStyle)
+                    && (widget->inherits("QPrintDialog")
+                        || widget->inherits("QPrintPropertiesDialog")
+                        || widget->inherits("QPageSetupDialog")
+                        || widget->inherits("QPrintPreviewDialog")
+                        || (widget->inherits("QComboBoxPrivateContainer")
+                            && basePrintPropertiesDialog(widget)))) {
+                if (!light_style) {
+                    light_style = QStyleFactory::create("dlight");
+                }
+
+                if (light_style) {
+                    widget->setStyle(light_style);
+
+                    if (widget->style() != light_style) {
+                        widget->style()->deleteLater();
+                        widget->d_func()->setStyle_helper(light_style, false);
+                    }
+
+                    for (QWidget *w : widget->findChildren<QWidget*>()) {
+                        w->setStyle(light_style);
+                    }
+                }
+            }
+        }
+#endif
     } else if (event->type() == QEvent::ParentChange) {
         if (QWidget *widget = qobject_cast<QWidget*>(obj)) {
             DThemeManager::instance()->updateThemeOnParentChanged(widget);
