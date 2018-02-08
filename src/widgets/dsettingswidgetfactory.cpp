@@ -83,30 +83,47 @@ QWidget *createShortcutEditOptionHandle(QObject *opt)
     auto rightWidget = new ShortcutEdit();
     rightWidget->setObjectName("OptionShortcutEdit");
 
-    QStringList keyseqs = option->value().toStringList();
-    if (keyseqs.length() == 2) {
-        auto modifier = static_cast<Qt::KeyboardModifiers>(keyseqs.value(0).toInt());
-        auto key = static_cast<Qt::Key>(keyseqs.value(1).toInt());
-        rightWidget->setShortCut(modifier, key);
-    }
+    auto updateWidgetValue = [rightWidget](const QVariant & optionValue) {
+        if (optionValue.type() == QVariant::List) {
+            QStringList keyseqs = optionValue.toStringList();
+            if (keyseqs.length() == 2) {
+                auto modifier = static_cast<Qt::KeyboardModifiers>(keyseqs.value(0).toInt());
+                auto key = static_cast<Qt::Key>(keyseqs.value(1).toInt());
+                rightWidget->setShortCut(modifier, key);
+            }
+        }
+
+        if (optionValue.type() == QVariant::String) {
+            rightWidget->setShortCut(optionValue.toString());
+        }
+    };
+
+    auto optionValue = option->value();
+    updateWidgetValue(optionValue);
 
     auto optionWidget = DSettingsWidgetFactory::createTwoColumWidget(option, rightWidget);
 
-    option->connect(rightWidget, &ShortcutEdit::shortcutChanged,
-    option, [ = ](Qt::KeyboardModifiers modifier, Qt::Key key) {
-        QStringList keyseqs;
-        keyseqs << QString("%1").arg(modifier) << QString("%1").arg(key);
-        option->setValue(keyseqs);
-    });
+    // keep raw value type
+    if (optionValue.type() == QVariant::List) {
+        option->connect(rightWidget, &ShortcutEdit::shortcutChanged,
+        option, [ = ](Qt::KeyboardModifiers modifier, Qt::Key key) {
+            QStringList keyseqs;
+            keyseqs << QString("%1").arg(modifier) << QString("%1").arg(key);
+            option->setValue(keyseqs);
+        });
+    }
+
+    if (optionValue.type() == QVariant::String) {
+        option->connect(rightWidget, &ShortcutEdit::shortcutStringChanged,
+        option, [ = ](const QString & seqString) {
+            option->setValue(seqString);
+        });
+    }
+
     option->connect(option, &DTK_CORE_NAMESPACE::DSettingsOption::valueChanged,
     rightWidget, [ = ](const QVariant & value) {
-        QStringList keyseqs = value.toStringList();
-        if (keyseqs.length() == 2) {
-            auto modifier = static_cast<Qt::KeyboardModifiers>(keyseqs.value(0).toInt());
-            auto key = static_cast<Qt::Key>(keyseqs.value(1).toInt());
-            rightWidget->setShortCut(modifier, key);
-            rightWidget->update();
-        }
+        updateWidgetValue(value);
+        rightWidget->update();
     });
 
     return  optionWidget;

@@ -29,8 +29,13 @@ public:
     ~ShortcutEdit();
 
     void setShortCut(Qt::KeyboardModifiers modifier, Qt::Key key);
+    void setShortCut(const QString &sequenceString);
+
 Q_SIGNALS:
+    // WARINNG: just connect one of this on one time
+    // these two signal will send at them same time
     void shortcutChanged(Qt::KeyboardModifiers modifier, Qt::Key key);
+    void shortcutStringChanged(const QString &sequenceString);
 
 protected:
     virtual void paintEvent(QPaintEvent *) Q_DECL_OVERRIDE;
@@ -38,6 +43,8 @@ protected:
     virtual void focusOutEvent(QFocusEvent *e) Q_DECL_OVERRIDE;
     virtual void keyPressEvent(QKeyEvent *e) Q_DECL_OVERRIDE;
     virtual void mouseDoubleClickEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+
+    void notifyShortcutChanged(Qt::KeyboardModifiers modifier, Qt::Key key);
 
 private:
     QScopedPointer<ShortcutEditPrivate> d_ptr;

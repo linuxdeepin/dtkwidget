@@ -56,6 +56,7 @@ public:
 
     Qt::KeyboardModifiers   keyModifiers    = Qt::NoModifier;
     Qt::Key                 key             = Qt::Key_unknown;
+    QStringList             keyStringList;
     bool                    canSet          = true;
 
     QColor          borderColor = NORMAL_BORDER_COLOR;
@@ -81,6 +82,20 @@ void ShortcutEdit::setShortCut(Qt::KeyboardModifiers modifier, Qt::Key key)
     Q_D(ShortcutEdit);
     d->keyModifiers = modifier;
     d->key = key;
+
+    d->keyStringList.clear();
+    if (d->keyModifiers != Qt::NoModifier) {
+        d->keyStringList << QKeySequence(d->keyModifiers).toString().split("+", QString::SkipEmptyParts);
+    }
+    if (d->key != Qt::Key_unknown) {
+        d->keyStringList << QKeySequence(d->key).toString();
+    }
+}
+
+void ShortcutEdit::setShortCut(const QString &sequenceString)
+{
+    Q_D(ShortcutEdit);
+    d->keyStringList = sequenceString.split("+");
 }
 
 void ShortcutEdit::paintEvent(QPaintEvent *)
@@ -89,26 +104,17 @@ void ShortcutEdit::paintEvent(QPaintEvent *)
     QPainter painter(this);
     painter.setRenderHints(QPainter::Antialiasing | QPainter::HighQualityAntialiasing);
 
-    QStringList keys;
-    if (d->keyModifiers != Qt::NoModifier) {
-        keys << QKeySequence(d->keyModifiers).toString().split("+", QString::SkipEmptyParts);
-    }
-    if (d->key != Qt::Key_unknown) {
-        keys << QKeySequence(d->key).toString();
-    }
-
-    if (keys.isEmpty()) {
+    if (d->keyStringList.isEmpty()) {
         // Draw tips
         QRect tR(6, 5, width(), height());
         QFont f;
         f.setPixelSize(11);
         painter.setFont(f);
-        painter.setPen(QPen(QColor(48, 48, 48, 0.4 * 255)));
+        painter.setPen(QPen(QColor(48, 48, 48, 255 * 4 / 10)));
         painter.drawText(tR, tr("Please enter a new shortcut"));
     } else {
-
         QRectF lastRect(1, 0, 0, 0);
-        for (QString key : keys) {
+        for (QString key : d->keyStringList) {
             painter.save();
             lastRect = d->drawTextRect(lastRect.toRect(), key, painter);
             painter.restore();
@@ -147,6 +153,7 @@ void ShortcutEdit::focusOutEvent(QFocusEvent *e)
 void ShortcutEdit::keyPressEvent(QKeyEvent *e)
 {
     Q_D(ShortcutEdit);
+
     if (e->key() != Qt::Key_Backspace) {
         if (isModifiersKey(e->key()) || ! d->canSet) {
             return;
@@ -159,13 +166,21 @@ void ShortcutEdit::keyPressEvent(QKeyEvent *e)
             d->keyModifiers = e->modifiers();
             d->key = static_cast<Qt::Key>(e->key());
         }
+        d->keyStringList.clear();
+        if (d->keyModifiers != Qt::NoModifier) {
+            d->keyStringList << QKeySequence(d->keyModifiers).toString().split("+", QString::SkipEmptyParts);
+        }
+        if (d->key != Qt::Key_unknown) {
+            d->keyStringList << QKeySequence(d->key).toString();
+        }
     } else {
         d->canSet = true;
         d->key = Qt::Key_unknown;
         d->keyModifiers = Qt::NoModifier;
+        d->keyStringList.clear();
     }
 
-    shortcutChanged(d->keyModifiers, d->key);
+    notifyShortcutChanged(d->keyModifiers, d->key);
 
     this->update();
 }
@@ -177,9 +192,18 @@ void ShortcutEdit::mouseDoubleClickEvent(QMouseEvent *event)
         d->canSet = true;
         d->key = Qt::Key_unknown;
         d->keyModifiers = Qt::NoModifier;
-        shortcutChanged(d->keyModifiers, d->key);
+        notifyShortcutChanged(d->keyModifiers, d->key);
     }
     this->update();
+}
+
+void ShortcutEdit::notifyShortcutChanged(Qt::KeyboardModifiers modifier, Qt::Key key)
+{
+    QKeySequence modifierSeq(modifier);
+    QKeySequence keySeq(key);
+    QString seqString = modifierSeq.toString() + keySeq.toString();
+    Q_EMIT shortcutStringChanged(seqString);
+    Q_EMIT shortcutChanged(modifier, key);
 }
 
 QSize ShortcutEditPrivate::stringSize(const QString &str) const

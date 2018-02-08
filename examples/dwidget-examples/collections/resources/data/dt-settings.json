@@ -62,25 +62,25 @@
                             "key": "copy",
                             "name": "Copy",
                             "type": "shortcut",
-                            "default":  ["100663296", "67"]
+                            "default": "Ctrl+Alt+C"
                         },
                         {
                             "key": "paste",
                             "name": "Paste",
                             "type": "shortcut",
-                            "default":  ["100663296", "86"]
+                            "default": "Ctrl+Alt+V"
                         },
                         {
                             "key": "scroll_up",
                             "name": "Scroll Up",
                             "type": "shortcut",
-                            "default":  ["134217728", "46"]
+                            "default": "Alt+."
                         },
                         {
                             "key": "scroll_down",
                             "name": "Scroll down",
                             "type": "shortcut",
-                            "default":  ["134217728", "44"]
+                            "default": "Alt+,"
                         }
                     ]
                 },
@@ -92,25 +92,25 @@
                             "key": "new_window",
                             "name": "New Window",
                             "type": "shortcut",
-                            "default":  ["100663296", "60"]
+                            "default": "Ctrl+Shitf+<"
                         },
                         {
                             "key": "next_tab",
                             "name": "Next Tab",
                             "type": "shortcut",
-                            "default":  ["67108864", "78"]
+                            "default": "Ctrl+N"
                         },
                         {
                             "key": "prev_up",
                             "name": "Previous Tab",
                             "type": "shortcut",
-                            "default":  ["67108864", "87"]
+                            "default": "Ctrl+Shitf+>"
                         },
                         {
                             "key": "close_tab",
                             "name": "Close Tab",
                             "type": "shortcut",
-                            "default":  ["100663296", "62"]
+                            "default": "Ctrl+W"
                         }
                     ]
                 }
