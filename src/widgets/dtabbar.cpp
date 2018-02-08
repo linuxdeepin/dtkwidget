@@ -230,7 +230,7 @@ public:
     Q_SLOT void startDrag(int tabIndex);
 
     void setupMovableTab();
-    void updateMoveingTabPosition(const QPoint &mouse, bool autoScroll = true);
+    void updateMoveingTabPosition(const QPoint &mouse);
     void setupDragableTab();
     void slide(int from, int to);
     void layoutTab(int index);
@@ -350,7 +350,7 @@ void DTabBarPrivate::setupMovableTab()
     d->movingTab->setVisible(true);
 }
 
-void DTabBarPrivate::updateMoveingTabPosition(const QPoint &mouse, bool autoScroll)
+void DTabBarPrivate::updateMoveingTabPosition(const QPoint &mouse)
 {
     QTabBarPrivate *d = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
 
@@ -402,12 +402,6 @@ void DTabBarPrivate::updateMoveingTabPosition(const QPoint &mouse, bool autoScro
 
     // Buttons needs to follow the dragged tab
     layoutTab(d->pressedIndex);
-
-    if (autoScroll) {
-        // Auto scroll tags
-        autoScrollTabs(mouse);
-    }
-
     update();
 }
 
@@ -581,11 +575,16 @@ void DTabBarPrivate::makeVisible(int index)
 
 void DTabBarPrivate::autoScrollTabs(const QPoint &mouse)
 {
+    const QRect &rect = this->rect();
+
+    if (!rect.contains(mouse)) {
+        return stopAutoScrollTabs();
+    }
+
     QTabBarPrivate *d = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
     bool vertical = verticalTabs(d->shape);
-    const QRect &rect = this->rect();
     const QSize &size_hint = this->sizeHint();
-    int scroll_distance = qMin(40, vertical ? rect.height() / 3 : rect.width() / 3);
+    int scroll_distance = qMin(50, vertical ? rect.height() / 3 : rect.width() / 3);
 
     int start = 0;
     int end = 0;
@@ -608,7 +607,7 @@ void DTabBarPrivate::autoScrollTabs(const QPoint &mouse)
 
             // to down
             scroll_end = end;
-            scroll_speed = mouse.y() - rect.height() + scroll_distance;
+            scroll_speed = rect.height() - mouse.y();
         } else {
             return stopAutoScrollTabs();
         }
@@ -628,7 +627,7 @@ void DTabBarPrivate::autoScrollTabs(const QPoint &mouse)
 
             // to right
             scroll_end = end;
-            scroll_speed = mouse.x() - rect.width() + scroll_distance;
+            scroll_speed = rect.width() - mouse.x();
         } else {
             return stopAutoScrollTabs();
         }
@@ -639,7 +638,7 @@ void DTabBarPrivate::autoScrollTabs(const QPoint &mouse)
     if (scrollTabAnimation->state() == QVariantAnimation::Running)
         scrollTabAnimation->stop();
 
-    scrollTabAnimation->setDuration(qreal(qAbs(scroll_speed) + 10) / scroll_distance * qAbs(scroll_end - d->scrollOffset) * 10);
+    scrollTabAnimation->setDuration(qreal(qMax(qAbs(scroll_speed), 10)) / scroll_distance * (qAbs(scroll_end - d->scrollOffset) / 150) * 1000);
     scrollTabAnimation->setStartValue(d->scrollOffset);
     scrollTabAnimation->setEndValue(scroll_end);
     scrollTabAnimation->start();
@@ -685,7 +684,7 @@ void DTabBarPrivate::ensureScrollTabsAnimation()
 
             const QPoint bak_dragStartPosition = d->dragStartPosition;
 
-            updateMoveingTabPosition(mapFromGlobal(QCursor::pos()), false);
+            updateMoveingTabPosition(mapFromGlobal(QCursor::pos()));
 
             if (bak_dragStartPosition != d->dragStartPosition) {
                 dragStartPosition = d->dragStartPosition;
@@ -695,6 +694,14 @@ void DTabBarPrivate::ensureScrollTabsAnimation()
             layoutWidgets();
             update();
         }
+    });
+
+    connect(scrollTabAnimation, &QVariantAnimation::finished,
+            this, [this] {
+        QTabBarPrivate *d = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
+
+        d->leftB->setEnabled(d->scrollOffset > 0);
+        d->rightB->setEnabled(d->scrollOffset < sizeHint().width() - width());
     });
 }
 
@@ -1009,6 +1016,9 @@ void DTabBarPrivate::mouseMoveEvent(QMouseEvent *event)
 
         scrollOffset = d->scrollOffset;
         dragStartPosition = d->dragStartPosition;
+
+        // Auto scroll tags
+        autoScrollTabs(event->pos());
     }
 }
 
