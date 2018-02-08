@@ -639,7 +639,7 @@ void DTabBarPrivate::autoScrollTabs(const QPoint &mouse)
     if (scrollTabAnimation->state() == QVariantAnimation::Running)
         scrollTabAnimation->stop();
 
-    scrollTabAnimation->setDuration(qreal(scroll_speed + 10) / scroll_distance * qAbs(scroll_end - d->scrollOffset) * 10);
+    scrollTabAnimation->setDuration(qreal(qAbs(scroll_speed) + 10) / scroll_distance * qAbs(scroll_end - d->scrollOffset) * 10);
     scrollTabAnimation->setStartValue(d->scrollOffset);
     scrollTabAnimation->setEndValue(scroll_end);
     scrollTabAnimation->start();
@@ -869,7 +869,7 @@ void DTabBarPrivate::paintEvent(QPaintEvent *e)
     QStylePainter p(this);
     int selected = -1;
 //    int cut = -1;
-    bool rtl = optTabBase.direction == Qt::RightToLeft;
+//    bool rtl = optTabBase.direction == Qt::RightToLeft;
     bool vertical = verticalTabs(d->shape);
 //    QStyleOptionTab cutTab;
     selected = d->currentIndex;
@@ -1306,16 +1306,6 @@ QString DTabBar::tabText(int index) const
 void DTabBar::setTabText(int index, const QString &text)
 {
     d_func()->setTabText(index, text);
-}
-
-QColor DTabBar::tabTextColor(int index) const
-{
-    return d_func()->tabTextColor(index);
-}
-
-void DTabBar::setTabTextColor(int index, const QColor &color)
-{
-    d_func()->setTabTextColor(index, color);
 }
 
 QIcon DTabBar::tabIcon(int index) const

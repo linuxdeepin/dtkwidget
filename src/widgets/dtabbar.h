@@ -86,9 +86,6 @@ public:
     QString tabText(int index) const;
     void setTabText(int index, const QString &text);
 
-    QColor tabTextColor(int index) const;
-    void setTabTextColor(int index, const QColor &color);
-
     QIcon tabIcon(int index) const;
     void setTabIcon(int index, const QIcon &icon);
 
