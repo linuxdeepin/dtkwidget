@@ -44,7 +44,7 @@ DImageButton::DImageButton(QWidget *parent)
     : QLabel(parent)
     , DObject(*new DImageButtonPrivate(this))
 {
-    DThemeManager::registerWidget(this, QStringList({"checked"}));
+    DThemeManager::registerWidget(this, QStringList({"checked", "state"}));
 
     D_D(DImageButton);
 
@@ -65,7 +65,7 @@ DImageButton::DImageButton(const QString &normalPic, const QString &hoverPic, co
     : QLabel(parent)
     , DObject(*new DImageButtonPrivate(this))
 {
-    DThemeManager::registerWidget(this, QStringList({"checked"}));
+    DThemeManager::registerWidget(this, QStringList({"checked", "state"}));
 
     D_D(DImageButton);
 
@@ -100,7 +100,7 @@ DImageButton::DImageButton(const QString &normalPic, const QString &hoverPic,
     : QLabel(parent)
     , DObject(*new DImageButtonPrivate(this))
 {
-    DThemeManager::registerWidget(this, QStringList({"checked"}));
+    DThemeManager::registerWidget(this, QStringList({"checked", "state"}));
 
     D_D(DImageButton);
 
@@ -390,7 +390,7 @@ DImageButton::DImageButton(DImageButtonPrivate &q, QWidget *parent)
     : QLabel(parent)
     , DObject(q)
 {
-    DThemeManager::registerWidget(this, QStringList({"checked"}));
+    DThemeManager::registerWidget(this, QStringList({"checked", "state"}));
 
     D_D(DImageButton);
 
@@ -414,18 +414,23 @@ void DImageButtonPrivate::updateIcon()
 
     switch (m_state) {
     case DImageButton::Hover:
+        q->setProperty("state", "hover");
         if (!m_hoverPic.isEmpty()) { q->setPixmap(loadPixmap(m_hoverPic)); }
         break;
     case DImageButton::Press:
+        q->setProperty("state", "press");
         if (!m_pressPic.isEmpty()) { q->setPixmap(loadPixmap(m_pressPic)); }
         break;
     case DImageButton::Checked:
+        q->setProperty("state", "checked");
         if (!m_checkedPic.isEmpty()) { q->setPixmap(loadPixmap(m_checkedPic)); }
         break;
     case DImageButton::Disabled:
+        q->setProperty("state", "disabled");
         if (!m_disabledPic.isEmpty()) { q->setPixmap(loadPixmap(m_disabledPic)); }
         break;
     default:
+        q->setProperty("state", "");
         if (!m_normalPic.isEmpty()) { q->setPixmap(loadPixmap(m_normalPic)); }
         break;
     }
