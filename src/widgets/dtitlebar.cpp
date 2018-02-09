@@ -65,6 +65,7 @@ private:
     void updateFullscreen();
     void updateButtonsState(Qt::WindowFlags type);
     void updateButtonsFunc();
+    void handleParentWindowStateChange();
     void _q_toggleWindowState();
     void _q_showMinimized();
     void _q_onTopWindowMotifHintsChanged(quint32 winId);
@@ -214,6 +215,13 @@ void DTitlebarPrivate::init()
     q->connect(optionButton, &DWindowOptionButton::clicked, q, &DTitlebar::optionClicked);
     q->connect(DWindowManagerHelper::instance(), SIGNAL(windowMotifWMHintsChanged(quint32)),
                q, SLOT(_q_onTopWindowMotifHintsChanged(quint32)));
+
+    if (targetWindow()) {
+        q->connect(targetWindow()->windowHandle(), &QWindow::windowStateChanged,
+        q, [ = ](Qt::WindowState) {
+            handleParentWindowStateChange();
+        });
+    }
 }
 
 QWidget *DTitlebarPrivate::targetWindow()
@@ -324,6 +332,13 @@ void DTitlebarPrivate::updateButtonsFunc()
         targetWindow()->windowHandle(),
         DWindowManagerHelper::FUNC_CLOSE,
         !disableFlags.testFlag(Qt::WindowCloseButtonHint));
+}
+
+void DTitlebarPrivate::handleParentWindowStateChange()
+{
+    maxButton->setMaximized(targetWindow()->windowState() == Qt::WindowMaximized);
+    updateFullscreen();
+    updateButtonsState(targetWindow()->windowFlags());
 }
 
 void DTitlebarPrivate::_q_toggleWindowState()
@@ -605,11 +620,11 @@ bool DTitlebar::eventFilter(QObject *obj, QEvent *event)
     D_D(DTitlebar);
 
     if (obj == d->targetWindow()) {
+
         switch (event->type()) {
+        // !!! NO state change when fullscreen state change to nostate ?
         case QEvent::WindowStateChange: {
-            d->maxButton->setMaximized(d->targetWindow()->windowState() == Qt::WindowMaximized);
-            d->updateFullscreen();
-            d->updateButtonsState(d->targetWindow()->windowFlags());
+            d->handleParentWindowStateChange();
             break;
         }
         case QEvent::ShowToParent:
