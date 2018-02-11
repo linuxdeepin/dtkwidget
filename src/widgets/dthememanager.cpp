@@ -231,6 +231,7 @@ public:
     void registerWidget(QWidget *widget, const QString &filename, const QStringList &propertys)
     {
         if (filename.isEmpty()) {
+            qWarning() << "can not load qss with out filename" << widget;
             return;
         }
 

@@ -66,6 +66,7 @@ private:
     void updateButtonsState(Qt::WindowFlags type);
     void updateButtonsFunc();
     void handleParentWindowStateChange();
+    void handleParentWindowIdChange();
     void _q_toggleWindowState();
     void _q_showMinimized();
     void _q_onTopWindowMotifHintsChanged(quint32 winId);
@@ -216,12 +217,9 @@ void DTitlebarPrivate::init()
     q->connect(DWindowManagerHelper::instance(), SIGNAL(windowMotifWMHintsChanged(quint32)),
                q, SLOT(_q_onTopWindowMotifHintsChanged(quint32)));
 
-    if (targetWindow()) {
-        q->connect(targetWindow()->windowHandle(), &QWindow::windowStateChanged,
-        q, [ = ](Qt::WindowState) {
-            handleParentWindowStateChange();
-        });
-    }
+    // connect state change if parent has native window
+    // or connect when parent winid change
+    handleParentWindowIdChange();
 }
 
 QWidget *DTitlebarPrivate::targetWindow()
@@ -339,6 +337,22 @@ void DTitlebarPrivate::handleParentWindowStateChange()
     maxButton->setMaximized(targetWindow()->windowState() == Qt::WindowMaximized);
     updateFullscreen();
     updateButtonsState(targetWindow()->windowFlags());
+}
+
+//!
+//! \brief DTitlebarPrivate::handleParentWindowIdChange
+//! Them WindowStateChnage Event will miss some state changed message,
+//! So use windowHandle::windowStateChanged instead
+void DTitlebarPrivate::handleParentWindowIdChange()
+{
+    D_Q(DTitlebar);
+    if (targetWindow()->windowHandle()) {
+        q->disconnect(targetWindow()->windowHandle(), &QWindow::windowStateChanged, q, Q_NULLPTR);
+        q->connect(targetWindow()->windowHandle(), &QWindow::windowStateChanged,
+        q, [ = ](Qt::WindowState) {
+            handleParentWindowStateChange();
+        });
+    }
 }
 
 void DTitlebarPrivate::_q_toggleWindowState()
@@ -623,8 +637,8 @@ bool DTitlebar::eventFilter(QObject *obj, QEvent *event)
 
         switch (event->type()) {
         // !!! NO state change when fullscreen state change to nostate ?
-        case QEvent::WindowStateChange: {
-            d->handleParentWindowStateChange();
+        case QEvent::WinIdChange: {
+            d->handleParentWindowIdChange();
             break;
         }
         case QEvent::ShowToParent:
