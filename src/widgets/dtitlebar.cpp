@@ -96,11 +96,13 @@ private:
     QLabel              *separator;
 
 #ifndef QT_NO_MENU
-    QMenu               *menu = Q_NULLPTR;
-    QAction             *helpAction = Q_NULLPTR;
-    QAction             *aboutAction = Q_NULLPTR;
-    QAction             *quitAction = Q_NULLPTR;
+    QMenu               *menu           = Q_NULLPTR;
+    QAction             *helpAction     = Q_NULLPTR;
+    QAction             *aboutAction    = Q_NULLPTR;
+    QAction             *quitAction     = Q_NULLPTR;
 #endif
+
+    QWindow            *targetWindowHandle = Q_NULLPTR;
 
     Qt::WindowFlags     disableFlags;
     bool                mousePressed    = false;
@@ -216,10 +218,6 @@ void DTitlebarPrivate::init()
     q->connect(optionButton, &DWindowOptionButton::clicked, q, &DTitlebar::optionClicked);
     q->connect(DWindowManagerHelper::instance(), SIGNAL(windowMotifWMHintsChanged(quint32)),
                q, SLOT(_q_onTopWindowMotifHintsChanged(quint32)));
-
-    // connect state change if parent has native window
-    // or connect when parent winid change
-    handleParentWindowIdChange();
 }
 
 QWidget *DTitlebarPrivate::targetWindow()
@@ -346,13 +344,19 @@ void DTitlebarPrivate::handleParentWindowStateChange()
 void DTitlebarPrivate::handleParentWindowIdChange()
 {
     D_Q(DTitlebar);
-    if (targetWindow()->windowHandle()) {
-        q->disconnect(targetWindow()->windowHandle(), &QWindow::windowStateChanged, q, Q_NULLPTR);
-        q->connect(targetWindow()->windowHandle(), &QWindow::windowStateChanged,
+    if (!targetWindowHandle) {
+        targetWindowHandle = targetWindow()->windowHandle();
+        targetWindowHandle->disconnect(targetWindow()->windowHandle(), &QWindow::windowStateChanged,
+                                       q, Q_NULLPTR);
+        targetWindowHandle->connect(targetWindow()->windowHandle(), &QWindow::windowStateChanged,
         q, [ = ](Qt::WindowState) {
             handleParentWindowStateChange();
         });
+    } else if (targetWindow()->windowHandle() != targetWindowHandle) {
+        // Parent change???, show never here
+        qWarning() << "targetWindowHandle change" << targetWindowHandle << targetWindow()->windowHandle();
     }
+
 }
 
 void DTitlebarPrivate::_q_toggleWindowState()
@@ -634,14 +638,9 @@ bool DTitlebar::eventFilter(QObject *obj, QEvent *event)
     D_D(DTitlebar);
 
     if (obj == d->targetWindow()) {
-
         switch (event->type()) {
-        // !!! NO state change when fullscreen state change to nostate ?
-        case QEvent::WinIdChange: {
-            d->handleParentWindowIdChange();
-            break;
-        }
         case QEvent::ShowToParent:
+            d->handleParentWindowIdChange();
             d->updateButtonsFunc();
             d->updateButtonsState(d->targetWindow()->windowFlags());
             break;
@@ -878,7 +877,6 @@ void DTitlebar::setVisible(bool visible)
         if (!d->targetWindow()) {
             return;
         }
-
         d->targetWindow()->installEventFilter(this);
 
         connect(d->maxButton, SIGNAL(clicked()), this, SLOT(_q_toggleWindowState()));
