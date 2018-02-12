@@ -1,10 +1,6 @@
-include($$PWD/lib.pri)
-
-TEMPLATE = lib
-CONFIG += qt
-TARGET = dtkwidget
-
-DEFINES += LIBDTKWIDGET_LIBRARY
+include($$PWD/config.pri)
+# TODO: replace config.pri with dtk_build
+load(dtk_build)
 
 QT += multimedia multimediawidgets concurrent
 greaterThan(QT_MAJOR_VERSION, 4) {
@@ -13,26 +9,29 @@ greaterThan(QT_MAJOR_VERSION, 4) {
   greaterThan(QT_MAJOR_VERSION, 5)|greaterThan(QT_MINOR_VERSION, 7): QT += gui-private
   else: QT += platformsupport-private
 }
+
+QT += dtkcore
+
 linux* {
     QT += x11extras dbus
-    CONFIG += link_pkgconfig
-    PKGCONFIG += x11 xext dtkcore
 }
 
 mac* {
     QT += svg
     DEFINES += DTK_TITLE_DRAG_WINDOW
-    CONFIG += link_pkgconfig
-    PKGCONFIG += dtkcore
 }
 
 win* {
     QT += svg
     DEFINES += DTK_TITLE_DRAG_WINDOW
+}
 
-    #DEPENDS dtkcore
-    INCLUDEPATH += $$INCLUDE_INSTALL_DIR\libdtk-$$VERSION\DCore
-    LIBS += -L$$LIB_INSTALL_DIR -ldtkcore
+TEMPLATE = lib
+TARGET = dtkwidget
+
+!isEmpty(DTK_STATIC_LIB){
+    DEFINES += DTK_STATIC_LIB
+    CONFIG += staticlib
 }
 
 HEADERS += dtkwidget_global.h
@@ -53,20 +52,6 @@ win32* {
     includes.files += $$PWD/platforms/windows/*.h
 }
 
-QMAKE_PKGCONFIG_NAME = DTK_WIDGET
-QMAKE_PKGCONFIG_DESCRIPTION = Deepin Tool Kit Widget Module
-QMAKE_PKGCONFIG_INCDIR = $$includes.path
-QMAKE_PKGCONFIG_REQUIRES += dtkcore
-
-# CMake configure
-INC_DIR = $$replace(includes.path, "/", "\/")
-CMD = sed -E \'s/DTKWIDGET_INCLUDE_DIR \".*\"\\)$/DTKWIDGET_INCLUDE_DIR \"$${INC_DIR}\"\\)/\' ../cmake/DtkWidget/DtkWidgetConfig.cmake.in > ../cmake/DtkWidget/DtkWidgetConfig.cmake
-message($$CMD)
-system($$CMD)
-
-cmake_config.path = $$LIB_INSTALL_DIR
-cmake_config.files = $$PWD/../cmake
-
 # add translations
 TRANSLATIONS += $$PWD/../translations/$${TARGET}2.ts \
                 $$PWD/../translations/$${TARGET}2_zh_CN.ts
@@ -74,7 +59,7 @@ TRANSLATIONS += $$PWD/../translations/$${TARGET}2.ts \
 translations.path = $$PREFIX/share/$${TARGET}/translations
 translations.files = $$PWD/../translations/*.qm
 
-INSTALLS += translations cmake_config
+INSTALLS += translations
 
 # create DtkWidgets file
 defineTest(containIncludeFiles) {
@@ -126,3 +111,22 @@ defineTest(updateDtkWidgetConfigFile) {
 }
 
 !updateDtkWidgetConfigFile():warning(Cannot create "dtkwidget_config.h" header file)
+
+INSTALLS += includes target
+
+# CMake configure
+INC_DIR = $$replace(includes.path, "/", "\/")
+CMD = sed -E \'s/DTKWIDGET_INCLUDE_DIR \".*\"\\)$/DTKWIDGET_INCLUDE_DIR \"$${INC_DIR}\"\\)/\' ../cmake/DtkWidget/DtkWidgetConfig.cmake.in > ../cmake/DtkWidget/DtkWidgetConfig.cmake
+message($$CMD)
+system($$CMD)
+
+cmake_config.path = $$LIB_INSTALL_DIR
+cmake_config.files = $$PWD/../cmake
+INSTALLS += cmake_config
+
+#TODO: use dtkcmake
+#CMAKE_MODULE=DtkWidget
+#load(dtk_cmake)
+
+QMAKE_PKGCONFIG_REQUIRES += dtkcore
+load(dtk_module)

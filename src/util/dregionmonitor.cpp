@@ -126,7 +126,7 @@ void DRegionMonitorPrivate::_q_ButtonPress(const int flag, const int x, const in
 
     D_Q(DRegionMonitor);
 
-    emit q->buttonPress(deviceScaledCoordinate(QPoint(x, y), qApp->devicePixelRatio()), flag);
+    Q_EMIT q->buttonPress(deviceScaledCoordinate(QPoint(x, y), qApp->devicePixelRatio()), flag);
 }
 
 void DRegionMonitorPrivate::_q_ButtonRelease(const int flag, const int x, const int y, const QString &key)
@@ -136,7 +136,7 @@ void DRegionMonitorPrivate::_q_ButtonRelease(const int flag, const int x, const 
 
     D_Q(DRegionMonitor);
 
-    emit q->buttonRelease(deviceScaledCoordinate(QPoint(x, y), qApp->devicePixelRatio()), flag);
+    Q_EMIT q->buttonRelease(deviceScaledCoordinate(QPoint(x, y), qApp->devicePixelRatio()), flag);
 }
 
 void DRegionMonitorPrivate::_q_CursorMove(const int x, const int y, const QString &key)
@@ -146,7 +146,7 @@ void DRegionMonitorPrivate::_q_CursorMove(const int x, const int y, const QStrin
 
     D_Q(DRegionMonitor);
 
-    emit q->cursorMove(deviceScaledCoordinate(QPoint(x, y), qApp->devicePixelRatio()));
+    Q_EMIT q->cursorMove(deviceScaledCoordinate(QPoint(x, y), qApp->devicePixelRatio()));
 }
 
 void DRegionMonitorPrivate::_q_KeyPress(const QString &keyname, const int x, const int y, const QString &key)
@@ -159,7 +159,7 @@ void DRegionMonitorPrivate::_q_KeyPress(const QString &keyname, const int x, con
 
     D_Q(DRegionMonitor);
 
-    emit q->keyPress(keyname);
+    Q_EMIT q->keyPress(keyname);
 }
 
 void DRegionMonitorPrivate::_q_KeyRelease(const QString &keyname, const int x, const int y, const QString &key)
@@ -172,7 +172,7 @@ void DRegionMonitorPrivate::_q_KeyRelease(const QString &keyname, const int x, c
 
     D_Q(DRegionMonitor);
 
-    emit q->keyRelease(keyname);
+    Q_EMIT q->keyRelease(keyname);
 }
 
 const QPoint DRegionMonitorPrivate::deviceScaledCoordinate(const QPoint &p, const double ratio) const

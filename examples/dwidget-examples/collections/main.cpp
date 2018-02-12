@@ -29,8 +29,7 @@ DWIDGET_USE_NAMESPACE
 
 int main(int argc, char *argv[])
 {
-
-#if defined(STATIC_LIB)
+#if defined(DTK_STATIC_LIB)
     DWIDGET_INIT_RESOURCE();
 #endif
 

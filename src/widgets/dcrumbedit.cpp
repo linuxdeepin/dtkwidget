@@ -343,7 +343,7 @@ public:
             }
         }
 
-        foreach (const DCrumbTextFormat &f, formats) {
+        Q_FOREACH(const DCrumbTextFormat &f, formats) {
             if (!crumbList.contains(f.text())) {
                 formats.remove(f.text());
                 formatsChanged = true;

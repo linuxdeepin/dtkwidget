@@ -34,7 +34,7 @@ namespace Dtk
 namespace Widget
 {
 
-#if defined(STATIC_LIB)
+#if defined(DTK_STATIC_LIB)
 #define DWIDGET_INIT_RESOURCE() \
     do { \
         Q_INIT_RESOURCE(icons); \
@@ -45,7 +45,7 @@ namespace Widget
 }
 }
 
-#if defined(STATIC_LIB)
+#if defined(DTK_STATIC_LIB)
 #  define LIBDTKWIDGETSHARED_EXPORT
 #else
 #if defined(LIBDTKWIDGET_LIBRARY)

@@ -25,12 +25,12 @@ DWIDGET_USE_NAMESPACE
 class MultiListView : public DSimpleListView
 {
     Q_OBJECT
-    
+
 public:
     MultiListView(DSimpleListView *parent=0);
-    
-public slots:
+
+public Q_SLOTS:
     void popupMenu(QPoint pos, QList<DSimpleListItem*> items);
-};	
+};
 
 #endif

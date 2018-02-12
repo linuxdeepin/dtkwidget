@@ -1,9 +1,8 @@
-include($$PWD/../../src/config.pri)
-
 QT += gui svg
+QT += dtkcore
 
 TARGET = dtk-svgc
-CONFIG += c++11 console
+CONFIG += c++11
 CONFIG -= app_bundle
 
 # The following define makes your compiler emit warnings if you use
@@ -17,27 +16,23 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-SOURCES += main.cpp
-
-unix {
-    CONFIG+=link_pkgconfig
-    PKGCONFIG += dtkcore
-}
-
-win32* {
-    #DEPENDS dtkcore
-    INCLUDEPATH += $$INCLUDE_INSTALL_DIR\libdtk-$$VERSION\DCore
-    LIBS += -L$$LIB_INSTALL_DIR -ldtkcore
-}
+DEFINES += QT_MESSAGELOGCONTEXT
 
 isEmpty(PREFIX){
     PREFIX = /usr
 }
+isEmpty(BIN_INSTALL_DIR) {
+    BIN_INSTALL_DIR=$${PREFIX}/lib/dtk2
+}
+!isEmpty(DTK_STATIC_LIB){
+    DEFINES += DTK_STATIC_LIB
+}
 
-binary.files += $${OUT_PWD}/$${TARGET}
-binary.path = $${PREFIX}/lib/dtk2
+SOURCES += main.cpp
 
-INSTALLS += binary
+target.path = $${BIN_INSTALL_DIR}
+
+INSTALLS += target
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../src/release/ -ldtkwidget
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../src/debug/ -ldtkwidget

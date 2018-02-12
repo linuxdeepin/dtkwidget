@@ -1,6 +1,6 @@
 QT += core gui multimedia multimediawidgets svg
-
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT += dtkcore
 
 TARGET = collections
 TEMPLATE = app
@@ -10,8 +10,10 @@ DEFINES += QT_MESSAGELOGCONTEXT
 
 unix {
     QT += dbus
-    CONFIG += link_pkgconfig
-    PKGCONFIG += dtkcore
+}
+
+!isEmpty(DTK_STATIC_LIB){
+    DEFINES += DTK_STATIC_LIB
 }
 
 SOURCES += main.cpp\
@@ -60,15 +62,8 @@ RESOURCES += \
 FORMS += \
     cameraform.ui
 
-include($$PWD/../../../src/config.pri)
-
 win32* {
     CONFIG += no_lflags_merge
-    DEFINES += STATIC_LIB
-
-    #DEPENDS dtkcore
-    INCLUDEPATH += $$INCLUDE_INSTALL_DIR\libdtk-$$VERSION\DCore
-    LIBS += -L$$LIB_INSTALL_DIR -ldtkcore
 }
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../../src/release -ldtkwidget

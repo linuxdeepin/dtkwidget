@@ -245,7 +245,7 @@ void DImageButton::setChecked(bool flag)
         d->setState(Normal);
     }
 
-    emit checkedChanged(d->m_isChecked);
+    Q_EMIT checkedChanged(d->m_isChecked);
 }
 
 /*!
