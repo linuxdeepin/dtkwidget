@@ -2,6 +2,8 @@ include($$PWD/config.pri)
 # TODO: replace config.pri with dtk_build
 load(dtk_build)
 
+CONFIG += internal_module
+
 QT += multimedia multimediawidgets concurrent
 greaterThan(QT_MAJOR_VERSION, 4) {
   QT += widgets widgets-private
