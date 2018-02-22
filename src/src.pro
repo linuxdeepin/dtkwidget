@@ -116,19 +116,7 @@ defineTest(updateDtkWidgetConfigFile) {
 
 INSTALLS += includes target
 
-# CMake configure
-INC_DIR = $$replace(includes.path, "/", "\/")
-CMD = sed -E \'s/DTKWIDGET_INCLUDE_DIR \".*\"\\)$/DTKWIDGET_INCLUDE_DIR \"$${INC_DIR}\"\\)/\' ../cmake/DtkWidget/DtkWidgetConfig.cmake.in > ../cmake/DtkWidget/DtkWidgetConfig.cmake
-message($$CMD)
-system($$CMD)
-
-cmake_config.path = $$LIB_INSTALL_DIR
-cmake_config.files = $$PWD/../cmake
-INSTALLS += cmake_config
-
-#TODO: use dtkcmake
-#CMAKE_MODULE=DtkWidget
-#load(dtk_cmake)
+load(dtk_cmake)
 
 QMAKE_PKGCONFIG_REQUIRES += dtkcore
 load(dtk_module)
