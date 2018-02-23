@@ -170,6 +170,12 @@ void DImageButton::mouseReleaseEvent(QMouseEvent *event)
 {
     D_D(DImageButton);
 
+    event->accept();
+
+    if (event->button() != Qt::LeftButton) {
+        return;
+    }
+
     if (!rect().contains(event->pos())) {
         return;
     }
@@ -185,12 +191,7 @@ void DImageButton::mouseReleaseEvent(QMouseEvent *event)
         d->setState(Hover);
     }
 
-    event->accept();
-    //QLabel::mouseReleaseEvent(event);
-
-    if (event->button() == Qt::LeftButton) {
-        Q_EMIT clicked();
-    }
+    Q_EMIT clicked();
 }
 
 void DImageButton::mouseMoveEvent(QMouseEvent *event)
