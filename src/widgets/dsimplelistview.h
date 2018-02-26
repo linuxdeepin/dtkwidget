@@ -122,6 +122,14 @@ public:
      */
     void addItems(QList<DSimpleListItem*> items);
     
+    
+    /* 
+     * Remove DSimpleListItem from list.
+     * 
+     * @item item to remove
+     */
+    void removeItem(DSimpleListItem* item);
+    
     /* 
      * Clear items from DSimpleListView.
      */
