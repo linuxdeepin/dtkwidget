@@ -55,3 +55,8 @@ void SingleListItem::drawForeground(QRect rect, QPainter *painter, int column, i
     int padding = 10;
     painter->drawText(QRect(rect.x() + padding, rect.y(), rect.width() - padding * 2, rect.height()), Qt::AlignLeft | Qt::AlignVCenter, name);
 }
+
+void SingleListItem::drawHover(QRect rect, QPainter *painter)
+{
+    
+}

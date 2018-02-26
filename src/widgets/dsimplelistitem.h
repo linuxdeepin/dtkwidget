@@ -67,6 +67,15 @@ public:
      * @isSelect current item is selected, you can draw selected effect under content when isSelect is true
      */
     virtual void drawForeground(QRect rect, QPainter *painter, int column, int index, bool isSelect)=0;
+    
+    
+    /* 
+     * The interface function that used to draw hover effect.
+     * 
+     * @rect column corresponding to the drawing of the rectangular area
+     * @painter the painter used to draw anything you want
+     */
+    virtual void drawHover(QRect rect, QPainter *painter)=0;
 };
 
 DWIDGET_END_NAMESPACE

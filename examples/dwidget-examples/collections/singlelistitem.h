@@ -32,6 +32,7 @@ public:
     bool sameAs(DSimpleListItem *item);
     void drawBackground(QRect rect, QPainter *painter, int index, bool isSelect);
     void drawForeground(QRect rect, QPainter *painter, int column, int index, bool isSelect);
+    void drawHover(QRect rect, QPainter *painter);
     
     QString name;
 };	

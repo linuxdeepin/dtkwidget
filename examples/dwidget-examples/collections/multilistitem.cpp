@@ -94,3 +94,8 @@ bool MultiListItem::sortByLength(const DSimpleListItem *item1, const DSimpleList
 
     return descendingSort ? sortOrder : !sortOrder;
 }
+
+void MultiListItem::drawHover(QRect rect, QPainter *painter)
+{
+    
+}
