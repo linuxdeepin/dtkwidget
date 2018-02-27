@@ -141,7 +141,7 @@ DSimpleListView::DSimpleListView(QWidget *parent) : QWidget(parent), DObject(*ne
     d->lastHoverColumnIndex = -1;
     d->drawHoverItem = NULL;
     d->mouseHoverItem = NULL;
-    
+
     d->mouseAtScrollArea = false;
     d->mouseDragScrollbar = false;
     d->drawFrame = false;
@@ -294,9 +294,9 @@ void DSimpleListView::addItems(QList<DSimpleListItem*> items)
 void DSimpleListView::removeItem(DSimpleListItem* item)
 {
     D_D(DSimpleListView);
-    
+
     d->listItems->removeOne(item);
-    
+
     repaint();
 }
 
@@ -990,7 +990,7 @@ void DSimpleListView::mouseReleaseEvent(QMouseEvent *mouseEvent)
 
     // Emit mouseReleaseChanged signal.
     int releaseItemIndex = (d->renderOffset + mouseEvent->y() - d->titleHeight) / d->rowHeight;
-        
+
     QList<int> renderWidths = getRenderWidths();
     int columnCounter = 0;
     int columnRenderX = 0;
