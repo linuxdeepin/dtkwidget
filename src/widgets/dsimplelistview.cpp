@@ -1526,7 +1526,9 @@ int DSimpleListView::getScrollbarY()
 {
     D_D(DSimpleListView);
 
-    return static_cast<int>((d->renderOffset / (d->getItemsTotalHeight() * 1.0)) * getScrollAreaHeight() + d->titleHeight);
+    int y = static_cast<int>((d->renderOffset / (d->getItemsTotalHeight() * 1.0)) * getScrollAreaHeight() + d->titleHeight);
+    
+    return qMin(y, rect().height() - getScrollbarHeight());
 }
 
 int DSimpleListView::getScrollbarHeight()
