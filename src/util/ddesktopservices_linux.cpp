@@ -22,7 +22,7 @@
 #include <QDebug>
 #include <QFile>
 #include <QMediaPlayer>
-#include <QGSettings>
+#include <QGSettings/QGSettings>
 
 DWIDGET_BEGIN_NAMESPACE
 
