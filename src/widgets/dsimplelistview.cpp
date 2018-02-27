@@ -296,6 +296,7 @@ void DSimpleListView::removeItem(DSimpleListItem* item)
     D_D(DSimpleListView);
 
     d->listItems->removeOne(item);
+    d->renderItems->removeOne(item);
 
     repaint();
 }
@@ -990,24 +991,26 @@ void DSimpleListView::mouseReleaseEvent(QMouseEvent *mouseEvent)
 
     // Emit mouseReleaseChanged signal.
     int releaseItemIndex = (d->renderOffset + mouseEvent->y() - d->titleHeight) / d->rowHeight;
+    
+    if (releaseItemIndex >= 0 && releaseItemIndex < (*d->renderItems).length()) {
+        QList<int> renderWidths = getRenderWidths();
+        int columnCounter = 0;
+        int columnRenderX = 0;
+        for (int renderWidth:renderWidths) {
+            if (renderWidth > 0) {
+                if (mouseEvent->x() > columnRenderX && mouseEvent->x() < columnRenderX + renderWidth) {
+                    break;
+                }
 
-    QList<int> renderWidths = getRenderWidths();
-    int columnCounter = 0;
-    int columnRenderX = 0;
-    for (int renderWidth:renderWidths) {
-        if (renderWidth > 0) {
-            if (mouseEvent->x() > columnRenderX && mouseEvent->x() < columnRenderX + renderWidth) {
-                break;
+                columnRenderX += renderWidth;
             }
 
-            columnRenderX += renderWidth;
+            columnCounter++;
         }
-
-        columnCounter++;
+        mouseReleaseChanged((*d->renderItems)[releaseItemIndex], columnCounter,
+                            QPoint(mouseEvent->x() - columnRenderX,
+                                   d->renderOffset + mouseEvent->y() - releaseItemIndex * d->rowHeight));
     }
-    mouseReleaseChanged((*d->renderItems)[releaseItemIndex], columnCounter,
-                        QPoint(mouseEvent->x() - columnRenderX,
-                               d->renderOffset + mouseEvent->y() - releaseItemIndex * d->rowHeight));
 }
 
 void DSimpleListView::wheelEvent(QWheelEvent *event)
