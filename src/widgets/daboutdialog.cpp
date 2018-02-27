@@ -30,6 +30,7 @@
 #include <QKeyEvent>
 #include <QApplication>
 #include <QImageReader>
+#include <QSettings>
 
 #ifdef Q_OS_UNIX
 #include <unistd.h>
@@ -71,8 +72,6 @@ const QString DAboutDialogPrivate::websiteLinkTemplate = "<a href='%1' style='te
 
 DAboutDialogPrivate::DAboutDialogPrivate(DAboutDialog *qq)
     : DDialogPrivate(qq)
-    , websiteName("www.deepin.org")
-    , websiteLink("https://www.deepin.org")
 {
 
 }
@@ -80,6 +79,8 @@ DAboutDialogPrivate::DAboutDialogPrivate(DAboutDialog *qq)
 void DAboutDialogPrivate::init()
 {
     D_Q(DAboutDialog);
+
+    initWebsiteInfo();
 
     logoLabel = new QLabel();
     logoLabel->setContentsMargins(0, 0, 0, 0);
@@ -158,6 +159,25 @@ void DAboutDialogPrivate::init()
 
     // make active
     q->setFocus();
+}
+
+void DAboutDialogPrivate::initWebsiteInfo()
+{
+#ifdef Q_OS_LINUX
+    static const QString cfgPath = "/etc/deepin-version";
+
+    bool isProfessional = false;
+    if (QFile::exists(cfgPath)) {
+        QSettings deepinVersion(cfgPath, QSettings::IniFormat);
+        isProfessional = deepinVersion.value("Release/Type").toString() == "Professional";
+    }
+
+    websiteName = isProfessional ? "www.deepin.com" : "www.deepin.org";
+    websiteLink = QString("https://www.deepin.org/original/%1/").arg(qApp->applicationName());
+#else
+    websiteName = "www.deepin.org";
+    websiteLink = "https://www.deepin.org";
+#endif
 }
 
 void DAboutDialogPrivate::updateWebsiteLabel()

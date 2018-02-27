@@ -29,6 +29,7 @@ public:
     DAboutDialogPrivate(DAboutDialog *qq);
 
     void init();
+    void initWebsiteInfo();
     void updateWebsiteLabel();
     void updateAcknowledgementLabel();
     void _q_onLinkActivated(const QString &link);
