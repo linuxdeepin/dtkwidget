@@ -298,6 +298,10 @@ void DSimpleListView::removeItem(DSimpleListItem* item)
     d->listItems->removeOne(item);
     d->renderItems->removeOne(item);
 
+    if (d->renderOffset >= rect().height() - getScrollbarHeight()) {
+        d->renderOffset -= d->rowHeight;
+    }
+
     repaint();
 }
 
@@ -991,8 +995,8 @@ void DSimpleListView::mouseReleaseEvent(QMouseEvent *mouseEvent)
 
     // Emit mouseReleaseChanged signal.
     int releaseItemIndex = (d->renderOffset + mouseEvent->y() - d->titleHeight) / d->rowHeight;
-    
-    if (releaseItemIndex >= 0 && releaseItemIndex < (*d->renderItems).length()) {
+
+    if (releaseItemIndex >= 0 && releaseItemIndex <= (*d->renderItems).length()) {
         QList<int> renderWidths = getRenderWidths();
         int columnCounter = 0;
         int columnRenderX = 0;
@@ -1530,7 +1534,7 @@ int DSimpleListView::getScrollbarY()
     D_D(DSimpleListView);
 
     int y = static_cast<int>((d->renderOffset / (d->getItemsTotalHeight() * 1.0)) * getScrollAreaHeight() + d->titleHeight);
-    
+
     return qMin(y, rect().height() - getScrollbarHeight());
 }
 
