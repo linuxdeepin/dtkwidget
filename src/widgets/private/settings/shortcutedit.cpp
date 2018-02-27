@@ -28,10 +28,8 @@ namespace
 const int MAX_WIDTH = 238;
 const int MAX_HEIGHT = 22 + 2 * 2;
 const double BORDER_RADIUS = 3.0;
-const int ACTIVE_BORDER_WIDTH = 1;
-const int NORMAL_BORDER_WIDTH = 1;
 const QColor ACTIVE_BORDER_COLOR = QColor("#2ca7f8");
-const QColor NORMAL_BORDER_COLOR = QColor(0, 0, 0, 255 * 0.08);
+const QColor NORMAL_BORDER_COLOR = QColor(0, 0, 0, 255 * 8 / 100);
 
 }
 
@@ -95,7 +93,14 @@ void ShortcutEdit::setShortCut(Qt::KeyboardModifiers modifier, Qt::Key key)
 void ShortcutEdit::setShortCut(const QString &sequenceString)
 {
     Q_D(ShortcutEdit);
-    d->keyStringList = sequenceString.split("+");
+
+    // replcae ++ to sep_plus
+    const QString sepString = "sep_str";
+    const QString plusString = "sep_plus";
+    QString formatSequenceString = QString(sequenceString).replace("++", plusString);
+    formatSequenceString = formatSequenceString.replace("+", sepString);
+    formatSequenceString = formatSequenceString.replace(plusString, sepString + "+");
+    d->keyStringList = formatSequenceString.split(sepString);
 }
 
 void ShortcutEdit::paintEvent(QPaintEvent *)
