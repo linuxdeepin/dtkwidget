@@ -596,10 +596,8 @@ void DApplication::handleHelpAction()
 {
 #ifdef Q_OS_LINUX
     QString appid = applicationName();
-    if (!qgetenv("FLATPAK_APPID").isEmpty()) {
-        appid = qgetenv("FLATPAK_APPID");
-    }
 
+    // new interface use applicationName as id
     QDBusInterface manual("com.deepin.Manual.Open",
                           "/com/deepin/Manual/Open",
                           "com.deepin.Manual.Open");
@@ -609,6 +607,9 @@ void DApplication::handleHelpAction()
     }
 
 #ifdef DTK_DMAN_PORTAL
+    if (!qgetenv("FLATPAK_APPID").isEmpty()) {
+        appid = qgetenv("FLATPAK_APPID");
+    }
     QDBusInterface legacydman("com.deepin.dman",
                               "/com/deepin/dman",
                               "com.deepin.dman");
