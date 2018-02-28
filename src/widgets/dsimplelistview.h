@@ -108,13 +108,6 @@ public:
     void setFrame(bool enableFrame, QColor color=QColor("#000000"), double opacity=0.1);
 
     /*
-     * Set whether display hover effect.
-     *
-     * @enableHoverEffect draw hover effect by call item's drawBackground/drawForeground interface, default is false.
-     */
-    void setHoverEffect(bool enableHoverEffect);
-
-    /*
      * Add DSimpleListItem list to ListView.
      * If user has click title to sort, sort items after add items to list.
      *

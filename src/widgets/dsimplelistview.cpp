@@ -66,7 +66,6 @@ public:
     bool mouseAtScrollArea;
     bool mouseDragScrollbar;
     bool drawFrame;
-    bool drawHover;
     int alwaysVisibleColumn;
     int clipRadius;
     int defaultSortingColumn;
@@ -145,7 +144,6 @@ DSimpleListView::DSimpleListView(QWidget *parent) : QWidget(parent), DObject(*ne
     d->mouseAtScrollArea = false;
     d->mouseDragScrollbar = false;
     d->drawFrame = false;
-    d->drawHover = false;
     d->scrollbarDefaultWidth = 4;
     d->scrollbarDragWidth = 8;
     d->scrollbarMinHeight = 30;
@@ -264,13 +262,6 @@ void DSimpleListView::setFrame(bool enableFrame, QColor color, double opacity)
     d->drawFrame = enableFrame;
     frameColor = color;
     frameOpacity = opacity;
-}
-
-void DSimpleListView::setHoverEffect(bool enableHoverEffect)
-{
-    D_D(DSimpleListView);
-
-    d->drawHover = enableHoverEffect;
 }
 
 void DSimpleListView::addItems(QList<DSimpleListItem*> items)
@@ -769,7 +760,7 @@ void DSimpleListView::mouseMoveEvent(QMouseEvent *mouseEvent)
                     columnCounter++;
                 }
 
-                if (d->drawHover && (d->drawHoverItem == NULL || !item->sameAs(d->drawHoverItem))) {
+                if (d->drawHoverItem == NULL || !item->sameAs(d->drawHoverItem)) {
                     d->drawHoverItem = item;
 
                     repaint();
@@ -1139,26 +1130,26 @@ void DSimpleListView::paintEvent(QPaintEvent *)
 
             // Draw item backround.
             bool isSelect = d->selectionItems->contains(item);
-            bool isHover = d->drawHover && d->drawHoverItem != NULL && item->sameAs(d->drawHoverItem);
+            bool isHover = d->drawHoverItem != NULL && item->sameAs(d->drawHoverItem);
             painter.save();
-            item->drawBackground(QRect(0, renderY + rowCounter * d->rowHeight - d->renderOffset, rect().width(), d->rowHeight), 
-                                 &painter, 
-                                 rowCounter, 
-                                 isSelect, 
+            item->drawBackground(QRect(0, renderY + rowCounter * d->rowHeight - d->renderOffset, rect().width(), d->rowHeight),
+                                 &painter,
+                                 rowCounter,
+                                 isSelect,
                                  isHover);
             painter.restore();
-            
+
             // Draw item foreground.
             int columnCounter = 0;
             int columnRenderX = 0;
             for (int renderWidth:renderWidths) {
                 if (renderWidth > 0) {
                     painter.save();
-                    item->drawForeground(QRect(columnRenderX, renderY + rowCounter * d->rowHeight - d->renderOffset, renderWidth, d->rowHeight), 
-                                         &painter, 
-                                         columnCounter, 
-                                         rowCounter, 
-                                         isSelect, 
+                    item->drawForeground(QRect(columnRenderX, renderY + rowCounter * d->rowHeight - d->renderOffset, renderWidth, d->rowHeight),
+                                         &painter,
+                                         columnCounter,
+                                         rowCounter,
+                                         isSelect,
                                          isHover);
                     painter.restore();
 
