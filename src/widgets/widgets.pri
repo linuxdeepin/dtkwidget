@@ -232,6 +232,7 @@ includes.files += \
     $$PWD/DTabBar \
     $$PWD/DSuggestButton \
     $$PWD/DStyleOption \
-    $$PWD/DToast
+    $$PWD/DToast \
+    $$PWD/DFileDialog
 
 

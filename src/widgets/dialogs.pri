@@ -11,7 +11,8 @@ HEADERS += \
     $$PWD/private/settings/contenttitle.h \
     $$PWD/private/settings/navigation.h \
     $$PWD/private/settings/navigationdelegate.h \
-    $$PWD/private/settings/shortcutedit.h
+    $$PWD/private/settings/shortcutedit.h \
+    $$PWD/dfiledialog.h
 
 SOURCES += \
     $$PWD/dabstractdialog.cpp \
@@ -25,4 +26,5 @@ SOURCES += \
     $$PWD/private/settings/contenttitle.cpp \
     $$PWD/private/settings/navigation.cpp \
     $$PWD/private/settings/navigationdelegate.cpp \
-    $$PWD/private/settings/shortcutedit.cpp
+    $$PWD/private/settings/shortcutedit.cpp \
+    $$PWD/dfiledialog.cpp
