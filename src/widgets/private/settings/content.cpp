@@ -135,8 +135,12 @@ void Content::updateSettings(QPointer<DTK_CORE_NAMESPACE::DSettings> settings)
 {
     Q_D(Content);
     for (auto groupKey : settings->groupKeys()) {
+        auto group = settings->group(groupKey);
+        if (group->isHidden()) {
+            continue;
+        }
+        auto trName = QObject::tr(group->name().toStdString().c_str());
         auto title = new ContentTitle;
-        auto trName = QObject::tr(settings->group(groupKey)->name().toStdString().c_str());
         title->setTitle(trName);
         title->setProperty("key", groupKey);
 //        d->contentLayout->addSpacing(10);
@@ -145,9 +149,13 @@ void Content::updateSettings(QPointer<DTK_CORE_NAMESPACE::DSettings> settings)
         d->titles.insert(groupKey, title);
 
         for (auto subgroup : settings->group(groupKey)->childGroups()) {
+            if (subgroup->isHidden()) {
+                continue;
+            }
+
             if (!subgroup->name().isEmpty()) {
                 auto title = new QLabel;
-                title->setAlignment(Qt::AlignLeft|Qt::AlignVCenter);
+                title->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
                 title->setObjectName("ContentSubTitleText");
                 title->setFixedHeight(20);
                 auto trName = QObject::tr(subgroup->name().toStdString().c_str());

@@ -259,7 +259,6 @@ QWidget *createComboBoxOptionHandle(QObject *opt)
     };
 
     auto initData = option->data("items");
-    qDebug() << initData.type() << (QVariant::Map == initData.type()) << initData.typeName();
     updateData("items", initData);
 
     option->connect(option, &DTK_CORE_NAMESPACE::DSettingsOption::dataChanged,

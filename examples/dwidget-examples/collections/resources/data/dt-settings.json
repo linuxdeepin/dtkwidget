@@ -57,6 +57,7 @@
                 {
                     "key": "ternimal",
                     "name": "Ternimal",
+                    "hide": true,
                     "options": [
                         {
                             "key": "copy",

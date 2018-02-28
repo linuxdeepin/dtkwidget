@@ -117,8 +117,12 @@ void Navigation::updateSettings(QPointer<DTK_CORE_NAMESPACE::DSettings> settings
         }
         first = false;
 
+        auto group = settings->group(groupKey);
+        if (group->isHidden()) {
+            continue;
+        }
         auto item = new QStandardItem;
-        auto trName = QObject::tr(settings->group(groupKey)->name().toStdString().c_str());
+        auto trName = QObject::tr(group->name().toStdString().c_str());
 //        qDebug() << settings->group(groupKey)->name() << trName;
 //        QFont font(item->data(Qt::FontRole).value<QFont>());
 //        QFontMetrics fm(font);
@@ -131,6 +135,10 @@ void Navigation::updateSettings(QPointer<DTK_CORE_NAMESPACE::DSettings> settings
         d->navbarModel->appendRow(item);
 
         for (auto subgroup : settings->group(groupKey)->childGroups()) {
+            if (subgroup->isHidden()) {
+                continue;
+            }
+
             if (subgroup->name().isEmpty()) {
                 continue;
             }
