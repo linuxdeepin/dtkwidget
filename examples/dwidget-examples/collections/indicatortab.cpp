@@ -59,8 +59,6 @@ IndicatorTab::IndicatorTab(QWidget *parent) :
     loadingIndicator->setLoading(true);
     loadingIndicator->setAniDuration(2000);
     loadingIndicator->setAniEasingCurve(QEasingCurve::OutInCubic);
-    QColor color("gray");
-    loadingIndicator->setBackgroundColor(color);
 
     DLoadingIndicator *loadingIndicator2 = new DLoadingIndicator(this);
     QLabel *label = new QLabel;

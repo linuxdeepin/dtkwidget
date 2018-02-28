@@ -36,6 +36,8 @@ void DLoadingIndicatorPrivate::init()
 
     q->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     q->setScene(new QGraphicsScene(q));
+    q->setRenderHint(QPainter::SmoothPixmapTransform);
+    q->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
 
     rotateAni.setDuration(1000);
     rotateAni.setEasingCurve(QEasingCurve::OutInQuad);
