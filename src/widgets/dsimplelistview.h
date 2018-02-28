@@ -110,7 +110,7 @@ public:
     /*
      * Set whether display hover effect.
      *
-     * @enableHoverEffect draw hover effect by call item's drawHover interface, default is false.
+     * @enableHoverEffect draw hover effect by call item's drawBackground/drawForeground interface, default is false.
      */
     void setHoverEffect(bool enableHoverEffect);
 

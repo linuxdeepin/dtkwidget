@@ -54,8 +54,9 @@ public:
      * @painter the painter used to draw anything you want
      * @index the index of DSimpleListItem, you can draw different rows effect based on the index, such as the zebra crossing
      * @isSelect current item is selected, you can draw selected effect under content when isSelect is true
+     * @isHover current item is hovered, you can draw hover effect under content when isHover is true
      */
-    virtual void drawBackground(QRect rect, QPainter *painter, int index, bool isSelect)=0;
+    virtual void drawBackground(QRect rect, QPainter *painter, int index, bool isSelect, bool isHover)=0;
     
     /* 
      * The interface function that used to draw foreground of DSimpleListItem.
@@ -65,17 +66,9 @@ public:
      * @column the column of DSimpleListItem, you can draw different column content based on the column index
      * @index the index of DSimpleListItem, you can draw different rows effect based on the index, such as the zebra crossing
      * @isSelect current item is selected, you can draw selected effect under content when isSelect is true
+     * @isHover current item is hovered, you can draw hover effect under content when isHover is true
      */
-    virtual void drawForeground(QRect rect, QPainter *painter, int column, int index, bool isSelect)=0;
-    
-    
-    /* 
-     * The interface function that used to draw hover effect.
-     * 
-     * @rect column corresponding to the drawing of the rectangular area
-     * @painter the painter used to draw anything you want
-     */
-    virtual void drawHover(QRect rect, QPainter *painter)=0;
+    virtual void drawForeground(QRect rect, QPainter *painter, int column, int index, bool isSelect, bool isHover)=0;
 };
 
 DWIDGET_END_NAMESPACE

@@ -1139,22 +1139,27 @@ void DSimpleListView::paintEvent(QPaintEvent *)
 
             // Draw item backround.
             bool isSelect = d->selectionItems->contains(item);
+            bool isHover = d->drawHover && d->drawHoverItem != NULL && item->sameAs(d->drawHoverItem);
             painter.save();
-            item->drawBackground(QRect(0, renderY + rowCounter * d->rowHeight - d->renderOffset, rect().width(), d->rowHeight), &painter, rowCounter, isSelect);
+            item->drawBackground(QRect(0, renderY + rowCounter * d->rowHeight - d->renderOffset, rect().width(), d->rowHeight), 
+                                 &painter, 
+                                 rowCounter, 
+                                 isSelect, 
+                                 isHover);
             painter.restore();
-
-            // Draw hover effect.
-            if (d->drawHover && d->drawHoverItem != NULL && item->sameAs(d->drawHoverItem)) {
-                item->drawHover(QRect(0, renderY + rowCounter * d->rowHeight - d->renderOffset, rect().width(), d->rowHeight), &painter);
-            }
-
+            
             // Draw item foreground.
             int columnCounter = 0;
             int columnRenderX = 0;
             for (int renderWidth:renderWidths) {
                 if (renderWidth > 0) {
                     painter.save();
-                    item->drawForeground(QRect(columnRenderX, renderY + rowCounter * d->rowHeight - d->renderOffset, renderWidth, d->rowHeight), &painter, columnCounter, rowCounter, isSelect);
+                    item->drawForeground(QRect(columnRenderX, renderY + rowCounter * d->rowHeight - d->renderOffset, renderWidth, d->rowHeight), 
+                                         &painter, 
+                                         columnCounter, 
+                                         rowCounter, 
+                                         isSelect, 
+                                         isHover);
                     painter.restore();
 
                     columnRenderX += renderWidth;

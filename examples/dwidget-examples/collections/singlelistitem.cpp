@@ -30,7 +30,7 @@ bool SingleListItem::sameAs(DSimpleListItem *item)
     return name == (static_cast<SingleListItem*>(item))->name;
 }
 
-void SingleListItem::drawBackground(QRect rect, QPainter *painter, int index, bool isSelect)
+void SingleListItem::drawBackground(QRect rect, QPainter *painter, int index, bool isSelect, bool isHover)
 {
     QPainterPath path;
     path.addRect(QRectF(rect));
@@ -43,7 +43,7 @@ void SingleListItem::drawBackground(QRect rect, QPainter *painter, int index, bo
     }
 }
 
-void SingleListItem::drawForeground(QRect rect, QPainter *painter, int column, int index, bool isSelect)
+void SingleListItem::drawForeground(QRect rect, QPainter *painter, int column, int index, bool isSelect, bool isHover)
 {
     painter->setOpacity(1);
     if (isSelect) {
@@ -56,7 +56,3 @@ void SingleListItem::drawForeground(QRect rect, QPainter *painter, int column, i
     painter->drawText(QRect(rect.x() + padding, rect.y(), rect.width() - padding * 2, rect.height()), Qt::AlignLeft | Qt::AlignVCenter, name);
 }
 
-void SingleListItem::drawHover(QRect rect, QPainter *painter)
-{
-    
-}
