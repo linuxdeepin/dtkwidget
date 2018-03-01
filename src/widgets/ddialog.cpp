@@ -796,10 +796,8 @@ void DDialog::childEvent(QChildEvent *event)
             if (child->inherits("Dtk::Widget::DLineEdit")) {
                 DThemeManager *dtm = DThemeManager::instance();
                 // NOTE(sbw): want to force reset to light theme.
-                QString qss = dtm->getQssForWidget("DLineEdit", "light");
-
-                child->setStyleSheet(qss);
-                dtm->disconnect(child);
+                // FIXME(zccrs): fixation the DLineEdit widget theme to light.
+                dtm->setTheme(child, "light");
             }
         }
     }
