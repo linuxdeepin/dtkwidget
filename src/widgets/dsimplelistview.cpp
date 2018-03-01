@@ -1122,7 +1122,7 @@ void DSimpleListView::paintEvent(QPaintEvent *)
 
     int rowCounter = 0;
     for (DSimpleListItem *item:*d->renderItems) {
-        if (rowCounter > ((d->renderOffset - d->rowHeight) / d->rowHeight)) {
+        if (rowCounter >= d->renderOffset / d->rowHeight) {
             // Clip item rect.
             QPainterPath itemPath;
             itemPath.addRect(QRect(0, renderY + rowCounter * d->rowHeight - d->renderOffset, rect().width(), d->rowHeight));
