@@ -10,6 +10,8 @@ DWIDGET_BEGIN_NAMESPACE
 
 class LIBDTKWIDGETSHARED_EXPORT DFileDialog : public QFileDialog
 {
+    Q_OBJECT
+
 public:
     DFileDialog(QWidget *parent, Qt::WindowFlags f);
     explicit DFileDialog(QWidget *parent = Q_NULLPTR,
@@ -38,6 +40,8 @@ public:
 
     QString getComboBoxValue(const QString &text) const;
     QString getLineEditValue(const QString &text) const;
+
+    void setVisible(bool visible) override;
 };
 
 DWIDGET_END_NAMESPACE
