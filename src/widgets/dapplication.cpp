@@ -669,23 +669,21 @@ void DApplication::handleHelpAction()
         return;
     }
 
-#ifdef DTK_DMAN_PORTAL
+    // fallback to old interface
     if (!qgetenv("FLATPAK_APPID").isEmpty()) {
         appid = qgetenv("FLATPAK_APPID");
-    }
-    QDBusInterface legacydman("com.deepin.dman",
-                              "/com/deepin/dman",
-                              "com.deepin.dman");
-    if (legacydman.isValid()) {
-        legacydman.asyncCall("ShowManual", appid);
-        return;
-    }
+        QDBusInterface legacydman("com.deepin.dman",
+                                  "/com/deepin/dman",
+                                  "com.deepin.dman");
+        if (legacydman.isValid()) {
+            legacydman.asyncCall("ShowManual", appid);
+            return;
+        }
 
-    qWarning() << "can not call dman dbus interface";
-#else
-    QProcess::startDetached("dman", QStringList() << appid);
-#endif
-
+        qWarning() << "can not call dman dbus interface";
+    } else {
+        QProcess::startDetached("dman", QStringList() << appid);
+    }
 #else
     qWarning() << "not support dman now";
 #endif
