@@ -1,3 +1,72 @@
+<a name="2.0.7"></a>
+## 2.0.7 (2018-03-02)
+
+
+#### Bug Fixes
+
+*   check libdframeworkdbus when build ([39aa02b1](https://github.com/linuxdeepin/dtkwidget/commit/39aa02b1450f12f52d69eb3fe38a4e4865fdfac2))
+*   call deepin-manual with dbus and application name ([3e4293d1](https://github.com/linuxdeepin/dtkwidget/commit/3e4293d156f29a8d192d82c8cd88a99d21f68858))
+*   the DPasswordEdit style is wrong at the DInputDialog ([2e1c126e](https://github.com/linuxdeepin/dtkwidget/commit/2e1c126e15d6bf12ec4aaac27494cc2a68b5b73b))
+*   use applycation name as new deepin-manual id ([dfb05cae](https://github.com/linuxdeepin/dtkwidget/commit/dfb05caee4ca327dc3443833965ed4614cf42a06))
+*   parse key with + error ([dcf3a11a](https://github.com/linuxdeepin/dtkwidget/commit/dcf3a11a3c21142c34bf934736e8637a713b33d1))
+*   state change not connect ([0049a065](https://github.com/linuxdeepin/dtkwidget/commit/0049a0650ee12fec6f026bdd69b2814ebda30546))
+*   add qt internal_module failed ([975e36df](https://github.com/linuxdeepin/dtkwidget/commit/975e36df9557c6e2e2bbf77c614c99f42eeccdd9))
+*   delay connect native state change signal ([48e23bc9](https://github.com/linuxdeepin/dtkwidget/commit/48e23bc9e21b6760522e362d390c98772dc549fd))
+*   missing window state change in event filter ([7c7a4e38](https://github.com/linuxdeepin/dtkwidget/commit/7c7a4e383e319604b0ca6ca62729756619e74105))
+*   DTabBar tab list automatically scrolling too slow ([199c13b1](https://github.com/linuxdeepin/dtkwidget/commit/199c13b1ac52625efad1d64d75107627c34d8d7b))
+*   max button hint error ([43de05f3](https://github.com/linuxdeepin/dtkwidget/commit/43de05f3d7ead7f01f0b80e18ecb2f9e19eebf14))
+*   do not flow windowFlags if not dxcb ([4fd67cb2](https://github.com/linuxdeepin/dtkwidget/commit/4fd67cb2bd484f505e9c92a96d1a16fd1c10e81d))
+*   not draw tear indicator for DTabBar ([b59cbffc](https://github.com/linuxdeepin/dtkwidget/commit/b59cbffcfa6cc237712761cb09a3ce269d832102))
+*   connect widgetThemeChanged ([6c2d397a](https://github.com/linuxdeepin/dtkwidget/commit/6c2d397a1a27991d5753d2575d74161db5cbf0b5))
+*   typo for DTabBar::createMimeDataFramTab ([4bb6f1e3](https://github.com/linuxdeepin/dtkwidget/commit/4bb6f1e32f82014c611ab256180ca485dd7d114d))
+*   remove border style workaround ([3030f496](https://github.com/linuxdeepin/dtkwidget/commit/3030f4966267fb9f0a6745a27decc8c6b3066323))
+*   hide toast label by default ([0dfb1566](https://github.com/linuxdeepin/dtkwidget/commit/0dfb15665ce2cc286015e3705e8acb38e750f7cf))
+*   parse config.pri failed ([a9b33216](https://github.com/linuxdeepin/dtkwidget/commit/a9b33216d3298866c9aa81bc9100bfadd38dee16))
+*   tabbar tab can drag only at the first time ([07cd7dac](https://github.com/linuxdeepin/dtkwidget/commit/07cd7dacf675f3e328c4e53750d727a70ee2bc0e))
+*   the widget's theme is not updated after changing parent ([3cb8f27a](https://github.com/linuxdeepin/dtkwidget/commit/3cb8f27adcca146d98b47f1ed7ca21439e221af0))
+*   can not be fixed widget style ([5bf22c11](https://github.com/linuxdeepin/dtkwidget/commit/5bf22c1117f99d5d1b08f90bd3123526fb80f5de))
+*   VER_MAJ/VER_MIN/VER_PAT variables is empty in qmake ([85314de3](https://github.com/linuxdeepin/dtkwidget/commit/85314de363b316afe726b5a4e96b65ce8bd5ddf7))
+*   VER_MAJ/VER_MIN/VER_PAT variables is empty in qmake ([13023a33](https://github.com/linuxdeepin/dtkwidget/commit/13023a33f0e71cb025aa08b4bd793cf9d05dcdff))
+*   set AA_DontCreateNativeWidgetSiblings to true of QGuiApplication at enable dxcb for window ([779d620b](https://github.com/linuxdeepin/dtkwidget/commit/779d620b641e0dd6da426b65f25f150187f5641f))
+*   include path(DTK_INCLUDEPATH) ([b6ecfd8d](https://github.com/linuxdeepin/dtkwidget/commit/b6ecfd8d78e7640b342022dfb3c75ea60a944bc5))
+* **dsimplelistview:**
+  *  painting item is incomplete. ([a268fab4](https://github.com/linuxdeepin/dtkwidget/commit/a268fab4f210246f1483dcc2c0f902059e457edc))
+  *  adjust render offset. ([a2452c1b](https://github.com/linuxdeepin/dtkwidget/commit/a2452c1bf59b7e25d0f97cd071cd2a262e89c151))
+  *  adjust offsetY after removeing item. ([1b3b5f4a](https://github.com/linuxdeepin/dtkwidget/commit/1b3b5f4ac37ab3c885a1267965d8b11514da5308))
+
+#### Features
+
+*   control single instance by env ([9c388818](https://github.com/linuxdeepin/dtkwidget/commit/9c3888182db247ad9b65448451ddbe6ad36a1741))
+*   support hide group ([20c72e80](https://github.com/linuxdeepin/dtkwidget/commit/20c72e805c06b2d815632a402d37cfa60f582ad4))
+*   add DFileDialog ([425d82bf](https://github.com/linuxdeepin/dtkwidget/commit/425d82bf52d81f4ae1f51f56c0ee5f720d0a9c84))
+*   dynamic website info in about dialog ([22611379](https://github.com/linuxdeepin/dtkwidget/commit/2261137990966b95ef1696410637c586350e2398))
+*   create cmake file by dtk_cmake ([ae5a226d](https://github.com/linuxdeepin/dtkwidget/commit/ae5a226d82933dd43ad04adcdbd6b9d973b1c189))
+*   support qt module ([1525c2cb](https://github.com/linuxdeepin/dtkwidget/commit/1525c2cb363ba6c963ca6d43b0ba3dc6e80ff4b0))
+*   update password edit style ([45f07ab6](https://github.com/linuxdeepin/dtkwidget/commit/45f07ab60d618b94ede3451063c27c6cb97e99cb))
+*   auto scroll when move/drag tab ([d3a266bc](https://github.com/linuxdeepin/dtkwidget/commit/d3a266bc9b871371973a969cc3d314d1daa6cb3c))
+*   support new and legacy dman interface ([3e3c8849](https://github.com/linuxdeepin/dtkwidget/commit/3e3c88497be7372e582ba62eadfdb3553b2449ad))
+*   support set combobox data with QMap ([bdad10fc](https://github.com/linuxdeepin/dtkwidget/commit/bdad10fcfc9b350bf28f4eee90233145fa4060af))
+*   fixed the QPrintDialog theme to dlight ([18df8e0e](https://github.com/linuxdeepin/dtkwidget/commit/18df8e0e6281ac74fb1de057ed33f3ad976ffa0b))
+*   support dynamic property ([b121081c](https://github.com/linuxdeepin/dtkwidget/commit/b121081cf41ee0cc6c6efe47af31c8d73f2fdcd5))
+*   fixed the width of the DTabBar add button to 48 ([ec322589](https://github.com/linuxdeepin/dtkwidget/commit/ec322589e3ea29ef90177e9c0af453b72413f1a4))
+*   add buildDtkVersion/runtimeDtkVersion to DApplication ([9aaa1583](https://github.com/linuxdeepin/dtkwidget/commit/9aaa15830c3077c48019c321a29a8f79f93c97fd))
+*   parser correctly when version has '.is.' ([5f48b1f9](https://github.com/linuxdeepin/dtkwidget/commit/5f48b1f9b844679854f4fd437dca300c41ef23fe))
+*   follow parent/toplevelWidget flags ([d1f7bad0](https://github.com/linuxdeepin/dtkwidget/commit/d1f7bad0273287782a70dc4af4cac2223133dd7d))
+*   support configurable whether to redefine the window content when dxcb is turned on ([1cdf42f1](https://github.com/linuxdeepin/dtkwidget/commit/1cdf42f1e8fc09b3fe67d276db69e47934359c05))
+*   add "target" argument for DTabBar::tabDroped ([bcd009af](https://github.com/linuxdeepin/dtkwidget/commit/bcd009afb5661de15ecb4edbde2319339e221b61))
+*   auto hide title when fullscreen ([3e2e2921](https://github.com/linuxdeepin/dtkwidget/commit/3e2e2921d8c22c9feee7171c11e22551bcb668d5))
+*   add propertys maskColor and flashColor of DTabBar ([7dd2e8b4](https://github.com/linuxdeepin/dtkwidget/commit/7dd2e8b4cee7b6fe16e3ccb2bb12d9cff65f2a2b))
+*   support drag tab to other for DTabBar ([f6749472](https://github.com/linuxdeepin/dtkwidget/commit/f674947255ad0d0158ec3cd8d5dd9f6927bad787))
+*   add DToast ([c4d3f48f](https://github.com/linuxdeepin/dtkwidget/commit/c4d3f48fba40df0b8b31932e926b767b44ace6bd))
+*   add window title ([e7cffb03](https://github.com/linuxdeepin/dtkwidget/commit/e7cffb03466ab45562db4afad42422b62cad557c))
+*   not set AA_DontCreateNativeWidgetSiblings if dxcb version greater then 1.1.5 ([5b3b4b5e](https://github.com/linuxdeepin/dtkwidget/commit/5b3b4b5eab4c96d46b444035e81124f14307b98b))
+*   set version form changelog ([416f2e64](https://github.com/linuxdeepin/dtkwidget/commit/416f2e64a42249ad8476a9ee2416b9fd07f2ea73))
+*   add property "realWindowId" for DPlatformWindowHandle ([b888a855](https://github.com/linuxdeepin/dtkwidget/commit/b888a8551f1a607e1f72b8e17b1229a17629857b))
+* **DApplication:**  add the property of the menu ([ff9a89d7](https://github.com/linuxdeepin/dtkwidget/commit/ff9a89d7536b2225ea341c90f3aefa2bf3b40aeb))
+* **DSuggestButton:**  add initialize text parameter. ([20767937](https://github.com/linuxdeepin/dtkwidget/commit/207679379da96fb52d4567dd4731a8f645c0dd81))
+
+
+
 <a name="2.0.6"></a>
 ## 2.0.6 (2018-01-15)
 
