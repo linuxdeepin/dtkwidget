@@ -4,6 +4,7 @@
 #
 #-------------------------------------------------
 
+CONFIG += qt
 QT += core dbus
 QT -= gui
 TARGET = libdframeworkdbus

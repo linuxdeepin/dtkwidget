@@ -1,6 +1,6 @@
 TEMPLATE  = subdirs
 
-CONFIG += ordered no_keywords
+CONFIG += ordered
 
 SUBDIRS  += \
     src \

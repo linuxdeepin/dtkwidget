@@ -8,7 +8,7 @@
 #include <QRegion>
 #include <QScreen>
 
-#ifndef DBUS_VERSION_0_4_2
+#ifdef DFRAMEWORKDBUS_API_XEVENTMONITOR
 #include <com_deepin_api_xeventmonitor.h>
 #else
 #include <com_deepin_api_xmousearea.h>
@@ -17,7 +17,7 @@
 DCORE_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
-#ifndef DBUS_VERSION_0_4_2
+#ifdef DFRAMEWORKDBUS_API_XEVENTMONITOR
 using XEventMonitor = ::com::deepin::api::XEventMonitor;
 #else
 using XMousAreaInter = ::com::deepin::api::XMouseArea;
@@ -51,7 +51,7 @@ public:
 
     const QPoint deviceScaledCoordinate(const QPoint &p, const double ratio) const;
 
-#ifndef DBUS_VERSION_0_4_2
+#ifdef DFRAMEWORKDBUS_API_XEVENTMONITOR
     XEventMonitor *eventInter;
 #else
     XMousAreaInter *eventInter;
