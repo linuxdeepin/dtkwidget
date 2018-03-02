@@ -19,7 +19,7 @@ linux* {
 }
 
 mac* {
-    QT += svg
+    QT += svg dbus
     DEFINES += DTK_TITLE_DRAG_WINDOW
 }
 

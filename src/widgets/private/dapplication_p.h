@@ -45,7 +45,7 @@ public:
     void setTheme(const QString &theme);
 
     bool setSingleInstanceBySemaphore(const QString &key);
-#ifdef DTK_DBUS_SINGLEINSTANCE
+#ifdef Q_OS_UNIX
     bool setSingleInstanceByDbus(const QString &key);
 #endif
 

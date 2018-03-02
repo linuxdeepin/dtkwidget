@@ -37,11 +37,6 @@
 #include <QSystemSemaphore>
 #include <QtConcurrent/QtConcurrent>
 
-#ifdef DTK_DBUS_SINGLEINSTANCE
-#include <QDBusError>
-#include <QDBusConnection>
-#endif
-
 #include <qpa/qplatformintegrationfactory_p.h>
 #include <private/qwidget_p.h>
 
@@ -56,10 +51,15 @@
 #include "private/dapplication_p.h"
 #include "daboutdialog.h"
 
-#ifdef Q_OS_LINUX
-#include <QDBusInterface>
+#ifdef Q_OS_UNIX
+#include <QDBusError>
 #include <QDBusReply>
+#include <QDBusInterface>
 #include <QDBusPendingCall>
+#include <QDBusConnection>
+#endif
+
+#ifdef Q_OS_LINUX
 #include "startupnotificationmonitor.h"
 #endif
 
@@ -175,7 +175,7 @@ bool DApplicationPrivate::setSingleInstanceBySemaphore(const QString &key)
     return singleInstance;
 }
 
-#ifdef DTK_DBUS_SINGLEINSTANCE
+#ifdef Q_OS_UNIX
 /**
 * \brief DApplicationPrivate::setSingleInstanceByDbus will check singleinstance by
 * register dbus service
@@ -357,11 +357,12 @@ bool DApplication::setSingleInstance(const QString &key, SingleScope singleScope
     }
 #endif
 
-#ifdef DTK_DBUS_SINGLEINSTANCE
-    return d->setSingleInstanceByDbus(k);
-#else
-    return d->setSingleInstanceBySemaphore(k);
+#ifdef Q_OS_UNIX
+    if (qgetenv("DTK_USE_DBUS_SINGLEINSTANCE") == "TRUE") {
+        return d->setSingleInstanceByDbus(k);
+    }
 #endif
+    return d->setSingleInstanceBySemaphore(k);
 }
 
 //! load translate file form system or application data path;
@@ -765,12 +766,13 @@ bool DApplication::notify(QObject *obj, QEvent *event)
                     light_style = QStyleFactory::create("dlight");
                 }
 
-                if (light_style)
+                if (light_style) {
                     menu->setStyle(light_style);
+                }
             }
         }
 #ifdef Q_OS_LINUX
-        else if (QWidget *widget = qobject_cast<QWidget*>(obj)) {
+        else if (QWidget *widget = qobject_cast<QWidget *>(obj)) {
             if (!widget->testAttribute(Qt::WA_SetStyle)
                     && (widget->inherits("QPrintDialog")
                         || widget->inherits("QPrintPropertiesDialog")
@@ -790,7 +792,7 @@ bool DApplication::notify(QObject *obj, QEvent *event)
                         widget->d_func()->setStyle_helper(light_style, false);
                     }
 
-                    for (QWidget *w : widget->findChildren<QWidget*>()) {
+                    for (QWidget *w : widget->findChildren<QWidget *>()) {
                         w->setStyle(light_style);
                     }
                 }
@@ -798,7 +800,7 @@ bool DApplication::notify(QObject *obj, QEvent *event)
         }
 #endif
     } else if (event->type() == QEvent::ParentChange) {
-        if (QWidget *widget = qobject_cast<QWidget*>(obj)) {
+        if (QWidget *widget = qobject_cast<QWidget *>(obj)) {
             DThemeManager::instance()->updateThemeOnParentChanged(widget);
         }
     }
