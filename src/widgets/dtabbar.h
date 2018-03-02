@@ -152,6 +152,8 @@ public:
     QColor maskColor() const;
     QColor flashColor() const;
 
+    QWindow *dragIconWindow() const;
+
 Q_SIGNALS:
     void currentChanged(int index);
     void tabCloseRequested(int index);
@@ -161,6 +163,7 @@ Q_SIGNALS:
     void tabAddRequested();
     void tabReleaseRequested(int index);
     void tabDroped(int index, Qt::DropAction action, QObject *target);
+    void dragActionChanged(Qt::DropAction action);
 
 public Q_SLOTS:
     void setCurrentIndex(int index);

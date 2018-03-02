@@ -35,6 +35,11 @@
 #include <QDebug>
 
 #include <private/qtabbar_p.h>
+#define private public
+#include <private/qdnd_p.h>
+#include <private/qsimpledrag_p.h>
+#include <private/qshapedpixmapdndwindow_p.h>
+#undef private
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -434,6 +439,8 @@ void DTabBarPrivate::setupDragableTab()
     drag->setHotSpot(hotspot);
 
     QMetaObject::invokeMethod(this, "startDrag", Qt::QueuedConnection, Q_ARG(int, d->pressedIndex));
+
+    connect(drag, &QDrag::actionChanged, q_func(), &DTabBar::dragActionChanged);
 }
 
 void DTabBarPrivate::slide(int from, int to)
@@ -1529,6 +1536,14 @@ QColor DTabBar::maskColor() const
 QColor DTabBar::flashColor() const
 {
     return d_func()->flashColor;
+}
+
+QWindow *DTabBar::dragIconWindow() const
+{
+    if (QBasicDrag *drag = dynamic_cast<QBasicDrag*>(QDragManager::self()->m_platformDrag))
+        return drag->m_drag_icon_window;
+
+    return nullptr;
 }
 
 void DTabBar::setCurrentIndex(int index)
