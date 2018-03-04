@@ -142,6 +142,14 @@ public:
      * @clearLastSelection clear last selection item if option is true, default is true
      */
     void clearSelections(bool clearLastSelection=true);
+    
+
+    /*
+     * Get selection items.
+     *
+     * @return List of DSimpleListItem* to mark selected
+     */
+    QList<DSimpleListItem*> getSelections();
 
     /*
      * Refresh all items in DSimpleListView.

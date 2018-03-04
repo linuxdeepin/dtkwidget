@@ -332,6 +332,13 @@ void DSimpleListView::clearSelections(bool clearLastSelection)
     }
 }
 
+QList<DSimpleListItem*> DSimpleListView::getSelections()
+{
+    D_D(DSimpleListView);
+
+    return *d->selectionItems;
+}
+
 void DSimpleListView::refreshItems(QList<DSimpleListItem*> items)
 {
     D_D(DSimpleListView);
