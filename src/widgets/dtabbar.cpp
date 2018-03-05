@@ -36,10 +36,12 @@
 
 #include <private/qtabbar_p.h>
 #define private public
+#define protected public
 #include <private/qdnd_p.h>
 #include <private/qsimpledrag_p.h>
 #include <private/qshapedpixmapdndwindow_p.h>
 #undef private
+#undef protected
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -231,6 +233,8 @@ public:
     void tabLayoutChange() override;
 
     void initStyleOption(QStyleOptionTab *option, int tabIndex) const;
+
+     QTabBarPrivate *dd() const;
 
     Q_SLOT void startDrag(int tabIndex);
 
@@ -1207,6 +1211,11 @@ void DTabBarPrivate::initStyleOption(QStyleOptionTab *option, int tabIndex) cons
     QTabBar::initStyleOption(option, tabIndex);
 }
 
+QTabBarPrivate *DTabBarPrivate::dd() const
+{
+    return reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
+}
+
 DTabBar::DTabBar(QWidget *parent)
     : QWidget(parent)
     , DObject(*new DTabBarPrivate(this))
@@ -1578,6 +1587,25 @@ void DTabBar::setMaskColor(QColor maskColor)
 void DTabBar::setFlashColor(QColor flashColor)
 {
     d_func()->flashColor = flashColor;
+}
+
+void DTabBar::startDrag(int index)
+{
+    D_D(DTabBar);
+
+    d->dd()->pressedIndex = index;
+    d->setupDragableTab();
+}
+
+void DTabBar::stopDrag(Qt::DropAction action)
+{
+    if (QBasicDrag *drag = dynamic_cast<QBasicDrag*>(QDragManager::self()->m_platformDrag)) {
+        drag->cancel();
+        drag->m_executed_drop_action = action;
+
+        if (drag->m_eventLoop)
+            drag->m_eventLoop->quit();
+    }
 }
 
 void DTabBar::dragEnterEvent(QDragEnterEvent *e)

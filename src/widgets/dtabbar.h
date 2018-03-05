@@ -175,6 +175,9 @@ public Q_SLOTS:
     void setMaskColor(QColor maskColor);
     void setFlashColor(QColor flashColor);
 
+    void startDrag(int index);
+    void stopDrag(Qt::DropAction action);
+
 protected:
     void dragEnterEvent(QDragEnterEvent *e) override;
     void dragLeaveEvent(QDragLeaveEvent *e) override;
