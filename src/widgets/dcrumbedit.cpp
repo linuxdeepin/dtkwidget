@@ -482,7 +482,7 @@ bool DCrumbEdit::appendCrumb(const QString &text)
 
     format.setText(text);
 
-    return appendCrumb(text);
+    return appendCrumb(format);
 }
 
 bool DCrumbEdit::containCrumb(const QString &text) const
