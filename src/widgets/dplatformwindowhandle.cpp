@@ -54,6 +54,7 @@ DEFINE_CONST_CHAR(setWmBlurWindowBackgroundPathList);
 DEFINE_CONST_CHAR(setWmBlurWindowBackgroundMaskImage);
 DEFINE_CONST_CHAR(setWindowProperty);
 DEFINE_CONST_CHAR(pluginVersion);
+DEFINE_CONST_CHAR(disableOverrideCursor);
 
 static void setWindowProperty(QWindow *window, const char *name, const QVariant &value)
 {
@@ -352,6 +353,11 @@ bool DPlatformWindowHandle::setWindowBlurAreaByWM(const QVector<DPlatformWindowH
 bool DPlatformWindowHandle::setWindowBlurAreaByWM(const QList<QPainterPath> &paths)
 {
     return setWindowBlurAreaByWM(m_window, paths);
+}
+
+void DPlatformWindowHandle::setDisableWindowOverrideCursor(QWindow *window, bool disable)
+{
+    window->setProperty(_disableOverrideCursor, disable);
 }
 
 int DPlatformWindowHandle::windowRadius() const

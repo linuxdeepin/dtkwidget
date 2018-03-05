@@ -86,6 +86,8 @@ public:
     bool setWindowBlurAreaByWM(const QVector<WMBlurArea> &area);
     bool setWindowBlurAreaByWM(const QList<QPainterPath> &paths);
 
+    static void setDisableWindowOverrideCursor(QWindow *window, bool disable);
+
     int windowRadius() const;
 
     int borderWidth() const;
