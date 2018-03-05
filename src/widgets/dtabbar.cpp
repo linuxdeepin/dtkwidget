@@ -297,6 +297,8 @@ void DTabBarPrivate::startDrag(int tabIndex)
 {
     Qt::DropAction action = drag->exec(Qt::MoveAction | Qt::CopyAction, Qt::CopyAction);
 
+    Q_EMIT q_func()->dragEnd(action);
+
     if (action == Qt::IgnoreAction) {
         Q_EMIT q_func()->tabReleaseRequested(tabIndex);
     } else if (drag->target() != this) {
@@ -438,9 +440,13 @@ void DTabBarPrivate::setupDragableTab()
     drag->setMimeData(mime_data);
     drag->setHotSpot(hotspot);
 
-    QMetaObject::invokeMethod(this, "startDrag", Qt::QueuedConnection, Q_ARG(int, d->pressedIndex));
+    qRegisterMetaType<Qt::DropAction>();
 
-    connect(drag, &QDrag::actionChanged, q_func(), &DTabBar::dragActionChanged);
+    QMetaObject::invokeMethod(this, "startDrag", Qt::QueuedConnection, Q_ARG(int, d->pressedIndex));
+    QMetaObject::invokeMethod(q, "dragStarted", Qt::QueuedConnection);
+    QMetaObject::invokeMethod(q, "dragActionChanged", Qt::QueuedConnection, Q_ARG(Qt::DropAction, Qt::IgnoreAction));
+
+    connect(drag, &QDrag::actionChanged, q, &DTabBar::dragActionChanged);
 }
 
 void DTabBarPrivate::slide(int from, int to)

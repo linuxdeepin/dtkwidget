@@ -164,6 +164,8 @@ Q_SIGNALS:
     void tabReleaseRequested(int index);
     void tabDroped(int index, Qt::DropAction action, QObject *target);
     void dragActionChanged(Qt::DropAction action);
+    void dragStarted();
+    void dragEnd(Qt::DropAction action);
 
 public Q_SLOTS:
     void setCurrentIndex(int index);
