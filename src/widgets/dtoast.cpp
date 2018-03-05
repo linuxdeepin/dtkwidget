@@ -158,6 +158,7 @@ DToastPrivate::DToastPrivate(DToast *qq)
 void DToastPrivate::initUI()
 {
     D_Q(DToast);
+    q->setAttribute(Qt::WA_TransparentForMouseEvents,true);
     q->setWindowFlags(q->windowFlags() | Qt::WindowStaysOnTopHint);
 
     auto layout = new QHBoxLayout(q);
