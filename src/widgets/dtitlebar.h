@@ -31,7 +31,7 @@ class LIBDTKWIDGETSHARED_EXPORT DTitlebar : public QFrame, public DTK_CORE_NAMES
 {
     Q_OBJECT
 public:
-    explicit DTitlebar(QWidget *parent = 0);
+    explicit DTitlebar(QWidget *parent = Q_NULLPTR);
 
 #ifndef QT_NO_MENU
     QMenu *menu() const;
