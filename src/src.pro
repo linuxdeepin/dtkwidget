@@ -1,5 +1,8 @@
-include($$PWD/config.pri)
+TARGET = dtkwidget
+TEMPLATE = lib
+
 # TODO: replace config.pri with dtk_build
+include($$PWD/config.pri)
 load(dtk_build)
 
 CONFIG += internal_module
@@ -27,9 +30,6 @@ win* {
     QT += svg
     DEFINES += DTK_TITLE_DRAG_WINDOW
 }
-
-TEMPLATE = lib
-TARGET = dtkwidget
 
 !isEmpty(DTK_STATIC_LIB){
     DEFINES += DTK_STATIC_LIB
