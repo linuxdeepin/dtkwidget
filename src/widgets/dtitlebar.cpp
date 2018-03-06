@@ -275,6 +275,7 @@ void DTitlebarPrivate::updateFullscreen()
 
 void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
 {
+    D_Q(DTitlebar);
     bool useDXcb = DPlatformWindowHandle::isEnabledDXcb(targetWindow());
     bool isFullscreen = targetWindow()->windowState().testFlag(Qt::WindowFullScreen);
 
@@ -292,9 +293,15 @@ void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
     bool showMin = (type.testFlag(Qt::WindowMinimizeButtonHint) || !useDXcb) && !forceHide;
     minButton->setVisible(showMin);
 
-    bool showMax = (type.testFlag(Qt::WindowMaximizeButtonHint) || !useDXcb) && !forceHide;
+    bool allowResize = true;
+    if (q->window() && q->window()->windowHandle()) {
+        auto functions_hints = DWindowManagerHelper::getMotifFunctions(q->window()->windowHandle());
+        allowResize = functions_hints.testFlag(DWindowManagerHelper::FUNC_RESIZE);
+    }
+
+    bool showMax = (type.testFlag(Qt::WindowMaximizeButtonHint) || !useDXcb) && !forceHide && allowResize;
     maxButton->setVisible(showMax);
-    ;
+
     bool showClose = (type.testFlag(Qt::WindowCloseButtonHint) || !useDXcb) && !forceHide;
     closeButton->setVisible(showClose);
 
@@ -396,7 +403,6 @@ void DTitlebarPrivate::_q_onTopWindowMotifHintsChanged(quint32 winId)
         return;
     }
 
-    DWindowManagerHelper::MotifFunctions functions_hints = DWindowManagerHelper::getMotifFunctions(q->window()->windowHandle());
     DWindowManagerHelper::MotifDecorations decorations_hints = DWindowManagerHelper::getMotifDecorations(q->window()->windowHandle());
 
     if (titleLabel) {
@@ -407,7 +413,7 @@ void DTitlebarPrivate::_q_onTopWindowMotifHintsChanged(quint32 winId)
         iconLabel->setVisible(decorations_hints.testFlag(DWindowManagerHelper::DECOR_TITLE));
     }
 
-//    updateButtonsState(targetWindow()->windowFlags());
+    updateButtonsState(targetWindow()->windowFlags());
 
 //    minButton->setEnabled(functions_hints.testFlag(DWindowManagerHelper::FUNC_MINIMIZE) && !embedMode);
 //    maxButton->setEnabled(functions_hints.testFlag(DWindowManagerHelper::FUNC_MAXIMIZE) && !embedMode);
