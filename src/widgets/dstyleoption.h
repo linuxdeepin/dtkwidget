@@ -21,7 +21,11 @@
 #ifndef DSTYLEOPTION_H
 #define DSTYLEOPTION_H
 
+#include <dtkwidget_global.h>
+
 #include <QStyleOption>
+
+DWIDGET_BEGIN_NAMESPACE
 
 class DStyleOption
 {
@@ -38,5 +42,22 @@ public:
 
     void init(QWidget *widget) override;
 };
+
+class DStyleOptionLineEdit : public DStyleOption
+{
+public:
+    enum LineEditFeature {
+        Alert = 0x1,
+        IconButton = 0x2
+    };
+    Q_DECLARE_FLAGS(LineEditFeatures, LineEditFeature)
+
+    void init(QWidget *widget) override;
+
+    LineEditFeatures features = 0;
+    QRect iconButtonRect;
+};
+
+DWIDGET_END_NAMESPACE
 
 #endif // DSTYLEOPTION_H

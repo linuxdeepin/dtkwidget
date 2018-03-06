@@ -26,6 +26,7 @@
 DWIDGET_BEGIN_NAMESPACE
 
 class DLineEditPrivate;
+class DStyleOptionLineEdit;
 class LIBDTKWIDGETSHARED_EXPORT DLineEdit : public QLineEdit, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
@@ -69,8 +70,9 @@ protected:
     void focusInEvent(QFocusEvent *e) Q_DECL_OVERRIDE;
     void focusOutEvent(QFocusEvent *e) Q_DECL_OVERRIDE;
     void resizeEvent(QResizeEvent *e) Q_DECL_OVERRIDE;
+    bool eventFilter(QObject *watched, QEvent *event) override;
 
-    Q_PRIVATE_SLOT(d_func(), void _q_resizeInsideFrame(const QSize &))
+    friend class DStyleOptionLineEdit;
 };
 
 DWIDGET_END_NAMESPACE

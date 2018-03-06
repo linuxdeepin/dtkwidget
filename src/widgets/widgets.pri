@@ -233,6 +233,8 @@ includes.files += \
     $$PWD/DSuggestButton \
     $$PWD/DStyleOption \
     $$PWD/DToast \
-    $$PWD/DFileDialog
+    $$PWD/DFileDialog \
+    $$PWD/DLineEdit \
+    $$PWD/DStyleOptionLineEdit
 
 

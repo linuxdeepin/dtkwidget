@@ -25,6 +25,10 @@
 
 #include <QHBoxLayout>
 
+QT_BEGIN_NAMESPACE
+class QWidgetAction;
+QT_END_NAMESPACE
+
 DWIDGET_BEGIN_NAMESPACE
 
 class DArrowRectangle;
@@ -37,17 +41,11 @@ public:
 
     void init();
 
-public Q_SLOTS:
-    void _q_resizeInsideFrame(const QSize &size);
-    void _q_resizeInputableRegion();
-
 public:
     bool m_isAlert = false;
 
-    QFrame *m_insideFrame;
     DImageButton *m_rightIcon;
-    DImageButton *clearButton;
-    QHBoxLayout *m_centralHLayout;
+    QWidgetAction *m_iconAction;
     DArrowRectangle *tooltip = Q_NULLPTR;
 };
 

@@ -19,9 +19,18 @@
 #include "dthememanager.h"
 #include "private/dlineedit_p.h"
 #include "darrowrectangle.h"
+#include "dstyleoption.h"
 
 #include <QHBoxLayout>
 #include <QResizeEvent>
+#include <QWidgetAction>
+
+#define private public
+#ifndef slots
+#define slots Q_SLOTS
+#endif
+#include <private/qlineedit_p.h>
+#undef private
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -45,8 +54,6 @@ DLineEdit::DLineEdit(QWidget *parent)
     : QLineEdit(parent),
       DObject(*new DLineEditPrivate(this))
 {
-    DThemeManager::registerWidget(this, QStringList({"alert"}));
-
     Q_D(DLineEdit);
     d->init();
 }
@@ -55,8 +62,6 @@ DLineEdit::DLineEdit(DLineEditPrivate &q, QWidget *parent)
     : QLineEdit(parent),
       DObject(q)
 {
-    DThemeManager::registerWidget(this, QStringList({"alert"}));
-
     Q_D(DLineEdit);
     d->init();
 }
@@ -101,7 +106,7 @@ void DLineEdit::showAlertMessage(const QString &text, int duration)
         label->setWordWrap(true);
         label->setMaximumWidth(width());
         d->tooltip->setContent(label);
-        d->tooltip->setBackgroundColor(DThemeManager::instance()->theme() == "light" ? Qt::white : Qt::black);
+        d->tooltip->setBackgroundColor(DThemeManager::instance()->theme(this) == "light" ? Qt::white : Qt::black);
         d->tooltip->setArrowX(15);
         d->tooltip->setArrowHeight(5);
 
@@ -143,6 +148,22 @@ void DLineEdit::setIconVisible(bool visible)
     }
 
     d->m_rightIcon->setVisible(visible);
+
+    if (visible) {
+        QLineEditPrivate *d_d = reinterpret_cast<QLineEditPrivate*>(d_ptr.data());
+
+        addAction(d->m_iconAction, TrailingPosition);
+
+        if (d_d->trailingSideWidgets.size() > 1) {
+            if ((*(d_d->trailingSideWidgets.end() - 1)).action == d->m_iconAction) {
+                d_d->trailingSideWidgets.insert(d_d->trailingSideWidgets.begin(), *d_d->trailingSideWidgets.erase(d_d->trailingSideWidgets.end() - 1));
+                QResizeEvent resize_event(size(), size());
+                qApp->sendEvent(this, &resize_event);
+            }
+        }
+     } else {
+        removeAction(d->m_iconAction);
+    }
 }
 
 /*!
@@ -214,20 +235,12 @@ void DLineEdit::focusInEvent(QFocusEvent *e)
 {
     Q_EMIT focusChanged(true);
     QLineEdit::focusInEvent(e);
-
-    Q_D(DLineEdit);
-
-    d->clearButton->show();
 }
 
 void DLineEdit::focusOutEvent(QFocusEvent *e)
 {
     Q_EMIT focusChanged(false);
     QLineEdit::focusOutEvent(e);
-
-    Q_D(DLineEdit);
-
-    d->clearButton->hide();
 }
 
 void DLineEdit::resizeEvent(QResizeEvent *e)
@@ -235,6 +248,23 @@ void DLineEdit::resizeEvent(QResizeEvent *e)
     QLineEdit::resizeEvent(e);
 
     Q_EMIT sizeChanged(e->size());
+
+    D_D(DLineEdit);
+
+    d->m_rightIcon->setFixedHeight(e->size().height() - 2);
+}
+
+bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
+{
+    D_D(DLineEdit);
+
+    if (watched == d->m_rightIcon) {
+        if (event->type() == QEvent::Move) {
+            d->m_rightIcon->move(width() - d->m_rightIcon->width() - 1, 1);
+        }
+    }
+
+    return false;
 }
 
 DLineEditPrivate::DLineEditPrivate(DLineEdit *q)
@@ -245,35 +275,15 @@ DLineEditPrivate::DLineEditPrivate(DLineEdit *q)
 void DLineEditPrivate::init()
 {
     Q_Q(DLineEdit);
-    m_insideFrame = new QFrame(q);
-    m_insideFrame->setObjectName("LineEditInsideFrame");
     m_rightIcon = new DImageButton(q);
     m_rightIcon->setObjectName("IconButton");
-    m_rightIcon->hide();
-    clearButton = new DImageButton(q);
-    clearButton->setObjectName("ClearButton");
-    clearButton->hide();
-    m_centralHLayout = new QHBoxLayout;
-    m_centralHLayout->addStretch();
-    m_centralHLayout->addWidget(clearButton);
-    m_centralHLayout->addWidget(m_rightIcon);
-    m_centralHLayout->setSpacing(0);
-    m_centralHLayout->setContentsMargins(0, 0, 2, 0);
+    m_rightIcon->installEventFilter(q);
 
-    q->setLayout(m_centralHLayout);
-    q->setContextMenuPolicy(Qt::NoContextMenu);
+    m_iconAction = new QWidgetAction(q);
+    m_iconAction->setDefaultWidget(m_rightIcon);
+    m_rightIcon->hide();
 
     q->connect(m_rightIcon, &DImageButton::clicked, q, &DLineEdit::iconClicked);
-    q->connect(q, SIGNAL(sizeChanged(QSize)), q, SLOT(_q_resizeInsideFrame(QSize)));
-    q->connect(clearButton, &DImageButton::clicked, q, [q] {
-        q->setText(QString());
-    });
-}
-
-void DLineEditPrivate::_q_resizeInsideFrame(const QSize &size)
-{
-    m_insideFrame->setFixedHeight(size.height() - 1);
-    m_insideFrame->setFixedWidth(size.width());
 }
 
 DWIDGET_END_NAMESPACE

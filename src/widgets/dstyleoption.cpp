@@ -21,6 +21,10 @@
 
 #include "dstyleoption.h"
 
+#include "dlineedit.h"
+#include "private/dlineedit_p.h"
+
+DWIDGET_BEGIN_NAMESPACE
 
 void DStyleOption::init(QWidget *widget)
 {
@@ -33,3 +37,19 @@ void DStyleOptionSuggestButton::init(QWidget *widget)
 
     features |= QStyleOptionButton::ButtonFeature(SuggestButton);
 }
+
+void DStyleOptionLineEdit::init(QWidget *widget)
+{
+    if (const DLineEdit *edit = qobject_cast<DLineEdit*>(widget)) {
+        if (edit->isAlert()) {
+            features |= Alert;
+        }
+
+        if (edit->iconVisible()) {
+            features |= IconButton;
+            iconButtonRect = edit->d_func()->m_rightIcon->geometry();
+        }
+    }
+}
+
+DWIDGET_END_NAMESPACE
