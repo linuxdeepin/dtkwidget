@@ -208,14 +208,14 @@ public:
             fallbackList << overriveName;
         }
 
-        QString rawClassName = getThemeNameByRawClassName(w);
-        if (!rawClassName.isEmpty()) {
-            fallbackList << rawClassName;
-        }
-
         QString className = getThemeNameByClassName(w);
         if (!className.isEmpty()) {
             fallbackList << className;
+        }
+
+        QString rawClassName = getThemeNameByRawClassName(w);
+        if (!rawClassName.isEmpty()) {
+            fallbackList << rawClassName;
         }
 
         auto themeName = fallbackWidgetThemeName(w, nullptr);
