@@ -1187,7 +1187,7 @@ void DSimpleListView::paintEvent(QPaintEvent *)
         font.setPointSize(20);
         painter.setFont(font);
 
-        painter.drawText(QRect(rect().x(), rect().y() + d->titleHeight, rect().width(), rect().height() - d->titleHeight), Qt::AlignCenter, tr("No search result"));
+        painter.drawText(QRect(rect().x(), rect().y() + d->titleHeight, rect().width(), rect().height() - d->titleHeight), Qt::AlignCenter, QObject::tr("No search result"));
     }
 
     // Draw frame.
