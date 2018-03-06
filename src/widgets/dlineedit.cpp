@@ -75,6 +75,8 @@ void DLineEdit::setAlert(bool isAlert)
     }
 
     d->m_isAlert = isAlert;
+    
+    update();
 
     Q_EMIT alertChanged(isAlert);
 }
