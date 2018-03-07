@@ -1,6 +1,7 @@
 TARGET = dtkwidget
 TEMPLATE = lib
 
+QT += dtkcore
 load(dtk_build)
 
 CONFIG += internal_module
@@ -12,8 +13,6 @@ greaterThan(QT_MAJOR_VERSION, 4) {
   greaterThan(QT_MAJOR_VERSION, 5)|greaterThan(QT_MINOR_VERSION, 7): QT += gui-private
   else: QT += platformsupport-private
 }
-
-QT += dtkcore
 
 linux* {
     QT += x11extras dbus
@@ -43,7 +42,6 @@ qtCompileTest(libdframeworkdbus) {
 
 HEADERS += dtkwidget_global.h
 
-includes.path = $${DTK_INCLUDEPATH}/DWidget
 includes.files += \
     $$PWD/dtkwidget_global.h\
     $$PWD/DtkWidgets\

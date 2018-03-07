@@ -20,8 +20,8 @@ endif
 %:
 	dh $@ --parallel
 
-override_dh_auto_configure:
-	dh_auto_configure -- LIB_INSTALL_DIR=/usr/lib/$(DEB_HOST_MULTIARCH) VERSION=$(CONFIG_VERSION)
+#override_dh_auto_configure:
+#	dh_auto_configure -- LIB_INSTALL_DIR=/usr/lib/$(DEB_HOST_MULTIARCH) VERSION=$(CONFIG_VERSION)
 
 override_dh_makeshlibs:
 	dh_makeshlibs -V
