@@ -84,17 +84,23 @@ QWidget *createShortcutEditOptionHandle(QObject *opt)
     rightWidget->setObjectName("OptionShortcutEdit");
 
     auto updateWidgetValue = [rightWidget](const QVariant & optionValue) {
-        if (optionValue.type() == QVariant::List) {
+        switch (optionValue.type()) {
+        case QVariant::List:
+        case QVariant::StringList: {
             QStringList keyseqs = optionValue.toStringList();
             if (keyseqs.length() == 2) {
                 auto modifier = static_cast<Qt::KeyboardModifiers>(keyseqs.value(0).toInt());
                 auto key = static_cast<Qt::Key>(keyseqs.value(1).toInt());
                 rightWidget->setShortCut(modifier, key);
             }
+            break;
         }
-
-        if (optionValue.type() == QVariant::String) {
+        case QVariant::String: {
             rightWidget->setShortCut(optionValue.toString());
+            break;
+        }
+        default:
+            qCritical() << "unknown variant type" << optionValue;
         }
     };
 
@@ -104,20 +110,26 @@ QWidget *createShortcutEditOptionHandle(QObject *opt)
     auto optionWidget = DSettingsWidgetFactory::createTwoColumWidget(option, rightWidget);
 
     // keep raw value type
-    if (optionValue.type() == QVariant::List) {
+    switch (optionValue.type()) {
+    case QVariant::List:
+    case QVariant::StringList: {
         option->connect(rightWidget, &ShortcutEdit::shortcutChanged,
         option, [ = ](Qt::KeyboardModifiers modifier, Qt::Key key) {
             QStringList keyseqs;
             keyseqs << QString("%1").arg(modifier) << QString("%1").arg(key);
             option->setValue(keyseqs);
         });
+        break;
     }
-
-    if (optionValue.type() == QVariant::String) {
+    case QVariant::String: {
         option->connect(rightWidget, &ShortcutEdit::shortcutStringChanged,
         option, [ = ](const QString & seqString) {
             option->setValue(seqString);
         });
+        break;
+    }
+    default:
+        qCritical() << "unknown variant type" << optionValue;
     }
 
     option->connect(option, &DTK_CORE_NAMESPACE::DSettingsOption::valueChanged,
