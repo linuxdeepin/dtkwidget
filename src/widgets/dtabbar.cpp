@@ -32,6 +32,7 @@
 #include <QDrag>
 #include <QMimeData>
 #include <QDragMoveEvent>
+#include <QTimer>
 #include <QDebug>
 
 #include <private/qtabbar_p.h>
@@ -129,6 +130,13 @@ public:
         connect(this, &QTabBar::tabMoved, this, [this] (int from, int to) {
             tabMinimumSize.move(from, to);
             tabMaximumSize.move(from, to);
+
+            if (dd()->validIndex(ghostTabIndex)) {
+                if (from == ghostTabIndex)
+                    ghostTabIndex = to;
+                else if (to == ghostTabIndex)
+                    ghostTabIndex = from;
+            }
         });
 
         setAcceptDrops(true);
@@ -254,7 +262,10 @@ public:
     void startTabFlash();
 
     void setDragingFromOther(bool v);
-    int tabInsertIndexFromMouse(const QPoint &pos);
+    int tabInsertIndexFromMouse(QPoint pos);
+
+    void startMove(int index);
+    void stopMove();
 
     QList<QSize> tabMinimumSize;
     QList<QSize> tabMaximumSize;
@@ -267,6 +278,8 @@ public:
     bool dragingFromOther = false;
     // 记录当前drag过来的对象是否可以当做新标签页插入
     bool canInsertFromDrag = false;
+    // 为true忽略drag move事件
+    bool ignoreDragEvent = false;
 
     QColor maskColor;
     QColor flashColor;
@@ -295,6 +308,8 @@ public:
     // 备份启动tab move时的QTabBarPrivate中的这两个值
     int scrollOffset;
     QPoint dragStartPosition;
+
+    int ghostTabIndex = -1;
 };
 
 void DTabBarPrivate::startDrag(int tabIndex)
@@ -802,8 +817,14 @@ void DTabBarPrivate::setDragingFromOther(bool v)
     topFullWidget->raise();
 }
 
-int DTabBarPrivate::tabInsertIndexFromMouse(const QPoint &pos)
+int DTabBarPrivate::tabInsertIndexFromMouse(QPoint pos)
 {
+    if (pos.y() == height())
+        pos.setY(pos.y() - 1);
+
+    if (pos.x() == width())
+        pos.setX(pos.x() - 1);
+
     int current = tabAt(pos);
 
     QTabBarPrivate *d = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
@@ -811,9 +832,9 @@ int DTabBarPrivate::tabInsertIndexFromMouse(const QPoint &pos)
 
     if (!d->validIndex(current)){
         if (vertical)
-            current = pos.y() >= height() ? -1 : 0;
+            current = pos.y() >= height() ? count() - 1 : 0;
         else
-            current = pos.x() >= width() ? -1 : 0;
+            current = pos.x() >= width() ? count() - 1 : 0;
     }
 
     const QRect &current_rect = tabRect(current);
@@ -824,6 +845,50 @@ int DTabBarPrivate::tabInsertIndexFromMouse(const QPoint &pos)
     } else {
         return pos.x() <= center.x() ? current : current + 1;
     }
+}
+
+void DTabBarPrivate::startMove(int index)
+{
+    if (dd()->dragInProgress)
+        return;
+
+    dd()->pressedIndex = index;
+    makeVisible(index);
+
+    const QRect &index_rect = tabRect(index);
+
+    dd()->dragStartPosition = index_rect.center();
+
+    QVariantAnimation *mouse_animation = new QVariantAnimation(this);
+
+    mouse_animation->setDuration(100);
+    mouse_animation->setEasingCurve(QEasingCurve::OutSine);
+    mouse_animation->setStartValue(QCursor::pos());
+    mouse_animation->setEndValue(mapToGlobal(index_rect.center()));
+
+    connect(mouse_animation, &QVariantAnimation::valueChanged, this, [] (const QVariant &value) {
+        const QPoint pos = value.toPoint();
+
+        QCursor::setPos(pos.x(), pos.y());
+    });
+
+    connect(mouse_animation, &QVariantAnimation::finished, this, [this, mouse_animation] {
+        mouse_animation->deleteLater();
+        ignoreDragEvent = false;
+    });
+
+    ignoreDragEvent = true;
+    mouse_animation->start();
+}
+
+void DTabBarPrivate::stopMove()
+{
+    QMouseEvent event(QEvent::MouseButtonRelease, mapFromGlobal(QCursor::pos()),
+                      Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    bool movable = isMovable();
+    setMovable(true);
+    qApp->sendEvent(this, &event);
+    setMovable(movable);
 }
 
 bool DTabBarPrivate::eventFilter(QObject *watched, QEvent *event)
@@ -987,7 +1052,7 @@ void DTabBarPrivate::mouseMoveEvent(QMouseEvent *event)
 {
     QTabBarPrivate *d = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
 
-    if (!d->movable)
+    if (!d->movable && !d->validIndex(ghostTabIndex))
         return;
 
     // Be safe!
@@ -1009,7 +1074,7 @@ void DTabBarPrivate::mouseMoveEvent(QMouseEvent *event)
     }
 
     if (!drag && valid_pressed_index) {
-        if (offset_y > startDragDistance) {
+        if (offset_y > startDragDistance && !d->validIndex(ghostTabIndex)) {
             setupDragableTab();
         }
     }
@@ -1034,7 +1099,7 @@ void DTabBarPrivate::mouseMoveEvent(QMouseEvent *event)
         scrollOffset = d->scrollOffset;
         dragStartPosition = d->dragStartPosition;
 
-        // Auto scroll tags
+        // Auto scroll tabs
         autoScrollTabs(event->pos());
     }
 }
@@ -1620,6 +1685,16 @@ void DTabBar::dragEnterEvent(QDragEnterEvent *e)
     if (canInsertFromMimeData(index, e->mimeData())) {
         d->setDragingFromOther(true);
         e->acceptProposedAction();
+
+        // 插入一个虚拟的标签
+        if (e->source() != d) {
+            d->ghostTabIndex = index;
+            insertFromMimeDataOnDragEnter(index, e->mimeData());
+            // 延时启动startMove， 此时tabbar的大小还没有更新
+            QTimer::singleShot(10, [d, index] {
+                d->startMove(index);
+            });
+        }
     }
 }
 
@@ -1630,23 +1705,51 @@ void DTabBar::dragLeaveEvent(QDragLeaveEvent *e)
 
     d->setDragingFromOther(false);
     d->stopAutoScrollTabs();
+
+    if (d->dd()->validIndex(d->ghostTabIndex)) {
+        d->stopMove();
+        d->removeTab(d->ghostTabIndex);
+        d->ghostTabIndex = -1;
+    }
 }
 
 void DTabBar::dragMoveEvent(QDragMoveEvent *e)
 {
     D_D(DTabBar);
 
+    if (d->ignoreDragEvent)
+        return;
+
     if (e->source() == d)
         return QWidget::dragMoveEvent(e);
 
-    if (e->source() != d)
-        d->autoScrollTabs(d->mapFromParent(e->pos()));
-
-    int index = d->tabInsertIndexFromMouse(d->mapFromParent(e->pos()));
+    int index = d->dd()->validIndex(d->ghostTabIndex) ? d->ghostTabIndex : d->tabInsertIndexFromMouse(d->mapFromParent(e->pos()));
+    bool canInsert = false;
 
     if (canInsertFromMimeData(index, e->mimeData())) {
         d->setDragingFromOther(true);
         e->acceptProposedAction();
+        canInsert = true;
+    } else if (d->dd()->validIndex(d->ghostTabIndex)) {
+        d->stopMove();
+        d->removeTab(d->ghostTabIndex);
+        d->ghostTabIndex = -1;
+    }
+
+    if (e->source() != d) {
+        if (canInsert) {
+            if (d->dd()->validIndex(d->ghostTabIndex)) {
+                QMouseEvent event(QEvent::MouseMove, d->mapFromParent(e->pos()),
+                                  Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+                d->mouseMoveEvent(&event);
+            } else {
+                d->ghostTabIndex = index;
+                insertFromMimeDataOnDragEnter(index, e->mimeData());
+                d->startMove(index);
+            }
+        } else {
+            d->autoScrollTabs(d->mapFromParent(e->pos()));
+        }
     }
 }
 
@@ -1665,7 +1768,19 @@ void DTabBar::dropEvent(QDropEvent *e)
     if (canInsertFromMimeData(index, e->mimeData())) {
         e->acceptProposedAction();
         e->setDropAction(Qt::MoveAction);
-        insertFromMimeData(index, e->mimeData());
+
+        if (d->dd()->validIndex(d->ghostTabIndex)) {
+            d->stopMove();
+            {
+                QSignalBlocker blocker(this);
+                Q_UNUSED(blocker)
+                d->removeTab(d->ghostTabIndex);
+            }
+            insertFromMimeData(d->ghostTabIndex, e->mimeData());
+            d->ghostTabIndex = -1;
+        } else {
+            insertFromMimeData(index, e->mimeData());
+        }
     }
 }
 
@@ -1679,6 +1794,13 @@ void DTabBar::resizeEvent(QResizeEvent *e)
     }
 
     return QWidget::resizeEvent(e);
+}
+
+void DTabBar::startTabFlash(int index)
+{
+    d_func()->flashTabIndex = index;
+    d_func()->makeVisible(d_func()->flashTabIndex);
+    d_func()->startTabFlash();
 }
 
 void DTabBar::paintTab(QPainter *painter, int index, const QStyleOptionTab &option) const
@@ -1731,9 +1853,12 @@ bool DTabBar::canInsertFromMimeData(int index, const QMimeData *source) const
 
 void DTabBar::insertFromMimeData(int index, const QMimeData *source)
 {
-    d_func()->flashTabIndex = insertTab(index, source->text());
-    d_func()->makeVisible(d_func()->flashTabIndex);
-    d_func()->startTabFlash();
+    startTabFlash(insertTab(index, source->text()));
+}
+
+void DTabBar::insertFromMimeDataOnDragEnter(int index, const QMimeData *source)
+{
+    startTabFlash(insertTab(index, source->text()));
 }
 
 DTabBarPrivate *DTabBar::d_func()

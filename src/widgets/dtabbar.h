@@ -185,12 +185,15 @@ protected:
     void dropEvent(QDropEvent *e) override;
     void resizeEvent(QResizeEvent *e) override;
 
+    void startTabFlash(int index);
+
     virtual void paintTab(QPainter *painter, int index, const QStyleOptionTab &option) const;
 
     virtual QPixmap createDragPixmapFromTab(int index, const QStyleOptionTab &option, QPoint *hotspot) const;
     virtual QMimeData *createMimeDataFromTab(int index, const QStyleOptionTab &option) const;
     virtual bool canInsertFromMimeData(int index, const QMimeData *source) const;
     virtual void insertFromMimeData(int index, const QMimeData *source);
+    virtual void insertFromMimeDataOnDragEnter(int index, const QMimeData *source);
 
 private:
     DTabBarPrivate* d_func();
