@@ -1,3 +1,13 @@
+<a name="2.0.7.1"></a>
+## 2.0.7.1 (2018-03-12)
+
+
+#### Bug Fixes
+
+*   reset short cut not show ([8ba379aa](https://github.com/linuxdeepin/dtkwidget/commit/8ba379aaaa23a70715d16387c3d294c2742b52de))
+
+
+
 <a name="2.0.7"></a>
 ## 2.0.7 (2018-03-06)
 
