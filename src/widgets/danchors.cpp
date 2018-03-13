@@ -628,16 +628,23 @@ bool DAnchorsBase::setAnchor(const Qt::AnchorPoint &p, QWidget *target, const Qt
         }else{\
             old_pos = d->getValueByInfo(d->point);\
             int target_old_value = d->getValueByInfo(point);\
+            /*保存widget当然的一些标志位，setValueByInfo仅仅是尝试设置，调用之后要复原标志位*/\
+            bool moved = point->base->target()->testAttribute(Qt::WA_Moved);\
+            bool resized = point->base->target()->testAttribute(Qt::WA_Resized);\
             d->setValueByInfo(target_old_value + 1, point);\
             if(old_pos != d->getValueByInfo(d->point)){\
                 *d->point = old_info;\
                 slotName();\
                 d->setValueByInfo(target_old_value, point);\
+                point->base->target()->setAttribute(Qt::WA_Moved, moved);\
+                point->base->target()->setAttribute(Qt::WA_Resized, resized);\
                 d->errorCode = PointInvalid;\
                 d->errorString = "loop bind.";\
                 return false;\
             }\
             d->setValueByInfo(target_old_value, point);\
+            point->base->target()->setAttribute(Qt::WA_Moved, moved);\
+            point->base->target()->setAttribute(Qt::WA_Resized, resized);\
         }\
         tmp_w2 = point->base->d_func()->extendWidget;\
         if(tmp_w1 != tmp_w2){\
@@ -929,12 +936,12 @@ void DAnchorsBase::setAlignWhenCentered(bool alignWhenCentered)
     rect.set##fun(arg, point);\
     target()->setMinimumSize(QSize(0,0));\
     target()->setMaximumSize(QSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX));\
-    target()->setGeometry(rect);\
+    target()->setGeometry(rect);
 
 #define MOVE_POS(fun)\
     DAnchorsRect rect = target()->geometry();\
     rect.move##fun(arg);\
-    target()->move(rect.topLeft());\
+    target()->move(rect.topLeft());
 
 void DAnchorsBase::setTop(int arg, Qt::AnchorPoint point)
 {
