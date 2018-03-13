@@ -150,16 +150,22 @@ bool DApplicationPrivate::setSingleInstanceBySemaphore(const QString &key)
     singleInstance = tryAcquireSystemSemaphore(&ss);
 
     if (singleInstance) {
-        QtConcurrent::run([] {
+        QtConcurrent::run([this] {
+            QPointer<DApplication> that = q_func();
+
             while (ss.acquire() && singleInstance)
             {
-                if (qApp->startingUp() || qApp->closingDown()) {
+                if (!that)
+                    return;
+
+                if (that->startingUp() || that->closingDown()) {
                     break;
                 }
 
                 ss.release(1);
 
-                Q_EMIT qApp->newInstanceStarted();
+                if (that)
+                    Q_EMIT that->newInstanceStarted();
             }
         });
 
