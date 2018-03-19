@@ -194,7 +194,7 @@ void DAbstractDialog::moveToTopRight()
 void DAbstractDialog::moveToTopRightByRect(const QRect &rect)
 {
     int x = rect.x() + rect.width() - width();
-    move(QPoint(x, 0));
+    QDialog::move(QPoint(x, 0));
 }
 
 /**
@@ -265,7 +265,7 @@ void DAbstractDialog::moveToCenterByRect(const QRect &rect)
 {
     QRect qr = geometry();
     qr.moveCenter(rect.center());
-    move(qr.topLeft());
+    QDialog::move(qr.topLeft());
 }
 
 void DAbstractDialog::mousePressEvent(QMouseEvent *event)
