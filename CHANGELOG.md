@@ -1,3 +1,17 @@
+<a name="2.0.7.2"></a>
+## 2.0.7.2 (2018-03-21)
+
+
+#### Bug Fixes
+
+*   add DAbstractDialog::move(int, int) and DAbstractDialog::setGeometry(int, int, int, int) ([dbc0eadf](https://github.com/linuxdeepin/dtkwidget/commit/dbc0eadf427be2f3bd950e5481469616cc07b24c))
+*   move the DAbstractDialog window is invalid ([a04e438b](https://github.com/linuxdeepin/dtkwidget/commit/a04e438bdf4b096c95e59bf1f76d8b7bc6104612))
+*   can not auto adjust dialog position ([f53579c6](https://github.com/linuxdeepin/dtkwidget/commit/f53579c6f50397afed4fd8787d4a794facab85c7))
+*   wait dbus call return ([1cf4d0c1](https://github.com/linuxdeepin/dtkwidget/commit/1cf4d0c139d3c57212a3a7f7b8b86cd0fac177aa))
+*   build failed ([8afa3123](https://github.com/linuxdeepin/dtkwidget/commit/8afa31239a8f2307656a5ea6cc2c1b11fd4cf5da))
+
+
+
 <a name="2.0.7"></a>
 ## 2.0.7 (2018-03-06)
 
