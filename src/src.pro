@@ -1,6 +1,8 @@
 TARGET = dtkwidget
 TEMPLATE = lib
 
+QT += dtkcore
+
 # TODO: replace config.pri with dtk_build
 include($$PWD/config.pri)
 load(dtk_build)
@@ -15,7 +17,6 @@ greaterThan(QT_MAJOR_VERSION, 4) {
   else: QT += platformsupport-private
 }
 
-QT += dtkcore
 
 linux* {
     QT += x11extras dbus
