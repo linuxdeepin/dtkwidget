@@ -682,7 +682,8 @@ void DApplication::handleHelpAction()
                                   "/com/deepin/dman",
                                   "com.deepin.dman");
         if (legacydman.isValid()) {
-            legacydman.asyncCall("ShowManual", appid);
+            // will block application
+            legacydman.call("ShowManual", appid);
             return;
         }
 
