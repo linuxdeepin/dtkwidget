@@ -122,6 +122,16 @@ void DClipEffectWidget::setClipPath(const QPainterPath &path)
     update();
 }
 
+inline QRect multiply(const QRect &rect, qreal scale)
+{
+    return QRect(rect.topLeft() * scale, rect.size() * scale);
+}
+
+inline QRect divide(const QRect &rect, qreal scale)
+{
+    return multiply(rect, 1.0 / scale);
+}
+
 bool DClipEffectWidget::eventFilter(QObject *watched, QEvent *event)
 {
     D_D(DClipEffectWidget);
@@ -136,19 +146,26 @@ bool DClipEffectWidget::eventFilter(QObject *watched, QEvent *event)
     if (event->type() == QEvent::Paint) {
         const QPoint &offset = mapTo(window(), QPoint(0, 0));
         const QImage &image = window()->backingStore()->handle()->toImage();
+        qreal scale = devicePixelRatioF();
 
-        if (d->image.isNull()) {
-            d->imageGeometry = image.rect() & parentWidget()->rect().translated(offset);
+        d->imageGeometry = image.rect() & multiply(parentWidget()->rect().translated(offset), scale);
+
+        if (d->image.isNull() || d->imageGeometry.size() != d->image.size()) {
             d->image = image.copy(d->imageGeometry);
+            d->image.setDevicePixelRatio(scale);
         } else {
             QPaintEvent *e = static_cast<QPaintEvent*>(event);
             QPainter p;
-            const QRect &rect = image.rect() & e->rect().translated(offset);
+            const QRect &rect = image.rect() & multiply(e->rect().translated(offset), scale);
+
+            d->image.setDevicePixelRatio(image.devicePixelRatio());
 
             p.begin(&d->image);
             p.setCompositionMode(QPainter::CompositionMode_Source);
             p.drawImage(rect.topLeft() - d->imageGeometry.topLeft(), image.copy(rect));
             p.end();
+
+            d->image.setDevicePixelRatio(scale);
         }
     } else if (event->type() == QEvent::Resize) {
         resize(parentWidget()->size());
@@ -165,7 +182,7 @@ void DClipEffectWidget::paintEvent(QPaintEvent *event)
         return;
 
     const QRect &rect = event->rect() & this->rect().marginsRemoved(d->margins);
-    const QRect &imageRect = rect.translated(mapTo(window(), QPoint(0, 0)) - d->imageGeometry.topLeft()) & d->imageGeometry;
+    const QRect &imageRect = multiply(rect, devicePixelRatioF()).translated(mapTo(window(), QPoint(0, 0)) - d->imageGeometry.topLeft()) & d->imageGeometry;
 
     if (!imageRect.isValid())
         return;
