@@ -670,27 +670,14 @@ void DApplication::handleHelpAction()
     QDBusInterface manual("com.deepin.Manual.Open",
                           "/com/deepin/Manual/Open",
                           "com.deepin.Manual.Open");
-    if (manual.isValid()) {
-        manual.asyncCall("ShowManual", appid);
+    QDBusReply<void> reply = manual.call("ShowManual", appid);
+    if (reply.isValid())  {
+        qDebug() << "call com.deepin.Manual.Open success";
         return;
     }
-
+    qDebug() << "call com.deepin.Manual.Open failed" << reply.error();
     // fallback to old interface
-    if (!qgetenv("FLATPAK_APPID").isEmpty()) {
-        appid = qgetenv("FLATPAK_APPID");
-        QDBusInterface legacydman("com.deepin.dman",
-                                  "/com/deepin/dman",
-                                  "com.deepin.dman");
-        if (legacydman.isValid()) {
-            // will block application
-            legacydman.call("ShowManual", appid);
-            return;
-        }
-
-        qWarning() << "can not call dman dbus interface";
-    } else {
-        QProcess::startDetached("dman", QStringList() << appid);
-    }
+    QProcess::startDetached("dman", QStringList() << appid);
 #else
     qWarning() << "not support dman now";
 #endif
