@@ -6,7 +6,7 @@ load(dtk_build)
 
 CONFIG += internal_module
 
-QT += multimedia multimediawidgets concurrent
+QT += concurrent
 greaterThan(QT_MAJOR_VERSION, 4) {
   QT += widgets widgets-private
   # Qt >= 5.8
@@ -15,7 +15,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 }
 
 linux* {
-    QT += x11extras dbus
+    QT += multimedia multimediawidgets x11extras dbus
 }
 
 mac* {
