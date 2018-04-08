@@ -41,10 +41,13 @@
 
 #include "mainwindow.h"
 #include "buttonlisttab.h"
-#include "cameraform.h"
 #include "graphicseffecttab.h"
 #include "simplelistviewtab.h"
 #include "dtoast.h"
+
+#ifndef DTK_NO_MULTIMEDIA
+#include "cameraform.h"
+#endif
 
 DCORE_USE_NAMESPACE
 DWIDGET_USE_NAMESPACE
@@ -254,7 +257,9 @@ void MainWindow::initTabWidget()
 
     WidgetsTab *widgetsTab = new WidgetsTab(this);
 
+#ifndef DTK_NO_MULTIMEDIA
     CameraForm *cameraform = new CameraForm(this);
+#endif
 
     GraphicsEffectTab *effectTab = new GraphicsEffectTab(this);
 
@@ -272,7 +277,9 @@ void MainWindow::initTabWidget()
 
     m_mainTab->addTab(buttonListGroupTab, "ButtonList");
     m_mainTab->addTab(segmentedControl, "Segmented Control");
+#ifndef DTK_NO_MULTIMEDIA
     m_mainTab->addTab(cameraform, "Camera View");
+#endif
     m_mainTab->addTab(simplelistviewTab, "SimpleListView");
 
     m_mainTab->setCurrentIndex(0);

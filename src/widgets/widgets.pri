@@ -32,6 +32,17 @@ mac{
     LIBS += -framework Foundation -framework Cocoa
 }
 
+isEmpty(DTK_NO_MULTIMEDIA){
+    HEADERS += \
+        $$PWD/dvideowidget.h
+
+    SOURCES += \
+        $$PWD/dvideowidget.cpp
+
+    includes.files += \
+        $$PWD/DVideoWidget
+}
+
 HEADERS += $$PWD/dslider.h\
     $$PWD/dthememanager.h \
     $$PWD/dapplication.h \
@@ -181,7 +192,6 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dpageindicator.cpp \
     $$PWD/dclipeffectwidget.cpp \
     $$PWD/dgraphicsclipeffect.cpp \
-    $$PWD/dvideowidget.cpp \
     $$PWD/dforeignwindow.cpp \
     $$PWD/dpushbutton.cpp \
     $$PWD/dtickeffect.cpp \
@@ -214,7 +224,6 @@ includes.files += \
     $$PWD/DGraphicsDropShadowEffect \
     $$PWD/DPlatformWindowHandle \
     $$PWD/DGraphicsClipEffect \
-    $$PWD/DVideoWidget \
     $$PWD/DForeignWindow \
     $$PWD/DExpandGroup \
     $$PWD/DArrowButton \

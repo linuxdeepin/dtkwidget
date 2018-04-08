@@ -6,7 +6,7 @@ load(dtk_build)
 
 CONFIG += internal_module
 
-QT += concurrent
+QT += network concurrent multimedia multimediawidgets
 greaterThan(QT_MAJOR_VERSION, 4) {
   QT += widgets widgets-private
   # Qt >= 5.8
@@ -15,7 +15,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 }
 
 linux* {
-    QT += multimedia multimediawidgets x11extras dbus
+    QT += x11extras dbus
 }
 
 mac* {
@@ -26,6 +26,11 @@ mac* {
 win* {
     QT += svg
     DEFINES += DTK_TITLE_DRAG_WINDOW
+}
+
+!isEmpty(DTK_NO_MULTIMEDIA){
+    DEFINES += DTK_NO_MULTIMEDIA
+    QT -= multimedia multimediawidgets
 }
 
 !isEmpty(DTK_STATIC_LIB){

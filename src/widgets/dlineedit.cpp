@@ -152,10 +152,10 @@ void DLineEdit::setIconVisible(bool visible)
     d->m_rightIcon->setVisible(visible);
 
     if (visible) {
-        QLineEditPrivate *d_d = reinterpret_cast<QLineEditPrivate*>(d_ptr.data());
 
         addAction(d->m_iconAction, TrailingPosition);
-
+#ifndef Q_OS_WIN
+        QLineEditPrivate *d_d = reinterpret_cast<QLineEditPrivate*>(d_ptr.data());
         if (d_d->trailingSideWidgets.size() > 1) {
             if ((*(d_d->trailingSideWidgets.end() - 1)).action == d->m_iconAction) {
                 d_d->trailingSideWidgets.insert(d_d->trailingSideWidgets.begin(), *d_d->trailingSideWidgets.erase(d_d->trailingSideWidgets.end() - 1));
@@ -163,6 +163,7 @@ void DLineEdit::setIconVisible(bool visible)
                 qApp->sendEvent(this, &resize_event);
             }
         }
+#endif
      } else {
         removeAction(d->m_iconAction);
     }

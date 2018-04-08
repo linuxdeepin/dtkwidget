@@ -12,6 +12,18 @@ unix {
     QT += dbus
 }
 
+!isEmpty(DTK_NO_MULTIMEDIA){
+    DEFINES += DTK_NO_MULTIMEDIA
+    QT -= multimedia multimediawidgets
+} else {
+    HEADERS  += \
+        cameraform.h
+    SOURCES += \
+        cameraform.cpp
+    FORMS += \
+        cameraform.ui
+}
+
 !isEmpty(DTK_STATIC_LIB){
     DEFINES += DTK_STATIC_LIB
 }
@@ -28,7 +40,6 @@ SOURCES += main.cpp\
     indicatortab.cpp \
     widgetstab.cpp \
     comboboxtab.cpp \
-    cameraform.cpp \
     simplelistviewtab.cpp \
     singlelistview.cpp \
     singlelistitem.cpp \
@@ -47,7 +58,6 @@ HEADERS  += mainwindow.h \
     indicatortab.h \
     widgetstab.h \
     comboboxtab.h \
-    cameraform.h \
     simplelistviewtab.h \
     singlelistview.h \
     singlelistitem.h \
@@ -59,8 +69,6 @@ RESOURCES += \
     images.qrc \
     resources.qrc
 
-FORMS += \
-    cameraform.ui
 
 win32* {
     CONFIG += no_lflags_merge
