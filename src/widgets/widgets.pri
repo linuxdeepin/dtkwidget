@@ -123,7 +123,8 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dsuggestbutton.h \
     $$PWD/dstyleoption.h \
     $$PWD/dtoast.h \
-    $$PWD/danchors.h
+    $$PWD/danchors.h \
+    $$PWD/dwindowgroupleader.h
 
 SOURCES += $$PWD/dslider.cpp \
     $$PWD/dthememanager.cpp \
@@ -203,7 +204,8 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dsuggestbutton.cpp \
     $$PWD/dstyleoption.cpp \
     $$PWD/dtoast.cpp \
-    $$PWD/danchors.cpp
+    $$PWD/danchors.cpp \
+    $$PWD/dwindowgroupleader.cpp
 
 RESOURCES += \
     $$PWD/themes/dui_theme_dark.qrc \
@@ -244,6 +246,7 @@ includes.files += \
     $$PWD/DToast \
     $$PWD/DFileDialog \
     $$PWD/DLineEdit \
-    $$PWD/DStyleOptionLineEdit
+    $$PWD/DStyleOptionLineEdit \
+    $$PWD/DWindowGroupLeader
 
 
