@@ -660,7 +660,11 @@ void DCrumbEdit::keyPressEvent(QKeyEvent *event)
     if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) {
         D_D(DCrumbEdit);
 
-        d->makeCrumb();
+        bool result = d->makeCrumb();
+
+        if (!result)
+            event->ignore();
+
     } else {
         QTextEdit::keyPressEvent(event);
     }
