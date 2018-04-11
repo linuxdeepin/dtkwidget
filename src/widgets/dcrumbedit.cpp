@@ -661,10 +661,11 @@ void DCrumbEdit::keyPressEvent(QKeyEvent *event)
         D_D(DCrumbEdit);
 
         bool result = d->makeCrumb();
-
         if (!result)
             event->ignore();
 
+    } else if (event->key() == Qt::Key_Escape) {
+        event->ignore();
     } else {
         QTextEdit::keyPressEvent(event);
     }
