@@ -62,15 +62,6 @@ win32* {
     includes.files += $$PWD/platforms/windows/*.h
 }
 
-# add translations
-TRANSLATIONS += $$PWD/../translations/$${TARGET}2.ts \
-                $$PWD/../translations/$${TARGET}2_zh_CN.ts
-
-translations.path = $$PREFIX/share/$${TARGET}/translations
-translations.files = $$PWD/../translations/*.qm
-
-INSTALLS += translations
-
 # create DtkWidgets file
 defineTest(containIncludeFiles) {
     header = $$absolute_path($$ARGS)
@@ -126,5 +117,4 @@ INSTALLS += includes target
 
 load(dtk_cmake)
 
-QMAKE_PKGCONFIG_REQUIRES += dtkcore
 load(dtk_module)

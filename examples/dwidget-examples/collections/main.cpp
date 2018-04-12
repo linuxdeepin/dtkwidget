@@ -36,9 +36,11 @@ int main(int argc, char *argv[])
     DApplication::loadDXcbPlugin();
 
     DApplication a(argc, argv);
+    Dtk::Core::DLogManager::registerConsoleAppender();
+
+    a.loadTranslator();
     a.setAttribute(Qt::AA_EnableHighDpiScaling, true);
     a.setTheme("light");
-    Dtk::Core::DLogManager::registerConsoleAppender();
 
     if (!a.setSingleInstance("deepin-tool-kit-examples")) {
         qDebug() << "another instance is running!!";

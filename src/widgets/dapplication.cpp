@@ -155,8 +155,9 @@ bool DApplicationPrivate::setSingleInstanceBySemaphore(const QString &key)
 
             while (ss.acquire() && singleInstance)
             {
-                if (!that)
+                if (!that) {
                     return;
+                }
 
                 if (that->startingUp() || that->closingDown()) {
                     break;
@@ -164,8 +165,9 @@ bool DApplicationPrivate::setSingleInstanceBySemaphore(const QString &key)
 
                 ss.release(1);
 
-                if (that)
+                if (that) {
                     Q_EMIT that->newInstanceStarted();
+                }
             }
         });
 
@@ -229,6 +231,10 @@ bool DApplicationPrivate::loadDtkTranslator(QList<QLocale> localeFallback)
 
     DPathBuf currentDir(QDir::currentPath());
     translateDirs << currentDir.join("translations");
+
+#ifdef DTK_STATIC_TRANSLATION
+    translateDirs << DPathBuf(":/dtk/translations");
+#endif
 
     return loadTranslator(translateDirs, dtkwidgetName, localeFallback);
 }
@@ -394,6 +400,10 @@ bool DApplication::loadTranslator(QList<QLocale> localeFallback)
     translateDirs << runDir.join("translations");
     DPathBuf currentDir(QDir::currentPath());
     translateDirs << currentDir.join("translations");
+
+#ifdef DTK_STATIC_TRANSLATION
+    translateDirs << DPathBuf(":/dtk/translations");
+#endif
 
     return d->loadTranslator(translateDirs, appName, localeFallback);
 }

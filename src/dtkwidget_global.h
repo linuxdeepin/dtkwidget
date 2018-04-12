@@ -29,6 +29,15 @@
 #define DWIDGET_END_NAMESPACE }}
 #define DWIDGET_USE_NAMESPACE using namespace DTK_WIDGET_NAMESPACE;
 
+void inline dtk_windget_init_resource()
+{
+    Q_INIT_RESOURCE(icons);
+    Q_INIT_RESOURCE(dui_theme_dark);
+    Q_INIT_RESOURCE(dui_theme_light);
+    // TODO: use marco create by dtk_build
+    Q_INIT_RESOURCE(dtkwidget_translations);
+}
+
 namespace Dtk
 {
 namespace Widget
@@ -37,9 +46,8 @@ namespace Widget
 #if defined(DTK_STATIC_LIB)
 #define DWIDGET_INIT_RESOURCE() \
     do { \
-        Q_INIT_RESOURCE(icons); \
-        Q_INIT_RESOURCE(dui_theme_dark); \
-        Q_INIT_RESOURCE(dui_theme_light); } while (0)
+        dtk_windget_init_resource(); \
+    } while (0)
 #endif
 
 }
@@ -60,7 +68,7 @@ namespace Widget
 #define D_THEME_INIT_WIDGET(className, ...) do{\
         DThemeManager * manager = DThemeManager::instance(); \
         {const QString &sheet = this->styleSheet() + manager->getQssForWidget(#className, this); \
-         if (!sheet.isEmpty()) this->setStyleSheet(sheet); \
+            if (!sheet.isEmpty()) this->setStyleSheet(sheet); \
         } \
         connect(manager, &DThemeManager::themeChanged, this, [this, manager] (QString) { \
             const QString &sheet = manager->getQssForWidget(#className, this); \

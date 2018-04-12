@@ -111,7 +111,6 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dpageindicator.h \
     $$PWD/dclipeffectwidget.h \
     $$PWD/dgraphicsclipeffect.h \
-    $$PWD/dvideowidget.h \
     $$PWD/dforeignwindow.h \
     $$PWD/dpushbutton.h \
     $$PWD/dtickeffect.h \
