@@ -29,14 +29,18 @@
 #define DWIDGET_END_NAMESPACE }}
 #define DWIDGET_USE_NAMESPACE using namespace DTK_WIDGET_NAMESPACE;
 
+#if defined(DTK_STATIC_LIB)
 void inline dtk_windget_init_resource()
 {
     Q_INIT_RESOURCE(icons);
     Q_INIT_RESOURCE(dui_theme_dark);
     Q_INIT_RESOURCE(dui_theme_light);
     // TODO: use marco create by dtk_build
+#if defined(DTK_STATIC_TRANSLATION)
     Q_INIT_RESOURCE(dtkwidget_translations);
+#endif
 }
+#endif
 
 namespace Dtk
 {
