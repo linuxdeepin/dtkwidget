@@ -41,6 +41,14 @@ bool DMPRISControl::isWorking() const
     return d->m_mprisInter;
 }
 
+void DMPRISControl::setPictureVisible(bool visible)
+{
+    D_D(DMPRISControl);
+
+    d->m_pictureVisible = visible;
+    d->m_picture->setVisible(visible);
+}
+
 DMPRISControlPrivate::DMPRISControlPrivate(DMPRISControl *q)
     : DObjectPrivate(q),
 
@@ -58,6 +66,8 @@ void DMPRISControlPrivate::init()
     m_title->setAlignment(Qt::AlignCenter);
     m_picture = new QLabel;
     m_picture->setFixedSize(200, 200);
+    m_pictureVisible = true;
+    m_controlWidget = new QWidget;
     m_prevBtn = new DImageButton;
     m_prevBtn->setObjectName("PrevBtn");
     m_pauseBtn = new DImageButton;
@@ -83,12 +93,15 @@ void DMPRISControlPrivate::init()
     controlLayout->addStretch();
     controlLayout->addWidget(m_nextBtn);
     controlLayout->setContentsMargins(0, 10, 0, 0);
+    m_controlWidget->setLayout(controlLayout);
+
 
     QVBoxLayout *centralLayout = new QVBoxLayout;
     centralLayout->addWidget(m_title);
     centralLayout->addWidget(m_picture);
     centralLayout->setAlignment(m_picture, Qt::AlignCenter);
-    centralLayout->addLayout(controlLayout);
+//    centralLayout->addLayout(controlLayout);
+    centralLayout->addWidget(m_controlWidget);
     centralLayout->setMargin(0);
 
     q->setLayout(centralLayout);
@@ -156,9 +169,13 @@ void DMPRISControlPrivate::_q_onMetaDataChanged()
             m_title->setText(QString("%1 - %2").arg(title).arg(artist));
     }
 
-    m_picture->setPixmap(picture);
-    m_picture->setVisible(false);
-//    m_picture->setVisible(!picture.isNull());
+    if (picture.isNull()) {
+        m_picture->setText("unable to obtain picture.");
+    } else {
+        m_picture->setPixmap(picture);
+        m_picture->setText(QString());
+    }
+    m_picture->setVisible(m_pictureVisible);
 }
 
 void DMPRISControlPrivate::_q_onPlaybackStatusChanged()
@@ -191,8 +208,11 @@ void DMPRISControlPrivate::_q_loadMPRISPath(const QString &path)
 
     m_mprisInter = new DBusMPRIS(path, "/org/mpris/MediaPlayer2", QDBusConnection::sessionBus(), q);
 
+    m_controlWidget->setVisible(m_mprisInter->canControl());
+
     q->connect(m_mprisInter, SIGNAL(MetadataChanged(QVariantMap)), q, SLOT(_q_onMetaDataChanged()));
     q->connect(m_mprisInter, SIGNAL(PlaybackStatusChanged(QString)), q, SLOT(_q_onPlaybackStatusChanged()));
+    q->connect(m_mprisInter, SIGNAL(CanControlChanged(bool)), q, SLOT(_q_onCanControlChanged(bool)));
 
     _q_onMetaDataChanged();
     _q_onPlaybackStatusChanged();
@@ -222,6 +242,13 @@ void DMPRISControlPrivate::_q_removeMPRISPath(const QString &path)
     m_mprisInter = nullptr;
 
     Q_EMIT q->mprisLosted();
+}
+
+void DMPRISControlPrivate::_q_onCanControlChanged(bool canControl)
+{
+    D_Q(DMPRISControl);
+
+    m_controlWidget->setVisible(canControl);
 }
 
 #include "moc_dmpriscontrol.cpp"

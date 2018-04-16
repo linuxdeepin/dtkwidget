@@ -42,6 +42,9 @@ Q_SIGNALS:
     void mprisChanged() const;
     void mprisLosted() const;
 
+public Q_SLOTS:
+    void setPictureVisible(bool visible);
+
 protected:
     D_PRIVATE_SLOT(void _q_onMetaDataChanged())
     D_PRIVATE_SLOT(void _q_onPlaybackStatusChanged())
@@ -51,6 +54,7 @@ protected:
     D_PRIVATE_SLOT(void _q_onNextClicked())
     D_PRIVATE_SLOT(void _q_loadMPRISPath(const QString &))
     D_PRIVATE_SLOT(void _q_removeMPRISPath(const QString &))
+    D_PRIVATE_SLOT(void _q_onCanControlChanged(bool canControl))
 };
 
 DWIDGET_END_NAMESPACE

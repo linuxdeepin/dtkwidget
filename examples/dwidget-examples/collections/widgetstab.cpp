@@ -60,6 +60,10 @@ WidgetsTab::WidgetsTab(QWidget *parent) : QLabel(parent)
     dateInfoVisible->setText("date info visible");
     dateInfoVisible->setChecked(false);
     dateInfoVisible->move(320, 170);
+    QCheckBox *togglePic = new QCheckBox(this);
+    togglePic->setText("toggle music picture");
+    togglePic->setChecked(false);
+    togglePic->move(320, 200);
 
     ////////////////////ArrowRectangle//////////////////
     DArrowRectangle *rectangle = new DArrowRectangle(DArrowRectangle::ArrowLeft);
@@ -79,6 +83,8 @@ WidgetsTab::WidgetsTab(QWidget *parent) : QLabel(parent)
     control->setFixedSize(300, 300);
     control->move(500, 0);
     control->setStyleSheet("background-color:red;");
+
+    connect(togglePic, SIGNAL(toggled(bool)), control, SLOT(setPictureVisible(bool)));
 #endif
 }
 

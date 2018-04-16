@@ -48,16 +48,22 @@ public Q_SLOTS:
     void _q_loadMPRISPath(const QString &path);
     void _q_removeMPRISPath(const QString &path);
 
+    void _q_onCanControlChanged(bool canControl);
+
 public:
     DMPRISMonitor *m_mprisMonitor;
     DBusMPRIS *m_mprisInter;
 
     QLabel *m_title;
     QLabel *m_picture;
+
+    QWidget *m_controlWidget;
     DImageButton *m_prevBtn;
     DImageButton *m_playBtn;
     DImageButton *m_pauseBtn;
     DImageButton *m_nextBtn;
+
+    bool m_pictureVisible;
 
     QString m_lastPath;
     QStringList m_mprisPaths;
