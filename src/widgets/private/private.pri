@@ -1,4 +1,5 @@
 linux{
+    include(keyboardmonitor/keyboardmonitor.pri)
     HEADERS += \
         $$PWD/mpris/dmprismonitor.h \
         $$PWD/mpris/dbusinterface.h \

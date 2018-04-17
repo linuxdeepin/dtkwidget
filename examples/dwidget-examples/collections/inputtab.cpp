@@ -28,6 +28,10 @@
 #include <QDebug>
 #include <QTimer>
 
+#ifdef Q_OS_LINUX
+#include "dpasswdeditanimated.h"
+#endif
+
 InputTab::InputTab(QWidget *parent) : QLabel(parent)
 {
     setStyleSheet("InputTab{background-color: #252627;}");
@@ -100,4 +104,9 @@ InputTab::InputTab(QWidget *parent) : QLabel(parent)
 
 //    searchEdit->setFocus();
     lineEditAlert->setFocus();
+
+#ifdef Q_OS_LINUX
+    DTK_WIDGET_NAMESPACE::DPasswdEditAnimated *passwdEA = new DTK_WIDGET_NAMESPACE::DPasswdEditAnimated(this);
+    passwdEA->move(500, 20);
+#endif
 }

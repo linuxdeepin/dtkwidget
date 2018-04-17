@@ -39,6 +39,7 @@
         <file>light/Dtk--Widget--DArrowButton.theme</file>
         <file>light/Dtk--Widget--DAbstractDialog.theme</file>
         <file>light/Dtk--Widget--DAboutDialog.theme</file>
+        <file>light/Dtk--Widget--DPasswdEditAnimated.theme</file>
     </qresource>
     <qresource prefix="/images">
         <file>light/images/arrow_down_hover.png</file>
@@ -152,5 +153,17 @@
         <file>light/images/window/quit_fullscreen_hover.svg</file>
         <file>light/images/window/quit_fullscreen_normal.svg</file>
         <file>light/images/window/quit_fullscreen_press.svg</file>
+        <file>light/images/capslock-normal.svg</file>
+        <file>light/images/capslock-hover.svg</file>
+        <file>light/images/capslock-clicked.svg</file>
+        <file>light/images/submit-clicked.svg</file>
+        <file>light/images/submit-hover.svg</file>
+        <file>light/images/submit-normal.svg</file>
+        <file>light/images/keyboard-clicked.svg</file>
+        <file>light/images/keyboard-hover.svg</file>
+        <file>light/images/keyboard-normal.svg</file>
+        <file>light/images/pw-visible-clicked.svg</file>
+        <file>light/images/pw-visible-hover.svg</file>
+        <file>light/images/pw-visible-normal.svg</file>
     </qresource>
 </RCC>

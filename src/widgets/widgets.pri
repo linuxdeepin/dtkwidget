@@ -13,11 +13,15 @@ win32* {
 
 linux{
     HEADERS += \
-        $$PWD/dmpriscontrol.h
+        $$PWD/dmpriscontrol.h \
+        $$PWD/dpasswdeditanimated.h
 
     SOURCES += \
-        $$PWD/dmpriscontrol.cpp
+        $$PWD/dmpriscontrol.cpp \
+        $$PWD/dpasswdeditanimated.cpp
 
+    includes.files += \
+        $$PWD/DPasswdEditAnimated
 }
 
 mac{
