@@ -1,5 +1,5 @@
 CONFIG += c++11 link_pkgconfig
-PKGCONFIG += xtst xext x11
+PKGCONFIG += xext x11
 
 INCLUDEPATH += $$PWD
 
