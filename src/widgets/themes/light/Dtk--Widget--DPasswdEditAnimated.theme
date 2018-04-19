@@ -1,21 +1,38 @@
 Dtk--Widget--DPasswdEditAnimated {
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 3px;
+    border-color: rgba(255,255,255,.3);
     background-color: rgba(255,255,255,.3);
 }
 
-Dtk--Widget--DPasswdEditAnimated  #KeyboardButton {
-    qproperty-normalPic:url(:/images/light/images/keyboard-normal.svg);
-    qproperty-hoverPic:url(:/images/light/images/keyboard-hover.svg);
-    qproperty-pressPic:url(:/images/light/images/keyboard-clicked.svg);
+
+Dtk--Widget--DPasswdEditAnimated[alert="true"] {
+    border-color: #FF8F00;
 }
 
-Dtk--Widget--DPasswdEditAnimated  #EyeButton {
-    qproperty-normalPic:url(:/images/light/images/pw-visible-normal.svg);
-    qproperty-hoverPic:url(:/images/light/images/pw-visible-hover.svg);
-    qproperty-pressPic:url(:/images/light/images/pw-visible-clicked.svg);
+Dtk--Widget--DPasswdEditAnimated #KeyboardButton {
+    qproperty-normalPic: url(:/images/light/images/keyboard-normal.svg);
+    qproperty-hoverPic: url(:/images/light/images/keyboard-hover.svg);
+    qproperty-pressPic: url(:/images/light/images/keyboard-clicked.svg);
 }
 
-Dtk--Widget--DPasswdEditAnimated  #SubmitButton {
-    qproperty-normalPic:url(:/images/light/images/submit-normal.svg);
-    qproperty-hoverPic:url(:/images/light/images/submit-hover.svg);
-    qproperty-pressPic:url(:/images/light/images/submit-clicked.svg);
+Dtk--Widget--DPasswdEditAnimated #EyeButton {
+    qproperty-normalPic: url(:/images/light/images/pw-visible-normal.svg);
+    qproperty-hoverPic: url(:/images/light/images/pw-visible-hover.svg);
+    qproperty-pressPic: url(:/images/light/images/pw-visible-clicked.svg);
+}
+
+Dtk--Widget--DPasswdEditAnimated #SubmitButton {
+    qproperty-normalPic: url(:/images/light/images/submit-normal.svg);
+    qproperty-hoverPic: url(:/images/light/images/submit-hover.svg);
+    qproperty-pressPic: url(:/images/light/images/submit-clicked.svg);
+}
+
+Dtk--Widget--DPasswdEditAnimated #InvalidTip {
+    qproperty-backgroundColor: rgba(255,255,255,.3);
+}
+
+Dtk--Widget--DPasswdEditAnimated #PasswdEdit {
+
 }

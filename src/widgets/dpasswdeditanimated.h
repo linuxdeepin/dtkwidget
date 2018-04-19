@@ -3,6 +3,7 @@
 
 #include "dimagebutton.h"
 #include "dlabel.h"
+#include "darrowrectangle.h"
 
 #include <QLineEdit>
 
@@ -18,14 +19,24 @@ public:
 private Q_SLOTS:
     void setKeyboardVisible(bool value);
     void setCapslockVisible(bool value);
-    void setEchoMode(QLineEdit::EchoMode mode);
     void togglePasswdVisible();
+
+public Q_SLOTS:
+    void setEchoMode(QLineEdit::EchoMode mode);
+    void showAlert(const QString &message);
+    void hideAlert();
 
 private:
     DImageButton *m_keyboard;
     DImageButton *m_eye;
-    QLineEdit *m_passwdEdit;
+    DImageButton *m_submit;
+
     DLabel *m_caps;
+    DLabel *m_invalidMessage;
+
+    QLineEdit *m_passwdEdit;
+
+    DArrowRectangle *m_invalidTip;
 };
 
 DWIDGET_END_NAMESPACE

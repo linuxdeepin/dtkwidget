@@ -27,6 +27,7 @@
 #include <QPixmap>
 #include <QDebug>
 #include <QTimer>
+#include <QCheckBox>
 
 #ifdef Q_OS_LINUX
 #include "dpasswdeditanimated.h"
@@ -108,5 +109,12 @@ InputTab::InputTab(QWidget *parent) : QLabel(parent)
 #ifdef Q_OS_LINUX
     DTK_WIDGET_NAMESPACE::DPasswdEditAnimated *passwdEA = new DTK_WIDGET_NAMESPACE::DPasswdEditAnimated(this);
     passwdEA->move(500, 20);
+    QCheckBox *checkButton = new QCheckBox("alert", this);
+    checkButton->setStyleSheet("color: red");
+    checkButton->move(700, 20);
+    connect(checkButton, &QCheckBox::clicked, [=](bool checked){\
+            if (checked) passwdEA->showAlert("button clicked!!!");\
+            else passwdEA->hideAlert();
+        });
 #endif
 }
