@@ -112,9 +112,14 @@ InputTab::InputTab(QWidget *parent) : QLabel(parent)
     QCheckBox *checkButton = new QCheckBox("alert", this);
     checkButton->setStyleSheet("color: red");
     checkButton->move(700, 20);
-    connect(checkButton, &QCheckBox::clicked, [=](bool checked){\
-            if (checked) passwdEA->showAlert("button clicked!!!");\
+    connect(checkButton, &QCheckBox::clicked, [=](bool checked){
+            if (checked) passwdEA->showAlert("button clicked!!!");
             else passwdEA->hideAlert();
         });
+    connect(checkButton, &QCheckBox::clicked, [=](bool checked){
+            if (checked) passwdEA->showLoadSlider();
+            else passwdEA->hideLoadSlider();
+        });
+
 #endif
 }

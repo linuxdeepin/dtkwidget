@@ -19,6 +19,10 @@ DPasswdEditAnimated::DPasswdEditAnimated(QWidget *parent) : QFrame(parent)
     m_invalidMessage = new DLabel;
     m_invalidTip = new DArrowRectangle(DArrowRectangle::ArrowTop, this);
 
+    m_isLoading = false;
+    m_loadSliderX = 0;
+    m_timerID = 0;
+
     m_keyboard->setObjectName("KeyboardButton");
     m_passwdEdit->setObjectName("PasswdEdit");
     m_caps->setObjectName("Capslock");
@@ -33,11 +37,11 @@ DPasswdEditAnimated::DPasswdEditAnimated(QWidget *parent) : QFrame(parent)
 
     m_invalidTip->hide();
 
-    mainHLayout->addWidget(m_keyboard);
-    mainHLayout->addWidget(m_passwdEdit);
-    mainHLayout->addWidget(m_caps);
-    mainHLayout->addWidget(m_eye);
-    mainHLayout->addWidget(m_submit);
+    mainHLayout->addWidget(m_keyboard, 0, Qt::AlignLeft);
+    mainHLayout->addWidget(m_passwdEdit, 1, Qt::AlignLeft);
+    mainHLayout->addWidget(m_caps, 0, Qt::AlignRight);
+    mainHLayout->addWidget(m_eye, 0, Qt::AlignRight);
+    mainHLayout->addWidget(m_submit, 0, Qt::AlignRight);
 
     // TODO: init keyboard state
     m_keyboard->hide();
@@ -105,6 +109,50 @@ void DPasswdEditAnimated::hideAlert()
 
     // qss will not work unless reset StyleSheet
     setStyleSheet(styleSheet());
+}
+
+void DPasswdEditAnimated::showLoadSlider()
+{
+    if (!m_isLoading) {
+        m_isLoading = true;
+        m_loadSliderX = 0;
+        m_timerID = startTimer(5);
+    }
+}
+
+void DPasswdEditAnimated::hideLoadSlider()
+{
+    if (m_timerID != 0 && m_isLoading) {
+        killTimer(m_timerID);
+        m_isLoading = false;
+        m_timerID = 0;
+    }
+}
+
+void DPasswdEditAnimated::timerEvent(QTimerEvent *event)
+{
+    Q_UNUSED(event)
+
+    update();
+}
+
+void DPasswdEditAnimated::paintEvent(QPaintEvent *event)
+{
+    QFrame::paintEvent(event);
+
+    if (m_isLoading) {
+        QPainter painter(this);
+    //    painter.setOpacity(0.8);
+        QLinearGradient grad(m_loadSliderX, height() / 2, 40 + m_loadSliderX, height() / 2);
+        grad.setColorAt(0.0, Qt::transparent);
+        grad.setColorAt(1.0, Qt::white);
+        painter.fillRect(m_loadSliderX, 1, 40, height() - 2, grad);
+
+        m_loadSliderX = m_loadSliderX + 1;
+        if (m_loadSliderX >= width()) {
+            m_loadSliderX = 0;
+        }
+    }
 }
 
 DWIDGET_END_NAMESPACE
