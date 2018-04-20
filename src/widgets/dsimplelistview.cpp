@@ -656,6 +656,12 @@ void DSimpleListView::ctrlScrollToEnd()
 
 void DSimpleListView::leaveEvent(QEvent * event)
 {
+    D_D(DSimpleListView);
+
+    d->lastHoverItem.clear();
+    d->drawHoverItem.clear();
+    d->mouseHoverItem.clear();
+
     hideScrollbar();
 
     QWidget::leaveEvent(event);
