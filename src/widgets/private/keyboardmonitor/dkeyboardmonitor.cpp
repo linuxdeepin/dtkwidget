@@ -36,6 +36,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+DWIDGET_BEGIN_NAMESPACE
+
 static int xi2_opcode;
 
 int xinput_version(Display *display)
@@ -219,3 +221,5 @@ void DKeyboardMonitor::run()
     select_events(display);
     listen(display);
 }
+
+DWIDGET_END_NAMESPACE

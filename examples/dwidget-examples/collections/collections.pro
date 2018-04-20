@@ -1,6 +1,10 @@
 QT += core gui multimedia multimediawidgets svg
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 QT += dtkcore
+linux* {
+    CONFIG += link_pkgconfig
+    PKGCONFIG += dframeworkdbus
+}
 
 TARGET = collections
 TEMPLATE = app

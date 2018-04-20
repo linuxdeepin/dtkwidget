@@ -1,9 +1,11 @@
 #include "dpasswdeditanimated.h"
-#include "DThemeManager"
-
 #include "dkeyboardmonitor.h"
 
+#include "DThemeManager"
 #include <QHBoxLayout>
+#include <com_deepin_daemon_inputdevice_keyboard.h>
+
+using KeyboardInter = com::deepin::daemon::inputdevice::Keyboard;
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -19,6 +21,10 @@ DPasswdEditAnimated::DPasswdEditAnimated(QWidget *parent) : QFrame(parent)
     m_invalidMessage = new DLabel;
     m_invalidTip = new DArrowRectangle(DArrowRectangle::ArrowTop, this);
 
+    m_keyboardEnable = true;
+    m_capsEnable = true;
+    m_eyeEnable = true;
+    m_submitEnable = true;
     m_isLoading = false;
     m_loadSliderX = 0;
     m_timerID = 0;
@@ -43,28 +49,54 @@ DPasswdEditAnimated::DPasswdEditAnimated(QWidget *parent) : QFrame(parent)
     mainHLayout->addWidget(m_eye, 0, Qt::AlignRight);
     mainHLayout->addWidget(m_submit, 0, Qt::AlignRight);
 
-    // TODO: init keyboard state
-    m_keyboard->hide();
+    DThemeManager::registerWidget(this, QStringList("alert"));
 
-    DThemeManager::registerWidget(this);
+    m_kbdMonitor = DKeyboardMonitor::instance();
+    m_kbdMonitor->start(QThread::LowestPriority);
+    resetCapslockState();
 
-    DKeyboardMonitor *dkm = DKeyboardMonitor::instance();
-    dkm->start(QThread::LowestPriority);
-    m_caps->setVisible(dkm->isCapslockOn());
+    m_kbdInter = new KeyboardInter(QString("com.deepin.daemon.SystemInfo"),
+                                                QString("/com/deepin/daemon/InputDevice/Keyboard"),
+                                                QDBusConnection::sessionBus(), this);
+    resetKeyboardState();
 
-    connect(dkm, &DKeyboardMonitor::capslockStatusChanged, this, &DPasswdEditAnimated::setCapslockVisible);
-    connect(m_eye, &DImageButton::clicked, this, &DPasswdEditAnimated::togglePasswdVisible);
-
+    connect(m_kbdMonitor, &DKeyboardMonitor::capslockStatusChanged, this, &DPasswdEditAnimated::resetCapslockState);
+    connect(m_kbdInter, &KeyboardInter::UserLayoutListChanged, this, &DPasswdEditAnimated::resetKeyboardState);
+    connect(m_eye, &DImageButton::clicked, this, &DPasswdEditAnimated::onEyeButtonClicked);
+    connect(m_passwdEdit, &QLineEdit::returnPressed, this, &DPasswdEditAnimated::inputDone);
+    connect(m_submit, &DImageButton::clicked, this, &DPasswdEditAnimated::inputDone);
 }
 
-void DPasswdEditAnimated::setKeyboardVisible(bool value)
+void DPasswdEditAnimated::setKeyboardButtonEnable(bool value)
 {
-    m_keyboard->setVisible(value);
+    if (m_keyboardEnable != value) {
+        m_keyboardEnable = value;
+        resetKeyboardState();
+    }
 }
 
-void DPasswdEditAnimated::setCapslockVisible(bool value)
+void DPasswdEditAnimated::setCapslockIndicatorEnable(bool value)
 {
-    m_caps->setVisible(value);
+    if (m_capsEnable != value) {
+        m_capsEnable = value;
+        resetCapslockState();
+    }
+}
+
+void DPasswdEditAnimated::setEyeButtonEnable(bool value)
+{
+    if (m_eyeEnable != value) {
+        m_eyeEnable = value;
+        m_eye->setVisible(m_eyeEnable);
+    }
+}
+
+void DPasswdEditAnimated::setSubmitButtonEnable(bool value)
+{
+    if (m_submitEnable != value) {
+        m_submitEnable = value;
+        m_submit->setVisible(m_submitEnable);
+    }
 }
 
 void DPasswdEditAnimated::setEchoMode(QLineEdit::EchoMode mode)
@@ -72,7 +104,7 @@ void DPasswdEditAnimated::setEchoMode(QLineEdit::EchoMode mode)
     m_passwdEdit->setEchoMode(mode);
 }
 
-void DPasswdEditAnimated::togglePasswdVisible()
+void DPasswdEditAnimated::onEyeButtonClicked()
 {
     if (m_passwdEdit->echoMode() == QLineEdit::Password) {
         this->setEchoMode(QLineEdit::Normal);
@@ -81,8 +113,21 @@ void DPasswdEditAnimated::togglePasswdVisible()
     this->setEchoMode(QLineEdit::Password);
 }
 
+void DPasswdEditAnimated::inputDone()
+{
+    QString input = m_passwdEdit->text();
+    if (input.length() > 0) {
+        showLoadSlider();
+        Q_EMIT submit(input);
+    }
+}
+
 void DPasswdEditAnimated::showAlert(const QString &message)
 {
+    hideLoadSlider();
+
+    m_passwdEdit->selectAll();
+
     m_invalidMessage->setText(message);
     m_invalidMessage->adjustSize();
 
@@ -93,22 +138,25 @@ void DPasswdEditAnimated::showAlert(const QString &message)
         m_invalidTip->move(pos.x() + m_invalidTip->width() / 2, pos.y() + 20);
         m_invalidTip->setArrowX(20);
         m_invalidTip->setVisible(true);
-        setProperty("alert", true);
+        setAlert(true);
     }
 
-    // qss will not work unless reset StyleSheet
-    setStyleSheet(styleSheet());
 }
 
 void DPasswdEditAnimated::hideAlert()
 {
     if (m_invalidTip->isVisible()) {
         m_invalidTip->setVisible(false);
-        setProperty("alert", false);
+        setAlert(false);
     }
 
-    // qss will not work unless reset StyleSheet
-    setStyleSheet(styleSheet());
+}
+
+void DPasswdEditAnimated::setSubmitIcon(const QString &normalPic, const QString &hoverPic, const QString &pressPic)
+{
+    m_submit->setNormalPic(normalPic);
+    m_submit->setHoverPic(hoverPic);
+    m_submit->setPressPic(pressPic);
 }
 
 void DPasswdEditAnimated::showLoadSlider()
@@ -153,6 +201,28 @@ void DPasswdEditAnimated::paintEvent(QPaintEvent *event)
             m_loadSliderX = 0;
         }
     }
+}
+
+void DPasswdEditAnimated::resetKeyboardState()
+{
+    if (m_keyboardEnable) {
+        if (m_kbdInter->userLayoutList().length() > 1) {
+            m_keyboard->setVisible(true);
+            return;
+        }
+    }
+    m_keyboard->setVisible(false);
+}
+
+void DPasswdEditAnimated::resetCapslockState()
+{
+    if (m_capsEnable) {
+        if (m_kbdMonitor->isCapslockOn()) {
+            m_caps->setVisible(true);
+            return;
+        }
+    }
+    m_caps->setVisible(false);
 }
 
 DWIDGET_END_NAMESPACE

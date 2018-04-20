@@ -7,30 +7,57 @@
 
 #include <QLineEdit>
 
+class __Keyboard;
+namespace com {
+  namespace deepin {
+    namespace daemon {
+      namespace inputdevice {
+        typedef __Keyboard Keyboard;
+      }
+    }
+  }
+}
+
 DWIDGET_BEGIN_NAMESPACE
+
+class DKeyboardMonitor;
 
 class LIBDTKWIDGETSHARED_EXPORT DPasswdEditAnimated : public QFrame
 {
     Q_OBJECT
 
+    Q_PROPERTY(bool alert READ alert WRITE setAlert NOTIFY alertChanged)
+
 public:
     DPasswdEditAnimated(QWidget *parent);
 
+Q_SIGNALS:
+    void submit(const QString &input);
+    void alertChanged(bool alert);
+
 public Q_SLOTS:
     void setEchoMode(QLineEdit::EchoMode mode);
+    void setKeyboardButtonEnable(bool value);
+    void setCapslockIndicatorEnable(bool value);
+    void setEyeButtonEnable(bool value);
+    void setSubmitButtonEnable(bool value);
+    void setSubmitIcon(const QString &normalPic, const QString &hoverPic, const QString &pressPic);
     void showAlert(const QString &message);
     void hideAlert();
-    void showLoadSlider();
-    void hideLoadSlider();
 
 protected:
     void timerEvent(QTimerEvent *event) Q_DECL_OVERRIDE;
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
 
 private Q_SLOTS:
-    void setKeyboardVisible(bool value);
-    void setCapslockVisible(bool value);
-    void togglePasswdVisible();
+    void resetKeyboardState();
+    void resetCapslockState();
+    void onEyeButtonClicked();
+    void showLoadSlider();
+    void hideLoadSlider();
+    void inputDone();
+    inline bool alert() { return m_alert; }
+    inline void setAlert(bool value) { m_alert = value; Q_EMIT alertChanged(m_alert); }
 
 private:
     DImageButton *m_keyboard;
@@ -43,7 +70,17 @@ private:
     DArrowRectangle *m_invalidTip;
     QLineEdit *m_passwdEdit;
 
+    // to get capslock state
+    DKeyboardMonitor *m_kbdMonitor;
+    // to get user keyboard layout
+    com::deepin::daemon::inputdevice::Keyboard *m_kbdInter;
+
+    bool m_keyboardEnable;
+    bool m_capsEnable;
+    bool m_eyeEnable;
+    bool m_submitEnable;
     bool m_isLoading;
+    bool m_alert;
     int m_loadSliderX;
     int m_timerID;
 };

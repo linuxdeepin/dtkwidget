@@ -28,6 +28,9 @@
 
 #include <QThread>
 #include <QX11Info>
+#include <dwidget.h>
+
+DWIDGET_BEGIN_NAMESPACE
 
 class DKeyboardMonitor : public QThread
 {
@@ -54,3 +57,5 @@ private:
 };
 
 #endif // KEYBOARDMONITOR_H
+
+DWIDGET_END_NAMESPACE
