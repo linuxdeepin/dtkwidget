@@ -30,6 +30,8 @@
 #include <QStyleFactory>
 #include <QWheelEvent>
 #include <QtMath>
+#include <QPointer>
+
 #include "dhidpihelper.h"
 
 DCORE_USE_NAMESPACE
@@ -48,10 +50,10 @@ public:
     int getTopRenderOffset();
     void sortItemsByColumn(int column, bool descendingSort);
 
-    DSimpleListItem *lastHoverItem;
-    DSimpleListItem *lastSelectItem;
-    DSimpleListItem *drawHoverItem;
-    DSimpleListItem *mouseHoverItem;
+    QPointer<DSimpleListItem> lastHoverItem;
+    QPointer<DSimpleListItem> lastSelectItem;
+    QPointer<DSimpleListItem> drawHoverItem;
+    QPointer<DSimpleListItem> mouseHoverItem;
     QList<DSimpleListItem*> *listItems;
     QList<DSimpleListItem*> *renderItems;
     QList<DSimpleListItem*> *selectionItems;
@@ -163,10 +165,10 @@ DSimpleListView::~DSimpleListView()
 {
     D_D(DSimpleListView);
 
-    delete d->lastHoverItem;
-    delete d->lastSelectItem;
-    delete d->drawHoverItem;
-    delete d->mouseHoverItem;
+    delete d->lastHoverItem.data();
+    delete d->lastSelectItem.data();
+    delete d->drawHoverItem.data();
+    delete d->mouseHoverItem.data();
     delete d->listItems;
     delete d->renderItems;
     delete d->selectionItems;
