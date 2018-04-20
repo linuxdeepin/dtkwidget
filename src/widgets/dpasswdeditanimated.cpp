@@ -34,10 +34,14 @@ DPasswdEditAnimated::DPasswdEditAnimated(QWidget *parent) : QFrame(parent)
     m_caps->setObjectName("Capslock");
     m_eye->setObjectName("EyeButton");
     m_submit->setObjectName("SubmitButton");
+    m_invalidMessage->setObjectName("InvalidMessage");
     m_invalidTip->setObjectName("InvalidTip");
 
     m_passwdEdit->setEchoMode(QLineEdit::Password);
     m_passwdEdit->setFrame(false);
+    m_passwdEdit->installEventFilter(this);
+    setFocusPolicy(Qt::StrongFocus);
+    setFocusProxy(m_passwdEdit);
 
     m_caps->setPixmap(QPixmap(":/images/light/images/capslock-hover.svg"));
 
@@ -49,7 +53,9 @@ DPasswdEditAnimated::DPasswdEditAnimated(QWidget *parent) : QFrame(parent)
     mainHLayout->addWidget(m_eye, 0, Qt::AlignRight);
     mainHLayout->addWidget(m_submit, 0, Qt::AlignRight);
 
-    DThemeManager::registerWidget(this, QStringList("alert"));
+    mainHLayout->setContentsMargins(5, 5, 5, 5);
+
+    DThemeManager::registerWidget(this, QStringList("alert") << "editFocus");
 
     m_kbdMonitor = DKeyboardMonitor::instance();
     m_kbdMonitor->start(QThread::LowestPriority);
@@ -64,6 +70,7 @@ DPasswdEditAnimated::DPasswdEditAnimated(QWidget *parent) : QFrame(parent)
     connect(m_kbdInter, &KeyboardInter::UserLayoutListChanged, this, &DPasswdEditAnimated::resetKeyboardState);
     connect(m_eye, &DImageButton::clicked, this, &DPasswdEditAnimated::onEyeButtonClicked);
     connect(m_passwdEdit, &QLineEdit::returnPressed, this, &DPasswdEditAnimated::inputDone);
+    connect(m_passwdEdit, &QLineEdit::selectionChanged, this, &DPasswdEditAnimated::hideAlert);
     connect(m_submit, &DImageButton::clicked, this, &DPasswdEditAnimated::inputDone);
 }
 
@@ -122,14 +129,32 @@ void DPasswdEditAnimated::inputDone()
     }
 }
 
+bool DPasswdEditAnimated::eventFilter(QObject *watched, QEvent *event)
+{
+    if (watched == m_passwdEdit) {
+        switch (event->type()) {
+        case QEvent::FocusIn:
+            Q_EMIT editFocusChanged(true);
+            break;
+        case QEvent::FocusOut:
+            Q_EMIT editFocusChanged(false);
+            break;
+        default:
+            break;
+        }
+    }
+    return false;
+}
+
 void DPasswdEditAnimated::showAlert(const QString &message)
 {
     hideLoadSlider();
 
-    m_passwdEdit->selectAll();
-
     m_invalidMessage->setText(message);
     m_invalidMessage->adjustSize();
+
+    m_passwdEdit->selectAll();
+    m_passwdEdit->setFocus();
 
     if (!m_invalidTip->isVisible()) {
         m_invalidTip->setContent(m_invalidMessage);
@@ -138,7 +163,7 @@ void DPasswdEditAnimated::showAlert(const QString &message)
         m_invalidTip->move(pos.x() + m_invalidTip->width() / 2, pos.y() + 20);
         m_invalidTip->setArrowX(20);
         m_invalidTip->setVisible(true);
-        setAlert(true);
+        Q_EMIT alertChanged(true);
     }
 
 }
@@ -147,7 +172,7 @@ void DPasswdEditAnimated::hideAlert()
 {
     if (m_invalidTip->isVisible()) {
         m_invalidTip->setVisible(false);
-        setAlert(false);
+        Q_EMIT alertChanged(false);
     }
 
 }
@@ -193,7 +218,7 @@ void DPasswdEditAnimated::paintEvent(QPaintEvent *event)
     //    painter.setOpacity(0.8);
         QLinearGradient grad(m_loadSliderX, height() / 2, 40 + m_loadSliderX, height() / 2);
         grad.setColorAt(0.0, Qt::transparent);
-        grad.setColorAt(1.0, Qt::white);
+        grad.setColorAt(1.0, Qt::gray);
         painter.fillRect(m_loadSliderX, 1, 40, height() - 2, grad);
 
         m_loadSliderX = m_loadSliderX + 1;

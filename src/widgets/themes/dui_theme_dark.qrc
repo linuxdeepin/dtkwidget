@@ -64,6 +64,7 @@
         <file>dark/Dtk--Widget--DArrowButton.theme</file>
         <file>dark/Dtk--Widget--DAbstractDialog.theme</file>
         <file>dark/Dtk--Widget--DAboutDialog.theme</file>
+        <file>dark/Dtk--Widget--DPasswdEditAnimated.theme</file>
     </qresource>
     <qresource prefix="/images">
         <file>dark/images/add_hover.png</file>
@@ -223,5 +224,17 @@
         <file>dark/images/window/quit_fullscreen_hover.svg</file>
         <file>dark/images/window/quit_fullscreen_normal.svg</file>
         <file>dark/images/window/quit_fullscreen_press.svg</file>
+        <file>dark/images/capslock-clicked.svg</file>
+        <file>dark/images/capslock-hover.svg</file>
+        <file>dark/images/capslock-normal.svg</file>
+        <file>dark/images/keyboard-clicked.svg</file>
+        <file>dark/images/keyboard-hover.svg</file>
+        <file>dark/images/keyboard-normal.svg</file>
+        <file>dark/images/pw-visible-clicked.svg</file>
+        <file>dark/images/pw-visible-hover.svg</file>
+        <file>dark/images/pw-visible-normal.svg</file>
+        <file>dark/images/submit-clicked.svg</file>
+        <file>dark/images/submit-hover.svg</file>
+        <file>dark/images/submit-normal.svg</file>
     </qresource>
 </RCC>

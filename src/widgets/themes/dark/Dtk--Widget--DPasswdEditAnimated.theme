@@ -1,0 +1,41 @@
+Dtk--Widget--DPasswdEditAnimated {
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 3px;
+    border-color: rgba(255,255,255,.1);
+    background-color: #454647;
+}
+
+Dtk--Widget--DPasswdEditAnimated[editFocus="true"] {
+    border-color: #2CA7F8;
+}
+
+Dtk--Widget--DPasswdEditAnimated[alert="true"] {
+    border-color: #FF8F00;
+}
+
+Dtk--Widget--DPasswdEditAnimated #KeyboardButton {
+    qproperty-normalPic: url(:/images/dark/images/keyboard-normal.svg);
+    qproperty-hoverPic: url(:/images/dark/images/keyboard-hover.svg);
+    qproperty-pressPic: url(:/images/dark/images/keyboard-clicked.svg);
+}
+
+Dtk--Widget--DPasswdEditAnimated #EyeButton {
+    qproperty-normalPic: url(:/images/dark/images/pw-visible-normal.svg);
+    qproperty-hoverPic: url(:/images/dark/images/pw-visible-hover.svg);
+    qproperty-pressPic: url(:/images/dark/images/pw-visible-clicked.svg);
+}
+
+Dtk--Widget--DPasswdEditAnimated #SubmitButton {
+    qproperty-normalPic: url(:/images/dark/images/submit-normal.svg);
+    qproperty-hoverPic: url(:/images/dark/images/submit-hover.svg);
+    qproperty-pressPic: url(:/images/dark/images/submit-clicked.svg);
+}
+
+Dtk--Widget--DPasswdEditAnimated #InvalidTip {
+    qproperty-backgroundColor: rgba(255,255,255,.3);
+}
+
+Dtk--Widget--DPasswdEditAnimated #PasswdEdit {
+
+}

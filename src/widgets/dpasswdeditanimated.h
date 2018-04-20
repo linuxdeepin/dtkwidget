@@ -26,7 +26,8 @@ class LIBDTKWIDGETSHARED_EXPORT DPasswdEditAnimated : public QFrame
 {
     Q_OBJECT
 
-    Q_PROPERTY(bool alert READ alert WRITE setAlert NOTIFY alertChanged)
+    Q_PROPERTY(bool alert READ alert NOTIFY alertChanged)
+    Q_PROPERTY(bool editFocus READ editFocus NOTIFY editFocusChanged)
 
 public:
     DPasswdEditAnimated(QWidget *parent);
@@ -34,6 +35,7 @@ public:
 Q_SIGNALS:
     void submit(const QString &input);
     void alertChanged(bool alert);
+    void editFocusChanged(bool focus);
 
 public Q_SLOTS:
     void setEchoMode(QLineEdit::EchoMode mode);
@@ -48,6 +50,7 @@ public Q_SLOTS:
 protected:
     void timerEvent(QTimerEvent *event) Q_DECL_OVERRIDE;
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
+    bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
 
 private Q_SLOTS:
     void resetKeyboardState();
@@ -56,8 +59,8 @@ private Q_SLOTS:
     void showLoadSlider();
     void hideLoadSlider();
     void inputDone();
-    inline bool alert() { return m_alert; }
-    inline void setAlert(bool value) { m_alert = value; Q_EMIT alertChanged(m_alert); }
+    inline bool alert() { return m_invalidTip->isVisible(); }
+    inline bool editFocus() { return hasFocus(); }
 
 private:
     DImageButton *m_keyboard;
@@ -80,7 +83,6 @@ private:
     bool m_eyeEnable;
     bool m_submitEnable;
     bool m_isLoading;
-    bool m_alert;
     int m_loadSliderX;
     int m_timerID;
 };
