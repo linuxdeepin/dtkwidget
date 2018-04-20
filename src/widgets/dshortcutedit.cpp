@@ -27,7 +27,7 @@
 
 DWIDGET_USE_NAMESPACE
 
-// static const varibles
+// static const variables
 const QString DShortcutEdit::DefaultTips = tr("Please input a new shortcut");
 
 DShortcutEdit::DShortcutEdit(QWidget *parent)
