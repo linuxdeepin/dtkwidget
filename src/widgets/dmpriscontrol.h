@@ -44,6 +44,7 @@ Q_SIGNALS:
 
 public Q_SLOTS:
     void setPictureVisible(bool visible);
+    void setPictureSize(const QSize &size);
 
 protected:
     D_PRIVATE_SLOT(void _q_onMetaDataChanged())

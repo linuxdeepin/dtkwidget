@@ -49,6 +49,13 @@ void DMPRISControl::setPictureVisible(bool visible)
     d->m_picture->setVisible(visible);
 }
 
+void DMPRISControl::setPictureSize(const QSize &size)
+{
+    D_D(DMPRISControl);
+
+    d->m_picture->setFixedSize(size);
+}
+
 DMPRISControlPrivate::DMPRISControlPrivate(DMPRISControl *q)
     : DObjectPrivate(q),
 
@@ -157,7 +164,8 @@ void DMPRISControlPrivate::_q_onMetaDataChanged()
     const QString title = meta.value("xesam:title").toString();
     const QString artist = meta.value("xesam:artist").toString();
     const QUrl pictureUrl = meta.value("mpris:artUrl").toString();
-    const QPixmap picture = QPixmap(pictureUrl.toLocalFile());
+    const QSize pictureSize = m_picture->size();
+    const QPixmap picture = QPixmap(pictureUrl.toLocalFile()).scaled(pictureSize, Qt::IgnoreAspectRatio);
 
     if (title.isEmpty())
         m_title->clear();
