@@ -25,6 +25,7 @@ DPasswdEditAnimated::DPasswdEditAnimated(QWidget *parent) : QFrame(parent)
     m_capsEnable = true;
     m_eyeEnable = true;
     m_submitEnable = true;
+    m_loadAnimEnable = true;
     m_isLoading = false;
     m_loadSliderX = 0;
     m_timerID = 0;
@@ -106,6 +107,11 @@ void DPasswdEditAnimated::setSubmitButtonEnable(bool value)
     }
 }
 
+void DPasswdEditAnimated::setLoadAnimEnable(bool value)
+{
+    m_loadAnimEnable = value;
+}
+
 void DPasswdEditAnimated::setEchoMode(QLineEdit::EchoMode mode)
 {
     m_passwdEdit->setEchoMode(mode);
@@ -177,6 +183,14 @@ void DPasswdEditAnimated::hideAlert()
 
 }
 
+void DPasswdEditAnimated::abortAuth()
+{
+    if (m_isLoading) {
+        hideLoadSlider();
+        Q_EMIT abort();
+    }
+}
+
 void DPasswdEditAnimated::setSubmitIcon(const QString &normalPic, const QString &hoverPic, const QString &pressPic)
 {
     m_submit->setNormalPic(normalPic);
@@ -186,10 +200,12 @@ void DPasswdEditAnimated::setSubmitIcon(const QString &normalPic, const QString 
 
 void DPasswdEditAnimated::showLoadSlider()
 {
-    if (!m_isLoading) {
-        m_isLoading = true;
-        m_loadSliderX = 0;
-        m_timerID = startTimer(5);
+    if (m_loadAnimEnable) {
+        if (!m_isLoading) {
+            m_isLoading = true;
+            m_loadSliderX = 0;
+            m_timerID = startTimer(5);
+        }
     }
 }
 
@@ -199,6 +215,7 @@ void DPasswdEditAnimated::hideLoadSlider()
         killTimer(m_timerID);
         m_isLoading = false;
         m_timerID = 0;
+        update();
     }
 }
 

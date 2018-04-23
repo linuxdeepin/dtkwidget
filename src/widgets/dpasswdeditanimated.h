@@ -34,6 +34,7 @@ public:
 
 Q_SIGNALS:
     void submit(const QString &input);
+    void abort();
     void alertChanged(bool alert);
     void editFocusChanged(bool focus);
 
@@ -43,9 +44,11 @@ public Q_SLOTS:
     void setCapslockIndicatorEnable(bool value);
     void setEyeButtonEnable(bool value);
     void setSubmitButtonEnable(bool value);
+    void setLoadAnimEnable(bool value);
     void setSubmitIcon(const QString &normalPic, const QString &hoverPic, const QString &pressPic);
     void showAlert(const QString &message);
     void hideAlert();
+    void abortAuth();
 
 protected:
     void timerEvent(QTimerEvent *event) Q_DECL_OVERRIDE;
@@ -82,6 +85,7 @@ private:
     bool m_capsEnable;
     bool m_eyeEnable;
     bool m_submitEnable;
+    bool m_loadAnimEnable;
     bool m_isLoading;
     int m_loadSliderX;
     int m_timerID;

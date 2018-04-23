@@ -153,5 +153,20 @@ InputTab::InputTab(QWidget *parent) : QLabel(parent)
             else passwdEA->setSubmitButtonEnable(false);
         });
 
+    QCheckBox *checkButton6 = new QCheckBox("anim enable", this);
+    checkButton6->setStyleSheet("color: red");
+    checkButton6->setChecked(true);
+    checkButton6->move(700, 120);
+    connect(checkButton6, &QCheckBox::clicked, [=](bool checked){
+            if (checked) passwdEA->setLoadAnimEnable(true);
+            else passwdEA->setLoadAnimEnable(false);
+        });
+
+    QCheckBox *checkButton7 = new QCheckBox("abort auth", this);
+    checkButton7->setStyleSheet("color: red");
+    checkButton7->setChecked(true);
+    checkButton7->move(700, 140);
+    connect(checkButton7, &QCheckBox::clicked, [=](){ passwdEA->abortAuth(); });
+
 #endif
 }
