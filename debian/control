@@ -8,7 +8,7 @@ Build-Depends: debhelper (>= 9), pkg-config, libudev-dev,
  libmtdev-dev, qtbase5-private-dev, libegl1-mesa-dev, libudev-dev,
  libfontconfig1-dev, libfreetype6-dev, libglib2.0-dev, libxrender-dev,
  libdtkcore-dev, libgsettings-qt-dev, librsvg2-dev, libdframeworkdbus-dev, 
- libqt5svg5-dev
+ libqt5svg5-dev, libxi-dev
 Standards-Version: 3.9.8
 
 Package: libdtkwidget2
