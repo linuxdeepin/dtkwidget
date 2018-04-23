@@ -61,6 +61,7 @@
 
 #ifdef Q_OS_LINUX
 #include "startupnotificationmonitor.h"
+#include <DDBusSender>
 #endif
 
 #define DXCB_PLUGIN_KEY "dxcb"
@@ -69,6 +70,25 @@
 DCORE_USE_NAMESPACE
 
 DWIDGET_BEGIN_NAMESPACE
+
+#ifdef Q_OS_LINUX
+// let startdde know that we've already started.
+static void RegisterDdeSession()
+{
+    QString envName("DDE_SESSION_PROCESS_COOKIE_ID");
+
+    QByteArray cookie = qgetenv(envName.toUtf8().data());
+    qunsetenv(envName.toUtf8().data());
+
+    if (!cookie.isEmpty()) {
+        QDBusInterface iface("com.deepin.SessionManager",
+                             "/com/deepin/SessionManager",
+                             "com.deepin.SessionManager",
+                             QDBusConnection::sessionBus());
+        iface.asyncCall("Register", QString(cookie));
+    }
+}
+#endif
 
 DApplicationPrivate::DApplicationPrivate(DApplication *q) :
     DObjectPrivate(q)
@@ -298,6 +318,10 @@ DApplication::DApplication(int &argc, char **argv) :
     qputenv("QT_QPA_PLATFORM", QByteArray());
 
     QPixmapCache::setCacheLimit(0);
+
+#ifdef Q_OS_LINUX
+    RegisterDdeSession();
+#endif
 }
 
 /**
