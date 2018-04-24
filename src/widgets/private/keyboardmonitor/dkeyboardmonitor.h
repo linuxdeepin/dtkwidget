@@ -28,7 +28,7 @@
 
 #include <QThread>
 #include <QX11Info>
-#include <dwidget.h>
+#include <dtkwidget_global.h>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -56,6 +56,6 @@ private:
     int listen(Display *display);
 };
 
-#endif // KEYBOARDMONITOR_H
-
 DWIDGET_END_NAMESPACE
+
+#endif // KEYBOARDMONITOR_H

@@ -46,7 +46,8 @@ HEADERS += \
     $$PWD/dpushbutton_p.h \
     $$PWD/dtickeffect_p.h \
     $$PWD/dswitchbutton_p.h \
-    $$PWD/dimagebutton_p.h
+    $$PWD/dimagebutton_p.h \
+    $$PWD/dpasswdeditanimated_p.h
 
 SOURCES += \
     $$PWD/dthemehelper.cpp

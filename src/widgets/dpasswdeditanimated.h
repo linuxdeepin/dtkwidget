@@ -1,33 +1,20 @@
 #ifndef DPASSWDEDITANIMATED_H
 #define DPASSWDEDITANIMATED_H
 
-#include "dimagebutton.h"
-#include "dlabel.h"
-#include "darrowrectangle.h"
-
+#include <DObject>
 #include <QLineEdit>
-
-class __Keyboard;
-namespace com {
-  namespace deepin {
-    namespace daemon {
-      namespace inputdevice {
-        typedef __Keyboard Keyboard;
-      }
-    }
-  }
-}
+#include <dtkwidget_global.h>
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DKeyboardMonitor;
-
-class LIBDTKWIDGETSHARED_EXPORT DPasswdEditAnimated : public QFrame
+class DPasswdEditAnimatedPrivate;
+class LIBDTKWIDGETSHARED_EXPORT DPasswdEditAnimated : public QFrame, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(DPasswdEditAnimated)
 
     Q_PROPERTY(bool alert READ alert NOTIFY alertChanged)
-    Q_PROPERTY(bool editFocus READ editFocus NOTIFY editFocusChanged)
+    Q_PROPERTY(bool editFocus READ hasFocus NOTIFY editFocusChanged)
 
 public:
     DPasswdEditAnimated(QWidget *parent);
@@ -49,46 +36,23 @@ public Q_SLOTS:
     void showAlert(const QString &message);
     void hideAlert();
     void abortAuth();
+    bool alert();
 
 protected:
     void timerEvent(QTimerEvent *event) Q_DECL_OVERRIDE;
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
     bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
 
-private Q_SLOTS:
-    void resetKeyboardState();
-    void resetCapslockState();
-    void onEyeButtonClicked();
-    void showLoadSlider();
-    void hideLoadSlider();
-    void inputDone();
-    inline bool alert() { return m_invalidTip->isVisible(); }
-    inline bool editFocus() { return hasFocus(); }
+protected:
+    D_PRIVATE_SLOT(void _q_resetKeyboardState())
+    D_PRIVATE_SLOT(void _q_resetCapslockState())
+    D_PRIVATE_SLOT(void _q_onEyeButtonClicked())
+    D_PRIVATE_SLOT(void _q_showLoadSlider())
+    D_PRIVATE_SLOT(void _q_hideLoadSlider())
+    D_PRIVATE_SLOT(void _q_inputDone())
 
 private:
-    DImageButton *m_keyboard;
-    DImageButton *m_eye;
-    DImageButton *m_submit;
-
-    DLabel *m_caps;
-    DLabel *m_invalidMessage;
-
-    DArrowRectangle *m_invalidTip;
-    QLineEdit *m_passwdEdit;
-
-    // to get capslock state
-    DKeyboardMonitor *m_kbdMonitor;
-    // to get user keyboard layout
-    com::deepin::daemon::inputdevice::Keyboard *m_kbdInter;
-
-    bool m_keyboardEnable;
-    bool m_capsEnable;
-    bool m_eyeEnable;
-    bool m_submitEnable;
-    bool m_loadAnimEnable;
-    bool m_isLoading;
-    int m_loadSliderX;
-    int m_timerID;
+    D_DECLARE_PRIVATE(DPasswdEditAnimated)
 };
 
 DWIDGET_END_NAMESPACE
