@@ -71,6 +71,9 @@ public:
     // return the libdtkwidget version of runing application
     static int runtimeDtkVersion();
 
+    // let startdde know that we've already started.
+    static void registerDDESession();
+
     // meta information that necessary to create a about dialog for the application.
     QString productName() const;
     void setProductName(const QString &productName);
