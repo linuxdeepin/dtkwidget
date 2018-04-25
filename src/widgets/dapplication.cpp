@@ -61,7 +61,6 @@
 
 #ifdef Q_OS_LINUX
 #include "startupnotificationmonitor.h"
-#include <DDBusSender>
 #endif
 
 #define DXCB_PLUGIN_KEY "dxcb"
