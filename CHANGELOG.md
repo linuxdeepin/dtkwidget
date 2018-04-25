@@ -1,3 +1,13 @@
+<a name="2.0.7.3"></a>
+## 2.0.7.3 (2018-04-25)
+
+
+#### Features
+
+*   register dde session manager ([d5241550](https://github.com/linuxdeepin/dtkwidget/commit/d5241550615eaa6809443c264dc9369e9d4a0620))
+
+
+
 <a name="2.0.7.2"></a>
 ## 2.0.7.2 (2018-03-21)
 
