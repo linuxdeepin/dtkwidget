@@ -71,27 +71,6 @@ DCORE_USE_NAMESPACE
 
 DWIDGET_BEGIN_NAMESPACE
 
-#ifdef Q_OS_LINUX
-// let startdde know that we've already started.
-static void RegisterDdeSession()
-{
-    QString envName("DDE_SESSION_PROCESS_COOKIE_ID");
-
-    QByteArray cookie = qgetenv(envName.toUtf8().data());
-    qunsetenv(envName.toUtf8().data());
-
-    if (!cookie.isEmpty()) {
-        DDBusSender()
-                .service("com.deepin.SessionManager")
-                .path("/com/deepin/SessionManager")
-                .interface("com.deepin.SessionManager")
-                .method("Register")
-                .arg(QString(cookie))
-                .call();
-    }
-}
-#endif
-
 DApplicationPrivate::DApplicationPrivate(DApplication *q) :
     DObjectPrivate(q)
 {
@@ -332,10 +311,6 @@ DApplication::DApplication(int &argc, char **argv) :
     qputenv("QT_QPA_PLATFORM", QByteArray());
 
     QPixmapCache::setCacheLimit(0);
-
-#ifdef Q_OS_LINUX
-    RegisterDdeSession();
-#endif
 }
 
 /**
@@ -461,6 +436,26 @@ int DApplication::buildDtkVersion()
 int DApplication::runtimeDtkVersion()
 {
     return DTK_VERSION;
+}
+
+void DApplication::registerDDESession()
+{
+#ifdef Q_OS_LINUX
+    QString envName("DDE_SESSION_PROCESS_COOKIE_ID");
+
+    QByteArray cookie = qgetenv(envName.toUtf8().data());
+    qunsetenv(envName.toUtf8().data());
+
+    if (!cookie.isEmpty()) {
+        DDBusSender()
+                .service("com.deepin.SessionManager")
+                .path("/com/deepin/SessionManager")
+                .interface("com.deepin.SessionManager")
+                .method("Register")
+                .arg(QString(cookie))
+                .call();
+    }
+#endif
 }
 
 /**
