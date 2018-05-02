@@ -1,0 +1,16 @@
+{
+        "commit": {
+                "quilt": false,
+                "pkgver": "git describe --tags --long %(ref)s | awk '{split($0,v,\"-\"); print v[1]\"+r\"v[2]\"+\"v[3]}'",
+                "dist": "experimental"
+        },
+        "release": {
+                "quilt": true,
+                "pkgver": "git describe --abbrev=0 --tags %(ref)s",
+                "dist": "unstable"
+        },
+        "release-candidate": {
+                "quilt": true,
+                "dist": "unstable"
+        }
+}
