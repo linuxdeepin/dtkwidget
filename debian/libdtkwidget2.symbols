@@ -2978,19 +2978,13 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZN3Dtk6Widget9DTitlebarD1Ev@Base 2.0.7.2
  _ZN3Dtk6Widget9DTitlebarD2Ev@Base 2.0.7.2
  _ZN4QMapI7QString8QVariantE13detach_helperEv@Base 2.0.7.2
- _ZN4QMapI7QString8QVariantEC1ERKS2_@Base 2.0.7.2
- _ZN4QMapI7QString8QVariantEC2ERKS2_@Base 2.0.7.2
  _ZN4QMapI7QString8QVariantED1Ev@Base 2.0.7.2
  _ZN4QMapI7QString8QVariantED2Ev@Base 2.0.7.2
  _ZN4QMapI7QStringN3Dtk6Widget16DCrumbTextFormatEE13detach_helperEv@Base 2.0.7.2
- _ZN4QMapI7QStringN3Dtk6Widget16DCrumbTextFormatEEC1ERKS4_@Base 2.0.7.2
- _ZN4QMapI7QStringN3Dtk6Widget16DCrumbTextFormatEEC2ERKS4_@Base 2.0.7.2
  _ZN4QMapI7QStringN3Dtk6Widget16DCrumbTextFormatEED1Ev@Base 2.0.7.2
  _ZN4QMapI7QStringN3Dtk6Widget16DCrumbTextFormatEED2Ev@Base 2.0.7.2
  _ZN4QMapI7QStringP7QWidgetE13detach_helperEv@Base 2.0.7.2
  _ZN4QMapI7QStringS0_E13detach_helperEv@Base 2.0.7.2
- _ZN4QMapI7QStringS0_EC1ERKS1_@Base 2.0.7.2
- _ZN4QMapI7QStringS0_EC2ERKS1_@Base 2.0.7.2
  _ZN4QMapI7QStringS0_ED1Ev@Base 2.0.7.2
  _ZN4QMapI7QStringS0_ED2Ev@Base 2.0.7.2
  _ZN4QMapI7QStringSt8functionIFP7QWidgetP7QObjectEEE6insertERKS0_RKS7_@Base 2.0.7.2
@@ -3129,8 +3123,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZN5QListIP11QLayoutItemED1Ev@Base 2.0.7.2
  _ZN5QListIP11QLayoutItemED2Ev@Base 2.0.7.2
  _ZN5QListIP11QToolButtonE18detach_helper_growEii@Base 2.0.7.2
- _ZN5QListIP11QToolButtonEC1ERKS2_@Base 2.0.7.2
- _ZN5QListIP11QToolButtonEC2ERKS2_@Base 2.0.7.2
  _ZN5QListIP11QToolButtonED1Ev@Base 2.0.7.2
  _ZN5QListIP11QToolButtonED2Ev@Base 2.0.7.2
  _ZN5QListIP12QRadioButtonE18detach_helper_growEii@Base 2.0.7.2
@@ -3148,8 +3140,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZN5QListIP15QAbstractButtonE13detach_helperEi@Base 2.0.7.2
  _ZN5QListIP15QAbstractButtonE18detach_helper_growEii@Base 2.0.7.2
  _ZN5QListIP15QAbstractButtonE6appendERKS1_@Base 2.0.7.2
- _ZN5QListIP15QAbstractButtonEC1ERKS2_@Base 2.0.7.2
- _ZN5QListIP15QAbstractButtonEC2ERKS2_@Base 2.0.7.2
  _ZN5QListIP15QAbstractButtonED1Ev@Base 2.0.7.2
  _ZN5QListIP15QAbstractButtonED2Ev@Base 2.0.7.2
  _ZN5QListIP19QGraphicsPixmapItemE13detach_helperEi@Base 2.0.7.2
@@ -3177,8 +3167,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZN5QListIP9QLineEditED2Ev@Base 2.0.7.2
  _ZN5QListIPKN3Dtk6Widget17DBlurEffectWidgetEE18detach_helper_growEii@Base 2.0.7.2
  _ZN5QListIPKN3Dtk6Widget17DBlurEffectWidgetEE6appendERKS4_@Base 2.0.7.2
- _ZN5QListIPKN3Dtk6Widget17DBlurEffectWidgetEEC1ERKS5_@Base 2.0.7.2
- _ZN5QListIPKN3Dtk6Widget17DBlurEffectWidgetEEC2ERKS5_@Base 2.0.7.2
  _ZN5QListIPKN3Dtk6Widget17DBlurEffectWidgetEED1Ev@Base 2.0.7.2
  _ZN5QListIPKN3Dtk6Widget17DBlurEffectWidgetEED2Ev@Base 2.0.7.2
  _ZN5QListIPN3Dtk6Widget11DBaseExpandEE18detach_helper_growEii@Base 2.0.7.2
@@ -3188,8 +3176,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZN5QListIPN3Dtk6Widget14DForeignWindowEE13detach_helperEi@Base 2.0.7.2
  _ZN5QListIPN3Dtk6Widget14DForeignWindowEE18detach_helper_growEii@Base 2.0.7.2
  _ZN5QListIPN3Dtk6Widget14DForeignWindowEE6appendERKS3_@Base 2.0.7.2
- _ZN5QListIPN3Dtk6Widget14DForeignWindowEEC1ERKS4_@Base 2.0.7.2
- _ZN5QListIPN3Dtk6Widget14DForeignWindowEEC2ERKS4_@Base 2.0.7.2
  _ZN5QListIPN3Dtk6Widget14DForeignWindowEED1Ev@Base 2.0.7.2
  _ZN5QListIPN3Dtk6Widget14DForeignWindowEED2Ev@Base 2.0.7.2
  _ZN5QListIPN3Dtk6Widget15DSimpleListItemEE13detach_helperEi@Base 2.0.7.2
@@ -3219,8 +3205,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZN5QListIiE18detach_helper_growEii@Base 2.0.7.2
  _ZN5QListIiE6appendERKi@Base 2.0.7.2
  _ZN5QListIiE9removeOneERKi@Base 2.0.7.2
- _ZN5QListIiEC1ERKS0_@Base 2.0.7.2
- _ZN5QListIiEC2ERKS0_@Base 2.0.7.2
  _ZN5QListIiED1Ev@Base 2.0.7.2
  _ZN5QListIiED2Ev@Base 2.0.7.2
  _ZN6XUtils10MoveWindowEPK7QWidgetN2Qt11MouseButtonE@Base 2.0.7.2
@@ -3255,8 +3239,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZN7QVectorIN3Dtk6Widget21DPlatformWindowHandle10WMBlurAreaEE6appendERKS3_@Base 2.0.7.2
  _ZN7QVectorIiE11reallocDataEii6QFlagsIN10QArrayData16AllocationOptionEE@Base 2.0.7.2
  _ZN7QVectorIjE11reallocDataEii6QFlagsIN10QArrayData16AllocationOptionEE@Base 2.0.7.2
- _ZN7QVectorIjEC1ERKS0_@Base 2.0.7.2
- _ZN7QVectorIjEC2ERKS0_@Base 2.0.7.2
  _ZN7QWidget8setFocusEv@Base 2.0.7.2
  _ZN8ComboBox10wheelEventEP11QWheelEvent@Base 2.0.7.2
  _ZN8ComboBox11qt_metacallEN11QMetaObject4CallEiPPv@Base 2.0.7.2
