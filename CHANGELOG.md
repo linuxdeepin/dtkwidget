@@ -1,4 +1,46 @@
 <a name="2.0.8"></a>
+## 2.0.8 (2018-05-02)
+
+
+#### Bug Fixes
+
+*   double free of list item on exit ([3941dda5](https://github.com/linuxdeepin/dtkwidget/commit/3941dda581c0112ff79ddff9692343611176f56e))
+*   build failed when no static build ([9194f83b](https://github.com/linuxdeepin/dtkwidget/commit/9194f83b5faa1f1ffbb47105099f6257fc69db39))
+*   remove useless module ([84c50e83](https://github.com/linuxdeepin/dtkwidget/commit/84c50e8341fa28806a2186aba28f056d1a5acaae))
+*   isValid not work in flatpak ([88095fdf](https://github.com/linuxdeepin/dtkwidget/commit/88095fdf22c25b4458ed38cf7a1b347467513ec9))
+*   support hi-DPI for DClipEffectWidget ([2d152997](https://github.com/linuxdeepin/dtkwidget/commit/2d1529974c291f537934870cec53f86306e660a1))
+*   wait dbus call return ([bb863db0](https://github.com/linuxdeepin/dtkwidget/commit/bb863db0188678017cfbc7f05aef28c4dc7ddd3d))
+*   can not auto adjust dialog position ([c487b5cb](https://github.com/linuxdeepin/dtkwidget/commit/c487b5cb462709d42a4c9b0a9938a35037b0205a))
+*   add DAbstractDialog::move(int, int) and DAbstractDialog::setGeometry(int, int, int, int) ([3f4bc68b](https://github.com/linuxdeepin/dtkwidget/commit/3f4bc68bca7752b80703e4a9d3be152012e0511b))
+*   crash when quit application ([13d22e32](https://github.com/linuxdeepin/dtkwidget/commit/13d22e32ccc37504182a21ac8133503a437e7f6e))
+*   move the DAbstractDialog window is invalid ([7d578e99](https://github.com/linuxdeepin/dtkwidget/commit/7d578e999a190d284895243784dae0f3f035ed0e))
+*   the DPasswordEdit text color ([97ac1992](https://github.com/linuxdeepin/dtkwidget/commit/97ac1992bb37facf67d7842df8d4248c4100c46f))
+*   hide max button if cannot resize ([20dfc974](https://github.com/linuxdeepin/dtkwidget/commit/20dfc97447cd8c46139d8c9fd409d233805555c3))
+*   work around DSimpleListView cannot use tr ([98be9fed](https://github.com/linuxdeepin/dtkwidget/commit/98be9fed1d7d8c3fce7e27934678c57fc4b2ed6e))
+*   dtk_build add error marco ([bd1b7f0d](https://github.com/linuxdeepin/dtkwidget/commit/bd1b7f0d3edfe3977a9beebbe78a1cae0010ff06))
+*   use fix class name as theme file first ([d2dfd67d](https://github.com/linuxdeepin/dtkwidget/commit/d2dfd67de094334222b28c3b8f1176875b1d1393))
+*   use a wrong variable when invoke DCrumbEdit::appendCrumb in DCrumbEdit ([453f5c4c](https://github.com/linuxdeepin/dtkwidget/commit/453f5c4c38824e8dde3945eea6465af6d4994422))
+
+#### Features
+
+*   add symbols check ([a811208d](https://github.com/linuxdeepin/dtkwidget/commit/a811208d0ec7112e886c466b2536367b381b43cb))
+*   register dde session manager ([5727efe4](https://github.com/linuxdeepin/dtkwidget/commit/5727efe41a6ac2bcd2e27460dfa0814ffdafa3e7))
+*   support dtk_lib ([07326439](https://github.com/linuxdeepin/dtkwidget/commit/0732643960a34a141ffec2b48a643e86cd1b526b))
+*   add DWindowGroupLeader ([d6d9f4ff](https://github.com/linuxdeepin/dtkwidget/commit/d6d9f4ff3d4523de9119f0aa4f072d75b4a889b9))
+*   support DTK_NO_MULTIMEDIA ([5fecfc04](https://github.com/linuxdeepin/dtkwidget/commit/5fecfc04e065fa784adaeac71ef0664a31f0cb14))
+*   insert virtual tab on DTabBar when drag enter ([3927d441](https://github.com/linuxdeepin/dtkwidget/commit/3927d441f83e0aaf68acc473242fb6e9e35d235d))
+*   the DLineEdit inherit style form the QLineEdit ([7b6caece](https://github.com/linuxdeepin/dtkwidget/commit/7b6caece0394e80b89b1831ea860cc0d06558929))
+*   add "startDrag/stopDrag" for DTabBar ([611bc0c2](https://github.com/linuxdeepin/dtkwidget/commit/611bc0c2ca3674904f964b86bef6ca3bb56e4f83))
+*   add signals dragStarted/dragEnd ([a7b9d9ba](https://github.com/linuxdeepin/dtkwidget/commit/a7b9d9ba28bded77d64eb96c8e1a1d7b750c719b))
+*   support disable change window cursor on dxcb platform ([08f4f2ad](https://github.com/linuxdeepin/dtkwidget/commit/08f4f2adc5fb67ba5bf41d5f849a2fbc5973c5b1))
+*   add signal dragActoinChanged for DTabBar ([6f894a67](https://github.com/linuxdeepin/dtkwidget/commit/6f894a67ef53caf78a15debca1f8185dc8088cd5))
+* **DCrumbEdit:**
+  *  progate Key_Escape to parent window. ([390f51bf](https://github.com/linuxdeepin/dtkwidget/commit/390f51bf6f13af090a1d1c715f20c4685b19f8da))
+  *  support to send Key_enter or Key_return to parent window. ([d39ce078](https://github.com/linuxdeepin/dtkwidget/commit/d39ce0782ca8797f5837d9cabfa75647fa2e0070))
+
+
+
+<a name="2.0.8"></a>
 ## 2.0.8
 
 #### Bug Fixes
