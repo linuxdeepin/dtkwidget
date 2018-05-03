@@ -68,6 +68,7 @@ public:
     bool mouseAtScrollArea;
     bool mouseDragScrollbar;
     bool drawFrame;
+    bool isKeepSelectWhenClickBlank;
     int alwaysVisibleColumn;
     int clipRadius;
     int defaultSortingColumn;
@@ -146,6 +147,7 @@ DSimpleListView::DSimpleListView(QWidget *parent) : QWidget(parent), DObject(*ne
     d->mouseAtScrollArea = false;
     d->mouseDragScrollbar = false;
     d->drawFrame = false;
+    d->isKeepSelectWhenClickBlank = false;
     d->scrollbarDefaultWidth = 4;
     d->scrollbarDragWidth = 8;
     d->scrollbarMinHeight = 30;
@@ -421,6 +423,13 @@ void DSimpleListView::search(QString content)
     }
 
     repaint();
+}
+
+void DSimpleListView::keepSelectWhenClickBlank(bool keep)
+{
+    D_D(DSimpleListView);
+    
+    d->isKeepSelectWhenClickBlank = keep;
 }
 
 void DSimpleListView::selectAllItems()
@@ -892,7 +901,9 @@ void DSimpleListView::mousePressEvent(QMouseEvent *mouseEvent)
         int pressItemIndex = (d->renderOffset + mouseEvent->y() - d->titleHeight) / d->rowHeight;
 
         if (pressItemIndex >= d->renderItems->count()) {
-            clearSelections();
+            if (!d->isKeepSelectWhenClickBlank) {
+                clearSelections();
+            }
 
             repaint();
         } else {

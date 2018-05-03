@@ -164,6 +164,11 @@ public:
      * Search
      */
     void search(QString searchContent);
+    
+    /*
+     * Keep select items when click blank area.
+     */
+    void keepSelectWhenClickBlank(bool keep);
 
     // DSimpleListView operations.
     void selectAllItems();
