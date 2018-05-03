@@ -338,6 +338,27 @@ void DApplication::setTheme(const QString &theme)
     d->setTheme(theme);
 }
 
+#ifdef Q_OS_UNIX
+/**
+ * @brief DApplication::setOOMScoreAdj set Out-Of-Memory score
+ * @param score vaild range is [-1000, 1000]
+ */
+void DApplication::setOOMScoreAdj(const int score)
+{
+    if (score > 1000 || score < -1000)
+        qWarning() << "OOM score adjustment value out of range: " << score;
+
+    QFile f("/proc/self/oom_score_adj");
+    if (!f.open(QIODevice::WriteOnly))
+    {
+        qWarning() << "OOM score adjust failed, open file error: " << f.errorString();
+        return;
+    }
+
+    f.write(std::to_string(score).c_str());
+}
+#endif
+
 /**
  * @brief DApplication::setSingleInstance marks this application to be single instanced.
  * @param key is used as the unique ID of every application.

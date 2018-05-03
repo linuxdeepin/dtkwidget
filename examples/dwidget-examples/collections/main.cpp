@@ -41,6 +41,9 @@ int main(int argc, char *argv[])
     a.loadTranslator();
     a.setAttribute(Qt::AA_EnableHighDpiScaling, true);
     a.setTheme("light");
+#ifdef Q_OS_UNIX
+    a.setOOMScoreAdj(500);
+#endif
 
     if (!a.setSingleInstance("deepin-tool-kit-examples")) {
         qDebug() << "another instance is running!!";

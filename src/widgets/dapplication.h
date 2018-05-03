@@ -56,6 +56,10 @@ public:
     QString theme() const;
     void setTheme(const QString &theme);
 
+#ifdef Q_OS_UNIX
+    void setOOMScoreAdj(const int score);
+#endif
+
     bool setSingleInstance(const QString &key);
 
     bool setSingleInstance(const QString &key, SingleScope singleScope);
