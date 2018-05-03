@@ -166,6 +166,11 @@ public:
     void search(QString searchContent);
     
     /*
+     * Set single selection.
+     */
+    void setSingleSelect(bool singleSelect);
+    
+    /*
      * Keep select items when click blank area.
      */
     void keepSelectWhenClickBlank(bool keep);

@@ -69,6 +69,7 @@ public:
     bool mouseDragScrollbar;
     bool drawFrame;
     bool isKeepSelectWhenClickBlank;
+    bool isSingleSelect;
     int alwaysVisibleColumn;
     int clipRadius;
     int defaultSortingColumn;
@@ -148,6 +149,7 @@ DSimpleListView::DSimpleListView(QWidget *parent) : QWidget(parent), DObject(*ne
     d->mouseDragScrollbar = false;
     d->drawFrame = false;
     d->isKeepSelectWhenClickBlank = false;
+    d->isSingleSelect = false;
     d->scrollbarDefaultWidth = 4;
     d->scrollbarDragWidth = 8;
     d->scrollbarMinHeight = 30;
@@ -425,6 +427,13 @@ void DSimpleListView::search(QString content)
     repaint();
 }
 
+void DSimpleListView::setSingleSelect(bool singleSelect)
+{
+    D_D(DSimpleListView);
+        
+    d->isSingleSelect = singleSelect;
+}
+
 void DSimpleListView::keepSelectWhenClickBlank(bool keep)
 {
     D_D(DSimpleListView);
@@ -435,19 +444,22 @@ void DSimpleListView::keepSelectWhenClickBlank(bool keep)
 void DSimpleListView::selectAllItems()
 {
     D_D(DSimpleListView);
+    
+    if (!d->isSingleSelect) {
+        // Record old render offset to control scrollbar whether display.
+        d->oldRenderOffset = d->renderOffset;
 
-    // Record old render offset to control scrollbar whether display.
-    d->oldRenderOffset = d->renderOffset;
+        // Select all items.
+        clearSelections();
+        addSelections(*d->renderItems);
 
-    // Select all items.
-    clearSelections();
-    addSelections(*d->renderItems);
+        // Scroll to top.
+        d->renderOffset = d->getTopRenderOffset();
 
-    // Scroll to top.
-    d->renderOffset = d->getTopRenderOffset();
+        // Repaint.
+        repaint();
+    }
 
-    // Repaint.
-    repaint();
 }
 
 void DSimpleListView::selectFirstItem()
@@ -509,73 +521,87 @@ void DSimpleListView::selectNextItem()
 void DSimpleListView::shiftSelectPageDown()
 {
     D_D(DSimpleListView);
-
-    shiftSelectNextItemWithOffset(getScrollAreaHeight() / d->rowHeight);
+    
+    if (!d->isSingleSelect) {
+        shiftSelectNextItemWithOffset(getScrollAreaHeight() / d->rowHeight);
+    }
 }
 
 void DSimpleListView::shiftSelectPageUp()
 {
     D_D(DSimpleListView);
-
-    shiftSelectPrevItemWithOffset(getScrollAreaHeight() / d->rowHeight);
+    
+    if (!d->isSingleSelect) {
+        shiftSelectPrevItemWithOffset(getScrollAreaHeight() / d->rowHeight);
+    }
 }
 
 void DSimpleListView::shiftSelectToEnd()
 {
     D_D(DSimpleListView);
+    
+    if (!d->isSingleSelect) {
+        // Select last item if nothing selected yet.
+        if (d->selectionItems->empty()) {
+            selectLastItem();
+        }
+        // Select items from last selected item to last item.
+        else {
+            // Found last selected index and do select operation.
+            int lastSelectionIndex = d->renderItems->indexOf(d->lastSelectItem);
+            shiftSelectItemsWithBound(lastSelectionIndex, d->renderItems->count() - 1);
 
-    // Select last item if nothing selected yet.
-    if (d->selectionItems->empty()) {
-        selectLastItem();
+            // Scroll to bottom.
+            d->renderOffset = getBottomRenderOffset();
+
+            // Repaint.
+            repaint();
+        }
     }
-    // Select items from last selected item to last item.
-    else {
-        // Found last selected index and do select operation.
-        int lastSelectionIndex = d->renderItems->indexOf(d->lastSelectItem);
-        shiftSelectItemsWithBound(lastSelectionIndex, d->renderItems->count() - 1);
 
-        // Scroll to bottom.
-        d->renderOffset = getBottomRenderOffset();
-
-        // Repaint.
-        repaint();
-    }
 }
 
 void DSimpleListView::shiftSelectToHome()
 {
     D_D(DSimpleListView);
+    
+    if (!d->isSingleSelect) {
+        // Select first item if nothing selected yet.
+        if (d->selectionItems->empty()) {
+            selectFirstItem();
+        }
+        // Select items from last selected item to first item.
+        else {
+            // Found last selected index and do select operation.
+            int lastSelectionIndex = d->renderItems->indexOf(d->lastSelectItem);
+            shiftSelectItemsWithBound(0, lastSelectionIndex);
 
-    // Select first item if nothing selected yet.
-    if (d->selectionItems->empty()) {
-        selectFirstItem();
+            // Scroll to top.
+            d->renderOffset = d->getTopRenderOffset();
+
+            // Repaint.
+            repaint();
+        }
     }
-    // Select items from last selected item to first item.
-    else {
-        // Found last selected index and do select operation.
-        int lastSelectionIndex = d->renderItems->indexOf(d->lastSelectItem);
-        shiftSelectItemsWithBound(0, lastSelectionIndex);
 
-        // Scroll to top.
-        d->renderOffset = d->getTopRenderOffset();
-
-        // Repaint.
-        repaint();
-    }
 }
 
 void DSimpleListView::shiftSelectToNext()
 {
     D_D(DSimpleListView);
-
-    shiftSelectNextItemWithOffset(1);
+    
+    if (!d->isSingleSelect) {
+        shiftSelectNextItemWithOffset(1);
+    }
 }
 
 void DSimpleListView::shiftSelectToPrev()
 {
     D_D(DSimpleListView);
-
-    shiftSelectPrevItemWithOffset(1);
+    
+    if (!d->isSingleSelect) {
+        shiftSelectPrevItemWithOffset(1);
+    }
 }
 
 void DSimpleListView::scrollPageDown()
@@ -910,7 +936,7 @@ void DSimpleListView::mousePressEvent(QMouseEvent *mouseEvent)
             if (mouseEvent->button() == Qt::LeftButton) {
                 if (pressItemIndex < d->renderItems->count()) {
                     // Scattered selection of items when press ctrl modifier.
-                    if (mouseEvent->modifiers() == Qt::ControlModifier) {
+                    if (!d->isSingleSelect && mouseEvent->modifiers() == Qt::ControlModifier) {
                         DSimpleListItem *item = (*d->renderItems)[pressItemIndex];
 
                         if (d->selectionItems->contains(item)) {
@@ -922,7 +948,7 @@ void DSimpleListView::mousePressEvent(QMouseEvent *mouseEvent)
                         }
                     }
                     // Continuous selection of items when press shift modifier.
-                    else if ((mouseEvent->modifiers() == Qt::ShiftModifier) && !d->selectionItems->empty()) {
+                    else if (!d->isSingleSelect && (mouseEvent->modifiers() == Qt::ShiftModifier) && !d->selectionItems->empty()) {
                         int lastSelectionIndex = d->renderItems->indexOf(d->lastSelectItem);
                         int selectionStartIndex = std::min(pressItemIndex, lastSelectionIndex);
                         int selectionEndIndex = std::max(pressItemIndex, lastSelectionIndex);
