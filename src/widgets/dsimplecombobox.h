@@ -27,7 +27,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDTKWIDGETSHARED_EXPORT  D_DECL_DEPRECATED_X("Use QCombobBox directly.") DSimpleComboBox : public DComboBox
+class LIBDTKWIDGETSHARED_EXPORT  D_DECL_DEPRECATED_X("Use QComboBox directly.") DSimpleComboBox : public DComboBox
 {
     Q_OBJECT
 public:
