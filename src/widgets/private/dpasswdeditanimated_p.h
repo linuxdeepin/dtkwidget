@@ -31,6 +31,7 @@ public Q_SLOTS:
     void _q_showLoadSlider();
     void _q_hideLoadSlider();
     void _q_inputDone();
+    void _q_onKeyboardButtonClicked();
 
 public:
     DImageButton *m_keyboard;

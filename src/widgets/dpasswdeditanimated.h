@@ -24,6 +24,7 @@ Q_SIGNALS:
     void abort();
     void alertChanged(bool alert);
     void editFocusChanged(bool focus);
+    void keyboardButtonClicked();
 
 public Q_SLOTS:
     void setEchoMode(QLineEdit::EchoMode mode);
@@ -50,6 +51,7 @@ protected:
     D_PRIVATE_SLOT(void _q_showLoadSlider())
     D_PRIVATE_SLOT(void _q_hideLoadSlider())
     D_PRIVATE_SLOT(void _q_inputDone())
+    D_PRIVATE_SLOT(void _q_onKeyboardButtonClicked())
 
 private:
     D_DECLARE_PRIVATE(DPasswdEditAnimated)

@@ -79,6 +79,7 @@ void DPasswdEditAnimatedPrivate::init()
     q->connect(m_passwdEdit, SIGNAL(returnPressed()), q, SLOT(_q_inputDone()));
     q->connect(m_passwdEdit, SIGNAL(selectionChanged()), q, SLOT(hideAlert()));
     q->connect(m_submit, SIGNAL(clicked()), q, SLOT(_q_inputDone()));
+    q->connect(m_keyboard, SIGNAL(clicked()), q, SLOT(_q_onKeyboardButtonClicked()));
 }
 
 void DPasswdEditAnimatedPrivate::_q_onEyeButtonClicked()
@@ -101,6 +102,13 @@ void DPasswdEditAnimatedPrivate::_q_inputDone()
         _q_showLoadSlider();
         Q_EMIT q->submit(input);
     }
+}
+
+void DPasswdEditAnimatedPrivate::_q_onKeyboardButtonClicked()
+{
+    D_Q(DPasswdEditAnimated);
+
+    Q_EMIT q->keyboardButtonClicked();
 }
 
 void DPasswdEditAnimatedPrivate::_q_showLoadSlider()
