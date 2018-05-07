@@ -166,6 +166,13 @@ DPasswdEditAnimated::DPasswdEditAnimated(QWidget *parent) : QFrame(parent),
     d->init();
 }
 
+QLineEdit *DPasswdEditAnimated::lineEdit()
+{
+    D_D(DPasswdEditAnimated);
+
+    return d->m_passwdEdit;
+}
+
 void DPasswdEditAnimated::setKeyboardButtonEnable(bool value)
 {
     D_D(DPasswdEditAnimated);

@@ -27,6 +27,7 @@ Q_SIGNALS:
     void keyboardButtonClicked();
 
 public Q_SLOTS:
+    QLineEdit *lineEdit();
     void setEchoMode(QLineEdit::EchoMode mode);
     void setKeyboardButtonEnable(bool value);
     void setCapslockIndicatorEnable(bool value);
