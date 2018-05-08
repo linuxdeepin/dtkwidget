@@ -38,13 +38,6 @@ win* {
     CONFIG += staticlib
 }
 
-load(configure)
-qtCompileTest(libdframeworkdbus) {
-    DEFINES += DFRAMEWORKDBUS_API_XEVENTMONITOR
-} else {
-    CONFIG -= no_keywords
-}
-
 HEADERS += dtkwidget_global.h
 
 includes.files += \
