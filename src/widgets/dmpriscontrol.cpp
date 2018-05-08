@@ -160,12 +160,12 @@ void DMPRISControlPrivate::_q_onMetaDataChanged()
     if (!m_mprisInter)
         return;
 
-    const auto meta = m_mprisInter->metadata();
-    const QString title = meta.value("xesam:title").toString();
-    const QString artist = meta.value("xesam:artist").toString();
-    const QUrl pictureUrl = meta.value("mpris:artUrl").toString();
-    const QSize pictureSize = m_picture->size();
-    const QPixmap picture = QPixmap(pictureUrl.toLocalFile()).scaled(pictureSize, Qt::IgnoreAspectRatio);
+    const auto &meta = m_mprisInter->metadata();
+    const QString &title = meta.value("xesam:title").toString();
+    const QString &artist = meta.value("xesam:artist").toString();
+    const QUrl &pictureUrl = meta.value("mpris:artUrl").toString();
+    const QSize &pictureSize = m_picture->size();
+    const QPixmap &picture = QPixmap(pictureUrl.toLocalFile()).scaled(pictureSize, Qt::IgnoreAspectRatio);
 
     if (title.isEmpty())
         m_title->clear();
@@ -177,13 +177,8 @@ void DMPRISControlPrivate::_q_onMetaDataChanged()
             m_title->setText(QString("%1 - %2").arg(title).arg(artist));
     }
 
-    if (picture.isNull()) {
-        m_picture->setText("unable to obtain picture.");
-    } else {
-        m_picture->setPixmap(picture);
-        m_picture->setText(QString());
-    }
-    m_picture->setVisible(m_pictureVisible);
+    m_picture->setPixmap(picture);
+    m_picture->setVisible(m_pictureVisible && !picture.isNull());
 }
 
 void DMPRISControlPrivate::_q_onPlaybackStatusChanged()
