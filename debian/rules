@@ -5,6 +5,8 @@ export QT_SELECT = qt5
 
 DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 
+DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
+
 ifneq (,$(wildcard .git/config))
 	CONFIG_VERSION=
 else
@@ -24,3 +26,14 @@ override_dh_auto_configure:
 	dh_auto_configure -- LIB_INSTALL_DIR=/usr/lib/$(DEB_HOST_MULTIARCH)
 override_dh_makeshlibs:
 	dh_makeshlibs -V
+
+ifeq ($(DEB_BUILD_ARCH), sw_64)
+override_dh_makeshlibs:
+	dh_makeshlibs -V -- -c0
+endif
+
+ifeq ($(DEB_BUILD_ARCH), mips64el)
+override_dh_makeshlibs:
+	dh_makeshlibs -V -- -c0
+endif
+
