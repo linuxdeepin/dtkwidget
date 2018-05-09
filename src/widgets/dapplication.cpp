@@ -315,9 +315,12 @@ DApplication::DApplication(int &argc, char **argv) :
 
 #ifdef Q_OS_LINUX
     // set qpixmap cache limit
-    QGSettings gsettings("com.deepin.dde.dapplication", "/com/deepin/dde/dapplication/");
-    if (gsettings.keys().contains("qpixmapCacheLimit"))
-        QPixmapCache::setCacheLimit(gsettings.get("qpixmap-cache-limit").toInt());
+    if (QGSettings::isSchemaInstalled("com.deepin.dde.dapplication"))
+    {
+        QGSettings gsettings("com.deepin.dde.dapplication", "/com/deepin/dde/dapplication/");
+        if (gsettings.keys().contains("qpixmapCacheLimit"))
+            QPixmapCache::setCacheLimit(gsettings.get("qpixmap-cache-limit").toInt());
+    }
 #endif
 }
 
