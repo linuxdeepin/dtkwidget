@@ -38,7 +38,7 @@
 #include "ddialog.h"
 #include "dthememanager.h"
 #include "dboxwidget.h"
-#include "anchors.h"
+#include "DAnchors"
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -127,7 +127,7 @@ void DDialogPrivate::init()
     closeButton->setFixedSize(DIALOG::CLOSE_BUTTON_WIDTH, DIALOG::CLOSE_BUTTON_HEIGHT);
     closeButton->setAttribute(Qt::WA_NoMousePropagation);
 
-    AnchorsBase::setAnchor(closeButton, Qt::AnchorRight, q, Qt::AnchorRight);
+    DAnchorsBase::setAnchor(closeButton, Qt::AnchorRight, q, Qt::AnchorRight);
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->setContentsMargins(0, 0, 0, 0);
