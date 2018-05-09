@@ -73,12 +73,10 @@ Navigation::Navigation(QWidget *parent) :
 
     layout->addWidget(d->navbar);
 
-    connect(d->navbar, &QListView::clicked,
-    this, [ = ](const QModelIndex & index) {
-        qDebug() << index.data(NavigationDelegate::NavKeyRole);
-        auto key = index.data(NavigationDelegate::NavKeyRole).toString();
+    connect(d->navbar->selectionModel(), &QItemSelectionModel::currentChanged, this, [=] (const QModelIndex &current) {
+        const QString &key = current.data(NavigationDelegate::NavKeyRole).toString();
         if (!key.isEmpty()) {
-            Q_EMIT selectedGroup(index.data(NavigationDelegate::NavKeyRole).toString());
+            Q_EMIT selectedGroup(key);
         }
     });
 

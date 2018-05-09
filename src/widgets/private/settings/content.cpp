@@ -123,6 +123,9 @@ DSettingsWidgetFactory *Content::widgetFactory() const
 void Content::onScrollToGroup(const QString &key)
 {
     Q_D(Content);
+
+    if (!d->titles.contains(key)) return;
+
     auto title = d->titles.value(key);
 
     this->blockSignals(true);
