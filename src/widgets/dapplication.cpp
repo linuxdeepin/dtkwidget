@@ -61,7 +61,10 @@
 
 #ifdef Q_OS_LINUX
 #include "startupnotificationmonitor.h"
+
 #include <DDBusSender>
+
+#include <QGSettings>
 #endif
 
 #define DXCB_PLUGIN_KEY "dxcb"
@@ -310,7 +313,12 @@ DApplication::DApplication(int &argc, char **argv) :
 {
     qputenv("QT_QPA_PLATFORM", QByteArray());
 
-    QPixmapCache::setCacheLimit(0);
+#ifdef Q_OS_LINUX
+    // set qpixmap cache limit
+    QGSettings gsettings("com.deepin.dde.dapplication", "/com/deepin/dde/dapplication/");
+    if (gsettings.keys().contains("qpixmapCacheLimit"))
+        QPixmapCache::setCacheLimit(gsettings.get("qpixmap-cache-limit").toInt());
+#endif
 }
 
 /**
