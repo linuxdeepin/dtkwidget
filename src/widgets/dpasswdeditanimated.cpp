@@ -17,6 +17,7 @@ void DPasswdEditAnimatedPrivate::init()
     D_Q(DPasswdEditAnimated);
 
     QHBoxLayout *mainHLayout = new QHBoxLayout(q);
+    QVBoxLayout *passwdVBLayout = new QVBoxLayout;
 
     m_keyboard = new DImageButton;
     m_passwdEdit = new QLineEdit;
@@ -43,8 +44,15 @@ void DPasswdEditAnimatedPrivate::init()
     m_invalidMessage->setObjectName("InvalidMessage");
     m_invalidTip->setObjectName("InvalidTip");
 
+    m_keyboard->setStyleSheet("background-color: transparent;");
+    m_passwdEdit->setStyleSheet("background-color: transparent;");
+    m_caps->setStyleSheet("background-color: transparent;");
+    m_eye->setStyleSheet("background-color: transparent;");
+    m_submit->setStyleSheet("background-color: transparent;");
+
     m_passwdEdit->setEchoMode(QLineEdit::Password);
     m_passwdEdit->setFrame(false);
+    m_passwdEdit->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     m_passwdEdit->installEventFilter(q);
     q->setFocusPolicy(Qt::StrongFocus);
     q->setFocusProxy(m_passwdEdit);
@@ -53,8 +61,14 @@ void DPasswdEditAnimatedPrivate::init()
 
     m_invalidTip->hide();
 
+    // fix QLineEdit do not expand width in QHBoxLayout
+    passwdVBLayout->setMargin(0);
+    passwdVBLayout->setContentsMargins(0, 0, 0, 0);
+    passwdVBLayout->setSpacing(0);
+    passwdVBLayout->addWidget(m_passwdEdit);
+
     mainHLayout->addWidget(m_keyboard, 0, Qt::AlignLeft);
-    mainHLayout->addWidget(m_passwdEdit, 1, Qt::AlignLeft);
+    mainHLayout->addLayout(passwdVBLayout, 1);
     mainHLayout->addWidget(m_caps, 0, Qt::AlignRight);
     mainHLayout->addWidget(m_eye, 0, Qt::AlignRight);
     mainHLayout->addWidget(m_submit, 0, Qt::AlignRight);

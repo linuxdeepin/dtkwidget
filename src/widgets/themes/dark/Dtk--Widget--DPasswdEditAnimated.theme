@@ -20,6 +20,14 @@ Dtk--Widget--DPasswdEditAnimated #KeyboardButton {
     qproperty-pressPic: url(:/images/dark/images/keyboard-clicked.svg);
 }
 
+Dtk--Widget--DPasswdEditAnimated #PasswdEdit {
+
+}
+
+Dtk--Widget--DPasswdEditAnimated #Capslock {
+
+}
+
 Dtk--Widget--DPasswdEditAnimated #EyeButton {
     qproperty-normalPic: url(:/images/dark/images/pw-visible-normal.svg);
     qproperty-hoverPic: url(:/images/dark/images/pw-visible-hover.svg);
@@ -34,8 +42,4 @@ Dtk--Widget--DPasswdEditAnimated #SubmitButton {
 
 Dtk--Widget--DPasswdEditAnimated #InvalidTip {
     qproperty-backgroundColor: rgba(255,255,255,.3);
-}
-
-Dtk--Widget--DPasswdEditAnimated #PasswdEdit {
-
 }
