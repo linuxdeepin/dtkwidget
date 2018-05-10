@@ -176,6 +176,8 @@ void DInputDialog::setTextEchoMode(QLineEdit::EchoMode mode)
         edit->setEchoMode(mode);
     }
 
+    edit->setClearButtonEnabled(true);
+
     disconnect(d->lineEdit, &DLineEdit::alertChanged, this, &DInputDialog::textAlertChanged);
     disconnect(d->lineEdit, &DLineEdit::textChanged, this, &DInputDialog::textValueChanged);
     connect(edit, &DLineEdit::alertChanged, this, &DInputDialog::textAlertChanged);
