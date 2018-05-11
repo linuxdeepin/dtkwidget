@@ -1,3 +1,27 @@
+<a name="2.0.7.4"></a>
+## 2.0.7.4 (2018-05-11)
+
+
+#### Bug Fixes
+
+*   add DAbstractDialog::move(int, int) and DAbstractDialog::setGeometry(int, int, int, int) ([dbc0eadf](https://github.com/linuxdeepin/dtkwidget/commit/dbc0eadf427be2f3bd950e5481469616cc07b24c))
+*   move the DAbstractDialog window is invalid ([a04e438b](https://github.com/linuxdeepin/dtkwidget/commit/a04e438bdf4b096c95e59bf1f76d8b7bc6104612))
+*   can not auto adjust dialog position ([f53579c6](https://github.com/linuxdeepin/dtkwidget/commit/f53579c6f50397afed4fd8787d4a794facab85c7))
+*   wait dbus call return ([1cf4d0c1](https://github.com/linuxdeepin/dtkwidget/commit/1cf4d0c139d3c57212a3a7f7b8b86cd0fac177aa))
+*   build failed ([8afa3123](https://github.com/linuxdeepin/dtkwidget/commit/8afa31239a8f2307656a5ea6cc2c1b11fd4cf5da))
+*   reset short cut not show ([8ba379aa](https://github.com/linuxdeepin/dtkwidget/commit/8ba379aaaa23a70715d16387c3d294c2742b52de))
+*   hide max button if cannot resize ([40e80880](https://github.com/linuxdeepin/dtkwidget/commit/40e80880201e3f385d34cb7f07dd69a9a6ad6cda))
+*   work around DSimpleListView cannot use tr ([4996efd4](https://github.com/linuxdeepin/dtkwidget/commit/4996efd4b03075efed20953a0dd4ff929c94eac3))
+*   dtk_build add error marco ([b1ebee2e](https://github.com/linuxdeepin/dtkwidget/commit/b1ebee2e709061942a99050093a9ebfc1e9b315a))
+*   use fix class name as theme file first ([fd1d76b4](https://github.com/linuxdeepin/dtkwidget/commit/fd1d76b488475e98b79ae1a1365cc724ac84739b))
+
+#### Features
+
+*   add registerDDESession ([4e65da8f](https://github.com/linuxdeepin/dtkwidget/commit/4e65da8f0422b75fb801af510adf5b7df31b324d))
+*   register dde session manager ([d5241550](https://github.com/linuxdeepin/dtkwidget/commit/d5241550615eaa6809443c264dc9369e9d4a0620))
+
+
+
 <a name="2.0.7.3"></a>
 ## 2.0.7.3 (2018-04-25)
 
