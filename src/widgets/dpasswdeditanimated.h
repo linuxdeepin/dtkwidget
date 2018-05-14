@@ -3,6 +3,7 @@
 
 #include <DObject>
 #include <QLineEdit>
+#include <QPropertyAnimation>
 #include <dtkwidget_global.h>
 
 DWIDGET_BEGIN_NAMESPACE
@@ -15,6 +16,7 @@ class LIBDTKWIDGETSHARED_EXPORT DPasswdEditAnimated : public QFrame, public DTK_
 
     Q_PROPERTY(bool alert READ alert NOTIFY alertChanged)
     Q_PROPERTY(bool editFocus READ hasFocus NOTIFY editFocusChanged)
+    Q_PROPERTY(QColor loadingEffectColor READ loadingEffectColor WRITE setLoadingEffectColor DESIGNABLE true SCRIPTABLE true)
 
 public:
     DPasswdEditAnimated(QWidget *parent);
@@ -27,22 +29,29 @@ Q_SIGNALS:
     void keyboardButtonClicked();
 
 public Q_SLOTS:
-    QLineEdit *lineEdit();
-    void setEchoMode(QLineEdit::EchoMode mode);
     void setKeyboardButtonEnable(bool value);
     void setCapslockIndicatorEnable(bool value);
     void setEyeButtonEnable(bool value);
     void setSubmitButtonEnable(bool value);
     void setLoadAnimEnable(bool value);
+
+    void setEchoMode(QLineEdit::EchoMode mode);
     void setSubmitIcon(const QString &normalPic, const QString &hoverPic, const QString &pressPic);
+    void setLoadingEffectColor(const QColor &color);
+
     void showAlert(const QString &message);
     void hideAlert();
     void abortAuth();
+
+public:
     bool alert();
 
+    QLineEdit *lineEdit();
+    QPropertyAnimation *loadingAnimation();
+
+    QColor loadingEffectColor();
+
 protected:
-    void timerEvent(QTimerEvent *event) Q_DECL_OVERRIDE;
-    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
     bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
 
 protected:

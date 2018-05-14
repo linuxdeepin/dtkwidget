@@ -7,6 +7,34 @@
 
 DWIDGET_USE_NAMESPACE
 
+LoadSlider::LoadSlider(QWidget *parent) : QWidget(parent),
+    m_loadSliderColor(Qt::gray)
+{
+}
+
+void LoadSlider::setLoadSliderColor(const QColor &color)
+{
+    m_loadSliderColor = color;
+    update();
+}
+
+void LoadSlider::paintEvent(QPaintEvent *event)
+{
+    QPainter painter(this);
+//    painter.setOpacity(0.8);
+    QLinearGradient grad(0, height() / 2, width(), height() / 2);
+    grad.setColorAt(0.0, Qt::transparent);
+    grad.setColorAt(1.0, m_loadSliderColor);
+    painter.fillRect(0, 1, width(), height() - 2, grad);
+
+    QWidget::paintEvent(event);
+}
+
+QColor LoadSlider::loadSliderColor() const
+{
+    return m_loadSliderColor;
+}
+
 DPasswdEditAnimatedPrivate::DPasswdEditAnimatedPrivate(DPasswdEditAnimated *q)
     : DTK_CORE_NAMESPACE::DObjectPrivate(q)
 {
@@ -27,14 +55,19 @@ void DPasswdEditAnimatedPrivate::init()
     m_invalidMessage = new DLabel;
     m_invalidTip = new DArrowRectangle(DArrowRectangle::ArrowTop, q);
 
+    m_loadSlider = new LoadSlider(q);
+    m_loadSlider->hide();
+    m_loadSliderAnim = new QPropertyAnimation(m_loadSlider, "pos", m_loadSlider);
+    m_loadSliderAnim->setDuration(1000);
+    m_loadSliderAnim->setLoopCount(-1);
+    m_loadSliderAnim->setEasingCurve(QEasingCurve::Linear);
+
     m_keyboardEnable = true;
     m_capsEnable = true;
     m_eyeEnable = true;
     m_submitEnable = true;
     m_loadAnimEnable = true;
     m_isLoading = false;
-    m_loadSliderX = 0;
-    m_timerID = 0;
 
     m_keyboard->setObjectName("KeyboardButton");
     m_passwdEdit->setObjectName("PasswdEdit");
@@ -132,8 +165,11 @@ void DPasswdEditAnimatedPrivate::_q_showLoadSlider()
     if (m_loadAnimEnable) {
         if (!m_isLoading) {
             m_isLoading = true;
-            m_loadSliderX = 0;
-            m_timerID = q->startTimer(5);
+            m_loadSlider->show();
+            m_loadSlider->setGeometry(0, 0, LoadSliderWidth, q->height());
+            m_loadSliderAnim->setStartValue(QPoint(0 - LoadSliderWidth, 0));
+            m_loadSliderAnim->setEndValue(QPoint(q->width(), 0));
+            m_loadSliderAnim->start();
         }
     }
 }
@@ -142,11 +178,10 @@ void DPasswdEditAnimatedPrivate::_q_hideLoadSlider()
 {
     D_Q(DPasswdEditAnimated);
 
-    if (m_timerID != 0 && m_isLoading) {
-        q->killTimer(m_timerID);
+    if (m_isLoading) {
         m_isLoading = false;
-        m_timerID = 0;
-        q->update();
+        m_loadSliderAnim->stop();
+        m_loadSlider->hide();
     }
 }
 
@@ -185,6 +220,13 @@ QLineEdit *DPasswdEditAnimated::lineEdit()
     D_D(DPasswdEditAnimated);
 
     return d->m_passwdEdit;
+}
+
+QPropertyAnimation *DPasswdEditAnimated::loadingAnimation()
+{
+    D_D(DPasswdEditAnimated);
+
+    return d->m_loadSliderAnim;
 }
 
 void DPasswdEditAnimated::setKeyboardButtonEnable(bool value)
@@ -321,32 +363,18 @@ void DPasswdEditAnimated::setSubmitIcon(const QString &normalPic, const QString 
     d->m_submit->setPressPic(pressPic);
 }
 
-void DPasswdEditAnimated::timerEvent(QTimerEvent *event)
-{
-    Q_UNUSED(event)
-
-    update();
-}
-
-void DPasswdEditAnimated::paintEvent(QPaintEvent *event)
+QColor DPasswdEditAnimated::loadingEffectColor()
 {
     D_D(DPasswdEditAnimated);
 
-    QFrame::paintEvent(event);
+    return d->m_loadSlider->loadSliderColor();
+}
 
-    if (d->m_isLoading) {
-        QPainter painter(this);
-    //    painter.setOpacity(0.8);
-        QLinearGradient grad(d->m_loadSliderX, height() / 2, 40 + d->m_loadSliderX, height() / 2);
-        grad.setColorAt(0.0, Qt::transparent);
-        grad.setColorAt(1.0, Qt::gray);
-        painter.fillRect(d->m_loadSliderX, 1, 40, height() - 2, grad);
+void DPasswdEditAnimated::setLoadingEffectColor(const QColor &color)
+{
+    D_D(DPasswdEditAnimated);
 
-        d->m_loadSliderX = d->m_loadSliderX + 1;
-        if (d->m_loadSliderX >= width()) {
-            d->m_loadSliderX = 0;
-        }
-    }
+    d->m_loadSlider->setLoadSliderColor(color);
 }
 
 #include "moc_dpasswdeditanimated.cpp"

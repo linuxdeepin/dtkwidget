@@ -15,6 +15,22 @@ using KeyboardInter = com::deepin::daemon::inputdevice::Keyboard;
 
 DWIDGET_BEGIN_NAMESPACE
 
+class LoadSlider : public QWidget
+{
+public:
+    LoadSlider(QWidget *parent = 0);
+
+public:
+    QColor loadSliderColor() const;
+    void setLoadSliderColor(const QColor &color);
+
+protected:
+    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
+
+private:
+    QColor m_loadSliderColor;
+};
+
 class DPasswdEditAnimatedPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 {
     D_DECLARE_PUBLIC(DPasswdEditAnimated)
@@ -44,6 +60,9 @@ public:
     DArrowRectangle *m_invalidTip;
     QLineEdit *m_passwdEdit;
 
+    LoadSlider *m_loadSlider;
+    QPropertyAnimation *m_loadSliderAnim;
+
     // to get capslock state
     DKeyboardMonitor *m_kbdMonitor;
     // to get user keyboard layout
@@ -55,8 +74,8 @@ public:
     bool m_submitEnable;
     bool m_loadAnimEnable;
     bool m_isLoading;
-    int m_loadSliderX;
-    int m_timerID;
+
+    const int LoadSliderWidth = 40;
 };
 
 DWIDGET_END_NAMESPACE
