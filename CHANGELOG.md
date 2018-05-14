@@ -1,3 +1,27 @@
+<a name="2.0.8.1"></a>
+## 2.0.8.1 (2018-05-14)
+
+
+#### Features
+
+*   DSettings support spinbox max/min ([550f2fc4](https://github.com/linuxdeepin/dtkwidget/commit/550f2fc4b534abac04c5309375a21b59ffa118db))
+*   Hide album picture if it's null ([45da32be](https://github.com/linuxdeepin/dtkwidget/commit/45da32beb6815fdfb0dd409e543e33d1e72efca5))
+*   add registerDDESession ([d543e68f](https://github.com/linuxdeepin/dtkwidget/commit/d543e68f65148058243d276182505c02fc14280a))
+
+#### Bug Fixes
+
+*   remove missing symbols ([000b06eb](https://github.com/linuxdeepin/dtkwidget/commit/000b06eb0c1e9f96ecdd952e5b77b298f43289f8))
+*   update symbols ([ea074f6d](https://github.com/linuxdeepin/dtkwidget/commit/ea074f6dc52579b39577856d9d0ffe40becab711))
+*   reset short cut not show ([f9937836](https://github.com/linuxdeepin/dtkwidget/commit/f99378368c5722fe63a0b20453287d7c22a319ca))
+*   build failure due to missing xi in pkgconfig array ([ee8a6419](https://github.com/linuxdeepin/dtkwidget/commit/ee8a64190b62a083e1c10c4949ca1e296befbfd3))
+*   remove some symbals ([cb888e92](https://github.com/linuxdeepin/dtkwidget/commit/cb888e92295162dcb2043d19c4ebd02715d3aca8))
+* **DDialog:**  replace Anchors to DAnchors ([f280a09c](https://github.com/linuxdeepin/dtkwidget/commit/f280a09c2e58f49ce6c791653797a34616a1b886))
+* **DInputDialog:**  not enable clear button ([a8d4adab](https://github.com/linuxdeepin/dtkwidget/commit/a8d4adaba7089a05af90bc4ed28a9907627ad56b))
+* **DSettingDialog:**  sync scroll when use hotkey ([e2f1be12](https://github.com/linuxdeepin/dtkwidget/commit/e2f1be1211d01d8e917e7fbdecce04fac257aac5))
+* **mpris_control:**  image does not zoom ([5eb61574](https://github.com/linuxdeepin/dtkwidget/commit/5eb61574a39780695c820ca3044d22ca7b9c7755))
+
+
+
 <a name="2.0.8"></a>
 ## 2.0.8 (2018-05-02)
 
