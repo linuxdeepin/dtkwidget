@@ -366,6 +366,13 @@ QWidget *createSpinButtonOptionHandle(QObject *opt)
     rightWidget->setObjectName("OptionDSpinBox");
     rightWidget->setValue(option->value().toInt());
 
+    if (option->data("max").isValid()) {
+        rightWidget->setMaximum(option->data("max").toInt());
+    }
+    if (option->data("min").isValid()) {
+        rightWidget->setMinimum(option->data("min").toInt());
+    }
+
     auto optionWidget = DSettingsWidgetFactory::createTwoColumWidget(option, rightWidget);
 
     option->connect(rightWidget, static_cast<void (QSpinBox::*)(int value)>(&QSpinBox::valueChanged),

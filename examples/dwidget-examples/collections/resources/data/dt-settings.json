@@ -37,7 +37,9 @@
                             "key": "size",
                             "name": "Font Size",
                             "type": "spinbutton",
-                            "default": 12
+                            "default": 12,
+                            "max": 20,
+                            "min": 9
                         },
                         {
                             "key": "style",
