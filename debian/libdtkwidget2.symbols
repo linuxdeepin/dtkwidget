@@ -1306,7 +1306,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZN3Dtk6Widget14DForeignWindow14wmClassChangedEv@Base 2.0.7.2
  _ZN3Dtk6Widget14DForeignWindow16staticMetaObjectE@Base 2.0.7.2
  _ZN3Dtk6Widget14DForeignWindow5eventEP6QEvent@Base 2.0.7.2
- _ZN3Dtk6Widget14DForeignWindow9fromWinIdEy@Base 2.0.7.2
  _ZN3Dtk6Widget14DForeignWindowC1EP7QWindow@Base 2.0.7.2
  _ZN3Dtk6Widget14DForeignWindowC2EP7QWindow@Base 2.0.7.2
  _ZN3Dtk6Widget14DForeignWindowD0Ev@Base 2.0.7.2
@@ -2587,8 +2586,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZN3Dtk6Widget29DFileThumbnailProviderPrivateD0Ev@Base 2.0.7.2
  _ZN3Dtk6Widget29DFileThumbnailProviderPrivateD1Ev@Base 2.0.7.2
  _ZN3Dtk6Widget29DFileThumbnailProviderPrivateD2Ev@Base 2.0.7.2
- _ZN3Dtk6Widget29DSettingsWidgetFactoryPrivateC1EPNS0_22DSettingsWidgetFactoryE@Base 2.0.7.2
- _ZN3Dtk6Widget29DSettingsWidgetFactoryPrivateC2EPNS0_22DSettingsWidgetFactoryE@Base 2.0.7.2
  _ZN3Dtk6Widget29createButtonGroupOptionHandleEP7QObject@Base 2.0.7.2
  _ZN3Dtk6Widget30DAbstractStackWidgetTransition15beginTransitionERKNS1_14TransitionInfoE@Base 2.0.7.2
  _ZN3Dtk6Widget30DAbstractStackWidgetTransitionC1EP7QObject@Base 2.0.7.2
@@ -4028,8 +4025,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  (optional=templinst)_ZNK5QHashI5QPairI7QStringN3Dtk6Widget18DThumbnailProvider4SizeEE15QHashDummyValueE8findNodeERKS6_Pj@Base 2.0.7.2
  (optional=templinst)_ZNK5QHashI7QString15QHashDummyValueE8findNodeERKS0_Pj@Base 2.0.7.2
  (optional=templinst)_ZNK5QHashI9QMimeTypexE8findNodeERKS0_Pj@Base 2.0.7.2
- (optional=templinst)_ZNK5QHashIP7QWidgetPKN3Dtk6Widget17DBlurEffectWidgetEE8findNodeERKS1_Pj@Base 2.0.7.2
- (optional=templinst)_ZNK5QHashIPKN3Dtk6Widget17DBlurEffectWidgetEP7QWidgetE8findNodeERKS4_Pj@Base 2.0.7.2
  (optional=templinst)_ZNK5QListI7QStringE5valueEi@Base 2.0.7.2
  (optional=templinst)_ZNK5QListIN14QTabBarPrivate3TabEE7indexOfERKS1_i@Base 2.0.7.2
  (optional=templinst)_ZNK5QListIP15QAbstractButtonE7indexOfERKS1_i@Base 2.0.7.2
@@ -4063,7 +4058,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  (optional=templinst)_ZNSt8functionIFvRK7QStringEEC2ERKS4_@Base 2.0.7.2
  (optional=templinst)_ZNSt8functionIFvvEEC1ERKS1_@Base 2.0.7.2
  (optional=templinst)_ZNSt8functionIFvvEEC2ERKS1_@Base 2.0.7.2
- (optional=templinst)_ZSt13__adjust_heapIN5QListIiE8iteratorExiN9__gnu_cxx5__ops15_Iter_less_iterEEvT_T0_S7_T1_T2_@Base 2.0.7.2
  (optional=templinst)_ZSt16__insertion_sortIN5QListIiE8iteratorEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_T0_@Base 2.0.7.2
  _ZTI10IconButton@Base 2.0.7.2
  _ZTI11ButtonGroup@Base 2.0.7.2
