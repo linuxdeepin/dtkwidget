@@ -887,7 +887,7 @@ void DTabBarPrivate::stopMove()
                       Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
     bool movable = isMovable();
     setMovable(true);
-    qApp->sendEvent(this, &event);
+    mouseReleaseEvent(&event);
     setMovable(movable);
 }
 
