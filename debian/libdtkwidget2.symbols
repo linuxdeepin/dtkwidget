@@ -1373,12 +1373,10 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZN3Dtk6Widget14DTabBarPrivate11makeVisibleEi@Base 2.0.7.2
  _ZN3Dtk6Widget14DTabBarPrivate11qt_metacallEN11QMetaObject4CallEiPPv@Base 2.0.7.2
  _ZN3Dtk6Widget14DTabBarPrivate11qt_metacastEPKc@Base 2.0.7.2
- _ZN3Dtk6Widget14DTabBarPrivate11resizeEventEP12QResizeEvent@Base 2.0.7.2
  _ZN3Dtk6Widget14DTabBarPrivate11tabInsertedEi@Base 2.0.7.2
  _ZN3Dtk6Widget14DTabBarPrivate13dragMoveEventEP14QDragMoveEvent@Base 2.0.7.2
  _ZN3Dtk6Widget14DTabBarPrivate13layoutWidgetsEi@Base 2.0.7.2
  _ZN3Dtk6Widget14DTabBarPrivate13startTabFlashEv@Base 2.0.7.2
- _ZN3Dtk6Widget14DTabBarPrivate13updateTabSizeEv@Base 2.0.7.2
  _ZN3Dtk6Widget14DTabBarPrivate14autoScrollTabsERK6QPoint@Base 2.0.7.2
  _ZN3Dtk6Widget14DTabBarPrivate14dragEnterEventEP15QDragEnterEvent@Base 2.0.7.2
  _ZN3Dtk6Widget14DTabBarPrivate14dragLeaveEventEP15QDragLeaveEvent@Base 2.0.7.2
@@ -3721,7 +3719,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZNK3Dtk6Widget14DTabBarPrivate11tabSizeHintEi@Base 2.0.7.2
  _ZNK3Dtk6Widget14DTabBarPrivate15initStyleOptionEP15QStyleOptionTabi@Base 2.0.7.2
  _ZNK3Dtk6Widget14DTabBarPrivate15minimumSizeHintEv@Base 2.0.7.2
- _ZNK3Dtk6Widget14DTabBarPrivate18maximumTabSizeHintEi@Base 2.0.7.2
  _ZNK3Dtk6Widget14DTabBarPrivate18minimumTabSizeHintEi@Base 2.0.7.2
  _ZNK3Dtk6Widget14DWaterProgress10metaObjectEv@Base 2.0.7.2
  _ZNK3Dtk6Widget14DWaterProgress5valueEv@Base 2.0.7.2

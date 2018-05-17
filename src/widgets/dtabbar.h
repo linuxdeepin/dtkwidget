@@ -195,6 +195,14 @@ protected:
     virtual void insertFromMimeData(int index, const QMimeData *source);
     virtual void insertFromMimeDataOnDragEnter(int index, const QMimeData *source);
 
+    virtual void tabInserted(int index);
+    virtual void tabLayoutChange();
+    virtual void tabRemoved(int index);
+
+    virtual QSize tabSizeHint(int index) const;
+    virtual QSize minimumTabSizeHint(int index) const;
+    virtual QSize maximumTabSizeHint(int index) const;
+
 private:
     DTabBarPrivate* d_func();
     const DTabBarPrivate* d_func() const;
