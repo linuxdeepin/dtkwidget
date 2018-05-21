@@ -1757,6 +1757,8 @@ void DTabBar::dropEvent(QDropEvent *e)
                 Q_UNUSED(blocker)
                 d->removeTab(d->ghostTabIndex);
             }
+            Q_EMIT tabIsRemoved(d->ghostTabIndex);
+
             insertFromMimeData(d->ghostTabIndex, e->mimeData());
             d->ghostTabIndex = -1;
         } else {
