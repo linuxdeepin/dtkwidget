@@ -158,6 +158,8 @@ Q_SIGNALS:
     void currentChanged(int index);
     void tabCloseRequested(int index);
     void tabMoved(int from, int to);
+    void tabIsInserted(int index);
+    void tabIsRemoved(int index);
     void tabBarClicked(int index);
     void tabBarDoubleClicked(int index);
     void tabAddRequested();

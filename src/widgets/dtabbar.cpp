@@ -1850,6 +1850,8 @@ void DTabBar::tabInserted(int index)
     d->tabMinimumSize.insert(index, QSize());
 
     d->QTabBar::tabInserted(index);
+
+    Q_EMIT tabIsInserted(index);
 }
 
 void DTabBar::tabLayoutChange()
@@ -1867,6 +1869,8 @@ void DTabBar::tabRemoved(int index)
     d->tabMinimumSize.removeAt(index);
 
     d->QTabBar::tabRemoved(index);
+
+    Q_EMIT tabIsRemoved(index);
 }
 
 QSize DTabBar::tabSizeHint(int index) const
