@@ -33,19 +33,15 @@ public:
 
     void init();
 
-    QPixmap loadPixmap(const QString &path, bool &ok);
-
 public:
-    bool m_checked;
+    bool checked = false;
+    QColor enabledBackground = qRgba(207, 214, 230, 255);
+    QColor disabledBackground = qRgba(207, 214, 230, 255);
+    QColor checkedBackground =  qRgba(44, 167, 248, 255);
 
-    QPixmap m_enabledImage;
-    QPixmap m_disabledImage;
-    QVariantAnimation *m_innerAnimation;
-
-    double m_animationStartValue;
-    double m_animationEndValue;
-    QString m_disabledImageSource;
-    QString m_enabledImageSource;
+    QVariantAnimation *animation;
+    double animationStartValue;
+    double animationEndValue;
 
 public:
     D_DECLARE_PUBLIC(DSwitchButton)

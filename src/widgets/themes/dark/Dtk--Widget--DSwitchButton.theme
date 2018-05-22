@@ -1,10 +1,2 @@
 Dtk--Widget--DSwitchButton#DSwitchButton{
-    qproperty-enabledImageSource: ":/images/dark/images/switch_inner.png";
-    qproperty-disabledImageSource: ":/images/dark/images/switch_inner_insensitive.png";
-
-    qproperty-animationStartValue: -20;
-    qproperty-animationEndValue: 0;
-
-    qproperty-animationDuration: 150;
-    qproperty-animationType: InOutQuad;
 }

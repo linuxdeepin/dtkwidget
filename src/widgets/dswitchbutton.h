@@ -27,43 +27,29 @@
 #include "dobject.h"
 
 DWIDGET_BEGIN_NAMESPACE
+
 class DSwitchButtonPrivate;
 class LIBDTKWIDGETSHARED_EXPORT DSwitchButton : public QFrame, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
 
     Q_PROPERTY(bool checked READ checked WRITE setChecked NOTIFY checkedChanged)
-    Q_PROPERTY(int animationDuration READ animationDuration WRITE setAnimationDuration)
-    Q_PROPERTY(double animationStartValue READ animationStartValue WRITE setAnimationStartValue)
-    Q_PROPERTY(double animationEndValue READ animationEndValue WRITE setAnimationEndValue)
-    Q_PROPERTY(QEasingCurve::Type animationType READ animationType WRITE setAnimationType)
-    Q_PROPERTY(QString disabledImageSource READ disabledImageSource WRITE setDisabledImageSource)
-    Q_PROPERTY(QString enabledImageSource READ enabledImageSource WRITE setEnabledImageSource)
+    Q_PROPERTY(QColor enabledBackground READ enabledBackground WRITE setEnabledBackground)
+    Q_PROPERTY(QColor disabledBackground READ disabledBackground WRITE setDisabledBackground)
 
 public:
-    explicit DSwitchButton(QWidget *parent = 0);
+    explicit DSwitchButton(QWidget *parent = Q_NULLPTR);
 
     bool checked() const;
-
-    D_DECL_DEPRECATED int animationDuration() const;
-    D_DECL_DEPRECATED QEasingCurve::Type animationType() const;
-    D_DECL_DEPRECATED QString backgroundImageSource() const;
-    D_DECL_DEPRECATED double animationStartValue() const;
-    D_DECL_DEPRECATED double animationEndValue() const;
-    D_DECL_DEPRECATED QString disabledImageSource() const;
-    D_DECL_DEPRECATED QString enabledImageSource() const;
+    QColor enabledBackground() const;
+    QColor disabledBackground() const;
 
     QSize sizeHint() const Q_DECL_OVERRIDE;
 
 public Q_SLOTS:
     void setChecked(bool arg);
-
-    D_DECL_DEPRECATED void setAnimationDuration(int arg);
-    D_DECL_DEPRECATED void setAnimationType(QEasingCurve::Type arg);
-    D_DECL_DEPRECATED void setAnimationStartValue(double animationStartValue);
-    D_DECL_DEPRECATED void setAnimationEndValue(double animationEndValue);
-    D_DECL_DEPRECATED bool setDisabledImageSource(const QString &arg);
-    D_DECL_DEPRECATED bool setEnabledImageSource(const QString &arg);
+    void setEnabledBackground(QColor enabledBackground);
+    void setDisabledBackground(QColor disabledBackground);
 
 Q_SIGNALS:
     void checkedChanged(bool arg);
@@ -77,5 +63,6 @@ private:
 };
 
 DWIDGET_END_NAMESPACE
+
 #endif // DSWITCHBUTTON_H
 

@@ -47,7 +47,7 @@ DSwitchButton::DSwitchButton(QWidget *parent) :
 {
     setObjectName("DSwitchButton");
 
-    setMaximumSize(38, 18);
+    setMaximumSize(36, 20);
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     DThemeManager::registerWidget(this);
@@ -56,7 +56,7 @@ DSwitchButton::DSwitchButton(QWidget *parent) :
 
     d->init();
 
-    connect(d->m_innerAnimation, &QVariantAnimation::valueChanged, [&](){
+    connect(d->animation, &QVariantAnimation::valueChanged, [&]() {
         this->update();
     });
 }
@@ -71,49 +71,7 @@ bool DSwitchButton::checked() const
 {
     D_DC(DSwitchButton);
 
-    return d->m_checked;
-}
-
-int DSwitchButton::animationDuration() const
-{
-    D_DC(DSwitchButton);
-
-    return d->m_innerAnimation->duration();
-}
-
-QEasingCurve::Type DSwitchButton::animationType() const
-{
-    D_DC(DSwitchButton);
-
-    return d->m_innerAnimation->easingCurve().type();
-}
-
-double DSwitchButton::animationStartValue() const
-{
-    D_DC(DSwitchButton);
-
-    return d->m_animationStartValue;
-}
-
-double DSwitchButton::animationEndValue() const
-{
-    D_DC(DSwitchButton);
-
-    return d->m_animationEndValue;
-}
-
-QString DSwitchButton::disabledImageSource() const
-{
-    D_DC(DSwitchButton);
-
-    return d->m_disabledImageSource;
-}
-
-QString DSwitchButton::enabledImageSource() const
-{
-    D_DC(DSwitchButton);
-
-    return d->m_enabledImageSource;
+    return d->checked;
 }
 
 QSize DSwitchButton::sizeHint() const
@@ -121,77 +79,48 @@ QSize DSwitchButton::sizeHint() const
     return maximumSize();
 }
 
+QColor DSwitchButton::disabledBackground() const
+{
+    D_DC(DSwitchButton);
+    return d->disabledBackground;
+}
+
+QColor DSwitchButton::enabledBackground() const
+{
+    D_DC(DSwitchButton);
+    return d->enabledBackground;
+}
+
 void DSwitchButton::setChecked(bool arg)
 {
     D_D(DSwitchButton);
 
-    if (d->m_checked != arg) {
-        d->m_checked = arg;
+    if (d->checked != arg) {
+        d->checked = arg;
 
-        if(arg){
-            d->m_innerAnimation->setStartValue(d->m_animationStartValue);
-            d->m_innerAnimation->setEndValue(d->m_animationEndValue);
-        }else{
-            d->m_innerAnimation->setStartValue(d->m_animationEndValue);
-            d->m_innerAnimation->setEndValue(d->m_animationStartValue);
+        if (arg) {
+            d->animation->setStartValue(d->animationStartValue);
+            d->animation->setEndValue(d->animationEndValue);
+        } else {
+            d->animation->setStartValue(d->animationEndValue);
+            d->animation->setEndValue(d->animationStartValue);
         }
-        d->m_innerAnimation->start();
+        d->animation->start();
 
         Q_EMIT checkedChanged(arg);
     }
 }
 
-void DSwitchButton::setAnimationDuration(int arg)
+void DSwitchButton::setEnabledBackground(QColor enabledBackground)
 {
     D_D(DSwitchButton);
-
-    d->m_innerAnimation->setDuration(arg);
+    d->enabledBackground = enabledBackground;
 }
 
-void DSwitchButton::setAnimationType(QEasingCurve::Type arg)
+void DSwitchButton::setDisabledBackground(QColor disabledBackground)
 {
     D_D(DSwitchButton);
-
-    d->m_innerAnimation->setEasingCurve(arg);
-}
-
-bool DSwitchButton::setDisabledImageSource(const QString &arg)
-{
-    D_D(DSwitchButton);
-
-    d->m_disabledImageSource = arg;
-    bool ok = false;
-
-    d->m_disabledImage = d->loadPixmap(arg, ok);
-
-    return ok;
-}
-
-bool DSwitchButton::setEnabledImageSource(const QString &arg)
-{
-    D_D(DSwitchButton);
-
-    d->m_enabledImageSource = arg;
-
-    bool ok = false;
-
-    d->m_enabledImage = d->loadPixmap(arg, ok);
-
-    return ok;
-}
-
-void DSwitchButton::setAnimationStartValue(double animationStartValue)
-{
-    D_D(DSwitchButton);
-
-    d->m_animationStartValue = animationStartValue;
-}
-
-void DSwitchButton::setAnimationEndValue(double animationEndValue)
-{
-    D_D(DSwitchButton);
-
-    d->m_animationEndValue = animationEndValue;
+    d->disabledBackground = disabledBackground;
 }
 
 void DSwitchButton::paintEvent(QPaintEvent *e)
@@ -200,49 +129,57 @@ void DSwitchButton::paintEvent(QPaintEvent *e)
 
     D_D(DSwitchButton);
 
-    QPixmap m_innerImage;
+    QColor frontground = Qt::white;
+    QColor background = d->enabledBackground;
 
-    if(isEnabled()){
-        m_innerImage = d->m_enabledImage;
-    }else{
-        m_innerImage = d->m_disabledImage;
+    if (d->checked) {
+        background = d->checkedBackground;
     }
 
-    if(m_innerImage.isNull())
-        return;
+    if (!isEnabled()) {
+        background.setAlpha(255 * 55 / 100);
+        frontground.setAlpha(255 * 55 / 100);
+    }
 
     QPainter p(this);
     p.setRenderHints(QPainter::Antialiasing);
 
-    const qreal ratio = m_innerImage.devicePixelRatioF();
-
     QPainterPath path;
-    path.addRoundedRect(rect(),
-                        (m_innerImage.height() / 2.0) / ratio,
-                        (m_innerImage.height() / 2.0) / ratio);
+    path.addRoundedRect(rect(), height() / 2.0, height() / 2.0);
     path.closeSubpath();
 
     p.setClipPath(path);
 
-    double m_innerImageX = 0;
+    double indicatorX = 0;
 
-    if(d->m_innerAnimation->state() == QVariantAnimation::Stopped){
-        if(!d->m_checked){
-            m_innerImageX = d->m_animationStartValue;
+    if (d->animation->state() == QVariantAnimation::Stopped) {
+        if (!d->checked) {
+            indicatorX = d->animationStartValue;
+        } else {
+            indicatorX = d->animationEndValue;
         }
-    }else{
-        m_innerImageX = d->m_innerAnimation->currentValue().toDouble();
+    } else {
+        indicatorX = d->animation->currentValue().toDouble();
     }
 
-    p.drawPixmap(m_innerImageX, 0, m_innerImage);
+    int moveWidth = width() - height();
+    int border = 1 * 1;
+    int btSize = height() - border * 2;
+    QRectF btRect(moveWidth * indicatorX + border, border, btSize, btSize);
+    QPainterPath btPath;
+    btPath.addRoundedRect(btRect, btSize / 2.0, btSize / 2.0);
+    btPath.closeSubpath();
+
+    p.fillPath(path, background);
+    p.fillPath(btPath, frontground);
 }
 
 void DSwitchButton::mousePressEvent(QMouseEvent *e)
 {
     D_D(DSwitchButton);
 
-    if(e->button() == Qt::LeftButton){
-        setChecked(!d->m_checked);
+    if (e->button() == Qt::LeftButton) {
+        setChecked(!d->checked);
         e->accept();
     }
 }
@@ -255,38 +192,15 @@ DSwitchButtonPrivate::DSwitchButtonPrivate(DSwitchButton *qq)
 
 DSwitchButtonPrivate::~DSwitchButtonPrivate()
 {
-    m_innerAnimation->deleteLater();
+    animation->deleteLater();
 }
 
 void DSwitchButtonPrivate::init()
 {
-    m_checked = false;
-    m_innerAnimation = new QVariantAnimation;
-    m_animationStartValue = 0;
-    m_animationEndValue = 0;
-}
-
-QPixmap DSwitchButtonPrivate::loadPixmap(const QString &path, bool &ok)
-{
-    D_Q(DSwitchButton);
-
-    QPixmap pixmap;
-
-    qreal ratio = 1.0;
-
-    const qreal devicePixel = q->devicePixelRatioF();
-
-    if (!qFuzzyCompare(ratio, devicePixel)) {
-        ok = pixmap.load(qt_findAtNxFile(path, devicePixel, &ratio));
-        pixmap = pixmap.scaled(devicePixel / ratio * pixmap.width(),
-                               devicePixel / ratio * pixmap.height(),
-                               Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-        pixmap.setDevicePixelRatio(devicePixel);
-    } else {
-        ok = pixmap.load(path);
-    }
-
-    return pixmap;
+    checked = false;
+    animation = new QVariantAnimation;
+    animationStartValue = 0;
+    animationEndValue = 1;
 }
 
 DWIDGET_END_NAMESPACE

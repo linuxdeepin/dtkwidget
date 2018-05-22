@@ -53,6 +53,5 @@ int main(int argc, char *argv[])
     w.show();
     Dtk::Widget::moveToCenter(&w);
 
-
     return a.exec();
 }

@@ -194,8 +194,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  (optional=templinst)_ZN17QtMetaTypePrivate23QMetaTypeFunctionHelperI8QMarginsLb1EE9ConstructEPvPKv@Base 2.0.7.2
  (optional=templinst)_ZN17QtMetaTypePrivate23QMetaTypeFunctionHelperIN18QAbstractAnimation5StateELb1EE8DestructEPv@Base 2.0.7.2
  (optional=templinst)_ZN17QtMetaTypePrivate23QMetaTypeFunctionHelperIN18QAbstractAnimation5StateELb1EE9ConstructEPvPKv@Base 2.0.7.2
- (optional=templinst)_ZN17QtMetaTypePrivate23QMetaTypeFunctionHelperIN2Qt11WindowStateELb1EE8DestructEPv@Base 2.0.7.2
- (optional=templinst)_ZN17QtMetaTypePrivate23QMetaTypeFunctionHelperIN2Qt11WindowStateELb1EE9ConstructEPvPKv@Base 2.0.7.2
  (optional=templinst)_ZN17QtMetaTypePrivate23QMetaTypeFunctionHelperIN2Qt3KeyELb1EE8DestructEPv@Base 2.0.7.2
  (optional=templinst)_ZN17QtMetaTypePrivate23QMetaTypeFunctionHelperIN2Qt3KeyELb1EE9ConstructEPvPKv@Base 2.0.7.2
  (optional=templinst)_ZN17QtMetaTypePrivate23QMetaTypeFunctionHelperINS_23QSequentialIterableImplELb1EE8DestructEPv@Base 2.0.7.2
@@ -1200,13 +1198,7 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZN3Dtk6Widget13DSwitchButton11qt_metacastEPKc@Base 2.0.7.2
  _ZN3Dtk6Widget13DSwitchButton14checkedChangedEb@Base 2.0.7.2
  _ZN3Dtk6Widget13DSwitchButton15mousePressEventEP11QMouseEvent@Base 2.0.7.2
- _ZN3Dtk6Widget13DSwitchButton16setAnimationTypeEN12QEasingCurve4TypeE@Base 2.0.7.2
  _ZN3Dtk6Widget13DSwitchButton16staticMetaObjectE@Base 2.0.7.2
- _ZN3Dtk6Widget13DSwitchButton20setAnimationDurationEi@Base 2.0.7.2
- _ZN3Dtk6Widget13DSwitchButton20setAnimationEndValueEd@Base 2.0.7.2
- _ZN3Dtk6Widget13DSwitchButton21setEnabledImageSourceERK7QString@Base 2.0.7.2
- _ZN3Dtk6Widget13DSwitchButton22setAnimationStartValueEd@Base 2.0.7.2
- _ZN3Dtk6Widget13DSwitchButton22setDisabledImageSourceERK7QString@Base 2.0.7.2
  _ZN3Dtk6Widget13DSwitchButtonC1EP7QWidget@Base 2.0.7.2
  _ZN3Dtk6Widget13DSwitchButtonC2EP7QWidget@Base 2.0.7.2
  _ZN3Dtk6Widget13DSwitchButtonD0Ev@Base 2.0.7.2
@@ -2273,7 +2265,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZN3Dtk6Widget20DSeparatorHorizontalD0Ev@Base 2.0.7.2
  _ZN3Dtk6Widget20DSeparatorHorizontalD1Ev@Base 2.0.7.2
  _ZN3Dtk6Widget20DSeparatorHorizontalD2Ev@Base 2.0.7.2
- _ZN3Dtk6Widget20DSwitchButtonPrivate10loadPixmapERK7QStringRb@Base 2.0.7.2
  _ZN3Dtk6Widget20DSwitchButtonPrivate4initEv@Base 2.0.7.2
  _ZN3Dtk6Widget20DSwitchButtonPrivateC1EPNS0_13DSwitchButtonE@Base 2.0.7.2
  _ZN3Dtk6Widget20DSwitchButtonPrivateC2EPNS0_13DSwitchButtonE@Base 2.0.7.2
@@ -3647,12 +3638,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZNK3Dtk6Widget13DShortcutEdit24getBlockShortcutKeysListEv@Base 2.0.7.2
  _ZNK3Dtk6Widget13DShortcutEdit8sizeHintEv@Base 2.0.7.2
  _ZNK3Dtk6Widget13DSwitchButton10metaObjectEv@Base 2.0.7.2
- _ZNK3Dtk6Widget13DSwitchButton13animationTypeEv@Base 2.0.7.2
- _ZNK3Dtk6Widget13DSwitchButton17animationDurationEv@Base 2.0.7.2
- _ZNK3Dtk6Widget13DSwitchButton17animationEndValueEv@Base 2.0.7.2
- _ZNK3Dtk6Widget13DSwitchButton18enabledImageSourceEv@Base 2.0.7.2
- _ZNK3Dtk6Widget13DSwitchButton19animationStartValueEv@Base 2.0.7.2
- _ZNK3Dtk6Widget13DSwitchButton19disabledImageSourceEv@Base 2.0.7.2
  _ZNK3Dtk6Widget13DSwitchButton7checkedEv@Base 2.0.7.2
  _ZNK3Dtk6Widget13DSwitchButton8sizeHintEv@Base 2.0.7.2
  _ZNK3Dtk6Widget13DThemeManager10metaObjectEv@Base 2.0.7.2
