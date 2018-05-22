@@ -235,7 +235,9 @@ bool DTitlebarPrivate::isVisableOnFullscreen()
 void DTitlebarPrivate::hideOnFullscreen()
 {
     D_Q(DTitlebar);
-    q->setProperty("_restore_height", q->height());
+    if (q->height() > 0) {
+        q->setProperty("_restore_height", q->height());
+    }
     q->setFixedHeight(0);
 }
 
@@ -265,8 +267,11 @@ void DTitlebarPrivate::updateFullscreen()
     } else {
         // must set to empty
         quitFullButton->show();
-        mainWindow->menuWidget()->setParent(nullptr);
-        mainWindow->setMenuWidget(Q_NULLPTR);
+        if (mainWindow->menuWidget()) {
+            mainWindow->menuWidget()->setParent(nullptr);
+            mainWindow->setMenuWidget(Q_NULLPTR);
+        }
+
         q->setParent(mainWindow);
         q->show();
         hideOnFullscreen();
