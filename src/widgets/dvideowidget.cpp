@@ -444,6 +444,7 @@ void DVideoWidget::paintEvent(QPaintEvent *)
                 frame.bits(),
                 frame.width(),
                 frame.height(),
+                frame.bytesPerLine(),
                 QVideoFrame::imageFormatFromPixelFormat(frame.pixelFormat()));
     frame.unmap();
 
