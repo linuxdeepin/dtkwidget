@@ -136,7 +136,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/widgets/dsimplelistview.cpp" line="1190"/>
+        <location filename="../src/widgets/dsimplelistview.cpp" line="1235"/>
         <source>No search result</source>
         <translation type="unfinished"></translation>
     </message>
