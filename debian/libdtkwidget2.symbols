@@ -271,8 +271,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZN18NavigationDelegateD0Ev@Base 2.0.7.2
  _ZN18NavigationDelegateD1Ev@Base 2.0.7.2
  _ZN18NavigationDelegateD2Ev@Base 2.0.7.2
- (optional=templinst)_ZN18QMetaTypeIdQObjectI6QFlagsIN2Qt16KeyboardModifierEELi16EE14qt_metatype_idEv@Base 2.0.7.2
- (optional=templinst)_ZN18QMetaTypeIdQObjectIN2Qt3KeyELi16EE14qt_metatype_idEv@Base 2.0.7.2
  (optional=templinst)_ZN18QMetaTypeIdQObjectIP7QWidgetLi8EE14qt_metatype_idEv@Base 2.0.7.2
  _ZN18QStyleOptionButtonD1Ev@Base 2.0.7.2
  _ZN18QStyleOptionButtonD2Ev@Base 2.0.7.2
@@ -2512,9 +2510,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZN3Dtk6Widget24DClipEffectWidgetPrivateD0Ev@Base 2.0.7.2
  _ZN3Dtk6Widget24DClipEffectWidgetPrivateD1Ev@Base 2.0.7.2
  _ZN3Dtk6Widget24DClipEffectWidgetPrivateD2Ev@Base 2.0.7.2
- _ZN3Dtk6Widget24DFileIconProviderPrivate14gnome_vfs_initE@Base 2.0.7.2
- _ZN3Dtk6Widget24DFileIconProviderPrivate22gnome_icon_lookup_syncE@Base 2.0.7.2
- _ZN3Dtk6Widget24DFileIconProviderPrivate26gtk_icon_theme_get_defaultE@Base 2.0.7.2
  _ZN3Dtk6Widget24DFileIconProviderPrivate4initEv@Base 2.0.7.2
  _ZN3Dtk6Widget24DFileIconProviderPrivateC1EPNS0_17DFileIconProviderE@Base 2.0.7.2
  _ZN3Dtk6Widget24DFileIconProviderPrivateC2EPNS0_17DFileIconProviderE@Base 2.0.7.2
@@ -3021,7 +3016,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  (optional=templinst)_ZN5QHashIP7QWidgetPKN3Dtk6Widget17DBlurEffectWidgetEE11deleteNode2EPN9QHashData4NodeE@Base 2.0.7.2
  (optional=templinst)_ZN5QHashIP7QWidgetPKN3Dtk6Widget17DBlurEffectWidgetEE13detach_helperEv@Base 2.0.7.2
  (optional=templinst)_ZN5QHashIP7QWidgetPKN3Dtk6Widget17DBlurEffectWidgetEE13duplicateNodeEPN9QHashData4NodeEPv@Base 2.0.7.2
- (optional=templinst)_ZN5QHashIP7QWidgetPKN3Dtk6Widget17DBlurEffectWidgetEE5eraseENS7_8iteratorE@Base 2.0.7.2
  (optional=templinst)_ZN5QHashIPKN3Dtk6Widget17DBlurEffectWidgetEP7QWidgetE11deleteNode2EPN9QHashData4NodeE@Base 2.0.7.2
  (optional=templinst)_ZN5QHashIPKN3Dtk6Widget17DBlurEffectWidgetEP7QWidgetE13detach_helperEv@Base 2.0.7.2
  (optional=templinst)_ZN5QHashIPKN3Dtk6Widget17DBlurEffectWidgetEP7QWidgetE13duplicateNodeEPN9QHashData4NodeEPv@Base 2.0.7.2
@@ -3172,13 +3166,11 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  (optional=templinst)_ZN5QListIP9QLineEditED1Ev@Base 2.0.7.2
  (optional=templinst)_ZN5QListIP9QLineEditED2Ev@Base 2.0.7.2
  (optional=templinst)_ZN5QListIPKN3Dtk6Widget17DBlurEffectWidgetEE18detach_helper_growEii@Base 2.0.7.2
- (optional=templinst)_ZN5QListIPKN3Dtk6Widget17DBlurEffectWidgetEE6appendERKS4_@Base 2.0.7.2
  (optional=templinst)_ZN5QListIPKN3Dtk6Widget17DBlurEffectWidgetEEC1ERKS5_@Base 2.0.7.2
  (optional=templinst)_ZN5QListIPKN3Dtk6Widget17DBlurEffectWidgetEEC2ERKS5_@Base 2.0.7.2
  (optional=templinst)_ZN5QListIPKN3Dtk6Widget17DBlurEffectWidgetEED1Ev@Base 2.0.7.2
  (optional=templinst)_ZN5QListIPKN3Dtk6Widget17DBlurEffectWidgetEED2Ev@Base 2.0.7.2
  (optional=templinst)_ZN5QListIPN3Dtk6Widget11DBaseExpandEE18detach_helper_growEii@Base 2.0.7.2
- (optional=templinst)_ZN5QListIPN3Dtk6Widget11DBaseExpandEE6appendERKS3_@Base 2.0.7.2
  (optional=templinst)_ZN5QListIPN3Dtk6Widget11DBaseExpandEED1Ev@Base 2.0.7.2
  (optional=templinst)_ZN5QListIPN3Dtk6Widget11DBaseExpandEED2Ev@Base 2.0.7.2
  (optional=templinst)_ZN5QListIPN3Dtk6Widget14DForeignWindowEE13detach_helperEi@Base 2.0.7.2
@@ -3199,7 +3191,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  (optional=templinst)_ZN5QListIPN3Dtk6Widget15DSimpleListItemEED2Ev@Base 2.0.7.2
  (optional=templinst)_ZN5QListIPN3Dtk6Widget15DSimpleListItemEEpLERKS4_@Base 2.0.7.2
  (optional=templinst)_ZN5QListIPN3Dtk6Widget7DOptionEE18detach_helper_growEii@Base 2.0.7.2
- (optional=templinst)_ZN5QListIPN3Dtk6Widget7DOptionEE6appendERKS3_@Base 2.0.7.2
  (optional=templinst)_ZN5QListIPN3Dtk6Widget7DOptionEED1Ev@Base 2.0.7.2
  (optional=templinst)_ZN5QListIPN3Dtk6Widget7DOptionEED2Ev@Base 2.0.7.2
  (optional=templinst)_ZN5QListIS_I6QColorEE18detach_helper_growEii@Base 2.0.7.2
@@ -3354,10 +3345,8 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  (optional=templinst)_ZN9QtPrivate18QFunctorSlotObjectIZN3Dtk6Widget20DThemeManagerPrivate14registerWidgetEP7QWidgetRK7QStringRK11QStringListEUlS5_S6_E1_Li2ENS_4ListIJS5_S6_EEEvE4implEiPNS_15QSlotObjectBaseEP7QObjectPPvPb@Base 2.0.7.2
  (optional=templinst)_ZN9QtPrivate18QFunctorSlotObjectIZN3Dtk6Widget20DThemeManagerPrivate14registerWidgetEP7QWidgetRK7QStringRK11QStringListEUlS6_E0_Li1ENS_4ListIJS6_EEEvE4implEiPNS_15QSlotObjectBaseEP7QObjectPPvPb@Base 2.0.7.2
  (optional=templinst)_ZN9QtPrivate18QFunctorSlotObjectIZN3Dtk6Widget20DThemeManagerPrivate14registerWidgetEP7QWidgetRK7QStringRK11QStringListEUlvE2_Li0ENS_4ListIJEEEvE4implEiPNS_15QSlotObjectBaseEP7QObjectPPvPb@Base 2.0.7.2
- (optional=templinst)_ZN9QtPrivate19QVariantValueHelperI13QDBusArgumentE8metaTypeERK8QVariant@Base 2.0.7.2
  (optional=templinst)_ZN9QtPrivate28QVariantValueHelperInterfaceI4QMapI7QString8QVariantEE6invokeERKS3_@Base 2.0.7.2
  _ZN9QtPrivate8RefCount3refEv@Base 2.0.7.2
- _ZN9QtPrivate8RefCount5derefEv@Base 2.0.7.2
  _ZNK10IconButton10metaObjectEv@Base 2.0.7.2
  _ZNK11ButtonGroup10metaObjectEv@Base 2.0.7.2
  _ZNK12ContentTitle10metaObjectEv@Base 2.0.7.2
@@ -3856,7 +3845,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZNK3Dtk6Widget20DPictureSequenceView7playEndEv@Base 2.0.7.2
  _ZNK3Dtk6Widget20DSeparatorHorizontal10metaObjectEv@Base 2.0.7.2
  _ZNK3Dtk6Widget20DThemeManagerPrivate13getQssContentERK7QString@Base 2.0.7.2
- _ZNK3Dtk6Widget20DThemeManagerPrivate23fallbackWidgetThemeNameEPK7QWidgetPPS2_@Base 2.0.7.2
  _ZNK3Dtk6Widget20DWindowManagerHelper10metaObjectEv@Base 2.0.7.2
  _ZNK3Dtk6Widget20DWindowManagerHelper12hasCompositeEv@Base 2.0.7.2
  _ZNK3Dtk6Widget20DWindowManagerHelper13hasBlurWindowEv@Base 2.0.7.2
@@ -4020,8 +4008,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  (optional=templinst)_ZNK4QMapIiPN3Dtk6Widget11DBaseExpandEE4keysEv@Base 2.0.7.2
  (optional=templinst)_ZNK4QMapIiPN3Dtk6Widget11DBaseExpandEE6valuesEv@Base 2.0.7.2
  (optional=templinst)_ZNK5QHashI5QPairI7QStringN3Dtk6Widget18DThumbnailProvider4SizeEE15QHashDummyValueE8findNodeERKS6_Pj@Base 2.0.7.2
- (optional=templinst)_ZNK5QHashI7QString15QHashDummyValueE8findNodeERKS0_Pj@Base 2.0.7.2
- (optional=templinst)_ZNK5QHashI9QMimeTypexE8findNodeERKS0_Pj@Base 2.0.7.2
  (optional=templinst)_ZNK5QListI7QStringE5valueEi@Base 2.0.7.2
  (optional=templinst)_ZNK5QListIN14QTabBarPrivate3TabEE7indexOfERKS1_i@Base 2.0.7.2
  (optional=templinst)_ZNK5QListIP15QAbstractButtonE7indexOfERKS1_i@Base 2.0.7.2
@@ -4682,8 +4668,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  (optional=templinst)_ZZN11QMetaTypeIdI8QMarginsE14qt_metatype_idEvE11metatype_id@Base 2.0.7.2
  (optional=templinst)_ZZN11QMetaTypeIdIN17QtMetaTypePrivate23QSequentialIterableImplEE14qt_metatype_idEvE11metatype_id@Base 2.0.7.2
  (optional=templinst)_ZZN11QMetaTypeIdIN17QtMetaTypePrivate24QAssociativeIterableImplEE14qt_metatype_idEvE11metatype_id@Base 2.0.7.2
- (optional=templinst)_ZZN18QMetaTypeIdQObjectI6QFlagsIN2Qt16KeyboardModifierEELi16EE14qt_metatype_idEvE11metatype_id@Base 2.0.7.2
- (optional=templinst)_ZZN18QMetaTypeIdQObjectIN2Qt3KeyELi16EE14qt_metatype_idEvE11metatype_id@Base 2.0.7.2
  (optional=templinst)_ZZN18QMetaTypeIdQObjectIP7QWidgetLi8EE14qt_metatype_idEvE11metatype_id@Base 2.0.7.2
  (optional=templinst)_ZZN18QMetaTypeIdQObjectIPN3Dtk4Core9DSettingsELi8EE14qt_metatype_idEvE11metatype_id@Base 2.0.7.2
  (optional=templinst)_ZZN18QMetaTypeIdQObjectIPN3Dtk6Widget11AnchorsBaseELi8EE14qt_metatype_idEvE11metatype_id@Base 2.0.7.2
@@ -4724,7 +4708,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZZZN9DBusMPRIS8PreviousEvENKUlvE_clEvE15qstring_literal@Base 2.0.7.2
  _ZZZN9DBusMPRIS9PlayPauseEvENKUlvE_clEvE15qstring_literal@Base 2.0.7.2
  _Zls6QDebugRKN3Dtk6Widget21DPlatformWindowHandle10WMBlurAreaE@Base 2.0.7.2
- (optional=templinst)_ZrsI7QString8QVariantERK13QDBusArgumentS4_R4QMapIT_T0_E@Base 2.0.7.2
  (c++)"non-virtual thunk to ButtonGroup::~ButtonGroup()@Base" 2.0.7.2
  (c++)"non-virtual thunk to ComboBox::~ComboBox()@Base" 2.0.7.2
  (c++)"non-virtual thunk to ContentTitle::~ContentTitle()@Base" 2.0.7.2
