@@ -33,8 +33,8 @@ DScrollAreaPrivate::DScrollAreaPrivate(DScrollArea *qq):
     autoHideScrollBar(false),
     vBar(new DScrollBar),
     hBar(new DScrollBar),
-    scrollBarAnimation(0),
-    timer(0)
+    scrollBarAnimation(nullptr),
+    timer(nullptr)
 {
 
 }
