@@ -52,8 +52,8 @@ void DPasswdEditAnimatedPrivate::init()
     m_caps = new DLabel;
     m_eye = new DImageButton;
     m_submit = new DImageButton;
-    m_invalidMessage = new DLabel;
     m_invalidTip = new DArrowRectangle(DArrowRectangle::ArrowTop, q);
+    m_invalidMessage = new DLabel(m_invalidTip);
 
     m_loadSlider = new LoadSlider(q);
     m_loadSlider->hide();
@@ -91,6 +91,7 @@ void DPasswdEditAnimatedPrivate::init()
 
     m_caps->setPixmap(QPixmap(":/images/light/images/capslock-hover.svg"));
 
+    m_invalidMessage->hide();
     m_invalidTip->hide();
 
     // fix QLineEdit do not expand width in QHBoxLayout
@@ -137,6 +138,8 @@ void DPasswdEditAnimatedPrivate::_q_inputDone()
 {
     D_Q(DPasswdEditAnimated);
 
+    q->hideAlert();
+
     QString input = m_passwdEdit->text();
     if (input.length() > 0) {
         _q_showLoadSlider();
@@ -147,6 +150,8 @@ void DPasswdEditAnimatedPrivate::_q_inputDone()
 void DPasswdEditAnimatedPrivate::_q_onKeyboardButtonClicked()
 {
     D_Q(DPasswdEditAnimated);
+
+    q->hideAlert();
 
     Q_EMIT q->keyboardButtonClicked();
 }
@@ -288,21 +293,26 @@ void DPasswdEditAnimated::showAlert(const QString &message)
     d->_q_hideLoadSlider();
 
     d->m_invalidMessage->setText(message);
-    d->m_invalidMessage->adjustSize();
 
     d->m_passwdEdit->selectAll();
     d->m_passwdEdit->setFocus();
 
     if (!d->m_invalidTip->isVisible()) {
-        d->m_invalidTip->setContent(d->m_invalidMessage);
-        d->m_invalidTip->adjustSize();
-        QPoint pos = mapToGlobal(d->m_passwdEdit->pos());
-        d->m_invalidTip->move(pos.x() + d->m_invalidTip->width() / 2, pos.y() + 20);
+        // focus BUG
+        //d->m_invalidTip->setContent(d->m_invalidMessage);
+        //d->m_invalidTip->adjustSize();
+
+        QPoint pos = mapToGlobal(d->m_passwdEdit->geometry().bottomLeft());
+        QFontMetrics fm((QFont()));
+        d->m_invalidTip->setGeometry(pos.x(), pos.y(), fm.width(message) + 60, 80);
+        d->m_invalidMessage->move(30, d->m_invalidTip->rect().center().y());
+
         d->m_invalidTip->setArrowX(20);
-        d->m_invalidTip->setVisible(true);
+        d->m_invalidMessage->show();
+        d->m_invalidTip->QWidget::show();
+
         Q_EMIT alertChanged(true);
     }
-
 }
 
 void DPasswdEditAnimated::hideAlert()
@@ -310,7 +320,9 @@ void DPasswdEditAnimated::hideAlert()
     D_D(DPasswdEditAnimated);
 
     if (d->m_invalidTip->isVisible()) {
-        d->m_invalidTip->setVisible(false);
+        d->m_invalidMessage->hide();
+        d->m_invalidTip->hide();
+
         Q_EMIT alertChanged(false);
     }
 
