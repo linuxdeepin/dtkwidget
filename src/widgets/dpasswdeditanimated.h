@@ -55,7 +55,6 @@ protected:
     bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
 
 protected:
-    D_PRIVATE_SLOT(void _q_resetKeyboardState())
     D_PRIVATE_SLOT(void _q_resetCapslockState())
     D_PRIVATE_SLOT(void _q_onEyeButtonClicked())
     D_PRIVATE_SLOT(void _q_showLoadSlider())

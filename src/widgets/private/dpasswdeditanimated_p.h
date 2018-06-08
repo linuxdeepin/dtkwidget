@@ -9,9 +9,6 @@
 
 #include <DObjectPrivate>
 #include <QLineEdit>
-#include <com_deepin_daemon_inputdevice_keyboard.h>
-
-using KeyboardInter = com::deepin::daemon::inputdevice::Keyboard;
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -41,7 +38,6 @@ public:
     void init();
 
 public Q_SLOTS:
-    void _q_resetKeyboardState();
     void _q_resetCapslockState();
     void _q_onEyeButtonClicked();
     void _q_showLoadSlider();
@@ -65,10 +61,7 @@ public:
 
     // to get capslock state
     DKeyboardMonitor *m_kbdMonitor;
-    // to get user keyboard layout
-    KeyboardInter *m_kbdInter;
 
-    bool m_keyboardEnable;
     bool m_capsEnable;
     bool m_eyeEnable;
     bool m_submitEnable;

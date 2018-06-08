@@ -62,7 +62,6 @@ void DPasswdEditAnimatedPrivate::init()
     m_loadSliderAnim->setLoopCount(-1);
     m_loadSliderAnim->setEasingCurve(QEasingCurve::Linear);
 
-    m_keyboardEnable = true;
     m_capsEnable = true;
     m_eyeEnable = true;
     m_submitEnable = true;
@@ -115,13 +114,7 @@ void DPasswdEditAnimatedPrivate::init()
     m_kbdMonitor->start(QThread::LowestPriority);
     _q_resetCapslockState();
 
-    m_kbdInter = new KeyboardInter(QString("com.deepin.daemon.SystemInfo"),
-                                                QString("/com/deepin/daemon/InputDevice/Keyboard"),
-                                                QDBusConnection::sessionBus(), q);
-    _q_resetKeyboardState();
-
     q->connect(m_kbdMonitor, SIGNAL(capslockStatusChanged(bool)), q, SLOT(_q_resetCapslockState()));
-    q->connect(m_kbdInter, SIGNAL(UserLayoutListChanged(const QStringList &)), q, SLOT(_q_resetKeyboardState()));
     q->connect(m_eye, SIGNAL(clicked()), q, SLOT(_q_onEyeButtonClicked()));
     q->connect(m_passwdEdit, SIGNAL(returnPressed()), q, SLOT(_q_inputDone()));
     q->connect(m_passwdEdit, SIGNAL(selectionChanged()), q, SLOT(hideAlert()));
@@ -185,17 +178,6 @@ void DPasswdEditAnimatedPrivate::_q_hideLoadSlider()
     }
 }
 
-void DPasswdEditAnimatedPrivate::_q_resetKeyboardState()
-{
-    if (m_keyboardEnable) {
-        if (m_kbdInter->userLayoutList().length() > 1) {
-            m_keyboard->setVisible(true);
-            return;
-        }
-    }
-    m_keyboard->setVisible(false);
-}
-
 void DPasswdEditAnimatedPrivate::_q_resetCapslockState()
 {
     if (m_capsEnable) {
@@ -233,10 +215,7 @@ void DPasswdEditAnimated::setKeyboardButtonEnable(bool value)
 {
     D_D(DPasswdEditAnimated);
 
-    if (d->m_keyboardEnable != value) {
-        d->m_keyboardEnable = value;
-        d->_q_resetKeyboardState();
-    }
+    d->m_keyboard->setVisible(value);
 }
 
 void DPasswdEditAnimated::setCapslockIndicatorEnable(bool value)
