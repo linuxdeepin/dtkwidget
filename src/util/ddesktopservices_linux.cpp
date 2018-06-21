@@ -23,6 +23,7 @@
 #include <QFile>
 #include <QMediaPlayer>
 #include <QGSettings/QGSettings>
+#include <QSound>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -80,13 +81,19 @@ static QString soundEffectFilePath(const QString &name)
 {
     // TODO: super simple version of sound theme file search shema :)
     // will need to be replaced by more advanced approch like libcanberra.
-    const QString temp = QString("/usr/share/sounds/deepin/stereo/%1.ogg").arg(name);
+    QString temp = QString("/usr/share/sounds/deepin/stereo/%1").arg(name);
 
-    if (QFile::exists(temp)) {
-        return temp;
-    } else {
-        return QString();
+    const QString tempWav = temp + ".wav";
+    if (QFile::exists(tempWav)) {
+        return tempWav;
     }
+
+    const QString tempOgg = temp + ".ogg";
+    if (QFile::exists(tempOgg)) {
+        return tempOgg;
+    }
+
+    return QString();
 }
 
 static bool systemSoundEffectEnabled(const QString &name)
@@ -215,9 +222,13 @@ bool DDesktopServices::playSystemSoundEffect(const QString &name)
         return false;
     }
 
-    QMediaPlayer *player = soundEffectPlayer();
-    player->setMedia(QUrl::fromLocalFile(path));
-    player->play();
+    if (path.endsWith("wav")) {
+        QSound::play(path);
+    } else {
+        QMediaPlayer *player = soundEffectPlayer();
+        player->setMedia(QUrl::fromLocalFile(path));
+        player->play();
+    }
 
     return true;
 }
