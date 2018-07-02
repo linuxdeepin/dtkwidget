@@ -52,7 +52,9 @@ public:
     QRectF boundsOnElement(const QString &id) const;
     bool elementExists(const QString &id) const;
 
-    static QPixmap render(const QString &svgPath, const QSize &sz);
+    QImage toImage(const QSize sz, const QString &elementId = QString()) const;
+
+    D_DECL_DEPRECATED static QPixmap render(const QString &svgPath, const QSize &sz);
 
 public Q_SLOTS:
     bool load(const QString &filename);

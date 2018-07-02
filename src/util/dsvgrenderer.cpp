@@ -34,6 +34,8 @@ class DSvgRendererPrivate : public DObjectPrivate
 public:
     DSvgRendererPrivate(DObject *qq);
 
+    QImage getImage(const QSize &size, const QString &elementId) const;
+
     RsvgHandle *handle = NULL;
     QSize defaultSize;
 
@@ -44,6 +46,28 @@ DSvgRendererPrivate::DSvgRendererPrivate(DObject *qq)
     : DObjectPrivate(qq)
 {
 
+}
+
+QImage DSvgRendererPrivate::getImage(const QSize &size, const QString &elementId) const
+{
+    QImage image(size, QImage::Format_ARGB32_Premultiplied);
+
+    image.fill(Qt::transparent);
+
+    cairo_surface_t *surface = cairo_image_surface_create_for_data(image.bits(), CAIRO_FORMAT_ARGB32, image.width(), image.height(), image.bytesPerLine());
+    cairo_t *cairo = cairo_create(surface);
+    cairo_scale(cairo, image.width() / viewBox.width(), image.height() / viewBox.height());
+    cairo_translate(cairo, -viewBox.x(), -viewBox.y());
+
+    if (elementId.isEmpty())
+        rsvg_handle_render_cairo(handle, cairo);
+    else
+        rsvg_handle_render_cairo_sub(handle, cairo, elementId.toUtf8().constData());
+
+    cairo_destroy(cairo);
+    cairo_surface_destroy(surface);
+
+    return image;
 }
 
 DSvgRenderer::DSvgRenderer(QObject *parent)
@@ -146,16 +170,18 @@ bool DSvgRenderer::elementExists(const QString &id) const
     return rsvg_handle_has_sub(d->handle, id.toUtf8().constData());
 }
 
+QImage DSvgRenderer::toImage(const QSize sz, const QString &elementId) const
+{
+    Q_D(const DSvgRenderer);
+
+    return d->getImage(sz, elementId);
+}
+
 QPixmap DSvgRenderer::render(const QString &svgPath, const QSize &sz)
 {
-    QImage ret(sz, QImage::Format_ARGB32);
-    ret.fill(Qt::transparent);
-
-    QPainter ptr(&ret);
     DSvgRenderer rdr(svgPath);
-    rdr.render(&ptr);
 
-    return QPixmap::fromImage(ret);
+    return QPixmap::fromImage(rdr.d_func()->getImage(sz, QString()));
 }
 
 bool DSvgRenderer::load(const QString &filename)
@@ -218,22 +244,7 @@ void DSvgRenderer::render(QPainter *p, const QString &elementId, const QRectF &b
 
     p->save();
 
-    QImage image(p->device()->width(), p->device()->height(), QImage::Format_ARGB32_Premultiplied);
-
-    image.fill(Qt::transparent);
-
-    cairo_surface_t *surface = cairo_image_surface_create_for_data(image.bits(), CAIRO_FORMAT_ARGB32, image.width(), image.height(), image.bytesPerLine());
-    cairo_t *cairo = cairo_create(surface);
-    cairo_scale(cairo, image.width() / d->viewBox.width(), image.height() / d->viewBox.height());
-    cairo_translate(cairo, -d->viewBox.x(), -d->viewBox.y());
-
-    if (elementId.isEmpty())
-        rsvg_handle_render_cairo(d->handle, cairo);
-    else
-        rsvg_handle_render_cairo_sub(d->handle, cairo, elementId.toUtf8().constData());
-
-    cairo_destroy(cairo);
-    cairo_surface_destroy(surface);
+    const QImage image = d->getImage(QSize(p->device()->width(), p->device()->height()), elementId);
 
     if (bounds.isEmpty())
         p->drawImage(0, 0, image);
