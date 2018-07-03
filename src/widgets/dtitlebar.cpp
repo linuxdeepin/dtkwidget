@@ -358,12 +358,6 @@ void DTitlebarPrivate::handleParentWindowIdChange()
     D_Q(DTitlebar);
     if (!targetWindowHandle) {
         targetWindowHandle = targetWindow()->windowHandle();
-        targetWindowHandle->disconnect(targetWindow()->windowHandle(), &QWindow::windowStateChanged,
-                                       q, Q_NULLPTR);
-        targetWindowHandle->connect(targetWindow()->windowHandle(), &QWindow::windowStateChanged,
-        q, [ = ](Qt::WindowState) {
-            handleParentWindowStateChange();
-        });
     } else if (targetWindow()->windowHandle() != targetWindowHandle) {
         // Parent change???, show never here
         qWarning() << "targetWindowHandle change" << targetWindowHandle << targetWindow()->windowHandle();
@@ -671,6 +665,10 @@ bool DTitlebar::eventFilter(QObject *obj, QEvent *event)
                     d->showOnFullscreen();
                 }
             }
+            break;
+        }
+        case QEvent::WindowStateChange: {
+            d->handleParentWindowStateChange();
             break;
         }
         default:
