@@ -155,6 +155,9 @@ public:
     DTrashManagerPrivate(DTrashManager *q_ptr)
         : DObjectPrivate(q_ptr) {}
 
+    static bool removeFileOrDir(const QString &path);
+    static bool removeFromIterator(QDirIterator &iter);
+
     D_DECLARE_PUBLIC(DTrashManager)
 };
 
@@ -175,28 +178,14 @@ bool DTrashManager::trashIsEmpty() const
 bool DTrashManager::cleanTrash()
 {
     QDirIterator iterator_info(TRASH_INFO_PATH,
-//                               QStringList() << "*.trashinfo",
                                QDir::Files | QDir::NoDotAndDotDot | QDir::Hidden);
-
-    bool ok = true;
-
-    while (iterator_info.hasNext()) {
-        if (!QFile::remove(iterator_info.next())) {
-            ok = false;
-        }
-    }
 
     QDirIterator iterator_files(TRASH_FILES_PATH,
                                 QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Hidden,
                                 QDirIterator::Subdirectories);
 
-    while (iterator_files.hasNext()) {
-        if (!QFile::remove(iterator_files.next())) {
-            ok = false;
-        }
-    }
-
-    return ok;
+    return DTrashManagerPrivate::removeFromIterator(iterator_info) &&
+           DTrashManagerPrivate::removeFromIterator(iterator_files);
 }
 
 bool DTrashManager::moveToTrash(const QString &filePath, bool followSymlink)
@@ -243,6 +232,30 @@ DTrashManager::DTrashManager()
     , DObject(*new DTrashManagerPrivate(this))
 {
 
+}
+
+bool DTrashManagerPrivate::removeFileOrDir(const QString &path)
+{
+    QFileInfo fileInfo(path);
+    if (fileInfo.isDir()) {
+        QDir dir(path);
+        return dir.removeRecursively();
+    } else {
+        return QFile::remove(path);
+    }
+}
+
+bool DTrashManagerPrivate::removeFromIterator(QDirIterator &iter)
+{
+    bool ok = true;
+    while (iter.hasNext()) {
+        QString nextPath = iter.next();
+//        qDebug() << iter.fileName() << iterator_info.filePath();
+        if (!DTrashManagerPrivate::removeFileOrDir(nextPath)) {
+            ok = false;
+        }
+    }
+    return ok;
 }
 
 DWIDGET_END_NAMESPACE
