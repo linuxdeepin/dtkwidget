@@ -96,19 +96,41 @@ static QString soundEffectFilePath(const QString &name)
     return QString();
 }
 
+/*!
+ * \brief Converts \p name from 'key-name' notation
+ *        to camel case 'keyName' or 'KeyName'.
+ * This function converts GSettings key names to names
+ * suitable for Qt getters and setters.
+ *
+ * Well fsck this.
+ *
+ * \param name key name
+ * \return key name converted to camel case
+ * \internal
+ */
+static QString GSettingsKeyToCamelCase(const QString name)
+{
+    QStringList parts = name.split('-', QString::SkipEmptyParts);
+    for (int i=1; i<parts.size(); ++i)
+        parts[i][0] = parts[i][0].toUpper();
+
+    return parts.join("");
+}
+
 static bool systemSoundEffectEnabled(const QString &name)
 {
     QGSettings settings("com.deepin.dde.sound-effect");
 
     const bool effEnabled = settings.get("enabled").toBool();
+    QString newName = GSettingsKeyToCamelCase(name);
 
     if (effEnabled) {
         const QStringList list = settings.keys();
-        if (!list.contains(name)) {
+        if (!list.contains(newName)) {
             return false;
         }
 
-        return settings.get(name).toBool();
+        return settings.get(newName).toBool();
     }
 
     return effEnabled;
