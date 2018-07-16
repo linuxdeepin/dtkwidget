@@ -1601,8 +1601,10 @@ QColor DTabBar::flashColor() const
 
 QWindow *DTabBar::dragIconWindow() const
 {
-    if (QBasicDrag *drag = dynamic_cast<QBasicDrag*>(QDragManager::self()->m_platformDrag))
-        return drag->m_drag_icon_window;
+    for (QWindow *w : qGuiApp->allWindows()) {
+        if (w->inherits("QShapedPixmapWindow"))
+            return w;
+    }
 
     return nullptr;
 }
