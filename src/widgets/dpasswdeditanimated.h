@@ -1,9 +1,11 @@
 #ifndef DPASSWDEDITANIMATED_H
 #define DPASSWDEDITANIMATED_H
 
-#include <DObject>
 #include <QLineEdit>
 #include <QPropertyAnimation>
+#include <QLabel>
+
+#include <DObject>
 #include <dtkwidget_global.h>
 
 DWIDGET_BEGIN_NAMESPACE
@@ -48,6 +50,7 @@ public:
 
     QLineEdit *lineEdit();
     QPropertyAnimation *loadingAnimation();
+    QLabel *invalidMessage();
 
     QColor loadingEffectColor();
 
