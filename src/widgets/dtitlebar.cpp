@@ -892,6 +892,8 @@ void DTitlebar::setVisible(bool visible)
         connect(this, SIGNAL(doubleClicked()), this, SLOT(_q_toggleWindowState()));
         connect(d->minButton, SIGNAL(clicked()), this, SLOT(_q_showMinimized()));
         connect(d->closeButton, &DWindowCloseButton::clicked, d->targetWindow(), &QWidget::close);
+
+        d->updateButtonsState(d->targetWindow()->windowFlags());
     } else {
         if (!d->targetWindow()) {
             return;
