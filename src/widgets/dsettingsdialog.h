@@ -39,6 +39,7 @@ public:
 
 public Q_SLOTS:
     void updateSettings(DTK_CORE_NAMESPACE::DSettings *settings);
+    void updateSettings(const QByteArray &translateContext, DTK_CORE_NAMESPACE::DSettings *settings);
 
 private:
     QScopedPointer<DSettingsDialogPrivate> d_ptr;

@@ -408,7 +408,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZN3Dtk6Widget10Navigation11qt_metacastEPKc@Base 2.0.7.2
  _ZN3Dtk6Widget10Navigation13onSelectGroupERK7QString@Base 2.0.7.2
  _ZN3Dtk6Widget10Navigation13selectedGroupERK7QString@Base 2.0.7.2
- _ZN3Dtk6Widget10Navigation14updateSettingsE8QPointerINS_4Core9DSettingsEE@Base 2.0.7.2
  _ZN3Dtk6Widget10Navigation16staticMetaObjectE@Base 2.0.7.2
  _ZN3Dtk6Widget10NavigationC1EP7QWidget@Base 2.0.7.2
  _ZN3Dtk6Widget10NavigationC2EP7QWidget@Base 2.0.7.2
@@ -2625,7 +2624,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZN3Dtk6Widget7Content11qt_metacallEN11QMetaObject4CallEiPPv@Base 2.0.7.2
  _ZN3Dtk6Widget7Content11qt_metacastEPKc@Base 2.0.7.2
  _ZN3Dtk6Widget7Content13scrollToGroupERK7QString@Base 2.0.7.2
- _ZN3Dtk6Widget7Content14updateSettingsE8QPointerINS_4Core9DSettingsEE@Base 2.0.7.2
  _ZN3Dtk6Widget7Content15onScrollToGroupERK7QString@Base 2.0.7.2
  _ZN3Dtk6Widget7Content16staticMetaObjectE@Base 2.0.7.2
  _ZN3Dtk6Widget7ContentC1EP7QWidget@Base 2.0.7.2

@@ -43,8 +43,10 @@ public:
     void registerWidget(const QString &viewType, std::function<WidgetCreateHandler> handler);
 
     QWidget *createWidget(QPointer<DTK_CORE_NAMESPACE::DSettingsOption> settings);
+    QWidget *createWidget(const QByteArray &translateContext, QPointer<DTK_CORE_NAMESPACE::DSettingsOption> settings);
 
     static QWidget *createTwoColumWidget(DTK_CORE_NAMESPACE::DSettingsOption *option, QWidget *rightWidget);
+    static QWidget *createTwoColumWidget(const QByteArray &translateContext, DTK_CORE_NAMESPACE::DSettingsOption *option, QWidget *rightWidget);
 
 private:
     QScopedPointer<DSettingsWidgetFactoryPrivate> d_ptr;

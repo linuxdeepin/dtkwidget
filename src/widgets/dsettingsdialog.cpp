@@ -106,9 +106,14 @@ DSettingsWidgetFactory *DSettingsDialog::widgetFactory() const
 
 void DSettingsDialog::updateSettings(Dtk::Core::DSettings *settings)
 {
+    updateSettings(QByteArray(), settings);
+}
+
+void DSettingsDialog::updateSettings(const QByteArray &translateContext, Core::DSettings *settings)
+{
     Q_D(DSettingsDialog);
-    d->leftFrame->updateSettings(settings);
-    d->content->updateSettings(settings);
+    d->leftFrame->updateSettings(translateContext, settings);
+    d->content->updateSettings(translateContext, settings);
     adjustSize();
 }
 

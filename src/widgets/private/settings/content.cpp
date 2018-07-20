@@ -23,6 +23,7 @@
 #include <QScrollBar>
 #include <QScrollArea>
 #include <QVBoxLayout>
+#include <QCoreApplication>
 
 #include <DSettings>
 #include <DSettingsGroup>
@@ -134,7 +135,7 @@ void Content::onScrollToGroup(const QString &key)
 //    qDebug() << "onScrollToGroup" << key;
 }
 
-void Content::updateSettings(QPointer<DTK_CORE_NAMESPACE::DSettings> settings)
+void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CORE_NAMESPACE::DSettings> settings)
 {
     Q_D(Content);
     for (auto groupKey : settings->groupKeys()) {
@@ -142,7 +143,8 @@ void Content::updateSettings(QPointer<DTK_CORE_NAMESPACE::DSettings> settings)
         if (group->isHidden()) {
             continue;
         }
-        auto trName = QObject::tr(group->name().toStdString().c_str());
+        auto trName = translateContext.isEmpty() ? QObject::tr(group->name().toStdString().c_str())
+                                                 : qApp->translate(translateContext.constData(), group->name().toStdString().c_str());
         auto title = new ContentTitle;
         title->setTitle(trName);
         title->setProperty("key", groupKey);
@@ -161,7 +163,8 @@ void Content::updateSettings(QPointer<DTK_CORE_NAMESPACE::DSettings> settings)
                 title->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
                 title->setObjectName("ContentSubTitleText");
                 title->setFixedHeight(20);
-                auto trName = QObject::tr(subgroup->name().toStdString().c_str());
+                auto trName = translateContext.isEmpty() ? QObject::tr(subgroup->name().toStdString().c_str())
+                                                         : qApp->translate(translateContext.constData(), subgroup->name().toStdString().c_str());
                 title->setText(trName);
                 title->setProperty("key", subgroup->key());
                 title->setStyleSheet("#ContentSubTitleText{font-weight: 520; "
@@ -178,7 +181,7 @@ void Content::updateSettings(QPointer<DTK_CORE_NAMESPACE::DSettings> settings)
                     continue;
                 }
 
-                auto widget = d->widgetFactory->createWidget(option);
+                auto widget = d->widgetFactory->createWidget(translateContext, option);
                 if (widget) {
                     d->contentLayout->addWidget(widget);
                     widget->setParent(d->contentFrame);

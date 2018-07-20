@@ -44,7 +44,7 @@ Q_SIGNALS:
 
 public Q_SLOTS:
     void onScrollToGroup(const QString &key);
-    void updateSettings(QPointer<DTK_CORE_NAMESPACE::DSettings> settings);
+    void updateSettings(const QByteArray &translateContext, QPointer<DTK_CORE_NAMESPACE::DSettings> settings);
 
 private:
     QScopedPointer<ContentPrivate> d_ptr;

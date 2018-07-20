@@ -21,6 +21,7 @@
 #include <QVBoxLayout>
 #include <QListView>
 #include <QStandardItemModel>
+#include <QCoreApplication>
 
 #include <DSettings>
 #include <DSettingsGroup>
@@ -101,7 +102,7 @@ void Navigation::onSelectGroup(const QString &key)
     }
 }
 
-void Navigation::updateSettings(QPointer<DTK_CORE_NAMESPACE::DSettings> settings)
+void Navigation::updateSettings(const QByteArray &translateContext, QPointer<DTK_CORE_NAMESPACE::DSettings> settings)
 {
     Q_D(Navigation);
 
@@ -120,7 +121,8 @@ void Navigation::updateSettings(QPointer<DTK_CORE_NAMESPACE::DSettings> settings
             continue;
         }
         auto item = new QStandardItem;
-        auto trName = QObject::tr(group->name().toStdString().c_str());
+        auto trName = translateContext.isEmpty() ? QObject::tr(group->name().toStdString().c_str())
+                                                 : qApp->translate(translateContext.constData(), group->name().toStdString().c_str());
 //        qDebug() << settings->group(groupKey)->name() << trName;
 //        QFont font(item->data(Qt::FontRole).value<QFont>());
 //        QFontMetrics fm(font);
@@ -142,7 +144,8 @@ void Navigation::updateSettings(QPointer<DTK_CORE_NAMESPACE::DSettings> settings
             }
 
             auto item = new QStandardItem;
-            auto trName = QObject::tr(subgroup->name().toStdString().c_str());
+            auto trName = translateContext.isEmpty() ? QObject::tr(subgroup->name().toStdString().c_str())
+                                                     : qApp->translate(translateContext.constData(), subgroup->name().toStdString().c_str());
 //            qDebug() << subgroup->name() << trName;
 //            QFont font(item->data(Qt::FontRole).value<QFont>());
 //            QFontMetrics fm(font);
