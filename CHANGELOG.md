@@ -1,3 +1,30 @@
+<a name="2.0.9"></a>
+## 2.0.9 (2018-07-20)
+
+
+#### Bug Fixes
+
+*   crash in DTabBar::dragIconWindow ([1772a8a8](https://github.com/linuxdeepin/dtkwidget/commit/1772a8a8f6ea826f9ba55e1b97daaf49c6e7a719))
+*   quick change fullscreen state crash ([565bfd5f](https://github.com/linuxdeepin/dtkwidget/commit/565bfd5f6f218409808a36911abe905219928d61))
+*   did not clear hover item when leaving. ([5c7da52e](https://github.com/linuxdeepin/dtkwidget/commit/5c7da52e5f663d3a67c4e8cc63c9c09bbaa3a451))
+*   the right scroll button of DTabBar cannot visible ([4d55296b](https://github.com/linuxdeepin/dtkwidget/commit/4d55296b63e8a890e825e4c826e5098f565445e5))
+*   DTabBarPrivate::stopMove will trigger drop event ([61c3a3e9](https://github.com/linuxdeepin/dtkwidget/commit/61c3a3e9d0d91ac06059db02a49f10d4ff48211b))
+* **DTabBar:**
+  *  no signal when tab is removed ([d33d8b0e](https://github.com/linuxdeepin/dtkwidget/commit/d33d8b0ea728d24a9e199340b8a356b2704c656c))
+  *  setTabMaxiumnSize is invalid ([ff5b9480](https://github.com/linuxdeepin/dtkwidget/commit/ff5b9480e149c0dfdee327bf2c4a60ecc6bd945a))
+* **DTitlebar:**  When the window is fast hiding and displaying, the state is wrong ([5af9fa21](https://github.com/linuxdeepin/dtkwidget/commit/5af9fa21a7b1f85fd126b92d249583016f41cd18))
+* **DTrashManager:**  clear trash behavior not correct ([1242bf64](https://github.com/linuxdeepin/dtkwidget/commit/1242bf6430340b1c1eac124ba89d990fd29db5b3))
+* **DVideoWidget:**  byte preline missing ([856d2f5a](https://github.com/linuxdeepin/dtkwidget/commit/856d2f5a3ec696780dbca31bc7acbcfcb4222a53))
+* **Dtitlebar:**  not update max button icon ([79d72833](https://github.com/linuxdeepin/dtkwidget/commit/79d728331d137b8da1c7b4884698a5231ec97d84))
+* **dscrollarea:**  initialization with nullptr ([a1e5697a](https://github.com/linuxdeepin/dtkwidget/commit/a1e5697a315382ece6a2f688e2a61da0432f55e1))
+* **sfx:**  sfx playback name should conv to camelCase ([870cf29c](https://github.com/linuxdeepin/dtkwidget/commit/870cf29cea6af3bd9fdfab6ccf2553714679a413))
+
+#### Features
+
+*   add signal for DTabBar ([2172c4bb](https://github.com/linuxdeepin/dtkwidget/commit/2172c4bbc3199fe439c282ca493b65c95fe8e2b5))
+
+
+
 <a name="2.0.8"></a>
 ## 2.0.8 (2018-05-02)
 
