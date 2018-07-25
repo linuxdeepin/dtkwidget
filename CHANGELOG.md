@@ -1,3 +1,13 @@
+<a name="2.0.9.1"></a>
+## 2.0.9.1 (2018-07-25)
+
+
+#### Features
+
+*   support set the translate context on DSettingsDialog::updateSettings ([0afad0c2](https://github.com/linuxdeepin/dtkwidget/commit/0afad0c2301cd50fe21cbd1a1379034d6e6f1048))
+
+
+
 <a name="2.0.9"></a>
 ## 2.0.9 (2018-07-20)
 
