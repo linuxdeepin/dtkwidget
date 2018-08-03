@@ -457,7 +457,12 @@ bool DApplication::loadDXcbPlugin()
 
 bool DApplication::isDXcbPlatform()
 {
-    return qApp && (qApp->platformName() == DXCB_PLUGIN_KEY || qApp->property(DXCB_PLUGIN_SYMBOLIC_PROPERTY).toBool());
+    if (!qApp)
+        return false;
+
+    static bool _is_dxcb = qApp->platformName() == DXCB_PLUGIN_KEY || qApp->property(DXCB_PLUGIN_SYMBOLIC_PROPERTY).toBool();
+
+    return _is_dxcb;
 }
 
 int DApplication::buildDtkVersion()

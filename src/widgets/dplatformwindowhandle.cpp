@@ -55,6 +55,8 @@ DEFINE_CONST_CHAR(setWmBlurWindowBackgroundMaskImage);
 DEFINE_CONST_CHAR(setWindowProperty);
 DEFINE_CONST_CHAR(pluginVersion);
 DEFINE_CONST_CHAR(disableOverrideCursor);
+DEFINE_CONST_CHAR(enableDxcb);
+DEFINE_CONST_CHAR(isEnableDxcb);
 
 static void setWindowProperty(QWindow *window, const char *name, const QVariant &value)
 {
@@ -111,11 +113,8 @@ QString DPlatformWindowHandle::pluginVersion()
     return reinterpret_cast<QString(*)()>(pv)();
 }
 
-void DPlatformWindowHandle::enableDXcbForWindow(QWidget *widget)
+static QWindow *ensureWindowHandle(QWidget *widget)
 {
-    if (!DApplication::isDXcbPlatform())
-        return;
-
     QWidget *window = widget->window();
     QWindow *handle = window->windowHandle();
 
@@ -127,24 +126,23 @@ void DPlatformWindowHandle::enableDXcbForWindow(QWidget *widget)
         window->setAttribute(Qt::WA_NativeWindow, false);
 
         // dxcb version >= 1.1.6
-        if (!pluginVersion().isEmpty()) {
+        if (!DPlatformWindowHandle::pluginVersion().isEmpty()) {
             /// TODO: Avoid call parentWidget()->enforceNativeChildren().
             qApp->setAttribute(Qt::AA_DontCreateNativeWidgetSiblings, save_flag);
         }
-
-        Q_ASSERT_X(handle, "DPlatformWindowHandler:", "widget window handle is NULL.");
-
-        if (Q_UNLIKELY(!handle))
-            return;
     }
 
-    if (handle->property(_useDxcb).toBool())
+    return handle;
+}
+
+void DPlatformWindowHandle::enableDXcbForWindow(QWidget *widget)
+{
+    if (!DApplication::isDXcbPlatform())
         return;
 
-    Q_ASSERT_X(!handle->handle(), "DPlatformWindowHandler:",
-               "Must be called before window handle has been created. See also QWidget::windowHandle()");
+    QWindow *handle = ensureWindowHandle(widget);
 
-    handle->setProperty(_useDxcb, true);
+    enableDXcbForWindow(handle);
 }
 
 void DPlatformWindowHandle::enableDXcbForWindow(QWindow *window)
@@ -152,7 +150,15 @@ void DPlatformWindowHandle::enableDXcbForWindow(QWindow *window)
     if (!DApplication::isDXcbPlatform())
         return;
 
-    if (window->handle()) {
+    QFunctionPointer enable_dxcb = nullptr;
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+    enable_dxcb = qApp->platformFunction(_enableDxcb);
+#endif
+
+    if (enable_dxcb) {
+        (*reinterpret_cast<bool(*)(QWindow*)>(enable_dxcb))(window);
+    } else if (window->handle()) {
         Q_ASSERT_X(window->property(_useDxcb).toBool(), "DPlatformWindowHandler:",
                    "Must be called before window handle has been created. See also QWindow::handle()");
     } else {
@@ -162,29 +168,37 @@ void DPlatformWindowHandle::enableDXcbForWindow(QWindow *window)
 
 void DPlatformWindowHandle::enableDXcbForWindow(QWidget *widget, bool redirectContent)
 {
-    enableDXcbForWindow(widget);
-
-    if (isEnabledDXcb(widget)) {
-        widget->windowHandle()->setProperty(_redirectContent, redirectContent);
-    }
+    enableDXcbForWindow(ensureWindowHandle(widget), redirectContent);
 }
 
 void DPlatformWindowHandle::enableDXcbForWindow(QWindow *window, bool redirectContent)
 {
-    enableDXcbForWindow(window);
+    window->setProperty(_redirectContent, redirectContent);
 
-    if (isEnabledDXcb(window)) {
-        window->setProperty(_redirectContent, redirectContent);
-    }
+    enableDXcbForWindow(window);
 }
 
 bool DPlatformWindowHandle::isEnabledDXcb(const QWidget *widget)
 {
-    return widget->windowHandle() && widget->windowHandle()->property(_useDxcb).toBool();
+    if (QWindow *handle = widget->windowHandle()) {
+        return isEnabledDXcb(handle);
+    }
+
+    return false;
 }
 
 bool DPlatformWindowHandle::isEnabledDXcb(const QWindow *window)
 {
+    QFunctionPointer is_enable_dxcb = nullptr;
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+    is_enable_dxcb = qApp->platformFunction(_isEnableDxcb);
+#endif
+
+    if (is_enable_dxcb) {
+        return (*reinterpret_cast<bool(*)(const QWindow*)>(is_enable_dxcb))(window);
+    }
+
     return window->property(_useDxcb).toBool();
 }
 
