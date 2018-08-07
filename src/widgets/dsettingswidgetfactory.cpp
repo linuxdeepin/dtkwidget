@@ -165,23 +165,24 @@ QWidget *createCheckboxOptionHandle(QObject *opt)
     auto value = option->data("text").toString();
     auto trName = DWIDGET_NAMESPACE::tr(translateContext, value.toStdString().c_str());
 
-    auto checkboxFrame = new QWidget;
-    auto checkboxLayout = new QHBoxLayout(checkboxFrame);
-    checkboxLayout->setSpacing(0);
-    checkboxLayout->setContentsMargins(0, 0, 0, 0);
-    auto rightWidget = new QCheckBox("");
-    auto checkboxLabel = new QLabel(trName);
-    checkboxLabel->setWordWrap(true);
-    checkboxLabel->setMinimumWidth(320);
-    checkboxLayout->addWidget(rightWidget);
-    checkboxLayout->addSpacing(5);
-    checkboxLayout->addWidget(checkboxLabel);
-    checkboxLayout->addStretch();
+//    auto checkboxFrame = new QWidget;
+//    auto checkboxLayout = new QHBoxLayout(checkboxFrame);
+//    checkboxLayout->setSpacing(0);
+//    checkboxLayout->setContentsMargins(0, 0, 0, 0);
+    auto rightWidget = new QCheckBox(trName);
+//    auto checkboxLabel = new QLabel(trName);
+//    checkboxLabel->setWordWrap(true);
+//    checkboxLabel->setMinimumWidth(320);
+//    checkboxLayout->addWidget(rightWidget);
+//    checkboxLayout->addSpacing(5);
+//    checkboxLayout->addWidget(checkboxLabel);
+//    checkboxLayout->addStretch();
 
+    rightWidget->setMinimumHeight(30);
     rightWidget->setObjectName("OptionCheckbox");
     rightWidget->setChecked(option->value().toBool());
 
-    auto optionWidget = DSettingsWidgetFactory::createTwoColumWidget(translateContext, option, checkboxFrame);
+//    auto optionWidget = DSettingsWidgetFactory::createTwoColumWidget(translateContext, option, checkboxFrame);
 
     option->connect(rightWidget, &QCheckBox::stateChanged,
     option, [ = ](int status) {
@@ -193,7 +194,8 @@ QWidget *createCheckboxOptionHandle(QObject *opt)
         rightWidget->update();
     });
 
-    return  optionWidget;
+    return rightWidget;
+//    return  optionWidget;
 }
 
 QWidget *createLineEditOptionHandle(QObject *opt)
