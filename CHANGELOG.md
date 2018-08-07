@@ -1,3 +1,13 @@
+<a name="2.0.9.2"></a>
+## 2.0.9.2 (2018-08-07)
+
+
+#### Features
+
+*   use new interface for DPlatformWindowHandle::enableDxcbForWindow ([ab03a058](https://github.com/linuxdeepin/dtkwidget/commit/ab03a058910a3258775bd8b40dc3bf43cf014cc8))
+
+
+
 <a name="2.0.9.1"></a>
 ## 2.0.9.1 (2018-07-25)
 
