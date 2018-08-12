@@ -28,6 +28,7 @@
 #include <DSettings>
 #include <DSettingsGroup>
 #include <DSettingsOption>
+#include <DSuggestButton>
 
 #include "dsettingswidgetfactory.h"
 
@@ -169,7 +170,6 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
                 title->setProperty("key", subgroup->key());
                 title->setStyleSheet("#ContentSubTitleText{font-weight: 520; "
 //                                     "border: 1px solid red; "
-                                     "font-size: 12px;"
                                      "}");
                 d->contentLayout->addWidget(title);
                 d->contentLayout->addSpacing(10);
@@ -192,7 +192,7 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
         }
     }
 
-    auto resetBt = new QPushButton(QObject::tr("Restore Defaults"));
+    auto resetBt = new DSuggestButton(QObject::tr("Restore Defaults"));
     resetBt->setObjectName("SettingsContentReset");
     resetBt->setFixedSize(310, 36);
 

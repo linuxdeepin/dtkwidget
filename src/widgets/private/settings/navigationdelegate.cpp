@@ -89,7 +89,6 @@ void NavigationDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         auto pen = isSelected ? QColor("#2ca7f8") : QColor("#303030");
         painter->setPen(pen);
         auto font = painter->font();
-        font.setPixelSize(12);
         painter->setFont(font);
 
         QFontMetrics fm(font);

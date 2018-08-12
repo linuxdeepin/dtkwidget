@@ -66,7 +66,6 @@ QWidget *DSettingsWidgetFactory::createTwoColumWidget(const QByteArray &translat
     optionLayout->setSpacing(0);
 
     rightWidget->setMinimumWidth(240);
-    rightWidget->setStyleSheet("QWidget{font-size: 12px;}");
 
     if (!option->name().isEmpty()) {
         optionLayout->setColumnMinimumWidth(0, 110);
@@ -81,7 +80,6 @@ QWidget *DSettingsWidgetFactory::createTwoColumWidget(const QByteArray &translat
         labelWidget->setMinimumWidth(150);
         labelWidget->setFixedWidth(160);
         labelWidget->setObjectName("OptionLabel");
-        labelWidget->setStyleSheet("#OptionLabel{font-size: 12px; }");
         optionLayout->addWidget(labelWidget, 0, 0, Qt::AlignLeft | Qt::AlignVCenter);
         optionLayout->addWidget(rightWidget, 0, 1, Qt::AlignLeft | Qt::AlignVCenter);
     } else {
@@ -378,7 +376,7 @@ QWidget *createRadioGroupOptionHandle(QObject *opt)
         buttonList.value(index)->setChecked(true);
     }
 
-    rightWidget->setStyleSheet("QGroupBox{border: none;} QRadioButton{font-size:12px;}");
+    rightWidget->setStyleSheet("QGroupBox{border: none;}");
     return  optionWidget;
 }
 
