@@ -37,20 +37,28 @@ class LIBDTKWIDGETSHARED_EXPORT DToast : public QFrame, public DTK_CORE_NAMESPAC
     Q_OBJECT
 
     Q_PROPERTY(qreal opacity READ opacity WRITE setOpacity)
+    Q_PROPERTY(qreal duration READ duration WRITE setDuration)
 public:
     explicit DToast(QWidget *parent = 0);
     ~DToast();
 
     QString text() const;
     QIcon icon() const;
+    int duration() const;
+
+Q_SIGNALS:
+    void visibleChanged(bool isVisible);
 
 public Q_SLOTS:
     void pop();
     void pack();
+    void showEvent(QShowEvent *event) override;
+    void hideEvent(QHideEvent *event) override;
 
     void setText(QString text);
     void setIcon(QString icon);
     void setIcon(QIcon icon, QSize defaultSize = QSize(20, 20));
+    void setDuration(int duration);
 
 private:
     qreal opacity() const;

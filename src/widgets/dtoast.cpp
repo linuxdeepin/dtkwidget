@@ -43,6 +43,8 @@ public:
     QLabel  *iconLabel = Q_NULLPTR;
     QLabel  *textLabel = Q_NULLPTR;
 
+    int     duration = 2000;
+
     QPropertyAnimation  *animation  = Q_NULLPTR;
     DGraphicsGlowEffect *effect     = Q_NULLPTR;
 
@@ -76,6 +78,12 @@ QIcon DToast::icon() const
     return d->icon;
 }
 
+int DToast::duration() const
+{
+    D_DC(DToast);
+    return d->duration;
+}
+
 qreal DToast::opacity() const
 {
     D_DC(DToast);
@@ -105,6 +113,12 @@ void DToast::setIcon(QIcon icon, QSize defaultSize)
     d->iconLabel->setPixmap(d->icon.pixmap(icon.actualSize(defaultSize)));
 }
 
+void DToast::setDuration(int duration)
+{
+    D_D(DToast);
+    d->duration = duration;
+}
+
 void DToast::setOpacity(qreal opacity)
 {
     D_D(DToast);
@@ -123,8 +137,10 @@ void DToast::pop()
         return;
     }
 
+    int _duration = d->duration < 0 ? 2000 : d->duration;
+
     d->animation = new QPropertyAnimation(this, "opacity");
-    d->animation->setDuration(2000);
+    d->animation->setDuration(_duration);
     d->animation->setStartValue(0);
     d->animation->setKeyValueAt(0.4, 1.0);
     d->animation->setKeyValueAt(0.8, 1.0);
@@ -147,6 +163,18 @@ void DToast::pack()
         d->animation->deleteLater();
         d->animation = Q_NULLPTR;
     }
+}
+
+void DToast::showEvent(QShowEvent *event)
+{
+    Q_EMIT visibleChanged(true);
+    return QWidget::showEvent(event);
+}
+
+void DToast::hideEvent(QHideEvent *event)
+{
+    Q_EMIT visibleChanged(false);
+    return QWidget::hideEvent(event);
 }
 
 DToastPrivate::DToastPrivate(DToast *qq)
