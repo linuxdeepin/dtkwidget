@@ -21,8 +21,6 @@ DSuggestButton::DSuggestButton(const QString &text, QWidget *parent)
 
 void DSuggestButton::paintEvent(QPaintEvent *event)
 {
-    QPushButton::paintEvent(event);
-
     QStylePainter p(this);
     DStyleOptionSuggestButton option;
     initStyleOption(&option);
