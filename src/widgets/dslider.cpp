@@ -87,7 +87,7 @@ class DSliderPrivate
  *
  * \note This class relies on dstyle Qt style plugin to work properly.
  *
- * \note This class is not working very well while orientaion is set to vertical.
+ * \note This class is not working very well while orientation is set to vertical.
  */
 
 
