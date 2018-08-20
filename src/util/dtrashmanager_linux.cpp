@@ -237,7 +237,7 @@ DTrashManager::DTrashManager()
 bool DTrashManagerPrivate::removeFileOrDir(const QString &path)
 {
     QFileInfo fileInfo(path);
-    if (fileInfo.isDir()) {
+    if (fileInfo.isDir() && !fileInfo.isSymLink()) {
         QDir dir(path);
         return dir.removeRecursively();
     } else {
