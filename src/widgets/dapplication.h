@@ -98,6 +98,9 @@ public:
     QString applicationAcknowledgementPage() const;
     void setApplicationAcknowledgementPage(const QString &link);
 
+    bool applicationAcknowledgementVisible() const;
+    void setApplicationAcknowledgementVisible(bool visible);
+
     DAboutDialog *aboutDialog();
     void setAboutDialog(DAboutDialog *aboutDialog);
 

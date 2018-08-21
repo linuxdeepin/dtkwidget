@@ -59,6 +59,7 @@ public Q_SLOTS:
     void setWebsiteName(const QString &websiteName);
     void setWebsiteLink(const QString &websiteLink);
     void setAcknowledgementLink(const QString &acknowledgementLink);
+    void setAcknowledgementVisible(bool visible);
     void setLicense(const QString &license);
 
 protected:

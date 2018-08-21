@@ -66,6 +66,7 @@ public:
     QString appDescription;
     QString homePage;
     QString acknowledgementPage;
+    bool acknowledgementPageVisible = true;
 
     bool visibleMenuShortcutText   = false;
     bool visibleMenuCheckboxWidget = false;

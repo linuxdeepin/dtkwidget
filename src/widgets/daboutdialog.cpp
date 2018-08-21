@@ -433,6 +433,12 @@ void DAboutDialog::setAcknowledgementLink(const QString &acknowledgementLink)
     d->updateAcknowledgementLabel();
 }
 
+void DAboutDialog::setAcknowledgementVisible(bool visible)
+{
+    D_D(DAboutDialog);
+    d->acknowledgementLabel->setVisible(visible);
+}
+
 void DAboutDialog::setLicense(const QString &license)
 {
     D_D(DAboutDialog);

@@ -646,6 +646,18 @@ void DApplication::setApplicationAcknowledgementPage(const QString &link)
     d->acknowledgementPage = link;
 }
 
+bool DApplication::applicationAcknowledgementVisible() const
+{
+    D_DC(DApplication);
+    return d->acknowledgementPageVisible;
+}
+
+void DApplication::setApplicationAcknowledgementVisible(bool visible)
+{
+    D_D(DApplication);
+    d->acknowledgementPageVisible = visible;
+}
+
 /**
  * @brief DApplication::aboutDialog returns the about dialog of this application.
  *
@@ -780,6 +792,7 @@ void DApplication::handleAboutAction()
     if (!applicationAcknowledgementPage().isEmpty()) {
         aboutDialog->setAcknowledgementLink(applicationAcknowledgementPage());
     }
+    aboutDialog->setAcknowledgementVisible(d->acknowledgementPageVisible);
 
     aboutDialog->exec();
     aboutDialog->deleteLater();
