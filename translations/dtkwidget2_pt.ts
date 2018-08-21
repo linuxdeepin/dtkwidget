@@ -22,87 +22,87 @@
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="530"/>
         <source>Black</source>
-        <translation type="unfinished"/>
+        <translation>Preto</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="533"/>
         <source>White</source>
-        <translation type="unfinished"/>
+        <translation>Branco</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="536"/>
         <source>Dark Gray</source>
-        <translation type="unfinished"/>
+        <translation>Cinzento escuro</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="539"/>
         <source>Gray</source>
-        <translation type="unfinished"/>
+        <translation>Cinzento</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="542"/>
         <source>Light Gray</source>
-        <translation type="unfinished"/>
+        <translation>Cinzento Claro</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="545"/>
         <source>Red</source>
-        <translation type="unfinished"/>
+        <translation>Vermelho</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="548"/>
         <source>Green</source>
-        <translation type="unfinished"/>
+        <translation>Verde</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="551"/>
         <source>Blue</source>
-        <translation type="unfinished"/>
+        <translation>Azul</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="554"/>
         <source>Cyan</source>
-        <translation type="unfinished"/>
+        <translation>Ciano</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="557"/>
         <source>Magenta</source>
-        <translation type="unfinished"/>
+        <translation>Magenta</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="560"/>
         <source>Yellow</source>
-        <translation type="unfinished"/>
+        <translation>Amarelo</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="563"/>
         <source>Dark Red</source>
-        <translation type="unfinished"/>
+        <translation>Vermelho Escuro</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="566"/>
         <source>Dark Green</source>
-        <translation type="unfinished"/>
+        <translation>Verde Escuro</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="569"/>
         <source>Dark Blue</source>
-        <translation type="unfinished"/>
+        <translation>Azul Escuro</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="572"/>
         <source>Dark Cyan</source>
-        <translation type="unfinished"/>
+        <translation>Ciano Escuro</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="575"/>
         <source>Dark Magenta</source>
-        <translation type="unfinished"/>
+        <translation>Magenta Escuro</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="578"/>
         <source>Dark Yellow</source>
-        <translation type="unfinished"/>
+        <translation>Amarelo Escuro</translation>
     </message>
 </context>
 <context>
@@ -123,7 +123,7 @@
     <message>
         <location filename="../src/widgets/dshortcutedit.cpp" line="31"/>
         <source>Please input a new shortcut</source>
-        <translation>Por favor crie um novo atalho</translation>
+        <translation>Por favor, crie um novo atalho</translation>
     </message>
     <message>
         <location filename="../src/widgets/dshortcutedit.cpp" line="102"/>
@@ -132,19 +132,16 @@
     </message>
 </context>
 <context>
-    <name>DSimpleListView</name>
-    <message>
-        <location filename="../src/widgets/dsimplelistview.cpp" line="1190"/>
-        <source>No search result</source>
-        <translation>Pesquisa sem resultados</translation>
-    </message>
-</context>
-<context>
     <name>QObject</name>
+    <message>
+        <location filename="../src/widgets/dsimplelistview.cpp" line="1235"/>
+        <source>No search result</source>
+        <translation>Nenhum resultado da pesquisa</translation>
+    </message>
     <message>
         <location filename="../src/widgets/private/settings/content.cpp" line="189"/>
         <source>Restore Defaults</source>
-        <translation>Restaurar originais</translation>
+        <translation>Restaurar Predefinições</translation>
     </message>
 </context>
 <context>
@@ -152,7 +149,7 @@
     <message>
         <location filename="../src/widgets/private/settings/shortcutedit.cpp" line="119"/>
         <source>Please enter a new shortcut</source>
-        <translation>Por favor crie um novo atalho</translation>
+        <translation>Por favor, crie um novo atalho</translation>
     </message>
 </context>
 <context>

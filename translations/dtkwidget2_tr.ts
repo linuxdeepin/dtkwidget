@@ -14,7 +14,7 @@
     <message>
         <location filename="../src/widgets/dapplication.cpp" line="716"/>
         <source>%1 is released under %2</source>
-        <translation>%2 altında %1 yayınlandı</translation>
+        <translation>%1, %2 koşulları altında yayınlanmıştır</translation>
     </message>
 </context>
 <context>
@@ -62,12 +62,12 @@
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="554"/>
         <source>Cyan</source>
-        <translation>Deniz Mavisi</translation>
+        <translation>Cam Göbeği</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="557"/>
         <source>Magenta</source>
-        <translation>Eflatun</translation>
+        <translation>Mor</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="560"/>
@@ -92,12 +92,12 @@
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="572"/>
         <source>Dark Cyan</source>
-        <translation>Koyu Deniz Mavisi</translation>
+        <translation>Koyu Cam Göbeği</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="575"/>
         <source>Dark Magenta</source>
-        <translation>Koyu Eflatun</translation>
+        <translation>Koyu Mor</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="578"/>
@@ -110,12 +110,12 @@
     <message>
         <location filename="../src/widgets/dinputdialog.cpp" line="42"/>
         <source>Cancel</source>
-        <translation>İptal Et</translation>
+        <translation>İptal</translation>
     </message>
     <message>
         <location filename="../src/widgets/dinputdialog.cpp" line="43"/>
         <source>Confirm</source>
-        <translation>Doğrula</translation>
+        <translation>Onayla</translation>
     </message>
 </context>
 <context>
@@ -123,7 +123,7 @@
     <message>
         <location filename="../src/widgets/dshortcutedit.cpp" line="31"/>
         <source>Please input a new shortcut</source>
-        <translation>Lütfen yeni bir kısayol giriniz</translation>
+        <translation>Lütfen yeni bir kısayol yazın</translation>
     </message>
     <message>
         <location filename="../src/widgets/dshortcutedit.cpp" line="102"/>
@@ -132,15 +132,12 @@
     </message>
 </context>
 <context>
-    <name>DSimpleListView</name>
-    <message>
-        <location filename="../src/widgets/dsimplelistview.cpp" line="1190"/>
-        <source>No search result</source>
-        <translation>Arama sonucu yok</translation>
-    </message>
-</context>
-<context>
     <name>QObject</name>
+    <message>
+        <location filename="../src/widgets/dsimplelistview.cpp" line="1235"/>
+        <source>No search result</source>
+        <translation>Aramada herhangi bir sonuç bulunamadı</translation>
+    </message>
     <message>
         <location filename="../src/widgets/private/settings/content.cpp" line="189"/>
         <source>Restore Defaults</source>
@@ -152,7 +149,7 @@
     <message>
         <location filename="../src/widgets/private/settings/shortcutedit.cpp" line="119"/>
         <source>Please enter a new shortcut</source>
-        <translation>Lütfen yeni bir kısayol giriniz</translation>
+        <translation>Lütfen yeni bir kısayol yazın</translation>
     </message>
 </context>
 <context>

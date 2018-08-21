@@ -132,15 +132,12 @@
     </message>
 </context>
 <context>
-    <name>DSimpleListView</name>
-    <message>
-        <location filename="../src/widgets/dsimplelistview.cpp" line="1190"/>
-        <source>No search result</source>
-        <translation>找不到結果</translation>
-    </message>
-</context>
-<context>
     <name>QObject</name>
+    <message>
+        <location filename="../src/widgets/dsimplelistview.cpp" line="1235"/>
+        <source>No search result</source>
+        <translation type="unfinished"/>
+    </message>
     <message>
         <location filename="../src/widgets/private/settings/content.cpp" line="189"/>
         <source>Restore Defaults</source>

@@ -22,12 +22,12 @@
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="530"/>
         <source>Black</source>
-        <translation type="unfinished"/>
+        <translation>Hitam</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="533"/>
         <source>White</source>
-        <translation type="unfinished"/>
+        <translation>Putih</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="536"/>
@@ -132,15 +132,12 @@
     </message>
 </context>
 <context>
-    <name>DSimpleListView</name>
+    <name>QObject</name>
     <message>
-        <location filename="../src/widgets/dsimplelistview.cpp" line="1190"/>
+        <location filename="../src/widgets/dsimplelistview.cpp" line="1235"/>
         <source>No search result</source>
         <translation type="unfinished"/>
     </message>
-</context>
-<context>
-    <name>QObject</name>
     <message>
         <location filename="../src/widgets/private/settings/content.cpp" line="189"/>
         <source>Restore Defaults</source>
