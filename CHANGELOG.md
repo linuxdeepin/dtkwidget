@@ -1,3 +1,20 @@
+<a name="2.0.9.3"></a>
+## 2.0.9.3 (2018-08-23)
+
+
+#### Features
+
+*   support hide acknowledgement ([c5d125a9](https://github.com/linuxdeepin/dtkwidget/commit/c5d125a9de66f19f572376ad8a411af743524612))
+* **DSettingsDialog:**  follow the system font size ([115febed](https://github.com/linuxdeepin/dtkwidget/commit/115febed538b9dce041b8aa87c463fb4c438a58e))
+* **toast:**  interface to set duration ([5d0fc564](https://github.com/linuxdeepin/dtkwidget/commit/5d0fc56493234a32ba3f38fff87d5af5e9aceedb))
+
+#### Bug Fixes
+
+* **DSuggestButton:**  draw text twice ([a149d05b](https://github.com/linuxdeepin/dtkwidget/commit/a149d05b57954a49a221e03b230e8c73230330eb))
+* **trashMgr:**  Will delete symbol link recursively ([dbcf048c](https://github.com/linuxdeepin/dtkwidget/commit/dbcf048c23ac2f6b898e9aacbdb8693cde161c2a))
+
+
+
 <a name="2.0.9.2"></a>
 ## 2.0.9.2 (2018-08-07)
 
