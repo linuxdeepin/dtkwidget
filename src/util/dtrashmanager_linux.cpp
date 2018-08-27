@@ -181,7 +181,7 @@ bool DTrashManager::cleanTrash()
                                QDir::Files | QDir::NoDotAndDotDot | QDir::Hidden);
 
     QDirIterator iterator_files(TRASH_FILES_PATH,
-                                QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Hidden,
+                                QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System,
                                 QDirIterator::Subdirectories);
 
     return DTrashManagerPrivate::removeFromIterator(iterator_info) &&
