@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "dwindow.h"
+#include "dborderlesswindow.h"
 
 #include <QDebug>
 #include <QHBoxLayout>
@@ -23,30 +23,30 @@
 #include <DApplication>
 
 #include "dtitlebar.h"
-#include "private/dwidget_p.h"
+#include "private/dborderlesswidget_p.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DWindowPrivate: public DWidgetPrivate
+class DBorderlessWindowPrivate: public DBorderlessWidgetPrivate
 {
-    D_DECLARE_PUBLIC(DWindow)
+    D_DECLARE_PUBLIC(DBorderlessWindow)
 
 public:
-    explicit DWindowPrivate(DWindow *q);
+    explicit DBorderlessWindowPrivate(DBorderlessWindow *q);
     void init();
 
     QMenu   *m_menu     = nullptr;
     QWidget *m_parent   = nullptr;
 };
 
-DWindowPrivate::DWindowPrivate(DWindow *q): DWidgetPrivate(q)
+DBorderlessWindowPrivate::DBorderlessWindowPrivate(DBorderlessWindow *q): DBorderlessWidgetPrivate(q)
 {
 
 }
 
-void DWindowPrivate::init()
+void DBorderlessWindowPrivate::init()
 {
-    D_Q(DWindow);
+    D_Q(DBorderlessWindow);
 
     m_menu = new QMenu(q);
     q->setTitlebarMenu(m_menu);
@@ -59,34 +59,34 @@ void DWindowPrivate::init()
     }
 }
 
-DWindow::DWindow(QWidget *parent): DWidget(*(new DWindowPrivate(this)))
+DBorderlessWindow::DBorderlessWindow(QWidget *parent): DBorderlessWidget(*(new DBorderlessWindowPrivate(this)))
 {
-    D_D(DWindow);
+    D_D(DBorderlessWindow);
 
     setParent(parent);
 
     d->init();
 }
 
-void DWindow::setParent(QWidget *parent)
+void DBorderlessWindow::setParent(QWidget *parent)
 {
-    D_D(DWindow);
+    D_D(DBorderlessWindow);
     d->m_parent = parent;
     QObject::setParent(parent);
 }
 
-QWidget *DWindow::parentWidget() const
+QWidget *DBorderlessWindow::parentWidget() const
 {
-    D_DC(DWindow);
+    D_DC(DBorderlessWindow);
     return d->m_parent;
 }
 
-void DWindow::setContentLayout(QLayout *l)
+void DBorderlessWindow::setContentLayout(QLayout *l)
 {
-    DWidget::setLayout(l);
+    DBorderlessWidget::setLayout(l);
 }
 
-void DWindow::setContentWidget(QWidget *w)
+void DBorderlessWindow::setContentWidget(QWidget *w)
 {
     QHBoxLayout *l = new QHBoxLayout;
     l->setSpacing(0);

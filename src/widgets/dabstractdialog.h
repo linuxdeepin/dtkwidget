@@ -61,7 +61,6 @@ public:
     QColor backgroundColor() const;
     QColor borderColor() const;
     DisplayPosition displayPosition() const;
-    D_DECL_DEPRECATED DisplayPostion displayPostion() const;
 
     void move(const QPoint &pos);
     inline void move(int x, int y)
@@ -80,7 +79,6 @@ public Q_SLOTS:
     void setBackgroundColor(QColor backgroundColor);
     void setBorderColor(QColor borderColor);
     void setDisplayPosition(DisplayPosition displayPosition);
-    D_DECL_DEPRECATED void setDisplayPostion(DisplayPostion displayPosition);
 
 Q_SIGNALS:
     /**

@@ -430,21 +430,21 @@ void DSimpleListView::search(QString content)
 void DSimpleListView::setSingleSelect(bool singleSelect)
 {
     D_D(DSimpleListView);
-        
+
     d->isSingleSelect = singleSelect;
 }
 
 void DSimpleListView::keepSelectWhenClickBlank(bool keep)
 {
     D_D(DSimpleListView);
-    
+
     d->isKeepSelectWhenClickBlank = keep;
 }
 
 void DSimpleListView::selectAllItems()
 {
     D_D(DSimpleListView);
-    
+
     if (!d->isSingleSelect) {
         // Record old render offset to control scrollbar whether display.
         d->oldRenderOffset = d->renderOffset;
@@ -506,22 +506,18 @@ void DSimpleListView::selectLastItem()
 
 void DSimpleListView::selectPrevItem()
 {
-    D_D(DSimpleListView);
-
     selectPrevItemWithOffset(1);
 }
 
 void DSimpleListView::selectNextItem()
 {
-    D_D(DSimpleListView);
-
     selectNextItemWithOffset(1);
 }
 
 void DSimpleListView::shiftSelectPageDown()
 {
     D_D(DSimpleListView);
-    
+
     if (!d->isSingleSelect) {
         shiftSelectNextItemWithOffset(getScrollAreaHeight() / d->rowHeight);
     }
@@ -530,7 +526,7 @@ void DSimpleListView::shiftSelectPageDown()
 void DSimpleListView::shiftSelectPageUp()
 {
     D_D(DSimpleListView);
-    
+
     if (!d->isSingleSelect) {
         shiftSelectPrevItemWithOffset(getScrollAreaHeight() / d->rowHeight);
     }
@@ -539,7 +535,7 @@ void DSimpleListView::shiftSelectPageUp()
 void DSimpleListView::shiftSelectToEnd()
 {
     D_D(DSimpleListView);
-    
+
     if (!d->isSingleSelect) {
         // Select last item if nothing selected yet.
         if (d->selectionItems->empty()) {
@@ -564,7 +560,7 @@ void DSimpleListView::shiftSelectToEnd()
 void DSimpleListView::shiftSelectToHome()
 {
     D_D(DSimpleListView);
-    
+
     if (!d->isSingleSelect) {
         // Select first item if nothing selected yet.
         if (d->selectionItems->empty()) {
@@ -589,7 +585,7 @@ void DSimpleListView::shiftSelectToHome()
 void DSimpleListView::shiftSelectToNext()
 {
     D_D(DSimpleListView);
-    
+
     if (!d->isSingleSelect) {
         shiftSelectNextItemWithOffset(1);
     }
@@ -598,7 +594,7 @@ void DSimpleListView::shiftSelectToNext()
 void DSimpleListView::shiftSelectToPrev()
 {
     D_D(DSimpleListView);
-    
+
     if (!d->isSingleSelect) {
         shiftSelectPrevItemWithOffset(1);
     }
@@ -685,8 +681,6 @@ bool DSimpleListView::eventFilter(QObject *, QEvent *)
 
 void DSimpleListView::keyPressEvent(QKeyEvent *keyEvent)
 {
-    D_D(DSimpleListView);
-
     if (keyEvent->key() == Qt::Key_Home) {
         if (keyEvent->modifiers() == Qt::ControlModifier) {
             ctrlScrollToHome();

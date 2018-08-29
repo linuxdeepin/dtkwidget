@@ -67,20 +67,13 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dswitchbutton.h \
     $$PWD/dsegmentedcontrol.h \
     $$PWD/dlineedit.h \
-    $$PWD/dcombobox.h \
-    $$PWD/dcomboboxmodel.h \
-    $$PWD/dcolorcombobox.h \
-    $$PWD/dfontcombobox.h \
-    $$PWD/dsimplecombobox.h \
     $$PWD/dwindowmaxbutton.h \
     $$PWD/dwindowminbutton.h \
     $$PWD/dwindowclosebutton.h \
-    $$PWD/dwindowrestorebutton.h \
     $$PWD/dwindowoptionbutton.h \
     $$PWD/dshortcutedit.h \
     $$PWD/dsimplelistview.h \
     $$PWD/dsimplelistitem.h \
-    $$PWD/dabstractcomboboxdelegate.h \
     $$PWD/dexpandgroup.h \
     $$PWD/dlabel.h \
     $$PWD/dlinkbutton.h \
@@ -88,7 +81,6 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dscrollarea.h \
     $$PWD/darrowrectangle.h \
     $$PWD/dgraphicsgloweffect.h \
-    $$PWD/anchors.h \
     $$PWD/dbasebutton.h \
     $$PWD/dlistwidget.h \
     $$PWD/dboxwidget.h \
@@ -106,9 +98,6 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/denhancedwidget.h \
     $$PWD/dtextedit.h \
     $$PWD/dtitlebar.h \
-    $$PWD/dwidget.h \
-    $$PWD/dwindow.h \
-    $$PWD/dx11widget.h \
     $$PWD/dplatformwindowhandle.h \
     $$PWD/dmainwindow.h \
     $$PWD/dblureffectwidget.h \
@@ -127,7 +116,9 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dstyleoption.h \
     $$PWD/dtoast.h \
     $$PWD/danchors.h \
-    $$PWD/dwindowgroupleader.h
+    $$PWD/dwindowgroupleader.h \
+    $$PWD/dborderlesswidget.h \
+    $$PWD/dborderlesswindow.h
 
 SOURCES += $$PWD/dslider.cpp \
     $$PWD/dthememanager.cpp \
@@ -148,20 +139,13 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dswitchbutton.cpp\
     $$PWD/dsegmentedcontrol.cpp \
     $$PWD/dlineedit.cpp \
-    $$PWD/dcombobox.cpp \
-    $$PWD/dcomboboxmodel.cpp \
-    $$PWD/dcolorcombobox.cpp \
-    $$PWD/dfontcombobox.cpp \
-    $$PWD/dsimplecombobox.cpp\
     $$PWD/dwindowmaxbutton.cpp \
     $$PWD/dwindowminbutton.cpp \
     $$PWD/dwindowclosebutton.cpp \
-    $$PWD/dwindowrestorebutton.cpp \
     $$PWD/dwindowoptionbutton.cpp \
     $$PWD/dshortcutedit.cpp \
     $$PWD/dsimplelistview.cpp \
     $$PWD/dsimplelistitem.cpp \
-    $$PWD/dabstractcomboboxdelegate.cpp \
     $$PWD/dexpandgroup.cpp \
     $$PWD/dlabel.cpp \
     $$PWD/dlinkbutton.cpp \
@@ -169,7 +153,6 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dscrollarea.cpp \
     $$PWD/darrowrectangle.cpp \
     $$PWD/dgraphicsgloweffect.cpp \
-    $$PWD/anchors.cpp \
     $$PWD/dbasebutton.cpp \
     $$PWD/dlistwidget.cpp \
     $$PWD/dboxwidget.cpp \
@@ -187,9 +170,6 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/denhancedwidget.cpp \
     $$PWD/dtextedit.cpp \
     $$PWD/dtitlebar.cpp \
-    $$PWD/dwindow.cpp \
-    $$PWD/dwidget.cpp \
-    $$PWD/dx11widget.cpp \
     $$PWD/dplatformwindowhandle.cpp \
     $$PWD/dmainwindow.cpp \
     $$PWD/dblureffectwidget.cpp \
@@ -208,7 +188,9 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dstyleoption.cpp \
     $$PWD/dtoast.cpp \
     $$PWD/danchors.cpp \
-    $$PWD/dwindowgroupleader.cpp
+    $$PWD/dwindowgroupleader.cpp \
+    $$PWD/dborderlesswidget.cpp \
+    $$PWD/dborderlesswindow.cpp
 
 RESOURCES += \
     $$PWD/themes/dui_theme_dark.qrc \

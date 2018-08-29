@@ -570,17 +570,6 @@ QWidget *DTitlebar::customWidget() const
     return d->customWidget;
 }
 
-///
-/// \brief setWindowFlags
-/// \param type
-/// accpet  WindowTitleHint, WindowSystemMenuHint, WindowMinimizeButtonHint, WindowMaximizeButtonHint
-/// and WindowMinMaxButtonsHint.
-void DTitlebar::setWindowFlags(Qt::WindowFlags type)
-{
-    D_D(DTitlebar);
-    d->targetWindow()->setWindowFlags(type);
-}
-
 #ifndef QT_NO_MENU
 void DTitlebar::showMenu()
 {
@@ -797,19 +786,6 @@ void DTitlebar::setTitle(const QString &title)
 }
 
 /*!
- * \brief Use setIcon(const QIcon &icon) instead
- */
-void DTitlebar::setIcon(const QPixmap &icon)
-{
-    D_D(DTitlebar);
-    if (d->titleLabel && !d->embedMode) {
-        d->titleLabel->setContentsMargins(0, 0, 0, 0);
-        d->iconLabel->setPixmap(icon.scaled(DefaultIconWidth * icon.devicePixelRatio(),
-                                            DefaultIconHeight * icon.devicePixelRatio(), Qt::KeepAspectRatio));
-    }
-}
-
-/*!
  * @brief DTitlebar::setIcon sets the icon to be shown on the title bar.
  * @param icon is to be used as the window icon.
  */
@@ -822,12 +798,6 @@ void DTitlebar::setIcon(const QIcon &icon)
     } else if (parentWidget()) {
         parentWidget()->setWindowIcon(icon);
     }
-}
-
-void DTitlebar::setWindowState(Qt::WindowState windowState)
-{
-    D_D(DTitlebar);
-    d->maxButton->setWindowState(windowState);
 }
 
 void DTitlebar::toggleWindowState()

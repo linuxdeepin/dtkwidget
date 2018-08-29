@@ -19,7 +19,7 @@
 #define DWDIGET_P_H
 
 #include <DObjectPrivate>
-#include "dwidget.h"
+#include "dborderlesswidget.h"
 #include "../../platforms/x11/xutil.h"
 
 class QVBoxLayout;
@@ -30,11 +30,11 @@ class DX11Widget;
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DX11WidgetPrivate: public DTK_CORE_NAMESPACE::DObjectPrivate
+class DBorderlessWidgetPrivate: public DTK_CORE_NAMESPACE::DObjectPrivate
 {
-    D_DECLARE_PUBLIC(DX11Widget)
+    D_DECLARE_PUBLIC(DBorderlessWidget)
 public:
-    explicit DX11WidgetPrivate(DX11Widget *q);
+    explicit DBorderlessWidgetPrivate(DBorderlessWidget *q);
 
     void init();
 
@@ -56,7 +56,7 @@ public:
     bool                m_MousePressed;
     QPoint              m_LastMousePos;
     Qt::WindowFlags     dwindowFlags;
-    DWidget::DecorationFlags decorationFlags;
+    DBorderlessWidget::DecorationFlags decorationFlags;
     QColor              m_backgroundColor;
     QColor              shadowColor;
     QPoint              shadowOffset;
@@ -72,16 +72,6 @@ public:
 };
 
 
-class DWidgetPrivate: public DX11WidgetPrivate
-{
-    D_DECLARE_PUBLIC(DWidget)
-
-public:
-    explicit DWidgetPrivate(DWidget *q);
-
-    bool leftPressed;
-    bool resizable;
-};
 
 DWIDGET_END_NAMESPACE
 

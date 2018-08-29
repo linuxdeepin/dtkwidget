@@ -30,7 +30,6 @@
         <file>light/Dtk--Widget--DHeaderLine.theme</file>
         <file>light/Dtk--Widget--DFileChooserEdit.theme</file>
         <file>light/Dtk--Widget--DDialog.theme</file>
-        <file>light/Dtk--Widget--DComboBox.theme</file>
         <file>light/Dtk--Widget--DButtonList.theme</file>
         <file>light/Dtk--Widget--DBoxWidget.theme</file>
         <file>light/Dtk--Widget--DBaseLine.theme</file>

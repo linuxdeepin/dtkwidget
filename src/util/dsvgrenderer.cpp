@@ -177,13 +177,6 @@ QImage DSvgRenderer::toImage(const QSize sz, const QString &elementId) const
     return d->getImage(sz, elementId);
 }
 
-QPixmap DSvgRenderer::render(const QString &svgPath, const QSize &sz)
-{
-    DSvgRenderer rdr(svgPath);
-
-    return QPixmap::fromImage(rdr.d_func()->getImage(sz, QString()));
-}
-
 bool DSvgRenderer::load(const QString &filename)
 {
     QFile file(filename);

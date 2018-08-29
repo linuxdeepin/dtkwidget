@@ -19,11 +19,12 @@
 #include <QHBoxLayout>
 #include <QShowEvent>
 #include <QApplication>
+#include <QComboBox>
 
 #include "dinputdialog.h"
 #include "private/dinputdialog_p.h"
 #include "dspinbox.h"
-#include "dcombobox.h"
+
 #include "dlabel.h"
 #include "dpasswordedit.h"
 
@@ -50,7 +51,7 @@ void DInputDialogPrivate::init()
     lineEdit = new DLineEdit;
     spinBox = new DSpinBox;
     doubleSpinBox = new DDoubleSpinBox;
-    comboBox = new DComboBox;
+    comboBox = new QComboBox;
 
     q->addSpacing(10);
     q->addContent(lineEdit);
@@ -62,7 +63,7 @@ void DInputDialogPrivate::init()
 
     q->connect(lineEdit, &DLineEdit::textChanged, q, &DInputDialog::textValueChanged);
     q->connect(lineEdit, &DLineEdit::alertChanged, q, &DInputDialog::textAlertChanged);
-    q->connect(comboBox, &DComboBox::currentTextChanged, q, &DInputDialog::textValueChanged);
+    q->connect(comboBox, &QComboBox::currentTextChanged, q, &DInputDialog::textValueChanged);
     q->connect(comboBox, SIGNAL(currentTextChanged(QString)), q, SIGNAL(textValueChanged(QString)));
     q->connect(spinBox, SIGNAL(valueChanged(int)), q, SIGNAL(intValueChanged(int)));
     q->connect(doubleSpinBox, SIGNAL(valueChanged(double)), q, SIGNAL(doubleValueChanged(double)));

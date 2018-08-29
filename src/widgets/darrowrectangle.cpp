@@ -255,20 +255,6 @@ void DArrowRectangle::setShadowXOffset(const qreal &shadowXOffset)
     }
 }
 
-qreal DArrowRectangle::shadowDistance() const
-{
-    D_DC(DArrowRectangle);
-
-    return d->m_shadowDistance;
-}
-
-void DArrowRectangle::setShadowDistance(const qreal &shadowDistance)
-{
-    D_D(DArrowRectangle);
-
-    d->m_shadowDistance = shadowDistance;
-}
-
 /*!
  * \property DArrowRectangle::shadowBlurRadius
  * \brief This property holds the blur radius of the widget's shadow.

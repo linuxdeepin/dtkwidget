@@ -144,11 +144,6 @@ DAbstractDialog::DisplayPosition DAbstractDialog::displayPosition() const
     return d->displayPosition;
 }
 
-DAbstractDialog::DisplayPostion DAbstractDialog::displayPostion() const
-{
-    return static_cast<DisplayPostion>(displayPosition());
-}
-
 void DAbstractDialog::move(const QPoint &pos)
 {
     QDialog::move(pos);
@@ -250,11 +245,6 @@ void DAbstractDialog::setDisplayPosition(DAbstractDialog::DisplayPosition displa
     default:
         break;
     }
-}
-
-void DAbstractDialog::setDisplayPostion(DAbstractDialog::DisplayPostion displayPosition)
-{
-    setDisplayPosition(static_cast<DisplayPosition>(displayPosition));
 }
 
 /**

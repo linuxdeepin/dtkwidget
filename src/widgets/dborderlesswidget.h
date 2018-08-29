@@ -26,10 +26,10 @@ class QMenu;
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DX11WidgetPrivate;
+class DBorderlessWidgetPrivate;
 class DTitlebar;
 
-class LIBDTKWIDGETSHARED_EXPORT DX11Widget : public QWidget, public DTK_CORE_NAMESPACE::DObject
+class LIBDTKWIDGETSHARED_EXPORT DBorderlessWidget : public QWidget, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
 public:
@@ -39,7 +39,7 @@ public:
     Q_DECLARE_FLAGS(DecorationFlags, DecorationFlag)
     Q_FLAGS(DecorationFlags)
 
-    explicit DX11Widget(QWidget *parent = 0);
+    explicit DBorderlessWidget(QWidget *parent = 0);
 
     Q_PROPERTY(int radius READ radius WRITE setRadius)
     Q_PROPERTY(int shadowWidth READ shadowWidth WRITE setShadowWidth)
@@ -163,7 +163,7 @@ public Q_SLOTS:
     void setShadowOffset(QPoint shadowOffset);
 
 protected:
-    explicit DX11Widget(DX11WidgetPrivate &dd, QWidget *parent = 0);
+    explicit DBorderlessWidget(DBorderlessWidgetPrivate &dd, QWidget *parent = 0);
 
     virtual void drawShadowPixmap();
 
@@ -176,7 +176,7 @@ Q_SIGNALS:
 private:
     D_PRIVATE_SLOT(void _q_onTitleBarMousePressed(Qt::MouseButtons) const)
 
-    D_DECLARE_PRIVATE(DX11Widget)
+    D_DECLARE_PRIVATE(DBorderlessWidget)
 };
 
 class FilterMouseMove : public QObject

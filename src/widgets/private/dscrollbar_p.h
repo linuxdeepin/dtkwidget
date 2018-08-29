@@ -43,7 +43,6 @@ class DScrollBarPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 
     QTimer *timer = Q_NULLPTR;
     QTimer *opacityTimer = Q_NULLPTR;
-    QGraphicsOpacityEffect *effect = Q_NULLPTR;
 
     D_DECLARE_PUBLIC(DScrollBar)
 };

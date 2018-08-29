@@ -43,7 +43,6 @@ SOURCES += main.cpp\
     segmentedcontrol.cpp\
     indicatortab.cpp \
     widgetstab.cpp \
-    comboboxtab.cpp \
     simplelistviewtab.cpp \
     singlelistview.cpp \
     singlelistitem.cpp \
@@ -61,7 +60,6 @@ HEADERS  += mainwindow.h \
     segmentedcontrol.h \
     indicatortab.h \
     widgetstab.h \
-    comboboxtab.h \
     simplelistviewtab.h \
     singlelistview.h \
     singlelistitem.h \
@@ -80,7 +78,7 @@ win32* {
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../../src/release -ldtkwidget
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../../src/debug -ldtkwidgetd
-else:unix: LIBS += -L$$OUT_PWD/../../../src/ -ldtkwidget
+else:unix: LIBS += -L$$OUT_PWD/../../../src -ldtkwidget
 
 INCLUDEPATH += $$PWD/../../../src
 INCLUDEPATH += $$PWD/../../../src/widgets

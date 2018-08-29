@@ -59,8 +59,6 @@ void DPictureSequenceViewPrivate::init()
 
 void DPictureSequenceViewPrivate::play()
 {
-    D_Q(DPictureSequenceView);
-
     refreshTimer->start();
 }
 

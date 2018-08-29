@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "dx11widget.h"
+#include "dborderlesswidget.h"
 
 #include <QDebug>
 #include <QTimer>
@@ -31,7 +31,7 @@
 #include <DObjectPrivate>
 
 #include "dtitlebar.h"
-#include "private/dwidget_p.h"
+#include "private/dborderlesswidget_p.h"
 
 #ifdef Q_OS_LINUX
 #include "../platforms/x11/xutil.h"
@@ -57,15 +57,15 @@ const QColor TipsBackground = QColor(0, 0, 0);
 #define SHADOW_COLOR_NORMAL QColor(0, 0, 0, 255 * 0.15)
 #define SHADOW_COLOR_ACTIVE QColor(0, 0, 0, 255 * 0.3)
 
-DX11WidgetPrivate::DX11WidgetPrivate(DX11Widget *q) : DObjectPrivate(q)
+DBorderlessWidgetPrivate::DBorderlessWidgetPrivate(DBorderlessWidget *q) : DObjectPrivate(q)
 {
     leftPressed = false;
     resizable = true;
 }
 
-void DX11WidgetPrivate::init()
+void DBorderlessWidgetPrivate::init()
 {
-    D_Q(DX11Widget);
+    D_Q(DBorderlessWidget);
 
     dwindowFlags = Qt::Window | Qt::WindowTitleHint |
                    Qt::WindowSystemMenuHint | Qt::WindowMinMaxButtonsHint |
@@ -108,8 +108,8 @@ void DX11WidgetPrivate::init()
     windowWidget->installEventFilter(filter);
     filter->m_rootWidget = q;
 
-    q->connect(titlebar, &DTitlebar::optionClicked, q, &DX11Widget::optionClicked);
-    q->connect(titlebar, &DTitlebar::mouseMoving, q, &DX11Widget::moveWindow);
+    q->connect(titlebar, &DTitlebar::optionClicked, q, &DBorderlessWidget::optionClicked);
+    q->connect(titlebar, &DTitlebar::mouseMoving, q, &DBorderlessWidget::moveWindow);
 
     q->connect(titlebar, SIGNAL(mousePressed(Qt::MouseButtons)), q, SLOT(_q_onTitleBarMousePressed(Qt::MouseButtons)));
 
@@ -124,23 +124,23 @@ void DX11WidgetPrivate::init()
     });
 }
 
-QSize DX11WidgetPrivate::externSize(const QSize &size) const
+QSize DBorderlessWidgetPrivate::externSize(const QSize &size) const
 {
     return QSize(size.width() + (m_ShadowWidth + m_Border) * 2,
                  size.height() + (m_ShadowWidth + m_Border) * 2);
 }
 
-QMargins DX11WidgetPrivate::externMargins() const
+QMargins DBorderlessWidgetPrivate::externMargins() const
 {
     return rootLayout->contentsMargins() + contentWidget->contentsMargins();
 }
 
-int DX11WidgetPrivate::externWidth() const
+int DBorderlessWidgetPrivate::externWidth() const
 {
     return m_ShadowWidth + m_Border;
 }
 
-void DX11WidgetPrivate::updateContentsMargins()
+void DBorderlessWidgetPrivate::updateContentsMargins()
 {
     rootLayout->setContentsMargins(m_ShadowWidth + m_Border - shadowOffset.x(),
                                    m_ShadowWidth + m_Border - shadowOffset.y(),
@@ -148,10 +148,10 @@ void DX11WidgetPrivate::updateContentsMargins()
                                    m_ShadowWidth + m_Border + shadowOffset.y());
 }
 
-void DX11WidgetPrivate::_q_onTitleBarMousePressed(Qt::MouseButtons buttons) const
+void DBorderlessWidgetPrivate::_q_onTitleBarMousePressed(Qt::MouseButtons buttons) const
 {
 #ifdef Q_OS_LINUX
-    D_QC(DX11Widget);
+    D_QC(DBorderlessWidget);
 
     if (buttons != Qt::LeftButton) {
         XUtils::CancelMoveWindow(q, Qt::LeftButton);
@@ -161,20 +161,20 @@ void DX11WidgetPrivate::_q_onTitleBarMousePressed(Qt::MouseButtons buttons) cons
 #endif
 }
 
-DX11Widget::DX11Widget(QWidget *parent): DX11Widget(*new DX11WidgetPrivate(this), parent)
+DBorderlessWidget::DBorderlessWidget(QWidget *parent): DBorderlessWidget(*new DBorderlessWidgetPrivate(this), parent)
 {
 
 }
 
-DX11Widget::DecorationFlags DX11Widget::decorationFlags()
+DBorderlessWidget::DecorationFlags DBorderlessWidget::decorationFlags()
 {
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
     return d->decorationFlags;
 }
 
-void DX11Widget::setDecorationFlags(DX11Widget::DecorationFlags flags)
+void DBorderlessWidget::setDecorationFlags(DBorderlessWidget::DecorationFlags flags)
 {
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
     d->decorationFlags = flags;
 
     if (flags & ShowTitlebarSeparator) {
@@ -184,10 +184,10 @@ void DX11Widget::setDecorationFlags(DX11Widget::DecorationFlags flags)
     }
 }
 
-DX11Widget::DX11Widget(DX11WidgetPrivate &dd, QWidget *parent)
+DBorderlessWidget::DBorderlessWidget(DBorderlessWidgetPrivate &dd, QWidget *parent)
     : QWidget(parent), DObject(dd)
 {
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
     d->init();
     QWidget::setMouseTracking(true);
 
@@ -197,7 +197,7 @@ DX11Widget::DX11Widget(DX11WidgetPrivate &dd, QWidget *parent)
     setWindowFlags(windowFlags());
     setDecorationFlags(decorationFlags());
 
-    DX11Widget::adjustSize();
+    DBorderlessWidget::adjustSize();
 #ifdef Q_OS_LINUX
     XUtils::SetMouseTransparent(this, true);
 #endif
@@ -216,21 +216,21 @@ DX11Widget::DX11Widget(DX11WidgetPrivate &dd, QWidget *parent)
 #endif
 }
 
-void DX11Widget::enterEvent(QEvent *e)
+void DBorderlessWidget::enterEvent(QEvent *e)
 {
 //    qDebug() << "enterEvent" ;
     return QWidget::enterEvent(e);
 }
 
-void DX11Widget::leaveEvent(QEvent *e)
+void DBorderlessWidget::leaveEvent(QEvent *e)
 {
 //    qDebug() << "leaveEvent";
     return QWidget::leaveEvent(e);
 }
 
-void DX11Widget::changeEvent(QEvent *event)
+void DBorderlessWidget::changeEvent(QEvent *event)
 {
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
 
     if (event->type() == QEvent::WindowStateChange) {
         d->updateContentsMargins();
@@ -239,10 +239,10 @@ void DX11Widget::changeEvent(QEvent *event)
     QWidget::changeEvent(event);
 }
 
-void DX11Widget::mouseMoveEvent(QMouseEvent *event)
+void DBorderlessWidget::mouseMoveEvent(QMouseEvent *event)
 {
 #ifdef Q_OS_LINUX
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
 
     const int x = event->x();
     const int y = event->y();
@@ -255,10 +255,10 @@ void DX11Widget::mouseMoveEvent(QMouseEvent *event)
     return QWidget::mouseMoveEvent(event);
 }
 
-void DX11Widget::mousePressEvent(QMouseEvent *event)
+void DBorderlessWidget::mousePressEvent(QMouseEvent *event)
 {
 #ifdef Q_OS_LINUX
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
 
     const int x = event->x();
     const int y = event->y();
@@ -275,16 +275,16 @@ void DX11Widget::mousePressEvent(QMouseEvent *event)
     return QWidget::mousePressEvent(event);
 }
 
-void DX11Widget::mouseReleaseEvent(QMouseEvent *event)
+void DBorderlessWidget::mouseReleaseEvent(QMouseEvent *event)
 {
 #ifdef Q_OS_LINUX
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
     d->resizingCornerEdge = XUtils::CornerEdge::kInvalid;
 #endif
     return QWidget::mouseReleaseEvent(event);
 }
 
-void DX11Widget::showMinimized()
+void DBorderlessWidget::showMinimized()
 {
 #ifdef Q_OS_LINUX
     XUtils::ShowMinimizedWindow(this, true);
@@ -292,7 +292,7 @@ void DX11Widget::showMinimized()
     QWidget::showMinimized();
 }
 
-void DX11Widget::showMaximized()
+void DBorderlessWidget::showMaximized()
 {
 #ifdef Q_OS_LINUX
     XUtils::ShowMaximizedWindow(this);
@@ -302,31 +302,31 @@ void DX11Widget::showMaximized()
     this->raise();
 }
 
-void DX11Widget::setContentsMargins(int left, int top, int right, int bottom)
+void DBorderlessWidget::setContentsMargins(int left, int top, int right, int bottom)
 {
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
     d->contentWidget->setContentsMargins(left, top, right, bottom);
 }
 
-void DX11Widget::setContentsMargins(const QMargins &margins)
+void DBorderlessWidget::setContentsMargins(const QMargins &margins)
 {
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
     d->contentWidget->setContentsMargins(margins);
 }
 
-void DX11Widget::getContentsMargins(int *left, int *top, int *right, int *bottom) const
+void DBorderlessWidget::getContentsMargins(int *left, int *top, int *right, int *bottom) const
 {
-    D_DC(DX11Widget);
+    D_DC(DBorderlessWidget);
     d->contentWidget->getContentsMargins(left, top, right, bottom);
 }
 
-QMargins DX11Widget::contentsMargins() const
+QMargins DBorderlessWidget::contentsMargins() const
 {
-    D_DC(DX11Widget);
+    D_DC(DBorderlessWidget);
     return d->contentWidget->contentsMargins();
 }
 
-void DX11Widget::showFullScreen()
+void DBorderlessWidget::showFullScreen()
 {
 #ifdef Q_OS_LINUX
     XUtils::ShowFullscreenWindow(this, true);
@@ -336,21 +336,21 @@ void DX11Widget::showFullScreen()
     this->raise();
 }
 
-void DX11Widget::moveWindow(Qt::MouseButton botton)
+void DBorderlessWidget::moveWindow(Qt::MouseButton botton)
 {
 #ifdef Q_OS_LINUX
     XUtils::MoveWindow(this, botton);
 #endif
 }
 
-void DX11Widget::toggleMaximizedWindow()
+void DBorderlessWidget::toggleMaximizedWindow()
 {
 #ifdef Q_OS_LINUX
     XUtils::ToggleMaximizedWindow(this);
 #endif
 }
 
-void DX11Widget::showNormal()
+void DBorderlessWidget::showNormal()
 {
 #ifdef Q_OS_LINUX
     XUtils::ShowNormalWindow(this);
@@ -358,14 +358,14 @@ void DX11Widget::showNormal()
 }
 
 
-void DX11Widget::removeLayout()
+void DBorderlessWidget::removeLayout()
 {
     qDeleteAll(this->children());
 }
 
-Qt::WindowFlags DX11Widget::windowFlags()
+Qt::WindowFlags DBorderlessWidget::windowFlags()
 {
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
     return d->dwindowFlags;
 }
 
@@ -373,111 +373,111 @@ Qt::WindowFlags DX11Widget::windowFlags()
 /// \brief setWindowFlags
 /// \param type
 ///
-void DX11Widget::setWindowFlags(Qt::WindowFlags type)
+void DBorderlessWidget::setWindowFlags(Qt::WindowFlags type)
 {
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
     d->dwindowFlags = type;
     d->titlebar->setWindowFlags(type);
 }
 
-int DX11Widget::titlebarHeight() const
+int DBorderlessWidget::titlebarHeight() const
 {
-    D_DC(DX11Widget);
+    D_DC(DBorderlessWidget);
     return d->titlebar->height();
 }
 
-void DX11Widget::setTitlebarFixedHeight(int h)
+void DBorderlessWidget::setTitlebarFixedHeight(int h)
 {
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
     d->titlebar->setFixedHeight(h);
-    DX11Widget::adjustSize();
+    DBorderlessWidget::adjustSize();
 }
 
-void DX11Widget::setTitle(const QString &t)
+void DBorderlessWidget::setTitle(const QString &t)
 {
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
     d->titlebar->setTitle(t);
 }
 
-void DX11Widget::setTitleIcon(const QPixmap &icon)
+void DBorderlessWidget::setTitleIcon(const QPixmap &icon)
 {
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
     d->titlebar->setIcon(icon);
 }
 
-DTitlebar *DX11Widget::titlebar() const
+DTitlebar *DBorderlessWidget::titlebar() const
 {
-    D_DC(DX11Widget);
+    D_DC(DBorderlessWidget);
 
     return d->titlebar;
 }
 
-void DX11Widget::setTitlebarMenu(QMenu *menu)
+void DBorderlessWidget::setTitlebarMenu(QMenu *menu)
 {
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
     d->titlebar->setMenu(menu);
 }
 
-QMenu *DX11Widget::titleBarMenu() const
+QMenu *DBorderlessWidget::titleBarMenu() const
 {
-    D_DC(DX11Widget);
+    D_DC(DBorderlessWidget);
     return d->titlebar->menu();
 }
 
-void DX11Widget::setTitlebarWidget(QWidget *w, bool fixCenterPos)
+void DBorderlessWidget::setTitlebarWidget(QWidget *w, bool fixCenterPos)
 {
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
     d->titlebar->setCustomWidget(w, Qt::AlignCenter, fixCenterPos);
 }
 
-void DX11Widget::setTitlebarWidget(QWidget *w, Qt::AlignmentFlag wflag, bool fixCenterPos)
+void DBorderlessWidget::setTitlebarWidget(QWidget *w, Qt::AlignmentFlag wflag, bool fixCenterPos)
 {
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
     d->titlebar->setCustomWidget(w, wflag, fixCenterPos);
 }
 
 // TODO: fix layout
-QLayout *DX11Widget::layout() const
+QLayout *DBorderlessWidget::layout() const
 {
-    D_DC(DX11Widget);
+    D_DC(DBorderlessWidget);
     return d->contentWidget->layout();
 }
 
-void DX11Widget::setLayout(QLayout *l)
+void DBorderlessWidget::setLayout(QLayout *l)
 {
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
 
     qDeleteAll(d->contentWidget->children());
     d->contentWidget->setLayout(l);
     d->contentWidget->adjustSize();
     d->windowWidget->adjustSize();
-    DX11Widget::resize(d->windowWidget->size());
+    DBorderlessWidget::resize(d->windowWidget->size());
 }
 
-int DX11Widget::radius() const
+int DBorderlessWidget::radius() const
 {
-    D_DC(DX11Widget);
+    D_DC(DBorderlessWidget);
     return d->m_Radius;
 }
 
-void DX11Widget::setRadius(int r)
+void DBorderlessWidget::setRadius(int r)
 {
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
     if (r > d->m_Border * 2) {
         r = d->m_Border * 2;
     }
     d->m_Radius = r;
 }
 
-int DX11Widget::shadowWidth() const
+int DBorderlessWidget::shadowWidth() const
 {
-    D_DC(DX11Widget);
+    D_DC(DBorderlessWidget);
     return d->m_Radius;
 }
 
-void DX11Widget::setShadowWidth(int r)
+void DBorderlessWidget::setShadowWidth(int r)
 {
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
 
     if (d->m_ShadowWidth == r) {
         return;
@@ -491,30 +491,30 @@ void DX11Widget::setShadowWidth(int r)
     update();
 }
 
-QColor DX11Widget::backgroundColor() const
+QColor DBorderlessWidget::backgroundColor() const
 {
-    D_DC(DX11Widget);
+    D_DC(DBorderlessWidget);
 
     return d->m_backgroundColor;
 }
 
-QColor DX11Widget::shadowColor() const
+QColor DBorderlessWidget::shadowColor() const
 {
-    D_DC(DX11Widget);
+    D_DC(DBorderlessWidget);
 
     return d->shadowColor;
 }
 
-QPoint DX11Widget::shadowOffset() const
+QPoint DBorderlessWidget::shadowOffset() const
 {
-    D_DC(DX11Widget);
+    D_DC(DBorderlessWidget);
 
     return d->shadowOffset;
 }
 
-void DX11Widget::setBackgroundColor(QColor backgroundColor)
+void DBorderlessWidget::setBackgroundColor(QColor backgroundColor)
 {
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
 
     if (d->m_backgroundColor == backgroundColor) {
         return;
@@ -524,9 +524,9 @@ void DX11Widget::setBackgroundColor(QColor backgroundColor)
     Q_EMIT backgroundColorChanged(backgroundColor);
 }
 
-void DX11Widget::setShadowColor(QColor shadowColor)
+void DBorderlessWidget::setShadowColor(QColor shadowColor)
 {
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
 
     if (d->shadowColor == shadowColor) {
         return;
@@ -540,9 +540,9 @@ void DX11Widget::setShadowColor(QColor shadowColor)
     Q_EMIT shadowColorChanged(shadowColor);
 }
 
-void DX11Widget::setShadowOffset(QPoint shadowOffset)
+void DBorderlessWidget::setShadowOffset(QPoint shadowOffset)
 {
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
 
     if (d->shadowOffset == shadowOffset) {
         return;
@@ -556,9 +556,9 @@ void DX11Widget::setShadowOffset(QPoint shadowOffset)
     Q_EMIT shadowOffsetChanged(shadowOffset);
 }
 
-void DX11Widget::drawShadowPixmap()
+void DBorderlessWidget::drawShadowPixmap()
 {
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
 
     QPixmap pixmap(QWidget::size() - QSize(d->m_ShadowWidth * 2, d->m_ShadowWidth * 2));
 
@@ -567,15 +567,15 @@ void DX11Widget::drawShadowPixmap()
     d->shadowPixmap = QPixmap::fromImage(Dtk::Widget::dropShadow(pixmap, d->m_ShadowWidth, d->shadowColor));
 }
 
-int DX11Widget::border() const
+int DBorderlessWidget::border() const
 {
-    D_DC(DX11Widget);
+    D_DC(DBorderlessWidget);
     return d->m_Border;
 }
 
-void DX11Widget::setBorder(int b)
+void DBorderlessWidget::setBorder(int b)
 {
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
     if (b < 0) { b = 0; }
     d->m_Border = b;
     if (d->m_Radius > b * 2) {
@@ -583,15 +583,15 @@ void DX11Widget::setBorder(int b)
     }
 }
 
-const QPixmap &DX11Widget::backgroundImage() const
+const QPixmap &DBorderlessWidget::backgroundImage() const
 {
-    D_DC(DX11Widget);
+    D_DC(DBorderlessWidget);
     return d->m_Background;
 }
 
-void DX11Widget::setBackgroundImage(const QPixmap &srcPixmap)
+void DBorderlessWidget::setBackgroundImage(const QPixmap &srcPixmap)
 {
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
 
     int radius = d->m_Radius;
     int windowExtern = d->m_ShadowWidth + d->m_Border * 2;
@@ -624,9 +624,9 @@ void DX11Widget::setBackgroundImage(const QPixmap &srcPixmap)
     d->m_Background = QPixmap::fromImage(resultImage);
 }
 
-void DX11Widget::setFixedSize(const QSize &size)
+void DBorderlessWidget::setFixedSize(const QSize &size)
 {
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
     d->resizable = false;
     d->titlebar->setMinimumWidth(size.width());
     d->windowWidget->setFixedSize(size);
@@ -640,27 +640,27 @@ void DX11Widget::setFixedSize(const QSize &size)
 #endif
 }
 
-void DX11Widget::setFixedSize(int w, int h)
+void DBorderlessWidget::setFixedSize(int w, int h)
 {
-    DX11Widget::setFixedSize(QSize(w, h));
+    DBorderlessWidget::setFixedSize(QSize(w, h));
 }
 
-void DX11Widget::setFixedWidth(int w)
+void DBorderlessWidget::setFixedWidth(int w)
 {
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
     d->titlebar->setFixedWidth(w);
     d->windowWidget->setFixedWidth(w);
     QWidget::setFixedWidth(w + d->m_ShadowWidth + d->m_Border);
 }
 
-void DX11Widget::resize(int width, int height)
+void DBorderlessWidget::resize(int width, int height)
 {
     resize(QSize(width, height));
 }
 
-void DX11Widget::resize(const QSize &size)
+void DBorderlessWidget::resize(const QSize &size)
 {
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
     d->windowWidget->resize(size);
     d->titlebar->resize(size.width(), d->titlebar->height());
 
@@ -673,9 +673,9 @@ void DX11Widget::resize(const QSize &size)
     }
 }
 
-void DX11Widget::adjustSize()
+void DBorderlessWidget::adjustSize()
 {
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
     d->windowWidget->adjustSize();
     QSize externSize = d->externSize(d->windowWidget->size());
     if (d->resizable) {
@@ -687,104 +687,104 @@ void DX11Widget::adjustSize()
     }
 }
 
-QSize DX11Widget::size() const
+QSize DBorderlessWidget::size() const
 {
-    D_DC(DX11Widget);
+    D_DC(DBorderlessWidget);
     return d->windowWidget->size();
 }
 
 
-void DX11Widget::move(int x, int y)
+void DBorderlessWidget::move(int x, int y)
 {
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
     QWidget::move(x - d->externWidth(), y - d->externWidth());
 }
 
-void DX11Widget::move(const QPoint &p)
+void DBorderlessWidget::move(const QPoint &p)
 {
-    DX11Widget::move(p.x(), p.y());
+    DBorderlessWidget::move(p.x(), p.y());
 }
 
-QRect DX11Widget::frameGeometry() const
+QRect DBorderlessWidget::frameGeometry() const
 {
-    D_DC(DX11Widget);
+    D_DC(DBorderlessWidget);
     return d->windowWidget->frameGeometry();
 }
 
-const QRect &DX11Widget::geometry() const
+const QRect &DBorderlessWidget::geometry() const
 {
-    D_DC(DX11Widget);
+    D_DC(DBorderlessWidget);
     return d->windowWidget->geometry();
 }
 
-QRect DX11Widget::normalGeometry() const
+QRect DBorderlessWidget::normalGeometry() const
 {
-    D_DC(DX11Widget);
+    D_DC(DBorderlessWidget);
     return d->windowWidget->normalGeometry();
 }
 
-int DX11Widget::x() const
+int DBorderlessWidget::x() const
 {
-    D_DC(DX11Widget);
+    D_DC(DBorderlessWidget);
     return d->windowWidget->x();
 }
 
-int DX11Widget::y() const
+int DBorderlessWidget::y() const
 {
-    D_DC(DX11Widget);
+    D_DC(DBorderlessWidget);
     return d->windowWidget->y();
 }
 
-QPoint DX11Widget::pos() const
+QPoint DBorderlessWidget::pos() const
 {
-    D_DC(DX11Widget);
+    D_DC(DBorderlessWidget);
     return d->windowWidget->pos();
 }
 
-QSize DX11Widget::frameSize() const
+QSize DBorderlessWidget::frameSize() const
 {
-    D_DC(DX11Widget);
+    D_DC(DBorderlessWidget);
     return d->windowWidget->frameSize();
 }
 
-int DX11Widget::width() const
+int DBorderlessWidget::width() const
 {
-    D_DC(DX11Widget);
+    D_DC(DBorderlessWidget);
     return d->windowWidget->width();
 }
 
-int DX11Widget::height() const
+int DBorderlessWidget::height() const
 {
-    D_DC(DX11Widget);
+    D_DC(DBorderlessWidget);
     return d->windowWidget->height();
 }
 
-inline QRect DX11Widget::rect() const
+inline QRect DBorderlessWidget::rect() const
 {
-    D_DC(DX11Widget);
+    D_DC(DBorderlessWidget);
     return d->windowWidget->rect();
 }
 
-QRect DX11Widget::childrenRect() const
+QRect DBorderlessWidget::childrenRect() const
 {
-    D_DC(DX11Widget);
+    D_DC(DBorderlessWidget);
     return d->windowWidget->childrenRect();
 }
 
-QRegion DX11Widget::childrenRegion() const
+QRegion DBorderlessWidget::childrenRegion() const
 {
-    D_DC(DX11Widget);
+    D_DC(DBorderlessWidget);
     return d->windowWidget->childrenRegion();
 }
 
-void DX11Widget::showEvent(QShowEvent *e)
+void DBorderlessWidget::showEvent(QShowEvent *e)
 {
     QWidget::showEvent(e);
 }
 
-void DX11Widget::resizeEvent(QResizeEvent *e)
+void DBorderlessWidget::resizeEvent(QResizeEvent *e)
 {
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
 #ifdef Q_OS_LINUX
     int resizeHandleWidth = d->resizable ? d->m_ResizeHandleWidth : 0;
     XUtils::SetWindowExtents(this, d->externMargins(), resizeHandleWidth);
@@ -795,14 +795,14 @@ void DX11Widget::resizeEvent(QResizeEvent *e)
     QWidget::resizeEvent(e);
 }
 
-void DX11Widget::closeEvent(QCloseEvent *e)
+void DBorderlessWidget::closeEvent(QCloseEvent *e)
 {
     QWidget::closeEvent(e);
 }
 
-void DX11Widget::paintEvent(QPaintEvent * /*e*/)
+void DBorderlessWidget::paintEvent(QPaintEvent * /*e*/)
 {
-    D_D(DX11Widget);
+    D_D(DBorderlessWidget);
     int radius = d->m_Radius;
     //. TODO: border not  part of window?
     int windowExtern = d->m_ShadowWidth + d->m_Border * 2;
@@ -872,4 +872,4 @@ bool FilterMouseMove::eventFilter(QObject *obj, QEvent *event)
 
 DWIDGET_END_NAMESPACE
 
-#include "moc_dx11widget.cpp"
+#include "moc_dborderlesswidget.cpp"

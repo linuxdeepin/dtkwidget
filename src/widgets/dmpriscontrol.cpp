@@ -249,8 +249,6 @@ void DMPRISControlPrivate::_q_removeMPRISPath(const QString &path)
 
 void DMPRISControlPrivate::_q_onCanControlChanged(bool canControl)
 {
-    D_Q(DMPRISControl);
-
     m_controlWidget->setVisible(canControl);
 }
 

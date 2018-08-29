@@ -21,13 +21,14 @@
 #include "dinputdialog.h"
 #include "ddialog_p.h"
 
+class QComboBox;
+
 DWIDGET_BEGIN_NAMESPACE
 
 class DLabel;
 class DLineEdit;
 class DSpinBox;
 class DDoubleSpinBox;
-class DComboBox;
 class DInputDialogPrivate : public DDialogPrivate
 {
     DInputDialogPrivate(DInputDialog *qq);
@@ -37,7 +38,7 @@ class DInputDialogPrivate : public DDialogPrivate
     DLineEdit *lineEdit = nullptr;
     DSpinBox* spinBox = nullptr;
     DDoubleSpinBox *doubleSpinBox = nullptr;
-    DComboBox *comboBox = nullptr;
+    QComboBox *comboBox = nullptr;
 
     DInputDialog::InputMode inputMode;
 

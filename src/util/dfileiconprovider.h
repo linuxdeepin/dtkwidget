@@ -30,7 +30,7 @@ class DFileIconProvider : public QFileIconProvider, public DTK_CORE_NAMESPACE::D
 {
 public:
     DFileIconProvider();
-    ~DFileIconProvider();
+    virtual ~DFileIconProvider() Q_DECL_OVERRIDE;
 
     static DFileIconProvider *globalProvider();
 

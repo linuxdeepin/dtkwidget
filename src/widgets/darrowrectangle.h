@@ -120,11 +120,9 @@ public:
 
     qreal shadowXOffset() const;
     qreal shadowYOffset() const;
-    D_DECL_DEPRECATED qreal shadowDistance() const;
     qreal shadowBlurRadius() const;
 
     void setShadowBlurRadius(const qreal &shadowBlurRadius);
-    D_DECL_DEPRECATED void setShadowDistance(const qreal &shadowDistance);
     void setShadowXOffset(const qreal &shadowXOffset);
     void setShadowYOffset(const qreal &shadowYOffset);
 

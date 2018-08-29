@@ -237,8 +237,6 @@ void MainWindow::initTabWidget()
 {
     m_mainTab = new QTabWidget(this);
 
-    ComboBoxTab *comboBoxTab = new ComboBoxTab(this);
-
     LineTab *lineTab = new LineTab(this);
 
     BarTab *barTab = new BarTab(this);
@@ -267,7 +265,6 @@ void MainWindow::initTabWidget()
 
     m_mainTab->addTab(widgetsTab, "Widgets");
     m_mainTab->addTab(effectTab, "GraphicsEffect");
-    m_mainTab->addTab(comboBoxTab, "ComboBox");
     m_mainTab->addTab(indicatorTab, "Indicator");
     m_mainTab->addTab(lineTab, "Line");
     m_mainTab->addTab(barTab, "Bar");

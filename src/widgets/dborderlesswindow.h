@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 ~ 2017 Deepin Technology Co., Ltd.
+ * Copyright (C) 2017 ~ 2017 Deepin Technology Co., Ltd.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,23 +15,40 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DWINDOWRESTOREBUTTON_H
-#define DWINDOWRESTOREBUTTON_H
+#ifndef DWINDOW_H
+#define DWINDOW_H
 
-#include <QObject>
-#include <QString>
+#include <QWidget>
+#include <dobject.h>
+#include <dtkwidget_global.h>
 
-#include "dimagebutton.h"
+#include "dborderlesswidget.h"
+
+class QMenu;
 
 DWIDGET_BEGIN_NAMESPACE
 
-class D_DECL_DEPRECATED_X("DWindowMaxButton is sufficient representing the two states.") DWindowRestoreButton : public DImageButton
+class DBorderlessWindowPrivate;
+
+class DBorderlessWindow : public DBorderlessWidget
 {
     Q_OBJECT
 public:
-    DWindowRestoreButton(QWidget * parent = 0);
+    explicit DBorderlessWindow(QWidget *parent = Q_NULLPTR);
+
+    void setContentLayout(QLayout *l);
+    void setContentWidget(QWidget *w);
+
+    void setParent(QWidget *parent);
+    QWidget *parentWidget() const;
+
+protected Q_SLOTS:
+
+private:
+    D_DECLARE_PRIVATE(DBorderlessWindow)
+    Q_DISABLE_COPY(DBorderlessWindow)
 };
 
 DWIDGET_END_NAMESPACE
 
-#endif // DWINDOWRESTOREBUTTON_H
+#endif // DWINDOW_H

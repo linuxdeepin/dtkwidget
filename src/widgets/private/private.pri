@@ -28,7 +28,6 @@ HEADERS += \
     $$PWD/dinputdialog_p.h \
     $$PWD/dipv4lineedit_p.h \
     $$PWD/dspinbox_p.h \
-    $$PWD/dcombobox_p.h \
     $$PWD/doptionlist_p.h \
     $$PWD/doption_p.h \
     $$PWD/dpicturesequenceview_p.h \
@@ -36,7 +35,6 @@ HEADERS += \
     $$PWD/dlistview_p.h \
     $$PWD/dtextedit_p.h \
     $$PWD/dapplication_p.h \
-    $$PWD/dwidget_p.h \
     $$PWD/dscrollbar_p.h \
     $$PWD/dmainwindow_p.h \
     $$PWD/dblureffectwidget_p.h \
@@ -47,7 +45,8 @@ HEADERS += \
     $$PWD/dtickeffect_p.h \
     $$PWD/dswitchbutton_p.h \
     $$PWD/dimagebutton_p.h \
-    $$PWD/dpasswdeditanimated_p.h
+    $$PWD/dpasswdeditanimated_p.h \
+    $$PWD/dborderlesswidget_p.h
 
 SOURCES += \
     $$PWD/dthemehelper.cpp

@@ -54,7 +54,6 @@
         <file>dark/Dtk--Widget--DHeaderLine.theme</file>
         <file>dark/Dtk--Widget--DFileChooserEdit.theme</file>
         <file>dark/Dtk--Widget--DDialog.theme</file>
-        <file>dark/Dtk--Widget--DComboBox.theme</file>
         <file>dark/Dtk--Widget--DCircleProgress.theme</file>
         <file>dark/Dtk--Widget--DButtonList.theme</file>
         <file>dark/Dtk--Widget--DBoxWidget.theme</file>

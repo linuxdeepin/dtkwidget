@@ -174,8 +174,6 @@ void DPasswdEditAnimatedPrivate::_q_showLoadSlider()
 
 void DPasswdEditAnimatedPrivate::_q_hideLoadSlider()
 {
-    D_Q(DPasswdEditAnimated);
-
     if (m_isLoading) {
         m_isLoading = false;
         m_loadSliderAnim->stop();

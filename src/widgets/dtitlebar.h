@@ -41,7 +41,6 @@ public:
     QWidget *customWidget() const;
     void setCustomWidget(QWidget *, bool fixCenterPos = false);
     void setCustomWidget(QWidget *, Qt::AlignmentFlag flag = Qt::AlignCenter, bool fixCenterPos = false);
-    D_DECL_DEPRECATED void setWindowFlags(Qt::WindowFlags type);
 
     int buttonAreaWidth() const;
     bool separatorVisible() const;
@@ -74,8 +73,6 @@ public Q_SLOTS:
     void setSeparatorVisible(bool visible);
     void setTitle(const QString &title);
     void setIcon(const QIcon &icon);
-    D_DECL_DEPRECATED void  setIcon(const QPixmap &icon);
-    D_DECL_DEPRECATED void setWindowState(Qt::WindowState windowState);
     /// Maximized/Minumized
     void toggleWindowState();
 
