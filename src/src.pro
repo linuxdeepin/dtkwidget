@@ -16,6 +16,12 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 
 linux* {
     QT += x11extras dbus
+
+    ###(zccrs): use load(dtk_qmake), dtkcore > 2.0.9
+    ARCH = $$QMAKE_HOST.arch
+    isEqual(ARCH, sw_64) | isEqual(ARCH, mips64) | isEqual(ARCH, mips32) {
+        DEFINES += FORCE_RASTER_WIDGETS
+    }
 }
 
 mac* {
