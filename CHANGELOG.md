@@ -1,3 +1,17 @@
+<a name="2.0.9.4"></a>
+## 2.0.9.4 (2018-09-06)
+
+
+#### Bug Fixes
+
+* **trashMgr:**  Will remove broken symlink now ([a5134f4d](https://github.com/linuxdeepin/dtkwidget/commit/a5134f4d2c8bcc0f29a6ce9cec0b282661080a36))
+
+#### Features
+
+*   set Qt::AA_ForceRasterWidgets on sw/loongson ([50138bb4](https://github.com/linuxdeepin/dtkwidget/commit/50138bb4516308ad71db6b182e8df819447f7488))
+
+
+
 <a name="2.0.9.3"></a>
 ## 2.0.9.3 (2018-08-23)
 
