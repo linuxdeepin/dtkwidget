@@ -302,10 +302,39 @@ bool DApplicationPrivate::isUserManualExists()
 #endif
 }
 
+
+
+/*!
+ * \~chinese \class DApplication
+ *
+ * \~chinese \brief DApplication 是 DTK 中用于替换 QApplication 相关功能实现的类。
+ * \~chinese 继承自 QApplication，并在此之上添加了一些特殊的设定，如：
+ * \~chinese - 在 FORCE_RASTER_WIDGETS 宏生效的情况下，默认设置 Qt::AA_ForceRasterWidgets 以减少 glx 相关库的加载，减少程序启动时间；
+ * \~chinese - 自动根据 applicationName 和 系统 locale 加载对应的翻译文件；
+ * \~chinese - 会根据系统gsettings中 com.deepin.dde.dapplication 的 qpixmapCacheLimit 值来设置 QPixmapCache::cacheLimit；
+ * \~chinese - 方便地通过 setSingleInstance 来实现程序的单实例。
+ *
+ * \~chinese \sa loadTranslator, setSingleInstance.
+ */
+
+
+/*!
+ * \~chinese \fn DApplication::newInstanceStarted()
+ * \~chinese 信号会在程序的一个新实例启动的时候被触发。
+ *
+ * \~chinese \fn DApplication::iconThemeChanged()
+ * \~chinese 信号会在系统图标主题发生改变的时候被触发。
+ */
+
 /**
- * @brief DApplication::DApplication constructs an instance of DApplication.
- * @param argc is the same as in the main function.
- * @param argv is the same as in the main function.
+ * \~english @brief DApplication::DApplication constructs an instance of DApplication.
+ * \~english @param argc is the same as in the main function.
+ * \~english @param argv is the same as in the main function.
+ *
+ *
+ * \~chinese \brief DApplication::DApplication 用于构建 DApplication 实例的构造函数。
+ * \~chinese \param argc 作用同 QApplication::QApplication 参数 argc。
+ * \~chinese \param argv 作用同 QApplication::QApplication 参数 argv。
  */
 DApplication::DApplication(int &argc, char **argv) :
     QApplication(argc, argv),
@@ -331,12 +360,32 @@ DApplication::DApplication(int &argc, char **argv) :
 #endif
 }
 
+
+
+/*!
+ *
+ * \~chinese \enum DApplication::SingleScope
+ * \~chinese DApplication::SingleScope 定义了 DApplication 单实例的效应范围。
+ *
+ * \~chinese \var DApplication::SingleScope DApplication::UserScope
+ * \~chinese 代表单实例的范围为用户范围，即同一个用户会话中不允许其他实例出现。
+ *
+ * \~chinese \var DApplication::SingleScope DApplication::SystemScope
+ * \~chinese 代表单实例的范围为系统范围，当前系统内只允许一个程序实例运行。
+ */
+
+
+
 /**
- * @brief DApplication::theme returns name of the theme that the application is currently using.
+ * \~english @brief DApplication::theme returns name of the theme that the application is currently using.
  *
- * theme name can be one of light, dark, semidark or semilight.
+ * \~english theme name can be one of light, dark, semidark or semilight.
  *
- * @return the theme name.
+ * \~english @return the theme name.
+ *
+ *
+ * \~chinese \property DApplication::theme
+ * \~chinese \brief theme 属性表示当前程序使用的主题名称，目前可选的主题名称有 light、dark、semidark 和 semilight。
  */
 QString DApplication::theme() const
 {
@@ -357,9 +406,14 @@ void DApplication::setTheme(const QString &theme)
 }
 
 #ifdef Q_OS_UNIX
-/**
+/*!
  * @brief DApplication::setOOMScoreAdj set Out-Of-Memory score
  * @param score vaild range is [-1000, 1000]
+ *
+ * \~chinese \brief DApplication::setOOMScoreAdj setOOMScoreAdj 用于调整当前进程的
+ * \~chinse Out-Of-Memory 分数（linux环境下），这个分数影响了内核在系统资源（内存）不足的
+ * \~chinse 情况下为了释放内存资源而挑选进程杀掉的算法，分数越高越容易被杀。
+ * \~chinese \param score 指定 oom-score，范围为 [-1000, 1000]。
  */
 void DApplication::setOOMScoreAdj(const int score)
 {
@@ -378,21 +432,27 @@ void DApplication::setOOMScoreAdj(const int score)
 #endif
 
 /**
- * @brief DApplication::setSingleInstance marks this application to be single instanced.
- * @param key is used as the unique ID of every application.
+ * \~chinese \brief DApplication::setSingleInstance setSingleInstance 用于将程序
+ * \~chinese 设置成单实例。
+ * \~chinese \param key 是确定程序唯一性的ID，一般使用程序的二进制名称即可。
  *
- * It should be in form of dde-dock, dde-desktop or dde-control-center etc.
+ * \~chinese \note 一般情况下单实例的实现使用 QSystemSemaphore，如果你的程序需要在沙箱
+ * \~chinese 环境如 flatpak 中运行，可选的一套方案是通过 DTK_DBUS_SINGLEINSTANCE 这个
+ * \~chinese 编译宏来控制单实例使用 DBus 方案。
  *
- * You can use dbus implement if you use an sandbox like flatpak and so on, just
- * build with DTK_DBUS_SINGLEINSTANCE
- *
- * @return true if succeed, otherwise false.
+ * \~chinese \return 设置成功返回 true，否则返回 false。
  */
 bool DApplication::setSingleInstance(const QString &key)
 {
     return setSingleInstance(key, SystemScope);
 }
 
+/*!
+ * \~chinese \brief DApplication::setSingleInstance 是一个重写函数，增加了控制单实例范围的 \a singleScope 参数。
+ * \~chinese \param key 是确定程序唯一性的ID，一般使用程序的二进制名称即可。
+ * \~chinese \param singleScope 用于指定单实例的影响范围，具体见 \a DApplication::SingleScope。
+ * \~chinese \return 设置成功返回 true，否则返回 false。
+ */
 bool DApplication::setSingleInstance(const QString &key, SingleScope singleScope)
 {
     D_D(DApplication);
@@ -417,11 +477,23 @@ bool DApplication::setSingleInstance(const QString &key, SingleScope singleScope
     return d->setSingleInstanceBySemaphore(k);
 }
 
-//! load translate file form system or application data path;
 /*!
-  \param localeFallback, a list of fallback locale you want load.
-  \return load success
-*/
+ * \~english \brief DApplication::loadTranslator loads translate file form
+ * \~english system or application data path;
+ * \~english \param localeFallback, a list of fallback locale you want load.
+ * \~english \return load success
+ *
+ * \~chinese \brief DApplication::loadTranslator 加载程序的翻译文件。
+ * \~chinese 使用这个函数需要保证翻译文件必须正确命名: 例如程序名叫 dde-dock，
+ * \~chinese 那么翻译文件在中文locale下的名称必须是 dde-dock_zh_CN.qm；翻译文件还需要放置
+ * \~chinese 在特定的位置，此函数会按照优先级顺序在以下目录中查找翻译文件：
+ * \~chinese 1. ~/.local/share/APPNAME/translations;
+ * \~chinese 2. /usr/local/share/APPNAME/translations;
+ * \~chinese 3. /usr/share/APPNAME/translations;
+ *
+ * \~chinese \param localeFallback 指定了回退的locale列表，默认只有系统locale。
+ * \~chinese \return 加载成功返回 true，否则返回 false。
+ */
 bool DApplication::loadTranslator(QList<QLocale> localeFallback)
 {
     D_D(DApplication);
@@ -448,6 +520,12 @@ bool DApplication::loadTranslator(QList<QLocale> localeFallback)
     return d->loadTranslator(translateDirs, appName, localeFallback);
 }
 
+/*!
+ * \~chinese \brief DApplication::loadDXcbPlugin 强制程序使用的平台插件到dxcb。
+ * \~chinese 这个函数的工作原理是通过设置 QT_QPA_PLATFORM 来影响平台插件的加载，所以此函数
+ * \~chinese 必须在 DApplication 实例创建前进行调用。
+ * \~chinese \return 设置成功返回 true，否则返回 false。
+ */
 bool DApplication::loadDXcbPlugin()
 {
     Q_ASSERT_X(!qApp, "DApplication::loadDxcbPlugin", "Must call before QGuiApplication defined object");
@@ -462,6 +540,10 @@ bool DApplication::loadDXcbPlugin()
     return qputenv("QT_QPA_PLATFORM", DXCB_PLUGIN_KEY);
 }
 
+/*!
+ * \~chinese \brief DApplication::isDXcbPlatform 检查当前程序是否使用了dxcb平台插件。
+ * \~chinese \return 正在使用返回 true，否则返回 false。
+ */
 bool DApplication::isDXcbPlatform()
 {
     if (!qApp)
@@ -472,16 +554,27 @@ bool DApplication::isDXcbPlatform()
     return _is_dxcb;
 }
 
+/*!
+ * \~chinese \brief DApplication::buildDtkVersion 返回编译时的dtk版本；
+ */
 int DApplication::buildDtkVersion()
 {
     return DtkBuildVersion::value;
 }
 
+/*!
+ * \~chinese \brief DApplication::runtimeDtkVersion 返回运行时的dtk版本；
+ */
 int DApplication::runtimeDtkVersion()
 {
     return DTK_VERSION;
 }
 
+/*!
+ * \~chinese \brief DApplication::registerDDESession 用于跟 startdde 进行通信，告知
+ * \~chinese startdde 进程已经启动成功。
+ * \~chinese \note 只有DDE系统组件需要使用此函数，普通应用无需使用。
+ */
 void DApplication::registerDDESession()
 {
 #ifdef Q_OS_LINUX
@@ -503,11 +596,20 @@ void DApplication::registerDDESession()
 }
 
 /**
- * @brief DApplication::productName returns the product name of this application.
+ * \~english @brief DApplication::productName returns the product name of this application.
  *
- * It's mainly used to construct an about dialog of the application.
+ * \~english It's mainly used to construct an about dialog of the application.
  *
- * @return the product name of this application if set, otherwise the applicationDisplayName.
+ * \~english @return the product name of this application if set, otherwise the applicationDisplayName.
+ *
+ *
+ * \~chinese \property DApplication::productName
+ * \~chinese \brief productName属性是程序的产品名称，
+ * \~chinese 产品名称不同与 applicationName ，应该是类似如“深度终端”，而不是 deepin-terminal，
+ * \~chinese 这个名称主要用于在程序的关于对话框中进行展示。
+ * \~chinese 如果没有手动通过 setProductName 来设置，会尝试使用 QApplication::applicationDisplayName 来充当产品名称。
+ *
+ * \sa productIcon, aboutDialog
  */
 QString DApplication::productName() const
 {
@@ -517,8 +619,8 @@ QString DApplication::productName() const
 }
 
 /**
- * @brief DApplication::setProductName sets the product name of this application.
- * @param productName is the product name to be set.
+ * \~english @brief DApplication::setProductName sets the product name of this application.
+ * \~english @param productName is the product name to be set.
  */
 void DApplication::setProductName(const QString &productName)
 {
@@ -528,11 +630,18 @@ void DApplication::setProductName(const QString &productName)
 }
 
 /**
- * @brief DApplication::productIcon returns the product icon of this application.
+ * \~english @brief DApplication::productIcon returns the product icon of this application.
  *
- * It's mainly used to construct an about dialog of the application.
+ * \~english It's mainly used to construct an about dialog of the application.
  *
- * @return the product icon of this application if set, otherwise empty.
+ * \~english @return the product icon of this application if set, otherwise empty.
+ *
+ *
+ * \~chinese \property DApplication::productIcon
+ * \~chinese \brief productIcon 属性是程序的产品图标，
+ * \~chinese 主要用于在关于对话框中进行展示。
+ *
+ * \sa productName, aboutDialog
  */
 const QIcon &DApplication::productIcon() const
 {
@@ -542,8 +651,8 @@ const QIcon &DApplication::productIcon() const
 }
 
 /**
- * @brief DApplication::setProductIcon sets the product icon of this application.
- * @param productIcon is the product icon to be set.
+ * \~english @brief DApplication::setProductIcon sets the product icon of this application.
+ * \~english @param productIcon is the product icon to be set.
  */
 void DApplication::setProductIcon(const QIcon &productIcon)
 {
@@ -553,11 +662,16 @@ void DApplication::setProductIcon(const QIcon &productIcon)
 }
 
 /**
- * @brief DApplication::applicationLicense returns the license used by this application.
+ * \~english @brief DApplication::applicationLicense returns the license used by this application.
  *
- * It's mainly used to construct an about dialog of the application.
+ * \~english It's mainly used to construct an about dialog of the application.
  *
- * @return the license used by this application.
+ * \~english @return the license used by this application.
+ *
+ *
+ * \~chinese \property DApplication::applicationLicense
+ * \~chinese \brief applicationLicense 属性是程序所使用的授权协议；
+ * \~chinese 主要用于在关于对话框中进行展示，默认值为 GPLv3。
  */
 QString DApplication::applicationLicense() const
 {
@@ -567,8 +681,8 @@ QString DApplication::applicationLicense() const
 }
 
 /**
- * @brief DApplication::setApplicationLicense sets the license of this application.
- * @param license is the license to be set.
+ * \~english @brief DApplication::setApplicationLicense sets the license of this application.
+ * \~english @param license is the license to be set.
  */
 void DApplication::setApplicationLicense(const QString &license)
 {
@@ -578,11 +692,15 @@ void DApplication::setApplicationLicense(const QString &license)
 }
 
 /**
- * @brief DApplication::applicationDescription returns the long description of the application.
+ * \~english @brief DApplication::applicationDescription returns the long description of the application.
  *
- * It's mainly used to construct an about dialog of the application.
+ * \~english It's mainly used to construct an about dialog of the application.
  *
- * @return the description of the application if set, otherwise empty.
+ * \~english @return the description of the application if set, otherwise empty.
+ *
+ *
+ * \~chinese \property DApplication::applicationDescription
+ * \~chinese \brief applicationDescription 属性记录了程序的描述信息，主要用于关于对话框中的信息展示。
  */
 QString DApplication::applicationDescription() const
 {
@@ -592,8 +710,8 @@ QString DApplication::applicationDescription() const
 }
 
 /**
- * @brief DApplication::setApplicationDescription sets the description of the application.
- * @param description is description to be set.
+ * \~english @brief DApplication::setApplicationDescription sets the description of the application.
+ * \~english @param description is description to be set.
  */
 void DApplication::setApplicationDescription(const QString &description)
 {
@@ -602,6 +720,10 @@ void DApplication::setApplicationDescription(const QString &description)
     d->appDescription = description;
 }
 
+/*!
+ * \~chinese \property DApplication::applicationHomePage
+ * \~chinese \brief applicationHomePage 属性记录程序的主页网址，主要用于在关于对话框中进行展示。
+ */
 QString DApplication::applicationHomePage() const
 {
     D_DC(DApplication);
@@ -617,11 +739,14 @@ void DApplication::setApplicationHomePage(const QString &link)
 }
 
 /**
- * @brief DApplication::applicationAcknowledgementPage returns the acknowlegement page of the application.
+ * \~english @brief DApplication::applicationAcknowledgementPage returns the acknowlegement page of the application.
  *
- * It's mainly used to construct an about dialog of the application.
+ * \~english It's mainly used to construct an about dialog of the application.
+ * \~english @return the acknowlegement page of the application if set, otherwise empty.
  *
- * @return the acknowlegement page of the application if set, otherwise empty.
+ *
+ * \~chinese \property DApplication::applicationAcknowledgementPage
+ * \~chinese \brief applicationAcknowledgementPage 属性记录程序的鸣谢信息网址，主要用于在关于对话框中进行展示。
  */
 QString DApplication::applicationAcknowledgementPage() const
 {
@@ -631,8 +756,8 @@ QString DApplication::applicationAcknowledgementPage() const
 }
 
 /**
- * @brief DApplication::setApplicationAcknowledgementPage sets the acknowlegement page of the application.
- * @param link is the acknowlegement page link to be shown in the about dialog.
+ * \~english @brief DApplication::setApplicationAcknowledgementPage sets the acknowlegement page of the application.
+ * \~english @param link is the acknowlegement page link to be shown in the about dialog.
  */
 void DApplication::setApplicationAcknowledgementPage(const QString &link)
 {
@@ -641,6 +766,11 @@ void DApplication::setApplicationAcknowledgementPage(const QString &link)
     d->acknowledgementPage = link;
 }
 
+
+/*!
+ * \~chinese \property DApplication::applicationAcknowledgementVisible
+ * \~chinese \brief applicationAcknowledgementVisible 属性控制是否显示关于对话框中的鸣谢地址显示。
+ */
 bool DApplication::applicationAcknowledgementVisible() const
 {
     D_DC(DApplication);
@@ -654,11 +784,18 @@ void DApplication::setApplicationAcknowledgementVisible(bool visible)
 }
 
 /**
- * @brief DApplication::aboutDialog returns the about dialog of this application.
+ * \~english @brief DApplication::aboutDialog returns the about dialog of this application.
  *
- * If the about dialog is not set, it will automatically construct one.
+ * \~english If the about dialog is not set, it will automatically construct one.
  *
- * @return the about dialog instance.
+ * \~english @return the about dialog instance.
+ *
+ *
+ * \~chinese \brief DApplication::aboutDialog 返回一个基于当前程序信息的关于对话框。
+ * \~chinese 此对话框可以通过 DApplication::setAboutDialog 进行设置，如果没有设置就使用此函数进行获取，
+ * \~chinese 系统会创建一个新的关于对话框。
+ *
+ * \sa setAboutDialog
  */
 DAboutDialog *DApplication::aboutDialog()
 {
@@ -668,12 +805,17 @@ DAboutDialog *DApplication::aboutDialog()
 }
 
 /**
- * @brief DApplication::setAboutDialog sets the about dialog of this application.
+ * \~english @brief DApplication::setAboutDialog sets the about dialog of this application.
  *
- * It's mainly used to override the auto-constructed about dialog which is not
- * a common case, so please do double check before using this method.
+ * \~english It's mainly used to override the auto-constructed about dialog which is not
+ * \~english a common case, so please do double check before using this method.
  *
- * @param aboutDialog
+ * \~english @param aboutDialog
+ *
+ *
+ * \~chinese \brief DApplication::setAboutDialog 为当前程序设置一个关于对话框。
+ *
+ * \sa aboutDialog
  */
 void DApplication::setAboutDialog(DAboutDialog *aboutDialog)
 {
@@ -686,6 +828,10 @@ void DApplication::setAboutDialog(DAboutDialog *aboutDialog)
     d->aboutDialog = aboutDialog;
 }
 
+/*!
+ * \~chinese \property DApplication::visibleMenuShortcutText
+ * \~chinese \brief visibleMenuShortcutText 属性代表了程序中菜单项是否显示对应的快捷键。
+ */
 bool DApplication::visibleMenuShortcutText() const
 {
     D_DC(DApplication);
@@ -700,6 +846,10 @@ void DApplication::setVisibleMenuShortcutText(bool value)
     d->visibleMenuShortcutText = value;
 }
 
+/*!
+ * \~chinese \property DApplication::visibleMenuCheckboxWidget
+ * \~chinese \brief visibleMenuCheckboxWidget 属性代表了程序中菜单项是否显示Checkbox控件。
+ */
 bool DApplication::visibleMenuCheckboxWidget() const
 {
     D_DC(DApplication);
@@ -714,6 +864,10 @@ void DApplication::setVisibleMenuCheckboxWidget(bool value)
     d->visibleMenuCheckboxWidget = value;
 }
 
+/*!
+ * \~chinese \property DApplication::visibleMenuIcon
+ * \~chinese \brief visibleMenuIcon 属性代表了程序中菜单项是否显示图标。
+ */
 bool DApplication::visibleMenuIcon() const
 {
     D_DC(DApplication);
@@ -729,12 +883,14 @@ void DApplication::setVisibleMenuIcon(bool value)
 }
 
 /**
- * @brief DApplication::helpActionHandler
+ * \~english @brief DApplication::handleHelpAction
  *
- * Triggered when user clicked the help menu item of this window's titlebar,
- * default action is to open the user manual of this program, override this
- * method if you want to change the default action.
+ * \~english Triggered when user clicked the help menu item of this window's titlebar,
+ * \~english default action is to open the user manual of this program, override this
+ * \~english method if you want to change the default action.
  *
+ * \~chinese \brief DApplication::handleHelpAction 函数在用户点击窗口标题栏的帮助按钮
+ * \~chinese 时触发，默认实现为打开当前程序的帮助手册，子类可以重现实现此函数以覆盖其默认行为。
  */
 void DApplication::handleHelpAction()
 {
@@ -759,12 +915,14 @@ void DApplication::handleHelpAction()
 }
 
 /**
- * @brief DApplication::aboutActionHandler
+ * \~english @brief DApplication::handleAboutAction
  *
- * Triggered when user clicked the about menu item of this window's titlebar,
- * default action is to show the about dialog of this window(if there is one),
- * override this method if you want to change the default action.
+ * \~english Triggered when user clicked the about menu item of this window's titlebar,
+ * \~english default action is to show the about dialog of this window(if there is one),
+ * \~english override this method if you want to change the default action.
  *
+ * \~chinese \brief DApplication::handleAboutAction 函数在用户点击窗口标题栏的关于按钮
+ * \~chinese 时触发，默认实现为打开程序关于对话框，子类可以重现实现此函数以覆盖其默认行为。
  */
 void DApplication::handleAboutAction()
 {
@@ -794,13 +952,15 @@ void DApplication::handleAboutAction()
 }
 
 /**
- * @brief DApplication::quitActionHandler
+ * \~english @brief DApplication::handleQuitAction
  *
- * Triggered when user clicked the exit menu item of this window's titlebar,
- * default action is to quit this program, you can try to save your data before
- * the program quitting by connecting to the aboutToQuit signal of this application.
- * override this method if you want to change the default action.
+ * \~english Triggered when user clicked the exit menu item of this window's titlebar,
+ * \~english default action is to quit this program, you can try to save your data before
+ * \~english the program quitting by connecting to the aboutToQuit signal of this application.
+ * \~english override this method if you want to change the default action.
  *
+ * \~chinese \brief DApplication::handleQuitAction 函数在用户点击窗口标题栏的关闭按钮
+ * \~chinese 时触发，默认行为是退出整个程序，子类可以重写此函数以覆盖其行为。
  */
 void DApplication::handleQuitAction()
 {
