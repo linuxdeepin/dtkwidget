@@ -41,12 +41,9 @@ class LIBDTKWIDGETSHARED_EXPORT DAbstractDialog : public QDialog, public DTK_COR
     Q_PROPERTY(DisplayPosition displayPosition READ displayPosition WRITE setDisplayPosition)
 
 public:
-    /**
-     * @brief The DisplayPosition enum contains the position options that can be specified by all dialogs.
-     */
     enum DisplayPosition {
-        Center, /*!< display this dialog in the center of the screen */
-        TopRight /*!< display this dialog in the top right of the screen */
+        Center,
+        TopRight
     };
     enum DisplayPostion {
         DisplayCenter = Center, /*!< display this dialog in the center of the screen */
