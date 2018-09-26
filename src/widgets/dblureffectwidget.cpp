@@ -27,7 +27,6 @@
 
 #include <qpa/qplatformbackingstore.h>
 
-#define MASK_COLOR_ALPHA_BLUR_MODE 102
 #define MASK_COLOR_ALPHA_DEFAULT 204
 
 QT_BEGIN_NAMESPACE
@@ -95,12 +94,19 @@ bool DBlurEffectWidgetPrivate::updateWindowBlurArea()
     return topLevelWidget && updateWindowBlurArea(topLevelWidget);
 }
 
+void DBlurEffectWidgetPrivate::setMaskAlpha(const quint8 alpha) {
+    maskAlpha = alpha;
+
+    // refresh alpha
+    setMaskColor(maskColor);
+}
+
 void DBlurEffectWidgetPrivate::setMaskColor(const QColor &color)
 {
     maskColor = color;
 
     if (isBehindWindowBlendMode()) {
-        maskColor.setAlpha(DWindowManagerHelper::instance()->hasBlurWindow() ? MASK_COLOR_ALPHA_BLUR_MODE : MASK_COLOR_ALPHA_DEFAULT);
+        maskColor.setAlpha(DWindowManagerHelper::instance()->hasBlurWindow() ? maskAlpha : MASK_COLOR_ALPHA_DEFAULT);
     }
 }
 
@@ -319,22 +325,22 @@ QColor DBlurEffectWidget::maskColor() const
     switch ((int)d->maskColorType) {
     case DarkColor: {
         if (!d->isBehindWindowBlendMode()) {
-            return QColor(0, 0, 0, MASK_COLOR_ALPHA_BLUR_MODE);
+            return QColor(0, 0, 0, d->maskAlpha);
         }
 
         if (DWindowManagerHelper::instance()->hasComposite()) {
-            return QColor(0, 0, 0, DWindowManagerHelper::instance()->hasBlurWindow() ? MASK_COLOR_ALPHA_BLUR_MODE : MASK_COLOR_ALPHA_DEFAULT);
+            return QColor(0, 0, 0, DWindowManagerHelper::instance()->hasBlurWindow() ? d->maskAlpha : MASK_COLOR_ALPHA_DEFAULT);
         } else {
             return QColor("#373F47");
         }
     }
     case LightColor: {
         if (!d->isBehindWindowBlendMode()) {
-            return QColor(255, 255, 255, MASK_COLOR_ALPHA_BLUR_MODE);
+            return QColor(255, 255, 255, d->maskAlpha);
         }
 
         if (DWindowManagerHelper::instance()->hasComposite()) {
-            return QColor(255, 255, 255, DWindowManagerHelper::instance()->hasBlurWindow() ? MASK_COLOR_ALPHA_BLUR_MODE : MASK_COLOR_ALPHA_DEFAULT);
+            return QColor(255, 255, 255, DWindowManagerHelper::instance()->hasBlurWindow() ? d->maskAlpha : MASK_COLOR_ALPHA_DEFAULT);
         } else {
             return QColor("#FCFCFC");
         }
@@ -342,6 +348,12 @@ QColor DBlurEffectWidget::maskColor() const
     }
 
     return d->maskColor;
+}
+
+quint8 DBlurEffectWidget::maskAlpha() const {
+    D_DC(DBlurEffectWidget);
+
+    return d->maskAlpha;
 }
 
 /*!
@@ -402,7 +414,7 @@ void DBlurEffectWidget::setBlendMode(DBlurEffectWidget::BlendMode blendMode)
         d->addToBlurEffectWidgetHash();
     } else {
         if (blendMode == InWindowBlend) {
-            d->maskColor.setAlpha(MASK_COLOR_ALPHA_BLUR_MODE);
+            d->maskColor.setAlpha(d->maskAlpha);
         }
 
         if (d->blendMode == BehindWindowBlend) {
@@ -445,6 +457,16 @@ void DBlurEffectWidget::setBlurRectYRadius(int blurRectYRadius)
     update();
 
     Q_EMIT blurRectYRadiusChanged(blurRectYRadius);
+}
+
+void DBlurEffectWidget::setMaskAlpha(quint8 alpha) {
+    D_D(DBlurEffectWidget);
+
+    if (alpha == d->maskAlpha) return;
+
+    d->setMaskAlpha(alpha);
+
+    Q_EMIT maskAlphaChanged(alpha);
 }
 
 void DBlurEffectWidget::setMaskColor(QColor maskColor)

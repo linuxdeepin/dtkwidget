@@ -40,6 +40,7 @@ class LIBDTKWIDGETSHARED_EXPORT DBlurEffectWidget : public QWidget, public DTK_C
     // ###(zccrs): The alpha channel of the color is fixed.
     // The alpha channel is 102 if the DPlatformWindowHandle::hasBlurWindow() is true, otherwise is 204).
     Q_PROPERTY(QColor maskColor READ maskColor WRITE setMaskColor NOTIFY maskColorChanged)
+    Q_PROPERTY(quint8 maskAlpha READ maskAlpha WRITE setMaskAlpha NOTIFY maskAlphaChanged)
 
 public:
     // TODO: To support MeanBlur, MedianBlur, BilateralFilter
@@ -85,6 +86,8 @@ public:
 
     QColor maskColor() const;
 
+    quint8 maskAlpha() const;
+
     void setMaskPath(const QPainterPath &path);
 
 public Q_SLOTS:
@@ -94,7 +97,7 @@ public Q_SLOTS:
     void setBlendMode(BlendMode blendMode);
     void setBlurRectXRadius(int blurRectXRadius);
     void setBlurRectYRadius(int blurRectYRadius);
-
+    void setMaskAlpha(quint8 alpha);
     void setMaskColor(QColor maskColor);
     void setMaskColor(MaskColorType type);
 
@@ -105,7 +108,7 @@ Q_SIGNALS:
     void blendModeChanged(BlendMode blendMode);
     void blurRectXRadiusChanged(int blurRectXRadius);
     void blurRectYRadiusChanged(int blurRectYRadius);
-
+    void maskAlphaChanged(quint8 alpha);
     void maskColorChanged(QColor maskColor);
 
 protected:
