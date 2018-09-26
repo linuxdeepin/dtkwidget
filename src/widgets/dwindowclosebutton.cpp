@@ -22,10 +22,19 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
- * \class DWindowCloseButton
- * \brief The DWindowCloseButton class is used as the unified window close button.
+ * \~english \class DWindowCloseButton
+ * \~english \brief The DWindowCloseButton class is used as the unified window close button.
  *
- * It's actually a special DImageButton which has the appearance of close button.
+ * \~english It's actually a special DImageButton which has the appearance of close button.
+ *
+ * \~chinese \class DWindowCloseButton
+ * \~chinese \brief DWindowCloseButton 类是 DTK 窗口统一的关闭按钮控件。
+ */
+
+/*!
+ * \~chinese \brief DWindowCloseButton::DWindowCloseButton 是 DWindowCloseButton 的构造
+ * \~chinese 函数，返回 DWindowCloseButton 对象，普通程序一般无需使用。
+ * \~chinese \param parent 为创建对象的父控件。
  */
 DWindowCloseButton::DWindowCloseButton(QWidget * parent) :
     DImageButton(parent)

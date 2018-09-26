@@ -22,10 +22,20 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
- * \class DWindowOptionButton
- * \brief The DWindowOptionButton class is used as the unified window option button.
+ * \~english \class DWindowOptionButton
+ * \~english \brief The DWindowOptionButton class is used as the unified window option button.
  *
- * It's actually a special DImageButton which has the appearance of option button.
+ * \~english It's actually a special DImageButton which has the appearance of option button.
+ *
+ * \~chinese \class DWindowOptionButton
+ * \~chinese \brief DWindowOptionButton 类是 DTK 窗口统一的菜单按钮控件。
+ * \~chinese 点击按钮后，默认会显示程序主菜单，包含“关于”、“帮助”等项。
+ */
+
+/*!
+ * \~chinese \brief DWindowOptionButton::DWindowOptionButton 是 DWindowOptionButton 的构造
+ * \~chinese 函数，返回 DWindowOptionButton 对象，普通程序一般无需使用。
+ * \~chinese \param parent 为创建对象的父控件。
  */
 DWindowOptionButton::DWindowOptionButton(QWidget * parent) :
     DImageButton(parent)

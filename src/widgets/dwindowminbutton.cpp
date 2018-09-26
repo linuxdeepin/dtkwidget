@@ -22,10 +22,19 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
- * \class DWindowMinButton
- * \brief The DWindowMinButton class is used as the unified window minimize button.
+ * \~english \class DWindowMinButton
+ * \~english \brief The DWindowMinButton class is used as the unified window minimize button.
  *
- * It's actually a special DImageButton which has the appearance of minimize button.
+ * \~english It's actually a special DImageButton which has the appearance of minimize button.
+ *
+ * \~chinese \class DWindowMinButton
+ * \~chinese \brief DWindowMinButton 类是 DTK 窗口统一的最小化按钮控件。
+ */
+
+/*!
+ * \~chinese \brief DWindowMinButton::DWindowMinButton 是 DWindowMinButton 的构造
+ * \~chinese 函数，返回 DWindowMinButton 对象，普通程序一般无需使用。
+ * \~chinese \param parent 为创建对象的父控件。
  */
 DWindowMinButton::DWindowMinButton(QWidget * parent) :
     DImageButton(parent)
