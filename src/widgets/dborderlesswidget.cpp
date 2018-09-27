@@ -161,16 +161,59 @@ void DBorderlessWidgetPrivate::_q_onTitleBarMousePressed(Qt::MouseButtons button
 #endif
 }
 
+/*!
+ * \~chinese @class DBorderlessWidget
+ *
+ * \~chinese @brief DBorderlessWidget 是DTK中用于提供无边框的功能的类，主要用于Windows。
+ * \~chinese - 通过设置窗口的WindowFlags为Qt::Window | Qt::FramelessWindowHint来实现
+ */
+
+/*!
+ * \~chinese \fn DBorderlessWidget::optionClicked()
+ * \~chinese 会在标题栏被点击时触发
+ * \~chinese \fn DBorderlessWidget::backgroundColorChanged(QColor backgroundColor)
+ * \~chinese 会在背景颜色发生改变时时触发
+ * \~chinese \fn DBorderlessWidget::shadowColorChanged(QColor shadowColor)
+ * \~chinese 会在阴影颜色发生改变时触发
+ * \~chinese \fn DBorderlessWidget::shadowOffsetChanged(QPoint shadowOffset)
+ * \~chinese 会在阴影偏移被设置时触发
+ */
+
+/*!
+ * \~chinese \enum DBorderlessWidget::DecorationFlag
+ * \~chinese @brief DBorderlessWidget::DecorationFlag 定义了修饰的标志
+ */
+
+/*!
+ * \~chinese \var DBorderlessWidget::ShowTitlebarSeparator
+ * \~chinese @brief 显示标题栏分隔栏
+ */
+
+/*!
+ * @brief 用于构建DBorderlessWidget实例的构造函数
+ * @param parent 接收QWidget的parent指针
+ */
+
 DBorderlessWidget::DBorderlessWidget(QWidget *parent): DBorderlessWidget(*new DBorderlessWidgetPrivate(this), parent)
 {
 
 }
+
+/*!
+ * \~chinese @brief 返回装饰标志
+ * \~chinese @return DBorderlessWidget::DecorationFlags
+ */
 
 DBorderlessWidget::DecorationFlags DBorderlessWidget::decorationFlags()
 {
     D_D(DBorderlessWidget);
     return d->decorationFlags;
 }
+
+/*!
+ * \~chinese @brief 设置当前的修饰标志
+ * \~chinese @param flags 接收一个DBorderlessWidget::DecorationFlags的枚举
+ */
 
 void DBorderlessWidget::setDecorationFlags(DBorderlessWidget::DecorationFlags flags)
 {
@@ -183,6 +226,13 @@ void DBorderlessWidget::setDecorationFlags(DBorderlessWidget::DecorationFlags fl
         d->titlebar->setSeparatorVisible(false);
     }
 }
+
+/*!
+ * \~chinese @brief 用于构建DBorderlessWidget实例的构造函数
+ *
+ * \~chinese @param dd 接收私有类
+ * \~chinese @param parent 设置parent
+ */
 
 DBorderlessWidget::DBorderlessWidget(DBorderlessWidgetPrivate &dd, QWidget *parent)
     : QWidget(parent), DObject(dd)
@@ -284,6 +334,9 @@ void DBorderlessWidget::mouseReleaseEvent(QMouseEvent *event)
     return QWidget::mouseReleaseEvent(event);
 }
 
+/*!
+* \~chinese \brief 该方法会在Linux下调用XUtils::ShowMinimizedWindow(this, true);
+*/
 void DBorderlessWidget::showMinimized()
 {
 #ifdef Q_OS_LINUX
@@ -292,6 +345,9 @@ void DBorderlessWidget::showMinimized()
     QWidget::showMinimized();
 }
 
+/*!
+ * \~chinese @brief 该方法会在Linux下调用XUtils::ShowMaximizedWindow(this, true);
+ */
 void DBorderlessWidget::showMaximized()
 {
 #ifdef Q_OS_LINUX
@@ -302,30 +358,60 @@ void DBorderlessWidget::showMaximized()
     this->raise();
 }
 
+/*!
+ * \~chinese @brief 设置内部控件的外边距
+ * \~chinese
+ * \~chinese @param left 设置左边缘的距离
+ * \~chinese @param top 设置上边缘的距离
+ * \~chinese @param right 设置右边缘的距离
+ * \~chinese @param bottom 设置下边缘的距离
+ */
 void DBorderlessWidget::setContentsMargins(int left, int top, int right, int bottom)
 {
     D_D(DBorderlessWidget);
     d->contentWidget->setContentsMargins(left, top, right, bottom);
 }
 
+/*!
+ * \~chinese @brief 重载的方法，接收QMargins对象来设置内部控件的外边距
+ *
+ * \~chinese @param margins QMargins对象
+ */
 void DBorderlessWidget::setContentsMargins(const QMargins &margins)
 {
     D_D(DBorderlessWidget);
     d->contentWidget->setContentsMargins(margins);
 }
 
+/*!
+ * \~chinese @brief 获取内部控件的外边距
+ *
+ * \~chinese @param left 左边距的指针
+ * \~chinese @param top 上边距的指针
+ * \~chinese @param right 右边距的指针
+ * \~chinese @param bottom 下边距的指针
+ */
 void DBorderlessWidget::getContentsMargins(int *left, int *top, int *right, int *bottom) const
 {
     D_DC(DBorderlessWidget);
     d->contentWidget->getContentsMargins(left, top, right, bottom);
 }
 
+/*!
+ * \~chinese @brief 获取内部控件的外边距
+ *
+ * \~chinese @return QMargins 返回QMargins对象
+ */
 QMargins DBorderlessWidget::contentsMargins() const
 {
     D_DC(DBorderlessWidget);
     return d->contentWidget->contentsMargins();
 }
 
+/*!
+ * \~chinese @brief 显示全屏
+ * \~chinese 会在Linux下调用XUtils::ShowFullscreenWindow(this, true);
+ */
 void DBorderlessWidget::showFullScreen()
 {
 #ifdef Q_OS_LINUX
@@ -336,6 +422,10 @@ void DBorderlessWidget::showFullScreen()
     this->raise();
 }
 
+/*!
+ * \~chinese @brief 移动窗口
+ * \~chinese @param botton 接收Qt::MouseButton枚举值
+ */
 void DBorderlessWidget::moveWindow(Qt::MouseButton botton)
 {
 #ifdef Q_OS_LINUX
@@ -343,6 +433,10 @@ void DBorderlessWidget::moveWindow(Qt::MouseButton botton)
 #endif
 }
 
+/*!
+ * \~chinese @brief 切换窗口为最大化或者还原
+ *
+ */
 void DBorderlessWidget::toggleMaximizedWindow()
 {
 #ifdef Q_OS_LINUX
@@ -350,6 +444,10 @@ void DBorderlessWidget::toggleMaximizedWindow()
 #endif
 }
 
+/*!
+ * \~chinese @brief 窗口将以标准模式显示
+ *
+ */
 void DBorderlessWidget::showNormal()
 {
 #ifdef Q_OS_LINUX
@@ -357,22 +455,34 @@ void DBorderlessWidget::showNormal()
 #endif
 }
 
-
+/*!
+ * \~chinese @brief 删除当前的布局
+ *
+ */
 void DBorderlessWidget::removeLayout()
 {
     qDeleteAll(this->children());
 }
 
+/*!
+ * \~chinese @brief 返回当前的WindowFlags
+ *
+ * \~chinese @return Qt::WindowFlags Qt的窗口标志枚举值
+ */
 Qt::WindowFlags DBorderlessWidget::windowFlags()
 {
     D_D(DBorderlessWidget);
     return d->dwindowFlags;
 }
 
-///
-/// \brief setWindowFlags
-/// \param type
-///
+/*!
+ * \~english @brief set the required flags for the window
+ *
+ * \~english @param type Qt::WindowFlags enum
+ *
+ * \~chinese @brief 设置窗口需要的标志位
+ * \~chinese @param type Qt::WindowFlags 枚举值
+ */
 void DBorderlessWidget::setWindowFlags(Qt::WindowFlags type)
 {
     D_D(DBorderlessWidget);
@@ -380,12 +490,22 @@ void DBorderlessWidget::setWindowFlags(Qt::WindowFlags type)
     d->titlebar->setWindowFlags(type);
 }
 
+/*!
+ * \~chinese @brief 返回标题栏的高度
+ *
+ * \~chinese @return int 标题栏的高度
+ */
 int DBorderlessWidget::titlebarHeight() const
 {
     D_DC(DBorderlessWidget);
     return d->titlebar->height();
 }
 
+/*!
+ * \~chinese @brief 设置标题栏的固定高度
+ *
+ * \~chinese @param h 高度
+ */
 void DBorderlessWidget::setTitlebarFixedHeight(int h)
 {
     D_D(DBorderlessWidget);
@@ -393,18 +513,33 @@ void DBorderlessWidget::setTitlebarFixedHeight(int h)
     DBorderlessWidget::adjustSize();
 }
 
+/*!
+ * \~chinese @brief 设置标题
+ *
+ * \~chinese @param t 标题内容
+ */
 void DBorderlessWidget::setTitle(const QString &t)
 {
     D_D(DBorderlessWidget);
     d->titlebar->setTitle(t);
 }
 
+/*!
+ * \~chinese @brief 设置标题栏的图标
+ *
+ * \~chinese @param icon 图标对象
+ */
 void DBorderlessWidget::setTitleIcon(const QPixmap &icon)
 {
     D_D(DBorderlessWidget);
     d->titlebar->setIcon(icon);
 }
 
+/*!
+ * \~chinese @brief 返回标题栏对象
+ *
+ * \~chinese @return DTitlebar* 标题栏对象指针
+ */
 DTitlebar *DBorderlessWidget::titlebar() const
 {
     D_DC(DBorderlessWidget);
@@ -412,30 +547,58 @@ DTitlebar *DBorderlessWidget::titlebar() const
     return d->titlebar;
 }
 
+/*!
+ * \~chinese @brief 设置标题栏菜单
+ *
+ * \~chinese @param menu 菜单对象指针
+ */
 void DBorderlessWidget::setTitlebarMenu(QMenu *menu)
 {
     D_D(DBorderlessWidget);
     d->titlebar->setMenu(menu);
 }
 
+/*!
+ * \~chinese @brief 返回标题栏的菜单对象
+ *
+ * \~chinese @return QMenu* 菜单对象的指针
+ */
 QMenu *DBorderlessWidget::titleBarMenu() const
 {
     D_DC(DBorderlessWidget);
     return d->titlebar->menu();
 }
 
+/*!
+ * \~chinese @brief 设置标题栏的控件
+ *
+ * \~chinese @param w 要添加在标题栏的QWidget控件
+ * \~chinese @param fixCenterPos 从中心偏移的距离
+ */
 void DBorderlessWidget::setTitlebarWidget(QWidget *w, bool fixCenterPos)
 {
     D_D(DBorderlessWidget);
     d->titlebar->setCustomWidget(w, Qt::AlignCenter, fixCenterPos);
 }
 
+/*!
+ * \~chinese @brief 重载的方法，增加了设置对齐方式的参数
+ *
+ * \~chinese @param w 要添加在标题栏的QWidget控件
+ * \~chinese @param wflag 设置对齐方式
+ * \~chinese @param fixCenterPos 从中心偏移的距离
+ */
 void DBorderlessWidget::setTitlebarWidget(QWidget *w, Qt::AlignmentFlag wflag, bool fixCenterPos)
 {
     D_D(DBorderlessWidget);
     d->titlebar->setCustomWidget(w, wflag, fixCenterPos);
 }
 
+
+/*!
+ * \~chinese @brief 返回当前的布局
+ *
+ */
 // TODO: fix layout
 QLayout *DBorderlessWidget::layout() const
 {
@@ -443,6 +606,11 @@ QLayout *DBorderlessWidget::layout() const
     return d->contentWidget->layout();
 }
 
+/*!
+ * \~chinese @brief 设置布局
+ *
+ * \~chinese @param l 布局对象
+ */
 void DBorderlessWidget::setLayout(QLayout *l)
 {
     D_D(DBorderlessWidget);
@@ -454,12 +622,22 @@ void DBorderlessWidget::setLayout(QLayout *l)
     DBorderlessWidget::resize(d->windowWidget->size());
 }
 
+/*!
+ * \~chinese @brief 返回控件的圆角半径
+ *
+ * \~chinese @return int 半径
+ */
 int DBorderlessWidget::radius() const
 {
     D_DC(DBorderlessWidget);
     return d->m_Radius;
 }
 
+/*!
+ * \~chinese @brief 设置控件的圆角半径
+ *
+ * \~chinese @param r 半径
+ */
 void DBorderlessWidget::setRadius(int r)
 {
     D_D(DBorderlessWidget);
@@ -469,12 +647,22 @@ void DBorderlessWidget::setRadius(int r)
     d->m_Radius = r;
 }
 
+/*!
+ * \~chinese @brief 返回阴影的宽度
+ *
+ * \~chinese @return int 阴影宽度
+ */
 int DBorderlessWidget::shadowWidth() const
 {
     D_DC(DBorderlessWidget);
     return d->m_Radius;
 }
 
+/*!
+ * \~chinese @brief 设置阴影的宽度
+ *
+ * \~chinese @param r 阴影的宽度
+ */
 void DBorderlessWidget::setShadowWidth(int r)
 {
     D_D(DBorderlessWidget);
@@ -491,6 +679,12 @@ void DBorderlessWidget::setShadowWidth(int r)
     update();
 }
 
+/*!
+ * \~chinese @property DBorderlessWidget::backgroundColor
+ * \~chinese @brief 返回背景颜色
+ *
+ * \~chinese @return QColor 颜色对象
+ */
 QColor DBorderlessWidget::backgroundColor() const
 {
     D_DC(DBorderlessWidget);
@@ -498,6 +692,11 @@ QColor DBorderlessWidget::backgroundColor() const
     return d->m_backgroundColor;
 }
 
+/*!
+ * \~chinese @brief 返回阴影的颜色
+ *
+ * \~chinese @return QColor 颜色对象
+ */
 QColor DBorderlessWidget::shadowColor() const
 {
     D_DC(DBorderlessWidget);
@@ -505,6 +704,11 @@ QColor DBorderlessWidget::shadowColor() const
     return d->shadowColor;
 }
 
+/*!
+ * \~chinese @brief 返回阴影的偏移
+ *
+ * \~chinese @return QPoint 坐标对象
+ */
 QPoint DBorderlessWidget::shadowOffset() const
 {
     D_DC(DBorderlessWidget);
@@ -512,6 +716,11 @@ QPoint DBorderlessWidget::shadowOffset() const
     return d->shadowOffset;
 }
 
+/*!
+ * \~chinese @brief 设置背景颜色
+ *
+ * \~chinese @param backgroundColor 颜色对象
+ */
 void DBorderlessWidget::setBackgroundColor(QColor backgroundColor)
 {
     D_D(DBorderlessWidget);
@@ -524,6 +733,11 @@ void DBorderlessWidget::setBackgroundColor(QColor backgroundColor)
     Q_EMIT backgroundColorChanged(backgroundColor);
 }
 
+/*!
+ * \~chinese @brief 设置阴影颜色
+ *
+ * \~chinese @param shadowColor 颜色对象
+ */
 void DBorderlessWidget::setShadowColor(QColor shadowColor)
 {
     D_D(DBorderlessWidget);
@@ -540,6 +754,11 @@ void DBorderlessWidget::setShadowColor(QColor shadowColor)
     Q_EMIT shadowColorChanged(shadowColor);
 }
 
+/*!
+ * \~chinese @brief 设置阴影的偏移
+ *
+ * \~chinese @param shadowOffset 偏移的坐标对象
+ */
 void DBorderlessWidget::setShadowOffset(QPoint shadowOffset)
 {
     D_D(DBorderlessWidget);
@@ -556,6 +775,10 @@ void DBorderlessWidget::setShadowOffset(QPoint shadowOffset)
     Q_EMIT shadowOffsetChanged(shadowOffset);
 }
 
+/*!
+ * \~chinese @brief 绘制阴影的图像
+ *
+ */
 void DBorderlessWidget::drawShadowPixmap()
 {
     D_D(DBorderlessWidget);
@@ -567,12 +790,22 @@ void DBorderlessWidget::drawShadowPixmap()
     d->shadowPixmap = QPixmap::fromImage(Dtk::Widget::dropShadow(pixmap, d->m_ShadowWidth, d->shadowColor));
 }
 
+/*!
+ * \~chinese @brief 返回边框的大小
+ *
+ * \~chinese @return int 边框大小
+ */
 int DBorderlessWidget::border() const
 {
     D_DC(DBorderlessWidget);
     return d->m_Border;
 }
 
+/*!
+ * \~chinese @brief 设置边框的大小
+ *
+ * \~chinese @param b 设置的大小
+ */
 void DBorderlessWidget::setBorder(int b)
 {
     D_D(DBorderlessWidget);
@@ -583,12 +816,22 @@ void DBorderlessWidget::setBorder(int b)
     }
 }
 
+/*!
+ * \~chinese @brief 返回背景的图像
+ *
+ * \~chinese @return const QPixmap& 背景的图像对象
+ */
 const QPixmap &DBorderlessWidget::backgroundImage() const
 {
     D_DC(DBorderlessWidget);
     return d->m_Background;
 }
 
+/*!
+ * \~chinese @brief 设置背景的图像数据
+ *
+ * \~chinese @param srcPixmap 图像数据
+ */
 void DBorderlessWidget::setBackgroundImage(const QPixmap &srcPixmap)
 {
     D_D(DBorderlessWidget);
@@ -624,6 +867,11 @@ void DBorderlessWidget::setBackgroundImage(const QPixmap &srcPixmap)
     d->m_Background = QPixmap::fromImage(resultImage);
 }
 
+/*!
+ * \~chinese @brief 设置固定大小
+ *
+ * \~chinese @param size 大小
+ */
 void DBorderlessWidget::setFixedSize(const QSize &size)
 {
     D_D(DBorderlessWidget);
@@ -640,11 +888,22 @@ void DBorderlessWidget::setFixedSize(const QSize &size)
 #endif
 }
 
+/*!
+ * \~chinese @brief 重载的方法，设置固定大小
+ *
+ * \~chinese @param w 固定的宽度
+ * \~chinese @param h 固定的高度
+ */
 void DBorderlessWidget::setFixedSize(int w, int h)
 {
     DBorderlessWidget::setFixedSize(QSize(w, h));
 }
 
+/*!
+ * \~chinese @brief 设置固定宽度
+ *
+ * \~chinese @param w 固定的宽度
+ */
 void DBorderlessWidget::setFixedWidth(int w)
 {
     D_D(DBorderlessWidget);
@@ -653,11 +912,23 @@ void DBorderlessWidget::setFixedWidth(int w)
     QWidget::setFixedWidth(w + d->m_ShadowWidth + d->m_Border);
 }
 
+/*!
+ * \~chinese @brief 调整控件的大小
+ * \~chinese - 可以调整的范围介于minimumSize和maxmumSize之间
+ *
+ * @param width 设置宽度
+ * @param height 设置高度
+ */
 void DBorderlessWidget::resize(int width, int height)
 {
     resize(QSize(width, height));
 }
 
+/*!
+ * \~chinese @brief 这是调整大小的重载方法，接收一个QSzie对象
+ *
+ * \~chinese @param size 要调整的大小
+ */
 void DBorderlessWidget::resize(const QSize &size)
 {
     D_D(DBorderlessWidget);
@@ -673,6 +944,10 @@ void DBorderlessWidget::resize(const QSize &size)
     }
 }
 
+/*!
+ * \~chinese @brief 立即调整大小
+ *
+ */
 void DBorderlessWidget::adjustSize()
 {
     D_D(DBorderlessWidget);
@@ -687,90 +962,166 @@ void DBorderlessWidget::adjustSize()
     }
 }
 
+/*!
+ * \~chinese @brief 返回控件当前的大小
+ *
+ * \~chinese @return QSize
+ */
 QSize DBorderlessWidget::size() const
 {
     D_DC(DBorderlessWidget);
     return d->windowWidget->size();
 }
 
-
+/*!
+ * \~chinese @brief 移动控件到某一点
+ *
+ * \~chinese @param x X坐标
+ * \~chinese @param y Y坐标
+ */
 void DBorderlessWidget::move(int x, int y)
 {
     D_D(DBorderlessWidget);
     QWidget::move(x - d->externWidth(), y - d->externWidth());
 }
 
+/*!
+ * \~chinese @brief 这是重载的方法，接收一个坐标对象
+ *
+ * \~chinese @param p 要移动到的坐标
+ */
 void DBorderlessWidget::move(const QPoint &p)
 {
     DBorderlessWidget::move(p.x(), p.y());
 }
 
+/*!
+ * \~chinese @brief 返回当前的几何尺寸，包含阴影
+ *
+ * \~chinese @return QRect 当前的几何大小
+ */
 QRect DBorderlessWidget::frameGeometry() const
 {
     D_DC(DBorderlessWidget);
     return d->windowWidget->frameGeometry();
 }
 
+/*!
+ * \~chinese @brief 返回当前的几何尺寸，不包含阴影的区域
+ *
+ * @return const QRect& 当前的几何大小
+ */
 const QRect &DBorderlessWidget::geometry() const
 {
     D_DC(DBorderlessWidget);
     return d->windowWidget->geometry();
 }
 
+/*!
+ * \~chinese @brief 此方法返回窗口小部件的几何
+ * \~chinese - 对于子窗口和控件， 此方法始终包含空矩形
+ *
+ * @return QRect
+ */
 QRect DBorderlessWidget::normalGeometry() const
 {
     D_DC(DBorderlessWidget);
     return d->windowWidget->normalGeometry();
 }
 
+/*!
+ * \~chinese @brief 返回当前的X坐标
+ *
+ * \~chinese @return int
+ */
 int DBorderlessWidget::x() const
 {
     D_DC(DBorderlessWidget);
     return d->windowWidget->x();
 }
 
+/*!
+ * \~chinese @brief 返回当前的Y坐标
+ *
+ * \~chinese @return int
+ */
 int DBorderlessWidget::y() const
 {
     D_DC(DBorderlessWidget);
     return d->windowWidget->y();
 }
 
+/*!
+ * \~chinese @brief 返回当前的坐标
+ *
+ * \~chinese @return QPoint 相对于父窗口的坐标
+ */
 QPoint DBorderlessWidget::pos() const
 {
     D_DC(DBorderlessWidget);
     return d->windowWidget->pos();
 }
 
+/*!
+ * \~chinese @brief 返回窗口外部框架的大小
+ *
+ * \~chinese @return QSize 框架的大小
+ */
 QSize DBorderlessWidget::frameSize() const
 {
     D_DC(DBorderlessWidget);
     return d->windowWidget->frameSize();
 }
 
+/*!
+ * \~chinese @brief 返回当前的宽度
+ *
+ * \~chinese @return int 当前的宽度
+ */
 int DBorderlessWidget::width() const
 {
     D_DC(DBorderlessWidget);
     return d->windowWidget->width();
 }
 
+/*!
+ * \~chinese @brief 返回当前的高度
+ *
+ * \~chinese @return int 当前的高度
+ */
 int DBorderlessWidget::height() const
 {
     D_DC(DBorderlessWidget);
     return d->windowWidget->height();
 }
 
+/*!
+ * \~chinese @brief 返回当前的大小
+ *
+ * \~chinese @return QRect 当前的大小
+ */
 inline QRect DBorderlessWidget::rect() const
 {
     D_DC(DBorderlessWidget);
     return d->windowWidget->rect();
 }
 
+/*!
+ * \~chinese @brief 返回内部控件的大小
+ *
+ * \~chinese @return QRect 内部控件的大小
+ */
 QRect DBorderlessWidget::childrenRect() const
 {
     D_DC(DBorderlessWidget);
     return d->windowWidget->childrenRect();
 }
 
+/*!
+ * \~chinese @brief 返回内部控件的区域大小
+ *
+ * \~chinese @return QRegion 内部控件的区域大小
+ */
 QRegion DBorderlessWidget::childrenRegion() const
 {
     D_DC(DBorderlessWidget);
