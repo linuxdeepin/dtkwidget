@@ -59,6 +59,13 @@ void DBorderlessWindowPrivate::init()
     }
 }
 
+/*!
+ * \~chinese @class DBorderlessWindow
+ * \~chinese @brief DBorderlessWindow 是DBorderlessWidget的派生类，提供了简化的接口
+ *
+ * \~chinese @param parent
+ */
+
 DBorderlessWindow::DBorderlessWindow(QWidget *parent): DBorderlessWidget(*(new DBorderlessWindowPrivate(this)))
 {
     D_D(DBorderlessWindow);
@@ -68,6 +75,11 @@ DBorderlessWindow::DBorderlessWindow(QWidget *parent): DBorderlessWidget(*(new D
     d->init();
 }
 
+/*!
+ * \~chinese @brief 修改当前的parent
+ *
+ * \~chinese @param parent
+ */
 void DBorderlessWindow::setParent(QWidget *parent)
 {
     D_D(DBorderlessWindow);
@@ -75,17 +87,32 @@ void DBorderlessWindow::setParent(QWidget *parent)
     QObject::setParent(parent);
 }
 
+/*!
+ * \~chinese @brief 获取当前的父窗口对象
+ *
+ * \~chinese @return QWidget* 父窗口对象
+ */
 QWidget *DBorderlessWindow::parentWidget() const
 {
     D_DC(DBorderlessWindow);
     return d->m_parent;
 }
 
+/*!
+ * \~chinese @brief 设置内部的布局
+ *
+ * \~chinese @param l 布局对象
+ */
 void DBorderlessWindow::setContentLayout(QLayout *l)
 {
     DBorderlessWidget::setLayout(l);
 }
 
+/*!
+ * \~chinese @brief 设置内部控件
+ *
+ * \~chinese @param w
+ */
 void DBorderlessWindow::setContentWidget(QWidget *w)
 {
     QHBoxLayout *l = new QHBoxLayout;
