@@ -166,6 +166,49 @@ void DIpv4LineEditPrivate::_q_setIpLineEditText(const QString &text)
     }
 }
 
+/*!
+ * \~chinese \class DIpv4LineEdit
+ * \~chinese \brief 类DIpv4LineEdit是专门用于输入ipv4格式文本的编辑框。
+ *
+ * \~chinese 此类内部由四个 \l QLineEdit 组合而成，输入框之间可以通过Tab/Shift+Tab快捷切
+ * \~chinese 换光标，输入字符"."时会自动跳到下一个输入框。在使用左右方向键移动光标时会自动跨
+ * \~chinese 越输入框，和在同一个输入框内光标的没有区别。和 \l QLineEdit 一样也可以使用快捷
+ * \~chinese 键方便的复制粘贴文本，在粘贴时会自动根据ipv4的规则过滤掉非法字符。每个输入框的文
+ * \~chinese 本内容必须要满足以下的正则规则：
+ * \code{.unparsed}
+ * ^(2[0-4]\d|25[0-5]|[01]?\d\d?)?$
+ * \endcode
+ * \~chinese \warning 不能使用DLineEdit和QLineEdit中的功能性函数
+ */
+
+/*!
+  * \~chinese \property DIpv4LineEdit::selectedText
+  * \~chinese \brief 选中的文本内容
+  * \~chinese \note 只读
+  * \~chinese \sa QLineEdit::selectedText
+  */
+
+/*!
+  * \~chinese \property DIpv4LineEdit::placeholderText
+  * \~chinese \brief 输入框未输入内容时的占位文本，通常显示为灰色，当输入任意字符后就会被隐藏
+  * \~chinese \note 只读。默认为空字符串
+  * \~chinese \sa QLineEdit::placeholderText
+  */
+
+/*!
+  * \~chinese \property DIpv4LineEdit::clearButtonEnabled
+  * \~chinese \brief 是否在输入框上显示清理按钮
+  * \~chinese \note 只读。默认为 false
+  * \~chinese \sa QLineEdit::clearButtonEnabled
+  */
+
+/*!
+ * \~chinese \brief 构造DIpv4LineEdit类，和普通 \l QWidget 一样，可以传入一个QWidget指
+ * \~chinese 针对象作为其父对象
+ * \~chinese \note 会调用 DThemeManager::registerWidget 注册为受 DThemeManager
+ * \~chinese 管理的控件
+ * \~chinese \param parent
+ */
 DIpv4LineEdit::DIpv4LineEdit(QWidget *parent) :
     DLineEdit(*new DIpv4LineEditPrivate(this), parent)
 {
@@ -174,11 +217,35 @@ DIpv4LineEdit::DIpv4LineEdit(QWidget *parent) :
     d_func()->init();
 }
 
+/*!
+ * \~chinese \property DIpv4LineEdit::displayText
+ * \~chinese \brief 输入框显示的文本内容
+ * \~chinese
+ * \~chinese 和 QLineEdit::displayText 不同，无论 \l echoMode 值为多少，都返回和 \l text 同样的内容
+ * \~chinese
+ * \~chinese \note 可读可写
+ * \~chinese \sa QLineEdit::echoMode QLineEdit::text
+ */
+
+/*!
+ * \~chinese \return
+ */
 QString DIpv4LineEdit::displayText() const
 {
     return text();
 }
 
+/*!
+ * \~chinese \property DIpv4LineEdit::cursorPosition
+ * \~chinese \brief 当前光标所在位置
+ * \~chinese
+ * \~chinese \note 可读可写
+ * \~chinese \sa QLineEdit::cursorPosition
+ */
+
+/*!
+ * \~chinese \return
+ */
 int DIpv4LineEdit::cursorPosition() const
 {
     D_DC(DIpv4LineEdit);
@@ -197,11 +264,33 @@ int DIpv4LineEdit::cursorPosition() const
     return cursorPosition;
 }
 
+/*!
+ * \~chinese \property DIpv4LineEdit::alignment
+ * \~chinese \brief 文本内容对齐方式
+ * \~chinese
+ * \~chinese 固定为 \l Qt::AlignHCenter
+ * \~chinese
+ * \~chinese \note 只读
+ * \~chinese \sa QLineEdit::alignment
+ */
+
+/*!
+ * \~chinese \return
+ */
 Qt::Alignment DIpv4LineEdit::alignment() const
 {
     return Qt::AlignHCenter;
 }
 
+/*!
+ * \~chinese \property DIpv4LineEdit::acceptableInput
+ * \~chinese \note 只读
+ * \~chinese \sa QLineEdit::acceptableInput
+ */
+
+/*!
+ * \~chinese \return
+ */
 bool DIpv4LineEdit::hasAcceptableInput() const
 {
     D_DC(DIpv4LineEdit);
@@ -215,11 +304,24 @@ bool DIpv4LineEdit::hasAcceptableInput() const
     return has;
 }
 
+/*!
+ * \~chinese \property DIpv4LineEdit::readOnly
+ * \~chinese \note 可读可写
+ * \~chinese \sa QLineEdit::readOnly
+ */
+
+/*!
+ * \~chinese \return
+ */
 bool DIpv4LineEdit::isReadOnly() const
 {
     return d_func()->editList.first()->isReadOnly();
 }
 
+/*!
+ * \~chinese \param cursorPosition
+ * \~chinese \sa cursorPosition
+ */
 void DIpv4LineEdit::setCursorPosition(int cursorPosition)
 {
     DLineEdit::setCursorPosition(cursorPosition);
@@ -239,6 +341,10 @@ void DIpv4LineEdit::setCursorPosition(int cursorPosition)
     }
 }
 
+/*!
+ * \~chinese \param readOnly
+ * \~chinese \sa readOnly
+ */
 void DIpv4LineEdit::setReadOnly(bool readOnly)
 {
     D_D(DIpv4LineEdit);
@@ -248,6 +354,12 @@ void DIpv4LineEdit::setReadOnly(bool readOnly)
     }
 }
 
+/*!
+ * \~chinese \brief 使用此方法选中文本时会把四个输入框当做一个看待
+ * \~chinese \param start
+ * \~chinese \param length
+ * \~chinese \sa QLineEdit::setSelection
+ */
 void DIpv4LineEdit::setSelection(int start, int length)
 {
     D_D(DIpv4LineEdit);
@@ -274,6 +386,10 @@ void DIpv4LineEdit::setSelection(int start, int length)
     DLineEdit::setSelection(start, length);
 }
 
+/*!
+ * \~chinese \brief 选中所有输入框的全部内容
+ * \~chinese \sa QLineEdit::selectAll
+ */
 void DIpv4LineEdit::selectAll()
 {
     D_D(DIpv4LineEdit);
