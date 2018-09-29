@@ -308,10 +308,10 @@ bool DApplicationPrivate::isUserManualExists()
  * \~chinese \class DApplication
  *
  * \~chinese \brief DApplication 是 DTK 中用于替换 QCoreApplication 相关功能实现的类。
- * \~chinese 继承自 QApplication，并在此之上添加了一些特殊的设定，如：
+ * \~chinese 继承自 QApplication ，并在此之上添加了一些特殊的设定，如：
  * \~chinese - 在 FORCE_RASTER_WIDGETS 宏生效的情况下，默认设置 Qt::AA_ForceRasterWidgets 以减少 glx 相关库的加载，减少程序启动时间；
  * \~chinese - 自动根据 applicationName 和 系统 locale 加载对应的翻译文件；
- * \~chinese - 会根据系统gsettings中 com.deepin.dde.dapplication 的 qpixmapCacheLimit 值来设置 QPixmapCache::cacheLimit；
+ * \~chinese - 会根据系统gsettings中 com.deepin.dde.dapplication 的 qpixmapCacheLimit 值来设置 QPixmapCache::cacheLimit ；
  * \~chinese - 方便地通过 setSingleInstance 来实现程序的单实例。
  *
  * \~chinese \sa loadTranslator, setSingleInstance.
