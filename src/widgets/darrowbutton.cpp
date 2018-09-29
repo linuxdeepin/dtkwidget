@@ -50,6 +50,30 @@ int ArrowButtonIcon::buttonState() const
     return m_buttonState;
 }
 
+/*!
+    \~chinese \class DArrowButton
+    \~chinese \brief 可以使用 DArrowButton 类快速创建箭头形状的按钮。
+
+    \~chinese DArrowButton 提供了快速的方式创建包含箭头标识的按钮，并允许通过 setArrowDirection() 设置箭头方向来直接改按钮的箭头图标的方向。
+    此外，还可以通过 \ref arrowButtonDirection 和 \ref arrowButtonState 属性获取和修改箭头按钮的状态。
+
+    \~chinese \sa QLabel
+*/
+
+/*!
+    \~english \class DArrowButton
+    \~english \brief DArrowButton allowed you create button with arrow icon conveniently.
+
+    \~english You can use DArrowButton to create button with arrow icon, and it also allowed you update the arrow direction by
+    calling setArrowDirection() . You can also update arrow state via arrowButtonDirection and arrowButtonState property.
+
+    \~english \sa QLabel
+*/
+
+/*!
+ * \~english \brief Construct a new DArrowButton with DArrowButton::ArrowDown direction
+ * \~chinese \brief 构造一个 DArrowButton 箭头按钮，默认箭头方向向下
+ */
 DArrowButton::DArrowButton(QWidget *parent)
     : QLabel(parent)
 {
@@ -77,23 +101,39 @@ DArrowButton::DArrowButton(QWidget *parent)
     setArrowDirection(DArrowButton::ArrowDown);
 }
 
+/*!
+ * \~english \brief Set arrow direction of the button
+ * \~chinese \brief 设置按钮的箭头方向
+ */
 void DArrowButton::setArrowDirection(ArrowDirection direction)
 {
     m_arrowDirection = direction;
     updateIconDirection(direction);
 }
 
+/*!
+ * \~english \brief Get the arrow direction of the button.
+ * \~chinese \brief 获取箭头方向
+ */
 int DArrowButton::arrowDirection() const
 {
     return m_arrowDirection;
 }
 
+/*!
+ * \~english \brief Set the button state.
+ * \~chinese \brief 设置按钮状态
+ */
 void DArrowButton::setButtonState(ArrowButtonState state)
 {
     m_buttonState = state;
     updateIconState(state);
 }
 
+/*!
+ * \~english \brief Get the button state
+ * \~chinese \brief 获得按钮状态
+ */
 int DArrowButton::buttonState() const
 {
     return m_buttonState;
@@ -123,11 +163,13 @@ void DArrowButton::mouseReleaseEvent(QMouseEvent *event)
     setButtonState(DArrowButton::ArrowStateNormal);
 }
 
+/* \reimp */
 void DArrowButton::enterEvent(QEvent *)
 {
     Q_EMIT mouseEnter();
 }
 
+/* \reimp */
 void DArrowButton::leaveEvent(QEvent *)
 {
     Q_EMIT mouseLeave();
@@ -167,6 +209,52 @@ void DArrowButton::initButtonState()
 //    machine->start();
 }
 
+/*!
+ * \enum DArrowButton::ArrowDirection
+ *
+ * \~english \brief The ArrowDirection enum indicate the direction of the arrow icon in the arrown button
+ * \~chinese \brief DArrowButton::ArrowDirection 表示箭头图标的方向。
+ *
+ * \var DArrowButton::ArrowDirection DArrowButton::ArrowUp
+ * \~english Up direction
+ * \~chinese 箭头朝上
+ *
+ * \var DArrowButton::ArrowDirection DArrowButton::ArrowDown
+ * \~english Down direction
+ * \~chinese 箭头朝下
+ *
+ * \var DArrowButton::ArrowDirection DArrowButton::ArrowLeft
+ * \~english Left direction
+ * \~chinese 箭头朝左
+ *
+ * \var DArrowButton::ArrowDirection DArrowButton::ArrowRight
+ * \~english Right direction
+ * \~chinese 箭头朝右
+ */
+
+/*!
+ * \enum DArrowButton::ArrowButtonState
+ *
+ * \~english \brief The ArrowDirection enum indicate the direction of the arrow icon in the arrown button
+ * \~chinese \brief DArrowButton::ArrowDirection 表示箭头图标的方向。
+ *
+ * \var DArrowButton::ArrowButtonState DArrowButton::ArrowStateNormal
+ * \~english Normal state
+ * \~chinese 普通状态
+ *
+ * \var DArrowButton::ArrowButtonState DArrowButton::ArrowStateHover
+ * \~english Mouse hover state
+ * \~chinese 鼠标在按钮上方悬停状态
+ *
+ * \var DArrowButton::ArrowButtonState DArrowButton::ArrowStatePress
+ * \~english Button got pressed state
+ * \~chinese 按钮被按下状态
+ */
+
+/*!
+ * \~english \brief Update arrow direction of the button
+ * \~chinese \brief 更新箭头按钮中箭头的方向
+ */
 void DArrowButton::updateIconDirection(ArrowDirection direction)
 {
     m_normalLabel->setArrowDirection(direction);
@@ -174,6 +262,10 @@ void DArrowButton::updateIconDirection(ArrowDirection direction)
     m_pressLabel->setArrowDirection(direction);
 }
 
+/*!
+ * \~english \brief Update icon state of the button
+ * \~chinese \brief 更新箭头按钮中图标的状态
+ */
 void DArrowButton::updateIconState(ArrowButtonState state)
 {
     m_normalLabel->setButtonState(state);
