@@ -27,8 +27,8 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
-    \class DBoxWidget
-    \brief The DBoxWidget widget provides a Adaptive child widget size
+    \~english \class DBoxWidget
+    \~english \brief The DBoxWidget widget provides a Adaptive child widget size
     when child widget size changed.
 */
 
@@ -51,22 +51,39 @@ void DBoxWidgetPrivate::init()
 }
 
 /*!
- * \class DBoxWidget
- * \brief The DBoxWidget class provides widget born with QBoxLayout set.
+ * \~english \class DBoxWidget
+ * \~english \brief The DBoxWidget class provides widget born with QBoxLayout set.
  *
- * Since an widget with QBoxLayout set is very common use case in Qt programming,
- * yet very tedious, DBoxWidget is built to ease that pain.
+ * \~english Since an widget with QBoxLayout set is very common use case in Qt
+ * \~english programming, yet very tedious, DBoxWidget is built to ease that pain.
  *
- * Also, DBoxWidget will calculate the size it needs automatically, so you don't
- * need to set width for DHBoxWidget or height for DVBoxLayout.
+ * \~english Also, DBoxWidget will calculate the size it needs automatically, so you don't
+ * \~english need to set width for DHBoxWidget or height for DVBoxLayout.
  *
- * \see DHBoxWidget and DVBoxWidget
+ * \~english \see DHBoxWidget and DVBoxWidget
  */
 
 /*!
- * \brief DBoxWidget::DBoxWidget constructs an instance of DBoxWidget.
- * \param direction is the direction used by the internal QBoxLayout.
- * \param parent is passed to QFrame constructor.
+ * \~chinese \class DBoxWidget
+ * \~chinese \brief DBoxWidget提供了一个自适应子控件大小的Widget.
+ *
+ * \~chinese 在Qt编程中，使用QBoxLayout设置控件是很常见的，但是是非常令人乏味的.
+ * \~chinese DBoxWidget是为了减轻这一痛苦而构建的.
+ *
+ * \~chinese DBoxWidget会自动计算它所需要的大小，所以你不需要为DBoxWidget设置宽或高.
+ */
+
+/*!
+ * \~english \brief DBoxWidget::DBoxWidget constructs an instance of DBoxWidget.
+ * \~english \param direction is the direction used by the internal QBoxLayout.
+ * \~english \param parent is passed to QFrame constructor.
+ */
+
+/*!
+ * \~chinese \brief DBoxWidget的构造函数
+ *
+ * \~chinese \param direction 是设置内部QBoxLayout使用的方向
+ * \~chinese \param parent 传递给QFrame的构造函数
  */
 DBoxWidget::DBoxWidget(QBoxLayout::Direction direction, QWidget *parent):
     QFrame(parent),
@@ -79,8 +96,14 @@ DBoxWidget::DBoxWidget(QBoxLayout::Direction direction, QWidget *parent):
 }
 
 /*!
- * \property DBoxWidget::direction
- * \brief This property holds the direction of the internal QBoxLayout.
+ * \~english \property DBoxWidget::direction
+ * \~english \brief This property holds the direction of the internal QBoxLayout.
+ */
+
+/*!
+ * \~chinese \property DBoxWidget::direction
+ * \~chinese 这个属性返回当前QBoxLayout使用的方向
+ * \return QBoxLayout::Direction 当前的方向
  */
 QBoxLayout::Direction DBoxWidget::direction() const
 {
@@ -90,11 +113,17 @@ QBoxLayout::Direction DBoxWidget::direction() const
 }
 
 /*!
- * \property DBoxWidget::layout
- * \brief This property holds the internal layout object.
+ * \~english \property DBoxWidget::layout
+ * \~english \brief This property holds the internal layout object.
  *
  * This property can be used to get the internal layout, so you can set
  * some extra properties on the layout to match the custom needs.
+ */
+
+/*!
+ * \~chinese \property DBoxWidget::layout
+ * \~chinese \brief 这个属性会返回当前使用的布局对象
+ * \return QBoxLayout*
  */
 QBoxLayout *DBoxWidget::layout() const
 {
@@ -104,14 +133,25 @@ QBoxLayout *DBoxWidget::layout() const
 }
 
 /*!
- * \brief DBoxWidget::addWidget adds widget to the internal layout.
- * \param widget is the widget to be added.
+ * \~english \brief DBoxWidget::addWidget adds widget to the internal layout.
+ * \~english \param widget is the widget to be added.
+ */
+
+/*!
+ * \~chinese \brief 添加控件到布局中
+ *
+ * \param widget 要添加的QWidget对象
  */
 void DBoxWidget::addWidget(QWidget *widget)
 {
     layout()->addWidget(widget);
 }
 
+/*!
+ * \~chinese \brief 设置QBoxLayout当前的方向
+ *
+ * \param direction
+ */
 void DBoxWidget::setDirection(QBoxLayout::Direction direction)
 {
     Q_D(DBoxWidget);
@@ -123,6 +163,11 @@ void DBoxWidget::setDirection(QBoxLayout::Direction direction)
     Q_EMIT directionChanged(direction);
 }
 
+/*!
+ * \~chinese \brief 强制更新大小
+ *
+ * \param size
+ */
 void DBoxWidget::updateSize(const QSize &size)
 {
     if(direction() == QBoxLayout::TopToBottom || QBoxLayout::BottomToTop) {
@@ -138,6 +183,7 @@ void DBoxWidget::updateSize(const QSize &size)
     }
 }
 
+/*!\reimp */
 bool DBoxWidget::event(QEvent *ee)
 {
     Q_D(const DBoxWidget);
@@ -161,9 +207,11 @@ bool DBoxWidget::event(QEvent *ee)
 }
 
 /*!
- * \brief DBoxWidget::sizeHint reimplemented from QWidget::sizeHint().
- * \return the recommended size of this widget.
+ * \~english \brief DBoxWidget::sizeHint reimplemented from QWidget::sizeHint().
+ * \~english \return the recommended size of this widget.
  */
+
+/*!\reimp */
 QSize DBoxWidget::sizeHint() const
 {
     Q_D(const DBoxWidget);
@@ -172,14 +220,25 @@ QSize DBoxWidget::sizeHint() const
 }
 
 /*!
- * \class DHBoxWidget
- * \brief The DHBoxWidget class is DBoxWidget with DBoxWidget::direction set to
+ * \~english \class DHBoxWidget
+ * \~english \brief The DHBoxWidget class is DBoxWidget with DBoxWidget::direction set to
  *  QBoxLayout::LeftToRight.
  */
 
 /*!
- * \brief DHBoxWidget::DHBoxWidget constructs an instance of DHBoxWidget.
- * \param parent is passed to DBoxWidget constructor.
+ * \~english \brief DHBoxWidget::DHBoxWidget constructs an instance of DHBoxWidget.
+ * \~english \param parent is passed to DBoxWidget constructor.
+ */
+
+/*!
+ * \~chinese \class DHBoxWidget
+ * \~chinese \brief 是设置成水平方向的DBoxWidget
+ */
+
+/*!
+ * \~chinese \brief DHBoxWidget的构造函数
+ *
+ * \param parent
  */
 DHBoxWidget::DHBoxWidget(QWidget *parent):
     DBoxWidget(QBoxLayout::LeftToRight, parent)
@@ -188,14 +247,25 @@ DHBoxWidget::DHBoxWidget(QWidget *parent):
 }
 
 /*!
- * \class DVBoxWidget
- * \brief The DVBoxWidget class is DBoxWidget with DBoxWidget::direction set to
+ * \~english \class DVBoxWidget
+ * \~english \brief The DVBoxWidget class is DBoxWidget with DBoxWidget::direction set to
  *  QBoxLayout::TopToBottom.
  */
 
 /*!
- * \brief DVBoxWidget::DVBoxWidget constructs an instance of DVBoxWidget.
- * \param parent is passed to DBoxWidget constructor.
+ * \~english \brief DVBoxWidget::DVBoxWidget constructs an instance of DVBoxWidget.
+ * \~english \param parent is passed to DBoxWidget constructor.
+ */
+
+/*!
+ * \~chinese \class DVoxWidget
+ * \~chinese \brief 是设置成垂直方向的DBoxWidget
+ */
+
+/*!
+ * \~chinese \brief DVBoxWidget的构造函数
+ *
+ * \param parent
  */
 DVBoxWidget::DVBoxWidget(QWidget *parent):
     DBoxWidget(QBoxLayout::TopToBottom, parent)
