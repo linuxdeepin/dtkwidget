@@ -70,15 +70,12 @@ public:
     const QString getCheckedPic() const;
     const QString getDisabledPic() const;
 
-    /*!
-     * \brief The State enum contains the four possible states of DImageButton.
-     */
     enum State {
-        Normal, /*!< normal state */
-        Hover, /*!< hover state */
-        Press, /*!< pressed state */
-        Checked,/*!< checked state */
-        Disabled /*!< disabled state */
+        Normal,
+        Hover,
+        Press,
+        Checked,
+        Disabled
     };
 
     void setState(State state);
