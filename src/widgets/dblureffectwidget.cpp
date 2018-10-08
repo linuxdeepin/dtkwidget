@@ -466,6 +466,8 @@ void DBlurEffectWidget::setMaskAlpha(quint8 alpha) {
 
     d->setMaskAlpha(alpha);
 
+    update();
+
     Q_EMIT maskAlphaChanged(alpha);
 }
 
