@@ -1,7 +1,7 @@
 {
         "commit": {
                 "quilt": false,
-                "pkgver": "$PWD/debian/makeVersion",
+                "pkgver": "./debian/makeVersion",
                 "dist": "experimental"
         },
         "release": {
