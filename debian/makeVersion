@@ -1,0 +1,5 @@
+#!/bin/bash
+
+lastTag=$(git describe --tags `git rev-list --tags --max-count=1`)
+version=${lastTag}"+r"$(date "+%y%m%d%H%M%S")"+"$(git rev-parse --short HEAD)
+echo $version
