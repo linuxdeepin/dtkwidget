@@ -1,7 +1,7 @@
 {
         "commit": {
                 "quilt": false,
-                "pkgver": "./debian/makeVersion",
+                "pkgver": "echo $(git tag | tail -n1)'+r'$(date '+%%y%%m%%d%%H%%M%%S')'+g'$(git rev-parse --short HEAD);",
                 "dist": "experimental"
         },
         "release": {
