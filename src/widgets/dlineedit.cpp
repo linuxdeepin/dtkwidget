@@ -35,20 +35,33 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
- * \class DLineEdit
- * \brief The DLineEdit class provides a styled QLineEdit.
+ * \~english \class DLineEdit
+ * \~english \brief The DLineEdit class provides a styled QLineEdit.
  *
- * DLineEdit has an optional action button (DImageButton) at the right side which can be used
- * to provide extra user interaction, for example: to change the echo mode of
+ * \~english DLineEdit has an optional action button (DImageButton) at the right side which can be used
+ * \~english to provide extra user interaction, for example: to change the echo mode of
  * the line edit.
  *
- * Also, DLineEdit can be set on or off alert mode, warning the user of some
+ * \~english Also, DLineEdit can be set on or off alert mode, warning the user of some
  * errors.
  */
 
 /*!
- * \brief DLineEdit::DLineEdit constructs an instance of DLineEdit.
- * \param parent is passed to QLineEdit constructor.
+ * \~english \brief DLineEdit::DLineEdit constructs an instance of DLineEdit.
+ * \~english \param parent is passed to QLineEdit constructor.
+ */
+
+/*!
+ * \~chinese \class DLineEdit
+ * \~chinese \brief DLineEdit提供了一个修改过的QLineEdit样式
+ *
+ * \~chinese DLineEdit右侧提供了可选的动作按钮，可以使用额外的用户交互，例如: 改变密码显示
+ */
+
+/*!
+ * \~chinese \brief DLineEdit的构造函数
+ *
+ * \~chinese \param parent 调用QLineEdit的构造函数
  */
 DLineEdit::DLineEdit(QWidget *parent)
     : QLineEdit(parent),
@@ -66,6 +79,11 @@ DLineEdit::DLineEdit(DLineEditPrivate &q, QWidget *parent)
     d->init();
 }
 
+/*!
+ * \~chinese \brief 设置是否显示警告
+ *
+ * \~chinese @param isAlert 是否显示警告
+ */
 void DLineEdit::setAlert(bool isAlert)
 {
     Q_D(DLineEdit);
@@ -75,18 +93,33 @@ void DLineEdit::setAlert(bool isAlert)
     }
 
     d->m_isAlert = isAlert;
-    
+
     update();
 
     Q_EMIT alertChanged(isAlert);
 }
 
 /*!
- * \property DLineEdit::alert
- * \brief This property shows whether the line edit is in alert mode or not.
+ * \~english\property DLineEdit::alert
+ * \~english \brief This property shows whether the line edit is in alert mode or not.
  *
  * There'll be a extra frame colored in orage like color showing if the alert
  * mode is on, to remind the user that the input is wrong.
+ */
+
+/*!
+ * \~chinese \property DLineEdit::alert
+ * \~chinese \brief 该属性会返回当前是否处于警告模式
+ *
+ * 将会有一个警告的颜色在额外的边框上显示，如果警告模式开启，将会提示用户输入错误
+ */
+
+/*!
+ * \~chinese \brief 返回当前是否处于警告模式
+ *
+ * 将会有一个警告的颜色在额外的边框上显示，如果警告模式开启，将会提示用户输入错误
+ * @return true
+ * @return false
  */
 bool DLineEdit::isAlert() const
 {
@@ -95,6 +128,12 @@ bool DLineEdit::isAlert() const
     return d->m_isAlert;
 }
 
+/*!
+ * \~chinese \brief 设置的文本会在警告模式下显示
+ *
+ * @param text 警告的文本
+ * @param duration 显示的时间长度
+ */
 void DLineEdit::showAlertMessage(const QString &text, int duration)
 {
     D_D(DLineEdit);
@@ -132,6 +171,10 @@ void DLineEdit::showAlertMessage(const QString &text, int duration)
     d->tooltip->show(pos.x(), pos.y());
 }
 
+/*!
+ * \~chinese \brief 隐藏警告的消息框
+ *
+ */
 void DLineEdit:: hideAlertMessage()
 {
     Q_D(DLineEdit);
@@ -141,6 +184,11 @@ void DLineEdit:: hideAlertMessage()
     }
 }
 
+/*!
+ * \~chinese \brief 设置图标是否可见
+ *
+ * @param visible
+ */
 void DLineEdit::setIconVisible(bool visible)
 {
     Q_D(DLineEdit);
@@ -170,8 +218,13 @@ void DLineEdit::setIconVisible(bool visible)
 }
 
 /*!
- * \property DLineEdit::iconVisible
- * \brief This property holds whether the action button can be seen.
+ * \~english \property DLineEdit::iconVisible
+ * \~english \brief This property holds whether the action button can be seen.
+ */
+
+/*!
+ * \~chinese \property DLineEdit::iconVisible
+ * \~chinese 这个属性将会决定动作按钮的图标是否可见
  */
 bool DLineEdit::iconVisible() const
 {
@@ -181,8 +234,13 @@ bool DLineEdit::iconVisible() const
 }
 
 /*!
- * \property DLineEdit::normalIcon
- * \brief This property holds the image used as the normal state of the action button.
+ * \~english \property DLineEdit::normalIcon
+ * \~english \brief This property holds the image used as the normal state of the action button.
+ */
+
+/*!
+ * \~chinese \property DLineEdit::normalIcon
+ * \~chinese 该属性返回normal状态的图标
  */
 QString DLineEdit::normalIcon() const
 {
@@ -191,6 +249,11 @@ QString DLineEdit::normalIcon() const
     return d->m_rightIcon->getNormalPic();
 }
 
+/*!
+ * \~chinese \brief 设置normal状态的图标
+ *
+ * @param normalIcon
+ */
 void DLineEdit::setNormalIcon(const QString &normalIcon)
 {
     Q_D(DLineEdit);
@@ -199,8 +262,13 @@ void DLineEdit::setNormalIcon(const QString &normalIcon)
 }
 
 /*!
- * \property DLineEdit::hoverIcon
- * \brief This property holds the image used as the hover state of the action button.
+ * \~english \property DLineEdit::hoverIcon
+ * \~english \brief This property holds the image used as the hover state of the action button.
+ */
+
+/*!
+ * \~chinese \property DLineEdit::hoverIcon
+ * \~chinese 该属性返回鼠标在动作按钮上时，按钮的图标
  */
 QString DLineEdit::hoverIcon() const
 {
@@ -209,6 +277,11 @@ QString DLineEdit::hoverIcon() const
     return d->m_rightIcon->getHoverPic();
 }
 
+/*!
+ * \~chinese \brief 设置鼠标在动作按钮上时，按钮的图标
+ *
+ * @param hoverIcon 鼠标在动作按钮上时，按钮的图标的路径
+ */
 void DLineEdit::setHoverIcon(const QString &hoverIcon)
 {
     Q_D(DLineEdit);
@@ -217,8 +290,13 @@ void DLineEdit::setHoverIcon(const QString &hoverIcon)
 }
 
 /*!
- * \property DLineEdit::pressIcon
- * \brief This property holds the image used as the pressed state of the action button.
+ * \~english \property DLineEdit::pressIcon
+ * \~english \brief This property holds the image used as the pressed state of the action button.
+ */
+
+/*!
+ * \~chinese \property DLineEdit::pressIcon
+ * \~chinese 该属性返回鼠标按下时动作按钮的图标
  */
 QString DLineEdit::pressIcon() const
 {
@@ -227,6 +305,11 @@ QString DLineEdit::pressIcon() const
     return d->m_rightIcon->getPressPic();
 }
 
+/*!
+ * \~chinese \brief 设置鼠标按下时动作按钮的图标
+ *
+ * @param pressIcon 鼠标按下时动作按钮的图标路径
+ */
 void DLineEdit::setPressIcon(const QString &pressIcon)
 {
     Q_D(DLineEdit);
