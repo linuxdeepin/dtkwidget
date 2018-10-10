@@ -19,12 +19,22 @@
 
 DWIDGET_USE_NAMESPACE
 
+
+/*!
+ * \class DGraphicsGlowEffect
+ * \brief DGraphicsGlowEffect draw a glow effect of widget, It's the default border effect of deepin windows.
+ */
+
+/*!
+ * \brief DGraphicsGlowEffect::DGraphicsGlowEffect Constructs a new DGraphicsGlowEffect instance having the specified parent.
+ * \param parent
+ */
 DGraphicsGlowEffect::DGraphicsGlowEffect(QObject *parent) :
     QGraphicsEffect(parent),
     m_xOffset(0),
     m_yOffset(0),
-    m_distance(4.0f),
-    m_blurRadius(10.0f),
+    m_distance(4.0),
+    m_blurRadius(10.0),
     m_color(0, 0, 0, 80)
 {
 }
@@ -33,6 +43,10 @@ QT_BEGIN_NAMESPACE
 extern Q_WIDGETS_EXPORT void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, bool quality, bool alphaOnly, int transposed = 0);
 QT_END_NAMESPACE
 
+/*!
+ * \brief DGraphicsGlowEffect::draw set a blur effect image to painter.
+ * \param painter
+ */
 void DGraphicsGlowEffect::draw(QPainter *painter)
 {
     // if nothing to show outside the item, just draw source
@@ -58,7 +72,8 @@ void DGraphicsGlowEffect::draw(QPainter *painter)
     painter->setWorldTransform(QTransform());
 
     // Calculate size for the background image
-    QSize scaleSize(sourcePx.size().width() + 2 * distance(), sourcePx.size().height() + 2 * distance());
+    QSize scaleSize(sourcePx.size().width() + 2 * distance(),
+                    sourcePx.size().height() + 2 * distance());
 
     QImage tmpImg(scaleSize, QImage::Format_ARGB32_Premultiplied);
     QPixmap scaled = sourcePx.scaled(scaleSize);
@@ -94,6 +109,11 @@ void DGraphicsGlowEffect::draw(QPainter *painter)
     painter->setOpacity(restoreOpacity);
 }
 
+/*!
+ * \brief DGraphicsGlowEffect::boundingRectFor calc the effective bounding rectangle
+ * \param rect is the widget rectangle
+ * \return Effective bounding rectangle
+ */
 QRectF DGraphicsGlowEffect::boundingRectFor(const QRectF &rect) const
 {
     qreal delta = blurRadius() + distance();

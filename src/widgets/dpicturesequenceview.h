@@ -37,9 +37,9 @@ class LIBDTKWIDGETSHARED_EXPORT DPictureSequenceView : public QGraphicsView, pub
 public:
     DPictureSequenceView(QWidget *parent = nullptr);
 
-    void setPictureSequence(const QString &src, const QPair<int, int> &range, const int fieldWidth = 0, const bool auto_scale = false);
-    void setPictureSequence(const QStringList &sequence, const bool auto_scale = false);
-    void setPictureSequence(const QList<QPixmap> &sequence, const bool auto_scale = false);
+    void setPictureSequence(const QString &srcFormat, const QPair<int, int> &range, const int fieldWidth = 0, const bool autoScale = false);
+    void setPictureSequence(const QStringList &sequence, const bool autoScale = false);
+    void setPictureSequence(const QList<QPixmap> &sequence, const bool autoScale = false);
     void play();
     void pause();
     void stop();

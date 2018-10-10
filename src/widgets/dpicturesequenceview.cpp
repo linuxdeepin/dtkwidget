@@ -111,6 +111,25 @@ void DPictureSequenceViewPrivate::_q_refreshPicture()
         item->show();
 }
 
+/*!
+ * \class DPictureSequenceView
+ * \brief DPictureSequenceView draw a serial of picture as movie. It trigger picture update by an timer.
+ */
+
+/*!
+ * \property DPictureSequenceView::singleShot
+ * \brief Animation is just refresh one time.
+ */
+
+/*!
+ * \property DPictureSequenceView::speed
+ * \brief Update interval of refresh timer by ms.
+ */
+
+/*!
+ * \brief DPictureSequenceView::DPictureSequenceView Constructs a new DPictureSequenceView instance having the specified parent.
+ * \param parent
+ */
 DPictureSequenceView::DPictureSequenceView(QWidget *parent) :
     QGraphicsView(parent),
     DObject(*new DPictureSequenceViewPrivate(this))
@@ -120,17 +139,29 @@ DPictureSequenceView::DPictureSequenceView(QWidget *parent) :
     d->init();
 }
 
-void DPictureSequenceView::setPictureSequence(const QString &src, const QPair<int, int> &range, const int fieldWidth, const bool auto_scale)
+/*!
+ * \brief DPictureSequenceView::setPictureSequence set picture source list by a uri template an range.
+ * \param srcFormat is the source uri template, just like ":/images/Spinner/Spinner%1.png".
+ * \param range for build source uris, it make an sequence of number.
+ * \param fieldWidth string width when convert number to string, fill "0" if needed.
+ * \param autoScale auto resize source image to widget size, default to false.
+ */
+void DPictureSequenceView::setPictureSequence(const QString &srcFormat, const QPair<int, int> &range, const int fieldWidth, const bool autoScale)
 {
     QStringList pics;
 
     for (int i(range.first); i != range.second; ++i)
-        pics << src.arg(i, fieldWidth, 10, QChar('0'));
+        pics << srcFormat.arg(i, fieldWidth, 10, QChar('0'));
 
-    setPictureSequence(pics, auto_scale);
+    setPictureSequence(pics, autoScale);
 }
 
-void DPictureSequenceView::setPictureSequence(const QStringList &sequence, const bool auto_scale)
+/*!
+ * \brief DPictureSequenceView::setPictureSequence set picture source list by a QStringList.
+ * \param sequence url list
+ * \param autoScale auto resize source image to widget size, default to false.
+ */
+void DPictureSequenceView::setPictureSequence(const QStringList &sequence, const bool autoScale)
 {
     D_D(DPictureSequenceView);
 
@@ -139,16 +170,15 @@ void DPictureSequenceView::setPictureSequence(const QStringList &sequence, const
         pixmapSequence << d->loadPixmap(path);
     }
 
-    setPictureSequence(pixmapSequence, auto_scale);
+    setPictureSequence(pixmapSequence, autoScale);
 }
 
-//!
-//! \brief DPictureSequenceView::setPictureSequence accept a list of pixmap as picture sequence,
-//! if set auto scale, the pixmap will scale as view size.
-//! \param sequence
-//! \param auto_scale
-//!
-void DPictureSequenceView::setPictureSequence(const QList<QPixmap> &sequence, const bool auto_scale)
+/*!
+ * \brief DPictureSequenceView::setPictureSequence
+ * \param sequence image data list.
+ * \param autoScale auto resize source image to widget size, default to false.
+ */
+void DPictureSequenceView::setPictureSequence(const QList<QPixmap> &sequence, const bool autoScale)
 {
     D_D(DPictureSequenceView);
 
@@ -157,7 +187,7 @@ void DPictureSequenceView::setPictureSequence(const QList<QPixmap> &sequence, co
     d->pictureItemList.clear();
 
     for (QPixmap pixmap : sequence) {
-        if (auto_scale) {
+        if (autoScale) {
             pixmap = pixmap.scaled(size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
         }
 
@@ -172,6 +202,9 @@ void DPictureSequenceView::setPictureSequence(const QList<QPixmap> &sequence, co
     setStyleSheet("background-color:transparent;");
 }
 
+/*!
+ * \brief DPictureSequenceView::play start/resume update timer and show animation.
+ */
 void DPictureSequenceView::play()
 {
     D_D(DPictureSequenceView);
@@ -179,6 +212,9 @@ void DPictureSequenceView::play()
     d->play();
 }
 
+/*!
+ * \brief DPictureSequenceView::pause pause animation and stay on current picture.
+ */
 void DPictureSequenceView::pause()
 {
     D_D(DPictureSequenceView);
@@ -186,6 +222,9 @@ void DPictureSequenceView::pause()
     d->refreshTimer->stop();
 }
 
+/*!
+ * \brief DPictureSequenceView::stop stop animation and rest to first picture.
+ */
 void DPictureSequenceView::stop()
 {
     D_D(DPictureSequenceView);
