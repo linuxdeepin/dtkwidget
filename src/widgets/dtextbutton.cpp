@@ -18,6 +18,12 @@
 #include "dtextbutton.h"
 #include "dthememanager.h"
 
+/**
+ * \~chinese \class DTextButton
+ * \~chinese \brief 支持deepin主题切换的按钮。
+ *
+ * \~chinese 继承自 QPushButton 仅新增了自动切换deepin主题的功能。
+ */
 DWIDGET_BEGIN_NAMESPACE
 
 DTextButton::DTextButton(const QString & text, QWidget * parent) :
