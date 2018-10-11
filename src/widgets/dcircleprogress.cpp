@@ -75,6 +75,22 @@ void DCircleProgressPrivate::paint(QPainter *painter)
     painter->drawArc(outerCircleRect, 90 * 16, 16 * 360 + splitPos);
 }
 
+/*!
+    \~chinese \class DCircleProgress
+    \~chinese \brief 可以使用 DCircleProgress 类快速创建环形进度条控件。
+
+    \~chinese DCircleProgress 提供了一个可控制颜色并可以包含文字显示的环形进度条控件。可以快速创建底色为 backgroundColor
+    ，进度颜色为 chunkColor 的环形进度条。
+*/
+
+/*!
+    \~english \class DCircleProgress
+    \~english \brief Use DCircleProgress to create a circle progress display widget.
+
+    \~english DCircleProgress provide a circle progress widget with configurable foreground color chunkColor
+    and background color backgroundColor. You can also set text for display status or for other purpose.
+*/
+
 DCircleProgress::DCircleProgress(QWidget *parent)
     : QWidget(parent),
       DObject(*new DCircleProgressPrivate(this))
@@ -82,6 +98,15 @@ DCircleProgress::DCircleProgress(QWidget *parent)
     DThemeManager::registerWidget(this);
 }
 
+/*!
+ * \~english \brief Progress value of the progressbar.
+ * \~chinese \brief 环形进度条的进度值。
+ *
+ * \~english Maximum value is 100, minimum value is 0.
+ * \~chinese 最大值为 100 ，最小值为 0 。
+ *
+ * \sa setValue()
+ */
 int DCircleProgress::value() const
 {
     Q_D(const DCircleProgress);
@@ -89,6 +114,15 @@ int DCircleProgress::value() const
     return d->m_currentValue;
 }
 
+/*!
+ * \~english \brief Set the progress value of the progressbar.
+ * \~chinese \brief 设置环形进度条的进度值。
+ *
+ * \~english Maximum value is 100, minimum value is 0.
+ * \~chinese 最大值为 100 ，最小值为 0 。将根据该值和最大值（100）的比例关系绘制进度。
+ *
+ * \sa value()
+ */
 void DCircleProgress::setValue(int value)
 {
     Q_D(DCircleProgress);
@@ -97,6 +131,10 @@ void DCircleProgress::setValue(int value)
     update();
 }
 
+/*!
+ * \~english \brief Text display near the circle progressbar.
+ * \~chinese \brief 环形进度条旁边的文字。
+ */
 const QString DCircleProgress::text() const
 {
     Q_D(const DCircleProgress);
@@ -104,6 +142,10 @@ const QString DCircleProgress::text() const
     return d->m_topLabel.text();
 }
 
+/*!
+ * \~english \brief Set the text display near the circle progressbar.
+ * \~chinese \brief 设置环形进度条旁边的文字。
+ */
 void DCircleProgress::setText(const QString &text)
 {
     Q_D(DCircleProgress);
@@ -111,6 +153,12 @@ void DCircleProgress::setText(const QString &text)
     return d->m_topLabel.setText(text);
 }
 
+/*!
+ * \~english \brief Background color of the circle progressbar.
+ * \~chinese \brief 环形进度条的背景色。
+ *
+ * \sa setBackgroundColor()
+ */
 const QColor DCircleProgress::backgroundColor() const
 {
     Q_D(const DCircleProgress);
@@ -118,6 +166,12 @@ const QColor DCircleProgress::backgroundColor() const
     return d->m_backgroundColor;
 }
 
+/*!
+ * \~english \brief Set the background color of the circle progressbar.
+ * \~chinese \brief 设置环形进度条的背景色。
+ *
+ * \sa backgroundColor()
+ */
 void DCircleProgress::setBackgroundColor(const QColor &color)
 {
     Q_D(DCircleProgress);
@@ -125,6 +179,12 @@ void DCircleProgress::setBackgroundColor(const QColor &color)
     d->m_backgroundColor = color;
 }
 
+/*!
+ * \~english \brief Foreground color of the progressbar to indicate progress.
+ * \~chinese \brief 环形进度条的前景色，用以标识进度。
+ *
+ * \sa setChunkColor()
+ */
 const QColor DCircleProgress::chunkColor() const
 {
     Q_D(const DCircleProgress);
@@ -132,6 +192,12 @@ const QColor DCircleProgress::chunkColor() const
     return d->m_chunkColor;
 }
 
+/*!
+ * \~english \brief Set the foreground color of the progressbar to indicate progress.
+ * \~chinese \brief 设置用以标识进度环形进度条的前景色。
+ *
+ * \sa chunkColor()
+ */
 void DCircleProgress::setChunkColor(const QColor &color)
 {
     Q_D(DCircleProgress);
@@ -139,6 +205,12 @@ void DCircleProgress::setChunkColor(const QColor &color)
     d->m_chunkColor = color;
 }
 
+/*!
+ * \~english \brief circle line width of the circle progressbar.
+ * \~chinese \brief 环形进度条的环形宽度。
+ *
+ * \sa setLineWidth()
+ */
 int DCircleProgress::lineWidth() const
 {
     Q_D(const DCircleProgress);
@@ -146,6 +218,12 @@ int DCircleProgress::lineWidth() const
     return d->m_lineWidth;
 }
 
+/*!
+ * \~english \brief Set the circle line width of the circle progressbar.
+ * \~chinese \brief 设置环形进度条的环形宽度。
+ *
+ * \sa setLineWidth()
+ */
 void DCircleProgress::setLineWidth(const int width)
 {
     Q_D(DCircleProgress);
