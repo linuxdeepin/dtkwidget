@@ -27,8 +27,72 @@
 #include <QResizeEvent>
 #include <QTimer>
 
-DWIDGET_USE_NAMESPACE
+DWIDGET_BEGIN_NAMESPACE
 
+/*!
+ * \~chinese \class DSearchEdit
+ * \~chinese \brief DSearchEdit 类提供了专门用来进行搜索的输入框控件。
+ * \~chinese
+ * \~chinese 相比于一般的输入框控件，DSearchEdit 提供了搜索按钮指示，用户使用起来会更加自然。
+ * \~chinese 如图示：
+ * \~chinese \image html searchedit.png
+ * \~chinese
+ * \~chinese \warning DSearchEdit 与 QLineEdit、DLineEdit 没有继承关系，功能不兼容。
+ */
+
+
+/*!
+ * \~chinese \fn DSearchEdit::textChanged
+ * \~chinese \brief 信号在用户对输入框内容做了修改后触发。
+ */
+
+/*!
+ * \~chinese \fn DSearchEdit::returnPressed
+ * \~chinese \brief 信号在用户输入完成敲击回车时触发。
+ */
+
+/*!
+ * \~chinese \fn DSearchEdit::editingFinished
+ * \~chinese \brief 信号在用户敲击Enter或者回车键，以及输入框失去焦点是触发。
+ * \~chinese \see QLineEdit::editingFinished。
+ */
+
+/*!
+ * \~chinese \fn DSearchEdit::focusOut
+ * \~chinese \brief 信号在输入框失去焦点时触发。
+ */
+
+/*!
+ * \~chinese \fn DSearchEdit::focusIn
+ * \~chinese \brief 信号在输入框获得焦点时触发。
+ */
+
+
+/*!
+ * \~chinese \fn DSearchEdit::setText
+ * \~chinese \brief 设置输入框内容。
+ * \~chinese \param text 为要设置的内容。
+ */
+
+
+/*!
+ * \~chinese \fn DSearchEdit::clear
+ * \~chinese \brief 清空输入框内容。
+ */
+
+
+/*!
+ * \~chinese \fn DSearchEdit::setPlaceHolder
+ * \~chinese \brief 为输入框设置占位内容，用来提示用户，如显示“搜索快捷键”。
+ * \~chinese \param text 为占位内容。
+ *
+ */
+
+
+/*!
+ * \~chinese \brief DSearchEdit::DSearchEdit 是 DSearchEdit 类的构造函数。
+ * \~chinese \param parent 指定了控件的父控件。
+ */
 DSearchEdit::DSearchEdit(QWidget *parent)
     : QFrame(parent)
 {
@@ -85,6 +149,10 @@ DSearchEdit::~DSearchEdit()
     m_animation->deleteLater();
 }
 
+/*!
+ * \~chinese \brief DSearchEdit::text 用于获取输入框中的内容。
+ * \~chinese \return 输入框中用户输入的内容。
+ */
 const QString DSearchEdit::text() const
 {
     return m_edt->text();
@@ -133,6 +201,11 @@ bool DSearchEdit::eventFilter(QObject *o, QEvent *e)
     return QFrame::eventFilter(o, e);
 }
 
+/*!
+ * \~chinese \brief DSearchEdit::getLineEdit 用于获取控件中封装的 QLineEdit 实例，
+ * \~chinese 使用者可以通过 QLineEdit 提供的函数对输入框进行进一步细节设置，如果输入规则等。
+ * \~chinese \return 控件中封装的 QLineEdit 实例
+ */
 QLineEdit *DSearchEdit::getLineEdit() const
 {
     return m_edt;
@@ -191,3 +264,5 @@ bool DSearchEdit::event(QEvent *e)
 
     return QFrame::event(e);
 }
+
+DWIDGET_END_NAMESPACE
