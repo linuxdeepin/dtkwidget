@@ -1,5 +1,6 @@
 linux{
     include(keyboardmonitor/keyboardmonitor.pri)
+    include(startupnotifications/startupnotifications.pri)
     HEADERS += \
         $$PWD/mpris/dmprismonitor.h \
         $$PWD/mpris/dbusinterface.h \

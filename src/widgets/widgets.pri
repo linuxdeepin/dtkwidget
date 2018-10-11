@@ -2,11 +2,6 @@ include(private/private.pri)
 include(dialogs.pri)
 include($$PWD/../platforms/platforms.pri)
 
-linux {
-    include(startupnotifications/startupnotifications.pri)
-    INCLUDEPATH += $$PWD/../platforms/linux
-}
-
 win32* {
     INCLUDEPATH += $$PWD/../platforms/windows
 }
