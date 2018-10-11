@@ -50,6 +50,7 @@ public:
     QVBoxLayout         *contentLayout;
 
     QMap<QString, QWidget *> titles;
+    QList<QWidget *> sortTitles;
 
     DSettingsWidgetFactory       *widgetFactory;
 
@@ -88,25 +89,36 @@ Content::Content(QWidget *parent) :
     connect(d->contentArea->verticalScrollBar(), &QScrollBar::valueChanged,
     this, [ = ](int value) {
         Q_D(Content);
-        auto offset = std::numeric_limits<int>::max();
-        auto closedTitle = d->titles.first();
+        auto viewHeight = d->contentArea->height();
+        auto currentTitle = d->sortTitles.first();
 
-        for (auto title : d->titles) {
-            // not the hide
-            if ((title->y() + title->height()) < value) {
-                continue;
-            }
+        QList<QWidget *> visableTitleList;
 
-            auto titleOffset = title->y() + title->height() - value;
-            if (titleOffset < offset) {
-                offset = titleOffset;
-                closedTitle = title;
+        for (auto idx = 0; idx < d->sortTitles.length(); ++idx) {
+            auto title = d->sortTitles[idx];
+            if (title->y() <= value) {
+                if (idx < d->sortTitles.length() - 1) {
+                    auto nextTitle = d->sortTitles[idx + 1];
+                    if (nextTitle->y() >= value) {
+                        visableTitleList.push_back(title);
+                    }
+                }
+            } else if (title->y() < (value + viewHeight)) {
+                visableTitleList.push_back(title);
             }
         }
 
-        if (closedTitle) {
-//            qDebug() << "send scrollToGroup" << closedTitle->property("key");
-            Q_EMIT scrollToGroup(closedTitle->property("key").toString());
+        if (!visableTitleList.isEmpty()) {
+            auto lastTitle = d->sortTitles.last();
+            if (value + viewHeight + 180 >= lastTitle->y()) {
+                currentTitle = visableTitleList.last();
+            } else {
+                currentTitle = visableTitleList.first();
+            }
+        }
+
+        if (currentTitle) {
+            Q_EMIT scrollToGroup(currentTitle->property("key").toString());
         }
     });
 }
@@ -126,7 +138,7 @@ void Content::onScrollToGroup(const QString &key)
 {
     Q_D(Content);
 
-    if (!d->titles.contains(key)) return;
+    if (!d->titles.contains(key)) { return; }
 
     auto title = d->titles.value(key);
 
@@ -145,13 +157,14 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
             continue;
         }
         auto trName = translateContext.isEmpty() ? QObject::tr(group->name().toStdString().c_str())
-                                                 : qApp->translate(translateContext.constData(), group->name().toStdString().c_str());
+                      : qApp->translate(translateContext.constData(), group->name().toStdString().c_str());
         auto title = new ContentTitle;
         title->setTitle(trName);
         title->setProperty("key", groupKey);
 //        d->contentLayout->addSpacing(10);
         d->contentLayout->addWidget(title);
         d->contentLayout->addSpacing(8);
+        d->sortTitles.push_back(title);
         d->titles.insert(groupKey, title);
 
         for (auto subgroup : settings->group(groupKey)->childGroups()) {
@@ -165,7 +178,7 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
                 title->setObjectName("ContentSubTitleText");
                 title->setFixedHeight(20);
                 auto trName = translateContext.isEmpty() ? QObject::tr(subgroup->name().toStdString().c_str())
-                                                         : qApp->translate(translateContext.constData(), subgroup->name().toStdString().c_str());
+                              : qApp->translate(translateContext.constData(), subgroup->name().toStdString().c_str());
                 title->setText(trName);
                 title->setProperty("key", subgroup->key());
                 title->setStyleSheet("#ContentSubTitleText{font-weight: 520; "
@@ -173,6 +186,7 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
                                      "}");
                 d->contentLayout->addWidget(title);
                 d->contentLayout->addSpacing(10);
+                d->sortTitles.push_back(title);
                 d->titles.insert(subgroup->key(), title);
             }
 

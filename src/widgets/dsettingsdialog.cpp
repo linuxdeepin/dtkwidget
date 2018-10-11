@@ -89,7 +89,11 @@ DSettingsDialog::DSettingsDialog(QWidget *parent) :
     setFixedWidth(680);
 
     connect(d->leftFrame, &Navigation::selectedGroup, d->content, &Content::onScrollToGroup);
-    connect(d->content, &Content::scrollToGroup, d->leftFrame, &Navigation::onSelectGroup);
+    connect(d->content, &Content::scrollToGroup, d->leftFrame, [ = ](const QString & key) {
+        d->leftFrame->blockSignals(true);
+        d->leftFrame->onSelectGroup(key);
+        d->leftFrame->blockSignals(false);
+    });
     connect(closeBt, &DWindowCloseButton::clicked, this, &DSettingsDialog::close);
 }
 
