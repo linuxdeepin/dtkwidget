@@ -35,7 +35,7 @@ class LIBDTKWIDGETSHARED_EXPORT DShortcutEdit : public QFrame
     Q_OBJECT
 
 public:
-    DShortcutEdit(QWidget *parent = 0);
+    DShortcutEdit(QWidget *parent = Q_NULLPTR);
 
     QSize sizeHint() const;
     bool eventFilter(QObject *o, QEvent *e);

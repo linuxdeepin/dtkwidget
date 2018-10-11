@@ -17,16 +17,19 @@
 
 #include "dgraphicsgloweffect.h"
 
-DWIDGET_USE_NAMESPACE
+QT_BEGIN_NAMESPACE
+extern Q_WIDGETS_EXPORT void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, bool quality, bool alphaOnly, int transposed = 0);
+QT_END_NAMESPACE
 
+DWIDGET_BEGIN_NAMESPACE
 
 /*!
  * \class DGraphicsGlowEffect
- * \brief DGraphicsGlowEffect draw a glow effect of widget, It's the default border effect of deepin windows.
+ * \brief Draw a glow effect of widget, It's the default border effect of deepin windows.
  */
 
 /*!
- * \brief DGraphicsGlowEffect::DGraphicsGlowEffect Constructs a new DGraphicsGlowEffect instance having the specified parent.
+ * \brief Constructs a new DGraphicsGlowEffect instance having the specified parent.
  * \param parent
  */
 DGraphicsGlowEffect::DGraphicsGlowEffect(QObject *parent) :
@@ -38,10 +41,6 @@ DGraphicsGlowEffect::DGraphicsGlowEffect(QObject *parent) :
     m_color(0, 0, 0, 80)
 {
 }
-
-QT_BEGIN_NAMESPACE
-extern Q_WIDGETS_EXPORT void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, bool quality, bool alphaOnly, int transposed = 0);
-QT_END_NAMESPACE
 
 /*!
  * \brief DGraphicsGlowEffect::draw set a blur effect image to painter.
@@ -119,3 +118,5 @@ QRectF DGraphicsGlowEffect::boundingRectFor(const QRectF &rect) const
     qreal delta = blurRadius() + distance();
     return rect.united(rect.adjusted(-delta - xOffset(), -delta - yOffset(), delta - xOffset(), delta - yOffset()));
 }
+
+DWIDGET_END_NAMESPACE

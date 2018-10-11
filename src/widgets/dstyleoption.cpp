@@ -26,11 +26,39 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+/*!
+ * \class DStyleOption
+ * \brief DStyleOption is the base class of deepin style option
+ * \param widget
+ */
+
+/*!
+ * \class DStyleOptionSuggestButton
+ * \brief DStyleOptionSuggestButton handle the style option of Dtk::Widget::DSuggestButton
+ * \param widget
+ */
+
+/*!
+ * \class DStyleOptionLineEdit
+ * \brief DStyleOptionLineEdit handle the style option of Dtk::Widget::DLineEdit
+ * \param widget
+ */
+
+
+/*!
+ * \brief Init style with widget
+ * \param widget
+ */
 void DStyleOption::init(QWidget *widget)
 {
     Q_UNUSED(widget)
 }
 
+/*!
+ * \brief DStyleOptionSuggestButton::init set style option for Dtk::Widget::DSuggestButton
+ * \param widget
+ * \sa Dtk::Widget::DSuggestButton
+ */
 void DStyleOptionSuggestButton::init(QWidget *widget)
 {
     Q_UNUSED(widget)
@@ -38,6 +66,11 @@ void DStyleOptionSuggestButton::init(QWidget *widget)
     features |= QStyleOptionButton::ButtonFeature(SuggestButton);
 }
 
+/*!
+ * \brief DStyleOptionSuggestButton::init set style option for Dtk::Widget::DLineEdit
+ * \param widget
+ * \sa Dtk::Widget::DLineEdit
+ */
 void DStyleOptionLineEdit::init(QWidget *widget)
 {
     if (const DLineEdit *edit = qobject_cast<DLineEdit*>(widget)) {
