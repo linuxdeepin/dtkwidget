@@ -5,7 +5,7 @@
 #include "DThemeManager"
 #include <QHBoxLayout>
 
-DWIDGET_USE_NAMESPACE
+DWIDGET_BEGIN_NAMESPACE
 
 LoadSlider::LoadSlider(QWidget *parent) : QWidget(parent),
     m_loadSliderColor(Qt::gray)
@@ -509,5 +509,7 @@ void DPasswdEditAnimated::setLoadingEffectColor(const QColor &color)
 
     d->m_loadSlider->setLoadSliderColor(color);
 }
+
+DWIDGET_END_NAMESPACE
 
 #include "moc_dpasswdeditanimated.cpp"
