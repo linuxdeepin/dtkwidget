@@ -34,9 +34,15 @@
 #include "dbuttonlist.h"
 #include "doptionlist.h"
 
-
-
 DWIDGET_BEGIN_NAMESPACE
+
+/*!
+ * \class DSettingsDialog
+ * \brief DSettingsDialog provide an common setting ui for deepin style application.
+ * It's depend Dtk::Widget::DSettingsWidgetFactory to auot build ui compent from json file.
+ * \sa Dtk::Widget::DSettingsWidgetFactory
+ * \sa Dtk::Core::DSettings
+ */
 
 class DSettingsDialogPrivate
 {
@@ -53,9 +59,8 @@ public:
     Q_DECLARE_PUBLIC(DSettingsDialog)
 };
 
-
 DSettingsDialog::DSettingsDialog(QWidget *parent) :
-    DAbstractDialog(parent), d_ptr(new DSettingsDialogPrivate(this))
+    DAbstractDialog(parent), dd_ptr(new DSettingsDialogPrivate(this))
 {
     Q_D(DSettingsDialog);
 
@@ -102,17 +107,33 @@ DSettingsDialog::~DSettingsDialog()
 
 }
 
+/*!
+ * \brief DSettingsDialog::widgetFactory return the widget build factory of this dialog.
+ * Every instance of DSettingDialog has it own widgetfactory.
+ * \return
+ */
 DSettingsWidgetFactory *DSettingsDialog::widgetFactory() const
 {
     Q_D(const DSettingsDialog);
     return  d->content->widgetFactory();
 }
 
+/*!
+ * \brief DSettingsDialog::updateSettings will create all widget for settings options.
+ * Warnning that you can only call the once.
+ * \param settings Dtk::Core::DSettings object from json
+ */
 void DSettingsDialog::updateSettings(Dtk::Core::DSettings *settings)
 {
     updateSettings(QByteArray(), settings);
 }
 
+/*!
+ * \brief DSettingsDialog::updateSettings
+ * \param translateContext is them custom translate data for i18n.
+ * \param settings Dtk::Core::DSettings object from json
+ * \sa void DSettingsDialog::updateSettings(Dtk::Core::DSettings *settings)
+ */
 void DSettingsDialog::updateSettings(const QByteArray &translateContext, Core::DSettings *settings)
 {
     Q_D(DSettingsDialog);

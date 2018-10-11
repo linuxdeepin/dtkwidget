@@ -37,20 +37,20 @@ class LIBDTKWIDGETSHARED_EXPORT DSettingsWidgetFactory : public QObject
 public:
     typedef QWidget *(WidgetCreateHandler)(QObject *);
 
-    explicit DSettingsWidgetFactory(QObject *parent = 0);
+    explicit DSettingsWidgetFactory(QObject *parent = Q_NULLPTR);
     ~DSettingsWidgetFactory();
 
     void registerWidget(const QString &viewType, std::function<WidgetCreateHandler> handler);
 
-    QWidget *createWidget(QPointer<DTK_CORE_NAMESPACE::DSettingsOption> settings);
-    QWidget *createWidget(const QByteArray &translateContext, QPointer<DTK_CORE_NAMESPACE::DSettingsOption> settings);
+    QWidget *createWidget(QPointer<DTK_CORE_NAMESPACE::DSettingsOption> option);
+    QWidget *createWidget(const QByteArray &translateContext, QPointer<DTK_CORE_NAMESPACE::DSettingsOption> option);
 
     static QWidget *createTwoColumWidget(DTK_CORE_NAMESPACE::DSettingsOption *option, QWidget *rightWidget);
     static QWidget *createTwoColumWidget(const QByteArray &translateContext, DTK_CORE_NAMESPACE::DSettingsOption *option, QWidget *rightWidget);
 
 private:
-    QScopedPointer<DSettingsWidgetFactoryPrivate> d_ptr;
-    Q_DECLARE_PRIVATE_D(qGetPtrHelper(d_ptr), DSettingsWidgetFactory)
+    QScopedPointer<DSettingsWidgetFactoryPrivate> dd_ptr;
+    Q_DECLARE_PRIVATE_D(qGetPtrHelper(dd_ptr), DSettingsWidgetFactory)
 };
 
 DWIDGET_END_NAMESPACE

@@ -32,7 +32,7 @@ class LIBDTKWIDGETSHARED_EXPORT DSettingsDialog : public DAbstractDialog
 {
     Q_OBJECT
 public:
-    DSettingsDialog(QWidget *parent = 0);
+    DSettingsDialog(QWidget *parent = nullptr);
     ~DSettingsDialog();
 
     DSettingsWidgetFactory* widgetFactory() const;
@@ -42,8 +42,8 @@ public Q_SLOTS:
     void updateSettings(const QByteArray &translateContext, DTK_CORE_NAMESPACE::DSettings *settings);
 
 private:
-    QScopedPointer<DSettingsDialogPrivate> d_ptr;
-    Q_DECLARE_PRIVATE_D(qGetPtrHelper(d_ptr), DSettingsDialog)
+    QScopedPointer<DSettingsDialogPrivate> dd_ptr;
+    Q_DECLARE_PRIVATE_D(qGetPtrHelper(dd_ptr), DSettingsDialog)
 };
 
 DWIDGET_END_NAMESPACE
