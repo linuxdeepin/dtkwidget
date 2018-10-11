@@ -21,15 +21,31 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
- * \class DSeparatorVertical
- * \brief The DSeparatorVertical class provides an vertical separator.
+ * \~english \class DSeparatorVertical
+ * \~english \brief The DSeparatorVertical class provides an vertical separator.
  *
- * DSeparatorVertical has fixed two pixels in width.
+ * \~english DSeparatorVertical has fixed two pixels in width.
+ *
+ *
+ * \~chinese \class DSeparatorVertical
+ * \~chinese \brief DSeparatorVertical 类提供了通用的纵向分割线，可以应用在任何基于
+ * \~chinese QWidget 的控件上。
+ *
+ * \~chinese DSeparatorVertical 固定宽度为2px，如果是放置在 QHBoxLayout 中进行使用，
+ * \~chinese 使用者无需手动指定 DSeparatorHorizontal 控件的高度，控件会默认使用 QHBoxLayout
+ * \~chinese 提供的最大高度。否则，使用者需要手动指定控件高度。
+ *
+ *
+ * \sa DSeparatorHorizontal
  */
 
 /*!
- * \brief DSeparatorVertical::DSeparatorVertical constructs an instance of DSeparatorVertical.
- * \param parent is passed to QWidget constructor.
+ * \~english \brief DSeparatorVertical::DSeparatorVertical constructs an instance of DSeparatorVertical.
+ * \~english \param parent is passed to QWidget constructor.
+ *
+ * \~chinese \brief DSeparatorVertical::DSeparatorVertical 函数是
+ * \~chinese DSeparatorVertical 类的构造函数。
+ * \~chinese \param parent 为控件的父控件。
  */
 DSeparatorVertical::DSeparatorVertical(QWidget *parent) : QWidget(parent)
 {

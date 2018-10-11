@@ -21,15 +21,33 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
- * \class DSeparatorHorizontal
- * \brief The DSeparatorHorizontal class provides an horizontal separator.
+ * \~english \class DSeparatorHorizontal
+ * \~english \brief The DSeparatorHorizontal class provides an horizontal separator.
  *
- * DSeparatorHorizontal has fixed two pixels in height.
+ * \~english DSeparatorHorizontal has fixed two pixels in height.
+ *
+ *
+ * \~chinese \class DSeparatorHorizontal
+ * \~chinese \brief DSeparatorHorizontal 类提供了通用的横向分割线，可以应用在任何基于
+ * \~chinese QWidget 的控件上。
+ *
+ * \~chinese DSeparatorHorizontal 固定高度为2px，如果是放置在 QVBoxLayout 中进行使用，
+ * \~chinese 使用者无需手动指定 DSeparatorHorizontal 控件的宽度，控件会默认使用 QVBoxLayout
+ * \~chinese 提供的最大宽度。否则，使用者需要手动指定控件宽度。
+ *
+ *
+ * \sa DSeparatorVertical
  */
 
 /*!
- * \brief DSeparatorHorizontal::DSeparatorHorizontal constructs an instance of DSeparatorHorizontal.
- * \param parent is passed to QWidget constructor.
+ * \~english \brief DSeparatorHorizontal::DSeparatorHorizontal constructs an instance of DSeparatorHorizontal.
+ * \~english \param parent is passed to QWidget constructor.
+ */
+
+/*!
+ * \~chinese \brief DSeparatorHorizontal::DSeparatorHorizontal 函数是
+ * \~chinese DSeparatorHorizontal 类的构造函数。
+ * \~chinese \param parent 为控件的父控件。
  */
 DSeparatorHorizontal::DSeparatorHorizontal(QWidget *parent) : QWidget(parent)
 {
