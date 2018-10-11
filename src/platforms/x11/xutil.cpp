@@ -27,6 +27,8 @@
 #include <X11/Xlib.h>
 #include <X11/extensions/shape.h>
 
+DWIDGET_BEGIN_NAMESPACE
+
 namespace XUtils
 {
 // From the WM spec
@@ -594,3 +596,5 @@ void SetWindowExtents(uint wid, const QRect &windowRect, const QMargins &margins
 }
 
 }
+
+DWIDGET_END_NAMESPACE

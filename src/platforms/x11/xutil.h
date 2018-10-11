@@ -18,6 +18,7 @@
 #pragma once
 
 #include <qnamespace.h>
+#include "dtkwidget_global.h"
 
 QT_BEGIN_NAMESPACE
 class QWidget;
@@ -25,6 +26,8 @@ class QPoint;
 class QMargins;
 class QRect;
 QT_END_NAMESPACE
+
+DWIDGET_BEGIN_NAMESPACE
 
 namespace XUtils
 {
@@ -83,3 +86,5 @@ void PropagateSizeHints(const QWidget *w);
 void DisableResize(const QWidget *w);
 
 }
+
+DWIDGET_END_NAMESPACE

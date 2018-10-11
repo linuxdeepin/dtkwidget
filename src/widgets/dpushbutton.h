@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DICONBUTTON_H
-#define DICONBUTTON_H
+#ifndef DPUSHBUTTON_H
+#define DPUSHBUTTON_H
 
 #include "dtkwidget_global.h"
 #include "dobject.h"
@@ -63,4 +63,4 @@ private:
 
 DWIDGET_END_NAMESPACE
 
-#endif // DICONBUTTON_H
+#endif // DPUSHBUTTON_H

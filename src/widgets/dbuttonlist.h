@@ -28,15 +28,18 @@ class QPoint;
 class QResizeEvent;
 class QEvent;
 
-class IconButton : public QPushButton{
+DWIDGET_BEGIN_NAMESPACE
+
+class DIconButton : public QPushButton
+{
     Q_OBJECT
 public:
-    IconButton(const QString& Icon, const QString& text, QWidget* parent=0);
+    DIconButton(const QString &Icon, const QString &text, QWidget *parent = Q_NULLPTR);
 
     void initIconLabel();
     void initConnect();
     void setIconLeftMargin(int leftMargin);
-    void setIconLabel(const QString& icon);
+    void setIconLabel(const QString &icon);
     void hideIconLabel();
     void updateStyle();
 
@@ -45,33 +48,30 @@ Q_SIGNALS:
     void mouseLeaved(QString label);
 
 protected:
-    void resizeEvent(QResizeEvent* event);
-    void enterEvent(QEvent* event);
-    void leaveEvent(QEvent* event);
+    void resizeEvent(QResizeEvent *event);
+    void enterEvent(QEvent *event);
+    void leaveEvent(QEvent *event);
 
 private:
-    QLabel* m_iconLabel;
+    QLabel *m_iconLabel;
     QString m_icon;
     QString m_text;
 };
-
-
-DWIDGET_BEGIN_NAMESPACE
 
 class LIBDTKWIDGETSHARED_EXPORT DButtonList : public QListWidget
 {
     Q_OBJECT
 public:
-    explicit DButtonList(QWidget *parent = 0);
+    explicit DButtonList(QWidget *parent = Q_NULLPTR);
     ~DButtonList();
 
     void initMargins(int leftMargin, int rightMargin, int imageLeftMargin);
-    IconButton* getButtonByIndex(int index);
+    DIconButton *getButtonByIndex(int index);
 
 public Q_SLOTS:
     void addButton(const QString &label);
-    void addButton(const QString& label, int index);
-    void addButtons(const QStringList& listLabels);
+    void addButton(const QString &label, int index);
+    void addButtons(const QStringList &listLabels);
     void setItemHeight(int height);
     void setItemWidth(int width);
     void setItemSize(int width, int height);
@@ -89,7 +89,7 @@ Q_SIGNALS:
     void buttonMouseLeaved(QString label);
 
 private:
-    QButtonGroup* m_buttonGroup = NULL;
+    QButtonGroup *m_buttonGroup = NULL;
 
     void initConnect();
 
