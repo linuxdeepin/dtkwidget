@@ -293,8 +293,8 @@ bool DApplicationPrivate::isUserManualExists()
     } else {
         const QString appName = qApp->applicationName();
         bool dmanAppExists = QFile::exists("/usr/bin/dman");
-        bool dmanDataExists = QFile::exists("/usr/share/dman/" + appName) ||
-                              QFile::exists("/app/share/dman/" + appName);
+        bool dmanDataExists = QFile::exists("/usr/share/deepin-manual/manual/" + appName) ||
+                              QFile::exists("/app/share/deepin-manual/manual/" + appName);
         return  dmanAppExists && dmanDataExists;
     }
 #else
