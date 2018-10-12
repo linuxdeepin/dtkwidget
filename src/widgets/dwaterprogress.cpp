@@ -72,10 +72,21 @@ public:
     D_DECLARE_PUBLIC(DWaterProgress)
 };
 
-//!
-//! \brief DWaterProgress::DWaterProgress create an new water animation progress
-//! \param parent
-//!
+/*!
+    \~chinese \class DWaterProgress
+    \~chinese \brief 可以使用 DWaterProgress 类快速创建圆形容器内水位高低指示进度的动画控件。
+
+    \~chinese 可以使用 DWaterProgress 类快速创建圆形容器内水位高低指示进度的动画控件。并提供了可选的是否显示进度文字的选项。
+*/
+
+/*!
+    \~english \class DWaterProgress
+    \~english \brief Use DWaterProgress to create an new water animation progress.
+
+    \~english Use DWaterProgress to create an new water animation progress. There is also an optional progress
+    text can be set as visible via setTextVisible().
+*/
+
 DWaterProgress::DWaterProgress(QWidget *parent) :
     QWidget(parent), DObject(*new DWaterProgressPrivate(this))
 {
@@ -90,46 +101,45 @@ DWaterProgress::DWaterProgress(QWidget *parent) :
     this->setGraphicsEffect(effect);
 }
 
-//!
-//! \brief DWaterProgress::~DWaterProgress
-//!
 DWaterProgress::~DWaterProgress()
 {
 
 }
 
-//!
-//! \brief DWaterProgress::value
-//! \return return the current progress value
-//!
+/*!
+ * \~english \brief get the current progress value
+ * \~chinese \brief 当前进度值
+ */
 int DWaterProgress::value() const
 {
     D_DC(DWaterProgress);
     return d->value;
 }
 
-//!
-//! \brief DWaterProgress::start will begin water movie
-//!
+/*!
+ * \~english \brief star water animation.
+ * \~chinese \brief 开始水位动画
+ */
 void DWaterProgress::start()
 {
     D_DC(DWaterProgress);
     d->timer->start();
 }
 
-//!
-//! \brief DWaterProgress::stop will stop water movie
-//!
+/*!
+ * \~english \brief stop water animation.
+ * \~chinese \brief 停止水位动画
+ */
 void DWaterProgress::stop()
 {
     D_DC(DWaterProgress);
     d->timer->stop();
 }
 
-//!
-//! \brief DWaterProgress::setValue
-//! \param set progress value, must range 0 ~ 100
-//!
+/*!
+ * \~english \brief set the current progress value (range: 0~100)
+ * \~chinese \brief 设置当前进度值，（范围 0~100）
+ */
 void DWaterProgress::setValue(int value)
 {
     D_D(DWaterProgress);
@@ -140,10 +150,13 @@ void DWaterProgress::setValue(int value)
     Q_EMIT valueChanged();
 }
 
-//!
-//! \brief DWaterProgress::setTextVisible
-//! \param set the progress text value(like 50% when value is 50) visible.
-//!
+/*!
+ * \~english \brief set progress text visible or not
+ * \~chinese \brief 设置是否显示进度
+ *
+ * \~english set the progress text value(like 50% when value is 50) visible.
+ * \~chinese 设置进度文字是否显示，如值为 50 时显示 50% 。
+ */
 void DWaterProgress::setTextVisible(bool visible)
 {
     D_D(DWaterProgress);
