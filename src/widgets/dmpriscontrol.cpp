@@ -25,6 +25,16 @@
 
 DWIDGET_USE_NAMESPACE
 
+/*!
+ * \~chinese \class DMPRISControl
+ * \~chinese \brief 封装了MPRIS协议，提供了统一的界面
+ */
+
+/*!
+ * \~chinese \brief DMPRISControl::DMPRISControl 的构造函数
+ *
+ * @param parent 初始化QFrame的构造函数
+ */
 DMPRISControl::DMPRISControl(QWidget *parent)
     : QFrame(parent),
       DObject(*new DMPRISControlPrivate(this))
@@ -34,6 +44,12 @@ DMPRISControl::DMPRISControl(QWidget *parent)
     d->init();
 }
 
+/*!
+ * \~chinese \brief 返回当前是否在工作状态
+ *
+ * @return true
+ * @return false
+ */
 bool DMPRISControl::isWorking() const
 {
     D_DC(DMPRISControl);
@@ -41,6 +57,11 @@ bool DMPRISControl::isWorking() const
     return d->m_mprisInter;
 }
 
+/*!
+ * \~chinese \brief 设置是否显示封面
+ *
+ * @param visible
+ */
 void DMPRISControl::setPictureVisible(bool visible)
 {
     D_D(DMPRISControl);
@@ -49,6 +70,11 @@ void DMPRISControl::setPictureVisible(bool visible)
     d->m_picture->setVisible(visible);
 }
 
+/*!
+ * \~chinese \brief 设置封面大小
+ *
+ * @param size
+ */
 void DMPRISControl::setPictureSize(const QSize &size)
 {
     D_D(DMPRISControl);
