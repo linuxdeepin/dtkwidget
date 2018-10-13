@@ -28,13 +28,24 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
- * \class DPasswordEdit
- * \brief The DPasswordEdit class provides a widget to let user input password.
+ * \~english \class DPasswordEdit
+ * \~english \brief The DPasswordEdit class provides a widget to let user input password.
  */
 
 /*!
- * \brief DPasswordEdit::DPasswordEdit constructs an instance of DPasswordEdit.
- * \param parent is passed to DLineEdit constructor.
+ * \~english \brief DPasswordEdit::DPasswordEdit constructs an instance of DPasswordEdit.
+ * \~english \param parent is passed to DLineEdit constructor.
+ */
+
+/*!
+ * \~chinese \class DPasswordEdit
+ * \~chinese \brief DPasswordEdit提供了一个让用户输入的密码框
+ */
+
+/*!
+ * \~chinese \brief DPasswordEdit的构造函数
+ *
+ * @param parent
  */
 DPasswordEdit::DPasswordEdit(QWidget *parent)
     : DLineEdit(*new DPasswordEditPrivate(this), parent)
@@ -49,9 +60,16 @@ DPasswordEdit::DPasswordEdit(QWidget *parent)
 }
 
 /*!
- * \property DPasswordEdit::isEchoMode
- * \brief This property holds whether the user input should be displayed directly
+ * \~english \property DPasswordEdit::isEchoMode
+ * \~english \brief This property holds whether the user input should be displayed directly
  * or show as dots.
+ *
+ * \see QLineEdit::EchoMode
+ */
+
+/*!
+ * \~chinese \property DPasswordEdit::isEchoMode
+ * \~chinese \brief 该属性会控制用户输入是否可见
  *
  * \see QLineEdit::EchoMode
  */
@@ -60,6 +78,11 @@ bool DPasswordEdit::isEchoMode() const
     return echoMode() == Normal;
 }
 
+/*!
+ * \~chinese \brief 设置显示模式
+ * \see QLineEdit::EchoMode
+ * @param mode
+ */
 void DPasswordEdit::setEchoMode(QLineEdit::EchoMode mode)
 {
     if (mode != echoMode()) {
@@ -105,4 +128,3 @@ void DPasswordEditPrivate::_q_toggleEchoMode()
 DWIDGET_END_NAMESPACE
 
 #include "moc_dpasswordedit.cpp"
-
