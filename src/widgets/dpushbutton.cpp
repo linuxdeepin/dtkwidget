@@ -20,6 +20,16 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+/*!
+ * \~chinese \class DPushButton
+ * \~chinese \brief 封装了三种状态的QPushButton，可以自动在不同状态更换图标，不需要自己控制。
+ */
+
+/*!
+ * \~chinese \brief DPushButton的构造函数
+ *
+ * @param parent
+ */
 DPushButton::DPushButton(QWidget *parent)
     : QPushButton(parent)
     , DObject(*new DPushButtonPrivate(this))
@@ -27,6 +37,14 @@ DPushButton::DPushButton(QWidget *parent)
 
 }
 
+/*!
+ * \~chinese \brief DPushButton的重载构造函数，初始化时接收不同状态的图标
+ *
+ * @param normalIcon 正常状态下的图标
+ * @param hoverIcon 鼠标在按钮上时的图标
+ * @param pressIcon 鼠标按下时的图标
+ * @param parent 初始化QPushButton的构造函数
+ */
 DPushButton::DPushButton(const QString &normalIcon, const QString &hoverIcon, const QString &pressIcon, QWidget *parent)
     : DPushButton(parent)
 {
@@ -35,6 +53,10 @@ DPushButton::DPushButton(const QString &normalIcon, const QString &hoverIcon, co
     setPressIcon(pressIcon);
 }
 
+/*!
+ * \~chinese \property DPushButton::normalIcon
+ * \~chinese \brief 该属性控制正常状态下的图标
+ */
 const QString DPushButton::normalIcon() const
 {
     D_DC(DPushButton);
@@ -42,6 +64,10 @@ const QString DPushButton::normalIcon() const
     return d->normalIconPath;
 }
 
+/*!
+ * \~chinese \property DPushButton::hoverIcon
+ * \~chinese \brief 该属性控制鼠标在按钮上时的图标
+ */
 const QString DPushButton::hoverIcon() const
 {
     D_DC(DPushButton);
@@ -49,6 +75,10 @@ const QString DPushButton::hoverIcon() const
     return d->hoverIconPath;
 }
 
+/*!
+ * \~chinese \property DPushButton::pressIcon
+ * \~chinese \brief 该属性控制鼠标按下时的图标
+ */
 const QString DPushButton::pressIcon() const
 {
     D_DC(DPushButton);
@@ -56,6 +86,11 @@ const QString DPushButton::pressIcon() const
     return d->pressIconPath;
 }
 
+/*!
+ * \~chinese \brief 设置正常状态下的图标
+ *
+ * @param normalIcon
+ */
 void DPushButton::setNormalIcon(const QString &normalIcon)
 {
     D_D(DPushButton);
@@ -65,6 +100,11 @@ void DPushButton::setNormalIcon(const QString &normalIcon)
     d->normalIconPath = normalIcon;
 }
 
+/*!
+ * \~chinese \brief 设置鼠标在按钮上时的图标
+ *
+ * @param hoverIcon
+ */
 void DPushButton::setHoverIcon(const QString &hoverIcon)
 {
     D_D(DPushButton);
@@ -74,6 +114,11 @@ void DPushButton::setHoverIcon(const QString &hoverIcon)
     d->hoverIconPath = hoverIcon;
 }
 
+/*!
+ * \~chinese \brief 设置鼠标按下时的图标
+ *
+ * @param pressIcon
+ */
 void DPushButton::setPressIcon(const QString &pressIcon)
 {
     D_D(DPushButton);
@@ -83,6 +128,11 @@ void DPushButton::setPressIcon(const QString &pressIcon)
     d->pressIconPath = pressIcon;
 }
 
+/*!
+ * \~chinese \brief 重载的方法
+ * \see setNormalIcon
+ * @param normalIcon
+ */
 void DPushButton::setNormalIcon(const QIcon &normalIcon)
 {
     D_D(DPushButton);
@@ -93,6 +143,11 @@ void DPushButton::setNormalIcon(const QIcon &normalIcon)
     setIcon(d->normalIcon);
 }
 
+/*!
+ * \~chinese \brief 重载的方法
+ * \see setHoverIcon
+ * @param hoverIcon
+ */
 void DPushButton::setHoverIcon(const QIcon &hoverIcon)
 {
     D_D(DPushButton);
@@ -101,6 +156,11 @@ void DPushButton::setHoverIcon(const QIcon &hoverIcon)
     d->hoverIcon = QIcon(hoverIcon);
 }
 
+/*!
+ * \~chinese \brief 重载的方法
+ * \see setPressIcon
+ * @param pressIcon
+ */
 void DPushButton::setPressIcon(const QIcon &pressIcon)
 {
     D_D(DPushButton);
