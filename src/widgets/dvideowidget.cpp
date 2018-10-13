@@ -28,6 +28,11 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+/*!
+ * \~chinese \class VideoFormatProxy
+ * \~chinese \brief DVideoWidget使用的封装视频帧的代理类
+ *
+ */
 class VideoFormatProxy : public QAbstractVideoSurface
 {
     Q_OBJECT
@@ -117,8 +122,8 @@ DVideoWidgetPrivate::DVideoWidgetPrivate(DVideoWidget *qq)
 }
 
 /*!
- * \class DVideoWidget
- * \brief The DVideoWidget class provides a widget which presents video produced
+ * \~english    \class DVideoWidget
+ * \~english    \brief The DVideoWidget class provides a widget which presents video produced
  * by a media object.
  *
  * Since the last frame that played is preserved, it always has better user
@@ -132,6 +137,50 @@ DVideoWidgetPrivate::DVideoWidgetPrivate(DVideoWidget *qq)
  * \param parent is the parent widget to be attached on.
  */
 
+/*!
+ * \~chinese \class DVideoWidget
+ * \~chinese \brief DVideoWidget类提供了呈现视频的小部件
+ * 为了给循环播放提供更好的用户体验，视频的最后一帧将会被保留，同时还支持视频垂直或水平翻转，
+ * 视频缩放和圆形视频编辑。
+ *
+ * 将QMediaPlayer添加到DVideoWidget中，DVideoWidget封装了QVideoWidget来提供视频或图像的输出。
+ * \note 注意: 一次只能将一个QMediaPlayer连接到DVideoWidget中。
+ *
+ * \code
+ * DVideoWidget *videoWidget = new DVideoWidget(this);
+ * QMediaPlayer *mediaPlayer = new QMediaPlayer(this);
+ * QMediaPlaylist *list = new QMediaPlaylist(this);
+ * list->addMedia(QUrl("qrc:/test.mp4"));
+ * list->setPlaybackMode(QMediaPlaylist::Loop);
+ * videoWidget->setVideoOutput(mediaPlayer);
+ * videoWidget->play();
+ * \endcode
+ */
+
+/*!
+ * \fn DVideoWidget::mirroredHorizontalChanged
+ * \~chinese \brief 当前的视频或画面发生水平翻转时会发出该信号
+ * \fn DVideoWidget::mirroredVerticalChanged
+ * \~chinese \brief 当前的视频或画面发生垂直翻转时会发出该信号
+ * \fn DVideoWidget::scaleChanged
+ * \~chinese \brief 当相对于视频或画面的原始大小的比例发生变化时会发出该信号
+ * \fn DVideoWidget::brightnessChanged
+ * \~chinese \brief 当前的视频或画面的亮度发生变化时会发出该信号
+ * \fn DVideoWidget::contrastChanged
+ * \~chinese \brief 当前的视频或画面的对比度发生变化时会发出该信号
+ * \fn DVideoWidget::hueChanged
+ * \~chinese \brief 当前的视频或画面的色彩度发生变化时会发出该信号
+ * \fn DVideoWidget::saturationChanged
+ * \~chinese \brief 当前视频或画面的饱和度发生变化时会发出该信号
+ * \fn DVideoWidget::roundChanged
+ * \~chinese \brief 当前开启和关闭圆形效果时会发出该信号
+ */
+
+/*!
+ * \~chinese \brief DVideoWidget的构造函数
+ *
+ * \param parent
+ */
 DVideoWidget::DVideoWidget(QWidget *parent)
     : QWidget(parent)
     , DObject(*new DVideoWidgetPrivate(this))
@@ -140,8 +189,18 @@ DVideoWidget::DVideoWidget(QWidget *parent)
 }
 
 /*!
- * \property DVideoWidget::mirroredHorizontal
- * \brief indicates whether the video is horizontally flipped.
+ * \~english \property DVideoWidget::mirroredHorizontal
+ * \~english \brief indicates whether the video is horizontally flipped.
+ */
+
+/*!
+ * \~chinese \property DVideoWidget::mirroredHorizontal
+ * \~chinese \brief 返回当前视频或画面是否水平翻转画面
+ *
+ * \see DVideoWidget::setMirroredHorizontal
+ * \see DVideoWidget::mirroredHorizontalChanged
+ *
+ * \return bool 是否水平翻转画面
  */
 bool DVideoWidget::mirroredHorizontal() const
 {
@@ -151,8 +210,18 @@ bool DVideoWidget::mirroredHorizontal() const
 }
 
 /*!
- * \property DVideoWidget::mirroredVertical
- * \brief indicates whether the video is vertically flipped.
+ * \~english \property DVideoWidget::mirroredVertical
+ * \~english \brief indicates whether the video is vertically flipped.
+ */
+
+/*!
+ * \~chinese \property DVideoWidget::mirroredVertical
+ * \~chinese \brief 返回当前视频或画面是否垂直翻转画面
+ *
+ * \see DVideoWidget::setMirroredVertical
+ * \see DVideoWidget::mirroredVerticalChanged
+ *
+ * \return bool 是否垂直翻转
  */
 bool DVideoWidget::mirroredVertical() const
 {
@@ -162,8 +231,8 @@ bool DVideoWidget::mirroredVertical() const
 }
 
 /*!
- * @brief DVideoWidget::paint paints a specific QVideoFrame onto the widget.
- * @param frame is the target video frame.
+ * \~english \brief DVideoWidget::paint paints a specific QVideoFrame onto the widget.
+ * \~english \param frame is the target video frame.
  */
 void DVideoWidget::paint(const QVideoFrame &frame)
 {
@@ -182,8 +251,18 @@ void DVideoWidget::paint(const QVideoFrame &frame)
 }
 
 /*!
- * \property DVideoWidget::scale
- * \brief the scale ratio used to paint the video frames.
+ * \~english \property DVideoWidget::scale
+ * \~english \brief the scale ratio used to paint the video frames.
+ */
+
+/*!
+ * \~chinese \property DVideoWidget::scale
+ * \~chinese \brief 返回当前视频或画面相对于原始大小的缩放比例
+ *
+ * \see DVideoWidget::setScale
+ * \see DVideoWidget::scaleChanged
+ *
+ * \return qreal 相对于原始大小的缩放比例
  */
 qreal DVideoWidget::scale() const
 {
@@ -193,8 +272,17 @@ qreal DVideoWidget::scale() const
 }
 
 /*!
- * \property DVideoWidget::aspectRatioMode
- * \brief holds the current aspect ratio.
+ * \~english \property DVideoWidget::aspectRatioMode
+ * \~english \brief holds the current aspect ratio.
+ */
+
+/*!
+ * \~chinese \property DVideoWidget::aspectRatioMode
+ * \~chinese \brief 返回当前视频或画面的宽高比模式
+ *
+ * \see DVideoWidget::setAspectRatioMode
+ *
+ * \return Qt::AspectRatioMode
  */
 Qt::AspectRatioMode DVideoWidget::aspectRatioMode() const
 {
@@ -203,6 +291,13 @@ Qt::AspectRatioMode DVideoWidget::aspectRatioMode() const
     return d->aspectRatioMode;
 }
 
+/*!
+ * \~chinese \brief 设置当前的视频或画面在HiDPI下的缩放系数
+ *
+ * \param ratio
+ *
+ * \see DVideoWidget::sourceVideoPixelRatio
+ */
 void DVideoWidget::setSourceVideoPixelRatio(const qreal ratio)
 {
     D_D(DVideoWidget);
@@ -210,6 +305,13 @@ void DVideoWidget::setSourceVideoPixelRatio(const qreal ratio)
     d->ratio = ratio;
 }
 
+/*!
+ * \~chinese \brief 返回视频在HiDPI下的缩放系数
+ *
+ * \see DVideoWidget::setSourceVideoPixelRatio
+ *
+ * \return qreal
+ */
 qreal DVideoWidget::sourceVideoPixelRatio() const
 {
     D_DC(DVideoWidget);
@@ -218,11 +320,22 @@ qreal DVideoWidget::sourceVideoPixelRatio() const
 }
 
 /*!
- * \property DVideoWidget::brightness
- * \brief returns the brightness adjust setting.
+ * \~english \property DVideoWidget::brightness
+ * \~english \brief returns the brightness adjust setting.
  *
  * \note
  * This property is not implemented.
+ */
+
+/*!
+ * \~chinese \property DVideoWidget::brightness
+ * \~chinese \brief 返回当前视频或画面的画面亮度
+ *
+ * \note
+ * 该属性暂未实现
+ *
+ * \see DVideoWidget::setBrightness
+ * \see DVideoWidget::brightnessChanged
  */
 int DVideoWidget::brightness() const
 {
@@ -232,11 +345,22 @@ int DVideoWidget::brightness() const
 }
 
 /*!
- * \property DVideoWidget::contrast
- * \brief returns the contrast adjust setting.
+ * \~english \property DVideoWidget::contrast
+ * \~english \brief returns the contrast adjust setting.
  *
  * \note
  * This property is not implemented.
+ */
+
+/*!
+ * \~chinese \property DVideoWidget::contrast
+ * \~chinese \brief 返回当前的视频或画面的对比度
+ *
+ * \note
+ * 该属性尚未实现
+ *
+ * \see DVideoWidget::setContrast
+ * \see DVideoWidget::contrastChanged
  */
 int DVideoWidget::contrast() const
 {
@@ -246,11 +370,22 @@ int DVideoWidget::contrast() const
 }
 
 /*!
- * \property DVideoWidget::hue
- * \brief returns the hue adjust setting.
+ * \~english \property DVideoWidget::hue
+ * \~english \brief returns the hue adjust setting.
  *
  * \note
  * This property is not implemented.
+ */
+
+/*!
+ * \~chinese \property DVideoWidget::hue
+ * \~chinese \brief 返回当前视频或画面的色调
+ *
+ * \note
+ * 该属性尚未实现
+ *
+ * \see DVideoWidget::setHue
+ * \see DVideoWidget::hueChanged
  */
 int DVideoWidget::hue() const
 {
@@ -260,11 +395,22 @@ int DVideoWidget::hue() const
 }
 
 /*!
- * \property DVideoWidget::saturation
- * \brief This property holds an adjustment to the saturation of displayed video.
+ * \~english \property DVideoWidget::saturation
+ * \~english \brief This property holds an adjustment to the saturation of displayed video.
  *
  * \note
  * This property is not implemented.
+ */
+
+/*!
+ * \~chinese \property DVideoWidget::saturation
+ * \~chinese \brief 返回当前的视频或画面的饱和度
+ *
+ * \note
+ * 该属性尚未实现
+ *
+ * \see DVideoWidget::setSaturation
+ * \see DVideoWidget::saturationChanged
  */
 int DVideoWidget::saturation() const
 {
@@ -274,8 +420,14 @@ int DVideoWidget::saturation() const
 }
 
 /**
- * @brief DVideoWidget::currentFrame
- * @return the current frame displaying.
+ * \~english \brief DVideoWidget::currentFrame
+ * \~english \return the current frame displaying.
+ */
+
+/*!
+ * \~chinese \brief 返回当前的画面帧
+ *
+ * \return const QVideoFrame*
  */
 const QVideoFrame *DVideoWidget::currentFrame() const
 {
@@ -289,8 +441,14 @@ const QVideoFrame *DVideoWidget::currentFrame() const
 }
 
 /**
- * @brief DVideoWidget::capture grabs the current frame.
- * @return a QPixmap representing the current frame.
+ * \~english \brief DVideoWidget::capture grabs the current frame.
+ * \~english \return a QPixmap representing the current frame.
+ */
+
+/*!
+ * \~chinese \brief 捕获当前的画面
+ *
+ * \return QPixmap 当前的画面帧
  */
 QPixmap DVideoWidget::capture()
 {
@@ -298,8 +456,18 @@ QPixmap DVideoWidget::capture()
 }
 
 /*!
- * \property DVideoWidget::round
- * \brief controls whether the painted video frame are rounded or not.
+ * \~english \property DVideoWidget::round
+ * \~english \brief controls whether the painted video frame are rounded or not.
+ */
+
+/*!
+ * \~chinese \property DVideoWidget::round
+ * \~chinese \brief 控制绘制的视频是否为圆形
+ *
+ * \see DVideoWidget::setRound
+ * \see DVideoWidget::roundChanged
+ *
+ * \return boo 是否为圆形
  */
 bool DVideoWidget::round() const
 {
@@ -309,8 +477,14 @@ bool DVideoWidget::round() const
 }
 
 /**
- * @brief DVideoWidget::setSource sets a QCamera source to be tracked.
- * @param source is the target camera source.
+ * \~english \brief DVideoWidget::setSource sets a QCamera source to be tracked.
+ * \~english \param source is the target camera source.
+ */
+
+/*!
+ * \~chinese \brief 设置要跟踪的QCamera源
+ *
+ * \param source
  */
 void DVideoWidget::setSource(QCamera *source)
 {
@@ -322,8 +496,14 @@ void DVideoWidget::setSource(QCamera *source)
 }
 
 /**
- * @brief DVideoWidget::setSource sets a QMediaPlayer source to be played.
- * @param source is the target media player source.
+ * \~english \brief DVideoWidget::setSource sets a QMediaPlayer source to be played.
+ * \~english \param source is the target media player source.
+ */
+
+/*!
+ * \~chinese \brief 设置要跟踪的QMediaPlayer源
+ *
+ * \param source
  */
 void DVideoWidget::setSource(QMediaPlayer *source)
 {
@@ -334,6 +514,14 @@ void DVideoWidget::setSource(QMediaPlayer *source)
     d->player = source;
 }
 
+/*!
+ * \~chinese \brief 设置是否开启当前视频或画面水平翻转
+ *
+ * \param mirroredHorizontal
+ *
+ * \see DVideoWidget::mirroredHorizontal
+ * \see DVideoWidget::mirroredHorizontalChanged
+ */
 void DVideoWidget::setMirroredHorizontal(bool mirroredHorizontal)
 {
     D_D(DVideoWidget);
@@ -345,6 +533,14 @@ void DVideoWidget::setMirroredHorizontal(bool mirroredHorizontal)
     Q_EMIT mirroredHorizontalChanged(mirroredHorizontal);
 }
 
+/*!
+ * \~chinese \brief 设置是否开启当前的视频或画面的垂直翻转
+ *
+ * \param mirroredVertical
+ *
+ * \see DVideoWidget::mirroredVertical
+ * \see DVideoWidget::mirroredVerticalChanged
+ */
 void DVideoWidget::setMirroredVertical(bool mirroredVertical)
 {
     D_D(DVideoWidget);
@@ -356,6 +552,14 @@ void DVideoWidget::setMirroredVertical(bool mirroredVertical)
     Q_EMIT mirroredVerticalChanged(mirroredVertical);
 }
 
+/*!
+ * \~chinese \brief 设置相对于原始视频或画面大小的缩放
+ *
+ * \see DVideoWidget::scale
+ * \see DVideoWidget::scaleChanged
+ *
+ * \param scale
+ */
 void DVideoWidget::setScale(qreal scale)
 {
     D_D(DVideoWidget);
@@ -367,6 +571,13 @@ void DVideoWidget::setScale(qreal scale)
     Q_EMIT scaleChanged(scale);
 }
 
+/*!
+ * \~chinese \brief 设置当前的视频或画面的缩放模式
+ *
+ * \param mode
+ *
+ * \see DVideoWidget::aspectRatioMode
+ */
 void DVideoWidget::setAspectRatioMode(Qt::AspectRatioMode mode)
 {
     D_D(DVideoWidget);
@@ -374,6 +585,14 @@ void DVideoWidget::setAspectRatioMode(Qt::AspectRatioMode mode)
     d->aspectRatioMode = mode;
 }
 
+/*!
+ * \~chinese \brief 设置当前的视频或画面的亮度
+ *
+ * \param brightness
+ *
+ * \see DVideoWidget::brightness
+ * \see DVideoWidget::brightnessChanged
+ */
 void DVideoWidget::setBrightness(int brightness)
 {
     D_D(DVideoWidget);
@@ -385,6 +604,14 @@ void DVideoWidget::setBrightness(int brightness)
     Q_EMIT brightnessChanged(brightness);
 }
 
+/*!
+ * \~chinese \brief 设置当前视频或画面的对比度
+ *
+ * \param contrast
+ *
+ * \see DVideoWidget::contrast
+ * \see DVideoWidget::contrastChanged
+ */
 void DVideoWidget::setContrast(int contrast)
 {
     D_D(DVideoWidget);
@@ -396,6 +623,14 @@ void DVideoWidget::setContrast(int contrast)
     Q_EMIT contrastChanged(contrast);
 }
 
+/*!
+ * \~chinese \brief 设置当前视频或画面的色彩度
+ *
+ * \param hue
+ *
+ * \see DVideoWidget::hue
+ * \see DVideoWidget::hueChanged
+ */
 void DVideoWidget::setHue(int hue)
 {
     D_D(DVideoWidget);
@@ -407,6 +642,14 @@ void DVideoWidget::setHue(int hue)
     Q_EMIT hueChanged(hue);
 }
 
+/*!
+ * \~chinese \brief 设置当前的视频或画面的饱和度
+ *
+ * \param saturation
+ *
+ * \see DVideoWidget::saturation
+ * \see DVideoWidget::saturationChanged
+ */
 void DVideoWidget::setSaturation(int saturation)
 {
     D_D(DVideoWidget);
@@ -418,6 +661,14 @@ void DVideoWidget::setSaturation(int saturation)
     Q_EMIT saturationChanged(saturation);
 }
 
+/*!
+ * \~chinese \brief 设置是否开启视频圆形
+ *
+ * \param round
+ *
+ * \see DVideoWidget::round
+ * \see DVideoWidget::roundChanged
+ */
 void DVideoWidget::setRound(bool round)
 {
     D_D(DVideoWidget);
