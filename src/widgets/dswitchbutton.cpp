@@ -28,8 +28,8 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
- * \class DSwitchButton
- * \brief The DSwitchButton class provides switch like widget.
+ * \~english \class DSwitchButton
+ * \~english \brief The DSwitchButton class provides switch like widget.
  *
  * User can put the switch on/off the turn some feature on/off.
  *
@@ -38,8 +38,23 @@ DWIDGET_BEGIN_NAMESPACE
  */
 
 /*!
- * \brief DSwitchButton::DSwitchButton constructs an instance of DSwitchButton.
- * \param parent is passed to QFrame constructor.
+ * \~english \brief DSwitchButton::DSwitchButton constructs an instance of DSwitchButton.
+ * \~english \param parent is passed to QFrame constructor.
+ */
+
+/*!
+ * \~chinese \class DSwitchButton
+ *
+ * \~chinese \brief DSwitchButton提供了切换样式的控件
+ * 用户可以打开和关闭一些功能
+ *
+ * 受到Apple的切换按钮的影响，查看https://developer.apple.com/documentation/uikit/uiswitch.
+ */
+
+/*!
+ * \~chinese \brief DSwitchButton的构造函数
+ *
+ * @param parent
  */
 DSwitchButton::DSwitchButton(QWidget *parent) :
     QFrame(parent),
@@ -62,10 +77,17 @@ DSwitchButton::DSwitchButton(QWidget *parent) :
 }
 
 /*!
- * \property DSwitchButton::checked
- * \brief This property holds whether the switch is on or off.
+ * \~english \property DSwitchButton::checked
+ * \~english \brief This property holds whether the switch is on or off.
  *
  * True if the switch is on, otherwise false.
+ */
+
+/*!
+ * \~chinese \property DSwitchButton::checked
+ * \~chinese \brief 这个属性保持开关是否打开或关闭
+ *
+ * True是开启，反之False
  */
 bool DSwitchButton::checked() const
 {
@@ -79,18 +101,32 @@ QSize DSwitchButton::sizeHint() const
     return maximumSize();
 }
 
+/*!
+ * \~chinese \property DSwitchButton::disabledBackground
+ *
+ * \~chinese \brief 这个属性保持了禁用状态的背景色
+ */
 QColor DSwitchButton::disabledBackground() const
 {
     D_DC(DSwitchButton);
     return d->disabledBackground;
 }
 
+/*!
+ * \~chinese \property DSwitchButton::enabledBackground
+ * \~chinese \brief 这个属性保持启用状态的背景色
+ */
 QColor DSwitchButton::enabledBackground() const
 {
     D_DC(DSwitchButton);
     return d->enabledBackground;
 }
 
+/*!
+ * \~chinese \brief 设置开启状态
+ *
+ * @param arg
+ */
 void DSwitchButton::setChecked(bool arg)
 {
     D_D(DSwitchButton);
@@ -111,12 +147,22 @@ void DSwitchButton::setChecked(bool arg)
     }
 }
 
+/*!
+ * \~chinese \brief 设置启用状态的背景色
+ *
+ * @param enabledBackground
+ */
 void DSwitchButton::setEnabledBackground(QColor enabledBackground)
 {
     D_D(DSwitchButton);
     d->enabledBackground = enabledBackground;
 }
 
+/*!
+ * \~chinese \brief 设置禁用状态的背景色
+ *
+ * @param disabledBackground
+ */
 void DSwitchButton::setDisabledBackground(QColor disabledBackground)
 {
     D_D(DSwitchButton);
