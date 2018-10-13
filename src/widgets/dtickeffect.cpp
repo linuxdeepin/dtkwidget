@@ -25,6 +25,33 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+/*!
+ * \~chinese \class DTickEffect
+ * \~chinese \brief 这个类提供了跑马灯效果，可以让控件的内容滚动起来
+ *
+ * 注意: 该类目前只支持滚动可视区域，如果需要滚动完整的界面，需要使用QScrollarea封装一下
+ *
+ * \~chinese \enum DTickEffect::Direction 滚动方向的枚举值
+ * \~chinese \var DTickEffect::Direction DTickEffect::LeftToRight
+ * \~chinese \brief 从左往右滚动
+ * \~chinese \var DTickEffect::Direction DTickEffect::RightToLeft
+ * \~chinese \brief  从右往左滚动
+ * \~chinese \var DTickEffect::Direction DTickEffect::TopToBottom
+ * \~chinese \brief  从上往下滚动
+ * \~chinese \var DTickEffect::Direction DTickEffect::BottomToTop
+ * \~chinese \brief  从下往上滚动
+ *
+ * \~chinese \fn DTickEffect::finished 调用stop方法以后会发出该信号
+ * \~chinese \fn DTickEffect::stateChanged 当方向发生改变时会发出该信号
+ */
+
+
+/*!
+ * \~chinese \brief DTickEffect的构造函数
+ *
+ * @param widget 设置动画绑定的对象
+ * @param parent
+ */
 DTickEffect::DTickEffect(QWidget *widget, QWidget *parent)
     : QGraphicsEffect(parent)
     , DObject(*new DTickEffectPrivate(this))
@@ -78,6 +105,10 @@ void DTickEffect::draw(QPainter *painter)
     painter->drawPixmap(offset, pixmap);
 }
 
+/*!
+ * \~chinese \brief 开始播放
+ *
+ */
 void DTickEffect::play()
 {
     D_D(DTickEffect);
@@ -87,6 +118,10 @@ void DTickEffect::play()
     Q_EMIT stateChanged();
 }
 
+/*!
+ * \~chinese \brief 停止播放
+ *
+ */
 void DTickEffect::stop()
 {
     D_D(DTickEffect);
@@ -96,6 +131,10 @@ void DTickEffect::stop()
     Q_EMIT stateChanged();
 }
 
+/*!
+ * \~chinese \brief 暂停播放
+ *
+ */
 void DTickEffect::pause()
 {
     D_D(DTickEffect);
@@ -105,6 +144,10 @@ void DTickEffect::pause()
     Q_EMIT stateChanged();
 }
 
+/*!
+ * \~chinese \brief 恢复播放
+ *
+ */
 void DTickEffect::resume()
 {
     D_D(DTickEffect);
@@ -114,6 +157,11 @@ void DTickEffect::resume()
     Q_EMIT stateChanged();
 }
 
+/*!
+ * \~chinese \brief 设置滚动的方向
+ *
+ * @param direction
+ */
 void DTickEffect::setDirection(DTickEffect::Direction direction)
 {
     D_D(DTickEffect);
@@ -126,6 +174,11 @@ void DTickEffect::setDirection(DTickEffect::Direction direction)
     d->initDirection();
 }
 
+/*!
+ * \~chinese \brief 设置滚动的时长
+ *
+ * @param duration
+ */
 void DTickEffect::setDuration(const int duration)
 {
     D_D(DTickEffect);
