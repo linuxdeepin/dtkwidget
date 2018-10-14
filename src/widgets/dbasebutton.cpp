@@ -21,17 +21,29 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
- * \class DBaseButton
- * \brief The DBaseButton class provides deepin style QPushButton.
+ * \~english \class DBaseButton
+ * \~english \brief The DBaseButton class provides deepin style QPushButton.
  *
- * DBaseButton will be deprecated and removed in the future, please use
- * QPushButton, together with dstyle Qt style plugin, QPushButton should have
- * the same visual effect as DBaseButton.
+ * \~english DBaseButton will be deprecated and removed in the future, please use
+ * \~english QPushButton, together with dstyle Qt style plugin, QPushButton should have
+ * \~english the same visual effect as DBaseButton.
  */
 
 /*!
- * \brief DBaseButton::DBaseButton constructs an instance of DBaseButton.
- * \param parent is passed to QPushButton constructor.
+ * \~chinese \class DBaseButton
+ * \~chinese \brief DBaseButton 提供 deepin 风格的 QPushButton。
+ *
+ * \~chinese DBaseButton 将来会被弃用并删除，请使用 QPushButton
+ */
+
+/*!
+ * \~english \brief DBaseButton::DBaseButton constructs an instance of DBaseButton.
+ * \~english \param parent is passed to QPushButton constructor.
+ */
+
+/*!
+ * \~chinese \brief DBaseButton 的构造函数
+ * \~chinese \param parent
  */
 DBaseButton::DBaseButton(QWidget *parent) :
     QPushButton(parent)
@@ -42,9 +54,15 @@ DBaseButton::DBaseButton(QWidget *parent) :
 }
 
 /*!
- * \brief DBaseButton::DBaseButton constructs an instance of DBaseButton.
- * \param text is passed to QPushButton constructor.
- * \param parent is passed to QPushButton constructor.
+ * \~english \brief DBaseButton::DBaseButton constructs an instance of DBaseButton.
+ * \~english \param text is passed to QPushButton constructor.
+ * \~english \param parent is passed to QPushButton constructor.
+ */
+
+/*!
+ * \~chinese \brief DBaseButton 的重载构造函数
+ * \~chinese \param text 用于初始化文本内容
+ * \~chinese \param
  */
 DBaseButton::DBaseButton(const QString &text, QWidget *parent) :
     QPushButton(text, parent)
@@ -55,10 +73,17 @@ DBaseButton::DBaseButton(const QString &text, QWidget *parent) :
 }
 
 /*!
- * \brief DBaseButton::DBaseButton constructs an instance of DBaseButton.
- * \param icon is passed to QPushButton constructor.
- * \param text is passed to QPushButton constructor.
- * \param parent is passed to QPushButton constructor.
+ * \~english \brief DBaseButton::DBaseButton constructs an instance of DBaseButton.
+ * \~english \param icon is passed to QPushButton constructor.
+ * \~english \param text is passed to QPushButton constructor.
+ * \~english \param parent is passed to QPushButton constructor.
+ */
+
+/*!
+ * \~chinese \brief DBaseButton 的重载构造函数
+ * \~chinese \param icon 初始化图标
+ * \~chinese \param text 初始化文本内容
+ * \~chinese \param parent
  */
 DBaseButton::DBaseButton(const QIcon &icon, const QString &text, QWidget *parent) :
     QPushButton(icon, text, parent)
