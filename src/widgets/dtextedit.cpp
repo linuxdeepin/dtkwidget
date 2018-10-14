@@ -44,6 +44,11 @@ void DTextEditPrivate::init()
     q->setHorizontalScrollBar(new DScrollBar);
 }
 
+/*!
+ * \~chinese \brief DTextEdit
+ * \~chinese DTextEdit 提供 deepin 风格的多行编辑控件，是 QTextEdit 的子类。
+ */
+
 DTextEdit::DTextEdit(QWidget *parent) :
     QTextEdit(parent),
     DObject(*new DTextEditPrivate(this))
