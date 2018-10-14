@@ -76,24 +76,46 @@ class DSliderPrivate
 
 
 /*!
- * \class DSlider
- * \brief The DSlider class provides an extended QSlider widget.
+ * \~english \class DSlider
+ * \~english \brief The DSlider class provides an extended QSlider widget.
  *
- * DSlider has optional vernier type handle type, scale marks that can be placed at
- * any position and corresponding scale tips.
+ * \~english DSlider has optional vernier type handle type, scale marks that can be placed at
+ * \~english any position and corresponding scale tips.
  *
- * DSlider also supports showing texts, value of the slider, when
- * user hovers on the slider handle.
+ * \~english DSlider also supports showing texts, value of the slider, when
+ * \~english user hovers on the slider handle.
  *
- * \note This class relies on dstyle Qt style plugin to work properly.
+ * \~english \note This class relies on dstyle Qt style plugin to work properly.
  *
- * \note This class is not working very well while orientation is set to vertical.
+ * \~english \note This class is not working very well while orientation is set to vertical.
  */
 
+/*!
+ * \~chinese \class DSlider
+ * \~chinese \brief DSlider 是基于 QSlider 之上扩展的控件。
+ *
+ * \~chinese 当用户将鼠标悬停在滑块手柄上时，DSlider 还支持显示文本，滑块的值。
+ *
+ * \~chinese \note 这个类依赖于 dstyle Qt 样式插件才能正常工作。
+ *
+ * \~chinese \note 当方向设置垂直时，不能很好的工作。
+ */
 
 /*!
- * \brief DSlider::DSlider constructs an instance of DSlider.
- * \param parent is passed to QSlider constructor.
+ * \~chinese \enum HandleType
+ * \~chinese \brief DSlider可以使用的句柄类型。
+ * \~chinese \var HandleType SharpHandler 箭头滑块
+ * \~chinese \var HandleType RoundHandle 圆形滑块
+ */
+
+/*!
+ * \~english \brief DSlider::DSlider constructs an instance of DSlider.
+ * \~english \param parent is passed to QSlider constructor.
+ */
+
+/*!
+ * \~chinese \brief DSlider 构造函数
+ * \~chinese \param parent
  */
 DSlider::DSlider(QWidget *parent) :
     QSlider(parent),
@@ -103,9 +125,15 @@ DSlider::DSlider(QWidget *parent) :
 }
 
 /*!
- * \brief DSlider::DSlider constructs an instance of DSlider.
- * \param orientation is passed to QSlider constructor.
- * \param parent is passed to QSldier constructor.
+ * \~english \brief DSlider::DSlider constructs an instance of DSlider.
+ * \~english \param orientation is passed to QSlider constructor.
+ * \~english \param parent is passed to QSldier constructor.
+ */
+
+/*!
+ * \~chinese \brief DSlider 的重载构造函数
+ * \~chinese \param orientation 初始化方向
+ * \~chinese \param parent
  */
 DSlider::DSlider(Qt::Orientation orientation, QWidget *parent) :
     QSlider(orientation, parent),
@@ -120,10 +148,17 @@ DSlider::~DSlider()
 }
 
 /*!
- * \property DSlider::handleType
- * \brief This property holds the handle type used by this slider.
+ * \~english \property DSlider::handleType
+ * \~english \brief This property holds the handle type used by this slider.
  *
- * Default value is DSlider::RoundHandle.
+ * \~english Default value is DSlider::RoundHandle.
+ */
+
+/*!
+ * \~chinese \property DSlider::handleType
+ * \~chinese \brief 滑块句柄类型
+ *
+ * \~chinese 默认值是 DSlider::RoundHandle.
  */
 int DSlider::handleType() const
 {
@@ -132,6 +167,9 @@ int DSlider::handleType() const
     return d->m_handleType;
 }
 
+/*!
+ * \~chinese \brief 设置滑块句柄类型
+ */
 void DSlider::setHandleType(HandleType handleType)
 {
     Q_D(DSlider);
@@ -139,7 +177,9 @@ void DSlider::setHandleType(HandleType handleType)
     d->m_handleType = handleType;
 }
 
-
+/*!
+ * \~chinese \brief 显示在滑块右侧的文本
+ */
 QString DSlider::rightTip() const
 {
     Q_D(const DSlider);
@@ -147,6 +187,9 @@ QString DSlider::rightTip() const
     return d->m_rightTip;
 }
 
+/*!
+ * \~chinese \brief 设置滑块右侧的文本
+ */
 void DSlider::setRightTip(const QString &rightTip)
 {
     Q_D(DSlider);
@@ -166,12 +209,16 @@ void DSlider::setRightTip(const QString &rightTip)
 }
 
 /*!
- * \property DSlider::leftTip
- * \brief This property holds the text to be display on the left side of the slider.
+ * \~english \property DSlider::leftTip
+ * \~english \brief This property holds the text to be display on the left side of the slider.
  *
- * DSlider::leftTip and DSlider::rightTip are used to help the user understand
- * how the slider works, for example: leftTip set to Low and rightTip set to High
- * tells the user that drag the handle to left lower the value and vice versa.
+ * \~english DSlider::leftTip and DSlider::rightTip are used to help the user understand
+ * \~english how the slider works, for example: leftTip set to Low and rightTip set to High
+ * \~english tells the user that drag the handle to left lower the value and vice versa.
+ */
+
+/*!
+ * \~chinese \brief 显示在滑块左侧的文本
  */
 QString DSlider::leftTip() const
 {
@@ -180,6 +227,9 @@ QString DSlider::leftTip() const
     return d->m_leftTip;
 }
 
+/*!
+ * \~chinese \brief 设置滑块左侧的文本
+ */
 void DSlider::setLeftTip(const QString &leftTip)
 {
     Q_D(DSlider);
@@ -199,8 +249,12 @@ void DSlider::setLeftTip(const QString &leftTip)
 }
 
 /*!
- * \property DSlider::scaleColor
- * \brief This property holds the color to paint the scale marks.
+ * \~english \property DSlider::scaleColor
+ * \~english \brief This property holds the color to paint the scale marks.
+ */
+
+/*!
+ * \~chinese \brief 刻度线颜色
  */
 QColor DSlider::scaleColor() const
 {
@@ -209,6 +263,9 @@ QColor DSlider::scaleColor() const
     return d->m_scaleColor;
 }
 
+/*!
+ * \~chinese \brief 设置刻度线颜色
+ */
 void DSlider::setScaleColor(const QColor &scaleColor)
 {
     Q_D(DSlider);
@@ -219,8 +276,8 @@ void DSlider::setScaleColor(const QColor &scaleColor)
 }
 
 /*!
- * \property DSlider::tipColor
- * \brief This property holds the color to paint the scale tips.
+ * \~english \property DSlider::tipColor
+ * \~english \brief This property holds the color to paint the scale tips.
  */
 QColor DSlider::tipColor() const
 {
@@ -239,11 +296,18 @@ void DSlider::setTipColor(const QColor &tipColor)
 }
 
 /*!
- * \brief DSlider::addScale adds a scale mark on the slider.
- * \param value is the position that the scale mark to be added.
+ * \~english \brief DSlider::addScale adds a scale mark on the slider.
+ * \~english \param value is the position that the scale mark to be added.
  *
- * The scale added can be removed using DSlider::removeScale passing the
- * value as the parameter.
+ * \~english The scale added can be removed using DSlider::removeScale passing the
+ * \~english value as the parameter.
+ */
+
+/*!
+ * \~chinese \brief 添加刻度标记
+ * \~chinese \param value 是要添加刻度标记的位置
+ *
+ * \~chinese 可以使用 DSlider::removeScale 删除刻度标记。
  */
 void DSlider::addScale(int value)
 {
@@ -259,8 +323,12 @@ void DSlider::addScale(int value)
 }
 
 /*!
- * \brief DSlider::removeScale removes a scale mark on the slider.
- * \param value is the value used to add the scale mark.
+ * \~english \brief DSlider::removeScale removes a scale mark on the slider.
+ * \~english \param value is the value used to add the scale mark.
+ */
+
+/*!
+ * \~english \brief 删除滑块上的刻度标记。
  */
 void DSlider::removeScale(int value)
 {
@@ -433,9 +501,13 @@ QSize DSlider::sizeHint() const
 }
 
 /*!
- * \property DSlider::hoverShowValue
- * \brief This property holds whether the value should be displayed when user
- * hovers on the slider handle.
+ * \~english \property DSlider::hoverShowValue
+ * \~english \brief This property holds whether the value should be displayed when user
+ * \~english hovers on the slider handle.
+ */
+
+/*!
+ * \~chinese \brief 是否显示鼠标悬停在滑块上的值。
  */
 bool DSlider::hoverShowValue() const
 {
@@ -445,8 +517,12 @@ bool DSlider::hoverShowValue() const
 }
 
 /*!
- * \property DSlider::hoverValueColor
- * \brief This property holds the color to be used to display the texts.
+ * \~english \property DSlider::hoverValueColor
+ * \~english \brief This property holds the color to be used to display the texts.
+ */
+
+/*!
+ * \~chinese \brief 鼠标悬停在滑块上提示颜色。
  */
 QColor DSlider::hoverValueColor() const
 {
@@ -456,9 +532,13 @@ QColor DSlider::hoverValueColor() const
 }
 
 /*!
- * \property DSlider::hoverShowValueInterval
- * \brief This property holds the interval of how long the value will be displayed
- * if the user keeps hovering on the slider handle.
+ * \~english \property DSlider::hoverShowValueInterval
+ * \~english \brief This property holds the interval of how long the value will be displayed
+ * \~english if the user keeps hovering on the slider handle.
+ */
+
+/*!
+ * \~chinese \brief 鼠标悬停在滑块显示值的时间间隔。
  */
 int DSlider::hoverShowValueInterval() const
 {
@@ -467,6 +547,9 @@ int DSlider::hoverShowValueInterval() const
     return d->m_hoverShowValueInterval;
 }
 
+/*!
+ * \~chinese \brief 设置显示值的时间间隔。
+ */
 void DSlider::setHoverShowValue(bool hoverShowValue)
 {
     Q_D(DSlider);

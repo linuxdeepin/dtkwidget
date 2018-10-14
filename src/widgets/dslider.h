@@ -36,12 +36,9 @@ class LIBDTKWIDGETSHARED_EXPORT DSlider : public QSlider
     Q_PROPERTY(int hoverShowValueInterval READ hoverShowValueInterval WRITE setHoverShowValueInterval)
 
 public:
-    /*!
-     * \brief The HandleType enum contains the handle types can be used by DSlider.
-     */
     enum HandleType {
-        SharpHandler, /*!< Rectangle with one side replaced by an arrow, like handle on verniers */
-        RoundHandle /*!< Round shape handle */
+        SharpHandler,
+        RoundHandle
     };
 
     DSlider(QWidget *parent = 0);
