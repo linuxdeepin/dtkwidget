@@ -46,23 +46,16 @@ class LIBDTKWIDGETSHARED_EXPORT DArrowRectangle : public QWidget, public DTK_COR
 
 public:
 
-    /**
-     * @brief The ArrowDirection enum contains the possible directions that
-     * the DArrowRectangle's arrow may point to.
-     */
     enum ArrowDirection {
-        ArrowLeft, /*!< indicates the arrow of this rectangle will point left */
-        ArrowRight, /*!< indicates the arrow of this rectangle will point right */
-        ArrowTop, /*!< indicates the arrow of this rectangle will point up */
-        ArrowBottom /*!< indicates the arrow of this rectangle will point down */
+        ArrowLeft,
+        ArrowRight,
+        ArrowTop,
+        ArrowBottom
     };
 
-    /*!
-     * \brief The FloatMode enum decide the WindowType when DArrowRectangle show
-     */
     enum FloatMode {
-        FloatWindow, /*!< Window will show a separate window */
-        FloatWidget, /*!< Widget must by show in the rect of parentWidget*/
+        FloatWindow,
+        FloatWidget,
     };
 
     explicit DArrowRectangle(ArrowDirection direction, QWidget *parent = 0);

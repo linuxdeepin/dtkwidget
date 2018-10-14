@@ -31,19 +31,90 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
- * \class DArrowRectangle
- * \brief The DArrowRectangle class provides a widget that has an arrow on one
- * of its four borders.
+ * \~english \class DArrowRectangle
+ * \~english \brief The DArrowRectangle class provides a widget that has an arrow on one
+ * \~english of its four borders.
  *
- * It's usually used as a container of some other widgets,
- * see DArrowRectangle::setContent()
+ * \~english It's usually used as a container of some other widgets,
+ * \~english see DArrowRectangle::setContent()
  */
 
 /*!
- * \brief DArrowRectangle::DArrowRectangle constructs an instance of DArrowRectangle.
- * \param direction is used to initialize the direction of which the arrow
- * points to.
- * \param parent is the parent widget the arrow rectangle will be attached to.
+ * \~chinese \class DArrowRectangle
+ * \~chinese \brief DArrowRectangle 提供了可以在四个边中的任意一个边显示箭头的矩形控件
+ *
+ * \~chinese 通常用于作为其他控件的容器，将其显示在矩形内作为内容控件
+ * \~chinese \sa DArrowRectangle::setContent()
+ */
+
+
+
+
+
+/**
+ * \~english \enum DArrowRectangle::ArrowDirection
+ * \~english \brief The ArrowDirection enum contains the possible directions that
+ * \~english the DArrowRectangle's arrow may point to.
+ * \~english \var DArrowRectangle::ArrowDirection DArrowRectangle::ArrowLeft
+ * \~english indicates the arrow of this rectangle will point left
+ * \~english \var DArrowRectangle::ArrowDirection DArrowRectangle::ArrowRight
+ * \~english indicates the arrow of this rectangle will point right
+ * \~english \var DArrowRectangle::ArrowDirection DArrowRectangle::ArrowTop
+ * \~english indicates the arrow of this rectangle will point up
+ * \~english \var DArrowRectangle::ArrowDirection DArrowRectangle::ArrowBottom
+ * \~english indicates the arrow of this rectangle will point down
+ */
+
+/**
+ * \~chinese \enum DArrowRectangle::ArrowDirection
+ * \~chinese \brief 箭头方向枚举包含 DArrowRectangle 的箭头可能指向的可能方向
+ * \~chinese \var DArrowRectangle::ArrowDirection DArrowRectangle::ArrowLeft
+ * \~chinese 指示此矩形的箭头将指向左侧
+ * \~chinese \var DArrowRectangle::ArrowDirection DArrowRectangle::ArrowRight
+ * \~chinese 指示此矩形的箭头将指向右侧
+ * \~chinese \var DArrowRectangle::ArrowDirection DArrowRectangle::ArrowTop
+ * \~chinese 指示此矩形的箭头将指向上方
+ * \~chinese \var DArrowRectangle::ArrowDirection DArrowRectangle::ArrowBottom
+ * \~chinese 指示此矩形的箭头将向下指向
+ */
+
+/*!
+ * \~english \enum DArrowRectangle::FloatMode
+ * \~english \brief The FloatMode enum decide the WindowType when DArrowRectangle show
+ * \~english \var DArrowRectangle::FloatMode DArrowRectangle::FloatWindow
+ * \~english Window will show a separate window
+ * \~english \var DArrowRectangle::FloatMode DArrowRectangle::FloatWidget
+ * \~english Widget must by show in the rect of parentWidget
+ */
+
+/*!
+ * \~chinese \enum DArrowRectangle::FloatMode
+ * \~chinese \brief FloatMode 表示不同的控件的浮动模式
+ *
+ * \~chinese 控件的浮动模式表示控件如何显示在布局中，DArrowRectangle::FloatWindow 表示控件将会以一个单独的窗口显示，而 DArrowRectangle::FloatWidget 则表示控件只能显示在其父控件的布局中，不能超出父控件大小
+ *
+ * \~chinese \var DArrowRectangle::FloatMode DArrowRectangle::FloatWindow
+ * \~chinese 窗口模式
+ * \~chinese \var DArrowRectangle::FloatMode DArrowRectangle::FloatWidget
+ * \~chinese 控件模式
+ */
+
+
+
+
+
+
+/*!
+ * \~english \brief DArrowRectangle::DArrowRectangle constructs an instance of DArrowRectangle.
+ * \~english \param direction is used to initialize the direction of which the arrow
+ * \~english points to.
+ * \~english \param parent is the parent widget the arrow rectangle will be attached to.
+ */
+
+/*!
+ * \~chinese \brief 获取 DArrowRectangle 实例
+ * \~chinese \param direction 用于初始化箭头的方向
+ * \~chinese \param parent 作为其父控件
  */
 DArrowRectangle::DArrowRectangle(ArrowDirection direction, QWidget *parent) :
     QWidget(parent),
@@ -55,11 +126,19 @@ DArrowRectangle::DArrowRectangle(ArrowDirection direction, QWidget *parent) :
 }
 
 /*!
- * \brief DArrowRectangle::DArrowRectangle can set DArrowRectangle show as a window or
- * a widget in parentWidget by floatMode
- * \param direction
- * \param floatMode
- * \param parent
+ * \~english \brief DArrowRectangle::DArrowRectangle can set DArrowRectangle show as a window or
+ * \~english a widget in parentWidget by floatMode
+ * \~english \param direction
+ * \~english \param floatMode
+ * \~english \param parent
+ */
+
+/*!
+ * \~chinese \brief 获取 DArrowRectangle 实例，并指定浮动模式
+ * \~chinese \param direction 用于初始化箭头的方向
+ * \~chinese \param floatMode
+ * \~chinese \param parent 作为其父控件
+ * \~chinese \sa DArrowRectangle::FloatMode
  */
 DArrowRectangle::DArrowRectangle(ArrowDirection direction, FloatMode floatMode, QWidget *parent) :
     QWidget(parent),
@@ -72,13 +151,22 @@ DArrowRectangle::DArrowRectangle(ArrowDirection direction, FloatMode floatMode, 
 
 
 /*!
- * \brief DArrowRectangle::show shows the widget at the given coordinate.
+ * \~english \brief DArrowRectangle::show shows the widget at the given coordinate.
  *
- * \note The coordiate is calculated to be the arrow head's position, so you
- * don't need to calculate the position yourself.
+ * \~english \note The coordiate is calculated to be the arrow head's position, so you
+ * \~english don't need to calculate the position yourself.
  *
- * \param x is the x coordinate of the arrow head.
- * \param y is the y coordinate of the arrow head.
+ * \~english \param x is the x coordinate of the arrow head.
+ * \~english \param y is the y coordinate of the arrow head.
+ */
+
+/*!
+ * \~chinese \brief 在指定的坐标位置显示本控件
+ *
+ * \~chinese \note 坐标被计算为箭头的位置，所以你不需要自己计算箭头位置
+ *
+ * \~chinese \param x 控件箭头的x轴坐标
+ * \~chinese \param y 控件箭头的y轴坐标
  */
 void DArrowRectangle::show(int x, int y)
 {
@@ -88,8 +176,13 @@ void DArrowRectangle::show(int x, int y)
 }
 
 /*!
- * \brief DArrowRectangle::setContent sets the content of the arrow rectangle.
- * \param content
+ * \~english \brief DArrowRectangle::setContent sets the content of the arrow rectangle.
+ * \~english \param content
+ */
+
+/*!
+ * \~chinese \brief 设置要显示在矩形内的内容控件
+ * \~chinese \param 要显示内容控件
  */
 void DArrowRectangle::setContent(QWidget *content)
 {
@@ -99,8 +192,8 @@ void DArrowRectangle::setContent(QWidget *content)
 }
 
 /*!
- * \brief DArrowRectangle::getContent
- * \return the content that the arrow rectangle holds, null if not set.
+ * \~english \brief 获取内容控件
+ * \~english \return 正在显示的内容控件
  */
 QWidget *DArrowRectangle::getContent() const
 {
@@ -110,8 +203,12 @@ QWidget *DArrowRectangle::getContent() const
 }
 
 /*!
- * \brief DArrowRectangle::resizeWithContent automatically adjust the rectangle's
- * size to fit the its content.
+ * \~english \brief DArrowRectangle::resizeWithContent automatically adjust the rectangle's
+ * \~english size to fit the its content.
+ */
+
+/*!
+ * \~chinese \brief 根据内容控件的大小自动设置矩形控件的大小
  */
 void DArrowRectangle::resizeWithContent()
 {
@@ -121,8 +218,13 @@ void DArrowRectangle::resizeWithContent()
 }
 
 /*!
- * \brief DArrowRectangle::getFixedSize
- * \return the size of the whole widget.
+ * \~english \brief DArrowRectangle::getFixedSize
+ * \~english \return the size of the whole widget.
+ */
+
+/*!
+ * \~chinese \brief 获取整个矩形控件的大小
+ * \~chinese \return 矩形控件的大小
  */
 QSize DArrowRectangle::getFixedSize()
 {
@@ -147,15 +249,26 @@ QSize DArrowRectangle::getFixedSize()
 }
 
 /*!
- * \brief DArrowRectangle::move moves the widget to the coordinate that provided,
+ * \~english \brief DArrowRectangle::move moves the widget to the coordinate that provided,
  *
- * Like the rules in DArrowRectangle::show(int x, int y), it moves the widget so
- * that the arrow head's coordinate matches the one that provided.
+ * \~english Like the rules in DArrowRectangle::show(int x, int y), it moves the widget so
+ * \~english that the arrow head's coordinate matches the one that provided.
  *
- * \param x is the x coordinate of the arrow head.
- * \param y is the y coordinate of the arrow head.
+ * \~english \param x is the x coordinate of the arrow head.
+ * \~english \param y is the y coordinate of the arrow head.
  *
- * \see DArrowRectangle::show(int x, int y)
+ * \~english \see DArrowRectangle::show(int x, int y)
+ */
+
+/*!
+ * \~chinese \brief 移动到指定的坐标位置
+ *
+ * \~chinese 参数的作用类似于 DArrowRectangle::show , 移动整个控件直到箭头出现在参数中指定的坐标
+ *
+ * \~chinese \param x 控件箭头的x轴坐标
+ * \~chinese \param y 控件箭头的y轴坐标
+ *
+ * \~chinese \sa DArrowRectangle::show
  */
 void DArrowRectangle::move(int x, int y)
 {
@@ -212,8 +325,16 @@ const QRect DArrowRectanglePrivate::currentScreenRect(const int x, const int y)
 }
 
 /*!
- * \property DArrowRectangle::shadowYOffset
- * \brief the offset of the widget and its shadow on y axis.
+ * \~english \property DArrowRectangle::shadowYOffset
+ * \~english \brief the offset of the widget and its shadow on y axis.
+ */
+
+/*!
+ * \~chinese \property DArrowRectangle::shadowYOffset
+ * \~chinese \brief 这属性表示小部件及其阴影在y轴上的偏移量
+ *
+ * \~chinese Getter: DArrowRectangle::shadowYOffset Setter: DArrowRectangle::setShadowYOffset
+ * \~chinese \sa DArrowRectangle::shadowXOffset
  */
 qreal DArrowRectangle::shadowYOffset() const
 {
@@ -222,6 +343,9 @@ qreal DArrowRectangle::shadowYOffset() const
     return d->m_shadowYOffset;
 }
 
+/**
+ * \~chinese \sa DArrowRectangle::shadowYOffset
+ */
 void DArrowRectangle::setShadowYOffset(const qreal &shadowYOffset)
 {
     D_D(DArrowRectangle);
@@ -234,8 +358,16 @@ void DArrowRectangle::setShadowYOffset(const qreal &shadowYOffset)
 }
 
 /*!
- * \property DArrowRectangle::shadowXOffset
- * \brief the offset of the widget and its shadow on x axis.
+ * \~english \property DArrowRectangle::shadowXOffset
+ * \~english \brief the offset of the widget and its shadow on x axis.
+ */
+
+/*!
+ * \~chinese \property DArrowRectangle::shadowXOffset
+ * \~chinese \brief 这属性表示小部件及其阴影在x轴上的偏移量
+ *
+ * \~chinese Getter: DArrowRectangle::shadowXOffset Setter: DArrowRectangle::setShadowXOffset
+ * \~chinese \sa DArrowRectangle::shadowYOffset
  */
 qreal DArrowRectangle::shadowXOffset() const
 {
@@ -244,6 +376,9 @@ qreal DArrowRectangle::shadowXOffset() const
     return d->m_shadowXOffset;
 }
 
+/**
+ * \~chinese \sa DArrowRectangle::shadowXOffset
+ */
 void DArrowRectangle::setShadowXOffset(const qreal &shadowXOffset)
 {
     D_D(DArrowRectangle);
@@ -256,8 +391,16 @@ void DArrowRectangle::setShadowXOffset(const qreal &shadowXOffset)
 }
 
 /*!
- * \property DArrowRectangle::shadowBlurRadius
- * \brief This property holds the blur radius of the widget's shadow.
+ * \~english \property DArrowRectangle::shadowBlurRadius
+ * \~english \brief This property holds the blur radius of the widget's shadow.
+ */
+
+/*!
+ * \~chinese \property DArrowRectangle::shadowBlurRadius
+ * \~chinese \brief 这个属性保存小部件阴影的模糊半径
+ *
+ * \~chinese Getter: DArrowRectangle::shadowBlurRadius Setter: DArrowRectangle::setShadowBlurRadius
+ * \~chinese \sa DArrowRectangle::shadowBlurRadius
  */
 qreal DArrowRectangle::shadowBlurRadius() const
 {
@@ -266,6 +409,9 @@ qreal DArrowRectangle::shadowBlurRadius() const
     return d->m_shadowBlurRadius;
 }
 
+/*!
+ * \~chinese \sa DArrowRectangle::setShadowBlurRadius
+ */
 void DArrowRectangle::setShadowBlurRadius(const qreal &shadowBlurRadius)
 {
     D_D(DArrowRectangle);
@@ -278,8 +424,15 @@ void DArrowRectangle::setShadowBlurRadius(const qreal &shadowBlurRadius)
 }
 
 /*!
- * \property DArrowRectangle::borderColor
- * \brief This property holds the border color of this widget.
+ * \~english \property DArrowRectangle::borderColor
+ * \~english \brief This property holds the border color of this widget.
+ */
+
+/*!
+ * \~chinese \property DArrowRectangle::borderColor
+ * \~chinese \brief 这个属性表示控件边框的颜色
+ *
+ * \~chinese Getter: DArrowRectangle::borderColor , Setter: DArrowRectangle::setBorderColor
  */
 QColor DArrowRectangle::borderColor() const
 {
@@ -288,6 +441,9 @@ QColor DArrowRectangle::borderColor() const
     return d->m_borderColor;
 }
 
+/*!
+ * \~chinese \sa DArrowRectangle::borderColor
+ */
 void DArrowRectangle::setBorderColor(const QColor &borderColor)
 {
     D_D(DArrowRectangle);
@@ -300,8 +456,15 @@ void DArrowRectangle::setBorderColor(const QColor &borderColor)
 }
 
 /*!
- * \property DArrowRectangle::borderWidth
- * \brief This property holds the border width of this widget.
+ * \~english \property DArrowRectangle::borderWidth
+ * \~english \brief This property holds the border width of this widget.
+ */
+
+/*!
+ * \~chinese \property DArrowRectangle::borderWidth
+ * \~chinese \brief 这个属性表示控件边框的宽度
+ *
+ * \~chinese Getter: DArrowRectangle::borderWidth , Setter: DArrowRectangle::setBorderWidth
  */
 int DArrowRectangle::borderWidth() const
 {
@@ -310,6 +473,9 @@ int DArrowRectangle::borderWidth() const
     return d->m_borderWidth;
 }
 
+/*!
+ * \~chinese \sa DArrowRectangle::borderWidth
+ */
 void DArrowRectangle::setBorderWidth(int borderWidth)
 {
     D_D(DArrowRectangle);
@@ -322,8 +488,15 @@ void DArrowRectangle::setBorderWidth(int borderWidth)
 }
 
 /*!
- * \property DArrowRectangle::backgroundColor
- * \brief the background color of this rectangle.
+ * \~english \property DArrowRectangle::backgroundColor
+ * \~english \brief the background color of this rectangle.
+ */
+
+/*!
+ * \~chinese \property DArrowRectangle::backgroundColor
+ * \~chinese \brief 这个属性表示矩形控件的背景颜色
+ *
+ * \~chinese Getter: DArrowRectangle::backgroundColor , Setter: DArrowRectangle::setBackgroundColor
  */
 QColor DArrowRectangle::backgroundColor() const
 {
@@ -333,8 +506,15 @@ QColor DArrowRectangle::backgroundColor() const
 }
 
 /*!
- * \property DArrowRectangle::arrowDirection
- * \brief This property holds the direction of the rectangle's arrow points to.
+ * \~english \property DArrowRectangle::arrowDirection
+ * \~english \brief This property holds the direction of the rectangle's arrow points to.
+ */
+
+/*!
+ * \~chinese \property DArrowRectangle::arrowDirection
+ * \~chinese \brief 这个属性表示箭头的方向
+ *
+ * \~chinese Getter: DArrowRectangle::arrowDirection , Setter: DArrowRectangle::setArrowDirection
  */
 DArrowRectangle::ArrowDirection DArrowRectangle::arrowDirection() const
 {
@@ -344,9 +524,7 @@ DArrowRectangle::ArrowDirection DArrowRectangle::arrowDirection() const
 }
 
 /*!
- * \brief DArrowRectangle::setBackgroundColor sets the background color of
- * this widget.
- * \param backgroundColor is the target background color.
+ * \~chinese \sa DArrowRectangle::backgroundColor
  */
 void DArrowRectangle::setBackgroundColor(const QColor &backgroundColor)
 {
@@ -375,12 +553,21 @@ void DArrowRectangle::setBackgroundColor(const QColor &backgroundColor)
 }
 
 /*!
- * \brief DArrowRectangle::setBackgroundColor is an overloaded function.
+ * \~english \brief DArrowRectangle::setBackgroundColor is an overloaded function.
  *
- * It sets the background color by modifing the mask color of the
- * Dtk::Widget::DBlurEffectWidget.
+ * \~english It sets the background color by modifing the mask color of the
+ * \~english Dtk::Widget::DBlurEffectWidget.
  *
- * \param type is the mask color to set.
+ * \~english \param type is the mask color to set.
+ */
+
+/*!
+ * \~chinese \brief DArrowRectangle::setBackgroundColor 是一个重载方法
+ *
+ * \~chinese 通过改变 DBlurEffectWidget::MaskColorType 来修改控件矩形的背景
+ *
+ * \~chinese \param type is the mask color to set.
+ * \~chinese \sa DArrowRectangle::backgroundColor and DBlurEffectWidget::MaskColorType
  */
 void DArrowRectangle::setBackgroundColor(DBlurEffectWidget::MaskColorType type)
 {
@@ -392,8 +579,15 @@ void DArrowRectangle::setBackgroundColor(DBlurEffectWidget::MaskColorType type)
 }
 
 /*!
- * \property DArrowRectangle::radius
- * \brief radius of the rectangle
+ * \~english \property DArrowRectangle::radius
+ * \~english \brief radius of the rectangle
+ */
+
+/*!
+ * \~chinese \property DArrowRectangle::radius
+ * \~chinese \brief 这个属性表示矩形的圆角
+ *
+ * \~chinese Getter: DArrowRectangle::radius , Setter: DArrowRectangle::setRadius
  */
 int DArrowRectangle::radius() const
 {
@@ -403,8 +597,16 @@ int DArrowRectangle::radius() const
 }
 
 /*!
- * \property DArrowRectangle::arrowHeight
- * \brief height of rectangle's arrow
+ * \~english \property DArrowRectangle::arrowHeight
+ * \~english \brief height of rectangle's arrow
+ */
+
+/*!
+ * \~chinese \property DArrowRectangle::arrowHeight
+ * \~chinese \brief 这个属性表示箭头的高度
+ *
+ * \~chinese Getter: DArrowRectangle::arrowHeight , Setter: DArrowRectangle::setArrowHeight
+ * \~chinese \sa DArrowRectangle::arrowWidth
  */
 int DArrowRectangle::arrowHeight() const
 {
@@ -414,8 +616,16 @@ int DArrowRectangle::arrowHeight() const
 }
 
 /*!
- * \property DArrowRectangle::arrowWidth
- * \brief width of the rectangle's arrow
+ * \~english \property DArrowRectangle::arrowWidth
+ * \~english \brief width of the rectangle's arrow
+ */
+
+/*!
+ * \~chinese \property DArrowRectangle::arrowWidth
+ * \~chinese \brief 这个属性表示箭头的宽度
+ *
+ * \~chinese Getter: DArrowRectangle::arrowWidth , Setter: DArrowRectangle::setArrowWidth
+ * \~chinese \sa DArrowRectangle::arrowHeight
  */
 int DArrowRectangle::arrowWidth() const
 {
@@ -425,8 +635,16 @@ int DArrowRectangle::arrowWidth() const
 }
 
 /*!
- * \property DArrowRectangle::arrowX
- * \brief the x coordinate of the rectangle's arrow
+ * \~english \property DArrowRectangle::arrowX
+ * \~english \brief the x coordinate of the rectangle's arrow
+ */
+
+/*!
+ * \~chinese \property DArrowRectangle::arrowX
+ * \~chinese \brief 这个属性表示箭头的x轴坐标
+ *
+ * \~chinese Getter: DArrowRectangle::arrowX , Setter: DArrowRectangle::setArrowX
+ * \~chinese \sa DArrowRectangle::arrowY
  */
 int DArrowRectangle::arrowX() const
 {
@@ -436,8 +654,16 @@ int DArrowRectangle::arrowX() const
 }
 
 /*!
- * \property DArrowRectangle::arrowY
- * \brief the y coordinate of the rectangle's arrow
+ * \~english \property DArrowRectangle::arrowY
+ * \~english \brief the y coordinate of the rectangle's arrow
+ */
+
+/*!
+ * \~chinese \property DArrowRectangle::arrowY
+ * \~chinese \brief 这个属性表示箭头的y轴坐标
+ *
+ * \~chinese Getter: DArrowRectangle::arrowY , Setter: DArrowRectangle::setArrowY
+ * \~chinese \sa DArrowRectangle::arrowX
  */
 int DArrowRectangle::arrowY() const
 {
@@ -447,13 +673,22 @@ int DArrowRectangle::arrowY() const
 }
 
 /*!
- * \property DArrowRectangle::margin
- * \brief This property holds the width of the margin
+ * \~english \property DArrowRectangle::margin
+ * \~english \brief This property holds the width of the margin
  *
- * The margin is the distance between the innermost pixel of the rectangle and the
- * outermost pixel of its contents.
+ * \~english The margin is the distance between the innermost pixel of the rectangle and the
+ * \~english outermost pixel of its contents.
  *
- * The default margin is 0.
+ * \~english The default margin is 0.
+ */
+
+/*!
+ * \~chinese \property DArrowRectangle::margin
+ * \~chinese \brief 这个属性表示边距大小
+ *
+ * \~chinese 边距是指矩形最里面的像素与其内容最外面的像素之间的距离
+ * \~chinese Getter: DArrowRectangle::margin , Setter: DArrowRectangle::setMargin
+ * \~chinese \sa DArrowRectangle::margin
  */
 int DArrowRectangle::margin() const
 {
@@ -462,6 +697,9 @@ int DArrowRectangle::margin() const
     return d->m_margin;
 }
 
+/*!
+ * \~chinese \sa DArrowRectangle::arrowDirection
+ */
 void DArrowRectangle::setArrowDirection(ArrowDirection value)
 {
     D_D(DArrowRectangle);
@@ -469,16 +707,29 @@ void DArrowRectangle::setArrowDirection(ArrowDirection value)
     d->m_arrowDirection = value;
 }
 
+/**
+ * \~chinese \brief 设置整个控件固定的宽度
+ * \~chinese
+ * \~chinese \param value 宽度大小
+ */
 void DArrowRectangle::setWidth(int value)
 {
     setFixedWidth(value);
 }
 
+/**
+ * \~chinese \brief 设置整个控件固定的高度
+ * \~chinese
+ * \~chinese \param value 高度大小
+ */
 void DArrowRectangle::setHeight(int value)
 {
     setFixedHeight(value);
 }
 
+/**
+ * \~chinese \sa DArrowRectangle::radius
+ */
 void DArrowRectangle::setRadius(int value)
 {
     D_D(DArrowRectangle);
@@ -486,6 +737,9 @@ void DArrowRectangle::setRadius(int value)
     d->m_radius = value;
 }
 
+/**
+ * \~chinese \sa DArrowRectangle::arrowHeight
+ */
 void DArrowRectangle::setArrowHeight(int value)
 {
     D_D(DArrowRectangle);
@@ -493,6 +747,9 @@ void DArrowRectangle::setArrowHeight(int value)
     d->m_arrowHeight = value;
 }
 
+/**
+ * \~chinese \sa DArrowRectangle::arrowWidth
+ */
 void DArrowRectangle::setArrowWidth(int value)
 {
     D_D(DArrowRectangle);
@@ -500,6 +757,9 @@ void DArrowRectangle::setArrowWidth(int value)
     d->m_arrowWidth = value;
 }
 
+/**
+ * \~chinese \sa DArrowRectangle::arrowX
+ */
 void DArrowRectangle::setArrowX(int value)
 {
     D_D(DArrowRectangle);
@@ -507,6 +767,9 @@ void DArrowRectangle::setArrowX(int value)
     d->m_arrowX = value;
 }
 
+/**
+ * \~chinese \sa DArrowRectangle::arrowY
+ */
 void DArrowRectangle::setArrowY(int value)
 {
     D_D(DArrowRectangle);
@@ -514,6 +777,9 @@ void DArrowRectangle::setArrowY(int value)
     d->m_arrowY = value;
 }
 
+/**
+ * \~chinese \sa DArrowRectangle::margin
+ */
 void DArrowRectangle::setMargin(int value)
 {
     D_D(DArrowRectangle);
