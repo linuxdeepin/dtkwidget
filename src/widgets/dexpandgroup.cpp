@@ -19,16 +19,39 @@
 
 DWIDGET_USE_NAMESPACE
 
+/**
+ * \~chinese \class DExpandGroup
+ * \~chinese \brief 封装了一组 DBaseExpand 的数据类型
+
+ * \~chinese DExpandGroup 是对一组 DBaseExpand 对象的按照键值对形式的封装，提供了简单的新增，获取，移除的方法，用于统一管理多个 DBaseExpand 对象。
+ * \note 请注意，DExpandGroup 并不是控件
+ */
+
+/**
+ * \~chinese \brief 获取类实例
+ * \~chinese
+ * \~chinese \param parent 作为实例的父对象
+ */
 DExpandGroup::DExpandGroup(QObject *parent) : QObject(parent)
 {
 
 }
 
+/**
+ * \~chinese \brief 获取所有可展开控件
+ * \~chinese
+ * \~chinese \return 所有可展开控件组成的列表
+ */
 QList<DBaseExpand *> DExpandGroup::expands() const
 {
     return m_expandMap.values();
 }
 
+/**
+ * \~chinese \brief 获取第一个处于已展开状态的控件
+ * \~chinese
+ * \~chinese \return 已展开状态的控件
+ */
 DBaseExpand *DExpandGroup::checkedExpand() const
 {
     if (m_checkedMap.isEmpty())
@@ -37,11 +60,24 @@ DBaseExpand *DExpandGroup::checkedExpand() const
         return m_checkedMap.first();
 }
 
+/**
+ * \~chinese \brief 获取指定 id 对应的控件
+ * \~chinese
+ * \~chinese \param id 增加控件时指定的的id
+ * \~chinese
+ * \~chinese \return 根据 id 找到的控件
+ */
 DBaseExpand *DExpandGroup::expand(int id) const
 {
     return m_expandMap.value(id);
 }
 
+/**
+ * \~chinese \brief 增加一个控件
+ * \~chinese
+ * \~chinese \param expand 要新增的控件对象
+ * \~chinese \param id 为要新增的控件对象指定id，id 应该是唯一值，如果没有给定 id ，则使用已有列表中最大的id自加1后的值
+ */
 void DExpandGroup::addExpand(DBaseExpand *expand, int id)
 {
     if (m_expandMap.values().indexOf(expand) == -1){
@@ -59,6 +95,12 @@ void DExpandGroup::addExpand(DBaseExpand *expand, int id)
     }
 }
 
+/**
+ * \~chinese \brief 设置指定控件的id
+ * \~chinese
+ * \~chinese \param expand 要设置id的控件
+ * \~chinese \param id 要设置的id
+ */
 void DExpandGroup::setId(DBaseExpand *expand, int id)
 {
     int index = m_expandMap.values().indexOf(expand);
@@ -68,12 +110,22 @@ void DExpandGroup::setId(DBaseExpand *expand, int id)
     }
 }
 
+/**
+ * \~chinese \brief 移除一个控件
+ * \~chinese
+ * \~chinese \param expand 要移除的控件对象
+ */
 void DExpandGroup::removeExpand(DBaseExpand *expand)
 {
     int index = m_expandMap.values().indexOf(expand);
     m_expandMap.remove(m_expandMap.keys().at(index));
 }
 
+/**
+ * \~chinese \brief 返回找到的第一个处于已展开状态的控件的 id
+ * \~chinese
+ * \~chinese \return 如果当前没有处于展开状态的控件则返回 -1
+ */
 int DExpandGroup::checkedId() const
 {
     if (m_checkedMap.isEmpty())
@@ -82,6 +134,13 @@ int DExpandGroup::checkedId() const
         return m_checkedMap.firstKey();
 }
 
+/**
+ * \~chinese \brief 获取指定控件的 id
+ * \~chinese
+ * \~chinese \param expand 指定控件对象
+ * \~chinese
+ * \~chinese \return 指定控件对象的 id
+ */
 int DExpandGroup::id(DBaseExpand *expand) const
 {
     return m_expandMap.keys().at(m_expandMap.values().indexOf(expand));

@@ -52,6 +52,19 @@ void ArrowHeaderLine::reverseArrowDirection()
         m_arrowButton->setArrowDirection(DArrowButton::ArrowUp);
 }
 
+/**
+ * \~chinese \class DArrowLineExpand
+ * \~chinese \brief 一个美观的可展开的控件
+ * \~chinese
+ * \~chinese DArrowLineExpand 继承自 DBaseExpand 并提供了了 ArrowHeaderLine (一个带有箭头标示的按钮)作为其固定的标题控件，也就是说跟 DBaseExpand 相比省去了提供标题控件的步骤，只需要提供内容控件即可，如果需要自定义标题控件应该使用 DBaseExpand 类。
+ * \~chinese \sa  DBaseExpand
+ */
+
+/**
+ * \~chinese \brief 构造一个 DArrowLineExpand 实例
+ * \~chinese
+ * \~chinese \param parent 为实例的父控件
+ */
 DArrowLineExpand::DArrowLineExpand(QWidget *parent) : DBaseExpand(parent)
 {
     m_headerLine = new ArrowHeaderLine(this);
@@ -62,11 +75,21 @@ DArrowLineExpand::DArrowLineExpand(QWidget *parent) : DBaseExpand(parent)
     setHeader(m_headerLine);
 }
 
+/**
+ * \~chinese \brief 设置标题要显示的文字
+ * \~chinese
+ * \~chinese \param title 标题内容
+ */
 void DArrowLineExpand::setTitle(const QString &title)
 {
     m_headerLine->setTitle(title);
 }
 
+/**
+ * \~chinese \brief 设置是否展开以显示内容控件
+ * \~chinese
+ * \~chinese \param value 为 true 即为显示，反之则反
+ */
 void DArrowLineExpand::setExpand(bool value)
 {
     //Header's arrow direction change here
@@ -74,6 +97,11 @@ void DArrowLineExpand::setExpand(bool value)
     DBaseExpand::setExpand(value);
 }
 
+/**
+ * \~chinese \brief 获取标题控件
+ * \~chinese \return 标题控件
+ * \~chinese \sa ArrowHeaderLine DHeaderLine DBaseLine
+ */
 DBaseLine *DArrowLineExpand::headerLine()
 {
     return m_headerLine;
