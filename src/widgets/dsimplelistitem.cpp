@@ -25,6 +25,11 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+/*!
+ * \~chinese \class DSimpleListItem
+ * \~chinese \brief DSimpleListItem 是 DSimpleListView 的接口
+ */
+
 DSimpleListItem::DSimpleListItem()
 {
     
