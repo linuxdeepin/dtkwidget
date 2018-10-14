@@ -53,6 +53,12 @@ private:
     D_DECLARE_PUBLIC(DToast)
 };
 
+/**
+ * \~chinese \class DToast
+ * \~chinese \brief 提供应用内通知的 Tooltip，类似安卓的 Toast。
+ * \~chinese \param parent
+ */
+
 DToast::DToast(QWidget *parent) :
     QFrame(parent), DObject(*new DToastPrivate(this))
 {
@@ -66,30 +72,45 @@ DToast::~DToast()
 
 }
 
+/*!
+ * \~chinese \brief 显示的内容
+ */
 QString DToast::text() const
 {
     D_DC(DToast);
     return d->textLabel->text();
 }
 
+/*!
+ * \~chinese \brief 显示的图标
+ */
 QIcon DToast::icon() const
 {
     D_DC(DToast);
     return d->icon;
 }
 
+/*!
+ * \~chinese \brief 显示时长
+ */
 int DToast::duration() const
 {
     D_DC(DToast);
     return d->duration;
 }
 
+/*!
+ * \~chinese \brief 不透明度
+ */
 qreal DToast::opacity() const
 {
     D_DC(DToast);
     return d->effect->opacity();
 }
 
+/*!
+ * \~chinese \brief 设置文本内容
+ */
 void DToast::setText(QString text)
 {
     D_D(DToast);
@@ -97,6 +118,10 @@ void DToast::setText(QString text)
     d->textLabel->setText(text);
 }
 
+/*!
+ * \~chinese \brief 设置图标
+ * \~chinese \param iconfile 从资源中加载图标
+ */
 void DToast::setIcon(QString iconfile)
 {
     D_D(DToast);
@@ -105,6 +130,11 @@ void DToast::setIcon(QString iconfile)
     d->iconLabel->setPixmap(DHiDPIHelper::loadNxPixmap(iconfile));
 }
 
+/*!
+ * \~chinese \brief 设置图标
+ * \~chinese \param icon QIcon 对象导入图标
+ * \~chinese \param defaultSize 设置图标大小
+ */
 void DToast::setIcon(QIcon icon, QSize defaultSize)
 {
     D_D(DToast);
@@ -113,12 +143,20 @@ void DToast::setIcon(QIcon icon, QSize defaultSize)
     d->iconLabel->setPixmap(d->icon.pixmap(icon.actualSize(defaultSize)));
 }
 
+/*!
+ * \~chinese \brief 设置显示时长
+ * \~chinese \param duration
+ */
 void DToast::setDuration(int duration)
 {
     D_D(DToast);
     d->duration = duration;
 }
 
+/*!
+ * \~chinese \brief 设置不透明度
+ * \~chinese \param opacity
+ */
 void DToast::setOpacity(qreal opacity)
 {
     D_D(DToast);
@@ -126,6 +164,9 @@ void DToast::setOpacity(qreal opacity)
     update();
 }
 
+/*!
+ * \~chinese \brief 弹出
+ */
 void DToast::pop()
 {
     Q_D(DToast);
@@ -154,6 +195,9 @@ void DToast::pop()
     });
 }
 
+/*!
+ * \~chinese \brief 隐藏并销毁
+ */
 void DToast::pack()
 {
     Q_D(DToast);
