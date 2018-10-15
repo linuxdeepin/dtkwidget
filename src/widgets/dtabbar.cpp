@@ -1248,6 +1248,42 @@ QTabBarPrivate *DTabBarPrivate::dd() const
     return reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
 }
 
+/*!
+ * \~chinese \class DTabBar
+ * \~chinese \brief DTabBar 是一个标签栏控件，是在 QTabBar 基础之上进行扩展增强。
+ *
+ * \~chinese 增加了许多特性，比如：新建按钮，支持向外拖放事件...该控件目前被深度编辑器中所使用。
+ */
+
+/*!
+ * \~chinese \fn DTabBar::currentChanged()
+ * \~chinese \brief 当前索引位置改变
+ * \~chinese \fn DTabBar::tabCloseRequested()
+ * \~chinese \brief 点击关闭后发出
+ * \~chinese \fn DTabBar::tabMoved()
+ * \~chinese \brief 索引位置发生变化
+ * \~chinese \fn DTabBar::tabIsInserted()
+ * \~chinese \brief 新标签已插入
+ * \~chinese \fn DTabBar::tabIsRemoved()
+ * \~chinese \brief 标签已删除
+ * \~chinese \fn DTabBar::tabBarClicked()
+ * \~chinese \brief 点击索引标签
+ * \~chinese \fn DTabBar::tabBarDoubleClicked()
+ * \~chinese \brief 双击索引标签
+ * \~chinese \fn DTabBar::tabAddRequested()
+ * \~chinese \brief 新标签加入
+ * \~chinese \fn DTabBar::tabReleaseRequested()
+ * \~chinese \brief 索引标签鼠标释放
+ * \~chinese \fn DTabBar::dragActionChanged()
+ * \~chinese \brief 鼠标形状发生变化
+ * \~chinese \fn DTabBar::tabDroped()
+ * \~chinese \brief 标签拖放
+ * \~chinese \fn DTabBar::dragStarted()
+ * \~chinese \brief 开始拖起
+ * \~chinese \fn DTabBar::dragEnd()
+ * \~chinese \brief 拖放结束
+ */
+
 DTabBar::DTabBar(QWidget *parent)
     : QWidget(parent)
     , DObject(*new DTabBarPrivate(this))
@@ -1255,6 +1291,9 @@ DTabBar::DTabBar(QWidget *parent)
     setAcceptDrops(true);
 }
 
+/*!
+ * \~chinese \brief 设置索引标签的最小尺寸
+ */
 void DTabBar::setTabMinimumSize(int index, const QSize &size)
 {
     D_D(DTabBar);
@@ -1269,6 +1308,9 @@ void DTabBar::setTabMinimumSize(int index, const QSize &size)
     dd->layoutDirty = true;
 }
 
+/*!
+ * \~chinese \brief 设置索引标签的最大尺寸
+ */
 void DTabBar::setTabMaximumSize(int index, const QSize &size)
 {
     D_D(DTabBar);
@@ -1283,6 +1325,9 @@ void DTabBar::setTabMaximumSize(int index, const QSize &size)
     dd->layoutDirty = true;
 }
 
+/*!
+ * \~chinese \brief 新建标签栏按钮是否可见
+ */
 bool DTabBar::visibleAddButton() const
 {
     D_DC(DTabBar);
@@ -1290,11 +1335,17 @@ bool DTabBar::visibleAddButton() const
     return d->visibleAddButton;
 }
 
+/*!
+ * \~chinese \brief 标签栏形状
+ */
 QTabBar::Shape DTabBar::shape() const
 {
     return d_func()->shape();
 }
 
+/*!
+ * \~chinese \brief 设置标签栏形状
+ */
 void DTabBar::setShape(QTabBar::Shape shape)
 {
     D_D(DTabBar);
@@ -1336,82 +1387,131 @@ void DTabBar::setShape(QTabBar::Shape shape)
     }
 }
 
+/*!
+ * \~chinese \brief 添加一个新的标签，返回新标签的索引
+ */
 int DTabBar::addTab(const QString &text)
 {
     return d_func()->addTab(text);
 }
 
+/*!
+ * \~chinese \brief 添加一个新的标签，包含图标、文本
+ */
 int DTabBar::addTab(const QIcon &icon, const QString &text)
 {
     return d_func()->addTab(icon, text);
 }
 
+/*!
+ * \~chinese \brief 插入一个文本标签
+ */
 int DTabBar::insertTab(int index, const QString &text)
 {
     return d_func()->insertTab(index, text);
 }
 
+/*!
+ * \~chinese \brief 插入一个图标文本标签
+ */
 int DTabBar::insertTab(int index, const QIcon &icon, const QString &text)
 {
     return insertTab(index, icon, text);
 }
 
+/*!
+ * \~chinese \brief 移除标签索引位置
+ */
 void DTabBar::removeTab(int index)
 {
     d_func()->removeTab(index);
 }
 
+/*!
+ * \~chinese \brief 移动标签索引位置
+ */
 void DTabBar::moveTab(int from, int to)
 {
     d_func()->moveTab(from, to);
 }
 
+/*!
+ * \~chinese \brief 是否启用标签索引位置
+ */
 bool DTabBar::isTabEnabled(int index) const
 {
     return d_func()->isTabEnabled(index);
 }
 
+/*!
+ * \~chinese \brief 设置标签索引位置启用状态
+ */
 void DTabBar::setTabEnabled(int index, bool enable)
 {
     d_func()->setTabEnabled(index, enable);
 }
 
+/*!
+ * \~chinese \brief 返回标签索引位置文本
+ */
 QString DTabBar::tabText(int index) const
 {
     return d_func()->tabText(index);
 }
 
+/*!
+ * \~chinese \brief 设置标签索引位置文本
+ */
 void DTabBar::setTabText(int index, const QString &text)
 {
     d_func()->setTabText(index, text);
 }
 
+/*!
+ * \~chinese \brief 返回标签索引位置图标
+ */
 QIcon DTabBar::tabIcon(int index) const
 {
     return d_func()->tabIcon(index);
 }
 
+/*!
+ * \~chinese \brief 设置标签索引位置图标
+ */
 void DTabBar::setTabIcon(int index, const QIcon &icon)
 {
     d_func()->setTabIcon(index, icon);
 }
 
+/*!
+ * \~chinese \brief 缩略模式
+ */
 Qt::TextElideMode DTabBar::elideMode() const
 {
     return d_func()->elideMode();
 }
 
+/*!
+ * \~chinese \brief 设置缩略模式
+ */
 void DTabBar::setElideMode(Qt::TextElideMode mode)
 {
     d_func()->setElideMode(mode);
 }
 
 #ifndef QT_NO_TOOLTIP
+
+/*!
+ * \~chinese \brief 设置标签索引位置提示文本
+ */
 void DTabBar::setTabToolTip(int index, const QString &tip)
 {
     d_func()->setTabToolTip(index, tip);
 }
 
+/*!
+ * \~chinese \brief 返回标签索引位置提示文本
+ */
 QString DTabBar::tabToolTip(int index) const
 {
     return d_func()->tabToolTip(index);
@@ -1430,16 +1530,25 @@ QString DTabBar::tabWhatsThis(int index) const
 }
 #endif
 
+/*!
+ * \~chinese \brief 设置标签索引位置数据
+ */
 void DTabBar::setTabData(int index, const QVariant &data)
 {
     d_func()->setTabData(index, data);
 }
 
+/*!
+ * \~chinese \brief 返回标签索引位置数据
+ */
 QVariant DTabBar::tabData(int index) const
 {
     return d_func()->tabData(index);
 }
 
+/*!
+ * \~chinese \brief 返回标签索引位置矩形
+ */
 QRect DTabBar::tabRect(int index) const
 {
     QRect rect = d_func()->tabRect(index);
@@ -1449,16 +1558,25 @@ QRect DTabBar::tabRect(int index) const
     return rect;
 }
 
+/*!
+ * \~chinese \brief 根据位置返回标签索引位置
+ */
 int DTabBar::tabAt(const QPoint &pos) const
 {
     return d_func()->tabAt(d_func()->mapFromParent(pos));
 }
 
+/*!
+ * \~chinese \brief 当前的标签索引位置
+ */
 int DTabBar::currentIndex() const
 {
     return d_func()->currentIndex();
 }
 
+/*!
+ * \~chinese \brief 标签总数
+ */
 int DTabBar::count() const
 {
     return d_func()->count();
@@ -1474,11 +1592,17 @@ bool DTabBar::drawBase() const
     return d_func()->drawBase();
 }
 
+/*!
+ * \~chinese \brief 图标大小
+ */
 QSize DTabBar::iconSize() const
 {
     return d_func()->iconSize();
 }
 
+/*!
+ * \~chinese \brief 设置图标大小
+ */
 void DTabBar::setIconSize(const QSize &size)
 {
     d_func()->setIconSize(size);
@@ -1494,11 +1618,17 @@ void DTabBar::setUsesScrollButtons(bool useButtons)
     d_func()->setUsesScrollButtons(useButtons);
 }
 
+/*!
+ * \~chinese \brief 标签栏是否可关闭
+ */
 bool DTabBar::tabsClosable() const
 {
     return d_func()->tabsClosable();
 }
 
+/*!
+ * \~chinese \brief 设置标签栏是否可关闭
+ */
 void DTabBar::setTabsClosable(bool closable)
 {
     d_func()->setTabsClosable(closable);
@@ -1609,11 +1739,17 @@ QWindow *DTabBar::dragIconWindow() const
     return nullptr;
 }
 
+/*!
+ * \~chinese \brief 设置当前标签索引位置
+ */
 void DTabBar::setCurrentIndex(int index)
 {
     d_func()->setCurrentIndex(index);
 }
 
+/*!
+ * \~chinese \brief 设置新建标签按钮是否显示
+ */
 void DTabBar::setVisibleAddButton(bool visibleAddButton)
 {
     D_D(DTabBar);
@@ -1622,11 +1758,17 @@ void DTabBar::setVisibleAddButton(bool visibleAddButton)
     d->addButton->setVisible(visibleAddButton);
 }
 
+/*!
+ * \~chinese \brief 设置开始拖动距离
+ */
 void DTabBar::setStartDragDistance(int startDragDistance)
 {
     d_func()->startDragDistance = startDragDistance;
 }
 
+/*!
+ * \~chinese \brief 设置颜色
+ */
 void DTabBar::setMaskColor(QColor maskColor)
 {
     d_func()->maskColor = maskColor;
