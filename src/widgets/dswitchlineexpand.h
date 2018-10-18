@@ -27,11 +27,11 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class SwitchHeaderLine : public DHeaderLine
+class DSwitchHeaderLine : public DHeaderLine
 {
     Q_OBJECT
 public:
-    SwitchHeaderLine(QWidget *parent = 0);
+    DSwitchHeaderLine(QWidget *parent = 0);
     void setExpand(bool value);
 
 Q_SIGNALS:
@@ -61,7 +61,7 @@ private:
     void resizeEvent(QResizeEvent *e);
 
 private:
-    SwitchHeaderLine *m_headerLine = NULL;
+    DSwitchHeaderLine *m_headerLine = NULL;
 };
 
 DWIDGET_END_NAMESPACE
