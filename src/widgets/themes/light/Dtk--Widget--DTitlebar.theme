@@ -11,12 +11,10 @@ Dtk--Widget--DWindowCloseButton {
     qproperty-normalPic: url(:/images/light/images/window/close_normal.svg);
     qproperty-hoverPic: url(:/images/light/images/window/close_hover.svg);
     qproperty-pressPic: url(:/images/light/images/window/close_press.svg);
-    padding-right: 6px;
 }
 
 #DTitlebarDWindowQuitFullscreenButton {
     qproperty-normalPic: url(:/images/light/images/window/quit_fullscreen_normal.svg);
     qproperty-hoverPic: url(:/images/light/images/window/quit_fullscreen_hover.svg);
     qproperty-pressPic: url(:/images/light/images/window/quit_fullscreen_press.svg);
-    padding-right: 6px;
 }

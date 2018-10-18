@@ -165,7 +165,7 @@ void DTitlebarPrivate::init()
     separator->setWindowFlags(Qt::WindowTransparentForInput);
 
     QHBoxLayout *buttonAreaLayout = new QHBoxLayout;
-    buttonAreaLayout->setContentsMargins(0, 1, 0, 0);
+    buttonAreaLayout->setContentsMargins(0, 0, 0, 0);
     buttonAreaLayout->setMargin(0);
     buttonAreaLayout->setSpacing(0);
     buttonAreaLayout->addWidget(optionButton);

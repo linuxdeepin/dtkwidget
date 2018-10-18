@@ -25,6 +25,7 @@
 #include <QIcon>
 #include <QApplication>
 #include <QImageReader>
+#include <QDebug>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -609,6 +610,40 @@ DImageButton::State DImageButton::getState() const
     D_DC(DImageButton);
 
     return d->m_state;
+}
+
+/*!
+ * \~chinese \brief QLabel 在计算 sizeHint 时需要考虑当前绘制的是文本、图片还是 QMovie,
+ * \~chinese        但是DImageButton继承 QLabel 只是使用到了它显示图片的功能, 所以直接
+ * \~chinese        将 sizeHint 重写, 当 pixmap 不为空时 sizeHint 即为图片大小, 否则
+ * \~chinese        返回 QLabel::sizeHint 的值
+ * \~chinese \return 返回期望的大小
+ */
+QSize DImageButton::sizeHint() const
+{
+    const QPixmap *p = pixmap();
+
+    if (!p || p->isNull())
+        return QLabel::sizeHint();
+
+    return p->size();
+}
+
+/*!
+ * \~chinese \brief QLabel 在计算 minimumSizeHint 时需要考虑当前绘制的是文本、图片还是
+ * \~chinese        QMovie, 但是DImageButton继承 QLabel 只是使用到了它显示图片的功能,
+ * \~chinese        所以直接将 minimumSizeHint 重写, 当 pixmap 不为空时 minimumSizeHint
+ * \~chinese        即为图片大小, 否则返回 QLabel::minimumSizeHint 的值
+ * \~chinese \return 返回期望的最小大小
+ */
+QSize DImageButton::minimumSizeHint() const
+{
+    const QPixmap *p = pixmap();
+
+    if (!p || p->isNull())
+        return QLabel::minimumSizeHint();
+
+    return p->size();
 }
 
 DImageButton::DImageButton(DImageButtonPrivate &q, QWidget *parent)

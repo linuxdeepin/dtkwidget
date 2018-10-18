@@ -12,10 +12,10 @@
         <file>dark/images/window/menu_hover.svg</file>
         <file>dark/images/window/menu_normal.svg</file>
         <file>dark/images/window/menu_press.svg</file>
-        <file>dark/images/window/minimise_disabled.svg</file>
-        <file>dark/images/window/minimise_hover.svg</file>
-        <file>dark/images/window/minimise_normal.svg</file>
-        <file>dark/images/window/minimise_press.svg</file>
+        <file>dark/images/window/minimize_disabled.svg</file>
+        <file>dark/images/window/minimize_hover.svg</file>
+        <file>dark/images/window/minimize_normal.svg</file>
+        <file>dark/images/window/minimize_press.svg</file>
         <file>dark/images/window/unmaximize_disabled.svg</file>
         <file>dark/images/window/unmaximize_hover.svg</file>
         <file>dark/images/window/unmaximize_normal.svg</file>
@@ -208,10 +208,10 @@
         <file>dark/images/window/menu_hover.svg</file>
         <file>dark/images/window/menu_normal.svg</file>
         <file>dark/images/window/menu_press.svg</file>
-        <file>dark/images/window/minimise_disabled.svg</file>
-        <file>dark/images/window/minimise_hover.svg</file>
-        <file>dark/images/window/minimise_normal.svg</file>
-        <file>dark/images/window/minimise_press.svg</file>
+        <file>dark/images/window/minimize_disabled.svg</file>
+        <file>dark/images/window/minimize_hover.svg</file>
+        <file>dark/images/window/minimize_normal.svg</file>
+        <file>dark/images/window/minimize_press.svg</file>
         <file>dark/images/window/unmaximize_disabled.svg</file>
         <file>dark/images/window/unmaximize_hover.svg</file>
         <file>dark/images/window/unmaximize_normal.svg</file>

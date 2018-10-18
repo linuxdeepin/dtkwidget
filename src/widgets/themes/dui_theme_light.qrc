@@ -138,9 +138,9 @@
         <file>light/images/window/menu_hover.svg</file>
         <file>light/images/window/menu_normal.svg</file>
         <file>light/images/window/menu_press.svg</file>
-        <file>light/images/window/minimise_hover.svg</file>
-        <file>light/images/window/minimise_normal.svg</file>
-        <file>light/images/window/minimise_press.svg</file>
+        <file>light/images/window/minimize_hover.svg</file>
+        <file>light/images/window/minimize_normal.svg</file>
+        <file>light/images/window/minimize_press.svg</file>
         <file>light/images/window/minimize_disabled.svg</file>
         <file>light/images/window/unmaximize_disabled.svg</file>
         <file>light/images/window/unmaximize_hover.svg</file>

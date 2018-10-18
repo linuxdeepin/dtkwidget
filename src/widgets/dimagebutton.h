@@ -81,6 +81,9 @@ public:
     void setState(State state);
     State getState() const;
 
+    QSize sizeHint() const override;
+    QSize minimumSizeHint() const override;
+
 Q_SIGNALS:
     void clicked();
     void checkedChanged(bool checked);
