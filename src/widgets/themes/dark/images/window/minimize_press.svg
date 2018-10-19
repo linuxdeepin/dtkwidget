@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
   <g fill="none" fill-rule="evenodd" transform="translate(-2)">
     <rect width="27" height="23" y="9" fill="#000" fill-opacity=".289" opacity="0"/>
-    <rect width="40" height="40" x="2" fill="#000" fill-opacity=".1" rx="2"/>
+    <rect width="40" height="40" x="2" fill="#000" fill-opacity=".1"/>
     <polygon fill="#2CA7F8" fill-rule="nonzero" points="17.5 20 27.125 20 27.625 20 27.625 19 27.125 19 17.5 19 17 19 17 20"/>
   </g>
 </svg>
