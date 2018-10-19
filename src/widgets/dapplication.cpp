@@ -449,6 +449,8 @@ bool DApplication::setSingleInstance(const QString &key)
 
 /*!
  * \~chinese \brief DApplication::setSingleInstance 是一个重写函数，增加了控制单实例范围的 \a singleScope 参数。
+ * \~chinese        在Linux环境下默认使用DBus的方式实现单例判断，在其它环境或者设置了环境变量 DTK_USE_SEMAPHORE_SINGLEINSTANCE
+ * \~chinese        时使用系统信号量的方式实现单例判断
  * \~chinese \param key 是确定程序唯一性的ID，一般使用程序的二进制名称即可。
  * \~chinese \param singleScope 用于指定单实例的影响范围，具体见 \a DApplication::SingleScope。
  * \~chinese \return 设置成功返回 true，否则返回 false。
@@ -470,7 +472,7 @@ bool DApplication::setSingleInstance(const QString &key, SingleScope singleScope
 #endif
 
 #ifdef Q_OS_UNIX
-    if (qgetenv("DTK_USE_DBUS_SINGLEINSTANCE") == "TRUE") {
+    if (!qEnvironmentVariableIsSet("DTK_USE_SEMAPHORE_SINGLEINSTANCE")) {
         return d->setSingleInstanceByDbus(k);
     }
 #endif
