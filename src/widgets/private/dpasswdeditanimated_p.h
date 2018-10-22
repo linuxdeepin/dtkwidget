@@ -67,6 +67,7 @@ public:
     bool m_submitEnable;
     bool m_loadAnimEnable;
     bool m_isLoading;
+    bool m_alterBeforeHide;
 
     const int LoadSliderWidth = 40;
 };

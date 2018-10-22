@@ -67,6 +67,7 @@ void DPasswdEditAnimatedPrivate::init()
     m_submitEnable = true;
     m_loadAnimEnable = true;
     m_isLoading = false;
+    m_alterBeforeHide = false;
 
     m_keyboard->setObjectName("KeyboardButton");
     m_passwdEdit->setObjectName("PasswdEdit");
@@ -393,6 +394,36 @@ bool DPasswdEditAnimated::eventFilter(QObject *watched, QEvent *event)
     return false;
 }
 
+/*!
+ * \reimp
+ */
+void DPasswdEditAnimated::showEvent(QShowEvent *event)
+{
+    D_D(DPasswdEditAnimated);
+
+    // show alert message if it is visible when widget is hidden
+    if (d->m_alterBeforeHide) {
+        showAlert(d->m_invalidMessage->text());
+    }
+
+    QFrame::showEvent(event);
+}
+
+/*!
+ * \reimp
+ */
+void DPasswdEditAnimated::hideEvent(QHideEvent *event)
+{
+    D_D(DPasswdEditAnimated);
+
+    // remember alert visible before hide
+    d->m_alterBeforeHide = alert();
+
+    hideAlert();
+
+    QFrame::hideEvent(event);
+}
+
 /**
  * \~chinese \brief 显示警告信息。
  *
@@ -409,6 +440,11 @@ void DPasswdEditAnimated::showAlert(const QString &message)
 
     d->m_passwdEdit->selectAll();
     d->m_passwdEdit->setFocus();
+
+    if (isVisible() == false) {
+        d->m_alterBeforeHide = true;
+        return;
+    }
 
     if (!d->m_invalidTip->isVisible()) {
         // focus BUG
