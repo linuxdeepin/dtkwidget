@@ -22,6 +22,7 @@
 #include <QPixmap>
 #include <QWidget>
 #include <QPainter>
+#include <QEvent>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -59,6 +60,7 @@ DTickEffect::DTickEffect(QWidget *widget, QWidget *parent)
     D_D(DTickEffect);
 
     widget->setGraphicsEffect(this);
+    widget->installEventFilter(this);
 
     d->content = widget;
     d->init();
@@ -103,6 +105,17 @@ void DTickEffect::draw(QPainter *painter)
 
     painter->drawPixmap(d->runAnimation->currentValue().toPoint(), pixmap);
     painter->drawPixmap(offset, pixmap);
+}
+
+bool DTickEffect::eventFilter(QObject *watched, QEvent *event)
+{
+    D_D(DTickEffect);
+
+    if (watched == d->content && event->type() == QEvent::Resize) {
+        d->initDirection();
+    }
+
+    return QGraphicsEffect::eventFilter(watched, event);
 }
 
 /*!
@@ -172,6 +185,9 @@ void DTickEffect::setDirection(DTickEffect::Direction direction)
     d->direction = direction;
 
     d->initDirection();
+
+    stop();
+    play();
 }
 
 /*!
@@ -209,8 +225,6 @@ void DTickEffectPrivate::init()
 
 void DTickEffectPrivate::initDirection()
 {
-    D_Q(DTickEffect);
-
     switch (direction) {
     case DTickEffect::LeftToRight:
         runAnimation->setStartValue(QPoint(content->x(), content->y()));
@@ -231,9 +245,6 @@ void DTickEffectPrivate::initDirection()
     default:
         break;
     }
-
-    q->stop();
-    q->play();
 }
 
 DWIDGET_END_NAMESPACE

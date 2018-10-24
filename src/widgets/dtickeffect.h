@@ -53,6 +53,7 @@ Q_SIGNALS:
 
 protected:
     void draw(QPainter *painter) Q_DECL_OVERRIDE;
+    bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
 
 private:
     D_DECLARE_PRIVATE(DTickEffect)
