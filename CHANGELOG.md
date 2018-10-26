@@ -1,3 +1,27 @@
+<a name="2.0.9.5"></a>
+## 2.0.9.5 (2018-10-26)
+
+
+#### Features
+
+*   update check deepin-manual path ([ec41a75f](https://github.com/linuxdeepin/dtkwidget/commit/ec41a75f87e465d3c0d79c81c07a971604728e86))
+*   update version number for expermimental ([9a72d912](https://github.com/linuxdeepin/dtkwidget/commit/9a72d912d8c4a8a9dbb39f08e8bd64bea24e2cb6))
+*   set Qt::AA_ForceRasterWidgets on sw/loongson ([6d8739e2](https://github.com/linuxdeepin/dtkwidget/commit/6d8739e2b38c46978dea6eb31a59c1d3f11fe8b0))
+* **DBlurEffectWidget:**  support set alpha ([a380128e](https://github.com/linuxdeepin/dtkwidget/commit/a380128ede3626b79964f7128c54697f6fd6c637))
+* **DTickEffect:**  keep animation value from widget size changed ([1f8c744b](https://github.com/linuxdeepin/dtkwidget/commit/1f8c744b3c622562c7f86ae213dd6deefe13cd27))
+
+#### Bug Fixes
+
+*   context scroll error ([68ab7294](https://github.com/linuxdeepin/dtkwidget/commit/68ab7294ec93eeb09ffa4cf533f69a01ff072ae7))
+*   run tag script error ([5cdfd2f3](https://github.com/linuxdeepin/dtkwidget/commit/5cdfd2f387d4bfb6c3e463f51cdbef643d036f89))
+*   repair version number error ([3ce05b0e](https://github.com/linuxdeepin/dtkwidget/commit/3ce05b0ef3076fb3a9187cd02ef6422e37c6067a))
+* **DBlurEffectWidget:**  not refresh when update mask alpha ([492b2b93](https://github.com/linuxdeepin/dtkwidget/commit/492b2b93a2ce0b656c4ff9145c74aebb4ff034d8))
+* **DImageButton:**  remove wrong sizehent ([e5cf29f7](https://github.com/linuxdeepin/dtkwidget/commit/e5cf29f793a7fc1469ccec766fe74a39b3ca48d2))
+* **DPasswordEditAnimated:**  alert visible control ([eb55642a](https://github.com/linuxdeepin/dtkwidget/commit/eb55642ac2a8b397f5013d4332c3d88cf5bf98fe))
+* **trashMgr:**  Will remove broken symlink now ([481ba0a0](https://github.com/linuxdeepin/dtkwidget/commit/481ba0a0dc875963d90cca3948029a6e577363fb))
+
+
+
 <a name="2.0.9.3"></a>
 ## 2.0.9.3 (2018-08-23)
 
