@@ -196,7 +196,9 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
                 }
 
                 auto widget = d->widgetFactory->createWidget(translateContext, option);
+
                 if (widget) {
+//                    qDebug() << widget << widget->height();
                     d->contentLayout->addWidget(widget);
                     widget->setParent(d->contentFrame);
                 }

@@ -80,7 +80,7 @@ DSettingsDialog::DSettingsDialog(QWidget *parent) :
     d->rightFrame = new QFrame;
     d->rightFrame->setObjectName("RightFrame");
     d->rightLayout = new QVBoxLayout(d->rightFrame);
-    d->rightLayout->setContentsMargins(1, 5, 5, 0);
+    d->rightLayout->setContentsMargins(1, 0, 0, 0);
     d->rightLayout->setSpacing(0);
 
     d->content = new Content;

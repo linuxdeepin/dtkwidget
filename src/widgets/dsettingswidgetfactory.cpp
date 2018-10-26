@@ -408,6 +408,7 @@ QWidget *createRadioGroupOptionHandle(QObject *opt)
     }
 
     rightWidget->setStyleSheet("QGroupBox{border: none;}");
+    optionWidget->setFixedHeight(24 * items.length() + 8);
     return  optionWidget;
 }
 
