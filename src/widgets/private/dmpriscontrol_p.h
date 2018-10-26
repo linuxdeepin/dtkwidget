@@ -20,15 +20,17 @@
 
 #include <DObjectPrivate>
 
-#include "dmpriscontrol.h"
 #include "dimagebutton.h"
-#include "private/mpris/dmprismonitor.h"
+#include "dmpriscontrol.h"
+#include "dtickeffect.h"
 #include "private/mpris/dbusmpris.h"
+#include "private/mpris/dmprismonitor.h"
+
+#include <QScrollArea>
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DMPRISControlPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
-{
+class DMPRISControlPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate {
     D_DECLARE_PUBLIC(DMPRISControl)
 
 public:
@@ -52,12 +54,14 @@ public Q_SLOTS:
 
 public:
     DMPRISMonitor *m_mprisMonitor;
-    DBusMPRIS *m_mprisInter;
+    DBusMPRIS *    m_mprisInter;
 
-    QLabel *m_title;
-    QLabel *m_picture;
+    QScrollArea *m_titleScrollArea;
+    QLabel *     m_title;
+    QLabel *     m_picture;
+    DTickEffect *m_tickEffect;
 
-    QWidget *m_controlWidget;
+    QWidget *     m_controlWidget;
     DImageButton *m_prevBtn;
     DImageButton *m_playBtn;
     DImageButton *m_pauseBtn;
@@ -65,10 +69,10 @@ public:
 
     bool m_pictureVisible;
 
-    QString m_lastPath;
+    QString     m_lastPath;
     QStringList m_mprisPaths;
 };
 
 DWIDGET_END_NAMESPACE
 
-#endif // DMPRISCONTROL_P_H
+#endif  // DMPRISCONTROL_P_H

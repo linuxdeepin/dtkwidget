@@ -83,9 +83,7 @@ void DMPRISControl::setPictureSize(const QSize &size)
 }
 
 DMPRISControlPrivate::DMPRISControlPrivate(DMPRISControl *q)
-    : DObjectPrivate(q),
-
-      m_mprisInter(nullptr)
+    : DObjectPrivate(q), m_mprisInter(nullptr)
 {
 }
 
@@ -93,22 +91,38 @@ void DMPRISControlPrivate::init()
 {
     D_Q(DMPRISControl);
 
-    m_mprisMonitor = new DMPRISMonitor(q);
+    m_mprisMonitor    = new DMPRISMonitor(q);
+    m_titleScrollArea = new QScrollArea(q);
+    m_title           = new QLabel;
+    m_picture         = new QLabel;
+    m_pictureVisible  = true;
+    m_controlWidget   = new QWidget;
+    m_prevBtn         = new DImageButton;
+    m_pauseBtn        = new DImageButton;
+    m_playBtn         = new DImageButton;
+    m_nextBtn         = new DImageButton;
+    m_tickEffect      = new DTickEffect(m_title, m_title);
 
-    m_title = new QLabel;
     m_title->setAlignment(Qt::AlignCenter);
-    m_picture = new QLabel;
     m_picture->setFixedSize(200, 200);
-    m_pictureVisible = true;
-    m_controlWidget = new QWidget;
-    m_prevBtn = new DImageButton;
     m_prevBtn->setObjectName("PrevBtn");
-    m_pauseBtn = new DImageButton;
     m_pauseBtn->setObjectName("PauseBtn");
-    m_playBtn = new DImageButton;
     m_playBtn->setObjectName("PlayBtn");
-    m_nextBtn = new DImageButton;
     m_nextBtn->setObjectName("NextBtn");
+
+    m_tickEffect->setDirection(DTickEffect::RightToLeft);
+    m_tickEffect->setDuration(3000);
+
+    m_titleScrollArea->setWidget(m_title);
+    m_titleScrollArea->setObjectName("scrollarea");
+    m_titleScrollArea->setWidgetResizable(true);
+    m_titleScrollArea->setFocusPolicy(Qt::NoFocus);
+    m_titleScrollArea->setFrameStyle(QFrame::NoFrame);
+    m_titleScrollArea->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
+    m_titleScrollArea->setContentsMargins(0, 0, 0, 0);
+    m_titleScrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_titleScrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_titleScrollArea->setStyleSheet("background-color:transparent;");
 
 #ifdef QT_DEBUG
     m_title->setText("MPRIS Title");
@@ -130,7 +144,7 @@ void DMPRISControlPrivate::init()
 
 
     QVBoxLayout *centralLayout = new QVBoxLayout;
-    centralLayout->addWidget(m_title);
+    centralLayout->addWidget(m_titleScrollArea);
     centralLayout->addWidget(m_picture);
     centralLayout->setAlignment(m_picture, Qt::AlignCenter);
 //    centralLayout->addLayout(controlLayout);
@@ -183,24 +197,29 @@ void DMPRISControlPrivate::_q_onNextClicked()
 
 void DMPRISControlPrivate::_q_onMetaDataChanged()
 {
-    if (!m_mprisInter)
-        return;
+    if (!m_mprisInter) return;
 
-    const auto &meta = m_mprisInter->metadata();
-    const QString &title = meta.value("xesam:title").toString();
-    const QString &artist = meta.value("xesam:artist").toString();
-    const QUrl &pictureUrl = meta.value("mpris:artUrl").toString();
-    const QSize &pictureSize = m_picture->size();
-    const QPixmap &picture = QPixmap(pictureUrl.toLocalFile()).scaled(pictureSize, Qt::IgnoreAspectRatio);
+    const auto &   meta        = m_mprisInter->metadata();
+    const QString &title       = meta.value("xesam:title").toString();
+    const QString &artist      = meta.value("xesam:artist").toString();
+    const QUrl &   pictureUrl  = meta.value("mpris:artUrl").toString();
+    const QSize &  pictureSize = m_picture->size();
+    const QPixmap &picture     = QPixmap(pictureUrl.toLocalFile())
+                                 .scaled(pictureSize, Qt::IgnoreAspectRatio);
 
-    if (title.isEmpty())
+    if (title.isEmpty()) {
         m_title->clear();
-    else
-    {
-        if (artist.isEmpty())
+        m_tickEffect->stop();
+    }
+    else {
+        if (artist.isEmpty()) {
             m_title->setText(title);
-        else
+        }
+        else {
             m_title->setText(QString("%1 - %2").arg(title).arg(artist));
+        }
+        m_title->adjustSize();
+        m_tickEffect->play();
     }
 
     m_picture->setPixmap(picture);

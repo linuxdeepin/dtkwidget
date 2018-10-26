@@ -84,20 +84,22 @@ void DTickEffect::draw(QPainter *painter)
     else
         pixmap = sourcePixmap(Qt::DeviceCoordinates, &offset, QGraphicsEffect::NoPad);
 
-    QPoint p = d->runAnimation->currentValue().toPoint();
+    const QPoint p { d->runAnimation->currentValue().toPoint() };
+    const QSize size { pixmap.size() / d->content->devicePixelRatioF() };
+
 
     switch (d->direction) {
     case LeftToRight:
-        offset = QPoint(-pixmap.width() + p.x(), p.y());
+        offset = QPoint(-size.width() + p.x(), p.y());
         break;
     case RightToLeft:
-        offset = QPoint(pixmap.width() + p.x(), p.y());
+        offset = QPoint(size.width() + p.x(), p.y());
         break;
     case TopToBottom:
-        offset = QPoint(p.x(), -pixmap.height() + p.y());
+        offset = QPoint(p.x(), -size.height() + p.y());
         break;
     case BottomToTop:
-        offset = QPoint(p.x(), pixmap.height() + p.y());
+        offset = QPoint(p.x(), size.height() + p.y());
         break;
     default:
         break;
