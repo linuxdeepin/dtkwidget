@@ -756,8 +756,9 @@ QString DInputDialog::getText(QWidget *parent, const QString &title, const QStri
     dialog.setTextValue(text);
     dialog.setWindowFlags(flags);
     dialog.setInputMethodHints(inputMethodHints);
+    dialog.setInputMode(InputMode::TextInput);
 
-    *ok = dialog.exec() == QDialog::Accepted;
+    ok ? *ok = dialog.exec() == QDialog::Accepted : dialog.exec();
 
     return dialog.textValue();
 }
@@ -788,8 +789,9 @@ QString DInputDialog::getItem(QWidget *parent, const QString &title, const QStri
     dialog.setMessage(message);
     dialog.setWindowFlags(flags);
     dialog.setInputMethodHints(inputMethodHints);
+    dialog.setInputMode(InputMode::ComboBox);
 
-    *ok = dialog.exec() == QDialog::Accepted;
+    ok ? *ok = dialog.exec() == QDialog::Accepted : dialog.exec();
 
     return dialog.textValue();
 }
@@ -819,8 +821,9 @@ int DInputDialog::getInt(QWidget *parent, const QString &title, const QString &m
     dialog.setTitle(title);
     dialog.setMessage(message);
     dialog.setWindowFlags(flags);
+    dialog.setInputMode(InputMode::IntInput);
 
-    *ok = dialog.exec() == QDialog::Accepted;
+    ok ? *ok = dialog.exec() == QDialog::Accepted : dialog.exec();
 
     return dialog.intValue();
 }
@@ -850,8 +853,9 @@ double DInputDialog::getDouble(QWidget *parent, const QString &title, const QStr
     dialog.setTitle(title);
     dialog.setMessage(message);
     dialog.setWindowFlags(flags);
+    dialog.setInputMode(InputMode::DoubleInput);
 
-    *ok = dialog.exec() == QDialog::Accepted;
+    ok ? *ok = dialog.exec() == QDialog::Accepted : dialog.exec();
 
     return dialog.doubleValue();
 }
