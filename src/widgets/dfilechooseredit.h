@@ -33,7 +33,7 @@ class LIBDTKWIDGETSHARED_EXPORT DFileChooserEdit : public DLineEdit
 
 public:
     enum DialogDisplayPosition{
-        FoloowParentWindow,
+        FollowParentWindow,
         CurrentMonitorCenter
     };
 
