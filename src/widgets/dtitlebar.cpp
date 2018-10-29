@@ -355,7 +355,7 @@ void DTitlebarPrivate::handleParentWindowStateChange()
 //! So use windowHandle::windowStateChanged instead
 void DTitlebarPrivate::handleParentWindowIdChange()
 {
-    D_Q(DTitlebar);
+//    D_Q(DTitlebar);
     if (!targetWindowHandle) {
         targetWindowHandle = targetWindow()->windowHandle();
     } else if (targetWindow()->windowHandle() != targetWindowHandle) {
@@ -497,7 +497,7 @@ void DTitlebarPrivate::_q_quitActionTriggered()
 
 #endif
 
-/**
+/*!
  * \class DTitlebar
  * \brief The DTitlebar class is an universal title bar on the top of windows.
  * \param parent is the parent widget to be attached on.
@@ -506,7 +506,7 @@ void DTitlebarPrivate::_q_quitActionTriggered()
  * can get an DTitlebar instance by DMainWindow::titlebar .
  */
 
-/**
+/*!
  * @brief DTitlebar::DTitlebar create an default widget with icon/title/and bottons
  * @param parent
  */
@@ -528,7 +528,7 @@ DTitlebar::DTitlebar(QWidget *parent) :
 }
 
 #ifndef QT_NO_MENU
-/**
+/*!
  * @brief DTitlebar::menu holds the QMenu object attached to this title bar.
  * @return the QMenu object it holds, returns null if there's no one set.
  */
@@ -539,7 +539,7 @@ QMenu *DTitlebar::menu() const
     return d->menu;
 }
 
-/**
+/*!
  * @brief DTitlebar::setMenu attaches a QMenu object to the title bar.
  * @param menu is the target menu.
  */
@@ -556,7 +556,7 @@ void DTitlebar::setMenu(QMenu *menu)
 
 #endif
 
-/**
+/*!
  * @brief DTitlebar::customWidget
  * @return the customized widget used in this title bar.
  *
@@ -571,6 +571,9 @@ QWidget *DTitlebar::customWidget() const
 }
 
 #ifndef QT_NO_MENU
+/*!
+ * \brief DTitlebar::showMenu pop the menu of application on titlebar.
+ */
 void DTitlebar::showMenu()
 {
     D_D(DTitlebar);
@@ -582,6 +585,10 @@ void DTitlebar::showMenu()
 }
 #endif
 
+/*!
+ * \brief DTitlebar::showEvent override showEvent, fix the width issue and process menu items.
+ * \param event
+ */
 void DTitlebar::showEvent(QShowEvent *event)
 {
     D_D(DTitlebar);
@@ -602,6 +609,10 @@ void DTitlebar::showEvent(QShowEvent *event)
     }
 }
 
+/*!
+ * \brief DTitlebar::mousePressEvent override QWidget::mousePressEvent to handle right button menu
+ * \param event
+ */
 void DTitlebar::mousePressEvent(QMouseEvent *event)
 {
     D_D(DTitlebar);
@@ -609,7 +620,6 @@ void DTitlebar::mousePressEvent(QMouseEvent *event)
 
     if (event->button() == Qt::RightButton) {
         DWindowManagerHelper::popupSystemWindowMenu(window()->windowHandle());
-
         return;
     }
 
@@ -667,6 +677,10 @@ bool DTitlebar::eventFilter(QObject *obj, QEvent *event)
     return QWidget::eventFilter(obj, event);
 }
 
+/*!
+ * \brief DTitlebar::resizeEvent override QWidget::resizeEvent to fix button and separator pos.
+ * \param event
+ */
 void DTitlebar::resizeEvent(QResizeEvent *event)
 {
     D_D(DTitlebar);
@@ -680,7 +694,7 @@ void DTitlebar::resizeEvent(QResizeEvent *event)
     return QWidget::resizeEvent(event);
 }
 
-/**
+/*!
  * @brief DTitlebar::setCustomWidget is an overloaded function.
  * @param w is the widget to be used as the customize widget shown in the title
  * bar.
@@ -692,7 +706,7 @@ void DTitlebar::setCustomWidget(QWidget *w, bool fixCenterPos)
     setCustomWidget(w, Qt::AlignCenter, fixCenterPos);
 }
 
-/**
+/*!
  * @brief DTitlebar::setCustomWidget sets a customized widget to be used as the
  * central content of the title bar.
  * @param w is the widget to be used as the customize widget shown in the title
@@ -733,7 +747,7 @@ void DTitlebar::setCustomWidget(QWidget *w, Qt::AlignmentFlag wflag, bool fixCen
     w->resize(d->coustomAtea->size());
 }
 
-/**
+/*!
  * @brief DTitlebar::setFixedHeight change the height of the title bar to
  * another value.
  * @param h is the target height.
@@ -746,7 +760,7 @@ void DTitlebar::setFixedHeight(int h)
     d->buttonArea->setFixedHeight(h);
 }
 
-/**
+/*!
  * @brief DTitlebar::setBackgroundTransparent set the title background transparent
  * @param transparent is the targeting value.
  */
@@ -755,7 +769,7 @@ void DTitlebar::setBackgroundTransparent(bool transparent)
     setProperty("transparent", transparent);
 }
 
-/**
+/*!
  * @brief DTitlebar::setSeparatorVisible sets the bottom separator of the title
  * bar and the window contents to be visible or not.
  * @param visible is the targeting value.
@@ -771,7 +785,7 @@ void DTitlebar::setSeparatorVisible(bool visible)
     }
 }
 
-/**
+/*!
  * @brief DTitlebar::setTitle sets the title to be shown on the title bar.
  * @param title is the text to be used as the window title.
  */
@@ -807,7 +821,7 @@ void DTitlebar::toggleWindowState()
     d->_q_toggleWindowState();
 }
 
-/**
+/*!
  * @brief DTitlebar::buttonAreaWidth returns the width of the area that all the
  * window buttons occupies.
  */
@@ -817,7 +831,7 @@ int DTitlebar::buttonAreaWidth() const
     return d->buttonArea->width();
 }
 
-/**
+/*!
  * @brief DTitlebar::separatorVisible returns the visibility of the bottom
  * separator of the titlebar.
  */
@@ -827,19 +841,27 @@ bool DTitlebar::separatorVisible() const
     return d->separator->isVisible();
 }
 
+/*!
+ * @brief DTitlebar::autoHideOnFullscreen returns if titlebar show on fullscreen mode.
+ * separator of the titlebar.
+ */
 bool DTitlebar::autoHideOnFullscreen() const
 {
     D_DC(DTitlebar);
     return d->autoHideOnFullscreen;
 }
 
+/*!
+ * \brief DTitlebar::setAutoHideOnFullscreen set if titlebar show when window is fullscreen state.
+ * \param autohide
+ */
 void DTitlebar::setAutoHideOnFullscreen(bool autohide)
 {
     D_D(DTitlebar);
     d->autoHideOnFullscreen = autohide;
 }
 
-/**
+/*!
  * @brief DTitlebar::setVisible overrides QWidget::setVisible(bool visible)
  */
 void DTitlebar::setVisible(bool visible)
@@ -879,7 +901,7 @@ void DTitlebar::setVisible(bool visible)
 }
 
 
-/**
+/*!
  * @brief DTitlebar::setEmbedMode set a titar is in parent;
  */
 void DTitlebar::setEmbedMode(bool visible)
@@ -890,7 +912,7 @@ void DTitlebar::setEmbedMode(bool visible)
     d->updateButtonsState(windowFlags());
 }
 
-/**
+/*!
  * @brief DTitlebar::resize resizes the title bar.
  * @param w is the target width.
  * @param h is the target height.
@@ -903,7 +925,7 @@ void DTitlebar::resize(int w, int h)
     }
 }
 
-/**
+/*!
  * @brief DTitlebar::resize is an overloaded function.
  * @param sz the target size.
  *
@@ -914,6 +936,11 @@ void DTitlebar::resize(const QSize &sz)
     DTitlebar::resize(sz.width(), sz.height());
 }
 
+
+/*!
+ * \brief DTitlebar::setDisableFlags will disable button match flags.
+ * \param flags
+ */
 void DTitlebar::setDisableFlags(Qt::WindowFlags flags)
 {
     D_D(DTitlebar);
@@ -921,12 +948,20 @@ void DTitlebar::setDisableFlags(Qt::WindowFlags flags)
     d->updateButtonsFunc();
 }
 
+/*!
+ * \brief DTitlebar::disableFlags return which button is disabled.
+ * \return
+ */
 Qt::WindowFlags DTitlebar::disableFlags() const
 {
     D_DC(DTitlebar);
     return d->disableFlags;
 }
 
+/*!
+ * \brief DTitlebar::mouseMoveEvent override QWidget::mouseMoveEvent to emit mouseMoving signal
+ * \param event
+ */
 void DTitlebar::mouseMoveEvent(QMouseEvent *event)
 {
     Qt::MouseButton button = event->buttons() & Qt::LeftButton ? Qt::LeftButton : Qt::NoButton;
@@ -943,6 +978,10 @@ void DTitlebar::mouseMoveEvent(QMouseEvent *event)
     QWidget::mouseMoveEvent(event);
 }
 
+/*!
+ * \brief DTitlebar::mouseDoubleClickEvent override QWidget::mouseDoubleClickEvent to emit doubleClicked signal
+ * \param event
+ */
 void DTitlebar::mouseDoubleClickEvent(QMouseEvent *event)
 {
     D_D(DTitlebar);
