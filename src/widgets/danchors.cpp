@@ -22,6 +22,260 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+/*!
+ * \~chinese \class DAnchorsBase
+ *
+ * \~chinese \brief DAnchorsBase 提供了一种指定 QWidget 与其它 QWidget 之间的关系来确定
+ * \~chinese 其位置的方法
+ *
+ * \~chinese 除了比较传统的布局方式之外，DtkWidget 还提供了一种使用锚定概念布局控件的方法（
+ * \~chinese 类似于 QQuickItem 中的 anchors 属性），可以认为每个控件具有一组6个不可见的“锚
+ * \~chinese 线”：left，horizontalCenter，right，top，verticalCenter和bottom，如图所示：
+ * \~chinese \image html edges_anchors.png
+ * \~chinese 使用 DAnchors 可以让 QWidget 基于这些“锚线”来确定相互间的关系，如：
+ * \~chinese \code
+ * DAnchors<QLabel> rect1(new QLabel("rect1"));
+ * DAnchors<QLabel> rect2(new QLabel("rect2"));
+ *
+ * rect2.setLeft(rect1.right());
+ * \endcode
+ * \~chinese 这样 rect2 的左边界就会和 rect1 的右边界对齐：
+ * \~chinese \image html edge1.png
+ * \~chinese 另外还可以同时设置多个“锚线”：
+ * \~chinese \code
+ * DAnchors<QLabel> rect1(new QLabel("rect1"));
+ * DAnchors<QLabel> rect2(new QLabel("rect2"));
+ *
+ * rect2.setTop(rect1.bottom());
+ * rect2.setLeft(rect1.right());
+ * \endcode
+ * \~chinese \image html edge3.png
+ * \~chinese 锚定布局同时在多个控件中使用，控件之间只需要满足以下条件：
+ * \~chinese \arg \c 控件之间为兄弟关系，或被锚定控件为父控件
+ * \~chinese \arg \c 锚定关系不能循环绑定
+ * \~chinese \section margin_offset 锚定的间隔和偏移
+ * \~chinese 锚定系统允许设置“锚线”之间的间距，和“锚线”一一对应，每个控件都有一组4个 margin：
+ * \~chinese leftMargin, rightMargin, topMargin 和 bottomMargin 以及两个 offset：
+ * \chinese horizontalCenterOffset 和 verticalCenterOffset。
+ * \~chinese \image html margins_anchors.png
+ * \~chinese 下面是左margin的例子：
+ * \~chinese \code
+ * DAnchors<QLabel> rect1(new QLabel("rect1"));
+ * DAnchors<QLabel> rect2(new QLabel("rect2"));
+ *
+ * rect2.setLeftMargin(5);
+ * rect2.setLeft(rect1.right());
+ * \endcode
+ * \~chinese rect2 的左边界相距 rect1 的右边界5个像素：
+ * \~chinese \image html edge2.png
+ * \~chinese \note margin 仅仅是对设置的锚点生效，并不是让控件本身增加了边距，如果设置了
+ * \~chinese margin，但并没有设置相应的锚点，对控件本身而已是没有任何影响的。margin 的值可以
+ * \~chinese 为负数，通过值的正负来决定margin的方向（内 margin 还是外 margin）
+ *
+ * \~chinese 除了基于“锚线”来设置锚定外，另外还有 setCenterIn 和 setFill 这两个比较特殊的
+ * \~chinese 的实现。
+ *
+ * \~chinese \section loop_anchor 判断循环锚定的方式
+ * \~chinese 假设 DAnchorsBase a1, a2; a1.setRight(a2.left()); 则判断 a1 和 a2 之间
+ * \~chinese 会不会存在循环绑定的逻辑为:
+ * \~chinese 尝试更改 a1 右边界的值，更新后如果 a2 左边界的值产出了变化，则认为会导致循环绑
+ * \~chinese 定，否则认为不存在
+ */
+
+/*!
+  * \~chinese \property DAnchorsBase::target
+  * \~chinese \brief 绑定了锚定功能的控件对象
+  * \~chinese \note 只读
+  */
+
+/*!
+  * \~chinese \property DAnchorsBase::enabled
+  * \~chinese \brief 控制锚定功能是否开启，为 false 时仅仅表示不会根据控件各种属性的变化来
+  * \~chinese 来更新它的位置，但锚定关系并没有被解除
+  * \~chinese \note 可读可写
+  */
+
+/*!
+  * \~chinese \property DAnchorsBase::anchors
+  * \~chinese \brief 一个指向自己的指针
+  * \~chinese \note 只读
+  */
+
+/*!
+  * \~chinese \property DAnchorsBase::top
+  * \~chinese \brief target 控件上边界锚线的信息
+  * \~chinese \note 只能和 top verticalCenter bottom 绑定
+  * \~chinese \note 对属性赋值不会更改它自身的值，而是对此锚线设置绑定关系
+  * \~chinese \note 可读可写
+  */
+
+/*!
+  * \~chinese \property DAnchorsBase::bottom
+  * \~chinese \note 只能和 top verticalCenter bottom 绑定
+  * \~chinese \brief target 控件下边界锚线的信息
+  * \~chinese \note 对属性赋值不会更改它自身的值，而是对此锚线设置绑定关系
+  * \~chinese \note 可读可写
+  */
+
+/*!
+  * \~chinese \property DAnchorsBase::left
+  * \~chinese \note 只能和 left horizontalCenter right 绑定
+  * \~chinese \brief target 控件左边界锚线的信息
+  * \~chinese \note 对属性赋值不会更改它自身的值，而是对此锚线设置绑定关系
+  * \~chinese \note 可读可写
+  */
+
+/*!
+  * \~chinese \property DAnchorsBase::right
+  * \~chinese \note 只能和 left horizontalCenter right 绑定
+  * \~chinese \brief target 控件右边界锚线的信息
+  * \~chinese \note 对属性赋值不会更改它自身的值，而是对此锚线设置绑定关系
+  * \~chinese \note 可读可写
+  */
+
+/*!
+  * \~chinese \property DAnchorsBase::horizontalCenter
+  * \~chinese \note 只能和 left horizontalCenter right 绑定
+  * \~chinese \brief target 控件水平锚线的信息
+  * \~chinese \note 对属性赋值不会更改它自身的值，而是对此锚线设置绑定关系
+  * \~chinese \note 可读可写
+  */
+
+/*!
+  * \~chinese \property DAnchorsBase::verticalCenter
+  * \~chinese \note 只能和 top verticalCenter bottom 绑定
+  * \~chinese \brief target 控件竖直锚线的信息
+  * \~chinese \note 对属性赋值不会更改它自身的值，而是对此锚线设置绑定关系
+  * \~chinese \note 可读可写
+  */
+
+/*!
+  * \~chinese \property DAnchorsBase::fill
+  * \~chinese \brief target 控件的填充目标对象
+  * \~chinese \note 可读可写
+  */
+
+/*!
+  * \~chinese \property DAnchorsBase::centerIn
+  * \~chinese \brief target 控件的居中目标对象
+  * \~chinese \note 可读可写
+  */
+
+/*!
+  * \~chinese \property DAnchorsBase::margins
+  * \~chinese \brief 上下左右四条“锚线”的边距，此值的优先级低于每条“锚线”特定的 margin 值
+  * \~chinese \note 可读可写
+  */
+
+/*!
+  * \~chinese \property DAnchorsBase::topMargin
+  * \~chinese \brief 上“锚线”的边距，优先级高于 margins
+  * \~chinese \note 可读可写
+  */
+
+/*!
+  * \~chinese \property DAnchorsBase::bottomMargin
+  * \~chinese \brief 下“锚线”的边距，优先级高于 margins
+  * \~chinese \note 可读可写
+  */
+
+/*!
+  * \~chinese \property DAnchorsBase::leftMargin
+  * \~chinese \brief 左“锚线”的边距，优先级高于 margins
+  * \~chinese \note 可读可写
+  */
+
+/*!
+  * \~chinese \property DAnchorsBase::rightMargin
+  * \~chinese \brief 右“锚线”的边距，优先级高于 margins
+  * \~chinese \note 可读可写
+  */
+
+/*!
+  * \~chinese \property DAnchorsBase::horizontalCenterOffset
+  * \~chinese \brief 水平“锚线”的偏移量
+  * \~chinese \note 可读可写
+  */
+
+/*!
+  * \~chinese \property DAnchorsBase::verticalCenterOffset
+  * \~chinese \brief 竖直“锚线”的偏移量
+  * \~chinese \note 可读可写
+  */
+
+/*!
+ * \~chinese \enum DAnchorsBase::AnchorError
+ * \~chinese DAnchorsBase::AnchorError 设置锚定信息的过程中可能出现的错误类型
+ *
+ * \~chinese \var DAnchorsBase::NoError DAnchorsBase::NoError
+ * \~chinese 设置锚定的过程中没有任何错误发生
+ *
+ * \~chinese \var DAnchorsBase::Conflict DAnchorsBase::Conflict
+ * \~chinese 表示设置的锚定关系跟已有关系存在冲突，如 fill 和 centerIn 不能同时设置
+ *
+ * \~chinese \var DAnchorsBase::TargetInvalid DAnchorsBase::TargetInvalid
+ * \~chinese 表示设置锚定关系时的目标控件无效
+ *
+ * \~chinese \var DAnchorsBase::PointInvalid DAnchorsBase::PointInvalid
+ * \~chinese 表示设置锚定关系时的“锚线”信息错误，如把 Qt::AnchorLeft 设置到了 Qt::AnchorTop 上
+ *
+ * \~chinese \var DAnchorsBase::LoopBind DAnchorsBase::LoopBind
+ * \~chinese 表示设置的锚定关系和已有关系形成了循环绑定
+ */
+
+/*!
+ * \~chinese \fn DAnchorsBase::enabledChanged
+ * \~chinese \brief 信号会在 enabled 属性的值改变时被发送
+ * \~chinese \fn DAnchorsBase::topChanged
+ * \~chinese \brief 信号会在 top 属性的值改变时被发送
+ * \~chinese \fn DAnchorsBase::bottomChanged
+ * \~chinese \brief 信号会在 bottom 属性的值改变时被发送
+ * \~chinese \fn DAnchorsBase::leftChanged
+ * \~chinese \brief 信号会在 left 属性的值改变时被发送
+ * \~chinese \fn DAnchorsBase::rightChanged
+ * \~chinese \brief 信号会在 right 属性的值改变时被发送
+ * \~chinese \fn DAnchorsBase::horizontalCenterChanged
+ * \~chinese \brief 信号会在 horizontalCenter 属性的值改变时被发送
+ * \~chinese \fn DAnchorsBase::verticalCenterChanged
+ * \~chinese \brief 信号会在 verticalCenter 属性的值改变时被发送
+ * \~chinese \fn DAnchorsBase::fillChanged
+ * \~chinese \brief 信号会在 fill 属性的值改变时被发送
+ * \~chinese \fn DAnchorsBase::centerInChanged
+ * \~chinese \brief 信号会在 centerIn 属性的值改变时被发送
+ * \~chinese \fn DAnchorsBase::marginsChanged
+ * \~chinese \brief 信号会在 margins 属性的值改变时被发送
+ * \~chinese \fn DAnchorsBase::topMarginChanged
+ * \~chinese \brief 信号会在 topMargin 属性的值改变时被发送
+ * \~chinese \fn DAnchorsBase::bottomMarginChanged
+ * \~chinese \brief 信号会在 bottomMargin 属性的值改变时被发送
+ * \~chinese \fn DAnchorsBase::leftMarginChanged
+ * \~chinese \brief 信号会在 leftMargin 属性的值改变时被发送
+ * \~chinese \fn DAnchorsBase::rightMarginChanged
+ * \~chinese \brief 信号会在 rightMargin 属性的值改变时被发送
+ * \~chinese \fn DAnchorsBase::horizontalCenterOffsetChanged
+ * \~chinese \brief 信号会在 horizontalCenterOffset 属性的值改变时被发送
+ * \~chinese \fn DAnchorsBase::verticalCenterOffsetChanged
+ * \~chinese \brief 信号会在 verticalCenterOffset 属性的值改变时被发送
+ */
+
+/*!
+ * \~chinese \class DAnchors
+ * \~chinese \brief DAnchors 是一个模板类，在 DAnchorsBase 的基础上保存了一个控件指针，
+ * \~chinese 将控件和锚定绑定在一起使用，相当于把“锚线”属性附加到了控件本身
+ *
+ * \~chinese 重载了 “->”、“*”、“&” 等运算符，用于把 DAnchors 这层封装透明化，尽量减少使用
+ * \~chinese DAnchors<QWidget> 和直接使用 QWidget* 对象的区别。
+ */
+
+/*!
+ * \~chinese \class DAnchorInfo
+ * \~chinese \brief DAnchorInfo 用于记录“锚线”的锚定信息：被锚定的 DAnchorsBase 对象、
+ * \~chinese 锚定的类型、目标“锚线”的信息
+ *
+ * \~chinese 每条锚线都和一个 DAnchorInfo 对象相对应。一般来说，在使用锚定布局时，只需要关心
+ * \~chinese “锚线”的绑定关系，不用关心 DAnchorInfo 中存储的数据。
+ */
+
 class DAnchorsRect: public QRect
 {
 public:
@@ -325,12 +579,31 @@ class DAnchorsBasePrivate : public QSharedData
 
 QMap<const QWidget *, DAnchorsBase *> DAnchorsBasePrivate::widgetMap;
 
+/*!
+ * \~chinese \brief 构造 DAnchorsBase 对象，传入的 w 对象会和一个新的 DAnchorsBase 对象
+ * \~chinese 绑定到一起
+ * \~chinese \param w 需要使用锚定关系的控件
+ * \~chinese \note 对 w 设置的锚定关系不会随着本次构造的 DAnchorsBase 对象的销毁而消失。
+ * \~chinese 此构造函数可能会隐式的构造一个新 DAnchorsBase 对象用于真正的功能实现，函数执行
+ * \~chinese 时会先检查当前是否已经有和 w 对象绑定的 DAnchorsBase 对象，如果没有则会创建一
+ * \~chinese 个新的 DAnchorsBase 对象与之绑定，否则使用已有的对象。隐式创建的 DAnchorsBase
+ * \~chinese 对象会在对应的 QWidget 对象被销毁时自动销毁。
+ * \~chinese \sa target() clearAnchors() getAnchorBaseByWidget()
+ */
 DAnchorsBase::DAnchorsBase(QWidget *w):
     QObject(w)
 {
     init(w);
 }
 
+/*!
+ * \~chinese \brief 在析构时会判断此 DAnchorsBase 对象是否和 target 存在绑定关系，如果是
+ * \~chinese 则从映射表中移除绑定
+ * \~chinese \warning DAnchorsBasePrivate 对象可能是在多个 DAnchorsBase 对象之间显式
+ * \~chinese 共享的，所以在销毁 DAnchorsBase 后，对应的 DAnchorsBasePrivate 对象不一定
+ * \~chinese 会被销毁
+ * \sa QExplicitlySharedDataPointer
+ */
 DAnchorsBase::~DAnchorsBase()
 {
     DAnchorsBasePrivate::removeWidgetAnchorsBase(target(), this);
@@ -346,6 +619,12 @@ QWidget *DAnchorsBase::target() const
     return d->extendWidget->target();
 }
 
+/*!
+ * \~chinese \brief 返回 target 控件的扩展对象。此对象为 QWidget 对象额外提供了和控件大小、
+ * \~chinese 位置相关的变化信号
+ * \~chinese \return
+ * \~chinese \sa DEnhancedWidget
+ */
 DEnhancedWidget *DAnchorsBase::enhancedWidget() const
 {
     Q_D(const DAnchorsBase);
@@ -488,6 +767,12 @@ int DAnchorsBase::alignWhenCentered() const
     return d->alignWhenCentered;
 }
 
+/*!
+ * \~chinese \brief 锚定过程中产生的错误，在一个新的锚定函数被调用之前会清空此错误状态，每次
+ * \~chinese 调用锚定函数后，可以通过此函数的返回值来判断锚定设置是否成功
+ * \~chinese \return
+ * \~chinese \sa errorString()
+ */
 DAnchorsBase::AnchorError DAnchorsBase::errorCode() const
 {
     Q_D(const DAnchorsBase);
@@ -495,6 +780,11 @@ DAnchorsBase::AnchorError DAnchorsBase::errorCode() const
     return d->errorCode;
 }
 
+/*!
+ * \~chinese \brief 对 errorCode 的文本描述信息
+ * \~chinese \return
+ * \~chinese \sa errorCode
+ */
 QString DAnchorsBase::errorString() const
 {
     Q_D(const DAnchorsBase);
@@ -502,11 +792,34 @@ QString DAnchorsBase::errorString() const
     return d->errorString;
 }
 
+/*!
+ * \~chinese \brief 如果此 info 设置了锚定对象，则返回 true ，否则返回 false
+ * \~chinese \code
+ * DAnchors<QWidget> w1;
+ * DAnchors<QWidget> w2;
+ *
+ * w1.setLeft(w2.right());
+ *
+ * qDebug() << w1.isBinding(w1.left()) << w2.isBinding(w2.right());
+ * \endcode
+ * \~chinese 打印内容为：ture false
+ * \~chinese \param info
+ * \~chinese \return
+ */
 bool DAnchorsBase::isBinding(const DAnchorInfo *info) const
 {
     return info->targetInfo;
 }
 
+/*!
+ * \~chinese \brief 方便用户直接设置两个对象之间锚定关系的静态函数，调用此函数可能会隐式创建
+ * \~chinese DAnchorsBase 对象
+ * \~chinese \param w 要锚定的控件对象
+ * \~chinese \param p 要锚定的锚线/锚点
+ * \~chinese \param target 锚定的目标对象
+ * \~chinese \param point 锚定的目标锚线/锚点
+ * \~chinese \return 如果锚定成功，则返回 true，否则返回 false
+ */
 bool DAnchorsBase::setAnchor(QWidget *w, const Qt::AnchorPoint &p, QWidget *target, const Qt::AnchorPoint &point)
 {
     if (!w || !target) {
@@ -521,6 +834,11 @@ bool DAnchorsBase::setAnchor(QWidget *w, const Qt::AnchorPoint &p, QWidget *targ
     return base->setAnchor(p, target, point);
 }
 
+/*!
+ * \~chinese \brief 清除和控件 w 相关的所有锚定关系，包括锚定w或者被w锚定的任何关联。会直接
+ * \~chinese 销毁 w 对应的 DAnchorsBase 对象
+ * \~chinese \param w
+ */
 void DAnchorsBase::clearAnchors(const QWidget *w)
 {
     DAnchorsBase *base = DAnchorsBasePrivate::getWidgetAnchorsBase(w);
@@ -529,6 +847,11 @@ void DAnchorsBase::clearAnchors(const QWidget *w)
     }
 }
 
+/*!
+ * \~chinese \brief 返回与 w 绑定的 DAnchorsBase 对象
+ * \~chinese \param w
+ * \~chinese \return 如果 w 没有对应的锚定对象，则返回空
+ */
 DAnchorsBase *DAnchorsBase::getAnchorBaseByWidget(const QWidget *w)
 {
     return DAnchorsBasePrivate::getWidgetAnchorsBase(w);
@@ -544,6 +867,14 @@ void DAnchorsBase::setEnabled(bool enabled)
     d->extendWidget->setEnabled(enabled);
 }
 
+/*!
+ * \~chinese \brief 为 DAnchorsBase::target 对象设置锚定规则
+ * \~chinese \note 可能会为目标控件隐式创建其对应的 DAnchorsBase 对象
+ * \~chinese \param p 为当前控件的哪个锚线/锚点设置锚定规则
+ * \~chinese \param target 锚定的目标控件
+ * \~chinese \param point 锚定的目标锚线/锚点
+ * \~chinese \return 如果设置成功，则返回 true，否则返回 false
+ */
 bool DAnchorsBase::setAnchor(const Qt::AnchorPoint &p, QWidget *target, const Qt::AnchorPoint &point)
 {
     if (!target) {
@@ -776,11 +1107,21 @@ bool DAnchorsBase::setCenterIn(QWidget *centerIn)
     ANCHOR_BIND_WIDGET(centerIn, CenterIn)
 }
 
+/*!
+ * \~chinese \brief 将 fill 中的target()作为参数调用其它重载函数
+ * \~chinese \param fill
+ * \~chinese \return
+ */
 bool DAnchorsBase::setFill(DAnchorsBase *fill)
 {
     return setFill(fill->target());
 }
 
+/*!
+ * \~chinese \brief 将 centerIn 中的target()作为参数调用其它重载函数
+ * \~chinese \param centerIn
+ * \~chinese \return
+ */
 bool DAnchorsBase::setCenterIn(DAnchorsBase *centerIn)
 {
     return setCenterIn(centerIn->target());
@@ -973,36 +1314,64 @@ void DAnchorsBase::setRight(int arg, Qt::AnchorPoint point)
     SET_POS(Right)
 }
 
+/*!
+ * \~chinese \brief 移动 target 控件的上边界到 arg 这个位置
+ * \param arg 要移动到的位置
+ */
 void DAnchorsBase::moveTop(int arg)
 {
     MOVE_POS(Top)
 }
 
+/*!
+ * \~chinese \brief 移动 target 控件的下边界到 arg 这个位置
+ * \param arg 要移动到的位置
+ */
 void DAnchorsBase::moveBottom(int arg)
 {
     MOVE_POS(Bottom)
 }
 
+/*!
+ * \~chinese \brief 移动 target 控件的左边界到 arg 这个位置
+ * \param arg 要移动到的位置
+ */
 void DAnchorsBase::moveLeft(int arg)
 {
     MOVE_POS(Left)
 }
 
+/*!
+ * \~chinese \brief 移动 target 控件的右边界到 arg 这个位置
+ * \param arg 要移动到的位置
+ */
 void DAnchorsBase::moveRight(int arg)
 {
     MOVE_POS(Right)
 }
 
+/*!
+ * \~chinese \brief 移动 target 控件的水平中线到 arg 这个位置
+ * \param arg 要移动到的位置
+ */
 void DAnchorsBase::moveHorizontalCenter(int arg)
 {
     MOVE_POS(HorizontalCenter)
 }
 
+/*!
+ * \~chinese \brief 移动 target 控件的竖直中线到 arg 这个位置
+ * \param arg 要移动到的位置
+ */
 void DAnchorsBase::moveVerticalCenter(int arg)
 {
     MOVE_POS(VerticalCenter)
 }
 
+/*!
+ * \~chinese \brief 移动 target 控件的上边界到 arg 这个位置
+ * \param arg 要移动到的位置
+ */
 void DAnchorsBase::moveCenter(const QPoint &arg)
 {
     MOVE_POS(Center)

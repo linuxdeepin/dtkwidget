@@ -227,6 +227,7 @@ includes.files += \
     $$PWD/DFileDialog \
     $$PWD/DLineEdit \
     $$PWD/DStyleOptionLineEdit \
-    $$PWD/DWindowGroupLeader
+    $$PWD/DWindowGroupLeader \
+    $$PWD/DAnchors
 
 
