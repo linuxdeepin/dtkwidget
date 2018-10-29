@@ -46,6 +46,7 @@ public:
     XEventMonitor *eventInter;
     QRegion watchedRegion;
     QString registerKey;
+    DRegionMonitor::CoordinateType type = DRegionMonitor::ScaleRatio;
 };
 
 DWIDGET_END_NAMESPACE

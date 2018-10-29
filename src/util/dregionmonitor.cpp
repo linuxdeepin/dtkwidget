@@ -30,6 +30,13 @@ QRegion DRegionMonitor::watchedRegion() const
     return d->watchedRegion;
 }
 
+DRegionMonitor::CoordinateType DRegionMonitor::coordinateType() const
+{
+    D_DC(DRegionMonitor);
+
+    return d->type;
+}
+
 void DRegionMonitor::registerRegion()
 {
     if (registered())
@@ -57,6 +64,13 @@ void DRegionMonitor::setWatchedRegion(const QRegion &region)
     d->watchedRegion = region;
     if (registered())
         d->registerMonitorRegion();
+}
+
+void DRegionMonitor::setCoordinateType(DRegionMonitor::CoordinateType type)
+{
+    D_D(DRegionMonitor);
+
+    d->type = type;
 }
 
 DRegionMonitorPrivate::DRegionMonitorPrivate(DRegionMonitor *q)
@@ -173,6 +187,12 @@ void DRegionMonitorPrivate::_q_KeyRelease(const QString &keyname, const int x, c
 
 const QPoint DRegionMonitorPrivate::deviceScaledCoordinate(const QPoint &p, const double ratio) const
 {
+    D_QC(DRegionMonitor);
+
+    if (type == q->Original) {
+        return p;
+    }
+
     for (const auto *s : qApp->screens())
     {
         const QRect &g(s->geometry());
