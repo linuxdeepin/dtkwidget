@@ -1,3 +1,19 @@
+<a name="2.0.9.6"></a>
+## 2.0.9.6 (2018-11-01)
+
+
+#### Bug Fixes
+
+*   static function bugs of DInputDialog ([a34833ec](https://github.com/linuxdeepin/dtkwidget/commit/a34833ec304cf3f5c3416760340d874eada9fc3b))
+*   radio setting widget height error ([6cea6e84](https://github.com/linuxdeepin/dtkwidget/commit/6cea6e84220cd40c05e43627909806f7043c5d61))
+
+#### Features
+
+* **DMPRIS:**  music title support tick effect ([48ac0431](https://github.com/linuxdeepin/dtkwidget/commit/48ac04318ff6ed840d5f25c26bd8cc692d96dc9c))
+* **DRegionMonitor:**  support set coordinate type ([d6773300](https://github.com/linuxdeepin/dtkwidget/commit/d67733006eba5ffa2c9376460c50eb49e23ee274))
+
+
+
 <a name="2.0.9.5"></a>
 ## 2.0.9.5 (2018-10-26)
 
