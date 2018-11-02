@@ -9,9 +9,9 @@ QFrame#ButtonFrame{
 }
 
 #CloseButton{
-    qproperty-normalPic: url(:/images/light/images/window/close_normal.svg);
-    qproperty-hoverPic: url(:/images/light/images/window/close_hover.svg);
-    qproperty-pressPic: url(:/images/light/images/window/close_press.svg);
+    qproperty-normalPic: url(:/images/dialog_close_round_normal.png);
+    qproperty-hoverPic: url(:/images/dialog_close_round_hover.png);
+    qproperty-pressPic: url(:/images/dialog_close_round_press.png);
 }
 
 QPushButton#NormalButton{

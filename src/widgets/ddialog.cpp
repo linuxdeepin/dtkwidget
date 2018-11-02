@@ -124,7 +124,8 @@ void DDialogPrivate::init()
     // TopLayout--Close button
     closeButton = new DImageButton(q);
     closeButton->setObjectName("CloseButton");
-    closeButton->setFixedSize(DIALOG::CLOSE_BUTTON_WIDTH, DIALOG::CLOSE_BUTTON_HEIGHT);
+    closeButton->adjustSize();
+//    closeButton->setFixedSize(DIALOG::CLOSE_BUTTON_WIDTH, DIALOG::CLOSE_BUTTON_HEIGHT);
     closeButton->setAttribute(Qt::WA_NoMousePropagation);
 
     DAnchorsBase::setAnchor(closeButton, Qt::AnchorRight, q, Qt::AnchorRight);

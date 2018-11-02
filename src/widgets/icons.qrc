@@ -9,5 +9,11 @@
         <file>images/arrow_left_normal.png</file>
         <file>images/arrow_left_hover.png</file>
         <file>images/deepin-logo.svg</file>
+        <file>images/dialog_close_round_hover@2x.png</file>
+        <file>images/dialog_close_round_hover.png</file>
+        <file>images/dialog_close_round_press@2x.png</file>
+        <file>images/dialog_close_round_normal@2x.png</file>
+        <file>images/dialog_close_round_normal.png</file>
+        <file>images/dialog_close_round_press.png</file>
     </qresource>
 </RCC>
