@@ -1,3 +1,13 @@
+<a name="2.0.9.7"></a>
+## 2.0.9.7 (2018-11-06)
+
+
+#### Bug Fixes
+
+*   open AA_ForceRasterWidgets by default ([f0bae104](https://github.com/linuxdeepin/dtkwidget/commit/f0bae104da6c151bb07f3c406f7779046d4648c3))
+
+
+
 <a name="2.0.9.6"></a>
 ## 2.0.9.6 (2018-11-01)
 
