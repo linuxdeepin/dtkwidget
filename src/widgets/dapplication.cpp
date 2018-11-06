@@ -342,12 +342,14 @@ DApplication::DApplication(int &argc, char **argv) :
 {
     qputenv("QT_QPA_PLATFORM", QByteArray());
 
-#ifdef FORCE_RASTER_WIDGETS
+
+//#ifdef FORCE_RASTER_WIDGETS
+    // FIXME: fix bug in nvidia prime workaround, do not know effoct, must test more!!!
     // 在龙芯和申威上，xcb插件中加载glx相关库（r600_dri.so等）会额外耗时1.xs（申威应该更长）
     if (!qEnvironmentVariableIsSet("DTK_DISABLE_FORCE_RASTER_WIDGETS")) {
         setAttribute(Qt::AA_ForceRasterWidgets);
     }
-#endif
+//#endif
 
 #ifdef Q_OS_LINUX
     // set qpixmap cache limit
