@@ -45,6 +45,8 @@ public Q_SLOTS:
     void hideAlert();
     void abortAuth();
 
+    void updateAlertPosition();
+
 public:
     bool alert();
 

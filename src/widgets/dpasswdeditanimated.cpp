@@ -451,14 +451,7 @@ void DPasswdEditAnimated::showAlert(const QString &message)
         //d->m_invalidTip->setContent(d->m_invalidMessage);
         //d->m_invalidTip->adjustSize();
 
-        QPoint pos = mapToGlobal(rect().bottomLeft());
-        QFontMetrics fm((QFont()));
-        d->m_invalidTip->setGeometry(pos.x(), pos.y() + 5, fm.width(message) + 20, fm.height() + 20);
-        d->m_invalidMessage->move(10, 15);
-
-        d->m_invalidTip->setArrowX(20);
-        d->m_invalidMessage->show();
-        d->m_invalidTip->QWidget::show();
+        updateAlertPosition();
 
         Q_EMIT alertChanged(true);
     }
@@ -489,6 +482,25 @@ void DPasswdEditAnimated::abortAuth()
         d->_q_hideLoadSlider();
         Q_EMIT abort();
     }
+}
+
+/**
+ * \~chinese \brief 更新警告提示框正确位置
+ */
+void DPasswdEditAnimated::updateAlertPosition()
+{
+    D_D(DPasswdEditAnimated);
+
+    const QString &message = d->m_invalidMessage->text();
+
+    QPoint pos = mapToGlobal(rect().bottomLeft());
+    QFontMetrics fm((QFont()));
+    d->m_invalidTip->setGeometry(pos.x(), pos.y() + 5, fm.width(message) + 20, fm.height() + 20);
+    d->m_invalidMessage->move(10, 15);
+
+    d->m_invalidTip->setArrowX(20);
+    d->m_invalidMessage->show();
+    d->m_invalidTip->QWidget::show();
 }
 
 /**
