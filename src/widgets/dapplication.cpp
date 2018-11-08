@@ -332,7 +332,12 @@ bool DApplicationPrivate::isUserManualExists()
  * \~english @param argv is the same as in the main function.
  *
  *
- * \~chinese \brief DApplication::DApplication 用于构建 DApplication 实例的构造函数。
+ * \~chinese \brief DApplication::DApplication 用于构建 DApplication 实例的构造函数
+ *
+ * \~chinese 对象构造时会判断环境变量 DTK_FORCE_RASTER_WIDGETS 的值，如果为 TRUE 则开启
+ * \~chinese Qt::AA_ForceRasterWidgets，为 FALSE 则不开启，当没有设置此环境变量时，如果
+ * \~chinese 编译时使用了宏 FORCE_RASTER_WIDGETS（龙芯和申威平台默认使用），则开启
+ * \~chinese Qt::AA_ForceRasterWidgets，否则不开启。
  * \~chinese \param argc 作用同 QApplication::QApplication 参数 argc。
  * \~chinese \param argv 作用同 QApplication::QApplication 参数 argv。
  */
@@ -342,14 +347,17 @@ DApplication::DApplication(int &argc, char **argv) :
 {
     qputenv("QT_QPA_PLATFORM", QByteArray());
 
-
-//#ifdef FORCE_RASTER_WIDGETS
     // FIXME: fix bug in nvidia prime workaround, do not know effoct, must test more!!!
     // 在龙芯和申威上，xcb插件中加载glx相关库（r600_dri.so等）会额外耗时1.xs（申威应该更长）
-    if (!qEnvironmentVariableIsSet("DTK_DISABLE_FORCE_RASTER_WIDGETS")) {
+    if (
+#ifdef FORCE_RASTER_WIDGETS
+            QLatin1String("FALSE") !=
+#else
+            QLatin1String("TRUE") ==
+#endif
+    qgetenv("DTK_FORCE_RASTER_WIDGETS")) {
         setAttribute(Qt::AA_ForceRasterWidgets);
     }
-//#endif
 
 #ifdef Q_OS_LINUX
     // set qpixmap cache limit
