@@ -85,7 +85,7 @@ void DPasswdEditAnimatedPrivate::init()
 
     m_passwdEdit->setEchoMode(QLineEdit::Password);
     m_passwdEdit->setFrame(false);
-    m_passwdEdit->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+    m_passwdEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     m_passwdEdit->installEventFilter(q);
     q->setFocusPolicy(Qt::StrongFocus);
     q->setFocusProxy(m_passwdEdit);
@@ -472,12 +472,10 @@ void DPasswdEditAnimated::hideAlert()
     D_D(DPasswdEditAnimated);
 
     if (d->m_invalidTip->isVisible()) {
-        d->m_invalidMessage->hide();
-        d->m_invalidTip->hide();
+        d->m_invalidTip->setVisible(false);
 
         Q_EMIT alertChanged(false);
     }
-
 }
 
 /**
