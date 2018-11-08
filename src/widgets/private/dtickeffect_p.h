@@ -37,6 +37,7 @@ public:
 public:
     DTickEffect::Direction direction;
     int duration;
+    int fixPixel;
     QVariantAnimation *runAnimation;
     QWidget *content;
 

@@ -66,8 +66,6 @@ DTickEffect::DTickEffect(QWidget *widget, QWidget *parent)
     d->init();
     setDirection(DTickEffect::LeftToRight);
 
-    setDuration(1000);
-
     connect(d->runAnimation, &QVariantAnimation::valueChanged, this, &DTickEffect::update);
     connect(d->runAnimation, &QVariantAnimation::finished, this, &DTickEffect::finished);
 }
@@ -199,14 +197,18 @@ void DTickEffect::setDirection(DTickEffect::Direction direction)
  */
 void DTickEffect::setDuration(const int duration)
 {
+    Q_UNUSED(duration);
+}
+
+void DTickEffect::setFixedPixelMove(const int pixel)
+{
     D_D(DTickEffect);
 
-    if (d->duration == duration)
-        return;
+    if (d->fixPixel == pixel) return;
 
-    d->duration = duration;
+    d->fixPixel = pixel;
 
-    d->runAnimation->setDuration(duration);
+    d->initDirection();
 }
 
 DTickEffectPrivate::DTickEffectPrivate(DTickEffect *qq)
@@ -223,6 +225,7 @@ void DTickEffectPrivate::init()
 {
     runAnimation = new QVariantAnimation;
     runAnimation->setLoopCount(-1);
+    fixPixel = 30;
 }
 
 void DTickEffectPrivate::initDirection()
@@ -231,18 +234,22 @@ void DTickEffectPrivate::initDirection()
     case DTickEffect::LeftToRight:
         runAnimation->setStartValue(QPoint(content->x(), content->y()));
         runAnimation->setEndValue(QPoint(content->width(), content->y()));
+        runAnimation->setDuration((content->width() / fixPixel) * 1000);
         break;
     case DTickEffect::RightToLeft:
         runAnimation->setStartValue(QPoint(content->x(), content->y()));
         runAnimation->setEndValue(QPoint(-content->width(), content->y()));
+        runAnimation->setDuration((content->width() / fixPixel) * 1000);
         break;
     case DTickEffect::TopToBottom:
         runAnimation->setStartValue(QPoint(content->x(), content->y()));
         runAnimation->setEndValue(QPoint(content->x(), content->height()));
+        runAnimation->setDuration((content->height() / fixPixel) * 1000);
         break;
     case DTickEffect::BottomToTop:
         runAnimation->setStartValue(QPoint(content->x(), content->y()));
         runAnimation->setEndValue(QPoint(content->x(), -content->height()));
+        runAnimation->setDuration((content->height() / fixPixel) * 1000);
         break;
     default:
         break;
