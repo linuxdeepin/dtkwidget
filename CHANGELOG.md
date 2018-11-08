@@ -1,3 +1,13 @@
+<a name="2.0.9.8"></a>
+## 2.0.9.8 (2018-11-08)
+
+
+#### Bug Fixes
+
+*   do not set Qt::AA_ForceRasterWidgets by default on x86 platform ([4281a396](https://github.com/linuxdeepin/dtkwidget/commit/4281a39694aecf0ebf2fe425f8e40c739698648c))
+
+
+
 <a name="2.0.9.7"></a>
 ## 2.0.9.7 (2018-11-06)
 
