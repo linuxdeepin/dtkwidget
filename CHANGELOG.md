@@ -1,3 +1,18 @@
+<a name="2.0.9.9"></a>
+## 2.0.9.9 (2018-11-09)
+
+
+#### Features
+
+* **DPasswdEditAnimated:**  add updateAlertPosition() func. ([1539439b](https://github.com/linuxdeepin/dtkwidget/commit/1539439b1e5326ba54990c2b02c1ef915fa22d49))
+* **DTickEffect:**  change scroll speed ([2bf9c93f](https://github.com/linuxdeepin/dtkwidget/commit/2bf9c93f682649eb16323c7a1ed5a61e74e7e73b))
+
+#### Bug Fixes
+
+* **passwdeditanimated:**  hide alert flash. ([faaa4ee2](https://github.com/linuxdeepin/dtkwidget/commit/faaa4ee286fa4fe3df120fe718e646310dc6a43e))
+
+
+
 <a name="2.0.9.8"></a>
 ## 2.0.9.8 (2018-11-08)
 
