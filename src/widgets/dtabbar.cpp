@@ -1071,7 +1071,8 @@ void DTabBarPrivate::mouseMoveEvent(QMouseEvent *event)
     }
 
     if (event->buttons() == Qt::LeftButton
-        && offset_x > startDragDistance
+        // 此条件会导致横向拖动时卡顿
+        // && offset_x > startDragDistance
         && valid_pressed_index) {
 
         updateMoveingTabPosition(event->pos());
