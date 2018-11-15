@@ -52,8 +52,10 @@ void DPasswdEditAnimatedPrivate::init()
     m_caps = new DLabel;
     m_eye = new DImageButton;
     m_submit = new DImageButton;
-    m_invalidTip = new DArrowRectangle(DArrowRectangle::ArrowTop, q);
+    m_invalidTip = new DArrowRectangle(DArrowRectangle::ArrowTop, DArrowRectangle::FloatWidget);
     m_invalidMessage = new DLabel(m_invalidTip);
+    m_invalidTip->setContent(m_invalidMessage);
+    m_invalidTip->setMargin(10);
 
     m_loadSlider = new LoadSlider(q);
     m_loadSlider->hide();
@@ -250,6 +252,8 @@ DPasswdEditAnimated::DPasswdEditAnimated(QWidget *parent) : QFrame(parent),
     D_D(DPasswdEditAnimated);
 
     d->init();
+
+    d->m_invalidTip->setParent(parent);
 }
 
 /**
@@ -437,6 +441,7 @@ void DPasswdEditAnimated::showAlert(const QString &message)
     d->_q_hideLoadSlider();
 
     d->m_invalidMessage->setText(message);
+    d->m_invalidMessage->adjustSize();
 
     d->m_passwdEdit->selectAll();
     d->m_passwdEdit->setFocus();
@@ -448,8 +453,9 @@ void DPasswdEditAnimated::showAlert(const QString &message)
 
     if (!d->m_invalidTip->isVisible()) {
         // focus BUG
-        //d->m_invalidTip->setContent(d->m_invalidMessage);
-        //d->m_invalidTip->adjustSize();
+//        d->m_invalidTip->setContent(d->m_invalidMessage);
+//        d->m_invalidTip->adjustSize();
+        d->m_invalidTip->setContent(d->m_invalidMessage);
 
         updateAlertPosition();
 
@@ -491,12 +497,13 @@ void DPasswdEditAnimated::updateAlertPosition()
 {
     D_D(DPasswdEditAnimated);
 
-    const QString &message = d->m_invalidMessage->text();
+    QPoint pos = mapToParent(rect().bottomLeft());
+    const int messageHalfWidth = d->m_invalidMessage->width() / 2;
+    d->m_invalidTip->move(pos.x() + messageHalfWidth + 10, pos.y() + 5);
 
-    QPoint pos = mapToGlobal(rect().bottomLeft());
-    QFontMetrics fm((QFont()));
-    d->m_invalidTip->setGeometry(pos.x(), pos.y() + 5, fm.width(message) + 20, fm.height() + 20);
-    d->m_invalidMessage->move(10, 15);
+    const QPoint messagePos = d->m_invalidMessage->pos();
+    const int h = d->m_invalidTip->height() - d->m_invalidMessage->height() - 10;
+    d->m_invalidMessage->move(messagePos.x(), h / 2);
 
     d->m_invalidTip->setArrowX(20);
     d->m_invalidMessage->show();
