@@ -312,6 +312,7 @@ bool DApplicationPrivate::isUserManualExists()
  * \~chinese - 在 FORCE_RASTER_WIDGETS 宏生效的情况下，默认设置 Qt::AA_ForceRasterWidgets 以减少 glx 相关库的加载，减少程序启动时间；
  * \~chinese - 自动根据 applicationName 和 系统 locale 加载对应的翻译文件；
  * \~chinese - 会根据系统gsettings中 com.deepin.dde.dapplication 的 qpixmapCacheLimit 值来设置 QPixmapCache::cacheLimit ；
+ * \~chinese - 会根据系统gsettings中 com.deepin.dde.touchscreen longpress-duration 的值来设置 QTapAndHoldGesture::timeout ；
  * \~chinese - 方便地通过 setSingleInstance 来实现程序的单实例。
  *
  * \~chinese \sa loadTranslator, setSingleInstance.
@@ -366,6 +367,13 @@ DApplication::DApplication(int &argc, char **argv) :
         QGSettings gsettings("com.deepin.dde.dapplication", "/com/deepin/dde/dapplication/");
         if (gsettings.keys().contains("qpixmapCacheLimit"))
             QPixmapCache::setCacheLimit(gsettings.get("qpixmap-cache-limit").toInt());
+    }
+
+    // set QTapAndHoldGesture::timeout
+    if (QGSettings::isSchemaInstalled("com.deepin.dde.touchscreen")) {
+        QGSettings gsettings("com.deepin.dde.touchscreen");
+        if (gsettings.keys().contains("longpressDuration"))
+            QTapAndHoldGesture::setTimeout(gsettings.get("longpress-duration").toInt());
     }
 #endif
 }
