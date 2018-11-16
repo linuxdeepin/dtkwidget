@@ -315,6 +315,10 @@ bool DApplicationPrivate::isUserManualExists()
  * \~chinese - 会根据系统gsettings中 com.deepin.dde.touchscreen longpress-duration 的值来设置 QTapAndHoldGesture::timeout ；
  * \~chinese - 方便地通过 setSingleInstance 来实现程序的单实例。
  *
+ * \~chinese \note DApplication 设置的 QTapAndHoldGesture::timeout 会比 gsettings
+ * \~chinese 中的值小 100，用来绕过 Dock 长按松开容易导致应用启动的问题，详细解释见
+ * \~chinese 见代码注释或者 https://github.com/linuxdeepin/internal-discussion/issues/430
+ *
  * \~chinese \sa loadTranslator, setSingleInstance.
  */
 
@@ -373,7 +377,20 @@ DApplication::DApplication(int &argc, char **argv) :
     if (QGSettings::isSchemaInstalled("com.deepin.dde.touchscreen")) {
         QGSettings gsettings("com.deepin.dde.touchscreen");
         if (gsettings.keys().contains("longpressDuration"))
-            QTapAndHoldGesture::setTimeout(gsettings.get("longpress-duration").toInt());
+            // NOTE(hualet): -100 is a workaround against the situation that that sometimes longpress
+            // and release on Dock cause App launches which should be avoided.
+            //
+            // I guess it happens like this: longpress happens on Dock,
+            // Dock menu shows(doesn't grab the mouse which is a bug can't be fixed easily),
+            // user ends the longpress, DDE Dock recevies mouseReleaseEvent and checks for
+            // QTapAndHoldGesture  which is still not happening (maybe because the timer used is
+            // a CoarseTimer?), so Dock treats the event as a normal mouseReleaseEvent, launches the
+            // App or triggers the action.
+            //
+            // see: https://github.com/linuxdeepin/internal-discussion/issues/430
+            //
+            // This workaround hopefully can fix most of this situations.
+            QTapAndHoldGesture::setTimeout(gsettings.get("longpress-duration").toInt() - 100);
     }
 #endif
 }
