@@ -996,9 +996,16 @@ void DDialog::showEvent(QShowEvent *event)
 /*!\reimp */
 void DDialog::hideEvent(QHideEvent *event)
 {
-    Q_EMIT aboutToClose();
-
     DAbstractDialog::hideEvent(event);
+
+    Q_EMIT visibleChanged(isVisible());
+}
+
+void DDialog::closeEvent(QCloseEvent *event)
+{
+    Q_UNUSED(event)
+
+    Q_EMIT aboutToClose();
 
     done(-1);
 
