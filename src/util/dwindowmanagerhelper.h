@@ -57,6 +57,13 @@ public:
     };
     Q_DECLARE_FLAGS(MotifDecorations, MotifDecoration)
 
+    enum WMName {
+        OtherWM,
+        DeepinWM,
+        KWinWM
+    };
+    Q_ENUM(WMName)
+
     ~DWindowManagerHelper();
 
     static DWindowManagerHelper *instance();
@@ -72,6 +79,8 @@ public:
 
     bool hasBlurWindow() const;
     bool hasComposite() const;
+    QString windowManagerNameString() const;
+    WMName windowManagerName() const;
 
     QList<DForeignWindow*> currentWorkspaceWindows() const;
 

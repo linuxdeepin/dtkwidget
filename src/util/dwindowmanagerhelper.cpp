@@ -34,6 +34,7 @@ DWIDGET_BEGIN_NAMESPACE
 // functions
 DEFINE_CONST_CHAR(hasBlurWindow);
 DEFINE_CONST_CHAR(hasComposite);
+DEFINE_CONST_CHAR(windowManagerName);
 DEFINE_CONST_CHAR(connectWindowManagerChangedSignal);
 DEFINE_CONST_CHAR(connectHasBlurWindowChanged);
 DEFINE_CONST_CHAR(connectHasCompositeChanged);
@@ -256,6 +257,32 @@ bool DWindowManagerHelper::hasComposite() const
 #endif
 
     return hasComposite && reinterpret_cast<bool(*)()>(hasComposite)();
+}
+
+QString DWindowManagerHelper::windowManagerNameString() const
+{
+    QFunctionPointer windowManagerName = Q_NULLPTR;
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+    windowManagerName = qApp->platformFunction(_windowManagerName);
+#endif
+
+    return windowManagerName ? reinterpret_cast<QString(*)()>(windowManagerName)() : QString();
+}
+
+DWindowManagerHelper::WMName DWindowManagerHelper::windowManagerName() const
+{
+    const QString &wmName = windowManagerNameString();
+
+    if (wmName == QStringLiteral("Mutter(DeepinGala)")) {
+        return DeepinWM;
+    }
+
+    if (wmName == QStringLiteral("KWin")) {
+        return KWinWM;
+    }
+
+    return OtherWM;
 }
 
 QList<DForeignWindow *> DWindowManagerHelper::currentWorkspaceWindows() const
