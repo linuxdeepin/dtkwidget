@@ -1,3 +1,21 @@
+<a name="2.0.9.10"></a>
+## 2.0.9.10 (2018-11-30)
+
+
+#### Bug Fixes
+
+*   the dialog type window will be closed after pressing Super+D ([251418bf](https://github.com/linuxdeepin/dtkwidget/commit/251418bf2423da81fbce5731347fc05c5e23a646))
+*   workaround QTapAndHoldGesture comes late than right press in dde-daemon ([2af710be](https://github.com/linuxdeepin/dtkwidget/commit/2af710bec685739d5b3a2e113c3e2a860ce0197b))
+* **DPasswdEditAnimated:**  modify parent for tip widget ([b9edc9d3](https://github.com/linuxdeepin/dtkwidget/commit/b9edc9d36386fcd9537e0b5cafc734e1696fa294))
+* **dtabbar:**  horizontal dragging delays. ([9efe4990](https://github.com/linuxdeepin/dtkwidget/commit/9efe4990c128e6a5a306057ae52abf614607c9a6))
+
+#### Features
+
+*   set QTapAndHoldGesture::timeout in DApplication ([a3e23a7e](https://github.com/linuxdeepin/dtkwidget/commit/a3e23a7e233df7b22fa6d8340df80a7744bb8ab7))
+* **DWindowManagerHelper:**  add inteface: "windowManagerName" ([d4c557f1](https://github.com/linuxdeepin/dtkwidget/commit/d4c557f1d54beb77591b9a208bdbb201f20a376a))
+
+
+
 <a name="2.0.9.9"></a>
 ## 2.0.9.9 (2018-11-09)
 
