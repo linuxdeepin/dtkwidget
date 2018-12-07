@@ -39,6 +39,7 @@ DEFINE_CONST_CHAR(connectWindowManagerChangedSignal);
 DEFINE_CONST_CHAR(connectHasBlurWindowChanged);
 DEFINE_CONST_CHAR(connectHasCompositeChanged);
 DEFINE_CONST_CHAR(getCurrentWorkspaceWindows);
+DEFINE_CONST_CHAR(getWindows);
 DEFINE_CONST_CHAR(connectWindowListChanged);
 DEFINE_CONST_CHAR(setMWMFunctions);
 DEFINE_CONST_CHAR(getMWMFunctions);
@@ -285,6 +286,32 @@ DWindowManagerHelper::WMName DWindowManagerHelper::windowManagerName() const
     return OtherWM;
 }
 
+QVector<WId> DWindowManagerHelper::allWindowIdList() const
+{
+    QFunctionPointer wmClientList = Q_NULLPTR;
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+    wmClientList = qApp->platformFunction(_getWindows);
+#endif
+
+    if (!wmClientList) return QVector<WId>();
+
+    return reinterpret_cast<QVector<WId>(*)()>(wmClientList)();
+}
+
+QVector<WId> DWindowManagerHelper::currentWorkspaceWindowIdList() const
+{
+    QFunctionPointer wmClientList = Q_NULLPTR;
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+    wmClientList = qApp->platformFunction(_getCurrentWorkspaceWindows);
+#endif
+
+    if (!wmClientList) return QVector<WId>();
+
+    return reinterpret_cast<QVector<WId>(*)()>(wmClientList)();
+}
+
 QList<DForeignWindow *> DWindowManagerHelper::currentWorkspaceWindows() const
 {
     D_DC(DWindowManagerHelper);
@@ -295,17 +322,23 @@ QList<DForeignWindow *> DWindowManagerHelper::currentWorkspaceWindows() const
 
     d->windowList.clear();
 
-    QFunctionPointer wmClientList = Q_NULLPTR;
+    QList<WId> currentApplicationWindowList;
+    const QWindowList &list = qApp->allWindows();
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
-    wmClientList = qApp->platformFunction(_getCurrentWorkspaceWindows);
-#endif
+    currentApplicationWindowList.reserve(list.size());
 
-    if (wmClientList) {
-        for (WId wid : reinterpret_cast<QVector<quint32>(*)()>(wmClientList)()) {
-            if (DForeignWindow *w = DForeignWindow::fromWinId(wid)) {
-                d->windowList << w;
-            }
+    for (auto window : list) {
+        currentApplicationWindowList.append(window->winId());
+    }
+
+    QVector<WId> wmClientList = currentWorkspaceWindowIdList();
+
+    for (WId wid : wmClientList) {
+        if (currentApplicationWindowList.contains(wid))
+            continue;
+
+        if (DForeignWindow *w = DForeignWindow::fromWinId(wid)) {
+            d->windowList << w;
         }
     }
 

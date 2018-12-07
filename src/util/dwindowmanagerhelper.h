@@ -82,6 +82,8 @@ public:
     QString windowManagerNameString() const;
     WMName windowManagerName() const;
 
+    QVector<WId> allWindowIdList() const;
+    QVector<WId> currentWorkspaceWindowIdList() const;
     QList<DForeignWindow*> currentWorkspaceWindows() const;
 
 Q_SIGNALS:
