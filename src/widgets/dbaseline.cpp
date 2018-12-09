@@ -26,6 +26,9 @@ DWIDGET_BEGIN_NAMESPACE
 
     \~chinese DBaseLine 提供一个固定高度的控件，包含分别位于左侧和右侧的两个可供显示的控件。
 
+    \~chinese DBaseLine 可用于构建固定行高并需要自定义左右控件的控件，比如上方导航栏等。如 DHeaderLine 即使用 DBaseLine
+    构建了一个带有文字标题和可选内容控件的控件。
+
     \~chinese \sa DHeaderLine
 */
 

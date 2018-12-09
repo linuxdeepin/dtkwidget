@@ -54,6 +54,8 @@ int ArrowButtonIcon::buttonState() const
     \~chinese \class DArrowButton
     \~chinese \brief 可以使用 DArrowButton 类快速创建箭头形状的按钮。
 
+    \~chinese \image html DArrowButton.png
+
     \~chinese DArrowButton 提供了快速的方式创建包含箭头标识的按钮，并允许通过 setArrowDirection() 设置箭头方向来直接改按钮的箭头图标的方向。
     此外，还可以通过 \ref arrowButtonDirection 和 \ref arrowButtonState 属性获取和修改箭头按钮的状态。
 
@@ -63,6 +65,8 @@ int ArrowButtonIcon::buttonState() const
 /*!
     \~english \class DArrowButton
     \~english \brief DArrowButton allowed you create button with arrow icon conveniently.
+
+    \~english \image html DArrowButton.png
 
     \~english You can use DArrowButton to create button with arrow icon, and it also allowed you update the arrow direction by
     calling setArrowDirection() . You can also update arrow state via arrowButtonDirection and arrowButtonState property.
