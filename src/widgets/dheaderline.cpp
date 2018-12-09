@@ -26,6 +26,11 @@ DWIDGET_BEGIN_NAMESPACE
 
     \~chinese DHeaderLine 提供一个固定高度的控件可供显示标题或相关内容，其行内提供左对齐的文字和可选的位于右侧的控件。
 
+    \~chinese \image html DHeaderLine.png
+
+    \~chinese 我们可以利用可选的内容控件为用户提供交互方式的提示，状态提示或其他类似的目的。上图中的例子，我们使用 DHeaderLine
+    并结合 DArrowButton 作为内容控件，构成了一个外观近似可折叠标题的标题行控件。
+
     \~chinese \sa DBaseLine
 */
 
@@ -35,6 +40,12 @@ DWIDGET_BEGIN_NAMESPACE
 
     \~english DHeaderLine provide a fixed height header line to display header title or related stuff.
     Title are aligned left and you can also set an optional right aligned QWidget.
+
+    \~english \image html DHeaderLine.png
+
+    \~english We can use the optional content widget to provide interaction hint, status state hint or other
+    propuse. The image above shows an use case which use DHeaderLine and combine DArrowButton as content widget
+    to construct a foldable-like header line widget (you need implement the foldable logic by yourself).
 
     \~english \sa DBaseLine
 */
