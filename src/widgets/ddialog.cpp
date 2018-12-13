@@ -895,6 +895,9 @@ void DDialog::setMessage(const QString &message)
 
 /*!
  * \~chinese \brief 设置对话框图标
+ *
+ * \~chinese 注意：该接口将会在未来版本中废弃，
+ * 请使用 setIcon(const QIcon &icon, const QSize &expectedSize) 这个重载。
  */
 void DDialog::setIcon(const QIcon &icon)
 {
@@ -908,6 +911,26 @@ void DDialog::setIcon(const QIcon &icon)
         auto pixmap = icon.pixmap(size);
         setIconPixmap(pixmap);
     }
+}
+
+/*!
+ * \~chinese \brief 设置对话框图标
+ *
+ * \~chinese 为对话框设置图标，同时可以指定一个期望的图标大小。
+ */
+void DDialog::setIcon(const QIcon &icon, const QSize &expectedSize)
+{
+    D_D(DDialog);
+
+    d->icon = icon;
+
+    if (icon.isNull()) {
+        return;
+    }
+
+    QSize actualSize = expectedSize.isValid() ? expectedSize : QSize(64, 64);
+    QPixmap pixmap = icon.pixmap(actualSize);
+    setIconPixmap(pixmap);
 }
 
 /*!
