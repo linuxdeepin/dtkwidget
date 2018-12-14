@@ -1,3 +1,14 @@
+<a name="2.0.9.11"></a>
+## 2.0.9.11 (2018-12-14)
+
+
+#### Features
+
+*   allowed set a expected icon size for DDialog::setIcon ([a4d2aa06](https://github.com/linuxdeepin/dtkwidget/commit/a4d2aa060381fb13e8a99f069e212549e032bd1c))
+* **DWindowManagerHelper:**  return all windowId and current workspace windowId ([d3440165](https://github.com/linuxdeepin/dtkwidget/commit/d34401655ec1119fc0173df15af1ece41b23f2af))
+
+
+
 <a name="2.0.9.10"></a>
 ## 2.0.9.10 (2018-11-30)
 
