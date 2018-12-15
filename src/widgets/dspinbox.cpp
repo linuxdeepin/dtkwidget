@@ -94,6 +94,10 @@ void DSpinBoxPrivate::_q_resizeInsideFrame(const QSize &size)
  * \~chinese \brief Deepin风格的QSpinBox。
  *
  * \~chinese 类似 DLineEdit ，这个控件也提供了警告功能，用于提醒用户当前输入的数据不正确，另外，还可以设置一个默认的值，并在默认值发生改变时发出信号。
+ *
+ * \~chinese 如下图上面的是正常状态的控件, 下面的是处于警告状态的控件:
+ *
+ * \~chinese \image html DSpinBox.png
  */
 
 // ========================SIGNAL START========================
@@ -169,7 +173,7 @@ bool DSpinBox::isAlert() const
  * \~chinese \property DSpinBox::defaultValue
  * \~chinese \brief 这个属性的值是控件的默认值。
  *
- * \~chinese 使用 DSpinBox::defaultValue 获取默认值，使用 DSpinBox::setDefaultValue 设置默认值。
+ * \~chinese 使用 DSpinBox::defaultValue 获取默认值，使用 DSpinBox::setDefaultValue 设置默认值, 点击控件上的 reset 按钮会设置为此值。
  */
 int DSpinBox::defaultValue() const
 {
