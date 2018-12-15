@@ -21,10 +21,11 @@ DWIDGET_USE_NAMESPACE
 
 /**
  * \~chinese \class DExpandGroup
- * \~chinese \brief 封装了一组 DBaseExpand 的数据类型
+ * \~chinese \brief 封装了一组 DBaseExpand 控件(当然也可以是其子类), 并保证同一时间只有一个 DBaseExpand 处于展开状态
 
- * \~chinese DExpandGroup 是对一组 DBaseExpand 对象的按照键值对形式的封装，提供了简单的新增，获取，移除的方法，用于统一管理多个 DBaseExpand 对象。
- * \note 请注意，DExpandGroup 并不是控件
+ * \~chinese DExpandGroup 顾名思义是用来管理一组 DBaseExpand 控件的，提供了简单的新增，获取，移除的方法，用于统一管理多个 DBaseExpand 对象的展开和收起状态,
+ * \~chinese DExpandGroup 会保证在同一时间只有一个 DBaseExpand 控件处于展开状态, 也就是说如果点击展开了组里的一个控件, DExpandGroup 会将组里其他控件设置为收起状态。
+ * \note 请注意，DExpandGroup 并不是控件, 只需要将需要管理的 DBaseExpand 添加进来即可
  */
 
 /**
@@ -38,9 +39,9 @@ DExpandGroup::DExpandGroup(QObject *parent) : QObject(parent)
 }
 
 /**
- * \~chinese \brief 获取所有可展开控件
+ * \~chinese \brief 获取所有正在管理的控件
  * \~chinese
- * \~chinese \return 所有可展开控件组成的列表
+ * \~chinese \return 控件组成的列表
  */
 QList<DBaseExpand *> DExpandGroup::expands() const
 {
@@ -48,9 +49,9 @@ QList<DBaseExpand *> DExpandGroup::expands() const
 }
 
 /**
- * \~chinese \brief 获取第一个处于已展开状态的控件
+ * \~chinese \brief 获取处于已展开状态的 DBaseExpand 对象
  * \~chinese
- * \~chinese \return 已展开状态的控件
+ * \~chinese \return 已展开状态的控件, 若没有已展开的控件则返回 NULL
  */
 DBaseExpand *DExpandGroup::checkedExpand() const
 {
@@ -122,7 +123,7 @@ void DExpandGroup::removeExpand(DBaseExpand *expand)
 }
 
 /**
- * \~chinese \brief 返回找到的第一个处于已展开状态的控件的 id
+ * \~chinese \brief 返回处于已展开状态控件的 id
  * \~chinese
  * \~chinese \return 如果当前没有处于展开状态的控件则返回 -1
  */
