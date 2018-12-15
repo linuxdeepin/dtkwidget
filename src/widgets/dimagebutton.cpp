@@ -44,33 +44,48 @@ DWIDGET_BEGIN_NAMESPACE
 
 /*!
  * \~chinese \class DImageButton
- * \~chinese \brief 可以帮助你轻松的创建基于图片的按钮
+ * \~chinese \brief 在Deepin的程序设计中，用到了大量基于图片的按钮，而Qt的QPushButton不能方便的只使用图片，
+ * 每个项目都存在相同的自绘图片的按钮控件，所以Dtk提供了基于图片来构建的按钮。
  *
- * DImageButton 四个状态:
- * - 正常
- * - 鼠标移动在控件上
- * - 鼠标按下
- * - 当前选中
+ * DImageButton 五个状态:
+ * - 正常 DImageButton::State::Normal
+ * - 鼠标移动在控件上 DImageButton::State::Hover
+ * - 鼠标按下 DImageButton::State::Press
+ * - 当前选中 DImageButton::State::Checked
+ * - 禁用 DImageButton::State::Disabled
  *
- * 开发者应该提供正常状态下的图片来保证其可以正常工作.
+ * \code
+ * DImageButton *button = new DImageButton(":/normal.png", ":/hover.png", ":/press.png", this);
+ * ...
+ * connect(button, &DImageButton::clicked, ...);
+ * \endcode
  *
  * \~chinese \enum DImageButton::State
  * DImageButton::State 定义了按钮可以使用的状态
  *
  * \~chinese \var DImageButton::Normal
- * 按钮默认状态图片
+ * 按钮默认状态图片 DImageButton::setNormalPic
  *
  * \~chinese \var DImageButton::Hover
- * 鼠标在按钮上时的图片
+ * 鼠标在按钮上时的图片 DImageButton::setHoverPic
  *
  * \~chinese \var DImageButton::Press
- * 按钮按下时的图片
+ * 按钮按下时的图片 DImageButton::setPressPic
  *
  * \~chinese \var DImageButton::Checked
- * 按钮选中的图片
+ * 按钮选中的图片 DImageButton::setCheckedPic
  *
  * \~chinese \var DImageButton::Disabled
- * 按钮被禁用时的图片
+ * 按钮被禁用时的图片 DImageButton::setDisabledPic
+ */
+
+/*!
+ * \fn DImageButton::clicked
+ * \~chinese \brief 当按钮被点击时会发出该信号
+ * \fn DImageButton::checkedChanged
+ * \~chinese \brief 当按钮的选择状态发生改变时会发出该信号
+ * \fn DImageButton::stateChanged
+ * \~chinese \brief 当按钮的状态发生变化时会发出该信号
  */
 
 /*!
@@ -106,7 +121,7 @@ DImageButton::DImageButton(QWidget *parent)
  *  通过图片来初始化按钮
  *
  * \param normalPic 默认状态下的图片
- * \param hoverPic 鼠标移动在控件上的图片
+ * \param hoverPic 鼠标在控件上的图片
  * \param pressPic 鼠标按下的图片
  * \param parent
  */
@@ -151,7 +166,7 @@ DImageButton::DImageButton(const QString &normalPic, const QString &hoverPic, co
  * 通过图片来初始化按钮
  *
  * \param normalPic 默认的图片
- * \param hoverPic 鼠标移动在控件上的图片
+ * \param hoverPic 鼠标在控件上的图片
  * \param pressPic 鼠标按下的图片
  * \param checkedPic 选中时的图片
  * \param parent
@@ -265,9 +280,13 @@ void DImageButton::mouseMoveEvent(QMouseEvent *event)
 }
 
 /*!
- * \~chinese \brief 设置是否启用
+ * \~chinese \brief 设置是否启用按钮的功能
  *
- * 该方法会控制当前按钮是否可用
+ * 该方法和 DImageButton::setDisabled() 方法的作用相反，设置为False时则按钮的功能不可用，不能被点击和选中。
+ *
+ * \see DImageButton::setDisabled
+ * \see DImageButton::isEnabled
+ * \see DImageButton::enabled
  *
  * \param enabled
  */
@@ -284,9 +303,12 @@ void DImageButton::setEnabled(bool enabled)
 }
 
 /*!
- * \~chinese \brief 设置是否禁用
+ * \~chinese \brief 设置是否禁用按钮的功能
  *
- * 该方法会控制当前按钮是否被禁用
+ * 该方法和 DImageButton::setEnabled() 方法的作用相反，设置为True时则按钮的功能不可用，不能被点击和选中。
+ *
+ * \see DImageButton::setEnabled
+ * \see DImageButton::disabled
  *
  * \param disabled
  */
@@ -296,9 +318,12 @@ void DImageButton::setDisabled(bool disabled)
 }
 
 /*!
- * \~chinese \brief 控制是否可以选中
+ * \~chinese \brief 设置按钮是否可以被选中
  *
- * 如果没有启用该方法，则选中状态不可用
+ * 该方法默认值为false，如果要开启选中效果，则需要设置为True。
+ *
+ * \see DImageButton::checkable
+ * \see DImageButton::isCheckable
  *
  * \param flag
  */
@@ -316,9 +341,13 @@ void DImageButton::setCheckable(bool flag)
 /*!
  * \~chinese \brief 设置按钮的选中状态
  *
- * 如果DImageButton::setCheckable没有被设置为true，则当前方法不可用
+ * 如果DImageButton::setCheckable()没有被设置为true，则当前方法不可用。
  *
  * \param flag
+ *
+ * \see DImageButton::setCheckable
+ * \see DImageButton::isChecked
+ * \see DImageButton::checkedChanged
  */
 void DImageButton::setChecked(bool flag)
 {
@@ -346,7 +375,10 @@ void DImageButton::setChecked(bool flag)
 /*!
  * \~chinese \property DImageButton::checked
  *
- * \~chinese \brief 这个属性会返回按钮是否为选中
+ * \~chinese \brief 返回按钮现在是否为选中状态
+ *
+ * \see DImageButton::setChecked
+ * \see DImageButton::checkedChanged
  *
  * \return true 选中
  * \return false 未选中
@@ -354,6 +386,9 @@ void DImageButton::setChecked(bool flag)
 
 /*!
  * \~chinese \brief 返回按钮是否是选中状态
+ *
+ * \see DImageButton::setChecked
+ * \see DImageButton::checkedChanged
  *
  * \return true 选中状态
  * \return false 不是选中状态
@@ -375,12 +410,18 @@ bool DImageButton::isChecked() const
  *
  * \~chinese \brief 这个方法会返回按钮是否可以被选中
  *
+ * \see DImageButton::setCheckable
+ * \see DImageButton::isCheckable
+ *
  * \return true 可以被选中
  * \return false 不可以被选中
  */
 
 /*!
  * \~chinese \brief 这个方法会返回按钮是否可以被选中
+ *
+ * \see DImageButton::setCheckable
+ * \see DImageButton::checkable
  *
  * \return true
  * \return false
@@ -395,6 +436,9 @@ bool DImageButton::isCheckable() const
 /*!
  * \~chinese \brief 该方法用来设置默认状态下的图片
  *
+ * \see DImageButton::normalPic
+ * \see DImageButton::getNormalPic
+ *
  * \param normalPicPixmap 图片的访问地址
  */
 void DImageButton::setNormalPic(const QString &normalPicPixmap)
@@ -407,6 +451,9 @@ void DImageButton::setNormalPic(const QString &normalPicPixmap)
 
 /*!
  * \~chinese \brief 设置鼠标在控件上时的图片
+ *
+ * \see DImageButton::hoverPic
+ * \see DImageButton::getHoverPic
  *
  * \param hoverPicPixmap 图片的访问地址
  */
@@ -421,6 +468,9 @@ void DImageButton::setHoverPic(const QString &hoverPicPixmap)
 /*!
  * \~chinese \brief 设置鼠标按下的图片
  *
+ * \see DImageButton::pressPic
+ * \see DImageButton::getPressPic
+ *
  * \param pressPicPixmap 图片的访问地址
  */
 void DImageButton::setPressPic(const QString &pressPicPixmap)
@@ -434,6 +484,9 @@ void DImageButton::setPressPic(const QString &pressPicPixmap)
 /*!
  * \~chinese \brief 设置选中状态下的图片
  *
+ * \see DImageButton::checkedPic
+ * \see DImageButton::getCheckedPic
+ *
  * \param checkedPicPixmap 图片的访问地址
  */
 void DImageButton::setCheckedPic(const QString &checkedPicPixmap)
@@ -446,6 +499,9 @@ void DImageButton::setCheckedPic(const QString &checkedPicPixmap)
 
 /*!
  * \~chinese \brief 设置禁用状态下的图片
+ *
+ * \see DImageButton::disabledPic
+ * \see DImageButton::getDisabledPic
  *
  * \param disabledPicPixmap 图片的访问地址
  */
@@ -467,13 +523,19 @@ void DImageButton::setDisabledPic(const QString &disabledPicPixmap)
  *
  * \~chinese \brief 当前的默认状态图片
  *
+ * \see DImageButton::setNormalPic
+ * \see DImageButton::getNormalPic
+ *
  * \return const QString
  */
 
 /*!
- * \~chinese \brief 返回当前的默认状态图片
+ * \~chinese \brief 返回默认状态的图片路径
  *
- * \return const QString 默认状态图片的地址
+ * \see DImageButton::setNormalPic
+ * \see DImageButton::normalPic
+ *
+ * \return const QString 默认状态图片的路径
  */
 const QString DImageButton::getNormalPic() const
 {
@@ -490,15 +552,21 @@ const QString DImageButton::getNormalPic() const
 /*!
  * \~chinese \property DImageButton::hoverPic
  *
- * \~chinese \brief 返回当前的鼠标在控件上时的图片
+ * \~chinese \brief 返回鼠标在控件上时的图片路径
  *
- * \return const QString 鼠标在控件上时的图片地址
+ * \see DImageButton::setHoverPic
+ * \see DImageButton::getHoverPic
+ *
+ * \return const QString 图片路径
  */
 
 /*!
- * \~chinese \brief 返回当前的鼠标在控件上时的图片地址p
+ * \~chinese \brief 返回鼠标在按钮上时的图片路径
  *
- * \return const QString 鼠标在控件上时的图片地址
+ * \see DImageButton::setHoverPic
+ * \see DImageButton::hoverPic
+ *
+ * \return const QString 图片路径
  */
 const QString DImageButton::getHoverPic() const
 {
@@ -517,13 +585,19 @@ const QString DImageButton::getHoverPic() const
  *
  * \~chinese \brief 设置的鼠标按下时的图片
  *
- * \return const QString
+ * \see DImageButton::setPressPic
+ * \see DImageButton::getPressPic
+ *
+ * \return const QString 图片路径
  */
 
 /*!
  * \~chinese \brief 返回鼠标按下时的图片
  *
- * \return const QString 鼠标按下时的图片
+ * \see DImageButton::pressPic
+ * \see DImageButton::setPressPic
+ *
+ * \return const QString 图片路径
  */
 const QString DImageButton::getPressPic() const
 {
@@ -540,15 +614,21 @@ const QString DImageButton::getPressPic() const
 /*!
  * \~chinese \property DImageButton::checkedPic
  *
+ * \see DImageButton::setCheckedPic
+ * \see DImageButton::getCheckedPic
+ *
  * \~chinese \brief 选中状态时的图片
  *
- * \return const QString 选中状态时的图片
+ * \return const QString 图片路径
  */
 
 /*!
  * \~chinese \brief 返回选中状态时的图片
  *
- * \return const QString 选中状态时的图片
+ * \see DImageButton::setCheckedPic
+ * \see DImageButton::checkedPic
+ *
+ * \return const QString 图片路径
  */
 const QString DImageButton::getCheckedPic() const
 {
@@ -562,13 +642,19 @@ const QString DImageButton::getCheckedPic() const
  *
  * \~chinese \brief 禁用状态下的图片
  *
- * \return const QString 禁用状态下的图片
+ * \see DImageButton::setDisabledPic
+ * \see DImageButton::getDisabledPic
+ *
+ * \return const QString 图片路径
  */
 
 /*!
  * \~chinese \brief 返回禁用状态下的图片
  *
- * \return const QString 禁用状态下的图片
+ * \see DImageButton::setDisabledPic
+ * \see DImageButton::disabledPic
+ *
+ * \return const QString 图片路径
  */
 const QString DImageButton::getDisabledPic() const
 {
@@ -586,6 +672,9 @@ const QString DImageButton::getDisabledPic() const
  * \~chinese \brief 设置当前的按钮状态
  *
  * \param state 当前的状态
+ *
+ * \see DImageButton::getState
+ * \see DImageButton::stateChanged
  */
 void DImageButton::setState(DImageButton::State state)
 {
@@ -602,6 +691,9 @@ void DImageButton::setState(DImageButton::State state)
 
 /*!
  * \~chinese \brief 返回当前的按钮状态
+ *
+ * \see DImageButton::setState
+ * \see DImageButton::stateChanged
  *
  * \return DImageButton::State
  */
