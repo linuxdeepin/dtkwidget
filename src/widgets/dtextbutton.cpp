@@ -20,12 +20,18 @@
 
 /**
  * \~chinese \class DTextButton
- * \~chinese \brief 支持deepin主题切换的按钮。
+ * \~chinese \brief 一个 DDE 风格按钮控件。
  *
- * \~chinese 继承自 QPushButton 仅新增了自动切换deepin主题的功能。
+ * \~chinese 继承自 QPushButton 并修改了样式使其更符合 DDE 风格, 其他功能与 QPushButton 一致, 可将其直接作为 QPushButton 使用
  */
+
 DWIDGET_BEGIN_NAMESPACE
 
+/*!
+ * \brief 构造一个 DTextButton 实例。
+ * \param text 按钮需要显示的文字
+ * \param parent 用于作为按钮的父控件
+ */
 DTextButton::DTextButton(const QString & text, QWidget * parent) :
     QPushButton(text, parent)
 {
