@@ -28,6 +28,10 @@ DWIDGET_BEGIN_NAMESPACE
  * \~chinese \brief 一个美观的可展开的控件
  *
  * \~chinese 使用 DBaseExpand 类可以创建一个可展开的带有展开动画效果的控件，这个控件包含上下两部分，上面的控件为标题控件，这个控件会始终显示，下面的控件为内容控件，默认为不会显示，调用 DBaseExpand::setExpand 设置内容控件的可见性。使用 DBaseExpand::setHeader 和 DBaseExpand::setContent 设置分别设置标题控件和内容控件。
+ *
+ * \~chinese \sa DHeaderLine
+ *
+ * \~chinese \image html DBaseExpand.gif
  */
 
 /**
