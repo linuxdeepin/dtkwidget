@@ -276,3 +276,26 @@ void DCircleProgress::leaveEvent(QEvent *e)
     QWidget::leaveEvent(e);
 }
 
+/*!
+  \fn DCircleProgress::clicked()
+
+  \~english This signal is emitted when the user clicks the DCircleProgress widget.
+
+  \~chinese 该信号将会在用户点击 DCircleProgress 控件时发出。
+*/
+
+/*!
+  \fn DCircleProgress::mouseEntered()
+
+  \~english This signal is emitted when the user's mouse pointer entered the DCircleProgress widget.
+
+  \~chinese 该信号将会在用户的鼠标指针移入 DCircleProgress 控件时发出。
+*/
+
+/*!
+  \fn DCircleProgress::mouseLeaved()
+
+  \~english This signal is emitted when the user's mouse pointer leaved the DCircleProgress widget.
+
+  \~chinese 该信号将会在用户的鼠标指针离开 DCircleProgress 控件时发出。
+*/
