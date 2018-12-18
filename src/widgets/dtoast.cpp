@@ -56,6 +56,7 @@ private:
 /**
  * \~chinese \class DToast
  * \~chinese \brief 提供应用内通知的 Tooltip，类似安卓的 Toast。
+ * \~chinese \image html DToast.gif
  * \~chinese \param parent
  */
 
