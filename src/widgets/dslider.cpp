@@ -168,7 +168,9 @@ int DSlider::handleType() const
 }
 
 /*!
+ * \~chinese \property DSlider::setHandleType
  * \~chinese \brief 设置滑块句柄类型
+ * \~chinese \brief 根据类型来显示滑块的样式，目前有箭头、圆形样式滑块
  */
 void DSlider::setHandleType(HandleType handleType)
 {
@@ -178,6 +180,7 @@ void DSlider::setHandleType(HandleType handleType)
 }
 
 /*!
+ * \~chinese \property DSlider::rightTip
  * \~chinese \brief 显示在滑块右侧的文本
  */
 QString DSlider::rightTip() const
@@ -188,6 +191,7 @@ QString DSlider::rightTip() const
 }
 
 /*!
+ * \~chinese \property DSlider::setRightTip
  * \~chinese \brief 设置滑块右侧的文本
  */
 void DSlider::setRightTip(const QString &rightTip)
@@ -218,6 +222,7 @@ void DSlider::setRightTip(const QString &rightTip)
  */
 
 /*!
+ * \~chinese \property DSlider::leftTip
  * \~chinese \brief 显示在滑块左侧的文本
  */
 QString DSlider::leftTip() const
@@ -228,6 +233,7 @@ QString DSlider::leftTip() const
 }
 
 /*!
+ * \~chinese \property DSlider::setLeftTip
  * \~chinese \brief 设置滑块左侧的文本
  */
 void DSlider::setLeftTip(const QString &leftTip)
@@ -254,6 +260,7 @@ void DSlider::setLeftTip(const QString &leftTip)
  */
 
 /*!
+ * \~chinese \property DSlider::scaleColor
  * \~chinese \brief 刻度线颜色
  */
 QColor DSlider::scaleColor() const
@@ -264,6 +271,7 @@ QColor DSlider::scaleColor() const
 }
 
 /*!
+ * \~chinese \property DSlider::setScaleColor
  * \~chinese \brief 设置刻度线颜色
  */
 void DSlider::setScaleColor(const QColor &scaleColor)
@@ -279,6 +287,11 @@ void DSlider::setScaleColor(const QColor &scaleColor)
  * \~english \property DSlider::tipColor
  * \~english \brief This property holds the color to paint the scale tips.
  */
+
+/*!
+ * \~chinese \property DSlider::tipColor
+ * \~chinese \brief 用于绘制刻度提示的颜色。
+ */
 QColor DSlider::tipColor() const
 {
     Q_D(const DSlider);
@@ -286,6 +299,10 @@ QColor DSlider::tipColor() const
     return d->m_tipColor;
 }
 
+/*!
+ * \~chinese \property DSlider::setTipColor
+ * \~chinese \brief 设置绘制刻度提示的颜色。
+ */
 void DSlider::setTipColor(const QColor &tipColor)
 {
     Q_D(DSlider);
@@ -304,10 +321,10 @@ void DSlider::setTipColor(const QColor &tipColor)
  */
 
 /*!
- * \~chinese \brief 添加刻度标记
- * \~chinese \param value 是要添加刻度标记的位置
+ * \~chinese \brief DSlider::addScale 在滑块上添加刻度标记
+ * \~chinese \param value 要添加刻度标记的位置
  *
- * \~chinese 可以使用 DSlider::removeScale 删除刻度标记。
+ * \~chinese 可以使用 DSlider::removeScale 将标记的位置值传入，删除相关的刻度标记。
  */
 void DSlider::addScale(int value)
 {
@@ -328,7 +345,8 @@ void DSlider::addScale(int value)
  */
 
 /*!
- * \~english \brief 删除滑块上的刻度标记。
+ * \~chinese \brief DSlider::removeScale 删除滑块上的刻度标记。
+ * \~chinese \param value 要删除刻度标记的位置值
  */
 void DSlider::removeScale(int value)
 {
@@ -507,7 +525,9 @@ QSize DSlider::sizeHint() const
  */
 
 /*!
+ * \~chinese \property DSlider::hoverShowValue
  * \~chinese \brief 是否显示鼠标悬停在滑块上的值。
+ * \~chinese \brief 这个属性保存着当用户鼠标悬停在滑块时是否显示该值。
  */
 bool DSlider::hoverShowValue() const
 {
@@ -522,7 +542,8 @@ bool DSlider::hoverShowValue() const
  */
 
 /*!
- * \~chinese \brief 鼠标悬停在滑块上提示颜色。
+ * \~chinese \property DSlider::hoverValueColor
+ * \~chinese \brief 鼠标悬停在滑块上提示文本的颜色。
  */
 QColor DSlider::hoverValueColor() const
 {
@@ -538,6 +559,7 @@ QColor DSlider::hoverValueColor() const
  */
 
 /*!
+ * \~chinese \property DSlider::hoverShowValueInterval
  * \~chinese \brief 鼠标悬停在滑块显示值的时间间隔。
  */
 int DSlider::hoverShowValueInterval() const
@@ -548,6 +570,7 @@ int DSlider::hoverShowValueInterval() const
 }
 
 /*!
+ * \~chinese \property DSlider::setHoverShowValue
  * \~chinese \brief 设置显示值的时间间隔。
  */
 void DSlider::setHoverShowValue(bool hoverShowValue)
@@ -565,6 +588,10 @@ void DSlider::setHoverShowValue(bool hoverShowValue)
     repaint();
 }
 
+/*!
+ * \~chinese \property DSlider::setHoverValueColor
+ * \~chinese \brief 设置鼠标悬停在滑块上提示文本的颜色。
+ */
 void DSlider::setHoverValueColor(QColor hoverValueColor)
 {
     Q_D(DSlider);
@@ -572,6 +599,10 @@ void DSlider::setHoverValueColor(QColor hoverValueColor)
     d->m_hoverValueColor = hoverValueColor;
 }
 
+/*!
+ * \~chinese \property DSlider::setHoverShowValueInterval
+ * \~chinese \brief 设置悬停显示值的时间间隔。
+ */
 void DSlider::setHoverShowValueInterval(int hoverShowValueInterval)
 {
     Q_D(DSlider);
