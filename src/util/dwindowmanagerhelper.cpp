@@ -328,6 +328,8 @@ QList<DForeignWindow *> DWindowManagerHelper::currentWorkspaceWindows() const
     currentApplicationWindowList.reserve(list.size());
 
     for (auto window : list) {
+        if (window->property("_q_foreignWinId").isValid()) continue;
+
         currentApplicationWindowList.append(window->winId());
     }
 
