@@ -30,7 +30,7 @@
 DWIDGET_BEGIN_NAMESPACE
 
 class DShortcutEditLabel;
-class LIBDTKWIDGETSHARED_EXPORT DShortcutEdit : public QFrame
+class D_DECL_DEPRECATED_X("Remove useless old widget") LIBDTKWIDGETSHARED_EXPORT DShortcutEdit : public QFrame
 {
     Q_OBJECT
 

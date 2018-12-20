@@ -27,7 +27,7 @@
 DWIDGET_BEGIN_NAMESPACE
 
 class DOptionPrivate;
-class LIBDTKWIDGETSHARED_EXPORT DOption : public QFrame, public DTK_CORE_NAMESPACE::DObject
+class D_DECL_DEPRECATED_X("Remove useless old widget") LIBDTKWIDGETSHARED_EXPORT DOption : public QFrame, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
     Q_DISABLE_COPY(DOption)

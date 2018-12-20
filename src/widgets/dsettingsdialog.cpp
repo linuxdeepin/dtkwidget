@@ -37,9 +37,16 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
- * \class DSettingsDialog
+ * \~english \class DSettingsDialog
  * \brief DSettingsDialog provide an common setting ui for deepin style application.
  * It's depend Dtk::Widget::DSettingsWidgetFactory to auot build ui compent from json file.
+ * \sa Dtk::Widget::DSettingsWidgetFactory
+ * \sa Dtk::Core::DSettings
+ */
+
+/*!
+ * \~chinese \class DSettingsDialog
+ * \brief 为使用DSettings的Dtk程序提供一个通用的设置对话框，这个对话框可以通过json配置文件来自动生成。
  * \sa Dtk::Widget::DSettingsWidgetFactory
  * \sa Dtk::Core::DSettings
  */
@@ -108,8 +115,13 @@ DSettingsDialog::~DSettingsDialog()
 }
 
 /*!
- * \brief DSettingsDialog::widgetFactory return the widget build factory of this dialog.
+ * \~english \brief Return the widget build factory of this dialog.
  * Every instance of DSettingDialog has it own widgetfactory.
+ * \return
+ */
+/*!
+ * \~chinese \brief 获取当前对话框使用的空间构造工厂。
+ * 每一个设置对话框都有自己的构造工厂实例，这些实例并不会共享数据。
  * \return
  */
 DSettingsWidgetFactory *DSettingsDialog::widgetFactory() const
@@ -119,19 +131,30 @@ DSettingsWidgetFactory *DSettingsDialog::widgetFactory() const
 }
 
 /*!
- * \brief DSettingsDialog::updateSettings will create all widget for settings options.
+ * \~english \brief Create all widget for settings options.
  * Warnning that you can only call the once.
  * \param settings Dtk::Core::DSettings object from json
  */
+/*!
+ * \~chinese \brief 根据settings数据来创建控件，该方法只能调用一次。
+ * \param settings 配置文件实例。
+ */
 void DSettingsDialog::updateSettings(Dtk::Core::DSettings *settings)
 {
+    // TODO: limit to call once
     updateSettings(QByteArray(), settings);
 }
 
 /*!
- * \brief DSettingsDialog::updateSettings
- * \param translateContext is them custom translate data for i18n.
+ * \~english \brief Create all widget for settings options with translate context
+ * \param translateContext custom translate data for i18n.
  * \param settings Dtk::Core::DSettings object from json
+ * \sa void DSettingsDialog::updateSettings(Dtk::Core::DSettings *settings)
+ */
+/*!
+ * \~chinese \brief 根据settings数据来创建控件，并使用translateContext来进行国际化，该方法只能调用一次。
+ * \param translateContext 国际化使用的上下文。
+ * \param settings 配置文件实例。
  * \sa void DSettingsDialog::updateSettings(Dtk::Core::DSettings *settings)
  */
 void DSettingsDialog::updateSettings(const QByteArray &translateContext, Core::DSettings *settings)
