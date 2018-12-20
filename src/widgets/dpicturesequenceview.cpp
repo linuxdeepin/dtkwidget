@@ -112,24 +112,35 @@ void DPictureSequenceViewPrivate::_q_refreshPicture()
 }
 
 /*!
- * \class DPictureSequenceView
+ * \~english \class DPictureSequenceView
  * \brief DPictureSequenceView draw a serial of picture as movie. It trigger picture update by an timer.
  */
 
 /*!
- * \property DPictureSequenceView::singleShot
+ * \~english \property DPictureSequenceView::singleShot
  * \brief Animation is just refresh one time.
  */
 
 /*!
- * \property DPictureSequenceView::speed
+ * \~english \property DPictureSequenceView::speed
  * \brief Update interval of refresh timer by ms.
  */
 
 /*!
- * \brief DPictureSequenceView::DPictureSequenceView Constructs a new DPictureSequenceView instance having the specified parent.
- * \param parent
+ * \~chinese \class DPictureSequenceView
+ * \brief 将图片序列绘制为动画，通过定时器刷新来实现动画效果。
  */
+
+/*!
+ * \~chinese \property DPictureSequenceView::singleShot
+ * \brief 控制动画是否只播放一次。
+ */
+
+/*!
+ * \~chinese \property DPictureSequenceView::speed
+ * \brief 动画更新时间间隔，单位为毫秒(ms)。
+ */
+
 DPictureSequenceView::DPictureSequenceView(QWidget *parent) :
     QGraphicsView(parent),
     DObject(*new DPictureSequenceViewPrivate(this))
@@ -140,11 +151,18 @@ DPictureSequenceView::DPictureSequenceView(QWidget *parent) :
 }
 
 /*!
- * \brief DPictureSequenceView::setPictureSequence set picture source list by a uri template an range.
+ * \~english \brief Set picture source list by a uri template an range.
  * \param srcFormat is the source uri template, just like ":/images/Spinner/Spinner%1.png".
  * \param range for build source uris, it make an sequence of number.
  * \param fieldWidth string width when convert number to string, fill "0" if needed.
  * \param autoScale auto resize source image to widget size, default to false.
+ */
+/*!
+ * \~chinese \brief 通过一个URI模板来设置图片序列
+ * \param srcFormat 图片源模板，例如":/images/Spinner/Spinner%1.png"。
+ * \param range 图片的序号范围，需要为一系列整数。
+ * \param fieldWidth 图片的序号转化为字符串时的宽度，通过‘0’来填充.
+ * \param autoScale 是否自动缩放图片，默认不缩放。
  */
 void DPictureSequenceView::setPictureSequence(const QString &srcFormat, const QPair<int, int> &range, const int fieldWidth, const bool autoScale)
 {
@@ -157,9 +175,14 @@ void DPictureSequenceView::setPictureSequence(const QString &srcFormat, const QP
 }
 
 /*!
- * \brief DPictureSequenceView::setPictureSequence set picture source list by a QStringList.
+ * \~english \brief Set picture source list by a QStringList.
  * \param sequence url list
  * \param autoScale auto resize source image to widget size, default to false.
+ */
+/*!
+ * \~chinese \brief 通过URI列表来设置图片序列。
+ * \param sequence 图片源路径。
+ * \param autoScale 是否自动缩放图片，默认不缩放。
  */
 void DPictureSequenceView::setPictureSequence(const QStringList &sequence, const bool autoScale)
 {
@@ -174,9 +197,14 @@ void DPictureSequenceView::setPictureSequence(const QStringList &sequence, const
 }
 
 /*!
- * \brief DPictureSequenceView::setPictureSequence
+ * \~english \brief Set picture source with pixmap array
  * \param sequence image data list.
  * \param autoScale auto resize source image to widget size, default to false.
+ */
+/*!
+ * \~chinese \brief 通过位图数据序列来初始化图片序列。
+ * \param sequence 位图数据序列。
+ * \param autoScale 是否自动缩放图片，默认不缩放。
  */
 void DPictureSequenceView::setPictureSequence(const QList<QPixmap> &sequence, const bool autoScale)
 {
@@ -203,7 +231,10 @@ void DPictureSequenceView::setPictureSequence(const QList<QPixmap> &sequence, co
 }
 
 /*!
- * \brief DPictureSequenceView::play start/resume update timer and show animation.
+ * \~english \brief Start/resume update timer and show animation.
+ */
+/*!
+ * \~chinese \brief 开始/恢复播放。
  */
 void DPictureSequenceView::play()
 {
@@ -213,7 +244,10 @@ void DPictureSequenceView::play()
 }
 
 /*!
- * \brief DPictureSequenceView::pause pause animation and stay on current picture.
+ * \~english \brief Pause animation and stay on current picture.
+ */
+/*!
+ * \~chinese \brief 暂停播放并停止在当前图片上。
  */
 void DPictureSequenceView::pause()
 {
@@ -223,7 +257,10 @@ void DPictureSequenceView::pause()
 }
 
 /*!
- * \brief DPictureSequenceView::stop stop animation and rest to first picture.
+ * \~english \brief Stop animation and rest to first picture.
+ */
+/*!
+ * \~chinese \brief 暂停播放并停止在初始图片上。
  */
 void DPictureSequenceView::stop()
 {

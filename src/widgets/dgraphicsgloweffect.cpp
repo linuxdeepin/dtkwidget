@@ -24,12 +24,22 @@ QT_END_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
- * \class DGraphicsGlowEffect
+ * \~english \class DGraphicsGlowEffect
  * \brief Draw a glow effect of widget, It's the default border effect of deepin windows.
  */
 
 /*!
- * \brief Constructs a new DGraphicsGlowEffect instance having the specified parent.
+ * \~chinese \class DGraphicsGlowEffect
+ * \brief 控件发散效果，同时也是Dtk默认的窗口特效。
+ */
+
+
+/*!
+ * \~english \brief Constructs a new DGraphicsGlowEffect instance having the specified parent.
+ * \param parent
+ */
+/*!
+ * \~chinese \brief 构造一个DGraphicsGlowEffect对象，并指定其父对象。
  * \param parent
  */
 DGraphicsGlowEffect::DGraphicsGlowEffect(QObject *parent) :
@@ -43,7 +53,11 @@ DGraphicsGlowEffect::DGraphicsGlowEffect(QObject *parent) :
 }
 
 /*!
- * \brief DGraphicsGlowEffect::draw set a blur effect image to painter.
+ * \~english \brief DGraphicsGlowEffect::draw set a blur effect image to painter.
+ * \param painter
+ */
+/*!
+ * \~chinese \brief 将控件的扩散效果绘制到指定的painter上。
  * \param painter
  */
 void DGraphicsGlowEffect::draw(QPainter *painter)
@@ -109,9 +123,14 @@ void DGraphicsGlowEffect::draw(QPainter *painter)
 }
 
 /*!
- * \brief DGraphicsGlowEffect::boundingRectFor calc the effective bounding rectangle
+ * \~english \brief Calc the effective bounding rectangle
  * \param rect is the widget rectangle
  * \return Effective bounding rectangle
+ */
+/*!
+ * \~chinese \brief 有效的边界区域
+ * \param rect 为控件的几何区域
+ * \return 有效的边界区域
  */
 QRectF DGraphicsGlowEffect::boundingRectFor(const QRectF &rect) const
 {
