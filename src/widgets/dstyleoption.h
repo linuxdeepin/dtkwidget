@@ -36,11 +36,8 @@ public:
 class DStyleOptionSuggestButton : public QStyleOptionButton, public DStyleOption
 {
 public:
-    /*!
-     * \brief This enum extend types of features a Dtk::Widget::DSuggestButton can have.
-     */
     enum ButtonFeature {
-        SuggestButton = (CommandLinkButton << 1) /*!< Default Button */
+        SuggestButton = (CommandLinkButton << 1)
     };
 
     void init(QWidget *widget) override;
@@ -49,13 +46,10 @@ public:
 class DStyleOptionLineEdit : public DStyleOption
 {
 public:
-    /*!
-     * \brief This enum describes the types of features a push Dtk::Widget::DLineEdit can have.
-     */
     enum LineEditFeature {
-        None        = 0x0,  /*!< Default none style */
-        Alert       = 0x1,  /*!< Alert style */
-        IconButton  = 0x2   /*!< Edit with an icon */
+        None        = 0x0,
+        Alert       = 0x1,
+        IconButton  = 0x2
     };
     Q_DECLARE_FLAGS(LineEditFeatures, LineEditFeature)
 

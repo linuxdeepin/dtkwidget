@@ -120,7 +120,7 @@ DSettingsDialog::~DSettingsDialog()
  * \return
  */
 /*!
- * \~chinese \brief 获取当前对话框使用的空间构造工厂。
+ * \~chinese \brief 获取当前对话框使用的控件构造工厂。
  * 每一个设置对话框都有自己的构造工厂实例，这些实例并不会共享数据。
  * \return
  */

@@ -27,26 +27,95 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
- * \class DStyleOption
- * \brief DStyleOption is the base class of deepin style option
+ * \~english \class DStyleOption
+ * \brief DStyleOption is the base class of deepin style option, use for dxcb plugins
  * \param widget
  */
 
 /*!
- * \class DStyleOptionSuggestButton
+ * \~chinese \class DStyleOption
+ * \brief dcxb插件通过DStyleOption来控制控件的样式
+ * \param widget
+ */
+
+
+/*!
+ * \~english \class DStyleOptionSuggestButton
  * \brief DStyleOptionSuggestButton handle the style option of Dtk::Widget::DSuggestButton
  * \param widget
  */
+/*!
+ * \~english \enum DStyleOptionSuggestButton::ButtonFeature
+ * \brief This enum extend types of features a Dtk::Widget::DSuggestButton can have
+ */
+/*!
+ * \~english \var DStyleOptionSuggestButton::SuggestButton
+ * \brief Default Button
+ */
 
 /*!
- * \class DStyleOptionLineEdit
- * \brief DStyleOptionLineEdit handle the style option of Dtk::Widget::DLineEdit
+ * \~chinese \class DStyleOptionSuggestButton
+ * \brief Dtk::Widget::DSuggestButton使用的样式配置
  * \param widget
+ */
+/*!
+ * \~chinese \enum DStyleOptionSuggestButton::ButtonFeature
+ * \brief Dtk::Widget::DSuggestButton扩展的样式
+ */
+/*!
+ * \~chinese \var DStyleOptionSuggestButton::SuggestButton
+ * \brief 默认样式
  */
 
 
 /*!
- * \brief Init style with widget
+ * \~english \class DStyleOptionLineEdit
+ * \brief DStyleOptionLineEdit handle the style option of Dtk::Widget::DLineEdit
+ * \param widget
+ */
+/*!
+ * \~english \var DStyleOptionLineEdit::None
+ * \brief Default none style
+ */
+/*!
+ * \~english \var DStyleOptionLineEdit::Alert
+ * \brief Alert style
+ */
+/*!
+ * \~english \var DStyleOptionLineEdit::IconButton
+ * \brief Edit with an icon
+ */
+
+
+/*!
+ * \~chinese \class DStyleOptionLineEdit
+ * \brief Dtk::Widget::DLineEdit使用的样式配置
+ * \param widget
+ */
+/*!
+ * \~chinese \enum DStyleOptionLineEdit::LineEditFeature
+ * \brief Dtk::Widget::DSuggestButton扩展的样式
+ */
+/*!
+ * \~chinese \var DStyleOptionLineEdit::None
+ * \brief 不使用自定义样式，保持Qt默认样式。
+ */
+/*!
+ * \~chinese \var DStyleOptionLineEdit::Alert
+ * \brief 警告状态样式
+ */
+/*!
+ * \~chinese \var DStyleOptionLineEdit::IconButton
+ * \brief 包含图标按钮的编辑框样式
+ */
+
+
+/*!
+ * \~english \brief Init style with widget.
+ * \param widget
+ */
+/*!
+ * \~chinese \brief 控件初始化样式时调用，可以用于重写控件样式。
  * \param widget
  */
 void DStyleOption::init(QWidget *widget)
@@ -55,7 +124,12 @@ void DStyleOption::init(QWidget *widget)
 }
 
 /*!
- * \brief DStyleOptionSuggestButton::init set style option for Dtk::Widget::DSuggestButton
+ * \~english \brief DStyleOptionSuggestButton::init set style option for Dtk::Widget::DSuggestButton
+ * \param widget
+ * \sa Dtk::Widget::DSuggestButton
+ */
+/*!
+ * \~chinese \brief 初始化Dtk::Widget::DSuggestButton样式，设置为 DStyleOptionSuggestButton::SuggestButton 。
  * \param widget
  * \sa Dtk::Widget::DSuggestButton
  */
@@ -67,7 +141,12 @@ void DStyleOptionSuggestButton::init(QWidget *widget)
 }
 
 /*!
- * \brief DStyleOptionSuggestButton::init set style option for Dtk::Widget::DLineEdit
+ * \~english \brief DStyleOptionSuggestButton::init set style option for Dtk::Widget::DLineEdit
+ * \param widget
+ * \sa Dtk::Widget::DLineEdit
+ */
+/*!
+ * \~chinese \brief 根据Dtk::Widget::DLineEdit控件状态初始化样式
  * \param widget
  * \sa Dtk::Widget::DLineEdit
  */
