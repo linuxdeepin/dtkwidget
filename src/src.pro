@@ -1,6 +1,5 @@
 TARGET = dtkwidget
 TEMPLATE = lib
-
 QT += dtkcore
 load(dtk_build)
 

@@ -45,7 +45,7 @@ public:
     void resume();
 
     void setDirection(Direction direction);
-    void setDuration(const int duration) D_DECL_DEPRECATED;
+    D_DECL_DEPRECATED void setDuration(const int duration);
     void setFixedPixelMove(const int pixel);
 
 Q_SIGNALS:
