@@ -15,14 +15,39 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "dsegmentedcontrol.h"
 #include <QDebug>
 #include <QPainter>
 #include <QPaintEvent>
 #include <QApplication>
-#include "dthememanager.h"
 
+#include "dsegmentedcontrol.h"
+#include "dthememanager.h"
+#include "dobject_p.h"
+
+DCORE_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
+
+class DSegmentedControlPrivate : public DObjectPrivate
+{
+public:
+    DSegmentedControlPrivate(DSegmentedControl *qq)
+        : DObjectPrivate(qq)
+        , highlight(new DSegmentedHighlight(qq))
+        , hLayout(new QHBoxLayout(qq))
+        , highlightMoveAnimation(new QPropertyAnimation(highlight, "geometry", qq))
+        , currentIndex(-1)
+    {
+
+    }
+
+    DSegmentedHighlight *highlight;
+    QHBoxLayout *hLayout;
+    QPropertyAnimation *highlightMoveAnimation;
+    int currentIndex;
+    QList<QToolButton*> tabList;
+
+    D_DECLARE_PUBLIC(DSegmentedControl)
+};
 
 /*!
  * \~chinese \class DSegmentedHighlight
@@ -72,26 +97,25 @@ DSegmentedHighlight::DSegmentedHighlight(QWidget *parent) :
  * \~chinese \brief DSegmentedControl::DSegmentedControl 为 DSegmentedControl 类的构造函数。
  * \~chinese \param parent 制定了控件的父控件。
  */
-DSegmentedControl::DSegmentedControl(QWidget *parent) :
-    QFrame(parent),
-    m_highlight(new DSegmentedHighlight(this)),
-    m_hLayout(new QHBoxLayout(this)),
-    m_highlightMoveAnimation(new QPropertyAnimation(m_highlight, "geometry", this)),
-    m_currentIndex(-1)
+DSegmentedControl::DSegmentedControl(QWidget *parent)
+    : QFrame(parent)
+    , DObject(*new DSegmentedControlPrivate(this))
 {
     setObjectName("DSegmentedControl");
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
-    m_hLayout->setSpacing(0);
-    m_hLayout->setMargin(0);
-    m_hLayout->setObjectName("TabBar");
-    m_highlight->setObjectName("Highlight");
-    m_highlight->installEventFilter(this);
+    D_D(DSegmentedControl);
+
+    d->hLayout->setSpacing(0);
+    d->hLayout->setMargin(0);
+    d->hLayout->setObjectName("TabBar");
+    d->highlight->setObjectName("Highlight");
+    d->highlight->installEventFilter(this);
 
     DThemeManager::registerWidget(this);
 
-    m_highlightMoveAnimation->setDuration(100);
-    m_highlightMoveAnimation->setEasingCurve(QEasingCurve::InCubic);
+    d->highlightMoveAnimation->setDuration(100);
+    d->highlightMoveAnimation->setEasingCurve(QEasingCurve::InCubic);
 }
 
 /*!
@@ -100,7 +124,9 @@ DSegmentedControl::DSegmentedControl(QWidget *parent) :
  */
 int DSegmentedControl::count() const
 {
-    return m_tabList.count();
+    D_DC(DSegmentedControl);
+
+    return d->tabList.count();
 }
 
 /*!
@@ -109,7 +135,9 @@ int DSegmentedControl::count() const
  */
 const DSegmentedHighlight *DSegmentedControl::highlight() const
 {
-    return m_highlight;
+    D_DC(DSegmentedControl);
+
+    return d->highlight;
 }
 
 /*!
@@ -118,7 +146,9 @@ const DSegmentedHighlight *DSegmentedControl::highlight() const
  */
 int DSegmentedControl::currentIndex() const
 {
-    return m_currentIndex;
+    D_DC(DSegmentedControl);
+
+    return d->currentIndex;
 }
 
 /*!
@@ -129,7 +159,9 @@ int DSegmentedControl::currentIndex() const
  */
 QToolButton *DSegmentedControl::at(int index) const
 {
-    return m_tabList[index];
+    D_DC(DSegmentedControl);
+
+    return d->tabList[index];
 }
 
 /*!
@@ -164,7 +196,9 @@ QIcon DSegmentedControl::getIcon(int index) const
  */
 int DSegmentedControl::animationDuration() const
 {
-    return m_highlightMoveAnimation->duration();
+    D_DC(DSegmentedControl);
+
+    return d->highlightMoveAnimation->duration();
 }
 
 /*!
@@ -175,8 +209,10 @@ int DSegmentedControl::animationDuration() const
  */
 int DSegmentedControl::indexByTitle(const QString &title) const
 {
+    D_DC(DSegmentedControl);
+
     int i=0;
-    Q_FOREACH (QToolButton *button, m_tabList) {
+    Q_FOREACH (QToolButton *button, d->tabList) {
         if(button->text() == title)
             return i;
         ++i;
@@ -191,7 +227,9 @@ int DSegmentedControl::indexByTitle(const QString &title) const
  */
 QEasingCurve::Type DSegmentedControl::animationType() const
 {
-    return m_highlightMoveAnimation->easingCurve().type();
+    D_DC(DSegmentedControl);
+
+    return d->highlightMoveAnimation->easingCurve().type();
 }
 
 /*!
@@ -204,9 +242,11 @@ QEasingCurve::Type DSegmentedControl::animationType() const
  */
 int DSegmentedControl::addSegmented(const QString &title)
 {
-    insertSegmented(m_hLayout->count(), title);
+    D_D(DSegmentedControl);
 
-    return m_hLayout->count()-1;
+    insertSegmented(d->hLayout->count(), title);
+
+    return d->hLayout->count()-1;
 }
 
 /*!
@@ -219,9 +259,11 @@ int DSegmentedControl::addSegmented(const QString &title)
  */
 int DSegmentedControl::addSegmented(const QIcon &icon, const QString &title)
 {
-    insertSegmented(m_hLayout->count(), icon, title);
+    D_D(DSegmentedControl);
 
-    return m_hLayout->count()-1;
+    insertSegmented(d->hLayout->count(), icon, title);
+
+    return d->hLayout->count()-1;
 }
 
 /*!
@@ -276,9 +318,11 @@ void DSegmentedControl::insertSegmented(int index, const QString &title)
  */
 void DSegmentedControl::insertSegmented(int index, const QIcon &icon, const QString &title)
 {
+    D_D(DSegmentedControl);
+
     QToolButton *button = new QToolButton();
 
-    m_tabList.insert(index, button);
+    d->tabList.insert(index, button);
 
     button->setObjectName("Segmented");
     button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -286,9 +330,9 @@ void DSegmentedControl::insertSegmented(int index, const QIcon &icon, const QStr
     button->setIcon(icon);
 
     connect(button, &QToolButton::clicked, this, &DSegmentedControl::buttonClicked);
-    m_hLayout->insertWidget(index, button);
+    d->hLayout->insertWidget(index, button);
 
-    if(m_currentIndex == -1){
+    if(d->currentIndex == -1){
         setCurrentIndex(0);
     }
 
@@ -301,13 +345,15 @@ void DSegmentedControl::insertSegmented(int index, const QIcon &icon, const QStr
  */
 void DSegmentedControl::removeSegmented(int index)
 {
-    if(index == m_currentIndex)
+    D_D(DSegmentedControl);
+
+    if(index == d->currentIndex)
         setCurrentIndex(-1);
 
-    delete m_hLayout->takeAt(index);
+    delete d->hLayout->takeAt(index);
 
     QToolButton *button = at(index);
-    m_tabList.removeAt(index);
+    d->tabList.removeAt(index);
     if(button)
         button->deleteLater();
 }
@@ -317,20 +363,24 @@ void DSegmentedControl::removeSegmented(int index)
  */
 void DSegmentedControl::clear()
 {
+    D_D(DSegmentedControl);
+
     for(int i=0; i<count(); ++i){
-        delete m_hLayout->takeAt(i);
+        delete d->hLayout->takeAt(i);
 
         QToolButton *button = at(i);
         if(button)
             button->deleteLater();
     }
 
-    m_tabList.clear();
+    d->tabList.clear();
 }
 
 bool DSegmentedControl::setCurrentIndex(int currentIndex)
 {
-    if(currentIndex == m_currentIndex)
+    D_D(DSegmentedControl);
+
+    if(currentIndex == d->currentIndex)
         return true;
 
     if(currentIndex<0||currentIndex>count()-1){
@@ -338,9 +388,9 @@ bool DSegmentedControl::setCurrentIndex(int currentIndex)
         return false;
     }
 
-    m_currentIndex = currentIndex;
+    d->currentIndex = currentIndex;
 
-    Q_FOREACH (QToolButton *button, m_tabList) {
+    Q_FOREACH (QToolButton *button, d->tabList) {
         button->setEnabled(true);
     }
 
@@ -387,22 +437,28 @@ void DSegmentedControl::setIcon(int index, const QIcon &icon)
 
 void DSegmentedControl::setAnimationDuration(int animationDuration)
 {
-    m_highlightMoveAnimation->setDuration(animationDuration);
+    D_D(DSegmentedControl);
+
+    d->highlightMoveAnimation->setDuration(animationDuration);
 }
 
 void DSegmentedControl::setAnimationType(QEasingCurve::Type animationType)
 {
-    m_highlightMoveAnimation->setEasingCurve(animationType);
+    D_D(DSegmentedControl);
+
+    d->highlightMoveAnimation->setEasingCurve(animationType);
 }
 
 bool DSegmentedControl::eventFilter(QObject *obj, QEvent *e)
 {
-    if(m_currentIndex < 0)
+    D_D(DSegmentedControl);
+
+    if(d->currentIndex < 0)
         return false;
 
-    QWidget *w = at(m_currentIndex);
+    QWidget *w = at(d->currentIndex);
 
-    if(obj == m_highlight){
+    if(obj == d->highlight){
         if(e->type() == QEvent::Move){
             updateHighlightGeometry(false);
         }
@@ -417,35 +473,39 @@ bool DSegmentedControl::eventFilter(QObject *obj, QEvent *e)
 
 void DSegmentedControl::updateHighlightGeometry(bool animation)
 {
-    if(m_currentIndex<0)
+    D_D(DSegmentedControl);
+
+    if(d->currentIndex<0)
         return;
 
-    QRect tmp = at(m_currentIndex)->geometry();
+    QRect tmp = at(d->currentIndex)->geometry();
 
-    if(m_currentIndex==0){
+    if(d->currentIndex==0){
         tmp.setX(0);
         tmp.setWidth(tmp.width()+1);
-    }else if(m_currentIndex == count()-1){
+    }else if(d->currentIndex == count()-1){
         tmp.setWidth(tmp.width()+1);
     }
     tmp.setY(0);
 
-    if(m_highlight->geometry() == tmp)
+    if(d->highlight->geometry() == tmp)
         return;
 
     if(animation){
-        m_highlightMoveAnimation->setStartValue(m_highlight->geometry());
-        m_highlightMoveAnimation->setEndValue(tmp);
-        m_highlightMoveAnimation->start();
+        d->highlightMoveAnimation->setStartValue(d->highlight->geometry());
+        d->highlightMoveAnimation->setEndValue(tmp);
+        d->highlightMoveAnimation->start();
     }else{
-        m_highlight->setFixedSize(tmp.size());
-        m_highlight->move(tmp.topLeft());
+        d->highlight->setFixedSize(tmp.size());
+        d->highlight->move(tmp.topLeft());
     }
 }
 
 void DSegmentedControl::buttonClicked()
 {
-    int i = m_tabList.indexOf(qobject_cast<QToolButton*>(sender()));
+    D_D(DSegmentedControl);
+
+    int i = d->tabList.indexOf(qobject_cast<QToolButton*>(sender()));
 
     if(i>=0){
         setCurrentIndex(i);

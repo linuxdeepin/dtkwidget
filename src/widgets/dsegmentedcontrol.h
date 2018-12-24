@@ -24,7 +24,9 @@
 #include <QPropertyAnimation>
 #include <QList>
 #include <QEasingCurve>
-#include "dtkwidget_global.h"
+
+#include <dtkwidget_global.h>
+#include <DObject>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -36,9 +38,11 @@ public:
     explicit DSegmentedHighlight(QWidget *parent = 0);
 };
 
-class LIBDTKWIDGETSHARED_EXPORT DSegmentedControl : public QFrame
+class DSegmentedControlPrivate;
+class LIBDTKWIDGETSHARED_EXPORT DSegmentedControl : public QFrame, public DCORE_NAMESPACE::DObject
 {
     Q_OBJECT
+    D_DECLARE_PRIVATE(DSegmentedControl)
 
     Q_PROPERTY(int currentIndex READ currentIndex WRITE setCurrentIndex NOTIFY currentChanged)
     Q_PROPERTY(int count READ count)
@@ -74,16 +78,6 @@ public Q_SLOTS:
     void setAnimationDuration(int animationDuration);
     void setAnimationType(QEasingCurve::Type animationType);
 
-private:
-    DSegmentedHighlight *m_highlight;
-    QHBoxLayout *m_hLayout;
-    QPropertyAnimation *m_highlightMoveAnimation;
-    int m_currentIndex;
-    QList<QToolButton*> m_tabList;
-
-protected:
-    bool eventFilter(QObject *, QEvent *);
-
 private Q_SLOTS:
     void updateHighlightGeometry(bool animation = true);
     void buttonClicked();
@@ -92,6 +86,9 @@ Q_SIGNALS:
     void currentChanged(int index);
     void currentTitleChanged(QString title);
     void animationDurationChanged(int animationDuration);
+
+protected:
+    bool eventFilter(QObject *, QEvent *) override;
 };
 
 DWIDGET_END_NAMESPACE

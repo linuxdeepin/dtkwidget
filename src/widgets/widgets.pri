@@ -228,6 +228,6 @@ includes.files += \
     $$PWD/DLineEdit \
     $$PWD/DStyleOptionLineEdit \
     $$PWD/DWindowGroupLeader \
-    $$PWD/DAnchors
-
-
+    $$PWD/DAnchors \
+    $$PWD/DSegmentedControl \
+    $$PWD/DSegmentedHighlight
