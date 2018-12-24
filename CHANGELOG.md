@@ -1,3 +1,20 @@
+<a name="2.0.9.12"></a>
+## 2.0.9.12 (2018-12-24)
+
+
+#### Features
+
+*   move settings dialog radio to left ([f7a33caa](https://github.com/linuxdeepin/dtkwidget/commit/f7a33caaad5941516a19dacdde0441d4ae2d3e8e))
+*   support connan build ([74f8f928](https://github.com/linuxdeepin/dtkwidget/commit/74f8f92817c51302b965c398c225bda752a450ee))
+
+#### Bug Fixes
+
+*   doc for DTextButton ([23160de6](https://github.com/linuxdeepin/dtkwidget/commit/23160de65021718de268cfe715191610357d12e4))
+*   doc for DExpandGroup ([597f25c1](https://github.com/linuxdeepin/dtkwidget/commit/597f25c16aaa1d0744b0ad405511845794209411))
+* **DWindowManagerHelper:**  return currentWorkspaceWindows is empty ([ec478aa0](https://github.com/linuxdeepin/dtkwidget/commit/ec478aa0ae4d9b4cdbba7f503d3f05b24334a3fc))
+
+
+
 <a name="2.0.9.11"></a>
 ## 2.0.9.11 (2018-12-14)
 
