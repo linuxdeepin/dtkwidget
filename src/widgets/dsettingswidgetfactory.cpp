@@ -391,8 +391,8 @@ QWidget *createRadioGroupOptionHandle(QObject *opt)
     }
     rightWidget->setLayout(rgLayout);
 
-    auto optionWidget = DSettingsWidgetFactory::createTwoColumWidget(translateContext, option, rightWidget);
-    rightWidget->setParent(optionWidget);
+//    auto optionWidget = DSettingsWidgetFactory::createTwoColumWidget(translateContext, option, rightWidget);
+//    rightWidget->setParent(optionWidget);
 
     option->connect(option, &DTK_CORE_NAMESPACE::DSettingsOption::valueChanged,
     rightWidget, [ buttonList ](const QVariant & value) {
@@ -407,9 +407,10 @@ QWidget *createRadioGroupOptionHandle(QObject *opt)
         buttonList.value(index)->setChecked(true);
     }
 
-    rightWidget->setStyleSheet("QGroupBox{border: none;}");
-    optionWidget->setFixedHeight(24 * items.length() + 8);
-    return  optionWidget;
+    rightWidget->setStyleSheet("QGroupBox{border: 0px solid red;}");
+//    optionWidget->setFixedHeight(24 * items.length() + 8);
+//    return  optionWidget;
+    return rightWidget;
 }
 
 QWidget *createSpinButtonOptionHandle(QObject *opt)
