@@ -22,8 +22,6 @@ Segmentedcontrol::Segmentedcontrol(QWidget *parent) :
     QFrame(parent),
     segmentedControl(new DSegmentedControl(this))
 {
-    setStyleSheet("Segmentedcontrol{background: #1e1e1e;}");
-
     segmentedControl->addSegmented("page1");
     segmentedControl->addSegmented("page2");
     segmentedControl->addSegmented("page3");

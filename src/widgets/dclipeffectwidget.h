@@ -55,6 +55,10 @@ protected:
     void hideEvent(QHideEvent *event) Q_DECL_OVERRIDE;
 
 private:
+    using QWidget::move;
+    using QWidget::resize;
+    using QWidget::setGeometry;
+
     D_DECLARE_PRIVATE(DClipEffectWidget)
 };
 

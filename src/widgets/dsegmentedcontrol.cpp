@@ -23,6 +23,7 @@
 #include "dsegmentedcontrol.h"
 #include "dthememanager.h"
 #include "dobject_p.h"
+#include "dgraphicsclipeffect.h"
 
 DCORE_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
@@ -33,14 +34,18 @@ public:
     DSegmentedControlPrivate(DSegmentedControl *qq)
         : DObjectPrivate(qq)
         , highlight(new DSegmentedHighlight(qq))
+        , clipEffect(new DGraphicsClipEffect(qq))
         , hLayout(new QHBoxLayout(qq))
-        , highlightMoveAnimation(new QPropertyAnimation(highlight, "geometry", qq))
+        , highlightMoveAnimation(new QPropertyAnimation(highlight, "pos", qq))
         , currentIndex(-1)
     {
-
+        qq->setGraphicsEffect(clipEffect);
     }
 
     DSegmentedHighlight *highlight;
+    // 此处不适用DClipEffectWidget是因为无法解决Qt浮点数高分屏缩放产生的细线问题
+//    DClipEffectWidget *clipEffect;
+    DGraphicsClipEffect *clipEffect;
     QHBoxLayout *hLayout;
     QPropertyAnimation *highlightMoveAnimation;
     int currentIndex;
@@ -98,7 +103,7 @@ DSegmentedHighlight::DSegmentedHighlight(QWidget *parent) :
  * \~chinese \param parent 制定了控件的父控件。
  */
 DSegmentedControl::DSegmentedControl(QWidget *parent)
-    : QFrame(parent)
+    : QWidget(parent)
     , DObject(*new DSegmentedControlPrivate(this))
 {
     setObjectName("DSegmentedControl");
@@ -106,7 +111,7 @@ DSegmentedControl::DSegmentedControl(QWidget *parent)
 
     D_D(DSegmentedControl);
 
-    d->hLayout->setSpacing(0);
+    d->hLayout->setSpacing(1);
     d->hLayout->setMargin(0);
     d->hLayout->setObjectName("TabBar");
     d->highlight->setObjectName("Highlight");
@@ -458,11 +463,7 @@ bool DSegmentedControl::eventFilter(QObject *obj, QEvent *e)
 
     QWidget *w = at(d->currentIndex);
 
-    if(obj == d->highlight){
-        if(e->type() == QEvent::Move){
-            updateHighlightGeometry(false);
-        }
-    }else if(obj == w){
+    if (obj == w) {
         if(e->type() == QEvent::Resize){
             updateHighlightGeometry(false);
         }
@@ -471,32 +472,44 @@ bool DSegmentedControl::eventFilter(QObject *obj, QEvent *e)
     return false;
 }
 
+void DSegmentedControl::resizeEvent(QResizeEvent *event)
+{
+    QPainterPath clip_path;
+
+    clip_path.addRoundedRect(QRect(QPoint(0, 0), event->size()), 4, 4);
+
+    D_D(DSegmentedControl);
+
+    d->clipEffect->setClipPath(clip_path);
+
+    return QWidget::resizeEvent(event);
+}
+
 void DSegmentedControl::updateHighlightGeometry(bool animation)
 {
     D_D(DSegmentedControl);
 
-    if(d->currentIndex<0)
+    if (d->currentIndex < 0)
         return;
 
     QRect tmp = at(d->currentIndex)->geometry();
 
-    if(d->currentIndex==0){
+    d->highlight->resize(tmp.size());
+
+    if (d->currentIndex == 0) {
         tmp.setX(0);
-        tmp.setWidth(tmp.width()+1);
-    }else if(d->currentIndex == count()-1){
-        tmp.setWidth(tmp.width()+1);
     }
+
     tmp.setY(0);
 
-    if(d->highlight->geometry() == tmp)
+    if (d->highlight->pos() == tmp.topLeft())
         return;
 
-    if(animation){
-        d->highlightMoveAnimation->setStartValue(d->highlight->geometry());
-        d->highlightMoveAnimation->setEndValue(tmp);
+    if (animation) {
+        d->highlightMoveAnimation->setStartValue(d->highlight->pos());
+        d->highlightMoveAnimation->setEndValue(tmp.topLeft());
         d->highlightMoveAnimation->start();
-    }else{
-        d->highlight->setFixedSize(tmp.size());
+    } else {
         d->highlight->move(tmp.topLeft());
     }
 }

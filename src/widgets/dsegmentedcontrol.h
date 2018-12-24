@@ -39,7 +39,7 @@ public:
 };
 
 class DSegmentedControlPrivate;
-class LIBDTKWIDGETSHARED_EXPORT DSegmentedControl : public QFrame, public DCORE_NAMESPACE::DObject
+class LIBDTKWIDGETSHARED_EXPORT DSegmentedControl : public QWidget, public DCORE_NAMESPACE::DObject
 {
     Q_OBJECT
     D_DECLARE_PRIVATE(DSegmentedControl)
@@ -89,6 +89,7 @@ Q_SIGNALS:
 
 protected:
     bool eventFilter(QObject *, QEvent *) override;
+    void resizeEvent(QResizeEvent *event) override;
 };
 
 DWIDGET_END_NAMESPACE

@@ -36,7 +36,7 @@ public:
     void updateImage();
 
     QImage image;
-    QRect imageGeometry;
+    QRectF imageGeometry;
     QPainterPath path;
     QMargins margins;
 
@@ -175,12 +175,12 @@ void DClipEffectWidget::setClipPath(const QPainterPath &path)
     update();
 }
 
-inline QRect multiply(const QRect &rect, qreal scale)
+inline QRectF multiply(const QRectF &rect, qreal scale)
 {
-    return QRect(rect.topLeft() * scale, rect.size() * scale);
+    return QRectF(rect.topLeft() * scale, rect.size() * scale);
 }
 
-inline QRect divide(const QRect &rect, qreal scale)
+inline QRectF divide(const QRectF &rect, qreal scale)
 {
     return multiply(rect, 1.0 / scale);
 }
@@ -201,21 +201,22 @@ bool DClipEffectWidget::eventFilter(QObject *watched, QEvent *event)
         const QImage &image = window()->backingStore()->handle()->toImage();
         qreal scale = devicePixelRatioF();
 
-        d->imageGeometry = image.rect() & multiply(parentWidget()->rect().translated(offset), scale);
+        d->imageGeometry = QRectF(image.rect()) & multiply(QRect(offset, size()), scale);
 
         if (d->image.isNull() || d->imageGeometry.size() != d->image.size()) {
-            d->image = image.copy(d->imageGeometry);
+            d->image = image.copy(d->imageGeometry.toRect());
             d->image.setDevicePixelRatio(scale);
         } else {
             QPaintEvent *e = static_cast<QPaintEvent*>(event);
             QPainter p;
-            const QRect &rect = image.rect() & multiply(e->rect().translated(offset), scale);
+            // 此控件位置一直为 0,0，且大小和父控件一致，所以offset也是父控件相对于顶级窗口的偏移
+            const QRectF &rect = QRectF(image.rect()) & multiply(e->rect().translated(offset), scale);
 
             d->image.setDevicePixelRatio(image.devicePixelRatio());
 
             p.begin(&d->image);
             p.setCompositionMode(QPainter::CompositionMode_Source);
-            p.drawImage(rect.topLeft() - d->imageGeometry.topLeft(), image.copy(rect));
+            p.drawImage(rect.topLeft() - d->imageGeometry.topLeft(), image.copy(rect.toRect()));
             p.end();
 
             d->image.setDevicePixelRatio(scale);
@@ -234,8 +235,10 @@ void DClipEffectWidget::paintEvent(QPaintEvent *event)
     if (d->image.isNull())
         return;
 
-    const QRect &rect = event->rect() & this->rect().marginsRemoved(d->margins);
-    const QRect &imageRect = multiply(rect, devicePixelRatioF()).translated(mapTo(window(), QPoint(0, 0)) - d->imageGeometry.topLeft()) & d->imageGeometry;
+    qreal devicePixelRatio = devicePixelRatioF();
+    const QRectF &rect = QRectF(event->rect()) & QRectF(this->rect()).marginsRemoved(d->margins);
+    const QPoint &offset = mapTo(window(), QPoint(0, 0));
+    const QRectF &imageRect = multiply(rect, devicePixelRatio) & d->imageGeometry.translated(-offset * devicePixelRatio);
 
     if (!imageRect.isValid())
         return;
@@ -249,7 +252,7 @@ void DClipEffectWidget::paintEvent(QPaintEvent *event)
     p.setRenderHint(QPainter::Antialiasing);
     p.setClipPath(newPath);
     p.setCompositionMode(QPainter::CompositionMode_Source);
-    p.drawImage(rect, d->image, imageRect);
+    p.drawImage(imageRect.topLeft() / devicePixelRatio, d->image, imageRect);
 }
 
 void DClipEffectWidget::resizeEvent(QResizeEvent *event)
