@@ -498,17 +498,29 @@ void DTitlebarPrivate::_q_quitActionTriggered()
 #endif
 
 /*!
- * \class DTitlebar
+ * \~english \class DTitlebar
  * \brief The DTitlebar class is an universal title bar on the top of windows.
  * \param parent is the parent widget to be attached on.
  *
  * Usually you don't need to construct a DTitlebar instance by your self, you
  * can get an DTitlebar instance by DMainWindow::titlebar .
  */
+/*!
+ * \~chinese \class DTitlebar
+ * \brief Dtitlebar是Dtk程序通用的标题栏组件，用于实现标题栏的高度定制化。
+ * \param 父组件，一般为标题栏所在的窗口
+ *
+ * 一般情况下，请使用Dtk::Widget::DMainWindow::titlebar()来获取已经自动初始化的标题栏，
+ * 不要自己来创建这个标题栏。
+ */
+
 
 /*!
- * @brief DTitlebar::DTitlebar create an default widget with icon/title/and bottons
+ *  \~english @brief DTitlebar::DTitlebar create an default widget with icon/title/and bottons
  * @param parent
+ */
+/*!
+ *  \~chinese @brief 创建一个DTitlebar对象，包含默认的窗口按钮。
  */
 DTitlebar::DTitlebar(QWidget *parent) :
     QFrame(parent),
@@ -529,8 +541,13 @@ DTitlebar::DTitlebar(QWidget *parent) :
 
 #ifndef QT_NO_MENU
 /*!
- * @brief DTitlebar::menu holds the QMenu object attached to this title bar.
+ * \~english @brief DTitlebar::menu holds the QMenu object attached to this title bar.
  * @return the QMenu object it holds, returns null if there's no one set.
+ */
+/*!
+ * \~chinese @brief 获取和标题栏关联的应用查询菜单。
+ * @return 如该标题栏没有设置菜单，这里会返回空，但是如该使用 Dtk::Widget::DApplication ,
+ * 那么这里一般会自动创建一个程序菜单。
  */
 QMenu *DTitlebar::menu() const
 {
@@ -540,8 +557,12 @@ QMenu *DTitlebar::menu() const
 }
 
 /*!
- * @brief DTitlebar::setMenu attaches a QMenu object to the title bar.
+ * \~english @brief DTitlebar::setMenu attaches a QMenu object to the title bar.
  * @param menu is the target menu.
+ */
+/*!
+ * \~chinese @brief 设置自定义的程序菜单
+ * @param 需要被设置的菜单
  */
 void DTitlebar::setMenu(QMenu *menu)
 {
@@ -557,11 +578,19 @@ void DTitlebar::setMenu(QMenu *menu)
 #endif
 
 /*!
- * @brief DTitlebar::customWidget
+ * \~english @brief DTitlebar::customWidget
  * @return the customized widget used in this title bar.
  *
  * One can set customized widget to show some extra widgets on the title bar.
- * \see DTitlebar::setCustomWidget()
+ * \see Dtk::Widget::DTitlebar::setCustomWidget()
+ */
+/*!
+ * \~chinese @brief 标题栏绑定的自定义控件
+ * @return 自定义控件
+ *
+ * 可以通过自定义控件来在标题栏上显示复杂的组合控件
+ *
+ * \see Dtk::Widget::DTitlebar::setCustomWidget()
  */
 QWidget *DTitlebar::customWidget() const
 {
@@ -572,8 +601,12 @@ QWidget *DTitlebar::customWidget() const
 
 #ifndef QT_NO_MENU
 /*!
- * \brief DTitlebar::showMenu pop the menu of application on titlebar.
+ * \~english \brief DTitlebar::showMenu pop the menu of application on titlebar.
  */
+/*!
+ * \~chineses \brief 弹出应用程序菜单
+ */
+
 void DTitlebar::showMenu()
 {
     D_D(DTitlebar);
@@ -585,12 +618,11 @@ void DTitlebar::showMenu()
 }
 #endif
 
-/*!
- * \brief DTitlebar::showEvent override showEvent, fix the width issue and process menu items.
- * \param event
- */
+
+
 void DTitlebar::showEvent(QShowEvent *event)
 {
+    //fix the width issue and process menu
     D_D(DTitlebar);
     d->separatorTop->setFixedWidth(width());
     d->separatorTop->move(0, 0);
@@ -609,10 +641,6 @@ void DTitlebar::showEvent(QShowEvent *event)
     }
 }
 
-/*!
- * \brief DTitlebar::mousePressEvent override QWidget::mousePressEvent to handle right button menu
- * \param event
- */
 void DTitlebar::mousePressEvent(QMouseEvent *event)
 {
     D_D(DTitlebar);
@@ -677,12 +705,9 @@ bool DTitlebar::eventFilter(QObject *obj, QEvent *event)
     return QWidget::eventFilter(obj, event);
 }
 
-/*!
- * \brief DTitlebar::resizeEvent override QWidget::resizeEvent to fix button and separator pos.
- * \param event
- */
 void DTitlebar::resizeEvent(QResizeEvent *event)
 {
+    //override QWidget::resizeEvent to fix button and separator pos.
     D_D(DTitlebar);
 
     d->optionButton->setFixedHeight(event->size().height());
@@ -695,11 +720,16 @@ void DTitlebar::resizeEvent(QResizeEvent *event)
 }
 
 /*!
- * @brief DTitlebar::setCustomWidget is an overloaded function.
+ * \~english @brief DTitlebar::setCustomWidget is an overloaded function.
  * @param w is the widget to be used as the customize widget shown in the title
  * bar.
  * @param fixCenterPos indicates whether it should automatically move the
  * customize widget to the horizontal center of the title bar or not.
+ */
+/*!
+ * \~chinese @brief 设置标题栏上的自定义控件
+ * @param w 需要显示的控件。
+ * @param fixCenterPos 是否需要自动修正控件位置，用于保持控件居中显示。
  */
 void DTitlebar::setCustomWidget(QWidget *w, bool fixCenterPos)
 {
@@ -707,13 +737,19 @@ void DTitlebar::setCustomWidget(QWidget *w, bool fixCenterPos)
 }
 
 /*!
- * @brief DTitlebar::setCustomWidget sets a customized widget to be used as the
+ * \~english @brief DTitlebar::setCustomWidget sets a customized widget to be used as the
  * central content of the title bar.
  * @param w is the widget to be used as the customize widget shown in the title
  * bar.
  * @param wflag is used to vertically align the widget.
  * @param fixCenterPos indicates whether it should automatically move the
  * customize widget to the horizontal center of the title bar or not.
+ */
+/*!
+ * \~chinese @brief 设置标题栏上的自定义控件
+ * @param w 需要显示的控件。
+ * @param wflag 控件对齐方式。
+ * @param fixCenterPos 是否需要自动修正控件位置，用于保持控件居中显示。
  */
 void DTitlebar::setCustomWidget(QWidget *w, Qt::AlignmentFlag wflag, bool fixCenterPos)
 {
@@ -748,9 +784,13 @@ void DTitlebar::setCustomWidget(QWidget *w, Qt::AlignmentFlag wflag, bool fixCen
 }
 
 /*!
- * @brief DTitlebar::setFixedHeight change the height of the title bar to
+ * \~english @brief DTitlebar::setFixedHeight change the height of the title bar to
  * another value.
  * @param h is the target height.
+ */
+/*!
+ * \~chinese @brief 设置标题栏的高度，默认高度为40。
+ * @param h 需要设置的高度
  */
 void DTitlebar::setFixedHeight(int h)
 {
@@ -761,8 +801,12 @@ void DTitlebar::setFixedHeight(int h)
 }
 
 /*!
- * @brief DTitlebar::setBackgroundTransparent set the title background transparent
+ * \~english @brief DTitlebar::setBackgroundTransparent set the title background transparent
  * @param transparent is the targeting value.
+ */
+/*!
+ * \~chinese @brief 设置标题栏背景是否透明，当为透明时标题栏直接叠加在下层控件上。
+ * @param transparent 是否透明
  */
 void DTitlebar::setBackgroundTransparent(bool transparent)
 {
@@ -770,9 +814,13 @@ void DTitlebar::setBackgroundTransparent(bool transparent)
 }
 
 /*!
- * @brief DTitlebar::setSeparatorVisible sets the bottom separator of the title
+ * \~english @brief DTitlebar::setSeparatorVisible sets the bottom separator of the title
  * bar and the window contents to be visible or not.
  * @param visible is the targeting value.
+ */
+/*!
+ * \~chinese @brief 设置菜单下面的分隔线是否可见，默认是可见的。
+ * @param 是否可见
  */
 void DTitlebar::setSeparatorVisible(bool visible)
 {
@@ -786,8 +834,12 @@ void DTitlebar::setSeparatorVisible(bool visible)
 }
 
 /*!
- * @brief DTitlebar::setTitle sets the title to be shown on the title bar.
+ * \~english @brief DTitlebar::setTitle sets the title to be shown on the title bar.
  * @param title is the text to be used as the window title.
+ */
+/*!
+ * \~chinese @brief 设置标题栏文本。
+ * @param 待设置内容
  */
 void DTitlebar::setTitle(const QString &title)
 {
@@ -800,8 +852,12 @@ void DTitlebar::setTitle(const QString &title)
 }
 
 /*!
- * @brief DTitlebar::setIcon sets the icon to be shown on the title bar.
+ * \~english @brief DTitlebar::setIcon sets the icon to be shown on the title bar.
  * @param icon is to be used as the window icon.
+ */
+/*!
+ * \~chinese @brief 设置标题栏图标
+ * @param 待设置的图标
  */
 void DTitlebar::setIcon(const QIcon &icon)
 {
@@ -822,8 +878,11 @@ void DTitlebar::toggleWindowState()
 }
 
 /*!
- * @brief DTitlebar::buttonAreaWidth returns the width of the area that all the
+ * \~english @brief DTitlebar::buttonAreaWidth returns the width of the area that all the
  * window buttons occupies.
+ */
+/*!
+ * \~chinese @brief 按钮区域大小，用于手动定位自定义控件时使用。
  */
 int DTitlebar::buttonAreaWidth() const
 {
@@ -832,8 +891,11 @@ int DTitlebar::buttonAreaWidth() const
 }
 
 /*!
- * @brief DTitlebar::separatorVisible returns the visibility of the bottom
+ * \~english @brief DTitlebar::separatorVisible returns the visibility of the bottom
  * separator of the titlebar.
+ */
+/*!
+ * \~chinese @brief 分隔线是否可见。
  */
 bool DTitlebar::separatorVisible() const
 {
@@ -842,8 +904,11 @@ bool DTitlebar::separatorVisible() const
 }
 
 /*!
- * @brief DTitlebar::autoHideOnFullscreen returns if titlebar show on fullscreen mode.
+ * \~english @brief DTitlebar::autoHideOnFullscreen returns if titlebar show on fullscreen mode.
  * separator of the titlebar.
+ */
+/*!
+ * \~chinese @brief 全屏模式下标题栏是否自动隐藏
  */
 bool DTitlebar::autoHideOnFullscreen() const
 {
@@ -852,8 +917,12 @@ bool DTitlebar::autoHideOnFullscreen() const
 }
 
 /*!
- * \brief DTitlebar::setAutoHideOnFullscreen set if titlebar show when window is fullscreen state.
+ * \~english \brief DTitlebar::setAutoHideOnFullscreen set if titlebar show when window is fullscreen state.
  * \param autohide
+ */
+/*!
+ * \~chinese \brief 设置全屏模式下是否需要自动隐藏标题栏
+ * \param 是否自动隐藏
  */
 void DTitlebar::setAutoHideOnFullscreen(bool autohide)
 {
@@ -861,9 +930,6 @@ void DTitlebar::setAutoHideOnFullscreen(bool autohide)
     d->autoHideOnFullscreen = autohide;
 }
 
-/*!
- * @brief DTitlebar::setVisible overrides QWidget::setVisible(bool visible)
- */
 void DTitlebar::setVisible(bool visible)
 {
     D_D(DTitlebar);
@@ -902,7 +968,10 @@ void DTitlebar::setVisible(bool visible)
 
 
 /*!
- * @brief DTitlebar::setEmbedMode set a titar is in parent;
+ * \~english @brief DTitlebar::setEmbedMode set a titlebar is in parent;
+ */
+/*!
+ * \~chinese @brief 设置为嵌入模式，而不是替换系统标题栏，用于不支持dxcb的平台
  */
 void DTitlebar::setEmbedMode(bool visible)
 {
@@ -912,11 +981,6 @@ void DTitlebar::setEmbedMode(bool visible)
     d->updateButtonsState(windowFlags());
 }
 
-/*!
- * @brief DTitlebar::resize resizes the title bar.
- * @param w is the target width.
- * @param h is the target height.
- */
 void DTitlebar::resize(int w, int h)
 {
     D_DC(DTitlebar);
@@ -925,12 +989,6 @@ void DTitlebar::resize(int w, int h)
     }
 }
 
-/*!
- * @brief DTitlebar::resize is an overloaded function.
- * @param sz the target size.
- *
- * @see DTitlebar::resize(int w, int h)
- */
 void DTitlebar::resize(const QSize &sz)
 {
     DTitlebar::resize(sz.width(), sz.height());
@@ -938,8 +996,12 @@ void DTitlebar::resize(const QSize &sz)
 
 
 /*!
- * \brief DTitlebar::setDisableFlags will disable button match flags.
+ * \~english \brief DTitlebar::setDisableFlags will disable button match flags.
  * \param flags
+ */
+/*!
+ * \~chinese \brief 设置需要被禁用的按钮，仅仅是在界面上禁用按钮，还是可以通过事件等机制来调用对应接口。
+ * \param flags 需要被禁用的按钮标志位
  */
 void DTitlebar::setDisableFlags(Qt::WindowFlags flags)
 {
@@ -949,8 +1011,10 @@ void DTitlebar::setDisableFlags(Qt::WindowFlags flags)
 }
 
 /*!
- * \brief DTitlebar::disableFlags return which button is disabled.
- * \return
+ * \~english \brief DTitlebar::disableFlags return which button is disabled.
+ */
+/*!
+ * \~chinese \brief 当前被禁用的按钮标志位。
  */
 Qt::WindowFlags DTitlebar::disableFlags() const
 {
@@ -958,10 +1022,6 @@ Qt::WindowFlags DTitlebar::disableFlags() const
     return d->disableFlags;
 }
 
-/*!
- * \brief DTitlebar::mouseMoveEvent override QWidget::mouseMoveEvent to emit mouseMoving signal
- * \param event
- */
 void DTitlebar::mouseMoveEvent(QMouseEvent *event)
 {
     Qt::MouseButton button = event->buttons() & Qt::LeftButton ? Qt::LeftButton : Qt::NoButton;
@@ -978,10 +1038,6 @@ void DTitlebar::mouseMoveEvent(QMouseEvent *event)
     QWidget::mouseMoveEvent(event);
 }
 
-/*!
- * \brief DTitlebar::mouseDoubleClickEvent override QWidget::mouseDoubleClickEvent to emit doubleClicked signal
- * \param event
- */
 void DTitlebar::mouseDoubleClickEvent(QMouseEvent *event)
 {
     D_D(DTitlebar);
