@@ -24,6 +24,7 @@
 #include <QScrollArea>
 #include <QVBoxLayout>
 #include <QCoreApplication>
+#include <QScroller>
 
 #include <DSettings>
 #include <DSettingsGroup>
@@ -75,6 +76,9 @@ Content::Content(QWidget *parent) :
     d->contentArea->setWidgetResizable(true);
     d->contentArea->setStyleSheet("QScrollArea{border: none; background-color: transparent; }");
 //    d->contentArea->setStyleSheet("QFrame{border: 1px solid red;}");
+
+    // 设置列表支持触屏滚动
+    QScroller::grabGesture(d->contentArea);
 
     d->contentFrame = new QWidget(this);
     d->contentFrame->setObjectName("SettingsContent");
