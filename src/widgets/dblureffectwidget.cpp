@@ -179,26 +179,163 @@ bool DBlurEffectWidgetPrivate::updateWindowBlurArea(QWidget *topLevelWidget)
 }
 
 /*!
- * \class DBlurEffectWidget
- * \brief The DBlurEffectWidget class provides widget that backgrounds are blurred and semitranslucent.
+ * \~english \class DBlurEffectWidget
+ * \~english \brief The DBlurEffectWidget class provides widget that backgrounds are blurred and semitranslucent.
  *
- * DBlurEffectWidget is QWidget that has blurry background. With different
- * blend mode set, DBlurEffectWidget can do in-window-blend, which means the
- * the widget is blended with the widgets between the top level window and the
- * widget itself, and behind-window-blend, which means the widget is blended with
- * the scene behind the window (with the help of WM).
+ * \~english DBlurEffectWidget is QWidget that has blurry background. With different
+ * \~english blend mode set, DBlurEffectWidget can do in-window-blend, which means the
+ * \~english the widget is blended with the widgets between the top level window and the
+ * \~english widget itself, and behind-window-blend, which means the widget is blended with
+ * \~english the scene behind the window (with the help of WM).
  *
- * The effect has optional styles can choose from: DBlurEffectWidget::DarkColor, DBlurEffectWidget::LightColor, and
- * DBlurEffectWidget::CustomColor. Usually the first two are sufficient, you can also choose
- * CustomColor and set the color you want by setting DBlurEffectWidget::maskColor.
+ * \~english The effect has optional styles can choose from: DBlurEffectWidget::DarkColor, DBlurEffectWidget::LightColor, and
+ * \~english DBlurEffectWidget::CustomColor. Usually the first two are sufficient, you can also choose
+ * \~english CustomColor and set the color you want by setting DBlurEffectWidget::maskColor.
  *
- * \note DBlurEffectWidget with BehindWindowBlend mode will become opaque if
- * WM supports no X11 composite protocol.
+ * \~english \note DBlurEffectWidget with BehindWindowBlend mode will become opaque if
+ * \~english WM supports no X11 composite protocol.
  */
 
 /*!
- * \brief DBlurEffectWidget::DBlurEffectWidget constructs an instance of DBlurEffectWidget.
- * \param parent is passed to QWidget constructor.
+ * \~chinese \class DBlurEffectWidget
+ * \~chinese \brief 用于实现主窗口或控件背景的实时模糊效果。
+ *
+ * \~chinese 分为主窗口模糊 DBlurEffectWidget::BehindWindowBlend 和控件模糊 DBlurEffectWidget::InWindowBlend
+ * \~chinese 这两种不同的模式，主窗口模糊效果依赖于窗口管理器的实现，目前仅支持 deepin-wm 和 kwin，
+ * \~chinese 可以使用DWindowManagerHelper::hasBlurWindow 判断当前运行环境中的窗口管理器是否支持
+ * \~chinese 模糊特效，使用 DPlatformWindowHandle::setWindowBlurAreaByWM 设置主窗口背景的模糊
+ * \~chinese 区域。如果在一个主窗口内同时使用了多个 DBlurEffectWidget 控件，则在更新主窗口模糊区域
+ * \~chinese 时会自动将所有控件的区域合并到 QVector<WMBlurArea> 或者 QList<QPainterPath>
+ * \~chinese （如果有任意一个控件设置了 DBlurEffectWidget::radius 属性）中统一设置。
+ * \~chinese 控件模糊效果的原理和 DClipEffectWidget 类似，在控件绘制时先使用 QPlatformBackingStore::toImage()
+ * \~chinese 获取主窗口上控件对应区域内已经绘制的内容，此时获取的内容为此控件下层控件所绘制的内容，将
+ * \~chinese 获得的 QImage 对象使用软件算法进行模糊处理，然后再将模糊之后的图像绘制到控件上。由于实现
+ * \~chinese 原理限制，不适用于主窗口为OpenGL绘制模式的窗口（如：QOpenGLWindow ），且控件下面使用
+ * \~chinese OpenGL绘制的内容也生成模糊的效果（如 QOpenGLWidget ）
+ */
+
+/*!
+ * \~chinese \property DBlurEffectWidget::radius
+ * \~chinese \brief 模糊效果计算时的取样范围，模糊的原理为：将此像素点和周围像素点合成计算得到得到新的值，
+ * \~chinese 此属性表示像素点周围 radius 距离的所有像素点参与计算
+ * \~chinese \note 可读可写
+ * \~chinese \note 只在模式为 DBlurEffectWidget::InWindowBlend 时有效
+ */
+
+/*!
+ * \~chinese \property DBlurEffectWidget::mode
+ * \~chinese \brief 所采用的模糊算法，默认值为 \a GaussianBlur
+ * \~chinese \note 可读可写
+ * \~chinese \note 只在模式为 DBlurEffectWidget::InWindowBlend 时有效
+ */
+
+/*!
+ * \~chinese \property DBlurEffectWidget::blendMode
+ * \~chinese \brief 模糊的应用场景，默认会根据有没有父控件自动判断使用哪种模式
+ * \~chinese \note 可读可写
+ * \~chinese \note 父对象为空时设置模式为 DBlurEffectWidget::InWindowBlend 没有意义
+ */
+
+/*!
+ * \~chinese \property DBlurEffectWidget::blurRectXRadius
+ * \~chinese \brief 模糊区域在x轴方向上的圆角半径，默认值为0
+ * \~chinese \note 可读可写
+ * \~chinese \see DBlurEffectWidget::blurRectYRadius DBlurEffectWidget::setMaskPath QPainterPath::addRoundedRect
+ */
+
+/*!
+ * \~chinese \property DBlurEffectWidget::blurRectYRadius
+ * \~chinese \brief 模糊区域在y轴方向上的圆角半径，默认值为0
+ * \~chinese \note 可读可写
+ * \~chinese \see DBlurEffectWidget::blurRectXRadius DBlurEffectWidget::setMaskPath QPainterPath::addRoundedRect
+ */
+
+/*!
+ * \~chinese \property DBlurEffectWidget::maskColor
+ * \~chinese \brief 画在控件模糊背景之上的颜色，此颜色的alpha通道值会被 \a maskAlpha 属性影响
+ * \~chinese 修改此属性会自动将颜色模式设置为 CustomColor，设置后将不能再自动根据窗口管理器是否
+ * \~chinese 支持混成和模糊来自动使用最佳的颜色
+ * \~chinese \note 可读可写
+ * \~chinese \see DBlurEffectWidget::blurRectXRadius DBlurEffectWidget::setMaskColor(MaskColorType)
+ */
+
+/*!
+ * \~chinese \property DBlurEffectWidget::maskAlpha
+ * \~chinese \brief maskColor 的alpha通道值。当前窗口管理器支持混成（窗口背景透明）时默认值为102，否则为204
+ * \~chinese \note 可读可写
+ * \~chinese \see DBlurEffectWidget::maskColor DPlatformWindowHandle::hasBlurWindow
+ */
+
+/*!
+ * \~chinese \fn DBlurEffectWidget::radiusChanged
+ * \~chinese \brief 信号会在 radius 属性的值改变时被发送
+ * \~chinese \fn DBlurEffectWidget::modeChanged
+ * \~chinese \brief 信号会在 mode 属性的值改变时被发送
+ * \~chinese \fn DBlurEffectWidget::blendModeChanged
+ * \~chinese \brief 信号会在 blendMode 属性的值改变时被发送
+ * \~chinese \fn DBlurEffectWidget::blurRectXRadiusChanged
+ * \~chinese \brief 信号会在 blurRectXRadius 属性的值改变时被发送
+ * * \~chinese \fn DBlurEffectWidget::blurRectYRadiusChanged
+ * \~chinese \brief 信号会在 blurRectYRadius 属性的值改变时被发送
+ * \~chinese \fn DBlurEffectWidget::maskAlphaChanged
+ * \~chinese \brief 信号会在 maskAlpha 属性的值改变时被发送
+ * \~chinese \fn DBlurEffectWidget::maskColorChanged
+ * \~chinese \brief 信号会在 maskColor 属性的值改变时被发送
+ */
+
+/*!
+ * \~chinese \enum DBlurEffectWidget::BlurMode
+ * \~chinese DBlurEffectWidget::BlurMode 模糊算法
+ *
+ * \~chinese \var DBlurEffectWidget::GaussianBlur DBlurEffectWidget::GaussianBlur
+ * \~chinese \href{https://zh.wikipedia.org/wiki/高斯模糊,高斯模糊算法}
+ */
+
+/*!
+ * \~chinese \enum DBlurEffectWidget::BlendMode
+ * \~chinese DBlurEffectWidget::BlendMode 模糊模式
+ * \~chinese \image html blur-effect.png
+ *
+ * \~chinese \var DBlurEffectWidget::InWindowBlend DBlurEffectWidget::InWindowBlend
+ * \~chinese 以窗口内部控件作为模糊背景
+ *
+ * \~chinese \var DBlurEffectWidget::BehindWindowBlend DBlurEffectWidget::BehindWindowBlend
+ * \~chinese 以外部的其它窗口作为模糊背景
+ */
+
+/*!
+ * \~chinese \enum DBlurEffectWidget::MaskColorType
+ * \~chinese DBlurEffectWidget::MaskColorType 内置的几种颜色模式。分为三种情况：
+ * \~chinese \arg \c A：模式为 DBlurEffectWidget::InWindowBlend 或当前窗口管理器支持混成且支持窗口背景模糊
+ * \~chinese \arg \c B：模式为 DBlurEffectWidget::BehindWindowBlend 窗口管理器不支持混成
+ * \~chinese \arg \c C：模式为 DBlurEffectWidget::BehindWindowBlend 窗口管理器不支持模糊
+ * \~chinese \see DBlurEffectWidget::maskAlpha
+ *
+ * \~chinese \var DBlurEffectWidget::DarkColor DBlurEffectWidget::DarkColor
+ * \~chinese 深色，三种情况下的值分别为：
+ *
+ * \~chinese \arg \c A：\color{black,#000000}（alpha通道值为非定值）
+ * \~chinese \arg \c B：\color{#373F47,#373F47}
+ * \~chinese \arg \c C：\color{rgba(0\,0\,0\,0.8),#CC000000}
+ *
+ * \~chinese \var DBlurEffectWidget::LightColor DBlurEffectWidget::LightColor
+ * \~chinese 浅色，三种情况下的值分别为：
+ * \~chinese \arg \c A：\color{#FFFFFF,#FFFFFF}（alpha通道值为非定值）
+ * \~chinese \arg \c B：\color{#FCFCFC,#FCFCFC}
+ * \~chinese \arg \c C：\color{rgba(255\,255\,255\,0.8),#CCFFFFFF}
+ *
+ * \~chinese \var DBlurEffectWidget::CustomColor DBlurEffectWidget::CustomColor
+ * \~chinese 自定义颜色，使用 DBlurEffectWidget::setMaskColor 设置的颜色
+ */
+
+/*!
+ * \~english \brief DBlurEffectWidget::DBlurEffectWidget constructs an instance of DBlurEffectWidget.
+ * \~english \param parent is passed to QWidget constructor.
+ */
+/*!
+ * \~chinese \brief 和普通控件使用方式一样，可以作为任何控件的子控件。默认会开启 Qt::WA_TranslucentBackground，
+ * \~chinese 必须设置控件为背景透明，否则控件所在区域的内容重绘时，在此控件下方的区域不会被下层控件重新绘制
+ * \~chinese \param 当父对象为空时，默认使用 DBlurEffectWidget::BehindWindowBlend 模式，否则使用 DBlurEffectWidget::InWindowBlend 模式
  */
 DBlurEffectWidget::DBlurEffectWidget(QWidget *parent)
     : QWidget(parent)
@@ -240,11 +377,11 @@ DBlurEffectWidget::~DBlurEffectWidget()
 }
 
 /*!
- * \property DBlurEffectWidget::radius
- * \brief This property holds the radius of the blur effect.
+ * \~english \property DBlurEffectWidget::radius
+ * \~english \brief This property holds the radius of the blur effect.
  *
- * \note This property has no effect with the DBlurEffectWidget::blendMode set
- * to DBlurEffectWidget::BehindWindowBlend.
+ * \~english \note This property has no effect with the DBlurEffectWidget::blendMode set
+ * \~english to DBlurEffectWidget::BehindWindowBlend.
  */
 int DBlurEffectWidget::radius() const
 {
@@ -254,10 +391,10 @@ int DBlurEffectWidget::radius() const
 }
 
 /*!
- * \property DBlurEffectWidget::mode
- * \brief This property holds which blur alghorithm to be used.
+ * \~english \property DBlurEffectWidget::mode
+ * \~english \brief This property holds which blur alghorithm to be used.
  *
- * Currently it only supports DBlurEffectWidget::GaussianBlur.
+ * \~english Currently it only supports DBlurEffectWidget::GaussianBlur.
  */
 DBlurEffectWidget::BlurMode DBlurEffectWidget::mode() const
 {
@@ -267,8 +404,8 @@ DBlurEffectWidget::BlurMode DBlurEffectWidget::mode() const
 }
 
 /*!
- * \property DBlurEffectWidget::blendMode
- * \brief This property holds which mode is used to blend the widget and its background scene.
+ * \~english \property DBlurEffectWidget::blendMode
+ * \~english \brief This property holds which mode is used to blend the widget and its background scene.
  */
 DBlurEffectWidget::BlendMode DBlurEffectWidget::blendMode() const
 {
@@ -278,13 +415,13 @@ DBlurEffectWidget::BlendMode DBlurEffectWidget::blendMode() const
 }
 
 /*!
- * \property DBlurEffectWidget::blurRectXRadius
- * \brief This property holds the xRadius of the effective background.
+ * \~english \property DBlurEffectWidget::blurRectXRadius
+ * \~english \brief This property holds the xRadius of the effective background.
  *
- * The xRadius and yRadius specify the radius of the ellipses defining
- * the corners of the effective background.
+ * \~english The xRadius and yRadius specify the radius of the ellipses defining
+ * \~english the corners of the effective background.
  *
- * \see DBlurEffectWidget::blurRectYRadius
+ * \~english \see DBlurEffectWidget::blurRectYRadius
  */
 int DBlurEffectWidget::blurRectXRadius() const
 {
@@ -294,13 +431,13 @@ int DBlurEffectWidget::blurRectXRadius() const
 }
 
 /*!
- * \property DBlurEffectWidget::blurRectYRadius
- * \brief This property holds the yRadius of the effective background.
+ * \~english \property DBlurEffectWidget::blurRectYRadius
+ * \~english \brief This property holds the yRadius of the effective background.
  *
- * The xRadius and yRadius specify the radius of the ellipses defining
- * the corners of the effective background.
+ * \~english The xRadius and yRadius specify the radius of the ellipses defining
+ * \~english the corners of the effective background.
  *
- * \see DBlurEffectWidget::blurRectXRadius
+ * \~english \see DBlurEffectWidget::blurRectXRadius
  */
 int DBlurEffectWidget::blurRectYRadius() const
 {
@@ -310,13 +447,13 @@ int DBlurEffectWidget::blurRectYRadius() const
 }
 
 /*!
- * \property DBlurEffectWidget::maskColor
- * \brief This property holds the background color of this widget.
+ * \~english \property DBlurEffectWidget::maskColor
+ * \~english \brief This property holds the background color of this widget.
  *
- * It returns predefined colors if the DBlurEffectWidget::maskColorType is set
- * to DBlurEffectWidget::DarkColor or BlurEffectWidget::LightColor, returns
- * the color set by DBlurEffectWidget::setMaskColor if
- * DBlurEffectWidget::maskColorType is set to BlurEffectWidget::CustomColor.
+ * \~english It returns predefined colors if the DBlurEffectWidget::maskColorType is set
+ * \~english to DBlurEffectWidget::DarkColor or BlurEffectWidget::LightColor, returns
+ * \~english the color set by DBlurEffectWidget::setMaskColor if
+ * \~english DBlurEffectWidget::maskColorType is set to BlurEffectWidget::CustomColor.
  */
 QColor DBlurEffectWidget::maskColor() const
 {
@@ -357,8 +494,14 @@ quint8 DBlurEffectWidget::maskAlpha() const {
 }
 
 /*!
- * \brief DBlurEffectWidget::setMaskPath set custom area as the effective background.
- * \param path a QPainterPath to be used as the effectvie background.
+ * \~english \brief DBlurEffectWidget::setMaskPath set custom area as the effective background.
+ * \~english \param path a QPainterPath to be used as the effectvie background.
+ */
+/*!
+ * \~chinese \brief 设置模糊区域的路径，当未调用过此接口时，模糊区域为整个控件所占据的空间，此路径坐标原点为控件左上角
+ * \~chinese \param path
+ * \~chinese \warning 设置自定义路径之后，控件大小改变时不会再自动调整模糊区域大小
+ * \~chinese \see DBlurEffectWidget::blurRectXRadius DBlurEffectWidget::blurRectYRadius
  */
 void DBlurEffectWidget::setMaskPath(const QPainterPath &path)
 {
@@ -490,6 +633,10 @@ void DBlurEffectWidget::setMaskColor(QColor maskColor)
     Q_EMIT maskColorChanged(maskColor);
 }
 
+/*!
+ * \~chinese \brief 设置控件的颜色模式，默认值为 \a CustomColor
+ * \~chinese \param type
+ */
 void DBlurEffectWidget::setMaskColor(DBlurEffectWidget::MaskColorType type)
 {
     D_D(DBlurEffectWidget);
