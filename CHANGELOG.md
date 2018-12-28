@@ -1,3 +1,13 @@
+<a name="2.0.9.13"></a>
+## 2.0.9.13 (2018-12-28)
+
+
+#### Features
+
+*   support touchscreen for DSettingDialog ([74482ea6](https://github.com/linuxdeepin/dtkwidget/commit/74482ea685979e6953d5191233820cb1713a3098))
+
+
+
 <a name="2.0.9.12"></a>
 ## 2.0.9.12 (2018-12-24)
 
