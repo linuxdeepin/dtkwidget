@@ -208,7 +208,7 @@ void DSimpleListView::setColumnTitleInfo(QList<QString> titles, QList<int> width
     // Set column titles.
     d->columnTitles = titles;
 
-    // Calcuate column title widths.
+    // Calculate column title widths.
     d->columnWidths.clear();
 
     QFont font;
@@ -858,7 +858,7 @@ void DSimpleListView::mouseMoveEvent(QMouseEvent *mouseEvent)
             int hoverColumn = -1;
 
             if (d->sortingAlgorithms->count() != 0 && d->sortingAlgorithms->count() == d->columnTitles.count() && d->sortingOrderes->count() == d->columnTitles.count()) {
-                // Calcuate title widths;
+                // Calculate title widths;
                 QList<int> renderWidths = getRenderWidths();
 
                 int columnCounter = 0;
@@ -942,7 +942,7 @@ void DSimpleListView::mousePressEvent(QMouseEvent *mouseEvent)
     if (atTitleArea) {
         if (mouseEvent->button() == Qt::LeftButton) {
             if (d->sortingAlgorithms->count() != 0 && d->sortingAlgorithms->count() == d->columnTitles.count() && d->sortingOrderes->count() == d->columnTitles.count()) {
-                // Calcuate title widths;
+                // Calculate title widths;
                 QList<int> renderWidths = getRenderWidths();
 
                 int columnCounter = 0;
@@ -1182,7 +1182,7 @@ void DSimpleListView::paintEvent(QPaintEvent *)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing, true);
 
-    // Calcuate title widths;
+    // Calculate title widths;
     QList<int> renderWidths = getRenderWidths();
 
     painter.setRenderHint(QPainter::Antialiasing, true);
