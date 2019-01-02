@@ -47,6 +47,8 @@ public Q_SLOTS:
     void updateSettings(const QByteArray &translateContext, QPointer<DTK_CORE_NAMESPACE::DSettings> settings);
 
 private:
+    void mouseMoveEvent(QMouseEvent *event) override;
+
     QScopedPointer<ContentPrivate> d_ptr;
     Q_DECLARE_PRIVATE_D(qGetPtrHelper(d_ptr), Content)
 };
