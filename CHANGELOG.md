@@ -1,3 +1,13 @@
+<a name="2.0.9.14"></a>
+## 2.0.9.14 (2019-01-02)
+
+
+#### Bug Fixes
+
+*   can not scroll view on DSettingDialog by touchscreen ([651dee29](https://github.com/linuxdeepin/dtkwidget/commit/651dee293bf1cf3de848eed496c3f6433712d8d5))
+
+
+
 <a name="2.0.9.13"></a>
 ## 2.0.9.13 (2018-12-28)
 
