@@ -31,6 +31,23 @@ DWIDGET_BEGIN_NAMESPACE
     QDBusInterface *interface = fileManager1DBusInterface();\
     return interface && interface->call(#name, urls2uris(urls), startupId).type() != QDBusMessage::ErrorMessage;
 
+static const QStringList SOUND_EFFECT_LIST {
+    "desktop-login",
+    "system-shutdown",
+    "desktop-logout",
+    "suspend-resume",
+    "audio-volume-change",
+    "message",
+    "power-unplug-battery-low",
+    "x-deepin-app-sent-to-desktop",
+    "trash-empty",
+    "power-plug",
+    "power-unplug",
+    "device-added",
+    "device-removed",
+    "dialog-error",
+};
+
 static QDBusInterface *fileManager1DBusInterface()
 {
     static QDBusInterface interface(QStringLiteral("org.freedesktop.FileManager1"),
@@ -219,18 +236,7 @@ bool DDesktopServices::trash(const QList<QUrl> urls)
 
 bool DDesktopServices::playSystemSoundEffect(const DDesktopServices::SystemSoundEffect &effect)
 {
-    switch (effect) {
-    case SSE_Notifications:
-        return playSystemSoundEffect("message");
-    case SSE_Screenshot:
-        return playSystemSoundEffect("camera-shutter");
-    case SSE_EmptyTrash:
-        return playSystemSoundEffect("trash-empty");
-    case SSE_SendFileComplete:
-        return playSystemSoundEffect("complete-copy");
-    default:
-        return false;
-    }
+    return playSystemSoundEffect(SOUND_EFFECT_LIST.at(static_cast<int>(effect)));
 }
 
 bool DDesktopServices::playSystemSoundEffect(const QString &name)
@@ -239,6 +245,16 @@ bool DDesktopServices::playSystemSoundEffect(const QString &name)
         return false;
     }
 
+    return previewSystemSoundEffect(name);
+}
+
+bool DDesktopServices::previewSystemSoundEffect(const DDesktopServices::SystemSoundEffect &effect)
+{
+    return previewSystemSoundEffect(SOUND_EFFECT_LIST.at(static_cast<int>(effect)));
+}
+
+bool DDesktopServices::previewSystemSoundEffect(const QString &name)
+{
     const QString path = soundEffectFilePath(name);
     if (path.isEmpty()) {
         return false;
@@ -253,6 +269,11 @@ bool DDesktopServices::playSystemSoundEffect(const QString &name)
     }
 
     return true;
+}
+
+QString DDesktopServices::getNameByEffectType(const DDesktopServices::SystemSoundEffect &effect)
+{
+    return SOUND_EFFECT_LIST.at(static_cast<int>(effect));
 }
 
 QString DDesktopServices::errorMessage()

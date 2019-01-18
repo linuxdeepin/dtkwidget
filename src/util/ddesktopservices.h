@@ -30,10 +30,20 @@ public:
 
 #ifdef Q_OS_LINUX
     enum SystemSoundEffect {
+        SSE_BootUp,
+        SSE_Shutdown,
+        SSE_Logout,
+        SSE_WakeUp,
+        SSE_VolumeChange,
         SSE_Notifications,
-        SSE_Screenshot,
+        SSE_LowBattery,
+        SSE_SendFileComplete,
         SSE_EmptyTrash,
-        SSE_SendFileComplete
+        SSE_PlugIn,
+        SSE_PlugOut,
+        SSE_DeviceAdded,
+        SSE_DeviceRemoved,
+        SSE_Error,
     };
 #endif
 
@@ -60,6 +70,9 @@ public:
 #ifdef Q_OS_LINUX
     static bool playSystemSoundEffect(const SystemSoundEffect &effect);
     static bool playSystemSoundEffect(const QString &name);
+    static bool previewSystemSoundEffect(const SystemSoundEffect &effect);
+    static bool previewSystemSoundEffect(const QString &name);
+    static QString getNameByEffectType(const SystemSoundEffect &effect);
 #endif
 
     static QString errorMessage();
