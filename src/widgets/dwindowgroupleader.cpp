@@ -107,6 +107,22 @@ DWindowGroupLeader::~DWindowGroupLeader()
     }
 }
 
+quint32 DWindowGroupLeader::groupLeaderId() const
+{
+    Q_D(const DWindowGroupLeader);
+
+    const_cast<DWindowGroupLeaderPrivate*>(d)->ensureGroupLeader();
+
+    return d->groupLeader;
+}
+
+quint32 DWindowGroupLeader::clientLeaderId() const
+{
+    Q_D(const DWindowGroupLeader);
+
+    return d->clientLeader;
+}
+
 void DWindowGroupLeader::addWindow(QWindow *window)
 {
     Q_ASSERT(window);

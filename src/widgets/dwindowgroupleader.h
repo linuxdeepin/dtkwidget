@@ -36,6 +36,9 @@ public:
     explicit DWindowGroupLeader(quint32 groupId = 0);
     ~DWindowGroupLeader();
 
+    quint32 groupLeaderId() const;
+    quint32 clientLeaderId() const;
+
     void addWindow(QWindow *window);
     void removeWindow(QWindow *window);
     void addWindow(QWidget *window);
