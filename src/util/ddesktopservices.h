@@ -30,15 +30,16 @@ public:
 
 #ifdef Q_OS_LINUX
     enum SystemSoundEffect {
+        SSE_Notifications,
+        SEE_Screenshot,
+        SSE_EmptyTrash,
+        SSE_SendFileComplete,
         SSE_BootUp,
         SSE_Shutdown,
         SSE_Logout,
         SSE_WakeUp,
         SSE_VolumeChange,
-        SSE_Notifications,
         SSE_LowBattery,
-        SSE_SendFileComplete,
-        SSE_EmptyTrash,
         SSE_PlugIn,
         SSE_PlugOut,
         SSE_DeviceAdded,

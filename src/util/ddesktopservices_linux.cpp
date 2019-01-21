@@ -32,15 +32,16 @@ DWIDGET_BEGIN_NAMESPACE
     return interface && interface->call(#name, urls2uris(urls), startupId).type() != QDBusMessage::ErrorMessage;
 
 static const QStringList SOUND_EFFECT_LIST {
+    "message",
+    "camera-shutter",
+    "trash-empty",
+    "x-deepin-app-sent-to-desktop",
     "desktop-login",
     "system-shutdown",
     "desktop-logout",
     "suspend-resume",
     "audio-volume-change",
-    "message",
     "power-unplug-battery-low",
-    "x-deepin-app-sent-to-desktop",
-    "trash-empty",
     "power-plug",
     "power-unplug",
     "device-added",
@@ -256,6 +257,7 @@ bool DDesktopServices::previewSystemSoundEffect(const DDesktopServices::SystemSo
 bool DDesktopServices::previewSystemSoundEffect(const QString &name)
 {
     const QString path = soundEffectFilePath(name);
+
     if (path.isEmpty()) {
         return false;
     }
