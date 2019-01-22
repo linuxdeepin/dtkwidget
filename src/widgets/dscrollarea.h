@@ -27,7 +27,7 @@ DWIDGET_BEGIN_NAMESPACE
 
 class DScrollBar;
 class DScrollAreaPrivate;
-class LIBDTKWIDGETSHARED_EXPORT DScrollArea : public QScrollArea, public DTK_CORE_NAMESPACE::DObject
+class D_DECL_DEPRECATED_X("Plase use QScrollArea") LIBDTKWIDGETSHARED_EXPORT DScrollArea : public QScrollArea, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
 
