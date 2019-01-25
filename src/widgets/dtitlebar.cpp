@@ -281,10 +281,10 @@ void DTitlebarPrivate::updateFullscreen()
 void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
 {
     D_Q(DTitlebar);
-    bool useDXcb = DPlatformWindowHandle::isEnabledDXcb(targetWindow());
     bool isFullscreen = targetWindow()->windowState().testFlag(Qt::WindowFullScreen);
 
-    bool showTitle = (type.testFlag(Qt::WindowTitleHint) || !useDXcb) && !embedMode;
+    bool showTitle = type.testFlag(Qt::WindowTitleHint) && !embedMode;
+
     if (titleLabel) {
         titleLabel->setVisible(showTitle);
     }
@@ -295,22 +295,16 @@ void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
     // Never show in embed/fullscreen
     bool forceHide = embedMode || isFullscreen;
 
-    bool showMin = (type.testFlag(Qt::WindowMinimizeButtonHint) || !useDXcb) && !forceHide;
+    bool showMin = type.testFlag(Qt::WindowMinimizeButtonHint) && !forceHide;
     minButton->setVisible(showMin);
 
-    bool allowResize = true;
-    if (q->window() && q->window()->windowHandle()) {
-        auto functions_hints = DWindowManagerHelper::getMotifFunctions(q->window()->windowHandle());
-        allowResize = functions_hints.testFlag(DWindowManagerHelper::FUNC_RESIZE);
-    }
-
-    bool showMax = (type.testFlag(Qt::WindowMaximizeButtonHint) || !useDXcb) && !forceHide && allowResize;
+    bool showMax = type.testFlag(Qt::WindowMaximizeButtonHint) && !forceHide;
     maxButton->setVisible(showMax);
 
-    bool showClose = (type.testFlag(Qt::WindowCloseButtonHint) || !useDXcb) && !forceHide;
+    bool showClose = type.testFlag(Qt::WindowCloseButtonHint) && !forceHide;
     closeButton->setVisible(showClose);
 
-    bool showOption = (type.testFlag(Qt::WindowSystemMenuHint) || !useDXcb) && !isFullscreen;
+    bool showOption = type.testFlag(Qt::WindowSystemMenuHint) && !isFullscreen;
     optionButton->setVisible(showOption);
 
     buttonArea->adjustSize();
@@ -324,20 +318,25 @@ void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
 void DTitlebarPrivate::updateButtonsFunc()
 {
     optionButton->setDisabled(disableFlags.testFlag(Qt::WindowSystemMenuHint));
-    minButton->setDisabled(disableFlags.testFlag(Qt::WindowMinimizeButtonHint));
-    maxButton->setDisabled(disableFlags.testFlag(Qt::WindowMaximizeButtonHint));
-    closeButton->setDisabled(disableFlags.testFlag(Qt::WindowCloseButtonHint));
 
+    if (!targetWindowHandle)
+        return;
+
+    // 根据 disableFlags 更新窗口标志，而标题栏上具体按钮的开启/禁用状态只根据
+    // 窗口标志改变后做更新，且窗口标志改变后也会同步更新 disableFlags 的值，
+    // 也就是说，实际上窗口按钮的状态只受窗口标志影响，而 setDisableFlags
+    // 只是单纯的记录新的 disableFlags 的值，由于调用 setDisableFlags
+    // 是应用中的主动行为，所以同时也会根据这个值更新窗口标志。
     DWindowManagerHelper::setMotifFunctions(
-        targetWindow()->windowHandle(),
+        targetWindowHandle,
         DWindowManagerHelper::FUNC_MAXIMIZE,
         !disableFlags.testFlag(Qt::WindowMaximizeButtonHint));
     DWindowManagerHelper::setMotifFunctions(
-        targetWindow()->windowHandle(),
+        targetWindowHandle,
         DWindowManagerHelper::FUNC_MINIMIZE,
         !disableFlags.testFlag(Qt::WindowMinimizeButtonHint));
     DWindowManagerHelper::setMotifFunctions(
-        targetWindow()->windowHandle(),
+        targetWindowHandle,
         DWindowManagerHelper::FUNC_CLOSE,
         !disableFlags.testFlag(Qt::WindowCloseButtonHint));
 }
@@ -355,14 +354,14 @@ void DTitlebarPrivate::handleParentWindowStateChange()
 //! So use windowHandle::windowStateChanged instead
 void DTitlebarPrivate::handleParentWindowIdChange()
 {
-//    D_Q(DTitlebar);
     if (!targetWindowHandle) {
         targetWindowHandle = targetWindow()->windowHandle();
+
+        updateButtonsFunc();
     } else if (targetWindow()->windowHandle() != targetWindowHandle) {
         // Parent change???, show never here
         qWarning() << "targetWindowHandle change" << targetWindowHandle << targetWindow()->windowHandle();
     }
-
 }
 
 void DTitlebarPrivate::_q_toggleWindowState()
@@ -403,6 +402,7 @@ void DTitlebarPrivate::_q_onTopWindowMotifHintsChanged(quint32 winId)
     }
 
     DWindowManagerHelper::MotifDecorations decorations_hints = DWindowManagerHelper::getMotifDecorations(q->window()->windowHandle());
+    DWindowManagerHelper::MotifFunctions functions_hints = DWindowManagerHelper::getMotifFunctions(q->window()->windowHandle());
 
     if (titleLabel) {
         titleLabel->setVisible(decorations_hints.testFlag(DWindowManagerHelper::DECOR_TITLE));
@@ -414,25 +414,15 @@ void DTitlebarPrivate::_q_onTopWindowMotifHintsChanged(quint32 winId)
 
     updateButtonsState(targetWindow()->windowFlags());
 
-//    minButton->setEnabled(functions_hints.testFlag(DWindowManagerHelper::FUNC_MINIMIZE) && !embedMode);
-//    maxButton->setEnabled(functions_hints.testFlag(DWindowManagerHelper::FUNC_MAXIMIZE) && !embedMode);
-//    closeButton->setEnabled(functions_hints.testFlag(DWindowManagerHelper::FUNC_CLOSE) && !embedMode);
-//    // sync button state
-//    if (minButton->isEnabled()) {
-//        disableFlags &= ~Qt::WindowMinimizeButtonHint;
-//    } else {
-//        disableFlags |= Qt::WindowMinimizeButtonHint;
-//    }
-//    if (maxButton->isEnabled()) {
-//        disableFlags &= ~Qt::WindowMaximizeButtonHint;
-//    } else {
-//        disableFlags |= Qt::WindowMaximizeButtonHint;
-//    }
-//    if (closeButton->isEnabled()) {
-//        disableFlags &= ~Qt::WindowCloseButtonHint;
-//    } else {
-//        disableFlags |= Qt::WindowCloseButtonHint;
-//    }
+    minButton->setEnabled(functions_hints.testFlag(DWindowManagerHelper::FUNC_MINIMIZE)
+                            && functions_hints.testFlag(DWindowManagerHelper::FUNC_RESIZE));
+    maxButton->setEnabled(functions_hints.testFlag(DWindowManagerHelper::FUNC_MAXIMIZE)
+                            && functions_hints.testFlag(DWindowManagerHelper::FUNC_RESIZE));
+    closeButton->setEnabled(functions_hints.testFlag(DWindowManagerHelper::FUNC_CLOSE));
+    // sync button state
+    disableFlags.setFlag(Qt::WindowMinimizeButtonHint, !minButton->isEnabled());
+    disableFlags.setFlag(Qt::WindowMaximizeButtonHint, !maxButton->isEnabled());
+    disableFlags.setFlag(Qt::WindowCloseButtonHint, !closeButton->isEnabled());
 
     if (titlePadding) {
         titlePadding->setFixedSize(buttonArea->size());
@@ -673,7 +663,6 @@ bool DTitlebar::eventFilter(QObject *obj, QEvent *event)
         switch (event->type()) {
         case QEvent::ShowToParent:
             d->handleParentWindowIdChange();
-            d->updateButtonsFunc();
             d->updateButtonsState(d->targetWindow()->windowFlags());
             break;
         case QEvent::Resize:
