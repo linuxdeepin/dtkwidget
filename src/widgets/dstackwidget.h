@@ -104,7 +104,7 @@ public:
 
 public Q_SLOTS:
     int pushWidget(QWidget *widget, bool enableTransition = true);
-    void insertWidget(int depth, QWidget *widget, bool enableTransition = true);
+    void insertWidget(int index, QWidget *widget, bool enableTransition = true);
 
     /// If widget is nullptr, all widgets up to the currentIndex+count widgets will be popped.
     /// If not specified, all widgets up to the depthOf(widget)+count widgets will be popped.
