@@ -108,7 +108,8 @@ static void setWindowProperty(QWindow *window, const char *name, const QVariant 
  * \~chinese \sa DApplication::loadDXcbPlugin
  * \~chinese \sa DApplication::isDXcbPlatform
  * \~chinese \sa QGuiApplication::platformNativeInterface
- * \~chinese \sa DMainWindow::DMainWindow
+ * \~chinese \sa DMainWindow
+ * \~chinese \sa DWindowManagerHelper
  * \~chinese \warning 使用此工具前要确保应用加载了dxcb插件
  * \~chinese \warning 因为 QGuiApplication::platformFunction 是在 Qt 5.4.0 版本引入的新接口，
  * \~chinese 所以 DPlatformWindowHandle 不支持 Qt 5.4.0 以下版本。
@@ -232,9 +233,11 @@ static void setWindowProperty(QWindow *window, const char *name, const QVariant 
   * \~chinese \note 无论属性值是多少，Qt::Popup 和 Qt::BypassWindowManagerHint 类型的
   * \~chinese 窗口都不允许改变大小
   * \~chinese \note 可读可写
+  * \~chinese \note 此属性仅仅控制 dxcb 中的行为，不会影响窗口管理器的行为
   * \~chinese \sa QWidget::setFixedSize
   * \~chinese \sa QWindow::setMinimumSize
   * \~chinese \sa QWindow::setMaximumSize
+  * \~chinese \sa DWindowManagerHelper::FUNC_RESIZE
   */
 
 /*!
@@ -244,6 +247,8 @@ static void setWindowProperty(QWindow *window, const char *name, const QVariant 
   * \~chinese \note 无论属性值是多少，Qt::Popup 和 Qt::BypassWindowManagerHint 类型的
   * \~chinese 窗口都不允许改变大小
   * \~chinese \note 可读可写
+  * \~chinese \note 此属性仅仅控制 dxcb 中的行为，不会影响窗口管理器的行为
+  * \~chinese \sa DWindowManagerHelper::FUNC_MOVE
   */
 
 /*!
