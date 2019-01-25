@@ -292,42 +292,6 @@ QWidget *DStackWidget::getWidgetByIndex(int index) const
     return d->widgetList[index];
 }
 
-void DStackWidget::setCurrentIndex(int currentIndex, DAbstractStackWidgetTransition::TransitionType type,
-                                   bool enableTransition)
-{
-    Q_D(DStackWidget);
-
-    if(enableTransition && currentWidget() && currentIndex >= 0) {
-        DAbstractStackWidgetTransition::TransitionInfo info;
-        info.stackWidget = this;
-        info.oldWidget = currentWidget();
-        info.newWidget = getWidgetByIndex(depth() - 1);
-        info.type = type;
-
-        d->setCurrentIndex(currentIndex);
-        d->transition->beginTransition(info);
-    } else {
-        if(currentWidget()) {
-            currentWidget()->hide();
-        }
-
-        d->setCurrentIndex(currentIndex);
-
-        if(currentWidget()) {
-            currentWidget()->move(0, 0);
-            currentWidget()->show();
-        }
-
-        Q_EMIT switchWidgetFinished();
-    }
-}
-
-void DStackWidget::setCurrentWidget(QWidget *currentWidget, DAbstractStackWidgetTransition::TransitionType type,
-                                    bool enableTransition)
-{
-    setCurrentIndex(indexOf(currentWidget), type, enableTransition);
-}
-
 void DStackWidget::setTransition(DAbstractStackWidgetTransition *transition)
 {
     Q_D(DStackWidget);
@@ -374,6 +338,42 @@ DStackWidget::DStackWidget(DStackWidgetPrivate &dd, QWidget *parent):
     DThemeManager::registerWidget(this);
 
     d_func()->init();
+}
+
+void DStackWidget::setCurrentIndex(int currentIndex, DAbstractStackWidgetTransition::TransitionType type,
+                                   bool enableTransition)
+{
+    Q_D(DStackWidget);
+
+    if(enableTransition && currentWidget() && currentIndex >= 0) {
+        DAbstractStackWidgetTransition::TransitionInfo info;
+        info.stackWidget = this;
+        info.oldWidget = currentWidget();
+        info.newWidget = getWidgetByIndex(depth() - 1);
+        info.type = type;
+
+        d->setCurrentIndex(currentIndex);
+        d->transition->beginTransition(info);
+    } else {
+        if(currentWidget()) {
+            currentWidget()->hide();
+        }
+
+        d->setCurrentIndex(currentIndex);
+
+        if(currentWidget()) {
+            currentWidget()->move(0, 0);
+            currentWidget()->show();
+        }
+
+        Q_EMIT switchWidgetFinished();
+    }
+}
+
+void DStackWidget::setCurrentWidget(QWidget *currentWidget, DAbstractStackWidgetTransition::TransitionType type,
+                                    bool enableTransition)
+{
+    setCurrentIndex(indexOf(currentWidget), type, enableTransition);
 }
 
 DWIDGET_END_NAMESPACE
