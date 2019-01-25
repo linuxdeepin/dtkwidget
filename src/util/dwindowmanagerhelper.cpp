@@ -560,6 +560,7 @@ QVector<quint32> DWindowManagerHelper::currentWorkspaceWindowIdList() const
  * \~chinese 类似，只不过自动通过窗口id创建了 DForeignWindow 对象
  * \~chinese \note 顺序和窗口层叠顺序相关，显示越靠下层的窗口在列表中顺序越靠前
  * \~chinese \note 列表中对象的生命周期由 DForeignWindow 负责
+ * \~chinese \warning 此列表中不包含由当前应用创建的窗口
  * \~chinese \sa DWindowManagerHelper::currentWorkspaceWindowIdList
  * \~chinese \sa DForeignWindow::fromWinId
  */
