@@ -1,3 +1,20 @@
+<a name="2.0.9.15"></a>
+## 2.0.9.15 (2019-01-25)
+
+
+#### Features
+
+*   add groupLeaderId/clientLeaderId interfaces for DWindowGroupLeader ([aa1ab5ad](https://github.com/linuxdeepin/dtkwidget/commit/aa1ab5ad141b7ae3a2abf5d1dd69564038ed2f68))
+* **DDesktopServices:**  support all sound effect ([c1a2285c](https://github.com/linuxdeepin/dtkwidget/commit/c1a2285c3a3fb54bf6c7c03220a89b028551e8da))
+
+#### Bug Fixes
+
+*   change permissions of DStackWidget's function ([f62bf044](https://github.com/linuxdeepin/dtkwidget/commit/f62bf04481a0feb5d99659a319140f159cf1b9be))
+*   can not hide the window menu button ([010c75d5](https://github.com/linuxdeepin/dtkwidget/commit/010c75d53417099132b85dc82d0768ad5c3520f3))
+* **DDesktopServices:**  keep old enum order ([15eb21f7](https://github.com/linuxdeepin/dtkwidget/commit/15eb21f79ab2adccd1dcf31ae5aa3d94654d4ec9))
+
+
+
 <a name="2.0.9.14"></a>
 ## 2.0.9.14 (2019-01-02)
 
