@@ -1,3 +1,13 @@
+<a name="2.0.9.16"></a>
+## 2.0.9.16 (2019-01-29)
+
+
+#### Bug Fixes
+
+*   titlebar not shown in some case ([c63bac17](https://github.com/linuxdeepin/dtkwidget/commit/c63bac174fa22ba762aa4d1291703eccbfb855e2))
+
+
+
 <a name="2.0.9.15"></a>
 ## 2.0.9.15 (2019-01-25)
 
