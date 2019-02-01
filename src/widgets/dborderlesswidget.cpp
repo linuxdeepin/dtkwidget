@@ -165,6 +165,8 @@ void DBorderlessWidgetPrivate::_q_onTitleBarMousePressed(Qt::MouseButtons button
  * \~chinese @class DBorderlessWidget
  *
  * \~chinese @brief DBorderlessWidget 是DTK中用于提供无边框的功能的类，主要用于Windows。
+ * 在Windows和Linux图形环境下，窗口管理器都会附加一个标题栏，为了Deepin的设计，DTK的窗口不会使用系统提供的
+ * 样式，而是通过取消系统标题栏和自己提供阴影来达到效果。
  * \~chinese - 通过设置窗口的WindowFlags为Qt::Window | Qt::FramelessWindowHint来实现
  */
 
