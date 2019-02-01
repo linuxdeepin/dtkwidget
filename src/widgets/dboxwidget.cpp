@@ -67,10 +67,8 @@ void DBoxWidgetPrivate::init()
  * \~chinese \class DBoxWidget
  * \~chinese \brief DBoxWidget提供了一个自适应子控件大小的Widget.
  *
- * \~chinese 在Qt编程中，使用QBoxLayout设置控件是很常见的，但是是非常令人乏味的.
- * \~chinese DBoxWidget是为了减轻这一痛苦而构建的.
- *
- * \~chinese DBoxWidget会自动计算它所需要的大小，所以你不需要为DBoxWidget设置宽或高.
+ * \~chinese 在Qt编程中，使用QBoxLayout设置控件是很常见的，DBoxWidget提供了方便的封装，会根据需要的大小自动
+ * 设置DBoxWidget的宽高。
  */
 
 /*!
@@ -138,7 +136,7 @@ QBoxLayout *DBoxWidget::layout() const
  */
 
 /*!
- * \~chinese \brief 添加控件到布局中
+ * \~chinese \brief 调用QBoxLayout的addWidget方法将QWidget添加到布局中
  *
  * \param widget 要添加的QWidget对象
  */
@@ -164,8 +162,9 @@ void DBoxWidget::setDirection(QBoxLayout::Direction direction)
 }
 
 /*!
- * \~chinese \brief 强制更新大小
- *
+ * \~chinese \brief 当方向是QBoxLayout::TopToBottom或者QBoxLayout::BottomToTop时，
+ * 固定高度将使用传入的高度，并设置最小宽度为传入的宽度。
+ * 否则将使用传入的宽度当做固定宽度，高度为最小高度。
  * \param size
  */
 void DBoxWidget::updateSize(const QSize &size)
