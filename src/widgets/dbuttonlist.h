@@ -62,7 +62,7 @@ class LIBDTKWIDGETSHARED_EXPORT DButtonList : public QListWidget
 {
     Q_OBJECT
 public:
-    explicit DButtonList(QWidget *parent = Q_NULLPTR) Q_DECL_DEPRECATED;
+    Q_DECL_DEPRECATED explicit DButtonList(QWidget *parent = Q_NULLPTR);
     ~DButtonList();
 
     void initMargins(int leftMargin, int rightMargin, int imageLeftMargin);
