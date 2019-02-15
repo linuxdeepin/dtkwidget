@@ -427,8 +427,7 @@ void DTitlebarPrivate::_q_onTopWindowMotifHintsChanged(quint32 winId)
 
     updateButtonsState(targetWindow()->windowFlags());
 
-    minButton->setEnabled(functions_hints.testFlag(DWindowManagerHelper::FUNC_MINIMIZE)
-                            && functions_hints.testFlag(DWindowManagerHelper::FUNC_RESIZE));
+    minButton->setEnabled(functions_hints.testFlag(DWindowManagerHelper::FUNC_MINIMIZE));
     maxButton->setEnabled(functions_hints.testFlag(DWindowManagerHelper::FUNC_MAXIMIZE)
                             && functions_hints.testFlag(DWindowManagerHelper::FUNC_RESIZE));
     closeButton->setEnabled(functions_hints.testFlag(DWindowManagerHelper::FUNC_CLOSE));
