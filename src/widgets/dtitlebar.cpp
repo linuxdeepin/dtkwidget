@@ -393,6 +393,13 @@ void DTitlebarPrivate::_q_showMinimized()
     targetWindow()->showMinimized();
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 7, 0)
+static Qt::WindowFlags &setWindowFlag(Qt::WindowFlags &flags, Qt::WindowType type, bool on)
+{
+    return on ? (flags |= type) : (flags &= ~int(type));
+}
+#endif
+
 void DTitlebarPrivate::_q_onTopWindowMotifHintsChanged(quint32 winId)
 {
     D_QC(DTitlebar);
@@ -426,9 +433,15 @@ void DTitlebarPrivate::_q_onTopWindowMotifHintsChanged(quint32 winId)
                             && functions_hints.testFlag(DWindowManagerHelper::FUNC_RESIZE));
     closeButton->setEnabled(functions_hints.testFlag(DWindowManagerHelper::FUNC_CLOSE));
     // sync button state
+#if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
     disableFlags.setFlag(Qt::WindowMinimizeButtonHint, !minButton->isEnabled());
     disableFlags.setFlag(Qt::WindowMaximizeButtonHint, !maxButton->isEnabled());
     disableFlags.setFlag(Qt::WindowCloseButtonHint, !closeButton->isEnabled());
+#else
+    setWindowFlag(disableFlags, Qt::WindowMinimizeButtonHint, !minButton->isEnabled());
+    setWindowFlag(disableFlags, Qt::WindowMaximizeButtonHint, !maxButton->isEnabled());
+    setWindowFlag(disableFlags, Qt::WindowCloseButtonHint, !closeButton->isEnabled());
+#endif
 
     if (titlePadding) {
         titlePadding->setFixedSize(buttonArea->size());
