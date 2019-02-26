@@ -1,3 +1,15 @@
+<a name="2.0.9.17"></a>
+## 2.0.9.17 (2019-02-26)
+
+
+#### Bug Fixes
+
+*   minimize buttons of fix sized windows are disabled ([f7d2974c](https://github.com/linuxdeepin/dtkwidget/commit/f7d2974c005cc3e09749503aec5bc9b2cbf7af75))
+*   build failed on Qt 5.6.x ([1ca45918](https://github.com/linuxdeepin/dtkwidget/commit/1ca45918dfc3546ab077ab613afd8f8cf64fd457))
+*   move Q_DECL_DEPRECATED to front ([c6d65f01](https://github.com/linuxdeepin/dtkwidget/commit/c6d65f016eb7f0c498a7a92f2ffb139fabaa80a9))
+
+
+
 <a name="2.0.9.16"></a>
 ## 2.0.9.16 (2019-01-29)
 
