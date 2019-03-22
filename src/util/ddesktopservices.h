@@ -79,10 +79,10 @@ public:
     static QString errorMessage();
 };
 
-#ifdef Q_OS_LINUX
-Q_DECLARE_METATYPE(DDesktopServices::SystemSoundEffect)
-#endif
-
 DWIDGET_END_NAMESPACE
+
+#ifdef Q_OS_LINUX
+Q_DECLARE_METATYPE(DTK_WIDGET_NAMESPACE::DDesktopServices::SystemSoundEffect)
+#endif
 
 #endif // DDESKTOPSERVICES_H
