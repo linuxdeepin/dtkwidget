@@ -85,12 +85,13 @@ DApplicationPrivate::DApplicationPrivate(DApplication *q) :
             q->setOverrideCursor(Qt::ArrowCursor);
         }
     };
-    QObject::connect(monitor, &StartupNotificationMonitor::appStartup, [this, q, &cancelNotification](const QString id) {
+    QObject::connect(monitor, &StartupNotificationMonitor::appStartup,
+                     q, [this, q, cancelNotification](const QString id) {
         m_monitoredStartupApps.append(id);
         q->setOverrideCursor(Qt::WaitCursor);
         // Set a timeout of 15s in case that some apps like pamac-tray started
         // with StartupNotify but don't show a window after startup finished.
-        QTimer::singleShot(15 * 1000, q, [id, &cancelNotification](){
+        QTimer::singleShot(15 * 1000, q, [id, cancelNotification](){
             cancelNotification(id);
         });
     });
