@@ -1,3 +1,19 @@
+<a name="2.0.10"></a>
+## 2.0.10 (2019-03-27)
+
+
+#### Bug Fixes
+
+*   crash at DApplicationPrivate::cancelNotification ([e84643fd](https://github.com/linuxdeepin/dtkwidget/commit/e84643fdbf0628f77bd4e2cb0b2b08feb80d18bb))
+*   cursor is always in busy state sometimes ([79473dfa](https://github.com/linuxdeepin/dtkwidget/commit/79473dfab2ba17694ded8568431a0f55c87d0492))
+* **DDesktopServices:**  wrong register ddesktopservices enum type ([c82f36e3](https://github.com/linuxdeepin/dtkwidget/commit/c82f36e33fb22de853f1bd61a7eaaa7b0ad63377))
+
+#### Features
+
+* **DDesktopServices:**  register qmetatype for SystemSoundEffect ([24fbd471](https://github.com/linuxdeepin/dtkwidget/commit/24fbd4710a3a9a9ac52eced25aeb20a5617c1d66))
+
+
+
 <a name="2.0.9.17"></a>
 ## 2.0.9.17 (2019-02-26)
 
