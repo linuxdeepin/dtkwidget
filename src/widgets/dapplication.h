@@ -133,6 +133,8 @@ Q_SIGNALS:
 
     //###(zccrs): Depend the Qt platform theme plugin(from the package: dde-qt5integration)
     void iconThemeChanged();
+    //###(zccrs): Emit form the Qt platform theme plugin(from the package: dde-qt5integration)
+    void screenDevicePixelRatioChanged(QScreen *screen);
 
 protected:
     virtual void handleHelpAction();

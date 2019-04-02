@@ -337,6 +337,24 @@ bool DApplicationPrivate::isUserManualExists()
  *
  * \~chinese \fn DApplication::iconThemeChanged()
  * \~chinese \brief iconThemeChanged 信号会在系统图标主题发生改变的时候被触发。
+ *
+ * \~chinese \fn DApplication::screenDevicePixelRatioChanged(QScreen *screen)
+ * \~chinese \brief screenDevicePixelRatioChanged 信号会在对应屏幕的缩放比可能发现变化
+ * \~chinese 时触发。
+ *
+ * \~chinese 依赖于 deepin 平台主题插件（dde-qt5integration 包中提供），实时更改
+ * \~chinese 屏幕缩放比是通过更改配置文件 ~/.config/deepin/qt-theme.ini 实现，与此相关的
+ * \~chinese 配置项有三个：
+ * \~chinese - ScreenScaleFactors：多屏幕设置不同缩放比，值格式和环境变量QT_SCREEN_SCALE_FACTORS一致
+ * \~chinese - ScaleFactor: 设置所有屏幕缩放比，值格式和环境变量QT_SCALE_FACTOR一致
+ * \~chinese - ScaleLogcailDpi：指定屏幕逻辑dpi，可影响仅设置了 point size 的 QFont 的绘制大小。
+ * \~chinese 未设置此值时，默认会在 \a ScreenScaleFactors 值改变后将屏幕逻辑dpi更改为主屏默认值，一般情况下，不需要设置此值。
+ * \~chinese \a ScreenScaleFactors 和 \a ScaleFactor 的值改变后，会触发所有屏幕的 QScreen::geometryChanged, 且会根据当前缩放
+ * \~chinese 更新所有QWindow的geometry（更新时保持窗口的真实大小不变，新窗口大小=窗口真实大小/新的缩放比）。另外，可在构造
+ * \~chinese DApplication 对象之前设置 \a Qt::AA_DisableHighDpiScaling 为 true，或添加环境变量 \a D_DISABLE_RT_SCREEN_SCALE
+ * \~chinese 禁用实时缩放的支持。
+ *
+ * \~chinese \sa QScreen::devicePixelRatio
  */
 
 /**
