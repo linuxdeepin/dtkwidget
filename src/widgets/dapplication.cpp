@@ -69,6 +69,7 @@
 
 #define DXCB_PLUGIN_KEY "dxcb"
 #define DXCB_PLUGIN_SYMBOLIC_PROPERTY "_d_isDxcb"
+#define QT_THEME_CONFIG_PATH "D_QT_THEME_CONFIG_PATH"
 
 DCORE_USE_NAMESPACE
 
@@ -656,6 +657,46 @@ void DApplication::registerDDESession()
                 .call();
     }
 #endif
+}
+
+/*!
+ * \~chinese \brief DApplication::customQtThemeConfigPathByUserHome
+ * \~chinese 根据用户家目录设置Qt主题配置文件的目录。
+ * \~chinese \param home 家目录，不要以 "/" 结尾
+ * \~chinese \warning 必须在构造 DApplication 对象之前调用
+ * \~chinese \sa DApplication::customQtThemeConfigPathByUserHome
+ */
+void DApplication::customQtThemeConfigPathByUserHome(const QString &home)
+{
+    customQtThemeConfigPath(home + "/.config");
+}
+
+/*!
+ * \~chinese \brief DApplication::customQtThemeConfigPath
+ * \~chinese 自定义Qt主题配置文件的路径。
+ *
+ * \~chinese 默认文件通常为 "~/.config/deepin/qt-theme.ini"
+ * \~chinese 其中包含应用的图标主题、字体、、屏幕缩放等相关的配置项。可应用于以root用户启动的
+ * \~chinese 应用，需要跟随某个一般用户的主题设置项。
+ * \~chinese \a path 中不包含 "/deepin/qt-theme.ini" 部分，如：path = "/tmp"，
+ * \~chinese 则配置文件路径为："/tmp/deepin/qt-theme.ini"。
+ * \~chinese \param path 不要以 "/" 结尾
+ * \~chinese \warning 必须在构造 DApplication 对象之前调用
+ */
+void DApplication::customQtThemeConfigPath(const QString &path)
+{
+    Q_ASSERT_X(!qApp, "DApplication::customQtThemeConfigPath", "Must call before QGuiApplication defined object");
+    qputenv(QT_THEME_CONFIG_PATH, path.toLocal8Bit());
+}
+
+/*!
+ * \~chinese \brief DApplication::customizedQtThemeConfigPath
+ * \~chinese \return 返回自定义的 Qt 主题配置文件路径，未设置过此路径时返回为空。
+ * \~chinese \sa DApplication::customQtThemeConfigPath
+ */
+QString DApplication::customizedQtThemeConfigPath()
+{
+    return QString::fromLocal8Bit(qgetenv(QT_THEME_CONFIG_PATH));
 }
 
 /**
