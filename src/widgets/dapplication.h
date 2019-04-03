@@ -78,6 +78,10 @@ public:
     // let startdde know that we've already started.
     static void registerDDESession();
 
+    static void customQtThemeConfigPathByUserHome(const QString &home);
+    static void customQtThemeConfigPath(const QString &path);
+    static QString customizedQtThemeConfigPath();
+
     // meta information that necessary to create a about dialog for the application.
     QString productName() const;
     void setProductName(const QString &productName);
