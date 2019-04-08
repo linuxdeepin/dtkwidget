@@ -132,7 +132,7 @@ DVideoWidgetPrivate::DVideoWidgetPrivate(DVideoWidget *qq)
  *
  * It's usually used just to play video animations like the one presented in
  * dde-zone settings page. If you want to play video or other media objects,
- * please refer to QVideoWidget for better preformance or support.
+ * please refer to QVideoWidget for better performance or support.
  *
  * \param parent is the parent widget to be attached on.
  */
