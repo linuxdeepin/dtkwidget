@@ -90,6 +90,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
     void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
+    void showEvent(QShowEvent *event) override;
 
 protected:
     DAbstractDialog(DAbstractDialogPrivate &dd, QWidget *parent = 0);

@@ -459,14 +459,28 @@ void DAbstractDialog::resizeEvent(QResizeEvent *event)
 
     D_DC(DAbstractDialog);
 
-    if (!d->mouseMoved) {
-        setDisplayPosition(displayPosition());
-    }
-
     if (d->bgBlurWidget)
         d->bgBlurWidget->resize(event->size());
 
     Q_EMIT sizeChanged(event->size());
+}
+
+void DAbstractDialog::showEvent(QShowEvent *event)
+{
+    D_DC(DAbstractDialog);
+
+    // 不要在resizeEvent中改变窗口geometry，可能会导致以下问题。在双屏开启不同缩放比时：
+    // 屏幕A缩放为1，屏幕B缩放为2。窗口初始在屏幕B上，此时大小为 100x100，则其缩放
+    // 后的真实大小为200x200，由于窗口管理器会对未设置过位置的窗口自动布局，接下来
+    // 窗口可能会因为位置改变而被移动到屏幕A上，则此对话框的大小将变化为 200x200，
+    // 触发了resize事件，紧接着又会尝试将窗口位置更新到鼠标所在屏幕的中心，如果鼠标
+    // 所在屏幕为B，则在移动窗口位置时又会根据B的缩放比重新设置窗口大小，窗口将变为：
+    // 400x400，将形成一个循环。。。
+    if (!d->mouseMoved) {
+        setDisplayPosition(displayPosition());
+    }
+
+    QDialog::showEvent(event);
 }
 
 DAbstractDialog::DAbstractDialog(DAbstractDialogPrivate &dd, QWidget *parent):
