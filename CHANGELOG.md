@@ -1,3 +1,18 @@
+<a name="2.0.11"></a>
+## 2.0.11 (2019-04-17)
+
+
+#### Features
+
+*   add interfaces for custom qt theme config file path ([b1308c8a](https://github.com/linuxdeepin/dtkwidget/commit/b1308c8ac3fbf42a1c9204dc07967979bce461cc))
+*   add signal "screenDevicePixelRatioChanged" for DApplication ([ee11cac5](https://github.com/linuxdeepin/dtkwidget/commit/ee11cac58d587203b16f2f1b3af862586bd135e2))
+
+#### Bug Fixes
+
+*   The dialog size abnormally on multi-screen ([320d896b](https://github.com/linuxdeepin/dtkwidget/commit/320d896b673b03f92a2c85d51857a4ae4d355230))
+
+
+
 <a name="2.0.10"></a>
 ## 2.0.10 (2019-03-27)
 
