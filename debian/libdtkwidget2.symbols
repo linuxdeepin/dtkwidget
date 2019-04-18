@@ -2412,9 +2412,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZN3Dtk6Widget24DClipEffectWidgetPrivateD0Ev@Base 2.0.11
  _ZN3Dtk6Widget24DClipEffectWidgetPrivateD1Ev@Base 2.0.11
  _ZN3Dtk6Widget24DClipEffectWidgetPrivateD2Ev@Base 2.0.11
- _ZN3Dtk6Widget24DFileIconProviderPrivate14gnome_vfs_initE@Base 2.0.11
- _ZN3Dtk6Widget24DFileIconProviderPrivate22gnome_icon_lookup_syncE@Base 2.0.11
- _ZN3Dtk6Widget24DFileIconProviderPrivate26gtk_icon_theme_get_defaultE@Base 2.0.11
  _ZN3Dtk6Widget24DFileIconProviderPrivate4initEv@Base 2.0.11
  _ZN3Dtk6Widget24DFileIconProviderPrivateC1EPNS0_17DFileIconProviderE@Base 2.0.11
  _ZN3Dtk6Widget24DFileIconProviderPrivateC2EPNS0_17DFileIconProviderE@Base 2.0.11
