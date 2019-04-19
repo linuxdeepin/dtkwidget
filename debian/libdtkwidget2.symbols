@@ -35,7 +35,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZN11ButtonGroupD0Ev@Base 2.0.11
  _ZN11ButtonGroupD1Ev@Base 2.0.11
  _ZN11ButtonGroupD2Ev@Base 2.0.11
- (optional=templinst)_ZN11DDBusCaller3argI7QStringEES_RKT_@Base 2.0.11
  _ZN11DDBusCallerD1Ev@Base 2.0.11
  _ZN11DDBusCallerD2Ev@Base 2.0.11
  _ZN11QStringListD1Ev@Base 2.0.11
@@ -69,7 +68,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  (optional=templinst)_ZN12QtConcurrent32StoredMemberFunctionPointerCall0Ib16QSystemSemaphoreED0Ev@Base 2.0.11
  (optional=templinst)_ZN12QtConcurrent32StoredMemberFunctionPointerCall0Ib16QSystemSemaphoreED1Ev@Base 2.0.11
  (optional=templinst)_ZN12QtConcurrent32StoredMemberFunctionPointerCall0Ib16QSystemSemaphoreED2Ev@Base 2.0.11
- (optional=templinst)_ZN12QtConcurrent3runIb16QSystemSemaphoreEE7QFutureIT_EPT0_MS5_FS3_vE@Base 2.0.11
  _ZN12ShortcutEdit10paintEventEP11QPaintEvent@Base 2.0.11
  _ZN12ShortcutEdit11qt_metacallEN11QMetaObject4CallEiPPv@Base 2.0.11
  _ZN12ShortcutEdit11qt_metacastEPKc@Base 2.0.11
@@ -257,7 +255,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZN18NavigationDelegateD0Ev@Base 2.0.11
  _ZN18NavigationDelegateD1Ev@Base 2.0.11
  _ZN18NavigationDelegateD2Ev@Base 2.0.11
- (optional=templinst)_ZN18QMetaTypeIdQObjectIP7QWidgetLi8EE14qt_metatype_idEv@Base 2.0.11
  _ZN18QStyleOptionButtonD1Ev@Base 2.0.11
  _ZN18QStyleOptionButtonD2Ev@Base 2.0.11
  (optional=templinst)_ZN21QScopedPointerDeleterIN3Dtk6Widget14ContentPrivateEE7cleanupEPS2_@Base 2.0.11
@@ -1143,7 +1140,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZN3Dtk6Widget14DForeignWindow14wmClassChangedEv@Base 2.0.11
  _ZN3Dtk6Widget14DForeignWindow16staticMetaObjectE@Base 2.0.11
  _ZN3Dtk6Widget14DForeignWindow5eventEP6QEvent@Base 2.0.11
- _ZN3Dtk6Widget14DForeignWindow9fromWinIdEy@Base 2.0.11
  _ZN3Dtk6Widget14DForeignWindowC1EP7QWindow@Base 2.0.11
  _ZN3Dtk6Widget14DForeignWindowC2EP7QWindow@Base 2.0.11
  _ZN3Dtk6Widget14DForeignWindowD0Ev@Base 2.0.11
@@ -2491,8 +2487,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZN3Dtk6Widget29DFileThumbnailProviderPrivateD0Ev@Base 2.0.11
  _ZN3Dtk6Widget29DFileThumbnailProviderPrivateD1Ev@Base 2.0.11
  _ZN3Dtk6Widget29DFileThumbnailProviderPrivateD2Ev@Base 2.0.11
- _ZN3Dtk6Widget29DSettingsWidgetFactoryPrivateC1EPNS0_22DSettingsWidgetFactoryE@Base 2.0.11
- _ZN3Dtk6Widget29DSettingsWidgetFactoryPrivateC2EPNS0_22DSettingsWidgetFactoryE@Base 2.0.11
  _ZN3Dtk6Widget29createButtonGroupOptionHandleEP7QObject@Base 2.0.11
  _ZN3Dtk6Widget30DAbstractStackWidgetTransition15beginTransitionERKNS1_14TransitionInfoE@Base 2.0.11
  _ZN3Dtk6Widget30DAbstractStackWidgetTransitionC1EP7QObject@Base 2.0.11
@@ -3126,10 +3120,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  (optional=templinst)_ZN5QListIiEC2ERKS0_@Base 2.0.11
  (optional=templinst)_ZN5QListIiED1Ev@Base 2.0.11
  (optional=templinst)_ZN5QListIiED2Ev@Base 2.0.11
- (optional=templinst)_ZN5QListIyE18detach_helper_growEii@Base 2.0.11
- (optional=templinst)_ZN5QListIyE6appendERKy@Base 2.0.11
- (optional=templinst)_ZN5QListIyED1Ev@Base 2.0.11
- (optional=templinst)_ZN5QListIyED2Ev@Base 2.0.11
  _ZN7QStringC1EPKc@Base 2.0.11
  _ZN7QStringC2EPKc@Base 2.0.11
  _ZN7QStringD1Ev@Base 2.0.11
@@ -3247,7 +3237,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  (optional=templinst)_ZN9QtPrivate18QFunctorSlotObjectIZN3Dtk6Widget20DThemeManagerPrivate14registerWidgetEP7QWidgetRK7QStringRK11QStringListEUlvE2_Li0ENS_4ListIJEEEvE4implEiPNS_15QSlotObjectBaseEP7QObjectPPvPb@Base 2.0.11
  (optional=templinst)_ZN9QtPrivate28QVariantValueHelperInterfaceI4QMapI7QString8QVariantEE6invokeERKS3_@Base 2.0.11
  _ZN9QtPrivate8RefCount3refEv@Base 2.0.11
- (optional=templinst)_ZN9__gnu_cxx12__to_xstringINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEcEET_PFiPT0_mPKS8_P13__va_list_tagEmSB_z@Base 2.0.11
  _ZNK11ButtonGroup10metaObjectEv@Base 2.0.11
  _ZNK12ContentTitle10metaObjectEv@Base 2.0.11
  _ZNK12DThemeHelper10metaObjectEv@Base 2.0.11
@@ -3905,7 +3894,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  (optional=templinst)_ZNSt8functionIFvRK7QStringEEC2ERKS4_@Base 2.0.11
  (optional=templinst)_ZNSt8functionIFvvEEC1ERKS1_@Base 2.0.11
  (optional=templinst)_ZNSt8functionIFvvEEC2ERKS1_@Base 2.0.11
- (optional=templinst)_ZSt13__adjust_heapIN5QListIiE8iteratorExiN9__gnu_cxx5__ops15_Iter_less_iterEEvT_T0_S7_T1_T2_@Base 2.0.11
  (optional=templinst)_ZSt16__insertion_sortIN5QListIiE8iteratorEN9__gnu_cxx5__ops15_Iter_less_iterEEvT_S6_T0_@Base 2.0.11
  _ZTI11ButtonGroup@Base 2.0.11
  _ZTI12ContentTitle@Base 2.0.11
