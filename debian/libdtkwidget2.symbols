@@ -91,7 +91,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZN13DBusInterface12NameAcquiredERK7QString@Base 2.0.11
  _ZN13DBusInterface16NameOwnerChangedERK7QStringS2_S2_@Base 2.0.11
  _ZN13DBusInterface16staticMetaObjectE@Base 2.0.11
- _ZN13DBusInterface19__propertyChanged__ERK12QDBusMessage@Base 2.0.11
  _ZN13DBusInterface8NameLostERK7QString@Base 2.0.11
  _ZN13DBusInterfaceC1ERK7QStringS2_RK15QDBusConnectionP7QObject@Base 2.0.11
  _ZN13DBusInterfaceC2ERK7QStringS2_RK15QDBusConnectionP7QObject@Base 2.0.11
@@ -2868,18 +2867,12 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZN3Dtk6Widget9DTitlebarD1Ev@Base 2.0.11
  _ZN3Dtk6Widget9DTitlebarD2Ev@Base 2.0.11
  (optional=templinst)_ZN4QMapI7QString8QVariantE13detach_helperEv@Base 2.0.11
- (optional=templinst)_ZN4QMapI7QString8QVariantEC1ERKS2_@Base 2.0.11
- (optional=templinst)_ZN4QMapI7QString8QVariantEC2ERKS2_@Base 2.0.11
  (optional=templinst)_ZN4QMapI7QString8QVariantED1Ev@Base 2.0.11
  (optional=templinst)_ZN4QMapI7QString8QVariantED2Ev@Base 2.0.11
  (optional=templinst)_ZN4QMapI7QStringN3Dtk6Widget16DCrumbTextFormatEE13detach_helperEv@Base 2.0.11
- (optional=templinst)_ZN4QMapI7QStringN3Dtk6Widget16DCrumbTextFormatEEC1ERKS4_@Base 2.0.11
- (optional=templinst)_ZN4QMapI7QStringN3Dtk6Widget16DCrumbTextFormatEEC2ERKS4_@Base 2.0.11
  (optional=templinst)_ZN4QMapI7QStringN3Dtk6Widget16DCrumbTextFormatEED1Ev@Base 2.0.11
  (optional=templinst)_ZN4QMapI7QStringN3Dtk6Widget16DCrumbTextFormatEED2Ev@Base 2.0.11
  (optional=templinst)_ZN4QMapI7QStringS0_E13detach_helperEv@Base 2.0.11
- (optional=templinst)_ZN4QMapI7QStringS0_EC1ERKS1_@Base 2.0.11
- (optional=templinst)_ZN4QMapI7QStringS0_EC2ERKS1_@Base 2.0.11
  (optional=templinst)_ZN4QMapI7QStringS0_ED1Ev@Base 2.0.11
  (optional=templinst)_ZN4QMapI7QStringS0_ED2Ev@Base 2.0.11
  (optional=templinst)_ZN4QMapI7QStringSt8functionIFP7QWidgetP7QObjectEEE6insertERKS0_RKS7_@Base 2.0.11
@@ -3022,12 +3015,9 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  (optional=templinst)_ZN5QListIP11QLayoutItemED1Ev@Base 2.0.11
  (optional=templinst)_ZN5QListIP11QLayoutItemED2Ev@Base 2.0.11
  (optional=templinst)_ZN5QListIP11QToolButtonE18detach_helper_growEii@Base 2.0.11
- (optional=templinst)_ZN5QListIP11QToolButtonEC1ERKS2_@Base 2.0.11
- (optional=templinst)_ZN5QListIP11QToolButtonEC2ERKS2_@Base 2.0.11
  (optional=templinst)_ZN5QListIP11QToolButtonED1Ev@Base 2.0.11
  (optional=templinst)_ZN5QListIP11QToolButtonED2Ev@Base 2.0.11
  (optional=templinst)_ZN5QListIP12QRadioButtonE18detach_helper_growEii@Base 2.0.11
- (optional=templinst)_ZN5QListIP12QRadioButtonE6appendERKS1_@Base 2.0.11
  (optional=templinst)_ZN5QListIP12QRadioButtonEC1ERKS2_@Base 2.0.11
  (optional=templinst)_ZN5QListIP12QRadioButtonEC2ERKS2_@Base 2.0.11
  (optional=templinst)_ZN5QListIP12QRadioButtonED1Ev@Base 2.0.11
@@ -3041,13 +3031,10 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  (optional=templinst)_ZN5QListIP15QAbstractButtonE13detach_helperEi@Base 2.0.11
  (optional=templinst)_ZN5QListIP15QAbstractButtonE18detach_helper_growEii@Base 2.0.11
  (optional=templinst)_ZN5QListIP15QAbstractButtonE6appendERKS1_@Base 2.0.11
- (optional=templinst)_ZN5QListIP15QAbstractButtonEC1ERKS2_@Base 2.0.11
- (optional=templinst)_ZN5QListIP15QAbstractButtonEC2ERKS2_@Base 2.0.11
  (optional=templinst)_ZN5QListIP15QAbstractButtonED1Ev@Base 2.0.11
  (optional=templinst)_ZN5QListIP15QAbstractButtonED2Ev@Base 2.0.11
  (optional=templinst)_ZN5QListIP19QGraphicsPixmapItemE13detach_helperEi@Base 2.0.11
  (optional=templinst)_ZN5QListIP19QGraphicsPixmapItemE18detach_helper_growEii@Base 2.0.11
- (optional=templinst)_ZN5QListIP19QGraphicsPixmapItemE6appendERKS1_@Base 2.0.11
  (optional=templinst)_ZN5QListIP19QGraphicsPixmapItemED1Ev@Base 2.0.11
  (optional=templinst)_ZN5QListIP19QGraphicsPixmapItemED2Ev@Base 2.0.11
  (optional=templinst)_ZN5QListIP7QScreenE13detach_helperEi@Base 2.0.11
@@ -3072,13 +3059,9 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  (optional=templinst)_ZN5QListIP9QLineEditED1Ev@Base 2.0.11
  (optional=templinst)_ZN5QListIP9QLineEditED2Ev@Base 2.0.11
  (optional=templinst)_ZN5QListIPKN3Dtk6Widget17DBlurEffectWidgetEE18detach_helper_growEii@Base 2.0.11
- (optional=templinst)_ZN5QListIPKN3Dtk6Widget17DBlurEffectWidgetEE6appendERKS4_@Base 2.0.11
- (optional=templinst)_ZN5QListIPKN3Dtk6Widget17DBlurEffectWidgetEEC1ERKS5_@Base 2.0.11
- (optional=templinst)_ZN5QListIPKN3Dtk6Widget17DBlurEffectWidgetEEC2ERKS5_@Base 2.0.11
  (optional=templinst)_ZN5QListIPKN3Dtk6Widget17DBlurEffectWidgetEED1Ev@Base 2.0.11
  (optional=templinst)_ZN5QListIPKN3Dtk6Widget17DBlurEffectWidgetEED2Ev@Base 2.0.11
  (optional=templinst)_ZN5QListIPN3Dtk6Widget11DBaseExpandEE18detach_helper_growEii@Base 2.0.11
- (optional=templinst)_ZN5QListIPN3Dtk6Widget11DBaseExpandEE6appendERKS3_@Base 2.0.11
  (optional=templinst)_ZN5QListIPN3Dtk6Widget11DBaseExpandEED1Ev@Base 2.0.11
  (optional=templinst)_ZN5QListIPN3Dtk6Widget11DBaseExpandEED2Ev@Base 2.0.11
  (optional=templinst)_ZN5QListIPN3Dtk6Widget14DForeignWindowEE13detach_helperEi@Base 2.0.11
@@ -3099,7 +3082,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  (optional=templinst)_ZN5QListIPN3Dtk6Widget15DSimpleListItemEED2Ev@Base 2.0.11
  (optional=templinst)_ZN5QListIPN3Dtk6Widget15DSimpleListItemEEpLERKS4_@Base 2.0.11
  (optional=templinst)_ZN5QListIPN3Dtk6Widget7DOptionEE18detach_helper_growEii@Base 2.0.11
- (optional=templinst)_ZN5QListIPN3Dtk6Widget7DOptionEE6appendERKS3_@Base 2.0.11
  (optional=templinst)_ZN5QListIPN3Dtk6Widget7DOptionEED1Ev@Base 2.0.11
  (optional=templinst)_ZN5QListIPN3Dtk6Widget7DOptionEED2Ev@Base 2.0.11
  (optional=templinst)_ZN5QListIS_I6QColorEE18detach_helper_growEii@Base 2.0.11
@@ -3107,7 +3089,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  (optional=templinst)_ZN5QListIbE13detach_helperEi@Base 2.0.11
  (optional=templinst)_ZN5QListIbE18detach_helper_growEii@Base 2.0.11
  (optional=templinst)_ZN5QListIbE6appendERKb@Base 2.0.11
- (optional=templinst)_ZN5QListIbE6detachEv@Base 2.0.11
  (optional=templinst)_ZN5QListIbEC1ERKS0_@Base 2.0.11
  (optional=templinst)_ZN5QListIbEC2ERKS0_@Base 2.0.11
  (optional=templinst)_ZN5QListIbED1Ev@Base 2.0.11
@@ -3116,8 +3097,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  (optional=templinst)_ZN5QListIiE18detach_helper_growEii@Base 2.0.11
  (optional=templinst)_ZN5QListIiE6appendERKi@Base 2.0.11
  (optional=templinst)_ZN5QListIiE9removeOneERKi@Base 2.0.11
- (optional=templinst)_ZN5QListIiEC1ERKS0_@Base 2.0.11
- (optional=templinst)_ZN5QListIiEC2ERKS0_@Base 2.0.11
  (optional=templinst)_ZN5QListIiED1Ev@Base 2.0.11
  (optional=templinst)_ZN5QListIiED2Ev@Base 2.0.11
  _ZN7QStringC1EPKc@Base 2.0.11
@@ -3131,8 +3110,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  (optional=templinst)_ZN7QVectorIN3Dtk6Widget21DPlatformWindowHandle10WMBlurAreaEE6appendERKS3_@Base 2.0.11
  (optional=templinst)_ZN7QVectorIiE11reallocDataEii6QFlagsIN10QArrayData16AllocationOptionEE@Base 2.0.11
  (optional=templinst)_ZN7QVectorIjE11reallocDataEii6QFlagsIN10QArrayData16AllocationOptionEE@Base 2.0.11
- (optional=templinst)_ZN7QVectorIjEC1ERKS0_@Base 2.0.11
- (optional=templinst)_ZN7QVectorIjEC2ERKS0_@Base 2.0.11
  _ZN7QWidget8setFocusEv@Base 2.0.11
  _ZN8ComboBox10wheelEventEP11QWheelEvent@Base 2.0.11
  _ZN8ComboBox11qt_metacallEN11QMetaObject4CallEiPPv@Base 2.0.11
@@ -3167,7 +3144,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZN9DBusMPRIS17LoopStatusChangedERK7QString@Base 2.0.11
  _ZN9DBusMPRIS18MaximumRateChangedEd@Base 2.0.11
  _ZN9DBusMPRIS18MinimumRateChangedEd@Base 2.0.11
- _ZN9DBusMPRIS19__propertyChanged__ERK12QDBusMessage@Base 2.0.11
  _ZN9DBusMPRIS20CanGoPreviousChangedEb@Base 2.0.11
  _ZN9DBusMPRIS21PlaybackStatusChangedERK7QString@Base 2.0.11
  _ZN9DBusMPRIS6SeekedEx@Base 2.0.11
@@ -3854,10 +3830,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  (optional=templinst)_ZNK4QMapIiPN3Dtk6Widget11DBaseExpandEE6valuesEv@Base 2.0.11
  (optional=templinst)_ZNK5QHashI5QPairI7QStringN3Dtk6Widget18DThumbnailProvider4SizeEE15QHashDummyValueE8findNodeERKS6_Pj@Base 2.0.11
  (optional=templinst)_ZNK5QHashI5QPairI7QStringN3Dtk6Widget18DThumbnailProvider4SizeEE15QHashDummyValueE8findNodeERKS6_j@Base 2.0.11
- (optional=templinst)_ZNK5QHashI7QString15QHashDummyValueE8findNodeERKS0_j@Base 2.0.11
- (optional=templinst)_ZNK5QHashI9QMimeTypexE8findNodeERKS0_j@Base 2.0.11
- (optional=templinst)_ZNK5QHashIP7QWidgetPKN3Dtk6Widget17DBlurEffectWidgetEE8findNodeERKS1_Pj@Base 2.0.11
- (optional=templinst)_ZNK5QHashIPKN3Dtk6Widget17DBlurEffectWidgetEP7QWidgetE8findNodeERKS4_Pj@Base 2.0.11
  (optional=templinst)_ZNK5QListI7QStringE5valueEi@Base 2.0.11
  (optional=templinst)_ZNK5QListIN14QTabBarPrivate3TabEE7indexOfERKS1_i@Base 2.0.11
  (optional=templinst)_ZNK5QListIP15QAbstractButtonE7indexOfERKS1_i@Base 2.0.11
@@ -3886,8 +3858,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  (optional=templinst)_ZNSt14_Function_base13_Base_managerIPFP7QWidgetP7QObjectEE10_M_managerERSt9_Any_dataRKS8_St18_Manager_operation@Base 2.0.11
  (optional=templinst)_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE10_M_releaseEv@Base 2.0.11
  (optional=templinst)_ZNSt17_Function_handlerIFP7QWidgetP7QObjectEPS4_E9_M_invokeERKSt9_Any_dataOS3_@Base 2.0.11
- (optional=templinst)_ZNSt6vectorIN16QLineEditPrivate15SideWidgetEntryESaIS1_EE17_M_realloc_insertIJRKS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_@Base 2.0.11
- (optional=templinst)_ZNSt6vectorIN16QLineEditPrivate15SideWidgetEntryESaIS1_EE6insertEN9__gnu_cxx17__normal_iteratorIPKS1_S3_EERS6_@Base 2.0.11
  (optional=templinst)_ZNSt8functionIFP7QWidgetP7QObjectEEC1ERKS5_@Base 2.0.11
  (optional=templinst)_ZNSt8functionIFP7QWidgetP7QObjectEEC2ERKS5_@Base 2.0.11
  (optional=templinst)_ZNSt8functionIFvRK7QStringEEC1ERKS4_@Base 2.0.11
