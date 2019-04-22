@@ -244,8 +244,6 @@ DBorderlessWidget::DBorderlessWidget(DBorderlessWidgetPrivate &dd, QWidget *pare
     QWidget::setMouseTracking(true);
 
     QWidget::setAttribute(Qt::WA_TranslucentBackground, true);
-    QWidget::setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
-
     setWindowFlags(windowFlags());
     setDecorationFlags(decorationFlags());
 
@@ -488,8 +486,9 @@ Qt::WindowFlags DBorderlessWidget::windowFlags()
 void DBorderlessWidget::setWindowFlags(Qt::WindowFlags type)
 {
     D_D(DBorderlessWidget);
+    QWidget::setWindowFlags(type | Qt::FramelessWindowHint);
     d->dwindowFlags = type;
-    d->titlebar->setWindowFlags(type);
+    d->titlebar->setWindowFlags(type &~ Qt::Window);
 }
 
 /*!

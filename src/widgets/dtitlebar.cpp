@@ -284,7 +284,12 @@ void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
     bool useDXcb = DPlatformWindowHandle::isEnabledDXcb(targetWindow());
     bool isFullscreen = targetWindow()->windowState().testFlag(Qt::WindowFullScreen);
 
-    bool showTitle = (type.testFlag(Qt::WindowTitleHint) || !useDXcb) && !embedMode;
+    bool forceShow = !useDXcb;
+#ifndef Q_OS_LINUX
+    forceShow = false;
+#endif
+
+    bool showTitle = (type.testFlag(Qt::WindowTitleHint) || forceShow) && !embedMode;
     if (titleLabel) {
         titleLabel->setVisible(showTitle);
     }
@@ -295,22 +300,29 @@ void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
     // Never show in embed/fullscreen
     bool forceHide = embedMode || isFullscreen;
 
-    bool showMin = (type.testFlag(Qt::WindowMinimizeButtonHint) || !useDXcb) && !forceHide;
+    bool showMin = (type.testFlag(Qt::WindowMinimizeButtonHint) || forceShow) && !forceHide;
     minButton->setVisible(showMin);
 
+
     bool allowResize = true;
+
     if (q->window() && q->window()->windowHandle()) {
         auto functions_hints = DWindowManagerHelper::getMotifFunctions(q->window()->windowHandle());
         allowResize = functions_hints.testFlag(DWindowManagerHelper::FUNC_RESIZE);
     }
 
-    bool showMax = (type.testFlag(Qt::WindowMaximizeButtonHint) || !useDXcb) && !forceHide && allowResize;
+    bool showMax = (type.testFlag(Qt::WindowMaximizeButtonHint) || forceShow) && !forceHide && allowResize;
+//    qDebug() << "max:"
+//             << "allowResize" << allowResize
+//             << "useDXcb" << useDXcb
+//             << "forceHide" << forceHide
+//             << "type.testFlag(Qt::WindowMaximizeButtonHint)" << type.testFlag(Qt::WindowMaximizeButtonHint);
     maxButton->setVisible(showMax);
 
-    bool showClose = (type.testFlag(Qt::WindowCloseButtonHint) || !useDXcb) && !forceHide;
+    bool showClose = (type.testFlag(Qt::WindowCloseButtonHint) || forceShow) && !forceHide;
     closeButton->setVisible(showClose);
 
-    bool showOption = (type.testFlag(Qt::WindowSystemMenuHint) || !useDXcb) && !isFullscreen;
+    bool showOption = (type.testFlag(Qt::WindowSystemMenuHint) || forceShow) && !isFullscreen;
     optionButton->setVisible(showOption);
 
     buttonArea->adjustSize();
@@ -325,8 +337,9 @@ void DTitlebarPrivate::updateButtonsFunc()
 {
     optionButton->setDisabled(disableFlags.testFlag(Qt::WindowSystemMenuHint));
 
-    if (!targetWindowHandle)
+    if (!targetWindowHandle) {
         return;
+    }
 
     // 根据 disableFlags 更新窗口标志，而标题栏上具体按钮的开启/禁用状态只根据
     // 窗口标志改变后做更新，且窗口标志改变后也会同步更新 disableFlags 的值，
@@ -429,7 +442,7 @@ void DTitlebarPrivate::_q_onTopWindowMotifHintsChanged(quint32 winId)
 
     minButton->setEnabled(functions_hints.testFlag(DWindowManagerHelper::FUNC_MINIMIZE));
     maxButton->setEnabled(functions_hints.testFlag(DWindowManagerHelper::FUNC_MAXIMIZE)
-                            && functions_hints.testFlag(DWindowManagerHelper::FUNC_RESIZE));
+                          && functions_hints.testFlag(DWindowManagerHelper::FUNC_RESIZE));
     closeButton->setEnabled(functions_hints.testFlag(DWindowManagerHelper::FUNC_CLOSE));
     // sync button state
 #if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
