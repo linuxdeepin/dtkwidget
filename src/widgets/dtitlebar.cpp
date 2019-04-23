@@ -322,9 +322,6 @@ void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
     bool showClose = (type.testFlag(Qt::WindowCloseButtonHint) || forceShow) && !forceHide;
     closeButton->setVisible(showClose);
 
-    bool showOption = (type.testFlag(Qt::WindowSystemMenuHint) || forceShow) && !isFullscreen;
-    optionButton->setVisible(showOption);
-
     buttonArea->adjustSize();
     buttonArea->resize(buttonArea->size());
 
@@ -335,8 +332,6 @@ void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
 
 void DTitlebarPrivate::updateButtonsFunc()
 {
-    optionButton->setDisabled(disableFlags.testFlag(Qt::WindowSystemMenuHint));
-
     if (!targetWindowHandle) {
         return;
     }
@@ -1012,6 +1007,30 @@ void DTitlebar::resize(int w, int h)
 void DTitlebar::resize(const QSize &sz)
 {
     DTitlebar::resize(sz.width(), sz.height());
+}
+
+bool DTitlebar::menuIsVisible() const
+{
+    D_DC(DTitlebar);
+    return !d->optionButton->isVisible();
+}
+
+void DTitlebar::setMenuVisible(bool visible)
+{
+    D_D(DTitlebar);
+    d->optionButton->setVisible(visible);
+}
+
+bool DTitlebar::menuIsDisabled() const
+{
+    D_DC(DTitlebar);
+    return !d->optionButton->isEnabled();
+}
+
+void DTitlebar::setMenuDisabled(bool disabled)
+{
+    D_D(DTitlebar);
+    d->optionButton->setDisabled(disabled);
 }
 
 

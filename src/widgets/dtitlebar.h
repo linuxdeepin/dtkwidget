@@ -54,6 +54,12 @@ public:
     void resize(int width, int height);
     void resize(const QSize &);
 
+    bool menuIsVisible() const;
+    void setMenuVisible(bool visible);
+
+    bool menuIsDisabled() const;
+    void setMenuDisabled(bool disabled);
+
     void setDisableFlags(Qt::WindowFlags flags);
     Qt::WindowFlags disableFlags() const;
 Q_SIGNALS:
