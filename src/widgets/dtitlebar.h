@@ -66,11 +66,11 @@ Q_SIGNALS:
     void optionClicked();
     void doubleClicked();
     void mousePressed(Qt::MouseButtons buttons);
-    void mouseMoving(Qt::MouseButton botton);
+    void mouseMoving(Qt::MouseButton button);
 
 #ifdef DTK_TITLE_DRAG_WINDOW
     void mousePosPressed(Qt::MouseButtons buttons, QPoint pos);
-    void mousePosMoving(Qt::MouseButton botton, QPoint pos);
+    void mousePosMoving(Qt::MouseButton button, QPoint pos);
 #endif
 
 public Q_SLOTS:

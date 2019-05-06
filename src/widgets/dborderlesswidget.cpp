@@ -48,7 +48,7 @@ const int WindowHandleWidth = 10;
 
 const QColor BorderColor = QColor(0, 0, 0, 60);
 const QColor BackgroundTopColor = QColor(255, 255, 255);
-const QColor BackgroundBottonColor = QColor(255, 255, 255);
+const QColor BackgroundButtonColor = QColor(255, 255, 255);
 
 const QColor TipsBorderColor = QColor(255, 255, 255, 255 * 0.2);
 const QColor TipsBackground = QColor(0, 0, 0);
@@ -253,12 +253,12 @@ DBorderlessWidget::DBorderlessWidget(DBorderlessWidgetPrivate &dd, QWidget *pare
 #endif
 #ifdef DTK_TITLE_DRAG_WINDOW
     connect(d->titlebar, &DTitlebar::mousePosMoving,
-    this, [ = ](Qt::MouseButton /*botton*/, QPoint pos) {
+    this, [ = ](Qt::MouseButton /*button*/, QPoint pos) {
         move(pos - d->m_LastMousePos);
     });
 
     connect(d->titlebar, &DTitlebar::mousePosPressed,
-    this, [ = ](Qt::MouseButtons /*botton*/, QPoint pos) {
+    this, [ = ](Qt::MouseButtons /*button*/, QPoint pos) {
         // TODO: fix margin
         pos.setY(pos.y() - 10);
         d->m_LastMousePos = pos - this->mapToParent(this->pos());
@@ -424,12 +424,12 @@ void DBorderlessWidget::showFullScreen()
 
 /*!
  * \~chinese @brief 移动窗口
- * \~chinese @param botton 接收Qt::MouseButton枚举值
+ * \~chinese @param button 接收Qt::MouseButton枚举值
  */
-void DBorderlessWidget::moveWindow(Qt::MouseButton botton)
+void DBorderlessWidget::moveWindow(Qt::MouseButton button)
 {
 #ifdef Q_OS_LINUX
-    XUtils::MoveWindow(this, botton);
+    XUtils::MoveWindow(this, button);
 #endif
 }
 

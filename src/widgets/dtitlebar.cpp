@@ -532,7 +532,7 @@ void DTitlebarPrivate::_q_quitActionTriggered()
 
 
 /*!
- *  \~english @brief DTitlebar::DTitlebar create an default widget with icon/title/and bottons
+ *  \~english @brief DTitlebar::DTitlebar create an default widget with icon/title/and buttons
  * @param parent
  */
 /*!
