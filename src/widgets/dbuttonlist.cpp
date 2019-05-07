@@ -90,6 +90,16 @@ void DIconButton::leaveEvent(QEvent *event){
     QPushButton::leaveEvent(event);
 }
 
+/*!
+ * \class DButtonList
+ *
+ * \~chinese \brief 已废弃，请考虑配合 QButtonGroup 使用 QRadioButton 来替代。
+ * \~english \brief Deprecated. Consider use QRadioButton with QButtonGroup instead.
+ *
+ * \~chinese \deprecated 请考虑配合 QButtonGroup 使用 QRadioButton 来替代。
+ * \~english \deprecated Consider use QRadioButton with QButtonGroup instead.
+*/
+
 DButtonList::DButtonList(QWidget *parent) : QListWidget(parent)
 {
     DThemeManager::registerWidget(this);

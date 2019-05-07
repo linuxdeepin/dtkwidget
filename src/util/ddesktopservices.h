@@ -31,9 +31,20 @@ public:
 #ifdef Q_OS_LINUX
     enum SystemSoundEffect {
         SSE_Notifications,
-        SSE_Screenshot,
+        SEE_Screenshot,
         SSE_EmptyTrash,
-        SSE_SendFileComplete
+        SSE_SendFileComplete,
+        SSE_BootUp,
+        SSE_Shutdown,
+        SSE_Logout,
+        SSE_WakeUp,
+        SSE_VolumeChange,
+        SSE_LowBattery,
+        SSE_PlugIn,
+        SSE_PlugOut,
+        SSE_DeviceAdded,
+        SSE_DeviceRemoved,
+        SSE_Error,
     };
 #endif
 
@@ -60,11 +71,18 @@ public:
 #ifdef Q_OS_LINUX
     static bool playSystemSoundEffect(const SystemSoundEffect &effect);
     static bool playSystemSoundEffect(const QString &name);
+    static bool previewSystemSoundEffect(const SystemSoundEffect &effect);
+    static bool previewSystemSoundEffect(const QString &name);
+    static QString getNameByEffectType(const SystemSoundEffect &effect);
 #endif
 
     static QString errorMessage();
 };
 
 DWIDGET_END_NAMESPACE
+
+#ifdef Q_OS_LINUX
+Q_DECLARE_METATYPE(DTK_WIDGET_NAMESPACE::DDesktopServices::SystemSoundEffect)
+#endif
 
 #endif // DDESKTOPSERVICES_H

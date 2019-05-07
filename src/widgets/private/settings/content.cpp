@@ -25,6 +25,7 @@
 #include <QVBoxLayout>
 #include <QCoreApplication>
 #include <QScroller>
+#include <QMouseEvent>
 
 #include <DSettings>
 #include <DSettingsGroup>
@@ -225,6 +226,18 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
     this, [ = ]() {
         settings->reset();
     });
+}
+
+void Content::mouseMoveEvent(QMouseEvent *event)
+{
+    // 事件来源为 MouseEventSynthesizedByQt 时认为此事件为Touch事件合成而来
+    // 由于支持触屏下对视图的滚动，所以此处接收没有被处理的move事件，防止事件泄露
+    // 到主窗口后触发窗口移动动作
+    if (event->source() == Qt::MouseEventSynthesizedByQt) {
+        event->accept();
+
+        return;
+    }
 }
 
 DWIDGET_END_NAMESPACE

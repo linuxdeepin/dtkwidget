@@ -1,3 +1,89 @@
+<a name="2.0.12"></a>
+## 2.0.12 (2019-04-18)
+
+
+
+
+<a name="2.0.11"></a>
+## 2.0.11 (2019-04-17)
+
+
+#### Features
+
+*   add interfaces for custom qt theme config file path ([b1308c8a](https://github.com/linuxdeepin/dtkwidget/commit/b1308c8ac3fbf42a1c9204dc07967979bce461cc))
+*   add signal "screenDevicePixelRatioChanged" for DApplication ([ee11cac5](https://github.com/linuxdeepin/dtkwidget/commit/ee11cac58d587203b16f2f1b3af862586bd135e2))
+
+#### Bug Fixes
+
+*   The dialog size abnormally on multi-screen ([320d896b](https://github.com/linuxdeepin/dtkwidget/commit/320d896b673b03f92a2c85d51857a4ae4d355230))
+
+
+
+<a name="2.0.10"></a>
+## 2.0.10 (2019-03-27)
+
+
+#### Bug Fixes
+
+*   crash at DApplicationPrivate::cancelNotification ([e84643fd](https://github.com/linuxdeepin/dtkwidget/commit/e84643fdbf0628f77bd4e2cb0b2b08feb80d18bb))
+*   cursor is always in busy state sometimes ([79473dfa](https://github.com/linuxdeepin/dtkwidget/commit/79473dfab2ba17694ded8568431a0f55c87d0492))
+* **DDesktopServices:**  wrong register ddesktopservices enum type ([c82f36e3](https://github.com/linuxdeepin/dtkwidget/commit/c82f36e33fb22de853f1bd61a7eaaa7b0ad63377))
+
+#### Features
+
+* **DDesktopServices:**  register qmetatype for SystemSoundEffect ([24fbd471](https://github.com/linuxdeepin/dtkwidget/commit/24fbd4710a3a9a9ac52eced25aeb20a5617c1d66))
+
+
+
+<a name="2.0.9.17"></a>
+## 2.0.9.17 (2019-02-26)
+
+
+#### Bug Fixes
+
+*   minimize buttons of fix sized windows are disabled ([f7d2974c](https://github.com/linuxdeepin/dtkwidget/commit/f7d2974c005cc3e09749503aec5bc9b2cbf7af75))
+*   build failed on Qt 5.6.x ([1ca45918](https://github.com/linuxdeepin/dtkwidget/commit/1ca45918dfc3546ab077ab613afd8f8cf64fd457))
+*   move Q_DECL_DEPRECATED to front ([c6d65f01](https://github.com/linuxdeepin/dtkwidget/commit/c6d65f016eb7f0c498a7a92f2ffb139fabaa80a9))
+
+
+
+<a name="2.0.9.16"></a>
+## 2.0.9.16 (2019-01-29)
+
+
+#### Bug Fixes
+
+*   titlebar not shown in some case ([c63bac17](https://github.com/linuxdeepin/dtkwidget/commit/c63bac174fa22ba762aa4d1291703eccbfb855e2))
+
+
+
+<a name="2.0.9.15"></a>
+## 2.0.9.15 (2019-01-25)
+
+
+#### Features
+
+*   add groupLeaderId/clientLeaderId interfaces for DWindowGroupLeader ([aa1ab5ad](https://github.com/linuxdeepin/dtkwidget/commit/aa1ab5ad141b7ae3a2abf5d1dd69564038ed2f68))
+* **DDesktopServices:**  support all sound effect ([c1a2285c](https://github.com/linuxdeepin/dtkwidget/commit/c1a2285c3a3fb54bf6c7c03220a89b028551e8da))
+
+#### Bug Fixes
+
+*   change permissions of DStackWidget's function ([f62bf044](https://github.com/linuxdeepin/dtkwidget/commit/f62bf04481a0feb5d99659a319140f159cf1b9be))
+*   can not hide the window menu button ([010c75d5](https://github.com/linuxdeepin/dtkwidget/commit/010c75d53417099132b85dc82d0768ad5c3520f3))
+* **DDesktopServices:**  keep old enum order ([15eb21f7](https://github.com/linuxdeepin/dtkwidget/commit/15eb21f79ab2adccd1dcf31ae5aa3d94654d4ec9))
+
+
+
+<a name="2.0.9.14"></a>
+## 2.0.9.14 (2019-01-02)
+
+
+#### Bug Fixes
+
+*   can not scroll view on DSettingDialog by touchscreen ([651dee29](https://github.com/linuxdeepin/dtkwidget/commit/651dee293bf1cf3de848eed496c3f6433712d8d5))
+
+
+
 <a name="2.0.9.13"></a>
 ## 2.0.9.13 (2018-12-28)
 

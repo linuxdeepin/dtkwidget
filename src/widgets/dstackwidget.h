@@ -83,8 +83,8 @@ class DStackWidget : public QWidget, public DTK_CORE_NAMESPACE::DObject
     Q_PROPERTY(bool busy READ busy NOTIFY busyChanged FINAL)
     ///The number of widgets currently pushed onto the stack.
     Q_PROPERTY(int depth READ depth NOTIFY depthChanged FINAL)
-    Q_PROPERTY(int currentIndex READ currentIndex WRITE setCurrentIndex NOTIFY currentIndexChanged)
-    Q_PROPERTY(QWidget* currentWidget READ currentWidget WRITE setCurrentWidget NOTIFY currentWidgetChanged)
+    Q_PROPERTY(int currentIndex READ currentIndex NOTIFY currentIndexChanged)
+    Q_PROPERTY(QWidget* currentWidget READ currentWidget NOTIFY currentWidgetChanged)
     Q_PROPERTY(DAbstractStackWidgetTransition* transition READ transition WRITE setTransition)
     Q_PROPERTY(int animationDuration READ animationDuration WRITE setAnimationDuration)
     Q_PROPERTY(QEasingCurve::Type animationType READ animationType WRITE setAnimationType)
@@ -104,7 +104,7 @@ public:
 
 public Q_SLOTS:
     int pushWidget(QWidget *widget, bool enableTransition = true);
-    void insertWidget(int depth, QWidget *widget, bool enableTransition = true);
+    void insertWidget(int index, QWidget *widget, bool enableTransition = true);
 
     /// If widget is nullptr, all widgets up to the currentIndex+count widgets will be popped.
     /// If not specified, all widgets up to the depthOf(widget)+count widgets will be popped.
@@ -114,13 +114,6 @@ public Q_SLOTS:
 
     int indexOf(QWidget *widget) const;
     QWidget* getWidgetByIndex(int index) const;
-
-    void setCurrentIndex(int currentIndex,
-                         DAbstractStackWidgetTransition::TransitionType type = DAbstractStackWidgetTransition::Push,
-                         bool enableTransition = true);
-    void setCurrentWidget(QWidget* currentWidget,
-                          DAbstractStackWidgetTransition::TransitionType type = DAbstractStackWidgetTransition::Push,
-                          bool enableTransition = true);
 
     void setTransition(DAbstractStackWidgetTransition* transition);
     void setAnimationDuration(int animationDuration);
@@ -139,6 +132,13 @@ Q_SIGNALS:
 
 protected:
     explicit DStackWidget(DStackWidgetPrivate &dd, QWidget *parent = 0);
+
+    void setCurrentIndex(int currentIndex,
+                         DAbstractStackWidgetTransition::TransitionType type = DAbstractStackWidgetTransition::Push,
+                         bool enableTransition = true);
+    void setCurrentWidget(QWidget* currentWidget,
+                          DAbstractStackWidgetTransition::TransitionType type = DAbstractStackWidgetTransition::Push,
+                          bool enableTransition = true);
 
 private:
     Q_DISABLE_COPY(DStackWidget)

@@ -78,6 +78,10 @@ public:
     // let startdde know that we've already started.
     static void registerDDESession();
 
+    static void customQtThemeConfigPathByUserHome(const QString &home);
+    static void customQtThemeConfigPath(const QString &path);
+    static QString customizedQtThemeConfigPath();
+
     // meta information that necessary to create a about dialog for the application.
     QString productName() const;
     void setProductName(const QString &productName);
@@ -133,6 +137,8 @@ Q_SIGNALS:
 
     //###(zccrs): Depend the Qt platform theme plugin(from the package: dde-qt5integration)
     void iconThemeChanged();
+    //###(zccrs): Emit form the Qt platform theme plugin(from the package: dde-qt5integration)
+    void screenDevicePixelRatioChanged(QScreen *screen);
 
 protected:
     virtual void handleHelpAction();
