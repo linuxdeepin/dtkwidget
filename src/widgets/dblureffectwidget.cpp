@@ -108,6 +108,10 @@ void DBlurEffectWidgetPrivate::setMaskColor(const QColor &color)
     if (isBehindWindowBlendMode()) {
         maskColor.setAlpha(DWindowManagerHelper::instance()->hasBlurWindow() ? maskAlpha : MASK_COLOR_ALPHA_DEFAULT);
     }
+
+    D_Q(DBlurEffectWidget);
+
+    q->update();
 }
 
 bool DBlurEffectWidgetPrivate::updateWindowBlurArea(QWidget *topLevelWidget)
@@ -609,8 +613,6 @@ void DBlurEffectWidget::setMaskAlpha(quint8 alpha) {
 
     d->setMaskAlpha(alpha);
 
-    update();
-
     Q_EMIT maskAlphaChanged(alpha);
 }
 
@@ -628,7 +630,6 @@ void DBlurEffectWidget::setMaskColor(QColor maskColor)
 
     d->maskColorType = CustomColor;
     d->setMaskColor(maskColor);
-    update();
 
     Q_EMIT maskColorChanged(maskColor);
 }
