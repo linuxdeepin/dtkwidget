@@ -1,3 +1,15 @@
+<a name="2.0.13"></a>
+## 2.0.13 (2019-05-09)
+
+
+#### Bug Fixes
+
+*   repaint widget mask color when the color changed ([7553188b](https://github.com/linuxdeepin/dtkwidget/commit/7553188bfe9f9c34def92728e4aaeac9beb078a0))
+*   always show menu button ([4612b6fc](https://github.com/linuxdeepin/dtkwidget/commit/4612b6fc7cdd976f54065750bc628f5d1776a565))
+*   always show button on none linux ([633617d0](https://github.com/linuxdeepin/dtkwidget/commit/633617d0e2c7a3282c53b367c5753f688360dee1))
+
+
+
 <a name="2.0.12"></a>
 ## 2.0.12 (2019-04-18)
 
