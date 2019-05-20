@@ -550,6 +550,12 @@ DTitlebar::DTitlebar(QWidget *parent) :
 
     D_D(DTitlebar);
     d->init();
+
+    // 默认只在普通窗口中显示窗口菜单按钮
+    if (parent && parent->window()->windowType() != Qt::Window) {
+        d->optionButton->hide();
+    }
+
     d->buttonArea->adjustSize();
     d->buttonArea->resize(d->buttonArea->size());
     d->titlePadding->setFixedSize(d->buttonArea->size());
