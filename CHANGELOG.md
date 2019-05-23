@@ -1,3 +1,13 @@
+<a name="2.0.14"></a>
+## 2.0.14 (2019-05-23)
+
+
+#### Bug Fixes
+
+*   hide the non-window type window titlebar menu button on initialize ([eb0500fa](https://github.com/linuxdeepin/dtkwidget/commit/eb0500fa06e3a97fe2d98c8ad76dfc5edfaa9d58))
+
+
+
 <a name="2.0.13"></a>
 ## 2.0.13 (2019-05-09)
 
