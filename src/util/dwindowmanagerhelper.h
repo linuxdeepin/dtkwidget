@@ -34,6 +34,7 @@ class DWindowManagerHelper : public QObject, public DTK_CORE_NAMESPACE::DObject
 
     Q_PROPERTY(bool hasBlurWindow READ hasBlurWindow NOTIFY hasBlurWindowChanged)
     Q_PROPERTY(bool hasComposite READ hasComposite NOTIFY hasCompositeChanged)
+    Q_PROPERTY(bool hasNoTitlebar READ hasNoTitlebar NOTIFY hasNoTitlebarChanged)
 
 public:
     enum MotifFunction {
@@ -79,6 +80,7 @@ public:
 
     bool hasBlurWindow() const;
     bool hasComposite() const;
+    bool hasNoTitlebar() const;
     QString windowManagerNameString() const;
     WMName windowManagerName() const;
 
@@ -90,6 +92,7 @@ Q_SIGNALS:
     void windowManagerChanged();
     void hasBlurWindowChanged();
     void hasCompositeChanged();
+    void hasNoTitlebarChanged();
     void windowListChanged();
     void windowMotifWMHintsChanged(quint32 winId);
 

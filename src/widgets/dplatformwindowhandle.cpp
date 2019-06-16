@@ -57,6 +57,8 @@ DEFINE_CONST_CHAR(pluginVersion);
 DEFINE_CONST_CHAR(disableOverrideCursor);
 DEFINE_CONST_CHAR(enableDxcb);
 DEFINE_CONST_CHAR(isEnableDxcb);
+DEFINE_CONST_CHAR(setEnableNoTitlebar);
+DEFINE_CONST_CHAR(isEnableNoTitlebar);
 
 static void setWindowProperty(QWindow *window, const char *name, const QVariant &value)
 {
@@ -445,6 +447,9 @@ void DPlatformWindowHandle::enableDXcbForWindow(QWidget *widget)
  * ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
  * </pre>
  * \endhtmlonly
+ *
+ * 但是，如果窗口管理器自身支持隐藏窗口标题栏，则此方法将优先调用 enableNoTitlebarForWindow 实现同样的效果。
+ *
  * 例子：
  * \~chinese \code
  * QWidget w1;
@@ -502,9 +507,15 @@ void DPlatformWindowHandle::enableDXcbForWindow(QWidget *widget)
  * \~chinese DWindowManagerHelper::hasComposite 或 QX11Info::isCompositingManagerRunning
  * \~chinese 判断当前运行的窗口管理器是否支持混成。
  * \~chinese \param window
+ * \~chinese \sa DPlatformWindowHandle::setEnableNoTitlebarForWindow
  */
 void DPlatformWindowHandle::enableDXcbForWindow(QWindow *window)
 {
+    // 优先使用窗口管理器中实现的no titlebar接口实现自定义窗口修饰器的效果
+    if (setEnableNoTitlebarForWindow(window, true)) {
+        return;
+    }
+
     if (!DApplication::isDXcbPlatform())
         return;
 
@@ -592,6 +603,53 @@ bool DPlatformWindowHandle::isEnabledDXcb(const QWindow *window)
     }
 
     return window->property(_useDxcb).toBool();
+}
+
+/*!
+ * \~chinese \brief DPlatformWindowHandle::setEnableNoTitlebarForWindow
+ * \~chinese 使用窗口管理器提供的方式隐藏窗口的标题栏，目前已适配 DDE KWin 窗管，在窗口管理器支持的前提下，
+ * \~chinese 此方法将通过设置窗口属性 _DEEPIN_SCISSOR_WINDOW 的值为 1 来开启无标题栏效果。
+ * \~chinese \param window
+ * \~chinese \param enable
+ * \~chinese \sa DPlatformWindowHandle::enableDXcbForWindow(QWindow *)
+ * \~chinese \sa DWindowManagerHelper::hasNoTitlebar
+ */
+bool DPlatformWindowHandle::setEnableNoTitlebarForWindow(QWindow *window, bool enable)
+{
+    if (!DApplication::isDXcbPlatform())
+        return false;
+
+    QFunctionPointer enable_no_titlear = nullptr;
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+    enable_no_titlear = qApp->platformFunction(_setEnableNoTitlebar);
+#endif
+
+    if (enable_no_titlear) {
+        return (*reinterpret_cast<bool(*)(QWindow*, bool)>(enable_no_titlear))(window, enable);
+    }
+
+    return false;
+}
+
+/*!
+ * \~chinese \brief DPlatformWindowHandle::isEnableNoTitlebar
+ * \~chinese \param window
+ * \~chinese \return 如果窗口使用窗管提供的方式隐藏了标题栏则返回 true，否则返回 false
+ */
+bool DPlatformWindowHandle::isEnableNoTitlebar(QWindow *window)
+{
+    QFunctionPointer is_enable_no_titlebar = nullptr;
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+    is_enable_no_titlebar = qApp->platformFunction(_isEnableNoTitlebar);
+#endif
+
+    if (is_enable_no_titlebar) {
+        return (*reinterpret_cast<bool(*)(const QWindow*)>(is_enable_no_titlebar))(window);
+    }
+
+    return false;
 }
 
 /*!
