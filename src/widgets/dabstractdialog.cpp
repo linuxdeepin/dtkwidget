@@ -61,6 +61,8 @@ void DAbstractDialogPrivate::init()
 //        DPlatformWindowHandle::connectWindowManagerChangedSignal(q, [this] {
 //            bgBlurWidget->setVisible(DPlatformWindowHandle::hasBlurWindow());
 //        });
+    } else {
+        q->setWindowFlags(q->windowFlags() | Qt::FramelessWindowHint);
     }
 
     windowTitle = new QLabel(q);
@@ -69,8 +71,6 @@ void DAbstractDialogPrivate::init()
     q->connect(q,&QWidget::windowTitleChanged, windowTitle,[=](const QString &title){
         windowTitle->setText(title);
     });
-
-    q->setWindowFlags(q->windowFlags() | Qt::FramelessWindowHint  | Qt::WindowCloseButtonHint);
 
     q->setAttribute(Qt::WA_TranslucentBackground);
     q->resize(DIALOG::DEFAULT_WIDTH, DIALOG::DEFAULT_HEIGHT);

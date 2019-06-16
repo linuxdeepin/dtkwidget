@@ -34,10 +34,12 @@ DWIDGET_BEGIN_NAMESPACE
 // functions
 DEFINE_CONST_CHAR(hasBlurWindow);
 DEFINE_CONST_CHAR(hasComposite);
+DEFINE_CONST_CHAR(hasNoTitlebar);
 DEFINE_CONST_CHAR(windowManagerName);
 DEFINE_CONST_CHAR(connectWindowManagerChangedSignal);
 DEFINE_CONST_CHAR(connectHasBlurWindowChanged);
 DEFINE_CONST_CHAR(connectHasCompositeChanged);
+DEFINE_CONST_CHAR(connectHasNoTitlebarChanged);
 DEFINE_CONST_CHAR(getCurrentWorkspaceWindows);
 DEFINE_CONST_CHAR(getWindows);
 DEFINE_CONST_CHAR(connectWindowListChanged);
@@ -79,6 +81,17 @@ static bool connectHasCompositeChanged(QObject *object, std::function<void ()> s
 #endif
 
     return connectHasCompositeChanged && reinterpret_cast<bool(*)(QObject *object, std::function<void ()>)>(connectHasCompositeChanged)(object, slot);
+}
+
+static bool connectHasNoTitlebarChanged(QObject *object, std::function<void ()> slot)
+{
+    QFunctionPointer connectHasNoTitlebarChanged = Q_NULLPTR;
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+    connectHasNoTitlebarChanged = qApp->platformFunction(_connectHasNoTitlebarChanged);
+#endif
+
+    return connectHasNoTitlebarChanged && reinterpret_cast<bool(*)(QObject *object, std::function<void ()>)>(connectHasNoTitlebarChanged)(object, slot);
 }
 
 static bool connectWindowListChanged(QObject *object, std::function<void ()> slot)
@@ -140,6 +153,14 @@ Q_GLOBAL_STATIC(DWindowManagerHelper_, wmhGlobal)
  * \~chinese \brief 窗口管理器是否支持混成效果。如果不支持混成，则表示所有窗口的背景都不能透明，
  * \~chinese 随之而来也不会有窗口阴影等效果，不规则窗口的边缘也会存在锯齿。
  * \~chinese \note 只读
+ */
+
+/*!
+ * \~chinese \property DWindowManagerHelper::hasNoTitlebar
+ * \~chinese \brief 窗口管理器是否支持隐藏窗口标题栏。如果支持，则 DPlatformWindowHandle::enableDXcbForWindow
+ * \~chinese 会优先使用此方法支持自定义窗口标题栏。
+ * \~chinese \note 只读
+ * \~chinese \sa DPlatformWindowHandle::enableNoTitlebarForWindow
  */
 
 /*!
@@ -266,6 +287,8 @@ Q_GLOBAL_STATIC(DWindowManagerHelper_, wmhGlobal)
  * \~chinese \brief 信号会在 hasBlurWindow 属性的值改变时被发送
  * \~chinese \fn DWindowManagerHelper::hasCompositeChanged
  * \~chinese \brief 信号会在 hasComposite 属性的值改变时被发送
+ * \~chinese \fn DWindowManagerHelper::hasNoTitlebarChanged
+ * \~chinese \brief 信号会在 hasNoTitlebar 属性的值改变时被发送
  * \~chinese \fn DWindowManagerHelper::windowListChanged
  * \~chinese \brief 信号会在当前环境本地窗口列表变化时被发送。包含打开新窗口、关闭窗口、改变窗口的
  * \~chinese 层叠顺序
@@ -479,6 +502,21 @@ bool DWindowManagerHelper::hasComposite() const
 }
 
 /*!
+ * \~chinese \brief DWindowManagerHelper::hasNoTitlebar
+ * \~chinese \return 如果窗口管理器当前支持设置隐藏窗口标题栏则返回 true，否则返回 false
+ */
+bool DWindowManagerHelper::hasNoTitlebar() const
+{
+    QFunctionPointer hasNoTitlebar = Q_NULLPTR;
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+    hasNoTitlebar = qApp->platformFunction(_hasNoTitlebar);
+#endif
+
+    return hasNoTitlebar && reinterpret_cast<bool(*)()>(hasNoTitlebar)();
+}
+
+/*!
  * \~chinese \brief DWindowManagerHelper::windowManagerNameString
  * \~chinese \return 返回窗口管理器名称。在X11平台上，此值为窗口管理器对应窗口的 _NET_WM_NAME
  * \~chinese 的值
@@ -617,6 +655,9 @@ DWindowManagerHelper::DWindowManagerHelper(QObject *parent)
     });
     connectHasCompositeChanged(this, [this] {
         Q_EMIT hasCompositeChanged();
+    });
+    connectHasNoTitlebarChanged(this, [this] {
+        Q_EMIT hasNoTitlebarChanged();
     });
     connectWindowListChanged(this, [this] {
         Q_EMIT windowListChanged();
