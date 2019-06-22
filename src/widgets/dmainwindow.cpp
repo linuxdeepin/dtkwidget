@@ -82,15 +82,17 @@ void DMainWindowPrivate::init()
         q->connect(handle, &DPlatformWindowHandle::enableBlurWindowChanged, q, &DMainWindow::enableBlurWindowChanged);
         q->connect(handle, &DPlatformWindowHandle::autoInputMaskByClipPathChanged, q, &DMainWindow::autoInputMaskByClipPathChanged);
 
-        q->connect(qApp, &QGuiApplication::focusWindowChanged, q, [q] {
-            if (q->isActiveWindow())
-            {
-                q->setShadowColor(SHADOW_COLOR_ACTIVE);
-            } else
-            {
-                q->setShadowColor(SHADOW_COLOR_NORMAL);
-            }
-        });
+        if (!handle->isEnableNoTitlebar(q->windowHandle())) {
+            q->connect(qApp, &QGuiApplication::focusWindowChanged, q, [q] {
+                if (q->isActiveWindow())
+                {
+                    q->setShadowColor(SHADOW_COLOR_ACTIVE);
+                } else
+                {
+                    q->setShadowColor(SHADOW_COLOR_NORMAL);
+                }
+            });
+        }
     }
 
     if (!help && DApplicationPrivate::isUserManualExists()) {

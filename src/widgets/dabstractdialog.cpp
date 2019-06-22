@@ -63,6 +63,7 @@ void DAbstractDialogPrivate::init()
 //        });
     } else {
         q->setWindowFlags(q->windowFlags() | Qt::FramelessWindowHint);
+        q->setBorderColor(QColor(0, 0, 0));
     }
 
     windowTitle = new QLabel(q);
@@ -76,7 +77,6 @@ void DAbstractDialogPrivate::init()
     q->resize(DIALOG::DEFAULT_WIDTH, DIALOG::DEFAULT_HEIGHT);
     q->setMaximumWidth(480);
     q->setAttribute(Qt::WA_Resized, false);
-    q->setBorderColor(QColor(0, 0, 0));
 }
 
 QRect DAbstractDialogPrivate::getParentGeometry() const

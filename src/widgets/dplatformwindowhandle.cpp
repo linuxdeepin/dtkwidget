@@ -589,9 +589,13 @@ bool DPlatformWindowHandle::isEnabledDXcb(const QWidget *widget)
  * \~chinese \brief DPlatformWindowHandle::isEnabledDXcb
  * \~chinese \param widget
  * \~chinese \return 如果窗口开启了DTK风格的窗口修饰则返回 true，否则返回 false
+ * \~chinese \sa DPlatformWindowHandle::isEnableNoTitlebar
  */
 bool DPlatformWindowHandle::isEnabledDXcb(const QWindow *window)
 {
+    if (isEnableNoTitlebar(window))
+        return true;
+
     QFunctionPointer is_enable_dxcb = nullptr;
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
@@ -636,8 +640,9 @@ bool DPlatformWindowHandle::setEnableNoTitlebarForWindow(QWindow *window, bool e
  * \~chinese \brief DPlatformWindowHandle::isEnableNoTitlebar
  * \~chinese \param window
  * \~chinese \return 如果窗口使用窗管提供的方式隐藏了标题栏则返回 true，否则返回 false
+ * \~chinese \sa DPlatformWindowHandle::isEnabledDXcb
  */
-bool DPlatformWindowHandle::isEnableNoTitlebar(QWindow *window)
+bool DPlatformWindowHandle::isEnableNoTitlebar(const QWindow *window)
 {
     QFunctionPointer is_enable_no_titlebar = nullptr;
 
