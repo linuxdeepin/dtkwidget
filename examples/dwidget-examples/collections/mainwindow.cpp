@@ -58,6 +58,7 @@ MainWindow::MainWindow(QWidget *parent)
     auto flags = windowFlags() & ~Qt::WindowMaximizeButtonHint;
     flags = flags & ~Qt::WindowMinimizeButtonHint;
     setWindowFlags(flags);
+    setAttribute(Qt::WA_TranslucentBackground);
 
     DThemeManager *themeManager = DThemeManager::instance();
 
