@@ -575,6 +575,6 @@ void DAboutDialog::showEvent(QShowEvent *event)
     }
 }
 
-#include "moc_daboutdialog.cpp"
-
 DWIDGET_END_NAMESPACE
+
+#include "moc_daboutdialog.cpp"

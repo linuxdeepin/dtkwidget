@@ -530,6 +530,6 @@ bool DIpv4LineEdit::eventFilter(QObject *obj, QEvent *e)
     return DLineEdit::eventFilter(obj, e);
 }
 
-#include "moc_dipv4lineedit.cpp"
-
 DWIDGET_END_NAMESPACE
+
+#include "moc_dipv4lineedit.cpp"

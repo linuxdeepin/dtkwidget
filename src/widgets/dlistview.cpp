@@ -709,6 +709,6 @@ bool DListView::edit(const QModelIndex &index, QAbstractItemView::EditTrigger tr
     return tmp;
 }
 
-#include "moc_dlistview.cpp"
-
 DWIDGET_END_NAMESPACE
+
+#include "moc_dlistview.cpp"
