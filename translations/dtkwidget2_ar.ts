@@ -22,87 +22,87 @@
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="530"/>
         <source>Black</source>
-        <translation type="unfinished"/>
+        <translation>أسود</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="533"/>
         <source>White</source>
-        <translation type="unfinished"/>
+        <translation>أبيض</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="536"/>
         <source>Dark Gray</source>
-        <translation type="unfinished"/>
+        <translation>رمادى غامق</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="539"/>
         <source>Gray</source>
-        <translation type="unfinished"/>
+        <translation>رمادى</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="542"/>
         <source>Light Gray</source>
-        <translation type="unfinished"/>
+        <translation>رمادى فاتح</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="545"/>
         <source>Red</source>
-        <translation type="unfinished"/>
+        <translation>أحمر</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="548"/>
         <source>Green</source>
-        <translation type="unfinished"/>
+        <translation>أخضر</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="551"/>
         <source>Blue</source>
-        <translation type="unfinished"/>
+        <translation>أزرق</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="554"/>
         <source>Cyan</source>
-        <translation type="unfinished"/>
+        <translation>سماوى</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="557"/>
         <source>Magenta</source>
-        <translation type="unfinished"/>
+        <translation>أرجوانى</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="560"/>
         <source>Yellow</source>
-        <translation type="unfinished"/>
+        <translation>أصفر</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="563"/>
         <source>Dark Red</source>
-        <translation type="unfinished"/>
+        <translation>أحمر غامق</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="566"/>
         <source>Dark Green</source>
-        <translation type="unfinished"/>
+        <translation>أخضر غامق</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="569"/>
         <source>Dark Blue</source>
-        <translation type="unfinished"/>
+        <translation>أزرق غامق</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="572"/>
         <source>Dark Cyan</source>
-        <translation type="unfinished"/>
+        <translation>سماوى غامق</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="575"/>
         <source>Dark Magenta</source>
-        <translation type="unfinished"/>
+        <translation>أرجوانى غامق</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="578"/>
         <source>Dark Yellow</source>
-        <translation type="unfinished"/>
+        <translation>أصفر غامق</translation>
     </message>
 </context>
 <context>
@@ -136,7 +136,7 @@
     <message>
         <location filename="../src/widgets/dsimplelistview.cpp" line="1235"/>
         <source>No search result</source>
-        <translation type="unfinished"/>
+        <translation>لا توجد نتائج بحث</translation>
     </message>
     <message>
         <location filename="../src/widgets/private/settings/content.cpp" line="189"/>

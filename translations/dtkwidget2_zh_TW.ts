@@ -14,7 +14,7 @@
     <message>
         <location filename="../src/widgets/dapplication.cpp" line="716"/>
         <source>%1 is released under %2</source>
-        <translation>%1遵循 %2 發布</translation>
+        <translation>%1 遵循 %2 發布</translation>
     </message>
 </context>
 <context>
@@ -22,87 +22,87 @@
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="530"/>
         <source>Black</source>
-        <translation type="unfinished"/>
+        <translation>黑色</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="533"/>
         <source>White</source>
-        <translation type="unfinished"/>
+        <translation>白色</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="536"/>
         <source>Dark Gray</source>
-        <translation type="unfinished"/>
+        <translation>暗灰</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="539"/>
         <source>Gray</source>
-        <translation type="unfinished"/>
+        <translation>灰色</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="542"/>
         <source>Light Gray</source>
-        <translation type="unfinished"/>
+        <translation>亮灰</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="545"/>
         <source>Red</source>
-        <translation type="unfinished"/>
+        <translation>紅色</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="548"/>
         <source>Green</source>
-        <translation type="unfinished"/>
+        <translation>綠色</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="551"/>
         <source>Blue</source>
-        <translation type="unfinished"/>
+        <translation>藍色</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="554"/>
         <source>Cyan</source>
-        <translation type="unfinished"/>
+        <translation>青色</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="557"/>
         <source>Magenta</source>
-        <translation type="unfinished"/>
+        <translation>洋紅</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="560"/>
         <source>Yellow</source>
-        <translation type="unfinished"/>
+        <translation>黃色</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="563"/>
         <source>Dark Red</source>
-        <translation type="unfinished"/>
+        <translation>暗紅</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="566"/>
         <source>Dark Green</source>
-        <translation type="unfinished"/>
+        <translation>暗綠</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="569"/>
         <source>Dark Blue</source>
-        <translation type="unfinished"/>
+        <translation>暗藍</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="572"/>
         <source>Dark Cyan</source>
-        <translation type="unfinished"/>
+        <translation>暗青</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="575"/>
         <source>Dark Magenta</source>
-        <translation type="unfinished"/>
+        <translation>暗洋紅</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="578"/>
         <source>Dark Yellow</source>
-        <translation type="unfinished"/>
+        <translation>暗黃</translation>
     </message>
 </context>
 <context>
@@ -136,7 +136,7 @@
     <message>
         <location filename="../src/widgets/dsimplelistview.cpp" line="1235"/>
         <source>No search result</source>
-        <translation type="unfinished"/>
+        <translation>沒有搜尋結果</translation>
     </message>
     <message>
         <location filename="../src/widgets/private/settings/content.cpp" line="189"/>
