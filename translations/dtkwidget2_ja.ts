@@ -9,12 +9,12 @@
     <message>
         <location filename="../src/widgets/dapplication.cpp" line="712"/>
         <source>Version: %1</source>
-        <translation type="unfinished"/>
+        <translation>バージョン: %1</translation>
     </message>
     <message>
         <location filename="../src/widgets/dapplication.cpp" line="716"/>
         <source>%1 is released under %2</source>
-        <translation type="unfinished"/>
+        <translation>%1 は %2 の下でリリースされています</translation>
     </message>
 </context>
 <context>
@@ -22,87 +22,87 @@
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="530"/>
         <source>Black</source>
-        <translation type="unfinished"/>
+        <translation>ブラック</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="533"/>
         <source>White</source>
-        <translation type="unfinished"/>
+        <translation>ホワイト</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="536"/>
         <source>Dark Gray</source>
-        <translation type="unfinished"/>
+        <translation>ダークグレー</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="539"/>
         <source>Gray</source>
-        <translation type="unfinished"/>
+        <translation>グレー</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="542"/>
         <source>Light Gray</source>
-        <translation type="unfinished"/>
+        <translation>ライトグレー</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="545"/>
         <source>Red</source>
-        <translation type="unfinished"/>
+        <translation>レッド</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="548"/>
         <source>Green</source>
-        <translation type="unfinished"/>
+        <translation>グリーン</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="551"/>
         <source>Blue</source>
-        <translation type="unfinished"/>
+        <translation>ブルー</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="554"/>
         <source>Cyan</source>
-        <translation type="unfinished"/>
+        <translation>シアン</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="557"/>
         <source>Magenta</source>
-        <translation type="unfinished"/>
+        <translation>マゼンタ</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="560"/>
         <source>Yellow</source>
-        <translation type="unfinished"/>
+        <translation>イエロー</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="563"/>
         <source>Dark Red</source>
-        <translation type="unfinished"/>
+        <translation>ダークレッド</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="566"/>
         <source>Dark Green</source>
-        <translation type="unfinished"/>
+        <translation>ダークグリーン</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="569"/>
         <source>Dark Blue</source>
-        <translation type="unfinished"/>
+        <translation>ダークブルー</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="572"/>
         <source>Dark Cyan</source>
-        <translation type="unfinished"/>
+        <translation>ダークシアン</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="575"/>
         <source>Dark Magenta</source>
-        <translation type="unfinished"/>
+        <translation>ダークマゼンタ</translation>
     </message>
     <message>
         <location filename="../src/widgets/dcrumbedit.cpp" line="578"/>
         <source>Dark Yellow</source>
-        <translation type="unfinished"/>
+        <translation>ダークイエロー</translation>
     </message>
 </context>
 <context>
@@ -110,7 +110,7 @@
     <message>
         <location filename="../src/widgets/dinputdialog.cpp" line="42"/>
         <source>Cancel</source>
-        <translation>取り消す</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../src/widgets/dinputdialog.cpp" line="43"/>
@@ -123,7 +123,7 @@
     <message>
         <location filename="../src/widgets/dshortcutedit.cpp" line="31"/>
         <source>Please input a new shortcut</source>
-        <translation>新しいショートカットを入力して下さい</translation>
+        <translation>新しいショートカットを入力してください</translation>
     </message>
     <message>
         <location filename="../src/widgets/dshortcutedit.cpp" line="102"/>
@@ -136,12 +136,12 @@
     <message>
         <location filename="../src/widgets/dsimplelistview.cpp" line="1235"/>
         <source>No search result</source>
-        <translation type="unfinished"/>
+        <translation>検索結果が見つかりませんでした</translation>
     </message>
     <message>
         <location filename="../src/widgets/private/settings/content.cpp" line="189"/>
         <source>Restore Defaults</source>
-        <translation type="unfinished"/>
+        <translation>デフォルトに戻す</translation>
     </message>
 </context>
 <context>
@@ -149,7 +149,7 @@
     <message>
         <location filename="../src/widgets/private/settings/shortcutedit.cpp" line="119"/>
         <source>Please enter a new shortcut</source>
-        <translation type="unfinished"/>
+        <translation>新しいショートカットを入力してください</translation>
     </message>
 </context>
 <context>
@@ -162,7 +162,7 @@
     <message>
         <location filename="../src/widgets/dtitlebar.cpp" line="456"/>
         <source>About</source>
-        <translation>について</translation>
+        <translation>このアプリケーションについて</translation>
     </message>
     <message>
         <location filename="../src/widgets/dtitlebar.cpp" line="463"/>
