@@ -1,7 +1,7 @@
 {
         "commit": {
                 "quilt": false,
-                "pkgver": "echo $(git tag | sort -V | tail -n1)'+r'$(date '+%%y%%m%%d%%H%%M%%S')'+g'$(git rev-parse --short HEAD);",
+                "pkgver": "echo $(git tag | sort -V | tail -n1)'+r'$(git log $(git describe --abbrev=0 --tags)..HEAD --oneline|wc -l)'+g'$(git rev-parse --short HEAD);",
                 "dist": "experimental"
         },
         "release": {
