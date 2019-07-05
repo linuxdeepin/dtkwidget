@@ -52,6 +52,13 @@ bool DBlurEffectWidgetPrivate::isBehindWindowBlendMode() const
            || q->isTopLevel();
 }
 
+bool DBlurEffectWidgetPrivate::isFull() const
+{
+    D_QC(DBlurEffectWidget);
+
+    return full || (q->isTopLevel() && !(blurRectXRadius * blurRectYRadius));
+}
+
 void DBlurEffectWidgetPrivate::addToBlurEffectWidgetHash()
 {
     D_QC(DBlurEffectWidget);
@@ -125,10 +132,32 @@ bool DBlurEffectWidgetPrivate::updateWindowBlurArea(QWidget *topLevelWidget)
     bool isExistMaskPath = false;
 
     Q_FOREACH (const DBlurEffectWidget *w, blurEffectWidgetList) {
+        if (!w->d_func()->blurEnabled) {
+            continue;
+        }
+
+        // 当存在一个模糊区域填充整个窗口时，不需要再考虑其它的控件，直接对此窗口开启全模糊即可
+        if (w->d_func()->isFull() && w->isVisible()) {
+            DPlatformWindowHandle handle(topLevelWidget);
+
+            if (!handle.enableBlurWindow()) {
+                handle.setEnableBlurWindow(true);
+            }
+
+            return true;
+        }
+
         if (!w->d_func()->maskPath.isEmpty() && w->isVisible()) {
             isExistMaskPath = true;
             break;
         }
+    }
+
+    // 清理窗口背景模糊是否完全开启的状态
+    DPlatformWindowHandle handle(topLevelWidget);
+
+    if (handle.enableBlurWindow()) {
+        handle.setEnableBlurWindow(false);
     }
 
     bool ok = false;
@@ -137,6 +166,10 @@ bool DBlurEffectWidgetPrivate::updateWindowBlurArea(QWidget *topLevelWidget)
         QList<QPainterPath> pathList;
 
         Q_FOREACH (const DBlurEffectWidget *w, blurEffectWidgetList) {
+            if (!w->d_func()->blurEnabled) {
+                continue;
+            }
+
             if (!w->isVisible()) {
                 continue;
             }
@@ -154,13 +187,17 @@ bool DBlurEffectWidgetPrivate::updateWindowBlurArea(QWidget *topLevelWidget)
             pathList << p;
         }
 
-        ok = DPlatformWindowHandle::setWindowBlurAreaByWM(topLevelWidget, pathList);
+        ok = handle.setWindowBlurAreaByWM(pathList);
     } else {
         QVector<DPlatformWindowHandle::WMBlurArea> areaList;
 
         areaList.reserve(blurEffectWidgetList.size());
 
         Q_FOREACH (const DBlurEffectWidget *w, blurEffectWidgetList) {
+            if (!w->d_func()->blurEnabled) {
+                continue;
+            }
+
             if (!w->isVisible()) {
                 continue;
             }
@@ -172,7 +209,7 @@ bool DBlurEffectWidgetPrivate::updateWindowBlurArea(QWidget *topLevelWidget)
             areaList << dMakeWMBlurArea(r.x(), r.y(), r.width(), r.height(), w->blurRectXRadius(), w->blurRectYRadius());
         }
 
-        ok = DPlatformWindowHandle::setWindowBlurAreaByWM(topLevelWidget, areaList);
+        ok = handle.setWindowBlurAreaByWM(areaList);
     }
 
     if (blurEffectWidgetList.isEmpty()) {
@@ -268,6 +305,25 @@ bool DBlurEffectWidgetPrivate::updateWindowBlurArea(QWidget *topLevelWidget)
  * \~chinese \brief maskColor 的alpha通道值。当前窗口管理器支持混成（窗口背景透明）时默认值为102，否则为204
  * \~chinese \note 可读可写
  * \~chinese \see DBlurEffectWidget::maskColor DPlatformWindowHandle::hasBlurWindow
+ */
+
+/*!
+ * \~chinese \property DBlurEffectWidget::full
+ * \~chinese \brief 如果值为true，将模糊此控件所在顶层窗口的整个背景，而无论控件的大小和位置，否则使用控件的位置和大小
+ * \~chinese 设置顶层窗口的模糊区域。需要注意的时，当控件本身就是顶层窗口且未设置 blurRectXRadius 和 blurRectYRadius
+ * \~chinese 属性的情况下，无论 full 属性的值为多少，都将和值为 true 时的行为保持一致。
+ * \~chinese \note 可读可写
+ * \~chinese \note 此属性不影响蒙版的绘制区域
+ * \~chinese \note 只在模糊的混合模式为 BehindWindowBlend 时生效
+ * \~chinese \see DBlurEffectWidget::blurRectXRadius BlurEffectWidget::blurRectYRadius
+ * \~chinese \see DBlurEffectWidget::maskColor
+ * \~chinese \see DBlurEffectWidget::blendMode
+ */
+
+/*!
+ * \~chinese \property DBlurEffectWidget::blurEnabled
+ * \~chinese \brief 如果值为 true 则此控件的模糊设置生效，否则不生效
+ * \~chinese \note 可读可写
  */
 
 /*!
@@ -520,6 +576,20 @@ void DBlurEffectWidget::setMaskPath(const QPainterPath &path)
     update();
 }
 
+bool DBlurEffectWidget::isFull() const
+{
+    D_DC(DBlurEffectWidget);
+
+    return d->full;
+}
+
+bool DBlurEffectWidget::blurEnabled() const
+{
+    D_DC(DBlurEffectWidget);
+
+    return d->blurEnabled;
+}
+
 void DBlurEffectWidget::setRadius(int radius)
 {
     D_D(DBlurEffectWidget);
@@ -651,6 +721,33 @@ void DBlurEffectWidget::setMaskColor(DBlurEffectWidget::MaskColorType type)
     update();
 }
 
+void DBlurEffectWidget::setFull(bool full)
+{
+    D_D(DBlurEffectWidget);
+
+    if (d->full == full)
+        return;
+
+    d->full = full;
+    d->updateWindowBlurArea();
+
+    Q_EMIT fullChanged(full);
+}
+
+void DBlurEffectWidget::setBlurEnabled(bool blurEnabled)
+{
+    D_D(DBlurEffectWidget);
+
+    if (d->blurEnabled == blurEnabled)
+        return;
+
+    d->blurEnabled = blurEnabled;
+    d->updateWindowBlurArea();
+    update();
+
+    Q_EMIT blurEnabledChanged(d->blurEnabled);
+}
+
 DBlurEffectWidget::DBlurEffectWidget(DBlurEffectWidgetPrivate &dd, QWidget *parent)
     : QWidget(parent)
     , DObject(dd)
@@ -666,6 +763,9 @@ inline QRect operator *(const QRect &rect, qreal scale)
 void DBlurEffectWidget::paintEvent(QPaintEvent *event)
 {
     D_D(DBlurEffectWidget);
+
+    if (!d->blurEnabled)
+        return;
 
     QPainter pa(this);
 

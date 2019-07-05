@@ -37,11 +37,15 @@ public:
     int blurRectYRadius = 0;
     quint8 maskAlpha = 102;
 
+    bool full = false;
+    bool blurEnabled = true;
+
     QColor maskColor = Qt::transparent;
     DBlurEffectWidget::MaskColorType maskColorType = DBlurEffectWidget::CustomColor;
     QPainterPath maskPath;
 
     bool isBehindWindowBlendMode() const;
+    bool isFull() const;
 
     void addToBlurEffectWidgetHash();
     void removeFromBlurEffectWidgetHash();
