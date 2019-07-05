@@ -41,6 +41,8 @@ class LIBDTKWIDGETSHARED_EXPORT DBlurEffectWidget : public QWidget, public DTK_C
     // The alpha channel is 102 if the DPlatformWindowHandle::hasBlurWindow() is true, otherwise is 204).
     Q_PROPERTY(QColor maskColor READ maskColor WRITE setMaskColor NOTIFY maskColorChanged)
     Q_PROPERTY(quint8 maskAlpha READ maskAlpha WRITE setMaskAlpha NOTIFY maskAlphaChanged)
+    Q_PROPERTY(bool full READ isFull WRITE setFull NOTIFY fullChanged)
+    Q_PROPERTY(bool blurEnabled READ blurEnabled WRITE setBlurEnabled NOTIFY blurEnabledChanged)
 
 public:
     // TODO: To support MeanBlur, MedianBlur, BilateralFilter
@@ -75,6 +77,9 @@ public:
     int blurRectXRadius() const;
     int blurRectYRadius() const;
 
+    bool isFull() const;
+    bool blurEnabled() const;
+
     QColor maskColor() const;
 
     quint8 maskAlpha() const;
@@ -91,6 +96,8 @@ public Q_SLOTS:
     void setMaskAlpha(quint8 alpha);
     void setMaskColor(QColor maskColor);
     void setMaskColor(MaskColorType type);
+    void setFull(bool full);
+    void setBlurEnabled(bool blurEnabled);
 
 Q_SIGNALS:
     void radiusChanged(int radius);
@@ -101,6 +108,8 @@ Q_SIGNALS:
     void blurRectYRadiusChanged(int blurRectYRadius);
     void maskAlphaChanged(quint8 alpha);
     void maskColorChanged(QColor maskColor);
+    void fullChanged(bool full);
+    void blurEnabledChanged(bool blurEnabled);
 
 protected:
     DBlurEffectWidget(DBlurEffectWidgetPrivate &dd, QWidget *parent = 0);
