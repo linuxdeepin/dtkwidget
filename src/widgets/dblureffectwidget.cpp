@@ -56,7 +56,7 @@ bool DBlurEffectWidgetPrivate::isFull() const
 {
     D_QC(DBlurEffectWidget);
 
-    return full || (q->isTopLevel() && !(blurRectXRadius * blurRectYRadius));
+    return full || (q->isTopLevel() && !(blurRectXRadius * blurRectYRadius) && maskPath.isEmpty());
 }
 
 void DBlurEffectWidgetPrivate::addToBlurEffectWidgetHash()
