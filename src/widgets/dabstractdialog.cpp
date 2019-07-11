@@ -61,6 +61,11 @@ void DAbstractDialogPrivate::init()
 //        DPlatformWindowHandle::connectWindowManagerChangedSignal(q, [this] {
 //            bgBlurWidget->setVisible(DPlatformWindowHandle::hasBlurWindow());
 //        });
+
+        // FIXME: The DAbstractDialog QSS won't apply if we don't set the Qt::FramelessWindowHint flag
+        if (!handle->isEnableNoTitlebar(q->windowHandle())) {
+            q->setWindowFlags(q->windowFlags() | Qt::FramelessWindowHint);
+        }
     } else {
         q->setWindowFlags(q->windowFlags() | Qt::FramelessWindowHint);
         q->setBorderColor(QColor(0, 0, 0));
