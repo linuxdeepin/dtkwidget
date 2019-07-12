@@ -269,6 +269,7 @@ public:
 
         auto dtm = DThemeManager::instance();
         widget->setStyleSheet(widget->styleSheet() + dtm->d_func()->getQssContent(themeurl));
+        widget->style()->polish(widget);
 
         auto reloadTheme = [this, dtm](QWidget * widget, const QString & filename, const QString & themename) {
             const char *baseClassReloadThemeProp = "_dtk_theme_base_calss_reload_theme";
