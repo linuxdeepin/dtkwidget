@@ -220,7 +220,13 @@ void DSwitchButton::paintEvent(QPaintEvent *e)
     p.fillPath(btPath, frontground);
 }
 
-void DSwitchButton::mousePressEvent(QMouseEvent *e)
+// for ABI compatibilities' sake.
+void DSwitchButton::mousePressEvent(QMouseEvent *event)
+{
+    QFrame::mousePressEvent(event);
+}
+
+void DSwitchButton::mouseReleaseEvent(QMouseEvent *e)
 {
     D_D(DSwitchButton);
 
