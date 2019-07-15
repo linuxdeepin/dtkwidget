@@ -57,6 +57,7 @@ Q_SIGNALS:
 protected:
     void paintEvent(QPaintEvent *e) Q_DECL_OVERRIDE;
     void mousePressEvent(QMouseEvent *) Q_DECL_OVERRIDE;
+    void mouseReleaseEvent(QMouseEvent *) Q_DECL_OVERRIDE;
 
 private:
     D_DECLARE_PRIVATE(DSwitchButton)
