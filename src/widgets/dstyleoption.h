@@ -30,7 +30,11 @@ DWIDGET_BEGIN_NAMESPACE
 class DStyleOption
 {
 public:
-    virtual void init(QWidget *widget);
+    enum PrimitiveElement {
+        PE_BACKGROUND = QStyle::PE_CustomBase + 1,
+    };
+
+    virtual void init(QWidget *widget);    
 };
 
 class DStyleOptionSuggestButton : public QStyleOptionButton, public DStyleOption
@@ -57,6 +61,30 @@ public:
 
     LineEditFeatures features = None;
     QRect iconButtonRect;
+};
+
+class DStyleOptionBackgroundGroup : public QStyleOption, public DStyleOption {
+public:
+    enum BackgroundDirection {
+        horizontal,
+        vertical,
+    };
+
+    enum ItemBackgroundPosition {
+        Invalid,
+        Beginning,
+        Middle,
+        End,
+        OnlyOne
+    };
+
+    using DStyleOption::DStyleOption;
+    using QStyleOption::QStyleOption;
+    void init(QWidget* widget) override;
+
+    BackgroundDirection direction;
+    ItemBackgroundPosition position;
+    QRect backgroundRect;
 };
 
 DWIDGET_END_NAMESPACE
