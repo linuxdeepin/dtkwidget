@@ -1,2 +1,2 @@
 usr/lib/*/lib*.so.*
-usr/share/*/translations/*
+usr/share/*/DWidget/translations/*
