@@ -24,6 +24,8 @@
 #include "dlineedit.h"
 #include "private/dlineedit_p.h"
 
+#include <QGuiApplication>
+
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
@@ -167,6 +169,190 @@ void DStyleOptionLineEdit::init(QWidget *widget)
 void DStyleOptionBackgroundGroup::init(QWidget *widget)
 {
     backgroundRect = widget->geometry();
+}
+
+class DPalettePrivate
+{
+public:
+    QBrush br[DPalette::NColorGroups][DPalette::NColorRoles];
+
+    static QHash<const QWidget*, QSharedPointer<DPalettePrivate>> map;
+    static QSharedPointer<DPalettePrivate> appPalette;
+};
+
+QHash<const QWidget*, QSharedPointer<DPalettePrivate>> DPalettePrivate::map;
+QSharedPointer<DPalettePrivate> DPalettePrivate::appPalette = QSharedPointer<DPalettePrivate>::create();
+
+DPalette::DPalette()
+    : d(DPalettePrivate::appPalette)
+{
+
+}
+
+DPalette::DPalette(const QPalette &palette)
+    : QPalette(palette)
+    , d(DPalettePrivate::appPalette)
+{
+
+}
+
+DPalette::~DPalette()
+{
+
+}
+
+DPalette DPalette::get(const QWidget *widget, const QPalette &base)
+{
+    DPalette pa = base;
+    auto data = DPalettePrivate::map.value(widget);
+
+    while (!data) {
+        widget = widget->parentWidget();
+
+        if (!widget) {
+            break;
+        }
+
+        data = DPalettePrivate::map.value(widget);
+    }
+
+    if (data) {
+        pa.d = data;
+    }
+
+    return pa;
+}
+
+void DPalette::set(QWidget *widget, const DPalette &pa)
+{
+    if (!DPalettePrivate::map.contains(widget)) {
+        QObject::connect(widget, &QWidget::destroyed, [widget] {
+            DPalettePrivate::map.remove(widget);
+        });
+    }
+
+    DPalettePrivate::map[widget] = pa.d;
+    widget->setPalette(pa);
+}
+
+void DPalette::setGeneric(const DPalette &pa)
+{
+    DPalettePrivate::appPalette = pa.d;
+}
+
+const QBrush &DPalette::brush(QPalette::ColorGroup cg, DPalette::ColorType cr) const
+{
+    if (cr >= NColorTypes) {
+        return QPalette::brush(cg, QPalette::NoRole);
+    }
+
+    if (cg == Current) {
+        cg = currentColorGroup();
+    } else if (cg >= NColorGroups) {
+        cg = Normal;
+    }
+
+    return d->br[cg][cr];
+}
+
+void DPalette::setBrush(QPalette::ColorGroup cg, DPalette::ColorType cr, const QBrush &brush)
+{
+    d->br[cg][cr] = brush;
+}
+
+class DFontSizeManagerPrivate
+{
+public:
+    QList<QWidget*> binderMap[DFontSizeManager::NSizeTypes];
+    quint16 fontPixelSize[DFontSizeManager::NSizeTypes] = {40, 30, 24, 20, 17, 14, 13, 12, 11, 10};
+    quint8 fontGenericSizeType = DFontSizeManager::T6;
+    // 字号的差值
+    quint16 fontPixelSizeDiff = 0;
+
+    void updateWidgetFont(DFontSizeManager *manager, DFontSizeManager::SizeType type)
+    {
+        for (QWidget *w : binderMap[type]) {
+            w->setFont(manager->get(type, w->font()));
+        }
+    }
+};
+
+DFontSizeManager *DFontSizeManager::instance()
+{
+    static DFontSizeManager manager;
+
+    return &manager;
+}
+
+void DFontSizeManager::bind(QWidget *widget, DFontSizeManager::SizeType type)
+{
+    unbind(widget);
+
+    d->binderMap[type].append(widget);
+    widget->setFont(get(type, widget->font()));
+
+    QObject::connect(widget, &QWidget::destroyed, [this, widget] {
+        unbind(widget);
+    });
+}
+
+void DFontSizeManager::unbind(QWidget *widget)
+{
+    for (int i = 0; i < NSizeTypes; ++i) {
+        d->binderMap[i].removeOne(widget);
+    }
+}
+
+quint16 DFontSizeManager::fontPixelSize(DFontSizeManager::SizeType type) const
+{
+    if (type >= NSizeTypes) {
+        return 0;
+    }
+
+    return d->fontPixelSize[type] + d->fontPixelSizeDiff;
+}
+
+void DFontSizeManager::setFontPixelSize(DFontSizeManager::SizeType type, quint16 size)
+{
+    if (type >= NSizeTypes) {
+        return;
+    }
+
+    if (d->fontPixelSize[type] == size) {
+        return;
+    }
+
+    d->fontPixelSize[type] = size;
+    d->updateWidgetFont(this, type);
+}
+
+void DFontSizeManager::setFontGenericPixelSize(quint16 size)
+{
+    qint16 diff = size - d->fontPixelSize[d->fontGenericSizeType];
+
+    if (diff == d->fontPixelSizeDiff)
+        return;
+
+    d->fontPixelSizeDiff = diff;
+
+    for (int i = 0; i < NSizeTypes; ++i) {
+        d->updateWidgetFont(this, static_cast<DFontSizeManager::SizeType>(i));
+    }
+}
+
+const QFont DFontSizeManager::get(DFontSizeManager::SizeType type, const QFont &base) const
+{
+    QFont font = base;
+
+    font.setPixelSize(fontPixelSize(type));
+
+    return font;
+}
+
+DFontSizeManager::DFontSizeManager()
+    : d(new DFontSizeManagerPrivate())
+{
+
 }
 
 DWIDGET_END_NAMESPACE
