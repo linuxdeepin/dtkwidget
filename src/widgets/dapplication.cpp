@@ -290,6 +290,51 @@ bool DApplicationPrivate::loadTranslator(QList<DPathBuf> translateDirs, const QS
     return false;
 }
 
+void DApplicationPrivate::resetApplicationThemeType()
+{
+    D_QC(DApplication);
+    // 在 DThemeManager 初始化期间会调用 QApplicationi::setStyle
+    // 这将导致应用程序的调色板发生变化，因此先初始化DThemeManager对象
+    // 之后再获取调色板中的背景色
+    DThemeManager *tm = DThemeManager::instance();
+
+    // tm为空说明DThemeManager对象正在被初始化
+    if (!tm) {
+        return;
+    }
+
+    const QColor &window_background = q->palette().background().color();
+
+    // 颜色无效时不处理（窗口背景可能为图片）
+    if (!window_background.isValid()) {
+        return;
+    }
+
+    DThemeManager::ThemeType type = DThemeManager::toThemeType(window_background);
+    tm->setThemeType(type);
+}
+
+void DApplicationPrivate::resetWindowThemeType(QWidget *window)
+{
+    D_QC(DApplication);
+
+    // 如果窗口未自定义调色板，则清除其“主题类型”的设置
+    if (!window->testAttribute(Qt::WA_SetPalette)) {
+        DThemeManager::instance()->setThemeType(window, DThemeManager::UnknownType);
+        return;
+    }
+
+    const QColor &window_background = window->palette().background().color();
+
+    // 颜色无效时不处理（窗口背景可能为图片）
+    if (!window_background.isValid()) {
+        return;
+    }
+
+    DThemeManager::ThemeType type = DThemeManager::toThemeType(window_background);
+    DThemeManager::instance()->setThemeType(window, type);
+}
+
 bool DApplicationPrivate::isUserManualExists()
 {
 #ifdef Q_OS_LINUX
@@ -420,6 +465,9 @@ DApplication::DApplication(int &argc, char **argv) :
             QTapAndHoldGesture::setTimeout(gsettings.get("longpress-duration").toInt() - 100);
     }
 #endif
+
+    // 初始化窗口主题类型
+    d_func()->resetApplicationThemeType();
 }
 
 
@@ -1087,7 +1135,8 @@ static inline bool basePrintPropertiesDialog(const QWidget *w)
 
 bool DApplication::notify(QObject *obj, QEvent *event)
 {
-    if (event->type() == QEvent::PolishRequest) {
+    switch((int)event->type()) {
+    case QEvent::PolishRequest: {
         // Fixed the style for the menu widget to dlight
         // ugly code will no longer needed.
         static QStyle *light_style = nullptr;
@@ -1131,10 +1180,33 @@ bool DApplication::notify(QObject *obj, QEvent *event)
             }
         }
 #endif
-    } else if (event->type() == QEvent::ParentChange) {
+        break;
+    }
+    case QEvent::ParentChange: {
         if (QWidget *widget = qobject_cast<QWidget *>(obj)) {
             DThemeManager::instance()->updateThemeOnParentChanged(widget);
         }
+        break;
+    }
+    // 处理应用程序和主窗口的调色板变化事件，以此更新程序/窗口的主题类型
+    case QEvent::ApplicationPaletteChange: {
+        // 只处理发送给application对象的事件
+        if (obj == this) {
+            D_D(DApplication);
+            d->resetApplicationThemeType();
+        }
+        break;
+    }
+    case QEvent::PaletteChange: {
+        D_D(DApplication);
+
+        if (QWidget *window = qobject_cast<QWidget*>(obj)) {
+            if (window->isTopLevel()) {
+                d->resetWindowThemeType(window);
+            }
+        }
+        break;
+    }
     }
 
     return QApplication::notify(obj, event);

@@ -32,13 +32,26 @@ class LIBDTKWIDGETSHARED_EXPORT DThemeManager : public QObject, public DTK_CORE_
 {
     Q_OBJECT
 
+    Q_PROPERTY(ThemeType themeType READ themeType WRITE setThemeType NOTIFY themeTypeChanged)
+
 public:
+    enum ThemeType {
+        UnknownType,
+        LightType,
+        DarkType
+    };
+    Q_ENUM(ThemeType)
+
     static DThemeManager *instance();
 
     QString theme() const;
     QString theme(const QWidget *widget, QWidget **baseWidget = nullptr) const;
     void setTheme(const QString theme);
     void setTheme(QWidget *widget, const QString theme);
+
+    ThemeType themeType() const;
+    ThemeType themeType(const QWidget *window) const;
+    void setThemeType(QWidget *window, ThemeType type);
 
     QString getQssForWidget(const QString className, const QString &theme = QString()) const;
     Q_DECL_DEPRECATED QString getQssForWidget(const QString className, const QWidget *widget) const;
@@ -49,13 +62,20 @@ public:
     // static void registerWidget(QWidget *widget, const QStringList &propertys = QStringList());
     static void registerWidget(QWidget *widget, const QString &filename, const QStringList &propertys = QStringList());
 
+    static ThemeType toThemeType(const QColor &color);
+
 public Q_SLOTS:
     void updateQss();
     void updateThemeOnParentChanged(QWidget *widget);
 
+    void setThemeType(ThemeType themeType);
+
 Q_SIGNALS:
     void themeChanged(QString theme);
     void widgetThemeChanged(QWidget *widget, QString theme);
+
+    void themeTypeChanged(ThemeType themeType);
+    void windowThemeTypeChanged(QWidget *window, ThemeType type);
 
 protected:
     DThemeManager();

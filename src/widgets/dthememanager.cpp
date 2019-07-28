@@ -68,12 +68,57 @@ Q_GLOBAL_STATIC(DThemeManagerStaticPrivate, DThemeManagerStatic)
  */
 
 /*!
+ *
+ * \~chinese \enum DThemeManager::ThemeType
+ * \~chinese DThemeManager::ThemeType 主题的类型，分为“浅色”、“深色”两种类型。默认情况下，DApplication
+ * \~chinese 会根据应用程序调色板中的窗口背景色自动设置应用程序的主题类型。
+ *
+ * \~chinese \var DThemeManager::UnknownType DThemeManager::UnknownType
+ * \~chinese 未知的主题类型
+ *
+ * \~chinese \var DThemeManager::LightType DThemeManager::LightType
+ * \~chinese 浅色主题
+ *
+ * \~chinese \var DApplication::SingleScope DApplication::SystemScope
+ * \~chinese 深色主题
+ *
+ * \~chinese \sa DApplication
+ * \~chinese \sa QPalette
+ * \~chinese \sa QApplication::palette
+ */
+
+/**
+ * \~chinese \property DThemeManager::themeType
+ * \~chinese \brief themeType 属性表示应用程序主题的类型
+ */
+
+/*!
  * \~chinese \fn DThemeManager::themeChanged
  * \~chinese \brief themeChanged 信号在程序主题发生改变时触发。
  */
 /*!
  * \~chinese \fn DThemeManager::widgetThemeChanged
  * \~chinese \brief widgetThemeChanged 信号在特定控件主题发生改变时触发。
+ */
+/*!
+ * \~chinese \fn DThemeManager::themeTypeChanged
+ * \~chinese \param themeType 新的主题类型
+ * \~chinese \brief themeTypeChanged 信号在应用程序主题发生变化时触发。默认情况下，DApplication
+ * \~chinese 会在处理 QEvent::ApplicationPaletteChange 事件时自动更新应用程序的主题类型，此操作可能
+ * \~chinese 会导致此信号的触发。
+ *
+ * \~chinese \sa DThemeManager::setThemeType
+ */
+/*!
+ * \~chinese \fn DThemeManager::windowThemeTypeChanged
+ * \~chinese \param window 主题类型发生变化的顶级窗口
+ * \~chinese \param themeType 新的主题类型
+ * \~chinese \brief windowThemeTypeChanged 信号在窗口的主题类型发现变化时触发。默认情况下，DApplication
+ * \~chinese 会在处理 QEvent::PaletteChange 事件时自动更新顶级窗口的主题类型，此操作可能会导致此信号的触发。
+ * \~chinese 另外，如果窗口未自定义过 QPalette 并且未指定主题类型，窗口的主题类型会跟随应用程序改变而改变。
+ *
+ * \~chinese \sa QWidget::setPalette
+ * \~chinese \sa DThemeManager::setThemeType(QWidget*, DThemeManager::ThemeType)
  */
 
 /*!
@@ -82,6 +127,13 @@ Q_GLOBAL_STATIC(DThemeManagerStaticPrivate, DThemeManagerStatic)
  */
 DThemeManager *DThemeManager::instance()
 {
+    // 正在初始化时返回空对象，否则会导致当前线程陷入死锁
+    if (Q_QGS_DThemeManagerStatic::guard.load() == QtGlobalStatic::Initializing) {
+        return nullptr;
+    }
+
+    Q_QGS_DThemeManagerStatic::guard.testAndSetRelaxed(QtGlobalStatic::Uninitialized, QtGlobalStatic::Initializing);
+
     return DThemeManagerStatic;
 }
 
@@ -173,6 +225,7 @@ class DThemeManagerPrivate : public DCORE_NAMESPACE::DObjectPrivate
 
     QString themeName;
     QMap<QWidget *, QMap<QString, QString> > watchedDynamicPropertys;
+    DThemeManager::ThemeType themeType = DThemeManager::UnknownType;
 
 public:
     DThemeManagerPrivate(DThemeManager *qq)
@@ -468,6 +521,65 @@ void DThemeManager::setTheme(QWidget *widget, const QString theme)
 }
 
 /*!
+ * \~chinese \brief DThemeManager::themeType 返回应用程序的主题类型。DApplication 对象构造时会
+ * \~chinese 调用 setThemeType 初始化应用程序的主题类型，未初始化时返回 UnknownType。
+ * \~chinese \return 主题类型的枚举值
+ *
+ * \~chinese \sa \class DApplication
+ * \~chinese \sa DThemeManager::setThemeType
+ */
+DThemeManager::ThemeType DThemeManager::themeType() const
+{
+    D_DC(DThemeManager);
+
+    return d->themeType;
+}
+
+/*!
+ * \~chinese \brief DThemeManager::themeType 返回窗口的主题类型。当窗口未设置主题类型时，将返回
+ * \~chinese 应用程序的主题类型。
+ * \~chinese \param window 要获取主题类型的顶级窗口对象
+ * \~chinese \return 主题类型的枚举值
+ *
+ * \~chinese \sa DThemeManager::setThemeType
+ * \~chinese \sa DThemeManager::setThemeType(QWidget*, DThemeManager::ThemeType)
+ */
+DThemeManager::ThemeType DThemeManager::themeType(const QWidget *window) const
+{
+    ThemeType type = static_cast<ThemeType>(window->property("_d_dtk_theme_type").toInt());
+
+    if (type == UnknownType) {
+        type = themeType();
+    }
+
+    return type;
+}
+
+/*!
+ * \~chinese \brief DThemeManager::setThemeType 设置窗口的主题类型。
+ * \~chinese \param window 要设置主题类型的顶级窗口对象
+ * \~chinese \param 要设置的主题类型枚举值，值为 UnknownType 时将清空 window 对象的主题类型设置
+ *
+ * \~chinese \sa DThemeManager::setThemeType()
+ * \~chinese \note 针对窗口设置的主题类型将存储在窗口对象的 "_d_dtk_theme_type" 属性中
+ */
+void DThemeManager::setThemeType(QWidget *window, DThemeManager::ThemeType type)
+{
+    ThemeType old_type = themeType(window);
+
+    if (type == UnknownType) {
+        window->setProperty("_d_dtk_theme_type", QVariant());
+        type = themeType();
+    } else {
+        window->setProperty("_d_dtk_theme_type", type);
+    }
+
+    if (old_type != type) {
+        Q_EMIT windowThemeTypeChanged(window, type);
+    }
+}
+
+/*!
  * \~english \brief DThemeManager::getQssForWidget searches for the theme file of one class in a specific theme.
  * \~english \param className is the name of the class.
  * \~english \param theme is the name of the theme to be applied.
@@ -541,6 +653,26 @@ void DThemeManager::registerWidget(QWidget *widget, const QString &filename, con
 {
     auto dtm = DThemeManager::instance();
     dtm->d_func()->registerWidget(widget, filename, propertys);
+}
+
+/*!
+ * \~chinese \brief DThemeManager::toThemeType 获取颜色的明亮度，将其转换为主题类型的枚举值。
+ * \~chinese 转换的策略为：先将颜色转换为rgb格式，再根据 Y = 0.299R + 0.587G + 0.114B 的公式
+ * \~chinese 计算出颜色的亮度，亮度大于 191 时认为其为浅色，否则认为其为深色。
+ * \~chinese \param color 需要转换为主题的类型的颜色
+ * \~chinese \return 主题类型的枚举值
+ */
+DThemeManager::ThemeType DThemeManager::toThemeType(const QColor &color)
+{
+    QColor rgb_color = color.toRgb();
+    // 获取rgb颜色的亮度
+    float luminance = 0.299 * rgb_color.redF() + 0.587 * rgb_color.greenF() + 0.114 * rgb_color.blueF();
+
+    if (qRound(luminance * 255) > 191) {
+        return LightType;
+    }
+
+    return DarkType;
 }
 
 /*!
@@ -619,5 +751,26 @@ void DThemeManager::updateThemeOnParentChanged(QWidget *widget)
     updateWidgetTheme(this, widget, base_widget, theme);
 }
 
+/*!
+ * \~chinese \brief DThemeManager::setThemeType 设置应用程序的主题类型。
+ * \~chinese \param themeType 新的主题类型
+ */
+void DThemeManager::setThemeType(DThemeManager::ThemeType themeType)
+{
+    D_D(DThemeManager);
+
+    if (d->themeType == themeType)
+        return;
+
+    d->themeType = themeType;
+    Q_EMIT themeTypeChanged(themeType);
+
+    // 未自定义主题类型的窗口应该跟随应用程序的主题类型改变，此处需要为这些窗口发送通知
+    for (QWidget *window : qApp->topLevelWidgets()) {
+        if (!window->property("_d_dtk_theme_type").isValid()) {
+            Q_EMIT windowThemeTypeChanged(window, themeType);
+        }
+    }
+}
 
 DWIDGET_END_NAMESPACE
