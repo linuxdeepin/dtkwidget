@@ -135,6 +135,11 @@ public:
     inline const QBrush &textWarning() const { return brush(TextWarning); }
     inline const QBrush &textLively() const { return brush(TextLively); }
 
+    using QPalette::color;
+    using QPalette::brush;
+    using QPalette::setBrush;
+    using QPalette::setColor;
+
 private:
     QSharedPointer<DPalettePrivate> d;
 };

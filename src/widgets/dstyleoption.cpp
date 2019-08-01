@@ -174,7 +174,7 @@ void DStyleOptionBackgroundGroup::init(QWidget *widget)
 class DPalettePrivate
 {
 public:
-    QBrush br[DPalette::NColorGroups][DPalette::NColorRoles];
+    QBrush br[DPalette::NColorGroups][DPalette::NColorTypes];
 
     static QHash<const QWidget*, QSharedPointer<DPalettePrivate>> map;
     static QSharedPointer<DPalettePrivate> appPalette;
@@ -249,7 +249,7 @@ const QBrush &DPalette::brush(QPalette::ColorGroup cg, DPalette::ColorType cr) c
     if (cg == Current) {
         cg = currentColorGroup();
     } else if (cg >= NColorGroups) {
-        cg = Normal;
+        cg = Active;
     }
 
     return d->br[cg][cr];
@@ -257,6 +257,22 @@ const QBrush &DPalette::brush(QPalette::ColorGroup cg, DPalette::ColorType cr) c
 
 void DPalette::setBrush(QPalette::ColorGroup cg, DPalette::ColorType cr, const QBrush &brush)
 {
+    if (cg == All) {
+        for (uint i = 0; i < NColorGroups; i++)
+            setBrush(ColorGroup(i), cr, brush);
+        return;
+    }
+
+    if (cr >= NColorTypes) {
+        return QPalette::setBrush(cg, QPalette::NoRole, brush);
+    }
+
+    if (cg == Current) {
+        cg = currentColorGroup();
+    } else {
+        cg = Active;
+    }
+
     d->br[cg][cr] = brush;
 }
 
