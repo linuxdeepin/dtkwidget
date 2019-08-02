@@ -37,8 +37,10 @@ DSuggestButton::DSuggestButton(const QString &text, QWidget *parent)
 
 void DSuggestButton::paintEvent(QPaintEvent *event)
 {
+    Q_UNUSED(event)
     QStylePainter p(this);
-    DStyleOptionSuggestButton option;
+    DStyleOptionButton option;
+    option.features |= DStyleOptionButton::ButtonFeatures(DStyleOptionButton::SuggestButton);
     initStyleOption(&option);
     option.init(this);
     p.drawControl(QStyle::CE_PushButton, option);

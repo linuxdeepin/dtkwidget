@@ -29,23 +29,29 @@ QT_BEGIN_NAMESPACE
 class QGuiApplication;
 QT_END_NAMESPACE
 
+DTK_BEGIN_NAMESPACE
+
+enum ItemDataRole {
+    MarginsRole,
+    UserRole = Qt::UserRole * 2
+};
+
+DTK_END_NAMESPACE
+
 DWIDGET_BEGIN_NAMESPACE
 
 class DStyleOption
 {
 public:
-    enum PrimitiveElement {
-        PE_BACKGROUND = QStyle::PE_CustomBase + 1,
-    };
-
     virtual void init(QWidget *widget);
 };
 
-class DStyleOptionSuggestButton : public QStyleOptionButton, public DStyleOption
+class DStyleOptionButton : public QStyleOptionButton, public DStyleOption
 {
 public:
     enum ButtonFeature {
-        SuggestButton = (CommandLinkButton << 1)
+        SuggestButton = (CommandLinkButton << 1),
+        WarningButton = (SuggestButton << 1)
     };
 
     void init(QWidget *widget) override;
@@ -97,11 +103,13 @@ class DPalette : public QPalette
 {
 public:
     enum ColorType {
-        ItemBackground,
-        TextTitle,
-        TextTips,
-        TextWarning,
-        TextLively,
+        ItemBackground,     //列表项的背景色
+        TextTitle,          //标题型文本的颜色
+        TextTips,           //提示性文本的颜色
+        TextWarning,        //警告类型的文本颜色
+        TextLively,         //活跃式文本颜色（不受活动色影响）
+        LightLively,        //活跃式按钮（recommend button）背景色中的亮色（不受活跃色影响）
+        DarkLively,         //活跃式按钮（recommend button）背景色中的暗色，会从亮色渐变到暗色（不受活跃色影响）
         NColorTypes
     };
 

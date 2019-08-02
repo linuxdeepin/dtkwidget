@@ -1,7 +1,8 @@
 #include "dbackgroundgroup.h"
 #include "dstyleoption.h"
-#include <QBoxLayout>
+#include "dstyle.h"
 
+#include <QBoxLayout>
 #include <QStylePainter>
 #include <QStyleOptionButton>
 
@@ -63,7 +64,7 @@ void DBackgroundGroup::paintEvent(QPaintEvent *event)
             option.init(pair.first);
             option.direction = direction;
             option.position = pair.second;
-            painter.drawPrimitive(static_cast<QStyle::PrimitiveElement>(DStyleOption::PE_BACKGROUND), option);
+            painter.drawPrimitive(static_cast<QStyle::PrimitiveElement>(DStyle::PE_ItemBackground), option);
         }
     }
 }

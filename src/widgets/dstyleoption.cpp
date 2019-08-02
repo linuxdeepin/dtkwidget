@@ -135,11 +135,9 @@ void DStyleOption::init(QWidget *widget)
  * \param widget
  * \sa Dtk::Widget::DSuggestButton
  */
-void DStyleOptionSuggestButton::init(QWidget *widget)
+void DStyleOptionButton::init(QWidget *widget)
 {
     Q_UNUSED(widget)
-
-    features |= QStyleOptionButton::ButtonFeature(SuggestButton);
 }
 
 /*!

@@ -114,7 +114,8 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/danchors.h \
     $$PWD/dwindowgroupleader.h \
     $$PWD/dborderlesswidget.h \
-    $$PWD/dborderlesswindow.h
+    $$PWD/dborderlesswindow.h \
+    $$PWD/dstyle.h
 
 SOURCES += $$PWD/dslider.cpp \
     $$PWD/dbackgroundgroup.cpp \
@@ -187,7 +188,8 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/danchors.cpp \
     $$PWD/dwindowgroupleader.cpp \
     $$PWD/dborderlesswidget.cpp \
-    $$PWD/dborderlesswindow.cpp
+    $$PWD/dborderlesswindow.cpp \
+    $$PWD/dstyle.cpp
 
 RESOURCES += \
     $$PWD/themes/dui_theme_dark.qrc \
@@ -233,4 +235,10 @@ includes.files += \
     $$PWD/DAnchors \
     $$PWD/DSegmentedControl \
     $$PWD/DSegmentedHighlight \
-    $$PWD/DBackgroundGroup
+    $$PWD/DBackgroundGroup \
+    $$PWD/DStyleOptionBackgroundGroup \
+    $$PWD/DStyleOptionButton \
+    $$PWD/DPalette \
+    $$PWD/DFontSizeManager \
+    $$PWD/DStyle
+
