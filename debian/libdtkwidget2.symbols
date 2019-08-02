@@ -2424,7 +2424,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZN3Dtk6Widget24DSegmentedControlPrivateD1Ev@Base 2.0.11
  _ZN3Dtk6Widget24DSegmentedControlPrivateD2Ev@Base 2.0.11
  _ZN3Dtk6Widget24createSliderOptionHandleEP7QObject@Base 2.0.11
- _ZN3Dtk6Widget25DStyleOptionButton4initEP7QWidget@Base 2.0.11
  _ZN3Dtk6Widget25DThumbnailProviderPrivate11ProduceInfoD1Ev@Base 2.0.11
  _ZN3Dtk6Widget25DThumbnailProviderPrivate11ProduceInfoD2Ev@Base 2.0.11
  _ZN3Dtk6Widget25DThumbnailProviderPrivate20hasThumbnailMimeHashE@Base 2.0.11
@@ -4034,7 +4033,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZTIN3Dtk6Widget24DFileIconProviderPrivateE@Base 2.0.11
  _ZTIN3Dtk6Widget24DLoadingIndicatorPrivateE@Base 2.0.11
  _ZTIN3Dtk6Widget24DSegmentedControlPrivateE@Base 2.0.11
- _ZTIN3Dtk6Widget25DStyleOptionButtonE@Base 2.0.11
  _ZTIN3Dtk6Widget25DThumbnailProviderPrivateE@Base 2.0.11
  _ZTIN3Dtk6Widget26DGraphicsClipEffectPrivateE@Base 2.0.11
  _ZTIN3Dtk6Widget26DPasswdEditAnimatedPrivateE@Base 2.0.11
@@ -4229,7 +4227,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZTSN3Dtk6Widget24DFileIconProviderPrivateE@Base 2.0.11
  _ZTSN3Dtk6Widget24DLoadingIndicatorPrivateE@Base 2.0.11
  _ZTSN3Dtk6Widget24DSegmentedControlPrivateE@Base 2.0.11
- _ZTSN3Dtk6Widget25DStyleOptionButtonE@Base 2.0.11
  _ZTSN3Dtk6Widget25DThumbnailProviderPrivateE@Base 2.0.11
  _ZTSN3Dtk6Widget26DGraphicsClipEffectPrivateE@Base 2.0.11
  _ZTSN3Dtk6Widget26DPasswdEditAnimatedPrivateE@Base 2.0.11
@@ -4419,7 +4416,6 @@ libdtkwidget.so.2 libdtkwidget2 #MINVER#
  _ZTVN3Dtk6Widget24DFileIconProviderPrivateE@Base 2.0.11
  _ZTVN3Dtk6Widget24DLoadingIndicatorPrivateE@Base 2.0.11
  _ZTVN3Dtk6Widget24DSegmentedControlPrivateE@Base 2.0.11
- _ZTVN3Dtk6Widget25DStyleOptionButtonE@Base 2.0.11
  _ZTVN3Dtk6Widget25DThumbnailProviderPrivateE@Base 2.0.11
  _ZTVN3Dtk6Widget26DGraphicsClipEffectPrivateE@Base 2.0.11
  _ZTVN3Dtk6Widget26DPasswdEditAnimatedPrivateE@Base 2.0.11
