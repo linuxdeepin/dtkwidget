@@ -20,13 +20,71 @@
  */
 #include "dstyle.h"
 
-#include <QDebug>
+#include <QStyleOption>
 
 DWIDGET_BEGIN_NAMESPACE
 
 DStyle::DStyle()
 {
 
+}
+
+QBrush DStyle::generatedBrush(const QStyleOption *option, const QBrush &base, QPalette::ColorGroup cg, QPalette::ColorRole role) const
+{
+    StyleState state = SS_NormalState;
+
+    if (option->state.testFlag(State_Sunken)) {
+        state = SS_PressState;
+    } else if (option->state.testFlag(State_MouseOver)) {
+        state = SS_HoverState;
+    }
+
+    return generatedBrush(state, option, base, cg, role);
+}
+
+QBrush DStyle::generatedBrush(DStyle::StyleState state, const QStyleOption *option, const QBrush &base, QPalette::ColorGroup cg, QPalette::ColorRole role) const
+{
+    StateFlags flags = state;
+
+    if (option->state.testFlag(State_On)) {
+        flags |= SS_CheckedFlag;
+    }
+
+    if (option->state.testFlag(State_Selected)) {
+        flags |= SS_SelectedFlag;
+    }
+
+    if (option->state.testFlag(State_HasFocus)) {
+        flags |= SS_FocusFlag;
+    }
+
+    return generatedBrush(flags, base, cg, role);
+}
+
+QBrush DStyle::generatedBrush(StateFlags flags, const QBrush &base, QPalette::ColorGroup cg, QPalette::ColorRole role) const
+{
+    Q_UNUSED(cg)
+    Q_UNUSED(role)
+    QColor color = base.color();
+
+    if (color.isValid()) {
+        return base;
+    }
+
+    QBrush new_brush = base;
+
+    switch (flags & StyleState_Mask) {
+    case SS_HoverState:
+        new_brush.setColor(color.lighter(150));
+        break;
+    case SS_PressState:
+        new_brush.setColor(color.darker(150));
+        break;
+    default:
+        break;
+    }
+
+    return new_brush;
 }
 
 DWIDGET_END_NAMESPACE

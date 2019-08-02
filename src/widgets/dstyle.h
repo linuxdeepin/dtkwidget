@@ -47,12 +47,37 @@ public:
         PM_CustomBase = QStyle::PM_CustomBase + 0xf00000
     };
 
+    enum StyleState {
+        SS_NormalState = 0x00000000,
+        SS_HoverState = 0x00000001,
+        SS_PressState = 0x00000002,
+        SS_StateCustomBase = 0x000000f0,
+
+        StyleState_Mask = 0x000000ff,
+        SS_CheckedFlag = 0x00000100,
+        SS_SelectedFlag = 0x00000200,
+        SS_FocusFlag = 0x00000400,
+        SS_FlagCustomBase = 0xf00000
+    };
+    Q_DECLARE_FLAGS(StateFlags, StyleState)
+
     DStyle();
 
     inline void drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, QPainter *p, const QWidget *w = nullptr) const
     { drawPrimitive(static_cast<QStyle::PrimitiveElement>(pe), opt, p, w); }
     inline int pixelMetric(PixelMetric m, const QStyleOption *opt = nullptr, const QWidget *widget = nullptr) const
     { return pixelMetric(m, opt, widget); }
+
+    // 获取一个加工后的画笔
+    QBrush generatedBrush(const QStyleOption *option, const QBrush &base,
+                          QPalette::ColorGroup cg = QPalette::Normal,
+                          QPalette::ColorRole role = QPalette::NoRole) const;
+    QBrush generatedBrush(StyleState state, const QStyleOption *option, const QBrush &base,
+                          QPalette::ColorGroup cg = QPalette::Normal,
+                          QPalette::ColorRole role = QPalette::NoRole) const;
+    virtual QBrush generatedBrush(StateFlags flags, const QBrush &base,
+                                  QPalette::ColorGroup cg = QPalette::Normal,
+                                  QPalette::ColorRole role = QPalette::NoRole) const;
 
     using QStyle::drawPrimitive;
     using QStyle::pixelMetric;
