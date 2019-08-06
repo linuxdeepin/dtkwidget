@@ -29,62 +29,75 @@ DStyle::DStyle()
 
 }
 
-QBrush DStyle::generatedBrush(const QStyleOption *option, const QBrush &base, QPalette::ColorGroup cg, QPalette::ColorRole role) const
+static DStyle::StyleState getState(const QStyleOption *option)
 {
-    StyleState state = SS_NormalState;
+    DStyle::StyleState state = DStyle::SS_NormalState;
 
-    if (option->state.testFlag(State_Sunken)) {
-        state = SS_PressState;
-    } else if (option->state.testFlag(State_MouseOver)) {
-        state = SS_HoverState;
+    if (option->state.testFlag(DStyle::State_Sunken)) {
+        state = DStyle::SS_PressState;
+    } else if (option->state.testFlag(DStyle::State_MouseOver)) {
+        state = DStyle::SS_HoverState;
     }
 
-    return generatedBrush(state, option, base, cg, role);
+    return state;
+}
+
+static DStyle::StateFlags getFlags(const QStyleOption *option)
+{
+    DStyle::StateFlags flags = 0;
+
+    if (option->state.testFlag(DStyle::State_On)) {
+        flags |= DStyle::SS_CheckedFlag;
+    }
+
+    if (option->state.testFlag(DStyle::State_Selected)) {
+        flags |= DStyle::SS_SelectedFlag;
+    }
+
+    if (option->state.testFlag(DStyle::State_HasFocus)) {
+        flags |= DStyle::SS_FocusFlag;
+    }
+
+    return flags;
+}
+
+QBrush DStyle::generatedBrush(const QStyleOption *option, const QBrush &base, QPalette::ColorGroup cg, QPalette::ColorRole role) const
+{
+    return generatedBrush(getState(option), option, base, cg, role);
 }
 
 QBrush DStyle::generatedBrush(DStyle::StyleState state, const QStyleOption *option, const QBrush &base, QPalette::ColorGroup cg, QPalette::ColorRole role) const
 {
-    StateFlags flags = state;
-
-    if (option->state.testFlag(State_On)) {
-        flags |= SS_CheckedFlag;
-    }
-
-    if (option->state.testFlag(State_Selected)) {
-        flags |= SS_SelectedFlag;
-    }
-
-    if (option->state.testFlag(State_HasFocus)) {
-        flags |= SS_FocusFlag;
-    }
-
-    return generatedBrush(flags, base, cg, role);
+    return generatedBrush(getFlags(option) | state, base, cg, role);
 }
 
 QBrush DStyle::generatedBrush(StateFlags flags, const QBrush &base, QPalette::ColorGroup cg, QPalette::ColorRole role) const
 {
+    Q_UNUSED(flags)
+    Q_UNUSED(base)
     Q_UNUSED(cg)
     Q_UNUSED(role)
-    QColor color = base.color();
 
-    if (color.isValid()) {
-        return base;
-    }
+    return base;
+}
 
-    QBrush new_brush = base;
+QBrush DStyle::generatedBrush(const QStyleOption *option, const QBrush &base, QPalette::ColorGroup cg, DPalette::ColorType type) const
+{
+    return generatedBrush(getState(option), option, base, cg, type);
+}
 
-    switch (flags & StyleState_Mask) {
-    case SS_HoverState:
-        new_brush.setColor(color.lighter(150));
-        break;
-    case SS_PressState:
-        new_brush.setColor(color.darker(150));
-        break;
-    default:
-        break;
-    }
+QBrush DStyle::generatedBrush(DStyle::StyleState state, const QStyleOption *option, const QBrush &base, QPalette::ColorGroup cg, DPalette::ColorType type) const
+{
+    return generatedBrush(getFlags(option) | state, base, cg, type);
+}
 
-    return new_brush;
+QBrush DStyle::generatedBrush(StateFlags flags, const QBrush &base, QPalette::ColorGroup cg, DPalette::ColorType role) const
+{
+    Q_UNUSED(flags)
+    Q_UNUSED(cg)
+    Q_UNUSED(role)
+
+    return base;
 }
 
 DWIDGET_END_NAMESPACE

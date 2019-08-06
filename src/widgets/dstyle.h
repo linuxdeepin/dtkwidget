@@ -22,6 +22,7 @@
 #define DSTYLE_H
 
 #include <dtkwidget_global.h>
+#include <DPalette>
 
 #include <QCommonStyle>
 
@@ -78,6 +79,16 @@ public:
     virtual QBrush generatedBrush(StateFlags flags, const QBrush &base,
                                   QPalette::ColorGroup cg = QPalette::Normal,
                                   QPalette::ColorRole role = QPalette::NoRole) const;
+
+    QBrush generatedBrush(const QStyleOption *option, const QBrush &base,
+                          DPalette::ColorGroup cg = DPalette::Normal,
+                          DPalette::ColorType type = DPalette::ItemBackground) const;
+    QBrush generatedBrush(StyleState state, const QStyleOption *option, const QBrush &base,
+                          DPalette::ColorGroup cg = DPalette::Normal,
+                          DPalette::ColorType type = DPalette::ItemBackground) const;
+    virtual QBrush generatedBrush(StateFlags flags, const QBrush &base,
+                                  DPalette::ColorGroup cg = DPalette::Normal,
+                                  DPalette::ColorType role = DPalette::ItemBackground) const;
 
     using QCommonStyle::drawPrimitive;
     using QCommonStyle::pixelMetric;
