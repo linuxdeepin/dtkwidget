@@ -61,6 +61,24 @@ static DStyle::StateFlags getFlags(const QStyleOption *option)
     return flags;
 }
 
+int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QWidget *widget) const
+{
+    if (static_cast<int>(m) == PM_FrameMargins) {
+        int shadow_radius = pixelMetric(PM_ShadowRadius, opt, widget);
+        int shadow_xoffset = pixelMetric(PM_ShadowHOffset, opt, widget);
+        int shadow_yoffset = pixelMetric(PM_ShadowVOffset, opt, widget);
+
+        int border_width = pixelMetric(PM_FocusBorderWidth, opt, widget);
+        int border_spacing = pixelMetric(PM_FocusBorderSpacing, opt, widget);
+
+        int margins = qMax((shadow_radius + qMax(shadow_xoffset, shadow_yoffset)) / 2, border_width + border_spacing);
+
+        return margins;
+    }
+
+    return QCommonStyle::pixelMetric(m, opt, widget);
+}
+
 QBrush DStyle::generatedBrush(const QStyleOption *option, const QBrush &base, QPalette::ColorGroup cg, QPalette::ColorRole role) const
 {
     return generatedBrush(getState(option), option, base, cg, role);
@@ -68,6 +86,10 @@ QBrush DStyle::generatedBrush(const QStyleOption *option, const QBrush &base, QP
 
 QBrush DStyle::generatedBrush(DStyle::StyleState state, const QStyleOption *option, const QBrush &base, QPalette::ColorGroup cg, QPalette::ColorRole role) const
 {
+    if (auto proxy = qobject_cast<const DStyle*>(this->proxy())) {
+        return proxy->generatedBrush(getFlags(option) | state, base, cg, role);
+    }
+
     return generatedBrush(getFlags(option) | state, base, cg, role);
 }
 
@@ -88,6 +110,10 @@ QBrush DStyle::generatedBrush(const QStyleOption *option, const QBrush &base, QP
 
 QBrush DStyle::generatedBrush(DStyle::StyleState state, const QStyleOption *option, const QBrush &base, QPalette::ColorGroup cg, DPalette::ColorType type) const
 {
+    if (auto proxy = qobject_cast<const DStyle*>(this->proxy())) {
+        return proxy->generatedBrush(getFlags(option) | state, base, cg, type);
+    }
+
     return generatedBrush(getFlags(option) | state, base, cg, type);
 }
 

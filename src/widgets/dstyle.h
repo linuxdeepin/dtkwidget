@@ -45,6 +45,7 @@ public:
         PM_ShadowRadius,                                        //控件阴影效果的半径
         PM_ShadowHOffset,                                       //阴影在水平方向的偏移
         PM_ShadowVOffset,                                       //阴影在竖直方向的偏移
+        PM_FrameMargins,                                        //控件的margins区域，控件内容 = 控件大小 - FrameMargins
         PM_CustomBase = QStyle::PM_CustomBase + 0xf00000
     };
 
@@ -65,9 +66,11 @@ public:
     DStyle();
 
     inline void drawPrimitive(DStyle::PrimitiveElement pe, const QStyleOption *opt, QPainter *p, const QWidget *w = nullptr) const
-    { static_cast<const QCommonStyle*>(this)->drawPrimitive(static_cast<QStyle::PrimitiveElement>(pe), opt, p, w); }
+    { proxy()->drawPrimitive(static_cast<QStyle::PrimitiveElement>(pe), opt, p, w); }
     inline int pixelMetric(DStyle::PixelMetric m, const QStyleOption *opt = nullptr, const QWidget *widget = nullptr) const
-    { return static_cast<const QCommonStyle*>(this)->pixelMetric(static_cast<QStyle::PixelMetric>(m), opt, widget); }
+    { return proxy()->pixelMetric(static_cast<QStyle::PixelMetric>(m), opt, widget); }
+
+    int pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QWidget *widget) const override;
 
     // 获取一个加工后的画笔
     QBrush generatedBrush(const QStyleOption *option, const QBrush &base,
