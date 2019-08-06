@@ -267,7 +267,7 @@ void DPalette::setBrush(QPalette::ColorGroup cg, DPalette::ColorType cr, const Q
 
     if (cg == Current) {
         cg = currentColorGroup();
-    } else {
+    } else if (cg >= NColorGroups) {
         cg = Active;
     }
 
