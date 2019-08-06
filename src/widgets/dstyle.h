@@ -63,10 +63,10 @@ public:
 
     DStyle();
 
-    inline void drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, QPainter *p, const QWidget *w = nullptr) const
-    { drawPrimitive(static_cast<QStyle::PrimitiveElement>(pe), opt, p, w); }
-    inline int pixelMetric(PixelMetric m, const QStyleOption *opt = nullptr, const QWidget *widget = nullptr) const
-    { return pixelMetric(m, opt, widget); }
+    inline void drawPrimitive(DStyle::PrimitiveElement pe, const QStyleOption *opt, QPainter *p, const QWidget *w = nullptr) const
+    { static_cast<const QCommonStyle*>(this)->drawPrimitive(static_cast<QStyle::PrimitiveElement>(pe), opt, p, w); }
+    inline int pixelMetric(DStyle::PixelMetric m, const QStyleOption *opt = nullptr, const QWidget *widget = nullptr) const
+    { return static_cast<const QCommonStyle*>(this)->pixelMetric(static_cast<QStyle::PixelMetric>(m), opt, widget); }
 
     // 获取一个加工后的画笔
     QBrush generatedBrush(const QStyleOption *option, const QBrush &base,
@@ -79,8 +79,8 @@ public:
                                   QPalette::ColorGroup cg = QPalette::Normal,
                                   QPalette::ColorRole role = QPalette::NoRole) const;
 
-    using QStyle::drawPrimitive;
-    using QStyle::pixelMetric;
+    using QCommonStyle::drawPrimitive;
+    using QCommonStyle::pixelMetric;
 };
 
 DWIDGET_END_NAMESPACE
