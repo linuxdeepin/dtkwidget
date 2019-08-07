@@ -63,6 +63,10 @@ public:
     };
     Q_DECLARE_FLAGS(StateFlags, StyleState)
 
+    static QColor adjustColor(const QColor &base,
+                              qint8 hueFloat = 0, qint8 saturationFloat = 0, qint8 lightnessFloat = 0,
+                              qint8 redFloat = 0, qint8 greenFloat = 0, qint8 blueFloat = 0, qint8 alphaFloat = 0);
+
     DStyle();
 
     inline void drawPrimitive(DStyle::PrimitiveElement pe, const QStyleOption *opt, QPainter *p, const QWidget *w = nullptr) const

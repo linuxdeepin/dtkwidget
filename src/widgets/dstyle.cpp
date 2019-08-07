@@ -24,6 +24,40 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+inline static int adjustColorValue(int base, qint8 increment, int max = 255)
+{
+    return increment > 0 ? (max - base) * increment / 100.0 + base
+                         : base * (1 + increment / 100.0);
+}
+
+QColor DStyle::adjustColor(const QColor &base,
+                           qint8 hueFloat, qint8 saturationFloat, qint8 lightnessFloat,
+                           qint8 redFloat, qint8 greenFloat, qint8 blueFloat, qint8 alphaFloat)
+{
+    // 按HSL格式调整
+    int H, S, L;
+    base.getHsl(&H, &S, &L);
+
+    H = H > 0 ? adjustColorValue(H, hueFloat, 359) : H;
+    S = adjustColorValue(S, saturationFloat);
+    L = adjustColorValue(L, lightnessFloat);
+
+    QColor new_color = QColor::fromHsl(H, S, L);
+
+    // 按RGB格式调整
+    int A, R, G, B;
+    new_color.getRgb(&R, &G, &B, &A);
+
+    A = adjustColorValue(A, alphaFloat);
+    R = adjustColorValue(R, redFloat);
+    G = adjustColorValue(G, greenFloat);
+    B = adjustColorValue(B, blueFloat);
+
+    new_color.setRgb(R, G, B, A);
+
+    return new_color;
+}
+
 DStyle::DStyle()
 {
 
