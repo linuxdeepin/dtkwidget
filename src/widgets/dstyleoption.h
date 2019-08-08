@@ -43,6 +43,11 @@ DWIDGET_BEGIN_NAMESPACE
 class DStyleOption
 {
 public:
+    enum OptionType {
+        SO_HighlightButton = QStyleOption::SO_CustomBase + 1,
+        SO_CustomBase = QStyleOption::SO_CustomBase << 2
+    };
+
     virtual void init(QWidget *widget);
 };
 
