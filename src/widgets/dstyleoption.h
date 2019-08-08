@@ -32,8 +32,8 @@ QT_END_NAMESPACE
 DTK_BEGIN_NAMESPACE
 
 enum ItemDataRole {
-    MarginsRole,
-    UserRole = Qt::UserRole * 2
+    MarginsRole = Qt::UserRole + 1,
+    UserRole = Qt::UserRole << 2
 };
 
 DTK_END_NAMESPACE
