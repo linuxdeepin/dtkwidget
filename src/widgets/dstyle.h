@@ -66,6 +66,7 @@ public:
     static QColor adjustColor(const QColor &base,
                               qint8 hueFloat = 0, qint8 saturationFloat = 0, qint8 lightnessFloat = 0,
                               qint8 redFloat = 0, qint8 greenFloat = 0, qint8 blueFloat = 0, qint8 alphaFloat = 0);
+    static QColor blendColor(const QColor &substrate, const QColor &color2);
 
     DStyle();
 

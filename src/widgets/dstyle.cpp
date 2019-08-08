@@ -58,6 +58,23 @@ QColor DStyle::adjustColor(const QColor &base,
     return new_color;
 }
 
+QColor DStyle::blendColor(const QColor &substrate, const QColor &superstratum)
+{
+    QColor c2 = superstratum.toRgb();
+
+    if (c2.alpha() >= 255)
+        return c2;
+
+    QColor c1 = substrate.toRgb();
+    qreal c1_weight = 1 - c2.alphaF();
+
+    int r = c1_weight * c1.red() + c2.alphaF() * c2.red();
+    int g = c1_weight * c1.green() + c2.alphaF() * c2.green();
+    int b = c1_weight * c1.blue() + c2.alphaF() * c2.blue();
+
+    return QColor(r, g, b, c1.alpha());
+}
+
 DStyle::DStyle()
 {
 
