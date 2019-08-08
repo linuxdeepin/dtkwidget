@@ -86,7 +86,8 @@ public:
                           QPalette::ColorRole role = QPalette::NoRole) const;
     virtual QBrush generatedBrush(StateFlags flags, const QBrush &base,
                                   QPalette::ColorGroup cg = QPalette::Normal,
-                                  QPalette::ColorRole role = QPalette::NoRole) const;
+                                  QPalette::ColorRole role = QPalette::NoRole,
+                                  const QStyleOption *option = nullptr) const;
 
     QBrush generatedBrush(const QStyleOption *option, const QBrush &base,
                           DPalette::ColorGroup cg = DPalette::Normal,
@@ -96,7 +97,8 @@ public:
                           DPalette::ColorType type = DPalette::ItemBackground) const;
     virtual QBrush generatedBrush(StateFlags flags, const QBrush &base,
                                   DPalette::ColorGroup cg = DPalette::Normal,
-                                  DPalette::ColorType role = DPalette::ItemBackground) const;
+                                  DPalette::ColorType role = DPalette::ItemBackground,
+                                  const QStyleOption *option = nullptr) const;
 
     using QCommonStyle::drawPrimitive;
     using QCommonStyle::pixelMetric;

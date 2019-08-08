@@ -138,18 +138,19 @@ QBrush DStyle::generatedBrush(const QStyleOption *option, const QBrush &base, QP
 QBrush DStyle::generatedBrush(DStyle::StyleState state, const QStyleOption *option, const QBrush &base, QPalette::ColorGroup cg, QPalette::ColorRole role) const
 {
     if (auto proxy = qobject_cast<const DStyle*>(this->proxy())) {
-        return proxy->generatedBrush(getFlags(option) | state, base, cg, role);
+        return proxy->generatedBrush(getFlags(option) | state, base, cg, role, option);
     }
 
-    return generatedBrush(getFlags(option) | state, base, cg, role);
+    return generatedBrush(getFlags(option) | state, base, cg, role, option);
 }
 
-QBrush DStyle::generatedBrush(StateFlags flags, const QBrush &base, QPalette::ColorGroup cg, QPalette::ColorRole role) const
+QBrush DStyle::generatedBrush(StateFlags flags, const QBrush &base, QPalette::ColorGroup cg, QPalette::ColorRole role, const QStyleOption *option) const
 {
     Q_UNUSED(flags)
     Q_UNUSED(base)
     Q_UNUSED(cg)
     Q_UNUSED(role)
+    Q_UNUSED(option)
 
     return base;
 }
@@ -162,17 +163,18 @@ QBrush DStyle::generatedBrush(const QStyleOption *option, const QBrush &base, QP
 QBrush DStyle::generatedBrush(DStyle::StyleState state, const QStyleOption *option, const QBrush &base, QPalette::ColorGroup cg, DPalette::ColorType type) const
 {
     if (auto proxy = qobject_cast<const DStyle*>(this->proxy())) {
-        return proxy->generatedBrush(getFlags(option) | state, base, cg, type);
+        return proxy->generatedBrush(getFlags(option) | state, base, cg, type, option);
     }
 
-    return generatedBrush(getFlags(option) | state, base, cg, type);
+    return generatedBrush(getFlags(option) | state, base, cg, type, option);
 }
 
-QBrush DStyle::generatedBrush(StateFlags flags, const QBrush &base, QPalette::ColorGroup cg, DPalette::ColorType role) const
+QBrush DStyle::generatedBrush(StateFlags flags, const QBrush &base, QPalette::ColorGroup cg, DPalette::ColorType role, const QStyleOption *option) const
 {
     Q_UNUSED(flags)
     Q_UNUSED(cg)
     Q_UNUSED(role)
+    Q_UNUSED(option)
 
     return base;
 }
