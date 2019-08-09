@@ -35,20 +35,20 @@ QColor DStyle::adjustColor(const QColor &base,
                            qint8 redFloat, qint8 greenFloat, qint8 blueFloat, qint8 alphaFloat)
 {
     // 按HSL格式调整
-    int H, S, L;
-    base.getHsl(&H, &S, &L);
+    int H, S, L, A;
+    base.getHsl(&H, &S, &L, &A);
 
     H = H > 0 ? adjustColorValue(H, hueFloat, 359) : H;
     S = adjustColorValue(S, saturationFloat);
     L = adjustColorValue(L, lightnessFloat);
+    A = adjustColorValue(A, alphaFloat);
 
-    QColor new_color = QColor::fromHsl(H, S, L);
+    QColor new_color = QColor::fromHsl(H, S, L, A);
 
     // 按RGB格式调整
-    int A, R, G, B;
-    new_color.getRgb(&R, &G, &B, &A);
+    int R, G, B;
+    new_color.getRgb(&R, &G, &B);
 
-    A = adjustColorValue(A, alphaFloat);
     R = adjustColorValue(R, redFloat);
     G = adjustColorValue(G, greenFloat);
     B = adjustColorValue(B, blueFloat);
