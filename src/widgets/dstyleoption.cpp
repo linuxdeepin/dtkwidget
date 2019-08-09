@@ -230,7 +230,6 @@ void DPalette::set(QWidget *widget, const DPalette &pa)
     }
 
     DPalettePrivate::map[widget] = pa.d;
-    widget->setPalette(pa);
 }
 
 void DPalette::setGeneric(const DPalette &pa)
