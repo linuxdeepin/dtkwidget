@@ -71,6 +71,9 @@ DBackgroundGroup::DBackgroundGroup(QLayout *layout, QWidget *parent)
     , DObject(*new DBackgroundGroupPrivate(this))
 {
     setLayout(layout);
+    // 默认使用窗口背景作为item背景
+    setBackgroundRole(QPalette::Base);
+    setAutoFillBackground(false);
 
     if (QBoxLayout* boxLayout = qobject_cast<QBoxLayout*>(layout)) {
         if (boxLayout->direction() == QBoxLayout::LeftToRight ||
@@ -132,6 +135,18 @@ bool DBackgroundGroup::event(QEvent *event)
     case QEvent::LayoutDirectionChange: {
         D_D(DBackgroundGroup);
         d->updateOptions();
+        break;
+    }
+    case QEvent::PaletteChange: {
+        DPalette pa = DPalette::get(this);
+
+        if (backgroundRole() == QPalette::NoRole) { // 恢复为默认的role
+            pa.setBrush(DPalette::ItemBackground, DPalette().brush(DPalette::ItemBackground));
+        } else {
+            pa.setBrush(DPalette::ItemBackground, pa.brush(backgroundRole()));
+        }
+
+        DPalette::set(this, pa);
         break;
     }
     default:

@@ -29,6 +29,7 @@ protected:
 
 private:
     using QWidget::setLayout;
+    using QWidget::setAutoFillBackground;
 };
 
 DWIDGET_END_NAMESPACE
