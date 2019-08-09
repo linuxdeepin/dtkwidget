@@ -81,11 +81,6 @@ public:
 class DStyleOptionBackgroundGroup : public QStyleOption, public DStyleOption
 {
 public:
-    enum BackgroundDirection {
-        horizontal,
-        vertical,
-    };
-
     enum ItemBackgroundPosition {
         Invalid,
         Beginning,
@@ -98,9 +93,8 @@ public:
     using QStyleOption::QStyleOption;
     void init(QWidget *widget) override;
 
-    BackgroundDirection direction;
+    Qt::Orientations directions;
     ItemBackgroundPosition position;
-    QRect backgroundRect;
 };
 
 class DPalettePrivate;

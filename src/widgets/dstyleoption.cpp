@@ -166,7 +166,7 @@ void DStyleOptionLineEdit::init(QWidget *widget)
 
 void DStyleOptionBackgroundGroup::init(QWidget *widget)
 {
-    backgroundRect = widget->geometry();
+    rect = widget->geometry();
 }
 
 class DPalettePrivate
