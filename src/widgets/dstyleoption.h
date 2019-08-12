@@ -121,6 +121,7 @@ public:
 
     DPalette();
     DPalette(const QPalette &palette);
+    DPalette(const DPalette &palette);
     ~DPalette();
 
     static DPalette get(const QWidget *widget, const QPalette &base);
@@ -155,7 +156,7 @@ public:
     using QPalette::setColor;
 
 private:
-    QSharedPointer<DPalettePrivate> d;
+    QScopedPointer<DPalettePrivate> d;
 };
 
 class DFontSizeManagerPrivate;

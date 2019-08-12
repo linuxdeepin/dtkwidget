@@ -169,27 +169,45 @@ void DStyleOptionBackgroundGroup::init(QWidget *widget)
     rect = widget->geometry();
 }
 
+struct DPaletteData : public QSharedData
+{
+    QBrush br[DPalette::NColorGroups][DPalette::NColorTypes];
+};
+
 class DPalettePrivate
 {
 public:
-    QBrush br[DPalette::NColorGroups][DPalette::NColorTypes];
+    DPalettePrivate(const QSharedDataPointer<DPaletteData> &d)
+        : data(d)
+    {
 
-    static QHash<const QWidget*, QSharedPointer<DPalettePrivate>> map;
-    static QSharedPointer<DPalettePrivate> appPalette;
+    }
+
+    QSharedDataPointer<DPaletteData> data;
+
+    static QHash<const QWidget*, QSharedDataPointer<DPaletteData>> map;
+    static QSharedDataPointer<DPaletteData> appPalette;
 };
 
-QHash<const QWidget*, QSharedPointer<DPalettePrivate>> DPalettePrivate::map;
-QSharedPointer<DPalettePrivate> DPalettePrivate::appPalette = QSharedPointer<DPalettePrivate>::create();
+QHash<const QWidget*, QSharedDataPointer<DPaletteData>> DPalettePrivate::map;
+QSharedDataPointer<DPaletteData> DPalettePrivate::appPalette(new DPaletteData());
 
 DPalette::DPalette()
-    : d(DPalettePrivate::appPalette)
+    : d(new DPalettePrivate(DPalettePrivate::appPalette))
 {
 
 }
 
 DPalette::DPalette(const QPalette &palette)
     : QPalette(palette)
-    , d(DPalettePrivate::appPalette)
+    , d(new DPalettePrivate(DPalettePrivate::appPalette))
+{
+
+}
+
+DPalette::DPalette(const DPalette &palette)
+    : QPalette(palette)
+    , d(new DPalettePrivate(palette.d->data))
 {
 
 }
@@ -215,7 +233,7 @@ DPalette DPalette::get(const QWidget *widget, const QPalette &base)
     }
 
     if (data) {
-        pa.d = data;
+        pa.d->data = data;
     }
 
     return pa;
@@ -229,12 +247,12 @@ void DPalette::set(QWidget *widget, const DPalette &pa)
         });
     }
 
-    DPalettePrivate::map[widget] = pa.d;
+    DPalettePrivate::map[widget] = pa.d->data;
 }
 
 void DPalette::setGeneric(const DPalette &pa)
 {
-    DPalettePrivate::appPalette = pa.d;
+    DPalettePrivate::appPalette = pa.d->data;
 }
 
 const QBrush &DPalette::brush(QPalette::ColorGroup cg, DPalette::ColorType cr) const
@@ -249,7 +267,7 @@ const QBrush &DPalette::brush(QPalette::ColorGroup cg, DPalette::ColorType cr) c
         cg = Active;
     }
 
-    return d->br[cg][cr];
+    return d->data->br[cg][cr];
 }
 
 void DPalette::setBrush(QPalette::ColorGroup cg, DPalette::ColorType cr, const QBrush &brush)
@@ -270,7 +288,7 @@ void DPalette::setBrush(QPalette::ColorGroup cg, DPalette::ColorType cr, const Q
         cg = Active;
     }
 
-    d->br[cg][cr] = brush;
+    d->data->br[cg][cr] = brush;
 }
 
 class DFontSizeManagerPrivate
