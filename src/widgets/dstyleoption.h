@@ -54,7 +54,7 @@ public:
         SO_CustomBase = QStyleOption::SO_CustomBase << 2
     };
 
-    virtual void init(QWidget *widget);
+    virtual void init(const QWidget *widget);
 };
 
 class DStyleOptionButton : public QStyleOptionButton, public DStyleOption
@@ -62,10 +62,11 @@ class DStyleOptionButton : public QStyleOptionButton, public DStyleOption
 public:
     enum ButtonFeature {
         SuggestButton = (CommandLinkButton << 1),
-        WarningButton = (SuggestButton << 1)
+        WarningButton = (SuggestButton << 1),
+        FloatingButton = (WarningButton << 1)
     };
 
-    void init(QWidget *widget) override;
+    void init(const QWidget *widget) override;
 };
 
 class DStyleOptionLineEdit : public DStyleOption
@@ -78,7 +79,7 @@ public:
     };
     Q_DECLARE_FLAGS(LineEditFeatures, LineEditFeature)
 
-    void init(QWidget *widget) override;
+    void init(const QWidget *widget) override;
 
     LineEditFeatures features = None;
     QRect iconButtonRect;
@@ -97,7 +98,7 @@ public:
 
     using DStyleOption::DStyleOption;
     using QStyleOption::QStyleOption;
-    void init(QWidget *widget) override;
+    void init(const QWidget *widget) override;
 
     Qt::Orientations directions;
     ItemBackgroundPosition position;

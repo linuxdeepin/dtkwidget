@@ -115,7 +115,8 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dwindowgroupleader.h \
     $$PWD/dborderlesswidget.h \
     $$PWD/dborderlesswindow.h \
-    $$PWD/dstyle.h
+    $$PWD/dstyle.h \
+    $$PWD/dfloatingbutton.h
 
 SOURCES += $$PWD/dslider.cpp \
     $$PWD/dbackgroundgroup.cpp \
@@ -189,7 +190,8 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dwindowgroupleader.cpp \
     $$PWD/dborderlesswidget.cpp \
     $$PWD/dborderlesswindow.cpp \
-    $$PWD/dstyle.cpp
+    $$PWD/dstyle.cpp \
+    $$PWD/dfloatingbutton.cpp
 
 RESOURCES += \
     $$PWD/themes/dui_theme_dark.qrc \
@@ -240,5 +242,6 @@ includes.files += \
     $$PWD/DStyleOptionButton \
     $$PWD/DPalette \
     $$PWD/DFontSizeManager \
-    $$PWD/DStyle
+    $$PWD/DStyle \
+    $$PWD/DFloatingButton
 

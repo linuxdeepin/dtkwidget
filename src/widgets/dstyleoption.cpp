@@ -120,7 +120,7 @@ DWIDGET_BEGIN_NAMESPACE
  * \~chinese \brief 控件初始化样式时调用，可以用于重写控件样式。
  * \param widget
  */
-void DStyleOption::init(QWidget *widget)
+void DStyleOption::init(const QWidget *widget)
 {
     Q_UNUSED(widget)
 }
@@ -135,7 +135,7 @@ void DStyleOption::init(QWidget *widget)
  * \param widget
  * \sa Dtk::Widget::DSuggestButton
  */
-void DStyleOptionButton::init(QWidget *widget)
+void DStyleOptionButton::init(const QWidget *widget)
 {
     Q_UNUSED(widget)
 }
@@ -150,9 +150,9 @@ void DStyleOptionButton::init(QWidget *widget)
  * \param widget
  * \sa Dtk::Widget::DLineEdit
  */
-void DStyleOptionLineEdit::init(QWidget *widget)
+void DStyleOptionLineEdit::init(const QWidget *widget)
 {
-    if (const DLineEdit *edit = qobject_cast<DLineEdit*>(widget)) {
+    if (const DLineEdit *edit = qobject_cast<const DLineEdit*>(widget)) {
         if (edit->isAlert()) {
             features |= Alert;
         }
@@ -164,7 +164,7 @@ void DStyleOptionLineEdit::init(QWidget *widget)
     }
 }
 
-void DStyleOptionBackgroundGroup::init(QWidget *widget)
+void DStyleOptionBackgroundGroup::init(const QWidget *widget)
 {
     rect = widget->geometry();
 }
