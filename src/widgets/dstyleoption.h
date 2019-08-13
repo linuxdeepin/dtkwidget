@@ -54,6 +54,7 @@ public:
         SO_CustomBase = QStyleOption::SO_CustomBase << 2
     };
 
+    virtual void init(QWidget *widget);
     virtual void init(const QWidget *widget);
 };
 

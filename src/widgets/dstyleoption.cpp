@@ -120,6 +120,11 @@ DWIDGET_BEGIN_NAMESPACE
  * \~chinese \brief 控件初始化样式时调用，可以用于重写控件样式。
  * \param widget
  */
+void DStyleOption::init(QWidget *widget)
+{
+    init(static_cast<const QWidget*>(widget));
+}
+
 void DStyleOption::init(const QWidget *widget)
 {
     Q_UNUSED(widget)
