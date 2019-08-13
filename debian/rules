@@ -22,18 +22,18 @@ endif
 %:
 	dh $@ --parallel
 
-override_dh_auto_configure:
-	dh_auto_configure -- LIB_INSTALL_DIR=/usr/lib/$(DEB_HOST_MULTIARCH)
-override_dh_makeshlibs:
-	dh_makeshlibs -V
+#override_dh_auto_configure:
+#	dh_auto_configure -- LIB_INSTALL_DIR=/usr/lib/$(DEB_HOST_MULTIARCH)
+#override_dh_makeshlibs:
+#	dh_makeshlibs -V
 
-ifeq ($(DEB_BUILD_ARCH), sw_64)
-override_dh_makeshlibs:
-	dh_makeshlibs -V -- -c0
-endif
+#ifeq ($(DEB_BUILD_ARCH), sw_64)
+#override_dh_makeshlibs:
+#	dh_makeshlibs -V -- -c0
+#endif
 
-ifeq ($(DEB_BUILD_ARCH), mips64el)
-override_dh_makeshlibs:
-	dh_makeshlibs -V -- -c0
-endif
+#ifeq ($(DEB_BUILD_ARCH), mips64el)
+#override_dh_makeshlibs:
+#	dh_makeshlibs -V -- -c0
+#endif
 
