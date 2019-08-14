@@ -36,7 +36,8 @@ public:
     DFloatingButtonPrivate(DFloatingButton *qq)
         : DObjectPrivate(qq)
     {
-
+        // 默认调整大小，否则可能会导致按钮显示后为 QWidget 的默认大小
+        qq->resize(48, 48);
     }
 
     bool flat = false;
