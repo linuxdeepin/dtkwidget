@@ -26,6 +26,10 @@
 
 #include <QCommonStyle>
 
+QT_BEGIN_NAMESPACE
+class QTextLayout;
+QT_END_NAMESPACE
+
 DWIDGET_BEGIN_NAMESPACE
 
 class DStyle : public QCommonStyle
@@ -102,6 +106,13 @@ public:
 
     using QCommonStyle::drawPrimitive;
     using QCommonStyle::pixelMetric;
+
+#if QT_CONFIG(itemviews)
+    virtual QSizeF viewItemTextLayout(QTextLayout &textLayout, int lineWidth) const;
+    virtual QSize viewItemSize(const QStyleOptionViewItem *option, int role) const;
+    virtual void viewItemLayout(const QStyleOptionViewItem *opt,  QRect *pixmapRect,
+                                QRect *textRect, QRect *checkRect, bool sizehint) const;
+#endif
 };
 
 DWIDGET_END_NAMESPACE

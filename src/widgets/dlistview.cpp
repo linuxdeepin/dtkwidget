@@ -23,6 +23,7 @@
 #include "dlistview.h"
 #include "private/dlistview_p.h"
 #include "dflowlayout.h"
+#include "dstyleoption.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -185,8 +186,6 @@ DListView::DListView(QWidget *parent) :
     QListView(parent),
     DObject(*new DListViewPrivate(this))
 {
-    DThemeManager::registerWidget(this);
-
     d_func()->init();
 }
 
@@ -707,6 +706,19 @@ bool DListView::edit(const QModelIndex &index, QAbstractItemView::EditTrigger tr
         Q_EMIT triggerEdit(index);
 
     return tmp;
+}
+
+QStyleOptionViewItem DListView::viewOptions() const
+{
+    QStyleOptionViewItem item = QListView::viewOptions();
+
+    item.features |= QStyleOptionViewItem::ViewItemFeature(DStyleOptionViewItem::UseDStyleLayout);
+
+    if (viewMode() == QListView::ListMode) {
+        item.decorationAlignment = Qt::AlignVCenter;
+    }
+
+    return item;
 }
 
 DWIDGET_END_NAMESPACE

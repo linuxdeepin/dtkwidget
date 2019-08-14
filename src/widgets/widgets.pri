@@ -243,5 +243,7 @@ includes.files += \
     $$PWD/DPalette \
     $$PWD/DFontSizeManager \
     $$PWD/DStyle \
-    $$PWD/DFloatingButton
+    $$PWD/DFloatingButton \
+    $$PWD/DListView \
+    $$PWD/DStyleOptionViewItem
 

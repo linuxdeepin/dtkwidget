@@ -106,6 +106,8 @@ protected:
     void currentChanged(const QModelIndex &current, const QModelIndex &previous) Q_DECL_OVERRIDE;
     bool edit(const QModelIndex &index, EditTrigger trigger, QEvent *event) Q_DECL_OVERRIDE;
 
+    QStyleOptionViewItem viewOptions() const override;
+
 private:
     void setFlow(QListView::Flow flow);
     void setWrapping(bool enable);

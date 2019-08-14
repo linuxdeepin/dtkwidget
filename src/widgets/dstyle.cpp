@@ -21,6 +21,9 @@
 #include "dstyle.h"
 
 #include <QStyleOption>
+#include <QTextLayout>
+#include <qmath.h>
+#include <private/qfixed_p.h>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -178,5 +181,266 @@ QBrush DStyle::generatedBrush(StateFlags flags, const QBrush &base, QPalette::Co
 
     return base;
 }
+
+#if QT_CONFIG(itemviews)
+QSizeF DStyle::viewItemTextLayout(QTextLayout &textLayout, int lineWidth) const
+{
+    qreal height = 0;
+    qreal widthUsed = 0;
+    textLayout.beginLayout();
+    while (true) {
+        QTextLine line = textLayout.createLine();
+        if (!line.isValid())
+            break;
+        line.setLineWidth(lineWidth);
+        line.setPosition(QPointF(0, height));
+        height += line.height();
+        widthUsed = qMax(widthUsed, line.naturalTextWidth());
+    }
+    textLayout.endLayout();
+    return QSizeF(widthUsed, height);
+}
+
+QSize DStyle::viewItemSize(const QStyleOptionViewItem *option, int role) const
+{
+    const QWidget *widget = option->widget;
+    switch (role) {
+    case Qt::CheckStateRole:
+        if (option->features & QStyleOptionViewItem::HasCheckIndicator)
+            return QSize(proxy()->pixelMetric(QStyle::PM_IndicatorWidth, option, widget),
+                         proxy()->pixelMetric(QStyle::PM_IndicatorHeight, option, widget));
+        break;
+    case Qt::DisplayRole:
+        if (option->features & QStyleOptionViewItem::HasDisplay) {
+            QTextOption textOption;
+            textOption.setWrapMode(QTextOption::WordWrap);
+            QTextLayout textLayout(option->text, option->font);
+            textLayout.setTextOption(textOption);
+            const bool wrapText = option->features & QStyleOptionViewItem::WrapText;
+            const int textMargin = proxy()->pixelMetric(QStyle::PM_FocusFrameHMargin, option, widget) + 1;
+            QRect bounds = option->rect;
+            switch (option->decorationPosition) {
+            case QStyleOptionViewItem::Left:
+            case QStyleOptionViewItem::Right: {
+                if (wrapText && bounds.isValid()) {
+                    int width = bounds.width() - 2 * textMargin;
+                    if (option->features & QStyleOptionViewItem::HasDecoration)
+                        width -= option->decorationSize.width() + 2 * textMargin;
+                    bounds.setWidth(width);
+                } else
+                    bounds.setWidth(QFIXED_MAX);
+                break;
+            }
+            case QStyleOptionViewItem::Top:
+            case QStyleOptionViewItem::Bottom:
+                if (wrapText)
+                    bounds.setWidth(bounds.isValid() ? bounds.width() - 2 * textMargin : option->decorationSize.width());
+                else
+                    bounds.setWidth(QFIXED_MAX);
+                break;
+            default:
+                break;
+            }
+
+            if (wrapText && option->features & QStyleOptionViewItem::HasCheckIndicator)
+                bounds.setWidth(bounds.width() - proxy()->pixelMetric(QStyle::PM_IndicatorWidth) - 2 * textMargin);
+
+            const int lineWidth = bounds.width();
+            const QSizeF size = viewItemTextLayout(textLayout, lineWidth);
+            return QSize(qCeil(size.width()) + 2 * textMargin, qCeil(size.height()));
+        }
+        break;
+    case Qt::DecorationRole:
+        if (option->features & QStyleOptionViewItem::HasDecoration) {
+            return option->decorationSize;
+        }
+        break;
+    default:
+        break;
+    }
+
+    return QSize(0, 0);
+}
+
+void DStyle::viewItemLayout(const QStyleOptionViewItem *opt,  QRect *pixmapRect, QRect *textRect, QRect *checkRect, bool sizehint) const
+{
+    Q_ASSERT(checkRect && pixmapRect && textRect);
+    *pixmapRect = QRect(QPoint(0, 0), viewItemSize(opt, Qt::DecorationRole));
+    *textRect = QRect(QPoint(0, 0), viewItemSize(opt, Qt::DisplayRole));
+    *checkRect = QRect(QPoint(0, 0), viewItemSize(opt, Qt::CheckStateRole));
+
+    const QWidget *widget = opt->widget;
+    const bool hasCheck = checkRect->isValid();
+    const bool hasPixmap = pixmapRect->isValid();
+    const bool hasText = textRect->isValid();
+    const bool hasMargin = (hasText | hasPixmap | hasCheck);
+    const int frameHMargin = hasMargin ? proxy()->pixelMetric(QStyle::PM_FocusFrameHMargin, opt, widget) + 1 : 0;
+    const int textMargin = hasText ? frameHMargin : 0;
+    const int pixmapMargin = hasPixmap ? frameHMargin : 0;
+    const int checkMargin = hasCheck ? frameHMargin : 0;
+    const int x = opt->rect.left();
+    const int y = opt->rect.top();
+    int w, h;
+
+    if (textRect->height() == 0 && (!hasPixmap || !sizehint)) {
+        //if there is no text, we still want to have a decent height for the item sizeHint and the editor size
+        textRect->setHeight(opt->fontMetrics.height());
+    }
+
+    QSize pm(0, 0);
+    if (hasPixmap) {
+        pm = pixmapRect->size();
+        pm.rwidth() += 2 * pixmapMargin;
+    }
+    if (sizehint) {
+        h = qMax(checkRect->height(), qMax(textRect->height(), pm.height()));
+        if (opt->decorationPosition == QStyleOptionViewItem::Left
+            || opt->decorationPosition == QStyleOptionViewItem::Right) {
+            w = textRect->width() + pm.width();
+        } else {
+            w = qMax(textRect->width(), pm.width());
+        }
+
+        int cw = 0;
+        QRect check;
+        if (hasCheck) {
+            cw = checkRect->width() + 2 * checkMargin;
+            if (sizehint) w += cw;
+            // 选择标识框优先放置在右边
+            if (opt->direction == Qt::RightToLeft) {
+                check.setRect(x, y, cw, h);
+            } else {
+                check.setRect(x + w - cw, y, cw, h);
+            }
+        }
+
+        QRect display;
+        QRect decoration;
+        switch (opt->decorationPosition) {
+        case QStyleOptionViewItem::Top: {
+            if (hasPixmap)
+                pm.setHeight(pm.height() + pixmapMargin); // add space
+            h = sizehint ? textRect->height() : h - pm.height();
+
+            if (opt->direction == Qt::RightToLeft) {
+                decoration.setRect(x, y, w - cw, pm.height());
+                display.setRect(x, y + pm.height(), w - cw, h);
+            } else {
+                decoration.setRect(x + cw, y, w - cw, pm.height());
+                display.setRect(x + cw, y + pm.height(), w - cw, h);
+            }
+            break; }
+        case QStyleOptionViewItem::Bottom: {
+            if (hasText)
+                textRect->setHeight(textRect->height() + textMargin); // add space
+            h = sizehint ? textRect->height() + pm.height() : h;
+
+            if (opt->direction == Qt::RightToLeft) {
+                display.setRect(x, y, w - cw, textRect->height());
+                decoration.setRect(x, y + textRect->height(), w - cw, h - textRect->height());
+            } else {
+                display.setRect(x + cw, y, w - cw, textRect->height());
+                decoration.setRect(x + cw, y + textRect->height(), w - cw, h - textRect->height());
+            }
+            break; }
+        case QStyleOptionViewItem::Left: {
+            if (opt->direction == Qt::LeftToRight) {
+                decoration.setRect(x + cw, y, pm.width(), h);
+                display.setRect(decoration.right() + 1, y, w - pm.width() - cw, h);
+            } else {
+                display.setRect(x, y, w - pm.width() - cw, h);
+                decoration.setRect(display.right() + 1, y, pm.width(), h);
+            }
+            break; }
+        case QStyleOptionViewItem::Right: {
+            if (opt->direction == Qt::LeftToRight) {
+                display.setRect(x + cw, y, w - pm.width() - cw, h);
+                decoration.setRect(display.right() + 1, y, pm.width(), h);
+            } else {
+                decoration.setRect(x, y, pm.width(), h);
+                display.setRect(decoration.right() + 1, y, w - pm.width() - cw, h);
+            }
+            break; }
+        default:
+            qWarning("doLayout: decoration position is invalid");
+            decoration = *pixmapRect;
+            break;
+        }
+
+        *checkRect = check;
+        *pixmapRect = decoration;
+        *textRect = display;
+    } else {
+        w = opt->rect.width();
+        h = opt->rect.height();
+
+        *pixmapRect = QStyle::alignedRect(opt->direction, opt->decorationAlignment,
+                                          pixmapRect->size(), opt->rect.adjusted(pixmapMargin, pixmapMargin, -pixmapMargin, -pixmapMargin));
+
+        QRect display = opt->rect;
+
+        switch (opt->decorationPosition) {
+        case QStyleOptionViewItem::Top: {
+            int residue_height = opt->rect.bottom() - pixmapRect->bottom();
+
+            // 空间不够时，要改变图标的位置来腾出空间
+            if (textRect->height() > residue_height) {
+                pixmapRect->moveTop(qMax(0, pixmapRect->top() - textRect->height() + residue_height));
+            }
+
+            display.setTop(pixmapRect->bottom() + pixmapMargin);
+            break;
+        }
+        case QStyleOptionViewItem::Bottom: {
+            int residue_height = pixmapRect->top() - opt->rect.top();
+
+            // 空间不够时，要改变图标的位置来腾出空间
+            if (textRect->height() > residue_height) {
+                pixmapRect->moveBottom(qMin(opt->rect.bottom(), pixmapRect->bottom() + textRect->height() - residue_height));
+            }
+
+            display.setBottom(pixmapRect->top() - pixmapMargin);
+            break;
+        }
+        case QStyleOptionViewItem::Left:
+        case QStyleOptionViewItem::Right:
+            if (opt->decorationPosition == QStyleOptionViewItem::Left
+                    && opt->direction == Qt::LeftToRight) {
+                int residue_width = pixmapRect->left() - opt->rect.left();
+
+                // 空间不够时，要改变图标的位置来腾出空间
+                if (textRect->width() > residue_width) {
+                    pixmapRect->moveLeft(qMax(opt->rect.left(), pixmapRect->left() - textRect->width() + residue_width));
+                }
+
+                display.setLeft(pixmapRect->right() + pixmapMargin);
+            } else {
+                int residue_width = opt->rect.right() - pixmapRect->left();
+
+                // 空间不够时，要改变图标的位置来腾出空间
+                if (textRect->width() > residue_width) {
+                    pixmapRect->moveRight(qMin(opt->rect.right(), pixmapRect->right() + textRect->width() - residue_width));
+                }
+
+                display.setRight(pixmapRect->left() - pixmapMargin);
+            }
+        default:
+            break;
+        }
+
+        display.adjust(checkMargin, 0, -checkMargin, 0);
+        *checkRect = QStyle::alignedRect(opt->direction, Qt::AlignRight | Qt::AlignVCenter, checkRect->size(), display);
+
+        // 减去margins
+        display.adjust(textMargin, textMargin, -textMargin, -textMargin);
+        *textRect = QStyle::alignedRect(opt->direction, opt->displayAlignment, textRect->size(), display);
+
+        if (opt->features & QStyleOptionViewItem::HasCheckIndicator)
+            display.setRight(checkRect->left() - checkMargin - textMargin);
+
+        *textRect &= display;
+    }
+}
+#endif
 
 DWIDGET_END_NAMESPACE
