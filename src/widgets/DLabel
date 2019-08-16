@@ -1,0 +1,2 @@
+#include "dwidgerstype.h"
+#inclue <QLabel>

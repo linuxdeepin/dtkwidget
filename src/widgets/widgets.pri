@@ -116,7 +116,8 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dborderlesswidget.h \
     $$PWD/dborderlesswindow.h \
     $$PWD/dstyle.h \
-    $$PWD/dfloatingbutton.h
+    $$PWD/dfloatingbutton.h \
+    $$PWD/dwidgetstype.h \
 
 SOURCES += $$PWD/dslider.cpp \
     $$PWD/dbackgroundgroup.cpp \
@@ -245,5 +246,58 @@ includes.files += \
     $$PWD/DStyle \
     $$PWD/DFloatingButton \
     $$PWD/DListView \
-    $$PWD/DStyleOptionViewItem
+    $$PWD/DStyleOptionViewItem \
+
+    $$PWD/DScrollBar \
+    $$PWD/DPushButton \
+    $$PWD/DToolButton \
+    $$PWD/DRadioButton \
+    $$PWD/DCheckButton \
+    $$PWD/DommandLinkButton \
+    $$PWD/DDialogButtonBox \
+
+    $$PWD/DListWidget \
+    $$PWD/DTreeWidget \
+    $$PWD/DTableWidget \
+
+    $$PWD/DGroupBox \
+    $$PWD/DGroupBox \
+    $$PWD/DScrollArea \
+    $$PWD/DToolBox \
+    $$PWD/DTableWidget \
+    $$PWD/DStackedWidget \
+    $$PWD/DFrame \
+    $$PWD/DWidget \
+    $$PWD/DMDIArea \
+    $$PWD/DDockWidget \
+
+    $$PWD/DComboBox \
+    $$PWD/DFontComboBox \
+    $$PWD/DLineEdit \
+    $$PWD/DTextEdit \
+    $$PWD/DPlainTextEdit \
+    $$PWD/DSpinBox \
+    $$PWD/DDoubleSpinBox \
+    $$PWD/DTimeEdit \
+    $$PWD/DDateEdit \
+    $$PWD/DDateTimeEdit \
+    $$PWD/DDial \
+    $$PWD/DHorizontalScrollBar \
+    $$PWD/DVerticalScrollBar \
+    $$PWD/DHorizontalSlider \
+    $$PWD/DVerticalSlider \
+    $$PWD/DKeySequenceEdit \
+
+    $$PWD/DLabel \
+    $$PWD/DTextBrowser \
+    $$PWD/DGraphicsView \
+    $$PWD/DCalendarWidget \
+    $$PWD/DLCDNumber \
+    $$PWD/DProgressBar \
+    $$PWD/DHorizontalLine \
+    $$PWD/DVerticalLine \
+    $$PWD/DOpenGLWidget \
+    $$PWD/DQuickWidget \
+    $$PWD/DWebView
+
 
