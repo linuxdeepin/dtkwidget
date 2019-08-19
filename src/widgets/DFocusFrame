@@ -1,2 +1,2 @@
 #include "dwidgetstype.h"
-#include <QToolButton>
+#include <QFocusFrame>

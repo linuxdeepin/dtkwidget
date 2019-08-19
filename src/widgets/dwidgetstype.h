@@ -12,11 +12,9 @@ class QRadioButton;
 class QCheckButton;
 class QCommandLinkButton;
 class QDialogButtonBox;
-
 class QListWidget;
 class QTreeWidget;
 class QTableWidget;
-
 class QGroupBox;
 class QScrollArea;
 class QToolBox;
@@ -26,7 +24,6 @@ class QFrame;
 class QWidget;
 class QMDIArea;
 class QDockWidget;
-
 class QComboBox;
 class QFontComboBox;
 class QLineEdit;
@@ -43,7 +40,6 @@ class QVerticalScrollBar;
 class QHorizontalSlider;
 class QVerticalSlider;
 class QKeySequenceEdit;
-
 class QLabel;
 class QTextBrowser;
 class QGraphicsView;
@@ -55,6 +51,35 @@ class QVerticalLine;
 class QOpenGLWidget;
 class QQuickWidget;
 class QWebView;
+class QAccessibleWidget;
+class QCheckBox;
+class QColorDialog;
+class QColumnView;
+class QDataWidgetMapper;
+class QFocusFrame;
+class QHeaderView;
+class QInputDialog;
+class QMdiArea;
+class QMdiSubWindow;
+class QErrorMessage;
+class QFontDialog;
+class QMenu;
+class QMenuBar;
+class QMessageBox;
+class QRubberBand;
+class QSlider;
+class QSplitter;
+class QStatusBar;
+class QTabWidget;
+class QTableView;
+class QTileRules;
+class QToolBar;
+class QToolTip;
+class QTreeView;
+class QUndoView;
+class QWhatsThis;
+class QWizard;
+class QWizardPage;
 
 QT_END_NAMESPACE
 
@@ -67,11 +92,9 @@ typedef QRadioButton  DRadioButton;
 typedef QCheckButton DCheckButton;
 typedef QCommandLinkButton DommandLinkButton;
 typedef QDialogButtonBox DDialogButtonBox;
-
 typedef QListWidget DListWidget;
 typedef QTreeWidget DTreeWidget;
 typedef QTableWidget DTableWidget;
-
 typedef QGroupBox DGroupBox;
 typedef QScrollArea DScrollArea;
 typedef QToolBox DToolBox;
@@ -81,7 +104,6 @@ typedef QFrame DFrame;
 typedef QWidget DWidget;
 typedef QMDIArea DMDIArea;
 typedef QDockWidget DDockWidget;
-
 typedef QComboBox DComboBox;
 typedef QFontComboBox DFontComboBox;
 typedef QLineEdit DLineEdit;
@@ -98,7 +120,6 @@ typedef QVerticalScrollBar DVerticalScrollBar;
 typedef QHorizontalSlider DHorizontalSlider;
 typedef QVerticalSlider DVerticalSlider;
 typedef QKeySequenceEdit DKeySequenceEdit;
-
 typedef QLabel DLabel;
 typedef QTextBrowser DTextBrowser;
 typedef QGraphicsView DGraphicsView;
@@ -110,6 +131,35 @@ typedef QVerticalLine DVerticalLine;
 typedef QOpenGLWidget DOpenGLWidget;
 typedef QQuickWidget DQuickWidget;
 typedef QWebView DWebView;
+typedef QAccessibleWidget DAccessibleWidget;
+typedef QCheckBox DCheckBox;
+typedef QColorDialog DColorDialog;
+typedef QColumnView DColumnView;
+typedef QDataWidgetMapper DDataWidgetMapper;
+typedef QFocusFrame DFocusFrame;
+typedef QHeaderView DHeaderView;
+typedef QInputDialog DInputDialog;
+typedef QMdiArea DMdiArea;
+typedef QMdiSubWindow DMdiSubWindow;
+typedef QErrorMessage DErrorMessage;
+typedef QFontDialog DFontDialog;
+typedef QMenu DMenu;
+typedef QMenuBar DMenuBar;
+typedef QMessageBox DMessageBox;
+typedef QRubberBand DRubberBand;
+typedef QSlider DSlider;
+typedef QSplitter DSplitter;
+typedef QStatusBar DStatusBar;
+typedef QTabWidget DTabWidget;
+typedef QTableView DTableView;
+typedef QTileRules DTileRules;
+typedef QToolBar DToolBar;
+typedef QToolTip DToolTip;
+typedef QTreeView DTreeView;
+typedef QUndoView DUndoView;
+typedef QWhatsThis DWhatsThis;
+typedef QWizard DWizard;
+typedef QWizardPage DWizardPage;
 
 DWIDGET_END_NAMESPACE
 

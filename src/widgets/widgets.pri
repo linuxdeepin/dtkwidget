@@ -204,7 +204,6 @@ INCLUDEPATH += $$PWD
 includes.files += $$PWD/*.h
 includes.files += \
     $$PWD/DTitlebar \
-    $$PWD/DWindow \
     $$PWD/DMainWindow \
     $$PWD/DAboutDialog \
     $$PWD/DApplication \
@@ -247,7 +246,6 @@ includes.files += \
     $$PWD/DFloatingButton \
     $$PWD/DListView \
     $$PWD/DStyleOptionViewItem \
-
     $$PWD/DScrollBar \
     $$PWD/DPushButton \
     $$PWD/DToolButton \
@@ -255,12 +253,9 @@ includes.files += \
     $$PWD/DCheckButton \
     $$PWD/DommandLinkButton \
     $$PWD/DDialogButtonBox \
-
     $$PWD/DListWidget \
     $$PWD/DTreeWidget \
     $$PWD/DTableWidget \
-
-    $$PWD/DGroupBox \
     $$PWD/DGroupBox \
     $$PWD/DScrollArea \
     $$PWD/DToolBox \
@@ -270,7 +265,6 @@ includes.files += \
     $$PWD/DWidget \
     $$PWD/DMDIArea \
     $$PWD/DDockWidget \
-
     $$PWD/DComboBox \
     $$PWD/DFontComboBox \
     $$PWD/DLineEdit \
@@ -287,7 +281,6 @@ includes.files += \
     $$PWD/DHorizontalSlider \
     $$PWD/DVerticalSlider \
     $$PWD/DKeySequenceEdit \
-
     $$PWD/DLabel \
     $$PWD/DTextBrowser \
     $$PWD/DGraphicsView \
@@ -298,6 +291,33 @@ includes.files += \
     $$PWD/DVerticalLine \
     $$PWD/DOpenGLWidget \
     $$PWD/DQuickWidget \
-    $$PWD/DWebView
-
-
+    $$PWD/DWebView \
+    $$PWD/DAccessibleWidget \
+    $$PWD/DCheckBox \
+    $$PWD/DColorDialog \
+    $$PWD/DColumnView \
+    $$PWD/DDataWidgetMapper \
+    $$PWD/DFocusFrame \
+    $$PWD/DHeaderView \
+    $$PWD/DInputDialog \
+    $$PWD/DMdiArea \
+    $$PWD/DMdiSubWindow \
+    $$PWD/DErrorMessage \
+    $$PWD/DFontDialog \
+    $$PWD/DMenu \
+    $$PWD/DMenuBar \
+    $$PWD/DMessageBox \
+    $$PWD/DRubberBand \
+    $$PWD/DSlider \
+    $$PWD/DSplitter \
+    $$PWD/DStatusBar \
+    $$PWD/DTabWidget \
+    $$PWD/DTableView \
+    $$PWD/DTileRules \
+    $$PWD/DToolBar \
+    $$PWD/DToolTip \
+    $$PWD/DTreeView \
+    $$PWD/DUndoView \
+    $$PWD/DWhatsThis \
+    $$PWD/DWizard \
+    $$PWD/DWizardPage

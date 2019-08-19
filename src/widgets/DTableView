@@ -1,0 +1,2 @@
+#include "dwidgetstype.h"
+#include <QTableView>
