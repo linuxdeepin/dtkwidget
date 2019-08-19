@@ -320,4 +320,5 @@ includes.files += \
     $$PWD/DUndoView \
     $$PWD/DWhatsThis \
     $$PWD/DWizard \
-    $$PWD/DWizardPage
+    $$PWD/DWizardPage \
+    $$PWD/DDialog

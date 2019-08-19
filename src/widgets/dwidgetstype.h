@@ -2,6 +2,7 @@
 #define DWIDGETSTYPE_H
 
 #include <dtkwidget_global.h>
+#include <QFrame>
 
 QT_BEGIN_NAMESPACE
 
@@ -26,7 +27,6 @@ class QMDIArea;
 class QDockWidget;
 class QComboBox;
 class QFontComboBox;
-class QLineEdit;
 class QTextEdit;
 class QPlainTextEdit;
 class QSpinBox;
@@ -40,7 +40,6 @@ class QVerticalScrollBar;
 class QHorizontalSlider;
 class QVerticalSlider;
 class QKeySequenceEdit;
-class QLabel;
 class QTextBrowser;
 class QGraphicsView;
 class QCalendarWidget;
@@ -106,7 +105,6 @@ typedef QMDIArea DMDIArea;
 typedef QDockWidget DDockWidget;
 typedef QComboBox DComboBox;
 typedef QFontComboBox DFontComboBox;
-typedef QLineEdit DLineEdit;
 typedef QTextEdit DTextEdit;
 typedef QPlainTextEdit DPlainTextEdit;
 typedef QSpinBox DSpinBox;
@@ -120,14 +118,11 @@ typedef QVerticalScrollBar DVerticalScrollBar;
 typedef QHorizontalSlider DHorizontalSlider;
 typedef QVerticalSlider DVerticalSlider;
 typedef QKeySequenceEdit DKeySequenceEdit;
-typedef QLabel DLabel;
 typedef QTextBrowser DTextBrowser;
 typedef QGraphicsView DGraphicsView;
 typedef QCalendarWidget DCalendarWidget;
 typedef QLCDNumber DLCDNumber;
 typedef QProgressBar DProgressBar;
-typedef QHorizontalLine DHorizontalLine;
-typedef QVerticalLine DVerticalLine;
 typedef QOpenGLWidget DOpenGLWidget;
 typedef QQuickWidget DQuickWidget;
 typedef QWebView DWebView;
@@ -160,6 +155,26 @@ typedef QUndoView DUndoView;
 typedef QWhatsThis DWhatsThis;
 typedef QWizard DWizard;
 typedef QWizardPage DWizardPage;
+
+class DHorizontalLine : public QFrame
+{
+public:
+    explicit DHorizontalLine(QWidget* parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags())
+        : QFrame(parent, f)
+    {
+        setFrameShape(HLine);
+    }
+};
+
+class DVerticalLine : public QFrame
+{
+public:
+    explicit DVerticalLine(QWidget* parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags())
+        : QFrame(parent, f)
+    {
+        setFrameShape(VLine);
+    }
+};
 
 DWIDGET_END_NAMESPACE
 
