@@ -18,12 +18,12 @@
 #include <QDebug>
 #include <QScrollBar>
 
-#include "dthememanager.h"
 #include "dboxwidget.h"
 #include "dlistview.h"
 #include "private/dlistview_p.h"
 #include "dflowlayout.h"
 #include "dstyleoption.h"
+#include "dstyleditemdelegate.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -107,6 +107,11 @@ void DListViewPrivate::init()
 
     q->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
     q->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+
+    DStyledItemDelegate *delegate = new DStyledItemDelegate(q);
+
+    delegate->setBackgroundType(DStyledItemDelegate::RoundedBackground);
+    q->setItemDelegate(delegate);
 }
 
 void DListViewPrivate::onOrientationChanged()
@@ -335,6 +340,33 @@ void DListView::setModel(QAbstractItemModel *model)
         connect(model, &QAbstractItemModel::rowsInserted, this, &DListView::rowCountChanged);
         connect(model, &QAbstractItemModel::rowsRemoved, this, &DListView::rowCountChanged);
     }
+}
+
+DStyledItemDelegate::BackgroundType DListView::backgroundType() const
+{
+    if (DStyledItemDelegate *d = qobject_cast<DStyledItemDelegate*>(itemDelegate())) {
+        return d->backgroundType();
+    }
+
+    return DStyledItemDelegate::NoBackground;
+}
+
+QMargins DListView::itemMargins() const
+{
+    if (DStyledItemDelegate *d = qobject_cast<DStyledItemDelegate*>(itemDelegate())) {
+        return d->margins();
+    }
+
+    return QMargins();
+}
+
+QSize DListView::itemSize() const
+{
+    if (DStyledItemDelegate *d = qobject_cast<DStyledItemDelegate*>(itemDelegate())) {
+        return d->itemSize();
+    }
+
+    return QSize();
 }
 
 /*!
@@ -615,6 +647,27 @@ void DListView::setOrientation(QListView::Flow flow, bool wrapping)
 void DListView::edit(const QModelIndex &index)
 {
     QListView::edit(index);
+}
+
+void DListView::setBackgroundType(DStyledItemDelegate::BackgroundType backgroundType)
+{
+    if (DStyledItemDelegate *d = qobject_cast<DStyledItemDelegate*>(itemDelegate())) {
+        d->setBackgroundType(backgroundType);
+    }
+}
+
+void DListView::setItemMargins(const QMargins &itemMargins)
+{
+    if (DStyledItemDelegate *d = qobject_cast<DStyledItemDelegate*>(itemDelegate())) {
+        d->setMargins(itemMargins);
+    }
+}
+
+void DListView::setItemSize(QSize itemSize)
+{
+    if (DStyledItemDelegate *d = qobject_cast<DStyledItemDelegate*>(itemDelegate())) {
+        return d->setItemSize(itemSize);
+    }
 }
 
 #if(QT_VERSION < 0x050500)

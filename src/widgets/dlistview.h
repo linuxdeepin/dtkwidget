@@ -21,8 +21,8 @@
 #include "dtkwidget_global.h"
 
 #include <dobject.h>
+#include <DStyledItemDelegate>
 
-#include <QStyledItemDelegate>
 #include <QListView>
 
 DWIDGET_BEGIN_NAMESPACE
@@ -52,6 +52,9 @@ class LIBDTKWIDGETSHARED_EXPORT DListView : public QListView, public DTK_CORE_NA
     Q_PROPERTY(int count READ count NOTIFY rowCountChanged)
     /// list layout orientation
     Q_PROPERTY(Qt::Orientation orientation READ orientation NOTIFY orientationChanged)
+    Q_PROPERTY(DStyledItemDelegate::BackgroundType backgroundType READ backgroundType WRITE setBackgroundType)
+    Q_PROPERTY(QMargins itemMargins READ itemMargins WRITE setItemMargins)
+    Q_PROPERTY(QSize itemSize READ itemSize WRITE setItemSize)
 
 public:
     explicit DListView(QWidget *parent = 0);
@@ -71,6 +74,10 @@ public:
 
     void setModel(QAbstractItemModel *model) Q_DECL_OVERRIDE;
 
+    DStyledItemDelegate::BackgroundType backgroundType() const;
+    QMargins itemMargins() const;
+    QSize itemSize() const;
+
 public Q_SLOTS:
     bool addItem(const QVariant &data);
     bool addItems(const QVariantList &datas);
@@ -88,6 +95,10 @@ public Q_SLOTS:
 
     void setOrientation(QListView::Flow flow, bool wrapping);
     void edit(const QModelIndex &index);
+
+    void setBackgroundType(DStyledItemDelegate::BackgroundType backgroundType);
+    void setItemMargins(const QMargins &itemMargins);
+    void setItemSize(QSize itemSize);
 
 Q_SIGNALS:
     void rowCountChanged();

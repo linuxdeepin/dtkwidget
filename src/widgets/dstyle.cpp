@@ -22,8 +22,10 @@
 
 #include <QStyleOption>
 #include <QTextLayout>
+#include <QTextLine>
 #include <qmath.h>
 #include <private/qfixed_p.h>
+#include <private/qtextengine_p.h>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -183,7 +185,7 @@ QBrush DStyle::generatedBrush(StateFlags flags, const QBrush &base, QPalette::Co
 }
 
 #if QT_CONFIG(itemviews)
-QSizeF DStyle::viewItemTextLayout(QTextLayout &textLayout, int lineWidth) const
+QSizeF DStyle::viewItemTextLayout(QTextLayout &textLayout, int lineWidth)
 {
     qreal height = 0;
     qreal widthUsed = 0;
@@ -201,14 +203,14 @@ QSizeF DStyle::viewItemTextLayout(QTextLayout &textLayout, int lineWidth) const
     return QSizeF(widthUsed, height);
 }
 
-QSize DStyle::viewItemSize(const QStyleOptionViewItem *option, int role) const
+QSize DStyle::viewItemSize(const QStyle *style, const QStyleOptionViewItem *option, int role)
 {
     const QWidget *widget = option->widget;
     switch (role) {
     case Qt::CheckStateRole:
         if (option->features & QStyleOptionViewItem::HasCheckIndicator)
-            return QSize(proxy()->pixelMetric(QStyle::PM_IndicatorWidth, option, widget),
-                         proxy()->pixelMetric(QStyle::PM_IndicatorHeight, option, widget));
+            return QSize(style->pixelMetric(QStyle::PM_IndicatorWidth, option, widget),
+                         style->pixelMetric(QStyle::PM_IndicatorHeight, option, widget));
         break;
     case Qt::DisplayRole:
         if (option->features & QStyleOptionViewItem::HasDisplay) {
@@ -217,7 +219,7 @@ QSize DStyle::viewItemSize(const QStyleOptionViewItem *option, int role) const
             QTextLayout textLayout(option->text, option->font);
             textLayout.setTextOption(textOption);
             const bool wrapText = option->features & QStyleOptionViewItem::WrapText;
-            const int textMargin = proxy()->pixelMetric(QStyle::PM_FocusFrameHMargin, option, widget) + 1;
+            const int textMargin = style->pixelMetric(QStyle::PM_FocusFrameHMargin, option, widget) + 1;
             QRect bounds = option->rect;
             switch (option->decorationPosition) {
             case QStyleOptionViewItem::Left:
@@ -243,7 +245,7 @@ QSize DStyle::viewItemSize(const QStyleOptionViewItem *option, int role) const
             }
 
             if (wrapText && option->features & QStyleOptionViewItem::HasCheckIndicator)
-                bounds.setWidth(bounds.width() - proxy()->pixelMetric(QStyle::PM_IndicatorWidth) - 2 * textMargin);
+                bounds.setWidth(bounds.width() - style->pixelMetric(QStyle::PM_IndicatorWidth) - 2 * textMargin);
 
             const int lineWidth = bounds.width();
             const QSizeF size = viewItemTextLayout(textLayout, lineWidth);
@@ -262,19 +264,19 @@ QSize DStyle::viewItemSize(const QStyleOptionViewItem *option, int role) const
     return QSize(0, 0);
 }
 
-void DStyle::viewItemLayout(const QStyleOptionViewItem *opt,  QRect *pixmapRect, QRect *textRect, QRect *checkRect, bool sizehint) const
+void DStyle::viewItemLayout(const QStyle *style, const QStyleOptionViewItem *opt,  QRect *pixmapRect, QRect *textRect, QRect *checkRect, bool sizehint)
 {
     Q_ASSERT(checkRect && pixmapRect && textRect);
-    *pixmapRect = QRect(QPoint(0, 0), viewItemSize(opt, Qt::DecorationRole));
-    *textRect = QRect(QPoint(0, 0), viewItemSize(opt, Qt::DisplayRole));
-    *checkRect = QRect(QPoint(0, 0), viewItemSize(opt, Qt::CheckStateRole));
+    *pixmapRect = QRect(QPoint(0, 0), viewItemSize(style, opt, Qt::DecorationRole));
+    *textRect = QRect(QPoint(0, 0), viewItemSize(style, opt, Qt::DisplayRole));
+    *checkRect = QRect(QPoint(0, 0), viewItemSize(style, opt, Qt::CheckStateRole));
 
     const QWidget *widget = opt->widget;
     const bool hasCheck = checkRect->isValid();
     const bool hasPixmap = pixmapRect->isValid();
     const bool hasText = textRect->isValid();
     const bool hasMargin = (hasText | hasPixmap | hasCheck);
-    const int frameHMargin = hasMargin ? proxy()->pixelMetric(QStyle::PM_FocusFrameHMargin, opt, widget) + 1 : 0;
+    const int frameHMargin = hasMargin ? style->pixelMetric(QStyle::PM_FocusFrameHMargin, opt, widget) + 1 : 0;
     const int textMargin = hasText ? frameHMargin : 0;
     const int pixmapMargin = hasPixmap ? frameHMargin : 0;
     const int checkMargin = hasCheck ? frameHMargin : 0;
@@ -440,6 +442,84 @@ void DStyle::viewItemLayout(const QStyleOptionViewItem *opt,  QRect *pixmapRect,
 
         *textRect &= display;
     }
+}
+
+void DStyle::viewItemLayout(const QStyleOptionViewItem *opt, QRect *pixmapRect, QRect *textRect, QRect *checkRect, bool sizehint) const
+{
+    viewItemLayout(this, opt, pixmapRect, textRect, checkRect, sizehint);
+}
+
+void DStyle::viewItemDrawText(const QStyle *style, QPainter *p, const QStyleOptionViewItem *option, const QRect &rect)
+{
+    const QWidget *widget = option->widget;
+    const int textMargin = style->pixelMetric(QStyle::PM_FocusFrameHMargin, 0, widget) + 1;
+
+    QRect textRect = rect.adjusted(textMargin, 0, -textMargin, 0); // remove width padding
+    const bool wrapText = option->features & QStyleOptionViewItem::WrapText;
+    QTextOption textOption;
+    textOption.setWrapMode(wrapText ? QTextOption::WordWrap : QTextOption::ManualWrap);
+    textOption.setTextDirection(option->direction);
+    textOption.setAlignment(QStyle::visualAlignment(option->direction, option->displayAlignment));
+    QTextLayout textLayout(option->text, option->font);
+    textLayout.setTextOption(textOption);
+
+    viewItemTextLayout(textLayout, textRect.width());
+
+    QString elidedText;
+    qreal height = 0;
+    qreal width = 0;
+    int elidedIndex = -1;
+    const int lineCount = textLayout.lineCount();
+    for (int j = 0; j < lineCount; ++j) {
+        const QTextLine line = textLayout.lineAt(j);
+        if (j + 1 <= lineCount - 1) {
+            const QTextLine nextLine = textLayout.lineAt(j + 1);
+            if ((nextLine.y() + nextLine.height()) > textRect.height()) {
+                int start = line.textStart();
+                int length = line.textLength() + nextLine.textLength();
+                const QStackTextEngine engine(textLayout.text().mid(start, length), option->font);
+                elidedText = engine.elidedText(option->textElideMode, textRect.width());
+                height += line.height();
+                width = textRect.width();
+                elidedIndex = j;
+                break;
+            }
+        }
+        if (line.naturalTextWidth() > textRect.width()) {
+            int start = line.textStart();
+            int length = line.textLength();
+            const QStackTextEngine engine(textLayout.text().mid(start, length), option->font);
+            elidedText = engine.elidedText(option->textElideMode, textRect.width());
+            height += line.height();
+            width = textRect.width();
+            elidedIndex = j;
+            break;
+        }
+        width = qMax<qreal>(width, line.width());
+        height += line.height();
+    }
+
+    const QRect layoutRect = QStyle::alignedRect(option->direction, option->displayAlignment,
+                                                 QSize(int(width), int(height)), textRect);
+    const QPointF position = layoutRect.topLeft();
+    for (int i = 0; i < lineCount; ++i) {
+        const QTextLine line = textLayout.lineAt(i);
+        if (i == elidedIndex) {
+            qreal x = position.x() + line.x();
+            qreal y = position.y() + line.y() + line.ascent();
+            p->save();
+            p->setFont(option->font);
+            p->drawText(QPointF(x, y), elidedText);
+            p->restore();
+            break;
+        }
+        line.draw(p, position);
+    }
+}
+
+void DStyle::viewItemDrawText(QPainter *p, const QStyleOptionViewItem *option, const QRect &rect) const
+{
+    return viewItemDrawText(this, p, option, rect);
 }
 #endif
 

@@ -39,6 +39,10 @@ enum ItemBackgroundType {
 enum ItemDataRole {
     MarginsRole = Qt::UserRole + 1,
     BackgroundTypeRole,
+    LeftActionListRole,
+    TopActionListRole,
+    RightActionListRole,
+    BottomActionListRole,
     UserRole = Qt::UserRole << 2
 };
 

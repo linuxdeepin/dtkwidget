@@ -108,10 +108,15 @@ public:
     using QCommonStyle::pixelMetric;
 
 #if QT_CONFIG(itemviews)
-    virtual QSizeF viewItemTextLayout(QTextLayout &textLayout, int lineWidth) const;
-    virtual QSize viewItemSize(const QStyleOptionViewItem *option, int role) const;
+    static QSizeF viewItemTextLayout(QTextLayout &textLayout, int lineWidth);
+    static QSize viewItemSize(const QStyle *style, const QStyleOptionViewItem *option, int role);
+    static void viewItemLayout(const QStyle *style, const QStyleOptionViewItem *opt, QRect *pixmapRect,
+                               QRect *textRect, QRect *checkRect, bool sizehint);
     virtual void viewItemLayout(const QStyleOptionViewItem *opt,  QRect *pixmapRect,
                                 QRect *textRect, QRect *checkRect, bool sizehint) const;
+
+    static void viewItemDrawText(const QStyle *style, QPainter *p, const QStyleOptionViewItem *option, const QRect &rect);
+    virtual void viewItemDrawText(QPainter *p, const QStyleOptionViewItem *option, const QRect &rect) const;
 #endif
 };
 
