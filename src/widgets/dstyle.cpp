@@ -435,12 +435,12 @@ void DStyle::viewItemLayout(const QStyle *style, const QStyleOptionViewItem *opt
 
         // 减去margins
         display.adjust(textMargin, textMargin, -textMargin, -textMargin);
-        *textRect = QStyle::alignedRect(opt->direction, opt->displayAlignment, textRect->size(), display);
+//        *textRect = QStyle::alignedRect(opt->direction, opt->displayAlignment, textRect->size(), display);
 
         if (opt->features & QStyleOptionViewItem::HasCheckIndicator)
             display.setRight(checkRect->left() - checkMargin - textMargin);
 
-        *textRect &= display;
+        *textRect = display;
     }
 }
 
@@ -449,7 +449,7 @@ void DStyle::viewItemLayout(const QStyleOptionViewItem *opt, QRect *pixmapRect, 
     viewItemLayout(this, opt, pixmapRect, textRect, checkRect, sizehint);
 }
 
-void DStyle::viewItemDrawText(const QStyle *style, QPainter *p, const QStyleOptionViewItem *option, const QRect &rect)
+QRect DStyle::viewItemDrawText(const QStyle *style, QPainter *p, const QStyleOptionViewItem *option, const QRect &rect)
 {
     const QWidget *widget = option->widget;
     const int textMargin = style->pixelMetric(QStyle::PM_FocusFrameHMargin, 0, widget) + 1;
@@ -515,9 +515,11 @@ void DStyle::viewItemDrawText(const QStyle *style, QPainter *p, const QStyleOpti
         }
         line.draw(p, position);
     }
+
+    return layoutRect;
 }
 
-void DStyle::viewItemDrawText(QPainter *p, const QStyleOptionViewItem *option, const QRect &rect) const
+QRect DStyle::viewItemDrawText(QPainter *p, const QStyleOptionViewItem *option, const QRect &rect) const
 {
     return viewItemDrawText(this, p, option, rect);
 }

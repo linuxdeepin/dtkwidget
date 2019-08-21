@@ -44,6 +44,7 @@ public:
     QSize maxSize;
     qint8 colorType = -1;
     qint8 colorRole = -1;
+    qint8 fontSize = -1;
 };
 
 class DStyledItemDelegatePrivate : public DCORE_NAMESPACE::DObjectPrivate
@@ -77,6 +78,20 @@ public:
         const QSize &text_size = fm.size(0, text);
 
         return QSize(icon_size.width() + text_size.width(), qMax(icon_size.height(), text_size.height()));
+    }
+
+    static QSize displayActionSize(const DViewItemAction *action, const QStyle *style, const QStyleOptionViewItem &option)
+    {
+        QStyleOptionViewItem item;
+        item.text = action->text();
+        item.features = option.features | QStyleOptionViewItem::HasDisplay;
+        item.font = action->font();
+        item.fontMetrics = QFontMetrics(item.font);
+        item.rect = option.rect;
+        item.decorationPosition = option.decorationPosition;
+        item.decorationSize = option.decorationSize;
+
+        return DStyle::viewItemSize(style, &item, Qt::DisplayRole);
     }
 
     static QList<QRect> doActionsLayout(QRect base, const QList<DViewItemAction*> &list, Qt::Orientation orientation,
@@ -331,6 +346,24 @@ DPalette::ColorRole DViewItemAction::textColorRole() const
     return static_cast<DPalette::ColorRole>(d->colorRole);
 }
 
+void DViewItemAction::setFontSize(DFontSizeManager::SizeType size)
+{
+    D_D(DViewItemAction);
+
+    d->fontSize = size;
+}
+
+QFont DViewItemAction::font() const
+{
+    D_DC(DViewItemAction);
+
+    if (d->fontSize < 0) {
+        return QAction::font();
+    }
+
+    return DFontSizeManager::instance()->get(static_cast<DFontSizeManager::SizeType>(d->fontSize), QAction::font());
+}
+
 DStyledItemDelegate::DStyledItemDelegate(QObject *parent)
     : QStyledItemDelegate(parent)
     , DObject(*new DStyledItemDelegatePrivate(this))
@@ -384,6 +417,8 @@ void DStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
     action_area_size = d->drawActions(painter, opt, index.data(Dtk::BottomActionListRole), Qt::BottomEdge);
     itemContentRect.setBottom(itemContentRect.bottom() - action_area_size.height());
 
+    const DViewItemActionList &text_action_list = qvariant_cast<DViewItemActionList>(index.data(Dtk::TextActionListRole));
+
     opt.rect = itemContentRect;
     QRect iconRect, textRect, checkRect;
     DStyle::viewItemLayout(style, &opt, &iconRect, &textRect, &checkRect, false);
@@ -416,7 +451,39 @@ void DStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
             painter->drawRect(textRect.adjusted(0, 0, -1, -1));
         }
 
-        DStyle::viewItemDrawText(style, painter, &opt, textRect);
+        if (!text_action_list.isEmpty()) {
+            opt.displayAlignment &= ~Qt::AlignBottom;
+            opt.displayAlignment &= ~Qt::AlignVCenter;
+            opt.displayAlignment |= Qt::AlignTop;
+        }
+
+        if (text_action_list.isEmpty()) {
+            DStyle::viewItemDrawText(style, painter, &opt, textRect);
+        } else {
+            opt.displayAlignment &= ~Qt::AlignVCenter;
+            opt.displayAlignment &= ~Qt::AlignBottom;
+
+            QRect bounding = DStyle::viewItemDrawText(style, painter, &opt, textRect);
+
+            // draw action text
+            for (const DViewItemAction *action : text_action_list) {
+                textRect.setTop(bounding.bottom());
+                opt.font = action->font();
+                opt.text = action->text();
+
+                if (opt.state & QStyle::State_Selected) {
+                    painter->setPen(opt.palette.color(cg, QPalette::HighlightedText));
+                } else if (action->textColorType() >= 0) {
+                    painter->setPen(DPalette::get(widget).color(cg, action->textColorType()));
+                } else if (action->textColorRole() >= 0) {
+                    painter->setPen(opt.palette.color(cg, action->textColorRole()));
+                } else {
+                    painter->setPen(opt.palette.color(cg, QPalette::Text));
+                }
+
+                bounding = DStyle::viewItemDrawText(style, painter, &opt, textRect);
+            }
+        }
     }
 
     // reset rect for focus rect
@@ -455,6 +522,15 @@ QSize DStyledItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QM
     initStyleOption(&opt, index);
     QRect pixmapRect, textRect, checkRect;
     DStyle::viewItemLayout(style, &opt, &pixmapRect, &textRect, &checkRect, true);
+
+    const DViewItemActionList &text_action_list = qvariant_cast<DViewItemActionList>(index.data(Dtk::TextActionListRole));
+
+    for (const DViewItemAction *action : text_action_list) {
+        const QSize &action_size = d->displayActionSize(action, style, opt);
+        textRect.setWidth(qMax(textRect.width(), action_size.width()));
+        textRect.setHeight(textRect.height() + action_size.height());
+    }
+
     QSize size = (pixmapRect | textRect | checkRect).size();
 
     const DViewItemActionList &left_actions = qvariant_cast<QList<DViewItemAction*>>(index.data(Dtk::LeftActionListRole));
@@ -549,6 +625,15 @@ void DStyledItemDelegate::setItemSize(QSize itemSize)
     d->itemSize = itemSize;
 }
 
+void DStyledItemDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
+{
+    QStyledItemDelegate::initStyleOption(option, index);
+
+    if (index.data(Dtk::TextActionListRole).isValid()) {
+        option->features |= QStyleOptionViewItem::HasDisplay;
+    }
+}
+
 static Dtk::ItemDataRole getActionPositionRole(Qt::Edge edge)
 {
     switch (edge) {
@@ -569,12 +654,34 @@ static Dtk::ItemDataRole getActionPositionRole(Qt::Edge edge)
 
 void DStandardItem::setActionList(Qt::Edge edge, const DViewItemActionList &list)
 {
-    setData(QVariant::fromValue(list), getActionPositionRole(edge));
+    QVariant value;
+
+    if (!list.isEmpty()) {
+        value = QVariant::fromValue(list);
+    }
+
+    setData(value, getActionPositionRole(edge));
 }
 
 DViewItemActionList DStandardItem::actionList(Qt::Edge edge)
 {
     return qvariant_cast<DViewItemActionList>(data(getActionPositionRole(edge)));
+}
+
+void DStandardItem::setTextActionList(const DViewItemActionList &list)
+{
+    QVariant value;
+
+    if (!list.isEmpty()) {
+        value = QVariant::fromValue(list);
+    }
+
+    setData(value, Dtk::TextActionListRole);
+}
+
+DViewItemActionList DStandardItem::textActionList() const
+{
+    return qvariant_cast<DViewItemActionList>(data(Dtk::TextActionListRole));
 }
 
 DWIDGET_END_NAMESPACE

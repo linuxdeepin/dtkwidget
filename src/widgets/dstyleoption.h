@@ -43,6 +43,7 @@ enum ItemDataRole {
     TopActionListRole,
     RightActionListRole,
     BottomActionListRole,
+    TextActionListRole,
     UserRole = Qt::UserRole << 2
 };
 

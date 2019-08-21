@@ -32,6 +32,7 @@ QT_END_NAMESPACE
 
 DWIDGET_BEGIN_NAMESPACE
 
+class DViewItemAction;
 class DStyle : public QCommonStyle
 {
     Q_OBJECT
@@ -112,11 +113,11 @@ public:
     static QSize viewItemSize(const QStyle *style, const QStyleOptionViewItem *option, int role);
     static void viewItemLayout(const QStyle *style, const QStyleOptionViewItem *opt, QRect *pixmapRect,
                                QRect *textRect, QRect *checkRect, bool sizehint);
-    virtual void viewItemLayout(const QStyleOptionViewItem *opt,  QRect *pixmapRect,
+    virtual void viewItemLayout(const QStyleOptionViewItem *opt, QRect *pixmapRect,
                                 QRect *textRect, QRect *checkRect, bool sizehint) const;
 
-    static void viewItemDrawText(const QStyle *style, QPainter *p, const QStyleOptionViewItem *option, const QRect &rect);
-    virtual void viewItemDrawText(QPainter *p, const QStyleOptionViewItem *option, const QRect &rect) const;
+    static QRect viewItemDrawText(const QStyle *style, QPainter *p, const QStyleOptionViewItem *option, const QRect &rect);
+    virtual QRect viewItemDrawText(QPainter *p, const QStyleOptionViewItem *option, const QRect &rect) const;
 #endif
 };
 

@@ -49,6 +49,9 @@ public:
     void setTextColorRole(DPalette::ColorRole role);
     DPalette::ColorType textColorType() const;
     DPalette::ColorRole textColorRole() const;
+
+    void setFontSize(DFontSizeManager::SizeType size);
+    QFont font() const;
 };
 typedef QList<DViewItemAction*> DViewItemActionList;
 
@@ -82,6 +85,9 @@ public Q_SLOTS:
     void setBackgroundType(BackgroundType backgroundType);
     void setMargins(const QMargins margins);
     void setItemSize(QSize itemSize);
+
+protected:
+    void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const;
 };
 
 class DStandardItem : public QStandardItem
@@ -91,6 +97,9 @@ public:
 
     void setActionList(Qt::Edge edge, const DViewItemActionList &list);
     DViewItemActionList actionList(Qt::Edge edge);
+
+    void setTextActionList(const DViewItemActionList &list);
+    DViewItemActionList textActionList() const;
 };
 
 DWIDGET_END_NAMESPACE
