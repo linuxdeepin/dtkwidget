@@ -104,7 +104,7 @@ void DBackgroundGroup::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);
 
-    QStylePainter painter(this);
+    DStylePainter painter(this);
     D_DC(DBackgroundGroup);
 
     for (auto pair : d->itemStyleOptions) {
@@ -119,7 +119,7 @@ void DBackgroundGroup::paintEvent(QPaintEvent *event)
             option.dpalette.setBrush(DPalette::ItemBackground, palette().brush(backgroundRole()));
         }
 
-        painter.drawPrimitive(static_cast<QStyle::PrimitiveElement>(DStyle::PE_ItemBackground), option);
+        painter.drawPrimitive(DStyle::PE_ItemBackground, option);
     }
 }
 

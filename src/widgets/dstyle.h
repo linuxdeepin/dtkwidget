@@ -25,12 +25,36 @@
 #include <DPalette>
 
 #include <QCommonStyle>
+#include <QPainter>
 
 QT_BEGIN_NAMESPACE
 class QTextLayout;
 QT_END_NAMESPACE
 
 DWIDGET_BEGIN_NAMESPACE
+
+namespace DDrawUtils
+{
+enum Corner {
+    TopLeftCorner = 0x00001,
+    TopRightCorner = 0x00002,
+    BottomLeftCorner = 0x00004,
+    BottomRightCorner = 0x00008
+};
+Q_DECLARE_FLAGS(Corners, Corner)
+
+void drawShadow(QPainter *pa, const QRect &rect, qreal xRadius, qreal yRadius, const QColor &sc, qreal radius, const QPoint &offset);
+void drawShadow(QPainter *pa, const QRect &rect, const QPainterPath &path, const QColor &sc, int radius, const QPoint &offset);
+void drawRoundedRect(QPainter *pa, const QRect &rect, qreal xRadius, qreal yRadius, Corners corners, Qt::SizeMode mode = Qt::AbsoluteSize);
+void drawFork(QPainter *pa, const QRectF &rect, const QColor &color, int width = 2);
+void drawMark(QPainter *pa, const QRectF &rect, const QColor &boxInside, const QColor &boxOutside, const int penWidth, const int outLineLeng = 2);
+void drawBorder(QPainter *pa, const QRectF &rect, const QBrush &brush, int borderWidth, int radius);
+void drawArrow(QPainter *pa, const QRectF &rect, const QColor &color, Qt::ArrowType arrow, int width = 2);
+void drawPlus(QPainter *painter, const QRectF &rect, const QColor &color , qreal width);
+void drawSubtract(QPainter *painter, const QRectF &rect, const QColor &color, qreal width);
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(Corners)
+}
 
 class DViewItemAction;
 class DStyle : public QCommonStyle
@@ -41,6 +65,10 @@ public:
     enum PrimitiveElement {
         PE_ItemBackground = QStyle::PE_CustomBase + 1,          //列表项的背景色
         PE_CustomBase = QStyle::PE_CustomBase + 0xf00000
+    };
+
+    enum ControlElement {
+        CE_CustomBase = QStyle::CE_CustomBase + 0xf00000
     };
 
     enum PixelMetric {
@@ -75,12 +103,20 @@ public:
 
     DStyle();
 
+    static void drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, const QStyleOption *opt, QPainter *p, const QWidget *w = nullptr);
+    static void drawControl(const QStyle *style, DStyle::ControlElement ce, const QStyleOption *opt, QPainter *p, const QWidget *w = nullptr);
+    static int pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyleOption *opt = nullptr, const QWidget *widget = nullptr);
+
     inline void drawPrimitive(DStyle::PrimitiveElement pe, const QStyleOption *opt, QPainter *p, const QWidget *w = nullptr) const
     { proxy()->drawPrimitive(static_cast<QStyle::PrimitiveElement>(pe), opt, p, w); }
+    inline void drawControl(DStyle::ControlElement ce, const QStyleOption *opt, QPainter *p, const QWidget *w = nullptr) const
+    { proxy()->drawControl(static_cast<QStyle::ControlElement>(ce), opt, p, w); }
     inline int pixelMetric(DStyle::PixelMetric m, const QStyleOption *opt = nullptr, const QWidget *widget = nullptr) const
     { return proxy()->pixelMetric(static_cast<QStyle::PixelMetric>(m), opt, widget); }
 
-    int pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QWidget *widget) const override;
+    void drawPrimitive(QStyle::PrimitiveElement pe, const QStyleOption *opt, QPainter *p, const QWidget *w = nullptr) const override;
+    void drawControl(QStyle::ControlElement ce, const QStyleOption *opt, QPainter *p, const QWidget *w = nullptr) const override;
+    int pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt = nullptr, const QWidget *widget = nullptr) const override;
 
     // 获取一个加工后的画笔
     QBrush generatedBrush(const QStyleOption *option, const QBrush &base,
@@ -106,6 +142,7 @@ public:
                                   const QStyleOption *option = nullptr) const;
 
     using QCommonStyle::drawPrimitive;
+    using QCommonStyle::drawControl;
     using QCommonStyle::pixelMetric;
 
 #if QT_CONFIG(itemviews)
@@ -120,6 +157,102 @@ public:
     virtual QRect viewItemDrawText(QPainter *p, const QStyleOptionViewItem *option, const QRect &rect) const;
 #endif
 };
+
+class DStyleHelper
+{
+public:
+    inline DStyleHelper(const QStyle *style = nullptr) {
+        setStyle(style);
+    }
+
+    inline void setStyle(const QStyle *style) {
+        m_style = style;
+        m_dstyle = qobject_cast<const DStyle*>(style);
+    }
+
+    inline const QStyle *style() const
+    { return m_style; }
+    inline const DStyle *dstyle() const
+    { return m_dstyle; }
+
+    inline void drawPrimitive(DStyle::PrimitiveElement pe, const QStyleOption *opt, QPainter *p, const QWidget *w = nullptr) const
+    { m_dstyle ? m_dstyle->drawPrimitive(pe, opt, p, w) : DStyle::drawPrimitive(m_style, pe, opt, p, w); }
+    inline void drawControl(DStyle::ControlElement ce, const QStyleOption *opt, QPainter *p, const QWidget *w = nullptr) const
+    { m_dstyle ? m_dstyle->drawControl(ce, opt, p, w) : DStyle::drawControl(m_style, ce, opt, p, w); }
+    inline int pixelMetric(DStyle::PixelMetric m, const QStyleOption *opt = nullptr, const QWidget *widget = nullptr) const
+    { return m_dstyle ? m_dstyle->pixelMetric(m, opt, widget) : DStyle::pixelMetric(m_style, m, opt, widget); }
+
+private:
+    const QStyle *m_style;
+    const DStyle *m_dstyle;
+};
+
+class DStylePainter : public QPainter
+{
+public:
+    inline DStylePainter() : QPainter(), widget(nullptr), wstyle(nullptr) {}
+    inline explicit DStylePainter(QWidget *w) { begin(w, w); }
+    inline DStylePainter(QPaintDevice *pd, QWidget *w) { begin(pd, w); }
+    inline bool begin(QWidget *w) { return begin(w, w); }
+    inline bool begin(QPaintDevice *pd, QWidget *w) {
+        Q_ASSERT_X(w, "DStylePainter::DStylePainter", "Widget must be non-zero");
+        widget = w;
+        wstyle = w->style();
+        dstyle.setStyle(wstyle);
+        return QPainter::begin(pd);
+    };
+    inline void drawPrimitive(QStyle::PrimitiveElement pe, const QStyleOption &opt);
+    inline void drawPrimitive(DStyle::PrimitiveElement pe, const QStyleOption &opt);
+    inline void drawControl(QStyle::ControlElement ce, const QStyleOption &opt);
+    inline void drawControl(DStyle::ControlElement ce, const QStyleOption &opt);
+    inline void drawComplexControl(QStyle::ComplexControl cc, const QStyleOptionComplex &opt);
+    inline void drawItemText(const QRect &r, int flags, const QPalette &pal, bool enabled,
+                             const QString &text, QPalette::ColorRole textRole = QPalette::NoRole);
+    inline void drawItemPixmap(const QRect &r, int flags, const QPixmap &pixmap);
+    inline QStyle *style() const { return wstyle; }
+
+private:
+    QWidget *widget;
+    QStyle *wstyle;
+    DStyleHelper dstyle;
+    Q_DISABLE_COPY(DStylePainter)
+};
+
+void DStylePainter::drawPrimitive(QStyle::PrimitiveElement pe, const QStyleOption &opt)
+{
+    wstyle->drawPrimitive(pe, &opt, this, widget);
+}
+
+void DStylePainter::drawPrimitive(DStyle::PrimitiveElement pe, const QStyleOption &opt)
+{
+    dstyle.drawPrimitive(pe, &opt, this, widget);
+}
+
+void DStylePainter::drawControl(QStyle::ControlElement ce, const QStyleOption &opt)
+{
+    wstyle->drawControl(ce, &opt, this, widget);
+}
+
+void DStylePainter::drawControl(DStyle::ControlElement ce, const QStyleOption &opt)
+{
+    dstyle.drawControl(ce, &opt, this, widget);
+}
+
+void DStylePainter::drawComplexControl(QStyle::ComplexControl cc, const QStyleOptionComplex &opt)
+{
+    wstyle->drawComplexControl(cc, &opt, this, widget);
+}
+
+void DStylePainter::drawItemText(const QRect &r, int flags, const QPalette &pal, bool enabled,
+                                 const QString &text, QPalette::ColorRole textRole)
+{
+    wstyle->drawItemText(this, r, flags, pal, enabled, text, textRole);
+}
+
+void DStylePainter::drawItemPixmap(const QRect &r, int flags, const QPixmap &pixmap)
+{
+    wstyle->drawItemPixmap(this, r, flags, pixmap);
+}
 
 DWIDGET_END_NAMESPACE
 

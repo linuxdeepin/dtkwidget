@@ -23,9 +23,16 @@
 #include <QStyleOption>
 #include <QTextLayout>
 #include <QTextLine>
+#include <QPixmapCache>
+
 #include <qmath.h>
 #include <private/qfixed_p.h>
 #include <private/qtextengine_p.h>
+
+QT_BEGIN_NAMESPACE
+//extern Q_WIDGETS_EXPORT void qt_blurImage(QImage &blurImage, qreal radius, bool quality, int transposed = 0);
+extern Q_WIDGETS_EXPORT void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, bool quality, bool alphaOnly, int transposed = 0);
+QT_END_NAMESPACE
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -80,9 +87,453 @@ QColor DStyle::blendColor(const QColor &substrate, const QColor &superstratum)
     return QColor(r, g, b, c1.alpha());
 }
 
+namespace DDrawUtils {
+static QImage dropShadow(const QPixmap &px, qreal radius, const QColor &color)
+{
+    if (px.isNull())
+        return QImage();
+
+    QImage tmp(px.size() + QSize(radius * 2, radius * 2), QImage::Format_ARGB32_Premultiplied);
+    tmp.fill(0);
+    QPainter tmpPainter(&tmp);
+    tmpPainter.setCompositionMode(QPainter::CompositionMode_Source);
+    tmpPainter.drawPixmap(QPoint(radius, radius), px);
+    tmpPainter.end();
+
+    // blur the alpha channel
+    QImage blurred(tmp.size(), QImage::Format_ARGB32_Premultiplied);
+    blurred.fill(0);
+    QPainter blurPainter(&blurred);
+    qt_blurImage(&blurPainter, tmp, radius, false, true);
+    blurPainter.end();
+
+    if (color == QColor(Qt::black))
+        return blurred;
+
+    tmp = blurred;
+
+    // blacken the image...
+    tmpPainter.begin(&tmp);
+    tmpPainter.setCompositionMode(QPainter::CompositionMode_SourceIn);
+    tmpPainter.fillRect(tmp.rect(), color);
+    tmpPainter.end();
+
+    return tmp;
+}
+
+static QList<QRect> sudokuByRect(const QRect &rect, QMargins borders)
+{
+    QList<QRect> list;
+
+//    qreal border_width = borders.left() + borders.right();
+
+//    if ( border_width > rect.width()) {
+//        borders.setLeft(borders.left() / border_width * rect.width());
+//        borders.setRight(rect.width() - borders.left());
+//    }
+
+//    qreal border_height = borders.top() + borders.bottom();
+
+//    if (border_height > rect.height()) {
+//        borders.setTop(borders.top()/ border_height * rect.height());
+//        borders.setBottom(rect.height() - borders.top());
+//    }
+
+    const QRect &contentsRect = rect - borders;
+
+    list << QRect(0, 0, borders.left(), borders.top());
+    list << QRect(list.at(0).topRight(), QSize(contentsRect.width(), borders.top())).translated(1, 0);
+    list << QRect(list.at(1).topRight(), QSize(borders.right(), borders.top())).translated(1, 0);
+    list << QRect(list.at(0).bottomLeft(), QSize(borders.left(), contentsRect.height())).translated(0, 1);
+    list << contentsRect;
+    list << QRect(contentsRect.topRight(), QSize(borders.right(), contentsRect.height())).translated(1, 0);
+    list << QRect(list.at(3).bottomLeft(), QSize(borders.left(), borders.bottom())).translated(0, 1);
+    list << QRect(contentsRect.bottomLeft(), QSize(contentsRect.width(), borders.bottom())).translated(0, 1);
+    list << QRect(contentsRect.bottomRight(), QSize(borders.left(), borders.bottom())).translated(1, 1);
+
+    return list;
+}
+
+static QImage borderImage(const QPixmap &px, const QMargins &borders, const QSize &size, QImage::Format format)
+{
+    QImage image(size, format);
+    QPainter pa(&image);
+
+    const QList<QRect> sudoku_src = sudokuByRect(px.rect(), borders);
+    const QList<QRect> sudoku_tar = sudokuByRect(QRect(QPoint(0, 0), size), borders);
+
+    pa.setCompositionMode(QPainter::CompositionMode_Source);  //设置组合模式
+
+    for (int i = 0; i < 9; ++i) {
+        pa.drawPixmap(sudoku_tar[i], px, sudoku_src[i]);
+    }
+
+    pa.end();
+
+    return image;
+}
+
+void drawShadow(QPainter *pa, const QRect &rect, qreal xRadius, qreal yRadius, const QColor &sc, qreal radius, const QPoint &offset)
+{
+    QPixmap shadow;
+    qreal scale = pa->paintEngine()->paintDevice()->devicePixelRatioF();
+    QRect shadow_rect = rect;
+
+    shadow_rect.setTopLeft(shadow_rect.topLeft() + offset);
+
+    xRadius *= scale;
+    yRadius *= scale;
+    radius *= scale;
+
+    const QString &key = QString("dtk-shadow-%1x%2-%3-%4").arg(xRadius).arg(yRadius).arg(sc.name()).arg(radius);
+
+    if (!QPixmapCache::find(key, shadow)) {
+        QImage shadow_base(QSize(xRadius * 3, yRadius * 3), QImage::Format_ARGB32_Premultiplied);
+        shadow_base.fill(0);
+        QPainter pa(&shadow_base);
+
+        pa.setBrush(sc);
+        pa.setPen(Qt::NoPen);
+        pa.drawRoundedRect(shadow_base.rect(), xRadius, yRadius);
+        pa.end();
+
+        shadow_base = dropShadow(QPixmap::fromImage(shadow_base), radius, sc);
+        shadow = QPixmap::fromImage(shadow_base);
+        QPixmapCache::insert(key, shadow);
+    }
+
+    const QMargins margins(xRadius + radius, yRadius + radius, xRadius + radius, yRadius + radius);
+    QImage new_shadow = borderImage(shadow, margins, shadow_rect.size() * scale, QImage::Format_ARGB32_Premultiplied);
+//    QPainter pa_shadow(&new_shadow);
+//    pa_shadow.setCompositionMode(QPainter::CompositionMode_Clear);
+//    pa_shadow.setPen(Qt::NoPen);
+//    pa_shadow.setBrush(Qt::transparent);
+//    pa_shadow.setRenderHint(QPainter::Antialiasing);
+//    pa_shadow.drawRoundedRect((new_shadow.rect() - QMargins(radius, radius, radius, radius)).translated(-offset), xRadius, yRadius);
+//    pa_shadow.end();
+    new_shadow.setDevicePixelRatio(scale);
+    pa->drawImage(shadow_rect.topLeft(), new_shadow);
+}
+
+void drawShadow(QPainter *pa, const QRect &rect, const QPainterPath &path, const QColor &sc, int radius, const QPoint &offset)
+{
+    QPixmap shadow;
+    qreal scale = pa->paintEngine()->paintDevice()->devicePixelRatioF();
+    QRect shadow_rect = rect;
+
+    shadow_rect.setTopLeft(rect.topLeft() + offset);
+    radius *= scale;
+
+    QImage shadow_base(shadow_rect.size() * scale, QImage::Format_ARGB32_Premultiplied);
+    shadow_base.fill(0);
+    shadow_base.setDevicePixelRatio(scale);
+
+    QPainter paTmp(&shadow_base);
+    paTmp.setBrush(sc);
+    paTmp.setPen(Qt::NoPen);
+    paTmp.drawPath(path);
+    paTmp.end();
+    shadow_base = dropShadow(QPixmap::fromImage(shadow_base), radius, sc);
+    shadow = QPixmap::fromImage(shadow_base);
+    shadow.setDevicePixelRatio(scale);
+
+    pa->drawPixmap(shadow_rect, shadow);
+}
+
+void drawFork(QPainter *pa, const QRectF &rect, const QColor &color, int width)
+{
+    QPen pen;
+    pen.setWidth(width);
+    pen.setColor(color);
+
+    pa->setRenderHint(QPainter::Antialiasing, true);
+    pa->setPen(pen);
+    pa->setBrush(Qt::NoBrush);
+    pa->drawLine(rect.topLeft(), rect.bottomRight());
+    pa->drawLine(rect.bottomLeft(), rect.topRight());
+}
+
+void drawRoundedRect(QPainter *pa, const QRect &rect, qreal xRadius, qreal yRadius, Corners corners, Qt::SizeMode mode)
+{
+    QRectF r = rect.normalized();
+
+    if (r.isNull())
+        return;
+
+    if (mode == Qt::AbsoluteSize) {
+        qreal w = r.width() / 2;
+        qreal h = r.height() / 2;
+
+        if (w == 0) {
+            xRadius = 0;
+        } else {
+            xRadius = 100 * qMin(xRadius, w) / w;
+        }
+        if (h == 0) {
+            yRadius = 0;
+        } else {
+            yRadius = 100 * qMin(yRadius, h) / h;
+        }
+    } else {
+        if (xRadius > 100)                          // fix ranges
+            xRadius = 100;
+
+        if (yRadius > 100)
+            yRadius = 100;
+    }
+
+    if (xRadius <= 0 || yRadius <= 0) {             // add normal rectangle
+        pa->drawRect(r);
+        return;
+    }
+
+    QPainterPath path;
+    qreal x = r.x();
+    qreal y = r.y();
+    qreal w = r.width();
+    qreal h = r.height();
+    qreal rxx2 = w * xRadius / 100;
+    qreal ryy2 = h * yRadius / 100;
+
+    path.arcMoveTo(x, y, rxx2, ryy2, 180);
+
+    if (corners & TopLeftCorner) {
+        path.arcTo(x, y, rxx2, ryy2, 180, -90);
+    } else {
+        path.lineTo(r.topLeft());
+    }
+
+    if (corners & TopRightCorner) {
+        path.arcTo(x + w - rxx2, y, rxx2, ryy2, 90, -90);
+    } else {
+        path.lineTo(r.topRight());
+    }
+
+    if (corners & BottomRightCorner) {
+        path.arcTo(x + w - rxx2, y + h - ryy2, rxx2, ryy2, 0, -90);
+    } else {
+        path.lineTo(r.bottomRight());
+    }
+
+    if (corners & BottomLeftCorner) {
+        path.arcTo(x, y + h - ryy2, rxx2, ryy2, 270, -90);
+    } else {
+        path.lineTo(r.bottomLeft());
+    }
+
+    path.closeSubpath();
+    pa->drawPath(path);
+}
+
+void drawMark(QPainter *pa, const QRectF &rect, const QColor &boxInside, const QColor &boxOutside, const int penWidth, const int outLineLeng)
+{
+    QPen pen(boxInside);
+    pen.setWidth(penWidth);
+    pa->setPen(pen);
+    pen.setJoinStyle(Qt::RoundJoin);
+    pa->setRenderHint(QPainter::Antialiasing, true);
+
+    pa->drawLine(rect.x(), rect.center().y(), rect.center().x(), rect.bottom());
+    pa->drawLine(rect.center().x(), rect.bottom(), rect.right(), rect.y());
+
+    if (outLineLeng == 0)
+        return;
+
+    double xWide = (rect.width() / 2.0);
+    int yHigh = rect.height();
+    double length = sqrt(pow(xWide, 2) + pow(yHigh, 2));
+    double x = rect.right() + (outLineLeng / length) * xWide;
+    double y = rect.y() - (outLineLeng / length) * yHigh;
+
+    pen.setColor(boxOutside);
+    pa->setPen(pen);
+    pa->drawLine(QPointF(rect.topRight()), QPointF(x, y));
+}
+
+void drawBorder(QPainter *pa, const QRectF &rect, const QBrush &brush, int borderWidth, int radius)
+{
+    pa->setPen(QPen(brush, borderWidth, Qt::SolidLine));
+    pa->setBrush(Qt::NoBrush);
+    pa->setRenderHint(QPainter::Antialiasing);
+    pa->drawRoundedRect(rect.adjusted(1, 1, -1, -1), radius, radius) ;
+}
+
+void drawArrow(QPainter *pa, const QRectF &rect, const QColor &color, Qt::ArrowType arrow, int width)
+{
+    QPen pen;
+    pen.setWidth(width);
+    pen.setColor(color);
+    pa->setRenderHint(QPainter::Antialiasing, true);
+    pa->setPen(pen);
+    pa->setBrush(Qt::NoBrush);
+    const QPointF center = rect.center();
+
+    switch (arrow) {
+    case Qt::UpArrow: {
+        pa->drawLine(QPointF(center.x(), rect.y()), rect.bottomLeft());
+        pa->drawLine(QPointF(center.x(), rect.y()), rect.bottomRight());
+        break;
+    }
+    case Qt::LeftArrow: {
+        pa->drawLine(QPointF(rect.x(), center.y()), rect.bottomRight());
+        pa->drawLine(QPointF(rect.x(), center.y()), rect.topRight());
+        break;
+    }
+    case Qt::DownArrow: {
+        pa->drawLine(QPointF(center.x(), rect.bottom()), rect.topLeft());
+        pa->drawLine(QPointF(center.x(), rect.bottom()), rect.topRight());
+        break;
+    }
+    case Qt::RightArrow: {
+        pa->drawLine(QPointF(rect.right(), center.y()), rect.topLeft());
+        pa->drawLine(QPointF(rect.right(), center.y()), rect.bottomLeft());
+        break;
+    }
+    default:
+        break;
+    }
+
+}
+
+void drawPlus(QPainter *painter, const QRectF &rect, const QColor &color, qreal width)
+{
+    qreal centerX = rect.center().x() ;
+    qreal centerY = rect.center().y() ;
+    QPen pen = color;
+    pen.setWidthF(width);
+    painter->setPen(pen);
+    painter->setBrush(Qt::NoBrush);
+    painter->drawLine(QPointF(rect.x(), centerY), QPointF(rect.right(), centerY));
+    painter->drawLine(QPointF(centerX, rect.y()), QPointF(centerX, rect.bottom()));
+}
+
+void drawSubtract(QPainter *painter, const QRectF &rect, const QColor &color, qreal width)
+{
+    qreal centerY = rect.center().y() ;
+    QPen pen = color;
+    pen.setWidthF(width);
+    painter->setPen(pen);
+    painter->setBrush(Qt::NoBrush);
+    painter->drawLine(QPointF(rect.left(), centerY), QPointF(rect.right(), centerY));
+}
+}
+
 DStyle::DStyle()
 {
 
+}
+
+void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, const QStyleOption *opt, QPainter *p, const QWidget *w)
+{
+    DStyleHelper dstyle(style);
+
+    switch (pe) {
+    case PE_ItemBackground: {
+        if (const DStyleOptionBackgroundGroup *vopt = qstyleoption_cast<const DStyleOptionBackgroundGroup *>(opt)) {
+            QColor color = vopt->dpalette.color(DPalette::ItemBackground);
+
+            if (dstyle.dstyle()) {
+                color = dstyle.dstyle()->generatedBrush(vopt, color, vopt->dpalette.currentColorGroup(), DPalette::ItemBackground).color();
+            }
+
+            if (color.alpha() == 0) {
+                return;
+            }
+
+            int frame_radius = dstyle.pixelMetric(PM_FrameRadius, opt, w);
+            p->setBrush(color);
+            p->setPen(Qt::NoPen);
+            p->setRenderHint(QPainter::Antialiasing);
+
+            if (vopt->directions != Qt::Horizontal && vopt->directions != Qt::Vertical) {
+                p->drawRoundedRect(vopt->rect, frame_radius, frame_radius);
+                break;
+            }
+
+            switch (vopt->position) {
+            case DStyleOptionBackgroundGroup::OnlyOne:
+                p->drawRoundedRect(vopt->rect, frame_radius, frame_radius);
+                break;
+            case DStyleOptionBackgroundGroup::Beginning: {
+                if (vopt->directions == Qt::Horizontal) {
+                    DDrawUtils::drawRoundedRect(p, vopt->rect, frame_radius, frame_radius,
+                                                DDrawUtils::TopLeftCorner | DDrawUtils::BottomLeftCorner);
+                } else {
+                    DDrawUtils::drawRoundedRect(p, vopt->rect, frame_radius, frame_radius,
+                                                DDrawUtils::TopLeftCorner | DDrawUtils::TopRightCorner);
+                }
+
+                break;
+            }
+            case DStyleOptionBackgroundGroup::End:
+                if (vopt->directions == Qt::Horizontal) {
+                    DDrawUtils::drawRoundedRect(p, vopt->rect, frame_radius, frame_radius,
+                                                DDrawUtils::TopRightCorner | DDrawUtils::BottomRightCorner);
+                } else {
+                    DDrawUtils::drawRoundedRect(p, vopt->rect, frame_radius, frame_radius,
+                                                DDrawUtils::BottomLeftCorner | DDrawUtils::BottomRightCorner);
+                }
+
+                break;
+            case DStyleOptionBackgroundGroup::Middle:
+                p->setRenderHint(QPainter::Antialiasing, false);
+                p->drawRect(vopt->rect);
+                break;
+            default:
+                break;
+            }
+
+            return;
+        }
+        break;
+    }
+    default:
+        break;
+    }
+}
+
+void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const QStyleOption *opt, QPainter *p, const QWidget *w)
+{
+    Q_UNUSED(style)
+    Q_UNUSED(ce)
+    Q_UNUSED(opt)
+    Q_UNUSED(p)
+    Q_UNUSED(w)
+}
+
+int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyleOption *opt, const QWidget *widget)
+{
+    DStyleHelper dstyle(style);
+
+    switch (m) {
+    case PM_FocusBorderWidth: Q_FALLTHROUGH()
+    case PM_FocusBorderSpacing:
+        return 2;
+    case PM_FrameRadius:
+        return 8;
+    case PM_ShadowRadius:
+        return 6;
+    case PM_ShadowHOffset:
+        return 0;
+    case PM_ShadowVOffset:
+        return 2;
+    case PM_FrameMargins: {
+        int shadow_radius = dstyle.pixelMetric(PM_ShadowRadius, opt, widget);
+        int shadow_xoffset = dstyle.pixelMetric(PM_ShadowHOffset, opt, widget);
+        int shadow_yoffset = dstyle.pixelMetric(PM_ShadowVOffset, opt, widget);
+
+        int border_width = pixelMetric(style, PM_FocusBorderWidth, opt, widget);
+        int border_spacing = pixelMetric(style, PM_FocusBorderSpacing, opt, widget);
+
+        int margins = qMax((shadow_radius + qMax(shadow_xoffset, shadow_yoffset)) / 2, border_width + border_spacing);
+
+        return margins;
+    }
+    default:
+        break;
+    }
+
+    return -1;
 }
 
 static DStyle::StyleState getState(const QStyleOption *option)
@@ -117,22 +568,31 @@ static DStyle::StateFlags getFlags(const QStyleOption *option)
     return flags;
 }
 
-int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QWidget *widget) const
+void DStyle::drawPrimitive(QStyle::PrimitiveElement pe, const QStyleOption *opt, QPainter *p, const QWidget *w) const
 {
-    if (static_cast<int>(m) == PM_FrameMargins) {
-        int shadow_radius = pixelMetric(PM_ShadowRadius, opt, widget);
-        int shadow_xoffset = pixelMetric(PM_ShadowHOffset, opt, widget);
-        int shadow_yoffset = pixelMetric(PM_ShadowVOffset, opt, widget);
-
-        int border_width = pixelMetric(PM_FocusBorderWidth, opt, widget);
-        int border_spacing = pixelMetric(PM_FocusBorderSpacing, opt, widget);
-
-        int margins = qMax((shadow_radius + qMax(shadow_xoffset, shadow_yoffset)) / 2, border_width + border_spacing);
-
-        return margins;
+    if (Q_UNLIKELY(pe < QStyle::PE_CustomBase)) {
+        return QCommonStyle::drawPrimitive(pe, opt, p, w);
     }
 
-    return QCommonStyle::pixelMetric(m, opt, widget);
+    drawPrimitive(this, static_cast<PrimitiveElement>(pe), opt, p, w);
+}
+
+void DStyle::drawControl(QStyle::ControlElement ce, const QStyleOption *opt, QPainter *p, const QWidget *w) const
+{
+    if (Q_UNLIKELY(ce < QStyle::CE_CustomBase)) {
+        return QCommonStyle::drawControl(ce, opt, p, w);
+    }
+
+    drawControl(this, static_cast<ControlElement>(ce), opt, p, w);
+}
+
+int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QWidget *widget) const
+{
+    if (Q_UNLIKELY(m < QStyle::PM_CustomBase)) {
+        return QCommonStyle::pixelMetric(m, opt, widget);
+    }
+
+    return pixelMetric(this, static_cast<PixelMetric>(m), opt, widget);
 }
 
 QBrush DStyle::generatedBrush(const QStyleOption *option, const QBrush &base, QPalette::ColorGroup cg, QPalette::ColorRole role) const
