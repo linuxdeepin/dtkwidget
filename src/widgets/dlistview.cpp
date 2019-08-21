@@ -112,6 +112,9 @@ void DListViewPrivate::init()
 
     delegate->setBackgroundType(DStyledItemDelegate::RoundedBackground);
     q->setItemDelegate(delegate);
+
+    q->setFrameShape(QFrame::NoFrame);
+    q->setIconSize(QSize(32, 32));
 }
 
 void DListViewPrivate::onOrientationChanged()
