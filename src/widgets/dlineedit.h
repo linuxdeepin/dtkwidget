@@ -53,6 +53,9 @@ public:
     QString hoverIcon() const;
     QString pressIcon() const;
 
+    void setLeftWidgets(const QList<QWidget*> &list);
+    void setRightWidgets(const QList<QWidget*> &list);
+
 public Q_SLOTS:
     void setNormalIcon(const QString &normalIcon);
     void setHoverIcon(const QString &hoverIcon);

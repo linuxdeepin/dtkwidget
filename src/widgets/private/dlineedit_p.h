@@ -47,6 +47,9 @@ public:
     DImageButton *m_rightIcon;
     QWidgetAction *m_iconAction;
     DArrowRectangle *tooltip = Q_NULLPTR;
+
+    QWidget *leftWidget;
+    QWidget *rightWidget;
 };
 
 DWIDGET_END_NAMESPACE

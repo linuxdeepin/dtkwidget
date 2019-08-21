@@ -203,7 +203,7 @@ void DLineEdit::setIconVisible(bool visible)
 
         addAction(d->m_iconAction, TrailingPosition);
 #ifndef Q_OS_WIN
-        QLineEditPrivate *d_d = reinterpret_cast<QLineEditPrivate*>(d_ptr.data());
+        QLineEditPrivate *d_d = reinterpret_cast<QLineEditPrivate *>(d_ptr.data());
         if (d_d->trailingSideWidgets.size() > 1) {
             if ((*(d_d->trailingSideWidgets.end() - 1)).action == d->m_iconAction) {
                 d_d->trailingSideWidgets.insert(d_d->trailingSideWidgets.begin(), *d_d->trailingSideWidgets.erase(d_d->trailingSideWidgets.end() - 1));
@@ -212,7 +212,7 @@ void DLineEdit::setIconVisible(bool visible)
             }
         }
 #endif
-     } else {
+    } else {
         removeAction(d->m_iconAction);
     }
 }
@@ -305,6 +305,78 @@ QString DLineEdit::pressIcon() const
     return d->m_rightIcon->getPressPic();
 }
 
+void DLineEdit::setLeftWidgets(const QList<QWidget *> &list)
+{
+    Q_D(DLineEdit);
+
+    if (d->leftWidget != nullptr) {
+        d->leftWidget->hide();
+        d->leftWidget->deleteLater();
+        d->leftWidget = nullptr;
+    }
+
+    if (list.isEmpty()) {
+        const QMargins &margins = contentsMargins();
+        setContentsMargins(0, margins.top(), margins.right(), margins.bottom());
+
+        return;
+    }
+
+    d->leftWidget = new QWidget(this);
+    QHBoxLayout *layout = new QHBoxLayout(d->leftWidget);
+    layout->setContentsMargins(0, 0, 5, 0);
+
+    QList<QWidget *>::const_iterator itor;
+
+    for (itor = list.constBegin(); itor != list.constEnd(); itor++) {
+        layout->addWidget(*itor, 0, Qt::AlignVCenter);
+    }
+
+    d->leftWidget->adjustSize();
+
+    int leftWidth = d->leftWidget->width();
+    d->leftWidget->resize(leftWidth, height());
+
+    const QMargins &margins = contentsMargins();
+    setContentsMargins(leftWidth, margins.top(), margins.right(), margins.bottom());
+}
+
+void DLineEdit::setRightWidgets(const QList<QWidget *> &list)
+{
+    Q_D(DLineEdit);
+
+    if (d->rightWidget != nullptr) {
+        d->rightWidget->hide();
+        d->rightWidget->deleteLater();
+        d->rightWidget = nullptr;
+    }
+
+    if (list.isEmpty()) {
+        const QMargins &margins = contentsMargins();
+        setContentsMargins(margins.top(), margins.left(), 0, margins.bottom());
+
+        return;
+    }
+
+    d->rightWidget = new QWidget(this);
+    QHBoxLayout *layout = new QHBoxLayout(d->rightWidget);
+    layout->setContentsMargins(5, 0, 0, 0);
+    QList<QWidget *>::const_iterator itor;
+
+    for (itor = list.constBegin(); itor != list.constEnd(); itor++) {
+        layout->addWidget(*itor, 0, Qt::AlignVCenter);
+    }
+
+    d->rightWidget->adjustSize();
+
+    int rightWidth = d->rightWidget->width();
+
+    d->rightWidget->resize(rightWidth, height());
+    d->rightWidget->setGeometry(width() - rightWidth, 0, rightWidth, height());
+    const QMargins &margins = contentsMargins();
+    setContentsMargins(margins.left(), margins.top(), rightWidth, margins.bottom());
+}
+
 /*!
  * \~chinese \brief 设置鼠标按下时动作按钮的图标
  *
@@ -338,6 +410,15 @@ void DLineEdit::resizeEvent(QResizeEvent *e)
     D_D(DLineEdit);
 
     d->m_rightIcon->setFixedHeight(e->size().height() - 2);
+
+    if (d->rightWidget != nullptr) {
+        d->rightWidget->setGeometry(width() - d->rightWidget->width(), 0,
+                                    d->rightWidget->width(), height());
+    }
+
+    if (d->leftWidget != nullptr) {
+        d->leftWidget->resize(d->leftWidget->width(), height());
+    }
 }
 
 bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
@@ -355,6 +436,8 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
 
 DLineEditPrivate::DLineEditPrivate(DLineEdit *q)
     : DObjectPrivate(q)
+    , leftWidget(nullptr)
+    , rightWidget(nullptr)
 {
 }
 
