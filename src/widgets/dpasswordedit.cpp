@@ -23,6 +23,7 @@
 
 #include <QDebug>
 #include <QTimer>
+#include <QPushButton>
 
 
 DWIDGET_BEGIN_NAMESPACE
@@ -105,13 +106,19 @@ void DPasswordEditPrivate::init()
     D_Q(DPasswordEdit);
 
     q->setEchoMode(q->Password);
-    q->setIconVisible(true);
+
+    QList<QWidget *> list;
+    QPushButton *btn = new QPushButton;
+    btn->setIcon(QIcon(":/images/light/images/pw-visible-hover.svg"));
+
+    list.append(btn);
+    q->setRightWidgets(list);
 
     // FIXME: DPasswordEdit instances that initialized with a parent will fail
     // to load the little eye icon if we don't do the below thing.
     DUtil::TimerSingleShot(0,  [q] { q->setStyleSheet(q->styleSheet()); });
 
-    q->connect(q, SIGNAL(iconClicked()), q, SLOT(_q_toggleEchoMode()));
+    q->connect(btn, SIGNAL(clicked()), q, SLOT(_q_toggleEchoMode()));
 }
 
 void DPasswordEditPrivate::_q_toggleEchoMode()
