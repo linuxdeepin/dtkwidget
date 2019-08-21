@@ -28,6 +28,7 @@
 #include <QAction>
 #include <QStyledItemDelegate>
 #include <QStandardItem>
+#include <QAbstractItemView>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -39,7 +40,7 @@ class DViewItemAction : public QAction, public DCORE_NAMESPACE::DObject
 
 public:
     explicit DViewItemAction(Qt::Alignment alignment = Qt::Alignment(), const QSize &iconSize = QSize(),
-                             const QSize &maxSize = QSize(), QObject *parent = nullptr);
+                             const QSize &maxSize = QSize(), bool clickable = false, QObject *parent = nullptr);
 
     Qt::Alignment alignment() const;
     QSize iconSize() const;
@@ -52,6 +53,8 @@ public:
 
     void setFontSize(DFontSizeManager::SizeType size);
     QFont font() const;
+
+    bool isClickable() const;
 };
 typedef QList<DViewItemAction*> DViewItemActionList;
 
@@ -72,7 +75,7 @@ public:
         RoundedBackground
     };
 
-    explicit DStyledItemDelegate(QObject *parent = nullptr);
+    explicit DStyledItemDelegate(QAbstractItemView *parent = nullptr);
 
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
     QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
@@ -88,6 +91,7 @@ public Q_SLOTS:
 
 protected:
     void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const;
+    bool editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index) override;
 };
 
 class DStandardItem : public QStandardItem

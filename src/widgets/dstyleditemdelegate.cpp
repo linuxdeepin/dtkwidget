@@ -42,6 +42,8 @@ public:
     Qt::Alignment alignment;
     QSize iconSize;
     QSize maxSize;
+    bool clickable;
+
     qint8 colorType = -1;
     qint8 colorRole = -1;
     qint8 fontSize = -1;
@@ -253,7 +255,7 @@ public:
         }
     }
 
-    static QSize drawActions(QPainter *pa, const QStyleOptionViewItem &option, const QVariant &value, Qt::Edge edge)
+    static QSize drawActions(QPainter *pa, const QStyleOptionViewItem &option, const QVariant &value, Qt::Edge edge, QList<QPair<QAction*, QRect>> *clickableActionRect)
     {
         const DViewItemActionList &actionList = qvariant_cast<DViewItemActionList>(value);
         const Qt::Orientation orientation = (edge == Qt::TopEdge || edge == Qt::BottomEdge) ? Qt::Vertical : Qt::Horizontal;
@@ -273,7 +275,14 @@ public:
         }
 
         for (int i = 0; i < list.count(); ++i) {
-            drawAction(pa, option, list.at(i).translated(origin), actionList.at(i));
+            DViewItemAction *action = actionList.at(i);
+            const QRect &rect = list.at(i).translated(origin);
+
+            drawAction(pa, option, rect, action);
+
+            if (action->isClickable()) {
+                clickableActionRect->append(qMakePair(action, rect));
+            }
         }
 
         return bounding;
@@ -282,9 +291,11 @@ public:
     DStyledItemDelegate::BackgroundType backgroundType = DStyledItemDelegate::NoBackground;
     QMargins margins;
     QSize itemSize;
+    QMap<QModelIndex, QList<QPair<QAction*, QRect>>> clickableActionMap;
 };
 
-DViewItemAction::DViewItemAction(Qt::Alignment alignment, const QSize &iconSize, const QSize &maxSize, QObject *parent)
+DViewItemAction::DViewItemAction(Qt::Alignment alignment, const QSize &iconSize,
+                                 const QSize &maxSize, bool clickable, QObject *parent)
     : QAction(parent)
     , DObject(*new DViewItemActionPrivate(this))
 {
@@ -293,6 +304,7 @@ DViewItemAction::DViewItemAction(Qt::Alignment alignment, const QSize &iconSize,
     d->alignment = alignment;
     d->iconSize = iconSize;
     d->maxSize = maxSize;
+    d->clickable = clickable;
 }
 
 Qt::Alignment DViewItemAction::alignment() const
@@ -364,11 +376,19 @@ QFont DViewItemAction::font() const
     return DFontSizeManager::instance()->get(static_cast<DFontSizeManager::SizeType>(d->fontSize), QAction::font());
 }
 
-DStyledItemDelegate::DStyledItemDelegate(QObject *parent)
+bool DViewItemAction::isClickable() const
+{
+    D_DC(DViewItemAction);
+
+    return d->clickable;
+}
+
+DStyledItemDelegate::DStyledItemDelegate(QAbstractItemView *parent)
     : QStyledItemDelegate(parent)
     , DObject(*new DStyledItemDelegatePrivate(this))
 {
-
+    //支持QAction的点击
+    parent->viewport()->installEventFilter(this);
 }
 
 void DStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -404,18 +424,25 @@ void DStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
     opt.rect = opt.rect.marginsRemoved(d->margins);
     QRect itemContentRect = opt.rect;
     QSize action_area_size;
+    QList<QPair<QAction*, QRect>> clickActionList;
 
-    action_area_size = d->drawActions(painter, opt, index.data(Dtk::LeftActionListRole), Qt::LeftEdge);
+    action_area_size = d->drawActions(painter, opt, index.data(Dtk::LeftActionListRole), Qt::LeftEdge, &clickActionList);
     itemContentRect.setLeft(itemContentRect.left() + action_area_size.width());
 
-    action_area_size = d->drawActions(painter, opt, index.data(Dtk::RightActionListRole), Qt::RightEdge);
+    action_area_size = d->drawActions(painter, opt, index.data(Dtk::RightActionListRole), Qt::RightEdge, &clickActionList);
     itemContentRect.setRight(itemContentRect.right() - action_area_size.width());
 
-    action_area_size = d->drawActions(painter, opt, index.data(Dtk::TopActionListRole), Qt::TopEdge);
+    action_area_size = d->drawActions(painter, opt, index.data(Dtk::TopActionListRole), Qt::TopEdge, &clickActionList);
     itemContentRect.setTop(itemContentRect.top() + action_area_size.height());
 
-    action_area_size = d->drawActions(painter, opt, index.data(Dtk::BottomActionListRole), Qt::BottomEdge);
+    action_area_size = d->drawActions(painter, opt, index.data(Dtk::BottomActionListRole), Qt::BottomEdge, &clickActionList);
     itemContentRect.setBottom(itemContentRect.bottom() - action_area_size.height());
+
+    if (!clickActionList.isEmpty()) {
+        const_cast<DStyledItemDelegatePrivate*>(d)->clickableActionMap[index] = clickActionList;
+    } else {
+        const_cast<DStyledItemDelegatePrivate*>(d)->clickableActionMap.remove(index);
+    }
 
     const DViewItemActionList &text_action_list = qvariant_cast<DViewItemActionList>(index.data(Dtk::TextActionListRole));
 
@@ -632,6 +659,35 @@ void DStyledItemDelegate::initStyleOption(QStyleOptionViewItem *option, const QM
     if (index.data(Dtk::TextActionListRole).isValid()) {
         option->features |= QStyleOptionViewItem::HasDisplay;
     }
+}
+
+bool DStyledItemDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index)
+{
+    switch (event->type()) {
+    case QEvent::MouseButtonPress:
+    case QEvent::MouseButtonRelease:
+    case QEvent::MouseMove: {
+        QMouseEvent *ev = static_cast<QMouseEvent*>(event);
+        D_DC(DStyledItemDelegate);
+
+        for (auto action_map : d->clickableActionMap.value(index)) {
+            if (action_map.first->isEnabled()
+                    && action_map.second.contains(ev->pos(), true)) {
+                if (event->type() == QEvent::MouseButtonRelease) {
+                    action_map.first->trigger();
+                }
+
+                return true;
+            }
+        }
+
+        break;
+    }
+    default:
+        break;
+    }
+
+    return QStyledItemDelegate::editorEvent(event, model, option, index);
 }
 
 static Dtk::ItemDataRole getActionPositionRole(Qt::Edge edge)
