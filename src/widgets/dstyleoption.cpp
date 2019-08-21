@@ -142,7 +142,7 @@ void DStyleOption::init(const QWidget *widget)
  */
 void DStyleOptionButton::init(const QWidget *widget)
 {
-    Q_UNUSED(widget)
+    DStyleOption::init(widget);
 }
 
 /*!
@@ -157,6 +157,8 @@ void DStyleOptionButton::init(const QWidget *widget)
  */
 void DStyleOptionLineEdit::init(const QWidget *widget)
 {
+    DStyleOption::init(widget);
+
     if (const DLineEdit *edit = qobject_cast<const DLineEdit*>(widget)) {
         if (edit->isAlert()) {
             features |= Alert;
@@ -171,6 +173,7 @@ void DStyleOptionLineEdit::init(const QWidget *widget)
 
 void DStyleOptionBackgroundGroup::init(const QWidget *widget)
 {
+    DStyleOption::init(widget);
     rect = widget->geometry();
 }
 

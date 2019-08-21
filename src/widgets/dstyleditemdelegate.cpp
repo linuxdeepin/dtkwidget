@@ -214,6 +214,10 @@ public:
 
     static void drawAction(QPainter *pa, const QStyleOptionViewItem &option, const QRect &rect, const DViewItemAction *action)
     {
+        if (!action->isVisible()) {
+            return;
+        }
+
         QSize icon_size(action->iconSize());
 
         if (!icon_size.isValid() && !action->icon().isNull()) {
@@ -406,6 +410,7 @@ void DStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
     // draw the background
     if (d->backgroundType != NoBackground && !(opt.state & QStyle::State_Selected)) {
         DStyleOptionBackgroundGroup boption;
+        boption.init(widget);
         boption.QStyleOption::operator =(opt);
         boption.position = DStyleOptionBackgroundGroup::ItemBackgroundPosition(opt.viewItemPosition);
 
@@ -719,7 +724,7 @@ void DStandardItem::setActionList(Qt::Edge edge, const DViewItemActionList &list
     setData(value, getActionPositionRole(edge));
 }
 
-DViewItemActionList DStandardItem::actionList(Qt::Edge edge)
+DViewItemActionList DStandardItem::actionList(Qt::Edge edge) const
 {
     return qvariant_cast<DViewItemActionList>(data(getActionPositionRole(edge)));
 }

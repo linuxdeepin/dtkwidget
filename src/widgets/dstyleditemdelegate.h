@@ -100,7 +100,7 @@ public:
     using QStandardItem::QStandardItem;
 
     void setActionList(Qt::Edge edge, const DViewItemActionList &list);
-    DViewItemActionList actionList(Qt::Edge edge);
+    DViewItemActionList actionList(Qt::Edge edge) const;
 
     void setTextActionList(const DViewItemActionList &list);
     DViewItemActionList textActionList() const;
