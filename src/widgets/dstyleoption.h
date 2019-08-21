@@ -50,6 +50,64 @@ DTK_END_NAMESPACE
 
 DWIDGET_BEGIN_NAMESPACE
 
+class DPalettePrivate;
+class DPalette : public QPalette
+{
+public:
+    enum ColorType {
+        ItemBackground,     //列表项的背景色
+        TextTitle,          //标题型文本的颜色
+        TextTips,           //提示性文本的颜色
+        TextWarning,        //警告类型的文本颜色
+        TextLively,         //活跃式文本颜色（不受活动色影响）
+        LightLively,        //活跃式按钮（recommend button）背景色中的亮色（不受活跃色影响）
+        DarkLively,         //活跃式按钮（recommend button）背景色中的暗色，会从亮色渐变到暗色（不受活跃色影响）
+        FrameBorder,        //控件边框颜色
+        NColorTypes
+    };
+
+    DPalette();
+    DPalette(const QPalette &palette);
+    DPalette(const DPalette &palette);
+    ~DPalette();
+
+    DPalette &operator=(const DPalette &palette);
+
+    static DPalette get(const QWidget *widget, const QPalette &base);
+    static inline DPalette get(const QWidget *widget)
+    { return get(widget, widget->palette()); }
+
+    static void set(QWidget *widget, const DPalette &pa);
+    static void setGeneric(const DPalette &pa);
+
+    inline const QColor &color(ColorGroup cg, ColorType ct) const
+    { return brush(cg, ct).color(); }
+    const QBrush &brush(ColorGroup cg, ColorType ct) const;
+    inline void setColor(ColorGroup cg, ColorType ct, const QColor &color)
+    { setBrush(cg, ct, color); }
+    inline void setColor(ColorType ct, const QColor &color)
+    { setColor(All, ct, color); }
+    inline void setBrush(ColorType ct, const QBrush &brush)
+    { setBrush(All, ct, brush); }
+    void setBrush(ColorGroup cg, ColorType ct, const QBrush &brush);
+
+    inline const QColor &color(ColorType ct) const { return color(Current, ct); }
+    inline const QBrush &brush(ColorType ct) const { return brush(Current, ct); }
+    inline const QBrush &itemBackground() const { return brush(ItemBackground); }
+    inline const QBrush &textTiele() const { return brush(TextTitle); }
+    inline const QBrush &textTips() const { return brush(TextTips); }
+    inline const QBrush &textWarning() const { return brush(TextWarning); }
+    inline const QBrush &textLively() const { return brush(TextLively); }
+
+    using QPalette::color;
+    using QPalette::brush;
+    using QPalette::setBrush;
+    using QPalette::setColor;
+
+private:
+    QScopedPointer<DPalettePrivate> d;
+};
+
 class DStyleOption
 {
 public:
@@ -60,6 +118,8 @@ public:
 
     virtual void init(QWidget *widget);
     virtual void init(const QWidget *widget);
+
+    DPalette dpalette;
 };
 
 class DStyleOptionButton : public QStyleOptionButton, public DStyleOption
@@ -115,62 +175,6 @@ public:
     enum ViewItemFeature {
         UseDStyleLayout = 0x10000
     };
-};
-
-class DPalettePrivate;
-class DPalette : public QPalette
-{
-public:
-    enum ColorType {
-        ItemBackground,     //列表项的背景色
-        TextTitle,          //标题型文本的颜色
-        TextTips,           //提示性文本的颜色
-        TextWarning,        //警告类型的文本颜色
-        TextLively,         //活跃式文本颜色（不受活动色影响）
-        LightLively,        //活跃式按钮（recommend button）背景色中的亮色（不受活跃色影响）
-        DarkLively,         //活跃式按钮（recommend button）背景色中的暗色，会从亮色渐变到暗色（不受活跃色影响）
-        FrameBorder,        //控件边框颜色
-        NColorTypes
-    };
-
-    DPalette();
-    DPalette(const QPalette &palette);
-    DPalette(const DPalette &palette);
-    ~DPalette();
-
-    static DPalette get(const QWidget *widget, const QPalette &base);
-    static inline DPalette get(const QWidget *widget)
-    { return get(widget, widget->palette()); }
-
-    static void set(QWidget *widget, const DPalette &pa);
-    static void setGeneric(const DPalette &pa);
-
-    inline const QColor &color(ColorGroup cg, ColorType ct) const
-    { return brush(cg, ct).color(); }
-    const QBrush &brush(ColorGroup cg, ColorType ct) const;
-    inline void setColor(ColorGroup cg, ColorType ct, const QColor &color)
-    { setBrush(cg, ct, color); }
-    inline void setColor(ColorType ct, const QColor &color)
-    { setColor(All, ct, color); }
-    inline void setBrush(ColorType ct, const QBrush &brush)
-    { setBrush(All, ct, brush); }
-    void setBrush(ColorGroup cg, ColorType ct, const QBrush &brush);
-
-    inline const QColor &color(ColorType ct) const { return color(Current, ct); }
-    inline const QBrush &brush(ColorType ct) const { return brush(Current, ct); }
-    inline const QBrush &itemBackground() const { return brush(ItemBackground); }
-    inline const QBrush &textTiele() const { return brush(TextTitle); }
-    inline const QBrush &textTips() const { return brush(TextTips); }
-    inline const QBrush &textWarning() const { return brush(TextWarning); }
-    inline const QBrush &textLively() const { return brush(TextLively); }
-
-    using QPalette::color;
-    using QPalette::brush;
-    using QPalette::setBrush;
-    using QPalette::setColor;
-
-private:
-    QScopedPointer<DPalettePrivate> d;
 };
 
 class DFontSizeManagerPrivate;

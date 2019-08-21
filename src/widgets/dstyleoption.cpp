@@ -127,7 +127,7 @@ void DStyleOption::init(QWidget *widget)
 
 void DStyleOption::init(const QWidget *widget)
 {
-    Q_UNUSED(widget)
+    dpalette = DPalette::get(widget);
 }
 
 /*!
@@ -220,6 +220,13 @@ DPalette::DPalette(const DPalette &palette)
 DPalette::~DPalette()
 {
 
+}
+
+DPalette &DPalette::operator=(const DPalette &palette)
+{
+    d->data = palette.d->data;
+
+    return *this;
 }
 
 DPalette DPalette::get(const QWidget *widget, const QPalette &base)

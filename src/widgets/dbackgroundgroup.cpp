@@ -22,7 +22,7 @@ public:
     {
         D_QC(DBackgroundGroup);
 
-        QList<QWidget*> items = q->findChildren<QWidget*>();
+        QList<QWidget*> items = q->findChildren<QWidget*>(QString(), Qt::FindDirectChildrenOnly);
         QList<QPair<QWidget*, DStyleOptionBackgroundGroup::ItemBackgroundPosition>> itemStyleOptions;
         itemStyleOptions.reserve(items.size());
 
@@ -114,7 +114,11 @@ void DBackgroundGroup::paintEvent(QPaintEvent *event)
         option.rect += d->itemMargins;
         option.directions = d->direction;
         option.position = pair.second;
-        option.palette = this->palette();
+
+        if (backgroundRole() != QPalette::NoRole) {
+            option.dpalette.setBrush(DPalette::ItemBackground, palette().brush(backgroundRole()));
+        }
+
         painter.drawPrimitive(static_cast<QStyle::PrimitiveElement>(DStyle::PE_ItemBackground), option);
     }
 }
@@ -135,18 +139,6 @@ bool DBackgroundGroup::event(QEvent *event)
     case QEvent::LayoutDirectionChange: {
         D_D(DBackgroundGroup);
         d->updateOptions();
-        break;
-    }
-    case QEvent::PaletteChange: {
-        DPalette pa = DPalette::get(this);
-
-        if (backgroundRole() == QPalette::NoRole) { // 恢复为默认的role
-            pa.setBrush(DPalette::ItemBackground, DPalette().brush(DPalette::ItemBackground));
-        } else {
-            pa.setBrush(DPalette::ItemBackground, pa.brush(backgroundRole()));
-        }
-
-        DPalette::set(this, pa);
         break;
     }
     default:
