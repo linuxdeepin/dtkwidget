@@ -768,7 +768,7 @@ QStyleOptionViewItem DListView::viewOptions() const
 {
     QStyleOptionViewItem item = QListView::viewOptions();
 
-    item.features |= QStyleOptionViewItem::ViewItemFeature(DStyleOptionViewItem::UseDStyleLayout);
+    item.showDecorationSelected = true;
 
     if (viewMode() == QListView::ListMode) {
         item.decorationAlignment = Qt::AlignVCenter;

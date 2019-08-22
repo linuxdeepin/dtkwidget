@@ -296,6 +296,7 @@ public:
     QMargins margins;
     QSize itemSize;
     QMap<QModelIndex, QList<QPair<QAction*, QRect>>> clickableActionMap;
+    QAction *pressedAction = nullptr;
 };
 
 DViewItemAction::DViewItemAction(Qt::Alignment alignment, const QSize &iconSize,
@@ -666,33 +667,41 @@ void DStyledItemDelegate::initStyleOption(QStyleOptionViewItem *option, const QM
     }
 }
 
-bool DStyledItemDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index)
+bool DStyledItemDelegate::eventFilter(QObject *object, QEvent *event)
 {
     switch (event->type()) {
-    case QEvent::MouseButtonPress:
-    case QEvent::MouseButtonRelease:
-    case QEvent::MouseMove: {
+    case QEvent::MouseButtonPress: {
+        D_D(DStyledItemDelegate);
+        d->pressedAction = nullptr;
+        Q_FALLTHROUGH();
+    }
+    case QEvent::MouseButtonRelease: {
         QMouseEvent *ev = static_cast<QMouseEvent*>(event);
-        D_DC(DStyledItemDelegate);
+        D_D(DStyledItemDelegate);
+
+        QAbstractItemView *view = qobject_cast<QAbstractItemView*>(parent());
+        const QModelIndex &index = view->indexAt(ev->pos());
 
         for (auto action_map : d->clickableActionMap.value(index)) {
             if (action_map.first->isEnabled()
                     && action_map.second.contains(ev->pos(), true)) {
-                if (event->type() == QEvent::MouseButtonRelease) {
+                if (event->type() == QEvent::MouseButtonRelease
+                        && d->pressedAction == action_map.first) {
                     action_map.first->trigger();
+                } else {
+                    d->pressedAction = action_map.first;
                 }
 
                 return true;
             }
         }
-
         break;
     }
     default:
         break;
     }
 
-    return QStyledItemDelegate::editorEvent(event, model, option, index);
+    return QStyledItemDelegate::eventFilter(object, event);
 }
 
 static Dtk::ItemDataRole getActionPositionRole(Qt::Edge edge)

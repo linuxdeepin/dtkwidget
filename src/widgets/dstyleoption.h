@@ -177,7 +177,7 @@ class DStyleOptionViewItem : public QStyleOptionViewItem, public DStyleOption
 {
 public:
     enum ViewItemFeature {
-        UseDStyleLayout = 0x10000
+
     };
 };
 

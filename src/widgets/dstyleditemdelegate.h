@@ -91,7 +91,7 @@ public Q_SLOTS:
 
 protected:
     void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const;
-    bool editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index) override;
+    bool eventFilter(QObject *object, QEvent *event) override;
 };
 
 class DStandardItem : public QStandardItem
