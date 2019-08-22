@@ -25,31 +25,24 @@
 
 #include <private/qabstractbutton_p.h>
 
-#include <QScopedPointer>
-#include <QStylePainter>
-
 DWIDGET_BEGIN_NAMESPACE
 
-class DFloatingButtonPrivate : public DCORE_NAMESPACE::DObjectPrivate
-{
-public:
-    DFloatingButtonPrivate(DFloatingButton *qq)
-        : DObjectPrivate(qq)
-    {
-        // 默认调整大小，否则可能会导致按钮显示后为 QWidget 的默认大小
-        qq->resize(48, 48);
-    }
-
-    bool flat = false;
-
-    D_DECLARE_PUBLIC(DFloatingButton)
-};
-
 DFloatingButton::DFloatingButton(QWidget *parent)
-    : QAbstractButton(parent)
-    , DObject(*new DFloatingButtonPrivate(this))
+    : DIconButton(parent)
 {
+    resize(48, 48);
+}
 
+DFloatingButton::DFloatingButton(QStyle::StandardPixmap iconType, QWidget *parent)
+    : DIconButton(iconType, parent)
+{
+    resize(48, 48);
+}
+
+DFloatingButton::DFloatingButton(DStyle::StandardPixmap iconType, QWidget *parent)
+    : DIconButton(iconType, parent)
+{
+    resize(48, 48);
 }
 
 DFloatingButton::DFloatingButton(const QString &text, QWidget *parent)
@@ -107,65 +100,10 @@ QSize DFloatingButton::minimumSizeHint() const
     return sizeHint();
 }
 
-bool DFloatingButton::isFlat() const
-{
-    D_DC(DFloatingButton);
-
-    return d->flat;
-}
-
-void DFloatingButton::setFlat(bool flat)
-{
-    D_D(DFloatingButton);
-
-    d->flat = flat;
-
-    if (d->flat == flat)
-        return;
-
-    QAbstractButtonPrivate *bp = static_cast<QAbstractButtonPrivate*>(QAbstractButton::d_ptr.data());
-    bp->sizeHint = QSize();
-
-    update();
-    updateGeometry();
-}
-
 void DFloatingButton::initStyleOption(DStyleOptionButton *option) const
 {
-    if (!option)
-        return;
-
-    D_DC(DFloatingButton);
-
-    option->initFrom(this);
-    option->init(this);
+    DIconButton::initStyleOption(option);
     option->features = QStyleOptionButton::ButtonFeature(DStyleOptionButton::FloatingButton);
-
-    if (d->flat)
-        option->features |= QStyleOptionButton::Flat;
-
-    if (isChecked())
-        option->state |= QStyle::State_On;
-
-    if (isDown())
-        option->state |= QStyle::State_Sunken;
-
-    if (!d->flat && !isDown())
-        option->state |= QStyle::State_Raised;
-
-    option->text = text();
-    option->icon = icon();
-    option->iconSize = iconSize();
-}
-
-void DFloatingButton::paintEvent(QPaintEvent *event)
-{
-    Q_UNUSED(event)
-
-    DStylePainter p(this);
-    DStyleOptionButton opt;
-    initStyleOption(&opt);
-    p.drawControl(DStyle::CE_FloatingButton, opt);
 }
 
 DWIDGET_END_NAMESPACE

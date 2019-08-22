@@ -71,9 +71,7 @@ public:
     };
 
     enum ControlElement {
-        CE_FloatingButton = QStyle::CE_CustomBase + 1,
-        CE_FloatingButtonBevel,
-        CE_IconButton,
+        CE_IconButton = QStyle::CE_CustomBase + 1,
         CE_CustomBase = QStyle::CE_CustomBase + 0xf00000
     };
 

@@ -21,40 +21,26 @@
 #ifndef DFLOATINGBUTTON_H
 #define DFLOATINGBUTTON_H
 
-#include <dtkwidget_global.h>
-#include <DObject>
-
-#include <QAbstractButton>
+#include <DIconButton>
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DStyleOptionButton;
-class DFloatingButtonPrivate;
-class DFloatingButton : public QAbstractButton, DCORE_NAMESPACE::DObject
+class DFloatingButton : public DIconButton
 {
     Q_OBJECT
-    D_DECLARE_PRIVATE(DFloatingButton)
-
-    Q_PROPERTY(bool flat READ isFlat WRITE setFlat)
 
 public:
     explicit DFloatingButton(QWidget *parent = nullptr);
+    explicit DFloatingButton(QStyle::StandardPixmap iconType = static_cast<QStyle::StandardPixmap>(-1), QWidget *parent = nullptr);
+    explicit DFloatingButton(DStyle::StandardPixmap iconType = static_cast<DStyle::StandardPixmap>(-1), QWidget *parent = nullptr);
     explicit DFloatingButton(const QString &text, QWidget *parent = nullptr);
     DFloatingButton(const QIcon& icon, const QString &text, QWidget *parent = nullptr);
 
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
 
-    bool isFlat() const;
-
-public Q_SLOTS:
-    void setFlat(bool flat);
-
 protected:
-    void initStyleOption(DStyleOptionButton *option) const;
-
-private:
-    void paintEvent(QPaintEvent *event) override;
+    void initStyleOption(DStyleOptionButton *option) const override;
 };
 
 DWIDGET_END_NAMESPACE
