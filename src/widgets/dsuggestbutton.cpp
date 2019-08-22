@@ -40,9 +40,11 @@ void DSuggestButton::paintEvent(QPaintEvent *event)
     Q_UNUSED(event)
     QStylePainter p(this);
     DStyleOptionButton option;
-    option.features |= DStyleOptionButton::ButtonFeatures(DStyleOptionButton::SuggestButton);
     initStyleOption(&option);
     option.init(this);
+    option.features |= QStyleOptionButton::ButtonFeature(DStyleOptionButton::SuggestButton);
+    option.palette.setBrush(QPalette::Light, option.dpalette.lightLively());
+    option.palette.setBrush(QPalette::Dark, option.dpalette.darkLively());
     p.drawControl(QStyle::CE_PushButton, option);
 }
 

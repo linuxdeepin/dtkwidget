@@ -162,10 +162,10 @@ void DFloatingButton::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event)
 
-    QStylePainter p(this);
+    DStylePainter p(this);
     DStyleOptionButton opt;
     initStyleOption(&opt);
-    p.drawControl(QStyle::CE_PushButton, opt);
+    p.drawControl(DStyle::CE_FloatingButton, opt);
 }
 
 DWIDGET_END_NAMESPACE

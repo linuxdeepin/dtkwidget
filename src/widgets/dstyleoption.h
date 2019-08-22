@@ -99,6 +99,9 @@ public:
     inline const QBrush &textTips() const { return brush(TextTips); }
     inline const QBrush &textWarning() const { return brush(TextWarning); }
     inline const QBrush &textLively() const { return brush(TextLively); }
+    inline const QBrush &lightLively() const { return brush(LightLively); }
+    inline const QBrush &darkLively() const { return brush(DarkLively); }
+    inline const QBrush &frameBorder() const { return brush(FrameBorder); }
 
     using QPalette::color;
     using QPalette::brush;

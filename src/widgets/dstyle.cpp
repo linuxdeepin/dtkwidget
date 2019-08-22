@@ -494,11 +494,71 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
 
 void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const QStyleOption *opt, QPainter *p, const QWidget *w)
 {
-    Q_UNUSED(style)
-    Q_UNUSED(ce)
-    Q_UNUSED(opt)
-    Q_UNUSED(p)
-    Q_UNUSED(w)
+    switch (ce) {
+    case CE_FloatingButton: {
+        if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton *>(opt)) {
+            DStyleHelper dstyle(style);
+            dstyle.drawControl(CE_FloatingButtonBevel, opt, p, w);
+            QStyleOptionButton subopt = *btn;
+            subopt.rect = style->subElementRect(SE_PushButtonContents, opt, w);
+
+            if (!(btn->features & QStyleOptionButton::Flat))
+                subopt.palette.setBrush(QPalette::ButtonText, subopt.palette.highlightedText());
+
+            style->drawControl(CE_PushButtonLabel, &subopt, p, w);
+
+            if (btn->state.testFlag(QStyle::State_HasFocus)) {
+                int border_width = dstyle.pixelMetric(PM_FocusBorderWidth, opt, w);
+                QColor color = opt->palette.color(QPalette::Highlight);
+
+                if (const DStyle *dstyle = qobject_cast<const DStyle*>(style)) {
+                    color = dstyle->generatedBrush(opt, color, opt->palette.currentColorGroup(), QPalette::Highlight).color();
+                }
+
+                p->setPen(QPen(color, border_width, Qt::SolidLine));
+                p->setBrush(Qt::NoBrush);
+                p->setRenderHint(QPainter::Antialiasing);
+                p->drawEllipse(QRectF(opt->rect).adjusted(1, 1, -1, -1));
+            }
+
+            return;
+        }
+        break;
+    }
+    case CE_FloatingButtonBevel: {
+        DStyleHelper dstyle(style);
+        int frame_margins = dstyle.pixelMetric(PM_FrameMargins, opt, w);
+        const QMargins margins(frame_margins, frame_margins, frame_margins, frame_margins);
+        QRect shadow_rect = opt->rect + margins;
+        const QRect content_rect = opt->rect - margins;
+        QColor color = opt->palette.highlight().color();
+
+        if (const DStyle *dstyle = qobject_cast<const DStyle*>(style)) {
+            color = dstyle->generatedBrush(opt, color, opt->palette.currentColorGroup(), QPalette::Highlight).color();
+        }
+
+        qreal frame_radius = content_rect.width() / 2.0;
+        int shadow_radius = dstyle.pixelMetric(PM_ShadowRadius, opt, w);
+        int shadow_xoffset = dstyle.pixelMetric(PM_ShadowHOffset, opt, w);
+        int shadow_yoffset = dstyle.pixelMetric(PM_ShadowVOffset, opt, w);
+
+        shadow_rect.setTopLeft(shadow_rect.topLeft() + QPoint(shadow_xoffset, shadow_yoffset));
+        shadow_rect.setWidth(qMin(shadow_rect.width(), shadow_rect.height()));
+        shadow_rect.setHeight(qMin(shadow_rect.width(), shadow_rect.height()));
+        shadow_rect.moveCenter(opt->rect.center() + QPoint(shadow_xoffset / 2.0, shadow_yoffset / 2.0));
+
+        DDrawUtils::drawShadow(p, shadow_rect, frame_radius, frame_radius,
+                               DStyle::adjustColor(color, 0, 0, +30), shadow_radius, QPoint(0, 0));
+
+        p->setPen(Qt::NoPen);
+        p->setBrush(color);
+        p->setRenderHint(QPainter::Antialiasing);
+        p->drawEllipse(content_rect);
+        break;
+    }
+    default:
+        break;
+    }
 }
 
 int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyleOption *opt, const QWidget *widget)
