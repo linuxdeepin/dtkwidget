@@ -56,6 +56,7 @@ class DPalette : public QPalette
 {
 public:
     enum ColorType {
+        NoType,
         ItemBackground,     //列表项的背景色
         TextTitle,          //标题型文本的颜色
         TextTips,           //提示性文本的颜色
@@ -171,6 +172,13 @@ public:
 
     Qt::Orientations directions;
     ItemBackgroundPosition position;
+};
+
+class DStyleOptionIcon : public QStyleOption, public DStyleOption
+{
+public:
+    QIcon icon;
+    QSize iconSize;
 };
 
 class DStyleOptionViewItem : public QStyleOptionViewItem, public DStyleOption

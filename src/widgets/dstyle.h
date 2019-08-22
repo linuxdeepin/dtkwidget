@@ -64,12 +64,16 @@ class DStyle : public QCommonStyle
 public:
     enum PrimitiveElement {
         PE_ItemBackground = QStyle::PE_CustomBase + 1,          //列表项的背景色
+        PE_IconButtonPanel,
+        PE_IconButtonIcon,
+        PE_Icon,
         PE_CustomBase = QStyle::PE_CustomBase + 0xf00000
     };
 
     enum ControlElement {
         CE_FloatingButton = QStyle::CE_CustomBase + 1,
         CE_FloatingButtonBevel,
+        CE_IconButton,
         CE_CustomBase = QStyle::CE_CustomBase + 0xf00000
     };
 
@@ -81,7 +85,18 @@ public:
         PM_ShadowHOffset,                                       //阴影在水平方向的偏移
         PM_ShadowVOffset,                                       //阴影在竖直方向的偏移
         PM_FrameMargins,                                        //控件的margins区域，控件内容 = 控件大小 - FrameMargins
+        PM_IconButtonIconSize,
         PM_CustomBase = QStyle::PM_CustomBase + 0xf00000
+    };
+
+    enum SubElement {
+        SE_IconButtonIcon = QStyle::SE_CustomBase + 1,
+        SE_CustomBase = QStyle::SE_CustomBase + 0xf00000
+    };
+
+    enum ContentsType {
+        CT_IconButton = QStyle::CT_CustomBase + 1,
+        CT_CustomBase = QStyle::CT_CustomBase + 0xf00000
     };
 
     enum StyleState {
@@ -98,6 +113,10 @@ public:
     };
     Q_DECLARE_FLAGS(StateFlags, StyleState)
 
+    enum StandardPixmap {
+        SP_CustomBase = QStyle::SP_CustomBase + 0xf00000
+    };
+
     static QColor adjustColor(const QColor &base,
                               qint8 hueFloat = 0, qint8 saturationFloat = 0, qint8 lightnessFloat = 0,
                               qint8 redFloat = 0, qint8 greenFloat = 0, qint8 blueFloat = 0, qint8 alphaFloat = 0);
@@ -108,6 +127,9 @@ public:
     static void drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, const QStyleOption *opt, QPainter *p, const QWidget *w = nullptr);
     static void drawControl(const QStyle *style, DStyle::ControlElement ce, const QStyleOption *opt, QPainter *p, const QWidget *w = nullptr);
     static int pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyleOption *opt = nullptr, const QWidget *widget = nullptr);
+    static QRect subElementRect(const QStyle *style, DStyle::SubElement r, const QStyleOption *opt, const QWidget *widget = nullptr);
+    static QSize sizeFromContents(const QStyle *style, DStyle::ContentsType ct, const QStyleOption *opt, const QSize &contentsSize, const QWidget *widget = nullptr);
+    static QIcon standardIcon(const QStyle *style, StandardPixmap st, const QStyleOption *opt = nullptr, const QWidget *widget = 0);
 
     inline void drawPrimitive(DStyle::PrimitiveElement pe, const QStyleOption *opt, QPainter *p, const QWidget *w = nullptr) const
     { proxy()->drawPrimitive(static_cast<QStyle::PrimitiveElement>(pe), opt, p, w); }
@@ -115,10 +137,19 @@ public:
     { proxy()->drawControl(static_cast<QStyle::ControlElement>(ce), opt, p, w); }
     inline int pixelMetric(DStyle::PixelMetric m, const QStyleOption *opt = nullptr, const QWidget *widget = nullptr) const
     { return proxy()->pixelMetric(static_cast<QStyle::PixelMetric>(m), opt, widget); }
+    inline QRect subElementRect(DStyle::SubElement r, const QStyleOption *opt, const QWidget *widget = nullptr) const
+    { return proxy()->subElementRect(static_cast<QStyle::SubElement>(r), opt, widget); }
+    inline QSize sizeFromContents(DStyle::ContentsType ct, const QStyleOption *opt, const QSize &contentsSize, const QWidget *widget = nullptr) const
+    { return proxy()->sizeFromContents(static_cast<QStyle::ContentsType>(ct), opt, contentsSize, widget); }
+    inline QIcon standardIcon(DStyle::StandardPixmap st, const QStyleOption *opt = nullptr, const QWidget *widget = nullptr) const
+    { return proxy()->standardIcon(static_cast<QStyle::StandardPixmap>(st), opt, widget); }
 
     void drawPrimitive(QStyle::PrimitiveElement pe, const QStyleOption *opt, QPainter *p, const QWidget *w = nullptr) const override;
     void drawControl(QStyle::ControlElement ce, const QStyleOption *opt, QPainter *p, const QWidget *w = nullptr) const override;
     int pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt = nullptr, const QWidget *widget = nullptr) const override;
+    QRect subElementRect(QStyle::SubElement r, const QStyleOption *opt, const QWidget *widget = nullptr) const override;
+    QSize sizeFromContents(QStyle::ContentsType ct, const QStyleOption *opt, const QSize &contentsSize, const QWidget *widget = nullptr) const override;
+    QIcon standardIcon(QStyle::StandardPixmap st, const QStyleOption *opt = nullptr, const QWidget *widget = nullptr) const override;
 
     // 获取一个加工后的画笔
     QBrush generatedBrush(const QStyleOption *option, const QBrush &base,
@@ -146,6 +177,9 @@ public:
     using QCommonStyle::drawPrimitive;
     using QCommonStyle::drawControl;
     using QCommonStyle::pixelMetric;
+    using QCommonStyle::subElementRect;
+    using QCommonStyle::sizeFromContents;
+    using QCommonStyle::standardIcon;
 
 #if QT_CONFIG(itemviews)
     static QSizeF viewItemTextLayout(QTextLayout &textLayout, int lineWidth);
@@ -177,12 +211,34 @@ public:
     inline const DStyle *dstyle() const
     { return m_dstyle; }
 
+    inline QBrush generatedBrush(const QStyleOption *option, const QBrush &base,
+                                 QPalette::ColorGroup cg = QPalette::Normal,
+                                 QPalette::ColorRole role = QPalette::NoRole) const
+    { return m_dstyle ? m_dstyle->generatedBrush(option, base, cg, role) : base; }
+    inline QBrush generatedBrush(const QStyleOption *option, const QBrush &base,
+                                 QPalette::ColorGroup cg = QPalette::Normal,
+                                 DPalette::ColorType type = DPalette::NoType) const
+    { return m_dstyle ? m_dstyle->generatedBrush(option, base, cg, type) : base; }
+    inline QColor getColor(const QStyleOption *option, QPalette::ColorRole role) const
+    { return generatedBrush(option, option->palette.brush(role), option->palette.currentColorGroup(), role).color(); }
+    inline QColor getColor(const QStyleOption *option, const DPalette &palette, DPalette::ColorType type) const
+    { return generatedBrush(option, palette.brush(type), palette.currentColorGroup(), type).color(); }
+    template<class T>
+    inline QColor getColor(const T *option, DPalette::ColorType type) const
+    { return getColor(option, option->dpalette, type); }
+
     inline void drawPrimitive(DStyle::PrimitiveElement pe, const QStyleOption *opt, QPainter *p, const QWidget *w = nullptr) const
     { m_dstyle ? m_dstyle->drawPrimitive(pe, opt, p, w) : DStyle::drawPrimitive(m_style, pe, opt, p, w); }
     inline void drawControl(DStyle::ControlElement ce, const QStyleOption *opt, QPainter *p, const QWidget *w = nullptr) const
     { m_dstyle ? m_dstyle->drawControl(ce, opt, p, w) : DStyle::drawControl(m_style, ce, opt, p, w); }
     inline int pixelMetric(DStyle::PixelMetric m, const QStyleOption *opt = nullptr, const QWidget *widget = nullptr) const
     { return m_dstyle ? m_dstyle->pixelMetric(m, opt, widget) : DStyle::pixelMetric(m_style, m, opt, widget); }
+    inline QRect subElementRect(DStyle::SubElement r, const QStyleOption *opt, const QWidget *widget = nullptr) const
+    { return m_dstyle ? m_dstyle->subElementRect(r, opt, widget) : DStyle::subElementRect(m_style, r, opt, widget); }
+    inline QSize sizeFromContents(DStyle::ContentsType ct, const QStyleOption *opt, const QSize &contentsSize, const QWidget *widget = nullptr) const
+    { return m_dstyle ? m_dstyle->sizeFromContents(ct, opt, contentsSize, widget) : DStyle::sizeFromContents(m_style, ct, opt, contentsSize, widget); }
+    inline QIcon standardIcon(DStyle::StandardPixmap standardIcon, const QStyleOption *opt, const QWidget *widget = nullptr) const
+    { return m_dstyle ? m_dstyle->standardIcon(standardIcon, opt, widget) : DStyle::standardIcon(m_style, standardIcon, opt, widget); }
 
 private:
     const QStyle *m_style;

@@ -30,11 +30,11 @@ class QEvent;
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DIconButton : public QPushButton
+class DButtonListIconButton : public QPushButton
 {
     Q_OBJECT
 public:
-    DIconButton(const QString &Icon, const QString &text, QWidget *parent = Q_NULLPTR);
+    DButtonListIconButton(const QString &Icon, const QString &text, QWidget *parent = Q_NULLPTR);
 
     void initIconLabel();
     void initConnect();
@@ -66,7 +66,7 @@ public:
     ~DButtonList();
 
     void initMargins(int leftMargin, int rightMargin, int imageLeftMargin);
-    DIconButton *getButtonByIndex(int index);
+    DButtonListIconButton *getButtonByIndex(int index);
 
 public Q_SLOTS:
     void addButton(const QString &label);

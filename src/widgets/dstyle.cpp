@@ -487,6 +487,47 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
         }
         break;
     }
+    case PE_IconButtonPanel: {
+        DStyleHelper dstyle(style);
+        p->fillRect(opt->rect, dstyle.getColor(opt, QPalette::Background));
+        break;
+    }
+    case PE_IconButtonIcon: {
+        if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton*>(opt)) {
+            DStyleHelper dstyle(style);
+            DStyleOptionIcon icon_option;
+
+            icon_option.QStyleOption::operator =(*opt);
+            icon_option.icon = btn->icon;
+            icon_option.iconSize = btn->iconSize;
+            icon_option.dpalette = btn->dpalette;
+
+            dstyle.drawPrimitive(PE_Icon, &icon_option, p, w);
+        }
+        break;
+    }
+    case PE_Icon: {
+        if (const DStyleOptionIcon *icon_opt = qstyleoption_cast<const DStyleOptionIcon*>(opt)) {
+            QIcon::Mode mode = QIcon::Normal;
+            QIcon::State state = QIcon::Off;
+
+            if (!(opt->state & QStyle::State_Enabled)) {
+                mode = QIcon::Disabled;
+            } else if (opt->state & QStyle::State_Selected) {
+                mode = QIcon::Selected;
+            } else if (opt->state & QStyle::State_MouseOver) {
+                mode = QIcon::Active;
+            }
+
+            if (opt->state & QStyle::State_On) {
+                state = QIcon::On;
+            }
+
+            icon_opt->icon.actualSize(w->window()->windowHandle(), icon_opt->iconSize, mode, state);
+            icon_opt->icon.paint(p, opt->rect, Qt::AlignCenter, mode, state);
+        }
+        break;
+    }
     default:
         break;
     }
@@ -556,6 +597,20 @@ void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const Q
         p->drawEllipse(content_rect);
         break;
     }
+    case CE_IconButton: {
+        if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton *>(opt)) {
+            DStyleHelper dstyle(style);
+
+            if (!(btn->features & DStyleOptionButton::Flat)) {
+                dstyle.drawPrimitive(PE_IconButtonPanel, opt, p, w);
+            }
+
+            DStyleOptionButton new_opt = *btn;
+            new_opt.rect = dstyle.subElementRect(SE_IconButtonIcon, opt, w);
+            dstyle.drawPrimitive(PE_IconButtonIcon, opt, p, w);
+        }
+        break;
+    }
     default:
         break;
     }
@@ -589,11 +644,56 @@ int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyle
 
         return margins;
     }
+    case PM_IconButtonIconSize:
+        return 32;
     default:
         break;
     }
 
     return -1;
+}
+
+QRect DStyle::subElementRect(const QStyle *style, DStyle::SubElement r, const QStyleOption *opt, const QWidget *widget)
+{
+    Q_UNUSED(style)
+    Q_UNUSED(widget)
+
+    switch (r) {
+    case SE_IconButtonIcon:
+        return opt->rect;
+    default:
+        break;
+    }
+
+    return QRect();
+}
+
+QSize DStyle::sizeFromContents(const QStyle *style, DStyle::ContentsType ct, const QStyleOption *opt, const QSize &contentsSize, const QWidget *widget)
+{
+    Q_UNUSED(style)
+    Q_UNUSED(widget)
+
+    switch (ct) {
+    case CT_IconButton:
+        if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton*>(opt)) {
+            return contentsSize.expandedTo(btn->iconSize);
+        }
+        Q_FALLTHROUGH()
+    default:
+        break;
+    }
+
+    return contentsSize;
+}
+
+QIcon DStyle::standardIcon(const QStyle *style, DStyle::StandardPixmap st, const QStyleOption *opt, const QWidget *widget)
+{
+    Q_UNUSED(style)
+    Q_UNUSED(st)
+    Q_UNUSED(opt)
+    Q_UNUSED(widget);
+
+    return QIcon();
 }
 
 static DStyle::StyleState getState(const QStyleOption *option)
@@ -653,6 +753,33 @@ int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QW
     }
 
     return pixelMetric(this, static_cast<PixelMetric>(m), opt, widget);
+}
+
+QRect DStyle::subElementRect(QStyle::SubElement r, const QStyleOption *opt, const QWidget *widget) const
+{
+    if (Q_UNLIKELY(r < QStyle::SE_CustomBase)) {
+        return QCommonStyle::subElementRect(r, opt, widget);
+    }
+
+    return subElementRect(this, static_cast<DStyle::SubElement>(r), opt, widget);
+}
+
+QSize DStyle::sizeFromContents(QStyle::ContentsType ct, const QStyleOption *opt, const QSize &contentsSize, const QWidget *widget) const
+{
+    if (Q_UNLIKELY(ct < QStyle::CT_CustomBase)) {
+        return QCommonStyle::sizeFromContents(ct, opt, contentsSize, widget);
+    }
+
+    return sizeFromContents(this, static_cast<DStyle::ContentsType>(ct), opt, contentsSize, widget);
+}
+
+QIcon DStyle::standardIcon(QStyle::StandardPixmap st, const QStyleOption *opt, const QWidget *widget) const
+{
+    if (Q_UNLIKELY(st < QStyle::SP_CustomBase)) {
+        return QCommonStyle::standardIcon(st, opt, widget);
+    }
+
+    return standardIcon(this, static_cast<DStyle::StandardPixmap>(st), opt, widget);
 }
 
 QBrush DStyle::generatedBrush(const QStyleOption *option, const QBrush &base, QPalette::ColorGroup cg, QPalette::ColorRole role) const

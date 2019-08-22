@@ -31,7 +31,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-DIconButton::DIconButton(const QString &Icon, const QString &text, QWidget *parent):
+DButtonListIconButton::DButtonListIconButton(const QString &Icon, const QString &text, QWidget *parent):
     QPushButton(text, parent),
     m_icon(Icon),
     m_text(text)
@@ -40,11 +40,11 @@ DIconButton::DIconButton(const QString &Icon, const QString &text, QWidget *pare
     initConnect();
 }
 
-void DIconButton::initConnect(){
+void DButtonListIconButton::initConnect(){
     connect(this, SIGNAL(toggled(bool)), m_iconLabel, SLOT(setVisible(bool)));
 }
 
-void DIconButton::initIconLabel(){
+void DButtonListIconButton::initIconLabel(){
     m_iconLabel = new QLabel(this);
     setIconLeftMargin(20);
     m_iconLabel->hide();
@@ -53,39 +53,39 @@ void DIconButton::initIconLabel(){
     m_iconLabel->setFixedSize(image.size());
 }
 
-void DIconButton::setIconLeftMargin(int leftMargin){
+void DButtonListIconButton::setIconLeftMargin(int leftMargin){
     m_iconLabel->move(leftMargin, y());
 }
 
-void DIconButton::resizeEvent(QResizeEvent *event){
+void DButtonListIconButton::resizeEvent(QResizeEvent *event){
     int height = event->size().height();
     m_iconLabel->move(m_iconLabel->x(), (height - m_iconLabel->height())/ 2 );
     QPushButton::resizeEvent(event);
 }
 
-void DIconButton::setIconLabel(const QString &icon){
+void DButtonListIconButton::setIconLabel(const QString &icon){
     m_icon = icon;
     QImage image(m_icon);
     m_iconLabel->setPixmap(QPixmap::fromImage(image));
     m_iconLabel->setFixedSize(image.size());
 }
 
-void DIconButton::hideIconLabel(){
+void DButtonListIconButton::hideIconLabel(){
     m_iconLabel->hide();
 }
 
-void DIconButton::updateStyle(){
+void DButtonListIconButton::updateStyle(){
     style()->unpolish(this);
     style()->polish(this);
     update();
 }
 
-void DIconButton::enterEvent(QEvent *event){
+void DButtonListIconButton::enterEvent(QEvent *event){
     Q_EMIT mouseEntered(text());
     QPushButton::enterEvent(event);
 }
 
-void DIconButton::leaveEvent(QEvent *event){
+void DButtonListIconButton::leaveEvent(QEvent *event){
     Q_EMIT mouseLeaved(text());
     QPushButton::leaveEvent(event);
 }
@@ -162,7 +162,7 @@ void DButtonList::addButton(const QString &label){
 }
 
 void DButtonList::addButton(const QString &label, int index){
-    DIconButton* button = new DIconButton(":/images/dark/images/tick_hover.png", label, this);
+    DButtonListIconButton* button = new DButtonListIconButton(":/images/dark/images/tick_hover.png", label, this);
     button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     button->setCheckable(true);
     connect(button, SIGNAL(mouseEntered(QString)), this, SIGNAL(buttonMouseEntered(QString)));
@@ -193,7 +193,7 @@ void DButtonList::addButtons(const QStringList &listLabels){
 
 void DButtonList::setButtonChecked(int id){
    if (id < m_buttonGroup->buttons().length()){
-       DIconButton* button = reinterpret_cast<DIconButton*>(m_buttonGroup->button(id));
+       DButtonListIconButton* button = reinterpret_cast<DButtonListIconButton*>(m_buttonGroup->button(id));
        button->setChecked(true);
        if (m_buttonGroup->buttons().length() == 1){
             button->setProperty("state", "OnlyOne");
@@ -209,14 +209,14 @@ void DButtonList::setButtonChecked(int id){
 
 void DButtonList::checkButtonByIndex(int index){
     if (index < m_buttonGroup->buttons().length()){
-        DIconButton* button = reinterpret_cast<DIconButton*>(m_buttonGroup->button(index));
+        DButtonListIconButton* button = reinterpret_cast<DButtonListIconButton*>(m_buttonGroup->button(index));
         button->click();
     }
 }
 
-DIconButton* DButtonList::getButtonByIndex(int index){
+DButtonListIconButton* DButtonList::getButtonByIndex(int index){
     if (index < m_buttonGroup->buttons().length()){
-        DIconButton* button = reinterpret_cast<DIconButton*>(m_buttonGroup->button(index));
+        DButtonListIconButton* button = reinterpret_cast<DButtonListIconButton*>(m_buttonGroup->button(index));
         return button;
     }else{
         qWarning() << "There is no this index:" << index;
@@ -227,8 +227,8 @@ DIconButton* DButtonList::getButtonByIndex(int index){
 void DButtonList::clear(){
     Q_FOREACH (QAbstractButton* button, m_buttonGroup->buttons()) {
 //        qDebug() << static_cast<IconButton*>(button)->text();
-        static_cast<DIconButton*>(button)->disconnect();
-        m_buttonGroup->removeButton(static_cast<DIconButton*>(button));
+        static_cast<DButtonListIconButton*>(button)->disconnect();
+        m_buttonGroup->removeButton(static_cast<DButtonListIconButton*>(button));
     }
     QListWidget::clear();
 }
