@@ -38,6 +38,7 @@ DWindowCloseButton::DWindowCloseButton(QWidget * parent)
     : DIconButton(QStyle::SP_TitleBarCloseButton, parent)
 {
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    setFlat(true);
 }
 
 DWIDGET_END_NAMESPACE

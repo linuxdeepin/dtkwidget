@@ -544,4 +544,11 @@ DMainWindow::DMainWindow(DMainWindowPrivate &dd, QWidget *parent)
     d_func()->init();
 }
 
+void DMainWindow::showEvent(QShowEvent *event)
+{
+    setMinimumWidth(titlebar()->minimumSizeHint().width());
+
+    QMainWindow::showEvent(event);
+}
+
 DWIDGET_END_NAMESPACE

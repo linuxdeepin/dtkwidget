@@ -41,6 +41,7 @@ DWindowOptionButton::DWindowOptionButton(QWidget * parent)
     : DIconButton(QStyle::SP_TitleBarMenuButton, parent)
 {
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    setFlat(true);
 }
 
 DWIDGET_END_NAMESPACE

@@ -57,6 +57,7 @@ DWindowMaxButton::DWindowMaxButton(QWidget * parent) :
 {
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     setIcon(QStyle::SP_TitleBarMaxButton);
+    setFlat(true);
 }
 
 /*!

@@ -38,9 +38,12 @@ public:
     void setMenu(QMenu *menu);
 #endif
 
-    QWidget *customWidget() const;
-    void setCustomWidget(QWidget *, bool fixCenterPos = false);
-    void setCustomWidget(QWidget *, Qt::AlignmentFlag flag = Qt::AlignCenter, bool fixCenterPos = false);
+    D_DECL_DEPRECATED QWidget *customWidget() const;
+    D_DECL_DEPRECATED_X("Use addWidget") void setCustomWidget(QWidget *, bool fixCenterPos = false);
+    D_DECL_DEPRECATED_X("Use addWidget") void setCustomWidget(QWidget *, Qt::AlignmentFlag flag = Qt::AlignCenter, bool fixCenterPos = false);
+
+    void addWidget(QWidget *w, Qt::Alignment alignment = Qt::AlignCenter);
+    void removeWidget(QWidget *w);
 
     int buttonAreaWidth() const;
     bool separatorVisible() const;
@@ -51,9 +54,6 @@ public:
     void setVisible(bool visible) Q_DECL_OVERRIDE;
     void setEmbedMode(bool embed);
 
-    void resize(int width, int height);
-    void resize(const QSize &);
-
     bool menuIsVisible() const;
     void setMenuVisible(bool visible);
 
@@ -62,6 +62,10 @@ public:
 
     void setDisableFlags(Qt::WindowFlags flags);
     Qt::WindowFlags disableFlags() const;
+
+    QSize sizeHint() const;
+    QSize minimumSizeHint() const;
+
 Q_SIGNALS:
     void optionClicked();
     void doubleClicked();
@@ -89,6 +93,7 @@ private Q_SLOTS:
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) Q_DECL_OVERRIDE;
+    bool event(QEvent *e) override;
     void showEvent(QShowEvent *event) Q_DECL_OVERRIDE;
     void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;

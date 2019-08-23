@@ -66,6 +66,8 @@ private:
     void updateFullscreen();
     void updateButtonsState(Qt::WindowFlags type);
     void updateButtonsFunc();
+    void updateCenterArea();
+
     void handleParentWindowStateChange();
     void handleParentWindowIdChange();
     void _q_toggleWindowState();
@@ -80,19 +82,22 @@ private:
 #endif
 
     QHBoxLayout         *mainLayout;
-    DLabel              *iconLabel;
-    DLabel              *titleLabel;
+    QWidget             *leftArea;
+    QHBoxLayout         *leftLayout;
+    QWidget             *rightArea;
+    QHBoxLayout         *rightLayout;
+    DLabel              *centerArea;
+    QHBoxLayout         *centerLayout;
+    DIconButton         *iconLabel;
+    QWidget             *buttonArea;
     DWindowMinButton    *minButton;
     DWindowMaxButton    *maxButton;
     DWindowCloseButton  *closeButton;
     DWindowOptionButton *optionButton;
     DImageButton        *quitFullButton;
+    DLabel              *titleLabel;
+    QWidget             *customWidget = nullptr;
 
-    QWidget             *customWidget = Q_NULLPTR;
-    QWidget             *coustomAtea;
-    QWidget             *buttonArea;
-    QWidget             *titleArea;
-    QWidget             *titlePadding;
     DHorizontalLine     *separatorTop;
     DHorizontalLine     *separator;
 
@@ -122,19 +127,22 @@ void DTitlebarPrivate::init()
     D_Q(DTitlebar);
 
     mainLayout      = new QHBoxLayout;
-    iconLabel       = new DLabel;
-    titleLabel      = new DLabel;
+    leftArea        = new QWidget;
+    leftLayout      = new QHBoxLayout(leftArea);
+    rightArea       = new QWidget;
+    rightLayout     = new QHBoxLayout;
+    centerArea      = new DLabel(q);
+    centerLayout    = new QHBoxLayout(centerArea);
+    iconLabel       = new DIconButton(q);
+    buttonArea      = new QWidget;
     minButton       = new DWindowMinButton;
     maxButton       = new DWindowMaxButton;
     closeButton     = new DWindowCloseButton;
     optionButton    = new DWindowOptionButton;
     quitFullButton  = new DImageButton;
-    coustomAtea     = new QWidget;
-    buttonArea      = new QWidget;
-    titleArea       = new QWidget;
-    titlePadding    = new QWidget;
     separatorTop    = new DHorizontalLine(q);
     separator       = new DHorizontalLine(q);
+    titleLabel      = centerArea;
 
     optionButton->setObjectName("DTitlebarDWindowOptionButton");
     minButton->setObjectName("DTitlebarDWindowMinButton");
@@ -143,15 +151,43 @@ void DTitlebarPrivate::init()
     quitFullButton->setObjectName("DTitlebarDWindowQuitFullscreenButton");
     quitFullButton->hide();
 
-    mainLayout->setContentsMargins(6, 0, 0, 0);
-    mainLayout->setSpacing(0);
-
     iconLabel->setFixedSize(DefaultIconWidth, DefaultIconHeight);
     iconLabel->setWindowFlags(Qt::WindowTransparentForInput);
-    titleLabel->setText(qApp->applicationName());
+    iconLabel->setFocusPolicy(Qt::NoFocus);
+    iconLabel->setFlat(true);
 
-    titleLabel->setContentsMargins(0, 0, DefaultIconWidth + 10, 0);
-    titleLabel->setWindowFlags(Qt::WindowTransparentForInput);
+    leftArea->setWindowFlag(Qt::WindowTransparentForInput);
+    leftArea->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+    leftLayout->setContentsMargins(0, 0, 0, 0);
+    leftLayout->addSpacing(10);
+    leftLayout->addWidget(iconLabel, 0 , Qt::AlignLeading | Qt::AlignVCenter);
+
+    centerArea->setText(qApp->applicationName());
+    centerArea->setWindowFlags(Qt::WindowTransparentForInput);
+    centerArea->setFrameShape(QFrame::NoFrame);
+    centerArea->setAutoFillBackground(false);
+    centerArea->setBackgroundRole(QPalette::NoRole);
+
+    buttonArea->setWindowFlag(Qt::WindowTransparentForInput);
+    buttonArea->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+    QHBoxLayout *buttonLayout = new QHBoxLayout(buttonArea);
+    buttonLayout->setContentsMargins(0, 0, 0, 0);
+    buttonLayout->setSpacing(0);
+    buttonLayout->addWidget(optionButton);
+    buttonLayout->addWidget(minButton);
+    buttonLayout->addWidget(maxButton);
+    buttonLayout->addWidget(closeButton);
+    buttonLayout->addWidget(quitFullButton);
+
+    rightArea->setWindowFlag(Qt::WindowTransparentForInput);
+    rightArea->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+    rightLayout->setContentsMargins(0, 0, 0, 0);
+    auto rightAreaLayout = new QHBoxLayout(rightArea);
+    rightAreaLayout->setContentsMargins(0, 0, 0, 0);
+    rightAreaLayout->setMargin(0);
+    rightAreaLayout->setSpacing(0);
+    rightAreaLayout->addLayout(rightLayout);
+    rightAreaLayout->addWidget(buttonArea);
 
     separatorTop->setFixedHeight(1);
     separatorTop->hide();
@@ -161,48 +197,13 @@ void DTitlebarPrivate::init()
     separator->hide();
     separator->setWindowFlags(Qt::WindowTransparentForInput);
 
-    QHBoxLayout *buttonAreaLayout = new QHBoxLayout;
-    buttonAreaLayout->setContentsMargins(0, 0, 0, 0);
-    buttonAreaLayout->setMargin(0);
-    buttonAreaLayout->setSpacing(0);
-    buttonAreaLayout->addWidget(optionButton);
-    buttonAreaLayout->addWidget(minButton);
-    buttonAreaLayout->addWidget(maxButton);
-    buttonAreaLayout->addWidget(closeButton);
-    buttonAreaLayout->addWidget(quitFullButton);
-    buttonArea->setLayout(buttonAreaLayout);
-
-    QHBoxLayout *titleAreaLayout = new QHBoxLayout;
-    titleAreaLayout->setContentsMargins(4, 0, 10 + iconLabel->width(), 0);
-    titleAreaLayout->setSpacing(0);
-    titleAreaLayout->addWidget(iconLabel);
-    titleAreaLayout->setAlignment(iconLabel, Qt::AlignLeft);
-    titlePadding->setFixedSize(buttonArea->size());
-    titlePadding->setWindowFlags(Qt::WindowTransparentForInput);
-    titleAreaLayout->addWidget(titlePadding);
-    titleAreaLayout->addStretch();
-    titleAreaLayout->addWidget(titleLabel);
-    titleAreaLayout->setAlignment(titleLabel, Qt::AlignCenter);
-
-    titleAreaLayout->addStretch();
-    titleArea->setLayout(titleAreaLayout);
-    titleArea->setWindowFlags(Qt::WindowTransparentForInput);
-
-    QHBoxLayout *coustomAteaLayout = new QHBoxLayout;
-    coustomAteaLayout->setMargin(0);
-    coustomAteaLayout->setSpacing(0);
-    coustomAteaLayout->addWidget(titleArea);
-    coustomAtea->setLayout(coustomAteaLayout);
-
-    mainLayout->addWidget(coustomAtea);
-    mainLayout->addWidget(buttonArea);
-    mainLayout->setAlignment(buttonArea, Qt::AlignRight |  Qt::AlignVCenter);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
+    mainLayout->addWidget(leftArea, 0, Qt::AlignLeft);
+    mainLayout->addWidget(rightArea, 0, Qt::AlignRight);
 
     q->setLayout(mainLayout);
     q->setFixedHeight(DefaultTitlebarHeight);
     q->setMinimumHeight(DefaultTitlebarHeight);
-    coustomAtea->setFixedHeight(q->height());
-    buttonArea->setFixedHeight(q->height());
 
     q->connect(quitFullButton, &DImageButton::clicked, q, [ = ]() {
         bool isFullscreen = targetWindow()->windowState().testFlag(Qt::WindowFullScreen);
@@ -219,6 +220,7 @@ void DTitlebarPrivate::init()
     q->setFrameShape(QFrame::NoFrame);
     q->setBackgroundRole(QPalette::Base);
     q->setAutoFillBackground(true);
+    q->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 }
 
 QWidget *DTitlebarPrivate::targetWindow()
@@ -322,13 +324,6 @@ void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
 
     bool showClose = (type.testFlag(Qt::WindowCloseButtonHint) || forceShow) && !forceHide;
     closeButton->setVisible(showClose);
-
-    buttonArea->adjustSize();
-    buttonArea->resize(buttonArea->size());
-
-    if (titlePadding) {
-        titlePadding->setFixedSize(buttonArea->size());
-    }
 }
 
 void DTitlebarPrivate::updateButtonsFunc()
@@ -354,6 +349,16 @@ void DTitlebarPrivate::updateButtonsFunc()
         targetWindowHandle,
         DWindowManagerHelper::FUNC_CLOSE,
         !disableFlags.testFlag(Qt::WindowCloseButtonHint));
+}
+
+void DTitlebarPrivate::updateCenterArea()
+{
+    D_QC(DTitlebar);
+
+    int padding = qMax(leftArea->width(), rightArea->width());
+    QRect rect(0, 0, q->width() - 2 * padding, q->height());
+    rect.moveCenter(q->rect().center());
+    centerArea->setGeometry(rect);
 }
 
 void DTitlebarPrivate::handleParentWindowStateChange()
@@ -448,10 +453,6 @@ void DTitlebarPrivate::_q_onTopWindowMotifHintsChanged(quint32 winId)
     setWindowFlag(disableFlags, Qt::WindowMaximizeButtonHint, !maxButton->isEnabled());
     setWindowFlag(disableFlags, Qt::WindowCloseButtonHint, !closeButton->isEnabled());
 #endif
-
-    if (titlePadding) {
-        titlePadding->setFixedSize(buttonArea->size());
-    }
 }
 
 #ifndef QT_NO_MENU
@@ -552,10 +553,6 @@ DTitlebar::DTitlebar(QWidget *parent) :
     if (parent && parent->window()->windowType() != Qt::Window) {
         d->optionButton->hide();
     }
-
-    d->buttonArea->adjustSize();
-    d->buttonArea->resize(d->buttonArea->size());
-    d->titlePadding->setFixedSize(d->buttonArea->size());
 }
 
 #ifndef QT_NO_MENU
@@ -722,17 +719,26 @@ bool DTitlebar::eventFilter(QObject *obj, QEvent *event)
     return QWidget::eventFilter(obj, event);
 }
 
+bool DTitlebar::event(QEvent *e)
+{
+    if (e->type() == QEvent::LayoutRequest) {
+        D_D(DTitlebar);
+
+        d->updateCenterArea();
+    }
+
+    return QFrame::event(e);
+}
+
 void DTitlebar::resizeEvent(QResizeEvent *event)
 {
     //override QWidget::resizeEvent to fix button and separator pos.
     D_D(DTitlebar);
 
-    d->optionButton->setFixedHeight(event->size().height());
-    d->minButton->setFixedHeight(event->size().height());
-    d->maxButton->setFixedHeight(event->size().height());
-    d->closeButton->setFixedHeight(event->size().height());
     d->separatorTop->setFixedWidth(event->size().width());
     d->separator->setFixedWidth(event->size().width());
+    d->updateCenterArea();
+
     return QWidget::resizeEvent(event);
 }
 
@@ -771,33 +777,56 @@ void DTitlebar::setCustomWidget(QWidget *w, bool fixCenterPos)
 void DTitlebar::setCustomWidget(QWidget *w, Qt::AlignmentFlag wflag, bool fixCenterPos)
 {
     D_D(DTitlebar);
-    if (!w || w == d->titleArea) {
+
+    if (!w || w == d->customWidget) {
         return;
     }
 
-    QSize old = d->buttonArea->size();
-
-    QHBoxLayout *l = new QHBoxLayout;
-    l->setSpacing(0);
-    l->setMargin(0);
-
-    if (fixCenterPos) {
-        d->titlePadding = new QWidget;
-        d->titlePadding->setFixedSize(old);
-        l->addWidget(d->titlePadding);
+    for (int i = 0; i < d->centerLayout->count(); ++i) {
+        delete d->centerLayout->itemAt(i);
     }
 
-    l->addWidget(w, 0, wflag);
-    qDeleteAll(d->coustomAtea->children());
-    d->titleLabel = Q_NULLPTR;
-    d->titleArea = Q_NULLPTR;
-    d->iconLabel = Q_NULLPTR;
-    d->titlePadding = Q_NULLPTR;
-    d->coustomAtea->setLayout(l);
-    d->buttonArea->resize(old);
+    if (d->customWidget) {
+        d->customWidget->hide();
+        d->customWidget->deleteLater();
+    }
+
     d->customWidget = w;
 
-    w->resize(d->coustomAtea->size());
+    addWidget(w, fixCenterPos ? wflag | Qt::AlignHCenter : wflag);
+}
+
+void DTitlebar::addWidget(QWidget *w, Qt::Alignment alignment)
+{
+    D_D(DTitlebar);
+
+    if (alignment & Qt::AlignLeft) {
+        d->leftLayout->addWidget(w, 0, alignment & ~Qt::AlignLeft);
+    } else if (alignment & Qt::AlignRight) {
+        d->rightLayout->addWidget(w, 0, alignment & ~Qt::AlignRight);
+    } else {
+        d->centerLayout->addWidget(w, 0, alignment);
+        d->centerArea->clear();
+        d->titleLabel = nullptr;
+    }
+
+    updateGeometry();
+}
+
+void DTitlebar::removeWidget(QWidget *w)
+{
+    D_D(DTitlebar);
+
+    d->leftLayout->removeWidget(w);
+    d->centerLayout->removeWidget(w);
+    d->rightLayout->removeWidget(w);
+
+    if (d->centerLayout->isEmpty()) {
+        d->titleLabel = d->centerArea;
+        d->titleLabel->setText(d->targetWindowHandle->title());
+    }
+
+    updateGeometry();
 }
 
 /*!
@@ -813,8 +842,6 @@ void DTitlebar::setFixedHeight(int h)
 {
     D_D(DTitlebar);
     QWidget::setFixedHeight(h);
-    d->coustomAtea->setFixedHeight(h);
-    d->buttonArea->setFixedHeight(h);
 }
 
 /*!
@@ -882,9 +909,10 @@ void DTitlebar::setTitle(const QString &title)
 void DTitlebar::setIcon(const QIcon &icon)
 {
     D_D(DTitlebar);
-    if (d->titleLabel && !d->embedMode) {
-        d->titleLabel->setContentsMargins(0, 0, 0, 0);
-        d->iconLabel->setPixmap(icon.pixmap(QSize(DefaultIconWidth, DefaultIconHeight)));
+    if (!d->embedMode) {
+        QIcon new_icon = icon;
+        new_icon.actualSize(d->targetWindowHandle, QSize(DefaultIconWidth, DefaultIconHeight));
+        d->iconLabel->setIcon(new_icon);
     } else if (parentWidget()) {
         parentWidget()->setWindowIcon(icon);
     }
@@ -1001,19 +1029,6 @@ void DTitlebar::setEmbedMode(bool visible)
     d->updateButtonsState(windowFlags());
 }
 
-void DTitlebar::resize(int w, int h)
-{
-    D_DC(DTitlebar);
-    if (d->customWidget) {
-        d->customWidget->resize(w - d->buttonArea->width(), h);
-    }
-}
-
-void DTitlebar::resize(const QSize &sz)
-{
-    DTitlebar::resize(sz.width(), sz.height());
-}
-
 bool DTitlebar::menuIsVisible() const
 {
     D_DC(DTitlebar);
@@ -1064,6 +1079,21 @@ Qt::WindowFlags DTitlebar::disableFlags() const
 {
     D_DC(DTitlebar);
     return d->disableFlags;
+}
+
+QSize DTitlebar::sizeHint() const
+{
+    D_DC(DTitlebar);
+
+    int padding = qMax(d->leftArea->sizeHint().width(), d->rightArea->sizeHint().width());
+    int width = d->centerArea->sizeHint().width() + 2 * d->mainLayout->spacing() + 2 * padding;
+
+    return QSize(width, DefaultTitlebarHeight);
+}
+
+QSize DTitlebar::minimumSizeHint() const
+{
+    return sizeHint();
 }
 
 void DTitlebar::mouseMoveEvent(QMouseEvent *event)
