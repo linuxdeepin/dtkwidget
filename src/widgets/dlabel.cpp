@@ -16,7 +16,6 @@
  */
 
 #include "dlabel.h"
-#include "dthememanager.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -45,7 +44,7 @@ DWIDGET_BEGIN_NAMESPACE
 DLabel::DLabel(QWidget *parent, Qt::WindowFlags f)
     : QLabel(parent, f)
 {
-    DThemeManager::registerWidget(this);
+
 }
 
 /*!
@@ -64,7 +63,7 @@ DLabel::DLabel(QWidget *parent, Qt::WindowFlags f)
 DLabel::DLabel(const QString &text, QWidget *parent, Qt::WindowFlags f)
     : QLabel(text, parent, f)
 {
-    DThemeManager::registerWidget(this);
+
 }
 
 DWIDGET_END_NAMESPACE

@@ -33,6 +33,7 @@
 #include "dspinbox.h"
 #include "dbuttonlist.h"
 #include "doptionlist.h"
+#include "dimagebutton.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -106,7 +107,7 @@ DSettingsDialog::DSettingsDialog(QWidget *parent) :
         d->leftFrame->onSelectGroup(key);
         d->leftFrame->blockSignals(false);
     });
-    connect(closeBt, &DWindowCloseButton::clicked, this, &DSettingsDialog::close);
+    connect(closeBt, &DImageButton::clicked, this, &DSettingsDialog::close);
 }
 
 DSettingsDialog::~DSettingsDialog()

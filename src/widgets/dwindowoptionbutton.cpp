@@ -37,11 +37,9 @@ DWIDGET_BEGIN_NAMESPACE
  * \~chinese 函数，返回 DWindowOptionButton 对象，普通程序一般无需使用。
  * \~chinese \param parent 为创建对象的父控件。
  */
-DWindowOptionButton::DWindowOptionButton(QWidget * parent) :
-    DImageButton(parent)
+DWindowOptionButton::DWindowOptionButton(QWidget * parent)
+    : DIconButton(QStyle::SP_TitleBarMenuButton, parent)
 {
-    DThemeManager::registerWidget(this);
-
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }
 

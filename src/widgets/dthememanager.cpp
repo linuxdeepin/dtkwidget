@@ -698,7 +698,7 @@ DThemeManager::DThemeManager()
     : QObject()
     , DObject(*new DThemeManagerPrivate(this))
 {
-    setTheme("light");
+
 }
 
 bool DThemeManager::eventFilter(QObject *watched, QEvent *event)

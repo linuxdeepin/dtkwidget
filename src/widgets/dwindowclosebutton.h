@@ -18,11 +18,11 @@
 #ifndef DWINDOWCLOSEBUTTON_H
 #define DWINDOWCLOSEBUTTON_H
 
-#include "dimagebutton.h"
+#include <DIconButton>
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDTKWIDGETSHARED_EXPORT DWindowCloseButton : public DImageButton
+class LIBDTKWIDGETSHARED_EXPORT DWindowCloseButton : public DIconButton
 {
     Q_OBJECT
 public:

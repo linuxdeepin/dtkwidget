@@ -18,11 +18,11 @@
 #ifndef DWINDOWOPTIONBUTTON_H
 #define DWINDOWOPTIONBUTTON_H
 
-#include "dimagebutton.h"
+#include <DIconButton>
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDTKWIDGETSHARED_EXPORT DWindowOptionButton : public DImageButton
+class LIBDTKWIDGETSHARED_EXPORT DWindowOptionButton : public DIconButton
 {
     Q_OBJECT
 public:

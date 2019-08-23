@@ -18,13 +18,14 @@
 #ifndef DWINDOWMINBUTTON_H
 #define DWINDOWMINBUTTON_H
 
-#include "dimagebutton.h"
+#include <DIconButton>
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDTKWIDGETSHARED_EXPORT DWindowMinButton : public DImageButton
+class LIBDTKWIDGETSHARED_EXPORT DWindowMinButton : public DIconButton
 {
     Q_OBJECT
+
 public:
     DWindowMinButton(QWidget * parent = 0);
 };

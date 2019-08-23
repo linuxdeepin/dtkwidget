@@ -15,18 +15,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <DObjectPrivate>
-
-#include "dthememanager.h"
 #include "dwindowmaxbutton.h"
-#include "private/dimagebutton_p.h"
-#include <QStyle>
+#include "private/diconbutton_p.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DWindowMaxButtonPrivate : public DImageButtonPrivate{
+class DWindowMaxButtonPrivate : public DIconButtonPrivate {
 public:
-    DWindowMaxButtonPrivate(DWindowMaxButton* qq):DImageButtonPrivate(qq) {
+    DWindowMaxButtonPrivate(DWindowMaxButton* qq)
+        : DIconButtonPrivate(qq)
+    {
         m_isMaximized = false;
     }
 
@@ -55,11 +53,10 @@ private:
  * \~chinese \param parent 为创建对象的父控件。
  */
 DWindowMaxButton::DWindowMaxButton(QWidget * parent) :
-    DImageButton(*new DWindowMaxButtonPrivate(this), parent)
+    DIconButton(*new DWindowMaxButtonPrivate(this), parent)
 {
-    DThemeManager::registerWidget(this, QStringList({"isMaximized"}));
-
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    setIcon(QStyle::SP_TitleBarMaxButton);
 }
 
 /*!

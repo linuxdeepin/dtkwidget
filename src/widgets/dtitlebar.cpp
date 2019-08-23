@@ -38,9 +38,10 @@
 #include "daboutdialog.h"
 #include "dapplication.h"
 #include "private/dapplication_p.h"
-#include "dthememanager.h"
 #include "util/dwindowmanagerhelper.h"
 #include "dmainwindow.h"
+#include "DHorizontalLine"
+#include "dimagebutton.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -92,8 +93,8 @@ private:
     QWidget             *buttonArea;
     QWidget             *titleArea;
     QWidget             *titlePadding;
-    QLabel              *separatorTop;
-    QLabel              *separator;
+    DHorizontalLine     *separatorTop;
+    DHorizontalLine     *separator;
 
 #ifndef QT_NO_MENU
     QMenu               *menu           = Q_NULLPTR;
@@ -132,8 +133,8 @@ void DTitlebarPrivate::init()
     buttonArea      = new QWidget;
     titleArea       = new QWidget;
     titlePadding    = new QWidget;
-    separatorTop    = new QLabel(q);
-    separator       = new QLabel(q);
+    separatorTop    = new DHorizontalLine(q);
+    separator       = new DHorizontalLine(q);
 
     optionButton->setObjectName("DTitlebarDWindowOptionButton");
     minButton->setObjectName("DTitlebarDWindowMinButton");
@@ -148,19 +149,15 @@ void DTitlebarPrivate::init()
     iconLabel->setFixedSize(DefaultIconWidth, DefaultIconHeight);
     iconLabel->setWindowFlags(Qt::WindowTransparentForInput);
     titleLabel->setText(qApp->applicationName());
-    // TODO: use QSS
-    titleLabel->setStyleSheet("font-size: 12px;");
+
     titleLabel->setContentsMargins(0, 0, DefaultIconWidth + 10, 0);
     titleLabel->setWindowFlags(Qt::WindowTransparentForInput);
-//    q->setStyleSheet("background-color: green;");
 
     separatorTop->setFixedHeight(1);
-    separatorTop->setStyleSheet("background: rgba(0, 0, 0, 20);");
     separatorTop->hide();
     separatorTop->setWindowFlags(Qt::WindowTransparentForInput);
 
     separator->setFixedHeight(1);
-    separator->setStyleSheet("background: rgba(0, 0, 0, 20);");
     separator->hide();
     separator->setWindowFlags(Qt::WindowTransparentForInput);
 
@@ -218,6 +215,10 @@ void DTitlebarPrivate::init()
     q->connect(optionButton, &DWindowOptionButton::clicked, q, &DTitlebar::optionClicked);
     q->connect(DWindowManagerHelper::instance(), SIGNAL(windowMotifWMHintsChanged(quint32)),
                q, SLOT(_q_onTopWindowMotifHintsChanged(quint32)));
+
+    q->setFrameShape(QFrame::NoFrame);
+    q->setBackgroundRole(QPalette::Base);
+    q->setAutoFillBackground(true);
 }
 
 QWidget *DTitlebarPrivate::targetWindow()
@@ -390,14 +391,12 @@ void DTitlebarPrivate::_q_toggleWindowState()
         parentWindow->showNormal();
     } else if (!parentWindow->isFullScreen()
                && (maxButton->isVisible())) {
-        maxButton->setState(DImageButton::Normal);
         parentWindow->showMaximized();
     }
 }
 
 void DTitlebarPrivate::_q_showMinimized()
 {
-    minButton->setState(DImageButton::Normal);
     targetWindow()->showMinimized();
 }
 
@@ -546,8 +545,6 @@ DTitlebar::DTitlebar(QWidget *parent) :
         setBackgroundTransparent(true);
     }
 
-    DThemeManager::registerWidget(this, QStringList({"transparent"}));
-
     D_D(DTitlebar);
     d->init();
 
@@ -634,7 +631,6 @@ void DTitlebar::showMenu()
     D_D(DTitlebar);
 
     if (d->menu) {
-        d->optionButton->setState(DImageButton::Normal);
         d->menu->exec(d->optionButton->mapToGlobal(d->optionButton->rect().bottomLeft()));
     }
 }
@@ -831,7 +827,10 @@ void DTitlebar::setFixedHeight(int h)
  */
 void DTitlebar::setBackgroundTransparent(bool transparent)
 {
-    setProperty("transparent", transparent);
+    if (transparent)
+        setBackgroundRole(QPalette::NoRole);
+    else
+        setBackgroundRole(QPalette::Base);
 }
 
 /*!

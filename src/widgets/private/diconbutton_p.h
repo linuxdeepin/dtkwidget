@@ -1,5 +1,9 @@
 /*
- * Copyright (C) 2015 ~ 2017 Deepin Technology Co., Ltd.
+ * Copyright (C) 2017 ~ 2019 Deepin Technology Co., Ltd.
+ *
+ * Author:     zccrs <zccrs@live.com>
+ *
+ * Maintainer: zccrs <zhangjide@deepin.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,36 +18,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#ifndef DICONBUTTON_P_H
+#define DICONBUTTON_P_H
 
-#ifndef DWINDOWMAXBUTTON_H
-#define DWINDOWMAXBUTTON_H
-
-#include <DIconButton>
+#include "dobject_p.h"
+#include "diconbutton.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DWindowMaxButtonPrivate;
-
-class LIBDTKWIDGETSHARED_EXPORT DWindowMaxButton : public DIconButton
+class DIconButtonPrivate : public DCORE_NAMESPACE::DObjectPrivate
 {
-    Q_OBJECT
 public:
-    DWindowMaxButton(QWidget * parent = 0);
+    DIconButtonPrivate(DIconButton *qq);
 
-    Q_PROPERTY(bool isMaximized READ isMaximized WRITE setMaximized NOTIFY maximizedChanged)
+    bool flat = false;
+    int iconType = -1;
 
-    bool isMaximized() const;
-
-public Q_SLOTS:
-    void setMaximized(bool isMaximized);
-
-Q_SIGNALS:
-    void maximizedChanged(bool isMaximized);
-
-private:
-    D_DECLARE_PRIVATE(DWindowMaxButton)
+    D_DECLARE_PUBLIC(DIconButton)
 };
 
 DWIDGET_END_NAMESPACE
 
-#endif // DWINDOWMAXBUTTON_H
+#endif // DICONBUTTON_P_H

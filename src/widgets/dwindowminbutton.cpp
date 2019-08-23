@@ -15,9 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "dthememanager.h"
-
 #include "dwindowminbutton.h"
+
+#include <QEvent>
+#include <QStyle>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -36,11 +37,9 @@ DWIDGET_BEGIN_NAMESPACE
  * \~chinese 函数，返回 DWindowMinButton 对象，普通程序一般无需使用。
  * \~chinese \param parent 为创建对象的父控件。
  */
-DWindowMinButton::DWindowMinButton(QWidget * parent) :
-    DImageButton(parent)
+DWindowMinButton::DWindowMinButton(QWidget * parent)
+    : DIconButton(QStyle::SP_TitleBarMinButton, parent)
 {
-    DThemeManager::registerWidget(this);
-
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }
 

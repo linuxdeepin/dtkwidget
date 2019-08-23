@@ -22,32 +22,23 @@
 #include "dstyleoption.h"
 #include "dobject_p.h"
 #include "dstyle.h"
+#include "private/diconbutton_p.h"
 
 #include <private/qabstractbutton_p.h>
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DIconButtonPrivate : public DCORE_NAMESPACE::DObjectPrivate
+DIconButtonPrivate::DIconButtonPrivate(DIconButton *qq)
+    : DObjectPrivate(qq)
 {
-public:
-    DIconButtonPrivate(DIconButton *qq)
-        : DObjectPrivate(qq)
-    {
-        // 默认调整大小，否则可能会导致按钮显示后为 QWidget 的默认大小
-        qq->resize(qq->iconSize());
-    }
 
-    bool flat = false;
-    int iconType = -1;
-
-    D_DECLARE_PUBLIC(DIconButton)
-};
+}
 
 DIconButton::DIconButton(QWidget *parent)
-    : QAbstractButton(parent)
-    , DObject(*new DIconButtonPrivate(this))
+    : DIconButton(*new DIconButtonPrivate(this), parent)
 {
-
+    // 默认调整大小，否则可能会导致按钮显示后为 QWidget 的默认大小
+    resize(iconSize());
 }
 
 DIconButton::DIconButton(QStyle::StandardPixmap iconType, QWidget *parent)
@@ -157,11 +148,15 @@ void DIconButton::setFlat(bool flat)
     updateGeometry();
 }
 
+DIconButton::DIconButton(DIconButtonPrivate &dd, QWidget *parent)
+    : QAbstractButton(parent)
+    , DObject(dd)
+{
+
+}
+
 void DIconButton::initStyleOption(DStyleOptionButton *option) const
 {
-    if (!option)
-        return;
-
     D_DC(DIconButton);
 
     option->initFrom(this);

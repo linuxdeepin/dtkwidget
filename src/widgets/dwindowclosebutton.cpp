@@ -15,8 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "dthememanager.h"
-
 #include "dwindowclosebutton.h"
 
 DWIDGET_BEGIN_NAMESPACE
@@ -36,11 +34,9 @@ DWIDGET_BEGIN_NAMESPACE
  * \~chinese 函数，返回 DWindowCloseButton 对象，普通程序一般无需使用。
  * \~chinese \param parent 为创建对象的父控件。
  */
-DWindowCloseButton::DWindowCloseButton(QWidget * parent) :
-    DImageButton(parent)
+DWindowCloseButton::DWindowCloseButton(QWidget * parent)
+    : DIconButton(QStyle::SP_TitleBarCloseButton, parent)
 {
-    DThemeManager::registerWidget(this);
-
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }
 

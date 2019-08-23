@@ -47,7 +47,8 @@ HEADERS += \
     $$PWD/dswitchbutton_p.h \
     $$PWD/dimagebutton_p.h \
     $$PWD/dpasswdeditanimated_p.h \
-    $$PWD/dborderlesswidget_p.h
+    $$PWD/dborderlesswidget_p.h \
+    $$PWD/diconbutton_p.h
 
 SOURCES += \
     $$PWD/dthemehelper.cpp
