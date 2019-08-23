@@ -78,6 +78,8 @@ public:
     QMargins itemMargins() const;
     QSize itemSize() const;
 
+    using QListView::contentsSize;
+
 public Q_SLOTS:
     bool addItem(const QVariant &data);
     bool addItems(const QVariantList &datas);
