@@ -18,68 +18,29 @@
 #ifndef DSEARCHEDIT_H
 #define DSEARCHEDIT_H
 
-#include <QFrame>
-#include <QSize>
-#include <QLineEdit>
-#include <QPropertyAnimation>
-
-#include "dtkwidget_global.h"
-#include "dimagebutton.h"
+#include <DLineEdit>
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDTKWIDGETSHARED_EXPORT DSearchEdit : public QFrame
+class DSearchEditPrivate;
+class LIBDTKWIDGETSHARED_EXPORT DSearchEdit : public DLineEdit
 {
     Q_OBJECT
+
 public:
-    explicit DSearchEdit(QWidget *parent = 0);
+    explicit DSearchEdit(QWidget *parent = nullptr);
     ~DSearchEdit();
 
-    QSize sizeHint() const {return m_size;}
-    QSize minimumSizeHint() const {return m_size;}
-    const QString text() const;
+    void setPlaceHolder(QString placeHolder);
+    QString placeHolder() const;
 
-    void mousePressEvent(QMouseEvent *e);
-    void mouseReleaseEvent(QMouseEvent *e);
-    bool eventFilter(QObject *o, QEvent *e);
+protected:
+    void paintEvent(QPaintEvent *event) override;
 
-    inline void setAniDuration(const int duration) {m_animation->setDuration(duration);}
-    inline void setAniShowCurve(const QEasingCurve curve) {m_showCurve = curve;}
-    inline void setAniHideCurve(const QEasingCurve curve) {m_hideCurve = curve;}
-
-    QLineEdit *getLineEdit() const;
-
-public Q_SLOTS:
-    void setText(const QString & text) {if (m_edt) m_edt->setText(text);}
-    inline void clear() {m_edt->clear();}
-    inline void setPlaceHolder(const QString &text) {m_placeHolder->setText(text);}
-
-Q_SIGNALS:
-    void textChanged();
-    void returnPressed();
-    void editingFinished();
-    void focusOut();
-    void focusIn();
-
-private Q_SLOTS:
-    void toEditMode();
-
-private:
-    void initInsideFrame();
-    void resizeEvent(QResizeEvent *e);
-    bool event(QEvent *e);
-
-private:
-    QSize m_size;
-    QLineEdit *m_edt;
-    QLabel *m_searchBtn;
-    DImageButton *m_clearBtn;
-    QLabel *m_placeHolder;
-    QFrame *m_insideFrame = NULL;
-
-    QPropertyAnimation *m_animation;
-    QEasingCurve m_showCurve = QEasingCurve::OutCubic;
-    QEasingCurve m_hideCurve = QEasingCurve::InCubic;
+protected:
+    Q_DISABLE_COPY(DSearchEdit)
+    D_DECLARE_PRIVATE(DSearchEdit)
+    Q_PRIVATE_SLOT(d_func(), void _q_toEditMode())
 };
 
 DWIDGET_END_NAMESPACE

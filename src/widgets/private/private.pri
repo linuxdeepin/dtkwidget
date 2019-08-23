@@ -48,7 +48,7 @@ HEADERS += \
     $$PWD/dimagebutton_p.h \
     $$PWD/dpasswdeditanimated_p.h \
     $$PWD/dborderlesswidget_p.h \
-    $$PWD/diconbutton_p.h
+    $$PWD/diconbutton_p.h \
     $$PWD/dsearchedit_p.h
 
 SOURCES += \

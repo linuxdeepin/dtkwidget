@@ -34,12 +34,11 @@ public:
 
     void init();
 
-    void _q_toEditMode(bool);
+    void _q_toEditMode();
 
 public:
     QAction *action;
-    QString strTitle;
-    bool focusState;
+    QString placeHolder;
 
 protected:
     Q_DECLARE_PUBLIC(DSearchEdit)
