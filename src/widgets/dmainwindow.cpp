@@ -53,6 +53,8 @@ DMainWindowPrivate::DMainWindowPrivate(DMainWindow *qq)
         titlebar->setEmbedMode(true);
 #endif
     }
+
+    qq->setMinimumWidth(titlebar->minimumSizeHint().width());
 }
 
 void DMainWindowPrivate::init()
@@ -542,13 +544,6 @@ DMainWindow::DMainWindow(DMainWindowPrivate &dd, QWidget *parent)
     , DObject(dd)
 {
     d_func()->init();
-}
-
-void DMainWindow::showEvent(QShowEvent *event)
-{
-    setMinimumWidth(titlebar()->minimumSizeHint().width());
-
-    QMainWindow::showEvent(event);
 }
 
 DWIDGET_END_NAMESPACE
