@@ -178,7 +178,6 @@ class DStyleOptionIcon : public QStyleOption, public DStyleOption
 {
 public:
     QIcon icon;
-    QSize iconSize;
 };
 
 class DStyleOptionViewItem : public QStyleOptionViewItem, public DStyleOption

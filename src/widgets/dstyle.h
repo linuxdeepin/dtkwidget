@@ -54,45 +54,45 @@ void drawArrow(QPainter *pa, const QRectF &rect, const QColor &color, Qt::ArrowT
 void drawPlus(QPainter *painter, const QRectF &rect, const QColor &color , qreal width);
 void drawSubtract(QPainter *painter, const QRectF &rect, const QColor &color, qreal width);
 
-void drawForkElement(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawDecreaseElement(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawIncreaseElement(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawMarkElement(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawSelectElement(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawEditElement(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawExpandElement(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawReduceElement(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawLockElement(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawUnlockElement(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawMediaVolumeElement(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawMediaVolumeFullElement(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawMediaVolumeMutedElement(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawMediaVolumeLeftElement(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawMediaVolumeRightElement(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawArrowEnter(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawArrowLeave(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawArrowNext(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawArrowPrev(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawShowPassword(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawHidePassword(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawCloseButton(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawIndicatorMajuscule(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawIndicatorSearch(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawDeleteButton(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawAddButton(QPainter *pa, const QRectF &rect, const QSizeF &size);
+void drawForkElement(QPainter *pa, const QRectF &rect);
+void drawDecreaseElement(QPainter *pa, const QRectF &rect);
+void drawIncreaseElement(QPainter *pa, const QRectF &rect);
+void drawMarkElement(QPainter *pa, const QRectF &rect);
+void drawSelectElement(QPainter *pa, const QRectF &rect);
+void drawEditElement(QPainter *pa, const QRectF &rect);
+void drawExpandElement(QPainter *pa, const QRectF &rect);
+void drawReduceElement(QPainter *pa, const QRectF &rect);
+void drawLockElement(QPainter *pa, const QRectF &rect);
+void drawUnlockElement(QPainter *pa, const QRectF &rect);
+void drawMediaVolumeElement(QPainter *pa, const QRectF &rect);
+void drawMediaVolumeFullElement(QPainter *pa, const QRectF &rect);
+void drawMediaVolumeMutedElement(QPainter *pa, const QRectF &rect);
+void drawMediaVolumeLeftElement(QPainter *pa, const QRectF &rect);
+void drawMediaVolumeRightElement(QPainter *pa, const QRectF &rect);
+void drawArrowEnter(QPainter *pa, const QRectF &rect);
+void drawArrowLeave(QPainter *pa, const QRectF &rect);
+void drawArrowNext(QPainter *pa, const QRectF &rect);
+void drawArrowPrev(QPainter *pa, const QRectF &rect);
+void drawShowPassword(QPainter *pa, const QRectF &rect);
+void drawHidePassword(QPainter *pa, const QRectF &rect);
+void drawCloseButton(QPainter *pa, const QRectF &rect);
+void drawIndicatorMajuscule(QPainter *pa, const QRectF &rect);
+void drawIndicatorSearch(QPainter *pa, const QRectF &rect);
+void drawDeleteButton(QPainter *pa, const QRectF &rect);
+void drawAddButton(QPainter *pa, const QRectF &rect);
 
-void drawTitleBarMenuButton(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawTitleBarMinButton(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawTitleBarMaxButton(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawTitleBarCloseButton(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawTitleBarNormalButton(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawArrowUp(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawArrowDown(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawArrowLeft(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawArrowRight(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawArrowBack(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawArrowForward(QPainter *pa, const QRectF &rect, const QSizeF &size);
-void drawLineEditClearButton(QPainter *pa, const QRectF &rect, const QSizeF &size);
+void drawTitleBarMenuButton(QPainter *pa, const QRectF &rect);
+void drawTitleBarMinButton(QPainter *pa, const QRectF &rect);
+void drawTitleBarMaxButton(QPainter *pa, const QRectF &rect);
+void drawTitleBarCloseButton(QPainter *pa, const QRectF &rect);
+void drawTitleBarNormalButton(QPainter *pa, const QRectF &rect);
+void drawArrowUp(QPainter *pa, const QRectF &rect);
+void drawArrowDown(QPainter *pa, const QRectF &rect);
+void drawArrowLeft(QPainter *pa, const QRectF &rect);
+void drawArrowRight(QPainter *pa, const QRectF &rect);
+void drawArrowBack(QPainter *pa, const QRectF &rect);
+void drawArrowForward(QPainter *pa, const QRectF &rect);
+void drawLineEditClearButton(QPainter *pa, const QRectF &rect);
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(Corners)
 }
@@ -380,13 +380,12 @@ void DStylePainter::drawItemPixmap(const QRect &r, int flags, const QPixmap &pix
 class DStyledIconEngine : public QIconEngine
 {
 public:
-    typedef void (*DrawFun)(QPainter *, const QRectF &rect, const QSizeF &size);
+    typedef void (*DrawFun)(QPainter *, const QRectF &rect);
     DStyledIconEngine(DrawFun drawFun, const QPalette &palette, const QString &iconName = QString());
 
     void bindDrawFun(DrawFun drawFun);
     void setIconName(const QString &name);
 
-    QSize actualSize(const QSize &size, QIcon::Mode mode, QIcon::State state) override;
     void paint(QPainter *painter, const QPalette &palette, const QRectF &rect);
     void paint(QPainter *painter, const QRect &rect, QIcon::Mode mode, QIcon::State state) override;
 
@@ -398,7 +397,6 @@ protected:
     DrawFun m_drawFun = nullptr;
     QPalette m_palette;
     QString m_iconName;
-    QSizeF m_size;
 };
 
 DWIDGET_END_NAMESPACE
