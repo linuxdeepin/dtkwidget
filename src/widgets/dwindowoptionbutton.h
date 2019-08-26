@@ -27,6 +27,8 @@ class LIBDTKWIDGETSHARED_EXPORT DWindowOptionButton : public DIconButton
     Q_OBJECT
 public:
     DWindowOptionButton(QWidget * parent = 0);
+
+    QSize sizeHint() const override;
 };
 
 DWIDGET_END_NAMESPACE

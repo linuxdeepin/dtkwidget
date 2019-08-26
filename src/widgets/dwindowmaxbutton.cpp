@@ -55,9 +55,10 @@ private:
 DWindowMaxButton::DWindowMaxButton(QWidget * parent) :
     DIconButton(*new DWindowMaxButtonPrivate(this), parent)
 {
-    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
     setIcon(QStyle::SP_TitleBarMaxButton);
     setFlat(true);
+    setIconSize(QSize(10, 10));
 }
 
 /*!
@@ -80,6 +81,11 @@ bool DWindowMaxButton::isMaximized() const
     D_DC(DWindowMaxButton);
 
     return d->m_isMaximized;
+}
+
+QSize DWindowMaxButton::sizeHint() const
+{
+    return iconSize() * 4;
 }
 
 void DWindowMaxButton::setMaximized(bool isMaximized)

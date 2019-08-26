@@ -33,6 +33,7 @@ public:
     Q_PROPERTY(bool isMaximized READ isMaximized WRITE setMaximized NOTIFY maximizedChanged)
 
     bool isMaximized() const;
+    QSize sizeHint() const override;
 
 public Q_SLOTS:
     void setMaximized(bool isMaximized);

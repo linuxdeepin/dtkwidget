@@ -50,7 +50,7 @@ DIconButton::DIconButton(QStyle::StandardPixmap iconType, QWidget *parent)
 DIconButton::DIconButton(DStyle::StandardPixmap iconType, QWidget *parent)
     : DIconButton(parent)
 {
-    d_func()->iconType = iconType;
+    d_func()->iconType = static_cast<qint64>(iconType);
 }
 
 DIconButton::~DIconButton()
@@ -202,7 +202,7 @@ bool DIconButton::event(QEvent *e)
         D_DC(DIconButton);
 
         if (d->iconType > 0) {
-            if (d->iconType > static_cast<int>(QStyle::SP_CustomBase)) {
+            if (d->iconType > static_cast<qint64>(QStyle::SP_CustomBase)) {
                 DStyleHelper dstyle(style());
                 setIcon(dstyle.standardIcon(static_cast<DStyle::StandardPixmap>(d->iconType), nullptr, this));
             } else {

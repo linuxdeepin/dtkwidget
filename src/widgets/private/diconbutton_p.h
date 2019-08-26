@@ -32,7 +32,7 @@ public:
     DIconButtonPrivate(DIconButton *qq);
 
     bool flat = false;
-    int iconType = -1;
+    qint64 iconType = -1;
 
     D_DECLARE_PUBLIC(DIconButton)
 };

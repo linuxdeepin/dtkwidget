@@ -27,6 +27,8 @@ class LIBDTKWIDGETSHARED_EXPORT DWindowCloseButton : public DIconButton
     Q_OBJECT
 public:
     DWindowCloseButton(QWidget * parent = 0);
+
+    QSize sizeHint() const override;
 };
 
 DWIDGET_END_NAMESPACE

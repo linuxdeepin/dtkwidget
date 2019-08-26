@@ -42,6 +42,12 @@ DWindowOptionButton::DWindowOptionButton(QWidget * parent)
 {
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     setFlat(true);
+    setIconSize(QSize(10, 10));
+}
+
+QSize DWindowOptionButton::sizeHint() const
+{
+    return iconSize() * 4;
 }
 
 DWIDGET_END_NAMESPACE

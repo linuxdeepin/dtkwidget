@@ -28,6 +28,8 @@ class LIBDTKWIDGETSHARED_EXPORT DWindowMinButton : public DIconButton
 
 public:
     DWindowMinButton(QWidget * parent = 0);
+
+    QSize sizeHint() const override;
 };
 
 DWIDGET_END_NAMESPACE

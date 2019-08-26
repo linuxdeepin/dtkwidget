@@ -40,8 +40,14 @@ DWIDGET_BEGIN_NAMESPACE
 DWindowMinButton::DWindowMinButton(QWidget * parent)
     : DIconButton(QStyle::SP_TitleBarMinButton, parent)
 {
-    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
     setFlat(true);
+    setIconSize(QSize(10, 10));
+}
+
+QSize DWindowMinButton::sizeHint() const
+{
+    return iconSize() * 4;
 }
 
 DWIDGET_END_NAMESPACE
