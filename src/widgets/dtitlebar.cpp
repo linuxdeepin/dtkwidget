@@ -162,6 +162,7 @@ void DTitlebarPrivate::init()
     leftLayout->addSpacing(10);
     leftLayout->addWidget(iconLabel, 0 , Qt::AlignLeading | Qt::AlignVCenter);
 
+    centerLayout->setContentsMargins(0, 0, 0, 0);
     centerArea->setText(qApp->applicationName());
     centerArea->setWindowFlags(Qt::WindowTransparentForInput);
     centerArea->setFrameShape(QFrame::NoFrame);
@@ -654,6 +655,8 @@ void DTitlebar::showEvent(QShowEvent *event)
         d->_q_onTopWindowMotifHintsChanged(
             static_cast<quint32>(window()->internalWinId()));
     }
+
+    d->updateCenterArea();
 }
 
 void DTitlebar::mousePressEvent(QMouseEvent *event)
@@ -756,7 +759,38 @@ void DTitlebar::resizeEvent(QResizeEvent *event)
  */
 void DTitlebar::setCustomWidget(QWidget *w, bool fixCenterPos)
 {
-    setCustomWidget(w, Qt::AlignCenter, fixCenterPos);
+    D_D(DTitlebar);
+
+    if (w == d->customWidget) {
+        return;
+    }
+
+    if (d->customWidget) {
+        d->mainLayout->removeWidget(d->customWidget);
+        d->customWidget->hide();
+        d->customWidget->deleteLater();
+    }
+
+    d->customWidget = w;
+
+    if (w) {
+        w->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    } else {
+        d->centerArea->show();
+
+        return;
+    }
+
+    if (fixCenterPos) {
+        for (int i = 0; i < d->centerLayout->count(); ++i) {
+            delete d->centerLayout->itemAt(i);
+        }
+
+        addWidget(w, Qt::Alignment());
+    } else {
+        d->mainLayout->insertWidget(1, w);
+        d->centerArea->hide();
+    }
 }
 
 /*!
@@ -776,24 +810,9 @@ void DTitlebar::setCustomWidget(QWidget *w, bool fixCenterPos)
  */
 void DTitlebar::setCustomWidget(QWidget *w, Qt::AlignmentFlag wflag, bool fixCenterPos)
 {
-    D_D(DTitlebar);
+    Q_UNUSED(wflag)
 
-    if (!w || w == d->customWidget) {
-        return;
-    }
-
-    for (int i = 0; i < d->centerLayout->count(); ++i) {
-        delete d->centerLayout->itemAt(i);
-    }
-
-    if (d->customWidget) {
-        d->customWidget->hide();
-        d->customWidget->deleteLater();
-    }
-
-    d->customWidget = w;
-
-    addWidget(w, fixCenterPos ? wflag | Qt::AlignHCenter : wflag);
+    setCustomWidget(w, fixCenterPos);
 }
 
 void DTitlebar::addWidget(QWidget *w, Qt::Alignment alignment)

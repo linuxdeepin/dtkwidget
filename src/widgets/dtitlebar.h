@@ -38,11 +38,11 @@ public:
     void setMenu(QMenu *menu);
 #endif
 
-    D_DECL_DEPRECATED QWidget *customWidget() const;
-    D_DECL_DEPRECATED_X("Use addWidget") void setCustomWidget(QWidget *, bool fixCenterPos = false);
-    D_DECL_DEPRECATED_X("Use addWidget") void setCustomWidget(QWidget *, Qt::AlignmentFlag flag = Qt::AlignCenter, bool fixCenterPos = false);
+    QWidget *customWidget() const;
+    void setCustomWidget(QWidget *, bool fixCenterPos = false);
+    D_DECL_DEPRECATED_X("Use setCustomWidget(QWidget*, bool)") void setCustomWidget(QWidget *, Qt::AlignmentFlag flag = Qt::AlignCenter, bool fixCenterPos = false);
 
-    void addWidget(QWidget *w, Qt::Alignment alignment = Qt::AlignCenter);
+    void addWidget(QWidget *w, Qt::Alignment alignment = Qt::Alignment());
     void removeWidget(QWidget *w);
 
     int buttonAreaWidth() const;
