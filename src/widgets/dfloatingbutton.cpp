@@ -31,18 +31,21 @@ DFloatingButton::DFloatingButton(QWidget *parent)
     : DIconButton(parent)
 {
     resize(48, 48);
+    setBackgroundRole(QPalette::Highlight);
 }
 
 DFloatingButton::DFloatingButton(QStyle::StandardPixmap iconType, QWidget *parent)
     : DIconButton(iconType, parent)
 {
     resize(48, 48);
+    setBackgroundRole(QPalette::Highlight);
 }
 
 DFloatingButton::DFloatingButton(DStyle::StandardPixmap iconType, QWidget *parent)
     : DIconButton(iconType, parent)
 {
     resize(48, 48);
+    setBackgroundRole(QPalette::Highlight);
 }
 
 DFloatingButton::DFloatingButton(const QString &text, QWidget *parent)

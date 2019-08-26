@@ -29,6 +29,7 @@
 #include <qmath.h>
 #include <private/qfixed_p.h>
 #include <private/qtextengine_p.h>
+#include <private/qicon_p.h>
 
 QT_BEGIN_NAMESPACE
 //extern Q_WIDGETS_EXPORT void qt_blurImage(QImage &blurImage, qreal radius, bool quality, int transposed = 0);
@@ -693,7 +694,7 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
                 const QMargins margins(frame_margins, frame_margins, frame_margins, frame_margins);
                 QRect shadow_rect = opt->rect + margins;
                 const QRect content_rect = opt->rect - margins;
-                QColor color = dstyle.getColor(opt, QPalette::Highlight);
+                QColor color = dstyle.getColor(opt, QPalette::Button);
 
                 qreal frame_radius = content_rect.width() / 2.0;
                 int shadow_radius = dstyle.pixelMetric(PM_ShadowRadius, opt, w);
@@ -713,7 +714,7 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
                 p->setRenderHint(QPainter::Antialiasing);
                 p->drawEllipse(content_rect);
             } else {
-                p->fillRect(opt->rect, dstyle.getColor(opt, QPalette::Background));
+                style->drawControl(CE_PushButtonBevel, opt, p, w);
             }
         }
         break;
@@ -728,12 +729,22 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
             icon_option.iconSize = btn->iconSize;
             icon_option.dpalette = btn->dpalette;
 
+            QPalette pa = opt->palette;
+            pa.setBrush(QPalette::Background, dstyle.generatedBrush(opt, pa.button(), pa.currentColorGroup(), QPalette::Button));
+            pa.setBrush(QPalette::Foreground, dstyle.generatedBrush(opt, pa.buttonText(), pa.currentColorGroup(), QPalette::ButtonText));
+
+            icon_option.palette = pa;
+
             dstyle.drawPrimitive(PE_Icon, &icon_option, p, w);
         }
         break;
     }
     case PE_Icon: {
         if (const DStyleOptionIcon *icon_opt = qstyleoption_cast<const DStyleOptionIcon*>(opt)) {
+            if (icon_opt->icon.isNull()) {
+                return;
+            }
+
             QIcon::Mode mode = QIcon::Normal;
             QIcon::State state = QIcon::Off;
 
@@ -749,8 +760,14 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
                 state = QIcon::On;
             }
 
-            icon_opt->icon.actualSize(w->window()->windowHandle(), icon_opt->iconSize, mode, state);
-            icon_opt->icon.paint(p, opt->rect, Qt::AlignCenter, mode, state);
+            icon_opt->icon.actualSize(w ? w->window()->windowHandle() : nullptr, icon_opt->iconSize, mode, state);
+            auto *data = const_cast<DStyleOptionIcon*>(icon_opt)->icon.data_ptr();
+
+            if (DStyledIconEngine *engine = dynamic_cast<DStyledIconEngine*>(data->engine)) {
+                engine->paint(p, opt->palette, opt->rect);
+            } else {
+                icon_opt->icon.paint(p, opt->rect, Qt::AlignCenter, mode, state);
+            }
         }
         break;
     }
