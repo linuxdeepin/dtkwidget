@@ -745,9 +745,9 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
                 return;
             }
 
-            auto *data = const_cast<DStyleOptionIcon*>(icon_opt)->icon.data_ptr();
+            auto *data = const_cast<DStyleOptionIcon *>(icon_opt)->icon.data_ptr();
 
-            if (DStyledIconEngine *engine = dynamic_cast<DStyledIconEngine*>(data->engine)) {
+            if (DStyledIconEngine *engine = dynamic_cast<DStyledIconEngine *>(data->engine)) {
                 engine->paint(p, opt->palette, opt->rect);
             } else {
                 QIcon::Mode mode = QIcon::Normal;
@@ -767,6 +767,35 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
 
                 icon_opt->icon.paint(p, opt->rect, Qt::AlignCenter, mode, state);
             }
+        }
+        break;
+    }
+    case PE_SwitchButtonGroove: {
+        if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton*>(opt)) {
+            QRect rectGroove = btn->rect;
+            int frame_radius = dstyle.pixelMetric(DStyle::PM_FrameRadius, opt, w);
+
+            p->setRenderHint(QPainter::Antialiasing);
+            p->setPen(Qt::NoPen);
+            p->setBrush(dstyle.getColor(opt, QPalette::Button));
+            p->drawRoundedRect(rectGroove, frame_radius, frame_radius);
+        }
+        break;
+    }
+    case PE_SwitchButtonHandle: {
+        if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton*>(opt)) {
+            QRect rectHandle = btn->rect;
+            int frame_radius = dstyle.pixelMetric(DStyle::PM_FrameRadius, opt, w);
+            p->setRenderHint(QPainter::Antialiasing);
+            p->setPen(Qt::NoPen);
+
+            if (btn->state & State_On) {
+                p->setBrush(dstyle.getColor(opt, QPalette::Highlight));
+            } else {
+                p->setBrush(dstyle.getColor(opt, QPalette::ButtonText));
+            }
+
+            p->drawRoundedRect(rectHandle, frame_radius, frame_radius);
         }
         break;
     }
@@ -812,6 +841,18 @@ void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const Q
         }
         break;
     }
+    case CE_SwitchButton: {
+        if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton *>(opt)) {
+            DStyleHelper dstyle(style);
+            DStyleOptionButton option = *btn;
+            option.dpalette = btn->dpalette;
+            option.rect = dstyle.subElementRect(SE_SwitchButtonGroove, opt, w);
+            dstyle.drawPrimitive(PE_SwitchButtonGroove, &option, p, w);
+            option.rect = dstyle.subElementRect(SE_SwitchButtonHandle, opt, w);
+            dstyle.drawPrimitive(PE_SwitchButtonHandle, &option, p, w);
+        }
+        break;
+    }
     default:
         break;
     }
@@ -849,6 +890,10 @@ int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyle
     }
     case PM_IconButtonIconSize:
         return 16;
+    case PM_SwitchButtonHandleWidth:
+        return 30;
+    case PM_SwithcButtonHandleHeight:
+        return 24;
     default:
         break;
     }
@@ -858,7 +903,6 @@ int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyle
 
 QRect DStyle::subElementRect(const QStyle *style, DStyle::SubElement r, const QStyleOption *opt, const QWidget *widget)
 {
-    Q_UNUSED(style)
     Q_UNUSED(widget)
 
     switch (r) {
@@ -875,6 +919,30 @@ QRect DStyle::subElementRect(const QStyle *style, DStyle::SubElement r, const QS
         }
 
         return opt->rect;
+    case SE_SwitchButtonGroove: {
+        if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton *>(opt)) {
+            return btn->rect;
+        }
+        break;
+    }
+    case SE_SwitchButtonHandle: {
+        if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton *>(opt)) {
+            QSize size(0, 0);
+            DStyleHelper dstyle(style);
+            int handleWidth = dstyle.pixelMetric(PM_SwitchButtonHandleWidth, opt, widget);
+            int handleHeight = dstyle.pixelMetric(PM_SwithcButtonHandleHeight, opt, widget);
+            QRect rectHandle(0, 0, handleWidth, handleHeight);
+
+            if (btn->state & QStyle::State_On) {
+                rectHandle.moveRight(opt->rect.right());
+            } else {
+                rectHandle.moveLeft(opt->rect.left());
+            }
+
+            return rectHandle;
+        }
+        break;
+    }
     default:
         break;
     }
@@ -884,15 +952,23 @@ QRect DStyle::subElementRect(const QStyle *style, DStyle::SubElement r, const QS
 
 QSize DStyle::sizeFromContents(const QStyle *style, DStyle::ContentsType ct, const QStyleOption *opt, const QSize &contentsSize, const QWidget *widget)
 {
-    Q_UNUSED(style)
     Q_UNUSED(widget)
 
     switch (ct) {
     case CT_IconButton:
-        if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton*>(opt)) {
+        if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton *>(opt)) {
             return contentsSize.expandedTo(btn->iconSize);
         }
         Q_FALLTHROUGH()
+    case CT_SwitchButton: {
+        DStyleHelper dstyle(style);
+        int w = dstyle.pixelMetric(PM_SwitchButtonHandleWidth, opt, widget);
+        int h = dstyle.pixelMetric(PM_SwithcButtonHandleHeight, opt, widget);
+        QSize size(qMax(contentsSize.width(), w * 5 / 3), qMax(contentsSize.height(), h));
+
+        return size;
+    }
+
     default:
         break;
     }
@@ -906,38 +982,38 @@ QIcon DStyle::standardIcon(const QStyle *style, DStyle::StandardPixmap st, const
     Q_UNUSED(widget)
 
 #define CASE_ICON(Value) \
-    case SP_##Value: { \
+case SP_##Value: { \
         const QPalette &palette = opt ? opt->palette : (widget ? widget->palette() : qGuiApp->palette()); \
         DStyledIconEngine *icon_engine = new DStyledIconEngine(DDrawUtils::draw##Value, palette, QStringLiteral(#Value)); \
         return QIcon(icon_engine);}
 
     switch (st) {
-    CASE_ICON(ForkElement)
-    CASE_ICON(DecreaseElement)
-    CASE_ICON(IncreaseElement)
-    CASE_ICON(MarkElement)
-    CASE_ICON(SelectElement)
-    CASE_ICON(EditElement)
-    CASE_ICON(ExpandElement)
-    CASE_ICON(ReduceElement)
-    CASE_ICON(LockElement)
-    CASE_ICON(UnlockElement)
-    CASE_ICON(MediaVolumeElement)
-    CASE_ICON(MediaVolumeFullElement)
-    CASE_ICON(MediaVolumeMutedElement)
-    CASE_ICON(MediaVolumeLeftElement)
-    CASE_ICON(MediaVolumeRightElement)
-    CASE_ICON(ArrowEnter)
-    CASE_ICON(ArrowLeave)
-    CASE_ICON(ArrowNext)
-    CASE_ICON(ArrowPrev)
-    CASE_ICON(ShowPassword)
-    CASE_ICON(HidePassword)
-    CASE_ICON(CloseButton)
-    CASE_ICON(IndicatorMajuscule)
-    CASE_ICON(IndicatorSearch)
-    CASE_ICON(DeleteButton)
-    CASE_ICON(AddButton)
+        CASE_ICON(ForkElement)
+        CASE_ICON(DecreaseElement)
+        CASE_ICON(IncreaseElement)
+        CASE_ICON(MarkElement)
+        CASE_ICON(SelectElement)
+        CASE_ICON(EditElement)
+        CASE_ICON(ExpandElement)
+        CASE_ICON(ReduceElement)
+        CASE_ICON(LockElement)
+        CASE_ICON(UnlockElement)
+        CASE_ICON(MediaVolumeElement)
+        CASE_ICON(MediaVolumeFullElement)
+        CASE_ICON(MediaVolumeMutedElement)
+        CASE_ICON(MediaVolumeLeftElement)
+        CASE_ICON(MediaVolumeRightElement)
+        CASE_ICON(ArrowEnter)
+        CASE_ICON(ArrowLeave)
+        CASE_ICON(ArrowNext)
+        CASE_ICON(ArrowPrev)
+        CASE_ICON(ShowPassword)
+        CASE_ICON(HidePassword)
+        CASE_ICON(CloseButton)
+        CASE_ICON(IndicatorMajuscule)
+        CASE_ICON(IndicatorSearch)
+        CASE_ICON(DeleteButton)
+        CASE_ICON(AddButton)
     default:
         break;
     }
@@ -1135,18 +1211,18 @@ QSize DStyle::sizeFromContents(QStyle::ContentsType ct, const QStyleOption *opt,
 QIcon DStyle::standardIcon(QStyle::StandardPixmap st, const QStyleOption *opt, const QWidget *widget) const
 {
     switch (st) {
-    CASE_ICON(TitleBarMenuButton)
-    CASE_ICON(TitleBarMinButton)
-    CASE_ICON(TitleBarMaxButton)
-    CASE_ICON(TitleBarCloseButton)
-    CASE_ICON(TitleBarNormalButton)
-    CASE_ICON(ArrowUp)
-    CASE_ICON(ArrowDown)
-    CASE_ICON(ArrowLeft)
-    CASE_ICON(ArrowRight)
-    CASE_ICON(ArrowBack)
-    CASE_ICON(ArrowForward)
-    CASE_ICON(LineEditClearButton)
+        CASE_ICON(TitleBarMenuButton)
+        CASE_ICON(TitleBarMinButton)
+        CASE_ICON(TitleBarMaxButton)
+        CASE_ICON(TitleBarCloseButton)
+        CASE_ICON(TitleBarNormalButton)
+        CASE_ICON(ArrowUp)
+        CASE_ICON(ArrowDown)
+        CASE_ICON(ArrowLeft)
+        CASE_ICON(ArrowRight)
+        CASE_ICON(ArrowBack)
+        CASE_ICON(ArrowForward)
+        CASE_ICON(LineEditClearButton)
         break;
     default:
         break;
@@ -1166,7 +1242,7 @@ QBrush DStyle::generatedBrush(const QStyleOption *option, const QBrush &base, QP
 
 QBrush DStyle::generatedBrush(DStyle::StyleState state, const QStyleOption *option, const QBrush &base, QPalette::ColorGroup cg, QPalette::ColorRole role) const
 {
-    if (auto proxy = qobject_cast<const DStyle*>(this->proxy())) {
+    if (auto proxy = qobject_cast<const DStyle *>(this->proxy())) {
         return proxy->generatedBrush(getFlags(option) | state, base, cg, role, option);
     }
 
@@ -1191,7 +1267,7 @@ QBrush DStyle::generatedBrush(const QStyleOption *option, const QBrush &base, QP
 
 QBrush DStyle::generatedBrush(DStyle::StyleState state, const QStyleOption *option, const QBrush &base, QPalette::ColorGroup cg, DPalette::ColorType type) const
 {
-    if (auto proxy = qobject_cast<const DStyle*>(this->proxy())) {
+    if (auto proxy = qobject_cast<const DStyle *>(this->proxy())) {
         return proxy->generatedBrush(getFlags(option) | state, base, cg, type, option);
     }
 
@@ -1321,7 +1397,7 @@ void DStyle::viewItemLayout(const QStyle *style, const QStyleOptionViewItem *opt
     if (sizehint) {
         h = qMax(checkRect->height(), qMax(textRect->height(), pm.height()));
         if (opt->decorationPosition == QStyleOptionViewItem::Left
-            || opt->decorationPosition == QStyleOptionViewItem::Right) {
+                || opt->decorationPosition == QStyleOptionViewItem::Right) {
             w = textRect->width() + pm.width();
         } else {
             w = qMax(textRect->width(), pm.width());
@@ -1355,7 +1431,8 @@ void DStyle::viewItemLayout(const QStyle *style, const QStyleOptionViewItem *opt
                 decoration.setRect(x + cw, y, w - cw, pm.height());
                 display.setRect(x + cw, y + pm.height(), w - cw, h);
             }
-            break; }
+            break;
+        }
         case QStyleOptionViewItem::Bottom: {
             if (hasText)
                 textRect->setHeight(textRect->height() + textMargin); // add space
@@ -1368,7 +1445,8 @@ void DStyle::viewItemLayout(const QStyle *style, const QStyleOptionViewItem *opt
                 display.setRect(x + cw, y, w - cw, textRect->height());
                 decoration.setRect(x + cw, y + textRect->height(), w - cw, h - textRect->height());
             }
-            break; }
+            break;
+        }
         case QStyleOptionViewItem::Left: {
             if (opt->direction == Qt::LeftToRight) {
                 decoration.setRect(x + cw, y, pm.width(), h);
@@ -1377,7 +1455,8 @@ void DStyle::viewItemLayout(const QStyle *style, const QStyleOptionViewItem *opt
                 display.setRect(x, y, w - pm.width() - cw, h);
                 decoration.setRect(display.right() + 1, y, pm.width(), h);
             }
-            break; }
+            break;
+        }
         case QStyleOptionViewItem::Right: {
             if (opt->direction == Qt::LeftToRight) {
                 display.setRect(x + cw, y, w - pm.width() - cw, h);
@@ -1386,7 +1465,8 @@ void DStyle::viewItemLayout(const QStyle *style, const QStyleOptionViewItem *opt
                 decoration.setRect(x, y, pm.width(), h);
                 display.setRect(decoration.right() + 1, y, w - pm.width() - cw, h);
             }
-            break; }
+            break;
+        }
         default:
             qWarning("doLayout: decoration position is invalid");
             decoration = *pixmapRect;
@@ -1595,9 +1675,9 @@ QIconEngine *DStyledIconEngine::clone() const
 void DStyledIconEngine::virtual_hook(int id, void *data)
 {
     if (id == IconNameHook) {
-        *reinterpret_cast<QString*>(data) = m_iconName;
+        *reinterpret_cast<QString *>(data) = m_iconName;
     } else if (id == IsNullHook) {
-        *reinterpret_cast<bool*>(data) = !m_drawFun;
+        *reinterpret_cast<bool *>(data) = !m_drawFun;
     }
 
     return QIconEngine::virtual_hook(id, data);

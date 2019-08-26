@@ -16,56 +16,22 @@
  */
 
 #include "dswitchbutton.h"
-#include <QPainter>
-#include <QPainterPath>
-#include <QMouseEvent>
-#include <QDebug>
+#include <DStyle>
+#include <DStyleOptionButton>
+#include <private/dswitchbutton_p.h>
+
 #include <QApplication>
-#include <QIcon>
-#include "dthememanager.h"
-#include "private/dswitchbutton_p.h"
+
 
 DWIDGET_BEGIN_NAMESPACE
 
-/*!
- * \~english \class DSwitchButton
- * \~english \brief The DSwitchButton class provides switch like widget.
- *
- * User can put the switch on/off the turn some feature on/off.
- *
- * It's inspired by UISwitch of Apple,
- * see https://developer.apple.com/documentation/uikit/uiswitch.
- */
-
-/*!
- * \~english \brief DSwitchButton::DSwitchButton constructs an instance of DSwitchButton.
- * \~english \param parent is passed to QFrame constructor.
- */
-
-/*!
- * \~chinese \class DSwitchButton
- *
- * \~chinese \brief DSwitchButton提供了切换样式的控件
- * 用户可以打开和关闭一些功能
- *
- * 受到Apple的切换按钮的影响，查看https://developer.apple.com/documentation/uikit/uiswitch.
- */
-
-/*!
- * \~chinese \brief DSwitchButton的构造函数
- *
- * @param parent
- */
-DSwitchButton::DSwitchButton(QWidget *parent) :
-    QFrame(parent),
-    DObject(*new DSwitchButtonPrivate(this))
+DSwitchButton::DSwitchButton(QWidget *parent)
+    : QAbstractButton(parent)
+    , DObject(*new DSwitchButtonPrivate(this))
 {
     setObjectName("DSwitchButton");
-
-    setMaximumSize(36, 20);
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-
-    DThemeManager::registerWidget(this);
+    setCheckable(true);
 
     D_D(DSwitchButton);
 
@@ -76,163 +42,37 @@ DSwitchButton::DSwitchButton(QWidget *parent) :
     });
 }
 
-/*!
- * \~english \property DSwitchButton::checked
- * \~english \brief This property holds whether the switch is on or off.
- *
- * True if the switch is on, otherwise false.
- */
-
-/*!
- * \~chinese \property DSwitchButton::checked
- * \~chinese \brief 这个属性保持开关是否打开或关闭
- *
- * True是开启，反之False
- */
-bool DSwitchButton::checked() const
-{
-    D_DC(DSwitchButton);
-
-    return d->checked;
-}
-
 QSize DSwitchButton::sizeHint() const
 {
-    return maximumSize();
-}
+    QSize size(0, 0);
+    DStyleHelper dstyle(style());
+    size = dstyle.sizeFromContents(DStyle::CT_SwitchButton, nullptr, QSize(0, 0), this);
 
-/*!
- * \~chinese \property DSwitchButton::disabledBackground
- *
- * \~chinese \brief 这个属性保持了禁用状态的背景色
- */
-QColor DSwitchButton::disabledBackground() const
-{
-    D_DC(DSwitchButton);
-    return d->disabledBackground;
-}
-
-/*!
- * \~chinese \property DSwitchButton::enabledBackground
- * \~chinese \brief 这个属性保持启用状态的背景色
- */
-QColor DSwitchButton::enabledBackground() const
-{
-    D_DC(DSwitchButton);
-    return d->enabledBackground;
-}
-
-/*!
- * \~chinese \brief 设置开启状态
- *
- * @param arg
- */
-void DSwitchButton::setChecked(bool arg)
-{
-    D_D(DSwitchButton);
-
-    if (d->checked != arg) {
-        d->checked = arg;
-
-        if (arg) {
-            d->animation->setStartValue(d->animationStartValue);
-            d->animation->setEndValue(d->animationEndValue);
-        } else {
-            d->animation->setStartValue(d->animationEndValue);
-            d->animation->setEndValue(d->animationStartValue);
-        }
-        d->animation->start();
-
-        Q_EMIT checkedChanged(arg);
-    }
-}
-
-/*!
- * \~chinese \brief 设置启用状态的背景色
- *
- * @param enabledBackground
- */
-void DSwitchButton::setEnabledBackground(QColor enabledBackground)
-{
-    D_D(DSwitchButton);
-    d->enabledBackground = enabledBackground;
-}
-
-/*!
- * \~chinese \brief 设置禁用状态的背景色
- *
- * @param disabledBackground
- */
-void DSwitchButton::setDisabledBackground(QColor disabledBackground)
-{
-    D_D(DSwitchButton);
-    d->disabledBackground = disabledBackground;
+    return size;
 }
 
 void DSwitchButton::paintEvent(QPaintEvent *e)
 {
     Q_UNUSED(e);
 
-    D_D(DSwitchButton);
+    DStylePainter painter(this);
+    DStyleOptionButton opt;
+    initStyleOption(&opt);
+    painter.drawControl(DStyle::CE_SwitchButton, opt);
+}
 
-    QColor frontground = Qt::white;
-    QColor background = d->enabledBackground;
+void DSwitchButton::initStyleOption(DStyleOptionButton *option) const
+{
+    if (!option)
+        return;
 
-    if (d->checked) {
-        background = d->checkedBackground;
-    }
+    option->init(this);
+    option->initFrom(this);
 
-    if (!isEnabled()) {
-        background.setAlpha(255 * 55 / 100);
-        frontground.setAlpha(255 * 55 / 100);
-    }
-
-    QPainter p(this);
-    p.setRenderHints(QPainter::Antialiasing);
-
-    QPainterPath path;
-    path.addRoundedRect(rect(), height() / 2.0, height() / 2.0);
-    path.closeSubpath();
-
-    p.setClipPath(path);
-
-    double indicatorX = 0;
-
-    if (d->animation->state() == QVariantAnimation::Stopped) {
-        if (!d->checked) {
-            indicatorX = d->animationStartValue;
-        } else {
-            indicatorX = d->animationEndValue;
-        }
+    if (isChecked()) {
+        option->state |= QStyle::State_On;
     } else {
-        indicatorX = d->animation->currentValue().toDouble();
-    }
-
-    int moveWidth = width() - height();
-    int border = 1 * 1;
-    int btSize = height() - border * 2;
-    QRectF btRect(moveWidth * indicatorX + border, border, btSize, btSize);
-    QPainterPath btPath;
-    btPath.addRoundedRect(btRect, btSize / 2.0, btSize / 2.0);
-    btPath.closeSubpath();
-
-    p.fillPath(path, background);
-    p.fillPath(btPath, frontground);
-}
-
-// for ABI compatibilities' sake.
-void DSwitchButton::mousePressEvent(QMouseEvent *event)
-{
-    QFrame::mousePressEvent(event);
-}
-
-void DSwitchButton::mouseReleaseEvent(QMouseEvent *e)
-{
-    D_D(DSwitchButton);
-
-    if (e->button() == Qt::LeftButton) {
-        setChecked(!d->checked);
-        e->accept();
+        option->state |= QStyle::State_Off;
     }
 }
 

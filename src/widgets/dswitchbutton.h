@@ -18,46 +18,31 @@
 #ifndef DSWITCHBUTTON_H
 #define DSWITCHBUTTON_H
 
-#include <QFrame>
-#include <QPixmap>
 #include <QVariantAnimation>
-#include <QUrl>
+#include <QAbstractButton>
 
-#include "dtkwidget_global.h"
-#include "dobject.h"
+#include <dtkwidget_global.h>
+#include <DObject>
 
 DWIDGET_BEGIN_NAMESPACE
 
 class DSwitchButtonPrivate;
-class LIBDTKWIDGETSHARED_EXPORT DSwitchButton : public QFrame, public DTK_CORE_NAMESPACE::DObject
+class DStyleOptionButton;
+class LIBDTKWIDGETSHARED_EXPORT DSwitchButton : public QAbstractButton, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
-
-    Q_PROPERTY(bool checked READ checked WRITE setChecked NOTIFY checkedChanged)
-    Q_PROPERTY(QColor enabledBackground READ enabledBackground WRITE setEnabledBackground)
-    Q_PROPERTY(QColor disabledBackground READ disabledBackground WRITE setDisabledBackground)
 
 public:
     explicit DSwitchButton(QWidget *parent = Q_NULLPTR);
 
-    bool checked() const;
-    QColor enabledBackground() const;
-    QColor disabledBackground() const;
-
     QSize sizeHint() const Q_DECL_OVERRIDE;
-
-public Q_SLOTS:
-    void setChecked(bool arg);
-    void setEnabledBackground(QColor enabledBackground);
-    void setDisabledBackground(QColor disabledBackground);
 
 Q_SIGNALS:
     void checkedChanged(bool arg);
 
 protected:
     void paintEvent(QPaintEvent *e) Q_DECL_OVERRIDE;
-    void mousePressEvent(QMouseEvent *) Q_DECL_OVERRIDE;
-    void mouseReleaseEvent(QMouseEvent *) Q_DECL_OVERRIDE;
+    void initStyleOption(DStyleOptionButton *option) const;
 
 private:
     D_DECLARE_PRIVATE(DSwitchButton)

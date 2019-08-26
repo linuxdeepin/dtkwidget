@@ -57,7 +57,7 @@ void DSwitchHeaderLine::setExpand(bool value)
 
 void DSwitchHeaderLine::mousePressEvent(QMouseEvent *)
 {
-    m_switchButton->setChecked(!m_switchButton->checked());
+    m_switchButton->setChecked(!m_switchButton->isChecked());
 //    Q_EMIT mousePress();
 }
 
