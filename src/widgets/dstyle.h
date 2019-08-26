@@ -26,6 +26,7 @@
 
 #include <QCommonStyle>
 #include <QPainter>
+#include <QIconEngine>
 
 QT_BEGIN_NAMESPACE
 class QTextLayout;
@@ -52,6 +53,45 @@ void drawBorder(QPainter *pa, const QRectF &rect, const QBrush &brush, int borde
 void drawArrow(QPainter *pa, const QRectF &rect, const QColor &color, Qt::ArrowType arrow, int width = 2);
 void drawPlus(QPainter *painter, const QRectF &rect, const QColor &color , qreal width);
 void drawSubtract(QPainter *painter, const QRectF &rect, const QColor &color, qreal width);
+
+void drawForkElement(QPainter *pa, const QRectF &rect);
+void drawDecreaseElement(QPainter *pa, const QRectF &rect);
+void drawIncreaseElement(QPainter *pa, const QRectF &rect);
+void drawMarkElement(QPainter *pa, const QRectF &rect);
+void drawSelectElement(QPainter *pa, const QRectF &rect);
+void drawEditElement(QPainter *pa, const QRectF &rect);
+void drawExpandElement(QPainter *pa, const QRectF &rect);
+void drawReduceElement(QPainter *pa, const QRectF &rect);
+void drawLockElement(QPainter *pa, const QRectF &rect);
+void drawUnlockElement(QPainter *pa, const QRectF &rect);
+void drawMediaVolumeElement(QPainter *pa, const QRectF &rect);
+void drawMediaVolumeFullElement(QPainter *pa, const QRectF &rect);
+void drawMediaVolumeMutedElement(QPainter *pa, const QRectF &rect);
+void drawMediaVolumeLeftElement(QPainter *pa, const QRectF &rect);
+void drawMediaVolumeRightElement(QPainter *pa, const QRectF &rect);
+void drawArrowEnter(QPainter *pa, const QRectF &rect);
+void drawArrowLeave(QPainter *pa, const QRectF &rect);
+void drawArrowNext(QPainter *pa, const QRectF &rect);
+void drawArrowPrev(QPainter *pa, const QRectF &rect);
+void drawShowPassword(QPainter *pa, const QRectF &rect);
+void drawHidePassword(QPainter *pa, const QRectF &rect);
+void drawCloseButton(QPainter *pa, const QRectF &rect);
+void drawIndicatorMajuscule(QPainter *pa, const QRectF &rect);
+void drawDeleteButton(QPainter *pa, const QRectF &rect);
+void drawAddButton(QPainter *pa, const QRectF &rect);
+
+void drawTitleBarMenuButton(QPainter *pa, const QRectF &rect);
+void drawTitleBarMinButton(QPainter *pa, const QRectF &rect);
+void drawTitleBarMaxButton(QPainter *pa, const QRectF &rect);
+void drawTitleBarCloseButton(QPainter *pa, const QRectF &rect);
+void drawTitleBarNormalButton(QPainter *pa, const QRectF &rect);
+void drawArrowUp(QPainter *pa, const QRectF &rect);
+void drawArrowDown(QPainter *pa, const QRectF &rect);
+void drawArrowLeft(QPainter *pa, const QRectF &rect);
+void drawArrowRight(QPainter *pa, const QRectF &rect);
+void drawArrowBack(QPainter *pa, const QRectF &rect);
+void drawArrowForward(QPainter *pa, const QRectF &rect);
+void drawLineEditClearButton(QPainter *pa, const QRectF &rect);
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(Corners)
 }
@@ -112,6 +152,31 @@ public:
     Q_DECLARE_FLAGS(StateFlags, StyleState)
 
     enum StandardPixmap {
+        SP_ForkElement = QStyle::SP_CustomBase + 1,
+        SP_DecreaseElement,                         //增加（+）
+        SP_IncreaseElement,                         //减少（-）
+        SP_MarkElement,                             //对勾
+        SP_SelectElement,                           //选择（...）
+        SP_EditElement,                             //编辑
+        SP_ExpandElement,                           //展开
+        SP_ReduceElement,                           //收缩
+        SP_LockElement,                             //锁定
+        SP_UnlockElement,                           //解锁
+        SP_MediaVolumeElement,                      //音量
+        SP_MediaVolumeFullElement,                  //满音量
+        SP_MediaVolumeMutedElement,                 //静音
+        SP_MediaVolumeLeftElement,                  //左声道
+        SP_MediaVolumeRightElement,                 //右声道
+        SP_ArrowEnter,                              //进入
+        SP_ArrowLeave,                              //离开
+        SP_ArrowNext,                               //下一页
+        SP_ArrowPrev,                               //上一页
+        SP_ShowPassword,                            //显示密码
+        SP_HidePassword,                            //因此密码
+        SP_CloseButton,                             //关闭按钮（X）
+        SP_IndicatorMajuscule,                      //大写标识
+        SP_DeleteButton,                            //删除按钮
+        SP_AddButton,                               //新增按钮
         SP_CustomBase = QStyle::SP_CustomBase + 0xf00000
     };
 
@@ -309,6 +374,28 @@ void DStylePainter::drawItemPixmap(const QRect &r, int flags, const QPixmap &pix
 {
     wstyle->drawItemPixmap(this, r, flags, pixmap);
 }
+
+class DStyledIconEngine : public QIconEngine
+{
+public:
+    typedef void (*DrawFun)(QPainter *, const QRectF &rect);
+    DStyledIconEngine(DrawFun drawFun, const QPalette &palette, const QString &iconName = QString());
+
+    void bindDrawFun(DrawFun drawFun);
+    void setIconName(const QString &name);
+
+    void paint(QPainter *painter, const QPalette &palette, const QRectF &rect);
+    void paint(QPainter *painter, const QRect &rect, QIcon::Mode mode, QIcon::State state) override;
+
+    QIconEngine *clone() const override;
+
+protected:
+    void virtual_hook(int id, void *data) override;
+
+    DrawFun m_drawFun = nullptr;
+    QPalette m_palette;
+    QString m_iconName;
+};
 
 DWIDGET_END_NAMESPACE
 

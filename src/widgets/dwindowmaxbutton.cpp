@@ -90,6 +90,13 @@ void DWindowMaxButton::setMaximized(bool isMaximized)
         return;
 
     d->m_isMaximized = isMaximized;
+
+    if (isMaximized) {
+        setIcon(QStyle::SP_TitleBarNormalButton);
+    } else {
+        setIcon(QStyle::SP_TitleBarMaxButton);
+    }
+
     Q_EMIT maximizedChanged(isMaximized);
 }
 

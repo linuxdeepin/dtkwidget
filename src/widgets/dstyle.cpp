@@ -24,6 +24,7 @@
 #include <QTextLayout>
 #include <QTextLine>
 #include <QPixmapCache>
+#include <QGuiApplication>
 
 #include <qmath.h>
 #include <private/qfixed_p.h>
@@ -249,8 +250,8 @@ void drawFork(QPainter *pa, const QRectF &rect, const QColor &color, int width)
     pa->setRenderHint(QPainter::Antialiasing, true);
     pa->setPen(pen);
     pa->setBrush(Qt::NoBrush);
-    pa->drawLine(rect.topLeft(), rect.bottomRight());
-    pa->drawLine(rect.bottomLeft(), rect.topRight());
+
+    drawForkElement(pa, rect.toRect());
 }
 
 void drawRoundedRect(QPainter *pa, const QRect &rect, qreal xRadius, qreal yRadius, Corners corners, Qt::SizeMode mode)
@@ -409,13 +410,209 @@ void drawPlus(QPainter *painter, const QRectF &rect, const QColor &color, qreal 
 
 void drawSubtract(QPainter *painter, const QRectF &rect, const QColor &color, qreal width)
 {
-    qreal centerY = rect.center().y() ;
     QPen pen = color;
     pen.setWidthF(width);
     painter->setPen(pen);
     painter->setBrush(Qt::NoBrush);
-    painter->drawLine(QPointF(rect.left(), centerY), QPointF(rect.right(), centerY));
+    drawIncreaseElement(painter, rect);
 }
+
+void drawForkElement(QPainter *pa, const QRectF &rect)
+{
+    pa->drawLine(rect.topLeft(), rect.bottomRight());
+    pa->drawLine(rect.bottomLeft(), rect.topRight());
+}
+
+void drawDecreaseElement(QPainter *pa, const QRectF &rect)
+{
+    qreal centerY = rect.center().y();
+    pa->drawLine(QPointF(rect.left(), centerY), QPointF(rect.right(), centerY));
+}
+
+void drawIncreaseElement(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawMarkElement(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawSelectElement(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawEditElement(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawExpandElement(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawReduceElement(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawLockElement(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawUnlockElement(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawMediaVolumeElement(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawMediaVolumeFullElement(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawMediaVolumeMutedElement(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawMediaVolumeLeftElement(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawMediaVolumeRightElement(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawArrowEnter(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawArrowLeave(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawArrowNext(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawArrowPrev(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawShowPassword(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawHidePassword(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawCloseButton(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawIndicatorMajuscule(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawDeleteButton(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawAddButton(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawTitleBarMenuButton(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawTitleBarMinButton(QPainter *pa, const QRectF &rect)
+{
+    QRectF new_rect = rect;
+    new_rect.setWidth(rect.width() / 4);
+    new_rect.moveCenter(rect.center());
+
+    drawDecreaseElement(pa, new_rect);
+}
+
+void drawTitleBarMaxButton(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawTitleBarCloseButton(QPainter *pa, const QRectF &rect)
+{
+    QRectF new_rect = rect;
+    new_rect.setWidth(rect.width() / 4);
+    new_rect.setHeight(rect.height() / 4);
+    new_rect.moveCenter(rect.center());
+
+    drawForkElement(pa, new_rect);
+}
+
+void drawTitleBarNormalButton(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawArrowUp(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawArrowDown(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawArrowLeft(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawArrowRight(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawArrowBack(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawArrowForward(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawLineEditClearButton(QPainter *pa, const QRectF &rect)
+{
+
+}
+
 }
 
 DStyle::DStyle()
@@ -688,9 +885,43 @@ QSize DStyle::sizeFromContents(const QStyle *style, DStyle::ContentsType ct, con
 QIcon DStyle::standardIcon(const QStyle *style, DStyle::StandardPixmap st, const QStyleOption *opt, const QWidget *widget)
 {
     Q_UNUSED(style)
-    Q_UNUSED(st)
-    Q_UNUSED(opt)
-    Q_UNUSED(widget);
+    Q_UNUSED(widget)
+
+#define CASE_ICON(Value) \
+    case SP_##Value: { \
+        const QPalette &palette = opt ? opt->palette : (widget ? widget->palette() : qGuiApp->palette()); \
+        DStyledIconEngine *icon_engine = new DStyledIconEngine(DDrawUtils::draw##Value, palette, QStringLiteral(#Value)); \
+        return QIcon(icon_engine);}
+
+    switch (st) {
+    CASE_ICON(ForkElement)
+    CASE_ICON(DecreaseElement)
+    CASE_ICON(IncreaseElement)
+    CASE_ICON(MarkElement)
+    CASE_ICON(SelectElement)
+    CASE_ICON(EditElement)
+    CASE_ICON(ExpandElement)
+    CASE_ICON(ReduceElement)
+    CASE_ICON(LockElement)
+    CASE_ICON(UnlockElement)
+    CASE_ICON(MediaVolumeElement)
+    CASE_ICON(MediaVolumeFullElement)
+    CASE_ICON(MediaVolumeMutedElement)
+    CASE_ICON(MediaVolumeLeftElement)
+    CASE_ICON(MediaVolumeRightElement)
+    CASE_ICON(ArrowEnter)
+    CASE_ICON(ArrowLeave)
+    CASE_ICON(ArrowNext)
+    CASE_ICON(ArrowPrev)
+    CASE_ICON(ShowPassword)
+    CASE_ICON(HidePassword)
+    CASE_ICON(CloseButton)
+    CASE_ICON(IndicatorMajuscule)
+    CASE_ICON(DeleteButton)
+    CASE_ICON(AddButton)
+    default:
+        break;
+    }
 
     return QIcon();
 }
@@ -774,7 +1005,25 @@ QSize DStyle::sizeFromContents(QStyle::ContentsType ct, const QStyleOption *opt,
 
 QIcon DStyle::standardIcon(QStyle::StandardPixmap st, const QStyleOption *opt, const QWidget *widget) const
 {
-    if (Q_UNLIKELY(st < QStyle::SP_CustomBase)) {
+    switch (st) {
+    CASE_ICON(TitleBarMenuButton)
+    CASE_ICON(TitleBarMinButton)
+    CASE_ICON(TitleBarMaxButton)
+    CASE_ICON(TitleBarCloseButton)
+    CASE_ICON(TitleBarNormalButton)
+    CASE_ICON(ArrowUp)
+    CASE_ICON(ArrowDown)
+    CASE_ICON(ArrowLeft)
+    CASE_ICON(ArrowRight)
+    CASE_ICON(ArrowBack)
+    CASE_ICON(ArrowForward)
+    CASE_ICON(LineEditClearButton)
+        break;
+    default:
+        break;
+    }
+
+    if (st < QStyle::SP_CustomBase) {
         return QCommonStyle::standardIcon(st, opt, widget);
     }
 
@@ -1170,5 +1419,58 @@ QRect DStyle::viewItemDrawText(QPainter *p, const QStyleOptionViewItem *option, 
     return viewItemDrawText(this, p, option, rect);
 }
 #endif
+
+DStyledIconEngine::DStyledIconEngine(DrawFun drawFun, const QPalette &palette, const QString &iconName)
+    : QIconEngine()
+    , m_drawFun(drawFun)
+    , m_palette(palette)
+    , m_iconName(iconName)
+{
+
+}
+
+void DStyledIconEngine::bindDrawFun(DStyledIconEngine::DrawFun drawFun)
+{
+    m_drawFun = drawFun;
+}
+
+void DStyledIconEngine::setIconName(const QString &name)
+{
+    m_iconName = name;
+}
+
+void DStyledIconEngine::paint(QPainter *painter, const QPalette &palette, const QRectF &rect)
+{
+    if (!m_drawFun)
+        return;
+
+    painter->setBrush(palette.background());
+    painter->setPen(QPen(palette.foreground(), painter->pen().widthF()));
+    m_drawFun(painter, rect);
+}
+
+void DStyledIconEngine::paint(QPainter *painter, const QRect &rect, QIcon::Mode mode, QIcon::State state)
+{
+    Q_UNUSED(mode)
+    Q_UNUSED(state)
+
+    return paint(painter, m_palette, rect);
+}
+
+QIconEngine *DStyledIconEngine::clone() const
+{
+    return new DStyledIconEngine(m_drawFun, m_palette, m_iconName);
+}
+
+void DStyledIconEngine::virtual_hook(int id, void *data)
+{
+    if (id == IconNameHook) {
+        *reinterpret_cast<QString*>(data) = m_iconName;
+    } else if (id == IsNullHook) {
+        *reinterpret_cast<bool*>(data) = !m_drawFun;
+    }
+
+    return QIconEngine::virtual_hook(id, data);
+}
 
 DWIDGET_END_NAMESPACE
