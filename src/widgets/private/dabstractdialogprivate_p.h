@@ -45,8 +45,6 @@ private:
     bool mousePressed = false;
 
     QPoint dragPosition;
-    QColor backgroundColor;
-    QColor borderColor;
     DAbstractDialog::DisplayPosition displayPosition = DAbstractDialog::Center;
 
     QLabel* windowTitle = Q_NULLPTR;

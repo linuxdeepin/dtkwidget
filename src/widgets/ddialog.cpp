@@ -36,7 +36,6 @@
 #include "dimagebutton.h"
 #include "dialog_constants.h"
 #include "ddialog.h"
-#include "dthememanager.h"
 #include "dboxwidget.h"
 #include "DAnchors"
 
@@ -63,8 +62,7 @@ void DialogButton::setButtonType(int buttonType)
 }
 
 DDialogPrivate::DDialogPrivate(DDialog *qq) :
-    DAbstractDialogPrivate(qq),
-    fixedStyle(Q_NULLPTR)
+    DAbstractDialogPrivate(qq)
 {
 
 }
@@ -311,8 +309,6 @@ void DDialogPrivate::_q_defaultButtonTriggered()
 DDialog::DDialog(QWidget *parent) :
     DAbstractDialog(*new DDialogPrivate(this), parent)
 {
-    DThemeManager::registerWidget(this);
-
     d_func()->init();
 }
 
@@ -326,8 +322,6 @@ DDialog::DDialog(QWidget *parent) :
 DDialog::DDialog(const QString &title, const QString &message, QWidget *parent) :
     DAbstractDialog(*new DDialogPrivate(this), parent)
 {
-    DThemeManager::registerWidget(this);
-
     d_func()->init();
 
     setTitle(title);
@@ -998,8 +992,6 @@ int DDialog::exec()
 DDialog::DDialog(DDialogPrivate &dd, QWidget *parent) :
     DAbstractDialog(dd, parent)
 {
-    DThemeManager::registerWidget(this);
-
     d_func()->init();
 }
 
@@ -1045,33 +1037,6 @@ void DDialog::childEvent(QChildEvent *event)
     if (event->added()) {
         if (d->closeButton) {
             d->closeButton->raise();
-        }
-
-        QStyle *style = d->fixedStyle;
-        if (!style) {
-            style = QStyleFactory::create("dlight");
-            if (style) {
-                d->fixedStyle = style;
-                style->setParent(this);
-            }
-        }
-
-
-        QWidget *child = qobject_cast<QWidget*>(event->child());
-        if (child) {
-            if (style) {
-                child->setStyle(style);
-            }
-
-            // TODO(hualet): apply the rule to all dwidgets.
-            // Just tried with no luck, DPsswordWidget's style goes wrong,
-            // no time to deal with this detail, leave it alone for now.
-            if (child->inherits("Dtk::Widget::DLineEdit")) {
-                DThemeManager *dtm = DThemeManager::instance();
-                // NOTE(sbw): want to force reset to light theme.
-                // FIXME(zccrs): fixation the DLineEdit widget theme to light.
-                dtm->setTheme(child, "light");
-            }
         }
     }
 }

@@ -62,6 +62,7 @@ public:
     enum MaskColorType {
         DarkColor,
         LightColor,
+        AutoColor,
         CustomColor
     };
 

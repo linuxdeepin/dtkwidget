@@ -29,7 +29,6 @@
 #include "dialog_constants.h"
 #include "dabstractdialog.h"
 #include "private/dabstractdialogprivate_p.h"
-#include "dthememanager.h"
 #include "dplatformwindowhandle.h"
 #include "dapplication.h"
 #include "dblureffectwidget.h"
@@ -49,22 +48,16 @@ void DAbstractDialogPrivate::init()
     if (qApp->isDXcbPlatform()) {
         handle = new DPlatformWindowHandle(q, q);
 
-        handle->setTranslucentBackground(true);
         handle->setEnableSystemMove(false);
         handle->setEnableSystemResize(false);
 
-//        bgBlurWidget = new DBlurEffectWidget(q);
-//        bgBlurWidget->lower();
-//        bgBlurWidget->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
-//        bgBlurWidget->setVisible(DPlatformWindowHandle::hasBlurWindow());
-
-//        DPlatformWindowHandle::connectWindowManagerChangedSignal(q, [this] {
-//            bgBlurWidget->setVisible(DPlatformWindowHandle::hasBlurWindow());
-//        });
-
+        bgBlurWidget = new DBlurEffectWidget(q);
+        bgBlurWidget->lower();
+        bgBlurWidget->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
+        bgBlurWidget->setFull(true);
+        bgBlurWidget->setMaskColor(DBlurEffectWidget::AutoColor);
     } else {
         q->setWindowFlags(q->windowFlags() | Qt::FramelessWindowHint);
-        q->setBorderColor(QColor(0, 0, 0));
     }
 
     windowTitle = new QLabel(q);
@@ -185,35 +178,7 @@ DAbstractDialog::DAbstractDialog(QWidget *parent) :
     QDialog(parent),
     DObject(*new DAbstractDialogPrivate(this))
 {
-    DThemeManager::registerWidget(this);
-
     d_func()->init();
-}
-
-/**
- * \~english \brief DAbstractDialog::backgroundColor
- * \~english \return the background color of the dialog.
- *
- * \~chinese \brief 获取对话框的背景色
- */
-QColor DAbstractDialog::backgroundColor() const
-{
-    D_DC(DAbstractDialog);
-
-    return d->backgroundColor;
-}
-
-/**
- * \~english \brief DAbstractDialog::borderColor
- * \~english \return the border color of the dialog.
- *
- * \~chinese \brief 获取对话框的边框颜色
- */
-QColor DAbstractDialog::borderColor() const
-{
-    D_DC(DAbstractDialog);
-
-    return d->borderColor;
 }
 
 /*!
@@ -297,43 +262,6 @@ void DAbstractDialog::moveToTopRightByRect(const QRect &rect)
 {
     int x = rect.x() + rect.width() - width();
     QDialog::move(QPoint(x, 0));
-}
-
-/**
- * \~english \brief DAbstractDialog::setBackgroundColor sets the background color of the dialog.
- * \~english \param backgroundColor is the target background color.
- *
- * \~chinese \brief 设置对话框的背景色
- */
-void DAbstractDialog::setBackgroundColor(QColor backgroundColor)
-{
-    D_D(DAbstractDialog);
-
-    d->backgroundColor = backgroundColor;
-
-    if (d->bgBlurWidget)
-        d->bgBlurWidget->setMaskColor(backgroundColor);
-
-    update();
-}
-
-/**
- * \~english \brief DAbstractDialog::setBorderColor sets the border color of the dialog.
- * \~english \param borderColor is the target border color.
- *
- * \~chinese \brief 设置对话框边框的颜色
- */
-void DAbstractDialog::setBorderColor(QColor borderColor)
-{
-    D_D(DAbstractDialog);
-
-    d->borderColor = borderColor;
-
-    if (d->handle) {
-        d->handle->setBorderColor(d->borderColor);
-    } else {
-        update();
-    }
 }
 
 /**
@@ -422,27 +350,6 @@ void DAbstractDialog::mouseMoveEvent(QMouseEvent *event)
     }
 
     QDialog::mouseMoveEvent(event);
-}
-
-/*!\reimp */
-void DAbstractDialog::paintEvent(QPaintEvent *event)
-{
-    D_DC(DAbstractDialog);
-
-    QPainter painter(this);
-
-    if (d->handle) {
-        painter.fillRect(event->rect(), d->backgroundColor);
-    } else {
-        painter.setPen(QPen(d->borderColor, DIALOG::BORDER_SHADOW_WIDTH));
-        painter.setBrush(d->backgroundColor);
-        painter.setRenderHint(QPainter::Antialiasing, true);
-        QRectF r(DIALOG::BORDER_SHADOW_WIDTH / 2.0, DIALOG::BORDER_SHADOW_WIDTH / 2.0,
-                 width() - DIALOG::BORDER_SHADOW_WIDTH, height() - DIALOG::BORDER_SHADOW_WIDTH);
-        painter.drawRoundedRect(r, DIALOG::BORDER_RADIUS, DIALOG::BORDER_RADIUS);
-    }
-
-    QDialog::paintEvent(event);
 }
 
 /*!\reimp */

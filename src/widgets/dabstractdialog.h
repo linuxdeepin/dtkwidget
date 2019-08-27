@@ -36,8 +36,6 @@ class LIBDTKWIDGETSHARED_EXPORT DAbstractDialog : public QDialog, public DTK_COR
 {
     Q_OBJECT
 
-    Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor)
-    Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor)
     Q_PROPERTY(DisplayPosition displayPosition READ displayPosition WRITE setDisplayPosition)
 
 public:
@@ -53,10 +51,8 @@ public:
     Q_ENUMS(DisplayPosition)
     Q_ENUMS(DisplayPostion)
 
-    DAbstractDialog(QWidget *parent = 0);
+    DAbstractDialog(QWidget *parent = nullptr);
 
-    QColor backgroundColor() const;
-    QColor borderColor() const;
     DisplayPosition displayPosition() const;
 
     void move(const QPoint &pos);
@@ -73,8 +69,6 @@ public Q_SLOTS:
     void moveToCenterByRect(const QRect &rect);
     void moveToTopRightByRect(const QRect &rect);
 
-    void setBackgroundColor(QColor backgroundColor);
-    void setBorderColor(QColor borderColor);
     void setDisplayPosition(DisplayPosition displayPosition);
 
 Q_SIGNALS:
@@ -88,7 +82,6 @@ protected:
     void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
-    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
     void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
     void showEvent(QShowEvent *event) override;
 

@@ -83,8 +83,6 @@ private:
 
     int clickedButtonIndex;
 
-    QStyle *fixedStyle;
-
     void init();
     const QScreen *getScreen() const;
     QString trimTag(QString origin) const;

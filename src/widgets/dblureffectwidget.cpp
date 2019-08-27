@@ -384,6 +384,9 @@ bool DBlurEffectWidgetPrivate::updateWindowBlurArea(QWidget *topLevelWidget)
  * \~chinese \arg \c B：\color{#FCFCFC,#FCFCFC}
  * \~chinese \arg \c C：\color{rgba(255\,255\,255\,0.8),#CCFFFFFF}
  *
+ * \~chinese \var DBlurEffectWidget::AutoColor DBlurEffectWidget::AutoColor
+ * \~chinese 自动颜色，以当前应用的主题的背景色作为叠加色（alpha通道值为非定值）
+ *
  * \~chinese \var DBlurEffectWidget::CustomColor DBlurEffectWidget::CustomColor
  * \~chinese 自定义颜色，使用 DBlurEffectWidget::setMaskColor 设置的颜色
  */
@@ -541,6 +544,11 @@ QColor DBlurEffectWidget::maskColor() const
         } else {
             return QColor("#FCFCFC");
         }
+    }
+    case AutoColor: {
+        QColor color = palette().color(backgroundRole());
+        color.setAlpha(d->maskAlpha);
+        return color;
     }
     }
 

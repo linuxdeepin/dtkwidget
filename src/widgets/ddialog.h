@@ -49,7 +49,7 @@ public:
         ButtonRecommend
     };
 
-    explicit DDialog(QWidget *parent = 0);
+    explicit DDialog(QWidget *parent = nullptr);
     explicit DDialog(const QString &title, const QString& message, QWidget *parent = 0);
 
     int getButtonIndexByText(const QString &text) const;
