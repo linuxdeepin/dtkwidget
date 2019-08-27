@@ -18,7 +18,7 @@
 #ifndef INPUTTAB_H
 #define INPUTTAB_H
 
-#include <QWidget>
+#include <QLabel>
 
 #include "dpasswordedit.h"
 #include "dsearchedit.h"
