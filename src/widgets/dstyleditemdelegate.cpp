@@ -470,9 +470,6 @@ void DStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
     if (opt.features & QStyleOptionViewItem::HasDisplay) {
         QPalette::ColorGroup cg = opt.state & QStyle::State_Enabled
                               ? QPalette::Normal : QPalette::Disabled;
-        if (cg == QPalette::Normal && !(opt.state & QStyle::State_Active))
-            cg = QPalette::Inactive;
-
         if (opt.state & QStyle::State_Selected) {
             painter->setPen(opt.palette.color(cg, QPalette::HighlightedText));
         } else {

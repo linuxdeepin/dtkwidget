@@ -769,6 +769,8 @@ QStyleOptionViewItem DListView::viewOptions() const
     QStyleOptionViewItem item = QListView::viewOptions();
 
     item.showDecorationSelected = true;
+    // 列表项不会变为Inactive状态
+    item.state |= QStyle::State_Active;
 
     if (viewMode() == QListView::ListMode) {
         item.decorationAlignment = Qt::AlignVCenter;
