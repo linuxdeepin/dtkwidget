@@ -863,7 +863,7 @@ int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyle
     DStyleHelper dstyle(style);
 
     switch (m) {
-    case PM_FocusBorderWidth: Q_FALLTHROUGH()
+    case PM_FocusBorderWidth: Q_FALLTHROUGH();
     case PM_FocusBorderSpacing:
         return 2;
     case PM_FrameRadius:
@@ -959,7 +959,7 @@ QSize DStyle::sizeFromContents(const QStyle *style, DStyle::ContentsType ct, con
         if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton *>(opt)) {
             return contentsSize.expandedTo(btn->iconSize);
         }
-        Q_FALLTHROUGH()
+        Q_FALLTHROUGH();
     case CT_SwitchButton: {
         DStyleHelper dstyle(style);
         int w = dstyle.pixelMetric(PM_SwitchButtonHandleWidth, opt, widget);
