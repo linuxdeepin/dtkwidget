@@ -43,6 +43,7 @@ public:
     QSize iconSize;
     QSize maxSize;
     bool clickable;
+    QWidget *widget = nullptr;
 
     qint8 colorType = -1;
     qint8 colorRole = -1;
@@ -60,6 +61,10 @@ public:
 
     static QSize actionSize(const DViewItemAction *action, const QSize &max, const QSize &fallbackIconSize)
     {
+        if (action->widget()) {
+            return action->widget()->size();
+        }
+
         const QString &text = action->text();
         QSize icon_size = action->iconSize();
 
@@ -215,6 +220,14 @@ public:
     static void drawAction(QPainter *pa, const QStyleOptionViewItem &option, const QRect &rect, const DViewItemAction *action)
     {
         if (!action->isVisible()) {
+            return;
+        }
+
+        if (action->widget()) {
+            if (action->widget()->geometry() != rect) {
+                action->widget()->setGeometry(rect);
+            }
+
             return;
         }
 
@@ -386,6 +399,20 @@ bool DViewItemAction::isClickable() const
     D_DC(DViewItemAction);
 
     return d->clickable;
+}
+
+void DViewItemAction::setWidget(QWidget *widget)
+{
+    D_D(DViewItemAction);
+
+    d->widget = widget;
+}
+
+QWidget *DViewItemAction::widget() const
+{
+    D_DC(DViewItemAction);
+
+    return d->widget;
 }
 
 DStyledItemDelegate::DStyledItemDelegate(QAbstractItemView *parent)

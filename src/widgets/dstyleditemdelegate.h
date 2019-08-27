@@ -55,6 +55,9 @@ public:
     QFont font() const;
 
     bool isClickable() const;
+
+    void setWidget(QWidget *widget);
+    QWidget *widget() const;
 };
 typedef QList<DViewItemAction*> DViewItemActionList;
 
