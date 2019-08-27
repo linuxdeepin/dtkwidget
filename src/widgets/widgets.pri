@@ -255,7 +255,7 @@ includes.files += \
     $$PWD/DToolButton \
     $$PWD/DRadioButton \
     $$PWD/DCheckButton \
-    $$PWD/DommandLinkButton \
+    $$PWD/DCommandLinkButton \
     $$PWD/DDialogButtonBox \
     $$PWD/DListWidget \
     $$PWD/DTreeWidget \

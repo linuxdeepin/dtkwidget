@@ -1,2 +1,2 @@
 #include "dwidgetstype.h"
-#Include <QGraphicsView>
+#include <QGraphicsView>
