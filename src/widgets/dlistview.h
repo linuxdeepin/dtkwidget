@@ -79,6 +79,7 @@ public:
     QSize itemSize() const;
 
     using QListView::contentsSize;
+    using QListView::setViewportMargins;
 
 public Q_SLOTS:
     bool addItem(const QVariant &data);

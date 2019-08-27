@@ -115,6 +115,10 @@ void DListViewPrivate::init()
 
     q->setFrameShape(QFrame::NoFrame);
     q->setIconSize(QSize(32, 32));
+
+    q->viewport()->setAutoFillBackground(false);
+    q->setAutoFillBackground(true);
+    q->setBackgroundRole(q->viewport()->backgroundRole());
 }
 
 void DListViewPrivate::onOrientationChanged()
