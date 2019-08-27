@@ -1454,11 +1454,11 @@ void DStyle::viewItemLayout(const QStyle *style, const QStyleOptionViewItem *opt
             break;
         }
 
-        display.adjust(checkMargin, 0, -checkMargin, 0);
-        *checkRect = QStyle::alignedRect(opt->direction, Qt::AlignRight | Qt::AlignVCenter, checkRect->size(), display);
+        if (opt->features & QStyleOptionViewItem::HasCheckIndicator) {
+            display.adjust(checkMargin, 0, -checkMargin, 0);
+            *checkRect = QStyle::alignedRect(opt->direction, Qt::AlignRight | Qt::AlignVCenter, checkRect->size(), display);
+        }
 
-        // 减去margins
-        display.adjust(textMargin, textMargin, -textMargin, -textMargin);
 //        *textRect = QStyle::alignedRect(opt->direction, opt->displayAlignment, textRect->size(), display);
 
         if (opt->features & QStyleOptionViewItem::HasCheckIndicator)
