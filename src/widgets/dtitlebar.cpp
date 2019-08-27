@@ -168,6 +168,7 @@ void DTitlebarPrivate::init()
     centerArea->setFrameShape(QFrame::NoFrame);
     centerArea->setAutoFillBackground(false);
     centerArea->setBackgroundRole(QPalette::NoRole);
+    centerArea->setAlignment(Qt::AlignCenter);
 
     buttonArea->setWindowFlag(Qt::WindowTransparentForInput);
     buttonArea->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
@@ -355,6 +356,10 @@ void DTitlebarPrivate::updateButtonsFunc()
 void DTitlebarPrivate::updateCenterArea()
 {
     D_QC(DTitlebar);
+
+    if (centerArea->isHidden()) {
+        return;
+    }
 
     int padding = qMax(leftArea->width(), rightArea->width());
     QRect rect(0, 0, q->width() - 2 * padding, q->height());
@@ -777,6 +782,7 @@ void DTitlebar::setCustomWidget(QWidget *w, bool fixCenterPos)
         w->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     } else {
         d->centerArea->show();
+        d->titleLabel = d->centerArea;
 
         return;
     }
@@ -787,8 +793,11 @@ void DTitlebar::setCustomWidget(QWidget *w, bool fixCenterPos)
         }
 
         addWidget(w, Qt::Alignment());
+        d->centerArea->show();
+        d->titleLabel = d->centerArea;
     } else {
         d->mainLayout->insertWidget(1, w);
+        d->titleLabel = nullptr;
         d->centerArea->hide();
     }
 }
@@ -1103,6 +1112,10 @@ Qt::WindowFlags DTitlebar::disableFlags() const
 QSize DTitlebar::sizeHint() const
 {
     D_DC(DTitlebar);
+
+    if (d->centerArea->isHidden()) {
+        return QFrame::sizeHint();
+    }
 
     int padding = qMax(d->leftArea->sizeHint().width(), d->rightArea->sizeHint().width());
     int width = d->centerArea->sizeHint().width() + 2 * d->mainLayout->spacing() + 2 * padding;
