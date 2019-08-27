@@ -212,6 +212,7 @@ public:
     void drawPrimitive(QStyle::PrimitiveElement pe, const QStyleOption *opt, QPainter *p, const QWidget *w = nullptr) const override;
     void drawControl(QStyle::ControlElement ce, const QStyleOption *opt, QPainter *p, const QWidget *w = nullptr) const override;
     int pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt = nullptr, const QWidget *widget = nullptr) const override;
+    int styleHint(StyleHint sh, const QStyleOption *opt, const QWidget *w, QStyleHintReturn *shret) const override;
     QRect subElementRect(QStyle::SubElement r, const QStyleOption *opt, const QWidget *widget = nullptr) const override;
     QSize sizeFromContents(QStyle::ContentsType ct, const QStyleOption *opt, const QSize &contentsSize, const QWidget *widget = nullptr) const override;
     QIcon standardIcon(QStyle::StandardPixmap st, const QStyleOption *opt = nullptr, const QWidget *widget = nullptr) const override;

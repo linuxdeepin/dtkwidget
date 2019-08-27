@@ -25,6 +25,7 @@
 #include <QTextLine>
 #include <QPixmapCache>
 #include <QGuiApplication>
+#include <QAbstractItemView>
 
 #include <qmath.h>
 #include <private/qfixed_p.h>
@@ -940,6 +941,61 @@ QIcon DStyle::standardIcon(const QStyle *style, DStyle::StandardPixmap st, const
     }
 
     return QIcon();
+}
+
+int DStyle::styleHint(QStyle::StyleHint sh, const QStyleOption *opt, const QWidget *w, QStyleHintReturn *shret) const
+{
+    switch (sh) {
+    case SH_ScrollBar_MiddleClickAbsolutePosition:
+    case SH_FontDialog_SelectAssociatedText:
+    case SH_Menu_KeyboardSearch:
+    case SH_Menu_Scrollable:
+    case SH_Menu_SloppySubMenus:
+    case SH_ComboBox_ListMouseTracking:
+    case SH_Menu_MouseTracking:
+    case SH_MenuBar_MouseTracking:
+    case SH_Menu_FillScreenWithScroll:
+    case SH_ItemView_ChangeHighlightOnFocus:
+    case SH_Widget_ShareActivation:
+    case SH_TabBar_PreferNoArrows:
+    case SH_ComboBox_Popup:
+    case SH_Slider_StopMouseOverSlider:
+    case SH_SpinBox_AnimateButton:
+    case SH_SpinBox_KeyPressAutoRepeatRate:
+    case SH_SpinBox_ClickAutoRepeatRate:
+    case SH_SpinBox_ClickAutoRepeatThreshold:
+    case SH_SpinControls_DisableOnBounds:
+    case SH_Menu_FadeOutOnHide:
+    case SH_ItemView_ShowDecorationSelected:
+    case SH_ScrollBar_Transient:
+    case SH_TitleBar_ShowToolTipsOnButtons:
+    case SH_SpinBox_ButtonsInsideFrame:
+        return true;
+    case SH_ScrollBar_LeftClickAbsolutePosition:
+    case SH_Slider_SnapToValue:
+    case SH_Menu_AllowActiveAndDisabled:
+    case SH_BlinkCursorWhenTextSelected:
+    case SH_UnderlineShortcut:
+    case SH_ItemView_PaintAlternatingRowColorsForEmptyArea:
+    case SH_ComboBox_AllowWheelScrolling:
+        return false;
+    case SH_Header_ArrowAlignment:
+        return Qt::AlignVCenter | Qt::AlignRight;
+    case SH_Menu_SubMenuPopupDelay:
+        return 100;
+    case SH_ToolTipLabel_Opacity:
+        return 0;
+    case SH_RequestSoftwareInputPanel:
+        return RSIP_OnMouseClickAndAlreadyFocused;
+    case SH_ItemView_ScrollMode:
+        return QAbstractItemView::ScrollPerPixel;
+    case SH_Widget_Animation_Duration:
+        return 300;
+    default:
+        break;
+    }
+
+    return QCommonStyle::styleHint(sh, opt, w, shret);
 }
 
 static DStyle::StyleState getState(const QStyleOption *option)
