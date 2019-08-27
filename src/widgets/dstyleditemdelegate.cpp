@@ -543,6 +543,27 @@ void DStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
         }
     }
 
+    // draw the check mark
+    if (opt.features & QStyleOptionViewItem::HasCheckIndicator) {
+        QStyleOptionViewItem option(opt);
+        option.rect = checkRect;
+        option.state = option.state & ~QStyle::State_HasFocus;
+
+        switch (opt.checkState) {
+        case Qt::Unchecked:
+            option.state |= QStyle::State_Off;
+            break;
+        case Qt::PartiallyChecked:
+            option.state |= QStyle::State_NoChange;
+            break;
+        case Qt::Checked:
+            option.state |= QStyle::State_On;
+            break;
+        }
+
+        style->drawPrimitive(QStyle::PE_IndicatorViewItemCheck, &option, painter, widget);
+    }
+
     // reset rect for focus rect
     opt.rect = option.rect;
 

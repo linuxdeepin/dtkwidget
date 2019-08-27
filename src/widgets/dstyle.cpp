@@ -1332,11 +1332,11 @@ void DStyle::viewItemLayout(const QStyle *style, const QStyleOptionViewItem *opt
         if (hasCheck) {
             cw = checkRect->width() + 2 * checkMargin;
             if (sizehint) w += cw;
-            // 选择标识框优先放置在右边
+
             if (opt->direction == Qt::RightToLeft) {
-                check.setRect(x, y, cw, h);
-            } else {
                 check.setRect(x + w - cw, y, cw, h);
+            } else {
+                check.setRect(x, y, cw, h);
             }
         }
 
