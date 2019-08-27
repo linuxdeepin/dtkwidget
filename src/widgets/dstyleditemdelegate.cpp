@@ -710,6 +710,15 @@ void DStyledItemDelegate::initStyleOption(QStyleOptionViewItem *option, const QM
     if (index.data(Dtk::TextActionListRole).isValid()) {
         option->features |= QStyleOptionViewItem::HasDisplay;
     }
+
+    if ((option->state & (QStyle::State_HasFocus | QStyle::State_Selected)) == (QStyle::State_HasFocus | QStyle::State_Selected)) {
+        if (const QAbstractItemView *view = qobject_cast<const QAbstractItemView*>(option->widget)) {
+            // item 被选中背景色和获取焦点时的border样式类似，因此单选时不再绘制焦点样式
+            if (view->selectionMode() == QAbstractItemView::SingleSelection) {
+                option->state &= ~QStyle::State_HasFocus;
+            }
+        }
+    }
 }
 
 bool DStyledItemDelegate::eventFilter(QObject *object, QEvent *event)
