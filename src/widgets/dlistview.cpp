@@ -114,7 +114,6 @@ void DListViewPrivate::init()
     q->setItemDelegate(delegate);
 
     q->setFrameShape(QFrame::NoFrame);
-    q->setIconSize(QSize(32, 32));
 
     q->viewport()->setAutoFillBackground(false);
     q->setAutoFillBackground(true);
