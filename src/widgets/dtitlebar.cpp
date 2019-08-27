@@ -81,6 +81,8 @@ private:
     void _q_quitActionTriggered();
 #endif
 
+    void setIconVisible(bool visible);
+
     QHBoxLayout         *mainLayout;
     QWidget             *leftArea;
     QHBoxLayout         *leftLayout;
@@ -151,16 +153,16 @@ void DTitlebarPrivate::init()
     quitFullButton->setObjectName("DTitlebarDWindowQuitFullscreenButton");
     quitFullButton->hide();
 
-    iconLabel->setFixedSize(DefaultIconWidth, DefaultIconHeight);
+    iconLabel->setIconSize(QSize(DefaultIconWidth, DefaultIconHeight));
     iconLabel->setWindowFlags(Qt::WindowTransparentForInput);
     iconLabel->setFocusPolicy(Qt::NoFocus);
     iconLabel->setFlat(true);
+    // 默认无图标，所以隐藏
+    iconLabel->hide();
 
     leftArea->setWindowFlag(Qt::WindowTransparentForInput);
     leftArea->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
     leftLayout->setContentsMargins(0, 0, 0, 0);
-    leftLayout->addSpacing(10);
-    leftLayout->addWidget(iconLabel, 0 , Qt::AlignLeading | Qt::AlignVCenter);
 
     centerLayout->setContentsMargins(0, 0, 0, 0);
     centerArea->setText(qApp->applicationName());
@@ -297,9 +299,6 @@ void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
     bool showTitle = (type.testFlag(Qt::WindowTitleHint) || forceShow) && !embedMode;
     if (titleLabel) {
         titleLabel->setVisible(showTitle);
-    }
-    if (iconLabel) {
-        iconLabel->setVisible(showTitle);
     }
 
     // Never show in embed/fullscreen
@@ -439,10 +438,6 @@ void DTitlebarPrivate::_q_onTopWindowMotifHintsChanged(quint32 winId)
         titleLabel->setVisible(decorations_hints.testFlag(DWindowManagerHelper::DECOR_TITLE));
     }
 
-    if (iconLabel) {
-        iconLabel->setVisible(decorations_hints.testFlag(DWindowManagerHelper::DECOR_TITLE));
-    }
-
     updateButtonsState(targetWindow()->windowFlags());
 
     minButton->setEnabled(functions_hints.testFlag(DWindowManagerHelper::FUNC_MINIMIZE));
@@ -514,6 +509,23 @@ void DTitlebarPrivate::_q_quitActionTriggered()
     DApplication *dapp = qobject_cast<DApplication *>(qApp);
     if (dapp) {
         dapp->handleQuitAction();
+    }
+}
+
+void DTitlebarPrivate::setIconVisible(bool visible)
+{
+    if (iconLabel->isVisible() == visible)
+        return;
+
+    if (visible) {
+        leftLayout->insertSpacing(0, 10);
+        leftLayout->insertWidget(1, iconLabel, 0, Qt::AlignLeading | Qt::AlignVCenter);
+        iconLabel->show();
+    } else {
+        iconLabel->hide();
+        // 从布局中移除图标相关的东西
+        delete leftLayout->takeAt(0);
+        delete leftLayout->takeAt(1);
     }
 }
 
@@ -938,10 +950,10 @@ void DTitlebar::setIcon(const QIcon &icon)
 {
     D_D(DTitlebar);
     if (!d->embedMode) {
-        QIcon new_icon = icon;
-        new_icon.actualSize(d->targetWindowHandle, QSize(DefaultIconWidth, DefaultIconHeight));
-        d->iconLabel->setIcon(new_icon);
+        d->iconLabel->setIcon(icon);
+        d->setIconVisible(!icon.isNull());
     } else if (parentWidget()) {
+        d->setIconVisible(false);
         parentWidget()->setWindowIcon(icon);
     }
 }
