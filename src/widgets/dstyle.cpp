@@ -827,6 +827,8 @@ int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyle
         return 2;
     case PM_FrameRadius:
         return 8;
+    case PM_TopLevelWindowRadius:
+        return 18;
     case PM_ShadowRadius:
         return 6;
     case PM_ShadowHOffset:
@@ -1050,6 +1052,61 @@ void DStyle::drawControl(QStyle::ControlElement ce, const QStyleOption *opt, QPa
 
 int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QWidget *widget) const
 {
+    switch (m) {
+    case PM_ButtonDefaultIndicator:
+    case PM_ButtonShiftHorizontal:
+    case PM_ButtonShiftVertical:
+    case PM_FocusFrameVMargin:
+    case PM_FocusFrameHMargin:
+    case PM_MenuBarPanelWidth:
+    case PM_MenuDesktopFrameWidth:
+        return 0;
+    case PM_ButtonMargin:
+    case PM_DefaultChildMargin:
+        return pixelMetric(PM_FrameRadius, opt, widget);
+    case PM_DefaultFrameWidth:
+        return 1;
+    case PM_DefaultLayoutSpacing:
+        return 5;
+    case PM_DefaultTopLevelMargin:
+        return pixelMetric(PM_TopLevelWindowRadius, opt, widget);
+    case PM_MenuBarItemSpacing:
+        return 6;
+    case PM_IndicatorWidth:
+    case PM_IndicatorHeight:
+    case PM_ExclusiveIndicatorHeight:
+    case PM_ExclusiveIndicatorWidth:
+        return 14;
+    case PM_ScrollBarSliderMin:
+        return 36;
+    case PM_SliderLength:
+    case PM_ScrollBarExtent:
+        return 20;
+    case PM_SliderControlThickness:
+        return 24;
+    case PM_MenuBarHMargin:
+        return 10;
+    case PM_MenuBarVMargin:
+        return 6;
+    case PM_SliderTickmarkOffset:
+        return 14;
+    case PM_MenuHMargin:
+        return 0;
+    case PM_MenuVMargin:
+        return pixelMetric(PM_TopLevelWindowRadius, opt, widget);
+    case PM_SmallIconSize:
+    case PM_ListViewIconSize:
+    case PM_ButtonIconSize:
+        return 16;
+    case PM_LargeIconSize:
+    case PM_IconViewIconSize:
+        return 24;
+    case PM_ScrollView_ScrollBarOverlap:
+        return true;
+    default:
+        break;
+    }
+
     if (Q_UNLIKELY(m < QStyle::PM_CustomBase)) {
         return QCommonStyle::pixelMetric(m, opt, widget);
     }

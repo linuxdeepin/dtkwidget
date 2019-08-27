@@ -125,6 +125,7 @@ public:
         PM_ShadowVOffset,                                       //阴影在竖直方向的偏移
         PM_FrameMargins,                                        //控件的margins区域，控件内容 = 控件大小 - FrameMargins
         PM_IconButtonIconSize,
+        PM_TopLevelWindowRadius,                                //窗口的圆角大小
         PM_CustomBase = QStyle::PM_CustomBase + 0xf00000
     };
 
