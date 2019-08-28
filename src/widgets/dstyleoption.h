@@ -31,14 +31,8 @@ QT_END_NAMESPACE
 
 DTK_BEGIN_NAMESPACE
 
-enum ItemBackgroundType {
-    ClipCornerBackground,
-    RoundedBackground
-};
-
 enum ItemDataRole {
     MarginsRole = Qt::UserRole + 1,
-    BackgroundTypeRole,
     LeftActionListRole,
     TopActionListRole,
     RightActionListRole,

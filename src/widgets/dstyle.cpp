@@ -1219,10 +1219,11 @@ int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QW
     case PM_MenuVMargin:
         return pixelMetric(PM_TopLevelWindowRadius, opt, widget);
     case PM_SmallIconSize:
-    case PM_ListViewIconSize:
     case PM_ButtonIconSize:
-        return 24;
+        return 16;
+    case PM_ListViewIconSize:
     case PM_LargeIconSize:
+        return 24;
     case PM_IconViewIconSize:
         return 32;
     case PM_ScrollView_ScrollBarOverlap:

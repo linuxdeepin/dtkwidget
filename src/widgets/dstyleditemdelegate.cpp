@@ -28,6 +28,8 @@
 #include <DStyle>
 #include <QPainter>
 
+Q_DECLARE_METATYPE(QMargins)
+
 DWIDGET_BEGIN_NAMESPACE
 
 class DViewItemActionPrivate : public DCORE_NAMESPACE::DObjectPrivate
@@ -442,6 +444,10 @@ void DStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
         boption.QStyleOption::operator =(opt);
         boption.position = DStyleOptionBackgroundGroup::ItemBackgroundPosition(opt.viewItemPosition);
 
+        if (opt.backgroundBrush.style() != Qt::NoBrush) {
+            boption.dpalette.setBrush(DPalette::ItemBackground, opt.backgroundBrush);
+        }
+
         if (d->backgroundType == RoundedBackground) {
             int frame_margins = style->pixelMetric(static_cast<QStyle::PixelMetric>(DStyle::PM_FrameMargins));
             boption.rect = option.rect.adjusted(frame_margins, frame_margins, -frame_margins, -frame_margins);
@@ -454,7 +460,14 @@ void DStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
     }
 
     // 设置内容区域
-    opt.rect = opt.rect.marginsRemoved(d->margins);
+    QMargins margins = d->margins;
+    const QVariant &margins_varinat = index.data(Dtk::MarginsRole);
+
+    if (margins_varinat.isValid()) {
+        margins = qvariant_cast<QMargins>(margins_varinat);
+    }
+
+    opt.rect = opt.rect.marginsRemoved(margins);
     QRect itemContentRect = opt.rect;
     QSize action_area_size;
     QList<QPair<QAction*, QRect>> clickActionList;
@@ -641,7 +654,14 @@ QSize DStyledItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QM
     size.setHeight(size.height() + action_area_size.height());
     size.setWidth(qMax(size.width(), action_area_size.width()));
 
-    return QRect(QPoint(0, 0), size).marginsAdded(d->margins).size();
+    QMargins margins = d->margins;
+    const QVariant &margins_varinat = index.data(Dtk::MarginsRole);
+
+    if (margins_varinat.isValid()) {
+        margins = qvariant_cast<QMargins>(margins_varinat);
+    }
+
+    return QRect(QPoint(0, 0), size).marginsAdded(margins).size();
 }
 
 DStyledItemDelegate::BackgroundType DStyledItemDelegate::backgroundType() const
