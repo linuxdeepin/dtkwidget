@@ -41,6 +41,9 @@ public Q_SLOTS:
 Q_SIGNALS:
     void maximizedChanged(bool isMaximized);
 
+protected:
+    void initStyleOption(DStyleOptionButton *option) const override;
+
 private:
     D_DECLARE_PRIVATE(DWindowMaxButton)
 };

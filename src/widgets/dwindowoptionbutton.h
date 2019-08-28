@@ -29,6 +29,9 @@ public:
     DWindowOptionButton(QWidget * parent = 0);
 
     QSize sizeHint() const override;
+
+protected:
+    void initStyleOption(DStyleOptionButton *option) const override;
 };
 
 DWIDGET_END_NAMESPACE

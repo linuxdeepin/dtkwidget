@@ -36,9 +36,6 @@ public:
     explicit DFloatingButton(const QString &text, QWidget *parent = nullptr);
     DFloatingButton(const QIcon& icon, const QString &text, QWidget *parent = nullptr);
 
-    QSize sizeHint() const override;
-    QSize minimumSizeHint() const override;
-
 protected:
     void initStyleOption(DStyleOptionButton *option) const override;
 };

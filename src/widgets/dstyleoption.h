@@ -133,7 +133,8 @@ public:
     enum ButtonFeature {
         SuggestButton = (CommandLinkButton << 1),
         WarningButton = (SuggestButton << 1),
-        FloatingButton = (WarningButton << 1)
+        FloatingButton = (WarningButton << 1),
+        TitleBarButton = (FloatingButton << 1)
     };
 
     void init(const QWidget *widget) override;

@@ -58,7 +58,6 @@ DWindowMaxButton::DWindowMaxButton(QWidget * parent) :
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
     setIcon(QStyle::SP_TitleBarMaxButton);
     setFlat(true);
-    setIconSize(QSize(10, 10));
 }
 
 /*!
@@ -85,7 +84,7 @@ bool DWindowMaxButton::isMaximized() const
 
 QSize DWindowMaxButton::sizeHint() const
 {
-    return iconSize() * 4;
+    return iconSize();
 }
 
 void DWindowMaxButton::setMaximized(bool isMaximized)
@@ -104,6 +103,13 @@ void DWindowMaxButton::setMaximized(bool isMaximized)
     }
 
     Q_EMIT maximizedChanged(isMaximized);
+}
+
+void DWindowMaxButton::initStyleOption(DStyleOptionButton *option) const
+{
+    DIconButton::initStyleOption(option);
+
+    option->features |= QStyleOptionButton::ButtonFeature(DStyleOptionButton::TitleBarButton);
 }
 
 DWIDGET_END_NAMESPACE

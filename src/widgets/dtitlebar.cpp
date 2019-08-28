@@ -147,9 +147,13 @@ void DTitlebarPrivate::init()
     titleLabel      = centerArea;
 
     optionButton->setObjectName("DTitlebarDWindowOptionButton");
+    optionButton->setIconSize(QSize(DefaultTitlebarHeight, DefaultTitlebarHeight));
     minButton->setObjectName("DTitlebarDWindowMinButton");
+    minButton->setIconSize(QSize(DefaultTitlebarHeight, DefaultTitlebarHeight));
     maxButton->setObjectName("DTitlebarDWindowMaxButton");
+    maxButton->setIconSize(QSize(DefaultTitlebarHeight, DefaultTitlebarHeight));
     closeButton->setObjectName("DTitlebarDWindowCloseButton");
+    closeButton->setIconSize(QSize(DefaultTitlebarHeight, DefaultTitlebarHeight));
     quitFullButton->setObjectName("DTitlebarDWindowQuitFullscreenButton");
     quitFullButton->hide();
 

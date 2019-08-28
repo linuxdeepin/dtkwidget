@@ -40,14 +40,20 @@ DWIDGET_BEGIN_NAMESPACE
 DWindowOptionButton::DWindowOptionButton(QWidget * parent)
     : DIconButton(QStyle::SP_TitleBarMenuButton, parent)
 {
-    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
     setFlat(true);
-    setIconSize(QSize(10, 10));
 }
 
 QSize DWindowOptionButton::sizeHint() const
 {
-    return iconSize() * 4;
+    return iconSize();
+}
+
+void DWindowOptionButton::initStyleOption(DStyleOptionButton *option) const
+{
+    DIconButton::initStyleOption(option);
+
+    option->features |= QStyleOptionButton::ButtonFeature(DStyleOptionButton::TitleBarButton);
 }
 
 DWIDGET_END_NAMESPACE

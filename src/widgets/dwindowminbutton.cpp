@@ -42,12 +42,18 @@ DWindowMinButton::DWindowMinButton(QWidget * parent)
 {
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
     setFlat(true);
-    setIconSize(QSize(10, 10));
 }
 
 QSize DWindowMinButton::sizeHint() const
 {
-    return iconSize() * 4;
+    return iconSize();
+}
+
+void DWindowMinButton::initStyleOption(DStyleOptionButton *option) const
+{
+    DIconButton::initStyleOption(option);
+
+    option->features |= QStyleOptionButton::ButtonFeature(DStyleOptionButton::TitleBarButton);
 }
 
 DWIDGET_END_NAMESPACE

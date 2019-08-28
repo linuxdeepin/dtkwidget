@@ -30,22 +30,22 @@ DWIDGET_BEGIN_NAMESPACE
 DFloatingButton::DFloatingButton(QWidget *parent)
     : DIconButton(parent)
 {
-    resize(48, 48);
     setBackgroundRole(QPalette::Highlight);
+    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }
 
 DFloatingButton::DFloatingButton(QStyle::StandardPixmap iconType, QWidget *parent)
     : DIconButton(iconType, parent)
 {
-    resize(48, 48);
     setBackgroundRole(QPalette::Highlight);
+    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }
 
 DFloatingButton::DFloatingButton(DStyle::StandardPixmap iconType, QWidget *parent)
     : DIconButton(iconType, parent)
 {
-    resize(48, 48);
     setBackgroundRole(QPalette::Highlight);
+    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }
 
 DFloatingButton::DFloatingButton(const QString &text, QWidget *parent)
@@ -59,48 +59,6 @@ DFloatingButton::DFloatingButton(const QIcon &icon, const QString &text, QWidget
 {
     setIcon(icon);
     setText(text);
-}
-
-QSize DFloatingButton::sizeHint() const
-{
-    QAbstractButtonPrivate *bp = static_cast<QAbstractButtonPrivate*>(QAbstractButton::d_ptr.data());
-
-    if (bp->sizeHint.isValid()) {
-        return bp->sizeHint;
-    }
-
-    DStyleOptionButton opt;
-    initStyleOption(&opt);
-
-    QString s(text());
-    bool empty = s.isEmpty();
-
-    if (empty)
-        s = QStringLiteral("X");
-
-    QFontMetrics fm = fontMetrics();
-    QSize sz = fm.size(Qt::TextShowMnemonic, s);
-    int w = 0, h = 0;
-
-    if (!empty || !w)
-        w += sz.width();
-
-    if (!empty || !h)
-        h = qMax(h, sz.height());
-
-    int size = qMax(w, h);
-    opt.rect.setSize(QSize(size, size));
-    bp->sizeHint = (style()->sizeFromContents(DStyle::CT_PushButton, &opt, QSize(w, h), this).expandedTo(QApplication::globalStrut()));
-    size = qMax(bp->sizeHint.width(), bp->sizeHint.height());
-    bp->sizeHint.setHeight(size);
-    bp->sizeHint.setWidth(size);
-
-    return bp->sizeHint;
-}
-
-QSize DFloatingButton::minimumSizeHint() const
-{
-    return sizeHint();
 }
 
 void DFloatingButton::initStyleOption(DStyleOptionButton *option) const

@@ -555,27 +555,54 @@ void drawAddButton(QPainter *pa, const QRectF &rect)
 
 void drawTitleBarMenuButton(QPainter *pa, const QRectF &rect)
 {
-
+    const QPen pen = pa->pen();
+    pa->setPen(Qt::NoPen);
+    pa->drawRect(rect);
+    QRectF content_rect(0, 0, rect.width() / 4, rect.height() / 4);
+    content_rect.moveCenter(rect.center());
+    pa->setPen(pen);
 }
 
 void drawTitleBarMinButton(QPainter *pa, const QRectF &rect)
 {
-    drawDecreaseElement(pa, rect);
+    const QPen pen = pa->pen();
+    pa->setPen(Qt::NoPen);
+    pa->drawRect(rect);
+    QRectF content_rect(0, 0, rect.width() / 4, rect.height() / 4);
+    content_rect.moveCenter(rect.center());
+    pa->setPen(pen);
+    drawDecreaseElement(pa, content_rect);
 }
 
 void drawTitleBarMaxButton(QPainter *pa, const QRectF &rect)
 {
-
+    const QPen pen = pa->pen();
+    pa->setPen(Qt::NoPen);
+    pa->drawRect(rect);
+    QRectF content_rect(0, 0, rect.width() / 4, rect.height() / 4);
+    content_rect.moveCenter(rect.center());
+    pa->setPen(pen);
 }
 
 void drawTitleBarCloseButton(QPainter *pa, const QRectF &rect)
 {
-    drawForkElement(pa, rect);
+    const QPen pen = pa->pen();
+    pa->setPen(Qt::NoPen);
+    pa->drawRect(rect);
+    QRectF content_rect(0, 0, rect.width() / 4, rect.height() / 4);
+    content_rect.moveCenter(rect.center());
+    pa->setPen(pen);
+    drawForkElement(pa, content_rect);
 }
 
 void drawTitleBarNormalButton(QPainter *pa, const QRectF &rect)
 {
-
+    const QPen pen = pa->pen();
+    pa->setPen(Qt::NoPen);
+    pa->drawRect(rect);
+    QRectF content_rect(0, 0, rect.width() / 4, rect.height() / 4);
+    content_rect.moveCenter(rect.center());
+    pa->setPen(pen);
 }
 
 void drawArrowUp(QPainter *pa, const QRectF &rect)
@@ -728,8 +755,21 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
             icon_option.dpalette = btn->dpalette;
 
             QPalette pa = opt->palette;
-            pa.setBrush(QPalette::Background, dstyle.generatedBrush(opt, pa.button(), pa.currentColorGroup(), QPalette::Button));
-            pa.setBrush(QPalette::Foreground, dstyle.generatedBrush(opt, pa.buttonText(), pa.currentColorGroup(), QPalette::ButtonText));
+
+            if (btn->features & DStyleOptionButton::TitleBarButton) {
+                if (!(opt->state & (State_MouseOver | State_Sunken))) {
+                    pa.setBrush(QPalette::Background, Qt::transparent);
+                }
+
+                if (opt->state & State_Sunken) {
+                    pa.setBrush(QPalette::Foreground, opt->palette.highlight());
+                } else {
+                    pa.setBrush(QPalette::Foreground, opt->palette.buttonText());
+                }
+            } else {
+                pa.setBrush(QPalette::Background, dstyle.generatedBrush(opt, pa.button(), pa.currentColorGroup(), QPalette::Button));
+                pa.setBrush(QPalette::Foreground, dstyle.generatedBrush(opt, pa.buttonText(), pa.currentColorGroup(), QPalette::ButtonText));
+            }
 
             icon_option.palette = pa;
             icon_option.rect.setSize(btn->iconSize);
@@ -957,7 +997,15 @@ QSize DStyle::sizeFromContents(const QStyle *style, DStyle::ContentsType ct, con
     switch (ct) {
     case CT_IconButton:
         if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton *>(opt)) {
-            return contentsSize.expandedTo(btn->iconSize);
+            if (btn->features & DStyleOptionButton::FloatingButton) {
+                return btn->iconSize * 3;
+            }
+
+            if (btn->features & DStyleOptionButton::Flat) {
+                return contentsSize.expandedTo(btn->iconSize);
+            }
+
+            return style->sizeFromContents(CT_PushButton, opt, btn->iconSize, widget);
         }
         Q_FALLTHROUGH();
     case CT_SwitchButton: {
@@ -1251,11 +1299,51 @@ QBrush DStyle::generatedBrush(DStyle::StyleState state, const QStyleOption *opti
 
 QBrush DStyle::generatedBrush(StateFlags flags, const QBrush &base, QPalette::ColorGroup cg, QPalette::ColorRole role, const QStyleOption *option) const
 {
-    Q_UNUSED(flags)
-    Q_UNUSED(base)
     Q_UNUSED(cg)
-    Q_UNUSED(role)
-    Q_UNUSED(option)
+
+    QColor colorNew = base.color();
+
+    if (!colorNew.isValid())
+        return base;
+
+    if ((flags & StyleState_Mask)  == SS_HoverState) {
+        switch (role) {
+        case QPalette::Light:
+        case QPalette::Dark:
+            colorNew = adjustColor(colorNew, 0, 0, -10, 0, 0, 0, 0);
+            break;
+        case QPalette::Highlight:
+            colorNew = adjustColor(colorNew, 0, 0, +20);
+            break;
+        default:
+            break;
+        }
+
+        return colorNew;
+    } else if ((flags & StyleState_Mask) == SS_PressState) {
+        QColor hightColor = option->palette.highlight().color();
+        hightColor.setAlphaF(0.1);
+
+        switch (role) {
+        case QPalette::Light: {
+            colorNew = adjustColor(colorNew, 0, 0, -20, 0, 0, +20, 0);
+            colorNew = blendColor(colorNew, hightColor);
+            break;
+        }
+        case QPalette::Dark: {
+            colorNew = adjustColor(colorNew, 0, 0, -15, 0, 0, +20, 0);
+            colorNew = blendColor(colorNew, hightColor);
+            break;
+        }
+        case QPalette::Highlight:
+            colorNew = adjustColor(colorNew, 0, 0, -10);
+            break;
+        default:
+            break;
+        }
+
+        return colorNew;
+    }
 
     return base;
 }
@@ -1274,12 +1362,59 @@ QBrush DStyle::generatedBrush(DStyle::StyleState state, const QStyleOption *opti
     return generatedBrush(getFlags(option) | state, base, cg, type, option);
 }
 
-QBrush DStyle::generatedBrush(StateFlags flags, const QBrush &base, QPalette::ColorGroup cg, DPalette::ColorType role, const QStyleOption *option) const
+QBrush DStyle::generatedBrush(StateFlags flags, const QBrush &base, QPalette::ColorGroup cg, DPalette::ColorType type, const QStyleOption *option) const
 {
-    Q_UNUSED(flags)
     Q_UNUSED(cg)
-    Q_UNUSED(role)
     Q_UNUSED(option)
+
+    QColor colorNew = base.color();
+
+    if (!colorNew.isValid())
+        return base;
+
+    if ((flags & StyleState_Mask)  == SS_HoverState) {
+        switch (type) {
+        case DPalette::LightLively:
+            colorNew = adjustColor(colorNew, 0, 0, +30, 0, 0, 0, 0);
+            break;
+        case DPalette::DarkLively:
+            colorNew = adjustColor(colorNew, 0, 0, +10, 0, 0, 0, 0);
+            break;
+        case DPalette::ItemBackground:
+            colorNew = adjustColor(colorNew, 0, 0, 0, 0, 0, 0, +10);
+            break;
+        default:
+            break;
+        }
+
+        return colorNew;
+    } else if ((flags & StyleState_Mask) == SS_PressState) {
+        switch (type) {
+        case DPalette::LightLively:
+            colorNew = adjustColor(colorNew, 0, 0, -30, 0, 0, 0, 0);
+            break;
+        case DPalette::DarkLively:
+            colorNew = adjustColor(colorNew, 0, 0, -20, 0, 0, 0, 0);
+            break;
+        default:
+            break;
+        }
+
+        return colorNew;
+    } else if ((flags & StyleState_Mask) == SS_NormalState) {
+        switch (type) {
+        case DPalette::LightLively:
+            colorNew = adjustColor(colorNew, 0, 0, +40, 0, 0, 0, 0);
+            break;
+        case DPalette::DarkLively:
+            colorNew = adjustColor(colorNew, 0, 0, +20, 0, 0, 0, 0);
+            break;
+        default:
+            break;
+        }
+
+        return colorNew;
+    }
 
     return base;
 }

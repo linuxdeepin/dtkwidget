@@ -37,8 +37,7 @@ DIconButtonPrivate::DIconButtonPrivate(DIconButton *qq)
 DIconButton::DIconButton(QWidget *parent)
     : DIconButton(*new DIconButtonPrivate(this), parent)
 {
-    // 默认调整大小，否则可能会导致按钮显示后为 QWidget 的默认大小
-    resize(iconSize());
+
 }
 
 DIconButton::DIconButton(QStyle::StandardPixmap iconType, QWidget *parent)
@@ -201,7 +200,7 @@ bool DIconButton::event(QEvent *e)
     if (e->type() == QEvent::Polish) {
         D_DC(DIconButton);
 
-        if (d->iconType > 0) {
+        if (d->iconType >= 0) {
             if (d->iconType > static_cast<qint64>(QStyle::SP_CustomBase)) {
                 DStyleHelper dstyle(style());
                 setIcon(dstyle.standardIcon(static_cast<DStyle::StandardPixmap>(d->iconType), nullptr, this));
@@ -209,6 +208,9 @@ bool DIconButton::event(QEvent *e)
                 setIcon(style()->standardIcon(static_cast<QStyle::StandardPixmap>(d->iconType), nullptr, this));
             }
         }
+    } else if (e->type() == QEvent::ShowToParent) {
+        // 默认调整大小，否则可能会导致按钮显示后为 QWidget 的默认大小
+        resize(sizeHint());
     }
 
     return QAbstractButton::event(e);

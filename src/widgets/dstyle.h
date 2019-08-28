@@ -246,7 +246,7 @@ public:
                           DPalette::ColorType type = DPalette::ItemBackground) const;
     virtual QBrush generatedBrush(StateFlags flags, const QBrush &base,
                                   DPalette::ColorGroup cg = DPalette::Normal,
-                                  DPalette::ColorType role = DPalette::ItemBackground,
+                                  DPalette::ColorType type = DPalette::ItemBackground,
                                   const QStyleOption *option = nullptr) const;
 
     using QCommonStyle::drawPrimitive;

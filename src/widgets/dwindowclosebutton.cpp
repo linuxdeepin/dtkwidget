@@ -39,12 +39,18 @@ DWindowCloseButton::DWindowCloseButton(QWidget * parent)
 {
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
     setFlat(true);
-    setIconSize(QSize(10, 10));
 }
 
 QSize DWindowCloseButton::sizeHint() const
 {
-    return iconSize() * 4;
+    return iconSize();
+}
+
+void DWindowCloseButton::initStyleOption(DStyleOptionButton *option) const
+{
+    DIconButton::initStyleOption(option);
+
+    option->features |= QStyleOptionButton::ButtonFeature(DStyleOptionButton::TitleBarButton);
 }
 
 DWIDGET_END_NAMESPACE
