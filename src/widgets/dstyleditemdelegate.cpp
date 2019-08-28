@@ -307,7 +307,7 @@ public:
         return bounding;
     }
 
-    DStyledItemDelegate::BackgroundType backgroundType = DStyledItemDelegate::RoundedBackground;
+    DStyledItemDelegate::BackgroundType backgroundType;
     QMargins margins;
     QSize itemSize;
     QMap<QModelIndex, QList<QPair<QAction*, QRect>>> clickableActionMap;
@@ -423,6 +423,9 @@ DStyledItemDelegate::DStyledItemDelegate(QAbstractItemView *parent)
 {
     //支持QAction的点击
     parent->viewport()->installEventFilter(this);
+
+    // 初始化 background type. 注意 setBackgroundType() 中有额外的处理操作，所以不能直接简单的修改默认值
+    setBackgroundType(DStyledItemDelegate::RoundedBackground);
 }
 
 void DStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
