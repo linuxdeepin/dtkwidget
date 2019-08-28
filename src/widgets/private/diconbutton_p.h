@@ -31,7 +31,7 @@ class DIconButtonPrivate : public DCORE_NAMESPACE::DObjectPrivate
 public:
     DIconButtonPrivate(DIconButton *qq);
 
-    bool flat = false;
+    bool flat = true;
     qint64 iconType = -1;
 
     D_DECLARE_PUBLIC(DIconButton)
