@@ -307,7 +307,7 @@ public:
         return bounding;
     }
 
-    DStyledItemDelegate::BackgroundType backgroundType = DStyledItemDelegate::NoBackground;
+    DStyledItemDelegate::BackgroundType backgroundType = DStyledItemDelegate::RoundedBackground;
     QMargins margins;
     QSize itemSize;
     QMap<QModelIndex, QList<QPair<QAction*, QRect>>> clickableActionMap;

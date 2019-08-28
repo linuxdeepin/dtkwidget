@@ -109,8 +109,6 @@ void DListViewPrivate::init()
     q->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
     DStyledItemDelegate *delegate = new DStyledItemDelegate(q);
-
-    delegate->setBackgroundType(DStyledItemDelegate::RoundedBackground);
     q->setItemDelegate(delegate);
 
     q->setFrameShape(QFrame::NoFrame);
