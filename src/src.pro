@@ -4,7 +4,7 @@ QT += dtkcore
 
 CONFIG += internal_module
 
-QT += network concurrent multimedia multimediawidgets
+QT += network concurrent multimedia multimediawidgets dtkgui
 greaterThan(QT_MAJOR_VERSION, 4) {
   QT += widgets widgets-private
   # Qt >= 5.8

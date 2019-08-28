@@ -20,12 +20,12 @@
 
 #include "darrowrectangle.h"
 
+#include <DWindowManagerHelper>
 #include <DObjectPrivate>
 
 #include <QPointer>
 
-#include "util/dwindowmanagerhelper.h"
-
+DGUI_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
 class DArrowRectanglePrivate : public DTK_CORE_NAMESPACE::DObjectPrivate

@@ -24,6 +24,7 @@
 #include <QMouseEvent>
 #include <QProcess>
 
+#include <DWindowManagerHelper>
 #include <DObjectPrivate>
 
 #include "dwindowclosebutton.h"
@@ -38,7 +39,6 @@
 #include "daboutdialog.h"
 #include "dapplication.h"
 #include "private/dapplication_p.h"
-#include "util/dwindowmanagerhelper.h"
 #include "dmainwindow.h"
 #include "DHorizontalLine"
 #include "dimagebutton.h"

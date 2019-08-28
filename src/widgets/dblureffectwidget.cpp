@@ -18,7 +18,8 @@
 #include "dblureffectwidget.h"
 #include "private/dblureffectwidget_p.h"
 #include "dplatformwindowhandle.h"
-#include "util/dwindowmanagerhelper.h"
+
+#include <DWindowManagerHelper>
 
 #include <QPainter>
 #include <QBackingStore>
@@ -32,6 +33,8 @@
 QT_BEGIN_NAMESPACE
 Q_WIDGETS_EXPORT void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, bool quality, bool alphaOnly, int transposed = 0);
 QT_END_NAMESPACE
+
+DGUI_USE_NAMESPACE
 
 DWIDGET_BEGIN_NAMESPACE
 

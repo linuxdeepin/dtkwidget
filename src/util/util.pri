@@ -3,7 +3,6 @@ INCLUDEPATH += $$PWD
 HEADERS += \
     $$PWD/dfileiconprovider.h \
     $$PWD/dthumbnailprovider.h \
-    $$PWD/dwindowmanagerhelper.h \
     $$PWD/dwidgetutil.h \
     $$PWD/ddesktopservices.h \
     $$PWD/dtrashmanager.h \
@@ -13,7 +12,6 @@ HEADERS += \
 SOURCES += \
     $$PWD/dfileiconprovider.cpp \
     $$PWD/dthumbnailprovider.cpp \
-    $$PWD/dwindowmanagerhelper.cpp \
     $$PWD/dwidgetutil.cpp \
     $$PWD/dhidpihelper.cpp
 
@@ -50,7 +48,6 @@ includes.files += $$PWD/*.h \
             $$PWD/DTrashManager \
             $$PWD/DThumbnailProvider \
             $$PWD/DFileIconProvider \
-            $$PWD/DWindowManagerHelper \
             $$PWD/DHiDPIHelper \
             $$PWD/DSvgRenderer
 

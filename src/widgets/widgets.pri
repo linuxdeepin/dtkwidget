@@ -100,7 +100,6 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dpageindicator.h \
     $$PWD/dclipeffectwidget.h \
     $$PWD/dgraphicsclipeffect.h \
-    $$PWD/dforeignwindow.h \
     $$PWD/dpushbutton.h \
     $$PWD/dtickeffect.h \
     $$PWD/dwaterprogress.h \
@@ -112,7 +111,6 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dstyleoption.h \
     $$PWD/dtoast.h \
     $$PWD/danchors.h \
-    $$PWD/dwindowgroupleader.h \
     $$PWD/dborderlesswidget.h \
     $$PWD/dborderlesswindow.h \
     $$PWD/dstyle.h \
@@ -178,7 +176,6 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dpageindicator.cpp \
     $$PWD/dclipeffectwidget.cpp \
     $$PWD/dgraphicsclipeffect.cpp \
-    $$PWD/dforeignwindow.cpp \
     $$PWD/dpushbutton.cpp \
     $$PWD/dtickeffect.cpp \
     $$PWD/dwaterprogress.cpp \
@@ -190,7 +187,6 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dstyleoption.cpp \
     $$PWD/dtoast.cpp \
     $$PWD/danchors.cpp \
-    $$PWD/dwindowgroupleader.cpp \
     $$PWD/dborderlesswidget.cpp \
     $$PWD/dborderlesswindow.cpp \
     $$PWD/dstyle.cpp \
@@ -216,7 +212,6 @@ includes.files += \
     $$PWD/DGraphicsDropShadowEffect \
     $$PWD/DPlatformWindowHandle \
     $$PWD/DGraphicsClipEffect \
-    $$PWD/DForeignWindow \
     $$PWD/DExpandGroup \
     $$PWD/DArrowButton \
     $$PWD/DArrowLineExpand \
@@ -237,7 +232,6 @@ includes.files += \
     $$PWD/DFileDialog \
     $$PWD/DLineEdit \
     $$PWD/DStyleOptionLineEdit \
-    $$PWD/DWindowGroupLeader \
     $$PWD/DAnchors \
     $$PWD/DSegmentedControl \
     $$PWD/DSegmentedHighlight \

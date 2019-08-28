@@ -51,6 +51,8 @@
 #include "private/dapplication_p.h"
 #include "daboutdialog.h"
 
+#include <DPlatformHandle>
+
 #ifdef Q_OS_UNIX
 #include <QDBusError>
 #include <QDBusReply>
@@ -658,12 +660,7 @@ bool DApplication::loadDXcbPlugin()
  */
 bool DApplication::isDXcbPlatform()
 {
-    if (!qApp)
-        return false;
-
-    static bool _is_dxcb = qApp->platformName() == DXCB_PLUGIN_KEY || qApp->property(DXCB_PLUGIN_SYMBOLIC_PROPERTY).toBool();
-
-    return _is_dxcb;
+    return DGUI_NAMESPACE::DPlatformHandle::isDXcbPlatform();
 }
 
 /*!
