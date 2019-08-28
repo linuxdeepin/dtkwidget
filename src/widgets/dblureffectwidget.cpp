@@ -550,7 +550,14 @@ QColor DBlurEffectWidget::maskColor() const
     }
     case AutoColor: {
         QColor color = palette().color(backgroundRole());
-        color.setAlpha(d->maskAlpha);
+        if (!d->isBehindWindowBlendMode()) {
+            color.setAlpha(d->maskAlpha);
+            return color;
+        }
+
+        if (DWindowManagerHelper::instance()->hasComposite()) {
+            color.setAlpha(DWindowManagerHelper::instance()->hasBlurWindow() ? d->maskAlpha : MASK_COLOR_ALPHA_DEFAULT);
+        }
         return color;
     }
     }
