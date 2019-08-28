@@ -1087,9 +1087,6 @@ int DStyle::styleHint(QStyle::StyleHint sh, const QStyleOption *opt, const QWidg
     case SH_ComboBox_Popup:
     case SH_Slider_StopMouseOverSlider:
     case SH_SpinBox_AnimateButton:
-    case SH_SpinBox_KeyPressAutoRepeatRate:
-    case SH_SpinBox_ClickAutoRepeatRate:
-    case SH_SpinBox_ClickAutoRepeatThreshold:
     case SH_SpinControls_DisableOnBounds:
     case SH_Menu_FadeOutOnHide:
     case SH_ItemView_ShowDecorationSelected:
