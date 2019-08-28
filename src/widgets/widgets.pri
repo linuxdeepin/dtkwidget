@@ -328,4 +328,14 @@ includes.files += \
     $$PWD/DDialog \
     $$PWD/DStyledItemDelegate \
     $$PWD/DStandardItem \
-    $$PWD/DIconButton
+    $$PWD/DIconButton \
+    $$PWD/DStyleHelper \
+    $$PWD/DStylePainter \
+    $$PWD/DStyledIconEngine \
+    $$PWD/DArrowRectangle \
+    $$PWD/DImageButton \
+    $$PWD/DSwitchButton \
+    $$PWD/DWindowCloseButton \
+    $$PWD/DWindowMaxButton \
+    $$PWD/DWindowMinButton \
+    $$PWD/DWindowOptionButton
