@@ -16,16 +16,14 @@
  */
 
 #include "dfilechooseredit.h"
-#include "dthememanager.h"
 #include "private/dfilechooseredit_p.h"
 
-#include <QDebug>
-#include <QFileDialog>
+#include <DIconButton>
+
 #include <QScreen>
 #include <QGuiApplication>
 
 DWIDGET_BEGIN_NAMESPACE
-
 
 /*!
  * \~chinese \class DFileChooserEdit
@@ -76,7 +74,6 @@ DWIDGET_BEGIN_NAMESPACE
 DFileChooserEdit::DFileChooserEdit(QWidget *parent)
     : DLineEdit(*new DFileChooserEditPrivate(this), parent)
 {
-    DThemeManager::registerWidget(this);
     D_D(DFileChooserEdit);
 
     d->init();
@@ -171,10 +168,16 @@ void DFileChooserEditPrivate::init()
 {
     D_Q(DFileChooserEdit);
 
-    q->setTextMargins(0, 0, 24, 0);
-    q->setReadOnly(true);
-    q->setIconVisible(true);
-    q->connect(q, SIGNAL(iconClicked()), q, SLOT(_q_showFileChooserDialog()));
+    QList<QWidget *> list;
+    DIconButton *btn = new DIconButton(nullptr);
+    btn->setIcon(QIcon(":/images/light/images/loadfile_normal.svg"));
+
+    list.append(btn);
+
+    q->setRightWidgets(list);
+    q->setClearButtonEnabled(true);
+
+    q->connect(btn, SIGNAL(clicked()), q, SLOT(_q_showFileChooserDialog()));
 }
 
 void DFileChooserEditPrivate::_q_showFileChooserDialog()

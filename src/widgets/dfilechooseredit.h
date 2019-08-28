@@ -37,7 +37,6 @@ public:
         CurrentMonitorCenter
     };
 
-
     DFileChooserEdit(QWidget *parent = nullptr);
 
     DialogDisplayPosition dialogDisplayPosition() const;
