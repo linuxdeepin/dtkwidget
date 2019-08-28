@@ -698,7 +698,7 @@ DThemeManager::DThemeManager()
     : QObject()
     , DObject(*new DThemeManagerPrivate(this))
 {
-
+    qApp->setStyle("chameleon");
 }
 
 bool DThemeManager::eventFilter(QObject *watched, QEvent *event)
