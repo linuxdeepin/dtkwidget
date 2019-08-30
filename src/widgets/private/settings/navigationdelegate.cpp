@@ -57,11 +57,12 @@ void NavigationDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     case Level1:
     case Level2: {
         if (isSelected) {
-            auto brush =  QColor("#d5edfe");
-            painter->fillRect(option.rect, brush);
+            QColor brush = option.palette.color(QPalette::Highlight);
+            QColor brushWithAlpha = brush;
+            brushWithAlpha.setAlpha(61);
+            painter->fillRect(option.rect, brushWithAlpha);
             auto rect = option.rect;
             rect.setX(option.rect.x() + option.rect.width() - 3);
-            brush =  QColor("#2ca7f8");
             painter->fillRect(rect, brush);
         }
     }

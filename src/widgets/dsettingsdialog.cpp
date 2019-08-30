@@ -72,8 +72,6 @@ DSettingsDialog::DSettingsDialog(QWidget *parent) :
 {
     Q_D(DSettingsDialog);
 
-    DThemeManager::registerWidget(this);
-
     setObjectName("DSettingsDialog");
 
     auto layout = new QHBoxLayout(this);

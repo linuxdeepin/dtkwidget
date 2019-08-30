@@ -48,7 +48,6 @@ Navigation::Navigation(QWidget *parent) :
     Q_D(Navigation);
 
     setObjectName("Navigation");
-//    setStyleSheet("#Navigation{border: none; border-right: 1px solid rgba(0,0,0,0.1);}");
 
     setContentsMargins(0, 0, 0, 0);
     auto layout = new QHBoxLayout(this);
@@ -64,6 +63,8 @@ Navigation::Navigation(QWidget *parent) :
     d->navbar->setSelectionMode(QListView::SingleSelection);
     d->navbar->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     d->navbar->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    d->navbar->setFrameShape(QFrame::NoFrame);
+    d->navbar->viewport()->setAutoFillBackground(false);
 
     d->navbarModel = new QStandardItemModel;
 
