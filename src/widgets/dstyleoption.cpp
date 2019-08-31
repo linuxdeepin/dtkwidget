@@ -163,11 +163,6 @@ void DStyleOptionLineEdit::init(const QWidget *widget)
         if (edit->isAlert()) {
             features |= Alert;
         }
-
-        if (edit->iconVisible()) {
-            features |= IconButton;
-            iconButtonRect = edit->d_func()->m_rightIcon->geometry();
-        }
     }
 }
 

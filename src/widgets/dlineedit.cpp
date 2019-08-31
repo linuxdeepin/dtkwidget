@@ -16,14 +16,10 @@
  */
 
 #include "dlineedit.h"
-#include "dthememanager.h"
 #include "private/dlineedit_p.h"
 #include "darrowrectangle.h"
-#include "dstyleoption.h"
 
 #include <QHBoxLayout>
-#include <QResizeEvent>
-#include <QWidgetAction>
 
 #define private public
 #ifndef slots
@@ -67,16 +63,14 @@ DLineEdit::DLineEdit(QWidget *parent)
     : QLineEdit(parent),
       DObject(*new DLineEditPrivate(this))
 {
-    Q_D(DLineEdit);
-    d->init();
+    setClearButtonEnabled(true);
 }
 
 DLineEdit::DLineEdit(DLineEditPrivate &q, QWidget *parent)
     : QLineEdit(parent),
       DObject(q)
 {
-    Q_D(DLineEdit);
-    d->init();
+
 }
 
 /*!
@@ -184,127 +178,6 @@ void DLineEdit:: hideAlertMessage()
     }
 }
 
-/*!
- * \~chinese \brief 设置图标是否可见
- *
- * @param visible
- */
-void DLineEdit::setIconVisible(bool visible)
-{
-    Q_D(DLineEdit);
-
-    if (visible == d->m_rightIcon->isVisible()) {
-        return;
-    }
-
-    d->m_rightIcon->setVisible(visible);
-
-    if (visible) {
-
-        addAction(d->m_iconAction, TrailingPosition);
-#ifndef Q_OS_WIN
-        QLineEditPrivate *d_d = reinterpret_cast<QLineEditPrivate *>(d_ptr.data());
-        if (d_d->trailingSideWidgets.size() > 1) {
-            if ((*(d_d->trailingSideWidgets.end() - 1)).action == d->m_iconAction) {
-                d_d->trailingSideWidgets.insert(d_d->trailingSideWidgets.begin(), *d_d->trailingSideWidgets.erase(d_d->trailingSideWidgets.end() - 1));
-                QResizeEvent resize_event(size(), size());
-                qApp->sendEvent(this, &resize_event);
-            }
-        }
-#endif
-    } else {
-        removeAction(d->m_iconAction);
-    }
-}
-
-/*!
- * \~english \property DLineEdit::iconVisible
- * \~english \brief This property holds whether the action button can be seen.
- */
-
-/*!
- * \~chinese \property DLineEdit::iconVisible
- * \~chinese 这个属性将会决定动作按钮的图标是否可见
- */
-bool DLineEdit::iconVisible() const
-{
-    D_DC(DLineEdit);
-
-    return d->m_rightIcon->isVisible();
-}
-
-/*!
- * \~english \property DLineEdit::normalIcon
- * \~english \brief This property holds the image used as the normal state of the action button.
- */
-
-/*!
- * \~chinese \property DLineEdit::normalIcon
- * \~chinese 该属性返回normal状态的图标
- */
-QString DLineEdit::normalIcon() const
-{
-    D_DC(DLineEdit);
-
-    return d->m_rightIcon->getNormalPic();
-}
-
-/*!
- * \~chinese \brief 设置normal状态的图标
- *
- * @param normalIcon
- */
-void DLineEdit::setNormalIcon(const QString &normalIcon)
-{
-    Q_D(DLineEdit);
-
-    d->m_rightIcon->setNormalPic(normalIcon);
-}
-
-/*!
- * \~english \property DLineEdit::hoverIcon
- * \~english \brief This property holds the image used as the hover state of the action button.
- */
-
-/*!
- * \~chinese \property DLineEdit::hoverIcon
- * \~chinese 该属性返回鼠标在动作按钮上时，按钮的图标
- */
-QString DLineEdit::hoverIcon() const
-{
-    D_DC(DLineEdit);
-
-    return d->m_rightIcon->getHoverPic();
-}
-
-/*!
- * \~chinese \brief 设置鼠标在动作按钮上时，按钮的图标
- *
- * @param hoverIcon 鼠标在动作按钮上时，按钮的图标的路径
- */
-void DLineEdit::setHoverIcon(const QString &hoverIcon)
-{
-    Q_D(DLineEdit);
-
-    d->m_rightIcon->setHoverPic(hoverIcon);
-}
-
-/*!
- * \~english \property DLineEdit::pressIcon
- * \~english \brief This property holds the image used as the pressed state of the action button.
- */
-
-/*!
- * \~chinese \property DLineEdit::pressIcon
- * \~chinese 该属性返回鼠标按下时动作按钮的图标
- */
-QString DLineEdit::pressIcon() const
-{
-    D_DC(DLineEdit);
-
-    return d->m_rightIcon->getPressPic();
-}
-
 void DLineEdit::setLeftWidgets(const QList<QWidget *> &list)
 {
     Q_D(DLineEdit);
@@ -377,17 +250,7 @@ void DLineEdit::setRightWidgets(const QList<QWidget *> &list)
     setContentsMargins(margins.left(), margins.top(), rightWidth, margins.bottom());
 }
 
-/*!
- * \~chinese \brief 设置鼠标按下时动作按钮的图标
- *
- * @param pressIcon 鼠标按下时动作按钮的图标路径
- */
-void DLineEdit::setPressIcon(const QString &pressIcon)
-{
-    Q_D(DLineEdit);
 
-    d->m_rightIcon->setPressPic(pressIcon);
-}
 
 void DLineEdit::focusInEvent(QFocusEvent *e)
 {
@@ -409,8 +272,6 @@ void DLineEdit::resizeEvent(QResizeEvent *e)
 
     D_D(DLineEdit);
 
-    d->m_rightIcon->setFixedHeight(e->size().height() - 2);
-
     if (d->rightWidget != nullptr) {
         d->rightWidget->setGeometry(width() - d->rightWidget->width(), 0,
                                     d->rightWidget->width(), height());
@@ -421,19 +282,6 @@ void DLineEdit::resizeEvent(QResizeEvent *e)
     }
 }
 
-bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
-{
-    D_D(DLineEdit);
-
-    if (watched == d->m_rightIcon) {
-        if (event->type() == QEvent::Move) {
-            d->m_rightIcon->move(width() - d->m_rightIcon->width() - 1, 1);
-        }
-    }
-
-    return false;
-}
-
 DLineEditPrivate::DLineEditPrivate(DLineEdit *q)
     : DObjectPrivate(q)
     , leftWidget(nullptr)
@@ -441,20 +289,4 @@ DLineEditPrivate::DLineEditPrivate(DLineEdit *q)
 {
 }
 
-void DLineEditPrivate::init()
-{
-    Q_Q(DLineEdit);
-    m_rightIcon = new DImageButton(q);
-    m_rightIcon->setObjectName("IconButton");
-    m_rightIcon->installEventFilter(q);
-
-    m_iconAction = new QWidgetAction(q);
-    m_iconAction->setDefaultWidget(m_rightIcon);
-    m_rightIcon->hide();
-
-    q->connect(m_rightIcon, &DImageButton::clicked, q, &DLineEdit::iconClicked);
-}
-
 DWIDGET_END_NAMESPACE
-
-#include "moc_dlineedit.cpp"

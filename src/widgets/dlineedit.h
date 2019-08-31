@@ -33,10 +33,6 @@ class LIBDTKWIDGETSHARED_EXPORT DLineEdit : public QLineEdit, public DTK_CORE_NA
     Q_DISABLE_COPY(DLineEdit)
     D_DECLARE_PRIVATE(DLineEdit)
     Q_PROPERTY(bool alert READ isAlert WRITE setAlert NOTIFY alertChanged)
-    Q_PROPERTY(QString normalIcon READ normalIcon WRITE setNormalIcon DESIGNABLE true)
-    Q_PROPERTY(QString hoverIcon READ hoverIcon WRITE setHoverIcon DESIGNABLE true)
-    Q_PROPERTY(QString pressIcon READ pressIcon WRITE setPressIcon DESIGNABLE true)
-    Q_PROPERTY(bool iconVisible READ iconVisible WRITE setIconVisible)
 
 public:
     DLineEdit(QWidget *parent = 0);
@@ -46,23 +42,10 @@ public:
     void showAlertMessage(const QString &text, int duration = 3000);
     void hideAlertMessage();
 
-    void setIconVisible(bool visible);
-    bool iconVisible() const;
-
-    QString normalIcon() const;
-    QString hoverIcon() const;
-    QString pressIcon() const;
-
     void setLeftWidgets(const QList<QWidget*> &list);
     void setRightWidgets(const QList<QWidget*> &list);
 
-public Q_SLOTS:
-    void setNormalIcon(const QString &normalIcon);
-    void setHoverIcon(const QString &hoverIcon);
-    void setPressIcon(const QString &pressIcon);
-
 Q_SIGNALS:
-    void iconClicked() const;
     void alertChanged(bool alert) const;
     void focusChanged(bool onFocus) const;
     void sizeChanged(const QSize &size) const;
@@ -73,7 +56,6 @@ protected:
     void focusInEvent(QFocusEvent *e) Q_DECL_OVERRIDE;
     void focusOutEvent(QFocusEvent *e) Q_DECL_OVERRIDE;
     void resizeEvent(QResizeEvent *e) Q_DECL_OVERRIDE;
-    bool eventFilter(QObject *watched, QEvent *event) override;
 
     friend class DStyleOptionLineEdit;
 };

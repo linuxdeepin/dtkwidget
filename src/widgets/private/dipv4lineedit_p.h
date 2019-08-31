@@ -20,6 +20,7 @@
 
 #include "dlineedit_p.h"
 #include "dipv4lineedit.h"
+#include "dimagebutton.h"
 
 DWIDGET_BEGIN_NAMESPACE
 

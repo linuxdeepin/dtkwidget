@@ -19,15 +19,8 @@
 #define DLINEEDIT_P_H
 
 #include "dlineedit.h"
-#include "dimagebutton.h"
 
 #include <DObjectPrivate>
-
-#include <QHBoxLayout>
-
-QT_BEGIN_NAMESPACE
-class QWidgetAction;
-QT_END_NAMESPACE
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -39,13 +32,9 @@ class DLineEditPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 public:
     DLineEditPrivate(DLineEdit *q);
 
-    void init();
-
 public:
     bool m_isAlert = false;
 
-    DImageButton *m_rightIcon;
-    QWidgetAction *m_iconAction;
     DArrowRectangle *tooltip = Q_NULLPTR;
 
     QWidget *leftWidget;
