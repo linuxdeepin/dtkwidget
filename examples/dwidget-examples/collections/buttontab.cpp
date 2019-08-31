@@ -18,7 +18,6 @@
 #include "buttontab.h"
 
 #include <QDebug>
-#include "dbasebutton.h"
 
 DWIDGET_USE_NAMESPACE
 
@@ -43,15 +42,6 @@ ButtonTab::ButtonTab(QWidget *parent) : QLabel(parent)
     optionButton->move(110, 5);
 
     //////////////////////////////////////////////////////////////--DTextButton
-    DTextButton *textButton = new DTextButton("Test Text", this);
-    textButton->move(5, 40);
-
-    DTextButton *textComplexButton = new DTextButton("Checked Button", this);
-    textComplexButton->setCheckable(true);
-    textComplexButton->setChecked(true);
-    textComplexButton->move(5, 75);
-
-    //////////////////////////////////////////////////////////////--DTextButton
 
     DImageButton *imageButton = new DImageButton(":/images/button.png", ":/images/buttonHover.png", ":/images/buttonPress.png", this);
     imageButton->move(5, 100);
@@ -67,18 +57,6 @@ ButtonTab::ButtonTab(QWidget *parent) : QLabel(parent)
 
     DSwitchButton *switchButton = new DSwitchButton(this);
     switchButton->move(85, 200);
-
-    DTK_WIDGET_NAMESPACE::DLinkButton *linkBtn = new DTK_WIDGET_NAMESPACE::DLinkButton("Link Button", this);
-    linkBtn->move(10, 125);
-
-    DTK_WIDGET_NAMESPACE::DLinkButton *linkButton = new DTK_WIDGET_NAMESPACE::DLinkButton("Link Button", this);
-    linkButton->move(10, 155);
-
-    /////////////////////////////////////////////////////////////////////////////
-    DTK_WIDGET_NAMESPACE::DBaseButton *bf = new DTK_WIDGET_NAMESPACE::DBaseButton(this);
-    bf->setFixedSize(100, 30);
-    bf->move(10, 260);
-    bf->show();
 }
 
 void ButtonTab::buttonClickTest()

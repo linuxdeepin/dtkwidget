@@ -603,13 +603,6 @@ QString DThemeManager::getQssForWidget(const QString className, const QString &t
     return d->getQssContent(themeURL);
 }
 
-QString DThemeManager::getQssForWidget(const QString className, const QWidget *widget) const
-{
-    Q_ASSERT(widget);
-
-    return getQssForWidget(className, theme(widget));
-}
-
 /*!
  * \~english \brief DThemeManager::getQssForWidget This function is overloaded.
  * \~english \param widget is the target widget.
@@ -622,7 +615,7 @@ QString DThemeManager::getQssForWidget(const QString className, const QWidget *w
  */
 QString DThemeManager::getQssForWidget(const QWidget *widget) const
 {
-    return getQssForWidget(getObjectClassName(widget), widget);
+    return getQssForWidget(getObjectClassName(widget), theme(widget));
 }
 
 /*!

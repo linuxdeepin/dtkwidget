@@ -39,7 +39,6 @@ SOURCES += main.cpp\
     bartab.cpp \
     inputtab.cpp \
     slidertab.cpp \
-    buttonlisttab.cpp \
     segmentedcontrol.cpp\
     indicatortab.cpp \
     widgetstab.cpp \
@@ -56,7 +55,6 @@ HEADERS  += mainwindow.h \
     bartab.h \
     inputtab.h \
     slidertab.h \
-    buttonlisttab.h \
     segmentedcontrol.h \
     indicatortab.h \
     widgetstab.h \

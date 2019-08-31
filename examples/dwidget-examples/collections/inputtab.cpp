@@ -29,10 +29,6 @@
 #include <QTimer>
 #include <QCheckBox>
 
-#ifdef Q_OS_LINUX
-#include "dpasswdeditanimated.h"
-#endif
-
 InputTab::InputTab(QWidget *parent) : QLabel(parent)
 {
     setStyleSheet("InputTab{background-color: #252627;}");
@@ -105,68 +101,4 @@ InputTab::InputTab(QWidget *parent) : QLabel(parent)
 
 //    searchEdit->setFocus();
     lineEditAlert->setFocus();
-
-#ifdef Q_OS_LINUX
-    DTK_WIDGET_NAMESPACE::DPasswdEditAnimated *passwdEA = new DTK_WIDGET_NAMESPACE::DPasswdEditAnimated(this);
-    passwdEA->move(500, 20);
-    QCheckBox *checkButton1 = new QCheckBox("show alert", this);
-    checkButton1->setStyleSheet("color: red");
-    checkButton1->move(700, 20);
-    connect(checkButton1, &QCheckBox::clicked, [=](bool checked){
-            if (checked) passwdEA->showAlert("button clicked!!!");
-            else passwdEA->hideAlert();
-        });
-
-    QCheckBox *checkButton2 = new QCheckBox("keyboard enable", this);
-    checkButton2->setStyleSheet("color: red");
-    checkButton2->setChecked(true);
-    checkButton2->move(700, 40);
-    connect(checkButton2, &QCheckBox::clicked, [=](bool checked){
-            if (checked) passwdEA->setKeyboardButtonEnable(true);
-            else passwdEA->setKeyboardButtonEnable(false);
-        });
-
-    QCheckBox *checkButton3 = new QCheckBox("capslock enable", this);
-    checkButton3->setStyleSheet("color: red");
-    checkButton3->setChecked(true);
-    checkButton3->move(700, 60);
-    connect(checkButton3, &QCheckBox::clicked, [=](bool checked){
-            if (checked) passwdEA->setCapslockIndicatorEnable(true);
-            else passwdEA->setCapslockIndicatorEnable(false);
-        });
-
-    QCheckBox *checkButton4 = new QCheckBox("eye enable", this);
-    checkButton4->setStyleSheet("color: red");
-    checkButton4->setChecked(true);
-    checkButton4->move(700, 80);
-    connect(checkButton4, &QCheckBox::clicked, [=](bool checked){
-            if (checked) passwdEA->setEyeButtonEnable(true);
-            else passwdEA->setEyeButtonEnable(false);
-        });
-
-    QCheckBox *checkButton5 = new QCheckBox("submit enable", this);
-    checkButton5->setStyleSheet("color: red");
-    checkButton5->setChecked(true);
-    checkButton5->move(700, 100);
-    connect(checkButton5, &QCheckBox::clicked, [=](bool checked){
-            if (checked) passwdEA->setSubmitButtonEnable(true);
-            else passwdEA->setSubmitButtonEnable(false);
-        });
-
-    QCheckBox *checkButton6 = new QCheckBox("anim enable", this);
-    checkButton6->setStyleSheet("color: red");
-    checkButton6->setChecked(true);
-    checkButton6->move(700, 120);
-    connect(checkButton6, &QCheckBox::clicked, [=](bool checked){
-            if (checked) passwdEA->setLoadAnimEnable(true);
-            else passwdEA->setLoadAnimEnable(false);
-        });
-
-    QCheckBox *checkButton7 = new QCheckBox("abort auth", this);
-    checkButton7->setStyleSheet("color: red");
-    checkButton7->setChecked(true);
-    checkButton7->move(700, 140);
-    connect(checkButton7, &QCheckBox::clicked, [=](){ passwdEA->abortAuth(); });
-
-#endif
 }

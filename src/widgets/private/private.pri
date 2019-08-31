@@ -19,8 +19,6 @@ HEADERS += \
     $$PWD/dlineedit_p.h \
     $$PWD/dfilechooseredit_p.h \
     $$PWD/dstackwidget_p.h \
-    $$PWD/dscrollarea_p.h \
-    $$PWD/dlistwidget_p.h \
     $$PWD/dboxwidget_p.h \
     $$PWD/dpasswordedit_p.h \
     $$PWD/dabstractdialogprivate_p.h \
@@ -29,24 +27,18 @@ HEADERS += \
     $$PWD/dinputdialog_p.h \
     $$PWD/dipv4lineedit_p.h \
     $$PWD/dspinbox_p.h \
-    $$PWD/doptionlist_p.h \
-    $$PWD/doption_p.h \
     $$PWD/dpicturesequenceview_p.h \
     $$PWD/dflowlayout_p.h \
     $$PWD/dlistview_p.h \
-    $$PWD/dtextedit_p.h \
     $$PWD/dapplication_p.h \
-    $$PWD/dscrollbar_p.h \
     $$PWD/dmainwindow_p.h \
     $$PWD/dblureffectwidget_p.h \
     $$PWD/dpageindicator_p.h \
     $$PWD/daboutdialog_p.h \
     $$PWD/darrowrectangle_p.h \
-    $$PWD/dpushbutton_p.h \
     $$PWD/dtickeffect_p.h \
     $$PWD/dswitchbutton_p.h \
     $$PWD/dimagebutton_p.h \
-    $$PWD/dpasswdeditanimated_p.h \
     $$PWD/dborderlesswidget_p.h \
     $$PWD/diconbutton_p.h \
     $$PWD/dsearchedit_p.h

@@ -22,7 +22,6 @@
 #include <QLabel>
 
 #include "dtkwidget_global.h"
-#include "dtextbutton.h"
 #include "dimagebutton.h"
 #include "dheaderline.h"
 #include "darrowbutton.h"
@@ -31,7 +30,6 @@
 #include "dwindowminbutton.h"
 #include "dwindowclosebutton.h"
 #include "dwindowoptionbutton.h"
-#include "dlinkbutton.h"
 
 class ButtonTab : public QLabel
 {

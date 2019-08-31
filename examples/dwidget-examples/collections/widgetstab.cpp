@@ -23,9 +23,10 @@
 using Dtk::Widget::DRegionMonitor;
 #endif
 
-
 #include <QCheckBox>
+#include <QPushButton>
 
+DWIDGET_USE_NAMESPACE
 
 WidgetsTab::WidgetsTab(QWidget *parent) : QLabel(parent)
 {

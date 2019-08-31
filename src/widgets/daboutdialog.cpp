@@ -250,8 +250,6 @@ QPixmap DAboutDialogPrivate::loadPixmap(const QString &file)
 DAboutDialog::DAboutDialog(QWidget *parent)
     : DDialog(*new DAboutDialogPrivate(this), parent)
 {
-    DThemeManager::registerWidget(this);
-
     D_D(DAboutDialog);
 
     d->init();

@@ -23,8 +23,9 @@
 #include <QVBoxLayout>
 #include <QPropertyAnimation>
 
+#include <DHorizontalLine>
+
 #include "dtkwidget_global.h"
-#include "dseparatorhorizontal.h"
 #include "dconstants.h"
 
 DWIDGET_BEGIN_NAMESPACE
@@ -71,8 +72,8 @@ private:
     QVBoxLayout *m_headerLayout = NULL;
     QBoxLayout *m_contentLayout = NULL;
     ContentLoader *m_contentLoader = NULL;
-    DSeparatorHorizontal * m_hSeparator = NULL;
-    DSeparatorHorizontal *m_bottom_separator = NULL;
+    DHorizontalLine * m_hSeparator = NULL;
+    DHorizontalLine *m_bottom_separator = NULL;
     QPropertyAnimation *m_animation = NULL;
     bool m_expand = false;
 };

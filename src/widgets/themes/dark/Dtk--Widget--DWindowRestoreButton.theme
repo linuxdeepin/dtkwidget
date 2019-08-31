@@ -1,5 +1,0 @@
-Dtk--Widget--DWindowRestoreButton {
-    qproperty-normalPic: url(:/images/dark/images/window/unmaximize_normal.svg);
-    qproperty-hoverPic: url(:/images/dark/images/window/unmaximize_hover.svg);
-    qproperty-pressPic: url(:/images/dark/images/window/unmaximize_press.svg);
-}

@@ -10,7 +10,6 @@ class QScrollBar;
 class QPushButton;
 class QToolButton;
 class QRadioButton;
-class QCheckButton;
 class QCommandLinkButton;
 class QDialogButtonBox;
 class QListWidget;
@@ -35,8 +34,6 @@ class QTimeEdit;
 class QDateEdit;
 class QDateTimeEdit;
 class QDial;
-class QHorizontalScrollBar;
-class QVerticalScrollBar;
 class QHorizontalSlider;
 class QVerticalSlider;
 class QKeySequenceEdit;
@@ -79,6 +76,7 @@ class QUndoView;
 class QWhatsThis;
 class QWizard;
 class QWizardPage;
+class QLabel;
 
 QT_END_NAMESPACE
 
@@ -88,7 +86,6 @@ typedef QScrollBar DScrollBar;
 typedef QPushButton DPushButton;
 typedef QToolButton DToolButton;
 typedef QRadioButton  DRadioButton;
-typedef QCheckButton DCheckButton;
 typedef QCommandLinkButton DCommandLinkButton;
 typedef QDialogButtonBox DDialogButtonBox;
 typedef QListWidget DListWidget;
@@ -113,8 +110,6 @@ typedef QTimeEdit DTimeEdit;
 typedef QDateEdit DDateEdit;
 typedef QDateTimeEdit DDateTimeEdit;
 typedef QDial DDial;
-typedef QHorizontalScrollBar DHorizontalScrollBar;
-typedef QVerticalScrollBar DVerticalScrollBar;
 typedef QHorizontalSlider DHorizontalSlider;
 typedef QVerticalSlider DVerticalSlider;
 typedef QKeySequenceEdit DKeySequenceEdit;
@@ -142,7 +137,6 @@ typedef QMenu DMenu;
 typedef QMenuBar DMenuBar;
 typedef QMessageBox DMessageBox;
 typedef QRubberBand DRubberBand;
-typedef QSlider DSlider;
 typedef QSplitter DSplitter;
 typedef QStatusBar DStatusBar;
 typedef QTabWidget DTabWidget;
@@ -155,6 +149,7 @@ typedef QUndoView DUndoView;
 typedef QWhatsThis DWhatsThis;
 typedef QWizard DWizard;
 typedef QWizardPage DWizardPage;
+typedef QLabel DLabel;
 
 class DHorizontalLine : public QFrame
 {

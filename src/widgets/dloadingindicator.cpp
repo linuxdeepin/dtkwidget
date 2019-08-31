@@ -122,9 +122,6 @@ DLoadingIndicator::DLoadingIndicator(QWidget *parent) :
     DObject(*new DLoadingIndicatorPrivate(this))
 {
     d_func()->init();
-
-    // May crash if the scene is not set.
-    DThemeManager::registerWidget(this);
 }
 
 DLoadingIndicator::~DLoadingIndicator()

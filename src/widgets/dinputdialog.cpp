@@ -25,7 +25,6 @@
 #include "private/dinputdialog_p.h"
 #include "dspinbox.h"
 
-#include "dlabel.h"
 #include "dpasswordedit.h"
 
 DWIDGET_BEGIN_NAMESPACE

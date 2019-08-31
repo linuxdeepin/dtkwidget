@@ -20,10 +20,6 @@
 
 #include <QLabel>
 
-#include "dtextbutton.h"
-
-DWIDGET_USE_NAMESPACE
-
 class WidgetsTab : public QLabel
 {
     Q_OBJECT

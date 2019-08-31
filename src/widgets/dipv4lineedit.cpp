@@ -205,15 +205,12 @@ void DIpv4LineEditPrivate::_q_setIpLineEditText(const QString &text)
 /*!
  * \~chinese \brief 构造DIpv4LineEdit类，和普通 \l QWidget 一样，可以传入一个QWidget指
  * \~chinese 针对象作为其父对象
- * \~chinese \note 会调用 DThemeManager::registerWidget 注册为受 DThemeManager
  * \~chinese 管理的控件
  * \~chinese \param parent
  */
 DIpv4LineEdit::DIpv4LineEdit(QWidget *parent) :
     DLineEdit(*new DIpv4LineEditPrivate(this), parent)
 {
-    DThemeManager::registerWidget(this);
-
     d_func()->init();
 }
 

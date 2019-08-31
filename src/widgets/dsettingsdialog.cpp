@@ -30,8 +30,6 @@
 
 #include "dwindowclosebutton.h"
 #include "dspinbox.h"
-#include "dbuttonlist.h"
-#include "doptionlist.h"
 #include "dimagebutton.h"
 
 DWIDGET_BEGIN_NAMESPACE

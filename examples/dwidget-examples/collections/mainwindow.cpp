@@ -40,7 +40,6 @@
 #include <DApplication>
 
 #include "mainwindow.h"
-#include "buttonlisttab.h"
 #include "graphicseffecttab.h"
 #include "simplelistviewtab.h"
 #include "dtoast.h"
@@ -250,8 +249,6 @@ void MainWindow::initTabWidget()
 
     IndicatorTab *indicatorTab = new IndicatorTab(this);
 
-    ButtonListTab *buttonListGroupTab = new ButtonListTab(this);
-
     Segmentedcontrol *segmentedControl = new Segmentedcontrol(this);
 
     WidgetsTab *widgetsTab = new WidgetsTab(this);
@@ -273,7 +270,6 @@ void MainWindow::initTabWidget()
     m_mainTab->addTab(inputTab, "Input");
     m_mainTab->addTab(sliderTab, "Slider");
 
-    m_mainTab->addTab(buttonListGroupTab, "ButtonList");
     m_mainTab->addTab(segmentedControl, "Segmented Control");
 #ifndef DTK_NO_MULTIMEDIA
     m_mainTab->addTab(cameraform, "Camera View");

@@ -24,8 +24,6 @@
 
 #include "dheaderline.h"
 #include "dbaseline.h"
-#include "dseparatorhorizontal.h"
-#include "dseparatorvertical.h"
 #include "dbaseexpand.h"
 #include "darrowlineexpand.h"
 #include "dswitchlineexpand.h"

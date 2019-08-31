@@ -64,7 +64,6 @@ DToast::DToast(QWidget *parent) :
     QFrame(parent), DObject(*new DToastPrivate(this))
 {
     D_D(DToast);
-    DThemeManager::registerWidget(this);
     d->initUI();
 }
 

@@ -31,7 +31,6 @@
 #include "dwindowmaxbutton.h"
 #include "dwindowminbutton.h"
 #include "dwindowoptionbutton.h"
-#include "dlabel.h"
 #include "dplatformwindowhandle.h"
 #ifdef Q_OS_LINUX
 #include "../platforms/x11/xutil.h"
@@ -816,28 +815,6 @@ void DTitlebar::setCustomWidget(QWidget *w, bool fixCenterPos)
         d->titleLabel = nullptr;
         d->centerArea->hide();
     }
-}
-
-/*!
- * \~english @brief DTitlebar::setCustomWidget sets a customized widget to be used as the
- * central content of the title bar.
- * @param w is the widget to be used as the customize widget shown in the title
- * bar.
- * @param wflag is used to vertically align the widget.
- * @param fixCenterPos indicates whether it should automatically move the
- * customize widget to the horizontal center of the title bar or not.
- */
-/*!
- * \~chinese @brief 设置标题栏上的自定义控件
- * @param w 需要显示的控件。
- * @param wflag 控件对齐方式。
- * @param fixCenterPos 是否需要自动修正控件位置，用于保持控件居中显示。
- */
-void DTitlebar::setCustomWidget(QWidget *w, Qt::AlignmentFlag wflag, bool fixCenterPos)
-{
-    Q_UNUSED(wflag)
-
-    setCustomWidget(w, fixCenterPos);
 }
 
 void DTitlebar::addWidget(QWidget *w, Qt::Alignment alignment)

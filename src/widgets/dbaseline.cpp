@@ -43,8 +43,6 @@ DWIDGET_BEGIN_NAMESPACE
 
 DBaseLine::DBaseLine(QWidget *parent) : QLabel(parent)
 {
-    DThemeManager::registerWidget(this);
-
     this->setFixedHeight(CONTENT_HEADER_HEIGHT);
     m_leftLayout = new QHBoxLayout();
     m_leftLayout->setMargin(0);

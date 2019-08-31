@@ -54,7 +54,6 @@ public:
     void setThemeType(QWidget *window, ThemeType type);
 
     QString getQssForWidget(const QString className, const QString &theme = QString()) const;
-    Q_DECL_DEPRECATED QString getQssForWidget(const QString className, const QWidget *widget) const;
     QString getQssForWidget(const QWidget *widget) const;
 
     static void registerWidget(QWidget *widget, QStringList propertys = QStringList());

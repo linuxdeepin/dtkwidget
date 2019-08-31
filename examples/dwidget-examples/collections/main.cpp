@@ -16,7 +16,6 @@
  */
 
 #include "mainwindow.h"
-#include "dlabel.h"
 #include "dapplication.h"
 #include "dplatformwindowhandle.h"
 

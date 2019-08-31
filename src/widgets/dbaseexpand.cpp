@@ -46,8 +46,6 @@ DWIDGET_BEGIN_NAMESPACE
  */
 DBaseExpand::DBaseExpand(QWidget *parent) : QWidget(parent)
 {
-    DThemeManager::registerWidget(this);
-
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
     mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->setSpacing(0);
@@ -56,11 +54,11 @@ DBaseExpand::DBaseExpand(QWidget *parent) : QWidget(parent)
     m_headerLayout->setContentsMargins(0, 0, 0, 0);
     m_headerLayout->setAlignment(Qt::AlignCenter);
 
-    m_hSeparator = new DSeparatorHorizontal();
-    m_bottom_separator = new DSeparatorHorizontal;
+    m_hSeparator = new DHorizontalLine();
+    m_bottom_separator = new DHorizontalLine;
     m_bottom_separator->hide();
 
-    connect(this, &DBaseExpand::expandChange, m_bottom_separator, &DSeparatorHorizontal::setVisible);
+    connect(this, &DBaseExpand::expandChange, m_bottom_separator, &QWidget::setVisible);
 
     m_contentLoader = new ContentLoader();
     m_contentLoader->setFixedHeight(0); // default to not expanded.
@@ -253,10 +251,10 @@ void DBaseExpand::setSeparatorVisible(bool arg)
 void DBaseExpand::setExpandedSeparatorVisible(bool arg)
 {
     if (arg) {
-        connect(this, &DBaseExpand::expandChange, m_bottom_separator, &DSeparatorHorizontal::setVisible);
+        connect(this, &DBaseExpand::expandChange, m_bottom_separator, &QWidget::setVisible);
         m_bottom_separator->show();
     } else {
-        disconnect(this, &DBaseExpand::expandChange, m_bottom_separator, &DSeparatorHorizontal::setVisible);
+        disconnect(this, &DBaseExpand::expandChange, m_bottom_separator, &QWidget::setVisible);
         m_bottom_separator->hide();
     }
 }

@@ -97,8 +97,6 @@ DImageButton::DImageButton(QWidget *parent)
     : QLabel(parent)
     , DObject(*new DImageButtonPrivate(this))
 {
-    DThemeManager::registerWidget(this, QStringList({"checked", "state"}));
-
     D_D(DImageButton);
 
     d->updateIcon();
@@ -129,8 +127,6 @@ DImageButton::DImageButton(const QString &normalPic, const QString &hoverPic, co
     : QLabel(parent)
     , DObject(*new DImageButtonPrivate(this))
 {
-    DThemeManager::registerWidget(this, QStringList({"checked", "state"}));
-
     D_D(DImageButton);
 
     if (!normalPic.isEmpty()) {
@@ -176,8 +172,6 @@ DImageButton::DImageButton(const QString &normalPic, const QString &hoverPic,
     : QLabel(parent)
     , DObject(*new DImageButtonPrivate(this))
 {
-    DThemeManager::registerWidget(this, QStringList({"checked", "state"}));
-
     D_D(DImageButton);
 
     if (!normalPic.isEmpty()) {
@@ -708,8 +702,6 @@ DImageButton::DImageButton(DImageButtonPrivate &q, QWidget *parent)
     : QLabel(parent)
     , DObject(q)
 {
-    DThemeManager::registerWidget(this, QStringList({"checked", "state"}));
-
     D_D(DImageButton);
 
     d->updateIcon();

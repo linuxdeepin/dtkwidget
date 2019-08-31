@@ -1133,58 +1133,6 @@ static inline bool basePrintPropertiesDialog(const QWidget *w)
 bool DApplication::notify(QObject *obj, QEvent *event)
 {
     switch((int)event->type()) {
-    case QEvent::PolishRequest: {
-        // Fixed the style for the menu widget to dlight
-        // ugly code will no longer needed.
-        static QStyle *light_style = nullptr;
-
-        if (QMenu *menu = qobject_cast<QMenu *>(obj)) {
-            if (!menu->testAttribute(Qt::WA_SetStyle)) {
-                if (!light_style) {
-                    light_style = QStyleFactory::create("dlight");
-                }
-
-                if (light_style) {
-                    menu->setStyle(light_style);
-                }
-            }
-        }
-#ifdef Q_OS_LINUX
-        else if (QWidget *widget = qobject_cast<QWidget *>(obj)) {
-            if (!widget->testAttribute(Qt::WA_SetStyle)
-                    && (widget->inherits("QPrintDialog")
-                        || widget->inherits("QPrintPropertiesDialog")
-                        || widget->inherits("QPageSetupDialog")
-                        || widget->inherits("QPrintPreviewDialog")
-                        || (widget->inherits("QComboBoxPrivateContainer")
-                            && basePrintPropertiesDialog(widget)))) {
-                if (!light_style) {
-                    light_style = QStyleFactory::create("dlight");
-                }
-
-                if (light_style) {
-                    widget->setStyle(light_style);
-
-                    if (widget->style() != light_style) {
-                        widget->style()->deleteLater();
-                        widget->d_func()->setStyle_helper(light_style, false);
-                    }
-
-                    for (QWidget *w : widget->findChildren<QWidget *>()) {
-                        w->setStyle(light_style);
-                    }
-                }
-            }
-        }
-#endif
-        break;
-    }
-    case QEvent::ParentChange: {
-        if (QWidget *widget = qobject_cast<QWidget *>(obj)) {
-            DThemeManager::instance()->updateThemeOnParentChanged(widget);
-        }
-        break;
-    }
     // 处理应用程序和主窗口的调色板变化事件，以此更新程序/窗口的主题类型
     case QEvent::ApplicationPaletteChange: {
         // 只处理发送给application对象的事件

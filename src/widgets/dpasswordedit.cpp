@@ -51,10 +51,6 @@ DWIDGET_BEGIN_NAMESPACE
 DPasswordEdit::DPasswordEdit(QWidget *parent)
     : DLineEdit(*new DPasswordEditPrivate(this), parent)
 {
-    // This will do the trick refreshing your style sheet for you
-    // after your registered property changed.
-    DThemeManager::registerWidget(this, QStringList({"isEchoMode"}));
-
     D_D(DPasswordEdit);
 
     d->init();

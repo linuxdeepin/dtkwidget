@@ -40,7 +40,6 @@ public:
 
     QWidget *customWidget() const;
     void setCustomWidget(QWidget *, bool fixCenterPos = false);
-    D_DECL_DEPRECATED_X("Use setCustomWidget(QWidget*, bool)") void setCustomWidget(QWidget *, Qt::AlignmentFlag flag = Qt::AlignCenter, bool fixCenterPos = false);
 
     void addWidget(QWidget *w, Qt::Alignment alignment = Qt::Alignment());
     void removeWidget(QWidget *w);

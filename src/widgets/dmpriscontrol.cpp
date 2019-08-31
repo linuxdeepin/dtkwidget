@@ -120,7 +120,7 @@ void DMPRISControlPrivate::init()
     m_nextBtn->setObjectName("NextBtn");
 
     m_tickEffect->setDirection(DTickEffect::RightToLeft);
-    m_tickEffect->setDuration(3000);
+    m_tickEffect->setFixedPixelMove(50);
 
     m_titleScrollArea->setWidget(m_title);
     m_titleScrollArea->setObjectName("scrollarea");

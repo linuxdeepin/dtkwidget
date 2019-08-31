@@ -95,7 +95,7 @@ DCircleProgress::DCircleProgress(QWidget *parent)
     : QWidget(parent),
       DObject(*new DCircleProgressPrivate(this))
 {
-    DThemeManager::registerWidget(this);
+
 }
 
 /*!

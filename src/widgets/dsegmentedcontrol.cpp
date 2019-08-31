@@ -117,8 +117,6 @@ DSegmentedControl::DSegmentedControl(QWidget *parent)
     d->highlight->setObjectName("Highlight");
     d->highlight->installEventFilter(this);
 
-    DThemeManager::registerWidget(this);
-
     d->highlightMoveAnimation->setDuration(100);
     d->highlightMoveAnimation->setEasingCurve(QEasingCurve::InCubic);
 }

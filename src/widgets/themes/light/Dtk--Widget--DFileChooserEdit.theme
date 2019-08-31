@@ -1,5 +1,0 @@
-Dtk--Widget--DFileChooserEdit {
-    qproperty-normalIcon:url(:/images/light/images/loadfile_normal.svg);
-    qproperty-hoverIcon:url(:/images/light/images/loadfile_hover.svg);
-    qproperty-pressIcon:url(:/images/light/images/loadfile_press.svg);
-}

@@ -190,16 +190,6 @@ void DTickEffect::setDirection(DTickEffect::Direction direction)
     play();
 }
 
-/*!
- * \~chinese \brief 设置滚动的时长
- *
- * @param duration
- */
-void DTickEffect::setDuration(const int duration)
-{
-    Q_UNUSED(duration);
-}
-
 void DTickEffect::setFixedPixelMove(const int pixel)
 {
     D_D(DTickEffect);

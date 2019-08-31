@@ -17,14 +17,17 @@
 
 #include "linetab.h"
 
+#include <DHorizontalLine>
+#include <DVerticalLine>
+
 LineTab::LineTab(QWidget *parent) : QLabel(parent)
 {
 //        setStyleSheet("LineTab{background-color: #252627;}");
         //////////////////////////////////////////////////////////////--DSeparator
-        DSeparatorHorizontal *dsHorizontal = new DSeparatorHorizontal(this);
+        DHorizontalLine *dsHorizontal = new DHorizontalLine(this);
         dsHorizontal->setFixedSize(200,2);
         dsHorizontal->move(1,5);
-        DSeparatorVertical *dsVertical = new DSeparatorVertical(this);
+        DVerticalLine *dsVertical = new DVerticalLine(this);
         dsVertical->setFixedSize(2,200);
         dsVertical->move(10,5);
 
@@ -49,7 +52,7 @@ LineTab::LineTab(QWidget *parent) : QLabel(parent)
         connect(bbb, &QPushButton::clicked, [=]{
             baseExpand->setExpand(!baseExpand->expand());
         });
-        DSeparatorHorizontal *dsHorizontal2 = new DSeparatorHorizontal(this);
+        DHorizontalLine *dsHorizontal2 = new DHorizontalLine(this);
         dsHorizontal2->setFixedWidth(baseExpand->width());
         QLabel *expandLabel = new QLabel("Expand content");
         expandLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);

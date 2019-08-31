@@ -81,8 +81,6 @@ int ArrowButtonIcon::buttonState() const
 DArrowButton::DArrowButton(QWidget *parent)
     : QLabel(parent)
 {
-    DThemeManager::registerWidget(this);
-
     setFixedSize(IMAGE_BUTTON_WIDTH, BUTTON_HEIGHT);
 
     m_normalLabel = new ArrowButtonIcon(this);

@@ -52,8 +52,6 @@ DWIDGET_BEGIN_NAMESPACE
 
 DHeaderLine::DHeaderLine(QWidget *parent) : DBaseLine(parent)
 {
-    DThemeManager::registerWidget(this);
-
     setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
     setFixedHeight(EXPAND_HEADER_HEIGHT);
     m_titleLabel = new QLabel(this);

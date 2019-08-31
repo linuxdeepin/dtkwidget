@@ -127,8 +127,6 @@ DSpinBox::DSpinBox(QWidget *parent) :
     QSpinBox(parent),
     DObject(*new DSpinBoxPrivate(this))
 {
-    DThemeManager::registerWidget(this, QStringList({"alert"}));
-
     d_func()->init();
 }
 
@@ -265,8 +263,6 @@ DDoubleSpinBox::DDoubleSpinBox(QWidget *parent) :
     QDoubleSpinBox(parent),
     DObject(*new DDoubleSpinBoxPrivate(this))
 {
-    DThemeManager::registerWidget(this, QStringList({"alert"}));
-
     d_func()->init();
 }
 

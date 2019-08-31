@@ -19,7 +19,6 @@
 
 #include "dspinner.h"
 #include "dpicturesequenceview.h"
-#include "dlinkbutton.h"
 
 #include <QDebug>
 #include <QString>
@@ -129,11 +128,8 @@ IndicatorTab::IndicatorTab(QWidget *parent) :
     seqViewOnce->setSpeed(33);
     seqViewOnce->setSingleShot(true);
 
-    DLinkButton *restart = new DLinkButton("Restart", this);
-
     auto seqOnceViewLayout = new QHBoxLayout;
     seqOnceViewLayout->addWidget(seqViewOnce);
-    seqOnceViewLayout->addWidget(restart);
     seqOnceViewLayout->addStretch();
 
     layout->addLayout(spinnerLayout);
@@ -148,10 +144,6 @@ IndicatorTab::IndicatorTab(QWidget *parent) :
     seqView4->play();
     seqView5->play();
     seqView6->play();
-
-    connect(restart, &DLinkButton::clicked, [seqViewOnce] {
-        seqViewOnce->play();
-    });
 
     setLayout(layout);
 }

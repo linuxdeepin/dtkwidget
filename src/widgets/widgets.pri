@@ -8,12 +8,10 @@ win32* {
 
 linux{
     HEADERS += \
-        $$PWD/dmpriscontrol.h \
-        $$PWD/dpasswdeditanimated.h
+        $$PWD/dmpriscontrol.h
 
     SOURCES += \
-        $$PWD/dmpriscontrol.cpp \
-        $$PWD/dpasswdeditanimated.cpp
+        $$PWD/dmpriscontrol.cpp
 
     includes.files += \
         $$PWD/DPasswdEditAnimated
@@ -47,17 +45,13 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dthememanager.h \
     $$PWD/dapplication.h \
     $$PWD/dconstants.h \
-    $$PWD/dseparatorhorizontal.h \
-    $$PWD/dseparatorvertical.h \
     $$PWD/dbaseline.h \
     $$PWD/dheaderline.h \
     $$PWD/dbaseexpand.h \
     $$PWD/darrowbutton.h \
     $$PWD/darrowlineexpand.h \
     $$PWD/dswitchlineexpand.h \
-    $$PWD/dbuttonlist.h \
     $$PWD/dimagebutton.h \
-    $$PWD/dtextbutton.h \
     $$PWD/dloadingindicator.h \
     $$PWD/dsearchedit.h \
     $$PWD/dswitchbutton.h \
@@ -71,14 +65,8 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dsimplelistview.h \
     $$PWD/dsimplelistitem.h \
     $$PWD/dexpandgroup.h \
-    $$PWD/dlabel.h \
-    $$PWD/dlinkbutton.h \
-    $$PWD/dscrollbar.h \
-    $$PWD/dscrollarea.h \
     $$PWD/darrowrectangle.h \
     $$PWD/dgraphicsgloweffect.h \
-    $$PWD/dbasebutton.h \
-    $$PWD/dlistwidget.h \
     $$PWD/dboxwidget.h \
     $$PWD/dcircleprogress.h \
     $$PWD/dstackwidget.h \
@@ -86,13 +74,10 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dpasswordedit.h \
     $$PWD/dipv4lineedit.h \
     $$PWD/dspinbox.h \
-    $$PWD/doptionlist.h \
-    $$PWD/doption.h \
     $$PWD/dpicturesequenceview.h \
     $$PWD/dflowlayout.h \
     $$PWD/dlistview.h \
     $$PWD/denhancedwidget.h \
-    $$PWD/dtextedit.h \
     $$PWD/dtitlebar.h \
     $$PWD/dplatformwindowhandle.h \
     $$PWD/dmainwindow.h \
@@ -100,7 +85,6 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dpageindicator.h \
     $$PWD/dclipeffectwidget.h \
     $$PWD/dgraphicsclipeffect.h \
-    $$PWD/dpushbutton.h \
     $$PWD/dtickeffect.h \
     $$PWD/dwaterprogress.h \
     $$PWD/dsettingswidgetfactory.h \
@@ -111,8 +95,6 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dstyleoption.h \
     $$PWD/dtoast.h \
     $$PWD/danchors.h \
-    $$PWD/dborderlesswidget.h \
-    $$PWD/dborderlesswindow.h \
     $$PWD/dstyle.h \
     $$PWD/dfloatingbutton.h \
     $$PWD/dwidgetstype.h \
@@ -123,17 +105,13 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dbackgroundgroup.cpp \
     $$PWD/dthememanager.cpp \
     $$PWD/dapplication.cpp \
-    $$PWD/dseparatorhorizontal.cpp \
-    $$PWD/dseparatorvertical.cpp \
     $$PWD/dbaseline.cpp \
     $$PWD/dheaderline.cpp \
     $$PWD/dbaseexpand.cpp \
     $$PWD/darrowbutton.cpp \
     $$PWD/darrowlineexpand.cpp \
     $$PWD/dswitchlineexpand.cpp \
-    $$PWD/dbuttonlist.cpp \
     $$PWD/dimagebutton.cpp \
-    $$PWD/dtextbutton.cpp \
     $$PWD/dloadingindicator.cpp \
     $$PWD/dsearchedit.cpp \
     $$PWD/dswitchbutton.cpp\
@@ -147,14 +125,8 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dsimplelistview.cpp \
     $$PWD/dsimplelistitem.cpp \
     $$PWD/dexpandgroup.cpp \
-    $$PWD/dlabel.cpp \
-    $$PWD/dlinkbutton.cpp \
-    $$PWD/dscrollbar.cpp \
-    $$PWD/dscrollarea.cpp \
     $$PWD/darrowrectangle.cpp \
     $$PWD/dgraphicsgloweffect.cpp \
-    $$PWD/dbasebutton.cpp \
-    $$PWD/dlistwidget.cpp \
     $$PWD/dboxwidget.cpp \
     $$PWD/dcircleprogress.cpp \
     $$PWD/dstackwidget.cpp \
@@ -162,13 +134,10 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dpasswordedit.cpp \
     $$PWD/dipv4lineedit.cpp \
     $$PWD/dspinbox.cpp \
-    $$PWD/doptionlist.cpp \
-    $$PWD/doption.cpp \
     $$PWD/dpicturesequenceview.cpp \
     $$PWD/dflowlayout.cpp \
     $$PWD/dlistview.cpp \
     $$PWD/denhancedwidget.cpp \
-    $$PWD/dtextedit.cpp \
     $$PWD/dtitlebar.cpp \
     $$PWD/dplatformwindowhandle.cpp \
     $$PWD/dmainwindow.cpp \
@@ -176,7 +145,6 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dpageindicator.cpp \
     $$PWD/dclipeffectwidget.cpp \
     $$PWD/dgraphicsclipeffect.cpp \
-    $$PWD/dpushbutton.cpp \
     $$PWD/dtickeffect.cpp \
     $$PWD/dwaterprogress.cpp \
     $$PWD/dsettingswidgetfactory.cpp \
@@ -187,16 +155,12 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dstyleoption.cpp \
     $$PWD/dtoast.cpp \
     $$PWD/danchors.cpp \
-    $$PWD/dborderlesswidget.cpp \
-    $$PWD/dborderlesswindow.cpp \
     $$PWD/dstyle.cpp \
     $$PWD/dfloatingbutton.cpp \
     $$PWD/dstyleditemdelegate.cpp \
     $$PWD/diconbutton.cpp
 
 RESOURCES += \
-    $$PWD/themes/dui_theme_dark.qrc \
-    $$PWD/themes/dui_theme_light.qrc \
     $$PWD/icons.qrc
 
 INCLUDEPATH += $$PWD
