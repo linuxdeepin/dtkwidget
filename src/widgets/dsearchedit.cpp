@@ -71,8 +71,9 @@ void DSearchEdit::paintEvent(QPaintEvent *event)
 
     DLineEdit::paintEvent(event);
 
-    if (hasFocus())
+    if (hasFocus() || !text().isEmpty()) {
         return;
+    }
 
     QPainter p(this);
     QPalette pal = palette();
@@ -86,6 +87,7 @@ void DSearchEdit::paintEvent(QPaintEvent *event)
 
 DSearchEditPrivate::DSearchEditPrivate(DSearchEdit *q)
     : DLineEditPrivate(q)
+    , action(nullptr)
 {
 }
 
@@ -94,6 +96,8 @@ void DSearchEditPrivate::init()
     D_Q(DSearchEdit);
 
     placeHolder = DSearchEdit::tr("Search");
+
+    action = new QAction(QIcon(":/images/light/images/search.svg"), QString());
 
     q->setFocusPolicy(Qt::ClickFocus);
 
@@ -105,7 +109,6 @@ void DSearchEditPrivate::_q_toEditMode()
     D_Q(DSearchEdit);
 
     if (q->hasFocus()) {
-        action = new QAction(QIcon(":/images/light/images/search.svg"), QString());
         q->addAction(action, QLineEdit::LeadingPosition);
     } else {
         q->removeAction(action);
