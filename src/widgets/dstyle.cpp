@@ -640,6 +640,16 @@ void drawLineEditClearButton(QPainter *pa, const QRectF &rect)
 
 }
 
+void drawIndicatorUnchecked(QPainter *pa, const QRectF &rect)
+{
+
+}
+
+void drawIndicatorChecked(QPainter *pa, const QRectF &rect)
+{
+
+}
+
 }
 
 DStyle::DStyle()
@@ -1060,6 +1070,8 @@ case SP_##Value: { \
         CASE_ICON(CloseButton)
         CASE_ICON(IndicatorMajuscule)
         CASE_ICON(IndicatorSearch)
+        CASE_ICON(IndicatorUnchecked)
+        CASE_ICON(IndicatorChecked)
         CASE_ICON(DeleteButton)
         CASE_ICON(AddButton)
     default:

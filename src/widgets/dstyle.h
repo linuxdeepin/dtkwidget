@@ -78,6 +78,8 @@ void drawHidePassword(QPainter *pa, const QRectF &rect);
 void drawCloseButton(QPainter *pa, const QRectF &rect);
 void drawIndicatorMajuscule(QPainter *pa, const QRectF &rect);
 void drawIndicatorSearch(QPainter *pa, const QRectF &rect);
+void drawIndicatorUnchecked(QPainter *pa, const QRectF &rect);
+void drawIndicatorChecked(QPainter *pa, const QRectF &rect);
 void drawDeleteButton(QPainter *pa, const QRectF &rect);
 void drawAddButton(QPainter *pa, const QRectF &rect);
 
@@ -186,6 +188,8 @@ public:
         SP_CloseButton,                             //关闭按钮（X）
         SP_IndicatorMajuscule,                      //大写标识
         SP_IndicatorSearch,                         //搜索标识（放大镜）
+        SP_IndicatorUnchecked,                      //搜索标识（对应对勾的选中状态）
+        SP_IndicatorChecked,                        //搜索标识（对勾）
         SP_DeleteButton,                            //删除按钮
         SP_AddButton,                               //新增按钮
         SP_CustomBase = QStyle::SP_CustomBase + 0xf00000
