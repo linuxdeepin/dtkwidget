@@ -25,18 +25,22 @@ DWIDGET_BEGIN_NAMESPACE
 ArrowHeaderLine::ArrowHeaderLine(QWidget *parent) :
     DHeaderLine(parent)
 {
-    m_arrowButton = new DArrowButton(this);
-    connect(m_arrowButton, &DArrowButton::mouseRelease, this, &ArrowHeaderLine::mousePress);
+    m_arrowButton = new DIconButton(DStyle::SP_ArrowDown, this);
+    m_arrowButton->setFlat(true);
+    setExpand(false);
+    connect(m_arrowButton, &DIconButton::clicked, this, &ArrowHeaderLine::mousePress);
     setContent(m_arrowButton);
     setFixedHeight(EXPAND_HEADER_HEIGHT);
 }
 
 void ArrowHeaderLine::setExpand(bool value)
 {
-    if (value)
-        m_arrowButton->setArrowDirection(DArrowButton::ArrowUp);
-    else
-        m_arrowButton->setArrowDirection(DArrowButton::ArrowDown);
+    if (value) {
+        m_arrowButton->setIcon(DStyle::SP_ArrowUp);
+    } else {
+        m_arrowButton->setIcon(DStyle::SP_ArrowDown);
+    }
+    m_isExpanded = value;
 }
 
 void ArrowHeaderLine::mousePressEvent(QMouseEvent *)
@@ -46,10 +50,7 @@ void ArrowHeaderLine::mousePressEvent(QMouseEvent *)
 
 void ArrowHeaderLine::reverseArrowDirection()
 {
-    if (m_arrowButton->arrowDirection() == DArrowButton::ArrowUp)
-        m_arrowButton->setArrowDirection(DArrowButton::ArrowDown);
-    else
-        m_arrowButton->setArrowDirection(DArrowButton::ArrowUp);
+    setExpand(!m_isExpanded);
 }
 
 /**

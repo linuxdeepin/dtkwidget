@@ -22,17 +22,16 @@
 
 #include "dtkwidget_global.h"
 #include "dbaseexpand.h"
-#include "darrowbutton.h"
+#include "diconbutton.h"
 #include "dbaseline.h"
 #include "dheaderline.h"
-
 DWIDGET_BEGIN_NAMESPACE
 
 class ArrowHeaderLine : public DHeaderLine
 {
     Q_OBJECT
 public:
-    ArrowHeaderLine(QWidget *parent = 0);
+    ArrowHeaderLine(QWidget *parent = nullptr);
     void setExpand(bool value);
 
 Q_SIGNALS:
@@ -43,14 +42,15 @@ protected:
 
 private:
     void reverseArrowDirection();
-    DArrowButton *m_arrowButton = NULL;
+    bool m_isExpanded = false;
+    DIconButton *m_arrowButton = nullptr;
 };
 
 class LIBDTKWIDGETSHARED_EXPORT DArrowLineExpand : public DBaseExpand
 {
     Q_OBJECT
 public:
-    explicit DArrowLineExpand(QWidget *parent = 0);
+    explicit DArrowLineExpand(QWidget *parent = nullptr);
     void setTitle(const QString &title);
     void setExpand(bool value);
     DBaseLine *headerLine();
@@ -60,7 +60,7 @@ private:
     void resizeEvent(QResizeEvent *e);
 
 private:
-    ArrowHeaderLine *m_headerLine = NULL;
+    ArrowHeaderLine *m_headerLine = nullptr;
 };
 
 DWIDGET_END_NAMESPACE

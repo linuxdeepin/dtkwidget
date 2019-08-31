@@ -35,21 +35,22 @@ class ContentLoader : public QFrame
     Q_OBJECT
     Q_PROPERTY(int height READ height WRITE setFixedHeight)
 public:
-    explicit ContentLoader(QWidget *parent = 0) : QFrame(parent){}
+    explicit ContentLoader(QWidget *parent = nullptr) : QFrame(parent){}
 };
 
 class DBoxWidget;
 
+class DBaseExpandPrivate;
 class LIBDTKWIDGETSHARED_EXPORT DBaseExpand : public QWidget
 {
     Q_OBJECT
 public:
-    explicit DBaseExpand(QWidget *parent = 0);
-    ~DBaseExpand();
+    explicit DBaseExpand(QWidget *parent = nullptr);
+    ~DBaseExpand() override;
 
     void setHeader(QWidget *header);
     void setContent(QWidget *content, Qt::Alignment alignment = Qt::AlignHCenter);
-    inline QWidget *getContent() const {return m_content;}
+    QWidget *getContent() const;
     void setHeaderHeight(int height);
     virtual void setExpand(bool value);
     bool expand() const;
@@ -66,16 +67,9 @@ protected:
     void resizeEvent(QResizeEvent *e) Q_DECL_OVERRIDE;
 
 private:
-    QWidget *m_header = NULL;
-    QWidget *m_content = NULL;
-    DBoxWidget *m_boxWidget = NULL;
-    QVBoxLayout *m_headerLayout = NULL;
-    QBoxLayout *m_contentLayout = NULL;
-    ContentLoader *m_contentLoader = NULL;
-    DHorizontalLine * m_hSeparator = NULL;
-    DHorizontalLine *m_bottom_separator = NULL;
-    QPropertyAnimation *m_animation = NULL;
-    bool m_expand = false;
+    QScopedPointer<DBaseExpandPrivate> d_private;
+
+    Q_DECLARE_PRIVATE_D(d_private, DBaseExpand)
 };
 
 DWIDGET_END_NAMESPACE

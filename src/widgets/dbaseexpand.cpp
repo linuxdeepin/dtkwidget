@@ -23,6 +23,88 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+class DBaseExpandPrivate
+{
+public:
+    DBaseExpandPrivate(DBaseExpand* qq);
+    ~DBaseExpandPrivate();
+
+    QWidget *m_header = nullptr;
+    QWidget *m_content = nullptr;
+    DBoxWidget *m_boxWidget = nullptr;
+    QVBoxLayout *m_headerLayout = nullptr;
+    QBoxLayout *m_contentLayout = nullptr;
+    ContentLoader *m_contentLoader = nullptr;
+    DHorizontalLine * m_hSeparator = nullptr;
+    DHorizontalLine *m_bottom_separator = nullptr;
+    QPropertyAnimation *m_animation = nullptr;
+    bool m_expand = false;
+    bool m_reservedPadding[7];
+
+    DBaseExpand *q_ptr;
+};
+
+DBaseExpandPrivate::DBaseExpandPrivate(DBaseExpand *qq)
+    : q_ptr(qq)
+{
+    QVBoxLayout *mainLayout = new QVBoxLayout(qq);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
+    mainLayout->setSpacing(0);
+
+    m_headerLayout = new QVBoxLayout();
+    m_headerLayout->setContentsMargins(0, 0, 0, 0);
+    m_headerLayout->setAlignment(Qt::AlignCenter);
+
+    m_hSeparator = new DHorizontalLine();
+    m_bottom_separator = new DHorizontalLine;
+    m_bottom_separator->hide();
+
+    qq->connect(qq, &DBaseExpand::expandChange, m_bottom_separator, &QWidget::setVisible);
+
+    m_contentLoader = new ContentLoader();
+    m_contentLoader->setFixedHeight(0); // default to not expanded.
+
+    m_boxWidget = new DVBoxWidget;
+    m_contentLayout = m_boxWidget->layout();
+
+    QVBoxLayout *layout_contentLoader = new QVBoxLayout(m_contentLoader);
+
+    layout_contentLoader->setMargin(0);
+    layout_contentLoader->setSpacing(0);
+    layout_contentLoader->addWidget(m_boxWidget);
+    layout_contentLoader->addStretch();
+
+    m_animation = new QPropertyAnimation(m_contentLoader, "height", qq);
+    m_animation->setDuration(200);
+    m_animation->setEasingCurve(QEasingCurve::InSine);
+    qq->connect(m_animation, &QPropertyAnimation::valueChanged, qq, [qq] {
+        qq->setFixedHeight(qq->sizeHint().height());
+    });
+
+    mainLayout->addLayout(m_headerLayout);
+    mainLayout->addWidget(m_hSeparator);
+    mainLayout->addWidget(m_contentLoader);
+    mainLayout->addWidget(m_bottom_separator);
+
+    qq->setLayout(mainLayout);
+
+    qq->connect(m_boxWidget, &DBoxWidget::sizeChanged, qq, [this] {
+        if (m_expand) {
+            int endHeight = 0;
+            endHeight = m_boxWidget->height();
+
+            m_animation->setStartValue(m_contentLoader->height());
+            m_animation->setEndValue(endHeight);
+            m_animation->stop();
+            m_animation->start();
+        }
+    });
+}
+
+DBaseExpandPrivate::~DBaseExpandPrivate()
+{
+}
+
 /*!
  * \~chinese \class DBaseExpand
  * \~chinese \brief 一个美观的可展开的控件
@@ -44,77 +126,16 @@ DWIDGET_BEGIN_NAMESPACE
  * \~chinese \brief 获取 DBaseExpand::DBaseExpand 实例
  * \~chinese \param parent 作为实例的父控件
  */
-DBaseExpand::DBaseExpand(QWidget *parent) : QWidget(parent)
+DBaseExpand::DBaseExpand(QWidget *parent)
+    : QWidget(parent)
+    , d_private(new DBaseExpandPrivate(this))
 {
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
-    mainLayout->setContentsMargins(0, 0, 0, 0);
-    mainLayout->setSpacing(0);
 
-    m_headerLayout = new QVBoxLayout();
-    m_headerLayout->setContentsMargins(0, 0, 0, 0);
-    m_headerLayout->setAlignment(Qt::AlignCenter);
-
-    m_hSeparator = new DHorizontalLine();
-    m_bottom_separator = new DHorizontalLine;
-    m_bottom_separator->hide();
-
-    connect(this, &DBaseExpand::expandChange, m_bottom_separator, &QWidget::setVisible);
-
-    m_contentLoader = new ContentLoader();
-    m_contentLoader->setFixedHeight(0); // default to not expanded.
-
-    m_boxWidget = new DVBoxWidget;
-    m_contentLayout = m_boxWidget->layout();
-
-    QVBoxLayout *layout_contentLoader = new QVBoxLayout(m_contentLoader);
-
-    layout_contentLoader->setMargin(0);
-    layout_contentLoader->setSpacing(0);
-    layout_contentLoader->addWidget(m_boxWidget);
-    layout_contentLoader->addStretch();
-
-    m_animation = new QPropertyAnimation(m_contentLoader, "height");
-    m_animation->setDuration(200);
-    m_animation->setEasingCurve(QEasingCurve::InSine);
-    connect(m_animation, &QPropertyAnimation::valueChanged, this, [this] {
-        setFixedHeight(sizeHint().height());
-    });
-
-    mainLayout->addLayout(m_headerLayout);
-    mainLayout->addWidget(m_hSeparator);
-    mainLayout->addWidget(m_contentLoader);
-    mainLayout->addWidget(m_bottom_separator);
-
-    setLayout(mainLayout);
-
-    connect(m_boxWidget, &DBoxWidget::sizeChanged, this, [this] {
-        if (m_expand)
-        {
-            int endHeight = 0;
-            endHeight = m_boxWidget->height();
-
-            m_animation->setStartValue(m_contentLoader->height());
-            m_animation->setEndValue(endHeight);
-            m_animation->stop();
-            m_animation->start();
-        }
-    });
 }
 
 DBaseExpand::~DBaseExpand()
 {
-    if (m_headerLayout) {
-        m_headerLayout->deleteLater();
-    }
-    if (m_contentLayout) {
-        m_contentLayout->deleteLater();
-    }
-    if (m_contentLoader) {
-        m_contentLoader->deleteLater();
-    }
-    if (m_animation) {
-        m_animation->deleteLater();
-    }
+
 }
 
 /**
@@ -124,17 +145,18 @@ DBaseExpand::~DBaseExpand()
  */
 void DBaseExpand::setHeader(QWidget *header)
 {
+    Q_D(DBaseExpand);
     if (!header) {
         return;
     }
 
     QLayoutItem *child;
-    while ((child = m_headerLayout->takeAt(0)) != 0) {
+    while ((child = d->m_headerLayout->takeAt(0)) != nullptr) {
         delete child;
     }
 
-    m_headerLayout->addWidget(header);
-    m_header = header;
+    d->m_headerLayout->addWidget(header);
+    d->m_header = header;
 }
 
 /**
@@ -151,18 +173,27 @@ void DBaseExpand::setHeader(QWidget *header)
  */
 void DBaseExpand::setContent(QWidget *content, Qt::Alignment alignment)
 {
+    Q_D(DBaseExpand);
+
     if (!content) {
         return;
     }
 
     QLayoutItem *child;
-    while ((child = m_contentLayout->takeAt(0)) != 0) {
+    while ((child = d->m_contentLayout->takeAt(0)) != nullptr) {
         delete child;
     }
 
-    m_contentLayout->addWidget(content, 1, alignment);
-    m_contentLayout->addStretch(1);
-    m_content = content;
+    d->m_contentLayout->addWidget(content, 1, alignment);
+    d->m_contentLayout->addStretch(1);
+    d->m_content = content;
+}
+
+QWidget *DBaseExpand::getContent() const
+{
+    Q_D(const DBaseExpand);
+
+    return d->m_content;
 }
 
 /**
@@ -172,8 +203,10 @@ void DBaseExpand::setContent(QWidget *content, Qt::Alignment alignment)
  */
 void DBaseExpand::setHeaderHeight(int height)
 {
-    if (m_header) {
-        m_header->setFixedHeight(height);
+    Q_D(DBaseExpand);
+
+    if (d->m_header) {
+        d->m_header->setFixedHeight(height);
     }
 }
 
@@ -184,23 +217,25 @@ void DBaseExpand::setHeaderHeight(int height)
  */
 void DBaseExpand::setExpand(bool value)
 {
-    if (m_expand == value) {
+    Q_D(DBaseExpand);
+
+    if (d->m_expand == value) {
         return;
     }
 
-    m_expand = value;
+    d->m_expand = value;
     Q_EMIT expandChange(value);
 
     if (value) {
-        m_animation->setStartValue(0);
-        m_animation->setEndValue(m_boxWidget->height());
+        d->m_animation->setStartValue(0);
+        d->m_animation->setEndValue(d->m_boxWidget->height());
     } else {
-        m_animation->setStartValue(m_boxWidget->height());
-        m_animation->setEndValue(0);
+        d->m_animation->setStartValue(d->m_boxWidget->height());
+        d->m_animation->setEndValue(0);
     }
 
-    m_animation->stop();
-    m_animation->start();
+    d->m_animation->stop();
+    d->m_animation->start();
 }
 
 /**
@@ -210,7 +245,8 @@ void DBaseExpand::setExpand(bool value)
  */
 bool DBaseExpand::expand() const
 {
-    return m_expand;
+    Q_D(const DBaseExpand);
+    return d->m_expand;
 }
 
 /**
@@ -220,7 +256,8 @@ bool DBaseExpand::expand() const
  */
 void DBaseExpand::setAnimationDuration(int duration)
 {
-    m_animation->setDuration(duration);
+    Q_D(DBaseExpand);
+    d->m_animation->setDuration(duration);
 }
 
 /**
@@ -230,7 +267,8 @@ void DBaseExpand::setAnimationDuration(int duration)
  */
 void DBaseExpand::setAnimationEasingCurve(QEasingCurve curve)
 {
-    m_animation->setEasingCurve(curve);
+    Q_D(DBaseExpand);
+    d->m_animation->setEasingCurve(curve);
 }
 
 /**
@@ -240,7 +278,8 @@ void DBaseExpand::setAnimationEasingCurve(QEasingCurve curve)
  */
 void DBaseExpand::setSeparatorVisible(bool arg)
 {
-    m_hSeparator->setVisible(arg);
+    Q_D(DBaseExpand);
+    d->m_hSeparator->setVisible(arg);
 }
 
 /**
@@ -250,22 +289,25 @@ void DBaseExpand::setSeparatorVisible(bool arg)
  */
 void DBaseExpand::setExpandedSeparatorVisible(bool arg)
 {
+    Q_D(DBaseExpand);
+
     if (arg) {
-        connect(this, &DBaseExpand::expandChange, m_bottom_separator, &QWidget::setVisible);
-        m_bottom_separator->show();
+        connect(this, &DBaseExpand::expandChange, d->m_bottom_separator, &QWidget::setVisible);
+        d->m_bottom_separator->show();
     } else {
-        disconnect(this, &DBaseExpand::expandChange, m_bottom_separator, &QWidget::setVisible);
-        m_bottom_separator->hide();
+        disconnect(this, &DBaseExpand::expandChange, d->m_bottom_separator, &QWidget::setVisible);
+        d->m_bottom_separator->hide();
     }
 }
 
 void DBaseExpand::resizeEvent(QResizeEvent *e)
 {
-    if (m_content) {
-        m_content->setFixedWidth(e->size().width());
+    Q_D(DBaseExpand);
+
+    if (d->m_content) {
+        d->m_content->setFixedWidth(e->size().width());
     }
     QWidget::resizeEvent(e);
 }
-
 
 DWIDGET_END_NAMESPACE
