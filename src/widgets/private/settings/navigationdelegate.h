@@ -25,7 +25,7 @@ class NavigationDelegate: public QStyledItemDelegate
 {
     Q_OBJECT
 public:
-    NavigationDelegate(QWidget *parent = 0);
+    NavigationDelegate(QWidget *parent = nullptr);
     ~NavigationDelegate();
 
 

@@ -28,7 +28,6 @@
 #include "private/settings/content.h"
 #include "private/settings/navigation.h"
 
-#include "dthememanager.h"
 #include "dwindowclosebutton.h"
 #include "dspinbox.h"
 #include "dbuttonlist.h"

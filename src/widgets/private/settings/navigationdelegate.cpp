@@ -53,6 +53,7 @@ void NavigationDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
 
     bool isSelected = option.state & QStyle::State_Selected;
 
+    // draw item background
     switch (level) {
     case Level1:
     case Level2: {
@@ -65,15 +66,17 @@ void NavigationDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
             rect.setX(option.rect.x() + option.rect.width() - 3);
             painter->fillRect(rect, brush);
         }
+        break;
     }
     case Split:
     case Level3:
         break;
     }
 
+    // draw text
     switch (level) {
     case Level1: {
-        auto pen = isSelected ? QColor("#2ca7f8") : QColor("#00162c");
+        QColor pen = option.palette.color(isSelected ? QPalette::HighlightedText : QPalette::BrightText);
         painter->setPen(pen);
         auto rect = option.rect.marginsRemoved(QMargins(30, 0, 0, 0));
         auto font = painter->font();
@@ -87,7 +90,7 @@ void NavigationDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         break;
     }
     case Level2: {
-        auto pen = isSelected ? QColor("#2ca7f8") : QColor("#303030");
+        QColor pen = option.palette.color(isSelected ? QPalette::HighlightedText : QPalette::WindowText);
         painter->setPen(pen);
         auto font = painter->font();
         painter->setFont(font);
@@ -137,9 +140,7 @@ QWidget *NavigationDelegate::createEditor(QWidget *parent,
 void NavigationDelegate::setEditorData(QWidget *editor,
                                        const QModelIndex &index) const
 {
-
     QStyledItemDelegate::setEditorData(editor, index);
-
 }
 
 void NavigationDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,

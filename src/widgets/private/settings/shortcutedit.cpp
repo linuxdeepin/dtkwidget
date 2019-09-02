@@ -115,7 +115,6 @@ void ShortcutEdit::paintEvent(QPaintEvent *)
         QFont f;
         f.setPixelSize(11);
         painter.setFont(f);
-        painter.setPen(QPen(QColor(48, 48, 48, 255 * 4 / 10)));
         painter.drawText(tR, tr("Please enter a new shortcut"));
     } else {
         QRectF lastRect(1, 0, 0, 0);
@@ -235,19 +234,20 @@ QRectF ShortcutEditPrivate::drawTextRect(const QRect &lastRect, const QString &s
     painter.fillRect(r, QColor(105, 170, 255, 255 * 0.15));
 
     // Draw inside border
+    painter.save();
     painter.setPen(QPen(QColor(95, 159, 217, 255 * 0.3), 1));
     QPainterPathStroker stroker;
     stroker.setWidth(1.0);
     stroker.setJoinStyle(Qt::RoundJoin);
     QPainterPath borderPath = stroker.createStroke(bp);
     painter.drawPath(borderPath);
+    painter.restore();
 
     // Draw text
     QRectF tR(r.x() + 6, 5, r.width(), r.height());
     QFont f;
     f.setPixelSize(10);
     painter.setFont(f);
-    painter.setPen(QPen(QColor("#434343")));
     painter.drawText(tR, str);
 
     return r;
