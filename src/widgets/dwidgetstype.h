@@ -89,7 +89,7 @@ typedef QPushButton DPushButton;
 typedef QToolButton DToolButton;
 typedef QRadioButton  DRadioButton;
 typedef QCheckButton DCheckButton;
-typedef QCommandLinkButton DommandLinkButton;
+typedef QCommandLinkButton DCommandLinkButton;
 typedef QDialogButtonBox DDialogButtonBox;
 typedef QListWidget DListWidget;
 typedef QTreeWidget DTreeWidget;
