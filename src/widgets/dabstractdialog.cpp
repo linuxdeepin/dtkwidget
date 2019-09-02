@@ -41,7 +41,7 @@ DAbstractDialogPrivate::DAbstractDialogPrivate(DAbstractDialog *qq):
 
 }
 
-void DAbstractDialogPrivate::init()
+void DAbstractDialogPrivate::init(bool blurIfPossible)
 {
     D_Q(DAbstractDialog);
 
@@ -56,6 +56,7 @@ void DAbstractDialogPrivate::init()
         bgBlurWidget->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
         bgBlurWidget->setFull(true);
         bgBlurWidget->setMaskColor(DBlurEffectWidget::AutoColor);
+        q->setAttribute(Qt::WA_TranslucentBackground, blurIfPossible);
     } else {
         q->setWindowFlags(q->windowFlags() | Qt::FramelessWindowHint);
     }
@@ -67,7 +68,6 @@ void DAbstractDialogPrivate::init()
         windowTitle->setText(title);
     });
 
-    q->setAttribute(Qt::WA_TranslucentBackground);
     q->resize(DIALOG::DEFAULT_WIDTH, DIALOG::DEFAULT_HEIGHT);
     q->setMaximumWidth(480);
     q->setAttribute(Qt::WA_Resized, false);
@@ -178,7 +178,14 @@ DAbstractDialog::DAbstractDialog(QWidget *parent) :
     QDialog(parent),
     DObject(*new DAbstractDialogPrivate(this))
 {
-    d_func()->init();
+    d_func()->init(true);
+}
+
+DAbstractDialog::DAbstractDialog(bool blurIfPossible, QWidget *parent)
+    : QDialog(parent)
+    , DObject(*new DAbstractDialogPrivate(this))
+{
+    d_func()->init(blurIfPossible);
 }
 
 /*!
@@ -395,7 +402,7 @@ DAbstractDialog::DAbstractDialog(DAbstractDialogPrivate &dd, QWidget *parent):
     QDialog(parent),
     DObject(dd)
 {
-    dd.init();
+    dd.init(true);
 }
 
 DWIDGET_END_NAMESPACE

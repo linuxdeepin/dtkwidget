@@ -67,7 +67,7 @@ public:
 };
 
 DSettingsDialog::DSettingsDialog(QWidget *parent) :
-    DAbstractDialog(parent), dd_ptr(new DSettingsDialogPrivate(this))
+    DAbstractDialog(false, parent), dd_ptr(new DSettingsDialogPrivate(this))
 {
     Q_D(DSettingsDialog);
 

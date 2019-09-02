@@ -52,6 +52,7 @@ public:
     Q_ENUMS(DisplayPostion)
 
     DAbstractDialog(QWidget *parent = nullptr);
+    DAbstractDialog(bool blurIfPossible, QWidget *parent = nullptr);
 
     DisplayPosition displayPosition() const;
 
@@ -86,7 +87,7 @@ protected:
     void showEvent(QShowEvent *event) override;
 
 protected:
-    DAbstractDialog(DAbstractDialogPrivate &dd, QWidget *parent = 0);
+    DAbstractDialog(DAbstractDialogPrivate &dd, QWidget *parent = nullptr);
 
 private:
     D_DECLARE_PRIVATE(DAbstractDialog)

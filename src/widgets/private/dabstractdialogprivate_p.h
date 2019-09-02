@@ -38,7 +38,7 @@ protected:
     QRect getParentGeometry() const;
 
 private:
-    void init();
+    void init(bool blurIfPossible);
 
     bool mouseMoved = false;
     /// 记录是否收到过鼠标移动事件.
