@@ -29,17 +29,14 @@ class LIBDTKWIDGETSHARED_EXPORT DFileChooserEdit : public DLineEdit
     Q_OBJECT
 
     Q_ENUMS(DialogDisplayPosition)
-    Q_PROPERTY(DialogDisplayPosition dialogDisplayPosition READ dialogDisplayPosition WRITE setDialogDisplayPosition)
 
 public:
-    enum DialogDisplayPosition{
+    enum DialogDisplayPosition {
         FollowParentWindow,
         CurrentMonitorCenter
     };
 
     DFileChooserEdit(QWidget *parent = nullptr);
-
-    DialogDisplayPosition dialogDisplayPosition() const;
 
     void setFileMode(QFileDialog::FileMode mode);
     QFileDialog::FileMode fileMode() const;
@@ -47,8 +44,14 @@ public:
     void setNameFilters(const QStringList &filters);
     QStringList nameFilters() const;
 
-public Q_SLOTS:
+    void setDirectoryUrl(const QUrl &directory);
+    QUrl directoryUrl();
+
     void setDialogDisplayPosition(DialogDisplayPosition dialogDisplayPosition);
+    DFileChooserEdit::DialogDisplayPosition dialogDisplayPosition() const;
+
+    void setFileDialog(QFileDialog *fileDialog);
+    QFileDialog *fileDialog() const;
 
 Q_SIGNALS:
     void fileChoosed(const QString &fileName);

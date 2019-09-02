@@ -106,6 +106,20 @@ void DFileChooserEdit::setDialogDisplayPosition(DFileChooserEdit::DialogDisplayP
     d->dialogDisplayPosition = dialogDisplayPosition;
 }
 
+void DFileChooserEdit::setFileDialog(QFileDialog *fileDialog)
+{
+    D_D(DFileChooserEdit);
+
+    d->dialog = fileDialog;
+}
+
+QFileDialog *DFileChooserEdit::fileDialog() const
+{
+    D_DC(DFileChooserEdit);
+
+    return d->dialog;
+}
+
 /*!
  * \~chinese \brief 设置文件选择模式
  * \~chinese \param mode 要使用的模式
@@ -114,7 +128,7 @@ void DFileChooserEdit::setDialogDisplayPosition(DFileChooserEdit::DialogDisplayP
 void DFileChooserEdit::setFileMode(QFileDialog::FileMode mode)
 {
     D_D(DFileChooserEdit);
-    d->fileMode = mode;
+    d->dialog->setFileMode(mode);
 }
 
 /*!
@@ -128,7 +142,7 @@ void DFileChooserEdit::setFileMode(QFileDialog::FileMode mode)
 QFileDialog::FileMode DFileChooserEdit::fileMode() const
 {
     D_DC(DFileChooserEdit);
-    return d->fileMode;
+    return d->dialog->fileMode();
 }
 
 /*!
@@ -139,7 +153,7 @@ QFileDialog::FileMode DFileChooserEdit::fileMode() const
 void  DFileChooserEdit::setNameFilters(const QStringList &filters)
 {
     D_D(DFileChooserEdit);
-    d->nameFilters = filters;
+    d->dialog->setNameFilters(filters);
 }
 
 /*!
@@ -155,7 +169,21 @@ void  DFileChooserEdit::setNameFilters(const QStringList &filters)
 QStringList DFileChooserEdit::nameFilters() const
 {
     D_DC(DFileChooserEdit);
-    return d->nameFilters;
+    return d->dialog->nameFilters();
+}
+
+void DFileChooserEdit::setDirectoryUrl(const QUrl &directory)
+{
+    D_D(DFileChooserEdit);
+
+    d->dialog->setDirectoryUrl(directory);
+}
+
+QUrl DFileChooserEdit::directoryUrl()
+{
+    D_D(DFileChooserEdit);
+
+    return d->dialog->directoryUrl();
 }
 
 
@@ -168,9 +196,15 @@ void DFileChooserEditPrivate::init()
 {
     D_Q(DFileChooserEdit);
 
+    dialog = new QFileDialog(q);
+    dialog->setAcceptMode(QFileDialog::AcceptOpen);
+    dialog->setFileMode(QFileDialog::ExistingFile);
+
     QList<QWidget *> list;
     DIconButton *btn = new DIconButton(nullptr);
     btn->setIcon(QIcon(":/images/light/images/loadfile_normal.svg"));
+
+    q->setDialogDisplayPosition(DFileChooserEdit::DialogDisplayPosition::CurrentMonitorCenter);
 
     list.append(btn);
 
@@ -184,20 +218,14 @@ void DFileChooserEditPrivate::_q_showFileChooserDialog()
 {
     D_Q(DFileChooserEdit);
 
-    QFileDialog dialog(q);
-
-    dialog.setAcceptMode(QFileDialog::AcceptOpen);
-    dialog.setFileMode(fileMode);
-    dialog.setNameFilters(nameFilters);
-
     if (dialogDisplayPosition == DFileChooserEdit::CurrentMonitorCenter) {
         QPoint pos = QCursor::pos();
 
         for (QScreen *screen : qApp->screens()) {
             if (screen->geometry().contains(pos)) {
-                QRect rect = dialog.geometry();
+                QRect rect = dialog->geometry();
                 rect.moveCenter(screen->geometry().center());
-                dialog.move(rect.topLeft());
+                dialog->move(rect.topLeft());
                 break;
             }
         }
@@ -205,11 +233,10 @@ void DFileChooserEditPrivate::_q_showFileChooserDialog()
 
     q->dialogOpened();
 
-    int code = dialog.exec();
+    int code = dialog->exec();
 
-
-    if (code == QDialog::Accepted && !dialog.selectedFiles().isEmpty()) {
-        const QString fileName = dialog.selectedFiles().first();
+    if (code == QDialog::Accepted && !dialog->selectedFiles().isEmpty()) {
+        const QString fileName = dialog->selectedFiles().first();
 
         q->setText(fileName);
         Q_EMIT q->fileChoosed(fileName);
