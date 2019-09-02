@@ -42,7 +42,7 @@ DWIDGET_BEGIN_NAMESPACE
 inline static int adjustColorValue(int base, qint8 increment, int max = 255)
 {
     return increment > 0 ? (max - base) * increment / 100.0 + base
-                         : base * (1 + increment / 100.0);
+           : base * (1 + increment / 100.0);
 }
 
 QColor DStyle::adjustColor(const QColor &base,
@@ -545,12 +545,43 @@ void drawIndicatorSearch(QPainter *pa, const QRectF &rect)
 
 void drawDeleteButton(QPainter *pa, const QRectF &rect)
 {
+    const QPen pen = pa->pen();
+    pa->setPen(Qt::NoPen);
 
+    QPainterPath path;
+    path.addEllipse(rect);
+
+    QRectF hRect(rect.x(), rect.y(), rect.width() / 2, 1);
+
+    hRect.moveCenter(rect.center());
+
+    path.addRect(hRect);
+
+    pa->fillPath(path, QColor("#ff6a6a"));
 }
 
 void drawAddButton(QPainter *pa, const QRectF &rect)
 {
+    const QPen pen = pa->pen();
+    pa->setPen(Qt::NoPen);
 
+    QPainterPath path;
+    path.addEllipse(rect);
+
+    QRectF hRect(rect.x(), rect.y(), rect.width() / 2, 1);
+    QRectF vRect(rect.x(), rect.y(), 1, rect.height() / 2);
+
+    hRect.moveCenter(rect.center());
+    vRect.moveCenter(rect.center());
+
+    path.addRect(hRect);
+    path.addRect(vRect);
+
+    QRectF center(0, 0, 1, 1);
+    center.moveCenter(rect.center());
+    path.addEllipse(center);
+
+    pa->fillPath(path, QColor("#48bf00"));
 }
 
 void drawTitleBarMenuButton(QPainter *pa, const QRectF &rect)
@@ -722,7 +753,7 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
         break;
     }
     case PE_IconButtonPanel: {
-        if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton*>(opt)) {
+        if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton *>(opt)) {
             DStyleHelper dstyle(style);
 
             if (btn->features & DStyleOptionButton::FloatingButton) {
@@ -756,7 +787,7 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
         break;
     }
     case PE_IconButtonIcon: {
-        if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton*>(opt)) {
+        if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton *>(opt)) {
             DStyleHelper dstyle(style);
             DStyleOptionIcon icon_option;
 
@@ -790,7 +821,7 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
         break;
     }
     case PE_Icon: {
-        if (const DStyleOptionIcon *icon_opt = qstyleoption_cast<const DStyleOptionIcon*>(opt)) {
+        if (const DStyleOptionIcon *icon_opt = qstyleoption_cast<const DStyleOptionIcon *>(opt)) {
             if (icon_opt->icon.isNull()) {
                 return;
             }
@@ -821,7 +852,7 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
         break;
     }
     case PE_SwitchButtonGroove: {
-        if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton*>(opt)) {
+        if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton *>(opt)) {
             QRect rectGroove = btn->rect;
             int frame_radius = dstyle.pixelMetric(DStyle::PM_FrameRadius, opt, w);
 
@@ -833,7 +864,7 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
         break;
     }
     case PE_SwitchButtonHandle: {
-        if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton*>(opt)) {
+        if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton *>(opt)) {
             QRect rectHandle = btn->rect;
             int frame_radius = dstyle.pixelMetric(DStyle::PM_FrameRadius, opt, w);
             p->setRenderHint(QPainter::Antialiasing);
