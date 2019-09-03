@@ -30,7 +30,7 @@
 
 #include "dwindowclosebutton.h"
 #include "dspinbox.h"
-#include "dimagebutton.h"
+#include "diconbutton.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -88,9 +88,9 @@ DSettingsDialog::DSettingsDialog(QWidget *parent) :
 
     d->content = new Content;
 
-    auto closeBt = new DImageButton;
-    closeBt->setObjectName("DSettingsDialogClose");
-    d->rightLayout->addWidget(closeBt, 0, Qt::AlignVCenter | Qt::AlignRight);
+    DIconButton * closeButton = new DIconButton(DStyle::SP_CloseButton);
+    closeButton->setObjectName("DSettingsDialogClose");
+    d->rightLayout->addWidget(closeButton, 0, Qt::AlignVCenter | Qt::AlignRight);
     d->rightLayout->addWidget(d->content);
 
     layout->addWidget(d->rightFrame);
@@ -102,7 +102,7 @@ DSettingsDialog::DSettingsDialog(QWidget *parent) :
         d->leftFrame->onSelectGroup(key);
         d->leftFrame->blockSignals(false);
     });
-    connect(closeBt, &DImageButton::clicked, this, &DSettingsDialog::close);
+    connect(closeButton, &DIconButton::clicked, this, &DSettingsDialog::close);
 }
 
 DSettingsDialog::~DSettingsDialog()

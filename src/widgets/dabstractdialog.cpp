@@ -56,6 +56,7 @@ void DAbstractDialogPrivate::init(bool blurIfPossible)
         bgBlurWidget->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
         bgBlurWidget->setFull(true);
         bgBlurWidget->setMaskColor(DBlurEffectWidget::AutoColor);
+        bgBlurWidget->setBlurEnabled(blurIfPossible);
         q->setAttribute(Qt::WA_TranslucentBackground, blurIfPossible);
     } else {
         q->setWindowFlags(q->windowFlags() | Qt::FramelessWindowHint);
