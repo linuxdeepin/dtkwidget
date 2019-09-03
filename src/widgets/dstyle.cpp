@@ -500,17 +500,17 @@ void drawMediaVolumeRightElement(QPainter *pa, const QRectF &rect)
 
 void drawArrowEnter(QPainter *pa, const QRectF &rect)
 {
-
+    drawArrow(pa, rect, pa->pen().color(), Qt::RightArrow);
 }
 
 void drawArrowLeave(QPainter *pa, const QRectF &rect)
 {
-
+    drawArrow(pa, rect, pa->pen().color(), Qt::LeftArrow);
 }
 
 void drawArrowNext(QPainter *pa, const QRectF &rect)
 {
-
+    drawArrow(pa, rect, pa->pen().color(), Qt::RightArrow);
 }
 
 void drawArrowPrev(QPainter *pa, const QRectF &rect)
@@ -530,7 +530,11 @@ void drawHidePassword(QPainter *pa, const QRectF &rect)
 
 void drawCloseButton(QPainter *pa, const QRectF &rect)
 {
-
+    pa->setRenderHint(QPainter::Antialiasing);
+    pa->drawEllipse(rect);
+    QRectF content_rect(0, 0, rect.width() / 3, rect.height() / 3);
+    content_rect.moveCenter(rect.center());
+    drawForkElement(pa, content_rect);
 }
 
 void drawIndicatorMajuscule(QPainter *pa, const QRectF &rect)
@@ -650,32 +654,32 @@ void drawTitleBarNormalButton(QPainter *pa, const QRectF &rect)
 
 void drawArrowUp(QPainter *pa, const QRectF &rect)
 {
-
+    drawArrow(pa, rect, pa->pen().color(), Qt::UpArrow);
 }
 
 void drawArrowDown(QPainter *pa, const QRectF &rect)
 {
-
+    drawArrow(pa, rect, pa->pen().color(), Qt::DownArrow);
 }
 
 void drawArrowLeft(QPainter *pa, const QRectF &rect)
 {
-
+    drawArrow(pa, rect, pa->pen().color(), Qt::LeftArrow);
 }
 
 void drawArrowRight(QPainter *pa, const QRectF &rect)
 {
-
+    drawArrow(pa, rect, pa->pen().color(), Qt::RightArrow);
 }
 
 void drawArrowBack(QPainter *pa, const QRectF &rect)
 {
-
+    drawArrow(pa, rect, pa->pen().color(), Qt::RightArrow);
 }
 
 void drawArrowForward(QPainter *pa, const QRectF &rect)
 {
-
+    drawArrow(pa, rect, pa->pen().color(), Qt::RightArrow);
 }
 
 void drawLineEditClearButton(QPainter *pa, const QRectF &rect)
@@ -1015,7 +1019,7 @@ int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyle
         return margins;
     }
     case PM_IconButtonIconSize:
-        return 16;
+        return 17;
     case PM_SwitchButtonHandleWidth:
         return 30;
     case PM_SwithcButtonHandleHeight:
@@ -1338,12 +1342,12 @@ int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QW
         return pixelMetric(PM_TopLevelWindowRadius, opt, widget);
     case PM_SmallIconSize:
     case PM_ButtonIconSize:
-        return 16;
+        return 17;
     case PM_ListViewIconSize:
     case PM_LargeIconSize:
-        return 24;
+        return 25;
     case PM_IconViewIconSize:
-        return 32;
+        return 33;
     case PM_ScrollView_ScrollBarOverlap:
         return true;
     default:
