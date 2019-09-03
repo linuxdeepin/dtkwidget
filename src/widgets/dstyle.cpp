@@ -592,6 +592,12 @@ void drawTitleBarMenuButton(QPainter *pa, const QRectF &rect)
     QRectF content_rect(0, 0, rect.width() / 4, rect.height() / 4);
     content_rect.moveCenter(rect.center());
     pa->setPen(pen);
+
+    pa->drawLine(content_rect.x(), content_rect.y(), content_rect.topRight().x() - 2, content_rect.topRight().y());
+    pa->drawLine(content_rect.bottomLeft(), content_rect.bottomRight());
+
+    qreal y = content_rect.center().y();
+    pa->drawLine(content_rect.x(), y, content_rect.topRight().x(), y);
 }
 
 void drawTitleBarMinButton(QPainter *pa, const QRectF &rect)
@@ -613,6 +619,8 @@ void drawTitleBarMaxButton(QPainter *pa, const QRectF &rect)
     QRectF content_rect(0, 0, rect.width() / 4, rect.height() / 4);
     content_rect.moveCenter(rect.center());
     pa->setPen(pen);
+
+    pa->drawRect(content_rect);
 }
 
 void drawTitleBarCloseButton(QPainter *pa, const QRectF &rect)
@@ -634,6 +642,10 @@ void drawTitleBarNormalButton(QPainter *pa, const QRectF &rect)
     QRectF content_rect(0, 0, rect.width() / 4, rect.height() / 4);
     content_rect.moveCenter(rect.center());
     pa->setPen(pen);
+
+    pa->drawRect(content_rect.x(), content_rect.y() + 2, content_rect.width() - 2, content_rect.height() - 2);
+    pa->drawLine(content_rect.x() + 2, content_rect.y(), content_rect.right(), content_rect.y());
+    pa->drawLine(content_rect.right(), content_rect.y(), content_rect.right(), content_rect.bottom() - 2);
 }
 
 void drawArrowUp(QPainter *pa, const QRectF &rect)
