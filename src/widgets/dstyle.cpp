@@ -892,6 +892,29 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
         }
         break;
     }
+    case PE_FloatingWidget: {
+        if (const DStyleOptionFloatingWidget *btn = qstyleoption_cast<const DStyleOptionFloatingWidget*>(opt)) {
+            DStyleHelper dstyle(style);
+            int shadowRadius = dstyle.pixelMetric(PM_FloatingWidgetShadowRadius, opt, w);    //18
+            int frameRadius = dstyle.pixelMetric(PM_FloatingWidgetRadius, opt, w);           //18
+            int offsetX = dstyle.pixelMetric(PM_FloatingWidgetShadowHOffset, opt, w);        //0
+            int offsetY = dstyle.pixelMetric(PM_FloatingWidgetShadowVOffset, opt, w);        //6
+            int shadowMargins = dstyle.pixelMetric(PM_FloatingWidgetShadowMargins, opt, w);
+
+            //绘画 矩形(图标icon+text+btn+icon)和外面一小圈frameRadius/2的 合在一起的矩形
+            p->setRenderHint(QPainter::Antialiasing);
+            QRect rectFoatWgt = dstyle.subElementRect(SE_FloatingWidget, opt, w);
+            QMargins shadow_margin(shadowMargins, shadowMargins, shadowMargins, shadowMargins);
+
+            //先绘画阴影
+            DDrawUtils::drawShadow(p, btn->rect + shadow_margin, shadowRadius, shadowRadius, dstyle.getColor(opt, QPalette::Shadow), shadowRadius, QPoint(offsetX, offsetY));
+            //再绘画上面的待显示区域
+            p->setPen(QPen(btn->dpalette.frameBorder(), 1));
+            p->setBrush(p->background());
+            p->drawRoundedRect(opt->rect, frameRadius, frameRadius);
+        }
+        break;
+    }
     default:
         break;
     }
@@ -946,6 +969,16 @@ void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const Q
         }
         break;
     }
+    case CE_FloatingWidget: {
+        if (const DStyleOptionFloatingWidget *btn = qstyleoption_cast<const DStyleOptionFloatingWidget *>(opt)) {
+            DStyleHelper dstyle(style);
+            DStyleOptionFloatingWidget option = *btn;
+            option.dpalette = btn->dpalette;
+            option.rect = dstyle.subElementRect(SE_FloatingWidget, opt, w);
+            dstyle.drawPrimitive(PE_FloatingWidget, &option, p, w);
+        }
+        break;
+    }
     default:
         break;
     }
@@ -987,6 +1020,21 @@ int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyle
         return 30;
     case PM_SwithcButtonHandleHeight:
         return 24;
+    case PM_FloatingWidgetRadius:
+        return dstyle.pixelMetric(PM_TopLevelWindowRadius, opt, widget);
+    case PM_FloatingWidgetShadowRadius:
+        return 18;
+    case PM_FloatingWidgetShadowHOffset:
+        return 0;
+    case PM_FloatingWidgetShadowVOffset:
+        return 6;
+    case PM_FloatingWidgetShadowMargins: {
+        int shadow_radius = dstyle.pixelMetric(PM_FloatingWidgetShadowRadius, opt, widget);
+        int shadow_hoffset = dstyle.pixelMetric(PM_FloatingWidgetShadowHOffset, opt, widget);
+        int shadow_voffset = dstyle.pixelMetric(PM_FloatingWidgetShadowVOffset, opt, widget);
+
+        return shadow_radius +  qMax(shadow_hoffset, shadow_voffset);
+    }
     default:
         break;
     }
@@ -1036,6 +1084,17 @@ QRect DStyle::subElementRect(const QStyle *style, DStyle::SubElement r, const QS
         }
         break;
     }
+    case SE_FloatingWidget: {
+        if (const DStyleOptionFloatingWidget *btn = qstyleoption_cast<const DStyleOptionFloatingWidget*>(opt)) {
+            DStyleHelper dstyle(style);
+            QRect rect = btn->rect;
+            int shadowMarge = dstyle.pixelMetric(PM_FloatingWidgetShadowMargins, opt, widget);
+            QRect rectBtn = rect.adjusted(shadowMarge, shadowMarge, -shadowMarge, -shadowMarge);
+
+            return rectBtn;
+        }
+        break;
+    }
     default:
         break;
     }
@@ -1069,7 +1128,14 @@ QSize DStyle::sizeFromContents(const QStyle *style, DStyle::ContentsType ct, con
 
         return size;
     }
-
+    case CT_FloatingWidget: {
+        DStyleHelper dstyle(style);
+        int margins = dstyle.pixelMetric(PM_FloatingWidgetShadowMargins, opt, widget);
+        int window_radius = dstyle.pixelMetric(PM_FloatingWidgetRadius, opt, widget);
+        QSize size(2 * margins + qMax(2 * window_radius, contentsSize.width() + window_radius),
+                   2 * margins + qMax(2 * window_radius,  contentsSize.height() + window_radius));
+        return size;
+    }
     default:
         break;
     }

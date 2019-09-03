@@ -99,7 +99,8 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dfloatingbutton.h \
     $$PWD/dwidgetstype.h \
     $$PWD/dstyleditemdelegate.h \
-    $$PWD/diconbutton.h
+    $$PWD/diconbutton.h \
+    $$PWD/dfloatingwidget.h
 
 SOURCES += $$PWD/dslider.cpp \
     $$PWD/dbackgroundgroup.cpp \
@@ -158,7 +159,8 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dstyle.cpp \
     $$PWD/dfloatingbutton.cpp \
     $$PWD/dstyleditemdelegate.cpp \
-    $$PWD/diconbutton.cpp
+    $$PWD/diconbutton.cpp \
+    $$PWD/dfloatingwidget.cpp
 
 RESOURCES += \
     $$PWD/icons.qrc
@@ -287,6 +289,7 @@ includes.files += \
     $$PWD/DStyledItemDelegate \
     $$PWD/DStandardItem \
     $$PWD/DIconButton \
+    $$PWD/DFloatingWidget \
     $$PWD/DStyleHelper \
     $$PWD/DStylePainter \
     $$PWD/DStyledIconEngine \

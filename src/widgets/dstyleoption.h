@@ -183,6 +183,12 @@ public:
     };
 };
 
+class DStyleOptionFloatingWidget : public QStyleOption, public DStyleOption
+{
+public:
+    using DStyleOption::init;
+};
+
 class DFontSizeManagerPrivate;
 class DFontSizeManager
 {

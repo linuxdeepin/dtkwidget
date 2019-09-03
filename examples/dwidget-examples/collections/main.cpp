@@ -39,6 +39,8 @@ int main(int argc, char *argv[])
 
     a.loadTranslator();
     a.setAttribute(Qt::AA_EnableHighDpiScaling, true);
+//    a.setTheme("light");
+//    a.setTheme("Dark");
 #ifdef Q_OS_UNIX
     a.setOOMScoreAdj(500);
 #endif

@@ -112,12 +112,14 @@ public:
         PE_Icon,
         PE_SwitchButtonGroove,
         PE_SwitchButtonHandle,
+        PE_FloatingWidget,
         PE_CustomBase = QStyle::PE_CustomBase + 0xf00000
     };
 
     enum ControlElement {
         CE_IconButton = QStyle::CE_CustomBase + 1,
         CE_SwitchButton,
+        CE_FloatingWidget,
         CE_CustomBase = QStyle::CE_CustomBase + 0xf00000
     };
 
@@ -133,6 +135,11 @@ public:
         PM_TopLevelWindowRadius,                                //窗口的圆角大小
         PM_SwitchButtonHandleWidth,
         PM_SwithcButtonHandleHeight,
+        PM_FloatingWidgetRadius,                                //(基类)的圆角半径:控件内容-Radius < 控件内容 < 控件显示大小
+        PM_FloatingWidgetShadowRadius,                          //(基类)的阴影Radius区域:控件内容 < 控件内容+阴影margins < 控件内容+阴影margins+阴影Radius = 控件显示大小
+        PM_FloatingWidgetShadowMargins,                         //(基类)阴影的宽度 = 控件显示大小 - 阴影Radius - 控件内容
+        PM_FloatingWidgetShadowHOffset,                         //(基类)的阴影水平偏移
+        PM_FloatingWidgetShadowVOffset,                         //(基类)的阴影竖直偏移
         PM_CustomBase = QStyle::PM_CustomBase + 0xf00000
     };
 
@@ -140,12 +147,14 @@ public:
         SE_IconButtonIcon = QStyle::SE_CustomBase + 1,
         SE_SwitchButtonGroove,
         SE_SwitchButtonHandle,
+        SE_FloatingWidget,
         SE_CustomBase = QStyle::SE_CustomBase + 0xf00000
     };
 
     enum ContentsType {
         CT_IconButton = QStyle::CT_CustomBase + 1,
         CT_SwitchButton,
+        CT_FloatingWidget,
         CT_CustomBase = QStyle::CT_CustomBase + 0xf00000
     };
 
