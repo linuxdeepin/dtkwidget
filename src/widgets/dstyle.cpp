@@ -506,9 +506,17 @@ void drawHidePassword(QPainter *pa, const QRectF &rect)
 void drawCloseButton(QPainter *pa, const QRectF &rect)
 {
     pa->setRenderHint(QPainter::Antialiasing);
-    pa->drawEllipse(rect);
+    QPen pen = pa->pen();
+    QPen new_pen = pa->pen();
+    QColor border_color = pen.color();
+    border_color.setAlphaF(0.1);
+    new_pen.setColor(border_color);
+    pa->setPen(new_pen);
+    qreal pen_extent = pen.widthF() / 2;
+    pa->drawEllipse(rect.adjusted(pen_extent, pen_extent, -pen_extent, -pen_extent));
     QRectF content_rect(0, 0, rect.width() / 3, rect.height() / 3);
     content_rect.moveCenter(rect.center());
+    pa->setPen(pen);
     drawForkElement(pa, content_rect);
 }
 
