@@ -1207,7 +1207,6 @@ int DStyle::styleHint(QStyle::StyleHint sh, const QStyleOption *opt, const QWidg
     case SH_MenuBar_MouseTracking:
     case SH_Menu_FillScreenWithScroll:
     case SH_ItemView_ChangeHighlightOnFocus:
-    case SH_Widget_ShareActivation:
     case SH_TabBar_PreferNoArrows:
     case SH_ComboBox_Popup:
     case SH_Slider_StopMouseOverSlider:
