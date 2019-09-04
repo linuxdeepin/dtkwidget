@@ -16,8 +16,8 @@
  */
 
 #include "dpasswordedit.h"
-#include "dthememanager.h"
 #include "private/dpasswordedit_p.h"
+#include "diconbutton.h"
 
 #include <DUtil>
 
@@ -104,17 +104,12 @@ void DPasswordEditPrivate::init()
     q->setEchoMode(q->Password);
 
     QList<QWidget *> list;
-    QPushButton *btn = new QPushButton;
-    btn->setIcon(QIcon(":/images/light/images/pw-visible-hover.svg"));
+    togglePasswordVisibleButton = new DIconButton(DStyle::SP_ShowPassword);
 
-    list.append(btn);
+    list.append(togglePasswordVisibleButton);
     q->setRightWidgets(list);
 
-    // FIXME: DPasswordEdit instances that initialized with a parent will fail
-    // to load the little eye icon if we don't do the below thing.
-    DUtil::TimerSingleShot(0,  [q] { q->setStyleSheet(q->styleSheet()); });
-
-    q->connect(btn, SIGNAL(clicked()), q, SLOT(_q_toggleEchoMode()));
+    q->connect(togglePasswordVisibleButton, SIGNAL(clicked()), q, SLOT(_q_toggleEchoMode()));
 }
 
 void DPasswordEditPrivate::_q_toggleEchoMode()
@@ -122,8 +117,10 @@ void DPasswordEditPrivate::_q_toggleEchoMode()
     D_Q(DPasswordEdit);
 
     if (q->isEchoMode()) {
+        togglePasswordVisibleButton->setIcon(DStyle::SP_HidePassword);
         q->setEchoMode(q->Password);
     } else {
+        togglePasswordVisibleButton->setIcon(DStyle::SP_HidePassword);
         q->setEchoMode(q->Normal);
     }
 }

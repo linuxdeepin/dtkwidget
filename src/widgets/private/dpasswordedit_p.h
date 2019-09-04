@@ -23,6 +23,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+class DIconButton;
 class DPasswordEditPrivate : DLineEditPrivate
 {
 public:
@@ -34,6 +35,9 @@ public:
 
 protected:
     Q_DECLARE_PUBLIC(DPasswordEdit)
+
+private:
+    DIconButton * togglePasswordVisibleButton;
 };
 
 DWIDGET_END_NAMESPACE

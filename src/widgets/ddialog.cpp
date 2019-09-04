@@ -121,6 +121,7 @@ void DDialogPrivate::init()
 
     // TopLayout--Close button
     closeButton = new DIconButton(DStyle::SP_CloseButton, q);
+    closeButton->setFlat(true);
     closeButton->setObjectName("CloseButton");
     closeButton->setIconSize(QSize(DIALOG::CLOSE_BUTTON_WIDTH, DIALOG::CLOSE_BUTTON_HEIGHT));
     closeButton->adjustSize();

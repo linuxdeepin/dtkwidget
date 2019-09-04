@@ -28,11 +28,13 @@
 #include "private/settings/content.h"
 #include "private/settings/navigation.h"
 
-#include "dwindowclosebutton.h"
 #include "dspinbox.h"
-#include "diconbutton.h"
+#include "dwindowclosebutton.h"
 
 DWIDGET_BEGIN_NAMESPACE
+
+// see also: dtitlebar.cpp
+const int DefaultTitlebarHeight = 40;
 
 /*!
  * \~english \class DSettingsDialog
@@ -88,8 +90,9 @@ DSettingsDialog::DSettingsDialog(QWidget *parent) :
 
     d->content = new Content;
 
-    DIconButton * closeButton = new DIconButton(DStyle::SP_CloseButton);
+    DWindowCloseButton * closeButton = new DWindowCloseButton;
     closeButton->setObjectName("DSettingsDialogClose");
+    closeButton->setIconSize(QSize(DefaultTitlebarHeight, DefaultTitlebarHeight));
     d->rightLayout->addWidget(closeButton, 0, Qt::AlignVCenter | Qt::AlignRight);
     d->rightLayout->addWidget(d->content);
 

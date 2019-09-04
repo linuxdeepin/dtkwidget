@@ -42,7 +42,7 @@ public:
     explicit DIconButton(QWidget *parent = nullptr);
     explicit DIconButton(QStyle::StandardPixmap iconType = static_cast<QStyle::StandardPixmap>(-1), QWidget *parent = nullptr);
     explicit DIconButton(DStyle::StandardPixmap iconType = static_cast<DStyle::StandardPixmap>(-1), QWidget *parent = nullptr);
-    ~DIconButton();
+    ~DIconButton() override;
 
     void setIcon(const QIcon &icon);
     void setIcon(QStyle::StandardPixmap iconType);
