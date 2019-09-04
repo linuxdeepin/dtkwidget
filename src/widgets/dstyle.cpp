@@ -1457,6 +1457,7 @@ QBrush DStyle::generatedBrush(StateFlags flags, const QBrush &base, QPalette::Co
 
     if ((flags & StyleState_Mask)  == SS_HoverState) {
         switch (role) {
+        case QPalette::Button:
         case QPalette::Light:
         case QPalette::Dark:
             colorNew = adjustColor(colorNew, 0, 0, -10, 0, 0, 0, 0);
@@ -1474,6 +1475,7 @@ QBrush DStyle::generatedBrush(StateFlags flags, const QBrush &base, QPalette::Co
         hightColor.setAlphaF(0.1);
 
         switch (role) {
+        case QPalette::Button:
         case QPalette::Light: {
             colorNew = adjustColor(colorNew, 0, 0, -20, 0, 0, +20, 0);
             colorNew = blendColor(colorNew, hightColor);
