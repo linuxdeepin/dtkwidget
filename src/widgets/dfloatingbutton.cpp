@@ -61,6 +61,14 @@ DFloatingButton::DFloatingButton(const QIcon &icon, const QString &text, QWidget
     setText(text);
 }
 
+DStyleOptionButton DFloatingButton::baseStyleOption() const
+{
+    DStyleOptionButton opt;
+    opt.features = QStyleOptionButton::ButtonFeature(DStyleOptionButton::FloatingButton);
+
+    return opt;
+}
+
 void DFloatingButton::initStyleOption(DStyleOptionButton *option) const
 {
     DIconButton::initStyleOption(option);

@@ -115,7 +115,8 @@ QSize DIconButton::iconSize() const
     }
 
     DStyleHelper dstyle(style());
-    int size = dstyle.pixelMetric(DStyle::PM_IconButtonIconSize, nullptr, this);
+    DStyleOptionButton opt = baseStyleOption();
+    int size = dstyle.pixelMetric(DStyle::PM_IconButtonIconSize, &opt, this);
 
     if (Q_LIKELY(size > 0)) {
         return QSize(size, size);
@@ -135,10 +136,10 @@ void DIconButton::setFlat(bool flat)
 {
     D_D(DIconButton);
 
-    d->flat = flat;
-
     if (d->flat == flat)
         return;
+
+    d->flat = flat;
 
     QAbstractButtonPrivate *bp = static_cast<QAbstractButtonPrivate*>(QAbstractButton::d_ptr.data());
     bp->sizeHint = QSize();
@@ -152,6 +153,11 @@ DIconButton::DIconButton(DIconButtonPrivate &dd, QWidget *parent)
     , DObject(dd)
 {
 
+}
+
+DStyleOptionButton DIconButton::baseStyleOption() const
+{
+    return DStyleOptionButton();
 }
 
 void DIconButton::initStyleOption(DStyleOptionButton *option) const

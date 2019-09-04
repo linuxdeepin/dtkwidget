@@ -55,6 +55,7 @@ void drawPlus(QPainter *painter, const QRectF &rect, const QColor &color , qreal
 void drawSubtract(QPainter *painter, const QRectF &rect, const QColor &color, qreal width);
 
 void drawForkElement(QPainter *pa, const QRectF &rect);
+void drawArrowElement(Qt::ArrowType arrow, QPainter *pa, const QRectF &rect);
 void drawDecreaseElement(QPainter *pa, const QRectF &rect);
 void drawIncreaseElement(QPainter *pa, const QRectF &rect);
 void drawMarkElement(QPainter *pa, const QRectF &rect);

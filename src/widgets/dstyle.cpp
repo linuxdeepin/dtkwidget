@@ -369,33 +369,8 @@ void drawArrow(QPainter *pa, const QRectF &rect, const QColor &color, Qt::ArrowT
     pa->setRenderHint(QPainter::Antialiasing, true);
     pa->setPen(pen);
     pa->setBrush(Qt::NoBrush);
-    const QPointF center = rect.center();
 
-    switch (arrow) {
-    case Qt::UpArrow: {
-        pa->drawLine(QPointF(center.x(), rect.y()), rect.bottomLeft());
-        pa->drawLine(QPointF(center.x(), rect.y()), rect.bottomRight());
-        break;
-    }
-    case Qt::LeftArrow: {
-        pa->drawLine(QPointF(rect.x(), center.y()), rect.bottomRight());
-        pa->drawLine(QPointF(rect.x(), center.y()), rect.topRight());
-        break;
-    }
-    case Qt::DownArrow: {
-        pa->drawLine(QPointF(center.x(), rect.bottom()), rect.topLeft());
-        pa->drawLine(QPointF(center.x(), rect.bottom()), rect.topRight());
-        break;
-    }
-    case Qt::RightArrow: {
-        pa->drawLine(QPointF(rect.right(), center.y()), rect.topLeft());
-        pa->drawLine(QPointF(rect.right(), center.y()), rect.bottomLeft());
-        break;
-    }
-    default:
-        break;
-    }
-
+    drawArrowElement(arrow, pa, rect);
 }
 
 void drawPlus(QPainter *painter, const QRectF &rect, const QColor &color, qreal width)
@@ -455,12 +430,12 @@ void drawEditElement(QPainter *pa, const QRectF &rect)
 
 void drawExpandElement(QPainter *pa, const QRectF &rect)
 {
-
+    drawArrowRight(pa, rect);
 }
 
 void drawReduceElement(QPainter *pa, const QRectF &rect)
 {
-
+    drawArrowDown(pa, rect);
 }
 
 void drawLockElement(QPainter *pa, const QRectF &rect)
@@ -500,22 +475,22 @@ void drawMediaVolumeRightElement(QPainter *pa, const QRectF &rect)
 
 void drawArrowEnter(QPainter *pa, const QRectF &rect)
 {
-    drawArrow(pa, rect, pa->pen().color(), Qt::RightArrow);
+    drawArrowRight(pa, rect);
 }
 
 void drawArrowLeave(QPainter *pa, const QRectF &rect)
 {
-    drawArrow(pa, rect, pa->pen().color(), Qt::LeftArrow);
+    drawArrowLeft(pa, rect);
 }
 
 void drawArrowNext(QPainter *pa, const QRectF &rect)
 {
-    drawArrow(pa, rect, pa->pen().color(), Qt::RightArrow);
+    drawArrowRight(pa, rect);
 }
 
 void drawArrowPrev(QPainter *pa, const QRectF &rect)
 {
-
+    drawArrowLeft(pa, rect);
 }
 
 void drawShowPassword(QPainter *pa, const QRectF &rect)
@@ -593,7 +568,7 @@ void drawTitleBarMenuButton(QPainter *pa, const QRectF &rect)
     const QPen pen = pa->pen();
     pa->setPen(Qt::NoPen);
     pa->drawRect(rect);
-    QRectF content_rect(0, 0, rect.width() / 4, rect.height() / 4);
+    QRectF content_rect(0, 0, rect.width() / 5, rect.height() / 5);
     content_rect.moveCenter(rect.center());
     pa->setPen(pen);
 
@@ -609,7 +584,7 @@ void drawTitleBarMinButton(QPainter *pa, const QRectF &rect)
     const QPen pen = pa->pen();
     pa->setPen(Qt::NoPen);
     pa->drawRect(rect);
-    QRectF content_rect(0, 0, rect.width() / 4, rect.height() / 4);
+    QRectF content_rect(0, 0, rect.width() / 5, rect.height() / 5);
     content_rect.moveCenter(rect.center());
     pa->setPen(pen);
     drawDecreaseElement(pa, content_rect);
@@ -620,7 +595,7 @@ void drawTitleBarMaxButton(QPainter *pa, const QRectF &rect)
     const QPen pen = pa->pen();
     pa->setPen(Qt::NoPen);
     pa->drawRect(rect);
-    QRectF content_rect(0, 0, rect.width() / 4, rect.height() / 4);
+    QRectF content_rect(0, 0, rect.width() / 5, rect.height() / 5);
     content_rect.moveCenter(rect.center());
     pa->setPen(pen);
 
@@ -632,7 +607,7 @@ void drawTitleBarCloseButton(QPainter *pa, const QRectF &rect)
     const QPen pen = pa->pen();
     pa->setPen(Qt::NoPen);
     pa->drawRect(rect);
-    QRectF content_rect(0, 0, rect.width() / 4, rect.height() / 4);
+    QRectF content_rect(0, 0, rect.width() / 5, rect.height() / 5);
     content_rect.moveCenter(rect.center());
     pa->setPen(pen);
     drawForkElement(pa, content_rect);
@@ -643,7 +618,7 @@ void drawTitleBarNormalButton(QPainter *pa, const QRectF &rect)
     const QPen pen = pa->pen();
     pa->setPen(Qt::NoPen);
     pa->drawRect(rect);
-    QRectF content_rect(0, 0, rect.width() / 4, rect.height() / 4);
+    QRectF content_rect(0, 0, rect.width() / 5, rect.height() / 5);
     content_rect.moveCenter(rect.center());
     pa->setPen(pen);
 
@@ -654,32 +629,40 @@ void drawTitleBarNormalButton(QPainter *pa, const QRectF &rect)
 
 void drawArrowUp(QPainter *pa, const QRectF &rect)
 {
-    drawArrow(pa, rect, pa->pen().color(), Qt::UpArrow);
+    QRectF ar(0, 0, rect.width(), rect.height() / 2);
+    ar.moveCenter(rect.center());
+    drawArrowElement(Qt::UpArrow, pa, ar);
 }
 
 void drawArrowDown(QPainter *pa, const QRectF &rect)
 {
-    drawArrow(pa, rect, pa->pen().color(), Qt::DownArrow);
+    QRectF ar(0, 0, rect.width(), rect.height() / 2);
+    ar.moveCenter(rect.center());
+    drawArrowElement(Qt::DownArrow, pa, ar);
 }
 
 void drawArrowLeft(QPainter *pa, const QRectF &rect)
 {
-    drawArrow(pa, rect, pa->pen().color(), Qt::LeftArrow);
+    QRectF ar(0, 0, rect.width() / 2, rect.height());
+    ar.moveCenter(rect.center());
+    drawArrowElement(Qt::LeftArrow, pa, ar);
 }
 
 void drawArrowRight(QPainter *pa, const QRectF &rect)
 {
-    drawArrow(pa, rect, pa->pen().color(), Qt::RightArrow);
+    QRectF ar(0, 0, rect.width() / 2, rect.height());
+    ar.moveCenter(rect.center());
+    drawArrowElement(Qt::RightArrow, pa, ar);
 }
 
 void drawArrowBack(QPainter *pa, const QRectF &rect)
 {
-    drawArrow(pa, rect, pa->pen().color(), Qt::RightArrow);
+    drawArrowLeft(pa, rect);
 }
 
 void drawArrowForward(QPainter *pa, const QRectF &rect)
 {
-    drawArrow(pa, rect, pa->pen().color(), Qt::RightArrow);
+    drawArrowRight(pa, rect);
 }
 
 void drawLineEditClearButton(QPainter *pa, const QRectF &rect)
@@ -695,6 +678,36 @@ void drawIndicatorUnchecked(QPainter *pa, const QRectF &rect)
 void drawIndicatorChecked(QPainter *pa, const QRectF &rect)
 {
 
+}
+
+void drawArrowElement(Qt::ArrowType arrow, QPainter *pa, const QRectF &rect)
+{
+    const QPointF center = rect.center();
+
+    switch (arrow) {
+    case Qt::UpArrow: {
+        pa->drawLine(QPointF(center.x(), rect.y()), rect.bottomLeft());
+        pa->drawLine(QPointF(center.x(), rect.y()), rect.bottomRight());
+        break;
+    }
+    case Qt::LeftArrow: {
+        pa->drawLine(QPointF(rect.x(), center.y()), rect.bottomRight());
+        pa->drawLine(QPointF(rect.x(), center.y()), rect.topRight());
+        break;
+    }
+    case Qt::DownArrow: {
+        pa->drawLine(QPointF(center.x(), rect.bottom()), rect.topLeft());
+        pa->drawLine(QPointF(center.x(), rect.bottom()), rect.topRight());
+        break;
+    }
+    case Qt::RightArrow: {
+        pa->drawLine(QPointF(rect.right(), center.y()), rect.topLeft());
+        pa->drawLine(QPointF(rect.right(), center.y()), rect.bottomLeft());
+        break;
+    }
+    default:
+        break;
+    }
 }
 
 }
@@ -1018,8 +1031,14 @@ int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyle
 
         return margins;
     }
-    case PM_IconButtonIconSize:
-        return 17;
+    case PM_IconButtonIconSize: {
+        if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton *>(opt)) {
+            if (btn->features & DStyleOptionButton::FloatingButton) {
+                return 19;
+            }
+        }
+        return 11;
+    }
     case PM_SwitchButtonHandleWidth:
         return 30;
     case PM_SwithcButtonHandleHeight:
@@ -1114,7 +1133,7 @@ QSize DStyle::sizeFromContents(const QStyle *style, DStyle::ContentsType ct, con
     case CT_IconButton:
         if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton *>(opt)) {
             if (btn->features & DStyleOptionButton::FloatingButton) {
-                return btn->iconSize * 3;
+                return btn->iconSize * 2.5;
             }
 
             if (btn->features & DStyleOptionButton::Flat) {

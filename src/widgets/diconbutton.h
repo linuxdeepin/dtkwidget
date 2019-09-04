@@ -62,6 +62,7 @@ protected:
     using QAbstractButton::text;
 
     DIconButton(DIconButtonPrivate &dd, QWidget *parent = nullptr);
+    virtual DStyleOptionButton baseStyleOption() const;
     virtual void initStyleOption(DStyleOptionButton *option) const;
 
 private:

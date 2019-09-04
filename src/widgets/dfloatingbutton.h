@@ -37,6 +37,7 @@ public:
     DFloatingButton(const QIcon& icon, const QString &text, QWidget *parent = nullptr);
 
 protected:
+    DStyleOptionButton baseStyleOption() const override;
     void initStyleOption(DStyleOptionButton *option) const override;
 };
 

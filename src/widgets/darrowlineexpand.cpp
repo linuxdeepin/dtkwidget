@@ -25,7 +25,7 @@ DWIDGET_BEGIN_NAMESPACE
 ArrowHeaderLine::ArrowHeaderLine(QWidget *parent) :
     DHeaderLine(parent)
 {
-    m_arrowButton = new DIconButton(DStyle::SP_ArrowDown, this);
+    m_arrowButton = new DIconButton(DStyle::SP_ExpandElement, this);
     m_arrowButton->setFlat(true);
     setExpand(false);
     connect(m_arrowButton, &DIconButton::clicked, this, &ArrowHeaderLine::mousePress);
@@ -36,9 +36,9 @@ ArrowHeaderLine::ArrowHeaderLine(QWidget *parent) :
 void ArrowHeaderLine::setExpand(bool value)
 {
     if (value) {
-        m_arrowButton->setIcon(DStyle::SP_ArrowUp);
+        m_arrowButton->setIcon(DStyle::SP_ReduceElement);
     } else {
-        m_arrowButton->setIcon(DStyle::SP_ArrowDown);
+        m_arrowButton->setIcon(DStyle::SP_ExpandElement);
     }
     m_isExpanded = value;
 }
