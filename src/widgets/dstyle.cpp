@@ -485,12 +485,20 @@ void drawArrowLeave(QPainter *pa, const QRectF &rect)
 
 void drawArrowNext(QPainter *pa, const QRectF &rect)
 {
-    drawArrowRight(pa, rect);
+    QRectF content_rect(rect.x() + rect.width() / 2, rect.y(), rect.width() / 2, rect.height());
+    qreal y = rect.center().y();
+
+    drawArrowElement(Qt::RightArrow, pa, content_rect);
+    pa->drawLine(rect.x(), y, rect.bottom(), y);
 }
 
 void drawArrowPrev(QPainter *pa, const QRectF &rect)
 {
-    drawArrowLeft(pa, rect);
+    QRectF content_rect(rect.x(), rect.y(), rect.width() / 2, rect.height());
+    qreal y = rect.center().y();
+
+    drawArrowElement(Qt::LeftArrow, pa, content_rect);
+    pa->drawLine(rect.x(), y, rect.bottom(), y);
 }
 
 void drawShowPassword(QPainter *pa, const QRectF &rect)
@@ -918,7 +926,7 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
         break;
     }
     case PE_FloatingWidget: {
-        if (const DStyleOptionFloatingWidget *btn = qstyleoption_cast<const DStyleOptionFloatingWidget*>(opt)) {
+        if (const DStyleOptionFloatingWidget *btn = qstyleoption_cast<const DStyleOptionFloatingWidget *>(opt)) {
             DStyleHelper dstyle(style);
             int shadowRadius = dstyle.pixelMetric(PM_FloatingWidgetShadowRadius, opt, w);    //18
             int frameRadius = dstyle.pixelMetric(PM_FloatingWidgetRadius, opt, w);           //18
@@ -1116,7 +1124,7 @@ QRect DStyle::subElementRect(const QStyle *style, DStyle::SubElement r, const QS
         break;
     }
     case SE_FloatingWidget: {
-        if (const DStyleOptionFloatingWidget *btn = qstyleoption_cast<const DStyleOptionFloatingWidget*>(opt)) {
+        if (const DStyleOptionFloatingWidget *btn = qstyleoption_cast<const DStyleOptionFloatingWidget *>(opt)) {
             DStyleHelper dstyle(style);
             QRect rect = btn->rect;
             int shadowMarge = dstyle.pixelMetric(PM_FloatingWidgetShadowMargins, opt, widget);
