@@ -29,8 +29,8 @@ namespace DIALOG {
     const int BORDER_RADIUS = 4;
     const int CONTENT_INSERT_OFFSET = 2;
     const int BUTTON_HEIGHT = 28;
-    const int CLOSE_BUTTON_WIDTH = 27;
-    const int CLOSE_BUTTON_HEIGHT = 23;
+    const int CLOSE_BUTTON_WIDTH = 21;
+    const int CLOSE_BUTTON_HEIGHT = 21;
     const int ICON_LAYOUT_TOP_MARGIN = 14;
     const int ICON_LAYOUT_BOTTOM_MARGIN = 14;
     const int ICON_LAYOUT_LEFT_MARGIN = 20;

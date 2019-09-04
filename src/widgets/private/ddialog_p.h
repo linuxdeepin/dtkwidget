@@ -29,7 +29,7 @@ QT_END_NAMESPACE
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DImageButton;
+class DIconButton;
 class DVBoxWidget;
 class DHBoxWidget;
 
@@ -38,7 +38,7 @@ class DialogButton : public QPushButton {
     Q_PROPERTY(int buttonType READ buttonType WRITE setButtonType NOTIFY buttonTypeChanged)
 
 public:
-    explicit DialogButton(const QString &text, QWidget *parent = 0);
+    explicit DialogButton(const QString &text, QWidget *parent = nullptr);
     int buttonType() const;
 
 public Q_SLOTS:
@@ -69,7 +69,7 @@ private:
     QLabel* messageLabel;
     QLabel* titleLabel;
 
-    DImageButton* closeButton = Q_NULLPTR;
+    DIconButton* closeButton = nullptr;
     QHBoxLayout *iconLayout;
     QVBoxLayout *contentLayout;
     QHBoxLayout *buttonLayout;

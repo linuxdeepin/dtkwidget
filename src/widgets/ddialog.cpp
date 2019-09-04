@@ -33,7 +33,7 @@
 
 #include "private/ddialog_p.h"
 
-#include "dimagebutton.h"
+#include "diconbutton.h"
 #include "dialog_constants.h"
 #include "ddialog.h"
 #include "dboxwidget.h"
@@ -120,10 +120,10 @@ void DDialogPrivate::init()
     topLayout->addLayout(contentLayout);
 
     // TopLayout--Close button
-    closeButton = new DImageButton(q);
+    closeButton = new DIconButton(DStyle::SP_CloseButton, q);
     closeButton->setObjectName("CloseButton");
+    closeButton->setIconSize(QSize(DIALOG::CLOSE_BUTTON_WIDTH, DIALOG::CLOSE_BUTTON_HEIGHT));
     closeButton->adjustSize();
-//    closeButton->setFixedSize(DIALOG::CLOSE_BUTTON_WIDTH, DIALOG::CLOSE_BUTTON_HEIGHT);
     closeButton->setAttribute(Qt::WA_NoMousePropagation);
 
     DAnchorsBase::setAnchor(closeButton, Qt::AnchorRight, q, Qt::AnchorRight);
