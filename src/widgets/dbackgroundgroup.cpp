@@ -62,6 +62,7 @@ public:
     Qt::Orientations direction;
     QList<QPair<QWidget*, DStyleOptionBackgroundGroup::ItemBackgroundPosition>> itemStyleOptions;
     QMargins itemMargins;
+    bool useWidgetBackground = true;
 
     D_DECLARE_PUBLIC(DBackgroundGroup)
 };
@@ -92,12 +93,30 @@ QMargins DBackgroundGroup::itemMargins() const
     return d->itemMargins;
 }
 
+bool DBackgroundGroup::useWidgetBackground() const
+{
+    D_DC(DBackgroundGroup);
+
+    return d->useWidgetBackground;
+}
+
 void DBackgroundGroup::setItemMargins(QMargins itemMargins)
 {
     D_D(DBackgroundGroup);
 
     d->itemMargins = itemMargins;
     update();
+}
+
+void DBackgroundGroup::setUseWidgetBackground(bool useWidgetBackground)
+{
+    D_D(DBackgroundGroup);
+
+    if (d->useWidgetBackground == useWidgetBackground)
+        return;
+
+    d->useWidgetBackground = useWidgetBackground;
+    Q_EMIT useWidgetBackgroundChanged(useWidgetBackground);
 }
 
 void DBackgroundGroup::paintEvent(QPaintEvent *event)
@@ -115,7 +134,7 @@ void DBackgroundGroup::paintEvent(QPaintEvent *event)
         option.directions = d->direction;
         option.position = pair.second;
 
-        if (backgroundRole() != QPalette::NoRole) {
+        if (d->useWidgetBackground) {
             option.dpalette.setBrush(DPalette::ItemBackground, palette().brush(backgroundRole()));
         }
 

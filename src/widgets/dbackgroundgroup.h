@@ -15,13 +15,20 @@ class LIBDTKWIDGETSHARED_EXPORT DBackgroundGroup : public QWidget, public DTK_CO
     D_DECLARE_PRIVATE(DBackgroundGroup)
 
     Q_PROPERTY(QMargins itemMargins READ itemMargins WRITE setItemMargins)
+    Q_PROPERTY(bool useWidgetBackground READ useWidgetBackground WRITE setUseWidgetBackground NOTIFY useWidgetBackgroundChanged)
+
 public:
     explicit DBackgroundGroup(QLayout *layout, QWidget *parent = nullptr);
 
     QMargins itemMargins() const;
+    bool useWidgetBackground() const;
 
 public Q_SLOTS:
     void setItemMargins(QMargins itemMargins);
+    void setUseWidgetBackground(bool useWidgetBackground);
+
+Q_SIGNALS:
+    void useWidgetBackgroundChanged(bool useWidgetBackground);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
