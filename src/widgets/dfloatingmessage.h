@@ -19,42 +19,43 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DFLOATINGWIDGET_H
-#define DFLOATINGWIDGET_H
+#ifndef DFLOATINGMESSAGE_H
+#define DFLOATINGMESSAGE_H
 
 #include <dtkwidget_global.h>
+#include <dfloatingwidget.h>
 #include <DObject>
 
-#include <QWidget>
+#include <DIconButton>
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DStyleOptionFloatingWidget;
-class DFloatingWidgetPrivate;
-class DFloatingWidget : public QWidget, public DTK_CORE_NAMESPACE::DObject
+class DFloatingMessagePrivate;
+class DFloatingMessage : public DFloatingWidget
 {
     Q_OBJECT
-    D_DECLARE_PRIVATE(DFloatingWidget)
+    D_DECLARE_PRIVATE(DFloatingMessage)
 
 public:
-    explicit DFloatingWidget(QWidget *parent = nullptr);
+    enum MessageType {
+        TransientType,  //临时的消息,
+        ResidentType    //常驻的消息
+    };
 
-    QSize sizeHint() const override;
-    void setWidget(QWidget *widget);
+    explicit DFloatingMessage(QWidget *parent = nullptr, MessageType notifyType = MessageType::TransientType);
+
+    void setIcon(const QIcon &ico);
+    void setMessage(const QString &str);
+    void setWidget(QWidget *w);
+    void setTimeInterval(int msec);
 
 protected:
-    DFloatingWidget(DFloatingWidgetPrivate &dd, QWidget *parent);
+    using DFloatingWidget::setWidget;
 
-    void paintEvent(QPaintEvent* e) override;
-    bool event(QEvent *event) override;
-
-    using QWidget::setContentsMargins;
-    using QWidget::setAutoFillBackground;
-
-public:
-    virtual void initStyleOption(DStyleOptionFloatingWidget *option) const;
+private:
+    void showEvent(QShowEvent *event) override;
 };
 
 DWIDGET_END_NAMESPACE
 
-#endif // DFLOATINGWIDGET_H
+#endif // DFLOATINGMESSAGE_H
