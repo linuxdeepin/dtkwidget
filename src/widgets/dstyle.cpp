@@ -32,6 +32,8 @@
 #include <private/qtextengine_p.h>
 #include <private/qicon_p.h>
 
+#include <math.h>
+
 QT_BEGIN_NAMESPACE
 //extern Q_WIDGETS_EXPORT void qt_blurImage(QImage &blurImage, qreal radius, bool quality, int transposed = 0);
 extern Q_WIDGETS_EXPORT void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, bool quality, bool alphaOnly, int transposed = 0);
@@ -420,7 +422,13 @@ void drawMarkElement(QPainter *pa, const QRectF &rect)
 
 void drawSelectElement(QPainter *pa, const QRectF &rect)
 {
+    qreal y = rect.center().y();
+    qreal width = rect.bottom() / 3.0;
+    qreal radius = rect.bottom() / 10;
 
+    pa->drawEllipse(width, y, radius, radius);
+    pa->drawEllipse(width * 2, y, radius, radius);
+    pa->drawEllipse(width * 3, y, radius, radius);
 }
 
 void drawEditElement(QPainter *pa, const QRectF &rect)
@@ -440,12 +448,37 @@ void drawReduceElement(QPainter *pa, const QRectF &rect)
 
 void drawLockElement(QPainter *pa, const QRectF &rect)
 {
+    qreal width = rect.width() / 5.0;
+    qreal height = rect.height() / 5.0;
+    qreal y = rect.y();
+    qreal x = rect.x();
 
+    QRectF topRect(x + width, y, width * 3, height * 3);
+    QRectF bottomRect(x, y + height * 2, rect.width(), rect.height() - height * 2);
+    QPainterPath path;
+
+    path.arcMoveTo(topRect, 0);
+    path.arcTo(topRect, 0, 180);
+
+    path.addRect(bottomRect);
+    pa->drawPath(path);
 }
 
 void drawUnlockElement(QPainter *pa, const QRectF &rect)
 {
+    qreal width = rect.width() / 5.0;
+    qreal height = rect.height() / 5.0;
+    qreal y = rect.y();
+    qreal x = rect.x();
 
+    QRectF topRect(x + width * 3, y, rect.width() - width * 3, height * 3);
+    QRectF bottomRect(x + width, y + height * 2, rect.width() - width * 2, rect.height() - height * 2);
+    QPainterPath path;
+
+    path.arcMoveTo(topRect, 0);
+    path.arcTo(topRect, 0, 180);
+    path.addRect(bottomRect);
+    pa->drawPath(path);
 }
 
 void drawMediaVolumeElement(QPainter *pa, const QRectF &rect)
@@ -535,7 +568,16 @@ void drawIndicatorMajuscule(QPainter *pa, const QRectF &rect)
 
 void drawIndicatorSearch(QPainter *pa, const QRectF &rect)
 {
+    QPainterPath path;
 
+    qreal hypotenuse =  sqrt((pow(rect.bottom(), 2) + pow(rect.right(), 2)));
+    qreal x = rect.bottom() - (4 / hypotenuse) * rect.bottom();
+    qreal y = rect.right() - (4 / hypotenuse) * rect.right();
+
+    path.addEllipse(rect.x(), rect.y(), x / 2, y / 2);
+    path.moveTo(rect.bottomRight());
+    path.lineTo(x, y);
+    pa->drawPath(path);
 }
 
 void drawDeleteButton(QPainter *pa, const QRectF &rect)
@@ -688,12 +730,15 @@ void drawLineEditClearButton(QPainter *pa, const QRectF &rect)
 
 void drawIndicatorUnchecked(QPainter *pa, const QRectF &rect)
 {
-
+    pa->drawEllipse(rect);
 }
 
 void drawIndicatorChecked(QPainter *pa, const QRectF &rect)
 {
+    QRectF mark(0, 0, rect.width() / 2, rect.height() / 2);
+    mark.moveCenter(rect.center());
 
+    drawMark(pa, mark, pa->pen().color(), pa->pen().color(), 1, 0);
 }
 
 void drawArrowElement(Qt::ArrowType arrow, QPainter *pa, const QRectF &rect)
