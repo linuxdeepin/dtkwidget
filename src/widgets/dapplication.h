@@ -18,11 +18,13 @@
 #ifndef DAPPLICATION_H
 #define DAPPLICATION_H
 
+#include <dtkwidget_global.h>
+#include <DObject>
+#include <DPalette>
+
 #include <QApplication>
 
-#include "dtkwidget_global.h"
-#include "dobject.h"
-
+DGUI_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
 #define DAPPLICATION_XSTRING(s) DAPPLICATION_STRING(s)

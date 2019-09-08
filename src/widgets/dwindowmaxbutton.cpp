@@ -17,6 +17,7 @@
 
 #include "dwindowmaxbutton.h"
 #include "private/diconbutton_p.h"
+#include "dstyleoption.h"
 
 DWIDGET_BEGIN_NAMESPACE
 

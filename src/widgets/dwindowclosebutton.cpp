@@ -16,6 +16,7 @@
  */
 
 #include "dwindowclosebutton.h"
+#include "dstyleoption.h"
 
 DWIDGET_BEGIN_NAMESPACE
 

@@ -15,9 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "dthememanager.h"
-
 #include "dwindowoptionbutton.h"
+#include "dstyleoption.h"
 
 DWIDGET_BEGIN_NAMESPACE
 

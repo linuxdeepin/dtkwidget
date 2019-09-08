@@ -24,6 +24,7 @@
 #include <dtkwidget_global.h>
 #include <DObject>
 #include <DPalette>
+#include <DFontSizeManager>
 
 #include <QAction>
 #include <QStyledItemDelegate>

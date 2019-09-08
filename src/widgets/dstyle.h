@@ -27,11 +27,13 @@
 #include <QCommonStyle>
 #include <QPainter>
 #include <QIconEngine>
+#include <QStyleOption>
 
 QT_BEGIN_NAMESPACE
 class QTextLayout;
 QT_END_NAMESPACE
 
+DGUI_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
 namespace DDrawUtils
@@ -239,6 +241,8 @@ public:
     QRect subElementRect(QStyle::SubElement r, const QStyleOption *opt, const QWidget *widget = nullptr) const override;
     QSize sizeFromContents(QStyle::ContentsType ct, const QStyleOption *opt, const QSize &contentsSize, const QWidget *widget = nullptr) const override;
     QIcon standardIcon(QStyle::StandardPixmap st, const QStyleOption *opt = nullptr, const QWidget *widget = nullptr) const override;
+
+    QPalette standardPalette() const override;
 
     // 获取一个加工后的画笔
     QBrush generatedBrush(const QStyleOption *option, const QBrush &base,

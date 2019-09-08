@@ -100,7 +100,8 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dwidgetstype.h \
     $$PWD/dstyleditemdelegate.h \
     $$PWD/diconbutton.h \
-    $$PWD/dfloatingwidget.h
+    $$PWD/dfloatingwidget.h \
+    $$PWD/dapplicationhelper.h
 
 SOURCES += $$PWD/dslider.cpp \
     $$PWD/dbackgroundgroup.cpp \
@@ -160,7 +161,8 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dfloatingbutton.cpp \
     $$PWD/dstyleditemdelegate.cpp \
     $$PWD/diconbutton.cpp \
-    $$PWD/dfloatingwidget.cpp
+    $$PWD/dfloatingwidget.cpp \
+    $$PWD/dapplicationhelper.cpp
 
 RESOURCES += \
     $$PWD/icons.qrc
@@ -299,4 +301,5 @@ includes.files += \
     $$PWD/DWindowCloseButton \
     $$PWD/DWindowMaxButton \
     $$PWD/DWindowMinButton \
-    $$PWD/DWindowOptionButton
+    $$PWD/DWindowOptionButton \
+    $$PWD/DApplicationHelper

@@ -16,6 +16,7 @@
  */
 
 #include "dwindowminbutton.h"
+#include "dstyleoption.h"
 
 #include <QEvent>
 #include <QStyle>

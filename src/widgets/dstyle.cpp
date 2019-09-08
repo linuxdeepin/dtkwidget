@@ -19,6 +19,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "dstyle.h"
+#include "dstyleoption.h"
+
+#include <DGuiApplicationHelper>
 
 #include <QStyleOption>
 #include <QTextLayout>
@@ -39,6 +42,7 @@ QT_BEGIN_NAMESPACE
 extern Q_WIDGETS_EXPORT void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, bool quality, bool alphaOnly, int transposed = 0);
 QT_END_NAMESPACE
 
+DGUI_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
 inline static int adjustColorValue(int base, qint8 increment, int max = 255)
@@ -1323,6 +1327,11 @@ int DStyle::styleHint(QStyle::StyleHint sh, const QStyleOption *opt, const QWidg
     }
 
     return QCommonStyle::styleHint(sh, opt, w, shret);
+}
+
+QPalette DStyle::standardPalette() const
+{
+    return DGuiApplicationHelper::instance()->standardPalette(DGuiApplicationHelper::LightType);
 }
 
 static DStyle::StyleState getState(const QStyleOption *option)

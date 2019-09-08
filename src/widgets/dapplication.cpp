@@ -52,6 +52,7 @@
 #include "daboutdialog.h"
 
 #include <DPlatformHandle>
+#include <DGuiApplicationHelper>
 
 #ifdef Q_OS_UNIX
 #include <QDBusError>
@@ -76,6 +77,9 @@
 DCORE_USE_NAMESPACE
 
 DWIDGET_BEGIN_NAMESPACE
+
+typedef QHash<const QWidget*, DPalette> PaletteHash;
+Q_GLOBAL_STATIC(PaletteHash, widgetPalette)
 
 DApplicationPrivate::DApplicationPrivate(DApplication *q) :
     DObjectPrivate(q)
