@@ -18,12 +18,14 @@
 #ifndef DTITLEBAR_H
 #define DTITLEBAR_H
 
+#include <dtkwidget_global.h>
+#include <DObject>
+#include <DGuiApplicationHelper>
+
 #include <QFrame>
 #include <QMenu>
 
-#include <dobject.h>
-#include "dtkwidget_global.h"
-
+DGUI_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
 class DTitlebarPrivate;
@@ -59,6 +61,9 @@ public:
     bool menuIsDisabled() const;
     void setMenuDisabled(bool disabled);
 
+    bool switchThemeMenuIsVisible() const;
+    void setSwitchThemeMenuVisible(bool visible);
+
     void setDisableFlags(Qt::WindowFlags flags);
     Qt::WindowFlags disableFlags() const;
 
@@ -75,6 +80,8 @@ Q_SIGNALS:
     void mousePosPressed(Qt::MouseButtons buttons, QPoint pos);
     void mousePosMoving(Qt::MouseButton button, QPoint pos);
 #endif
+
+    void themeTypeChanged(DGuiApplicationHelper::ColorType type);
 
 public Q_SLOTS:
     void setFixedHeight(int h);
@@ -111,6 +118,7 @@ private:
     D_PRIVATE_SLOT(void _q_helpActionTriggered())
     D_PRIVATE_SLOT(void _q_aboutActionTriggered())
     D_PRIVATE_SLOT(void _q_quitActionTriggered())
+    D_PRIVATE_SLOT(void _q_switchThemeActionTriggered(QAction*))
 #endif
 };
 

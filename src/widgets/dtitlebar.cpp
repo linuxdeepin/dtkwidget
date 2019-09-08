@@ -78,6 +78,7 @@ private:
     void _q_helpActionTriggered();
     void _q_aboutActionTriggered();
     void _q_quitActionTriggered();
+    void _q_switchThemeActionTriggered(QAction*action);
 #endif
 
     void setIconVisible(bool visible);
@@ -103,10 +104,13 @@ private:
     DHorizontalLine     *separator;
 
 #ifndef QT_NO_MENU
-    QMenu               *menu           = Q_NULLPTR;
-    QAction             *helpAction     = Q_NULLPTR;
-    QAction             *aboutAction    = Q_NULLPTR;
-    QAction             *quitAction     = Q_NULLPTR;
+    QMenu               *menu             = Q_NULLPTR;
+    QAction             *helpAction       = Q_NULLPTR;
+    QAction             *aboutAction      = Q_NULLPTR;
+    QAction             *quitAction       = Q_NULLPTR;
+    QMenu               *switchThemeMenu  = nullptr;
+    QAction             *lightThemeAction = nullptr;
+    QAction             *darkThemeAction  = nullptr;
 #endif
 
     QWindow            *targetWindowHandle = Q_NULLPTR;
@@ -469,6 +473,19 @@ void DTitlebarPrivate::_q_addDefaultMenuItems()
         q->setMenu(new QMenu(q));
     }
 
+    // add switch theme sub menu
+    if (!switchThemeMenu) {
+        switchThemeMenu = new QMenu(qApp->translate("TitleBarMenu", "Theme"), menu);
+        switchThemeMenu->addAction(qApp->translate("TitleBarMenu", "Auto"));
+        lightThemeAction = switchThemeMenu->addAction(qApp->translate("TitleBarMenu", "Light"));
+        darkThemeAction = switchThemeMenu->addAction(qApp->translate("TitleBarMenu", "Dark"));
+
+        QObject::connect(switchThemeMenu, SIGNAL(triggered(QAction*)),
+                         q, SLOT(_q_switchThemeActionTriggered(QAction*)));
+
+        menu->addMenu(switchThemeMenu);
+    }
+
     // add help menu item.
     if (!helpAction && DApplicationPrivate::isUserManualExists()) {
         helpAction = new QAction(qApp->translate("TitleBarMenu", "Help"), menu);
@@ -513,6 +530,22 @@ void DTitlebarPrivate::_q_quitActionTriggered()
     if (dapp) {
         dapp->handleQuitAction();
     }
+}
+
+void DTitlebarPrivate::_q_switchThemeActionTriggered(QAction *action)
+{
+    DGuiApplicationHelper::ColorType type = DGuiApplicationHelper::UnknownType;
+
+    if (action == lightThemeAction) {
+        type = DGuiApplicationHelper::LightType;
+    } else if (action == darkThemeAction) {
+        type = DGuiApplicationHelper::DarkType;
+    }
+
+    DGuiApplicationHelper::instance()->setPaletteType(type);
+    D_Q(DTitlebar);
+
+    Q_EMIT q->themeTypeChanged(type);
 }
 
 void DTitlebarPrivate::setIconVisible(bool visible)
@@ -1072,6 +1105,30 @@ void DTitlebar::setMenuDisabled(bool disabled)
 {
     D_D(DTitlebar);
     d->optionButton->setDisabled(disabled);
+}
+
+bool DTitlebar::switchThemeMenuIsVisible() const
+{
+    D_DC(DTitlebar);
+
+    return d->switchThemeMenu;
+}
+
+void DTitlebar::setSwitchThemeMenuVisible(bool visible)
+{
+    D_D(DTitlebar);
+
+    if (visible == static_cast<bool>(d->switchThemeMenu)) {
+        return;
+    }
+
+    if (visible) {
+        d->switchThemeMenu = new QMenu();
+        d->menu->insertMenu(d->helpAction ? d->helpAction : d->aboutAction, d->switchThemeMenu);
+    } else {
+        d->menu->removeAction(d->switchThemeMenu->menuAction());
+        d->switchThemeMenu->deleteLater();
+    }
 }
 
 

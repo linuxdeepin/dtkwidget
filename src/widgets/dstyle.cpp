@@ -1331,7 +1331,11 @@ int DStyle::styleHint(QStyle::StyleHint sh, const QStyleOption *opt, const QWidg
 
 QPalette DStyle::standardPalette() const
 {
-    return DGuiApplicationHelper::instance()->standardPalette(DGuiApplicationHelper::LightType);
+    QPalette pa = DGuiApplicationHelper::instance()->standardPalette(DGuiApplicationHelper::LightType);
+    // 将无效的颜色fallback到QCommonStyle提供的palette，且在resolve操作中将detach pa对象
+    // 防止在QApplication initSystemPalette的setSystemPalette中获取到一个和 QGuiApplicationPrivate::platformTheme()->palette()
+    // 一样的QPalette对象，这样将导致QApplicationPrivate::setPalette_helper中将 app_pal 和新的QPalette对比时认为他们没有变化
+    return pa.resolve(QCommonStyle::standardPalette());
 }
 
 static DStyle::StyleState getState(const QStyleOption *option)

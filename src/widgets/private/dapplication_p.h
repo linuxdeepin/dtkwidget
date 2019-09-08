@@ -41,8 +41,8 @@ public:
     explicit DApplicationPrivate(DApplication *q);
     ~DApplicationPrivate();
 
-    QString theme() const;
-    void setTheme(const QString &theme);
+    D_DECL_DEPRECATED QString theme() const;
+    D_DECL_DEPRECATED void setTheme(const QString &theme);
 
     bool setSingleInstanceBySemaphore(const QString &key);
 #ifdef Q_OS_UNIX
@@ -51,11 +51,6 @@ public:
 
     bool loadDtkTranslator(QList<QLocale> localeFallback);
     bool loadTranslator(QList<DPathBuf> translateDirs, const QString &name, QList<QLocale> localeFallback);
-
-    // 根据调色板中的窗口背景色重设程序的主题颜色“亮”/“暗”类型
-    void resetApplicationThemeType();
-    // 根据窗口自身的背景色重设其主题颜色的“亮”/“暗”类型
-    void resetWindowThemeType(QWidget *window);
 
     static bool isUserManualExists();
 public:
