@@ -108,7 +108,9 @@ private:
     QAction             *helpAction       = Q_NULLPTR;
     QAction             *aboutAction      = Q_NULLPTR;
     QAction             *quitAction       = Q_NULLPTR;
+    bool                canSwitchTheme    = true;
     QMenu               *switchThemeMenu  = nullptr;
+    QAction             *autoThemeAction  = nullptr;
     QAction             *lightThemeAction = nullptr;
     QAction             *darkThemeAction  = nullptr;
 #endif
@@ -474,13 +476,34 @@ void DTitlebarPrivate::_q_addDefaultMenuItems()
     }
 
     // add switch theme sub menu
-    if (!switchThemeMenu) {
+    if (canSwitchTheme && !switchThemeMenu) {
         switchThemeMenu = new QMenu(qApp->translate("TitleBarMenu", "Theme"), menu);
-        switchThemeMenu->addAction(qApp->translate("TitleBarMenu", "Auto"));
+        autoThemeAction = switchThemeMenu->addAction(qApp->translate("TitleBarMenu", "Auto"));
         lightThemeAction = switchThemeMenu->addAction(qApp->translate("TitleBarMenu", "Light"));
         darkThemeAction = switchThemeMenu->addAction(qApp->translate("TitleBarMenu", "Dark"));
 
-        QObject::connect(switchThemeMenu, SIGNAL(triggered(QAction*)),
+        autoThemeAction->setCheckable(true);
+        lightThemeAction->setCheckable(true);
+        darkThemeAction->setCheckable(true);
+
+        switch (DGuiApplicationHelper::instance()->paletteType()) {
+        case DGuiApplicationHelper::LightType:
+            lightThemeAction->setChecked(true);
+            break;
+        case DGuiApplicationHelper::DarkType:
+            darkThemeAction->setChecked(true);
+            break;
+        default:
+            autoThemeAction->setChecked(true);
+            break;
+        }
+
+        QActionGroup *group = new QActionGroup(switchThemeMenu);
+        group->addAction(autoThemeAction);
+        group->addAction(lightThemeAction);
+        group->addAction(darkThemeAction);
+
+        QObject::connect(group, SIGNAL(triggered(QAction*)),
                          q, SLOT(_q_switchThemeActionTriggered(QAction*)));
 
         menu->addMenu(switchThemeMenu);
@@ -543,9 +566,6 @@ void DTitlebarPrivate::_q_switchThemeActionTriggered(QAction *action)
     }
 
     DGuiApplicationHelper::instance()->setPaletteType(type);
-    D_Q(DTitlebar);
-
-    Q_EMIT q->themeTypeChanged(type);
 }
 
 void DTitlebarPrivate::setIconVisible(bool visible)
@@ -1118,19 +1138,22 @@ void DTitlebar::setSwitchThemeMenuVisible(bool visible)
 {
     D_D(DTitlebar);
 
-    if (visible == static_cast<bool>(d->switchThemeMenu)) {
+    if (visible == d->canSwitchTheme) {
         return;
     }
 
+    d->canSwitchTheme = visible;
+
     if (visible) {
-        d->switchThemeMenu = new QMenu();
-        d->menu->insertMenu(d->helpAction ? d->helpAction : d->aboutAction, d->switchThemeMenu);
-    } else {
+        if (!d->switchThemeMenu) {
+            d->switchThemeMenu = new QMenu(d->menu);
+            d->menu->insertMenu(d->helpAction ? d->helpAction : d->aboutAction, d->switchThemeMenu);
+        }
+    } else if (d->switchThemeMenu) {
         d->menu->removeAction(d->switchThemeMenu->menuAction());
         d->switchThemeMenu->deleteLater();
     }
 }
-
 
 /*!
  * \~english \brief DTitlebar::setDisableFlags will disable button match flags.

@@ -81,8 +81,6 @@ Q_SIGNALS:
     void mousePosMoving(Qt::MouseButton button, QPoint pos);
 #endif
 
-    void themeTypeChanged(DGuiApplicationHelper::ColorType type);
-
 public Q_SLOTS:
     void setFixedHeight(int h);
     void setBackgroundTransparent(bool transparent);
