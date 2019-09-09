@@ -109,6 +109,7 @@ private:
     QAction             *aboutAction      = Q_NULLPTR;
     QAction             *quitAction       = Q_NULLPTR;
     bool                canSwitchTheme    = true;
+    QAction             *themeSeparator   = nullptr;
     QMenu               *switchThemeMenu  = nullptr;
     QAction             *autoThemeAction  = nullptr;
     QAction             *lightThemeAction = nullptr;
@@ -476,27 +477,15 @@ void DTitlebarPrivate::_q_addDefaultMenuItems()
     }
 
     // add switch theme sub menu
-    if (canSwitchTheme && !switchThemeMenu) {
+    if (!switchThemeMenu) {
         switchThemeMenu = new QMenu(qApp->translate("TitleBarMenu", "Theme"), menu);
-        autoThemeAction = switchThemeMenu->addAction(qApp->translate("TitleBarMenu", "Auto"));
-        lightThemeAction = switchThemeMenu->addAction(qApp->translate("TitleBarMenu", "Light"));
-        darkThemeAction = switchThemeMenu->addAction(qApp->translate("TitleBarMenu", "Dark"));
+        lightThemeAction = switchThemeMenu->addAction(qApp->translate("TitleBarMenu", "Light Theme"));
+        darkThemeAction = switchThemeMenu->addAction(qApp->translate("TitleBarMenu", "Dark Theme"));
+        autoThemeAction = switchThemeMenu->addAction(qApp->translate("TitleBarMenu", "System Theme"));
 
         autoThemeAction->setCheckable(true);
         lightThemeAction->setCheckable(true);
         darkThemeAction->setCheckable(true);
-
-        switch (DGuiApplicationHelper::instance()->paletteType()) {
-        case DGuiApplicationHelper::LightType:
-            lightThemeAction->setChecked(true);
-            break;
-        case DGuiApplicationHelper::DarkType:
-            darkThemeAction->setChecked(true);
-            break;
-        default:
-            autoThemeAction->setChecked(true);
-            break;
-        }
 
         QActionGroup *group = new QActionGroup(switchThemeMenu);
         group->addAction(autoThemeAction);
@@ -507,6 +496,10 @@ void DTitlebarPrivate::_q_addDefaultMenuItems()
                          q, SLOT(_q_switchThemeActionTriggered(QAction*)));
 
         menu->addMenu(switchThemeMenu);
+        themeSeparator = menu->addSeparator();
+
+        switchThemeMenu->menuAction()->setVisible(canSwitchTheme);
+        themeSeparator->setVisible(canSwitchTheme);
     }
 
     // add help menu item.
@@ -702,6 +695,25 @@ void DTitlebar::showMenu()
     D_D(DTitlebar);
 
     if (d->menu) {
+        // 更新主题选中的项
+        if (d->switchThemeMenu) {
+            QAction *action;
+
+            switch (DGuiApplicationHelper::instance()->paletteType()) {
+            case DGuiApplicationHelper::LightType:
+                action = d->lightThemeAction;
+                break;
+            case DGuiApplicationHelper::DarkType:
+                action = d->darkThemeAction;
+                break;
+            default:
+                action = d->autoThemeAction;
+                break;
+            }
+
+            action->setChecked(true);
+        }
+
         d->menu->exec(d->optionButton->mapToGlobal(d->optionButton->rect().bottomLeft()));
     }
 }
@@ -1144,14 +1156,9 @@ void DTitlebar::setSwitchThemeMenuVisible(bool visible)
 
     d->canSwitchTheme = visible;
 
-    if (visible) {
-        if (!d->switchThemeMenu) {
-            d->switchThemeMenu = new QMenu(d->menu);
-            d->menu->insertMenu(d->helpAction ? d->helpAction : d->aboutAction, d->switchThemeMenu);
-        }
-    } else if (d->switchThemeMenu) {
-        d->menu->removeAction(d->switchThemeMenu->menuAction());
-        d->switchThemeMenu->deleteLater();
+    if (d->switchThemeMenu) {
+        d->switchThemeMenu->menuAction()->setVisible(visible);
+        d->themeSeparator->setVisible(visible);
     }
 }
 

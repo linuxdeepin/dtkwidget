@@ -21,6 +21,7 @@
 
 #include <QDebug>
 #include <DLog>
+#include <DTitlebar>
 
 #include "util/dwidgetutil.h"
 
@@ -50,8 +51,13 @@ int main(int argc, char *argv[])
     }
 
     MainWindow w;
+    w.titlebar()->setSwitchThemeMenuVisible(false);
     w.show();
     Dtk::Widget::moveToCenter(&w);
+
+    QTimer::singleShot(3000, [&w] {
+        w.titlebar()->setSwitchThemeMenuVisible(true);
+    });
 
     return a.exec();
 }
