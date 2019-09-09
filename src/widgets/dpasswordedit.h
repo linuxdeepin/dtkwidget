@@ -34,6 +34,9 @@ public:
     bool isEchoMode() const;
     void setEchoMode(EchoMode mode);
 
+    void setEchoButtonIsVisible(bool visible);
+    bool isEchoButtonIsVisible () const;
+
 Q_SIGNALS:
     void echoModeChanged(bool echoOn);
 

@@ -91,6 +91,20 @@ void DPasswordEdit::setEchoMode(QLineEdit::EchoMode mode)
     }
 }
 
+void DPasswordEdit::setEchoButtonIsVisible(bool visible)
+{
+    D_D(DPasswordEdit);
+
+    d->togglePasswordVisibleButton->setVisible(visible);
+    setRightWidgetsVisible(visible);
+}
+
+bool DPasswordEdit::echoButtonIsVisible() const
+{
+    D_DC(DPasswordEdit);
+    return d->togglePasswordVisibleButton->isVisible();
+}
+
 DPasswordEditPrivate::DPasswordEditPrivate(DPasswordEdit *q)
     : DLineEditPrivate(q)
 {

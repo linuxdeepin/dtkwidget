@@ -250,7 +250,31 @@ void DLineEdit::setRightWidgets(const QList<QWidget *> &list)
     setContentsMargins(margins.left(), margins.top(), rightWidth, margins.bottom());
 }
 
+void DLineEdit::setLeftWidgetsVisible(bool visible)
+{
+    Q_D(DLineEdit);
+    int left = 0;
+    const QMargins &margins = contentsMargins();
 
+    if (visible) {
+        d->leftWidget->adjustSize();
+        left = d->leftWidget->width();
+    }
+    setContentsMargins(left, margins.top(), margins.right(), margins.bottom());
+}
+
+void DLineEdit::setRightWidgetsVisible(bool visible)
+{
+    Q_D(DLineEdit);
+    int right = 0;
+    const QMargins &margins = contentsMargins();
+
+    if (visible) {
+        d->rightWidget->adjustSize();
+        right = d->rightWidget->width();
+    }
+    setContentsMargins(margins.left(), margins.top(), right, margins.bottom());
+}
 
 void DLineEdit::focusInEvent(QFocusEvent *e)
 {

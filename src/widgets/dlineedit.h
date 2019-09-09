@@ -42,8 +42,11 @@ public:
     void showAlertMessage(const QString &text, int duration = 3000);
     void hideAlertMessage();
 
-    void setLeftWidgets(const QList<QWidget*> &list);
-    void setRightWidgets(const QList<QWidget*> &list);
+    void setLeftWidgets(const QList<QWidget *> &list);
+    void setRightWidgets(const QList<QWidget *> &list);
+
+    void setLeftWidgetsVisible(bool visible);
+    void setRightWidgetsVisible(bool visible);
 
 Q_SIGNALS:
     void alertChanged(bool alert) const;
