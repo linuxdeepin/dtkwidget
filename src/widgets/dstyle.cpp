@@ -1372,6 +1372,23 @@ static DStyle::StateFlags getFlags(const QStyleOption *option)
 
 void DStyle::drawPrimitive(QStyle::PrimitiveElement pe, const QStyleOption *opt, QPainter *p, const QWidget *w) const
 {
+    switch (pe) {
+    case PE_IndicatorArrowUp:
+        p->setPen(QPen(opt->palette.foreground(), 1));
+        return DDrawUtils::drawArrowUp(p, opt->rect);
+    case PE_IndicatorArrowDown:
+        p->setPen(QPen(opt->palette.foreground(), 1));
+        return DDrawUtils::drawArrowDown(p, opt->rect);
+    case PE_IndicatorArrowRight:
+        p->setPen(QPen(opt->palette.foreground(), 1));
+        return DDrawUtils::drawArrowRight(p, opt->rect);
+    case PE_IndicatorArrowLeft:
+        p->setPen(QPen(opt->palette.foreground(), 1));
+        return DDrawUtils::drawArrowLeft(p, opt->rect);
+    default:
+        break;
+    }
+
     if (Q_UNLIKELY(pe < QStyle::PE_CustomBase)) {
         return QCommonStyle::drawPrimitive(pe, opt, p, w);
     }
