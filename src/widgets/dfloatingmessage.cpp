@@ -113,7 +113,7 @@ void DFloatingMessage::setWidget(QWidget *w)
     d->hBoxLayout->insertWidget(2, d->content);
 }
 
-void DFloatingMessage::setTimeInterval(int msec)
+void DFloatingMessage::setDuration(int msec)
 {
     D_D(DFloatingMessage);
 

@@ -47,7 +47,7 @@ public:
     void setIcon(const QIcon &ico);
     void setMessage(const QString &str);
     void setWidget(QWidget *w);
-    void setTimeInterval(int msec);
+    void setDuration(int msec);
 
 protected:
     using DFloatingWidget::setWidget;
