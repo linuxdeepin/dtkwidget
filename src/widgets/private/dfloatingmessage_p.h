@@ -25,10 +25,10 @@ public:
     QTimer *timer = nullptr;
     QWidget *widget = nullptr;
     QHBoxLayout *hBoxLayout = nullptr;
-    DIconButton *icoBtnLeft = nullptr;
+    DIconButton *iconButton = nullptr;
     QLabel *labMessage = nullptr;
     QWidget *content = nullptr;
-    DIconButton *icoBtnRight = nullptr;
+    DIconButton *closeButton = nullptr;
     DFloatingMessage::MessageType notifyType;
 
     D_DECLARE_PUBLIC(DFloatingMessage)

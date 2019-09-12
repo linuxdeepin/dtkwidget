@@ -42,7 +42,7 @@ public:
         ResidentType    //常驻的消息
     };
 
-    explicit DFloatingMessage(QWidget *parent = nullptr, MessageType notifyType = MessageType::TransientType);
+    explicit DFloatingMessage(MessageType notifyType = MessageType::TransientType, QWidget *parent = nullptr);
 
     void setIcon(const QIcon &ico);
     void setMessage(const QString &str);

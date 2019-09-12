@@ -25,6 +25,7 @@
 #include <QHBoxLayout>
 #include <QTimer>
 #include <QLabel>
+#include <QDebug>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -45,15 +46,20 @@ void DFloatingMessagePrivate::init()
 
     timer = nullptr;
     content = nullptr;
-    icoBtnRight = nullptr;
+    closeButton = nullptr;
     notifyType = notifyType;
     widget = new QWidget();
     q->DFloatingWidget::setWidget(widget);
     hBoxLayout = new QHBoxLayout(widget);
-    icoBtnLeft = new DIconButton(nullptr);
+    iconButton = new DIconButton(nullptr);
     labMessage = new QLabel();
 
-    hBoxLayout->addWidget(icoBtnLeft);
+    iconButton->setFlat(true);
+    iconButton->setFocusPolicy(Qt::NoFocus);
+    iconButton->setAttribute(Qt::WA_TransparentForMouseEvents);
+    iconButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+
+    hBoxLayout->addWidget(iconButton);
     hBoxLayout->addWidget(labMessage);
 
     if (notifyType == DFloatingMessage::MessageType::TransientType) {  //临时消息
@@ -63,17 +69,20 @@ void DFloatingMessagePrivate::init()
         q->connect(timer, &QTimer::timeout, q, &DFloatingMessage::close);
     } else {  //常驻消息
         content  = nullptr;
-        icoBtnRight = new DIconButton(DStyle::SP_CloseButton);
+        closeButton = new DIconButton(DStyle::SP_CloseButton);
+        closeButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
-        hBoxLayout->addWidget(icoBtnRight);
-        q->connect(icoBtnRight, &DIconButton::clicked, q, &DFloatingMessage::close);
+        hBoxLayout->addWidget(closeButton);
+        q->connect(closeButton, &DIconButton::clicked, q, &DFloatingMessage::close);
     }
 }
 
-DFloatingMessage::DFloatingMessage(QWidget *parent, MessageType notifyType)
+DFloatingMessage::DFloatingMessage(MessageType notifyType, QWidget *parent)
     : DFloatingWidget(*new DFloatingMessagePrivate(this), parent)
 {
     D_D(DFloatingMessage);
+
+    setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
 
     d->notifyType = notifyType;
     d->init();
@@ -83,7 +92,7 @@ void DFloatingMessage::setIcon(const QIcon &ico)
 {
     D_D(DFloatingMessage);
 
-    d->icoBtnLeft->setIcon(ico);
+    d->iconButton->setIcon(ico);
 }
 
 void DFloatingMessage::setMessage(const QString &str)
@@ -101,7 +110,7 @@ void DFloatingMessage::setWidget(QWidget *w)
         delete d->hBoxLayout->takeAt(2);
 
     d->content = w;
-    d->layout->insertWidget(2, d->content);
+    d->hBoxLayout->insertWidget(2, d->content);
 }
 
 void DFloatingMessage::setTimeInterval(int msec)

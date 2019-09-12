@@ -981,7 +981,7 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
             int frameRadius = dstyle.pixelMetric(PM_FloatingWidgetRadius, opt, w);           //18
             int offsetX = dstyle.pixelMetric(PM_FloatingWidgetShadowHOffset, opt, w);        //0
             int offsetY = dstyle.pixelMetric(PM_FloatingWidgetShadowVOffset, opt, w);        //6
-            int shadowMargins = dstyle.pixelMetric(PM_FloatingWidgetShadowMargins, opt, w);
+            int shadowMargins = dstyle.pixelMetric(PM_FloatingWidgetShadowMargins, opt, w) * 2;
 
             //绘画 矩形(图标icon+text+btn+icon)和外面一小圈frameRadius/2的 合在一起的矩形
             p->setRenderHint(QPainter::Antialiasing);
@@ -1121,7 +1121,7 @@ int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyle
         int shadow_hoffset = dstyle.pixelMetric(PM_FloatingWidgetShadowHOffset, opt, widget);
         int shadow_voffset = dstyle.pixelMetric(PM_FloatingWidgetShadowVOffset, opt, widget);
 
-        return shadow_radius +  qMax(shadow_hoffset, shadow_voffset);
+        return (shadow_radius +  qMax(shadow_hoffset, shadow_voffset)) / 2;
     }
     default:
         break;
