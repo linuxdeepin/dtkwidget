@@ -28,6 +28,7 @@ void DMessageManager::sendMessage(QWidget *par, DFloatingMessage *floMsg)
         layout->setSpacing(0);
         layout->setMargin(0);
         layout->setDirection(QBoxLayout::BottomToTop);
+        content->show();
     }
 
     content->layout()->addWidget(floMsg);
@@ -61,9 +62,12 @@ bool DMessageManager::eventFilter(QObject *watched, QEvent *event)
             content->setGeometry(geometry);
         }
     } else if (event->type() == QEvent::ChildRemoved) {
+        // 如果是通知消息被删除的事件
         if (QWidget *widget = qobject_cast<QWidget*>(watched)) {
-            if (widget->objectName() == D_MESSAGE_MANAGER_CONTENT && widget->layout()->count() == 0) {
+            if (widget->objectName() == D_MESSAGE_MANAGER_CONTENT
+                    && widget->layout() && widget->layout()->count() == 0) {
                 widget->parent()->removeEventFilter(this);
+                widget->deleteLater();
             }
         }
     }

@@ -32,7 +32,7 @@
 DWIDGET_BEGIN_NAMESPACE
 
 class DToastPrivate;
-class LIBDTKWIDGETSHARED_EXPORT DToast : public QFrame, public DTK_CORE_NAMESPACE::DObject
+class LIBDTKWIDGETSHARED_EXPORT D_DECL_DEPRECATED_X("Use DMessageManager") DToast : public QFrame, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
 

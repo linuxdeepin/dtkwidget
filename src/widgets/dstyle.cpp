@@ -985,7 +985,6 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
 
             //绘画 矩形(图标icon+text+btn+icon)和外面一小圈frameRadius/2的 合在一起的矩形
             p->setRenderHint(QPainter::Antialiasing);
-            QRect rectFoatWgt = dstyle.subElementRect(SE_FloatingWidget, opt, w);
             QMargins shadow_margin(shadowMargins, shadowMargins, shadowMargins, shadowMargins);
 
             //先绘画阴影
@@ -1221,7 +1220,7 @@ QSize DStyle::sizeFromContents(const QStyle *style, DStyle::ContentsType ct, con
         int margins = dstyle.pixelMetric(PM_FloatingWidgetShadowMargins, opt, widget);
         int window_radius = dstyle.pixelMetric(PM_FloatingWidgetRadius, opt, widget);
         QSize size(2 * margins + qMax(2 * window_radius, contentsSize.width() + window_radius),
-                   2 * margins + qMax(2 * window_radius,  contentsSize.height() + window_radius));
+                   2 * margins + qMax(2 * window_radius,  contentsSize.height()));
         return size;
     }
     default:
