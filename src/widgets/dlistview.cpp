@@ -48,7 +48,7 @@ QVariant DVariantListModel::data(const QModelIndex &index, int role) const
 }
 
 bool DVariantListModel::setData(const QModelIndex &index,
-                                 const QVariant &value, int role)
+                                const QVariant &value, int role)
 {
     if (index.row() >= 0 && index.row() < dataList.size()) {
         dataList.replace(index.row(), value);
@@ -124,11 +124,11 @@ void DListViewPrivate::onOrientationChanged()
 
     bool isVerticalLayout = (q->orientation() == Qt::Vertical);
 
-    if(headerLayout) {
+    if (headerLayout) {
         headerLayout->setDirection(isVerticalLayout
                                    ? QBoxLayout::TopToBottom
                                    : QBoxLayout::LeftToRight);
-        if(isVerticalLayout) {
+        if (isVerticalLayout) {
             headerLayout->resize(q->width(), headerLayout->sizeHint().height());
         } else {
             headerLayout->resize(headerLayout->sizeHint().width(), q->height());
@@ -137,12 +137,12 @@ void DListViewPrivate::onOrientationChanged()
         headerLayout->layout()->update();
     }
 
-    if(footerLayout) {
+    if (footerLayout) {
         footerLayout->setDirection(isVerticalLayout
                                    ? QBoxLayout::TopToBottom
                                    : QBoxLayout::LeftToRight);
 
-        if(isVerticalLayout) {
+        if (isVerticalLayout) {
             footerLayout->resize(q->width(), footerLayout->sizeHint().height());
             footerLayout->move(0, q->height() - footerLayout->height());
         } else {
@@ -348,7 +348,7 @@ void DListView::setModel(QAbstractItemModel *model)
 
 DStyledItemDelegate::BackgroundType DListView::backgroundType() const
 {
-    if (DStyledItemDelegate *d = qobject_cast<DStyledItemDelegate*>(itemDelegate())) {
+    if (DStyledItemDelegate *d = qobject_cast<DStyledItemDelegate *>(itemDelegate())) {
         return d->backgroundType();
     }
 
@@ -357,7 +357,7 @@ DStyledItemDelegate::BackgroundType DListView::backgroundType() const
 
 QMargins DListView::itemMargins() const
 {
-    if (DStyledItemDelegate *d = qobject_cast<DStyledItemDelegate*>(itemDelegate())) {
+    if (DStyledItemDelegate *d = qobject_cast<DStyledItemDelegate *>(itemDelegate())) {
         return d->margins();
     }
 
@@ -366,7 +366,7 @@ QMargins DListView::itemMargins() const
 
 QSize DListView::itemSize() const
 {
-    if (DStyledItemDelegate *d = qobject_cast<DStyledItemDelegate*>(itemDelegate())) {
+    if (DStyledItemDelegate *d = qobject_cast<DStyledItemDelegate *>(itemDelegate())) {
         return d->itemSize();
     }
 
@@ -401,7 +401,7 @@ bool DListView::addItems(const QVariantList &datas)
  */
 bool DListView::insertItem(int index, const QVariant &data)
 {
-    if(!model()->insertRow(index))
+    if (!model()->insertRow(index))
         return false;
 
     return model()->setData(model()->index(index, 0, rootIndex()), data);
@@ -415,10 +415,10 @@ bool DListView::insertItem(int index, const QVariant &data)
  */
 bool DListView::insertItems(int index, const QVariantList &datas)
 {
-    if(!model()->insertRows(index, datas.count()))
+    if (!model()->insertRows(index, datas.count()))
         return false;
 
-    for(int i = 0; i < datas.count(); ++i)
+    for (int i = 0; i < datas.count(); ++i)
         model()->setData(model()->index(index + i, 0, rootIndex()), datas.at(i));
 
     return true;
@@ -454,28 +454,28 @@ int DListView::addHeaderWidget(QWidget *widget)
 
     int index = d->headerList.indexOf(widget);
 
-    if(index >= 0)
+    if (index >= 0)
         return index;
 
-    if(!d->headerLayout) {
+    if (!d->headerLayout) {
         bool isVerticalLayout = (orientation() == Qt::Vertical);
 
         d->headerLayout = new DBoxWidget(isVerticalLayout
                                          ? QBoxLayout::TopToBottom
                                          : QBoxLayout::LeftToRight, this);
 
-        if(isVerticalLayout)
+        if (isVerticalLayout)
             d->headerLayout->resize(width(), d->headerLayout->height());
         else
             d->headerLayout->resize(d->headerLayout->width(), height());
 
         connect(d->headerLayout, &DBoxWidget::sizeChanged,
-                this, [this](const QSize &size) {
+        this, [this](const QSize & size) {
             bool isVerticalLayout = (orientation() == Qt::Vertical);
 
             QMargins margins = this->viewportMargins();
 
-            if(isVerticalLayout)
+            if (isVerticalLayout)
                 margins.setTop(size.height());
             else
                 margins.setLeft(size.width());
@@ -499,7 +499,7 @@ void DListView::removeHeaderWidget(int index)
 {
     QWidget *widget = takeHeaderWidget(index);
 
-    if(widget)
+    if (widget)
         widget->deleteLater();
 }
 
@@ -515,7 +515,7 @@ QWidget *DListView::takeHeaderWidget(int index)
 
     d->headerLayout->layout()->removeWidget(widget);
 
-    if(d->headerList.isEmpty()) {
+    if (d->headerList.isEmpty()) {
         d->headerLayout->deleteLater();
         d->headerLayout = nullptr;
     }
@@ -532,30 +532,30 @@ int DListView::addFooterWidget(QWidget *widget)
 
     int index = d->footerList.indexOf(widget);
 
-    if(index >= 0)
+    if (index >= 0)
         return index;
 
-    if(!d->footerLayout) {
+    if (!d->footerLayout) {
         bool isVerticalLayout = (orientation() == Qt::Vertical);
 
         d->footerLayout = new DBoxWidget(isVerticalLayout
                                          ? QBoxLayout::TopToBottom
                                          : QBoxLayout::LeftToRight, this);
 
-        if(isVerticalLayout)
+        if (isVerticalLayout)
             d->footerLayout->resize(width(), d->footerLayout->height());
         else
             d->footerLayout->resize(d->footerLayout->width(), height());
 
         connect(d->footerLayout, &DBoxWidget::sizeChanged,
-                this, [this](const QSize &size) {
+        this, [this](const QSize & size) {
             bool isVerticalLayout = (orientation() == Qt::Vertical);
 
             QMargins margins = this->viewportMargins();
 
             D_D(DListView);
 
-            if(isVerticalLayout) {
+            if (isVerticalLayout) {
                 margins.setBottom(size.height());
                 d->footerLayout->move(0, height() - d->footerLayout->height());
             } else {
@@ -582,7 +582,7 @@ void DListView::removeFooterWidget(int index)
 {
     QWidget *widget = takeFooterWidget(index);
 
-    if(widget)
+    if (widget)
         widget->deleteLater();
 }
 
@@ -597,7 +597,7 @@ QWidget *DListView::takeFooterWidget(int index)
 
     d->footerLayout->layout()->removeWidget(widget);
 
-    if(d->footerList.isEmpty()) {
+    if (d->footerList.isEmpty()) {
         d->footerLayout->deleteLater();
         d->footerLayout = nullptr;
     }
@@ -617,22 +617,22 @@ void DListView::setOrientation(QListView::Flow flow, bool wrapping)
 
     Qt::Orientation orientation = this->orientation();
 
-    if(old_orientation != orientation) {
+    if (old_orientation != orientation) {
         D_D(DListView);
 
         QMargins margins = viewportMargins();
 
-        if(old_orientation == Qt::Vertical) {
-            if(d->headerLayout)
+        if (old_orientation == Qt::Vertical) {
+            if (d->headerLayout)
                 margins.setTop(0);
 
-            if(d->footerLayout)
+            if (d->footerLayout)
                 margins.setBottom(0);
         } else {
-            if(d->headerLayout)
+            if (d->headerLayout)
                 margins.setLeft(0);
 
-            if(d->footerLayout)
+            if (d->footerLayout)
                 margins.setRight(0);
         }
 
@@ -655,21 +655,21 @@ void DListView::edit(const QModelIndex &index)
 
 void DListView::setBackgroundType(DStyledItemDelegate::BackgroundType backgroundType)
 {
-    if (DStyledItemDelegate *d = qobject_cast<DStyledItemDelegate*>(itemDelegate())) {
+    if (DStyledItemDelegate *d = qobject_cast<DStyledItemDelegate *>(itemDelegate())) {
         d->setBackgroundType(backgroundType);
     }
 }
 
 void DListView::setItemMargins(const QMargins &itemMargins)
 {
-    if (DStyledItemDelegate *d = qobject_cast<DStyledItemDelegate*>(itemDelegate())) {
+    if (DStyledItemDelegate *d = qobject_cast<DStyledItemDelegate *>(itemDelegate())) {
         d->setMargins(itemMargins);
     }
 }
 
 void DListView::setItemSize(QSize itemSize)
 {
-    if (DStyledItemDelegate *d = qobject_cast<DStyledItemDelegate*>(itemDelegate())) {
+    if (DStyledItemDelegate *d = qobject_cast<DStyledItemDelegate *>(itemDelegate())) {
         return d->setItemSize(itemSize);
     }
 }
@@ -708,15 +708,15 @@ void DListView::resizeEvent(QResizeEvent *event)
 
     bool isVerticalLayout = (orientation() == Qt::Vertical);
 
-    if(d->headerLayout) {
-        if(isVerticalLayout)
+    if (d->headerLayout) {
+        if (isVerticalLayout)
             d->headerLayout->resize(width(), d->headerLayout->height());
         else
             d->headerLayout->resize(d->headerLayout->width(), height());
     }
 
-    if(d->footerLayout) {
-        if(isVerticalLayout) {
+    if (d->footerLayout) {
+        if (isVerticalLayout) {
             d->footerLayout->resize(width(), d->footerLayout->height());
             d->footerLayout->move(0, height() - d->footerLayout->height());
         } else {
@@ -745,10 +745,10 @@ bool DListView::edit(const QModelIndex &index, QAbstractItemView::EditTrigger tr
         if (trigger == QAbstractItemView::AllEditTriggers) // force editing
             return true;
         if ((trigger & editTriggers()) == QAbstractItemView::SelectedClicked
-            && !selectionModel()->isSelected(index))
+                && !selectionModel()->isSelected(index))
             return false;
 
-        if(trigger & editTriggers()) {
+        if (trigger & editTriggers()) {
             w->setFocus();
 
             Q_EMIT triggerEdit(index);
@@ -759,7 +759,7 @@ bool DListView::edit(const QModelIndex &index, QAbstractItemView::EditTrigger tr
 
     bool tmp = QListView::edit(index, trigger, event);
 
-    if(tmp)
+    if (tmp)
         Q_EMIT triggerEdit(index);
 
     return tmp;
@@ -778,6 +778,38 @@ QStyleOptionViewItem DListView::viewOptions() const
     }
 
     return item;
+}
+
+QModelIndex DListView::moveCursor(QAbstractItemView::CursorAction cursorAction, Qt::KeyboardModifiers modifiers)
+{
+    switch (cursorAction) {
+    case MoveNext: {
+        auto curIdx = currentIndex();
+        auto curCol = modelColumn();
+
+        auto nextRow = 0;
+        if (curIdx.isValid()) {
+            nextRow = (curIdx.row() + 1) % model()->rowCount();
+        }
+
+        int hiddenCount = 0;
+        while (isRowHidden(nextRow)) {
+            nextRow = (nextRow + 1) % model()->rowCount();
+
+            //防止所有列都是隐藏的死循环
+            ++hiddenCount;
+            if (hiddenCount >= count()) {
+                return currentIndex();
+            }
+        }
+
+        return model()->index(nextRow, curCol);
+    }
+    default:
+        break;
+    }
+
+    return QListView::moveCursor(cursorAction, modifiers);
 }
 
 DWIDGET_END_NAMESPACE

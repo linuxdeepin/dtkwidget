@@ -121,6 +121,8 @@ protected:
     bool edit(const QModelIndex &index, EditTrigger trigger, QEvent *event) Q_DECL_OVERRIDE;
 
     QStyleOptionViewItem viewOptions() const override;
+    virtual QModelIndex moveCursor(CursorAction cursorAction,
+                                   Qt::KeyboardModifiers modifiers) override;
 
 private:
     void setFlow(QListView::Flow flow);
