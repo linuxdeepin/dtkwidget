@@ -19,6 +19,7 @@
 #include "dplatformwindowhandle.h"
 #include "dapplication.h"
 #include "dtitlebar.h"
+#include "dmessagemanager.h"
 
 #include "private/dmainwindow_p.h"
 #include "private/dapplication_p.h"
@@ -529,6 +530,16 @@ void DMainWindow::setAutoInputMaskByClipPath(bool autoInputMaskByClipPath)
     }
 
     d->handle->setAutoInputMaskByClipPath(autoInputMaskByClipPath);
+}
+
+void DMainWindow::sendMessage(const QIcon &icon, const QString &message)
+{
+    DMessageManager::instance()->sendMessage(this, icon, message);
+}
+
+void DMainWindow::sendMessage(DFloatingMessage *message)
+{
+    DMessageManager::instance()->sendMessage(this, message);
 }
 
 #ifdef Q_OS_MAC

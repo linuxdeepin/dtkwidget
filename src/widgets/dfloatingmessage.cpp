@@ -73,6 +73,7 @@ void DFloatingMessagePrivate::init()
         closeButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
         hBoxLayout->addWidget(closeButton);
+        q->connect(closeButton, &DIconButton::clicked, q, &DFloatingMessage::closeButtonClicked);
         q->connect(closeButton, &DIconButton::clicked, q, &DFloatingMessage::close);
     }
 }

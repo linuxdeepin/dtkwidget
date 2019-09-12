@@ -49,6 +49,9 @@ public:
     void setWidget(QWidget *w);
     void setDuration(int msec);
 
+Q_SIGNALS:
+    void closeButtonClicked();
+
 protected:
     using DFloatingWidget::setWidget;
 

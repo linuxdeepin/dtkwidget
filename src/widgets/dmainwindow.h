@@ -18,8 +18,9 @@
 #ifndef DMAINWINDOW_H
 #define DMAINWINDOW_H
 
-#include "dtkwidget_global.h"
-#include "dobject.h"
+#include <dtkwidget_global.h>
+#include <DFloatingMessage>
+#include <DObject>
 
 #include <QMainWindow>
 
@@ -96,6 +97,9 @@ public Q_SLOTS:
 #ifdef Q_OS_MAC
     void setWindowFlags(Qt::WindowFlags type);
 #endif
+
+    void sendMessage(const QIcon &icon, const QString &message);
+    void sendMessage(DFloatingMessage *message);
 
 Q_SIGNALS:
     void windowRadiusChanged();
