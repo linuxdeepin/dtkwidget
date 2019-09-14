@@ -240,6 +240,23 @@ public:
             icon_size = option.decorationSize;
         }
 
+        // 图标的绘制用也可能会使用这些颜色
+        QPalette::ColorGroup cg = option.state & QStyle::State_Enabled
+                              ? QPalette::Normal : QPalette::Disabled;
+        if (cg == QPalette::Normal && !(option.state & QStyle::State_Active))
+            cg = QPalette::Inactive;
+
+        if (option.state & QStyle::State_Selected) {
+            pa->setPen(option.palette.color(cg, QPalette::HighlightedText));
+        } else {
+            if (action->textColorType() > 0) {
+                pa->setPen(QPen(DApplicationHelper::instance()->palette(option.widget).brush(cg, action->textColorType()), 1));
+            } else {
+                QPalette::ColorRole role = action->textColorRole() > 0 ? action->textColorRole() : QPalette::Text;
+                pa->setPen(QPen(option.palette.brush(cg, role), 1));
+            }
+        }
+
         // draw icon
         if (icon_size.isValid()) {
             const QIcon &icon = action->icon();
@@ -252,22 +269,6 @@ public:
 
         // draw text
         if (!action->text().isEmpty()) {
-            QPalette::ColorGroup cg = option.state & QStyle::State_Enabled
-                                  ? QPalette::Normal : QPalette::Disabled;
-            if (cg == QPalette::Normal && !(option.state & QStyle::State_Active))
-                cg = QPalette::Inactive;
-
-            if (option.state & QStyle::State_Selected) {
-                pa->setPen(option.palette.color(cg, QPalette::HighlightedText));
-            } else {
-                if (action->textColorType() > 0) {
-                    pa->setPen(QPen(DApplicationHelper::instance()->palette(option.widget).brush(cg, action->textColorType()), 1));
-                } else {
-                    QPalette::ColorRole role = action->textColorRole() > 0 ? action->textColorRole() : QPalette::Text;
-                    pa->setPen(QPen(option.palette.brush(cg, role), 1));
-                }
-            }
-
             QRect text_rect = rect;
             text_rect.setLeft(text_rect.left() + icon_size.width());
             pa->setFont(action->font());
@@ -499,6 +500,16 @@ void DStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
     opt.rect = itemContentRect;
     QRect iconRect, textRect, checkRect;
     DStyle::viewItemLayout(style, &opt, &iconRect, &textRect, &checkRect, false);
+
+    // 图标的绘制用也可能会使用这些颜色
+    QPalette::ColorGroup cg = opt.state & QStyle::State_Enabled
+                          ? QPalette::Normal : QPalette::Disabled;
+    if (opt.state & QStyle::State_Selected) {
+        painter->setPen(opt.palette.color(cg, QPalette::HighlightedText));
+    } else {
+        painter->setPen(opt.palette.color(cg, QPalette::Text));
+    }
+
     // draw icon
     if (opt.features & QStyleOptionViewItem::HasDecoration) {
         QIcon::Mode mode = QIcon::Normal;
@@ -512,14 +523,6 @@ void DStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
 
     // draw the text
     if (opt.features & QStyleOptionViewItem::HasDisplay) {
-        QPalette::ColorGroup cg = opt.state & QStyle::State_Enabled
-                              ? QPalette::Normal : QPalette::Disabled;
-        if (opt.state & QStyle::State_Selected) {
-            painter->setPen(opt.palette.color(cg, QPalette::HighlightedText));
-        } else {
-            painter->setPen(opt.palette.color(cg, QPalette::Text));
-        }
-
         if (opt.state & QStyle::State_Editing) {
             painter->setPen(opt.palette.color(cg, QPalette::Text));
             painter->drawRect(textRect.adjusted(0, 0, -1, -1));

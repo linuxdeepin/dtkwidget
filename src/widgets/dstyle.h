@@ -414,6 +414,7 @@ public:
     void bindDrawFun(DrawFun drawFun);
     void setIconName(const QString &name);
 
+    QPixmap pixmap(const QSize &size, QIcon::Mode mode, QIcon::State state) override;
     void paint(QPainter *painter, const QPalette &palette, const QRectF &rect);
     void paint(QPainter *painter, const QRect &rect, QIcon::Mode mode, QIcon::State state) override;
 

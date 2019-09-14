@@ -729,7 +729,7 @@ void drawArrowForward(QPainter *pa, const QRectF &rect)
 
 void drawLineEditClearButton(QPainter *pa, const QRectF &rect)
 {
-
+    drawCloseButton(pa, rect);
 }
 
 void drawIndicatorUnchecked(QPainter *pa, const QRectF &rect)
@@ -940,6 +940,8 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
                     state = QIcon::On;
                 }
 
+                p->setBrush(opt->palette.background());
+                p->setPen(QPen(opt->palette.foreground(), 1));
                 icon_opt->icon.paint(p, opt->rect, Qt::AlignCenter, mode, state);
             }
         }
@@ -2014,6 +2016,17 @@ void DStyledIconEngine::bindDrawFun(DStyledIconEngine::DrawFun drawFun)
 void DStyledIconEngine::setIconName(const QString &name)
 {
     m_iconName = name;
+}
+
+QPixmap DStyledIconEngine::pixmap(const QSize &size, QIcon::Mode mode, QIcon::State state)
+{
+    QImage image(size, QImage::Format_ARGB32_Premultiplied);
+    image.fill(Qt::transparent);
+    QPainter pa(&image);
+    paint(&pa, QRect(QPoint(0, 0), size), mode, state);
+    pa.end();
+
+    return QPixmap::fromImage(image);
 }
 
 void DStyledIconEngine::paint(QPainter *painter, const QPalette &palette, const QRectF &rect)
