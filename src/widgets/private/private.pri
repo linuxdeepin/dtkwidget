@@ -43,7 +43,8 @@ HEADERS += \
     $$PWD/diconbutton_p.h \
     $$PWD/dsearchedit_p.h \
     $$PWD/dfloatingwidget_p.h \
-    $$PWD/dfloatingmessage_p.h
+    $$PWD/dfloatingmessage_p.h \
+    $$PWD/dbuttonbox_p.h
 
 SOURCES += \
     $$PWD/dthemehelper.cpp

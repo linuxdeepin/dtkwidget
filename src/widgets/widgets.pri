@@ -103,7 +103,8 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dfloatingwidget.h \
     $$PWD/dapplicationhelper.h \
     $$PWD/dfloatingmessage.h \
-    $$PWD/dmessagemanager.h
+    $$PWD/dmessagemanager.h \
+    $$PWD/dbuttonbox.h
 
 SOURCES += $$PWD/dslider.cpp \
     $$PWD/dbackgroundgroup.cpp \
@@ -166,7 +167,8 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dfloatingwidget.cpp \
     $$PWD/dapplicationhelper.cpp \
     $$PWD/dfloatingmessage.cpp \
-    $$PWD/dmessagemanager.cpp
+    $$PWD/dmessagemanager.cpp \
+    $$PWD/dbuttonbox.cpp
 
 RESOURCES += \
     $$PWD/icons.qrc
@@ -309,4 +311,5 @@ includes.files += \
     $$PWD/DApplicationHelper \
     $$PWD/DFloatingWidget \
     $$PWD/DFloatingMessage \
-    $$PWD/DMessageManager
+    $$PWD/DMessageManager \
+    $$PWD/DButtonBox

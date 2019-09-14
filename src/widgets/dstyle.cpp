@@ -1062,6 +1062,93 @@ void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const Q
         }
         break;
     }
+    case CE_ButtonBoxButton: {
+        if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton *>(opt)) {
+            DStyleHelper dstyle(style);
+            dstyle.drawControl(CE_ButtonBoxButtonBevel, btn, p, w);
+            DStyleOptionButton subopt = *btn;
+            subopt.rect = dstyle.subElementRect(SE_ButtonBoxButtonContents, btn, w);
+            dstyle.drawControl(CE_ButtonBoxButtonLabel, &subopt, p, w);
+            if (btn->state & State_HasFocus) {
+                QStyleOptionFocusRect fropt;
+                fropt.QStyleOption::operator=(*btn);
+                fropt.rect = dstyle.subElementRect(SE_ButtonBoxButtonFocusRect, btn, w);
+                style->drawPrimitive(PE_FrameFocusRect, &fropt, p, w);
+            }
+        }
+        break;
+    }
+    case CE_ButtonBoxButtonBevel: {
+        if (const DStyleOptionButtonBoxButton *btn = qstyleoption_cast<const DStyleOptionButtonBoxButton *>(opt)) {
+            bool checked = btn->state & State_On;
+            DStyleHelper dstyle(style);
+            const QColor &background = dstyle.getColor(opt, checked ? QPalette::Highlight : QPalette::Button);
+            p->setBrush(background);
+            p->setPen(Qt::NoPen);
+            int radius = dstyle.pixelMetric(PM_FrameRadius, opt, w);
+            int margins = dstyle.pixelMetric(PM_FrameMargins, opt, w);
+            DStyleOptionButtonBoxButton::ButtonPosition pos = btn->position;
+
+            if (btn->state & State_HasFocus) {
+                pos = DStyleOptionButtonBoxButton::OnlyOne;
+            }
+
+            switch (pos) {
+            case DStyleOptionButtonBoxButton::Beginning: {
+                p->setRenderHint(QPainter::Antialiasing);
+                QRect rect;
+
+                if (btn->orientation == Qt::Horizontal) {
+                    rect = opt->rect.adjusted(margins, margins, 0, -margins);
+                    DDrawUtils::drawRoundedRect(p, rect, radius, radius, DDrawUtils::TopLeftCorner | DDrawUtils::BottomLeftCorner);
+                } else {
+                    rect = opt->rect.adjusted(margins, margins, -margins, 0);
+                    DDrawUtils::drawRoundedRect(p, rect, radius, radius, DDrawUtils::TopLeftCorner | DDrawUtils::TopRightCorner);
+                }
+
+                break;
+            }
+            case DStyleOptionButtonBoxButton::Middle: {
+                QRect rect;
+
+                if (btn->orientation == Qt::Horizontal)
+                    rect = opt->rect.adjusted(0, margins, 0, -margins);
+                else
+                    rect = opt->rect.adjusted(margins, 0, -margins, 0);
+
+                p->drawRect(rect);
+                break;
+            }
+            case DStyleOptionButtonBoxButton::End: {
+                p->setRenderHint(QPainter::Antialiasing);
+                QRect rect;
+
+                if (btn->orientation == Qt::Horizontal) {
+                    rect = opt->rect.adjusted(0, margins, -margins, -margins);
+                    DDrawUtils::drawRoundedRect(p, rect, radius, radius, DDrawUtils::TopRightCorner | DDrawUtils::BottomRightCorner);
+                } else {
+                    rect = opt->rect.adjusted(margins, 0, -margins, -margins);
+                    DDrawUtils::drawRoundedRect(p, rect, radius, radius, DDrawUtils::BottomLeftCorner | DDrawUtils::BottomRightCorner);
+                }
+
+                break;
+            }
+            case DStyleOptionButtonBoxButton::OnlyOne: {
+                QRect rect = opt->rect.adjusted(margins, margins, -margins, -margins);
+                p->setRenderHint(QPainter::Antialiasing);
+                p->drawRoundedRect(rect, radius, radius);
+                break;
+            }
+            default:
+                break;
+            }
+        }
+        break;
+    }
+    case CE_ButtonBoxButtonLabel: {
+        style->drawControl(CE_PushButtonLabel, opt, p, w);
+        break;
+    }
     default:
         break;
     }
@@ -1157,7 +1244,6 @@ QRect DStyle::subElementRect(const QStyle *style, DStyle::SubElement r, const QS
     }
     case SE_SwitchButtonHandle: {
         if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton *>(opt)) {
-            QSize size(0, 0);
             DStyleHelper dstyle(style);
             int handleWidth = dstyle.pixelMetric(PM_SwitchButtonHandleWidth, opt, widget);
             int handleHeight = dstyle.pixelMetric(PM_SwithcButtonHandleHeight, opt, widget);
@@ -1184,6 +1270,10 @@ QRect DStyle::subElementRect(const QStyle *style, DStyle::SubElement r, const QS
         }
         break;
     }
+    case SE_ButtonBoxButtonContents:
+        return style->subElementRect(SE_PushButtonContents, opt, widget);
+    case SE_ButtonBoxButtonFocusRect:
+        return style->subElementRect(SE_PushButtonFocusRect, opt, widget);
     default:
         break;
     }
@@ -1225,6 +1315,9 @@ QSize DStyle::sizeFromContents(const QStyle *style, DStyle::ContentsType ct, con
                    2 * margins + qMax(2 * window_radius,  contentsSize.height()));
         return size;
     }
+    case CT_ButtonBoxButton: {
+        return style->sizeFromContents(CT_PushButton, opt, contentsSize, widget);
+    }
     default:
         break;
     }
@@ -1234,13 +1327,13 @@ QSize DStyle::sizeFromContents(const QStyle *style, DStyle::ContentsType ct, con
 
 QIcon DStyle::standardIcon(const QStyle *style, DStyle::StandardPixmap st, const QStyleOption *opt, const QWidget *widget)
 {
+    Q_UNUSED(opt)
     Q_UNUSED(style)
     Q_UNUSED(widget)
 
 #define CASE_ICON(Value) \
 case SP_##Value: { \
-        const QPalette &palette = opt ? opt->palette : (widget ? widget->palette() : qGuiApp->palette()); \
-        DStyledIconEngine *icon_engine = new DStyledIconEngine(DDrawUtils::draw##Value, palette, QStringLiteral(#Value)); \
+        DStyledIconEngine *icon_engine = new DStyledIconEngine(DDrawUtils::draw##Value, QStringLiteral(#Value)); \
         return QIcon(icon_engine);}
 
     switch (st) {
@@ -1999,10 +2092,9 @@ QRect DStyle::viewItemDrawText(QPainter *p, const QStyleOptionViewItem *option, 
 }
 #endif
 
-DStyledIconEngine::DStyledIconEngine(DrawFun drawFun, const QPalette &palette, const QString &iconName)
+DStyledIconEngine::DStyledIconEngine(DrawFun drawFun, const QString &iconName)
     : QIconEngine()
     , m_drawFun(drawFun)
-    , m_palette(palette)
     , m_iconName(iconName)
 {
 
@@ -2045,12 +2137,12 @@ void DStyledIconEngine::paint(QPainter *painter, const QRect &rect, QIcon::Mode 
     Q_UNUSED(mode)
     Q_UNUSED(state)
 
-    return paint(painter, m_palette, rect);
+    m_drawFun(painter, rect);
 }
 
 QIconEngine *DStyledIconEngine::clone() const
 {
-    return new DStyledIconEngine(m_drawFun, m_palette, m_iconName);
+    return new DStyledIconEngine(m_drawFun, m_iconName);
 }
 
 void DStyledIconEngine::virtual_hook(int id, void *data)

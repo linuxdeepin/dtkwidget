@@ -123,6 +123,9 @@ public:
         CE_IconButton = QStyle::CE_CustomBase + 1,
         CE_SwitchButton,
         CE_FloatingWidget,
+        CE_ButtonBoxButton,
+        CE_ButtonBoxButtonBevel,
+        CE_ButtonBoxButtonLabel,
         CE_CustomBase = QStyle::CE_CustomBase + 0xf00000
     };
 
@@ -151,6 +154,8 @@ public:
         SE_SwitchButtonGroove,
         SE_SwitchButtonHandle,
         SE_FloatingWidget,
+        SE_ButtonBoxButtonContents,
+        SE_ButtonBoxButtonFocusRect,
         SE_CustomBase = QStyle::SE_CustomBase + 0xf00000
     };
 
@@ -158,6 +163,7 @@ public:
         CT_IconButton = QStyle::CT_CustomBase + 1,
         CT_SwitchButton,
         CT_FloatingWidget,
+        CT_ButtonBoxButton,
         CT_CustomBase = QStyle::CT_CustomBase + 0xf00000
     };
 
@@ -409,7 +415,7 @@ class DStyledIconEngine : public QIconEngine
 {
 public:
     typedef void (*DrawFun)(QPainter *, const QRectF &rect);
-    DStyledIconEngine(DrawFun drawFun, const QPalette &palette, const QString &iconName = QString());
+    DStyledIconEngine(DrawFun drawFun, const QString &iconName = QString());
 
     void bindDrawFun(DrawFun drawFun);
     void setIconName(const QString &name);
@@ -424,7 +430,6 @@ protected:
     void virtual_hook(int id, void *data) override;
 
     DrawFun m_drawFun = nullptr;
-    QPalette m_palette;
     QString m_iconName;
 };
 

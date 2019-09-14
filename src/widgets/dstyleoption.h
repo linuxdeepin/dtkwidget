@@ -75,6 +75,21 @@ public:
     void init(const QWidget *widget) override;
 };
 
+class DStyleOptionButtonBoxButton : public DStyleOptionButton
+{
+public:
+    enum ButtonPosition {
+        Invalid,
+        Beginning,
+        Middle,
+        End,
+        OnlyOne
+    };
+
+    Qt::Orientation orientation;
+    ButtonPosition position;
+};
+
 class DStyleOptionLineEdit : public DStyleOption
 {
 public:
