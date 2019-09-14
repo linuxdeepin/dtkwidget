@@ -94,7 +94,7 @@ public Q_SLOTS:
     void setItemSize(QSize itemSize);
 
 protected:
-    void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const;
+    void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
     bool eventFilter(QObject *object, QEvent *event) override;
 };
 
