@@ -30,7 +30,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDTKWIDGETSHARED_EXPORT DSegmentedHighlight : public QToolButton
+class LIBDTKWIDGETSHARED_EXPORT D_DECL_DEPRECATED DSegmentedHighlight : public QToolButton
 {
     Q_OBJECT
 
@@ -39,7 +39,7 @@ public:
 };
 
 class DSegmentedControlPrivate;
-class LIBDTKWIDGETSHARED_EXPORT DSegmentedControl : public QWidget, public DCORE_NAMESPACE::DObject
+class LIBDTKWIDGETSHARED_EXPORT D_DECL_DEPRECATED_X("Use DButtonBox") DSegmentedControl : public QWidget, public DCORE_NAMESPACE::DObject
 {
     Q_OBJECT
     D_DECLARE_PRIVATE(DSegmentedControl)
