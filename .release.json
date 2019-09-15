@@ -1,7 +1,7 @@
 {
         "commit": {
                 "quilt": false,
-                "pkgver": "echo $(git describe --abbrev=0)'+r'$(git log $(git describe --abbrev=0 --tags)..HEAD --oneline|wc -l)'+g'$(git rev-parse --short HEAD);",
+                "pkgver": "git describe --tags --long %(ref)s | awk '{split($0,v,\"-\"); print v[1]\"+r\"v[2]\"+\"v[3]}'",
                 "dist": "experimental"
         },
         "release": {
