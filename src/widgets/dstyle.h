@@ -192,8 +192,8 @@ public:
         SP_ReduceElement,                           //收缩
         SP_LockElement,                             //锁定
         SP_UnlockElement,                           //解锁
-        SP_MediaVolumeElement,                      //音量
-        SP_MediaVolumeFullElement,                  //满音量
+        SP_MediaVolumeLowElement,                   //音量
+        SP_MediaVolumeHighElement,                  //满音量
         SP_MediaVolumeMutedElement,                 //静音
         SP_MediaVolumeLeftElement,                  //左声道
         SP_MediaVolumeRightElement,                 //右声道

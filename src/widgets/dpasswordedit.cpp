@@ -88,6 +88,14 @@ void DPasswordEdit::setEchoMode(QLineEdit::EchoMode mode)
         // To inform the style sheet system that our style sheet needs
         // to be recalculated.
         Q_EMIT echoModeChanged(mode == Normal);
+
+        D_D(DPasswordEdit);
+
+        if (isEchoMode()) {
+            d->togglePasswordVisibleButton->setIcon(DStyle::SP_HidePassword);
+        } else {
+            d->togglePasswordVisibleButton->setIcon(DStyle::SP_ShowPassword);
+        }
     }
 }
 
@@ -115,7 +123,7 @@ void DPasswordEditPrivate::init()
 {
     D_Q(DPasswordEdit);
 
-    q->setEchoMode(q->Password);
+    q->QLineEdit::setEchoMode(QLineEdit::Password);
 
     QList<QWidget *> list;
     togglePasswordVisibleButton = new DIconButton(DStyle::SP_ShowPassword);
@@ -131,7 +139,7 @@ void DPasswordEditPrivate::_q_toggleEchoMode()
     D_Q(DPasswordEdit);
 
     if (q->isEchoMode()) {
-        togglePasswordVisibleButton->setIcon(DStyle::SP_HidePassword);
+        togglePasswordVisibleButton->setIcon(DStyle::SP_ShowPassword);
         q->setEchoMode(q->Password);
     } else {
         togglePasswordVisibleButton->setIcon(DStyle::SP_HidePassword);

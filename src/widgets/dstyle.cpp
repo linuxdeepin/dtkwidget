@@ -342,8 +342,7 @@ void drawMark(QPainter *pa, const QRectF &rect, const QColor &boxInside, const Q
     pen.setJoinStyle(Qt::RoundJoin);
     pa->setRenderHint(QPainter::Antialiasing, true);
 
-    pa->drawLine(rect.x(), rect.center().y(), rect.center().x(), rect.bottom());
-    pa->drawLine(rect.center().x(), rect.bottom(), rect.right(), rect.y());
+    drawMarkElement(pa, rect);
 
     if (outLineLeng == 0)
         return;
@@ -421,7 +420,8 @@ void drawIncreaseElement(QPainter *pa, const QRectF &rect)
 
 void drawMarkElement(QPainter *pa, const QRectF &rect)
 {
-
+    pa->drawLine(rect.x(), rect.center().y(), rect.center().x(), rect.bottom());
+    pa->drawLine(rect.center().x(), rect.bottom(), rect.right(), rect.y());
 }
 
 void drawSelectElement(QPainter *pa, const QRectF &rect)
@@ -433,11 +433,6 @@ void drawSelectElement(QPainter *pa, const QRectF &rect)
     pa->drawEllipse(width, y, radius, radius);
     pa->drawEllipse(width * 2, y, radius, radius);
     pa->drawEllipse(width * 3, y, radius, radius);
-}
-
-void drawEditElement(QPainter *pa, const QRectF &rect)
-{
-
 }
 
 void drawExpandElement(QPainter *pa, const QRectF &rect)
@@ -485,31 +480,6 @@ void drawUnlockElement(QPainter *pa, const QRectF &rect)
     pa->drawPath(path);
 }
 
-void drawMediaVolumeElement(QPainter *pa, const QRectF &rect)
-{
-
-}
-
-void drawMediaVolumeFullElement(QPainter *pa, const QRectF &rect)
-{
-
-}
-
-void drawMediaVolumeMutedElement(QPainter *pa, const QRectF &rect)
-{
-
-}
-
-void drawMediaVolumeLeftElement(QPainter *pa, const QRectF &rect)
-{
-
-}
-
-void drawMediaVolumeRightElement(QPainter *pa, const QRectF &rect)
-{
-
-}
-
 void drawArrowEnter(QPainter *pa, const QRectF &rect)
 {
     drawArrowRight(pa, rect);
@@ -538,16 +508,6 @@ void drawArrowPrev(QPainter *pa, const QRectF &rect)
     pa->drawLine(rect.x(), y, rect.bottom(), y);
 }
 
-void drawShowPassword(QPainter *pa, const QRectF &rect)
-{
-
-}
-
-void drawHidePassword(QPainter *pa, const QRectF &rect)
-{
-
-}
-
 void drawCloseButton(QPainter *pa, const QRectF &rect)
 {
     pa->setRenderHint(QPainter::Antialiasing);
@@ -563,11 +523,6 @@ void drawCloseButton(QPainter *pa, const QRectF &rect)
     content_rect.moveCenter(rect.center());
     pa->setPen(pen);
     drawForkElement(pa, content_rect);
-}
-
-void drawIndicatorMajuscule(QPainter *pa, const QRectF &rect)
-{
-
 }
 
 void drawIndicatorSearch(QPainter *pa, const QRectF &rect)
@@ -1342,29 +1297,38 @@ case SP_##Value: { \
         CASE_ICON(IncreaseElement)
         CASE_ICON(MarkElement)
         CASE_ICON(SelectElement)
-        CASE_ICON(EditElement)
         CASE_ICON(ExpandElement)
         CASE_ICON(ReduceElement)
         CASE_ICON(LockElement)
         CASE_ICON(UnlockElement)
-        CASE_ICON(MediaVolumeElement)
-        CASE_ICON(MediaVolumeFullElement)
-        CASE_ICON(MediaVolumeMutedElement)
-        CASE_ICON(MediaVolumeLeftElement)
-        CASE_ICON(MediaVolumeRightElement)
         CASE_ICON(ArrowEnter)
         CASE_ICON(ArrowLeave)
         CASE_ICON(ArrowNext)
         CASE_ICON(ArrowPrev)
-        CASE_ICON(ShowPassword)
-        CASE_ICON(HidePassword)
         CASE_ICON(CloseButton)
-        CASE_ICON(IndicatorMajuscule)
         CASE_ICON(IndicatorSearch)
         CASE_ICON(IndicatorUnchecked)
         CASE_ICON(IndicatorChecked)
         CASE_ICON(DeleteButton)
         CASE_ICON(AddButton)
+    case SP_EditElement:
+        return QIcon::fromTheme("edit");
+    case SP_MediaVolumeLowElement:
+        return QIcon::fromTheme("volume_low");
+    case SP_MediaVolumeHighElement:
+        return QIcon::fromTheme("volume_high");
+    case SP_MediaVolumeMutedElement:
+        return QIcon::fromTheme("volume_mute");
+    case SP_MediaVolumeLeftElement:
+        return QIcon::fromTheme("sound_left");
+    case SP_MediaVolumeRightElement:
+        return QIcon::fromTheme("sound_right");
+    case SP_IndicatorMajuscule:
+        return QIcon::fromTheme("caps_lock");
+    case SP_ShowPassword:
+        return QIcon::fromTheme("password_show");
+    case SP_HidePassword:
+        return QIcon::fromTheme("password_hide");
     default:
         break;
     }
