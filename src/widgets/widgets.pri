@@ -312,4 +312,5 @@ includes.files += \
     $$PWD/DFloatingWidget \
     $$PWD/DFloatingMessage \
     $$PWD/DMessageManager \
-    $$PWD/DButtonBox
+    $$PWD/DButtonBox \
+    $$PWD/DApplicationSettings

@@ -22,6 +22,7 @@
 #include <QDebug>
 #include <DLog>
 #include <DTitlebar>
+#include <DApplicationSettings>
 
 #include "util/dwidgetutil.h"
 
@@ -40,8 +41,6 @@ int main(int argc, char *argv[])
 
     a.loadTranslator();
     a.setAttribute(Qt::AA_EnableHighDpiScaling, true);
-//    a.setTheme("light");
-//    a.setTheme("Dark");
 #ifdef Q_OS_UNIX
     a.setOOMScoreAdj(500);
 #endif
@@ -50,14 +49,14 @@ int main(int argc, char *argv[])
         qDebug() << "another instance is running!!";
     }
 
+    a.setApplicationName("dtk-example");
+    a.setOrganizationName("deepin");
+    DApplicationSettings as;
+    Q_UNUSED(as)
+
     MainWindow w;
-    w.titlebar()->setSwitchThemeMenuVisible(false);
     w.show();
     Dtk::Widget::moveToCenter(&w);
-
-    QTimer::singleShot(3000, [&w] {
-        w.titlebar()->setSwitchThemeMenuVisible(true);
-    });
 
     return a.exec();
 }
