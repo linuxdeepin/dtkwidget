@@ -1,4 +1,4 @@
-Source: dtkwidget2
+Source: dtkwidget
 Section: libdevel
 Priority: optional
 Maintainer: Deepin Packages Builder <packages@deepin.com>
