@@ -33,7 +33,7 @@ class DButtonBoxButton : public QAbstractButton
 {
 public:
     explicit DButtonBoxButton(const QString &text, QWidget *parent = nullptr);
-    DButtonBoxButton(const QIcon& icon, const QString &text, QWidget *parent = nullptr);
+    DButtonBoxButton(const QIcon& icon, const QString &text = QString(), QWidget *parent = nullptr);
 
     QSize sizeHint() const;
     QSize minimumSizeHint() const override;
@@ -56,7 +56,7 @@ public:
     Qt::Orientation orientation() const;
     void setOrientation(Qt::Orientation orientation);
 
-    void setButtonList(const QList<DButtonBoxButton*> &list);
+    void setButtonList(const QList<DButtonBoxButton*> &list, bool checkable);
     QList<QAbstractButton*> buttonList() const;
 
     QAbstractButton * checkedButton() const;

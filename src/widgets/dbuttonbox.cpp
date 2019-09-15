@@ -180,7 +180,7 @@ void DButtonBox::setOrientation(Qt::Orientation orientation)
     d->layout->setDirection(orientation == Qt::Horizontal ? QBoxLayout::LeftToRight : QBoxLayout::TopToBottom);
 }
 
-void DButtonBox::setButtonList(const QList<DButtonBoxButton *> &list)
+void DButtonBox::setButtonList(const QList<DButtonBoxButton *> &list, bool checkable)
 {
     D_D(DButtonBox);
 
@@ -195,7 +195,7 @@ void DButtonBox::setButtonList(const QList<DButtonBoxButton *> &list)
         d->layout->addWidget(button);
         d->group->addButton(button);
 
-        button->setCheckable(true);
+        button->setCheckable(checkable);
     }
 }
 
