@@ -469,6 +469,13 @@ QMargins DDialog::contentLayoutContentsMargins() const
     return d->topLayout->contentsMargins();
 }
 
+bool DDialog::closeButtonVisible() const
+{
+    D_DC(DDialog);
+
+    return d->closeButton->isVisible();
+}
+
 /*!
  * \~chinese \brief 向对话框添加按钮
  *
@@ -988,6 +995,13 @@ int DDialog::exec()
     int code = DAbstractDialog::exec();
 
     return d->clickedButtonIndex >= 0 ? d->clickedButtonIndex : code;
+}
+
+void DDialog::setCloseButtonVisible(bool closeButtonVisible)
+{
+    D_D(DDialog);
+
+    d->closeButton->setVisible(closeButtonVisible);
 }
 
 DDialog::DDialog(DDialogPrivate &dd, QWidget *parent) :

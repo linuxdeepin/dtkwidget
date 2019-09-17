@@ -41,6 +41,7 @@ class DDialog : public DAbstractDialog
     Q_PROPERTY(QPixmap iconPixmap READ iconPixmap WRITE setIconPixmap)
     Q_PROPERTY(Qt::TextFormat textFormat READ textFormat WRITE setTextFormat NOTIFY textFormatChanged)
     Q_PROPERTY(bool onButtonClickedClose READ onButtonClickedClose WRITE setOnButtonClickedClose)
+    Q_PROPERTY(bool closeButtonVisible READ closeButtonVisible WRITE setCloseButtonVisible)
 
 public:
     enum ButtonType {
@@ -68,6 +69,8 @@ public:
 
     void setContentLayoutContentsMargins(const QMargins &margins);
     QMargins contentLayoutContentsMargins() const;
+
+    bool closeButtonVisible() const;
 
 Q_SIGNALS:
     void aboutToClose();
@@ -109,6 +112,7 @@ public Q_SLOTS:
     void setIconPixmap(const QPixmap &iconPixmap);
     void setTextFormat(Qt::TextFormat textFormat);
     void setOnButtonClickedClose(bool onButtonClickedClose);
+    void setCloseButtonVisible(bool closeButtonVisible);
 
     int exec() Q_DECL_OVERRIDE;
 
