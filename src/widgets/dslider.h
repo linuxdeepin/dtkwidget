@@ -1,5 +1,9 @@
 /*
- * Copyright (C) 2015 ~ 2017 Deepin Technology Co., Ltd.
+ * Copyright (C) 2011 ~ 2019 Deepin Technology Co., Ltd.
+ *
+ * Author:     wp <wangpeng_cm@deepin.com>
+ *
+ * Maintainer: wp <wangpeng_cm@deepin.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,78 +22,58 @@
 #ifndef DSLIDER_H
 #define DSLIDER_H
 
+#include <QWidget>
 #include <QSlider>
 
-#include "dtkwidget_global.h"
+#include <dtkwidget_global.h>
+#include <dobject.h>
 
 DWIDGET_BEGIN_NAMESPACE
 
 class DSliderPrivate;
-class LIBDTKWIDGETSHARED_EXPORT DSlider : public QSlider
+class LIBDTKWIDGETSHARED_EXPORT DSlider : public QWidget, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
-    Q_PROPERTY(int handleType READ handleType)
-    Q_PROPERTY(QColor tipColor READ tipColor WRITE setTipColor)
-    Q_PROPERTY(QColor scaleColor READ scaleColor WRITE setScaleColor)
-    Q_PROPERTY(bool hoverShowValue READ hoverShowValue WRITE setHoverShowValue)
-    Q_PROPERTY(QColor hoverValueColor READ hoverValueColor WRITE setHoverValueColor)
-    Q_PROPERTY(int hoverShowValueInterval READ hoverShowValueInterval WRITE setHoverShowValueInterval)
-
+    Q_DISABLE_COPY(DSlider)
+    D_DECLARE_PRIVATE(DSlider)
 public:
-    enum HandleType {
-        SharpHandler,
-        RoundHandle
-    };
+    DSlider(Qt::Orientation orientation = Qt::Horizontal, QWidget *parent = nullptr);
 
-    DSlider(QWidget *parent = 0);
-    DSlider(Qt::Orientation orientation, QWidget *parent = 0);
-    ~DSlider();
+    Qt::Orientation orientation() const;
 
-    int handleType() const;
-    void setHandleType(HandleType handleType);
+    QSlider *slider();
 
-    QString leftTip() const;
-    void setLeftTip(const QString &leftTip);
+    void setLeftIcon(const QIcon &left);
+    void setRightIcon(const QIcon &right);
 
-    QString rightTip() const;
-    void setRightTip(const QString &rightTip);
+    void setMinimum(int min);
+    int minimum() const;
 
-    QColor tipColor() const;
-    void setTipColor(const QColor &tipColor);
+    void setValue(int value);
+    int value() const;
 
-    QColor scaleColor() const;
-    void setScaleColor(const QColor &scaleColor);
+    void setPageStep(int pageStep);
+    int pageStep() const;
 
-    void addScale(int value);
-    void removeScale(int value);
+    void setMaximum(int max);
+    int maximum() const;
 
-    bool hoverShowValue() const;
-    QColor hoverValueColor() const;
-    int hoverShowValueInterval() const;
+    void setLeftTicks(const QStringList &info);
+    void setRightTicks(const QStringList &info);
 
-public Q_SLOTS:
-    void setHoverShowValue(bool hoverShowValue);
-    void setHoverValueColor(QColor hoverValueColor);
-    void setHoverShowValueInterval(int hoverShowValueInterval);
+Q_SIGNALS:
+    void valueChanged(int value);
+
+    void sliderPressed();
+    void sliderMoved(int position);
+    void sliderReleased();
+
+    void rangeChanged(int min, int max);
+
+    void actionTriggered(int action);
 
 protected:
-    DSlider(DSliderPrivate &d);
-    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
-    void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
-    void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
-    void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
-    QSize sizeHint() const Q_DECL_OVERRIDE;
-
-private Q_SLOTS:
-    void hoverTimout();
-
-private:
-    DSliderPrivate *d_ptr;
-
-    void init();
-
-    Q_DECLARE_PRIVATE(DSlider)
-    Q_DISABLE_COPY(DSlider)
+    DSlider(DSliderPrivate &q, QWidget *parent);
 };
 
 DWIDGET_END_NAMESPACE
