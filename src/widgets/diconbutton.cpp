@@ -191,6 +191,21 @@ void DIconButton::initStyleOption(DStyleOptionButton *option) const
     }
 }
 
+void DIconButton::keyPressEvent(QKeyEvent *event)
+{
+    switch (event->key()) {
+    case Qt::Key_Enter:
+    case Qt::Key_Return:
+        if (hasFocus()) {
+            click();
+            break;
+        }
+        Q_FALLTHROUGH();
+    default:
+        QAbstractButton::keyPressEvent(event);
+    }
+}
+
 void DIconButton::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event)

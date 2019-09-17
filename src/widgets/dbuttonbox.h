@@ -42,6 +42,7 @@ private:
     void initStyleOption(DStyleOptionButtonBoxButton *option) const;
 
     void paintEvent(QPaintEvent *e) override;
+    void keyPressEvent(QKeyEvent *event) override;
 };
 
 class DButtonBoxPrivate;

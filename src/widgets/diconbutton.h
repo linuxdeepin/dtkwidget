@@ -64,6 +64,7 @@ protected:
     DIconButton(DIconButtonPrivate &dd, QWidget *parent = nullptr);
     virtual DStyleOptionButton baseStyleOption() const;
     virtual void initStyleOption(DStyleOptionButton *option) const;
+    void keyPressEvent(QKeyEvent *event) override;
 
 private:
     void paintEvent(QPaintEvent *event) override;
