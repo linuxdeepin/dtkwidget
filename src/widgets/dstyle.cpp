@@ -45,55 +45,16 @@ QT_END_NAMESPACE
 DGUI_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
-inline static int adjustColorValue(int base, qint8 increment, int max = 255)
-{
-    return increment > 0 ? (max - base) * increment / 100.0 + base
-           : base * (1 + increment / 100.0);
-}
-
 QColor DStyle::adjustColor(const QColor &base,
                            qint8 hueFloat, qint8 saturationFloat, qint8 lightnessFloat,
                            qint8 redFloat, qint8 greenFloat, qint8 blueFloat, qint8 alphaFloat)
 {
-    // 按HSL格式调整
-    int H, S, L, A;
-    base.getHsl(&H, &S, &L, &A);
-
-    H = H > 0 ? adjustColorValue(H, hueFloat, 359) : H;
-    S = adjustColorValue(S, saturationFloat);
-    L = adjustColorValue(L, lightnessFloat);
-    A = adjustColorValue(A, alphaFloat);
-
-    QColor new_color = QColor::fromHsl(H, S, L, A);
-
-    // 按RGB格式调整
-    int R, G, B;
-    new_color.getRgb(&R, &G, &B);
-
-    R = adjustColorValue(R, redFloat);
-    G = adjustColorValue(G, greenFloat);
-    B = adjustColorValue(B, blueFloat);
-
-    new_color.setRgb(R, G, B, A);
-
-    return new_color;
+    return DGuiApplicationHelper::adjustColor(base, hueFloat, saturationFloat, lightnessFloat, redFloat, greenFloat, blueFloat, alphaFloat);
 }
 
 QColor DStyle::blendColor(const QColor &substrate, const QColor &superstratum)
 {
-    QColor c2 = superstratum.toRgb();
-
-    if (c2.alpha() >= 255)
-        return c2;
-
-    QColor c1 = substrate.toRgb();
-    qreal c1_weight = 1 - c2.alphaF();
-
-    int r = c1_weight * c1.red() + c2.alphaF() * c2.red();
-    int g = c1_weight * c1.green() + c2.alphaF() * c2.green();
-    int b = c1_weight * c1.blue() + c2.alphaF() * c2.blue();
-
-    return QColor(r, g, b, c1.alpha());
+    return DGuiApplicationHelper::blendColor(substrate, superstratum);
 }
 
 namespace DDrawUtils {
