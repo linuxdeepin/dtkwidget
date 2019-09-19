@@ -63,14 +63,14 @@ DLineEdit::DLineEdit(QWidget *parent)
     : QLineEdit(parent),
       DObject(*new DLineEditPrivate(this))
 {
-    setClearButtonEnabled(true);
+
 }
 
 DLineEdit::DLineEdit(DLineEditPrivate &q, QWidget *parent)
     : QLineEdit(parent),
       DObject(q)
 {
-
+    setClearButtonEnabled(true);
 }
 
 /*!
