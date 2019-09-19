@@ -61,6 +61,9 @@ public:
     void setLeftTicks(const QStringList &info);
     void setRightTicks(const QStringList &info);
 
+    void setAboveTicks(const QStringList &info);
+    void setBelowTicks(const QStringList &info);
+
 Q_SIGNALS:
     void valueChanged(int value);
 

@@ -203,6 +203,16 @@ void DSlider::setRightTicks(const QStringList &info)
     d->right->setScaleInfo(info, QSlider::TicksRight);
 }
 
+void DSlider::setAboveTicks(const QStringList &info)
+{
+    setLeftTicks(info);
+}
+
+void DSlider::setBelowTicks(const QStringList &info)
+{
+    setRightTicks(info);
+}
+
 DSliderPrivate::DSliderPrivate(DSlider *q)
     : DObjectPrivate(q)
     , slider(nullptr)
