@@ -5,6 +5,17 @@
             "name": "Basic settings",
             "groups": [
                 {
+                    "key": "custom-widgets",
+                    "name": "Custom Widgets",
+                    "options": [
+                        {
+                            "key": "custom-button",
+                            "type": "custom-button",
+                            "default": "Custom Button"
+                        }
+                    ]
+                },
+                {
                     "key": "theme",
                     "name": "Theme",
                     "options": [

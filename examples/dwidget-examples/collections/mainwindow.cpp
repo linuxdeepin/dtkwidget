@@ -36,6 +36,7 @@
 #include "segmentedcontrol.h"
 #include "dplatformwindowhandle.h"
 #include "dtitlebar.h"
+#include <DSettingsWidgetFactory>
 
 #include <DApplication>
 
@@ -224,6 +225,15 @@ void MainWindow::menuItemInvoked(QAction *action)
         encoding->setValue(0);
 
         DSettingsDialog dsd(this);
+        dsd.widgetFactory()->registerWidget("custom-button", [] (QObject *obj) -> QWidget* {
+            if (DSettingsOption *option = qobject_cast<DSettingsOption*>(obj)) {
+                qDebug() << "create custom button:" << option->value();
+                QPushButton *button = new QPushButton(option->value().toString());
+                return button;
+            }
+
+            return nullptr;
+        });
         dsd.updateSettings(settings);
         dsd.exec();
         return;
