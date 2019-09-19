@@ -44,7 +44,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-const int DefaultTitlebarHeight = 40;
+const int DefaultTitlebarHeight = 50;
 const int DefaultIconHeight = 24;
 const int DefaultIconWidth = 24;
 
@@ -921,12 +921,11 @@ void DTitlebar::removeWidget(QWidget *w)
  * @param h is the target height.
  */
 /*!
- * \~chinese @brief 设置标题栏的高度，默认高度为40。
+ * \~chinese @brief 设置标题栏的高度，默认高度为 50。
  * @param h 需要设置的高度
  */
 void DTitlebar::setFixedHeight(int h)
 {
-    D_D(DTitlebar);
     QWidget::setFixedHeight(h);
 }
 
