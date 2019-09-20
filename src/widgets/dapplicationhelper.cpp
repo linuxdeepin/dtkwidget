@@ -24,20 +24,20 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class Q_DECL_HIDDEN _DApplicationHelper
-{
+class _DApplicationHelper {
 public:
     static DGuiApplicationHelper *createHelper()
     {
         return new DApplicationHelper();
     }
-
-    _DApplicationHelper() {
-        DApplicationHelper::registerInstanceCreator(createHelper);
-    }
 };
 
-static _DApplicationHelper _registerHelperCreator;
+__attribute__((constructor)) // 在库被加载时就执行此函数
+static void init_createHelper ()
+{
+    if (!d)
+        DApplicationHelper::registerInstanceCreator(_DApplicationHelper::createHelper);
+}
 
 class DApplicationHelperPrivate
 {
@@ -115,8 +115,10 @@ DApplicationHelper::DApplicationHelper()
 
 DApplicationHelper::~DApplicationHelper()
 {
-    if (d)
+    if (d) {
         delete d;
+        d = nullptr;
+    }
 }
 
 bool DApplicationHelper::eventFilter(QObject *watched, QEvent *event)
