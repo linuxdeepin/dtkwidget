@@ -126,6 +126,7 @@ public:
         CE_ButtonBoxButton,
         CE_ButtonBoxButtonBevel,
         CE_ButtonBoxButtonLabel,
+        CE_TextButton,
         CE_CustomBase = QStyle::CE_CustomBase + 0xf00000
     };
 

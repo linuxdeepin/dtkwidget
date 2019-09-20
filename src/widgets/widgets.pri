@@ -105,7 +105,8 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dfloatingmessage.h \
     $$PWD/dmessagemanager.h \
     $$PWD/dbuttonbox.h \
-    $$PWD/dwarningbutton.h
+    $$PWD/dwarningbutton.h \
+    $$PWD/dcommandlinkbutton.h
 
 SOURCES += $$PWD/dslider.cpp \
     $$PWD/dbackgroundgroup.cpp \
@@ -170,7 +171,8 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dfloatingmessage.cpp \
     $$PWD/dmessagemanager.cpp \
     $$PWD/dbuttonbox.cpp \
-    $$PWD/dwarningbutton.cpp
+    $$PWD/dwarningbutton.cpp \
+    $$PWD/dcommandlinkbutton.cpp
 
 RESOURCES += \
     $$PWD/icons.qrc

@@ -1074,6 +1074,14 @@ void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const Q
         style->drawControl(CE_PushButtonLabel, opt, p, w);
         break;
     }
+    case CE_TextButton: {
+        if (const QStyleOptionButton *option = qstyleoption_cast<const QStyleOptionButton *>(opt)) {
+            DStyleHelper dstyle(style);
+            p->setPen(dstyle.getColor(option, QPalette::Highlight));
+            p->drawText(opt->rect, option->text);
+        }
+        break;
+    }
     default:
         break;
     }
