@@ -22,6 +22,7 @@
 #define DBUTTONBOX_P_H
 
 #include "dbuttonbox.h"
+#include "dstyleoption.h"
 
 #include <DObjectPrivate>
 
@@ -36,6 +37,7 @@ class DButtonBoxPrivate : public DCORE_NAMESPACE::DObjectPrivate
 public:
     DButtonBoxPrivate(DButtonBox *qq);
     void init();
+    DStyleOptionButtonBoxButton::ButtonPosition getButtonPosition(const DButtonBoxButton *button) const;
 
     QButtonGroup *group;
     QBoxLayout *layout;

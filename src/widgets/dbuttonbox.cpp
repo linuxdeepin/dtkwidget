@@ -44,6 +44,26 @@ DButtonBoxButton::DButtonBoxButton(const QIcon &icon, const QString &text, QWidg
     setIcon(icon);
 }
 
+QSize DButtonBoxButton::iconSize() const
+{
+    QAbstractButtonPrivate *bp = static_cast<QAbstractButtonPrivate*>(QAbstractButton::d_ptr.data());
+
+    if (bp->iconSize.isValid()) {
+        return bp->iconSize;
+    }
+
+    DStyleHelper dstyle(style());
+    DStyleOptionButton opt;
+    opt.initFrom(this);
+    int size = dstyle.pixelMetric(DStyle::PM_IconButtonIconSize, &opt, this);
+
+    if (Q_LIKELY(size > 0)) {
+        return QSize(size, size);
+    }
+
+    return QAbstractButton::iconSize();
+}
+
 QSize DButtonBoxButton::sizeHint() const
 {
     QAbstractButtonPrivate *d = static_cast<QAbstractButtonPrivate*>(QAbstractButton::d_ptr.data());
@@ -106,18 +126,7 @@ void DButtonBoxButton::initStyleOption(DStyleOptionButtonBoxButton *option) cons
 
     if (DButtonBox *p = qobject_cast<DButtonBox*>(parent())) {
         option->orientation = p->orientation();
-        auto list = p->buttonList();
-        bool reverse = p->layoutDirection() == Qt::RightToLeft && option->orientation == Qt::Horizontal;
-
-        if (list.count() == 1) {
-            option->position = DStyleOptionButtonBoxButton::OnlyOne;
-        } else if (this == list.first()) {
-            option->position = reverse ? DStyleOptionButtonBoxButton::End : DStyleOptionButtonBoxButton::Beginning;
-        } else if (this == list.last()) {
-            option->position = reverse ? DStyleOptionButtonBoxButton::Beginning : DStyleOptionButtonBoxButton::End;
-        } else {
-            option->position = DStyleOptionButtonBoxButton::Middle;
-        }
+        option->position = p->d_func()->getButtonPosition(this);
     }
 }
 
@@ -156,6 +165,8 @@ void DButtonBoxPrivate::init()
 {
     D_Q(DButtonBox);
 
+    q->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed, QSizePolicy::PushButton));
+
     group = new QButtonGroup(q);
     q->connect(group, SIGNAL(buttonClicked(QAbstractButton*)), q, SIGNAL(buttonClicked(QAbstractButton*)));
     q->connect(group, SIGNAL(buttonPressed(QAbstractButton*)), q, SIGNAL(buttonPressed(QAbstractButton*)));
@@ -165,6 +176,27 @@ void DButtonBoxPrivate::init()
     layout = new QHBoxLayout(q);
     layout->setMargin(0);
     layout->setSpacing(0);
+}
+
+DStyleOptionButtonBoxButton::ButtonPosition DButtonBoxPrivate::getButtonPosition(const DButtonBoxButton *button) const
+{
+    D_QC(DButtonBox);
+
+    DStyleOptionButtonBoxButton::ButtonPosition position;
+    auto list = q->buttonList();
+    bool reverse = q->layoutDirection() == Qt::RightToLeft && q->orientation() == Qt::Horizontal;
+
+    if (list.count() == 1) {
+        position = DStyleOptionButtonBoxButton::OnlyOne;
+    } else if (button == list.first()) {
+        position = reverse ? DStyleOptionButtonBoxButton::End : DStyleOptionButtonBoxButton::Beginning;
+    } else if (button == list.last()) {
+        position = reverse ? DStyleOptionButtonBoxButton::Beginning : DStyleOptionButtonBoxButton::End;
+    } else {
+        position = DStyleOptionButtonBoxButton::Middle;
+    }
+
+    return position;
 }
 
 DButtonBox::DButtonBox(QWidget *parent)
@@ -207,6 +239,7 @@ void DButtonBox::setButtonList(const QList<DButtonBoxButton *> &list, bool check
     for (int i = 0; i < list.count(); ++i) {
         QAbstractButton *button = list.at(i);
 
+        button->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
         d->layout->addWidget(button);
         d->group->addButton(button);
 
@@ -254,6 +287,28 @@ int DButtonBox::checkedId() const
     D_DC(DButtonBox);
 
     return d->group->checkedId();
+}
+
+void DButtonBox::paintEvent(QPaintEvent *e)
+{
+    Q_UNUSED(e)
+
+    QStylePainter p(this);
+    QStyleOptionButton opt;
+    opt.state = QStyle::State_None;
+    opt.rect = rect();
+    opt.direction = layoutDirection();
+    opt.palette = palette();
+    opt.styleObject = this;
+    opt.fontMetrics = fontMetrics();
+
+    if (isEnabled()) {
+        opt.state |= QStyle::State_Enabled;
+    } else if (isActiveWindow()) {
+        opt.state |= QStyle::State_Active;
+    }
+
+    p.drawControl(QStyle::CE_PushButtonBevel, opt);
 }
 
 DWIDGET_END_NAMESPACE

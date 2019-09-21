@@ -35,6 +35,7 @@ public:
     explicit DButtonBoxButton(const QString &text, QWidget *parent = nullptr);
     DButtonBoxButton(const QIcon& icon, const QString &text = QString(), QWidget *parent = nullptr);
 
+    QSize iconSize() const;
     QSize sizeHint() const;
     QSize minimumSizeHint() const override;
 
@@ -73,6 +74,11 @@ Q_SIGNALS:
     void buttonPressed(QAbstractButton *);
     void buttonReleased(QAbstractButton *);
     void buttonToggled(QAbstractButton *, bool);
+
+private:
+    void paintEvent(QPaintEvent *e) override;
+
+    friend class DButtonBoxButton;
 };
 
 DWIDGET_END_NAMESPACE

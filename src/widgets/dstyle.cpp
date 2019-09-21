@@ -997,6 +997,15 @@ void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const Q
     case CE_ButtonBoxButtonBevel: {
         if (const DStyleOptionButtonBoxButton *btn = qstyleoption_cast<const DStyleOptionButtonBoxButton *>(opt)) {
             bool checked = btn->state & State_On;
+            bool disable = !(btn->state & State_Active);
+            bool hover = btn->state & State_MouseOver;
+            bool press = btn->state & State_Sunken;
+
+            // normal状态时不进行任何绘制，此时可直接使用button box的背景
+            if (!checked && !disable && !hover && !press) {
+                return;
+            }
+
             DStyleHelper dstyle(style);
             const QColor &background = dstyle.getColor(opt, checked ? QPalette::Highlight : QPalette::Button);
             p->setBrush(background);
@@ -1232,7 +1241,29 @@ QSize DStyle::sizeFromContents(const QStyle *style, DStyle::ContentsType ct, con
         return size;
     }
     case CT_ButtonBoxButton: {
-        return style->sizeFromContents(CT_PushButton, opt, contentsSize, widget);
+        QSize  size = style->sizeFromContents(CT_PushButton, opt, contentsSize, widget);
+
+        if (const DStyleOptionButtonBoxButton *btn = qstyleoption_cast<const DStyleOptionButtonBoxButton*>(opt)) {
+            if (btn->text.isEmpty()) {
+                // 只有图标时高度至少和宽度一致
+                size.setHeight(qMax(size.width() ,size.height()));
+            }
+
+            int frame_margin = DStyleHelper(style).pixelMetric(PM_FrameMargins, opt, widget);
+            switch (btn->position) {
+            case DStyleOptionButtonBoxButton::Beginning:
+            case DStyleOptionButtonBoxButton::End:
+                size.rwidth() -= frame_margin;
+                break;
+            case DStyleOptionButtonBoxButton::Middle:
+                size.rwidth() -= 2 * frame_margin;
+                break;
+            default:
+                break;
+            }
+        }
+
+        return size;
     }
     default:
         break;
