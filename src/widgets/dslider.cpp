@@ -26,6 +26,8 @@
 #include <QEvent>
 #include <QDebug>
 
+#include <DApplicationHelper>
+
 DWIDGET_BEGIN_NAMESPACE
 
 class SliderStrip : public QWidget
@@ -87,11 +89,15 @@ void DSlider::setLeftIcon(const QIcon &left)
         d->leftIcon->setFlat(true);
         d->leftIcon->setFocusPolicy(Qt::NoFocus);
         d->leftIcon->setAttribute(Qt::WA_TransparentForMouseEvents);
+
         if (orientation() == Qt::Horizontal) {
             d->layout->addWidget(d->leftIcon, 1, 0, Qt::AlignVCenter);
         } else {
             d->layout->addWidget(d->leftIcon, 0, 1, Qt::AlignHCenter);
         }
+
+        if (d->iconSize.isValid())
+            d->leftIcon->setIconSize(d->iconSize);
     }
     d->leftIcon->setIcon(left);
 }
@@ -111,8 +117,26 @@ void DSlider::setRightIcon(const QIcon &right)
         } else {
             d->layout->addWidget(d->rightIcon, 2, 1, Qt::AlignHCenter);
         }
+
+        if (d->iconSize.isValid())
+            d->rightIcon->setIconSize(d->iconSize);
     }
     d->rightIcon->setIcon(right);
+}
+
+void DSlider::setIconSize(const QSize &size)
+{
+    D_D(DSlider);
+
+    d->iconSize = size;
+
+    if (d->leftIcon != nullptr) {
+        d->leftIcon->setIconSize(size);
+    }
+
+    if (d->rightIcon != nullptr) {
+        d->rightIcon->setIconSize(size);
+    }
 }
 
 void DSlider::setMinimum(int min)
@@ -279,6 +303,7 @@ void SliderStrip::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event)
     QPainter pa(this);
+    pa.setPen(QPen(DApplicationHelper::instance()->palette(this).textTips(), 1));
 
     int tickSize = fontMetrics().height() / 2;
     int offsetSize = style()->pixelMetric(QStyle::PM_SliderLength, nullptr, this) / 2;
@@ -303,7 +328,7 @@ void SliderStrip::paintEvent(QPaintEvent *event)
         }
 
         pa.drawLine(QPointF(startX, startY), QPointF(endX, endY));
-        pa.drawText(QRectF(endX, textPos, average / 2, height - tickSize), Qt::AlignLeft, scaleInfo[0]);
+        pa.drawText(QRectF(endX - offsetSize, textPos, average / 2 + offsetSize, height - tickSize), Qt::AlignLeft, scaleInfo[0]);
 
         for (int i = 1; i < paragraph - 1; i++) {
             startX += average;
@@ -316,7 +341,7 @@ void SliderStrip::paintEvent(QPaintEvent *event)
             startX += average;
             endX = startX;
             pa.drawLine(QPointF(startX, startY), QPointF(endX, endY));
-            pa.drawText(QRectF(endX - average / 2, textPos, average / 2, height - tickSize), Qt::AlignRight, scaleInfo[paragraph - 1]);
+            pa.drawText(QRectF(endX - average / 2, textPos, average / 2 + offsetSize, height - tickSize), Qt::AlignRight, scaleInfo[paragraph - 1]);
         }
     } else {
         startY = offsetSize;

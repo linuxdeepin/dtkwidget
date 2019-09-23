@@ -46,6 +46,8 @@ public:
     void setLeftIcon(const QIcon &left);
     void setRightIcon(const QIcon &right);
 
+    void setIconSize(const QSize &size);
+
     void setMinimum(int min);
     int minimum() const;
 

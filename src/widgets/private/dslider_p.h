@@ -53,6 +53,8 @@ public:
     SliderStrip *right;
 
     QGridLayout *layout;
+
+    QSize iconSize;
 };
 
 DWIDGET_END_NAMESPACE
