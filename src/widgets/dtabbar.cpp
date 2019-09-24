@@ -20,8 +20,6 @@
  */
 #include "dtabbar.h"
 #include "dobject_p.h"
-#include "dimagebutton.h"
-#include "dthememanager.h"
 
 #include <QPainter>
 #include <QMouseEvent>
@@ -44,6 +42,7 @@
 #undef protected
 
 #include "dapplication.h"
+#include "diconbutton.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -89,26 +88,6 @@ void DMovableTabWidget::paintEvent(QPaintEvent *e)
     pa.drawPixmap(0, 0, m_pixmap);
 }
 
-class DTabBarAddButton : public QToolButton
-{
-public:
-    explicit DTabBarAddButton(QWidget *parent)
-        : QToolButton(parent) {}
-
-private:
-    void paintEvent(QPaintEvent *event) override;
-};
-
-void DTabBarAddButton::paintEvent(QPaintEvent *event)
-{
-    Q_UNUSED(event)
-
-    QStylePainter p(this);
-    QStyleOptionToolButton opt;
-    initStyleOption(&opt);
-    p.drawControl(static_cast<QStyle::ControlElement>(QStyle::CE_CustomBase + 1), opt);
-}
-
 class DTabBarPrivate : public QTabBar, public DObjectPrivate
 {
     Q_OBJECT
@@ -121,12 +100,12 @@ public:
         startDragDistance = qApp->startDragDistance();
         maskColor = flashColor = QColor(0, 0, 255, 125);
 
-        addButton = new DTabBarAddButton(qq);
+        addButton = new DIconButton(qq);
         addButton->setObjectName("AddButton");
         addButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
         addButton->setFixedWidth(48);
 
-        connect(addButton, &DTabBarAddButton::clicked,
+        connect(addButton, &DIconButton::clicked,
                 qq, &DTabBar::tabAddRequested);
         connect(this, &QTabBar::tabMoved, this, [this] (int from, int to) {
             tabMinimumSize.move(from, to);
@@ -268,7 +247,7 @@ public:
     QList<QSize> tabMinimumSize;
     QList<QSize> tabMaximumSize;
     bool visibleAddButton = true;
-    DTabBarAddButton *addButton;
+    DIconButton *addButton;
     QPointer<QDrag> drag;
     bool dragable = false;
     int startDragDistance;
