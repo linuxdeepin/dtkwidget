@@ -488,16 +488,18 @@ void drawCloseButton(QPainter *pa, const QRectF &rect)
 
 void drawIndicatorSearch(QPainter *pa, const QRectF &rect)
 {
-    QPainterPath path;
+    pa->setRenderHint(QPainter::Antialiasing, true);
+    QRectF content_rect(0, 0, rect.width() / 2, rect.height() / 2); //放大镜空间
+    content_rect.moveCenter(rect.center());
 
-    qreal hypotenuse =  sqrt((pow(rect.bottom(), 2) + pow(rect.right(), 2)));
-    qreal x = rect.bottom() - (4 / hypotenuse) * rect.bottom();
-    qreal y = rect.right() - (4 / hypotenuse) * rect.right();
-
-    path.addEllipse(rect.x(), rect.y(), x / 2, y / 2);
-    path.moveTo(rect.bottomRight());
-    path.lineTo(x, y);
-    pa->drawPath(path);
+    pa->translate(content_rect.center());
+    content_rect.moveCenter(QPoint(0,0));
+    pa->rotate(-40);
+    pa->drawEllipse(content_rect);
+    pa->drawLine(content_rect.center().x(),
+                 content_rect.right() ,
+                 content_rect.center().x(),
+                  content_rect.right() + content_rect.width()/2);
 }
 
 void drawDeleteButton(QPainter *pa, const QRectF &rect)
@@ -1251,10 +1253,10 @@ QSize DStyle::sizeFromContents(const QStyle *style, DStyle::ContentsType ct, con
     case CT_ButtonBoxButton: {
         QSize  size = style->sizeFromContents(CT_PushButton, opt, contentsSize, widget);
 
-        if (const DStyleOptionButtonBoxButton *btn = qstyleoption_cast<const DStyleOptionButtonBoxButton*>(opt)) {
+        if (const DStyleOptionButtonBoxButton *btn = qstyleoption_cast<const DStyleOptionButtonBoxButton *>(opt)) {
             if (btn->text.isEmpty()) {
                 // 只有图标时高度至少和宽度一致
-                size.setHeight(qMax(size.width() ,size.height()));
+                size.setHeight(qMax(size.width(), size.height()));
             }
 
             int frame_margin = DStyleHelper(style).pixelMetric(PM_FrameMargins, opt, widget);

@@ -19,8 +19,6 @@
 #include "private/dlineedit_p.h"
 #include "darrowrectangle.h"
 
-#include <QHBoxLayout>
-
 #define private public
 #ifndef slots
 #define slots Q_SLOTS
@@ -60,17 +58,29 @@ DWIDGET_BEGIN_NAMESPACE
  * \~chinese \param parent 调用QLineEdit的构造函数
  */
 DLineEdit::DLineEdit(QWidget *parent)
-    : QLineEdit(parent),
-      DObject(*new DLineEditPrivate(this))
+    : QWidget(parent)
+    , DObject(*new DLineEditPrivate(this))
+{
+    D_D(DLineEdit);
+    d->init();
+}
+
+DLineEdit::~DLineEdit()
 {
 
 }
 
-DLineEdit::DLineEdit(DLineEditPrivate &q, QWidget *parent)
-    : QLineEdit(parent),
-      DObject(q)
+QLineEdit *DLineEdit::lineEdit() const
 {
-    setClearButtonEnabled(true);
+    D_DC(DLineEdit);
+    return d->lineEdit;
+}
+
+DLineEdit::DLineEdit(DLineEditPrivate &q, QWidget *parent)
+    : QWidget(parent)
+    , DObject(q)
+{
+    d_func()->init();
 }
 
 /*!
@@ -188,30 +198,22 @@ void DLineEdit::setLeftWidgets(const QList<QWidget *> &list)
         d->leftWidget = nullptr;
     }
 
-    if (list.isEmpty()) {
-        const QMargins &margins = contentsMargins();
-        setContentsMargins(0, margins.top(), margins.right(), margins.bottom());
-
+    if (list.isEmpty())
         return;
-    }
 
-    d->leftWidget = new QWidget(this);
+
+    d->leftWidget = new QWidget;
     QHBoxLayout *layout = new QHBoxLayout(d->leftWidget);
-    layout->setContentsMargins(0, 0, 5, 0);
+    layout->setContentsMargins(0, 0, 0, 0);
+    d->hLayout->insertWidget(0, d->leftWidget);
 
     QList<QWidget *>::const_iterator itor;
 
     for (itor = list.constBegin(); itor != list.constEnd(); itor++) {
-        layout->addWidget(*itor, 0, Qt::AlignVCenter);
+        layout->addWidget(*itor);
     }
 
     d->leftWidget->adjustSize();
-
-    int leftWidth = d->leftWidget->width();
-    d->leftWidget->resize(leftWidth, height());
-
-    const QMargins &margins = contentsMargins();
-    setContentsMargins(leftWidth, margins.top(), margins.right(), margins.bottom());
 }
 
 void DLineEdit::setRightWidgets(const QList<QWidget *> &list)
@@ -224,85 +226,79 @@ void DLineEdit::setRightWidgets(const QList<QWidget *> &list)
         d->rightWidget = nullptr;
     }
 
-    if (list.isEmpty()) {
-        const QMargins &margins = contentsMargins();
-        setContentsMargins(margins.top(), margins.left(), 0, margins.bottom());
-
+    if (list.isEmpty())
         return;
-    }
 
-    d->rightWidget = new QWidget(this);
+    d->rightWidget = new QWidget;
     QHBoxLayout *layout = new QHBoxLayout(d->rightWidget);
-    layout->setContentsMargins(5, 0, 0, 0);
+    layout->setContentsMargins(0, 0, 0, 0);
+    d->hLayout->addWidget(d->rightWidget);
     QList<QWidget *>::const_iterator itor;
 
     for (itor = list.constBegin(); itor != list.constEnd(); itor++) {
-        layout->addWidget(*itor, 0, Qt::AlignVCenter);
+        layout->addWidget(*itor);
     }
 
     d->rightWidget->adjustSize();
-
-    int rightWidth = d->rightWidget->width();
-
-    d->rightWidget->resize(rightWidth, height());
-    d->rightWidget->setGeometry(width() - rightWidth, 0, rightWidth, height());
-    const QMargins &margins = contentsMargins();
-    setContentsMargins(margins.left(), margins.top(), rightWidth, margins.bottom());
 }
 
 void DLineEdit::setLeftWidgetsVisible(bool visible)
 {
     Q_D(DLineEdit);
-    int left = 0;
-    const QMargins &margins = contentsMargins();
-
-    if (visible) {
-        d->leftWidget->adjustSize();
-        left = d->leftWidget->width();
-    }
-    setContentsMargins(left, margins.top(), margins.right(), margins.bottom());
+    d->leftWidget->setVisible(visible);
 }
 
 void DLineEdit::setRightWidgetsVisible(bool visible)
 {
     Q_D(DLineEdit);
-    int right = 0;
-    const QMargins &margins = contentsMargins();
-
-    if (visible) {
-        d->rightWidget->adjustSize();
-        right = d->rightWidget->width();
-    }
-    setContentsMargins(margins.left(), margins.top(), right, margins.bottom());
+    d->rightWidget->setVisible(visible);
 }
 
-void DLineEdit::focusInEvent(QFocusEvent *e)
+void DLineEdit::setClearButtonEnabled(bool enable)
 {
-    Q_EMIT focusChanged(true);
-    QLineEdit::focusInEvent(e);
+    Q_D(DLineEdit);
+    d->lineEdit->setClearButtonEnabled(enable);
 }
 
-void DLineEdit::focusOutEvent(QFocusEvent *e)
+bool DLineEdit::isClearButtonEnabled() const
 {
-    Q_EMIT focusChanged(false);
-    QLineEdit::focusOutEvent(e);
+    D_DC(DLineEdit);
+    return  d->lineEdit->isClearButtonEnabled();
 }
 
-void DLineEdit::resizeEvent(QResizeEvent *e)
+void DLineEdit::setText(const QString &text)
 {
-    QLineEdit::resizeEvent(e);
-
-    Q_EMIT sizeChanged(e->size());
-
     D_D(DLineEdit);
+    d->lineEdit->setText(text);
+}
 
-    if (d->rightWidget != nullptr) {
-        d->rightWidget->setGeometry(width() - d->rightWidget->width(), 0,
-                                    d->rightWidget->width(), height());
-    }
+QString DLineEdit::text()
+{
+    D_DC(DLineEdit);
+    return d->lineEdit->text();
 
-    if (d->leftWidget != nullptr) {
-        d->leftWidget->resize(d->leftWidget->width(), height());
+}
+
+QLineEdit::EchoMode DLineEdit::echoMode() const
+{
+    D_DC(DLineEdit);
+    return d->lineEdit->echoMode();
+}
+
+void DLineEdit::setEchoMode(QLineEdit::EchoMode mode)
+{
+    D_D(DLineEdit);
+    d->lineEdit->setEchoMode(mode);
+}
+
+bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
+{
+    Q_UNUSED(watched)
+
+    if (event->type() == QEvent::FocusIn) {
+        Q_EMIT focusChanged(true);
+    } else if (event->type() == QEvent::FocusOut) {
+        Q_EMIT focusChanged(false);
     }
 }
 
@@ -310,7 +306,32 @@ DLineEditPrivate::DLineEditPrivate(DLineEdit *q)
     : DObjectPrivate(q)
     , leftWidget(nullptr)
     , rightWidget(nullptr)
+    , lineEdit(nullptr)
+    , hLayout(nullptr)
 {
+
+}
+
+void DLineEditPrivate::init()
+{
+    Q_Q(DLineEdit);
+
+    hLayout = new QHBoxLayout(q);
+    lineEdit = new QLineEdit;
+
+    hLayout->setContentsMargins(0, 0, 0, 0);
+    hLayout->addWidget(lineEdit);
+
+    lineEdit->installEventFilter(q);
+
+    q->lineEdit()->setClearButtonEnabled(true);
+
+    q->connect(lineEdit, &QLineEdit::textChanged, q, &DLineEdit::textChanged);
+    q->connect(lineEdit, &QLineEdit::textEdited, q, &DLineEdit::textEdited);
+    q->connect(lineEdit, &QLineEdit::cursorPositionChanged, q, &DLineEdit::cursorPositionChanged);
+    q->connect(lineEdit, &QLineEdit::returnPressed, q, &DLineEdit::returnPressed);
+    q->connect(lineEdit, &QLineEdit::editingFinished, q, &DLineEdit::editingFinished);
+    q->connect(lineEdit, &QLineEdit::selectionChanged, q, &DLineEdit::selectionChanged);
 }
 
 DWIDGET_END_NAMESPACE

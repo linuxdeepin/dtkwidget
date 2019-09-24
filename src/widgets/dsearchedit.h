@@ -35,12 +35,9 @@ public:
     QString placeHolder() const;
 
 protected:
-    void paintEvent(QPaintEvent *event) override;
-
-protected:
     Q_DISABLE_COPY(DSearchEdit)
     D_DECLARE_PRIVATE(DSearchEdit)
-    Q_PRIVATE_SLOT(d_func(), void _q_toEditMode())
+    Q_PRIVATE_SLOT(d_func(), void _q_toEditMode(bool))
 };
 
 DWIDGET_END_NAMESPACE

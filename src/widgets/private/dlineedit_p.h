@@ -32,13 +32,18 @@ class DLineEditPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 public:
     DLineEditPrivate(DLineEdit *q);
 
-public:
+    void init();
+
+private:
     bool m_isAlert = false;
 
     DArrowRectangle *tooltip = Q_NULLPTR;
 
     QWidget *leftWidget;
     QWidget *rightWidget;
+
+    QLineEdit *lineEdit;
+    QHBoxLayout *hLayout;
 };
 
 DWIDGET_END_NAMESPACE

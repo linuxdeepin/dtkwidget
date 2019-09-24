@@ -41,7 +41,7 @@ InputTab::InputTab(QWidget *parent) : QLabel(parent)
 
     DTK_WIDGET_NAMESPACE::DPasswordEdit *pwdEdit2 = new DTK_WIDGET_NAMESPACE::DPasswordEdit(this);
     pwdEdit2->setText("password");
-    pwdEdit2->setEchoMode(DTK_WIDGET_NAMESPACE::DPasswordEdit::Normal);
+    pwdEdit2->setEchoMode(QLineEdit::Normal);
     pwdEdit2->setAlert(true);
     pwdEdit2->move(20, 50);
     connect(pwdEdit2, &DTK_WIDGET_NAMESPACE::DPasswordEdit::focusChanged, [](bool focus) {qDebug() << "focus: " << focus;});
@@ -71,7 +71,7 @@ InputTab::InputTab(QWidget *parent) : QLabel(parent)
     lineEditAlert->setAlert(true);
     lineEditAlert->setFixedSize(200, 30);
     lineEditAlert->move(20, 230);
-    lineEditAlert->setValidator(new QRegExpValidator(QRegExp("((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.){0,3}(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)?")));
+    lineEditAlert->lineEdit()->setValidator(new QRegExpValidator(QRegExp("((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.){0,3}(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)?")));
 
     DTK_WIDGET_NAMESPACE::DShortcutEdit *shortcutEdit = new DTK_WIDGET_NAMESPACE::DShortcutEdit(this);
     shortcutEdit->move(20, 300);

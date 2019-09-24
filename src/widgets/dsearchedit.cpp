@@ -16,10 +16,16 @@
  */
 
 #include "dsearchedit.h"
+#include "dpalette.h"
+#include "dstyle.h"
 #include "private/dsearchedit_p.h"
 
 #include <QAction>
 #include <QPainter>
+#include <QDebug>
+#include <QLabel>
+#include <QHBoxLayout>
+#include <QEvent>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -65,26 +71,6 @@ QString DSearchEdit::placeHolder() const
     return d->placeHolder;
 }
 
-void DSearchEdit::paintEvent(QPaintEvent *event)
-{
-    Q_D(DSearchEdit);
-
-    DLineEdit::paintEvent(event);
-
-    if (hasFocus() || !text().isEmpty()) {
-        return;
-    }
-
-    QPainter p(this);
-    QPalette pal = palette();
-    QColor col = pal.text().color();
-
-    col.setAlpha(128);
-    p.setPen(col);
-
-    p.drawText(this->rect(), Qt::AlignCenter, d->placeHolder);
-}
-
 DSearchEditPrivate::DSearchEditPrivate(DSearchEdit *q)
     : DLineEditPrivate(q)
     , action(nullptr)
@@ -95,24 +81,40 @@ void DSearchEditPrivate::init()
 {
     D_Q(DSearchEdit);
 
+    label = new QLabel;
     placeHolder = DSearchEdit::tr("Search");
 
-    action = new QAction(QIcon(":/images/light/images/search.svg"), QString());
+    action = new QAction;
+
+    action->setIcon(DStyleHelper(q->style()).standardIcon(DStyle::SP_IndicatorSearch, nullptr));
+
+    DPalette pe;
+    QStyleOption opt;
+    QColor color = DStyleHelper(q->style()).getColor(&opt,pe, DPalette::TextTips);
+    pe.setColor(DPalette::TextTips, color);
+
+    label->setPalette(pe);
+    label->setText(placeHolder);
 
     q->setFocusPolicy(Qt::ClickFocus);
 
-    q->connect(q, SIGNAL(focusChanged(bool)), q, SLOT(_q_toEditMode()));
+    q->connect(q, SIGNAL(focusChanged(bool)), q, SLOT(_q_toEditMode(bool)));
+
+    QHBoxLayout *layout = new QHBoxLayout(q->lineEdit());
+
+    layout->addWidget(label, 0, Qt::AlignCenter);
 }
 
-void DSearchEditPrivate::_q_toEditMode()
+void DSearchEditPrivate::_q_toEditMode(bool focus)
 {
     D_Q(DSearchEdit);
 
-    if (q->hasFocus()) {
-        q->addAction(action, QLineEdit::LeadingPosition);
+    if (focus) {
+        q->lineEdit()->addAction(action, QLineEdit::LeadingPosition);
     } else {
-        q->removeAction(action);
+        q->lineEdit()->removeAction(action);
     }
+    label->setVisible(!focus);
 }
 
 DWIDGET_END_NAMESPACE

@@ -24,6 +24,7 @@
 #include <QDebug>
 #include <QTimer>
 #include <QPushButton>
+#include <QLineEdit>
 
 
 DWIDGET_BEGIN_NAMESPACE
@@ -72,7 +73,7 @@ DPasswordEdit::DPasswordEdit(QWidget *parent)
  */
 bool DPasswordEdit::isEchoMode() const
 {
-    return echoMode() == Normal;
+    return lineEdit()->echoMode() == QLineEdit::Normal;
 }
 
 /*!
@@ -83,11 +84,11 @@ bool DPasswordEdit::isEchoMode() const
 void DPasswordEdit::setEchoMode(QLineEdit::EchoMode mode)
 {
     if (mode != echoMode()) {
-        QLineEdit::setEchoMode(mode);
+        DLineEdit::setEchoMode(mode);
 
         // To inform the style sheet system that our style sheet needs
         // to be recalculated.
-        Q_EMIT echoModeChanged(mode == Normal);
+        Q_EMIT echoModeChanged(mode == QLineEdit::Normal);
 
         D_D(DPasswordEdit);
 
@@ -123,7 +124,7 @@ void DPasswordEditPrivate::init()
 {
     D_Q(DPasswordEdit);
 
-    q->QLineEdit::setEchoMode(QLineEdit::Password);
+    q->lineEdit()->setEchoMode(QLineEdit::Password);
 
     QList<QWidget *> list;
     togglePasswordVisibleButton = new DIconButton(DStyle::SP_ShowPassword);
@@ -140,10 +141,10 @@ void DPasswordEditPrivate::_q_toggleEchoMode()
 
     if (q->isEchoMode()) {
         togglePasswordVisibleButton->setIcon(DStyle::SP_ShowPassword);
-        q->setEchoMode(q->Password);
+        q->setEchoMode(q->lineEdit()->Password);
     } else {
         togglePasswordVisibleButton->setIcon(DStyle::SP_HidePassword);
-        q->setEchoMode(q->Normal);
+        q->setEchoMode(q->lineEdit()->Normal);
     }
 }
 

@@ -16,11 +16,11 @@
  */
 
 #include <QRegularExpressionValidator>
-#include <QHBoxLayout>
 #include <QGuiApplication>
 #include <QClipboard>
 #include <QKeyEvent>
 #include <QDebug>
+#include <QLabel>
 
 #include "dthememanager.h"
 #include "dipv4lineedit.h"
@@ -30,8 +30,8 @@ DWIDGET_BEGIN_NAMESPACE
 
 #define RX_PATTERN_IP "^(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)?$"
 
-DIpv4LineEditPrivate::DIpv4LineEditPrivate(DIpv4LineEdit *parent) :
-    DLineEditPrivate(parent)
+DIpv4LineEditPrivate::DIpv4LineEditPrivate(DIpv4LineEdit *parent)
+        : DObjectPrivate(parent)
 {
 
 }
@@ -56,12 +56,10 @@ void DIpv4LineEditPrivate::init()
 
     editMainWidget->setLayout(hbox_layout);
 
-    q->DLineEdit::setReadOnly(true);
+    q->QLineEdit::setReadOnly(true);
     q->setFocusProxy(editList.first());
     q->setValidator(new QRegularExpressionValidator(QRegularExpression("((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)?\\.){0,3}(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)?"), q));
 
-    QObject::connect(q, &DIpv4LineEdit::sizeChanged,
-                     editMainWidget, static_cast<void (QWidget::*)(const QSize&)>(&QWidget::resize));
     QObject::connect(q, SIGNAL(textChanged(QString)), q, SLOT(_q_setIpLineEditText(QString)), Qt::QueuedConnection);
 }
 
@@ -97,35 +95,36 @@ QLineEdit *DIpv4LineEditPrivate::getEdit()
 
 void DIpv4LineEditPrivate::setFocus(bool focus)
 {
-    if(this->focus == focus)
+    D_Q(DIpv4LineEdit);
+
+    if (this->focus == focus)
         return;
 
     this->focus = focus;
 
-    Q_EMIT q_func()->focusChanged(focus);
+    Q_EMIT q->focusChanged(focus);
 }
 
 void DIpv4LineEditPrivate::_q_updateLineEditText()
 {
     D_Q(DIpv4LineEdit);
-
     QString text;
 
-    for(const QLineEdit *edit : editList) {
+    for (const QLineEdit *edit : editList) {
         text.append(".").append(edit->text());
     }
 
     QObject::disconnect(q, SIGNAL(textChanged(QString)), q, SLOT(_q_setIpLineEditText(QString)));
 
-    if(text == "....") {
-        if(!q->text().isEmpty()) {
+    if (text == "....") {
+        if (!q->text().isEmpty()) {
             q->setText("");
             Q_EMIT q->textEdited(q->text());
         }
     } else {
         text = text.mid(1);
 
-        if(text != q->text()) {
+        if (text != q->text()) {
             q->setText(text);
             Q_EMIT q->textEdited(q->text());
         }
@@ -133,16 +132,16 @@ void DIpv4LineEditPrivate::_q_updateLineEditText()
 
     QObject::connect(q, SIGNAL(textChanged(QString)), q, SLOT(_q_setIpLineEditText(QString)), Qt::QueuedConnection);
 
-    q->DLineEdit::setCursorPosition(q->cursorPosition());
+    q->QLineEdit::setCursorPosition(q->cursorPosition());
 }
 
 void DIpv4LineEditPrivate::_q_setIpLineEditText(const QString &text)
 {
-    D_QC(DIpv4LineEdit);
+    D_Q(DIpv4LineEdit);
 
     int pos = 0;
 
-    if(q->validator()->validate(const_cast<QString&>(text), pos) != QValidator::Acceptable) {
+    if (q->validator()->validate(const_cast<QString &>(text), pos) != QValidator::Acceptable) {
         _q_updateLineEditText();
         return;
     }
@@ -151,14 +150,14 @@ void DIpv4LineEditPrivate::_q_setIpLineEditText(const QString &text)
 
     int min_count = qMin(editList.count(), text_list.count());
 
-    for(int i = 0; i < min_count; ++i ) {
+    for (int i = 0; i < min_count; ++i) {
         QLineEdit *edit = editList[i];
         bool edit_blocked = edit->blockSignals(true);
         edit->setText(text_list[i]);
         edit->blockSignals(edit_blocked);
     }
 
-    for(int i = min_count; i < editList.count(); ++i) {
+    for (int i = min_count; i < editList.count(); ++i) {
         QLineEdit *edit = editList[i];
         bool edit_blocked = edit->blockSignals(true);
         edit->clear();
@@ -208,8 +207,9 @@ void DIpv4LineEditPrivate::_q_setIpLineEditText(const QString &text)
  * \~chinese 管理的控件
  * \~chinese \param parent
  */
-DIpv4LineEdit::DIpv4LineEdit(QWidget *parent) :
-    DLineEdit(*new DIpv4LineEditPrivate(this), parent)
+DIpv4LineEdit::DIpv4LineEdit(QWidget *parent)
+    : QLineEdit(parent)
+    , DObject(*new DIpv4LineEditPrivate(this))
 {
     d_func()->init();
 }
@@ -249,8 +249,8 @@ int DIpv4LineEdit::cursorPosition() const
 
     int cursorPosition = 0;
 
-    for(const QLineEdit *edit : d->editList) {
-        if(edit->hasFocus()) {
+    for (const QLineEdit *edit : d->editList) {
+        if (edit->hasFocus()) {
             cursorPosition += edit->cursorPosition();
             break;
         } else {
@@ -294,7 +294,7 @@ bool DIpv4LineEdit::hasAcceptableInput() const
 
     bool has = true;
 
-    for(const QLineEdit *edit : d->editList) {
+    for (const QLineEdit *edit : d->editList) {
         has = has && edit->hasAcceptableInput();
     }
 
@@ -321,12 +321,12 @@ bool DIpv4LineEdit::isReadOnly() const
  */
 void DIpv4LineEdit::setCursorPosition(int cursorPosition)
 {
-    DLineEdit::setCursorPosition(cursorPosition);
+    QLineEdit::setCursorPosition(cursorPosition);
 
     D_D(DIpv4LineEdit);
 
-    for(QLineEdit *edit : d->editList) {
-        if(cursorPosition > edit->text().count()) {
+    for (QLineEdit *edit : d->editList) {
+        if (cursorPosition > edit->text().count()) {
             cursorPosition -= edit->text().count();
             --cursorPosition;
         } else {
@@ -346,7 +346,7 @@ void DIpv4LineEdit::setReadOnly(bool readOnly)
 {
     D_D(DIpv4LineEdit);
 
-    for(QLineEdit *edit : d->editList) {
+    for (QLineEdit *edit : d->editList) {
         edit->setReadOnly(readOnly);
     }
 }
@@ -361,9 +361,9 @@ void DIpv4LineEdit::setSelection(int start, int length)
 {
     D_D(DIpv4LineEdit);
 
-    for(QLineEdit *edit : d->editList) {
-        if(edit->text().count() > start) {
-            if(edit->text().count() < length + start) {
+    for (QLineEdit *edit : d->editList) {
+        if (edit->text().count() > start) {
+            if (edit->text().count() < length + start) {
                 int tmp_length = edit->text().count() - start;
 
                 edit->setSelection(start, tmp_length);
@@ -380,7 +380,7 @@ void DIpv4LineEdit::setSelection(int start, int length)
         start -= edit->text().count();
     }
 
-    DLineEdit::setSelection(start, length);
+    QLineEdit::setSelection(start, length);
 }
 
 /*!
@@ -391,37 +391,37 @@ void DIpv4LineEdit::selectAll()
 {
     D_D(DIpv4LineEdit);
 
-    for(QLineEdit *edit : d->editList) {
+    for (QLineEdit *edit : d->editList) {
         edit->selectAll();
     }
 
-    DLineEdit::selectAll();
+    QLineEdit::selectAll();
 }
 
 bool DIpv4LineEdit::eventFilter(QObject *obj, QEvent *e)
 {
-    if(e->type() == QEvent::KeyPress) {
-        QLineEdit *edit = qobject_cast<QLineEdit*>(obj);
+    if (e->type() == QEvent::KeyPress) {
+        QLineEdit *edit = qobject_cast<QLineEdit *>(obj);
 
-        if(edit) {
-            QKeyEvent *event = static_cast<QKeyEvent*>(e);
+        if (edit) {
+            QKeyEvent *event = static_cast<QKeyEvent *>(e);
 
-            if(event) {
+            if (event) {
                 D_D(DIpv4LineEdit);
 
-                if(event->key() <= Qt::Key_9 && event->key() >= Qt::Key_0) {
-                    if(edit->cursorPosition() == edit->text().count()) {
+                if (event->key() <= Qt::Key_9 && event->key() >= Qt::Key_0) {
+                    if (edit->cursorPosition() == edit->text().count()) {
                         QRegularExpression rx(RX_PATTERN_IP);
 
                         const QString number = QString::number(event->key() - Qt::Key_0);
 
-                        if(!rx.match(edit->text().append(number)).hasMatch()) {
+                        if (!rx.match(edit->text().append(number)).hasMatch()) {
                             int index = d->editList.indexOf(edit) + 1;
 
-                            if(index < d->editList.count()) {
+                            if (index < d->editList.count()) {
                                 d->editList[index]->setFocus();
 
-                                if(d->editList[index]->text().isEmpty()) {
+                                if (d->editList[index]->text().isEmpty()) {
                                     d->editList[index]->setText(number);
                                     d->_q_updateLineEditText();
                                 }
@@ -431,69 +431,69 @@ bool DIpv4LineEdit::eventFilter(QObject *obj, QEvent *e)
                         }
                     }
                 } else {
-                    if(event->key() == Qt::Key_Backspace) {
+                    if (event->key() == Qt::Key_Backspace) {
                         bool accept = false;
 
-                        for(QLineEdit *edit : d->editList) {
-                            if(!edit->selectedText().isEmpty()) {
+                        for (QLineEdit *edit : d->editList) {
+                            if (!edit->selectedText().isEmpty()) {
                                 edit->setText(edit->text().remove(edit->selectedText()));
                                 d->_q_updateLineEditText();
                                 accept = true;
                             }
                         }
 
-                        if(accept)
+                        if (accept)
                             return true;
                     }
 
-                    if(event->key() == Qt::Key_Left
-                              || (event->key() == Qt::Key_Backspace
-                                  && edit->cursorPosition() == 0)) {
+                    if (event->key() == Qt::Key_Left
+                            || (event->key() == Qt::Key_Backspace
+                                && edit->cursorPosition() == 0)) {
                         setCursorPosition(cursorPosition() - 1);
 
                         return true;
                     }
 
-                    if(event->key() == Qt::Key_Right) {
+                    if (event->key() == Qt::Key_Right) {
                         setCursorPosition(cursorPosition() + 1);
 
                         return true;
                     }
 
-                    if(event->key() == Qt::Key_Period || event->key() == Qt::Key_Space) {
+                    if (event->key() == Qt::Key_Period || event->key() == Qt::Key_Space) {
                         int index = d->editList.indexOf(edit) + 1;
 
-                        if(index < d->editList.count()) {
+                        if (index < d->editList.count()) {
                             d->editList[index]->setFocus();
                         }
 
                         return true;
                     }
 
-                    if(event->modifiers() == Qt::ControlModifier) {
-                        if(event->key() == Qt::Key_V) {
+                    if (event->modifiers() == Qt::ControlModifier) {
+                        if (event->key() == Qt::Key_V) {
                             QString clipboarg_text = qApp->clipboard()->text();
                             QString text = edit->text().insert(edit->cursorPosition(), clipboarg_text);
 
                             QRegularExpression rx(RX_PATTERN_IP);
 
-                            if(rx.match(text).hasMatch()) {
+                            if (rx.match(text).hasMatch()) {
                                 edit->setText(text);
                                 d->_q_updateLineEditText();
                             } else {
                                 int pos = 0;
 
-                                if(this->validator()->validate(clipboarg_text, pos) == QValidator::Acceptable)
+                                if (validator()->validate(clipboarg_text, pos) == QValidator::Acceptable)
                                     d->_q_setIpLineEditText(clipboarg_text);
                             }
 
                             return true;
-                        } else if(event->key() == Qt::Key_A) {
+                        } else if (event->key() == Qt::Key_A) {
                             selectAll();
-                        } else if(event->key() == Qt::Key_X) {
+                        } else if (event->key() == Qt::Key_X) {
                             cut();
                         } else {
-                            DLineEdit::keyPressEvent(event);
+                            QLineEdit::keyPressEvent(event);
                         }
 
                         return true;
@@ -501,30 +501,43 @@ bool DIpv4LineEdit::eventFilter(QObject *obj, QEvent *e)
                 }
             }
         }
-    } else if(e->type() == QEvent::FocusIn) {
-        QLineEdit *edit = qobject_cast<QLineEdit*>(obj);
+    } else if (e->type() == QEvent::FocusIn) {
+        QLineEdit *edit = qobject_cast<QLineEdit *>(obj);
 
-        if(edit) {
-            DLineEdit::setCursorPosition(cursorPosition());
+        if (edit) {
+          QLineEdit::setCursorPosition(cursorPosition());
         }
 
         d_func()->setFocus(true);
-    } else if(e->type() == QEvent::FocusOut || e->type() == QEvent::MouseButtonPress) {
+    } else if (e->type() == QEvent::FocusOut || e->type() == QEvent::MouseButtonPress) {
         D_D(DIpv4LineEdit);
 
         bool focus = false;
 
-        for(QLineEdit *edit : d->editList) {
+        for (QLineEdit *edit : d->editList) {
             edit->setSelection(edit->cursorPosition(), 0);
 
             focus = edit->hasFocus() | focus;
         }
 
-        if(!focus)
+        if (!focus)
             d_func()->setFocus(false);
     }
 
-    return DLineEdit::eventFilter(obj, e);
+    return QLineEdit::eventFilter(obj, e);
+}
+
+DIpv4LineEdit::DIpv4LineEdit(DIpv4LineEditPrivate &q, QWidget *parent)
+    : QLineEdit(parent)
+    , DObject(q)
+{
+
+}
+
+void DIpv4LineEdit::resizeEvent(QResizeEvent *event)
+{
+    D_D(DIpv4LineEdit);
+    d->editMainWidget->resize(event->size());
 }
 
 DWIDGET_END_NAMESPACE

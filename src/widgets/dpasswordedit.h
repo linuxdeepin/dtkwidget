@@ -32,7 +32,7 @@ public:
     DPasswordEdit(QWidget *parent = nullptr);
 
     bool isEchoMode() const;
-    void setEchoMode(EchoMode mode);
+    void setEchoMode(QLineEdit::EchoMode mode);
 
     void setEchoButtonIsVisible(bool visible);
     bool echoButtonIsVisible () const;

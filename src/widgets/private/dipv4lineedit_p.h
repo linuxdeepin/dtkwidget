@@ -24,8 +24,11 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DIpv4LineEditPrivate : public DLineEditPrivate
+class DIpv4LineEditPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 {
+    Q_DECLARE_PUBLIC(DIpv4LineEdit)
+
+public:
     DIpv4LineEditPrivate(DIpv4LineEdit *parent);
 
     void init();
@@ -42,8 +45,6 @@ class DIpv4LineEditPrivate : public DLineEditPrivate
     QWidget *editMainWidget;
 
     bool focus = false;
-
-    D_DECLARE_PUBLIC(DIpv4LineEdit)
 };
 
 DWIDGET_END_NAMESPACE

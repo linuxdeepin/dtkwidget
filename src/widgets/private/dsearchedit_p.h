@@ -25,6 +25,8 @@
 #include "dlineedit_p.h"
 #include "dsearchedit.h"
 
+#include <QLabel>
+
 DWIDGET_BEGIN_NAMESPACE
 
 class DSearchEditPrivate : DLineEditPrivate
@@ -34,11 +36,12 @@ public:
 
     void init();
 
-    void _q_toEditMode();
+    void _q_toEditMode(bool focus);
 
 public:
     QAction *action;
     QString placeHolder;
+    QLabel *label;
 
 protected:
     Q_DECLARE_PUBLIC(DSearchEdit)

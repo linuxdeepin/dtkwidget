@@ -35,7 +35,7 @@ class DInputDialog : public DDialog
     Q_PROPERTY(QString textValue READ textValue WRITE setTextValue NOTIFY textValueChanged)
     Q_PROPERTY(int intValue READ intValue WRITE setIntValue NOTIFY intValueChanged)
     Q_PROPERTY(int doubleValue READ doubleValue WRITE setDoubleValue NOTIFY doubleValueChanged)
-    Q_PROPERTY(DLineEdit::EchoMode textEchoMode READ textEchoMode WRITE setTextEchoMode)
+    Q_PROPERTY(QLineEdit::EchoMode textEchoMode READ textEchoMode WRITE setTextEchoMode)
     Q_PROPERTY(bool comboBoxEditable READ isComboBoxEditable WRITE setComboBoxEditable)
     Q_PROPERTY(QStringList comboBoxItems READ comboBoxItems WRITE setComboBoxItems)
     Q_PROPERTY(int comboBoxCurrentIndex READ comboBoxCurrentIndex WRITE setComboBoxCurrentIndex NOTIFY comboBoxCurrentIndexChanged)

@@ -266,7 +266,7 @@ void DInputDialog::setTextEchoMode(QLineEdit::EchoMode mode)
 
     DLineEdit *edit;
 
-    if(mode == DLineEdit::Normal) {
+    if(mode == QLineEdit::Normal) {
         edit = new DLineEdit;
     } else {
         edit = new DPasswordEdit;

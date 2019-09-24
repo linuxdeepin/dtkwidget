@@ -18,7 +18,9 @@
 #ifndef DLINEEDIT_H
 #define DLINEEDIT_H
 
+#include <QWidget>
 #include <QLineEdit>
+#include <QHBoxLayout>
 
 #include "dtkwidget_global.h"
 #include "dobject.h"
@@ -27,7 +29,7 @@ DWIDGET_BEGIN_NAMESPACE
 
 class DLineEditPrivate;
 class DStyleOptionLineEdit;
-class LIBDTKWIDGETSHARED_EXPORT DLineEdit : public QLineEdit, public DTK_CORE_NAMESPACE::DObject
+class LIBDTKWIDGETSHARED_EXPORT DLineEdit : public QWidget, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
     Q_DISABLE_COPY(DLineEdit)
@@ -36,6 +38,9 @@ class LIBDTKWIDGETSHARED_EXPORT DLineEdit : public QLineEdit, public DTK_CORE_NA
 
 public:
     DLineEdit(QWidget *parent = 0);
+    virtual ~DLineEdit();
+
+    QLineEdit* lineEdit() const;
 
     void setAlert(bool isAlert);
     bool isAlert() const;
@@ -48,17 +53,29 @@ public:
     void setLeftWidgetsVisible(bool visible);
     void setRightWidgetsVisible(bool visible);
 
+    void setClearButtonEnabled(bool enable);
+    bool isClearButtonEnabled() const;
+
+    void setText(const QString& text);
+    QString text();
+
+    QLineEdit::EchoMode echoMode() const;
+    void setEchoMode(QLineEdit::EchoMode mode);
+
 Q_SIGNALS:
     void alertChanged(bool alert) const;
     void focusChanged(bool onFocus) const;
-    void sizeChanged(const QSize &size) const;
+
+    void textChanged(const QString &);
+    void textEdited(const QString &);
+    void cursorPositionChanged(int, int);
+    void returnPressed();
+    void editingFinished();
+    void selectionChanged();
 
 protected:
     DLineEdit(DLineEditPrivate &q, QWidget *parent);
-
-    void focusInEvent(QFocusEvent *e) Q_DECL_OVERRIDE;
-    void focusOutEvent(QFocusEvent *e) Q_DECL_OVERRIDE;
-    void resizeEvent(QResizeEvent *e) Q_DECL_OVERRIDE;
+    bool eventFilter(QObject *watched, QEvent *event) override;
 
     friend class DStyleOptionLineEdit;
 };
