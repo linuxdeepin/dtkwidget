@@ -1,2 +1,1 @@
-#include "dwidgetstype.h"
-#include <QCommandLinkButton>
+#include "dcommandlinkbutton.h"
