@@ -20,6 +20,7 @@
 #include "dplatformwindowhandle.h"
 
 #include <DWindowManagerHelper>
+#include <DGuiApplicationHelper>
 
 #include <QPainter>
 #include <QBackingStore>
@@ -408,6 +409,7 @@ DBlurEffectWidget::DBlurEffectWidget(QWidget *parent)
     , DObject(*new DBlurEffectWidgetPrivate(this))
 {
     setAttribute(Qt::WA_TranslucentBackground);
+    setBackgroundRole(QPalette::Window);
 
     if (!parent) {
         D_D(DBlurEffectWidget);
@@ -550,6 +552,13 @@ QColor DBlurEffectWidget::maskColor() const
     }
     case AutoColor: {
         QColor color = palette().color(backgroundRole());
+
+        if (DGuiApplicationHelper::DarkType == DGuiApplicationHelper::toColorType(color)) {
+            color = DGuiApplicationHelper::adjustColor(color, 0, 0, -10, 0, 0, 0, 0);
+        } else {
+            color = DGuiApplicationHelper::adjustColor(color, 0, 0, +100, 0, 0, 0, 0);
+        }
+
         if (!d->isBehindWindowBlendMode()) {
             color.setAlpha(d->maskAlpha);
             return color;

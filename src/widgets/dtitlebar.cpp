@@ -41,6 +41,7 @@
 #include "dmainwindow.h"
 #include "DHorizontalLine"
 #include "dimagebutton.h"
+#include "dblureffectwidget.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -102,6 +103,8 @@ private:
 
     DHorizontalLine     *separatorTop;
     DHorizontalLine     *separator;
+
+    DBlurEffectWidget   *blurWidget = nullptr;
 
 #ifndef QT_NO_MENU
     QMenu               *menu             = Q_NULLPTR;
@@ -827,6 +830,10 @@ void DTitlebar::resizeEvent(QResizeEvent *event)
     d->separator->setFixedWidth(event->size().width());
     d->updateCenterArea();
 
+    if (d->blurWidget) {
+        d->blurWidget->resize(event->size());
+    }
+
     return QWidget::resizeEvent(event);
 }
 
@@ -1008,6 +1015,29 @@ void DTitlebar::toggleWindowState()
     D_D(DTitlebar);
 
     d->_q_toggleWindowState();
+}
+
+void DTitlebar::setBlurBackground(bool blurBackground)
+{
+    D_D(DTitlebar);
+
+    if (static_cast<bool>(d->blurWidget) == blurBackground)
+        return;
+
+    if (d->blurWidget) {
+        d->blurWidget->hide();
+        d->blurWidget->deleteLater();
+        d->blurWidget = nullptr;
+    } else {
+        d->blurWidget = new DBlurEffectWidget(this);
+        d->blurWidget->lower();
+        d->blurWidget->resize(size());
+        d->blurWidget->setMaskColor(DBlurEffectWidget::AutoColor);
+        d->blurWidget->setRadius(30);
+        d->blurWidget->show();
+    }
+
+    setAutoFillBackground(!blurBackground);
 }
 
 /*!
@@ -1205,6 +1235,12 @@ QSize DTitlebar::sizeHint() const
 QSize DTitlebar::minimumSizeHint() const
 {
     return sizeHint();
+}
+
+bool DTitlebar::blurBackground() const
+{
+    D_DC(DTitlebar);
+    return d->blurWidget;
 }
 
 void DTitlebar::mouseMoveEvent(QMouseEvent *event)

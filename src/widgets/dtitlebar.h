@@ -32,6 +32,8 @@ class DTitlebarPrivate;
 class LIBDTKWIDGETSHARED_EXPORT DTitlebar : public QFrame, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
+    Q_PROPERTY(bool blurBackground READ blurBackground WRITE setBlurBackground)
+
 public:
     explicit DTitlebar(QWidget *parent = Q_NULLPTR);
 
@@ -70,6 +72,8 @@ public:
     QSize sizeHint() const;
     QSize minimumSizeHint() const;
 
+    bool blurBackground() const;
+
 Q_SIGNALS:
     void optionClicked();
     void doubleClicked();
@@ -89,6 +93,8 @@ public Q_SLOTS:
     void setIcon(const QIcon &icon);
     /// Maximized/Minumized
     void toggleWindowState();
+
+    void setBlurBackground(bool blurBackground);
 
 private Q_SLOTS:
 #ifndef QT_NO_MENU
