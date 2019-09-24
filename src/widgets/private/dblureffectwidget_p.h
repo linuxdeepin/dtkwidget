@@ -35,7 +35,7 @@ public:
     int radius = 10;
     int blurRectXRadius = 0;
     int blurRectYRadius = 0;
-    quint8 maskAlpha = 204;
+    qint16 maskAlpha = -1;
 
     bool full = false;
     bool blurEnabled = true;
@@ -53,6 +53,8 @@ public:
     bool updateWindowBlurArea();
     void setMaskColor(const QColor &color);
     void setMaskAlpha(const quint8 alpha);
+    quint8 getMaskColorAlpha() const;
+    QColor getMaskColor(const QColor &baseColor) const;
 
     static QMultiHash<QWidget*, const DBlurEffectWidget*> blurEffectWidgetHash;
     static QHash<const DBlurEffectWidget*, QWidget*> windowOfBlurEffectHash;
