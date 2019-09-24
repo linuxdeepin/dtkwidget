@@ -1672,9 +1672,12 @@ QBrush DStyle::generatedBrush(StateFlags flags, const QBrush &base, QPalette::Co
         case DPalette::DarkLively:
             colorNew = adjustColor(colorNew, 0, 0, +10, 0, 0, 0, 0);
             break;
-        case DPalette::ItemBackground:
-            colorNew = adjustColor(colorNew, 0, 0, 0, 0, 0, 0, +10);
+        case DPalette::ItemBackground: {
+            DGuiApplicationHelper::ColorType ct = DGuiApplicationHelper::toColorType(colorNew);
+            colorNew = ct == DGuiApplicationHelper::LightType ? adjustColor(colorNew, 0, 0, -10, 0, 0, 0, +10)
+                                                              : adjustColor(colorNew, 0, 0, +10, 0, 0, 0, +10);
             break;
+        }
         default:
             break;
         }

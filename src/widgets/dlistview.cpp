@@ -114,7 +114,7 @@ void DListViewPrivate::init()
     q->setFrameShape(QFrame::NoFrame);
 
     q->viewport()->setAutoFillBackground(false);
-    q->setAutoFillBackground(true);
+    q->setAutoFillBackground(false);
     q->setBackgroundRole(q->viewport()->backgroundRole());
 }
 
