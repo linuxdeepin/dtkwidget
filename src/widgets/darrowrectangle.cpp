@@ -19,6 +19,7 @@
 #include "dplatformwindowhandle.h"
 #include "dapplication.h"
 #include "private/darrowrectangle_p.h"
+#include "dstyle.h"
 
 #ifdef Q_OS_LINUX
 #include <X11/extensions/shape.h>
@@ -308,6 +309,11 @@ bool DArrowRectangle::event(QEvent *e)
 {
     switch (e->type()) {
     case QEvent::WindowDeactivate:  Q_EMIT windowDeactivate();    break;
+    case QEvent::Polish: {
+        D_D(DArrowRectangle);
+        d->m_radius = DStyleHelper(style()).pixelMetric(DStyle::PM_TopLevelWindowRadius);
+        break;
+    }
     default:;
     }
 
@@ -1083,7 +1089,6 @@ void DArrowRectanglePrivate::init(DArrowRectangle::FloatMode mode)
         m_handle->setTranslucentBackground(true);
 
         m_blurBackground = new DBlurEffectWidget(q);
-        m_blurBackground->setMaskColor(DBlurEffectWidget::DarkColor);
         m_blurBackground->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
 
         m_wmHelper = DWindowManagerHelper::instance();
