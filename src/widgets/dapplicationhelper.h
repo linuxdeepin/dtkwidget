@@ -37,6 +37,7 @@ public:
 
     DPalette palette(const QWidget *widget, const QPalette &base = QPalette()) const;
     void setPalette(QWidget *widget, const DPalette &palette);
+    void resetPalette(QWidget *widget);
 
 private:
     DApplicationHelper();

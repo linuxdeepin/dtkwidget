@@ -93,17 +93,18 @@ DPalette DApplicationHelper::palette(const QWidget *widget, const QPalette &base
 
 void DApplicationHelper::setPalette(QWidget *widget, const DPalette &palette)
 {
-    if (palette.resolve()) {
-        d->paletteCache.insert(widget, palette);
-        // 记录此控件被设置过palette
-        widget->setProperty("_d_set_palette", true);
-        widget->setPalette(palette);
-    } else {
-        // 清理数据
-        d->paletteCache.remove(widget);
-        widget->setProperty("_d_set_palette", QVariant());
-        widget->setAttribute(Qt::WA_SetPalette, false);
-    }
+    d->paletteCache.insert(widget, palette);
+    // 记录此控件被设置过palette
+    widget->setProperty("_d_set_palette", true);
+    widget->setPalette(palette);
+}
+
+void DApplicationHelper::resetPalette(QWidget *widget)
+{
+    // 清理数据
+    d->paletteCache.remove(widget);
+    widget->setProperty("_d_set_palette", QVariant());
+    widget->setAttribute(Qt::WA_SetPalette, false);
 }
 
 DApplicationHelper::DApplicationHelper()
