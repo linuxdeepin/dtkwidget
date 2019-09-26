@@ -321,4 +321,5 @@ includes.files += \
     $$PWD/DButtonBox \
     $$PWD/DApplicationSettings \
     $$PWD/DWarningButton \
-    $$PWD/DDialogCloseButton
+    $$PWD/DDialogCloseButton \
+    $$PWD/DPasswordEdit

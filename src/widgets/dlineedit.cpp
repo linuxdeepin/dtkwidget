@@ -276,7 +276,12 @@ QString DLineEdit::text()
 {
     D_DC(DLineEdit);
     return d->lineEdit->text();
+}
 
+void DLineEdit::clear()
+{
+    D_D(DLineEdit);
+    return d->lineEdit->clear();
 }
 
 QLineEdit::EchoMode DLineEdit::echoMode() const

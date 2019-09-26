@@ -37,8 +37,8 @@ class LIBDTKWIDGETSHARED_EXPORT DLineEdit : public QWidget, public DTK_CORE_NAME
     Q_PROPERTY(bool alert READ isAlert WRITE setAlert NOTIFY alertChanged)
 
 public:
-    DLineEdit(QWidget *parent = 0);
-    virtual ~DLineEdit();
+    DLineEdit(QWidget *parent = nullptr);
+    virtual ~DLineEdit() override;
 
     QLineEdit* lineEdit() const;
 
@@ -58,6 +58,8 @@ public:
 
     void setText(const QString& text);
     QString text();
+
+    void clear();
 
     QLineEdit::EchoMode echoMode() const;
     void setEchoMode(QLineEdit::EchoMode mode);
