@@ -184,8 +184,8 @@ public:
 
     enum StandardPixmap {
         SP_ForkElement = QStyle::SP_CustomBase + 1,
-        SP_DecreaseElement,                         //增加（+）
-        SP_IncreaseElement,                         //减少（-）
+        SP_DecreaseElement,                         //减少（-）
+        SP_IncreaseElement,                         //增加（+）
         SP_MarkElement,                             //对勾
         SP_SelectElement,                           //选择（...）
         SP_EditElement,                             //编辑
