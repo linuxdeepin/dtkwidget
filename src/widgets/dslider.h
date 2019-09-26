@@ -66,6 +66,8 @@ public:
     void setAboveTicks(const QStringList &info);
     void setBelowTicks(const QStringList &info);
 
+    QSlider::TickPosition tickPosition() const;
+
 Q_SIGNALS:
     void valueChanged(int value);
 

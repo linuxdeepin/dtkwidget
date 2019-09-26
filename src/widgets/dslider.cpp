@@ -191,8 +191,14 @@ void DSlider::setLeftTicks(const QStringList &info)
 {
     D_D(DSlider);
 
-    if (info.isEmpty())
+    if (info.isEmpty()) {
+        if (d->left) {
+            d->left->deleteLater();
+            d->left = nullptr;
+        }
+
         return;
+    }
 
     if (d->left == nullptr) {
         d->left = new SliderStrip(orientation());
@@ -211,8 +217,14 @@ void DSlider::setRightTicks(const QStringList &info)
 {
     D_D(DSlider);
 
-    if (info.isEmpty())
+    if (info.isEmpty()) {
+        if (d->right) {
+            d->right->deleteLater();
+            d->right = nullptr;
+        }
+
         return;
+    }
 
     if (d->right == nullptr) {
         d->right = new SliderStrip(orientation());
@@ -235,6 +247,25 @@ void DSlider::setAboveTicks(const QStringList &info)
 void DSlider::setBelowTicks(const QStringList &info)
 {
     setRightTicks(info);
+}
+
+QSlider::TickPosition DSlider::tickPosition() const
+{
+    D_DC(DSlider);
+
+    if (d->left && d->right) {
+        return QSlider::TicksBothSides;
+    }
+
+    if (d->left) {
+        return QSlider::TicksLeft;
+    }
+
+    if (d->right) {
+        return QSlider::TicksRight;
+    }
+
+    return QSlider::NoTicks;
 }
 
 DSliderPrivate::DSliderPrivate(DSlider *q)
