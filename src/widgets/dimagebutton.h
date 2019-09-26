@@ -28,7 +28,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 class DImageButtonPrivate;
-class LIBDTKWIDGETSHARED_EXPORT DImageButton : public QLabel, public DTK_CORE_NAMESPACE::DObject
+class LIBDTKWIDGETSHARED_EXPORT D_DECL_DEPRECATED_X("Use DIconButton") DImageButton : public QLabel, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
     Q_PROPERTY(QString normalPic READ getNormalPic WRITE setNormalPic DESIGNABLE true)
