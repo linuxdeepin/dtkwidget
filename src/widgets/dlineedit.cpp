@@ -300,6 +300,8 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
     } else if (event->type() == QEvent::FocusOut) {
         Q_EMIT focusChanged(false);
     }
+
+    return QWidget::eventFilter(watched, event);
 }
 
 DLineEditPrivate::DLineEditPrivate(DLineEdit *q)
