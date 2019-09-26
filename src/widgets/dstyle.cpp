@@ -1102,20 +1102,16 @@ int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyle
     case PM_TopLevelWindowRadius:
         return 18;
     case PM_ShadowRadius:
-        return 6;
+        return 0;
     case PM_ShadowHOffset:
         return 0;
     case PM_ShadowVOffset:
-        return 2;
+        return 1;
     case PM_FrameMargins: {
         int shadow_radius = dstyle.pixelMetric(PM_ShadowRadius, opt, widget);
         int shadow_xoffset = dstyle.pixelMetric(PM_ShadowHOffset, opt, widget);
         int shadow_yoffset = dstyle.pixelMetric(PM_ShadowVOffset, opt, widget);
-
-        int border_width = pixelMetric(style, PM_FocusBorderWidth, opt, widget);
-        int border_spacing = pixelMetric(style, PM_FocusBorderSpacing, opt, widget);
-
-        int margins = qMax((shadow_radius + qMax(shadow_xoffset, shadow_yoffset)) / 2, border_width + border_spacing);
+        int margins = shadow_radius + qMax(shadow_xoffset, shadow_yoffset);
 
         return margins;
     }
