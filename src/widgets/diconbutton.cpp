@@ -70,7 +70,7 @@ void DIconButton::setIcon(QStyle::StandardPixmap iconType)
     D_D(DIconButton);
 
     d->iconType = iconType;
-    setIcon(style()->standardIcon(iconType, nullptr, this));
+    QAbstractButton::setIcon(style()->standardIcon(iconType, nullptr, this));
 }
 
 void DIconButton::setIcon(DStyle::StandardPixmap iconType)
@@ -78,7 +78,7 @@ void DIconButton::setIcon(DStyle::StandardPixmap iconType)
     D_D(DIconButton);
 
     d->iconType = iconType;
-    setIcon(DStyleHelper(style()).standardIcon(iconType, nullptr, this));
+    QAbstractButton::setIcon(DStyleHelper(style()).standardIcon(iconType, nullptr, this));
 }
 
 QSize DIconButton::sizeHint() const

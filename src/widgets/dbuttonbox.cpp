@@ -32,8 +32,21 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+class DButtonBoxButtonPrivate : public DCORE_NAMESPACE::DObjectPrivate
+{
+public:
+    DButtonBoxButtonPrivate(DButtonBoxButton *qq)
+        : DObjectPrivate(qq)
+    {
+
+    }
+
+    qint64 iconType = -1;
+};
+
 DButtonBoxButton::DButtonBoxButton(const QString &text, QWidget *parent)
     : QAbstractButton(parent)
+    , DObject(*new DButtonBoxButtonPrivate(this))
 {
     setText(text);
 }
@@ -42,6 +55,42 @@ DButtonBoxButton::DButtonBoxButton(const QIcon &icon, const QString &text, QWidg
     : DButtonBoxButton(text, parent)
 {
     setIcon(icon);
+}
+
+DButtonBoxButton::DButtonBoxButton(QStyle::StandardPixmap iconType, const QString &text, QWidget *parent)
+    : DButtonBoxButton(static_cast<DStyle::StandardPixmap>(iconType), text, parent)
+{
+
+}
+
+DButtonBoxButton::DButtonBoxButton(DStyle::StandardPixmap iconType, const QString &text, QWidget *parent)
+    : DButtonBoxButton(text, parent)
+{
+    d_func()->iconType = static_cast<qint64>(iconType);
+}
+
+void DButtonBoxButton::setIcon(const QIcon &icon)
+{
+    D_D(DButtonBoxButton);
+
+    d->iconType = -1;
+    QAbstractButton::setIcon(icon);
+}
+
+void DButtonBoxButton::setIcon(QStyle::StandardPixmap iconType)
+{
+    D_D(DButtonBoxButton);
+
+    d->iconType = iconType;
+    QAbstractButton::setIcon(style()->standardIcon(iconType, nullptr, this));
+}
+
+void DButtonBoxButton::setIcon(DStyle::StandardPixmap iconType)
+{
+    D_D(DButtonBoxButton);
+
+    d->iconType = iconType;
+    QAbstractButton::setIcon(DStyleHelper(style()).standardIcon(iconType, nullptr, this));
 }
 
 QSize DButtonBoxButton::iconSize() const
@@ -153,6 +202,24 @@ void DButtonBoxButton::keyPressEvent(QKeyEvent *event)
     default:
         QAbstractButton::keyPressEvent(event);
     }
+}
+
+bool DButtonBoxButton::event(QEvent *e)
+{
+    if (e->type() == QEvent::Polish) {
+        D_DC(DButtonBoxButton);
+
+        if (d->iconType >= 0) {
+            if (d->iconType > static_cast<qint64>(QStyle::SP_CustomBase)) {
+                DStyleHelper dstyle(style());
+                setIcon(dstyle.standardIcon(static_cast<DStyle::StandardPixmap>(d->iconType), nullptr, this));
+            } else {
+                setIcon(style()->standardIcon(static_cast<QStyle::StandardPixmap>(d->iconType), nullptr, this));
+            }
+        }
+    }
+
+    return QAbstractButton::event(e);
 }
 
 DButtonBoxPrivate::DButtonBoxPrivate(DButtonBox *qq)
