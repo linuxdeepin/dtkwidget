@@ -123,6 +123,7 @@ public:
         size_list.reserve(list.size());
 
         if (orientation == Qt::Horizontal) {
+            int spacing = qApp->style()->pixelMetric(QStyle::PM_LayoutHorizontalSpacing);
             // 记录上中下三列的宽度
             int top_width = 0;
             int center_width = 0;
@@ -154,19 +155,20 @@ public:
 
                 if (action->alignment().testFlag(Qt::AlignVCenter)) {
                     result_list << QStyle::alignedRect(direction, action->alignment(), size_list.at(i), center_rect);
-                    center_rect.setLeft(result_list.last().right());
+                    center_rect.setLeft(result_list.last().right() + spacing);
                 } else if (action->alignment().testFlag(Qt::AlignBottom)) {
                     result_list << QStyle::alignedRect(direction, action->alignment(), size_list.at(i), bottom_rect);
-                    bottom_rect.setLeft(result_list.last().right());
+                    bottom_rect.setLeft(result_list.last().right() + spacing);
                 } else {
                     result_list << QStyle::alignedRect(direction, action->alignment(), size_list.at(i), top_rect);
-                    top_rect.setLeft(result_list.last().right());
+                    top_rect.setLeft(result_list.last().right() + spacing);
                 }
 
                 if (bounding)
                     max_height = qMax(max_height, result_list.last().bottom() - base.top() + 1);
             }
         } else {
+            int spacing = qApp->style()->pixelMetric(QStyle::PM_LayoutVerticalSpacing);
             // 记录左中右三列的宽度
             int left_height = 0;
             int center_height = 0;
@@ -198,13 +200,13 @@ public:
 
                 if (action->alignment().testFlag(Qt::AlignHCenter)) {
                     result_list << QStyle::alignedRect(direction, action->alignment(), size_list.at(i), center_rect);
-                    center_rect.setTop(result_list.last().bottom());
+                    center_rect.setTop(result_list.last().bottom() + spacing);
                 } else if (action->alignment().testFlag(Qt::AlignRight)) {
                     result_list << QStyle::alignedRect(direction, action->alignment(), size_list.at(i), right_rect);
-                    right_rect.setTop(result_list.last().bottom());
+                    right_rect.setTop(result_list.last().bottom() + spacing);
                 } else {
                     result_list << QStyle::alignedRect(direction, action->alignment(), size_list.at(i), left_rect);
-                    left_rect.setTop(result_list.last().bottom());
+                    left_rect.setTop(result_list.last().bottom() + spacing);
                 }
 
                 if (bounding)
