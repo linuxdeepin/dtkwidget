@@ -19,5 +19,7 @@
         <file>images/play_start.svg</file>
         <file>images/play_previous.svg</file>
         <file>images/play_next.svg</file>
+        <file>images/voice.svg</file>
+        <file>images/voice_activate.svg</file>
     </qresource>
 </RCC>

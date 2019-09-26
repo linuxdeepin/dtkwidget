@@ -34,9 +34,7 @@ public:
 
     void init();
 
-private:
     bool m_isAlert = false;
-
     DArrowRectangle *tooltip = Q_NULLPTR;
 
     QWidget *leftWidget;

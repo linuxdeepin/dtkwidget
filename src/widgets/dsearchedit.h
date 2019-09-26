@@ -34,10 +34,14 @@ public:
     void setPlaceHolder(QString placeHolder);
     QString placeHolder() const;
 
+Q_SIGNALS:
+    void voiceInputFinished();
+
 protected:
     Q_DISABLE_COPY(DSearchEdit)
     D_DECLARE_PRIVATE(DSearchEdit)
     Q_PRIVATE_SLOT(d_func(), void _q_toEditMode(bool))
+    D_PRIVATE_SLOT(void _q_onVoiceActionTrigger(bool))
 };
 
 DWIDGET_END_NAMESPACE

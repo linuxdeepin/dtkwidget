@@ -60,8 +60,6 @@ MainWindow::MainWindow(QWidget *parent)
     setWindowFlags(flags);
     setAttribute(Qt::WA_TranslucentBackground);
 
-    DThemeManager *themeManager = DThemeManager::instance();
-
     initTabWidget();
 
     QVBoxLayout *mainLayout = new QVBoxLayout();
@@ -70,21 +68,11 @@ MainWindow::MainWindow(QWidget *parent)
     mainLayout->addWidget(m_mainTab);
 
     QHBoxLayout *styleLayout = new QHBoxLayout();
-    QPushButton *darkButton = new QPushButton("Dark", this);
-    QPushButton *lightBUtton = new QPushButton("Light", this);
     QPushButton *enableButtons = new QPushButton("Enable Titlebar ", this);
     QPushButton *disableButtons = new QPushButton("Disable Titlebar", this);
     QPushButton *toggleMinMaxButtons = new QPushButton("Toggle MinMax", this);
     QPushButton *fullscreenButtons = new QPushButton("Fullscreen", this);
 
-    themeManager->setTheme(lightBUtton, "light");
-
-    connect(darkButton, &QPushButton::clicked, [ = ] {
-        themeManager->setTheme("dark");
-    });
-    connect(lightBUtton, &QPushButton::clicked, [ = ] {
-        themeManager->setTheme("light");
-    });
     connect(enableButtons, &QPushButton::clicked, [ = ] {
         titlebar()->setDisableFlags(Qt::Widget);
     });
@@ -119,8 +107,6 @@ MainWindow::MainWindow(QWidget *parent)
         show();
     });
 
-    styleLayout->addWidget(darkButton);
-    styleLayout->addWidget(lightBUtton);
     styleLayout->addWidget(enableButtons);
     styleLayout->addWidget(disableButtons);
     styleLayout->addWidget(toggleMinMaxButtons);
@@ -166,6 +152,8 @@ MainWindow::MainWindow(QWidget *parent)
     QTimer::singleShot(4000, [ = ]() {
         toast->pop();
     });
+
+    titlebar->addWidget(new DSearchEdit(titlebar));
 }
 
 void MainWindow::menuItemInvoked(QAction *action)

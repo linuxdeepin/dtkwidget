@@ -27,21 +27,34 @@
 
 #include <QLabel>
 
+QT_BEGIN_NAMESPACE
+class QAudioInput;
+QT_END_NAMESPACE
+
 DWIDGET_BEGIN_NAMESPACE
 
+class VoiceDevice;
 class DSearchEditPrivate : DLineEditPrivate
 {
 public:
     DSearchEditPrivate(DSearchEdit *q);
+    ~DSearchEditPrivate();
 
     void init();
 
     void _q_toEditMode(bool focus);
+    void _q_onVoiceActionTrigger(bool checked);
 
 public:
     QAction *action;
     QString placeHolder;
     QLabel *label;
+
+#ifdef ENABLE_XFYUN
+    QAction *voiceAction;
+    QAudioInput *voiceInput = nullptr;
+    VoiceDevice *voiceIODevice = nullptr;
+#endif
 
 protected:
     Q_DECLARE_PUBLIC(DSearchEdit)
