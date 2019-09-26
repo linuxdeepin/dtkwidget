@@ -100,10 +100,8 @@ public:
         startDragDistance = qApp->startDragDistance();
         maskColor = flashColor = QColor(0, 0, 255, 125);
 
-        addButton = new DIconButton(qq);
+        addButton = new DIconButton(DStyle::SP_IncreaseElement, qq);
         addButton->setObjectName("AddButton");
-        addButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
-        addButton->setFixedWidth(48);
 
         connect(addButton, &DIconButton::clicked,
                 qq, &DTabBar::tabAddRequested);
