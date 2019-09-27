@@ -202,7 +202,7 @@ void DFileChooserEditPrivate::init()
 
     QList<QWidget *> list;
     DIconButton *btn = new DIconButton(nullptr);
-    btn->setIcon(QIcon(":/images/light/images/loadfile_normal.svg"));
+    btn->setIcon(DStyleHelper(q->style()).standardIcon(DStyle::SP_SelectElement, nullptr));
 
     q->setDialogDisplayPosition(DFileChooserEdit::DialogDisplayPosition::CurrentMonitorCenter);
 
