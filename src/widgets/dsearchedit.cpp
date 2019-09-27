@@ -90,7 +90,7 @@ void DSearchEditPrivate::init()
 
     DPalette pe;
     QStyleOption opt;
-    QColor color = DStyleHelper(q->style()).getColor(&opt,pe, DPalette::TextTips);
+    QColor color = DStyleHelper(q->style()).getColor(&opt, pe, DPalette::TextTips);
     pe.setColor(DPalette::TextTips, color);
 
     label->setPalette(pe);
@@ -111,10 +111,16 @@ void DSearchEditPrivate::_q_toEditMode(bool focus)
 
     if (focus) {
         q->lineEdit()->addAction(action, QLineEdit::LeadingPosition);
+        label->setVisible(false);
     } else {
         q->lineEdit()->removeAction(action);
+
+        if (!q->lineEdit()->text().isEmpty()) {
+            label->setVisible(false);
+        } else {
+            label->setVisible(true);
+        }
     }
-    label->setVisible(!focus);
 }
 
 DWIDGET_END_NAMESPACE
