@@ -18,6 +18,7 @@
 #include "dlineedit.h"
 #include "private/dlineedit_p.h"
 #include "darrowrectangle.h"
+#include "dstyle.h"
 
 #define private public
 #ifndef slots
@@ -98,6 +99,14 @@ void DLineEdit::setAlert(bool isAlert)
 
     d->m_isAlert = isAlert;
 
+    DPalette p = palette();
+
+    if (isAlert) {
+        p.setColor(QPalette::Button, QColor(241, 57, 50, qRound(0.15 * 255)));
+        d->lineEdit->setPalette(p);
+    } else {
+        d->lineEdit->setPalette(QPalette());
+    }
     update();
 
     Q_EMIT alertChanged(isAlert);
@@ -151,7 +160,6 @@ void DLineEdit::showAlertMessage(const QString &text, int duration)
         label->setWordWrap(true);
         label->setMaximumWidth(width());
         d->tooltip->setContent(label);
-        d->tooltip->setBackgroundColor(DThemeManager::instance()->theme(this) == "light" ? Qt::white : Qt::black);
         d->tooltip->setArrowX(15);
         d->tooltip->setArrowHeight(5);
 
@@ -171,7 +179,6 @@ void DLineEdit::showAlertMessage(const QString &text, int duration)
     label->adjustSize();
 
     const QPoint &pos = mapToGlobal(QPoint(15, height()));
-
     d->tooltip->show(pos.x(), pos.y());
 }
 

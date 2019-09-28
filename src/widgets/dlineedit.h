@@ -40,7 +40,7 @@ public:
     DLineEdit(QWidget *parent = nullptr);
     virtual ~DLineEdit() override;
 
-    QLineEdit* lineEdit() const;
+    QLineEdit *lineEdit() const;
 
     void setAlert(bool isAlert);
     bool isAlert() const;
@@ -56,7 +56,7 @@ public:
     void setClearButtonEnabled(bool enable);
     bool isClearButtonEnabled() const;
 
-    void setText(const QString& text);
+    void setText(const QString &text);
     QString text();
 
     void clear();
