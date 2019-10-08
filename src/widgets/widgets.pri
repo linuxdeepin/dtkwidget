@@ -107,7 +107,8 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dbuttonbox.h \
     $$PWD/dwarningbutton.h \
     $$PWD/dcommandlinkbutton.h \
-    $$PWD/ddialogclosebutton.h
+    $$PWD/ddialogclosebutton.h \
+    $$PWD/dtiplabel.h
 
 SOURCES += $$PWD/dslider.cpp \
     $$PWD/dbackgroundgroup.cpp \
@@ -174,7 +175,8 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dbuttonbox.cpp \
     $$PWD/dwarningbutton.cpp \
     $$PWD/dcommandlinkbutton.cpp \
-    $$PWD/ddialogclosebutton.cpp
+    $$PWD/ddialogclosebutton.cpp \
+    $$PWD/dtiplabel.cpp
 
 RESOURCES += \
     $$PWD/icons.qrc
@@ -322,4 +324,5 @@ includes.files += \
     $$PWD/DApplicationSettings \
     $$PWD/DWarningButton \
     $$PWD/DDialogCloseButton \
-    $$PWD/DPasswordEdit
+    $$PWD/DPasswordEdit \
+    $$PWD/DTipLabel
