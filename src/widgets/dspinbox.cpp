@@ -15,12 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QResizeEvent>
-#include <QHBoxLayout>
 #include <QDebug>
 
 #include "dspinbox.h"
 #include "private/dspinbox_p.h"
+#include "dlineedit.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -34,7 +33,9 @@ void DSpinBoxPrivate::init()
 {
     D_Q(DSpinBox);
 
-
+    lineEdit = new DLineEdit(q);
+    q->setLineEdit(lineEdit->lineEdit());
+    q->connect(lineEdit, &DLineEdit::alertChanged, q, &DSpinBox::alertChanged);
 }
 
 /*!
@@ -116,7 +117,7 @@ bool DSpinBox::isAlert() const
 {
     D_DC(DSpinBox);
 
-    return d->alert;
+    return d->lineEdit->isAlert();
 }
 
 /*!
@@ -132,31 +133,19 @@ bool DSpinBox::isAlert() const
  */
 int DSpinBox::defaultValue() const
 {
-    return d_func()->defaultValue;
+    return 0;
 }
 
 void DSpinBox::setAlert(bool alert)
 {
     D_D(DSpinBox);
 
-    if(alert == d->alert)
-        return;
-
-    d->alert = alert;
-
-    Q_EMIT alertChanged(alert);
+    d->lineEdit->setAlert(alert);
 }
 
 void DSpinBox::setDefaultValue(int defaultValue)
 {
-    D_D(DSpinBox);
-
-    if (d->defaultValue == defaultValue)
-        return;
-
-    d->defaultValue = defaultValue;
-
-    Q_EMIT defaultValueChanged(defaultValue);
+    Q_UNUSED(defaultValue)
 }
 
 DDoubleSpinBoxPrivate::DDoubleSpinBoxPrivate(DDoubleSpinBox *parent) :
@@ -169,7 +158,9 @@ void DDoubleSpinBoxPrivate::init()
 {
     D_Q(DDoubleSpinBox);
 
-
+    lineEdit = new DLineEdit(q);
+    q->setLineEdit(lineEdit->lineEdit());
+    q->connect(lineEdit, &DLineEdit::alertChanged, q, &DDoubleSpinBox::alertChanged);
 }
 
 /*!
@@ -188,36 +179,24 @@ bool DDoubleSpinBox::isAlert() const
 {
     D_DC(DDoubleSpinBox);
 
-    return d->alert;
+    return d->lineEdit->isAlert();
 }
 
 double DDoubleSpinBox::defaultValue() const
 {
-    return d_func()->defaultValue;
+    return 0;
 }
 
 void DDoubleSpinBox::setAlert(bool alert)
 {
     D_D(DDoubleSpinBox);
 
-    if(alert == d->alert)
-        return;
-
-    d->alert = alert;
-
-    Q_EMIT alertChanged(alert);
+    d->lineEdit->setAlert(alert);
 }
 
 void DDoubleSpinBox::setDefaultValue(double defaultValue)
 {
-    D_D(DDoubleSpinBox);
-
-    if (d->defaultValue == defaultValue)
-        return;
-
-    d->defaultValue = defaultValue;
-
-    Q_EMIT defaultValueChanged(defaultValue);
+    Q_UNUSED(defaultValue)
 }
 
 DWIDGET_END_NAMESPACE

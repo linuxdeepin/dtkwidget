@@ -27,16 +27,14 @@ class QLabel;
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DImageButton;
+class DLineEdit;
 class DSpinBoxPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 {
     DSpinBoxPrivate(DSpinBox *parent);
 
     void init();
 
-    bool alert = false;
-    int defaultValue = 0;
-
+    DLineEdit *lineEdit;
     D_DECLARE_PUBLIC(DSpinBox)
 };
 
@@ -46,9 +44,7 @@ class DDoubleSpinBoxPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 
     void init();
 
-    bool alert = false;
-    double defaultValue = 0;
-
+    DLineEdit *lineEdit;
     D_DECLARE_PUBLIC(DDoubleSpinBox)
 };
 

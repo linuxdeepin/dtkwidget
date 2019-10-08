@@ -18,10 +18,10 @@
 #ifndef DSPINBOX_H
 #define DSPINBOX_H
 
-#include <QSpinBox>
+#include <dtkwidget_global.h>
+#include <DObject>
 
-#include "dtkwidget_global.h"
-#include "dobject.h"
+#include <QSpinBox>
 
 DWIDGET_BEGIN_NAMESPACE
 
