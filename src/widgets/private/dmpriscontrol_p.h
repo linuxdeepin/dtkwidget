@@ -19,6 +19,7 @@
 #define DMPRISCONTROL_P_H
 
 #include <DObjectPrivate>
+#include <DFloatingButton>
 
 #include "dimagebutton.h"
 #include "dmpriscontrol.h"
@@ -62,10 +63,10 @@ public:
     DTickEffect *m_tickEffect;
 
     QWidget *     m_controlWidget;
-    DImageButton *m_prevBtn;
-    DImageButton *m_playBtn;
-    DImageButton *m_pauseBtn;
-    DImageButton *m_nextBtn;
+    DFloatingButton *m_prevBtn;
+    DFloatingButton *m_playBtn;
+    DFloatingButton *m_pauseBtn;
+    DFloatingButton *m_nextBtn;
 
     bool m_pictureVisible;
 

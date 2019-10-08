@@ -15,5 +15,9 @@
         <file>images/dialog_close_round_normal@2x.png</file>
         <file>images/dialog_close_round_normal.png</file>
         <file>images/dialog_close_round_press.png</file>
+        <file>images/play_pause.svg</file>
+        <file>images/play_start.svg</file>
+        <file>images/play_previous.svg</file>
+        <file>images/play_next.svg</file>
     </qresource>
 </RCC>

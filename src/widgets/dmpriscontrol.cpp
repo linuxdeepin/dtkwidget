@@ -106,11 +106,20 @@ void DMPRISControlPrivate::init()
     m_picture         = new QLabel;
     m_pictureVisible  = true;
     m_controlWidget   = new QWidget;
-    m_prevBtn         = new DImageButton;
-    m_pauseBtn        = new DImageButton;
-    m_playBtn         = new DImageButton;
-    m_nextBtn         = new DImageButton;
+    m_prevBtn         = new DFloatingButton(m_controlWidget);
+    m_pauseBtn        = new DFloatingButton(m_controlWidget);
+    m_playBtn         = new DFloatingButton(m_controlWidget);
+    m_nextBtn         = new DFloatingButton(m_controlWidget);
     m_tickEffect      = new DTickEffect(m_title, m_title);
+
+    m_prevBtn->setIcon(QIcon::fromTheme(":/images/play_previous.svg"));
+    m_playBtn->setIcon(QIcon::fromTheme(":/images/play_start.svg"));
+    m_nextBtn->setIcon(QIcon::fromTheme(":/images/play_next.svg"));
+    m_pauseBtn->setIcon(QIcon::fromTheme(":/images/play_pause.svg"));
+    m_prevBtn->setBackgroundRole(DPalette::Button);
+    m_playBtn->setBackgroundRole(DPalette::Button);
+    m_nextBtn->setBackgroundRole(DPalette::Button);
+    m_pauseBtn->setBackgroundRole(DPalette::Button);
 
     m_title->setAlignment(Qt::AlignCenter);
     m_picture->setFixedSize(200, 200);
@@ -135,10 +144,10 @@ void DMPRISControlPrivate::init()
 
 #ifdef QT_DEBUG
     m_title->setText("MPRIS Title");
-    m_nextBtn->setNormalPic("://images/arrow_right_normal.png");
-    m_pauseBtn->setNormalPic("://images/arrow_left_white.png");
-    m_playBtn->setNormalPic("://images/arrow_right_white.png");
-    m_prevBtn->setNormalPic("://images/arrow_left_normal.png");
+    m_nextBtn->setIcon(QIcon::fromTheme("://images/arrow_right_normal.png"));
+    m_pauseBtn->setIcon(QIcon::fromTheme("://images/arrow_left_white.png"));
+    m_playBtn->setIcon(QIcon::fromTheme("://images/arrow_right_white.png"));
+    m_prevBtn->setIcon(QIcon::fromTheme("://images/arrow_left_normal.png"));
 #endif
 
     QHBoxLayout *controlLayout = new QHBoxLayout;
@@ -148,7 +157,7 @@ void DMPRISControlPrivate::init()
     controlLayout->addWidget(m_playBtn);
     controlLayout->addStretch();
     controlLayout->addWidget(m_nextBtn);
-    controlLayout->setContentsMargins(0, 10, 0, 0);
+    controlLayout->setContentsMargins(0, 5, 0, 0);
     m_controlWidget->setLayout(controlLayout);
 
 
