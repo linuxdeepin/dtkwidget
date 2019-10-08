@@ -769,16 +769,16 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
             DStyleHelper dstyle(style);
 
             if (btn->features & DStyleOptionButton::FloatingButton) {
-                int frame_margins = dstyle.pixelMetric(PM_FrameMargins, opt, w);
+                int frame_margins = 3;
                 const QMargins margins(frame_margins, frame_margins, frame_margins, frame_margins);
                 QRect shadow_rect = opt->rect + margins;
                 const QRect content_rect = opt->rect - margins;
                 QColor color = dstyle.getColor(opt, QPalette::Button);
 
                 qreal frame_radius = content_rect.width() / 2.0;
-                int shadow_radius = dstyle.pixelMetric(PM_ShadowRadius, opt, w);
-                int shadow_xoffset = dstyle.pixelMetric(PM_ShadowHOffset, opt, w);
-                int shadow_yoffset = dstyle.pixelMetric(PM_ShadowVOffset, opt, w);
+                int shadow_radius = 5;
+                int shadow_xoffset = 0;
+                int shadow_yoffset = 2;
 
                 shadow_rect.setTopLeft(shadow_rect.topLeft() + QPoint(shadow_xoffset, shadow_yoffset));
                 shadow_rect.setWidth(qMin(shadow_rect.width(), shadow_rect.height()));
