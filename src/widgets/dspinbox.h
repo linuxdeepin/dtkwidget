@@ -39,18 +39,15 @@ public:
     QLineEdit *lineEdit() const;
 
     bool isAlert() const;
-    int defaultValue() const;
+    D_DECL_DEPRECATED int defaultValue() const;
 
 public Q_SLOTS:
     void setAlert(bool alert);
-    void setDefaultValue(int defaultValue);
+    D_DECL_DEPRECATED void setDefaultValue(int defaultValue);
 
 Q_SIGNALS:
     void alertChanged(bool alert);
-    void defaultValueChanged(int defaultValue);
-
-protected:
-    void resizeEvent(QResizeEvent *e) Q_DECL_OVERRIDE;
+    D_DECL_DEPRECATED void defaultValueChanged(int defaultValue);
 
 private:
     D_DECLARE_PRIVATE(DSpinBox)
@@ -68,22 +65,18 @@ public:
     explicit DDoubleSpinBox(QWidget *parent = 0);
 
     bool isAlert() const;
-    double defaultValue() const;
+    D_DECL_DEPRECATED double defaultValue() const;
 
 public Q_SLOTS:
     void setAlert(bool alert);
-    void setDefaultValue(double defaultValue);
+    D_DECL_DEPRECATED void setDefaultValue(double defaultValue);
 
 Q_SIGNALS:
     void alertChanged(bool alert);
-    void defaultValueChanged(double defaultValue);
-
-protected:
-    void resizeEvent(QResizeEvent *e) Q_DECL_OVERRIDE;
+    D_DECL_DEPRECATED void defaultValueChanged(double defaultValue);
 
 private:
     D_DECLARE_PRIVATE(DDoubleSpinBox)
-    double m_defaultValue;
 };
 
 DWIDGET_END_NAMESPACE

@@ -20,23 +20,9 @@
 #include <QDebug>
 
 #include "dspinbox.h"
-#include "dthememanager.h"
-#include "dlineedit.h"
 #include "private/dspinbox_p.h"
-#include "dimagebutton.h"
 
 DWIDGET_BEGIN_NAMESPACE
-
-DImageButton* DSpinBox_getButton(const QString &image_name)
-{
-    const QString str = ":/images/" + DThemeManager::instance()->theme() + "/images/" + image_name;
-
-    DImageButton *button = new DImageButton(str + "_normal.png", str + "_hover.png", str + "_press.png");
-
-    button->setObjectName("SpinBox_ImageButton");
-
-    return button;
-}
 
 DSpinBoxPrivate::DSpinBoxPrivate(DSpinBox *parent) :
     DObjectPrivate(parent)
@@ -48,36 +34,7 @@ void DSpinBoxPrivate::init()
 {
     D_Q(DSpinBox);
 
-    insideFrame = new QFrame(q);
-    insideFrame->setObjectName("SpinBoxInsideFrame");
 
-    QHBoxLayout *h_layout = new QHBoxLayout(insideFrame);
-
-    DImageButton *button_reset = DSpinBox_getButton("restore");
-    DImageButton *button_add = DSpinBox_getButton("spinner_increase");
-    DImageButton *button_sub = DSpinBox_getButton("spinner_decrease");
-
-    h_layout->setMargin(0);
-    h_layout->setSpacing(0);
-    h_layout->addStretch();
-    h_layout->addWidget(button_reset);
-    h_layout->addWidget(button_add);
-    h_layout->addWidget(button_sub);
-
-    q->connect(button_reset, &DImageButton::clicked, q, [q, this] {
-        if(defaultValue <= q->maximum() && defaultValue >= q->minimum())
-            q->setValue(defaultValue);
-        else
-            q->setValue(q->minimum());
-    });
-    q->connect(button_add, &DImageButton::clicked, q, &DSpinBox::stepUp);
-    q->connect(button_sub, &DImageButton::clicked, q, &DSpinBox::stepDown);
-}
-
-void DSpinBoxPrivate::_q_resizeInsideFrame(const QSize &size)
-{
-    insideFrame->setFixedWidth(size.width());
-    insideFrame->setFixedHeight(size.height() - 1);
 }
 
 /*!
@@ -202,14 +159,6 @@ void DSpinBox::setDefaultValue(int defaultValue)
     Q_EMIT defaultValueChanged(defaultValue);
 }
 
-/** \reimp */
-void DSpinBox::resizeEvent(QResizeEvent *e)
-{
-    QSpinBox::resizeEvent(e);
-
-    d_func()->_q_resizeInsideFrame(e->size());
-}
-
 DDoubleSpinBoxPrivate::DDoubleSpinBoxPrivate(DDoubleSpinBox *parent) :
     DObjectPrivate(parent)
 {
@@ -220,39 +169,8 @@ void DDoubleSpinBoxPrivate::init()
 {
     D_Q(DDoubleSpinBox);
 
-    insideFrame = new QFrame(q);
-    insideFrame->setObjectName("SpinBoxInsideFrame");
 
-    QHBoxLayout *h_layout = new QHBoxLayout(insideFrame);
-
-    DImageButton *button_reset = DSpinBox_getButton("restore");
-    DImageButton *button_add = DSpinBox_getButton("spinner_increase");
-    DImageButton *button_sub = DSpinBox_getButton("spinner_decrease");
-
-    h_layout->setMargin(0);
-    h_layout->setSpacing(0);
-    h_layout->addStretch();
-    h_layout->addWidget(button_reset);
-    h_layout->addWidget(button_add);
-    h_layout->addWidget(button_sub);
-
-    q->connect(button_reset, &DImageButton::clicked, q, [q, this] {
-        if(defaultValue < q->maximum() && defaultValue > q->minimum())
-            q->setValue(defaultValue);
-        else
-            q->setValue(q->minimum());
-    });
-    q->connect(button_add, &DImageButton::clicked, q, &DSpinBox::stepUp);
-    q->connect(button_sub, &DImageButton::clicked, q, &DSpinBox::stepDown);
 }
-
-void DDoubleSpinBoxPrivate::_q_resizeInsideFrame(const QSize &size)
-{
-    insideFrame->setFixedWidth(size.width());
-    insideFrame->setFixedHeight(size.height() - 1);
-}
-
-
 
 /*!
  * \~chinese \class DDoubleSpinBox
@@ -300,13 +218,6 @@ void DDoubleSpinBox::setDefaultValue(double defaultValue)
     d->defaultValue = defaultValue;
 
     Q_EMIT defaultValueChanged(defaultValue);
-}
-
-void DDoubleSpinBox::resizeEvent(QResizeEvent *e)
-{
-    QDoubleSpinBox::resizeEvent(e);
-
-    d_func()->_q_resizeInsideFrame(e->size());
 }
 
 DWIDGET_END_NAMESPACE

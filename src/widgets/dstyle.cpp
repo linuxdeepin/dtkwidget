@@ -1356,8 +1356,8 @@ int DStyle::styleHint(QStyle::StyleHint sh, const QStyleOption *opt, const QWidg
     case SH_ItemView_ShowDecorationSelected:
     case SH_ScrollBar_Transient:
     case SH_TitleBar_ShowToolTipsOnButtons:
-    case SH_SpinBox_ButtonsInsideFrame:
         return true;
+    case SH_SpinBox_ButtonsInsideFrame:
     case SH_ScrollBar_LeftClickAbsolutePosition:
     case SH_Slider_SnapToValue:
     case SH_Menu_AllowActiveAndDisabled:

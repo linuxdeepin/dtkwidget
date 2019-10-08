@@ -34,9 +34,6 @@ class DSpinBoxPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 
     void init();
 
-    void _q_resizeInsideFrame(const QSize &size);
-
-    QFrame *insideFrame;
     bool alert = false;
     int defaultValue = 0;
 
@@ -49,9 +46,6 @@ class DDoubleSpinBoxPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 
     void init();
 
-    void _q_resizeInsideFrame(const QSize &size);
-
-    QFrame *insideFrame;
     bool alert = false;
     double defaultValue = 0;
 
