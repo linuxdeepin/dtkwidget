@@ -55,8 +55,8 @@ public:
         SystemScope
     };
 
-    QString theme() const;
-    void setTheme(const QString &theme);
+    D_DECL_DEPRECATED QString theme() const;
+    D_DECL_DEPRECATED void setTheme(const QString &theme);
 
 #ifdef Q_OS_UNIX
     void setOOMScoreAdj(const int score);
