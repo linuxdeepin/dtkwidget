@@ -144,6 +144,15 @@ QColor DBlurEffectWidgetPrivate::getMaskColor(const QColor &baseColor) const
     return color;
 }
 
+void DBlurEffectWidgetPrivate::resetSourceImage()
+{
+    // 设置了自定义的image时忽略此请求
+    if (customSourceImage)
+        return;
+
+    sourceImage = QImage();
+}
+
 void DBlurEffectWidgetPrivate::setMaskColor(const QColor &color)
 {
     maskColor = color;
@@ -603,6 +612,21 @@ void DBlurEffectWidget::setMaskPath(const QPainterPath &path)
     update();
 }
 
+void DBlurEffectWidget::setSourceImage(const QImage &image, bool autoScale)
+{
+    D_D(DBlurEffectWidget);
+
+    d->sourceImage = image;
+    d->customSourceImage = !image.isNull();
+    d->autoScaleSourceImage = autoScale && d->customSourceImage;
+
+    if (autoScale && isVisible()) {
+        d->sourceImage.setDevicePixelRatio(devicePixelRatioF());
+        d->sourceImage = d->sourceImage.scaled((size() + QSize(d->radius * 1, d->radius * 2)) * devicePixelRatioF());
+        d->sourceImage.setDevicePixelRatio(devicePixelRatioF());
+    }
+}
+
 bool DBlurEffectWidget::isFull() const
 {
     D_DC(DBlurEffectWidget);
@@ -626,7 +650,7 @@ void DBlurEffectWidget::setRadius(int radius)
     }
 
     d->radius = radius;
-    d->sourceImage = QImage();
+    d->resetSourceImage();
 
     update();
 
@@ -829,7 +853,7 @@ void DBlurEffectWidget::paintEvent(QPaintEvent *event)
 
             d->sourceImage = window()->backingStore()->handle()->toImage().copy(tmp_rect * device_pixel_ratio);
             d->sourceImage = d->sourceImage.scaledToWidth(d->sourceImage.width() / device_pixel_ratio);
-        } else {
+        } else if (!d->customSourceImage) {
             QPainter pa_image(&d->sourceImage);
 
             pa_image.setCompositionMode(QPainter::CompositionMode_Source);
@@ -849,7 +873,14 @@ void DBlurEffectWidget::paintEvent(QPaintEvent *event)
             pa_image.end();
         }
 
-        QImage image = d->sourceImage.copy(paintRect.adjusted(0, 0, 2 * radius, 2 * radius));
+        QImage image;
+
+        if (d->customSourceImage) {
+            image = d->sourceImage.copy(paintRect.adjusted(0, 0, 2 * radius, 2 * radius) * device_pixel_ratio);
+            image.setDevicePixelRatio(device_pixel_ratio);
+        } else {// 非customSourceImage不考虑缩放产生的影响
+            image = d->sourceImage.copy(paintRect.adjusted(0, 0, 2 * radius, 2 * radius));
+        }
 
         QTransform old_transform = pa.transform();
         pa.translate(paintRect.topLeft() - QPoint(radius, radius));
@@ -869,7 +900,7 @@ void DBlurEffectWidget::moveEvent(QMoveEvent *event)
     }
 
     if (d->blendMode == DBlurEffectWidget::InWindowBlend) {
-        d->sourceImage = QImage();
+        d->resetSourceImage();
 
         return QWidget::moveEvent(event);
     }
@@ -883,9 +914,14 @@ void DBlurEffectWidget::resizeEvent(QResizeEvent *event)
 {
     D_D(DBlurEffectWidget);
 
-    d->sourceImage = QImage();
+    d->resetSourceImage();
 
     if (!d->isBehindWindowBlendMode()) {
+        if (d->autoScaleSourceImage) {
+            d->sourceImage = d->sourceImage.scaled((size() + QSize(d->radius * 1, d->radius * 2)) * devicePixelRatioF());
+            d->sourceImage.setDevicePixelRatio(devicePixelRatioF());
+        }
+
         return QWidget::resizeEvent(event);
     }
 
@@ -899,6 +935,11 @@ void DBlurEffectWidget::showEvent(QShowEvent *event)
     D_D(DBlurEffectWidget);
 
     if (!d->isBehindWindowBlendMode()) {
+        if (d->autoScaleSourceImage) {
+            d->sourceImage = d->sourceImage.scaled((size() + QSize(d->radius * 1, d->radius * 2)) * devicePixelRatioF());
+            d->sourceImage.setDevicePixelRatio(devicePixelRatioF());
+        }
+
         return QWidget::showEvent(event);
     }
 

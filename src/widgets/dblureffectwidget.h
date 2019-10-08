@@ -86,6 +86,7 @@ public:
     quint8 maskAlpha() const;
 
     void setMaskPath(const QPainterPath &path);
+    void setSourceImage(const QImage &image, bool autoScale = true);
 
 public Q_SLOTS:
     void setRadius(int radius);

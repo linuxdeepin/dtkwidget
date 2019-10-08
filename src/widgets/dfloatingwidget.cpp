@@ -23,6 +23,7 @@
 #include "private/dfloatingwidget_p.h"
 #include "dstyleoption.h"
 #include "dstyle.h"
+#include "dblureffectwidget.h"
 
 #include <QHBoxLayout>
 #include <QEvent>
@@ -44,6 +45,27 @@ void DFloatingWidgetPrivate::init()
 {
 }
 
+void DFloatingWidgetPrivate::adjustPalette()
+{
+    if (!layout || layout->count() == 0)
+        return;
+
+    QWidget *content = layout->itemAt(0)->widget();
+
+    if (background) {
+        D_Q(DFloatingWidget);
+        // 开启模糊背景后应到调整调色板
+        QPalette pa = q->palette();
+        pa.setBrush(QPalette::Button, pa.brush(QPalette::Base));
+        pa.setBrush(QPalette::Light, pa.brush(QPalette::Base));
+        pa.setBrush(QPalette::Dark, pa.brush(QPalette::Base));
+
+        content->setPalette(pa);
+    } else {
+        content->setPalette(QPalette());
+    }
+}
+
 void DFloatingWidget::setWidget(QWidget *widget)
 {
     D_D(DFloatingWidget);
@@ -58,6 +80,7 @@ void DFloatingWidget::setWidget(QWidget *widget)
     }
 
     d->layout->addWidget(widget);
+    d->adjustPalette();
 }
 
 DFloatingWidget::DFloatingWidget(DFloatingWidgetPrivate &dd, QWidget *parent)
@@ -98,10 +121,24 @@ void DFloatingWidget::paintEvent(QPaintEvent *e)
 
 bool DFloatingWidget::event(QEvent *event)
 {
+    D_D(DFloatingWidget);
+
     if (event->type() == QEvent::Polish) {
         DStyleHelper dstyle(style());
         int margins = dstyle.pixelMetric(DStyle::PM_FloatingWidgetShadowMargins, nullptr, this);
         setContentsMargins(margins, margins, margins, margins);
+
+        if (d->background) {
+            int radius = DStyleHelper(style()).pixelMetric(DStyle::PM_TopLevelWindowRadius);
+
+            d->background->setBlurRectXRadius(radius);
+            d->background->setBlurRectYRadius(radius);
+            d->background->setGeometry(contentsRect());
+
+            d->adjustPalette();
+        }
+    } else if (event->type() == QEvent::PaletteChange) {
+        d->adjustPalette();
     }
 
     return QWidget::event(event);
@@ -111,6 +148,48 @@ void DFloatingWidget::initStyleOption(DStyleOptionFloatingWidget *option) const
 {
     option->init(this);
     option->initFrom(this);
+    option->noBackground = blurBackgroundIsEnabled();
+}
+
+bool DFloatingWidget::blurBackgroundIsEnabled() const
+{
+    D_DC(DFloatingWidget);
+
+    return d->background;
+}
+
+DBlurEffectWidget *DFloatingWidget::blurBackground() const
+{
+    D_DC(DFloatingWidget);
+
+    return d->background;
+}
+
+void DFloatingWidget::setBlurBackgroundEnabled(bool blurBackgroundEnabled)
+{
+    D_D(DFloatingWidget);
+
+    if (bool(d->background) == blurBackgroundEnabled)
+        return;
+
+    if (blurBackgroundEnabled) {
+        d->background = new DBlurEffectWidget(this);
+        d->background->setGeometry(contentsRect());
+        d->background->lower();
+        d->background->setFocusPolicy(Qt::NoFocus);
+        d->background->setAttribute(Qt::WA_TransparentForMouseEvents);
+        d->background->show();
+
+        int radius = DStyleHelper(style()).pixelMetric(DStyle::PM_TopLevelWindowRadius);
+
+        d->background->setBlurRectXRadius(radius);
+        d->background->setBlurRectYRadius(radius);
+    } else {
+        d->background->hide();
+        d->background->deleteLater();
+    }
+
+    d->adjustPalette();
 }
 
 DWIDGET_END_NAMESPACE

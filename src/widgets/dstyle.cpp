@@ -911,7 +911,7 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
             DDrawUtils::drawShadow(p, btn->rect + shadow_margin, shadowRadius, shadowRadius, dstyle.getColor(opt, QPalette::Shadow), shadowRadius, QPoint(offsetX, offsetY));
             //再绘画上面的待显示区域
             p->setPen(QPen(btn->dpalette.frameBorder(), 1));
-            p->setBrush(p->background());
+            p->setBrush(btn->noBackground ? Qt::NoBrush : p->background());
             p->drawRoundedRect(opt->rect, frameRadius, frameRadius);
         }
         break;

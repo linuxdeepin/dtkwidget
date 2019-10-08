@@ -30,6 +30,8 @@ public:
 
     DBlurEffectWidget::BlurMode mode = DBlurEffectWidget::GaussianBlur;
     QImage sourceImage;
+    bool customSourceImage = false;
+    bool autoScaleSourceImage = false;
     DBlurEffectWidget::BlendMode blendMode = DBlurEffectWidget::InWindowBlend;
 
     int radius = 10;
@@ -55,6 +57,8 @@ public:
     void setMaskAlpha(const quint8 alpha);
     quint8 getMaskColorAlpha() const;
     QColor getMaskColor(const QColor &baseColor) const;
+
+    void resetSourceImage();
 
     static QMultiHash<QWidget*, const DBlurEffectWidget*> blurEffectWidgetHash;
     static QHash<const DBlurEffectWidget*, QWidget*> windowOfBlurEffectHash;

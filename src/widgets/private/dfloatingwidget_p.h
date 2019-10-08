@@ -18,8 +18,10 @@ public:
     ~DFloatingWidgetPrivate();
 
     void init();
+    void adjustPalette();
 
     QHBoxLayout *layout = nullptr;
+    DBlurEffectWidget *background = nullptr;
 
     D_DECLARE_PUBLIC(DFloatingWidget)
 };

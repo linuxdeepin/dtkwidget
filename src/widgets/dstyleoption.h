@@ -143,6 +143,7 @@ class DStyleOptionFloatingWidget : public QStyleOption, public DStyleOption
 {
 public:
     using DStyleOption::init;
+    bool noBackground;
 };
 
 class DFontSizeManagerPrivate;

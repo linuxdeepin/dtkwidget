@@ -30,11 +30,13 @@
 DWIDGET_BEGIN_NAMESPACE
 
 class DStyleOptionFloatingWidget;
+class DBlurEffectWidget;
 class DFloatingWidgetPrivate;
 class DFloatingWidget : public QWidget, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
     D_DECLARE_PRIVATE(DFloatingWidget)
+    Q_PROPERTY(bool blurBackgroundEnabled READ blurBackgroundIsEnabled WRITE setBlurBackgroundEnabled)
 
 public:
     explicit DFloatingWidget(QWidget *parent = nullptr);
@@ -53,6 +55,11 @@ protected:
 
 public:
     virtual void initStyleOption(DStyleOptionFloatingWidget *option) const;
+    bool blurBackgroundIsEnabled() const;
+    DBlurEffectWidget *blurBackground() const;
+
+public Q_SLOTS:
+    void setBlurBackgroundEnabled(bool blurBackgroundEnabled);
 };
 
 DWIDGET_END_NAMESPACE
