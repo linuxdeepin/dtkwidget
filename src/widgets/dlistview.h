@@ -73,6 +73,7 @@ public:
     Qt::Orientation orientation() const;
 
     void setModel(QAbstractItemModel *model) Q_DECL_OVERRIDE;
+    QSize minimumSizeHint() const Q_DECL_OVERRIDE;
 
     DStyledItemDelegate::BackgroundType backgroundType() const;
     QMargins itemMargins() const;
@@ -123,6 +124,7 @@ protected:
     QStyleOptionViewItem viewOptions() const override;
     virtual QModelIndex moveCursor(CursorAction cursorAction,
                                    Qt::KeyboardModifiers modifiers) override;
+    QSize viewportSizeHint() const override;
 
 private:
     void setFlow(QListView::Flow flow);

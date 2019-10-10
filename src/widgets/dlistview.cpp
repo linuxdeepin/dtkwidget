@@ -222,6 +222,27 @@ void DListView::setWrapping(bool enable)
     QListView::setWrapping(enable);
 }
 
+QSize DListView::viewportSizeHint() const
+{
+    return sizeAdjustPolicy() == QAbstractScrollArea::AdjustToContents ? QSize(0, 0) : QListView::viewportSizeHint();
+}
+
+QSize DListView::minimumSizeHint() const
+{
+    QSize size = QListView::minimumSizeHint();
+    QSize content_size = QListView::contentsSize();
+
+    if (horizontalScrollBarPolicy() == Qt::ScrollBarAlwaysOff) {
+        size.setWidth(content_size.width());
+    }
+
+    if (verticalScrollBarPolicy() == Qt::ScrollBarAlwaysOff) {
+        size.setHeight(content_size.height());
+    }
+
+    return size;
+}
+
 /*!
  * \~chinese \brief 获取一个顶部控件
  *
