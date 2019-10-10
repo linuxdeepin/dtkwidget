@@ -908,7 +908,7 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
             QMargins shadow_margin(shadowMargins, shadowMargins, shadowMargins, shadowMargins);
 
             //先绘画阴影
-            DDrawUtils::drawShadow(p, btn->rect + shadow_margin, shadowRadius, shadowRadius, dstyle.getColor(opt, QPalette::Shadow), shadowRadius, QPoint(offsetX, offsetY));
+            DDrawUtils::drawShadow(p, btn->rect + shadow_margin, frameRadius, frameRadius, QColor(0, 0, 0, 0.15 * 255), shadowRadius, QPoint(offsetX, offsetY));
             //再绘画上面的待显示区域
             p->setPen(QPen(btn->dpalette.frameBorder(), 1));
             p->setBrush(btn->noBackground ? Qt::NoBrush : p->background());
@@ -1130,11 +1130,11 @@ int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyle
     case PM_FloatingWidgetRadius:
         return dstyle.pixelMetric(PM_TopLevelWindowRadius, opt, widget);
     case PM_FloatingWidgetShadowRadius:
-        return 18;
+        return 8;
     case PM_FloatingWidgetShadowHOffset:
         return 0;
     case PM_FloatingWidgetShadowVOffset:
-        return 6;
+        return 4;
     case PM_FloatingWidgetShadowMargins: {
         int shadow_radius = dstyle.pixelMetric(PM_FloatingWidgetShadowRadius, opt, widget);
         int shadow_hoffset = dstyle.pixelMetric(PM_FloatingWidgetShadowHOffset, opt, widget);
