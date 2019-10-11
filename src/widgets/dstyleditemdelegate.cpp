@@ -805,6 +805,17 @@ static Dtk::ItemDataRole getActionPositionRole(Qt::Edge edge)
     return Dtk::LeftActionListRole;
 }
 
+DStandardItem::~DStandardItem()
+{
+    for (Qt::Edge e : {Qt::TopEdge, Qt::LeftEdge, Qt::RightEdge, Qt::BottomEdge}) {
+        DViewItemActionList list = qvariant_cast<DViewItemActionList>(data(getActionPositionRole(e)));
+        for (auto action : list) {
+            action->deleteLater();
+        }
+        setData(QVariant(), getActionPositionRole(e));
+    }
+}
+
 void DStandardItem::setActionList(Qt::Edge edge, const DViewItemActionList &list)
 {
     QVariant value;

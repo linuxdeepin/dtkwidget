@@ -102,6 +102,7 @@ class DStandardItem : public QStandardItem
 {
 public:
     using QStandardItem::QStandardItem;
+    virtual ~DStandardItem();
 
     void setActionList(Qt::Edge edge, const DViewItemActionList &list);
     DViewItemActionList actionList(Qt::Edge edge) const;
