@@ -38,6 +38,7 @@
 #include <QAudioInput>
 #include <QTimer>
 #include <QAudioDeviceInfo>
+#include <QCoreApplication>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -232,7 +233,7 @@ void DSearchEditPrivate::init()
     D_Q(DSearchEdit);
 
     label = new QLabel;
-    placeHolder = DSearchEdit::tr("Search");
+    placeHolder = qApp->translate("DSearchEdit", "Search");
 
     action = new QAction(q);
     action->setIcon(DStyleHelper(q->style()).standardIcon(DStyle::SP_IndicatorSearch, nullptr));
