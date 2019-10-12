@@ -108,7 +108,8 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dwarningbutton.h \
     $$PWD/dcommandlinkbutton.h \
     $$PWD/ddialogclosebutton.h \
-    $$PWD/dtiplabel.h
+    $$PWD/dtiplabel.h \
+    $$PWD/dtooltip.h
 
 SOURCES += $$PWD/dslider.cpp \
     $$PWD/dbackgroundgroup.cpp \
@@ -176,7 +177,8 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dwarningbutton.cpp \
     $$PWD/dcommandlinkbutton.cpp \
     $$PWD/ddialogclosebutton.cpp \
-    $$PWD/dtiplabel.cpp
+    $$PWD/dtiplabel.cpp \
+    $$PWD/dtooltip.cpp
 
 RESOURCES += \
     $$PWD/icons.qrc

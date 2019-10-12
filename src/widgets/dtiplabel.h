@@ -22,11 +22,11 @@
 #ifndef DTIPLABEL_H
 #define DTIPLABEL_H
 
-#include <QLabel>
+#include <dobject.h>
+#include <dstyle.h>
+#include <dtkwidget_global.h>
 
-#include "dtkwidget_global.h"
-#include "dobject.h"
-#include "dstyle.h"
+#include <QLabel>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -40,13 +40,11 @@ public:
     DTipLabel(const QString &text, QWidget *parent = nullptr);
     ~DTipLabel();
 
-    void show(int x, int y);
+    void show(const QPoint &pos);
 
     void setForegroundRole(DPalette::ColorType color);
 
 protected:
-    DTipLabel(DTipLabelPrivate &q, QWidget *parent);
-
     void initPainter(QPainter *painter) const override;
     void paintEvent(QPaintEvent *event) override;
 };

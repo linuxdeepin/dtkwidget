@@ -23,9 +23,6 @@
 #include "private/dtiplabel_p.h"
 #include "private/qlabel_p.h"
 
-#include <QDebug>
-#include <QStylePainter>
-
 #include <DFontSizeManager>
 #include <DApplicationHelper>
 
@@ -44,9 +41,9 @@ DTipLabel::~DTipLabel()
 
 }
 
-void DTipLabel::show(int x, int y)
+void DTipLabel::show(const QPoint &pos)
 {
-    move(x, y);
+    move(pos);
 
     QLabel::show();
 }
@@ -55,13 +52,6 @@ void DTipLabel::setForegroundRole(DPalette::ColorType color)
 {
     D_D(DTipLabel);
     d->color = color;
-}
-
-DTipLabel::DTipLabel(DTipLabelPrivate &q, QWidget *parent)
-    : QLabel(parent)
-    , DObject(q)
-{
-    d_func()->init();
 }
 
 void DTipLabel::initPainter(QPainter *painter) const
@@ -76,9 +66,9 @@ void DTipLabel::initPainter(QPainter *painter) const
 
 void DTipLabel::paintEvent(QPaintEvent *event)
 {
+    Q_UNUSED(event);
     QPainter p(this);
-
-    p.drawText(rect(), alignment(), text());
+    p.drawText(contentsRect(), alignment(), text());
 }
 
 DTipLabelPrivate::DTipLabelPrivate(DTipLabel *q)
