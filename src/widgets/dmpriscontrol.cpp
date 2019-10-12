@@ -120,6 +120,10 @@ void DMPRISControlPrivate::init()
     m_playBtn->setBackgroundRole(DPalette::Button);
     m_nextBtn->setBackgroundRole(DPalette::Button);
     m_pauseBtn->setBackgroundRole(DPalette::Button);
+    m_prevBtn->setAutoExclusive(true);
+    m_pauseBtn->setAutoExclusive(true);
+    m_playBtn->setAutoExclusive(true);
+    m_nextBtn->setAutoExclusive(true);
 
     m_title->setAlignment(Qt::AlignCenter);
     m_picture->setFixedSize(200, 200);
