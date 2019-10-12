@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="zh_CN">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_CN" version="2.1">
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -182,7 +180,7 @@
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="484"/>
         <source>System Theme</source>
-        <translation>跟随系统主题</translation>
+        <translation>系统主题</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="507"/>
