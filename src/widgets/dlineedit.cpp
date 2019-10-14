@@ -18,7 +18,9 @@
 #include "dlineedit.h"
 #include "private/dlineedit_p.h"
 #include "darrowrectangle.h"
-#include "dstyle.h"
+
+#include <DToolTip>
+#include <DPalette>
 
 #define private public
 #ifndef slots
@@ -152,34 +154,15 @@ void DLineEdit::showAlertMessage(const QString &text, int duration)
     D_D(DLineEdit);
 
     if (!d->tooltip) {
-        d->tooltip = new DArrowRectangle(DArrowRectangle::ArrowTop, this);
+        d->tooltip = new DToolTip(text);
         d->tooltip->setObjectName("AlertTooltip");
-
-        QLabel *label = new QLabel(d->tooltip);
-
-        label->setWordWrap(true);
-        label->setMaximumWidth(width());
-        d->tooltip->setContent(label);
-        d->tooltip->setArrowX(15);
-        d->tooltip->setArrowHeight(5);
-
-        QTimer::singleShot(duration, d->tooltip, [d] {
-            d->tooltip->deleteLater();
-            d->tooltip = Q_NULLPTR;
-        });
+        d->tooltip->setForegroundRole(DPalette::TextWarning);
     }
 
-    QLabel *label = qobject_cast<QLabel *>(d->tooltip->getContent());
+    d->tooltip->setText(text);
 
-    if (!label) {
-        return;
-    }
-
-    label->setText(text);
-    label->adjustSize();
-
-    const QPoint &pos = mapToGlobal(QPoint(15, height()));
-    d->tooltip->show(pos.x(), pos.y());
+    const QPoint &pos = mapToGlobal(QPoint(0, height()));
+    d->tooltip->show(pos, duration);
 }
 
 /*!
@@ -318,6 +301,7 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
 
 DLineEditPrivate::DLineEditPrivate(DLineEdit *q)
     : DObjectPrivate(q)
+    , tooltip(nullptr)
     , leftWidget(nullptr)
     , rightWidget(nullptr)
     , lineEdit(nullptr)

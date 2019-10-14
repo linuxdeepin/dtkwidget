@@ -18,12 +18,12 @@
 #ifndef DLINEEDIT_H
 #define DLINEEDIT_H
 
+#include <dobject.h>
+#include <dtkwidget_global.h>
+
 #include <QWidget>
 #include <QLineEdit>
 #include <QHBoxLayout>
-
-#include "dtkwidget_global.h"
-#include "dobject.h"
 
 DWIDGET_BEGIN_NAMESPACE
 

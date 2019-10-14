@@ -24,7 +24,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DArrowRectangle;
+class DToolTip;
 class DLineEditPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 {
     Q_DECLARE_PUBLIC(DLineEdit)
@@ -35,7 +35,7 @@ public:
     void init();
 
     bool m_isAlert = false;
-    DArrowRectangle *tooltip = Q_NULLPTR;
+    DToolTip *tooltip;
 
     QWidget *leftWidget;
     QWidget *rightWidget;
