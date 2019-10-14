@@ -41,7 +41,9 @@ class DViewItemAction : public QAction, public DCORE_NAMESPACE::DObject
 
 public:
     explicit DViewItemAction(Qt::Alignment alignment = Qt::Alignment(), const QSize &iconSize = QSize(),
-                             const QSize &maxSize = QSize(), bool clickable = false, QObject *parent = nullptr);
+                             const QSize &maxSize = QSize(), bool clickable = false);
+    D_DECL_DEPRECATED explicit DViewItemAction(Qt::Alignment alignment, const QSize &iconSize,
+                                               const QSize &maxSize, bool clickable, QObject *parent);
 
     Qt::Alignment alignment() const;
     QSize iconSize() const;

@@ -318,9 +318,8 @@ public:
     QAction *pressedAction = nullptr;
 };
 
-DViewItemAction::DViewItemAction(Qt::Alignment alignment, const QSize &iconSize,
-                                 const QSize &maxSize, bool clickable, QObject *parent)
-    : QAction(parent)
+DViewItemAction::DViewItemAction(Qt::Alignment alignment, const QSize &iconSize, const QSize &maxSize, bool clickable)
+    : QAction(nullptr)
     , DObject(*new DViewItemActionPrivate(this))
 {
     D_D(DViewItemAction);
@@ -329,6 +328,15 @@ DViewItemAction::DViewItemAction(Qt::Alignment alignment, const QSize &iconSize,
     d->iconSize = iconSize;
     d->maxSize = maxSize;
     d->clickable = clickable;
+}
+
+DViewItemAction::DViewItemAction(Qt::Alignment alignment, const QSize &iconSize,
+                                 const QSize &maxSize, bool clickable, QObject *parent)
+    : DViewItemAction(alignment, iconSize, maxSize, clickable)
+{
+    if (parent) {
+        qWarning() << "setting parent for a DViewItemAction object is no longer supported.";
+    }
 }
 
 Qt::Alignment DViewItemAction::alignment() const
