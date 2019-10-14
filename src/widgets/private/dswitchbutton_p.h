@@ -39,7 +39,6 @@ public:
     QColor disabledBackground = qRgba(207, 214, 230, 255);
     QColor checkedBackground =  qRgba(44, 167, 248, 255);
 
-    QVariantAnimation *animation;
     double animationStartValue;
     double animationEndValue;
 

@@ -29,17 +29,9 @@ DSwitchButton::DSwitchButton(QWidget *parent)
     : QAbstractButton(parent)
     , DObject(*new DSwitchButtonPrivate(this))
 {
-    setObjectName("DSwitchButton");
-    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    setCheckable(true);
-
     D_D(DSwitchButton);
 
     d->init();
-
-    connect(d->animation, &QVariantAnimation::valueChanged, [&]() {
-        this->update();
-    });
 }
 
 QSize DSwitchButton::sizeHint() const
@@ -84,15 +76,21 @@ DSwitchButtonPrivate::DSwitchButtonPrivate(DSwitchButton *qq)
 
 DSwitchButtonPrivate::~DSwitchButtonPrivate()
 {
-    animation->deleteLater();
+
 }
 
 void DSwitchButtonPrivate::init()
 {
     checked = false;
-    animation = new QVariantAnimation;
     animationStartValue = 0;
     animationEndValue = 1;
+
+    D_Q(DSwitchButton);
+
+    q->setObjectName("DSwitchButton");
+    q->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    q->setCheckable(true);
+    q->connect(q, &DSwitchButton::toggled, q, &DSwitchButton::checkedChanged);
 }
 
 DWIDGET_END_NAMESPACE
