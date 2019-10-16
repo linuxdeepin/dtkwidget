@@ -252,13 +252,14 @@ void DMPRISControlPrivate::_q_onPlaybackStatusChanged()
 {
     const QString stat = m_mprisInter->playbackStatus();
 
-    if (stat == "Playing")
-    {
+    if (stat == "Playing") {
         m_pauseBtn->setVisible(true);
+        m_pauseBtn->setFocus();
         m_playBtn->setVisible(false);
     } else {
         m_pauseBtn->setVisible(false);
         m_playBtn->setVisible(true);
+        m_playBtn->setFocus();
     }
 }
 
