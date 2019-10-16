@@ -398,7 +398,7 @@ void drawSelectElement(QPainter *pa, const QRectF &rect)
 
 void drawExpandElement(QPainter *pa, const QRectF &rect)
 {
-    drawArrowRight(pa, rect);
+    drawArrowUp(pa, rect);
 }
 
 void drawReduceElement(QPainter *pa, const QRectF &rect)
