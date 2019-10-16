@@ -1142,6 +1142,9 @@ int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyle
 
         return (shadow_radius +  qMax(shadow_hoffset, shadow_voffset)) / 2;
     }
+    case PM_ContentsMargins:
+    case PM_ContentsSpacing:
+        return 10;
     default:
         break;
     }

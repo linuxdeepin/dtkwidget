@@ -147,6 +147,8 @@ public:
         PM_FloatingWidgetShadowMargins,                         //(基类)阴影的宽度 = 控件显示大小 - 阴影Radius - 控件内容
         PM_FloatingWidgetShadowHOffset,                         //(基类)的阴影水平偏移
         PM_FloatingWidgetShadowVOffset,                         //(基类)的阴影竖直偏移
+        PM_ContentsMargins,                                     //内容的边距（一般只用于左右边距）
+        PM_ContentsSpacing,                                     //内容的间距（可用于列表项中每一项的距离）
         PM_CustomBase = QStyle::PM_CustomBase + 0xf00000
     };
 
