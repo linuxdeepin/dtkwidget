@@ -45,15 +45,11 @@ ContentTitle::ContentTitle(QWidget *parent) :
     d->titleLabel = new QLabel();
     d->titleLabel->setObjectName("ContentTitleText");
     layout->addWidget(d->titleLabel, 0, Qt::AlignLeft);
-    d->titleLabel->setStyleSheet("#ContentTitleText{font-weight: 550; font-size: 14px;}");
 
     auto lineLabel = new QLabel;
     lineLabel->setObjectName("ContentTitleLine");
-    lineLabel->setFixedHeight(1);
-    lineLabel->setStyleSheet("#ContentTitleLine{border: 1px solid rgba(0,0,0,0.1);}");
     layout->addWidget(lineLabel);
     lineLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-    setFixedHeight(20);
 }
 
 ContentTitle::~ContentTitle()

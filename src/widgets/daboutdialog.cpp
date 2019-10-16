@@ -97,14 +97,12 @@ void DAboutDialogPrivate::init()
     websiteLabel = new QLabel();
     websiteLabel->setObjectName("WebsiteLabel");
     websiteLabel->setContextMenuPolicy(Qt::NoContextMenu);
-    websiteLabel->setFixedHeight(24);
     websiteLabel->setOpenExternalLinks(false);
     updateWebsiteLabel();
 
     acknowledgementLabel = new QLabel();
     acknowledgementLabel->setObjectName("AcknowledgementLabel");
     acknowledgementLabel->setContextMenuPolicy(Qt::NoContextMenu);
-    acknowledgementLabel->setFixedHeight(24);
     acknowledgementLabel->setOpenExternalLinks(false);
     updateAcknowledgementLabel();
 
@@ -154,8 +152,6 @@ void DAboutDialogPrivate::init()
     QWidget  *mainContent = new QWidget;
     mainContent->setLayout(mainLayout);
     q->addContent(mainContent);
-
-    q->setFixedWidth(400);
 
     // make active
     q->setFocus();
@@ -253,12 +249,6 @@ DAboutDialog::DAboutDialog(QWidget *parent)
     D_D(DAboutDialog);
 
     d->init();
-    d->productNameLabel->setStyleSheet(styleSheet());
-    d->versionLabel->setStyleSheet(styleSheet());
-    d->websiteLabel->setStyleSheet(styleSheet());
-    d->acknowledgementLabel->setStyleSheet(styleSheet());
-    d->descriptionLabel->setStyleSheet(styleSheet());
-    d->licenseLabel->setStyleSheet(styleSheet());
 }
 
 /*!
@@ -483,7 +473,6 @@ void DAboutDialog::setCompanyLogo(const QPixmap &companyLogo)
     D_D(DAboutDialog);
 
     d->companyLogoLabel->setPixmap(companyLogo);
-    d->companyLogoLabel->setFixedSize(companyLogo.size());
 }
 
 /*!

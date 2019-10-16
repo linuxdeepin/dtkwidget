@@ -15,6 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <DHorizontalLine>
+
 #include <QPushButton>
 #include <QLabel>
 #include <QButtonGroup>
@@ -42,7 +44,7 @@
 DWIDGET_BEGIN_NAMESPACE
 
 DialogButton::DialogButton(const QString &text, QWidget *parent)
-    :QPushButton(text, parent)
+    : QPushButton(text, parent)
 {
 
 }
@@ -169,7 +171,7 @@ const QScreen *DDialogPrivate::getScreen() const
 
     const QScreen *screen = qApp->screens()[qApp->desktop()->screenNumber(q)];
 
-    if(screen)
+    if (screen)
         return screen;
 
     screen = qApp->screens()[qApp->desktop()->screenNumber(QCursor::pos())];
@@ -204,23 +206,23 @@ QString DDialogPrivate::elideString(QString str, const QFontMetrics &fm, int wid
 {
     QString trimmed = trimTag(str);
     if (fm.width(trimmed) > width) {
-         QMap<int, QString> info = scanTags(str);
-         QString elided = fm.elidedText(trimmed, Qt::ElideMiddle, width);
-         int elideStart = elided.indexOf("…");
-         int elideLength = trimmed.length() - elided.length();
-         QList<int> indexes = info.keys();
-         std::sort(indexes.begin(), indexes.end());
-         for (int index : indexes) {
-             if (index <= elideStart) {
-                 elided.insert(index, info[index]);
-             } else if (elideStart < index && index <= elideStart + elideLength) {
-                 elided.insert(elideStart, info[index]);
-                 elideStart += 1;
-             } else {
-                 elided.insert(index - elideLength + 1, info[index]);
-             }
-         }
-         return elided;
+        QMap<int, QString> info = scanTags(str);
+        QString elided = fm.elidedText(trimmed, Qt::ElideMiddle, width);
+        int elideStart = elided.indexOf("…");
+        int elideLength = trimmed.length() - elided.length();
+        QList<int> indexes = info.keys();
+        std::sort(indexes.begin(), indexes.end());
+        for (int index : indexes) {
+            if (index <= elideStart) {
+                elided.insert(index, info[index]);
+            } else if (elideStart < index && index <= elideStart + elideLength) {
+                elided.insert(elideStart, info[index]);
+                elideStart += 1;
+            } else {
+                elided.insert(index - elideLength + 1, info[index]);
+            }
+        }
+        return elided;
     } else {
         return str;
     }
@@ -245,13 +247,13 @@ void DDialogPrivate::_q_onButtonClicked()
 {
     D_Q(DDialog);
 
-    QAbstractButton *button = qobject_cast<QAbstractButton*>(q->sender());
+    QAbstractButton *button = qobject_cast<QAbstractButton *>(q->sender());
 
-    if(button) {
+    if (button) {
         clickedButtonIndex = buttonList.indexOf(button);
         q->buttonClicked(clickedButtonIndex, button->text());
 
-        if(onButtonClickedClose)
+        if (onButtonClickedClose)
             q->done(clickedButtonIndex);
     }
 }
@@ -260,7 +262,7 @@ void DDialogPrivate::_q_defaultButtonTriggered()
 {
     D_QC(DDialog);
 
-    QAbstractButton *button = qobject_cast<QAbstractButton*>(q->focusWidget());
+    QAbstractButton *button = qobject_cast<QAbstractButton *>(q->focusWidget());
 
     if (button)
         button->click();
@@ -342,10 +344,10 @@ int DDialog::getButtonIndexByText(const QString &text) const
 {
     int i = -1;
 
-    for(const QAbstractButton *button : getButtons()) {
+    for (const QAbstractButton *button : getButtons()) {
         ++i;
 
-        if(button->text() == text)
+        if (button->text() == text)
             return i;
     }
 
@@ -375,7 +377,7 @@ int DDialog::contentCount() const
 /*!
  * \~chinese \brief 获得对话框的按钮列表
  */
-QList<QAbstractButton*> DDialog::getButtons() const
+QList<QAbstractButton *> DDialog::getButtons() const
 {
     D_DC(DDialog);
 
@@ -526,7 +528,6 @@ void DDialog::insertButton(int index, const QString &text, bool isDefault, Butto
     button->setObjectName("ActionButton");
     button->setButtonType(type);
     button->setAttribute(Qt::WA_NoMousePropagation);
-    button->setFixedHeight(DIALOG::BUTTON_HEIGHT);
 
     insertButton(index, button, isDefault);
 }
@@ -542,20 +543,20 @@ void DDialog::insertButton(int index, QAbstractButton *button, bool isDefault)
 {
     D_D(DDialog);
 
-    QLabel* label = new QLabel;
-    label->setObjectName("VLine");
-    label->setFixedWidth(1);
-    label->hide();
+    DVerticalLine *line = new DVerticalLine;
+    line->setObjectName("VLine");
+    line->hide();
 
     if (index > 0 && index >= buttonCount()) {
-        QLabel *label = qobject_cast<QLabel*>(d->buttonLayout->itemAt(d->buttonLayout->count() - 1)->widget());
-        if(label)
-            label->show();
+        DVerticalLine *label = qobject_cast<DVerticalLine *>(d->buttonLayout->itemAt(d->buttonLayout->count() - 1)->widget());
+        if (label)
+            line->show();
     }
 
     d->buttonLayout->insertWidget(index * 2, button);
     d->buttonList << button;
-    d->buttonLayout->insertWidget(index * 2 + 1, label);
+    d->buttonLayout->insertWidget(index * 2 + 1, line);
+
 
     connect(button, SIGNAL(clicked(bool)), this, SLOT(_q_onButtonClicked()));
 
@@ -590,7 +591,7 @@ void DDialog::insertButton(int index, QAbstractButton *button, bool isDefault)
  */
 void DDialog::insertButtons(int index, const QStringList &text)
 {
-    for(int i = 0; i < text.count(); ++i) {
+    for (int i = 0; i < text.count(); ++i) {
         insertButton(index + i, text[i]);
     }
 }
@@ -604,23 +605,23 @@ void DDialog::removeButton(int index)
 {
     D_D(DDialog);
 
-    QLabel *label = qobject_cast<QLabel*>(d->buttonLayout->itemAt(index * 2 + 1)->widget());
-    QAbstractButton * button = qobject_cast<QAbstractButton*>(d->buttonLayout->itemAt(index * 2)->widget());
+    DVerticalLine *label = qobject_cast<DVerticalLine *>(d->buttonLayout->itemAt(index * 2 + 1)->widget());
+    QAbstractButton *button = qobject_cast<QAbstractButton *>(d->buttonLayout->itemAt(index * 2)->widget());
 
-    if(label) {
+    if (label) {
         d->buttonLayout->removeWidget(label);
         label->deleteLater();
     }
 
-    if(button) {
+    if (button) {
         d->buttonLayout->removeWidget(button);
         button->deleteLater();
     }
 
-    if(index > 0 && index == buttonCount() - 1) {
-        QLabel *label = qobject_cast<QLabel*>(d->buttonLayout->itemAt(d->buttonLayout->count() - 1)->widget());
+    if (index > 0 && index == buttonCount() - 1) {
+        DVerticalLine *label = qobject_cast<DVerticalLine *>(d->buttonLayout->itemAt(d->buttonLayout->count() - 1)->widget());
 
-        if(label)
+        if (label)
             label->hide();
     }
 
@@ -646,7 +647,7 @@ void DDialog::removeButtonByText(const QString &text)
 {
     int index = getButtonIndexByText(text);
 
-    if(index >= 0)
+    if (index >= 0)
         removeButton(index);
 }
 
@@ -659,7 +660,7 @@ void DDialog::clearButtons()
 
     d->buttonList.clear();
 
-    while(d->buttonLayout->count()) {
+    while (d->buttonLayout->count()) {
         QLayoutItem *item = d->buttonLayout->takeAt(0);
 
         item->widget()->deleteLater();
@@ -676,7 +677,7 @@ void DDialog::clearButtons()
  */
 bool DDialog::setDefaultButton(int index)
 {
-    if(index < 0)
+    if (index < 0)
         return false;
 
     setDefaultButton(getButton(index));
@@ -737,7 +738,7 @@ void DDialog::insertContent(int index, QWidget *widget, Qt::Alignment alignment)
     D_D(DDialog);
 
     d->contentLayout->insertWidget(index + DIALOG::CONTENT_INSERT_OFFSET,
-                                         widget, 0, alignment);
+                                   widget, 0, alignment);
     d->contentList << widget;
 }
 
@@ -753,7 +754,7 @@ void DDialog::removeContent(QWidget *widget, bool isDelete)
 
     d->contentLayout->removeWidget(widget);
 
-    if(isDelete)
+    if (isDelete)
         widget->deleteLater();
 
     d->contentList.removeOne(widget);
@@ -768,10 +769,10 @@ void DDialog::clearContents(bool isDelete)
 {
     D_D(DDialog);
 
-    for(QWidget *widget : d->contentList)
+    for (QWidget *widget : d->contentList)
         d->contentLayout->removeWidget(widget);
 
-    if(isDelete) {
+    if (isDelete) {
         qDeleteAll(d->contentList);
     }
 
@@ -829,10 +830,10 @@ void DDialog::clearSpacing()
 {
     D_D(DDialog);
 
-    for(int i = 0; i < d->contentLayout->count(); ++i) {
+    for (int i = 0; i < d->contentLayout->count(); ++i) {
         QLayoutItem *item = d->contentLayout->itemAt(i);
 
-        if(item->spacerItem()) {
+        if (item->spacerItem()) {
             delete d->contentLayout->takeAt(i);
         }
     }
@@ -909,7 +910,7 @@ void DDialog::setIcon(const QIcon &icon)
 
     d->icon = icon;
 
-    if(!icon.isNull()) {
+    if (!icon.isNull()) {
         auto size = QSize(64, 64);
         size = icon.availableSizes().value(0, size);
         auto pixmap = icon.pixmap(size);
@@ -945,7 +946,7 @@ void DDialog::setIconPixmap(const QPixmap &iconPixmap)
     D_D(DDialog);
 
     d->iconLabel->setPixmap(iconPixmap);
-    if(iconPixmap.isNull()) {
+    if (iconPixmap.isNull()) {
         d->iconLabel->hide();
     } else {
         d->iconLabel->show();
@@ -1080,7 +1081,6 @@ void DDialog::resizeEvent(QResizeEvent *event)
     if (d->messageLabel->sizeHint().width() > labelMaxWidth) {
         d->messageLabel->setFixedWidth(labelMaxWidth);
         d->messageLabel->setWordWrap(true);
-        d->messageLabel->setFixedHeight(d->messageLabel->sizeHint().height());
     }
 }
 

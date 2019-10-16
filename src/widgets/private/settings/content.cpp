@@ -75,15 +75,12 @@ Content::Content(QWidget *parent) :
     d->contentArea = new QScrollArea;
     d->contentArea->setContentsMargins(0, 0, 0, 0);
     d->contentArea->setWidgetResizable(true);
-    d->contentArea->setStyleSheet("QScrollArea{border: none; background-color: transparent; }");
-//    d->contentArea->setStyleSheet("QFrame{border: 1px solid red;}");
 
     // 设置列表支持触屏滚动
     QScroller::grabGesture(d->contentArea);
 
     d->contentFrame = new QWidget(this);
     d->contentFrame->setObjectName("SettingsContent");
-    d->contentFrame->setStyleSheet("#SettingsContent{border: none; background-color: transparent; }");
     d->contentLayout = new QVBoxLayout(d->contentFrame);
     d->contentLayout->setContentsMargins(20, 0, 0, 0);
     d->contentLayout->setSpacing(0);
@@ -181,14 +178,11 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
                 auto title = new QLabel;
                 title->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
                 title->setObjectName("ContentSubTitleText");
-                title->setFixedHeight(20);
                 auto trName = translateContext.isEmpty() ? QObject::tr(subgroup->name().toStdString().c_str())
                               : qApp->translate(translateContext.constData(), subgroup->name().toStdString().c_str());
                 title->setText(trName);
                 title->setProperty("key", subgroup->key());
-                title->setStyleSheet("#ContentSubTitleText{font-weight: 520; "
-//                                     "border: 1px solid red; "
-                                     "}");
+
                 d->contentLayout->addWidget(title);
                 d->contentLayout->addSpacing(10);
                 d->sortTitles.push_back(title);
@@ -215,7 +209,6 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
 
     auto resetBt = new DSuggestButton(QObject::tr("Restore Defaults"));
     resetBt->setObjectName("SettingsContentReset");
-    resetBt->setFixedSize(310, 36);
 
     d->contentLayout->addSpacing(40);
     d->contentLayout->addWidget(resetBt, 0, Qt::AlignCenter);

@@ -90,7 +90,7 @@ DSettingsDialog::DSettingsDialog(QWidget *parent) :
 
     d->content = new Content;
 
-    DWindowCloseButton * closeButton = new DWindowCloseButton;
+    DWindowCloseButton *closeButton = new DWindowCloseButton;
     closeButton->setObjectName("DSettingsDialogClose");
     closeButton->setIconSize(QSize(DefaultTitlebarHeight, DefaultTitlebarHeight));
     d->rightLayout->addWidget(closeButton, 0, Qt::AlignVCenter | Qt::AlignRight);

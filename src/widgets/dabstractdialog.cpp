@@ -367,8 +367,6 @@ void DAbstractDialog::resizeEvent(QResizeEvent *event)
     if (event->size().width() >= maximumWidth()) {
         bool resized = testAttribute(Qt::WA_Resized);
 
-        setFixedWidth(maximumWidth());
-
         if (!resized)
             setAttribute(Qt::WA_Resized, false);
     }

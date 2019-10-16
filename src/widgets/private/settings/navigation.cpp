@@ -55,9 +55,6 @@ Navigation::Navigation(QWidget *parent) :
 
     d->navbar = new QListView(this);
     d->navbar->setObjectName("NavigationBar");
-//    d->navbar->setStyleSheet("#NavigationBar{border: none;}");
-//    d->navbar->setMinimumWidth(160);
-//    d->navbar->setMaximumWidth(199);
     d->navbar->setContentsMargins(0, 0, 0, 0);
 
     d->navbar->setSelectionMode(QListView::SingleSelection);
@@ -81,10 +78,7 @@ Navigation::Navigation(QWidget *parent) :
             Q_EMIT selectedGroup(key);
         }
     });
-
-//    setMaximumWidth(200);
     d->navbar->setFixedWidth(190);
-    setFixedWidth(190 + 1);
 }
 
 Navigation::~Navigation()
@@ -160,9 +154,6 @@ void Navigation::updateSettings(const QByteArray &translateContext, QPointer<DTK
     }
 
     d->navbar->setCurrentIndex(d->navbarModel->index(0, 0));
-//    this->adjustSize();
-//    d->navbar->setMaximumWidth(200);
-//    this->setFixedWidth(d->navbar->width() + 1);
 }
 
 DWIDGET_END_NAMESPACE
