@@ -45,6 +45,7 @@ void DSuggestButton::paintEvent(QPaintEvent *event)
     option.features |= QStyleOptionButton::ButtonFeature(DStyleOptionButton::SuggestButton);
     option.palette.setBrush(QPalette::Light, option.dpalette.lightLively());
     option.palette.setBrush(QPalette::Dark, option.dpalette.darkLively());
+    option.palette.setBrush(QPalette::ButtonText, option.palette.highlightedText());
     p.drawControl(QStyle::CE_PushButton, option);
 }
 
