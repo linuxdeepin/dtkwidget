@@ -259,7 +259,6 @@ QWidget *createComboBoxOptionHandle(QObject *opt)
     auto option = qobject_cast<DTK_CORE_NAMESPACE::DSettingsOption *>(opt);
     auto rightWidget = new ComboBox();
     rightWidget->setFocusPolicy(Qt::StrongFocus);
-    rightWidget->setFixedHeight(24);
     rightWidget->setObjectName("OptionLineEdit");
     auto optionWidget = DSettingsWidgetFactory::createTwoColumWidget(translateContext, option, rightWidget);
 
