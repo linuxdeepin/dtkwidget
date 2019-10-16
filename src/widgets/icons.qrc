@@ -21,5 +21,7 @@
         <file>images/play_next.svg</file>
         <file>images/voice.svg</file>
         <file>images/voice_activate.svg</file>
+        <file>images/water_back.svg</file>
+        <file>images/water_front.svg</file>
     </qresource>
 </RCC>

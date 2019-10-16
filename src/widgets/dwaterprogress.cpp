@@ -182,7 +182,7 @@ void DWaterProgressPrivate::resizePixmap(QSize sz)
     auto waterSize = QSizeF(waterWidth, waterHeight).toSize();
 
     if (waterFrontImage.size() != waterSize) {
-        DSvgRenderer renderer(QString(":/images/light/images/water_front.svg"));
+        DSvgRenderer renderer(QString(":/images/water_front.svg"));
         QImage image(waterWidth, waterHeight, QImage::Format_ARGB32);
         image.fill(Qt::transparent);  // partly transparent red-ish background
         QPainter waterPainter(&image);
@@ -190,7 +190,7 @@ void DWaterProgressPrivate::resizePixmap(QSize sz)
         waterFrontImage = image;
     }
     if (waterBackImage.size() != waterSize) {
-        DSvgRenderer renderer(QString(":/images/light/images/water_back.svg"));
+        DSvgRenderer renderer(QString(":/images/water_back.svg"));
         QImage image(waterWidth, waterHeight, QImage::Format_ARGB32);
         image.fill(Qt::transparent);  // partly transparent red-ish background
         QPainter waterPainter(&image);
