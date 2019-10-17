@@ -42,6 +42,7 @@
 #include "DHorizontalLine"
 #include "dimagebutton.h"
 #include "dblureffectwidget.h"
+#include "dwidgetstype.h"
 
 DWIDGET_BEGIN_NAMESPACE
 

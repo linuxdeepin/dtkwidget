@@ -2,7 +2,6 @@
 #define DWIDGETSTYPE_H
 
 #include <dtkwidget_global.h>
-#include <QFrame>
 
 QT_BEGIN_NAMESPACE
 
@@ -19,7 +18,6 @@ class QScrollArea;
 class QToolBox;
 class QTableWidget;
 class QStackedWidget;
-class QFrame;
 class QWidget;
 class QMDIArea;
 class QDockWidget;
@@ -93,7 +91,6 @@ typedef QScrollArea DScrollArea;
 typedef QToolBox DToolBox;
 typedef QTableWidget DTableWidget;
 typedef QStackedWidget DStackedWidget;
-typedef QFrame DFrame;
 typedef QWidget DWidget;
 typedef QMDIArea DMDIArea;
 typedef QDockWidget DDockWidget;
@@ -146,26 +143,6 @@ typedef QWhatsThis DWhatsThis;
 typedef QWizard DWizard;
 typedef QWizardPage DWizardPage;
 typedef QLabel DLabel;
-
-class DHorizontalLine : public QFrame
-{
-public:
-    explicit DHorizontalLine(QWidget* parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags())
-        : QFrame(parent, f)
-    {
-        setFrameShape(HLine);
-    }
-};
-
-class DVerticalLine : public QFrame
-{
-public:
-    explicit DVerticalLine(QWidget* parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags())
-        : QFrame(parent, f)
-    {
-        setFrameShape(VLine);
-    }
-};
 
 DWIDGET_END_NAMESPACE
 
