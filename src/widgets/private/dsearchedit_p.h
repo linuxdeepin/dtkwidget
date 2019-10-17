@@ -34,6 +34,7 @@ QT_END_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
 class VoiceDevice;
+class DIconButton;
 class DSearchEditPrivate : DLineEditPrivate
 {
 public:
@@ -48,7 +49,8 @@ public:
 public:
     QAction *action;
     QString placeHolder;
-    QLabel *label;
+
+    QWidget *iconWidget;
 
 #ifdef ENABLE_XFYUN
     QAction *voiceAction;

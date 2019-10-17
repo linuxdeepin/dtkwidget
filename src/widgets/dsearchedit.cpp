@@ -48,7 +48,8 @@ class VoiceDevice : public QIODevice
     Q_OBJECT
 public:
     using QIODevice::QIODevice;
-    ~VoiceDevice() {
+    ~VoiceDevice()
+    {
         if (isOpen())
             close();
     }
@@ -60,7 +61,7 @@ public:
 
         // 先登录
         int            ret                  =    MSP_SUCCESS;
-        const char* login_params            =    "appid = 5720401f, work_dir = ."; // 登录参数，appid与msc库绑定,请勿随意改动
+        const char *login_params            =    "appid = 5720401f, work_dir = ."; // 登录参数，appid与msc库绑定,请勿随意改动
 
         /* 用户登录 */
         ret = MSPLogin(NULL, NULL, login_params); //第一个参数是用户名，第二个参数是密码，均传NULL即可，第三个参数是登录参数
@@ -87,7 +88,7 @@ public:
         *
         * 详细参数说明请参阅《iFlytek MSC Reference Manual》
         */
-        const char* session_begin_params = "sub = iat, domain = iat, language = zh_ch, accent = mandarin, sample_rate = 16000, result_type = plain, result_encoding = utf8";
+        const char *session_begin_params = "sub = iat, domain = iat, language = zh_ch, accent = mandarin, sample_rate = 16000, result_type = plain, result_encoding = utf8";
 
         // 启动讯飞语言解析的会话
         xfyunSessionID = QISRSessionBegin(NULL, session_begin_params, &errcode); //听写不需要语法，第一个参数为NULL
@@ -114,7 +115,7 @@ public:
         QIODevice::close();
     }
 
-    qint64 readData(char *, qint64 ) override
+    qint64 readData(char *, qint64) override
     {
         return 0;
     }
@@ -220,6 +221,7 @@ QString DSearchEdit::placeHolder() const
 DSearchEditPrivate::DSearchEditPrivate(DSearchEdit *q)
     : DLineEditPrivate(q)
     , action(nullptr)
+    , iconWidget(nullptr)
 {
 }
 
@@ -231,12 +233,20 @@ DSearchEditPrivate::~DSearchEditPrivate()
 void DSearchEditPrivate::init()
 {
     D_Q(DSearchEdit);
+    QLabel *label = new QLabel;
+    DIconButton *iconbtn = new DIconButton(DStyle::SP_IndicatorSearch);
 
-    label = new QLabel;
+    iconbtn->setFlat(true);
+    iconbtn->setFocusPolicy(Qt::NoFocus);
+    iconbtn->setAttribute(Qt::WA_TransparentForMouseEvents);
+
     placeHolder = qApp->translate("DSearchEdit", "Search");
 
     action = new QAction(q);
     action->setIcon(DStyleHelper(q->style()).standardIcon(DStyle::SP_IndicatorSearch, nullptr));
+
+    int icon_height = q->lineEdit()->sizeHint().height();
+    iconbtn->setIconSize(QSize(icon_height, icon_height));
 
     DPalette pe;
     QStyleOption opt;
@@ -247,12 +257,23 @@ void DSearchEditPrivate::init()
     label->setText(placeHolder);
 
     q->setFocusPolicy(Qt::ClickFocus);
+    q->lineEdit()->setContextMenuPolicy(Qt::NoContextMenu);
 
     q->connect(q, SIGNAL(focusChanged(bool)), q, SLOT(_q_toEditMode(bool)));
 
     QHBoxLayout *layout = new QHBoxLayout(q->lineEdit());
 
-    layout->addWidget(label, 0, Qt::AlignCenter);
+    iconWidget = new QWidget;
+    QHBoxLayout *center_layout = new QHBoxLayout(iconWidget);
+    center_layout->setMargin(0);
+    center_layout->setSpacing(0);
+
+    layout->setMargin(0);
+    layout->setSpacing(0);
+
+    center_layout->addWidget(iconbtn, 0, Qt::AlignVCenter);
+    center_layout->addWidget(label, 0, Qt::AlignCenter);
+    layout->addWidget(iconWidget, 0, Qt::AlignCenter);
 
 #ifdef ENABLE_XFYUN
     // 语音输入按钮
@@ -269,17 +290,12 @@ void DSearchEditPrivate::_q_toEditMode(bool focus)
 {
     D_Q(DSearchEdit);
 
-    if (focus) {
+    if (focus || !q->lineEdit()->text().isEmpty()) {
         q->lineEdit()->addAction(action, QLineEdit::LeadingPosition);
-        label->setVisible(false);
+        iconWidget->setVisible(false);
     } else {
         q->lineEdit()->removeAction(action);
-
-        if (!q->lineEdit()->text().isEmpty()) {
-            label->setVisible(false);
-        } else {
-            label->setVisible(true);
-        }
+        iconWidget->setVisible(true);
     }
 }
 
@@ -302,7 +318,7 @@ void DSearchEditPrivate::_q_onVoiceActionTrigger(bool checked)
             voiceInput = new QAudioInput(format, q);
             voiceIODevice = new VoiceDevice(voiceInput);
 
-            q->connect(voiceIODevice, &VoiceDevice::voiceReply, q, [q, this] (const QString &text) {
+            q->connect(voiceIODevice, &VoiceDevice::voiceReply, q, [q, this](const QString & text) {
                 // 自动结束录制
                 voiceAction->setChecked(false);
                 _q_onVoiceActionTrigger(false);
