@@ -27,6 +27,7 @@
 #include <QDebug>
 
 #include <DApplicationHelper>
+#include <DFontSizeManager>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -37,6 +38,7 @@ public:
         : QWidget(parent)
         , orient(orie)
     {
+        DFontSizeManager::instance()->bind(this, DFontSizeManager::T7);
     }
     QSize sizeHint() const override;
 
@@ -359,20 +361,20 @@ void SliderStrip::paintEvent(QPaintEvent *event)
         }
 
         pa.drawLine(QPointF(startX, startY), QPointF(endX, endY));
-        pa.drawText(QRectF(endX - offsetSize, textPos, average / 2 + offsetSize, height - tickSize), Qt::AlignLeft, scaleInfo[0]);
+        pa.drawText(QRectF(endX - offsetSize, textPos, width, height - tickSize), Qt::AlignLeft, scaleInfo[0]);
 
         for (int i = 1; i < paragraph - 1; i++) {
             startX += average;
             endX = startX;
             pa.drawLine(QPointF(startX, startY), QPointF(endX, endY));
-            pa.drawText(QRectF(endX - average / 2, textPos, average, height - tickSize), Qt::AlignHCenter, scaleInfo[i]);
+            pa.drawText(QRectF(endX - width / 2, textPos, width, height - tickSize), Qt::AlignHCenter, scaleInfo[i]);
         }
 
         if (paragraph > 1) {
             startX += average;
             endX = startX;
             pa.drawLine(QPointF(startX, startY), QPointF(endX, endY));
-            pa.drawText(QRectF(endX - average / 2, textPos, average / 2 + offsetSize, height - tickSize), Qt::AlignRight, scaleInfo[paragraph - 1]);
+            pa.drawText(QRectF(endX - width + offsetSize, textPos, width, height - tickSize), Qt::AlignRight, scaleInfo[paragraph - 1]);
         }
     } else {
         startY = offsetSize;
