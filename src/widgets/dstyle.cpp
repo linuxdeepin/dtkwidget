@@ -1401,6 +1401,10 @@ static DStyle::StyleState getState(const QStyleOption *option)
 {
     DStyle::StyleState state = DStyle::SS_NormalState;
 
+    if (!option->state.testFlag(DStyle::State_Enabled)) {
+        return DStyle::SS_NormalState;
+    }
+
     if (option->state.testFlag(DStyle::State_Sunken)) {
         state = DStyle::SS_PressState;
     } else if (option->state.testFlag(DStyle::State_MouseOver)) {
