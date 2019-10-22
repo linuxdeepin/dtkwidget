@@ -21,6 +21,7 @@
 #include "dlineedit.h"
 
 #include <DObjectPrivate>
+#include <QPointer>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -35,7 +36,7 @@ public:
     void init();
 
     bool m_isAlert = false;
-    DToolTip *tooltip;
+    QPointer<DToolTip> tooltip;
 
     QWidget *leftWidget;
     QWidget *rightWidget;
