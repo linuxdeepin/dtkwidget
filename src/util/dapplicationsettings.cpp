@@ -23,7 +23,9 @@
 #include <DGuiApplicationHelper>
 #include <DObjectPrivate>
 
+#ifdef Q_OS_LINUX
 #include <QGSettings>
+#endif
 #include <QCoreApplication>
 
 #define PALETTE_TYPE_KEY "paletteType"
@@ -39,7 +41,9 @@ public:
     void _q_onChanged(const QString &key);
     void _q_onPaletteTypeChanged();
 
+#ifdef Q_OS_LINUX
     QGSettings *genericSettings;
+#endif
 
     D_DECLARE_PUBLIC(DApplicationSettings)
 };
@@ -52,6 +56,7 @@ DApplicationSettingsPrivate::DApplicationSettingsPrivate(DApplicationSettings *q
 
 void DApplicationSettingsPrivate::init()
 {
+#ifdef Q_OS_LINUX
     D_Q(DApplicationSettings);
 
     const QString &on = qApp->organizationName();
@@ -72,10 +77,12 @@ void DApplicationSettingsPrivate::init()
     q->connect(genericSettings, SIGNAL(changed(const QString &)), q, SLOT(_q_onChanged(const QString &)));
     q->connect(DGuiApplicationHelper::instance(), SIGNAL(paletteTypeChanged(ColorType)),
                q, SLOT(_q_onPaletteTypeChanged()));
+#endif
 }
 
 void DApplicationSettingsPrivate::_q_onChanged(const QString &key)
 {
+#ifdef Q_OS_LINUX
     if (key != PALETTE_TYPE_KEY)
         return;
 
@@ -88,10 +95,12 @@ void DApplicationSettingsPrivate::_q_onChanged(const QString &key)
     } else if (palette_type == "UnknownType") {
         DGuiApplicationHelper::instance()->setPaletteType(DGuiApplicationHelper::UnknownType);
     }
+#endif
 }
 
 void DApplicationSettingsPrivate::_q_onPaletteTypeChanged()
 {
+#ifdef Q_OS_LINUX
     switch (DGuiApplicationHelper::instance()->paletteType()) {
     case DGuiApplicationHelper::LightType:
         genericSettings->set(PALETTE_TYPE_KEY, "LightType");
@@ -103,6 +112,7 @@ void DApplicationSettingsPrivate::_q_onPaletteTypeChanged()
         genericSettings->set(PALETTE_TYPE_KEY, "UnknownType");
         break;
     }
+#endif
 }
 
 DApplicationSettings::DApplicationSettings(QObject *parent)
