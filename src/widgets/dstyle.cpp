@@ -1145,6 +1145,8 @@ int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyle
     case PM_ContentsMargins:
     case PM_ContentsSpacing:
         return 10;
+    case PM_ButtonMinimizedSize:
+        return 36;
     default:
         break;
     }
@@ -1250,7 +1252,7 @@ QSize DStyle::sizeFromContents(const QStyle *style, DStyle::ContentsType ct, con
         return size;
     }
     case CT_ButtonBoxButton: {
-        QSize  size = style->sizeFromContents(CT_PushButton, opt, contentsSize, widget);
+        QSize size = style->sizeFromContents(CT_PushButton, opt, contentsSize, widget);
 
         if (const DStyleOptionButtonBoxButton *btn = qstyleoption_cast<const DStyleOptionButtonBoxButton *>(opt)) {
             if (btn->text.isEmpty()) {
@@ -1374,7 +1376,7 @@ int DStyle::styleHint(QStyle::StyleHint sh, const QStyleOption *opt, const QWidg
     case SH_Menu_SubMenuPopupDelay:
         return 100;
     case SH_ToolTipLabel_Opacity:
-        return 0;
+        return 255;
     case SH_RequestSoftwareInputPanel:
         return RSIP_OnMouseClickAndAlreadyFocused;
     case SH_ItemView_ScrollMode:
