@@ -62,7 +62,7 @@ public:
 
     }
 
-    static QSize actionSize(const DViewItemAction *action, const QSize &max, const QSize &fallbackIconSize)
+    static QSize actionSize(const DViewItemAction *action, const QSize &max, const QSize &fallbackIconSize, int spacing)
     {
         if (action->widget()) {
             return action->widget()->size();
@@ -87,7 +87,10 @@ public:
         QFontMetrics fm(action->font());
         const QSize &text_size = fm.size(0, text);
 
-        return QSize(icon_size.width() + text_size.width(), qMax(icon_size.height(), text_size.height()));
+        if (!icon_size.isValid())
+            spacing = 0;
+
+        return QSize(icon_size.width() + text_size.width() + spacing, qMax(icon_size.height(), text_size.height()));
     }
 
     static QSize displayActionSize(const DViewItemAction *action, const QStyle *style, const QStyleOptionViewItem &option)
@@ -121,9 +124,9 @@ public:
         int max_height = 0;
         QList<QSize> size_list;
         size_list.reserve(list.size());
+        int spacing = DStyleHelper(qApp->style()).pixelMetric(DStyle::PM_ContentsSpacing);
 
         if (orientation == Qt::Horizontal) {
-            int spacing = qApp->style()->pixelMetric(QStyle::PM_LayoutHorizontalSpacing);
             // 记录上中下三列的宽度
             int top_width = 0;
             int center_width = 0;
@@ -131,7 +134,7 @@ public:
 
             // 先找到最大宽度
             for (const DViewItemAction *action : list) {
-                size_list.append(actionSize(action, action->maximumSize(), fallbackIconSize));
+                size_list.append(actionSize(action, action->maximumSize(), fallbackIconSize, spacing));
 
                 if (action->alignment().testFlag(Qt::AlignVCenter)) {
                     center_width += size_list.last().width();
@@ -142,7 +145,7 @@ public:
                 }
             }
 
-            max_width = qBound(qMax(top_width, center_width), bottom_width, base.width());
+            max_width = qBound(qMax(top_width, center_width), bottom_width, base.width()) + (list.size() -  1) * spacing;
             base.setWidth(max_width);
 
             QRect top_rect = base;
@@ -168,7 +171,6 @@ public:
                     max_height = qMax(max_height, result_list.last().bottom() - base.top() + 1);
             }
         } else {
-            int spacing = qApp->style()->pixelMetric(QStyle::PM_LayoutVerticalSpacing);
             // 记录左中右三列的宽度
             int left_height = 0;
             int center_height = 0;
@@ -176,7 +178,7 @@ public:
 
             // 先找到最大高度
             for (const DViewItemAction *action : list) {
-                size_list.append(actionSize(action, action->maximumSize(), fallbackIconSize));
+                size_list.append(actionSize(action, action->maximumSize(), fallbackIconSize, spacing));
 
                 if (action->alignment().testFlag(Qt::AlignHCenter)) {
                     center_height += size_list.last().height();
@@ -187,7 +189,7 @@ public:
                 }
             }
 
-            max_height = qBound(qMax(left_height, center_height), right_height, base.height());
+            max_height = qBound(qMax(left_height, center_height), right_height, base.height()) + (list.size() -  1) * spacing;
             base.setHeight(max_height);
 
             QRect left_rect = base;
@@ -222,7 +224,7 @@ public:
         return result_list;
     }
 
-    static void drawAction(QPainter *pa, const QStyleOptionViewItem &option, const QRect &rect, const DViewItemAction *action)
+    static void drawAction(QPainter *pa, const QStyleOptionViewItem &option, const QRect &rect, const DViewItemAction *action, int spacing)
     {
         if (!action->isVisible()) {
             return;
@@ -272,7 +274,12 @@ public:
         // draw text
         if (!action->text().isEmpty()) {
             QRect text_rect = rect;
-            text_rect.setLeft(text_rect.left() + icon_size.width());
+
+            if (!icon_size.isValid()) {
+                spacing = 0;
+            }
+
+            text_rect.setLeft(text_rect.left() + icon_size.width() + spacing);
             pa->setFont(action->font());
             pa->drawText(text_rect, Qt::AlignVCenter, action->text());
         }
@@ -285,6 +292,7 @@ public:
         QSize bounding;
         const QList<QRect> &list = doActionsLayout(option.rect, actionList, orientation, option.direction, option.decorationSize, &bounding);
         QPoint origin(0, 0);
+        int spacing = DStyleHelper(qApp->style()).pixelMetric(DStyle::PM_ContentsSpacing);
 
         switch (edge) {
         case Qt::BottomEdge:
@@ -301,7 +309,7 @@ public:
             DViewItemAction *action = actionList.at(i);
             const QRect &rect = list.at(i).translated(origin);
 
-            drawAction(pa, option, rect, action);
+            drawAction(pa, option, rect, action, spacing);
 
             if (action->isClickable()) {
                 clickableActionRect->append(qMakePair(action, rect));
@@ -484,20 +492,21 @@ void DStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
 
     opt.rect = opt.rect.marginsRemoved(margins);
     QRect itemContentRect = opt.rect;
-    QSize action_area_size;
+    QSize action_area_size(0, 0);
     QList<QPair<QAction*, QRect>> clickActionList;
+    int spacing = DStyleHelper(qApp->style()).pixelMetric(DStyle::PM_ContentsSpacing);
 
     action_area_size = d->drawActions(painter, opt, index.data(Dtk::LeftActionListRole), Qt::LeftEdge, &clickActionList);
-    itemContentRect.setLeft(itemContentRect.left() + action_area_size.width());
+    itemContentRect.setLeft(itemContentRect.left() + action_area_size.width() + (action_area_size.isNull() ? 0 : spacing));
 
     action_area_size = d->drawActions(painter, opt, index.data(Dtk::RightActionListRole), Qt::RightEdge, &clickActionList);
-    itemContentRect.setRight(itemContentRect.right() - action_area_size.width());
+    itemContentRect.setRight(itemContentRect.right() - action_area_size.width() - (action_area_size.isNull() ? 0 : spacing));
 
     action_area_size = d->drawActions(painter, opt, index.data(Dtk::TopActionListRole), Qt::TopEdge, &clickActionList);
-    itemContentRect.setTop(itemContentRect.top() + action_area_size.height());
+    itemContentRect.setTop(itemContentRect.top() + action_area_size.height() + (action_area_size.isNull() ? 0 : spacing));
 
     action_area_size = d->drawActions(painter, opt, index.data(Dtk::BottomActionListRole), Qt::BottomEdge, &clickActionList);
-    itemContentRect.setBottom(itemContentRect.bottom() - action_area_size.height());
+    itemContentRect.setBottom(itemContentRect.bottom() - action_area_size.height() - (action_area_size.isNull() ? 0 : spacing));
 
     if (!clickActionList.isEmpty()) {
         const_cast<DStyledItemDelegatePrivate*>(d)->clickableActionMap[index] = clickActionList;
