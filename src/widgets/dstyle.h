@@ -80,7 +80,6 @@ void drawShowPassword(QPainter *pa, const QRectF &rect);
 void drawHidePassword(QPainter *pa, const QRectF &rect);
 void drawCloseButton(QPainter *pa, const QRectF &rect);
 void drawIndicatorMajuscule(QPainter *pa, const QRectF &rect);
-void drawIndicatorSearch(QPainter *pa, const QRectF &rect);
 void drawIndicatorUnchecked(QPainter *pa, const QRectF &rect);
 void drawIndicatorChecked(QPainter *pa, const QRectF &rect);
 void drawDeleteButton(QPainter *pa, const QRectF &rect);

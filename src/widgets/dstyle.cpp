@@ -486,22 +486,6 @@ void drawCloseButton(QPainter *pa, const QRectF &rect)
     drawForkElement(pa, content_rect);
 }
 
-void drawIndicatorSearch(QPainter *pa, const QRectF &rect)
-{
-    pa->setRenderHint(QPainter::Antialiasing, true);
-    QRectF content_rect(0, 0, rect.width() / 2, rect.height() / 2); //放大镜空间
-    content_rect.moveCenter(rect.center());
-
-    pa->translate(content_rect.center());
-    content_rect.moveCenter(QPoint(0,0));
-    pa->rotate(-40);
-    pa->drawEllipse(content_rect);
-    pa->drawLine(content_rect.center().x(),
-                 content_rect.right() ,
-                 content_rect.center().x(),
-                  content_rect.right() + content_rect.width()/2);
-}
-
 void drawDeleteButton(QPainter *pa, const QRectF &rect)
 {
     const QPen pen = pa->pen();
@@ -1309,7 +1293,6 @@ case SP_##Value: { \
         CASE_ICON(ArrowNext)
         CASE_ICON(ArrowPrev)
         CASE_ICON(CloseButton)
-        CASE_ICON(IndicatorSearch)
         CASE_ICON(IndicatorUnchecked)
         CASE_ICON(IndicatorChecked)
         CASE_ICON(DeleteButton)
@@ -1332,6 +1315,8 @@ case SP_##Value: { \
         return QIcon::fromTheme("password_show");
     case SP_HidePassword:
         return QIcon::fromTheme("password_hide");
+    case SP_IndicatorSearch:
+        return QIcon::fromTheme("search_indicator");
     default:
         break;
     }
