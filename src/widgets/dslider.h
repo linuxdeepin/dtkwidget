@@ -66,6 +66,8 @@ public:
     void setAboveTicks(const QStringList &info);
     void setBelowTicks(const QStringList &info);
 
+    void setMouseWheelEnabled(bool enabled);
+
     QSlider::TickPosition tickPosition() const;
 
 Q_SIGNALS:
@@ -81,6 +83,8 @@ Q_SIGNALS:
 
 protected:
     DSlider(DSliderPrivate &q, QWidget *parent);
+
+    bool eventFilter(QObject *watched, QEvent *event) override;
 };
 
 DWIDGET_END_NAMESPACE

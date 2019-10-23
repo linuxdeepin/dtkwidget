@@ -55,6 +55,7 @@ public:
     QGridLayout *layout;
 
     QSize iconSize;
+    bool mouseWheelEnabled;
 };
 
 DWIDGET_END_NAMESPACE

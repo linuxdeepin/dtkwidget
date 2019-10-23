@@ -70,6 +70,16 @@ DSlider::DSlider(DSliderPrivate &q, QWidget *parent)
 
 }
 
+bool DSlider::eventFilter(QObject *watched, QEvent *e)
+{
+    Q_D(DSlider);
+
+    if ((watched == d->slider) && (e->type() == QEvent::Wheel)) {
+        return !d->mouseWheelEnabled;
+    }
+    return QWidget::eventFilter(watched, e);
+}
+
 Qt::Orientation DSlider::orientation() const
 {
     D_DC(DSlider);
@@ -251,6 +261,12 @@ void DSlider::setBelowTicks(const QStringList &info)
     setRightTicks(info);
 }
 
+void DSlider::setMouseWheelEnabled(bool enabled)
+{
+    D_D(DSlider);
+    d->mouseWheelEnabled = enabled;
+}
+
 QSlider::TickPosition DSlider::tickPosition() const
 {
     D_DC(DSlider);
@@ -277,6 +293,7 @@ DSliderPrivate::DSliderPrivate(DSlider *q)
     , rightIcon(nullptr)
     , left(nullptr)
     , right(nullptr)
+    , mouseWheelEnabled(false)
 {
 
 }
@@ -305,6 +322,7 @@ void DSliderPrivate::init()
         q->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::MinimumExpanding);
     }
     slider->setTickPosition(QSlider::NoTicks);
+    slider->installEventFilter(q);
 }
 
 QSize SliderStrip::sizeHint() const
