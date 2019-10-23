@@ -947,6 +947,8 @@ void DTitlebar::setFixedHeight(int h)
  */
 void DTitlebar::setBackgroundTransparent(bool transparent)
 {
+    setAutoFillBackground(!transparent);
+
     if (transparent)
         setBackgroundRole(QPalette::NoRole);
     else
