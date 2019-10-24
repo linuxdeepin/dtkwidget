@@ -59,9 +59,12 @@ public:
         this->itemStyleOptions = itemStyleOptions;
     }
 
+    void updateLayoutSpacing();
+
     Qt::Orientations direction;
     QList<QPair<QWidget*, DStyleOptionBackgroundGroup::ItemBackgroundPosition>> itemStyleOptions;
     QMargins itemMargins;
+    int itemSpacing = -1;
     bool useWidgetBackground = true;
 
     D_DECLARE_PUBLIC(DBackgroundGroup)
@@ -84,6 +87,9 @@ DBackgroundGroup::DBackgroundGroup(QLayout *layout, QWidget *parent)
             d_func()->direction = Qt::Vertical;
         }
     }
+
+    // 从布局中同步margins数据
+    setItemMargins(layout->contentsMargins());
 }
 
 QMargins DBackgroundGroup::itemMargins() const
@@ -105,7 +111,15 @@ void DBackgroundGroup::setItemMargins(QMargins itemMargins)
     D_D(DBackgroundGroup);
 
     d->itemMargins = itemMargins;
-    update();
+    d->updateLayoutSpacing();
+}
+
+void DBackgroundGroup::setItemSpacing(int spacing)
+{
+    D_D(DBackgroundGroup);
+
+    d->itemSpacing = spacing;
+    d->updateLayoutSpacing();
 }
 
 void DBackgroundGroup::setUseWidgetBackground(bool useWidgetBackground)
@@ -165,6 +179,30 @@ bool DBackgroundGroup::event(QEvent *event)
     }
 
     return QWidget::event(event);
+}
+
+void DBackgroundGroupPrivate::updateLayoutSpacing()
+{
+    D_Q(DBackgroundGroup);
+
+    QLayout *layout = q->layout();
+    QBoxLayout::Direction lo = QBoxLayout::LeftToRight;
+
+    if (QBoxLayout *l = qobject_cast<QBoxLayout*>(layout)) {
+        lo = l->direction();
+    }
+
+    int spacing = itemSpacing;
+
+    if (spacing < 0) {
+        spacing = q->style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing, nullptr, q);
+    }
+
+    if (lo == QBoxLayout::LeftToRight || lo == QBoxLayout::RightToLeft) {
+        layout->setSpacing(itemMargins.left() + itemMargins.right() + spacing);
+    } else {
+        layout->setSpacing(itemMargins.top() + itemMargins.bottom() + spacing);
+    }
 }
 
 DWIDGET_END_NAMESPACE

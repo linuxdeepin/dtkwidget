@@ -25,6 +25,7 @@ public:
 
 public Q_SLOTS:
     void setItemMargins(QMargins itemMargins);
+    void setItemSpacing(int spacing);
     void setUseWidgetBackground(bool useWidgetBackground);
 
 Q_SIGNALS:
