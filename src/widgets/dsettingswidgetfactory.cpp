@@ -107,11 +107,9 @@ QWidget *DSettingsWidgetFactory::createTwoColumWidget(const QByteArray &translat
         auto trName = DWIDGET_NAMESPACE::tr(translateContext, option->name().toStdString().c_str());
         auto labelWidget = new QLabel(trName);
         labelWidget->setContentsMargins(5, 0, 0, 0);
-        labelWidget->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
-        labelWidget->setMinimumWidth(150);
-        labelWidget->setFixedWidth(160);
+        labelWidget->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
         labelWidget->setObjectName("OptionLabel");
-        optionLayout->addWidget(labelWidget, 0, 0, Qt::AlignLeft | Qt::AlignVCenter);
+        optionLayout->addWidget(labelWidget, 0, 0, Qt::AlignRight | Qt::AlignVCenter);
         optionLayout->addWidget(rightWidget, 0, 1, Qt::AlignLeft | Qt::AlignVCenter);
     } else {
         optionLayout->setColumnMinimumWidth(0, 5);
@@ -207,7 +205,6 @@ QWidget *createCheckboxOptionHandle(QObject *opt)
 //    checkboxLayout->addWidget(checkboxLabel);
 //    checkboxLayout->addStretch();
 
-    rightWidget->setMinimumHeight(30);
     rightWidget->setObjectName("OptionCheckbox");
     rightWidget->setChecked(option->value().toBool());
 
@@ -234,7 +231,6 @@ QWidget *createLineEditOptionHandle(QObject *opt)
     auto value = option->data("text").toString();
     auto trName = DWIDGET_NAMESPACE::tr(translateContext, value.toStdString().c_str());
     auto rightWidget = new QLineEdit(trName);
-    rightWidget->setFixedHeight(24);
     rightWidget->setObjectName("OptionLineEdit");
     rightWidget->setText(option->value().toString());
 
@@ -335,7 +331,6 @@ QWidget *createButtonGroupOptionHandle(QObject *opt)
 {
     auto option = qobject_cast<DTK_CORE_NAMESPACE::DSettingsOption *>(opt);
     auto rightWidget = new ButtonGroup();
-    rightWidget->setFixedHeight(24);
     rightWidget->setObjectName("OptionButtonGroup");
 
     auto items = option->data("items").toStringList();
@@ -416,7 +411,6 @@ QWidget *createSpinButtonOptionHandle(QObject *opt)
 {
     auto option = qobject_cast<DTK_CORE_NAMESPACE::DSettingsOption *>(opt);
     auto rightWidget = new QSpinBox();
-    rightWidget->setFixedHeight(24);
     rightWidget->setObjectName("OptionDSpinBox");
     rightWidget->setValue(option->value().toInt());
 
@@ -446,7 +440,6 @@ QWidget *createSliderOptionHandle(QObject *opt)
 {
     auto option = qobject_cast<DTK_CORE_NAMESPACE::DSettingsOption *>(opt);
     auto rightWidget = new QSlider();
-    rightWidget->setFixedHeight(24);
     rightWidget->setObjectName("OptionQSlider");
     rightWidget->setOrientation(Qt::Horizontal);
     rightWidget->setMaximum(option->data("max").toInt());

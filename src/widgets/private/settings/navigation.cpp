@@ -61,7 +61,6 @@ Navigation::Navigation(QWidget *parent) :
     d->navbar->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     d->navbar->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     d->navbar->setFrameShape(QFrame::NoFrame);
-    d->navbar->viewport()->setAutoFillBackground(false);
 
     d->navbarModel = new QStandardItemModel;
 

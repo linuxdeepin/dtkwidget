@@ -57,6 +57,12 @@ ContentTitle::~ContentTitle()
 
 }
 
+void ContentTitle::setSpacing(int width)
+{
+    QHBoxLayout *hLayout = qobject_cast<QHBoxLayout *>(layout());
+    hLayout->insertSpacing(0, width);
+}
+
 void ContentTitle::setTitle(const QString &title)
 {
     Q_D(ContentTitle);

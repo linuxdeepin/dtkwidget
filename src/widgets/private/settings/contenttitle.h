@@ -28,6 +28,7 @@ public:
     explicit ContentTitle(QWidget *parent = 0);
     ~ContentTitle();
 
+    void setSpacing(int width);
 Q_SIGNALS:
 
 public Q_SLOTS:

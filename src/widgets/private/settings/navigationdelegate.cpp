@@ -19,6 +19,10 @@
 
 #include <QPainter>
 #include <QDebug>
+#include <DApplication>
+#include <DFontSizeManager>
+
+DWIDGET_BEGIN_NAMESPACE
 
 class NavigationDelegatePrivate
 {
@@ -58,13 +62,14 @@ void NavigationDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     case Level1:
     case Level2: {
         if (isSelected) {
-            QColor brush = option.palette.color(QPalette::Highlight);
-            QColor brushWithAlpha = brush;
-            brushWithAlpha.setAlpha(61);
-            painter->fillRect(option.rect, brushWithAlpha);
-            auto rect = option.rect;
-            rect.setX(option.rect.x() + option.rect.width() - 3);
-            painter->fillRect(rect, brush);
+            painter->setPen(Qt::NoPen);
+            QColor brush = option.palette.color(DPalette::Highlight);
+            painter->setBrush(QBrush(brush));
+            int radius = DStyle::pixelMetric(qApp->style(), DStyle::PM_FrameRadius);
+            QRect rect = option.rect;
+            rect.setWidth(rect.width() - 10);
+            rect.setX(rect.x() + 10);
+            painter->drawRoundedRect(rect, radius, radius);
         }
         break;
     }
@@ -79,8 +84,8 @@ void NavigationDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         QColor pen = option.palette.color(isSelected ? QPalette::HighlightedText : QPalette::BrightText);
         painter->setPen(pen);
         auto rect = option.rect.marginsRemoved(QMargins(30, 0, 0, 0));
-        auto font = painter->font();
-        font.setPixelSize(16);
+
+        auto font = DFontSizeManager::instance()->get(DFontSizeManager::T4);
         font.setWeight(QFont::DemiBold);
         painter->setFont(font);
 
@@ -92,7 +97,7 @@ void NavigationDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     case Level2: {
         QColor pen = option.palette.color(isSelected ? QPalette::HighlightedText : QPalette::WindowText);
         painter->setPen(pen);
-        auto font = painter->font();
+        auto font = DFontSizeManager::instance()->get(DFontSizeManager::T5);
         painter->setFont(font);
 
         QFontMetrics fm(font);
@@ -153,3 +158,5 @@ void NavigationDelegate::initStyleOption(QStyleOptionViewItem *option, const QMo
 {
     QStyledItemDelegate::initStyleOption(option, index);
 }
+
+DWIDGET_END_NAMESPACE

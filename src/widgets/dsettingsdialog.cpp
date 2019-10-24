@@ -22,6 +22,8 @@
 
 #include <DSettingsOption>
 #include <DSettings>
+#include <DTitlebar>
+#include <DFrame>
 
 #include "dsettingswidgetfactory.h"
 
@@ -57,9 +59,6 @@ public:
     DSettingsDialogPrivate(DSettingsDialog *parent) : q_ptr(parent) {}
 
     Navigation      *leftFrame;
-
-    QFrame          *rightFrame;
-    QVBoxLayout     *rightLayout;
     Content         *content;
 
     DSettingsDialog *q_ptr;
@@ -73,30 +72,35 @@ DSettingsDialog::DSettingsDialog(QWidget *parent) :
 
     setObjectName("DSettingsDialog");
 
-    auto layout = new QHBoxLayout(this);
-    layout->setContentsMargins(0, 0, 0, 0);
-    layout->setSpacing(0);
+    auto mainlayout = new QVBoxLayout(this);
+    mainlayout->setContentsMargins(0, 0, 0, 0);
+    mainlayout->setSpacing(0);
 
     d->leftFrame = new Navigation;
-    d->leftFrame->layout()->setContentsMargins(0, 30, 0, 0);
-
-    layout->addWidget(d->leftFrame);
-
-    d->rightFrame = new QFrame;
-    d->rightFrame->setObjectName("RightFrame");
-    d->rightLayout = new QVBoxLayout(d->rightFrame);
-    d->rightLayout->setContentsMargins(1, 0, 0, 0);
-    d->rightLayout->setSpacing(0);
-
     d->content = new Content;
 
-    DWindowCloseButton *closeButton = new DWindowCloseButton;
-    closeButton->setObjectName("DSettingsDialogClose");
-    closeButton->setIconSize(QSize(DefaultTitlebarHeight, DefaultTitlebarHeight));
-    d->rightLayout->addWidget(closeButton, 0, Qt::AlignVCenter | Qt::AlignRight);
-    d->rightLayout->addWidget(d->content);
+    DFrame *rightFrame = new DFrame;
+    rightFrame->setContentsMargins(10, 10, 10, 0);
 
-    layout->addWidget(d->rightFrame);
+    QVBoxLayout *rightlayout = new QVBoxLayout(rightFrame);
+    DTitlebar *frameBar = new DTitlebar;
+    frameBar->setMenuVisible(false);
+    frameBar->setTitle(QString());
+
+    d->leftFrame->setObjectName("LeftFrame");
+    d->content->setObjectName("RightFrame");
+
+    rightlayout->setMargin(0);
+    rightlayout->addWidget(d->content);
+
+    QHBoxLayout *bottomlayout = new QHBoxLayout;
+    bottomlayout->addWidget(d->leftFrame);
+    bottomlayout->addWidget(rightFrame);
+    bottomlayout->setContentsMargins(0, 0, 0, 0);
+
+    mainlayout->addWidget(frameBar);
+    mainlayout->addLayout(bottomlayout);
+
     setFixedWidth(680);
 
     connect(d->leftFrame, &Navigation::selectedGroup, d->content, &Content::onScrollToGroup);
@@ -105,7 +109,6 @@ DSettingsDialog::DSettingsDialog(QWidget *parent) :
         d->leftFrame->onSelectGroup(key);
         d->leftFrame->blockSignals(false);
     });
-    connect(closeButton, &DIconButton::clicked, this, &DSettingsDialog::close);
 }
 
 DSettingsDialog::~DSettingsDialog()

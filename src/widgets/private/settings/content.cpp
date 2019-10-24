@@ -31,6 +31,7 @@
 #include <DSettingsGroup>
 #include <DSettingsOption>
 #include <DSuggestButton>
+#include <DFontSizeManager>
 
 #include "dsettingswidgetfactory.h"
 
@@ -69,12 +70,14 @@ Content::Content(QWidget *parent) :
     setContentsMargins(0, 0, 0, 0);
 
     auto layout = new QVBoxLayout(this);
-    layout->setContentsMargins(0, 0, 0, 0);
+    layout->setContentsMargins(10, 10, 10, 0);
     layout->setSpacing(0);
 
     d->contentArea = new QScrollArea;
     d->contentArea->setContentsMargins(0, 0, 0, 0);
     d->contentArea->setWidgetResizable(true);
+    d->contentArea->setVerticalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
+    d->contentArea->setFrameShape(QFrame::NoFrame);
 
     // 设置列表支持触屏滚动
     QScroller::grabGesture(d->contentArea);
@@ -82,7 +85,7 @@ Content::Content(QWidget *parent) :
     d->contentFrame = new QWidget(this);
     d->contentFrame->setObjectName("SettingsContent");
     d->contentLayout = new QVBoxLayout(d->contentFrame);
-    d->contentLayout->setContentsMargins(20, 0, 0, 0);
+    d->contentLayout->setContentsMargins(0, 0, 0, 0);
     d->contentLayout->setSpacing(0);
     layout->addWidget(d->contentArea);
 
@@ -163,7 +166,11 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
         auto title = new ContentTitle;
         title->setTitle(trName);
         title->setProperty("key", groupKey);
-//        d->contentLayout->addSpacing(10);
+
+        auto font = DFontSizeManager::instance()->get(DFontSizeManager::T4);
+        font.setWeight(QFont::DemiBold);
+        title->setFont(font);
+        title->setPalette(QPalette().color(QPalette::HighlightedText));
         d->contentLayout->addWidget(title);
         d->contentLayout->addSpacing(8);
         d->sortTitles.push_back(title);
@@ -175,13 +182,17 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
             }
 
             if (!subgroup->name().isEmpty()) {
-                auto title = new QLabel;
-                title->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
-                title->setObjectName("ContentSubTitleText");
                 auto trName = translateContext.isEmpty() ? QObject::tr(subgroup->name().toStdString().c_str())
                               : qApp->translate(translateContext.constData(), subgroup->name().toStdString().c_str());
-                title->setText(trName);
+                auto title = new ContentTitle;
+
+                title->setTitle(trName);
+                auto font = DFontSizeManager::instance()->get(DFontSizeManager::T5);
+                title->setPalette(QPalette().color(QPalette::HighlightedText));
+                font.setWeight(QFont::Normal);
+                title->setFont(font);
                 title->setProperty("key", subgroup->key());
+                title->setSpacing(10);
 
                 d->contentLayout->addWidget(title);
                 d->contentLayout->addSpacing(10);
@@ -197,8 +208,7 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
                 auto widget = d->widgetFactory->createWidget(translateContext, option);
 
                 if (widget) {
-//                    qDebug() << widget << widget->height();
-                    d->contentLayout->addWidget(widget);
+                    d->contentLayout->addWidget(widget, 0, Qt::AlignCenter);
                     widget->setParent(d->contentFrame);
                 }
             }

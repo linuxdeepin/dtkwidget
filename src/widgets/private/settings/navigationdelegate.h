@@ -19,6 +19,9 @@
 
 #include <QScopedPointer>
 #include <QStyledItemDelegate>
+#include <DStyle>
+
+DWIDGET_BEGIN_NAMESPACE
 
 class NavigationDelegatePrivate;
 class NavigationDelegate: public QStyledItemDelegate
@@ -62,4 +65,4 @@ private:
     Q_DECLARE_PRIVATE_D(qGetPtrHelper(d_ptr), NavigationDelegate)
 };
 
-
+DWIDGET_END_NAMESPACE
