@@ -88,7 +88,7 @@ void DMainWindowPrivate::init()
         q->connect(handle, &DPlatformWindowHandle::enableBlurWindowChanged, q, &DMainWindow::enableBlurWindowChanged);
         q->connect(handle, &DPlatformWindowHandle::autoInputMaskByClipPathChanged, q, &DMainWindow::autoInputMaskByClipPathChanged);
 
-        if (!handle->isEnableNoTitlebar(q->windowHandle())) {
+        if (!handle->isEnabledNoTitlebar(q->windowHandle())) {
             q->connect(qApp, &QGuiApplication::focusWindowChanged, q, [q] {
                 if (q->isActiveWindow())
                 {
