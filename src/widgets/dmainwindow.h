@@ -47,6 +47,7 @@ class LIBDTKWIDGETSHARED_EXPORT DMainWindow : public QMainWindow, public DTK_COR
     Q_PROPERTY(bool enableSystemMove READ enableSystemMove WRITE setEnableSystemMove NOTIFY enableSystemMoveChanged)
     Q_PROPERTY(bool enableBlurWindow READ enableBlurWindow WRITE setEnableBlurWindow NOTIFY enableBlurWindowChanged)
     Q_PROPERTY(bool autoInputMaskByClipPath READ autoInputMaskByClipPath WRITE setAutoInputMaskByClipPath NOTIFY autoInputMaskByClipPathChanged)
+    Q_PROPERTY(bool titlebarShadowEnabled READ titlebarShadowIsEnabled WRITE setTitlebarShadowEnabled)
 
 public:
     explicit DMainWindow(QWidget *parent = 0);
@@ -73,6 +74,8 @@ public:
     bool enableSystemMove() const;
     bool enableBlurWindow() const;
     bool autoInputMaskByClipPath() const;
+
+    bool titlebarShadowIsEnabled() const;
 
 public Q_SLOTS:
     void setWindowRadius(int windowRadius);
@@ -101,6 +104,8 @@ public Q_SLOTS:
     void sendMessage(const QIcon &icon, const QString &message);
     void sendMessage(DFloatingMessage *message);
 
+    void setTitlebarShadowEnabled(bool titlebarShadowEnabled);
+
 Q_SIGNALS:
     void windowRadiusChanged();
     void borderWidthChanged();
@@ -119,6 +124,7 @@ Q_SIGNALS:
 
 protected:
     DMainWindow(DMainWindowPrivate &dd, QWidget *parent = 0);
+    void resizeEvent(QResizeEvent *event) override;
 
 private:
     D_DECLARE_PRIVATE(DMainWindow)

@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/icons/deepin/builtin">
+        <file>dark/texts/titlebar_shadow_20px.svg</file>
+        <file>light/texts/titlebar_shadow_20px.svg</file>
+    </qresource>
+</RCC>

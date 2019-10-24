@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="4" height="20" viewBox="0 0 4 20">
+  <defs>
+    <linearGradient id="shadow_dark-a" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-opacity=".1"/>
+      <stop offset="100%" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="4" height="20" fill="url(#shadow_dark-a)" fill-rule="evenodd"/>
+</svg>

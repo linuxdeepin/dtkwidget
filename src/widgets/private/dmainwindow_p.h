@@ -18,9 +18,11 @@
 #ifndef DMAINWINDOW_P_H
 #define DMAINWINDOW_P_H
 
-#include <DObjectPrivate>
 #include "dtkwidget_global.h"
 #include "dmainwindow.h"
+#include "dshadowline.h"
+
+#include <DObjectPrivate>
 
 class QShortcut;
 
@@ -34,9 +36,11 @@ public:
     DMainWindowPrivate(DMainWindow *qq);
 
     void init();
+    void updateTitleShadowGeometry();
 
     DPlatformWindowHandle   *handle     = Q_NULLPTR;
     DTitlebar               *titlebar   = Q_NULLPTR;
+    DShadowLine             *titleShadow = nullptr;
     QShortcut               *help       = Q_NULLPTR;
 
 private:

@@ -62,6 +62,9 @@ void DMainWindowPrivate::init()
 {
     D_Q(DMainWindow);
 
+    // 默认开启标题栏阴影
+    q->setTitlebarShadowEnabled(true);
+
     const DApplication *dapp = qobject_cast<DApplication *>(qApp);
     if (dapp) {
         q->setWindowTitle(dapp->productName());
@@ -111,6 +114,18 @@ void DMainWindowPrivate::init()
     }
 
 
+}
+
+void DMainWindowPrivate::updateTitleShadowGeometry()
+{
+    D_QC(DMainWindow);
+
+    if (!titleShadow)
+        return;
+
+    QRect rect(0, titlebar->rect().bottom() + 1, q->width(), titleShadow->sizeHint().height());
+    titleShadow->setGeometry(rect);
+    titleShadow->raise();
 }
 
 /*!
@@ -389,6 +404,13 @@ bool DMainWindow::autoInputMaskByClipPath() const
     return d->handle->autoInputMaskByClipPath();
 }
 
+bool DMainWindow::titlebarShadowIsEnabled() const
+{
+    D_DC(DMainWindow);
+
+    return d->titleShadow;
+}
+
 void DMainWindow::setWindowRadius(int windowRadius)
 {
     D_D(DMainWindow);
@@ -542,6 +564,23 @@ void DMainWindow::sendMessage(DFloatingMessage *message)
     DMessageManager::instance()->sendMessage(this, message);
 }
 
+void DMainWindow::setTitlebarShadowEnabled(bool titlebarShadowEnabled)
+{
+    D_D(DMainWindow);
+
+    if (static_cast<bool>(d->titleShadow) == titlebarShadowEnabled)
+        return;
+
+    if (titlebarShadowEnabled) {
+        d->titleShadow = new DShadowLine(this);
+        d->titleShadow->setAttribute(Qt::WA_AlwaysStackOnTop);
+        d->updateTitleShadowGeometry();
+    } else {
+        d->titleShadow->deleteLater();
+        d->titleShadow = nullptr;
+    }
+}
+
 #ifdef Q_OS_MAC
 void DMainWindow::setWindowFlags(Qt::WindowFlags type)
 {
@@ -555,6 +594,16 @@ DMainWindow::DMainWindow(DMainWindowPrivate &dd, QWidget *parent)
     , DObject(dd)
 {
     d_func()->init();
+}
+
+void DMainWindow::resizeEvent(QResizeEvent *event)
+{
+    Q_UNUSED(event)
+    D_D(DMainWindow);
+
+    d->updateTitleShadowGeometry();
+
+    return QMainWindow::resizeEvent(event);
 }
 
 DWIDGET_END_NAMESPACE

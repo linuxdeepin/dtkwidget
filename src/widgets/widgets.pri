@@ -110,7 +110,8 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/ddialogclosebutton.h \
     $$PWD/dtiplabel.h \
     $$PWD/dtooltip.h \
-    $$PWD/dframe.h
+    $$PWD/dframe.h \
+    $$PWD/dshadowline.h
 
 SOURCES += $$PWD/dslider.cpp \
     $$PWD/dbackgroundgroup.cpp \
@@ -180,10 +181,12 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/ddialogclosebutton.cpp \
     $$PWD/dtiplabel.cpp \
     $$PWD/dtooltip.cpp \
-    $$PWD/dframe.cpp
+    $$PWD/dframe.cpp \
+    $$PWD/dshadowline.cpp
 
 RESOURCES += \
-    $$PWD/icons.qrc
+    $$PWD/icons.qrc \
+    $$PWD/icons/dtk-icon-theme.qrc
 
 INCLUDEPATH += $$PWD
 
@@ -329,4 +332,5 @@ includes.files += \
     $$PWD/DWarningButton \
     $$PWD/DDialogCloseButton \
     $$PWD/DPasswordEdit \
-    $$PWD/DTipLabel
+    $$PWD/DTipLabel \
+    $$PWD/DShadowLine
