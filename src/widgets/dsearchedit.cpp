@@ -244,6 +244,8 @@ void DSearchEditPrivate::init()
 
     action = new QAction(q);
     action->setIcon(DStyleHelper(q->style()).standardIcon(DStyle::SP_IndicatorSearch, nullptr));
+    q->lineEdit()->addAction(action, QLineEdit::LeadingPosition);
+    action->setVisible(false);
     iconbtn->setIconSize(QSize(20, 20));
 
     DPalette pe;
@@ -289,10 +291,10 @@ void DSearchEditPrivate::_q_toEditMode(bool focus)
     D_Q(DSearchEdit);
 
     if (focus || !q->lineEdit()->text().isEmpty()) {
-        q->lineEdit()->addAction(action, QLineEdit::LeadingPosition);
+        action->setVisible(true);
         iconWidget->setVisible(false);
     } else {
-        q->lineEdit()->removeAction(action);
+        action->setVisible(false);
         iconWidget->setVisible(true);
     }
 }
