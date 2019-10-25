@@ -28,11 +28,19 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DFrame : public QFrame
+class DFramePrivate;
+class DFrame : public QFrame, public DCORE_NAMESPACE::DObject
 {
     Q_OBJECT
+    D_DECLARE_PRIVATE(DFrame)
+
 public:
-    using QFrame::QFrame;
+    explicit DFrame(QWidget *parent = nullptr);
+
+    void setFrameRounded(bool on);
+
+protected:
+    void paintEvent(QPaintEvent *event) override;
 };
 
 class DHorizontalLine : public QFrame

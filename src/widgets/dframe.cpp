@@ -19,7 +19,61 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "dframe.h"
+#include "dapplicationhelper.h"
+
+#include <DObjectPrivate>
+
+#include <QPainter>
+#include <QStyle>
+#include <QStyleOptionFrame>
 
 DWIDGET_BEGIN_NAMESPACE
+
+class DFramePrivate : public DCORE_NAMESPACE::DObjectPrivate
+{
+public:
+    DFramePrivate(DFrame *qq)
+        : DObjectPrivate(qq)
+    {
+
+    }
+
+    bool frameRounded = true;
+};
+
+DFrame::DFrame(QWidget *parent)
+    : QFrame(parent)
+    , DObject(*new DFramePrivate(this))
+{
+    setBackgroundRole(QPalette::Base);
+    setFrameShape(QFrame::StyledPanel);
+}
+
+void DFrame::setFrameRounded(bool on)
+{
+    D_D(DFrame);
+
+    if (d->frameRounded == on)
+        return;
+
+    d->frameRounded = on;
+    update();
+}
+
+void DFrame::paintEvent(QPaintEvent *event)
+{
+    Q_UNUSED(event)
+    QStyleOptionFrame opt;
+    initStyleOption(&opt);
+    QPainter p(this);
+    D_DC(DFrame);
+
+    if (d->frameRounded) {
+        opt.features |= QStyleOptionFrame::Rounded;
+    }
+
+    p.setPen(QPen(DApplicationHelper::instance()->palette(this).frameBorder(), opt.lineWidth));
+    style()->drawControl(QStyle::CE_ShapedFrame, &opt, &p, this);
+}
 
 DWIDGET_END_NAMESPACE
