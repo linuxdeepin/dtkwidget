@@ -16,17 +16,14 @@
  */
 
 #include "mainwindow.h"
-#include "dapplication.h"
-#include "dplatformwindowhandle.h"
+
+#include <DTitlebar>
+#include <DApplication>
+#include <DApplicationSettings>
+#include <DWidgetUtil>
+#include <DLog>
 
 #include <QDebug>
-#include <DLog>
-#include <DTitlebar>
-#include <DApplicationSettings>
-#include <DListView>
-#include <DStandardItem>
-
-#include "util/dwidgetutil.h"
 
 DWIDGET_USE_NAMESPACE
 
@@ -56,23 +53,7 @@ int main(int argc, char *argv[])
     DApplicationSettings as;
     Q_UNUSED(as)
 
-    DMainWindow w;
-    DListView view;
-    QStandardItemModel *model = new QStandardItemModel(&view);
-    DStandardItem *item = new DStandardItem();
-
-    item->setText("test");
-    item->setIcon(QIcon::fromTheme("deepin-clone"));
-    auto action1 = new DViewItemAction();
-    action1->setText("action1");
-    auto action2 = new DViewItemAction();
-    action2->setIcon(QIcon::fromTheme("dde-file-manager"));
-    action2->setText("action2");
-    item->setActionList(Qt::RightEdge, {action1, action2});
-    model->appendRow(item);
-    view.setModel(model);
-
-    w.setCentralWidget(&view);
+    MainWindow w;
     w.show();
     Dtk::Widget::moveToCenter(&w);
 
