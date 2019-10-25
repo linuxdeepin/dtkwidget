@@ -643,8 +643,13 @@ void drawIndicatorChecked(QPainter *pa, const QRectF &rect)
 {
     QRectF mark(0, 0, rect.width() / 2, rect.height() / 2);
     mark.moveCenter(rect.center());
+    QStyleOption opt;
+    QColor brush = opt.palette.color(DPalette::Highlight);
+    pa->setPen(Qt::NoPen);
+    pa->setBrush(brush);
 
-    drawMark(pa, mark, pa->pen().color(), pa->pen().color(), 1, 0);
+    pa->drawEllipse(rect);
+    drawMark(pa, mark, opt.palette.color(DPalette::Window), opt.palette.color(DPalette::Window), 2, 0);
 }
 
 void drawArrowElement(Qt::ArrowType arrow, QPainter *pa, const QRectF &rect)
