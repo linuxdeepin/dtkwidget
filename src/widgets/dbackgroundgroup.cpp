@@ -74,22 +74,10 @@ DBackgroundGroup::DBackgroundGroup(QLayout *layout, QWidget *parent)
     : QWidget(parent)
     , DObject(*new DBackgroundGroupPrivate(this))
 {
-    setLayout(layout);
     // 默认使用窗口背景作为item背景
     setBackgroundRole(QPalette::Base);
     setAutoFillBackground(false);
-
-    if (QBoxLayout* boxLayout = qobject_cast<QBoxLayout*>(layout)) {
-        if (boxLayout->direction() == QBoxLayout::LeftToRight ||
-            boxLayout->direction() == QBoxLayout::RightToLeft) {
-            d_func()->direction = Qt::Horizontal;
-        } else {
-            d_func()->direction = Qt::Vertical;
-        }
-    }
-
-    // 从布局中同步margins数据
-    setItemMargins(layout->contentsMargins());
+    setLayout(layout);
 }
 
 QMargins DBackgroundGroup::itemMargins() const
@@ -104,6 +92,26 @@ bool DBackgroundGroup::useWidgetBackground() const
     D_DC(DBackgroundGroup);
 
     return d->useWidgetBackground;
+}
+
+void DBackgroundGroup::setLayout(QLayout *layout)
+{
+    QWidget::setLayout(layout);
+
+    if (!layout)
+        return;
+
+    if (QBoxLayout* boxLayout = qobject_cast<QBoxLayout*>(layout)) {
+        if (boxLayout->direction() == QBoxLayout::LeftToRight ||
+            boxLayout->direction() == QBoxLayout::RightToLeft) {
+            d_func()->direction = Qt::Horizontal;
+        } else {
+            d_func()->direction = Qt::Vertical;
+        }
+    }
+
+    // 从布局中同步margins数据
+    setItemMargins(layout->contentsMargins());
 }
 
 void DBackgroundGroup::setItemMargins(QMargins itemMargins)
