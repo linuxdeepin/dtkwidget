@@ -31,7 +31,6 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-//DFloatingWidgetPrivate 为 DFloatingWidget 的私有数据类
 DFloatingWidgetPrivate::DFloatingWidgetPrivate(DFloatingWidget *qq)
     : DObjectPrivate(qq)
 {
@@ -66,6 +65,10 @@ void DFloatingWidgetPrivate::adjustPalette()
     }
 }
 
+/*!
+ * \~chinese \brief 设置 widget 对象, 若是之前此处已经有对象, 会先清理旧的对象, 再将此处的新对象放到此处
+ * \~chinese \param[in] widget 将 widget 添加到 DFloatingWidget 的布局里面
+ */
 void DFloatingWidget::setWidget(QWidget *widget)
 {
     D_D(DFloatingWidget);
@@ -83,6 +86,11 @@ void DFloatingWidget::setWidget(QWidget *widget)
     d->adjustPalette();
 }
 
+/*!
+ * \~chinese \brief 构造函数
+ * \~chinese \param[in] dd 是 DFloatingWidgetPrivate 的对象引用
+ * \~chinese \param[in] parent 其父对象
+ */
 DFloatingWidget::DFloatingWidget(DFloatingWidgetPrivate &dd, QWidget *parent)
     : QWidget(parent)
     , DObject(dd)
@@ -92,6 +100,10 @@ DFloatingWidget::DFloatingWidget(DFloatingWidgetPrivate &dd, QWidget *parent)
     setAutoFillBackground(false);
 }
 
+/*!
+ * \~chinese \brief 构造函数
+ * \~chinese \param[in] parent 是本类的父控件
+ */
 DFloatingWidget::DFloatingWidget(QWidget *parent)
     : DFloatingWidget(*new DFloatingWidgetPrivate(this), parent)
 {
@@ -119,6 +131,11 @@ void DFloatingWidget::paintEvent(QPaintEvent *e)
     painter.drawControl(DStyle::CE_FloatingWidget, opt);
 }
 
+/*!
+ * \~chinese \brief 主事件处理程序, 用来处理感兴趣的事件
+ * \~chinese \param[in] event`父控件或者外设传入进来的 event 事件消息
+ * \~chinese \return 事件消息是否被处理的结果
+ */
 bool DFloatingWidget::event(QEvent *event)
 {
     D_D(DFloatingWidget);
@@ -144,6 +161,10 @@ bool DFloatingWidget::event(QEvent *event)
     return QWidget::event(event);
 }
 
+/*!
+ * \~chinese \brief 初始化风格属性
+ * \~chinese \param[in] option 自带一些风格属性传入, 其上面增加和删除一些其他属性
+ */
 void DFloatingWidget::initStyleOption(DStyleOptionFloatingWidget *option) const
 {
     option->init(this);
@@ -151,6 +172,10 @@ void DFloatingWidget::initStyleOption(DStyleOptionFloatingWidget *option) const
     option->noBackground = blurBackgroundIsEnabled();
 }
 
+/*!
+ * \~chinese \brief 获取背景模糊状态
+ * \~chinese \return 返回背景模糊状态
+ */
 bool DFloatingWidget::blurBackgroundIsEnabled() const
 {
     D_DC(DFloatingWidget);
@@ -158,6 +183,10 @@ bool DFloatingWidget::blurBackgroundIsEnabled() const
     return d->background;
 }
 
+/*!
+ * \~chinese \brief 获取模糊背景功能的对象
+ * \~chinese \return 返回模糊背景功能的对象
+ */
 DBlurEffectWidget *DFloatingWidget::blurBackground() const
 {
     D_DC(DFloatingWidget);
@@ -165,6 +194,10 @@ DBlurEffectWidget *DFloatingWidget::blurBackground() const
     return d->background;
 }
 
+/*!
+ * \~chinese \brief 设置模糊背景启动
+ * \~chinese \param[in] blurBackgroundEnabled 是否启动模糊背景效果
+ */
 void DFloatingWidget::setBlurBackgroundEnabled(bool blurBackgroundEnabled)
 {
     D_D(DFloatingWidget);
