@@ -32,33 +32,16 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
- * \~english \class DLineEdit
- * \~english \brief The DLineEdit class provides a styled QLineEdit.
- *
- * \~english DLineEdit has an optional action button (DImageButton) at the right side which can be used
- * \~english to provide extra user interaction, for example: to change the echo mode of
- * the line edit.
- *
- * \~english Also, DLineEdit can be set on or off alert mode, warning the user of some
- * errors.
- */
-
-/*!
- * \~english \brief DLineEdit::DLineEdit constructs an instance of DLineEdit.
- * \~english \param parent is passed to QLineEdit constructor.
- */
-
-/*!
  * \~chinese \class DLineEdit
- * \~chinese \brief DLineEdit提供了一个修改过的QLineEdit样式
- *
- * \~chinese DLineEdit右侧提供了可选的动作按钮，可以使用额外的用户交互，例如: 改变密码显示
+ * \~chinese \brief DLineEdit一个聚合 QLineEdit 的输入框
+ * \~chinese \li DLineEdit提供了向输入框左右两端插入控件的函数
+ * \~chinese \li DLineEdit提供了带警告颜色的输入框
+ * \~chinese \li DLineEdit提供了带文本警告消息的输入框
  */
 
 /*!
  * \~chinese \brief DLineEdit的构造函数
- *
- * \~chinese \param parent 调用QLineEdit的构造函数
+ * \~chinese \param parent参数被发送到 QWidget 构造函数。
  */
 DLineEdit::DLineEdit(QWidget *parent)
     : QWidget(parent)
@@ -73,6 +56,11 @@ DLineEdit::~DLineEdit()
 
 }
 
+/*!
+ * \~chinese \brief DLineEdit::lineEdit返回 QLineEdit 对象
+ * \~chinese \row 若 DLineEdit 不满足输入框的使用需求，请用此函数抛出的对象
+ * \~chinese \return
+ */
 QLineEdit *DLineEdit::lineEdit() const
 {
     D_DC(DLineEdit);
@@ -87,9 +75,9 @@ DLineEdit::DLineEdit(DLineEditPrivate &q, QWidget *parent)
 }
 
 /*!
- * \~chinese \brief 设置是否显示警告
- *
- * \~chinese @param isAlert 是否显示警告
+ * \~chinese \brief DLineEdit::setAlert设置是否开启警告模式
+ * \~chinese \row 警告模式，开启警告模式，输入框内将显示警告颜色
+ * \~chinese \param isAlert是否开启警告模式
  */
 void DLineEdit::setAlert(bool isAlert)
 {
@@ -115,26 +103,7 @@ void DLineEdit::setAlert(bool isAlert)
 }
 
 /*!
- * \~english\property DLineEdit::alert
- * \~english \brief This property shows whether the line edit is in alert mode or not.
- *
- * There'll be a extra frame colored in orage like color showing if the alert
- * mode is on, to remind the user that the input is wrong.
- */
-
-/*!
- * \~chinese \property DLineEdit::alert
- * \~chinese \brief 该属性会返回当前是否处于警告模式
- *
- * 将会有一个警告的颜色在额外的边框上显示，如果警告模式开启，将会提示用户输入错误
- */
-
-/*!
- * \~chinese \brief 返回当前是否处于警告模式
- *
- * 将会有一个警告的颜色在额外的边框上显示，如果警告模式开启，将会提示用户输入错误
- * @return true
- * @return false
+ * \~chinese \brief DLineEdit::alert返回当前是否处于警告模式
  */
 bool DLineEdit::isAlert() const
 {
@@ -144,10 +113,11 @@ bool DLineEdit::isAlert() const
 }
 
 /*!
- * \~chinese \brief 设置的文本会在警告模式下显示
- *
- * @param text 警告的文本
- * @param duration 显示的时间长度
+ * \~chinese \brief DLineEdit::showAlertMessage显示警告消息
+ * \~chinese \row 显示指定的文本消息，超过指定时间后警告消息消失.
+ * \~chinese \row \note 时间参数为-1时，警告消息将一直存在
+ * \~chinese \param text警告的文本
+ * \~chinese \param duration显示的时间长度，单位毫秒
  */
 void DLineEdit::showAlertMessage(const QString &text, int duration)
 {
@@ -166,9 +136,9 @@ void DLineEdit::showAlertMessage(const QString &text, int duration)
 }
 
 /*!
- * \~chinese \brief 隐藏警告的消息框
- *
+ * \~chinese \brief DLineEdit:: hideAlertMessage隐藏警告消息框
  */
+
 void DLineEdit:: hideAlertMessage()
 {
     Q_D(DLineEdit);
@@ -177,6 +147,13 @@ void DLineEdit:: hideAlertMessage()
         d->tooltip->hide();
     }
 }
+
+/*!
+ * \~chinese \brief DLineEdit::setLeftWidgets向输入框左侧添加控件
+ * \~chinese \row 将 QList 里的控件插入到输入框的左侧
+ * \~chinese \row \note 多次调用，只有最后一次调用生效
+ * \~chinese \param list存储控件的列表
+ */
 
 void DLineEdit::setLeftWidgets(const QList<QWidget *> &list)
 {
@@ -191,7 +168,6 @@ void DLineEdit::setLeftWidgets(const QList<QWidget *> &list)
     if (list.isEmpty())
         return;
 
-
     d->leftWidget = new QWidget;
     QHBoxLayout *layout = new QHBoxLayout(d->leftWidget);
     layout->setContentsMargins(0, 0, 0, 0);
@@ -205,6 +181,13 @@ void DLineEdit::setLeftWidgets(const QList<QWidget *> &list)
 
     d->leftWidget->adjustSize();
 }
+
+/*!
+ * \~chinese \brief DLineEdit::setRightWidgets向输入框右侧添加控件
+ * \~chinese \row 将 QList 里的控件插入到输入框的右侧
+ * \~chinese \row \note 多次调用，只有最后一次调用生效
+ * \~chinese \param list存储控件的列表
+ */
 
 void DLineEdit::setRightWidgets(const QList<QWidget *> &list)
 {
@@ -232,60 +215,99 @@ void DLineEdit::setRightWidgets(const QList<QWidget *> &list)
     d->rightWidget->adjustSize();
 }
 
+/*!
+ * \~chinese \brief DLineEdit::setLeftWidgetsVisible是否隐藏输入框左侧控件
+ * \~chinese \param visible是否隐藏
+ */
 void DLineEdit::setLeftWidgetsVisible(bool visible)
 {
     Q_D(DLineEdit);
     d->leftWidget->setVisible(visible);
 }
-
+/**
+ * \~chinese \brief DLineEdit::setRightWidgetsVisible是否隐藏输入框右侧控件
+ * \~chinese \param visible是否隐藏
+ */
 void DLineEdit::setRightWidgetsVisible(bool visible)
 {
     Q_D(DLineEdit);
     d->rightWidget->setVisible(visible);
 }
 
+/*!
+ * \~chinese \brief DLineEdit::setClearButtonEnabled
+ * \~chinese \sa QLineEdit::setClearButtonEnabled()
+ */
 void DLineEdit::setClearButtonEnabled(bool enable)
 {
     Q_D(DLineEdit);
     d->lineEdit->setClearButtonEnabled(enable);
 }
 
+/*!
+ * \~chinese \brief DLineEdit::isClearButtonEnabled
+ * \~shinese \sa QLineEdit::isClearButtonEnabled()
+ */
 bool DLineEdit::isClearButtonEnabled() const
 {
     D_DC(DLineEdit);
     return  d->lineEdit->isClearButtonEnabled();
 }
 
+/*!
+ * \~chinese \brief DLineEdit::setText
+ * \~chinese \sa QLineEdit::setText()
+ */
 void DLineEdit::setText(const QString &text)
 {
     D_D(DLineEdit);
     d->lineEdit->setText(text);
 }
 
+/*!
+ * \~chinese \brief DLineEdit::text
+ * \~chinese \sa QLineEdit::text()
+ */
 QString DLineEdit::text()
 {
     D_DC(DLineEdit);
     return d->lineEdit->text();
 }
 
+/*!
+ * \~chinese \brief DLineEdit::clear
+ * \~chinese \sa QLineEdit::clear();
+ */
 void DLineEdit::clear()
 {
     D_D(DLineEdit);
     return d->lineEdit->clear();
 }
 
+/*!
+ * \~chinese \brief DLineEdit::echoMode
+ * \~chinese \sa QLineEdit::echoMode();
+ */
 QLineEdit::EchoMode DLineEdit::echoMode() const
 {
     D_DC(DLineEdit);
     return d->lineEdit->echoMode();
 }
 
+/*!
+ * \~chinese \brief DLineEdit::setEchoMode
+ * \~chinese \sa QLineEdit::setEchoMode()
+ */
 void DLineEdit::setEchoMode(QLineEdit::EchoMode mode)
 {
     D_D(DLineEdit);
     d->lineEdit->setEchoMode(mode);
 }
 
+/*!
+ * \~chinese \brief DLineEdit::eventFilter
+ * \~chinese \row 该过滤器不做任何过滤动作，但会监控输入框的焦点状态，并发送信号 focusChanged()。
+ */
 bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
 {
     Q_UNUSED(watched)
