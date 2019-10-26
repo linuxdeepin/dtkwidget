@@ -322,6 +322,7 @@ public:
     DStyledItemDelegate::BackgroundType backgroundType;
     QMargins margins;
     QSize itemSize;
+    int itemSpacing = 0;
     QMap<QModelIndex, QList<QPair<QAction*, QRect>>> clickableActionMap;
     QAction *pressedAction = nullptr;
 };
@@ -471,12 +472,10 @@ void DStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
             boption.dpalette.setBrush(DPalette::ItemBackground, opt.backgroundBrush);
         }
 
-        if (d->backgroundType == RoundedBackground) {
-            int frame_margins = style->pixelMetric(static_cast<QStyle::PixelMetric>(DStyle::PM_FrameMargins));
-            boption.rect = option.rect.adjusted(frame_margins, frame_margins, -frame_margins, -frame_margins);
-        } else {
+        boption.rect = opt.rect;
+
+        if (d->backgroundType != RoundedBackground) {
             boption.directions = Qt::Vertical;
-            boption.rect = option.rect;
         }
 
         style->drawPrimitive(static_cast<QStyle::PrimitiveElement>(DStyle::PE_ItemBackground), &boption, painter, widget);
@@ -687,6 +686,11 @@ QSize DStyledItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QM
         margins = qvariant_cast<QMargins>(margins_varinat);
     }
 
+    if (option.viewItemPosition != QStyleOptionViewItem::Bottom) {
+        // 在item高度上添加额外空间来模拟spacing
+        size.rheight() += d->itemSpacing;
+    }
+
     return QRect(QPoint(0, 0), size).marginsAdded(margins).size();
 }
 
@@ -711,9 +715,19 @@ QSize DStyledItemDelegate::itemSize() const
     return d->itemSize;
 }
 
+int DStyledItemDelegate::spacing() const
+{
+    D_DC(DStyledItemDelegate);
+
+    return d->itemSpacing;
+}
+
 void DStyledItemDelegate::setBackgroundType(DStyledItemDelegate::BackgroundType backgroundType)
 {
     D_D(DStyledItemDelegate);
+
+    if (d->backgroundType == backgroundType)
+        return;
 
     d->backgroundType = backgroundType;
 
@@ -725,6 +739,7 @@ void DStyledItemDelegate::setBackgroundType(DStyledItemDelegate::BackgroundType 
         }
 
         int frame_margin = style->pixelMetric(static_cast<QStyle::PixelMetric>(DStyle::PM_FrameRadius));
+        d->margins = QMargins();
 
         if (d->backgroundType == RoundedBackground) {
             d->margins += frame_margin;
@@ -749,6 +764,13 @@ void DStyledItemDelegate::setItemSize(QSize itemSize)
     d->itemSize = itemSize;
 }
 
+void DStyledItemDelegate::setItemSpacing(int spacing)
+{
+    D_D(DStyledItemDelegate);
+
+    d->itemSpacing = spacing;
+}
+
 void DStyledItemDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
 {
     QStyledItemDelegate::initStyleOption(option, index);
@@ -765,6 +787,9 @@ void DStyledItemDelegate::initStyleOption(QStyleOptionViewItem *option, const QM
             }
         }
     }
+
+    D_DC(DStyledItemDelegate);
+    option->rect.adjust(0, 0, 0, -d->itemSpacing);
 }
 
 bool DStyledItemDelegate::eventFilter(QObject *object, QEvent *event)

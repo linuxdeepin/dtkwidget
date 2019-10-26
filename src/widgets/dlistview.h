@@ -103,6 +103,7 @@ public Q_SLOTS:
     void setBackgroundType(DStyledItemDelegate::BackgroundType backgroundType);
     void setItemMargins(const QMargins &itemMargins);
     void setItemSize(QSize itemSize);
+    void setItemSpacing(int spacing);
 
 Q_SIGNALS:
     void rowCountChanged();

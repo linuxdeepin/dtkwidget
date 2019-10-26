@@ -116,6 +116,9 @@ void DListViewPrivate::init()
     q->viewport()->setAutoFillBackground(false);
     q->setAutoFillBackground(false);
     q->setBackgroundRole(q->viewport()->backgroundRole());
+
+    // 默认背景类型为圆角背景
+    q->setBackgroundType(DStyledItemDelegate::RoundedBackground);
 }
 
 void DListViewPrivate::onOrientationChanged()
@@ -678,6 +681,14 @@ void DListView::setBackgroundType(DStyledItemDelegate::BackgroundType background
 {
     if (DStyledItemDelegate *d = qobject_cast<DStyledItemDelegate *>(itemDelegate())) {
         d->setBackgroundType(backgroundType);
+
+        if (backgroundType == DStyledItemDelegate::RoundedBackground) {
+            d->setItemSpacing(10);
+        } else if (backgroundType == DStyledItemDelegate::ClipCornerBackground) {
+            d->setItemSpacing(1);
+        } else {
+            d->setItemSpacing(0);
+        }
     }
 }
 
@@ -692,6 +703,13 @@ void DListView::setItemSize(QSize itemSize)
 {
     if (DStyledItemDelegate *d = qobject_cast<DStyledItemDelegate *>(itemDelegate())) {
         return d->setItemSize(itemSize);
+    }
+}
+
+void DListView::setItemSpacing(int spacing)
+{
+    if (DStyledItemDelegate *d = qobject_cast<DStyledItemDelegate *>(itemDelegate())) {
+        return d->setItemSpacing(spacing);
     }
 }
 

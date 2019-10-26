@@ -89,11 +89,13 @@ public:
     BackgroundType backgroundType() const;
     QMargins margins() const;
     QSize itemSize() const;
+    int spacing() const;
 
 public Q_SLOTS:
     void setBackgroundType(BackgroundType backgroundType);
     void setMargins(const QMargins margins);
     void setItemSize(QSize itemSize);
+    void setItemSpacing(int spacing);
 
 protected:
     void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
