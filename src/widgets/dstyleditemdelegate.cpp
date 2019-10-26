@@ -455,6 +455,7 @@ void DStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
 
     QStyleOptionViewItem opt(option);
     initStyleOption(&opt, index);
+    QRect backup_opt_rect = opt.rect;
 
     const QWidget *widget = option.widget;
     QStyle *style = widget ? widget->style() : QApplication::style();
@@ -603,7 +604,7 @@ void DStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
     }
 
     // reset rect for focus rect
-    opt.rect = option.rect;
+    opt.rect = backup_opt_rect;
 
     if (opt.state & QStyle::State_HasFocus) {
         QStyleOptionFocusRect o;
@@ -686,10 +687,8 @@ QSize DStyledItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QM
         margins = qvariant_cast<QMargins>(margins_varinat);
     }
 
-    if (option.viewItemPosition != QStyleOptionViewItem::Bottom) {
-        // 在item高度上添加额外空间来模拟spacing
-        size.rheight() += d->itemSpacing;
-    }
+    // 在item高度上添加额外空间来模拟spacing
+    size.rheight() += d->itemSpacing;
 
     return QRect(QPoint(0, 0), size).marginsAdded(margins).size();
 }
@@ -730,6 +729,7 @@ void DStyledItemDelegate::setBackgroundType(DStyledItemDelegate::BackgroundType 
         return;
 
     d->backgroundType = backgroundType;
+    d->margins = QMargins();
 
     if (d->backgroundType != NoBackground) {
         QStyle *style = qApp->style();
@@ -739,14 +739,7 @@ void DStyledItemDelegate::setBackgroundType(DStyledItemDelegate::BackgroundType 
         }
 
         int frame_margin = style->pixelMetric(static_cast<QStyle::PixelMetric>(DStyle::PM_FrameRadius));
-        d->margins = QMargins();
-
-        if (d->backgroundType == RoundedBackground) {
-            d->margins += frame_margin;
-        } else {
-            d->margins.setLeft(frame_margin);
-            d->margins.setRight(frame_margin);
-        }
+        d->margins += frame_margin;
     }
 }
 
