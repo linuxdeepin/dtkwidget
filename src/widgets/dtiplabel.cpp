@@ -28,6 +28,19 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+
+/*!
+ * \~chinese \class DTipLabel
+ * \~chinese \brief DTipLabel一个重新实现的 QLabel
+ * \~chinese \li DTipLabel提供了将 DTipLabel 显示在指定位置的函数
+ * \~chinese \li DTipLabel提供了改变字体颜色的函数
+ */
+
+/*!
+ * \~chinese \brief DTipLabel的构造函数
+ * \~chinese \param text文本信息
+ * \~chinese \param parent参数被发送到 QLabel 构造函数。
+ */
 DTipLabel::DTipLabel(const QString &text, QWidget *parent)
     : QLabel(text, parent, Qt::ToolTip | Qt::BypassGraphicsProxyWidget)
     , DObject(*new DTipLabelPrivate(this))
@@ -41,6 +54,10 @@ DTipLabel::~DTipLabel()
 
 }
 
+/*!
+ * \brief DTipLabel::show显示在指定的位置上
+ * \param pos 显示位置
+ */
 void DTipLabel::show(const QPoint &pos)
 {
     move(pos);
@@ -48,6 +65,10 @@ void DTipLabel::show(const QPoint &pos)
     QLabel::show();
 }
 
+/*!
+ * \brief DTipLabel::setForegroundRole显示的字体颜色
+ * \param color字体颜色
+ */
 void DTipLabel::setForegroundRole(DPalette::ColorType color)
 {
     D_D(DTipLabel);
