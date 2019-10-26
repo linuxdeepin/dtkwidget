@@ -54,6 +54,18 @@ private:
     QStringList scaleInfo;
 };
 
+/*!
+ * \~chinese \class DSlider
+ * \~chinese \brief DSlider一个聚合 QSlider 的滑块
+ * \~chinese \row \li DSlider提供了在滑块两侧设置图标函数
+ * \~chinese \row \li DSlider提供了滑块的刻度及刻度标识
+ */
+
+/*!
+ * \~chinese \brief DSlider的构造函数
+ * \~chinese \param \sa orientation Qt::Orientation
+ * \~chinese \param parent参数被发送到 QWidget 构造函数。
+ */
 DSlider::DSlider(Qt::Orientation orientation, QWidget *parent)
     : QWidget(parent)
     , DObject(*new DSliderPrivate(this))
@@ -70,6 +82,10 @@ DSlider::DSlider(DSliderPrivate &q, QWidget *parent)
 
 }
 
+/*!
+ * \~chinese \brief DSlider::eventFilter
+ * \~chinese \row 此函数处理了鼠标滚轮事件
+ */
 bool DSlider::eventFilter(QObject *watched, QEvent *e)
 {
     Q_D(DSlider);
@@ -80,18 +96,30 @@ bool DSlider::eventFilter(QObject *watched, QEvent *e)
     return QWidget::eventFilter(watched, e);
 }
 
+/*!
+ * \~chinese \brief DSlider::orientation
+ * \~chinese \sa QSlider::orientation()
+ */
 Qt::Orientation DSlider::orientation() const
 {
     D_DC(DSlider);
     return d->slider->orientation();
 }
-
+/*!
+ * \~chinese \brief DSlider::slider返回 QSlider 对象
+ * \~chinese \row 若 DSlider 不满足输入框的使用需求，请用此函数抛出的对象
+ * \~chinese \return
+ */
 QSlider *DSlider::slider()
 {
     Q_D(DSlider);
     return d->slider;
 }
 
+/*!
+ * \~chinese \brief DSlider::setLeftIcon设置滑块左侧图标
+ * \~chinese \param left图标
+ */
 void DSlider::setLeftIcon(const QIcon &left)
 {
     D_D(DSlider);
@@ -114,6 +142,10 @@ void DSlider::setLeftIcon(const QIcon &left)
     d->leftIcon->setIcon(left);
 }
 
+/*!
+ * \~chinese \brief DSlider::setRightIcon设置滑块右图标
+ * \~chinese \param right图标
+ */
 void DSlider::setRightIcon(const QIcon &right)
 {
     D_D(DSlider);
@@ -136,6 +168,10 @@ void DSlider::setRightIcon(const QIcon &right)
     d->rightIcon->setIcon(right);
 }
 
+/*!
+ * \~chinese \brief DSlider::setIconSize设置滑块图标大小
+ * \~chinese \param size图标大小
+ */
 void DSlider::setIconSize(const QSize &size)
 {
     D_D(DSlider);
@@ -151,54 +187,93 @@ void DSlider::setIconSize(const QSize &size)
     }
 }
 
+/*!
+ * \~chinese \brief DSlider::setMinimum
+ * \~chinese \sa QSlider::setMinimum()
+ */
 void DSlider::setMinimum(int min)
 {
     D_D(DSlider);
     d->slider->setMinimum(min);
 }
 
+/*!
+ * \~chinese \brief DSlider::minimum
+ * \~chinese \sa QSlider::minimum()
+ */
 int DSlider::minimum() const
 {
     D_DC(DSlider);
     return d->slider->minimum();
 }
 
+/*!
+ * \~chinese \brief DSlider::setValue
+ * \~chinese \sa QSlider::setValue()
+ */
 void DSlider::setValue(int value)
 {
     D_D(DSlider);
     d->slider->setValue(value);
 }
 
+/*!
+ * \~chinese \brief DSlider::value
+ * \~chinese \sa QSlider::value()
+ */
 int DSlider::value() const
 {
     D_DC(DSlider);
     return d->slider->value();
 }
 
+/*!
+ * \~chinese \brief DSlider::setPageStep
+ * \~chinese \sa QSlider::setPageStep()
+ */
 void DSlider::setPageStep(int pageStep)
 {
     D_D(DSlider);
     d->slider->setPageStep(pageStep);
 }
 
+/*!
+ * \~chinese \brief DSlider::pageStep
+ * \~chinese \sa QSlider::pageStep()
+ */
 int DSlider::pageStep() const
 {
     D_DC(DSlider);
     return d->slider->pageStep();
 }
 
+/*!
+ * \~chinese \brief DSlider::setMaximum
+ * \~chinese \sa QSlider::setMaximum()
+ */
 void DSlider::setMaximum(int max)
 {
     D_D(DSlider);
     d->slider->setMaximum(max);
 }
 
+/*!
+ * \~chinese \brief DSlider::maximum
+ * \~chinese \sa QSlider::maximum
+ */
 int DSlider::maximum() const
 {
     D_DC(DSlider);
     return d->slider->maximum();
 }
 
+/*!
+ * \~chinese \brief DSlider::setLeftTicks设置刻度在滑块左侧
+ * \~chinese \row 根据 QStringList 数量，绘制刻度的个数，绘制刻度标识
+ * \~chinese \row \li 滑块为水平,刻度在滑块上方
+ * \~chinese \row \li 滑块为垂直,刻度在滑块左侧
+ * \~chinese \param info刻度标识
+ */
 void DSlider::setLeftTicks(const QStringList &info)
 {
     D_D(DSlider);
@@ -225,6 +300,13 @@ void DSlider::setLeftTicks(const QStringList &info)
     d->left->setScaleInfo(info, QSlider::TicksLeft);
 }
 
+/*!
+ * \~chinese \brief DSlider::setRightTicks设置刻度在滑块右侧
+ * \~chinese \row 根据 QStringList 数量，绘制刻度的个数，绘制刻度标识
+ * \~chinese \row \li 滑块为水平,刻度在滑块下方
+ * \~chinese \row \li 滑块为垂直,刻度在滑块右侧
+ * \~chinese \param info刻度标识
+ */
 void DSlider::setRightTicks(const QStringList &info)
 {
     D_D(DSlider);
@@ -251,22 +333,40 @@ void DSlider::setRightTicks(const QStringList &info)
     d->right->setScaleInfo(info, QSlider::TicksRight);
 }
 
+/*!
+ * \~chinese \brief DSlider::setAboveTicks设置刻度在滑块上方
+ * \~chinese \sa DSlider::setLeftTicks()
+ */
 void DSlider::setAboveTicks(const QStringList &info)
 {
     setLeftTicks(info);
 }
 
+/*!
+ * \~chinese \brief DSlider::setBelowTicks设置刻度在滑块下方
+ * \~chinese \sa DSlider::setRightTicks()
+ */
 void DSlider::setBelowTicks(const QStringList &info)
 {
     setRightTicks(info);
 }
 
+/*!
+ * \~chinese \brief DSlider::setMouseWheelEnabled设置鼠标滚轮是否开启
+ * \~chinese \param enabled是否开启鼠标滚轮
+ */
 void DSlider::setMouseWheelEnabled(bool enabled)
 {
     D_D(DSlider);
     d->mouseWheelEnabled = enabled;
 }
 
+/*!
+ * \~chinese \brief DSlider::tickPosition返回滑块的记号位置
+ * \~chinese \row 获取滑块刻度当前朝向
+ * \~chinese \row \sa QSlider::TickPosition
+ * \~chinese \return
+ */
 QSlider::TickPosition DSlider::tickPosition() const
 {
     D_DC(DSlider);
@@ -335,7 +435,7 @@ QSize SliderStrip::sizeHint() const
     } else {
         int max = 0;
 
-        for (int i = 0;  i < scaleInfo.count(); i++) {
+        for (int i = 0; i < scaleInfo.count(); i++) {
             max = qMax(max, fontMetrics().width(scaleInfo[i]));
         }
         size.setWidth(max + fontSize / 2);
