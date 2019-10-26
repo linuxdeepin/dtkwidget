@@ -62,7 +62,7 @@ win32* {
 DTK_MODULE_NAME=$$TARGET
 load(dtk_build)
 
-include($$PWD/xfyun/xfyun.pri)
+#include($$PWD/xfyun/xfyun.pri)
 
 INSTALLS += includes target
 
