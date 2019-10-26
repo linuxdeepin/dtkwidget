@@ -151,6 +151,10 @@ void DBackgroundGroup::paintEvent(QPaintEvent *event)
     for (auto pair : d->itemStyleOptions) {
         DStyleOptionBackgroundGroup option;
         if (!pair.first) continue;
+
+        if (!pair.first->isVisible())
+            continue;
+
         option.init(pair.first);
         option.rect += d->itemMargins;
         option.directions = d->direction;
@@ -173,9 +177,9 @@ bool DBackgroundGroup::event(QEvent *event)
 
         if (!ce->child()->isWidgetType()) {
             break;
-        } else {
-            Q_FALLTHROUGH();
         }
+        update(); //重绘全部区域
+        Q_FALLTHROUGH();
     }
     case QEvent::LayoutDirectionChange: {
         D_D(DBackgroundGroup);
