@@ -1440,6 +1440,16 @@ void DStyle::drawPrimitive(QStyle::PrimitiveElement pe, const QStyleOption *opt,
     case PE_IndicatorArrowLeft:
         p->setPen(QPen(opt->palette.foreground(), 1));
         return DDrawUtils::drawArrowLeft(p, opt->rect);
+    case PE_IndicatorHeaderArrow:
+        if (const QStyleOptionHeader *header = qstyleoption_cast<const QStyleOptionHeader *>(opt)) {
+            p->setPen(QPen(opt->palette.foreground(), 1));
+            if (header->sortIndicator & QStyleOptionHeader::SortUp) {
+                return DDrawUtils::drawArrowElement(Qt::UpArrow, p, opt->rect);
+            } else if (header->sortIndicator & QStyleOptionHeader::SortDown) {
+                return DDrawUtils::drawArrowElement(Qt::DownArrow, p, opt->rect);
+            }
+        }
+        return;
     default:
         break;
     }
