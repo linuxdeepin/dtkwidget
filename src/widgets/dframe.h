@@ -22,6 +22,7 @@
 #define DFRAME_H
 
 #include <dtkwidget_global.h>
+#include <DPalette>
 #include <DObject>
 
 #include <QFrame>
@@ -38,6 +39,8 @@ public:
     explicit DFrame(QWidget *parent = nullptr);
 
     void setFrameRounded(bool on);
+    void setBackgroundRole(DGUI_NAMESPACE::DPalette::ColorType type);
+    using QFrame::setBackgroundRole;
 
 protected:
     void paintEvent(QPaintEvent *event) override;

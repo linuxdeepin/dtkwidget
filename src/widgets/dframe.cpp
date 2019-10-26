@@ -39,6 +39,7 @@ public:
     }
 
     bool frameRounded = true;
+    DPalette::ColorType backType = DPalette::NoType;
 };
 
 DFrame::DFrame(QWidget *parent)
@@ -60,6 +61,17 @@ void DFrame::setFrameRounded(bool on)
     update();
 }
 
+void DFrame::setBackgroundRole(DPalette::ColorType type)
+{
+    D_D(DFrame);
+
+    if (d->backType == type)
+        return;
+
+    d->backType = type;
+    update();
+}
+
 void DFrame::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event)
@@ -72,7 +84,13 @@ void DFrame::paintEvent(QPaintEvent *event)
         opt.features |= QStyleOptionFrame::Rounded;
     }
 
-    p.setPen(QPen(DApplicationHelper::instance()->palette(this).frameBorder(), opt.lineWidth));
+    const DPalette &dp = DApplicationHelper::instance()->palette(this);
+
+    if (d->backType != DPalette::NoType) {
+        p.setBackground(dp.brush(d->backType));
+    }
+
+    p.setPen(QPen(dp.frameBorder(), opt.lineWidth));
     style()->drawControl(QStyle::CE_ShapedFrame, &opt, &p, this);
 }
 
