@@ -28,6 +28,7 @@
 #include <QTextLayout>
 #include <DStyle>
 #include <QPainter>
+#include <QListView>
 
 Q_DECLARE_METATYPE(QMargins)
 
@@ -688,7 +689,14 @@ QSize DStyledItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QM
     }
 
     // 在item高度上添加额外空间来模拟spacing
-    size.rheight() += d->itemSpacing;
+    const QListView * lv = qobject_cast<const QListView*>(option.widget);
+    if (lv) {
+        if (lv->flow() == QListView::LeftToRight) {
+            size.rwidth() += d->itemSpacing;
+        } else {
+            size.rheight() += d->itemSpacing;
+        }
+    }
 
     return QRect(QPoint(0, 0), size).marginsAdded(margins).size();
 }
@@ -782,7 +790,14 @@ void DStyledItemDelegate::initStyleOption(QStyleOptionViewItem *option, const QM
     }
 
     D_DC(DStyledItemDelegate);
-    option->rect.adjust(0, 0, 0, -d->itemSpacing);
+    const QListView * lv = qobject_cast<const QListView*>(option->widget);
+    if (lv) {
+        if (lv->flow() == QListView::LeftToRight) {
+            option->rect.adjust(0, 0, 0 - d->itemSpacing, 0);
+        } else {
+            option->rect.adjust(0, 0, 0, 0 - d->itemSpacing);
+        }
+    }
 }
 
 bool DStyledItemDelegate::eventFilter(QObject *object, QEvent *event)
