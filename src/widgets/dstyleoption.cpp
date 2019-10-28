@@ -190,6 +190,16 @@ public:
     }
 };
 
+/*!
+ * \~chinese \class DFontSizeManager
+ * \~chinese \brief 字体大小设置的一个类,系统默认只设置T6
+ * \chiinese \image html font.png
+ */
+
+/*!
+ * \~chinese \brief 创建一个字体管理的实例
+ * \~chinese \return 返回一个创建的 static DFontSizeManager 实例
+ */
 DFontSizeManager *DFontSizeManager::instance()
 {
     static DFontSizeManager manager;
@@ -197,6 +207,40 @@ DFontSizeManager *DFontSizeManager::instance()
     return &manager;
 }
 
+/*!
+ * \~chinese \enum DFontSizeManager::SizeType
+ * \~chinese DFontSizeManager::SizeType 定义了 DFontSizeManager 的系统字体的定义的大小; 而系统只会设置 T6 为系统默认的字体
+ * \~chinese \var DFontSizeManager:SizeType DFontSizeManager::T1
+ * \~chinese 系统级别为 T1 的字体大小, 默认是40 px
+ * \~chinese \var DFontSizeManager:SizeType DFontSizeManager::T2
+ * \~chinese 系统级别为 T2 的字体大小, 默认是30 px
+ * \~chinese \var DFontSizeManager:SizeType DFontSizeManager::T3
+ * \~chinese 系统级别为 T3 的字体大小, 默认是24 px
+ * \~chinese \var DFontSizeManager:SizeType DFontSizeManager::T4
+ * \~chinese 系统级别为 T4 的字体大小, 默认是20 px
+ * \~chinese \var DFontSizeManager:SizeType DFontSizeManager::T5
+ * \~chinese 系统级别为 T5 的字体大小, 默认是17 px
+ * \~chinese \var DFontSizeManager:SizeType DFontSizeManager::T6
+ * \~chinese 系统级别为 T6 的字体大小, 默认是14 px
+ * \~chinese \var DFontSizeManager:SizeType DFontSizeManager::T7
+ * \~chinese 系统级别为 T7 的字体大小, 默认是13 px
+ * \~chinese \var DFontSizeManager:SizeType DFontSizeManager::T8
+ * \~chinese 系统级别为 T8 的字体大小, 默认是12 px
+ * \~chinese \var DFontSizeManager:SizeType DFontSizeManager::T9
+ * \~chinese 系统级别为 T9 的字体大小, 默认是11 px
+ * \~chinese \var DFontSizeManager:SizeType DFontSizeManager::T10
+ * \~chinese 系统级别为 T10 的字体大小, 默认是10 px
+ */
+
+/*!
+ * \~chinese \brief 将字体的大小枚举 SizeType 和控件 widget 进行绑定, 其控件的字体大小(随绑定的枚举的)对应值的改变而改变;
+ * \~chinese        系统自定义的绑定枚举值 T6, 若 T6 = 14px,  则其他枚举 T1 - T10 的数值,依次为:40, 30, 24, 20, 17, 14(T6), 13, 12, 11, 10;
+ * \~chinese        系统自定义的绑定枚举值 T6 改为 T6 = 20px, 则其他枚举 T1 - T10 的数值,依次为:46, 36, 30, 26, 23, 20(T6), 19, 18, 17, 16;
+ * \~chinese        即: 其对应的无论 T6 为何值, 其两个相邻的 T 值的差是定值: T(n) - T(n-1) == 定值
+ * \~chinese        而系统是只设置 T6 这以枚举, 作为基准
+ * \~chinese \param[in] widget 将要绑定字体大小枚举数值的控件
+ * \~chinese \param[int] type 字体的枚举类型, 每一个枚举数值对应着一个字体像素大小
+ */
 void DFontSizeManager::bind(QWidget *widget, DFontSizeManager::SizeType type)
 {
     unbind(widget);
@@ -209,6 +253,10 @@ void DFontSizeManager::bind(QWidget *widget, DFontSizeManager::SizeType type)
     });
 }
 
+/*!
+ * \~chinese \brief 将字体大小枚举值和 widget 的绑定解除, 不跟随 "枚举对应的像素值" 而改变本控件的字体大小
+ * \~chinese \param[in] widget 与 "字体枚举所对应的像素值" 的 (解除绑定的控件) 对象
+ */
 void DFontSizeManager::unbind(QWidget *widget)
 {
     for (int i = 0; i < NSizeTypes; ++i) {
@@ -216,6 +264,11 @@ void DFontSizeManager::unbind(QWidget *widget)
     }
 }
 
+/*!
+ * \~chinese \brief 获取字体像素的大小
+ * \~chinese \param[in] type 字体枚举类型
+ * \~chinese \return 返回字体像素的大小
+ */
 quint16 DFontSizeManager::fontPixelSize(DFontSizeManager::SizeType type) const
 {
     if (type >= NSizeTypes) {
@@ -225,6 +278,11 @@ quint16 DFontSizeManager::fontPixelSize(DFontSizeManager::SizeType type) const
     return d->fontPixelSize[type] + d->fontPixelSizeDiff;
 }
 
+/*!
+ * \~chinese \brief 设置字体像素大小
+ * \~chinese \param[in] type 字体枚举类型
+ * \~chinese \param[in] size 字体大小
+ */
 void DFontSizeManager::setFontPixelSize(DFontSizeManager::SizeType type, quint16 size)
 {
     if (type >= NSizeTypes) {
@@ -239,6 +297,10 @@ void DFontSizeManager::setFontPixelSize(DFontSizeManager::SizeType type, quint16
     d->updateWidgetFont(this, type);
 }
 
+/*!
+ * \~chinese \brief 设置字体的通用像素大小
+ * \~chinese \param[in] size 预设计的字体像素的大小
+ */
 void DFontSizeManager::setFontGenericPixelSize(quint16 size)
 {
     qint16 diff = size - d->fontPixelSize[d->fontGenericSizeType];
@@ -253,6 +315,12 @@ void DFontSizeManager::setFontGenericPixelSize(quint16 size)
     }
 }
 
+/*!
+ * \~chinese \brief 获取字体
+ * \~chinese \param[in] type 字体的大小枚举
+ * \~chinese \param[in] base 将改变大小的字体
+ * \~chinese \return 返回设置字体大小后的字体
+ */
 const QFont DFontSizeManager::get(DFontSizeManager::SizeType type, const QFont &base) const
 {
     QFont font = base;
@@ -262,6 +330,9 @@ const QFont DFontSizeManager::get(DFontSizeManager::SizeType type, const QFont &
     return font;
 }
 
+/*!
+ * \~chinese \brief 构造函数
+ */
 DFontSizeManager::DFontSizeManager()
     : d(new DFontSizeManagerPrivate())
 {
