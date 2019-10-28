@@ -70,6 +70,26 @@ public:
     D_DECLARE_PUBLIC(DBackgroundGroup)
 };
 
+/*!
+ * \~chinese \class DBackgroundGroup
+ * \~chinese \brief DBackgroundGroup提供了将布局控件改成圆角边框(将布局看成一个整体)
+ * \~chinese \note \row 示例代码
+ * \~chinese \note \row QWidget w;
+ * \~chinese \note \row QHBoxLayout* mainlayout = new QHBoxLayout(&w);
+ * \~chinese \note \row mainlayout->addWidget(new QPushButton("btn"));
+ * \~chinese \note \row QHBoxLayout *hlayout = new QHBoxLayout;
+ * \~chinese \note \row DBackgroundGroup *group = new DBackgroundGroup(hlayout,&w);
+ * \~chinese \note \row mainlayout->addWidget(group);
+ * \~chinese \note \row hlayout->addWidget(new QFrame);
+ * \~chinese \note \row hlayout->addWidget(new QFrame);
+ * \~chinese \image html DBackgroundGroup.png
+ */
+
+/*!
+ * \~chinese \brief DBackgroundGroup::DBackgroundGroup构造函数
+ * \~chinese \param layout布局对象
+ * \~chinese \param parent参数被发送到 QWidget 构造函数
+ */
 DBackgroundGroup::DBackgroundGroup(QLayout *layout, QWidget *parent)
     : QWidget(parent)
     , DObject(*new DBackgroundGroupPrivate(this))
@@ -80,6 +100,10 @@ DBackgroundGroup::DBackgroundGroup(QLayout *layout, QWidget *parent)
     setLayout(layout);
 }
 
+/*!
+ * \~chinese \brief DBackgroundGroup::itemMargins返回控件在布局内的边距
+ * \~chinese \return 控件在布局内的边距
+ */
 QMargins DBackgroundGroup::itemMargins() const
 {
     D_DC(DBackgroundGroup);
@@ -87,6 +111,10 @@ QMargins DBackgroundGroup::itemMargins() const
     return d->itemMargins;
 }
 
+/*!
+ * \~chinese \brief DBackgroundGroup::useWidgetBackground是否使用 QWidget 背景颜色
+ * \~chinese \return
+ */
 bool DBackgroundGroup::useWidgetBackground() const
 {
     D_DC(DBackgroundGroup);
@@ -94,6 +122,10 @@ bool DBackgroundGroup::useWidgetBackground() const
     return d->useWidgetBackground;
 }
 
+/*!
+ * \~chinese \brief DBackgroundGroup::setLayout设置布局
+ * \~chinese \param layout布局
+ */
 void DBackgroundGroup::setLayout(QLayout *layout)
 {
     QWidget::setLayout(layout);
@@ -114,6 +146,10 @@ void DBackgroundGroup::setLayout(QLayout *layout)
     setItemMargins(layout->contentsMargins());
 }
 
+/*!
+ * \~chinese \brief DBackgroundGroup::setItemMargins设置控件在布局内的边距
+ * \~chinese \param itemMargins控件在布局内的边距
+ */
 void DBackgroundGroup::setItemMargins(QMargins itemMargins)
 {
     D_D(DBackgroundGroup);
@@ -122,6 +158,10 @@ void DBackgroundGroup::setItemMargins(QMargins itemMargins)
     d->updateLayoutSpacing();
 }
 
+/*!
+ * \~chinese \brief DBackgroundGroup::setItemSpacing设置布局内控件间的距离
+ * \~chinese \param spacing距离
+ */
 void DBackgroundGroup::setItemSpacing(int spacing)
 {
     D_D(DBackgroundGroup);
@@ -130,6 +170,11 @@ void DBackgroundGroup::setItemSpacing(int spacing)
     d->updateLayoutSpacing();
 }
 
+/*!
+ * \~chinese \brief DBackgroundGroup::setUseWidgetBackground设置是否使用 QWidget 背景颜色
+ * \~chinese \row 设置是否使用 QWidget 背景颜色,并发送 useWidgetBackgroundChanged 信号
+ * \~chinese \param useWidgetBackground是否使用 QWidget 背景颜色
+ */
 void DBackgroundGroup::setUseWidgetBackground(bool useWidgetBackground)
 {
     D_D(DBackgroundGroup);
