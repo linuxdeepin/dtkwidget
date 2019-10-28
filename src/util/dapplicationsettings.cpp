@@ -115,6 +115,17 @@ void DApplicationSettingsPrivate::_q_onPaletteTypeChanged()
 #endif
 }
 
+
+/*!
+ * \~chinese \class DApplicationSettings
+ * \~chinese \brief DApplicationSettings保存应用程序的设置
+ * \~chinese \row \li DApplicationSettings存储程序的通用性设置的信息，如当前选择的主题
+ */
+
+/*!
+ * \~chinese \brief DApplicationSettings::DApplicationSettings构造函数
+ * \~chinese \param parent参数被发送到 QObject 构造函数
+ */
 DApplicationSettings::DApplicationSettings(QObject *parent)
     : QObject(parent)
     , DObject(*new DApplicationSettingsPrivate(this))
