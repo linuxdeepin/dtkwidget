@@ -877,6 +877,15 @@ static void clearActions(const DViewItemActionList &list)
     }
 }
 
+/*!
+ * \~chinese \class DStandardItem
+ * \~chinese \brief 提供标准项 item, 通常用于模型/视图,或模型-代理-视图里面,用以提供标准的 item 控件
+ * \~chinese \see QStandardItem, 和 DViewItemAction (有代码片示例，可重点参考)
+ */
+
+/*!
+ * \~chinese \brief 析构函数
+ */
 DStandardItem::~DStandardItem()
 {
     for (Qt::Edge e : {Qt::TopEdge, Qt::LeftEdge, Qt::RightEdge, Qt::BottomEdge}) {
@@ -886,6 +895,12 @@ DStandardItem::~DStandardItem()
     clearActions(textActionList());
 }
 
+/*!
+ * \~chinese \brief 设置 actionList
+ * \~chinese \param[in] edge 选用数值方向的枚举值, 表示设置 list 是在本对象 DStandardItem 的哪一个区域；
+ * \~chinese                 edge是相对于 item 的内容区域的，内容区域指的是 item 自身的图标和文字所在区域，也就是通过 setIcon和setText设置的内容的显示区域。
+ * \~chinese \param[in] list 许多 actiontem 的集合的 list 列表
+ */
 void DStandardItem::setActionList(Qt::Edge edge, const DViewItemActionList &list)
 {
     QVariant value;
@@ -899,11 +914,64 @@ void DStandardItem::setActionList(Qt::Edge edge, const DViewItemActionList &list
     setData(value, role);
 }
 
+/*!
+ * \~chinese \brief 获取项 item 的集合列表 list
+ * \~chinese \param[in] edge edge是相对于 item 的内容区域的，内容区域指的是 item 自身的图标和文字所在区域，也就是通过 setIcon和setText设置的内容的显示区域。
+ * \~chinese \return 返回项 item 的集合列表 list
+ */
 DViewItemActionList DStandardItem::actionList(Qt::Edge edge) const
 {
     return qvariant_cast<DViewItemActionList>(data(getActionPositionRole(edge)));
 }
 
+/*!
+ * \~chinese \brief 设置项 item 的集合列表 list, 只显示有 text 的 DViewItemActionList 集合
+ * \~chinese \param[in] 项 item 的集合列表 list, 只显示文字的 item 的集合
+ * \~chinese \li 一个参考代码片段，使用 setTextActionList():
+ *
+ * \code
+ * QMainWindow *wid = new QMainWindow();
+ * wid->resize(800, 600);
+ *
+ * //视图和模型
+ * DListView *view = new DListView(wid);
+ * QStandardItemModel *model = new QStandardItemModel(view);
+ * view->setModel(model);
+ *
+ * //标准DStandardItem item
+ * DStandardItem *item = new DStandardItem();
+ * item->setText("@1:这是同一个item 的text\n@2:这是同一个item 的text\n@3:这是同一个item 的text\n@4:这是同一个item 的text\n@5:这是同一个item 的text\n@6:这是同一个item 的text");
+ *
+ * //DViewItemAction() 的形参: 其参数 alignment = AlignLeft 或 AlignHCenter 或  AlignRight; 设置为 AlignTop, AlignVCenter, AlignBottom 也是无效的
+ * DViewItemAction *act1 = new DViewItemAction(Qt::AlignBottom, QSize(15, 15), QSize(50, 50));
+ * act1->setText("act1");
+ * act1->setIcon(QIcon("/home/yuanyi/Desktop/dog.jpg"));
+ * DViewItemAction *act2 = new DViewItemAction(Qt::AlignVCenter, QSize(15, 15), QSize());
+ * act2->setText("act2");
+ * act2->setIcon(QIcon("/home/yuanyi/Desktop/dog.jpg"));
+ * DViewItemAction *act3 = new DViewItemAction(Qt::AlignTop, QSize(15, 15), QSize(100, 50));
+ * act3->setText("act3");
+ * act3->setIcon(QIcon("/home/yuanyi/Desktop/dog.jpg"));
+ * DViewItemAction *act4 = new DViewItemAction(Qt::AlignBottom, QSize(15, 15), QSize(100, 50));
+ * act4->setText("act4");
+ * act4->setIcon(QIcon("/home/yuanyi/Desktop/dog.jpg"));
+ *
+ * DViewItemActionList *list = new DViewItemActionList();
+ * list->append(act1);
+ * list->append(act2);
+ * list->append(act3);
+ * list->append(act4);
+ *
+ * item->setTextActionList(*list);
+ * model->appendRow(item);
+ *
+ * wid->setCentralWidget(view);
+ * wid->show();
+ * \endcode
+ * \~chinese \li 代码片运行效果图：
+ *
+ * \~chinese \image html DStandardItem.png
+ */
 void DStandardItem::setTextActionList(const DViewItemActionList &list)
 {
     QVariant value;
@@ -916,6 +984,9 @@ void DStandardItem::setTextActionList(const DViewItemActionList &list)
     setData(value, Dtk::TextActionListRole);
 }
 
+/*!
+ * \~chinese \brief 返回 "扩充的文本内容列表" 数据
+ */
 DViewItemActionList DStandardItem::textActionList() const
 {
     return qvariant_cast<DViewItemActionList>(data(Dtk::TextActionListRole));
