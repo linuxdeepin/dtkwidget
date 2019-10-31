@@ -46,6 +46,7 @@ public:
     Qt::Alignment alignment;
     QSize iconSize;
     QSize maxSize;
+    QMargins clickMargins;
     bool clickable;
     QWidget *widget = nullptr;
 
@@ -313,7 +314,7 @@ public:
             drawAction(pa, option, rect, action, spacing);
 
             if (action->isClickable()) {
-                clickableActionRect->append(qMakePair(action, rect));
+                clickableActionRect->append(qMakePair(action, rect.marginsAdded(action->clickAreaMargins())));
             }
         }
 
@@ -368,6 +369,20 @@ QSize DViewItemAction::maximumSize() const
     D_DC(DViewItemAction);
 
     return d->maxSize;
+}
+
+QMargins DViewItemAction::clickAreaMargins() const
+{
+    D_DC(DViewItemAction);
+
+    return d->clickMargins;
+}
+
+void DViewItemAction::setClickAreaMargins(const QMargins &margins)
+{
+    D_D(DViewItemAction);
+
+    d->clickMargins = margins;
 }
 
 void DViewItemAction::setTextColorRole(DPalette::ColorType role)

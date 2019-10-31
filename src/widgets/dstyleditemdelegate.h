@@ -49,6 +49,9 @@ public:
     QSize iconSize() const;
     QSize maximumSize() const;
 
+    QMargins clickAreaMargins() const;
+    void setClickAreaMargins(const QMargins &margins);
+
     void setTextColorRole(DPalette::ColorType role);
     void setTextColorRole(DPalette::ColorRole role);
     DPalette::ColorType textColorType() const;
