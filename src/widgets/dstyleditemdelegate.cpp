@@ -855,15 +855,20 @@ static Dtk::ItemDataRole getActionPositionRole(Qt::Edge edge)
     return Dtk::LeftActionListRole;
 }
 
+static void clearActions(const DViewItemActionList &list)
+{
+    for (auto action : list) {
+        action->deleteLater();
+    }
+}
+
 DStandardItem::~DStandardItem()
 {
     for (Qt::Edge e : {Qt::TopEdge, Qt::LeftEdge, Qt::RightEdge, Qt::BottomEdge}) {
-        DViewItemActionList list = qvariant_cast<DViewItemActionList>(data(getActionPositionRole(e)));
-        for (auto action : list) {
-            action->deleteLater();
-        }
-        setData(QVariant(), getActionPositionRole(e));
+        clearActions(qvariant_cast<DViewItemActionList>(data(getActionPositionRole(e))));
     }
+
+    clearActions(textActionList());
 }
 
 void DStandardItem::setActionList(Qt::Edge edge, const DViewItemActionList &list)
@@ -874,7 +879,9 @@ void DStandardItem::setActionList(Qt::Edge edge, const DViewItemActionList &list
         value = QVariant::fromValue(list);
     }
 
-    setData(value, getActionPositionRole(edge));
+    auto role = getActionPositionRole(edge);
+    clearActions(qvariant_cast<DViewItemActionList>(data(role)));
+    setData(value, role);
 }
 
 DViewItemActionList DStandardItem::actionList(Qt::Edge edge) const
@@ -890,6 +897,7 @@ void DStandardItem::setTextActionList(const DViewItemActionList &list)
         value = QVariant::fromValue(list);
     }
 
+    clearActions(textActionList());
     setData(value, Dtk::TextActionListRole);
 }
 
