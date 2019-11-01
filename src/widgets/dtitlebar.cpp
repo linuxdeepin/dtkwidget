@@ -1171,6 +1171,24 @@ void DTitlebar::setMenuDisabled(bool disabled)
     d->optionButton->setDisabled(disabled);
 }
 
+bool DTitlebar::quitMenuIsDisabled() const
+{
+    D_DC(DTitlebar);
+
+    return d->quitAction && !d->quitAction->isEnabled();
+}
+
+void DTitlebar::setQuitMenuDisabled(bool disabled)
+{
+    D_D(DTitlebar);
+
+    if (!d->quitAction) {
+        d->_q_addDefaultMenuItems();
+    }
+
+    d->quitAction->setEnabled(!disabled);
+}
+
 bool DTitlebar::switchThemeMenuIsVisible() const
 {
     D_DC(DTitlebar);
