@@ -24,18 +24,8 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class NavigationDelegatePrivate
-{
-public:
-    NavigationDelegatePrivate(NavigationDelegate *parent) : q_ptr(parent) {}
-
-    NavigationDelegate *q_ptr;
-    Q_DECLARE_PUBLIC(NavigationDelegate)
-};
-
-NavigationDelegate::NavigationDelegate(QWidget *parent) :
-    QStyledItemDelegate(parent) ,
-    d_ptr(new NavigationDelegatePrivate(this))
+NavigationDelegate::NavigationDelegate(QAbstractItemView *parent)
+    : DStyledItemDelegate(parent)
 {
 
 }
@@ -48,61 +38,30 @@ NavigationDelegate::~NavigationDelegate()
 void NavigationDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
                                const QModelIndex &index) const
 {
-    painter->save();
-    painter->setRenderHints(QPainter::Antialiasing | QPainter::HighQualityAntialiasing);
-
-    painter->setBrush(option.palette.foreground());
-
+    QStyleOptionViewItem opt = option;
+    opt.text = QString();
+    DStyledItemDelegate::paint(painter, opt, index);
     auto level = static_cast<NavLevel>(index.data(NavLevelRole).toInt());
-
     bool isSelected = option.state & QStyle::State_Selected;
-
-    // draw item background
-    switch (level) {
-    case Level1:
-    case Level2: {
-        if (isSelected) {
-            painter->setPen(Qt::NoPen);
-            QColor brush = option.palette.color(DPalette::Highlight);
-            painter->setBrush(QBrush(brush));
-            int radius = DStyle::pixelMetric(qApp->style(), DStyle::PM_FrameRadius);
-            QRect rect = option.rect;
-            rect.setWidth(rect.width() - 10);
-            rect.setX(rect.x() + 10);
-            painter->drawRoundedRect(rect, radius, radius);
-        }
-        break;
-    }
-    case Split:
-    case Level3:
-        break;
-    }
 
     // draw text
     switch (level) {
     case Level1: {
         QColor pen = option.palette.color(isSelected ? QPalette::HighlightedText : QPalette::BrightText);
         painter->setPen(pen);
-        auto rect = option.rect.marginsRemoved(QMargins(30, 0, 0, 0));
-
-        auto font = DFontSizeManager::instance()->get(DFontSizeManager::T4);
-        font.setWeight(QFont::DemiBold);
-        painter->setFont(font);
-
-        QFontMetrics fm(font);
-        auto text = fm.elidedText(index.data().toString(), Qt::ElideMiddle, 150);
+        opt.font.setBold(true);
+        painter->setFont(DFontSizeManager::instance()->get(DFontSizeManager::T4, opt.font));
+        QRect rect = opt.rect.marginsRemoved(QMargins(10, 0, 10, 0));
+        auto text = opt.fontMetrics.elidedText(index.data().toString(), Qt::ElideMiddle, rect.width());
         painter->drawText(rect, Qt::AlignLeft | Qt::AlignVCenter, text);
         break;
     }
     case Level2: {
         QColor pen = option.palette.color(isSelected ? QPalette::HighlightedText : QPalette::WindowText);
         painter->setPen(pen);
-        auto font = DFontSizeManager::instance()->get(DFontSizeManager::T5);
-        painter->setFont(font);
-
-        QFontMetrics fm(font);
-        auto text = fm.elidedText(index.data().toString(), Qt::ElideMiddle, 135);
-        auto rect = option.rect.marginsRemoved(QMargins(45, 0, 0, 0));
+        auto text = opt.fontMetrics.elidedText(index.data().toString(), Qt::ElideMiddle, option.rect.width());
+        auto rect = option.rect.marginsRemoved(QMargins(30, 0, 10, 0));
+        painter->setFont(opt.font);
         painter->drawText(rect, Qt::AlignLeft | Qt::AlignVCenter, text);
         break;
     }
@@ -110,53 +69,20 @@ void NavigationDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     case Level3:
         break;
     }
-
-    painter->restore();
-}
-
-QSize NavigationDelegate::sizeHint(const QStyleOptionViewItem &option,
-                                   const QModelIndex &index) const
-{
-    auto sh = QStyledItemDelegate::sizeHint(option, index);
-
-    auto level = static_cast<NavLevel>(index.data(NavLevelRole).toInt());
-    switch (level) {
-    case Split: {
-        sh.setHeight(20);
-        break;
-    }
-    case Level1:
-    case Level2:
-    case Level3:
-        sh.setHeight(30);
-        break;
-    }
-    return sh;
-}
-
-QWidget *NavigationDelegate::createEditor(QWidget *parent,
-        const QStyleOptionViewItem &option,
-        const QModelIndex &index) const
-
-{
-    return QStyledItemDelegate::createEditor(parent, option, index);
-}
-
-void NavigationDelegate::setEditorData(QWidget *editor,
-                                       const QModelIndex &index) const
-{
-    QStyledItemDelegate::setEditorData(editor, index);
-}
-
-void NavigationDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
-                                      const QModelIndex &index) const
-{
-    QStyledItemDelegate::setModelData(editor, model, index);
 }
 
 void NavigationDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
 {
-    QStyledItemDelegate::initStyleOption(option, index);
+    DStyledItemDelegate::initStyleOption(option, index);
+    option->features &= ~QStyleOptionViewItem::HasDisplay;
+
+    auto level = static_cast<NavLevel>(index.data(NavLevelRole).toInt());
+
+    if (level == Level1) {
+        option->font = DFontSizeManager::instance()->get(DFontSizeManager::T4, option->font);
+        option->font.setBold(true);
+        option->fontMetrics = QFontMetrics(option->font);
+    }
 }
 
 DWIDGET_END_NAMESPACE

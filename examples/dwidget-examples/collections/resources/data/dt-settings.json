@@ -7,11 +7,23 @@
                 {
                     "key": "custom-widgets",
                     "name": "Custom Widgets",
+
                     "options": [
+                        {
+                            "key": "title2",
+                            "type": "title2",
+                            "default": "Custom Level2 Title"
+                        },
                         {
                             "key": "custom-button",
                             "type": "custom-button",
                             "default": "Custom Button"
+                        },
+                        {
+                            "key": "switchbutton",
+                            "type": "switchbutton",
+                            "default": true,
+                            "name": "Switch Button"
                         }
                     ]
                 },

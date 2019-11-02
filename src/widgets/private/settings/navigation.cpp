@@ -25,6 +25,8 @@
 
 #include <DSettings>
 #include <DSettingsGroup>
+#include <DListView>
+#include <DApplicationHelper>
 
 #include "navigationdelegate.h"
 
@@ -34,8 +36,19 @@ class NavigationPrivate
 {
 public:
     NavigationPrivate(Navigation *parent) : q_ptr(parent) {}
+    QModelIndex indexOfGroup(const QString &key) const
+    {
+        for (int i = 0; i < navbarModel->rowCount(); ++i) {
+            auto index = navbarModel->index(i, 0);
+            if (index.data(NavigationDelegate::NavKeyRole).toString() == key) {
+                return index;
+            }
+        }
 
-    QListView           *navbar         = nullptr;
+        return QModelIndex();
+    }
+
+    DListView           *navbar         = nullptr;
     QStandardItemModel  *navbarModel    = nullptr;
 
     Navigation *q_ptr;
@@ -53,21 +66,25 @@ Navigation::Navigation(QWidget *parent) :
     auto layout = new QHBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
 
-    d->navbar = new QListView(this);
+    d->navbar = new DListView(this);
     d->navbar->setObjectName("NavigationBar");
     d->navbar->setContentsMargins(0, 0, 0, 0);
+    d->navbar->setAutoFillBackground(true);
+    d->navbar->setViewportMargins(10, 0, 10, 0);
+    DPalette pa = DApplicationHelper::instance()->palette(d->navbar);
+    pa.setBrush(DPalette::ItemBackground, Qt::transparent);
+    DApplicationHelper::instance()->setPalette(d->navbar, pa);
 
     d->navbar->setSelectionMode(QListView::SingleSelection);
     d->navbar->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     d->navbar->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    d->navbar->setFrameShape(QFrame::NoFrame);
 
     d->navbarModel = new QStandardItemModel;
 
     d->navbar->setModel(d->navbarModel);
 
     d->navbar->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    d->navbar->setItemDelegate(new NavigationDelegate);
+    d->navbar->setItemDelegate(new NavigationDelegate(d->navbar));
 
     layout->addWidget(d->navbar);
 
@@ -84,15 +101,34 @@ Navigation::~Navigation()
 {
 }
 
+bool Navigation::groupIsVisible(const QString &key) const
+{
+    Q_D(const Navigation);
+
+    const QModelIndex &index = d->indexOfGroup(key);
+
+    return index.isValid() && d->navbar->isRowHidden(index.row());
+}
+
+void Navigation::setGroupVisible(const QString &key, bool visible)
+{
+    Q_D(Navigation);
+
+    const QModelIndex &index = d->indexOfGroup(key);
+
+    if (index.isValid()) {
+        d->navbar->setRowHidden(index.row(), !visible);
+    }
+}
+
 void Navigation::onSelectGroup(const QString &key)
 {
     Q_D(Navigation);
-    for (int i = 0; i < d->navbarModel->rowCount(); ++i) {
-        auto index = d->navbarModel->index(i, 0);
-        if (index.data(NavigationDelegate::NavKeyRole).toString() == key) {
-            d->navbar->setCurrentIndex(index);
-            return;
-        }
+
+    const QModelIndex &index = d->indexOfGroup(key);
+
+    if (index.isValid()) {
+        d->navbar->setCurrentIndex(index);
     }
 }
 

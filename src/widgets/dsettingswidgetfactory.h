@@ -36,17 +36,22 @@ class LIBDTKWIDGETSHARED_EXPORT DSettingsWidgetFactory : public QObject
     Q_OBJECT
 public:
     typedef QWidget *(WidgetCreateHandler)(QObject *);
+    typedef QPair<QWidget*, QWidget*> (ItemCreateHandler)(QObject *);
 
     explicit DSettingsWidgetFactory(QObject *parent = Q_NULLPTR);
     ~DSettingsWidgetFactory();
 
     void registerWidget(const QString &viewType, std::function<WidgetCreateHandler> handler);
+    void registerWidget(const QString &viewType, std::function<ItemCreateHandler> handler);
 
     QWidget *createWidget(QPointer<DTK_CORE_NAMESPACE::DSettingsOption> option);
     QWidget *createWidget(const QByteArray &translateContext, QPointer<DTK_CORE_NAMESPACE::DSettingsOption> option);
+    QPair<QWidget*, QWidget*> createItem(QPointer<DTK_CORE_NAMESPACE::DSettingsOption> option) const;
+    QPair<QWidget*, QWidget*> createItem(const QByteArray &translateContext, QPointer<DTK_CORE_NAMESPACE::DSettingsOption> option) const;
 
-    static QWidget *createTwoColumWidget(DTK_CORE_NAMESPACE::DSettingsOption *option, QWidget *rightWidget);
-    static QWidget *createTwoColumWidget(const QByteArray &translateContext, DTK_CORE_NAMESPACE::DSettingsOption *option, QWidget *rightWidget);
+    D_DECL_DEPRECATED static QWidget *createTwoColumWidget(DTK_CORE_NAMESPACE::DSettingsOption *option, QWidget *rightWidget);
+    D_DECL_DEPRECATED static QWidget *createTwoColumWidget(const QByteArray &translateContext, DTK_CORE_NAMESPACE::DSettingsOption *option, QWidget *rightWidget);
+    static QPair<QWidget*, QWidget*> createStandardItem(const QByteArray &translateContext, DTK_CORE_NAMESPACE::DSettingsOption *option, QWidget *rightWidget);
 
 private:
     QScopedPointer<DSettingsWidgetFactoryPrivate> dd_ptr;

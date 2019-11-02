@@ -36,10 +36,12 @@ public:
     ~DSettingsDialog();
 
     DSettingsWidgetFactory* widgetFactory() const;
+    bool groupIsVisible(const QString &groupKey) const;
 
 public Q_SLOTS:
     void updateSettings(DTK_CORE_NAMESPACE::DSettings *settings);
     void updateSettings(const QByteArray &translateContext, DTK_CORE_NAMESPACE::DSettings *settings);
+    void setGroupVisible(const QString &groupKey, bool visible);
 
 private:
     QScopedPointer<DSettingsDialogPrivate> dd_ptr;

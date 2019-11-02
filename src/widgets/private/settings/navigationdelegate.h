@@ -18,22 +18,23 @@
 #pragma once
 
 #include <QScopedPointer>
-#include <QStyledItemDelegate>
+
 #include <DStyle>
+#include <DStyledItemDelegate>
 
 DWIDGET_BEGIN_NAMESPACE
 
 class NavigationDelegatePrivate;
-class NavigationDelegate: public QStyledItemDelegate
+class NavigationDelegate: public DStyledItemDelegate
 {
     Q_OBJECT
 public:
-    NavigationDelegate(QWidget *parent = nullptr);
+    NavigationDelegate(QAbstractItemView *parent);
     ~NavigationDelegate();
 
 
     enum DataRole {
-        NavLevelRole = Qt::UserRole + 100,
+        NavLevelRole = Dtk::UserRole + 100,
         NavKeyRole,
     };
 
@@ -44,25 +45,10 @@ public:
         Level3
     };
 
-    virtual void initStyleOption(QStyleOptionViewItem *option,
-                                 const QModelIndex &index) const;
+protected:
     void paint(QPainter *painter, const QStyleOptionViewItem &option,
-               const QModelIndex &index) const;
-
-    QSize sizeHint(const QStyleOptionViewItem &option,
-                   const QModelIndex &index) const;
-
-    QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,
-                          const QModelIndex &index) const;
-
-    void setEditorData(QWidget *editor, const QModelIndex &index) const;
-
-    void setModelData(QWidget *editor, QAbstractItemModel *model,
-                      const QModelIndex &index) const;
-
-private:
-    QScopedPointer<NavigationDelegatePrivate> d_ptr;
-    Q_DECLARE_PRIVATE_D(qGetPtrHelper(d_ptr), NavigationDelegate)
+               const QModelIndex &index) const override;
+    void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const override;
 };
 
 DWIDGET_END_NAMESPACE

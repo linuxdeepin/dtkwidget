@@ -26,6 +26,7 @@
 #include <QCoreApplication>
 #include <QScroller>
 #include <QMouseEvent>
+#include <QFormLayout>
 
 #include <DSettings>
 #include <DSettingsGroup>
@@ -50,7 +51,7 @@ public:
 
     QScrollArea         *contentArea;
     QWidget             *contentFrame;
-    QVBoxLayout         *contentLayout;
+    QFormLayout         *contentLayout;
 
     QMap<QString, QWidget *> titles;
     QList<QWidget *> sortTitles;
@@ -61,17 +62,15 @@ public:
     Q_DECLARE_PUBLIC(Content)
 };
 
-Content::Content(QWidget *parent) :
-    QFrame(parent), d_ptr(new ContentPrivate(this))
+Content::Content(QWidget *parent)
+    : QWidget(parent)
+    , d_ptr(new ContentPrivate(this))
 {
     Q_D(Content);
 
     setObjectName("RightFrame");
-    setContentsMargins(0, 0, 0, 0);
 
     auto layout = new QVBoxLayout(this);
-    layout->setContentsMargins(10, 10, 10, 0);
-    layout->setSpacing(0);
 
     d->contentArea = new QScrollArea;
     d->contentArea->setContentsMargins(0, 0, 0, 0);
@@ -84,9 +83,9 @@ Content::Content(QWidget *parent) :
 
     d->contentFrame = new QWidget(this);
     d->contentFrame->setObjectName("SettingsContent");
-    d->contentLayout = new QVBoxLayout(d->contentFrame);
-    d->contentLayout->setContentsMargins(0, 0, 0, 0);
-    d->contentLayout->setSpacing(0);
+    d->contentLayout = new QFormLayout(d->contentFrame);
+    d->contentLayout->setRowWrapPolicy(QFormLayout::DontWrapRows);
+    d->contentLayout->setLabelAlignment(Qt::AlignRight);
     layout->addWidget(d->contentArea);
 
     d->contentArea->setWidget(d->contentFrame);
@@ -139,6 +138,44 @@ DSettingsWidgetFactory *Content::widgetFactory() const
     return d->widgetFactory;
 }
 
+bool Content::groupIsVisible(const QString &key) const
+{
+    Q_D(const Content);
+
+    QWidget *title = d->titles.value(key);
+
+    return title && title->isVisible();
+}
+
+void Content::setGroupVisible(const QString &key, bool visible)
+{
+    Q_D(Content);
+
+    if (!d->titles.contains(key))
+        return;
+
+    auto title = d->titles.value(key);
+    title->setVisible(visible);
+
+    for (QObject *obj : d->contentFrame->children()) {
+        if (obj->property("_d_dtk_group_key").toString() == key) {
+            if (ContentTitle *title = qobject_cast<ContentTitle*>(obj)) {
+                const QString &key = title->property("key").toString();
+
+                if (d->titles.contains(key)) {
+                    setGroupVisible(key, visible);
+                    continue;
+                }
+            }
+
+            if (QWidget *w = qobject_cast<QWidget*>(obj)) {
+                if (!visible || w->parentWidget()) // 无父控件时禁止其显示
+                    w->setVisible(visible);
+            }
+        }
+    }
+}
+
 void Content::onScrollToGroup(const QString &key)
 {
     Q_D(Content);
@@ -156,7 +193,13 @@ void Content::onScrollToGroup(const QString &key)
 void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CORE_NAMESPACE::DSettings> settings)
 {
     Q_D(Content);
+
+    QString current_groupKey;
+    QString current_subGroupKey;
+
     for (auto groupKey : settings->groupKeys()) {
+        current_groupKey = groupKey;
+
         auto group = settings->group(groupKey);
         if (group->isHidden()) {
             continue;
@@ -167,12 +210,11 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
         title->setTitle(trName);
         title->setProperty("key", groupKey);
 
-        auto font = DFontSizeManager::instance()->get(DFontSizeManager::T4);
-        font.setWeight(QFont::DemiBold);
+        QFont font = title->font();
+        font.setBold(true);
         title->setFont(font);
-        title->setPalette(QPalette().color(QPalette::HighlightedText));
-        d->contentLayout->addWidget(title);
-        d->contentLayout->addSpacing(8);
+        DFontSizeManager::instance()->bind(title, DFontSizeManager::T4);
+        d->contentLayout->setWidget(d->contentLayout->rowCount(), QFormLayout::LabelRole, title);
         d->sortTitles.push_back(title);
         d->titles.insert(groupKey, title);
 
@@ -181,21 +223,23 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
                 continue;
             }
 
+            current_subGroupKey = subgroup->key();
+
             if (!subgroup->name().isEmpty()) {
                 auto trName = translateContext.isEmpty() ? QObject::tr(subgroup->name().toStdString().c_str())
                               : qApp->translate(translateContext.constData(), subgroup->name().toStdString().c_str());
                 auto title = new ContentTitle;
 
                 title->setTitle(trName);
-                auto font = DFontSizeManager::instance()->get(DFontSizeManager::T5);
-                title->setPalette(QPalette().color(QPalette::HighlightedText));
-                font.setWeight(QFont::Normal);
+                QFont font = title->font();
+                font.setWeight(QFont::Medium);
                 title->setFont(font);
+                DFontSizeManager::instance()->bind(title, DFontSizeManager::T5);
                 title->setProperty("key", subgroup->key());
+                title->setProperty("_d_dtk_group_key", current_groupKey);
                 title->setSpacing(10);
 
-                d->contentLayout->addWidget(title);
-                d->contentLayout->addSpacing(10);
+                d->contentLayout->setWidget(d->contentLayout->rowCount(), QFormLayout::LabelRole, title);
                 d->sortTitles.push_back(title);
                 d->titles.insert(subgroup->key(), title);
             }
@@ -205,25 +249,46 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
                     continue;
                 }
 
-                auto widget = d->widgetFactory->createWidget(translateContext, option);
+                auto widget = d->widgetFactory->createItem(translateContext, option);
 
-                if (widget) {
-                    d->contentLayout->addWidget(widget, 0, Qt::AlignCenter);
-                    widget->setParent(d->contentFrame);
+                // 先尝试创建item
+                if (widget.first || widget.second) {
+                    if (QLabel *label = qobject_cast<QLabel*>(widget.first)) {
+                        if (widget.second)
+                            label->setBuddy(widget.second);
+                    }
+
+                    d->contentLayout->addRow(widget.first, widget.second);
+
+                    if (widget.first) {
+                        widget.first->setProperty("_d_dtk_group_key", current_subGroupKey);
+                    }
+
+                    if (widget.second) {
+                        widget.second->setProperty("_d_dtk_group_key", current_subGroupKey);
+                    }
+                } else {
+                    QWidget *widget = d->widgetFactory->createWidget(translateContext, option);
+
+                    if (widget) {
+                        widget->setProperty("_d_dtk_group_key", current_subGroupKey);
+                        d->contentLayout->setWidget(d->contentLayout->rowCount(), QFormLayout::SpanningRole, widget);
+                    }
                 }
             }
-
-            d->contentLayout->addSpacing(4);
         }
     }
 
-    auto resetBt = new DSuggestButton(QObject::tr("Restore Defaults"));
+    QWidget *box = new QWidget();
+    QHBoxLayout *box_layout = new QHBoxLayout(box);
+    box_layout->setContentsMargins(0, 30, 0, 0);
+    auto resetBt = new DSuggestButton(QObject::tr("Restore Defaults"), box);
     resetBt->setObjectName("SettingsContentReset");
+    resetBt->setMaximumWidth(300);
+    box_layout->addWidget(resetBt);
+    box->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 
-    d->contentLayout->addSpacing(40);
-    d->contentLayout->addWidget(resetBt, 0, Qt::AlignCenter);
-    d->contentLayout->addSpacing(40);
-    d->contentLayout->addStretch();
+    d->contentLayout->setWidget(d->contentLayout->rowCount(), QFormLayout::SpanningRole, box);
 
     connect(resetBt, &QPushButton::released,
     this, [ = ]() {
@@ -241,6 +306,14 @@ void Content::mouseMoveEvent(QMouseEvent *event)
 
         return;
     }
+}
+
+void Content::resizeEvent(QResizeEvent *event)
+{
+    Q_D(Content);
+    d->contentFrame->setMaximumWidth(d->contentArea->width());
+
+    return QWidget::resizeEvent(event);
 }
 
 DWIDGET_END_NAMESPACE

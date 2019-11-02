@@ -30,12 +30,16 @@
 #include <QRadioButton>
 #include <QGroupBox>
 #include <QCoreApplication>
+#include <QFormLayout>
 
 #include <DSettingsOption>
+#include <DSwitchButton>
+#include <DFontSizeManager>
 
 #include "private/settings/shortcutedit.h"
 #include "private/settings/buttongroup.h"
 #include "private/settings/combobox.h"
+#include "private/settings/contenttitle.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -87,39 +91,36 @@ QWidget *DSettingsWidgetFactory::createTwoColumWidget(DTK_CORE_NAMESPACE::DSetti
  */
 QWidget *DSettingsWidgetFactory::createTwoColumWidget(const QByteArray &translateContext, DTK_CORE_NAMESPACE::DSettingsOption *option, QWidget *rightWidget)
 {
-    auto optionFrame = new QFrame;
-    optionFrame->setMinimumHeight(30);
+    auto optionFrame = new QWidget;
     optionFrame->setObjectName("OptionFrame");
-//    optionFrame->setStyleSheet("QFrame{border: 1px solid red;}");
 
-    auto optionLayout = new QGridLayout(optionFrame);
+    auto optionLayout = new QFormLayout(optionFrame);
     optionLayout->setContentsMargins(0, 0, 0, 0);
     optionLayout->setSpacing(0);
 
     rightWidget->setMinimumWidth(240);
 
     if (!option->name().isEmpty()) {
-        optionLayout->setColumnMinimumWidth(0, 110);
-        optionLayout->setHorizontalSpacing(20);
-        optionLayout->setColumnStretch(0, 10);
-        optionLayout->setColumnStretch(1, 100);
-
         auto trName = DWIDGET_NAMESPACE::tr(translateContext, option->name().toStdString().c_str());
-        auto labelWidget = new QLabel(trName);
-        labelWidget->setContentsMargins(5, 0, 0, 0);
-        labelWidget->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-        labelWidget->setObjectName("OptionLabel");
-        optionLayout->addWidget(labelWidget, 0, 0, Qt::AlignRight | Qt::AlignVCenter);
-        optionLayout->addWidget(rightWidget, 0, 1, Qt::AlignLeft | Qt::AlignVCenter);
+        optionLayout->addRow(trName + ": ", rightWidget);
     } else {
-        optionLayout->setColumnMinimumWidth(0, 5);
-        optionLayout->addWidget(rightWidget, 0, 1, Qt::AlignLeft | Qt::AlignVCenter);
+        optionLayout->addWidget(rightWidget);
     }
 
     return  optionFrame;
 }
 
-QWidget *createShortcutEditOptionHandle(QObject *opt)
+QPair<QWidget *, QWidget *> DSettingsWidgetFactory::createStandardItem(const QByteArray &translateContext, Core::DSettingsOption *option, QWidget *rightWidget)
+{
+    const QString label(DWIDGET_NAMESPACE::tr(translateContext, option->name().toLocal8Bit().constData()));
+
+    if (label.isEmpty())
+        return qMakePair(nullptr, rightWidget);
+
+    return qMakePair(new QLabel(label), rightWidget);
+}
+
+QPair<QWidget *, QWidget *> createShortcutEditOptionHandle(QObject *opt)
 {
     auto option = qobject_cast<DTK_CORE_NAMESPACE::DSettingsOption *>(opt);
 
@@ -151,7 +152,6 @@ QWidget *createShortcutEditOptionHandle(QObject *opt)
     updateWidgetValue(optionValue);
 
     auto translateContext = opt->property(PRIVATE_PROPERTY_translateContext).toByteArray();
-    auto optionWidget = DSettingsWidgetFactory::createTwoColumWidget(translateContext, option, rightWidget);
 
     // keep raw value type
     switch (optionValue.type()) {
@@ -182,33 +182,20 @@ QWidget *createShortcutEditOptionHandle(QObject *opt)
         rightWidget->update();
     });
 
-    return  optionWidget;
+    return DSettingsWidgetFactory::createStandardItem(translateContext, option, rightWidget);
 }
 
-QWidget *createCheckboxOptionHandle(QObject *opt)
+QPair<QWidget *, QWidget *> createCheckboxOptionHandle(QObject *opt)
 {
     auto translateContext = opt->property(PRIVATE_PROPERTY_translateContext).toByteArray();
     auto option = qobject_cast<DTK_CORE_NAMESPACE::DSettingsOption *>(opt);
     auto value = option->data("text").toString();
     auto trName = DWIDGET_NAMESPACE::tr(translateContext, value.toStdString().c_str());
 
-//    auto checkboxFrame = new QWidget;
-//    auto checkboxLayout = new QHBoxLayout(checkboxFrame);
-//    checkboxLayout->setSpacing(0);
-//    checkboxLayout->setContentsMargins(0, 0, 0, 0);
     auto rightWidget = new QCheckBox(trName);
-//    auto checkboxLabel = new QLabel(trName);
-//    checkboxLabel->setWordWrap(true);
-//    checkboxLabel->setMinimumWidth(320);
-//    checkboxLayout->addWidget(rightWidget);
-//    checkboxLayout->addSpacing(5);
-//    checkboxLayout->addWidget(checkboxLabel);
-//    checkboxLayout->addStretch();
 
     rightWidget->setObjectName("OptionCheckbox");
     rightWidget->setChecked(option->value().toBool());
-
-//    auto optionWidget = DSettingsWidgetFactory::createTwoColumWidget(translateContext, option, checkboxFrame);
 
     option->connect(rightWidget, &QCheckBox::stateChanged,
     option, [ = ](int status) {
@@ -220,11 +207,10 @@ QWidget *createCheckboxOptionHandle(QObject *opt)
         rightWidget->update();
     });
 
-    return rightWidget;
-//    return  optionWidget;
+    return qMakePair(nullptr, rightWidget);
 }
 
-QWidget *createLineEditOptionHandle(QObject *opt)
+QPair<QWidget *, QWidget *> createLineEditOptionHandle(QObject *opt)
 {
     auto translateContext = opt->property(PRIVATE_PROPERTY_translateContext).toByteArray();
     auto option = qobject_cast<DTK_CORE_NAMESPACE::DSettingsOption *>(opt);
@@ -233,8 +219,6 @@ QWidget *createLineEditOptionHandle(QObject *opt)
     auto rightWidget = new QLineEdit(trName);
     rightWidget->setObjectName("OptionLineEdit");
     rightWidget->setText(option->value().toString());
-
-    auto optionWidget = DSettingsWidgetFactory::createTwoColumWidget(translateContext, option, rightWidget);
 
     option->connect(rightWidget, &QLineEdit::editingFinished,
     option, [ = ]() {
@@ -246,17 +230,16 @@ QWidget *createLineEditOptionHandle(QObject *opt)
         rightWidget->update();
     });
 
-    return  optionWidget;
+    return DSettingsWidgetFactory::createStandardItem(translateContext, option, rightWidget);
 }
 
-QWidget *createComboBoxOptionHandle(QObject *opt)
+QPair<QWidget *, QWidget *> createComboBoxOptionHandle(QObject *opt)
 {
     auto translateContext = opt->property(PRIVATE_PROPERTY_translateContext).toByteArray();
     auto option = qobject_cast<DTK_CORE_NAMESPACE::DSettingsOption *>(opt);
     auto rightWidget = new ComboBox();
     rightWidget->setFocusPolicy(Qt::StrongFocus);
     rightWidget->setObjectName("OptionLineEdit");
-    auto optionWidget = DSettingsWidgetFactory::createTwoColumWidget(translateContext, option, rightWidget);
 
     auto initComboxList = [ = ](const QStringList & data) {
         for (auto item : data) {
@@ -324,10 +307,10 @@ QWidget *createComboBoxOptionHandle(QObject *opt)
         updateData(dataType, value);
     });
 
-    return  optionWidget;
+    return DSettingsWidgetFactory::createStandardItem(translateContext, option, rightWidget);
 }
 
-QWidget *createButtonGroupOptionHandle(QObject *opt)
+QPair<QWidget *, QWidget *> createButtonGroupOptionHandle(QObject *opt)
 {
     auto option = qobject_cast<DTK_CORE_NAMESPACE::DSettingsOption *>(opt);
     auto rightWidget = new ButtonGroup();
@@ -338,8 +321,6 @@ QWidget *createButtonGroupOptionHandle(QObject *opt)
     rightWidget->setCheckedButton(0);
 
     auto translateContext = opt->property(PRIVATE_PROPERTY_translateContext).toByteArray();
-    auto optionWidget = DSettingsWidgetFactory::createTwoColumWidget(translateContext, option, rightWidget);
-    rightWidget->setParent(optionWidget);
 
     option->connect(rightWidget, &ButtonGroup::buttonChecked,
     option, [ = ](int id) {
@@ -350,10 +331,11 @@ QWidget *createButtonGroupOptionHandle(QObject *opt)
         rightWidget->setCheckedButton(value.toInt());
         rightWidget->update();
     });
-    return  optionWidget;
+
+    return DSettingsWidgetFactory::createStandardItem(translateContext, option, rightWidget);
 }
 
-QWidget *createRadioGroupOptionHandle(QObject *opt)
+QPair<QWidget *, QWidget *> createRadioGroupOptionHandle(QObject *opt)
 {
     auto translateContext = opt->property(PRIVATE_PROPERTY_translateContext).toByteArray();
     auto option = qobject_cast<DTK_CORE_NAMESPACE::DSettingsOption *>(opt);
@@ -385,9 +367,6 @@ QWidget *createRadioGroupOptionHandle(QObject *opt)
     }
     rightWidget->setLayout(rgLayout);
 
-//    auto optionWidget = DSettingsWidgetFactory::createTwoColumWidget(translateContext, option, rightWidget);
-//    rightWidget->setParent(optionWidget);
-
     option->connect(option, &DTK_CORE_NAMESPACE::DSettingsOption::valueChanged,
     rightWidget, [ buttonList ](const QVariant & value) {
         auto index = value.toInt();
@@ -401,13 +380,10 @@ QWidget *createRadioGroupOptionHandle(QObject *opt)
         buttonList.value(index)->setChecked(true);
     }
 
-    rightWidget->setStyleSheet("QGroupBox{border: 0px solid red;}");
-//    optionWidget->setFixedHeight(24 * items.length() + 8);
-//    return  optionWidget;
-    return rightWidget;
+    return DSettingsWidgetFactory::createStandardItem(translateContext, option, rightWidget);
 }
 
-QWidget *createSpinButtonOptionHandle(QObject *opt)
+QPair<QWidget *, QWidget *> createSpinButtonOptionHandle(QObject *opt)
 {
     auto option = qobject_cast<DTK_CORE_NAMESPACE::DSettingsOption *>(opt);
     auto rightWidget = new QSpinBox();
@@ -422,7 +398,6 @@ QWidget *createSpinButtonOptionHandle(QObject *opt)
     }
 
     auto translateContext = opt->property(PRIVATE_PROPERTY_translateContext).toByteArray();
-    auto optionWidget = DSettingsWidgetFactory::createTwoColumWidget(translateContext, option, rightWidget);
 
     option->connect(rightWidget, static_cast<void (QSpinBox::*)(int value)>(&QSpinBox::valueChanged),
     option, [ = ](int value) {
@@ -433,10 +408,11 @@ QWidget *createSpinButtonOptionHandle(QObject *opt)
         rightWidget->setValue(value.toInt());
         rightWidget->update();
     });
-    return  optionWidget;
+
+    return DSettingsWidgetFactory::createStandardItem(translateContext, option, rightWidget);
 }
 
-QWidget *createSliderOptionHandle(QObject *opt)
+QPair<QWidget *, QWidget *> createSliderOptionHandle(QObject *opt)
 {
     auto option = qobject_cast<DTK_CORE_NAMESPACE::DSettingsOption *>(opt);
     auto rightWidget = new QSlider();
@@ -447,7 +423,6 @@ QWidget *createSliderOptionHandle(QObject *opt)
     rightWidget->setValue(option->value().toInt());
 
     auto translateContext = opt->property(PRIVATE_PROPERTY_translateContext).toByteArray();
-    auto optionWidget = DSettingsWidgetFactory::createTwoColumWidget(translateContext, option, rightWidget);
 
     option->connect(rightWidget, &QSlider::valueChanged,
     option, [ = ](int value) {
@@ -460,7 +435,65 @@ QWidget *createSliderOptionHandle(QObject *opt)
         rightWidget->setValue(value.toInt());
         rightWidget->update();
     });
-    return  optionWidget;
+
+    return DSettingsWidgetFactory::createStandardItem(translateContext, option, rightWidget);
+}
+
+QPair<QWidget *, QWidget *> createSwitchButton(QObject *opt)
+{
+    auto option = qobject_cast<DTK_CORE_NAMESPACE::DSettingsOption *>(opt);
+    auto rightWidget = new DSwitchButton();
+    rightWidget->setObjectName("OptionDSwitchButton");
+    rightWidget->setChecked(option->value().toBool());
+
+    auto translateContext = opt->property(PRIVATE_PROPERTY_translateContext).toByteArray();
+
+    option->connect(rightWidget, &DSwitchButton::checkedChanged,
+    option, [ = ](bool value) {
+        rightWidget->blockSignals(true);
+        option->setValue(value);
+        rightWidget->blockSignals(false);
+    });
+    option->connect(option, &DTK_CORE_NAMESPACE::DSettingsOption::valueChanged,
+    rightWidget, [ = ](const QVariant & value) {
+        rightWidget->setChecked(value.toBool());
+        rightWidget->update();
+    });
+
+    return DSettingsWidgetFactory::createStandardItem(translateContext, option, rightWidget);
+}
+
+QPair<QWidget *, QWidget *> createTitle1(QObject *opt)
+{
+    auto option = qobject_cast<DTK_CORE_NAMESPACE::DSettingsOption *>(opt);
+    auto translateContext = opt->property(PRIVATE_PROPERTY_translateContext).toByteArray();
+    auto trName = DWIDGET_NAMESPACE::tr(translateContext, option->value().toString().toLocal8Bit().constData());
+
+    auto title = new ContentTitle;
+    title->setTitle(trName);
+    QFont font = title->font();
+    font.setBold(true);
+    title->setFont(font);
+    DFontSizeManager::instance()->bind(title, DFontSizeManager::T4);
+
+    return qMakePair(title, nullptr);
+}
+
+QPair<QWidget *, QWidget *> createTitle2(QObject *opt)
+{
+    auto option = qobject_cast<DTK_CORE_NAMESPACE::DSettingsOption *>(opt);
+    auto translateContext = opt->property(PRIVATE_PROPERTY_translateContext).toByteArray();
+    auto trName = DWIDGET_NAMESPACE::tr(translateContext, option->value().toString().toLocal8Bit().constData());
+
+    auto title = new ContentTitle;
+    title->setTitle(trName);
+    QFont font = title->font();
+    font.setWeight(QFont::Medium);
+    title->setSpacing(10);
+    title->setFont(font);
+    DFontSizeManager::instance()->bind(title, DFontSizeManager::T5);
+
+    return qMakePair(title, nullptr);
 }
 
 QWidget *createUnsupportHandle(QObject *opt)
@@ -470,12 +503,9 @@ QWidget *createUnsupportHandle(QObject *opt)
     rightWidget->setFixedHeight(24);
     rightWidget->setObjectName("OptionUnsupport");
     rightWidget->setText("Unsupport option type: " + option->viewType());
+    rightWidget->setWordWrap(true);
 
-    auto translateContext = opt->property(PRIVATE_PROPERTY_translateContext).toByteArray();
-    auto optionWidget = DSettingsWidgetFactory::createTwoColumWidget(translateContext, option, rightWidget);
-
-//    optionWidget->setStyleSheet("QFrame{border: 1px solid red;}");
-    return  optionWidget;
+    return  rightWidget;
 }
 
 class DSettingsWidgetFactoryPrivate
@@ -483,17 +513,21 @@ class DSettingsWidgetFactoryPrivate
 public:
     DSettingsWidgetFactoryPrivate(DSettingsWidgetFactory *parent) : q_ptr(parent)
     {
-        widgetCreateHandles.insert("checkbox", createCheckboxOptionHandle);
-        widgetCreateHandles.insert("lineedit", createLineEditOptionHandle);
-        widgetCreateHandles.insert("combobox", createComboBoxOptionHandle);
-        widgetCreateHandles.insert("shortcut", createShortcutEditOptionHandle);
-        widgetCreateHandles.insert("spinbutton", createSpinButtonOptionHandle);
-        widgetCreateHandles.insert("buttongroup", createButtonGroupOptionHandle);
-        widgetCreateHandles.insert("radiogroup", createRadioGroupOptionHandle);
-        widgetCreateHandles.insert("slider", createSliderOptionHandle);
+        itemCreateHandles.insert("checkbox", createCheckboxOptionHandle);
+        itemCreateHandles.insert("lineedit", createLineEditOptionHandle);
+        itemCreateHandles.insert("combobox", createComboBoxOptionHandle);
+        itemCreateHandles.insert("shortcut", createShortcutEditOptionHandle);
+        itemCreateHandles.insert("spinbutton", createSpinButtonOptionHandle);
+        itemCreateHandles.insert("buttongroup", createButtonGroupOptionHandle);
+        itemCreateHandles.insert("radiogroup", createRadioGroupOptionHandle);
+        itemCreateHandles.insert("slider", createSliderOptionHandle);
+        itemCreateHandles.insert("switchbutton", createSwitchButton);
+        itemCreateHandles.insert("title1", createTitle1);
+        itemCreateHandles.insert("title2", createTitle2);
     }
 
     QMap<QString, std::function<DSettingsWidgetFactory::WidgetCreateHandler> > widgetCreateHandles;
+    QMap<QString, std::function<DSettingsWidgetFactory::ItemCreateHandler> > itemCreateHandles;
 
     DSettingsWidgetFactory *q_ptr;
     Q_DECLARE_PUBLIC(DSettingsWidgetFactory)
@@ -519,6 +553,12 @@ void DSettingsWidgetFactory::registerWidget(const QString &viewType, std::functi
 {
     Q_D(DSettingsWidgetFactory);
     d->widgetCreateHandles.insert(viewType, handler);
+}
+
+void DSettingsWidgetFactory::registerWidget(const QString &viewType, std::function<DSettingsWidgetFactory::ItemCreateHandler> handler)
+{
+    Q_D(DSettingsWidgetFactory);
+    d->itemCreateHandles.insert(viewType, handler);
 }
 
 /*!
@@ -549,6 +589,24 @@ QWidget *DSettingsWidgetFactory::createWidget(const QByteArray &translateContext
     } else {
         return createUnsupportHandle(option.data());
     }
+}
+
+QPair<QWidget *, QWidget *> DSettingsWidgetFactory::createItem(QPointer<Core::DSettingsOption> option) const
+{
+    return createItem(QByteArray(), option);
+}
+
+QPair<QWidget *, QWidget *> DSettingsWidgetFactory::createItem(const QByteArray &translateContext, QPointer<Core::DSettingsOption> option) const
+{
+    option->setProperty(PRIVATE_PROPERTY_translateContext, translateContext);
+
+    Q_D(const DSettingsWidgetFactory);
+    auto handle = d->itemCreateHandles.value(option->viewType());
+    if (handle) {
+        return handle(option.data());
+    }
+
+    return qMakePair(nullptr, nullptr);
 }
 
 DWIDGET_END_NAMESPACE

@@ -36,6 +36,9 @@ public:
     explicit Navigation(QWidget *parent = 0);
     ~Navigation();
 
+    bool groupIsVisible(const QString &key) const;
+    void setGroupVisible(const QString &key, bool visible);
+
 Q_SIGNALS:
     void selectedGroup(const QString &key);
 

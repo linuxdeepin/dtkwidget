@@ -80,7 +80,8 @@ DSettingsDialog::DSettingsDialog(QWidget *parent) :
     d->content = new Content;
 
     DFrame *rightFrame = new DFrame;
-    rightFrame->setContentsMargins(10, 10, 10, 0);
+    rightFrame->setLineWidth(0);
+    rightFrame->setContentsMargins(10, 10, 10, 10);
 
     QVBoxLayout *rightlayout = new QVBoxLayout(rightFrame);
     DTitlebar *frameBar = new DTitlebar;
@@ -89,19 +90,20 @@ DSettingsDialog::DSettingsDialog(QWidget *parent) :
 
     d->leftFrame->setObjectName("LeftFrame");
     d->content->setObjectName("RightFrame");
+    d->content->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     rightlayout->setMargin(0);
     rightlayout->addWidget(d->content);
 
     QHBoxLayout *bottomlayout = new QHBoxLayout;
-    bottomlayout->addWidget(d->leftFrame);
+    bottomlayout->addWidget(d->leftFrame, 0, Qt::AlignLeft);
     bottomlayout->addWidget(rightFrame);
     bottomlayout->setContentsMargins(0, 0, 0, 0);
 
     mainlayout->addWidget(frameBar);
     mainlayout->addLayout(bottomlayout);
 
-    setFixedWidth(680);
+    setMinimumWidth(680);
 
     connect(d->leftFrame, &Navigation::selectedGroup, d->content, &Content::onScrollToGroup);
     connect(d->content, &Content::scrollToGroup, d->leftFrame, [ = ](const QString & key) {
@@ -130,6 +132,12 @@ DSettingsWidgetFactory *DSettingsDialog::widgetFactory() const
 {
     Q_D(const DSettingsDialog);
     return  d->content->widgetFactory();
+}
+
+bool DSettingsDialog::groupIsVisible(const QString &groupKey) const
+{
+    Q_D(const DSettingsDialog);
+    return d->content->groupIsVisible(groupKey);
 }
 
 /*!
@@ -165,6 +173,13 @@ void DSettingsDialog::updateSettings(const QByteArray &translateContext, Core::D
     d->leftFrame->updateSettings(translateContext, settings);
     d->content->updateSettings(translateContext, settings);
     adjustSize();
+}
+
+void DSettingsDialog::setGroupVisible(const QString &groupKey, bool visible)
+{
+    Q_D(DSettingsDialog);
+    d->leftFrame->setGroupVisible(groupKey, visible);
+    d->content->setGroupVisible(groupKey, visible);
 }
 
 DWIDGET_END_NAMESPACE

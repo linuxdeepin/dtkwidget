@@ -31,7 +31,7 @@ DWIDGET_BEGIN_NAMESPACE
 
 class DSettingsWidgetFactory;
 class ContentPrivate;
-class LIBDTKWIDGETSHARED_EXPORT Content : public QFrame
+class LIBDTKWIDGETSHARED_EXPORT Content : public QWidget
 {
     Q_OBJECT
 public:
@@ -39,6 +39,9 @@ public:
     ~Content();
 
     DSettingsWidgetFactory* widgetFactory() const;
+    bool groupIsVisible(const QString &key) const;
+    void setGroupVisible(const QString &key, bool visible);
+
 Q_SIGNALS:
     void scrollToGroup(const QString &key);
 
@@ -48,6 +51,7 @@ public Q_SLOTS:
 
 private:
     void mouseMoveEvent(QMouseEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
 
     QScopedPointer<ContentPrivate> d_ptr;
     Q_DECLARE_PRIVATE_D(qGetPtrHelper(d_ptr), Content)
