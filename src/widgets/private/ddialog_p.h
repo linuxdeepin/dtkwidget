@@ -30,6 +30,7 @@ QT_END_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
 class DIconButton;
+class DTitlebar;
 class DVBoxWidget;
 class DHBoxWidget;
 
@@ -69,11 +70,12 @@ private:
     QLabel* messageLabel;
     QLabel* titleLabel;
 
-    DIconButton* closeButton = nullptr;
+    DIconButton *closeButton = nullptr;
+    DTitlebar   *titleBar = nullptr;
     QHBoxLayout *iconLayout;
     QVBoxLayout *contentLayout;
     QHBoxLayout *buttonLayout;
-    QHBoxLayout *topLayout;
+    QVBoxLayout *topLayout;
     const QScreen *targetScreen = nullptr;
 
     QList<QAbstractButton*> buttonList;

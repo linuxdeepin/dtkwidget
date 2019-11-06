@@ -40,6 +40,7 @@
 #include "ddialog.h"
 #include "dboxwidget.h"
 #include "DAnchors"
+#include "dtitlebar.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -79,20 +80,14 @@ void DDialogPrivate::init()
     D_Q(DDialog);
 
     // TopLayout
-    topLayout = new QHBoxLayout;
-    topLayout->setContentsMargins(DIALOG::ICON_LAYOUT_LEFT_MARGIN,
-                                  DIALOG::ICON_LAYOUT_TOP_MARGIN,
-                                  DIALOG::ICON_LAYOUT_RIGHT_MARGIN,
-                                  DIALOG::ICON_LAYOUT_BOTTOM_MARGIN);
-    topLayout->setSpacing(DIALOG::ICON_LAYOUT_SPACING);
-
+    topLayout = new QVBoxLayout;
+    topLayout->setContentsMargins(0, 0, 0, 0);
+    topLayout->setSpacing(0);
 
     // TopLayout--Icon
     iconLabel = new QLabel;
     iconLabel->hide();
     iconLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-
-    topLayout->addWidget(iconLabel);
 
     // TopLayout--TextLabel
     titleLabel = new QLabel;
@@ -109,8 +104,8 @@ void DDialogPrivate::init()
     textLayout->setContentsMargins(0, 0, 0, 0);
     textLayout->setSpacing(5);
     textLayout->addStretch();
-    textLayout->addWidget(titleLabel, 0, Qt::AlignLeft);
-    textLayout->addWidget(messageLabel, 0, Qt::AlignLeft);
+    textLayout->addWidget(titleLabel, 0, Qt::AlignHCenter);
+    textLayout->addWidget(messageLabel, 0, Qt::AlignHCenter);
     textLayout->addStretch();
 
     // TopLayout--ContentLayout
@@ -119,23 +114,25 @@ void DDialogPrivate::init()
     contentLayout->setSpacing(0);
     contentLayout->addLayout(textLayout);
 
-    topLayout->addLayout(contentLayout);
-
     // TopLayout--Close button
     closeButton = new DDialogCloseButton(q);
     closeButton->setObjectName("CloseButton");
     closeButton->setIconSize(QSize(DIALOG::CLOSE_BUTTON_WIDTH, DIALOG::CLOSE_BUTTON_HEIGHT));
     closeButton->adjustSize();
     closeButton->setAttribute(Qt::WA_NoMousePropagation);
+    closeButton->hide();
 
-    DAnchors<DIconButton> anchors_close_button(closeButton);
-    anchors_close_button.setMargins(10);
-    anchors_close_button.setAnchor(Qt::AnchorRight, q, Qt::AnchorRight);
-    anchors_close_button.setAnchor(Qt::AnchorTop, q, Qt::AnchorTop);
+    titleBar = new DTitlebar();
+    titleBar->setIcon(icon); //设置标题icon
+    QWidget *nullWidget = new QWidget();
+    titleBar->addWidget(nullWidget);
+    titleBar->setMenuVisible(false);
+    titleBar->setBackgroundTransparent(true);
+
+    topLayout->addWidget(titleBar);
+    topLayout->addLayout(contentLayout);
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
-    mainLayout->setContentsMargins(0, 0, 0, 0);
-    mainLayout->setSpacing(0);
 
     // MainLayout--TopLayout
     mainLayout->addLayout(topLayout);
@@ -143,13 +140,11 @@ void DDialogPrivate::init()
     // MainLayout--ButtonLayout
     buttonLayout = new QHBoxLayout;
     buttonLayout->setMargin(0);
-    buttonLayout->setSpacing(0);
     buttonLayout->setContentsMargins(DIALOG::BUTTON_LAYOUT_LEFT_MARGIN,
                                      DIALOG::BUTTON_LAYOUT_TOP_MARGIN,
                                      DIALOG::BUTTON_LAYOUT_RIGHT_MARGIN,
                                      DIALOG::BUTTON_LAYOUT_BOTTOM_MARGIN);
     mainLayout->addLayout(buttonLayout);
-
 
     QAction *button_action = new QAction(q);
 
@@ -545,18 +540,13 @@ void DDialog::insertButton(int index, QAbstractButton *button, bool isDefault)
 
     DVerticalLine *line = new DVerticalLine;
     line->setObjectName("VLine");
-    line->hide();
+    line->setFixedHeight(30);
 
-    if (index > 0 && index >= buttonCount()) {
-        DVerticalLine *label = qobject_cast<DVerticalLine *>(d->buttonLayout->itemAt(d->buttonLayout->count() - 1)->widget());
-        if (label)
-            line->show();
-    }
-
-    d->buttonLayout->insertWidget(index * 2, button);
+    d->buttonLayout->insertWidget(index * 2 , line);
+    d->buttonLayout->insertWidget(index * 2 + 1, button);
     d->buttonList << button;
-    d->buttonLayout->insertWidget(index * 2 + 1, line);
-
+    line->show();
+    d->buttonLayout->itemAt(0)->widget()->hide();
 
     connect(button, SIGNAL(clicked(bool)), this, SLOT(_q_onButtonClicked()));
 
@@ -911,10 +901,7 @@ void DDialog::setIcon(const QIcon &icon)
     d->icon = icon;
 
     if (!icon.isNull()) {
-        auto size = QSize(64, 64);
-        size = icon.availableSizes().value(0, size);
-        auto pixmap = icon.pixmap(size);
-        setIconPixmap(pixmap);
+        d->titleBar->setIcon(d->icon);
     }
 }
 

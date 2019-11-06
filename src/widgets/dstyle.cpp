@@ -1729,7 +1729,7 @@ int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QW
     case PM_DefaultLayoutSpacing:
         return 5;
     case PM_DefaultTopLevelMargin:
-        return pixelMetric(PM_TopLevelWindowRadius, opt, widget);
+        return pixelMetric(PM_TopLevelWindowRadius, opt, widget) / 2;
     case PM_MenuBarItemSpacing:
         return 6;
     case PM_IndicatorWidth:
