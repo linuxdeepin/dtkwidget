@@ -84,11 +84,6 @@ void DDialogPrivate::init()
     topLayout->setContentsMargins(0, 0, 0, 0);
     topLayout->setSpacing(0);
 
-    // TopLayout--Icon
-    iconLabel = new QLabel;
-    iconLabel->hide();
-    iconLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-
     // TopLayout--TextLabel
     titleLabel = new QLabel;
     titleLabel->setObjectName("TitleLabel");
@@ -113,14 +108,6 @@ void DDialogPrivate::init()
     contentLayout->setContentsMargins(0, 0, 0, 0);
     contentLayout->setSpacing(0);
     contentLayout->addLayout(textLayout);
-
-    // TopLayout--Close button
-    closeButton = new DDialogCloseButton(q);
-    closeButton->setObjectName("CloseButton");
-    closeButton->setIconSize(QSize(DIALOG::CLOSE_BUTTON_WIDTH, DIALOG::CLOSE_BUTTON_HEIGHT));
-    closeButton->adjustSize();
-    closeButton->setAttribute(Qt::WA_NoMousePropagation);
-    closeButton->hide();
 
     titleBar = new DTitlebar();
     titleBar->setIcon(icon); //设置标题icon
@@ -151,7 +138,6 @@ void DDialogPrivate::init()
     button_action->setShortcuts(QKeySequence::InsertParagraphSeparator);
     button_action->setAutoRepeat(false);
 
-    QObject::connect(closeButton, SIGNAL(clicked()), q, SLOT(close()));
     QObject::connect(button_action, SIGNAL(triggered(bool)), q, SLOT(_q_defaultButtonTriggered()));
 
     q->setLayout(mainLayout);
@@ -434,7 +420,11 @@ QPixmap DDialog::iconPixmap() const
 {
     D_DC(DDialog);
 
-    return *d->iconLabel->pixmap();
+    if (d->icon.isNull())  {
+        return QPixmap();
+    } else {
+        return d->icon.pixmap(d->icon.availableSizes().at(0));
+    }
 }
 
 Qt::TextFormat DDialog::textFormat() const
@@ -470,9 +460,7 @@ QMargins DDialog::contentLayoutContentsMargins() const
 
 bool DDialog::closeButtonVisible() const
 {
-    D_DC(DDialog);
-
-    return d->closeButton->isVisible();
+    return windowFlags().testFlag(Qt::WindowCloseButtonHint);
 }
 
 /*!
@@ -930,14 +918,7 @@ void DDialog::setIcon(const QIcon &icon, const QSize &expectedSize)
  */
 void DDialog::setIconPixmap(const QPixmap &iconPixmap)
 {
-    D_D(DDialog);
-
-    d->iconLabel->setPixmap(iconPixmap);
-    if (iconPixmap.isNull()) {
-        d->iconLabel->hide();
-    } else {
-        d->iconLabel->show();
-    }
+    setIcon(QIcon(iconPixmap));
 }
 
 /*!
@@ -989,9 +970,7 @@ int DDialog::exec()
 
 void DDialog::setCloseButtonVisible(bool closeButtonVisible)
 {
-    D_D(DDialog);
-
-    d->closeButton->setVisible(closeButtonVisible);
+    setWindowFlag(Qt::WindowCloseButtonHint, closeButtonVisible);
 }
 
 DDialog::DDialog(DDialogPrivate &dd, QWidget *parent) :
@@ -1040,8 +1019,8 @@ void DDialog::childEvent(QChildEvent *event)
     D_D(DDialog);
 
     if (event->added()) {
-        if (d->closeButton) {
-            d->closeButton->raise();
+        if (d->titleBar) {
+            d->titleBar->raise();
         }
     }
 }
@@ -1054,7 +1033,7 @@ void DDialog::resizeEvent(QResizeEvent *event)
 
 
     d->titleLabel->setWordWrap(false);
-    int labelMaxWidth = maximumWidth() - d->closeButton->width() - d->titleLabel->x();
+    int labelMaxWidth = maximumWidth();
 
     if (d->titleLabel->sizeHint().width() > labelMaxWidth) {
         d->titleLabel->setFixedWidth(labelMaxWidth);
@@ -1063,7 +1042,7 @@ void DDialog::resizeEvent(QResizeEvent *event)
     }
 
     d->messageLabel->setWordWrap(false);
-    labelMaxWidth = maximumWidth() - d->closeButton->width() - d->messageLabel->x();
+    labelMaxWidth = maximumWidth();
 
     if (d->messageLabel->sizeHint().width() > labelMaxWidth) {
         d->messageLabel->setFixedWidth(labelMaxWidth);

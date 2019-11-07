@@ -66,11 +66,9 @@ private:
     QString message;
     Qt::TextFormat textFormat;
 
-    QLabel* iconLabel;
     QLabel* messageLabel;
     QLabel* titleLabel;
 
-    DIconButton *closeButton = nullptr;
     DTitlebar   *titleBar = nullptr;
     QHBoxLayout *iconLayout;
     QVBoxLayout *contentLayout;
