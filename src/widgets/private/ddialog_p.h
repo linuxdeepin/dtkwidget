@@ -34,24 +34,6 @@ class DTitlebar;
 class DVBoxWidget;
 class DHBoxWidget;
 
-class DialogButton : public QPushButton {
-    Q_OBJECT
-    Q_PROPERTY(int buttonType READ buttonType WRITE setButtonType NOTIFY buttonTypeChanged)
-
-public:
-    explicit DialogButton(const QString &text, QWidget *parent = nullptr);
-    int buttonType() const;
-
-public Q_SLOTS:
-    void setButtonType(int buttonType);
-
-Q_SIGNALS:
-    void buttonTypeChanged(int buttonType);
-
-private:
-    int m_buttonType;
-};
-
 class DDialogPrivate : public DAbstractDialogPrivate
 {
 protected:
@@ -73,7 +55,6 @@ private:
     QHBoxLayout *iconLayout;
     QVBoxLayout *contentLayout;
     QHBoxLayout *buttonLayout;
-    QVBoxLayout *topLayout;
     const QScreen *targetScreen = nullptr;
 
     QList<QAbstractButton*> buttonList;

@@ -41,28 +41,10 @@
 #include "dboxwidget.h"
 #include "DAnchors"
 #include "dtitlebar.h"
+#include "dwarningbutton.h"
+#include "dsuggestbutton.h"
 
 DWIDGET_BEGIN_NAMESPACE
-
-DialogButton::DialogButton(const QString &text, QWidget *parent)
-    : QPushButton(text, parent)
-{
-
-}
-
-int DialogButton::buttonType() const
-{
-    return m_buttonType;
-}
-
-void DialogButton::setButtonType(int buttonType)
-{
-    if (m_buttonType == buttonType)
-        return;
-
-    m_buttonType = buttonType;
-    Q_EMIT buttonTypeChanged(buttonType);
-}
 
 DDialogPrivate::DDialogPrivate(DDialog *qq) :
     DAbstractDialogPrivate(qq)
@@ -78,11 +60,6 @@ QBoxLayout *DDialogPrivate::getContentLayout()
 void DDialogPrivate::init()
 {
     D_Q(DDialog);
-
-    // TopLayout
-    topLayout = new QVBoxLayout;
-    topLayout->setContentsMargins(0, 0, 0, 0);
-    topLayout->setSpacing(0);
 
     // TopLayout--TextLabel
     titleLabel = new QLabel;
@@ -105,7 +82,7 @@ void DDialogPrivate::init()
 
     // TopLayout--ContentLayout
     contentLayout = new QVBoxLayout;
-    contentLayout->setContentsMargins(0, 0, 0, 0);
+    contentLayout->setContentsMargins(10, 0, 10, 0);
     contentLayout->setSpacing(0);
     contentLayout->addLayout(textLayout);
 
@@ -116,16 +93,12 @@ void DDialogPrivate::init()
     titleBar->setMenuVisible(false);
     titleBar->setBackgroundTransparent(true);
 
-    topLayout->addWidget(titleBar);
-    topLayout->addLayout(contentLayout);
-
     QVBoxLayout *mainLayout = new QVBoxLayout;
 
     // MainLayout--TopLayout
-    mainLayout->addLayout(topLayout);
-    QMargins margins = mainLayout->contentsMargins();
-    margins.setTop(0);
-    mainLayout->setContentsMargins(margins);
+    mainLayout->addWidget(titleBar);
+    mainLayout->addLayout(contentLayout);
+    mainLayout->setContentsMargins(QMargins(0, 0, 0, 0));
 
     // MainLayout--ButtonLayout
     buttonLayout = new QHBoxLayout;
@@ -451,14 +424,14 @@ void DDialog::setContentLayoutContentsMargins(const QMargins &margins)
 {
     D_D(DDialog);
 
-    d->topLayout->setContentsMargins(margins);
+    d->contentLayout->setContentsMargins(margins);
 }
 
 QMargins DDialog::contentLayoutContentsMargins() const
 {
     D_DC(DDialog);
 
-    return d->topLayout->contentsMargins();
+    return d->contentLayout->contentsMargins();
 }
 
 bool DDialog::closeButtonVisible() const
@@ -510,9 +483,22 @@ int DDialog::addButtons(const QStringList &text)
  */
 void DDialog::insertButton(int index, const QString &text, bool isDefault, ButtonType type)
 {
-    DialogButton *button = new DialogButton(text);
+    QAbstractButton *button;
+
+    switch (type) {
+    case ButtonWarning:
+        button = new DWarningButton(this);
+        break;
+    case ButtonRecommend:
+        button = new DSuggestButton(this);
+        break;
+    default:
+        button = new QPushButton(this);
+        break;
+    }
+
+    button->setText(text);
     button->setObjectName("ActionButton");
-    button->setButtonType(type);
     button->setAttribute(Qt::WA_NoMousePropagation);
 
     insertButton(index, button, isDefault);

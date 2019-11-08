@@ -22,8 +22,10 @@
 #include <DApplicationSettings>
 #include <DWidgetUtil>
 #include <DLog>
+#include <DDialog>
 
 #include <QDebug>
+#include <QTextBrowser>
 
 DWIDGET_USE_NAMESPACE
 
@@ -36,6 +38,7 @@ int main(int argc, char *argv[])
     DApplication::loadDXcbPlugin();
 
     DApplication a(argc, argv);
+    qDebug() <<  a.arguments();
     DApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
     Dtk::Core::DLogManager::registerConsoleAppender();
 
@@ -53,9 +56,17 @@ int main(int argc, char *argv[])
     DApplicationSettings as;
     Q_UNUSED(as)
 
-    MainWindow w;
-    w.show();
-    Dtk::Widget::moveToCenter(&w);
+//    MainWindow w;
+//    w.show();
+//    Dtk::Widget::moveToCenter(&w);
+    DDialog dialog;
+
+    dialog.setIcon(QIcon::fromTheme("dde-file-manager"));
+    dialog.setTitle("title-----");
+    dialog.setMessage("message++++++");
+    dialog.addContent(new QLineEdit());
+    dialog.addButtons({"aaaa", "bbbb", "ccccc"});
+    dialog.show();
 
     return a.exec();
 }
