@@ -18,8 +18,8 @@
 #include "daboutdialog.h"
 #include "private/daboutdialog_p.h"
 
-#include "dthememanager.h"
 #include <dwidgetutil.h>
+#include <DSysInfo>
 
 #include <QDesktopServices>
 #include <QUrl>
@@ -80,6 +80,8 @@ void DAboutDialogPrivate::init()
 {
     D_Q(DAboutDialog);
 
+    q->setMinimumWidth(360);
+
     initWebsiteInfo();
 
     logoLabel = new QLabel();
@@ -92,7 +94,7 @@ void DAboutDialogPrivate::init()
     versionLabel->setObjectName("VersionLabel");
 
     companyLogoLabel = new QLabel();
-    companyLogoLabel->setPixmap(loadPixmap(":/images/deepin-logo.svg"));
+    companyLogoLabel->setPixmap(loadPixmap(":/images/uos.svg"));
 
     websiteLabel = new QLabel();
     websiteLabel->setObjectName("WebsiteLabel");
@@ -142,8 +144,8 @@ void DAboutDialogPrivate::init()
     mainLayout->addWidget(websiteLabel);
     mainLayout->setAlignment(websiteLabel, Qt::AlignCenter);
     mainLayout->addSpacing(5);
-    mainLayout->addWidget(acknowledgementLabel);
-    mainLayout->setAlignment(acknowledgementLabel, Qt::AlignCenter);
+//    mainLayout->addWidget(acknowledgementLabel);
+//    mainLayout->setAlignment(acknowledgementLabel, Qt::AlignCenter);
     mainLayout->addSpacing(12);
     mainLayout->addWidget(descriptionLabel, Qt::AlignHCenter);
     mainLayout->addSpacing(7);
@@ -159,21 +161,17 @@ void DAboutDialogPrivate::init()
 
 void DAboutDialogPrivate::initWebsiteInfo()
 {
-#ifdef Q_OS_LINUX
-    static const QString cfgPath = "/etc/deepin-version";
+//#ifdef Q_OS_LINUX
+//    bool isProfessional = DCORE_NAMESPACE::DSysInfo::deepinType() == DCORE_NAMESPACE::DSysInfo::DeepinProfessional;
 
-    bool isProfessional = false;
-    if (QFile::exists(cfgPath)) {
-        QSettings deepinVersion(cfgPath, QSettings::IniFormat);
-        isProfessional = deepinVersion.value("Release/Type").toString() == "Professional";
-    }
-
-    websiteName = isProfessional ? "www.deepin.com" : "www.deepin.org";
-    websiteLink = QString("https://www.deepin.org/original/%1/").arg(qApp->applicationName());
-#else
-    websiteName = "www.deepin.org";
-    websiteLink = "https://www.deepin.org";
-#endif
+//    websiteName = isProfessional ? "www.deepin.com" : "www.deepin.org";
+//    websiteLink = QString("https://www.deepin.org/original/%1/").arg(qApp->applicationName());
+//#else
+//    websiteName = "www.deepin.org";
+//    websiteLink = "https://www.deepin.org";
+//#endif
+    websiteName = "www.chinauos.com";
+    websiteLink = "https://www.chinauos.com";
 }
 
 void DAboutDialogPrivate::updateWebsiteLabel()
@@ -428,7 +426,7 @@ void DAboutDialog::setProductIcon(const QIcon &icon)
 {
     D_D(DAboutDialog);
 
-    d->logoLabel->setPixmap(icon.pixmap(QSizeF(96, 96).toSize()));
+    d->logoLabel->setPixmap(icon.pixmap(windowHandle(), QSize(96, 96)));
 }
 
 /*!
@@ -525,8 +523,9 @@ void DAboutDialog::setAcknowledgementLink(const QString &acknowledgementLink)
  */
 void DAboutDialog::setAcknowledgementVisible(bool visible)
 {
+    Q_UNUSED(visible)
     D_D(DAboutDialog);
-    d->acknowledgementLabel->setVisible(visible);
+//    d->acknowledgementLabel->setVisible(visible);
 }
 
 /*!

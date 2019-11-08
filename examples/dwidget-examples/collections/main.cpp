@@ -36,10 +36,10 @@ int main(int argc, char *argv[])
     DApplication::loadDXcbPlugin();
 
     DApplication a(argc, argv);
+    DApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
     Dtk::Core::DLogManager::registerConsoleAppender();
 
     a.loadTranslator();
-    a.setAttribute(Qt::AA_EnableHighDpiScaling, true);
 #ifdef Q_OS_UNIX
     a.setOOMScoreAdj(500);
 #endif

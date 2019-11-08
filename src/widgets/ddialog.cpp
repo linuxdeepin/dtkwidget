@@ -123,6 +123,9 @@ void DDialogPrivate::init()
 
     // MainLayout--TopLayout
     mainLayout->addLayout(topLayout);
+    QMargins margins = mainLayout->contentsMargins();
+    margins.setTop(0);
+    mainLayout->setContentsMargins(margins);
 
     // MainLayout--ButtonLayout
     buttonLayout = new QHBoxLayout;

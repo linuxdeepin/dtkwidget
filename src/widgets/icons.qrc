@@ -23,5 +23,6 @@
         <file>images/voice_activate.svg</file>
         <file>images/water_back.svg</file>
         <file>images/water_front.svg</file>
+        <file>images/uos.svg</file>
     </qresource>
 </RCC>
