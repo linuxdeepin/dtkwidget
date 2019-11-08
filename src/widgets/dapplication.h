@@ -62,9 +62,9 @@ public:
     void setOOMScoreAdj(const int score);
 #endif
 
-    bool setSingleInstance(const QString &key);
+    D_DECL_DEPRECATED_X("Use DGuiApplicationHelper::setSingleInstance") bool setSingleInstance(const QString &key);
 
-    bool setSingleInstance(const QString &key, SingleScope singleScope);
+    D_DECL_DEPRECATED_X("Use DGuiApplicationHelper::setSingleInstance") bool setSingleInstance(const QString &key, SingleScope singleScope);
 
     bool loadTranslator(QList<QLocale> localeFallback = QList<QLocale>() << QLocale::system());
 
