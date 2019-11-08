@@ -111,7 +111,8 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dtiplabel.h \
     $$PWD/dtooltip.h \
     $$PWD/dframe.h \
-    $$PWD/dshadowline.h
+    $$PWD/dshadowline.h \
+    $$PWD/dcoloredprogressbar.h
 
 SOURCES += $$PWD/dslider.cpp \
     $$PWD/dbackgroundgroup.cpp \
@@ -182,7 +183,8 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dtiplabel.cpp \
     $$PWD/dtooltip.cpp \
     $$PWD/dframe.cpp \
-    $$PWD/dshadowline.cpp
+    $$PWD/dshadowline.cpp \
+    $$PWD/dcoloredprogressbar.cpp
 
 RESOURCES += \
     $$PWD/icons.qrc \
@@ -333,4 +335,5 @@ includes.files += \
     $$PWD/DDialogCloseButton \
     $$PWD/DPasswordEdit \
     $$PWD/DTipLabel \
-    $$PWD/DShadowLine
+    $$PWD/DShadowLine \
+    $$PWD/DColoredProgressBar

@@ -21,12 +21,11 @@
 
 #include "dcircleprogress.h"
 #include "dwaterprogress.h"
+#include "dcoloredprogressbar.h"
 #include "dslider.h"
 
 BarTab::BarTab(QWidget *parent) : QFrame(parent)
 {
-    setStyleSheet("background-color:gray;");
-
     DTK_WIDGET_NAMESPACE::DCircleProgress *circleProgess = new DTK_WIDGET_NAMESPACE::DCircleProgress(this);
     circleProgess->setFixedSize(100, 100);
 
@@ -45,6 +44,22 @@ BarTab::BarTab(QWidget *parent) : QFrame(parent)
     sliderSize->setFixedWidth(100);
     sliderSize->setFixedHeight(20);
 
+    DTK_WIDGET_NAMESPACE::DColoredProgressBar *coloredpb = new DTK_WIDGET_NAMESPACE::DColoredProgressBar(this);
+    QLinearGradient lg(0, 0.5, 1, 0.5);
+    lg.setCoordinateMode(QGradient::CoordinateMode::ObjectBoundingMode);
+
+    lg.setColorAt(0, QColor(0xFF0080FF));
+    lg.setColorAt(1, QColor(0xFF06BEFD));
+    coloredpb->addThreshold(0, lg);
+
+    lg.setColorAt(0, QColor(0xFFF8AE2C));
+    lg.setColorAt(1, QColor(0xFFF8C366));
+    coloredpb->addThreshold(70, lg);
+
+    lg.setColorAt(0, QColor(0xFFFF6170));
+    lg.setColorAt(1, QColor(0xFFFF8C99));
+    coloredpb->addThreshold(90, lg);
+
     auto layout = new QVBoxLayout(this);
     auto sliderLayout = new QHBoxLayout;
     sliderLayout->addWidget(slider, 0, Qt::AlignHCenter | Qt::AlignTop);
@@ -53,15 +68,17 @@ BarTab::BarTab(QWidget *parent) : QFrame(parent)
     auto progressLayout = new QHBoxLayout;
     progressLayout->addWidget(circleProgess, 0, Qt::AlignHCenter | Qt::AlignTop);
     progressLayout->addWidget(waterProgess, 0, Qt::AlignHCenter | Qt::AlignTop);
+    progressLayout->addWidget(coloredpb, 0, Qt::AlignHCenter | Qt::AlignTop);
 
     layout->addLayout(sliderLayout);
     layout->addLayout(progressLayout);
     layout->addStretch();
 
-    connect(slider, &DTK_WIDGET_NAMESPACE::DSlider::valueChanged, [circleProgess, waterProgess](const int value) {
+    connect(slider, &DTK_WIDGET_NAMESPACE::DSlider::valueChanged, [circleProgess, waterProgess, coloredpb](const int value) {
         circleProgess->setText(QString::number(value) + "%");
         waterProgess->setValue(value);
         circleProgess->setValue(value);
+        coloredpb->setValue(value);
     });
     connect(sliderSize, &DTK_WIDGET_NAMESPACE::DSlider::valueChanged, [circleProgess, waterProgess](const int value) {
         waterProgess->setFixedSize(value, value);
