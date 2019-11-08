@@ -102,7 +102,7 @@ QWidget *DSettingsWidgetFactory::createTwoColumWidget(const QByteArray &translat
 
     if (!option->name().isEmpty()) {
         auto trName = DWIDGET_NAMESPACE::tr(translateContext, option->name().toStdString().c_str());
-        optionLayout->addRow(trName + ": ", rightWidget);
+        optionLayout->addRow(trName, rightWidget);
     } else {
         optionLayout->addWidget(rightWidget);
     }
