@@ -112,7 +112,8 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dtooltip.h \
     $$PWD/dframe.h \
     $$PWD/dshadowline.h \
-    $$PWD/dcoloredprogressbar.h
+    $$PWD/dcoloredprogressbar.h \
+    $$PWD/dkeysequenceedit.h
 
 SOURCES += $$PWD/dslider.cpp \
     $$PWD/dbackgroundgroup.cpp \
@@ -184,7 +185,8 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dtooltip.cpp \
     $$PWD/dframe.cpp \
     $$PWD/dshadowline.cpp \
-    $$PWD/dcoloredprogressbar.cpp
+    $$PWD/dcoloredprogressbar.cpp \
+    $$PWD/dkeysequenceedit.cpp
 
 RESOURCES += \
     $$PWD/icons.qrc \

@@ -46,7 +46,8 @@ HEADERS += \
     $$PWD/dfloatingmessage_p.h \
     $$PWD/dbuttonbox_p.h \
     $$PWD/dslider_p.h \
-    $$PWD/dtiplabel_p.h
+    $$PWD/dtiplabel_p.h \
+    $$PWD/dkeysequenceedit_p.h
 
 SOURCES += \
     $$PWD/dthemehelper.cpp
