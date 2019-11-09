@@ -140,7 +140,8 @@ bool DFloatingWidget::event(QEvent *event)
 {
     D_D(DFloatingWidget);
 
-    if (event->type() == QEvent::Polish) {
+    switch (event->type()) {
+    case QEvent::Polish: {
         DStyleHelper dstyle(style());
         int margins = dstyle.pixelMetric(DStyle::PM_FloatingWidgetShadowMargins, nullptr, this);
         setContentsMargins(margins, margins, margins, margins);
@@ -154,8 +155,20 @@ bool DFloatingWidget::event(QEvent *event)
 
             d->adjustPalette();
         }
-    } else if (event->type() == QEvent::PaletteChange) {
+        break;
+    }
+    case QEvent::PaletteChange: {
         d->adjustPalette();
+        break;
+    }
+    case QEvent::Resize: {
+        if (d->background) {
+            d->background->setGeometry(contentsRect());
+        }
+        break;
+    }
+    default:
+        break;
     }
 
     return QWidget::event(event);
