@@ -395,13 +395,13 @@ void drawMarkElement(QPainter *pa, const QRectF &rect)
 
 void drawSelectElement(QPainter *pa, const QRectF &rect)
 {
-    qreal y = rect.center().y();
-    qreal width = rect.bottom() / 3.0;
-    qreal radius = rect.bottom() / 10;
+    qreal radius = rect.width() / 15.0;
+    QPointF pointff = rect.center();
 
-    pa->drawEllipse(width, y, radius, radius);
-    pa->drawEllipse(width * 2, y, radius, radius);
-    pa->drawEllipse(width * 3, y, radius, radius);
+    pa->setBrush(QBrush(pa->pen().color()));
+    pa->drawEllipse(pointff, radius, radius);
+    pa->drawEllipse(pointff - QPointF(radius * 3.5, 0), radius, radius);
+    pa->drawEllipse(pointff + QPointF(radius * 3.5, 0), radius, radius);
 }
 
 void drawExpandElement(QPainter *pa, const QRectF &rect)
@@ -1986,7 +1986,7 @@ QBrush DStyle::generatedBrush(StateFlags flags, const QBrush &base, QPalette::Co
         case DPalette::ItemBackground: {
             DGuiApplicationHelper::ColorType ct = DGuiApplicationHelper::toColorType(colorNew);
             colorNew = ct == DGuiApplicationHelper::LightType ? adjustColor(colorNew, 0, 0, -10, 0, 0, 0, +10)
-                                                              : adjustColor(colorNew, 0, 0, +10, 0, 0, 0, +10);
+                       : adjustColor(colorNew, 0, 0, +10, 0, 0, 0, +10);
             break;
         }
         default:

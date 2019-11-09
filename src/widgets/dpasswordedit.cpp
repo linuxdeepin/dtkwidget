@@ -128,6 +128,8 @@ void DPasswordEditPrivate::init()
 
     QList<QWidget *> list;
     togglePasswordVisibleButton = new DIconButton(DStyle::SP_ShowPassword);
+    togglePasswordVisibleButton->setBackgroundRole(QPalette::ColorRole::Highlight);
+    togglePasswordVisibleButton->setIconSize(QSize(24, 24));
 
     list.append(togglePasswordVisibleButton);
     q->setRightWidgets(list);
