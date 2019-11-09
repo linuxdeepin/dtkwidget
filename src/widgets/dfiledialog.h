@@ -37,6 +37,7 @@ public:
     void addComboBox(const QString &text, const DComboBoxOptions &options);
     void addLineEdit(const QString &text);
     void addLineEdit(const QString &text, const DLineEditOptions &options);
+    void setAllowMixedSelection(bool on);
 
     QString getComboBoxValue(const QString &text) const;
     QString getLineEditValue(const QString &text) const;

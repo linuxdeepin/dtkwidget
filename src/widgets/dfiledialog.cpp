@@ -133,6 +133,21 @@ void DFileDialog::addLineEdit(const QString &text, const DFileDialog::DLineEditO
 }
 
 /*!
+ * \brief Allow mixed selection
+ *
+ * Allow user choose files and folders at the same time when selecting multiple files. By
+ * default user can only select files (folder not included) when selecting multiple files.
+ *
+ * Notice that this option only works when file mode is QFileDialog::ExistingFiles
+ *
+ * \param on enable this feature or not.
+ */
+void DFileDialog::setAllowMixedSelection(bool on)
+{
+    setProperty("_dtk_widget_filedialog_mixed_selection", on);
+}
+
+/*!
  * \~english \brief Get the added extra ComboBox value
  * \~chinese \brief 获得所追加的额外多选框的值
  *
