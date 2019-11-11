@@ -116,6 +116,19 @@ public:
 
     void setTextActionList(const DViewItemActionList &list);
     DViewItemActionList textActionList() const;
+
+    void setTextColorRole(DPalette::ColorType role);
+    void setTextColorRole(DPalette::ColorRole role);
+    DPalette::ColorType textColorType() const;
+    DPalette::ColorRole textColorRole() const;
+
+    void setBackgroundRole(DPalette::ColorType role);
+    void setBackgroundRole(DPalette::ColorRole role);
+    DPalette::ColorType backgroundType() const;
+    DPalette::ColorRole backgroundRole() const;
+
+    void setFontSize(DFontSizeManager::SizeType size);
+    QFont font() const;
 };
 
 DWIDGET_END_NAMESPACE

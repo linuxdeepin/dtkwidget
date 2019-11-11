@@ -630,6 +630,42 @@ QWidget *DViewItemAction::widget() const
     return d->widget;
 }
 
+static QPalette::ColorRole getViewItemColorRole(const QModelIndex &index, int role)
+{
+    const QVariant &value = index.data(role);
+
+    if (!value.isValid())
+        return QPalette::NoRole;
+
+    auto pair = qvariant_cast<QPair<int, int>>(value);
+
+    return static_cast<QPalette::ColorRole>(pair.first);
+}
+
+static DPalette::ColorType getViewItemColorType(const QModelIndex &index, int role)
+{
+    const QVariant &value = index.data(role);
+
+    if (!value.isValid())
+        return DPalette::NoType;
+
+    auto pair = qvariant_cast<QPair<int, int>>(value);
+
+    return static_cast<DPalette::ColorType>(pair.second);
+}
+
+static QFont getViewItemFont(const QModelIndex &index, int role)
+{
+    const QVariant &value = index.data(role);
+
+    if (!value.isValid()) {
+        return qvariant_cast<QFont>(index.data(Qt::FontRole));
+    }
+
+    DFontSizeManager::SizeType size = static_cast<DFontSizeManager::SizeType>(qvariant_cast<int>(value));
+    return DFontSizeManager::instance()->get(size);
+}
+
 DStyledItemDelegate::DStyledItemDelegate(QAbstractItemView *parent)
     : QStyledItemDelegate(parent)
     , DObject(*new DStyledItemDelegatePrivate(this))
@@ -989,6 +1025,32 @@ void DStyledItemDelegate::initStyleOption(QStyleOptionViewItem *option, const QM
             option->rect.adjust(0, 0, 0, 0 - d->itemSpacing);
         }
     }
+
+    DPalette::ColorType type = getViewItemColorType(index, Dtk::ViewItemForegroundRole);
+
+    if (type != DPalette::NoType) {
+        option->palette.setBrush(QPalette::Text, DApplicationHelper::instance()->palette(option->widget).brush(type));
+    } else {
+        QPalette::ColorRole role = getViewItemColorRole(index, Dtk::ViewItemForegroundRole);
+
+        if (role != QPalette::NoRole) {
+            option->palette.setBrush(QPalette::Text, lv->palette().brush(role));
+        }
+    }
+
+    type = getViewItemColorType(index, Dtk::ViewItemBackgroundRole);
+
+    if (type != DPalette::NoType) {
+        option->backgroundBrush = DApplicationHelper::instance()->palette(option->widget).brush(type);
+    } else {
+        QPalette::ColorRole role = getViewItemColorRole(index, Dtk::ViewItemBackgroundRole);
+
+        if (role != QPalette::NoRole) {
+            option->backgroundBrush = lv->palette().brush(role);
+        }
+    }
+
+    option->font = getViewItemFont(index, Dtk::ViewItemFontLevelRole);
 }
 
 bool DStyledItemDelegate::eventFilter(QObject *object, QEvent *event)
@@ -1166,6 +1228,56 @@ void DStandardItem::setTextActionList(const DViewItemActionList &list)
 DViewItemActionList DStandardItem::textActionList() const
 {
     return qvariant_cast<DViewItemActionList>(data(Dtk::TextActionListRole));
+}
+
+void DStandardItem::setTextColorRole(DPalette::ColorType role)
+{
+    setData(QVariant::fromValue(qMakePair((int)QPalette::NoRole, (int)role)), Dtk::ViewItemForegroundRole);
+}
+
+void DStandardItem::setTextColorRole(QPalette::ColorRole role)
+{
+    setData(QVariant::fromValue(qMakePair((int)role, (int)DPalette::NoType)), Dtk::ViewItemForegroundRole);
+}
+
+DPalette::ColorType DStandardItem::textColorType() const
+{
+    return getViewItemColorType(index(), Dtk::ViewItemForegroundRole);
+}
+
+QPalette::ColorRole DStandardItem::textColorRole() const
+{
+    return getViewItemColorRole(index(), Dtk::ViewItemForegroundRole);
+}
+
+void DStandardItem::setBackgroundRole(DPalette::ColorType role)
+{
+    setData(QVariant::fromValue(qMakePair((int)QPalette::NoRole, (int)role)), Dtk::ViewItemBackgroundRole);
+}
+
+void DStandardItem::setBackgroundRole(QPalette::ColorRole role)
+{
+    setData(QVariant::fromValue(qMakePair((int)role, (int)DPalette::NoType)), Dtk::ViewItemBackgroundRole);
+}
+
+DPalette::ColorType DStandardItem::backgroundType() const
+{
+    return getViewItemColorType(index(), Dtk::ViewItemBackgroundRole);
+}
+
+QPalette::ColorRole DStandardItem::backgroundRole() const
+{
+    return getViewItemColorRole(index(), Dtk::ViewItemBackgroundRole);
+}
+
+void DStandardItem::setFontSize(DFontSizeManager::SizeType size)
+{
+    setData((int)size, Dtk::ViewItemFontLevelRole);
+}
+
+QFont DStandardItem::font() const
+{
+    return getViewItemFont(index(), Dtk::ViewItemFontLevelRole);
 }
 
 DWIDGET_END_NAMESPACE

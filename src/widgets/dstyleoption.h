@@ -41,6 +41,9 @@ enum ItemDataRole {
     RightActionListRole,
     BottomActionListRole,
     TextActionListRole,
+    ViewItemFontLevelRole,
+    ViewItemBackgroundRole,
+    ViewItemForegroundRole,
     UserRole = Qt::UserRole << 2
 };
 
