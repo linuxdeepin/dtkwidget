@@ -45,6 +45,8 @@ QT_END_NAMESPACE
 DGUI_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
+static Qt::TextFormat textFormat = Qt::TextFormat::AutoText;
+
 /*!
  * \~chinese \brief DStyle::adjustColor调整颜色
  * \~chinese \sa DGuiApplicationHelper::adjustColor()
@@ -63,6 +65,23 @@ QColor DStyle::adjustColor(const QColor &base,
 QColor DStyle::blendColor(const QColor &substrate, const QColor &superstratum)
 {
     return DGuiApplicationHelper::blendColor(substrate, superstratum);
+}
+
+/*!
+ * \~chinese \brief DStyle::setTooltipTextFormat 设置 tooltip 文本格式
+ * \~chinese \sa Qt::TextFormat
+ */
+void DStyle::setTooltipTextFormat(Qt::TextFormat format)
+{
+    textFormat = format;
+}
+/*!
+ * \~chinese \brief DStyle::tooltipTextFormat 获取 tooltip 文本格式
+ * \~chinese \sa Qt::TextFormat
+ */
+Qt::TextFormat DStyle::tooltipTextFormat()
+{
+    return textFormat;
 }
 
 namespace DDrawUtils {

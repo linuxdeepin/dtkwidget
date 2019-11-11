@@ -221,6 +221,8 @@ public:
                               qint8 redFloat = 0, qint8 greenFloat = 0, qint8 blueFloat = 0, qint8 alphaFloat = 0);
     static QColor blendColor(const QColor &substrate, const QColor &superstratum);
 
+    static void setTooltipTextFormat(Qt::TextFormat format);
+    static Qt::TextFormat tooltipTextFormat();
     DStyle();
 
     static void drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, const QStyleOption *opt, QPainter *p, const QWidget *w = nullptr);
