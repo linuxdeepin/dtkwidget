@@ -37,6 +37,7 @@ public:
 
     DSettingsWidgetFactory* widgetFactory() const;
     bool groupIsVisible(const QString &groupKey) const;
+    void setResetVisible(bool visible);
 
 public Q_SLOTS:
     void updateSettings(DTK_CORE_NAMESPACE::DSettings *settings);

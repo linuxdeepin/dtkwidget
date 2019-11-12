@@ -21,6 +21,7 @@
 #include <QHBoxLayout>
 
 #include <DSettingsOption>
+#include <DSuggestButton>
 #include <DSettings>
 #include <DTitlebar>
 #include <DFrame>
@@ -138,6 +139,21 @@ bool DSettingsDialog::groupIsVisible(const QString &groupKey) const
 {
     Q_D(const DSettingsDialog);
     return d->content->groupIsVisible(groupKey);
+}
+
+/*!
+ * /~chinese \brief DSettingsDialog::setResetVisible 设置恢复默认设置按钮是否显示
+ * /~chinese \param visible true显示 false隐藏
+ * /~chinese \note 请在 updateSettings() 后调用
+ */
+void DSettingsDialog::setResetVisible(bool visible)
+{
+    D_D(DSettingsDialog);
+    DSuggestButton *btn = d->content->findChild<DSuggestButton *>();
+    if (btn == nullptr)
+        return;
+    btn->setVisible(visible);
+
 }
 
 /*!
