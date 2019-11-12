@@ -1523,36 +1523,45 @@ case SP_##Value: { \
         return QIcon(icon_engine);}
 
     switch (st) {
-        CASE_ICON(ForkElement)
-        CASE_ICON(DecreaseElement)
-        CASE_ICON(IncreaseElement)
-        CASE_ICON(MarkElement)
-        CASE_ICON(SelectElement)
-        CASE_ICON(ExpandElement)
-        CASE_ICON(ReduceElement)
-        CASE_ICON(LockElement)
-        CASE_ICON(UnlockElement)
-        CASE_ICON(ArrowEnter)
-        CASE_ICON(ArrowLeave)
-        CASE_ICON(ArrowNext)
-        CASE_ICON(ArrowPrev)
-        CASE_ICON(CloseButton)
-        CASE_ICON(IndicatorUnchecked)
-        CASE_ICON(IndicatorChecked)
-        CASE_ICON(DeleteButton)
-        CASE_ICON(AddButton)
+    CASE_ICON(ForkElement)
+    CASE_ICON(UnlockElement)
+    CASE_ICON(CloseButton)
+    CASE_ICON(IndicatorUnchecked)
+    CASE_ICON(IndicatorChecked)
+    CASE_ICON(DeleteButton)
+    CASE_ICON(AddButton)
+    CASE_ICON(SelectElement)
+
+    case SP_DecreaseElement:
+        return QIcon::fromTheme("button_reduce");
+    case SP_IncreaseElement:
+        return QIcon::fromTheme("button_add");
+    case SP_MarkElement:
+        return QIcon::fromTheme("mark_indicator");
+    case SP_LockElement:
+        return QIcon::fromTheme("caps_lock");
+    case SP_ExpandElement:
+        return QIcon::fromTheme("go-up");
+    case SP_ReduceElement:
+        return QIcon::fromTheme("go-down");
+    case SP_ArrowEnter:
+    case SP_ArrowNext:
+        return QIcon::fromTheme("go-next");
+    case SP_ArrowLeave:
+    case SP_ArrowPrev:
+        return QIcon::fromTheme("go-pervious");
     case SP_EditElement:
         return QIcon::fromTheme("edit");
     case SP_MediaVolumeLowElement:
-        return QIcon::fromTheme("volume_low");
+        return QIcon::fromTheme("audio-volume-low");
     case SP_MediaVolumeHighElement:
-        return QIcon::fromTheme("volume_high");
+        return QIcon::fromTheme("audio-volume-medimu");
     case SP_MediaVolumeMutedElement:
-        return QIcon::fromTheme("volume_mute");
+        return QIcon::fromTheme("audio-volume-muted");
     case SP_MediaVolumeLeftElement:
-        return QIcon::fromTheme("sound_left");
+        return QIcon::fromTheme("audio-volume-left");
     case SP_MediaVolumeRightElement:
-        return QIcon::fromTheme("sound_right");
+        return QIcon::fromTheme("audio-volume-right");
     case SP_IndicatorMajuscule:
         return QIcon::fromTheme("caps_lock");
     case SP_ShowPassword:
@@ -1832,13 +1841,8 @@ QIcon DStyle::standardIcon(QStyle::StandardPixmap st, const QStyleOption *opt, c
         CASE_ICON(TitleBarMaxButton)
         CASE_ICON(TitleBarCloseButton)
         CASE_ICON(TitleBarNormalButton)
-        CASE_ICON(ArrowUp)
-        CASE_ICON(ArrowDown)
-        CASE_ICON(ArrowLeft)
-        CASE_ICON(ArrowRight)
-        CASE_ICON(ArrowBack)
-        CASE_ICON(ArrowForward)
-        CASE_ICON(LineEditClearButton)
+    case SP_LineEditClearButton:
+            return QIcon::fromTheme("button_edit-clear");
         break;
     default:
         break;
