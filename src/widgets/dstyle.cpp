@@ -1523,23 +1523,28 @@ case SP_##Value: { \
         return QIcon(icon_engine);}
 
     switch (st) {
-    CASE_ICON(ForkElement)
-    CASE_ICON(UnlockElement)
-    CASE_ICON(CloseButton)
-    CASE_ICON(IndicatorUnchecked)
-    CASE_ICON(IndicatorChecked)
     CASE_ICON(DeleteButton)
     CASE_ICON(AddButton)
     CASE_ICON(SelectElement)
 
+    case SP_IndicatorUnchecked:
+        return QIcon::fromTheme("unselected_indicator");
+    case SP_IndicatorChecked:
+        return QIcon::fromTheme("selected_indicator");
+    case SP_ForkElement:
+        return QIcon::fromTheme("fork_indicator");
+    case SP_CloseButton:
+        return QIcon::fromTheme("window-close_round");
     case SP_DecreaseElement:
         return QIcon::fromTheme("button_reduce");
     case SP_IncreaseElement:
         return QIcon::fromTheme("button_add");
     case SP_MarkElement:
         return QIcon::fromTheme("mark_indicator");
+    case SP_UnlockElement:
+        return QIcon::fromTheme("unlock_indicator");
     case SP_LockElement:
-        return QIcon::fromTheme("caps_lock");
+        return QIcon::fromTheme("lock_indicator");
     case SP_ExpandElement:
         return QIcon::fromTheme("go-up");
     case SP_ReduceElement:
@@ -1549,7 +1554,7 @@ case SP_##Value: { \
         return QIcon::fromTheme("go-next");
     case SP_ArrowLeave:
     case SP_ArrowPrev:
-        return QIcon::fromTheme("go-pervious");
+        return QIcon::fromTheme("go-previous");
     case SP_EditElement:
         return QIcon::fromTheme("edit");
     case SP_MediaVolumeLowElement:
