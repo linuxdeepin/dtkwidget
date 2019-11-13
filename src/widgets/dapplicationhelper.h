@@ -44,6 +44,7 @@ private:
     ~DApplicationHelper();
 
     bool eventFilter(QObject *watched, QEvent *event) override;
+    bool event(QEvent *event) override;
 
     friend class _DApplicationHelper;
 };

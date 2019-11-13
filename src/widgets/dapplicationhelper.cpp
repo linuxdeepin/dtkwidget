@@ -19,6 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "dapplicationhelper.h"
+#include "dstyleoption.h"
 
 #include <QWidget>
 
@@ -156,6 +157,15 @@ bool DApplicationHelper::eventFilter(QObject *watched, QEvent *event)
     }
 
     return DGuiApplicationHelper::eventFilter(watched, event);
+}
+
+bool DApplicationHelper::event(QEvent *event)
+{
+    if (event->type() == QEvent::ApplicationFontChange) {
+        DFontSizeManager::instance()->setFontGenericPixelSize(DFontSizeManager::fontPixelSize(qGuiApp->font()));
+    }
+
+    return DGuiApplicationHelper::event(event);
 }
 
 DWIDGET_END_NAMESPACE

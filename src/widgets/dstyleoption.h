@@ -197,6 +197,8 @@ public:
     inline const QFont t10(const QFont &base = QFont()) const
     { return get(T10, base); }
 
+    static int fontPixelSize(const QFont &font);
+
 private:
     DFontSizeManager();
 

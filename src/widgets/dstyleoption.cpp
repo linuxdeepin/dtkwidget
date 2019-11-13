@@ -19,6 +19,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#define private public
+#include <QFont>
+#undef private
+
 #include "dstyleoption.h"
 
 #include "dlineedit.h"
@@ -26,6 +30,10 @@
 #include "dapplicationhelper.h"
 
 #include <QGuiApplication>
+#include <qmath.h>
+#include <private/qfont_p.h>
+
+#include <cmath>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -176,6 +184,10 @@ void DStyleOptionBackgroundGroup::init(const QWidget *widget)
 class DFontSizeManagerPrivate
 {
 public:
+    DFontSizeManagerPrivate() {
+        fontPixelSizeDiff = DFontSizeManager::fontPixelSize(qGuiApp->font()) - fontPixelSize[DFontSizeManager::T6];
+    }
+
     QList<QWidget*> binderMap[DFontSizeManager::NSizeTypes];
     quint16 fontPixelSize[DFontSizeManager::NSizeTypes] = {40, 30, 24, 20, 17, 14, 13, 12, 11, 10};
     quint8 fontGenericSizeType = DFontSizeManager::T6;
@@ -328,6 +340,17 @@ const QFont DFontSizeManager::get(DFontSizeManager::SizeType type, const QFont &
     font.setPixelSize(fontPixelSize(type));
 
     return font;
+}
+
+int DFontSizeManager::fontPixelSize(const QFont &font)
+{
+    int px = font.pixelSize();
+
+    if (px == -1) {
+        px = qRound(std::floor(((font.pointSizeF() * font.d->dpi) / 72) * 100 + 0.5) / 100);
+    }
+
+    return px;
 }
 
 /*!
