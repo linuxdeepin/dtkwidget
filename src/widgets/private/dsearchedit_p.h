@@ -45,6 +45,7 @@ public:
 
     void _q_toEditMode(bool focus);
     void _q_onVoiceActionTrigger(bool checked);
+    void _q_clearFocus();
 
 public:
     QAction *action;

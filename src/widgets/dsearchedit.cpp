@@ -39,6 +39,7 @@
 #include <QTimer>
 #include <QAudioDeviceInfo>
 #include <QCoreApplication>
+#include <QToolButton>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -275,6 +276,18 @@ void DSearchEditPrivate::init()
     center_layout->addWidget(label, 0, Qt::AlignCenter);
     layout->addWidget(iconWidget, 0, Qt::AlignCenter);
 
+    QAction* clearAction = q->lineEdit()->findChild<QAction *>(QLatin1String("_q_qlineeditclearaction"));
+
+    if (clearAction != nullptr) {
+        QList<QToolButton *> list = q->lineEdit()->findChildren<QToolButton *>();
+
+        for (int i = 0; i < list.count(); i++) {
+            if (list.at(i)->defaultAction() == clearAction) {
+                q->connect(list.at(i), SIGNAL(clicked()), q, SLOT(_q_clearFocus()));
+            }
+        }
+    }
+
 #ifdef ENABLE_XFYUN
     // 语音输入按钮
     voiceAction = new QAction(q);
@@ -343,6 +356,13 @@ void DSearchEditPrivate::_q_onVoiceActionTrigger(bool checked)
         }
     }
 #endif
+}
+
+void DSearchEditPrivate::_q_clearFocus()
+{
+    Q_Q(DSearchEdit);
+    q->setFocus();
+    Q_EMIT q->searchAborted();
 }
 
 DWIDGET_END_NAMESPACE

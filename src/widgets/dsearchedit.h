@@ -36,12 +36,14 @@ public:
 
 Q_SIGNALS:
     void voiceInputFinished();
+    void searchAborted();
 
 protected:
     Q_DISABLE_COPY(DSearchEdit)
     D_DECLARE_PRIVATE(DSearchEdit)
     Q_PRIVATE_SLOT(d_func(), void _q_toEditMode(bool))
     D_PRIVATE_SLOT(void _q_onVoiceActionTrigger(bool))
+    D_PRIVATE_SLOT(void _q_clearFocus())
 };
 
 DWIDGET_END_NAMESPACE
