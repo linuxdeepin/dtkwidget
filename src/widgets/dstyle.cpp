@@ -1334,10 +1334,10 @@ int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyle
     case PM_IconButtonIconSize: {
         if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton *>(opt)) {
             if (btn->features & DStyleOptionButton::FloatingButton) {
-                return 19;
+                return 20;
             }
         }
-        return 11;
+        return 16;
     }
     case PM_SwitchButtonHandleWidth:
         return 30;
