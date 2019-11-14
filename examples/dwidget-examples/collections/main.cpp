@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     a.setOOMScoreAdj(500);
 #endif
 
-    if (!a.setSingleInstance("deepin-tool-kit-examples")) {
+    if (!DGuiApplicationHelper::setSingleInstance("deepin-tool-kit-examples")) {
         qDebug() << "another instance is running!!";
     }
 
@@ -56,17 +56,9 @@ int main(int argc, char *argv[])
     DApplicationSettings as;
     Q_UNUSED(as)
 
-//    MainWindow w;
-//    w.show();
-//    Dtk::Widget::moveToCenter(&w);
-    DDialog dialog;
-
-    dialog.setIcon(QIcon::fromTheme("dde-file-manager"));
-    dialog.setTitle("title-----");
-    dialog.setMessage("message++++++");
-    dialog.addContent(new QLineEdit());
-    dialog.addButtons({"aaaa", "bbbb", "ccccc"});
-    dialog.show();
+    MainWindow w;
+    w.show();
+    Dtk::Widget::moveToCenter(&w);
 
     return a.exec();
 }

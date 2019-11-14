@@ -247,7 +247,7 @@ void DSearchEditPrivate::init()
     action->setIcon(DStyleHelper(q->style()).standardIcon(DStyle::SP_IndicatorSearch, nullptr));
     q->lineEdit()->addAction(action, QLineEdit::LeadingPosition);
     action->setVisible(false);
-    iconbtn->setIconSize(QSize(20, 20));
+    iconbtn->setIconSize(QSize(32, 32));
 
     DPalette pe;
     QStyleOption opt;
