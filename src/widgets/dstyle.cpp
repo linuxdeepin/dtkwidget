@@ -1337,7 +1337,7 @@ int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyle
                 return 20;
             }
         }
-        return 16;
+        return 12;
     }
     case PM_SwitchButtonHandleWidth:
         return 30;
@@ -1789,12 +1789,12 @@ int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QW
         return pixelMetric(PM_TopLevelWindowRadius, opt, widget);
     case PM_SmallIconSize:
     case PM_ButtonIconSize:
-        return 17;
+        return 16;
     case PM_ListViewIconSize:
     case PM_LargeIconSize:
-        return 25;
+        return 24;
     case PM_IconViewIconSize:
-        return 33;
+        return 32;
     case PM_ScrollView_ScrollBarOverlap:
         return true;
     default:
