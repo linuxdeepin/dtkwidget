@@ -89,7 +89,14 @@ void DTipLabel::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);
     QPainter p(this);
-    p.drawText(contentsRect(), alignment(), text());
+
+    QTextOption opt(alignment());
+
+    if (wordWrap()) {
+        opt.setWrapMode(QTextOption::WordWrap);
+    }
+
+    p.drawText(contentsRect(), text(), opt);
 }
 
 DTipLabelPrivate::DTipLabelPrivate(DTipLabel *q)
