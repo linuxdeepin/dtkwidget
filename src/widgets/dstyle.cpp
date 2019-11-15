@@ -1560,7 +1560,7 @@ case SP_##Value: { \
     case SP_MediaVolumeLowElement:
         return QIcon::fromTheme("audio-volume-low");
     case SP_MediaVolumeHighElement:
-        return QIcon::fromTheme("audio-volume-medimu");
+        return QIcon::fromTheme("audio-volume-medium");
     case SP_MediaVolumeMutedElement:
         return QIcon::fromTheme("audio-volume-muted");
     case SP_MediaVolumeLeftElement:
