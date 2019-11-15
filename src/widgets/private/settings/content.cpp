@@ -85,7 +85,8 @@ Content::Content(QWidget *parent)
     d->contentFrame->setObjectName("SettingsContent");
     d->contentLayout = new QFormLayout(d->contentFrame);
     d->contentLayout->setRowWrapPolicy(QFormLayout::DontWrapRows);
-    d->contentLayout->setLabelAlignment(Qt::AlignRight);
+    d->contentLayout->setLabelAlignment(Qt::AlignLeft);
+    d->contentLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
     layout->addWidget(d->contentArea);
 
     d->contentArea->setWidget(d->contentFrame);
@@ -209,11 +210,9 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
         auto title = new ContentTitle;
         title->setTitle(trName);
         title->setProperty("key", groupKey);
+        title->label()->setForegroundRole(QPalette::BrightText);
 
-        QFont font = title->font();
-        font.setBold(true);
-        title->setFont(font);
-        DFontSizeManager::instance()->bind(title, DFontSizeManager::T4);
+        DFontSizeManager::instance()->bind(title, DFontSizeManager::T4, QFont::Medium);
         d->contentLayout->setWidget(d->contentLayout->rowCount(), QFormLayout::LabelRole, title);
         d->sortTitles.push_back(title);
         d->titles.insert(groupKey, title);
@@ -231,13 +230,9 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
                 auto title = new ContentTitle;
 
                 title->setTitle(trName);
-                QFont font = title->font();
-                font.setWeight(QFont::Medium);
-                title->setFont(font);
-                DFontSizeManager::instance()->bind(title, DFontSizeManager::T5);
+                DFontSizeManager::instance()->bind(title, DFontSizeManager::T5, QFont::Medium);
                 title->setProperty("key", subgroup->key());
                 title->setProperty("_d_dtk_group_key", current_groupKey);
-                title->setSpacing(10);
 
                 d->contentLayout->setWidget(d->contentLayout->rowCount(), QFormLayout::LabelRole, title);
                 d->sortTitles.push_back(title);

@@ -18,7 +18,7 @@
 #pragma once
 
 #include <QScopedPointer>
-#include <QWidget>
+#include <QLabel>
 
 class ContentTitlePrivate;
 class ContentTitle : public QWidget
@@ -29,7 +29,7 @@ public:
     ~ContentTitle();
 
     void setSpacing(int width);
-Q_SIGNALS:
+    QLabel *label() const;
 
 public Q_SLOTS:
     void setTitle(const QString &title);

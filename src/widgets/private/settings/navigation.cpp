@@ -136,16 +136,7 @@ void Navigation::updateSettings(const QByteArray &translateContext, QPointer<DTK
 {
     Q_D(Navigation);
 
-    bool first = true;
     for (auto groupKey : settings->groupKeys()) {
-        if (!first) {
-            auto item = new QStandardItem;
-            item->setData("", Qt::DisplayRole);
-            item->setData(NavigationDelegate::Split, NavigationDelegate::NavLevelRole);
-            d->navbarModel->appendRow(item);
-        }
-        first = false;
-
         auto group = settings->group(groupKey);
         if (group->isHidden()) {
             continue;

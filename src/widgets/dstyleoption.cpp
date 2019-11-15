@@ -219,6 +219,11 @@ DFontSizeManager *DFontSizeManager::instance()
     return &manager;
 }
 
+void DFontSizeManager::bind(QWidget *widget, DFontSizeManager::SizeType type)
+{
+    bind(widget, type, widget->font().weight());
+}
+
 /*!
  * \~chinese \enum DFontSizeManager::SizeType
  * \~chinese DFontSizeManager::SizeType 定义了 DFontSizeManager 的系统字体的定义的大小; 而系统只会设置 T6 为系统默认的字体
@@ -253,12 +258,12 @@ DFontSizeManager *DFontSizeManager::instance()
  * \~chinese \param[in] widget 将要绑定字体大小枚举数值的控件
  * \~chinese \param[int] type 字体的枚举类型, 每一个枚举数值对应着一个字体像素大小
  */
-void DFontSizeManager::bind(QWidget *widget, DFontSizeManager::SizeType type)
+void DFontSizeManager::bind(QWidget *widget, DFontSizeManager::SizeType type, int weight)
 {
     unbind(widget);
 
     d->binderMap[type].append(widget);
-    widget->setFont(get(type, widget->font()));
+    widget->setFont(get(type, weight, widget->font()));
 
     QObject::connect(widget, &QWidget::destroyed, [this, widget] {
         unbind(widget);
@@ -327,17 +332,23 @@ void DFontSizeManager::setFontGenericPixelSize(quint16 size)
     }
 }
 
+const QFont DFontSizeManager::get(DFontSizeManager::SizeType type, const QFont &base) const
+{
+    return get(type, base.weight(), base);
+}
+
 /*!
  * \~chinese \brief 获取字体
  * \~chinese \param[in] type 字体的大小枚举
  * \~chinese \param[in] base 将改变大小的字体
  * \~chinese \return 返回设置字体大小后的字体
  */
-const QFont DFontSizeManager::get(DFontSizeManager::SizeType type, const QFont &base) const
+const QFont DFontSizeManager::get(DFontSizeManager::SizeType type, int weight, const QFont &base) const
 {
     QFont font = base;
 
     font.setPixelSize(fontPixelSize(type));
+    font.setWeight(weight);
 
     return font;
 }

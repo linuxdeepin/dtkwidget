@@ -49,8 +49,7 @@ void NavigationDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
     case Level1: {
         QColor pen = option.palette.color(isSelected ? QPalette::HighlightedText : QPalette::BrightText);
         painter->setPen(pen);
-        opt.font.setBold(true);
-        painter->setFont(DFontSizeManager::instance()->get(DFontSizeManager::T4, opt.font));
+        painter->setFont(DFontSizeManager::instance()->get(DFontSizeManager::T4, QFont::Medium, opt.font));
         QRect rect = opt.rect.marginsRemoved(QMargins(10, 0, 10, 0));
         auto text = opt.fontMetrics.elidedText(index.data().toString(), Qt::ElideMiddle, rect.width());
         painter->drawText(rect, Qt::AlignLeft | Qt::AlignVCenter, text);

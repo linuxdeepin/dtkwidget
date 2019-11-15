@@ -207,7 +207,7 @@ QPair<QWidget *, QWidget *> createCheckboxOptionHandle(QObject *opt)
         rightWidget->update();
     });
 
-    return qMakePair(nullptr, rightWidget);
+    return qMakePair(rightWidget, nullptr);
 }
 
 QPair<QWidget *, QWidget *> createLineEditOptionHandle(QObject *opt)
@@ -380,7 +380,7 @@ QPair<QWidget *, QWidget *> createRadioGroupOptionHandle(QObject *opt)
         buttonList.value(index)->setChecked(true);
     }
 
-    return DSettingsWidgetFactory::createStandardItem(translateContext, option, rightWidget);
+    return qMakePair(rightWidget, nullptr);
 }
 
 QPair<QWidget *, QWidget *> createSpinButtonOptionHandle(QObject *opt)
@@ -460,7 +460,12 @@ QPair<QWidget *, QWidget *> createSwitchButton(QObject *opt)
         rightWidget->update();
     });
 
-    return DSettingsWidgetFactory::createStandardItem(translateContext, option, rightWidget);
+    QWidget *widget = new  QWidget();
+    QHBoxLayout *layout = new QHBoxLayout(widget);
+    layout->setContentsMargins(0, 0, 0, 0);
+    layout->addWidget(rightWidget, 0, Qt::AlignRight);
+
+    return DSettingsWidgetFactory::createStandardItem(translateContext, option, widget);
 }
 
 QPair<QWidget *, QWidget *> createTitle1(QObject *opt)
@@ -471,10 +476,8 @@ QPair<QWidget *, QWidget *> createTitle1(QObject *opt)
 
     auto title = new ContentTitle;
     title->setTitle(trName);
-    QFont font = title->font();
-    font.setBold(true);
-    title->setFont(font);
-    DFontSizeManager::instance()->bind(title, DFontSizeManager::T4);
+    title->label()->setForegroundRole(QPalette::BrightText);
+    DFontSizeManager::instance()->bind(title, DFontSizeManager::T4, QFont::Medium);
 
     return qMakePair(title, nullptr);
 }
@@ -487,11 +490,7 @@ QPair<QWidget *, QWidget *> createTitle2(QObject *opt)
 
     auto title = new ContentTitle;
     title->setTitle(trName);
-    QFont font = title->font();
-    font.setWeight(QFont::Medium);
-    title->setSpacing(10);
-    title->setFont(font);
-    DFontSizeManager::instance()->bind(title, DFontSizeManager::T5);
+    DFontSizeManager::instance()->bind(title, DFontSizeManager::T5, QFont::Medium);
 
     return qMakePair(title, nullptr);
 }

@@ -41,7 +41,7 @@ public:
     ~DTipLabel();
 
     void show(const QPoint &pos);
-
+    using QLabel::setForegroundRole;
     void setForegroundRole(DPalette::ColorType color);
 
 protected:

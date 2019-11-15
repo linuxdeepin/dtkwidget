@@ -169,12 +169,14 @@ public:
 
     static DFontSizeManager *instance();
     void bind(QWidget *widget, SizeType type);
+    void bind(QWidget *widget, SizeType type, int weight);
     void unbind(QWidget *widget);
 
     quint16 fontPixelSize(SizeType type) const;
     void setFontPixelSize(SizeType type, quint16 size);
     void setFontGenericPixelSize(quint16 size);
     const QFont get(SizeType type, const QFont &base = QFont()) const;
+    const QFont get(SizeType type, int weight, const QFont &base = QFont()) const;
 
     inline const QFont t1(const QFont &base = QFont()) const
     { return get(T1, base); }
