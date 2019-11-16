@@ -1,2 +1,1 @@
-#include "dwidgetstype.h"
-#include <QProgressBar>
+#include "dprogressbar.h"
