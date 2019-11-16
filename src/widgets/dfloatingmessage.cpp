@@ -21,6 +21,7 @@
 
 #include "dfloatingmessage.h"
 #include "private/dfloatingmessage_p.h"
+#include "ddialogclosebutton.h"
 
 #include <QHBoxLayout>
 #include <QTimer>
@@ -58,6 +59,7 @@ void DFloatingMessagePrivate::init()
     iconButton->setFocusPolicy(Qt::NoFocus);
     iconButton->setAttribute(Qt::WA_TransparentForMouseEvents);
     iconButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    iconButton->setIconSize(QSize(20, 20));
 
     hBoxLayout->addWidget(iconButton);
     hBoxLayout->addWidget(labMessage);
@@ -69,8 +71,7 @@ void DFloatingMessagePrivate::init()
         q->connect(timer, &QTimer::timeout, q, &DFloatingMessage::close);
     } else {  //常驻消息
         content  = nullptr;
-        closeButton = new DIconButton(DStyle::SP_CloseButton);
-        closeButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        closeButton = new DDialogCloseButton(q);
 
         hBoxLayout->addWidget(closeButton);
         q->connect(closeButton, &DIconButton::clicked, q, &DFloatingMessage::closeButtonClicked);
