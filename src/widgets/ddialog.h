@@ -38,7 +38,6 @@ class DDialog : public DAbstractDialog
     Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
     Q_PROPERTY(QString message READ message WRITE setMessage NOTIFY messageChanged)
     Q_PROPERTY(QIcon icon READ icon WRITE setIcon)
-    Q_PROPERTY(QPixmap iconPixmap READ iconPixmap WRITE setIconPixmap)
     Q_PROPERTY(Qt::TextFormat textFormat READ textFormat WRITE setTextFormat NOTIFY textFormatChanged)
     Q_PROPERTY(bool onButtonClickedClose READ onButtonClickedClose WRITE setOnButtonClickedClose)
     Q_PROPERTY(bool closeButtonVisible READ closeButtonVisible WRITE setCloseButtonVisible)
@@ -63,7 +62,7 @@ public:
     QString title() const;
     QString message() const;
     QIcon icon() const;
-    QPixmap iconPixmap() const;
+    D_DECL_DEPRECATED QPixmap iconPixmap() const;
     Qt::TextFormat textFormat() const;
     bool onButtonClickedClose() const;
 
@@ -108,8 +107,8 @@ public Q_SLOTS:
     void setTitle(const QString &title);
     void setMessage(const QString& message);
     void setIcon(const QIcon &icon);
-    void setIcon(const QIcon &icon, const QSize &expectedSize);
-    void setIconPixmap(const QPixmap &iconPixmap);
+    D_DECL_DEPRECATED void setIcon(const QIcon &icon, const QSize &expectedSize);
+    D_DECL_DEPRECATED void setIconPixmap(const QPixmap &iconPixmap);
     void setTextFormat(Qt::TextFormat textFormat);
     void setOnButtonClickedClose(bool onButtonClickedClose);
     void setCloseButtonVisible(bool closeButtonVisible);
@@ -123,7 +122,7 @@ protected:
     void hideEvent(QHideEvent *event) Q_DECL_OVERRIDE;
     void closeEvent(QCloseEvent *event) override;
     void childEvent(QChildEvent *event) Q_DECL_OVERRIDE;
-    void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
+    void resizeEvent(QResizeEvent *event) override;
 
 private:
     D_DECLARE_PRIVATE(DDialog)

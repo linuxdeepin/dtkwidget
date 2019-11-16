@@ -47,7 +47,6 @@ private:
     QPoint dragPosition;
     DAbstractDialog::DisplayPosition displayPosition = DAbstractDialog::Center;
 
-    QLabel* windowTitle = Q_NULLPTR;
     DPlatformWindowHandle *handle = Q_NULLPTR;
     DBlurEffectWidget *bgBlurWidget = Q_NULLPTR;
 

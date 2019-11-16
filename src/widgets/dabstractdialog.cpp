@@ -63,15 +63,7 @@ void DAbstractDialogPrivate::init(bool blurIfPossible)
         q->setWindowFlags(q->windowFlags() | Qt::FramelessWindowHint);
     }
 
-    windowTitle = new QLabel(q);
-    windowTitle->setAlignment(Qt::AlignCenter);
-    DAnchorsBase::setAnchor(windowTitle, Qt::AnchorHorizontalCenter, q, Qt::AnchorHorizontalCenter);
-    q->connect(q,&QWidget::windowTitleChanged, windowTitle,[=](const QString &title){
-        windowTitle->setText(title);
-    });
-
     q->resize(DIALOG::DEFAULT_WIDTH, DIALOG::DEFAULT_HEIGHT);
-    q->setMaximumWidth(480);
     q->setAttribute(Qt::WA_Resized, false);
 }
 

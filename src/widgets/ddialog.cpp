@@ -27,11 +27,7 @@
 #include <QDesktopWidget>
 #include <QScreen>
 #include <QAction>
-#include <QRegExp>
 #include <QRegularExpression>
-
-#include <QStyle>
-#include <QStyleFactory>
 
 #include "private/ddialog_p.h"
 
@@ -64,21 +60,25 @@ void DDialogPrivate::init()
     // TopLayout--TextLabel
     titleLabel = new QLabel;
     titleLabel->setObjectName("TitleLabel");
-    titleLabel->hide();
     titleLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
+    titleLabel->setWordWrap(true);
+    titleLabel->setAlignment(Qt::AlignCenter);
+    titleLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+    titleLabel->hide();
 
     messageLabel = new QLabel;
     messageLabel->setObjectName("MessageLabel");
-    messageLabel->hide();
     messageLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
+    messageLabel->setWordWrap(true);
+    messageLabel->setAlignment(Qt::AlignCenter);
+    messageLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    messageLabel->hide();
 
     QVBoxLayout *textLayout = new QVBoxLayout;
     textLayout->setContentsMargins(0, 0, 0, 0);
     textLayout->setSpacing(5);
-    textLayout->addStretch();
-    textLayout->addWidget(titleLabel, 0, Qt::AlignHCenter);
-    textLayout->addWidget(messageLabel, 0, Qt::AlignHCenter);
-    textLayout->addStretch();
+    textLayout->addWidget(titleLabel);
+    textLayout->addWidget(messageLabel, 0, Qt::AlignTop);
 
     // TopLayout--ContentLayout
     contentLayout = new QVBoxLayout;
@@ -88,10 +88,11 @@ void DDialogPrivate::init()
 
     titleBar = new DTitlebar();
     titleBar->setIcon(icon); //设置标题icon
-    QWidget *nullWidget = new QWidget();
-    titleBar->addWidget(nullWidget);
     titleBar->setMenuVisible(false);
     titleBar->setBackgroundTransparent(true);
+    titleBar->setTitle(q->windowTitle());
+
+    QObject::connect(q, &DDialog::windowTitleChanged, titleBar, &DTitlebar::setTitle);
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
 
@@ -1016,27 +1017,7 @@ void DDialog::childEvent(QChildEvent *event)
 
 void DDialog::resizeEvent(QResizeEvent *event)
 {
-    DAbstractDialog::resizeEvent(event);
-
-    D_D(DDialog);
-
-
-    d->titleLabel->setWordWrap(false);
-    int labelMaxWidth = maximumWidth();
-
-    if (d->titleLabel->sizeHint().width() > labelMaxWidth) {
-        d->titleLabel->setFixedWidth(labelMaxWidth);
-        d->titleLabel->setWordWrap(true);
-        d->titleLabel->setFixedHeight(d->titleLabel->sizeHint().height());
-    }
-
-    d->messageLabel->setWordWrap(false);
-    labelMaxWidth = maximumWidth();
-
-    if (d->messageLabel->sizeHint().width() > labelMaxWidth) {
-        d->messageLabel->setFixedWidth(labelMaxWidth);
-        d->messageLabel->setWordWrap(true);
-    }
+    return DAbstractDialog::resizeEvent(event);
 }
 
 DWIDGET_END_NAMESPACE

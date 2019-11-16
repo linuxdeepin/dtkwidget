@@ -26,6 +26,7 @@ DDialogCloseButton::DDialogCloseButton(QWidget *parent)
     : DIconButton(DStyle::SP_CloseButton, parent)
 {
     setFlat(true);
+    setIconSize(QSize(20, 20));
 }
 
 DWIDGET_END_NAMESPACE
