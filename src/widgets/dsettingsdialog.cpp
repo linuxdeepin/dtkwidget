@@ -112,6 +112,9 @@ DSettingsDialog::DSettingsDialog(QWidget *parent) :
         d->leftFrame->onSelectGroup(key);
         d->leftFrame->blockSignals(false);
     });
+
+    connect(this, &DSettingsDialog::windowIconChanged, frameBar, &DTitlebar::setIcon);
+    connect(this, &DSettingsDialog::windowTitleChanged, frameBar, &DTitlebar::setTitle);
 }
 
 DSettingsDialog::~DSettingsDialog()
