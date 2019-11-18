@@ -22,6 +22,7 @@ public:
     {
         label = new DTipLabel(text);
         QVBoxLayout *layout = new QVBoxLayout(this);
+        layout->setContentsMargins(layout->contentsMargins().left(), 0, layout->contentsMargins().right(), 0);
         layout->setSpacing(0);
         label->setForegroundRole(DPalette::LightLively);
         layout->addWidget(label);
@@ -115,7 +116,8 @@ DKeySequenceEdit::DKeySequenceEdit(QWidget *parent)
 void DKeySequenceEdit::clear()
 {
     D_D(DKeySequenceEdit);
-    setKeySequence(QKeySequence());
+
+    d->rightWidget->keyDelete();
     d->rightWidget->setKeyVisible(false);
 }
 
@@ -125,24 +127,41 @@ bool DKeySequenceEdit::setKeySequence(const QKeySequence &keySequence)
 
     QStringList keyText;
     keyText << keySequence.toString().split("+", QString::SkipEmptyParts);
+
     if (keyText.isEmpty()) {
         return false;
     }
 
     d->rightWidget->setKeyName(keyText);
+    d->sequencekey = keySequence;
     Q_EMIT keySequenceChanged(keySequence);
     return true;
+}
+
+QKeySequence DKeySequenceEdit::keySequence()
+{
+    D_D(DKeySequenceEdit);
+    return d->sequencekey;
+}
+
+void DKeySequenceEdit::ShortcutDirection(Qt::AlignmentFlag alig)
+{
+    if (alig == Qt::AlignLeft || alig == Qt::AlignRight) {
+       layout()->setAlignment(alig);
+       setAlignment(alig == Qt::AlignLeft ? Qt::AlignRight : Qt::AlignLeft);
+    }
 }
 
 void DKeySequenceEdit::keyPressEvent(QKeyEvent *e)
 {
     D_D(DKeySequenceEdit);
 
-    if (d->rightWidget->isFastMode()) { //快捷键模式
+    if (d->rightWidget->isFastMode()) {
         return;
     }
 
     int nextKey = e->key();
+
     if (nextKey == Qt::Key_Control
             || nextKey == Qt::Key_Shift
             || nextKey == Qt::Key_Alt
@@ -151,12 +170,20 @@ void DKeySequenceEdit::keyPressEvent(QKeyEvent *e)
         return;
     }
 
-    QKeySequence sequence(QKeySequence(e->modifiers()).toString() + QKeySequence(e->key()).toString());
+    QString modifiers = QKeySequence(e->modifiers()).toString();
+    QString key =  QKeySequence(e->key()).toString();
+
+    if (modifiers.isEmpty() || e->modifiers() == Qt::KeypadModifier) {
+        return;
+    }
+
+    QKeySequence sequence(modifiers + key);
     bool flags = setKeySequence(sequence);
     if (!flags)
         return;
 
-    Q_EMIT editingFinished();
+    d_func()->sequencekey = sequence;
+    Q_EMIT editingFinished(sequence);
 }
 
 DKeySequenceEditPrivate::DKeySequenceEditPrivate(DKeySequenceEdit *q)

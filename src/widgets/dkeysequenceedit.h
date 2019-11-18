@@ -21,9 +21,11 @@ public:
 
     void clear();
     bool setKeySequence(const QKeySequence &keySequence);
+    QKeySequence keySequence();
+    void ShortcutDirection(Qt::AlignmentFlag alig);
 
 Q_SIGNALS:
-    void editingFinished();
+    void editingFinished(const QKeySequence &keySequence);
     void keySequenceChanged(const QKeySequence &keySequence);
 
 protected:

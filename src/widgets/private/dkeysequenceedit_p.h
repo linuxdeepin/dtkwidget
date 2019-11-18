@@ -17,6 +17,7 @@ public:
     void init();
 private:
     DKeyWidget *rightWidget;
+    QKeySequence sequencekey;
 };
 
 DWIDGET_END_NAMESPACE

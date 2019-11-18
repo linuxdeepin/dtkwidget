@@ -35,6 +35,10 @@
 #include <DSettingsOption>
 #include <DSwitchButton>
 #include <DFontSizeManager>
+#include <DKeySequenceEdit>
+#include <DSuggestButton>
+#include <DTipLabel>
+#include <DDialog>
 
 #include "private/settings/shortcutedit.h"
 #include "private/settings/buttongroup.h"
@@ -42,6 +46,48 @@
 #include "private/settings/contenttitle.h"
 
 DWIDGET_BEGIN_NAMESPACE
+
+static QMap<QString, DKeySequenceEdit *> shortcutMap;
+
+class ChangeDDialog : public DDialog
+{
+public:
+    ChangeDDialog(QString key, DKeySequenceEdit*edit, QString text = QString())
+    {
+//        qApp->translate
+        QPushButton *cancel = new QPushButton(qApp->translate("DSettingsDialog", "Cancel"));
+        DSuggestButton *replace = new DSuggestButton(qApp->translate("DSettingsDialog", "Replace"));
+
+        QString str = qApp->translate("DSettingsDialog" ,"This shortcut conflicts with %1, click on Add to make this shortcut effective immediately")
+                      .arg(QString("<span style=\"color: rgba(255, 90, 90, 1);\">%1 %2</span>").arg(text).arg(QString("[%1]").arg(key)));
+        setMessage(str);
+        insertButton(1, cancel);
+        insertButton(1, replace);
+        connect(replace, &DSuggestButton::clicked, [=] {
+            shortcutMap.value(key)->clear();
+            shortcutMap.remove(shortcutMap.key(edit));
+            shortcutMap[key] = edit;
+        });
+        connect(cancel, &QPushButton::clicked, [=] {
+            cancelSettings(edit);
+        });
+        connect(this, &DDialog::closed, [=] {
+            cancelSettings(edit);
+        });
+        connect(this, &DDialog::rejected, [=]{
+            cancelSettings(edit);
+        });
+    }
+private:
+    void cancelSettings(DKeySequenceEdit*edit)
+    {
+        if (shortcutMap.key(edit).isEmpty()) {
+            edit->clear();
+        }else {
+            edit->setKeySequence(QKeySequence(shortcutMap.key(edit)));
+        }
+    }
+};
 
 /*!
  * \~chinese \class DSettingsWidgetFactory
@@ -120,67 +166,50 @@ QPair<QWidget *, QWidget *> DSettingsWidgetFactory::createStandardItem(const QBy
     return qMakePair(new QLabel(label), rightWidget);
 }
 
-QPair<QWidget *, QWidget *> createShortcutEditOptionHandle(QObject *opt)
+QPair<QWidget *, QWidget *> createShortcutEditOptionHandle(DSettingsWidgetFactoryPrivate *p, QObject *opt)
 {
-    auto option = qobject_cast<DTK_CORE_NAMESPACE::DSettingsOption *>(opt);
+    static DSettingsWidgetFactoryPrivate *pFlg = nullptr;
+    if (pFlg != p) {
+        shortcutMap.clear();
+        pFlg = p;
+    }
 
-    auto rightWidget = new ShortcutEdit();
+    auto option = qobject_cast<DTK_CORE_NAMESPACE::DSettingsOption *>(opt);
+    auto rightWidget = new DKeySequenceEdit;
+    rightWidget->ShortcutDirection(Qt::AlignLeft);
+    auto optionValue = option->value();
+    auto translateContext = opt->property(PRIVATE_PROPERTY_translateContext).toByteArray();
+
+    QObject::connect(rightWidget, &DKeySequenceEdit::editingFinished, [=](const QKeySequence & sequence){
+
+        QString keyseq = sequence.toString();
+        if (shortcutMap.value(sequence.toString()) == rightWidget)
+            return;
+
+        if (shortcutMap.value(keyseq)) {
+            ChangeDDialog frame(keyseq, rightWidget, rightWidget->text());
+            frame.exec();
+        }else {
+            shortcutMap.remove(shortcutMap.key(rightWidget));
+            shortcutMap.insert(keyseq, rightWidget);
+        }
+    });
+
     rightWidget->setObjectName("OptionShortcutEdit");
 
     auto updateWidgetValue = [rightWidget](const QVariant & optionValue) {
-        switch (optionValue.type()) {
-        case QVariant::List:
-        case QVariant::StringList: {
-            QStringList keyseqs = optionValue.toStringList();
-            if (keyseqs.length() == 2) {
-                auto modifier = static_cast<Qt::KeyboardModifiers>(keyseqs.value(0).toInt());
-                auto key = static_cast<Qt::Key>(keyseqs.value(1).toInt());
-                rightWidget->setShortCut(modifier, key);
-            }
-            break;
+        QString keyseq = optionValue.toString();
+        QKeySequence sequence(optionValue.toString());
+
+        if (shortcutMap.value(keyseq)) {    //如果重复,退出
+            return false;
         }
-        case QVariant::String: {
-            rightWidget->setShortCut(optionValue.toString());
-            break;
-        }
-        default:
-            qCritical() << "unknown variant type" << optionValue;
-        }
+        return rightWidget->setKeySequence(sequence);
     };
 
-    auto optionValue = option->value();
-    updateWidgetValue(optionValue);
-
-    auto translateContext = opt->property(PRIVATE_PROPERTY_translateContext).toByteArray();
-
-    // keep raw value type
-    switch (optionValue.type()) {
-    case QVariant::List:
-    case QVariant::StringList: {
-        option->connect(rightWidget, &ShortcutEdit::shortcutChanged,
-        option, [ = ](Qt::KeyboardModifiers modifier, Qt::Key key) {
-            QStringList keyseqs;
-            keyseqs << QString("%1").arg(modifier) << QString("%1").arg(key);
-            option->setValue(keyseqs);
-        });
-        break;
+    if (updateWidgetValue(optionValue)) { //如果快捷键添加成功，保存信息
+        shortcutMap.insert(optionValue.toString(), rightWidget);
     }
-    case QVariant::String: {
-        option->connect(rightWidget, &ShortcutEdit::shortcutStringChanged,
-        option, [ = ](const QString & seqString) {
-            option->setValue(seqString);
-        });
-        break;
-    }
-    default:
-        qCritical() << "unknown variant type" << optionValue;
-    }
-
-    option->connect(option, &DTK_CORE_NAMESPACE::DSettingsOption::valueChanged,
-    rightWidget, [ = ](const QVariant & value) {
-        updateWidgetValue(value);
-        rightWidget->update();
-    });
 
     return DSettingsWidgetFactory::createStandardItem(translateContext, option, rightWidget);
 }
@@ -515,7 +544,7 @@ public:
         itemCreateHandles.insert("checkbox", createCheckboxOptionHandle);
         itemCreateHandles.insert("lineedit", createLineEditOptionHandle);
         itemCreateHandles.insert("combobox", createComboBoxOptionHandle);
-        itemCreateHandles.insert("shortcut", createShortcutEditOptionHandle);
+        itemCreateHandles.insert("shortcut", std::bind(createShortcutEditOptionHandle, this, std::placeholders::_1));
         itemCreateHandles.insert("spinbutton", createSpinButtonOptionHandle);
         itemCreateHandles.insert("buttongroup", createButtonGroupOptionHandle);
         itemCreateHandles.insert("radiogroup", createRadioGroupOptionHandle);
