@@ -960,7 +960,11 @@ int DDialog::exec()
 
 void DDialog::setCloseButtonVisible(bool closeButtonVisible)
 {
+    bool visible = isVisible();
+    // This function calls setParent() when changing the flags for a window, causing the widget to be hidden.
     setWindowFlag(Qt::WindowCloseButtonHint, closeButtonVisible);
+    // So we need call show() or so to make the widget visible again.
+    this->setVisible(visible);
 }
 
 DDialog::DDialog(DDialogPrivate &dd, QWidget *parent) :
