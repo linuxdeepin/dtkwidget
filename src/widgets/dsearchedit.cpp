@@ -303,12 +303,13 @@ void DSearchEditPrivate::_q_toEditMode(bool focus)
 {
     D_Q(DSearchEdit);
 
-    if (focus || !q->lineEdit()->text().isEmpty()) {
+    if (focus) {
         action->setVisible(true);
         iconWidget->setVisible(false);
     } else {
         action->setVisible(false);
         iconWidget->setVisible(true);
+        q->lineEdit()->clear();
     }
 }
 
