@@ -340,4 +340,5 @@ includes.files += \
     $$PWD/DPasswordEdit \
     $$PWD/DTipLabel \
     $$PWD/DShadowLine \
-    $$PWD/DColoredProgressBar
+    $$PWD/DColoredProgressBar \
+    $$PWD/DAbstractdialog
