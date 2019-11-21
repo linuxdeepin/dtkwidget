@@ -89,7 +89,10 @@ void DLabel::initPainter(QPainter *painter) const
 
 void DLabel::paintEvent(QPaintEvent *event)
 {
-    Q_UNUSED(event);
+    if (!pixmap()->isNull() || !picture()->isNull()) {
+        return QLabel::paintEvent(event);
+    }
+
     QPainter p(this);
 
     QTextOption opt(alignment());
