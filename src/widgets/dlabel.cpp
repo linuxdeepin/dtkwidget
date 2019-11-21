@@ -60,6 +60,14 @@ DLabel::~DLabel()
 
 }
 
+void DLabel::setForegroundRole(QPalette::ColorRole role)
+{
+    D_D(DLabel);
+
+    d->color = DPalette::NoType;
+    QLabel::setForegroundRole(role);
+}
+
 /*!
  * \brief DLabel::setForegroundRole显示的字体颜色
  * \param color字体颜色

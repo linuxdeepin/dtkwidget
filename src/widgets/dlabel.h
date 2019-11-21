@@ -40,7 +40,7 @@ public:
     DLabel(const QString &text, QWidget *parent = nullptr);
     ~DLabel();
 
-    using QLabel::setForegroundRole;
+    void setForegroundRole(QPalette::ColorRole role);
     void setForegroundRole(DPalette::ColorType color);
 
 protected:
