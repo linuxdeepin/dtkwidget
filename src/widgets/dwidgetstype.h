@@ -70,7 +70,6 @@ class QUndoView;
 class QWhatsThis;
 class QWizard;
 class QWizardPage;
-class QLabel;
 
 QT_END_NAMESPACE
 
@@ -138,7 +137,6 @@ typedef QUndoView DUndoView;
 typedef QWhatsThis DWhatsThis;
 typedef QWizard DWizard;
 typedef QWizardPage DWizardPage;
-typedef QLabel DLabel;
 
 DWIDGET_END_NAMESPACE
 

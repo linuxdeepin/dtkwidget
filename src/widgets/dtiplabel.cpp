@@ -21,10 +21,8 @@
 
 #include "dtiplabel.h"
 #include "private/dtiplabel_p.h"
-#include "private/qlabel_p.h"
 
 #include <DFontSizeManager>
-#include <DApplicationHelper>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -42,9 +40,10 @@ DWIDGET_BEGIN_NAMESPACE
  * \~chinese \param parent参数被发送到 QLabel 构造函数。
  */
 DTipLabel::DTipLabel(const QString &text, QWidget *parent)
-    : QLabel(text, parent, Qt::ToolTip | Qt::BypassGraphicsProxyWidget)
-    , DObject(*new DTipLabelPrivate(this))
+    : DLabel(*new DTipLabelPrivate(this), parent)
 {
+    setText(text);
+
     D_D(DTipLabel);
     d->init();
 }
@@ -60,6 +59,10 @@ DTipLabel::~DTipLabel()
  */
 void DTipLabel::show(const QPoint &pos)
 {
+    if (isWindow()) {
+        setWindowFlag(Qt::ToolTip);
+    }
+
     move(pos);
 
     QLabel::show();
@@ -71,36 +74,21 @@ void DTipLabel::show(const QPoint &pos)
  */
 void DTipLabel::setForegroundRole(DPalette::ColorType color)
 {
-    D_D(DTipLabel);
-    d->color = color;
+    DLabel::setForegroundRole(color);
 }
 
 void DTipLabel::initPainter(QPainter *painter) const
 {
-    D_DC(DTipLabel);
-    QLabel::initPainter(painter);
-    if (d->color != DPalette::NoType) {
-        QBrush color = DApplicationHelper::instance()->palette(this).brush(d->color);
-        painter->setPen(QPen(color.color()));
-    }
+    DLabel::initPainter(painter);
 }
 
 void DTipLabel::paintEvent(QPaintEvent *event)
 {
-    Q_UNUSED(event);
-    QPainter p(this);
-
-    QTextOption opt(alignment());
-
-    if (wordWrap()) {
-        opt.setWrapMode(QTextOption::WordWrap);
-    }
-
-    p.drawText(contentsRect(), text(), opt);
+    DLabel::paintEvent(event);
 }
 
 DTipLabelPrivate::DTipLabelPrivate(DTipLabel *q)
-    : DObjectPrivate(q)
+    : DLabelPrivate(q)
 {
 }
 

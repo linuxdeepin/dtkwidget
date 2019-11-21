@@ -24,13 +24,11 @@
 
 #include "dtiplabel.h"
 #include "dstyle.h"
-
-#include <DObjectPrivate>
-
+#include "dlabel_p.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DTipLabelPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
+class DTipLabelPrivate : public DLabelPrivate
 {
     Q_DECLARE_PUBLIC(DTipLabel)
 
@@ -38,9 +36,6 @@ public:
     DTipLabelPrivate(DTipLabel *q);
 
     void init();
-
-private:
-    DPalette::ColorType color = DPalette::TextTips;
 };
 
 DWIDGET_END_NAMESPACE

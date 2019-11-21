@@ -43,6 +43,7 @@
 #include "dimagebutton.h"
 #include "dblureffectwidget.h"
 #include "dwidgetstype.h"
+#include "dlabel.h"
 
 DWIDGET_BEGIN_NAMESPACE
 

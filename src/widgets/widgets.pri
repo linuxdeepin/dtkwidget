@@ -114,7 +114,8 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dshadowline.h \
     $$PWD/dcoloredprogressbar.h \
     $$PWD/dkeysequenceedit.h \
-    $$PWD/dprogressbar.h
+    $$PWD/dprogressbar.h \
+    $$PWD/dlabel.h
 
 SOURCES += $$PWD/dslider.cpp \
     $$PWD/dbackgroundgroup.cpp \
@@ -188,7 +189,8 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dshadowline.cpp \
     $$PWD/dcoloredprogressbar.cpp \
     $$PWD/dkeysequenceedit.cpp \
-    $$PWD/dprogressbar.cpp
+    $$PWD/dprogressbar.cpp \
+    $$PWD/dlabel.cpp
 
 RESOURCES += \
     $$PWD/icons.qrc \
@@ -341,4 +343,5 @@ includes.files += \
     $$PWD/DTipLabel \
     $$PWD/DShadowLine \
     $$PWD/DColoredProgressBar \
-    $$PWD/DAbstractdialog
+    $$PWD/DAbstractdialog \
+    $$PWD/DLabel

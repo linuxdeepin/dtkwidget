@@ -19,31 +19,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DTIPLABEL_H
-#define DTIPLABEL_H
+#ifndef DLABEL_P_H
+#define DLABEL_P_H
 
-#include <DLabel>
+#include "dlabel.h"
+#include "dstyle.h"
+
+#include <DObjectPrivate>
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DTipLabelPrivate;
-class LIBDTKWIDGETSHARED_EXPORT DTipLabel : public DLabel
+class DLabelPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 {
-    Q_OBJECT
-    Q_DISABLE_COPY(DTipLabel)
-    D_DECLARE_PRIVATE(DTipLabel)
+    Q_DECLARE_PUBLIC(DLabel)
+
 public:
-    DTipLabel(const QString &text = QString(), QWidget *parent = nullptr);
-    ~DTipLabel();
+    DLabelPrivate(DLabel *q);
 
-    using QLabel::show;
-    void show(const QPoint &pos);
-    void setForegroundRole(DPalette::ColorType color);
+    void init();
 
-protected:
-    void initPainter(QPainter *painter) const override;
-    void paintEvent(QPaintEvent *event) override;
+private:
+    DPalette::ColorType color = DPalette::TextTips;
 };
+
 DWIDGET_END_NAMESPACE
 
-#endif // DTIPLABEL_H
+#endif // DLABEL_P_H
