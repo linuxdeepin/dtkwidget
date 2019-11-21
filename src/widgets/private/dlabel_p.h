@@ -37,6 +37,10 @@ public:
     DLabelPrivate(DLabel *q);
 
     void init();
+    static Qt::LayoutDirection textDirection(QLabelPrivate *d);
+    static QRectF documentRect(QLabelPrivate *d);
+    static QRectF layoutRect(QLabelPrivate *d);
+    static void ensureTextLayouted(QLabelPrivate *d);
 
     DPalette::ColorType color = DPalette::NoType;
 };
