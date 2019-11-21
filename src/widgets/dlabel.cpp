@@ -71,8 +71,8 @@ void DLabel::setForegroundRole(DPalette::ColorType color)
 }
 
 DLabel::DLabel(DLabelPrivate &dd, QWidget *parent)
-    : DObject(dd)
-    , QLabel(parent)
+    : QLabel(parent)
+    , DObject(dd)
 {
     dd.init();
 }
@@ -89,7 +89,7 @@ void DLabel::initPainter(QPainter *painter) const
 
 void DLabel::paintEvent(QPaintEvent *event)
 {
-    if (!pixmap()->isNull() || !picture()->isNull()) {
+    if (pixmap() || picture()) {
         return QLabel::paintEvent(event);
     }
 
