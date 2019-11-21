@@ -90,6 +90,7 @@ void DTipLabel::paintEvent(QPaintEvent *event)
 DTipLabelPrivate::DTipLabelPrivate(DTipLabel *q)
     : DLabelPrivate(q)
 {
+    color = DPalette::TextTips;
 }
 
 void DTipLabelPrivate::init()

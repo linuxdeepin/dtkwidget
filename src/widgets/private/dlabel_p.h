@@ -38,8 +38,7 @@ public:
 
     void init();
 
-private:
-    DPalette::ColorType color = DPalette::TextTips;
+    DPalette::ColorType color = DPalette::NoType;
 };
 
 DWIDGET_END_NAMESPACE
