@@ -1523,8 +1523,6 @@ case SP_##Value: { \
         return QIcon(icon_engine);}
 
     switch (st) {
-    CASE_ICON(DeleteButton)
-    CASE_ICON(AddButton)
     CASE_ICON(SelectElement)
 
     case SP_IndicatorUnchecked:
@@ -1535,6 +1533,10 @@ case SP_##Value: { \
         icon_engine->setFrontRole(widget, DPalette::Highlight);
         return QIcon(icon_engine);
     }
+    case SP_DeleteButton:
+        return QIcon::fromTheme("list_delete");
+    case SP_AddButton:
+        return QIcon::fromTheme("list_add");
     case SP_ForkElement:
         return QIcon::fromTheme("fork_indicator");
     case SP_CloseButton:
