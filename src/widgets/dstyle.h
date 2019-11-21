@@ -419,7 +419,9 @@ void DStylePainter::drawItemPixmap(const QRect &r, int flags, const QPixmap &pix
 class DStyledIconEngine : public QIconEngine
 {
 public:
-    typedef void (*DrawFun)(QPainter *, const QRectF &rect);
+    static void drawIcon(const QIcon &icon, QPainter *pa, const QRectF &rect);
+
+    typedef std::function<void(QPainter *, const QRectF &rect)> DrawFun;
     DStyledIconEngine(DrawFun drawFun, const QString &iconName = QString());
 
     void bindDrawFun(DrawFun drawFun);
@@ -430,12 +432,15 @@ public:
     void paint(QPainter *painter, const QRect &rect, QIcon::Mode mode, QIcon::State state) override;
 
     QIconEngine *clone() const override;
+    void setFrontRole(const QWidget* widget, QPalette::ColorRole role);
 
 protected:
     void virtual_hook(int id, void *data) override;
 
     DrawFun m_drawFun = nullptr;
     QString m_iconName;
+    QPalette::ColorRole m_painterRole;
+    const QWidget *m_widget;
 };
 
 DWIDGET_END_NAMESPACE

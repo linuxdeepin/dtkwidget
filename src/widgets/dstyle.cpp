@@ -1529,8 +1529,12 @@ case SP_##Value: { \
 
     case SP_IndicatorUnchecked:
         return QIcon::fromTheme("unselected_indicator");
-    case SP_IndicatorChecked:
-        return QIcon::fromTheme("selected_indicator");
+    case SP_IndicatorChecked: {
+        const QIcon &icon = QIcon::fromTheme("selected_indicator");
+        DStyledIconEngine *icon_engine = new DStyledIconEngine(std::bind(DStyledIconEngine::drawIcon, icon, std::placeholders::_1, std::placeholders::_2), QStringLiteral("IndicatorChecked"));
+        icon_engine->setFrontRole(widget, DPalette::Highlight);
+        return QIcon(icon_engine);
+    }
     case SP_ForkElement:
         return QIcon::fromTheme("fork_indicator");
     case SP_CloseButton:
@@ -2435,6 +2439,11 @@ QRect DStyle::viewItemDrawText(QPainter *p, const QStyleOptionViewItem *option, 
  * \~chinese \brief DStyledIconEngine一个修改的 QIconEngine 类
 */
 
+void DStyledIconEngine::drawIcon(const QIcon &icon, QPainter *pa, const QRectF &rect)
+{
+    icon.paint(pa, rect.toRect());
+}
+
 /*!
  * \~chinese \brief DStyledIconEngine::DStyledIconEngine
  * \~chinese \param drawFun
@@ -2445,14 +2454,15 @@ DStyledIconEngine::DStyledIconEngine(DrawFun drawFun, const QString &iconName)
     , m_drawFun(drawFun)
     , m_iconName(iconName)
 {
-
+    m_painterRole = DPalette::NoRole;
+    m_widget = nullptr;
 }
 
 /*!
  * \~chinese \brief DStyledIconEngine::bindDrawFun活页夹
  * \~chinese \param drawFun
  */
-void DStyledIconEngine::bindDrawFun(DStyledIconEngine::DrawFun drawFun)
+void DStyledIconEngine::bindDrawFun(DrawFun drawFun)
 {
     m_drawFun = drawFun;
 }
@@ -2507,6 +2517,16 @@ void DStyledIconEngine::paint(QPainter *painter, const QRect &rect, QIcon::Mode 
     Q_UNUSED(mode)
     Q_UNUSED(state)
 
+    if (m_painterRole != QPalette::NoRole) {
+        if (m_widget) {
+            painter->setPen(m_widget->palette().brush(m_painterRole).color());
+            painter->setBrush(m_widget->palette().brush(m_painterRole));
+        } else {
+            painter->setPen(qApp->palette().brush(m_painterRole).color());
+            painter->setBrush(qApp->palette().brush(m_painterRole));
+        }
+    }
+
     m_drawFun(painter, rect);
 }
 
@@ -2517,6 +2537,12 @@ void DStyledIconEngine::paint(QPainter *painter, const QRect &rect, QIcon::Mode 
 QIconEngine *DStyledIconEngine::clone() const
 {
     return new DStyledIconEngine(m_drawFun, m_iconName);
+}
+
+void DStyledIconEngine::setFrontRole(const QWidget *widget, QPalette::ColorRole role)
+{
+    m_painterRole = role;
+    m_widget = widget;
 }
 
 void DStyledIconEngine::virtual_hook(int id, void *data)
