@@ -30,13 +30,14 @@
 #include <QKeyEvent>
 #include <QApplication>
 #include <QImageReader>
-#include <QSettings>
+#include <DSysInfo>
 
 #ifdef Q_OS_UNIX
 #include <unistd.h>
 #include <pwd.h>
 #endif
 
+DCORE_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
 #ifdef Q_OS_UNIX
@@ -82,7 +83,8 @@ void DAboutDialogPrivate::init()
 
     q->setMinimumWidth(360);
 
-    initWebsiteInfo();
+    // overwrite default info if distribution config file existed.
+    loadDistributionInfo();
 
     logoLabel = new QLabel();
     logoLabel->setContentsMargins(0, 0, 0, 0);
@@ -94,7 +96,7 @@ void DAboutDialogPrivate::init()
     versionLabel->setObjectName("VersionLabel");
 
     companyLogoLabel = new QLabel();
-    companyLogoLabel->setPixmap(loadPixmap(":/images/uos.svg"));
+    companyLogoLabel->setPixmap(loadPixmap(logoPath));
 
     websiteLabel = new QLabel();
     websiteLabel->setObjectName("WebsiteLabel");
@@ -159,19 +161,12 @@ void DAboutDialogPrivate::init()
     q->setFocus();
 }
 
-void DAboutDialogPrivate::initWebsiteInfo()
+void DAboutDialogPrivate::loadDistributionInfo()
 {
-//#ifdef Q_OS_LINUX
-//    bool isProfessional = DCORE_NAMESPACE::DSysInfo::deepinType() == DCORE_NAMESPACE::DSysInfo::DeepinProfessional;
-
-//    websiteName = isProfessional ? "www.deepin.com" : "www.deepin.org";
-//    websiteLink = QString("https://www.deepin.org/original/%1/").arg(qApp->applicationName());
-//#else
-//    websiteName = "www.deepin.org";
-//    websiteLink = "https://www.deepin.org";
-//#endif
-    websiteName = "www.chinauos.com";
-    websiteLink = "https://www.chinauos.com";
+    logoPath = DSysInfo::deepinDistributorLogo(DSysInfo::Light, ":/images/deepin-logo.svg");
+    auto websiteInfo = DSysInfo::deepinDistributorWebsite(); // will always return a valid result.
+    websiteName = websiteInfo.first;
+    websiteLink = websiteInfo.second;
 }
 
 void DAboutDialogPrivate::updateWebsiteLabel()

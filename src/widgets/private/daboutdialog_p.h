@@ -29,7 +29,7 @@ public:
     DAboutDialogPrivate(DAboutDialog *qq);
 
     void init();
-    void initWebsiteInfo();
+    void loadDistributionInfo();
     void updateWebsiteLabel();
     void updateAcknowledgementLabel();
     void _q_onLinkActivated(const QString &link);
@@ -47,6 +47,7 @@ public:
     QLabel *websiteLabel;
     QLabel *acknowledgementLabel;
 
+    QString logoPath;
     QString websiteName;
     QString websiteLink;
     QString acknowledgementLink;
