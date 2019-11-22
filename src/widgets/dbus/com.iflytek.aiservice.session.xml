@@ -1,0 +1,26 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+"http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node name="/">
+  <interface name="com.iflytek.aiservice.session">
+    <!--创建会话-->
+     <method name='createSession'>
+        <!--调用者的应用标识-->
+        <arg name='appId' type='s'  direction='in'/>
+        <!--需要调用的能力，目前支持听写：iat，转写：asr，合成：tts-->
+        <arg name='ability' type='s'  direction='in'/>
+        <!--所申请能力返回对应dbus的object-path-->
+        <arg name='path' type='o'  direction='out'/>
+        <!--错误码，0：成功，-1：appid为空，-2：能力选择错误，-3：创建object失败，-4：路径已存在-->
+        <arg name='errorcode' type='i'  direction='out'/>
+    </method>
+    <!--释放会话-->
+    <method name='freeSession'>
+        <!--调用者的应用标识-->
+        <arg name='appId' type='s'  direction='in'/>
+        <!--需要调用的能力，目前支持听写：iat，转写：asr，合成：tts-->
+        <arg name='ability' type='s'  direction='in'/>
+        <!--错误码，0：成功，-1：appid为空，-2：能力选择错误-->
+        <arg name='errorcode' type='i'  direction='out'/>
+    </method>
+  </interface>
+</node>

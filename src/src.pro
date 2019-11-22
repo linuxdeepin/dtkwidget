@@ -42,6 +42,13 @@ win* {
     CONFIG += staticlib
 }
 
+isEmpty(DTK_NO_AI_SERVICE) {
+    DEFINES += ENABLE_AI
+    DBUS_INTERFACES += \
+        $$PWD/widgets/dbus/com.iflytek.aiservice.iat.xml\
+        $$PWD/widgets/dbus/com.iflytek.aiservice.session.xml
+}
+
 HEADERS += dtkwidget_global.h
 
 includes.files += \
@@ -61,8 +68,6 @@ win32* {
 
 DTK_MODULE_NAME=$$TARGET
 load(dtk_build)
-
-#include($$PWD/xfyun/xfyun.pri)
 
 INSTALLS += includes target
 

@@ -21,11 +21,10 @@
 #include "private/dsearchedit_p.h"
 #include "diconbutton.h"
 
-#ifdef ENABLE_XFYUN
+#ifdef ENABLE_AI
 // 讯飞语言相关
-#include "qisr.h"
-#include "msp_cmn.h"
-#include "msp_errors.h"
+#include "session_interface.h"
+#include "iat_interface.h"
 #endif
 
 #include <QAction>
@@ -43,7 +42,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-#ifdef ENABLE_XFYUN
+#ifdef ENABLE_AI
 class VoiceDevice : public QIODevice
 {
     Q_OBJECT
@@ -60,59 +59,39 @@ public:
         if (mode != WriteOnly)
             return false;
 
-        // 先登录
-        int            ret                  =    MSP_SUCCESS;
-        const char *login_params            =    "appid = 5720401f, work_dir = ."; // 登录参数，appid与msc库绑定,请勿随意改动
+        com::iflytek::aiservice::session session("com.iflytek.aiservice", "/", QDBusConnection::sessionBus());
+        QDBusObjectPath path = session.createSession(qApp->arguments().first().split("/").last(), "iat");
 
-        /* 用户登录 */
-        ret = MSPLogin(NULL, NULL, login_params); //第一个参数是用户名，第二个参数是密码，均传NULL即可，第三个参数是登录参数
+        if (session.lastError().type() != QDBusError::NoError)
+            return false;
 
-        if (MSP_SUCCESS != ret) {
-            qDebug("MSPLogin failed , Error code %d.\n", ret);
-            return false; //登录失败，退出登录
-        }
+        m_iat = new com::iflytek::aiservice::iat("com.iflytek.aiservice", path.path(), QDBusConnection::sessionBus(), this);
+        const QString &json_data = m_iat->startIat({});
+        QJsonDocument document = QJsonDocument::fromJson(json_data.toLocal8Bit());
 
-#define BUFFER_SIZE 4096 * 4
-#define FRAME_LEN 640
-#define HINTS_SIZE 100
-
-//        char            hints[HINTS_SIZE]               =    {NULL}; //hints为结束本次会话的原因描述，由用户自定义
-        int             errcode               =    MSP_SUCCESS;
-        /*
-        * sub:                  请求业务类型
-        * domain:               领域
-        * language:             语言
-        * accent:               方言
-        * sample_rate:          音频采样率
-        * result_type:          识别结果格式
-        * result_encoding:      结果编码格式
-        *
-        * 详细参数说明请参阅《iFlytek MSC Reference Manual》
-        */
-        const char *session_begin_params = "sub = iat, domain = iat, language = zh_ch, accent = mandarin, sample_rate = 16000, result_type = plain, result_encoding = utf8";
-
-        // 启动讯飞语言解析的会话
-        xfyunSessionID = QISRSessionBegin(NULL, session_begin_params, &errcode); //听写不需要语法，第一个参数为NULL
-
-        if (MSP_SUCCESS != errcode) {
-            xfyunSessionID = nullptr;
-            qWarning("QISRSessionBegin failed! error code: %d\n", errcode);
+        if (document.object().value("status").toInt(-1) != 0) {
+            m_iat->deleteLater();
+            m_iat = nullptr;
             return false;
         }
 
-        aud_stat = MSP_AUDIO_SAMPLE_FIRST; // 重置语音状态
+        // 清理旧的数据
+        m_message.clear();
+
+        connect(m_iat, &ComIflytekAiserviceIatInterface::onEnd, this, &VoiceDevice::onEnd);
+        connect(m_iat, &ComIflytekAiserviceIatInterface::onResult, this, &VoiceDevice::onResult);
 
         return QIODevice::open(mode);
     }
 
     void close() override
     {
-        if (xfyunSessionID) {
-            QISRSessionEnd(xfyunSessionID, nullptr);
-            xfyunSessionID = nullptr;
+        if (m_iat) {
+            m_iat->stopIat();
+            m_iat->deleteLater();
+            m_iat = nullptr;
         }
 
-        MSPLogout();
         QIODevice::close();
     }
 
@@ -123,57 +102,57 @@ public:
 
     qint64 writeData(const char *data, qint64 len) override
     {
-        unsigned int    total_len                       =    0;
-        int             ep_stat                         =    MSP_EP_LOOKING_FOR_SPEECH;        //端点检测
-        int             rec_stat                        =    MSP_REC_STATUS_SUCCESS;           //识别状态
-        int ret = 0;
-
-        ret = QISRAudioWrite(xfyunSessionID, (const void *)data, len, aud_stat, &ep_stat, &rec_stat);
-        aud_stat = MSP_AUDIO_SAMPLE_CONTINUE; // 更新音频状态
-
-        if (MSP_SUCCESS != ret) {
-            qDebug("QISRAudioWrite failed! error code: %d\n", ret);
-            // 结束录制
-            return 0;
-        }
-
-        if (MSP_REC_STATUS_SUCCESS == rec_stat) { //已经有部分听写结果
-            int             errcode                         =    MSP_SUCCESS;
-            const char *rslt = QISRGetResult(xfyunSessionID, &rec_stat, 0, &errcode);
-
-            if (MSP_SUCCESS != errcode) {
-                qDebug("QISRGetResult failed! error code: %d\n", errcode);
-                // 结束录制
-                return 0;
-            }
-
-            if (NULL != rslt) {
-                unsigned int rslt_len = strlen(rslt);
-                total_len += rslt_len;
-
-                if (total_len >= BUFFER_SIZE) {
-                    qDebug("no enough buffer for rec_result !\n");
-                    // 结束录制
-                }
-
-                Q_EMIT voiceReply(QString::fromUtf8(rslt));
-            }
-        }
-
-        if (MSP_EP_AFTER_SPEECH == ep_stat) {
-            qDebug() << "ep_stat" << ep_stat;
-            Q_EMIT voiceReply(QString());
-        }
+        m_iat->putAudio(QByteArray(data, len), false);
 
         return len;
     }
 
+    Q_SLOT void onResult(const QString &json)
+    {
+        QJsonDocument document = QJsonDocument::fromJson(json.toLocal8Bit());
+
+        if (!document.isObject()) {
+            return;
+        }
+
+        document = QJsonDocument::fromJson(document["text"].toString().toLocal8Bit());
+        const QJsonArray &words = document["ws"].toArray();
+        bool replace = document["pgs"].toString() == "rpl";
+
+        if (replace) {
+            m_message.clear();
+        }
+
+        for (const QJsonValue &v : words) {
+            const QJsonArray &cw = v["cw"].toArray();
+
+            for (const QJsonValue &v : cw) {
+                m_message.append(v["w"].toString());
+            }
+        }
+
+        Q_EMIT voiceReply(m_message);
+    }
+
+    Q_SLOT void onError(const QString &error)
+    {
+        qDebug() << error;
+        Q_EMIT voiceReply(QString());
+    }
+
+    Q_SLOT void onEnd()
+    {
+        close();
+        Q_EMIT finished();
+    }
+
 Q_SIGNALS:
     void voiceReply(QString text);
+    void finished();
 
 private:
-    const char *xfyunSessionID = nullptr;
-    int aud_stat = MSP_AUDIO_SAMPLE_FIRST; //音频状态
+    com::iflytek::aiservice::iat *m_iat = nullptr;
+    QString m_message;
 };
 #endif
 
@@ -288,10 +267,10 @@ void DSearchEditPrivate::init()
         }
     }
 
-#ifdef ENABLE_XFYUN
+#ifdef ENABLE_AI
     // 语音输入按钮
     voiceAction = new QAction(q);
-    voiceAction->setIcon(QIcon(":/images/voice.svg"));
+    voiceAction->setIcon(QIcon::fromTheme("button_voice"));
     voiceAction->setCheckable(true);
     lineEdit->addAction(voiceAction, QLineEdit::TrailingPosition);
 
@@ -315,9 +294,9 @@ void DSearchEditPrivate::_q_toEditMode(bool focus)
 
 void DSearchEditPrivate::_q_onVoiceActionTrigger(bool checked)
 {
-#ifdef ENABLE_XFYUN
+#ifdef ENABLE_AI
     if (checked) {
-        voiceAction->setIcon(QIcon(":/images/voice_activate.svg"));
+        voiceAction->setIcon(QIcon::fromTheme("button_voice_active"));
 
         if (!voiceInput) {
             QAudioFormat format;
@@ -333,21 +312,21 @@ void DSearchEditPrivate::_q_onVoiceActionTrigger(bool checked)
             voiceIODevice = new VoiceDevice(voiceInput);
 
             q->connect(voiceIODevice, &VoiceDevice::voiceReply, q, [q, this](const QString & text) {
+                q->setText(text);
+            }, Qt::QueuedConnection);
+
+            q->connect(voiceIODevice, &VoiceDevice::finished, q, [q, this] {
                 // 自动结束录制
                 voiceAction->setChecked(false);
                 _q_onVoiceActionTrigger(false);
-
-                if (!text.isEmpty()) {
-                    q->setText(text);
-                    Q_EMIT q->voiceInputFinished();
-                }
-            }, Qt::QueuedConnection);
+                Q_EMIT q->voiceInputFinished();
+            });
         }
 
         if (voiceIODevice->open(QIODevice::WriteOnly))
             voiceInput->start(voiceIODevice);
     } else {
-        voiceAction->setIcon(QIcon(":/images/voice.svg"));
+        voiceAction->setIcon(QIcon::fromTheme("button_voice"));
 
         if (voiceInput) {
             voiceInput->stop();

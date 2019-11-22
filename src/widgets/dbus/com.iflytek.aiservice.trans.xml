@@ -1,0 +1,33 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+"http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node name="/trans/xxx">
+  <interface name="com.iflytek.aiservice.trans">
+     <!--阻塞式翻译，结果同步返回-->
+     <method name='syncTrans'>
+        <!--
+        param为QVariantMap，目前支持以下参数
+        srcLanguage:
+        必填，源语种
+        targetLanguage:
+        必填，目标语种
+        txt:
+        必填，待翻译文本，最大15000 bytes
+         -->
+         <arg name='param' type='a{sv}'  direction='in'/>
+         <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="QVariantMap"/>
+        <!--翻译结果，json字符串格式-->
+        <arg name='result' type='s'  direction='out'/>
+    </method>
+     <!--非阻塞式翻译，结果以Signal形式异步返回-->
+     <method name='asyncTrans'>
+        <!--param同syncTrans-->
+         <arg name='param' type='a{sv}'  direction='in'/>
+         <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="QVariantMap"/>
+    </method>
+    <!--异步翻译结果通知-->
+    <signal name="onNotify">
+      <!--result内容为json字符串形式，同syncTrans返回值-->
+      <arg name="result" type="s" direction="out"/>
+    </signal>
+  </interface>
+</node>

@@ -1,0 +1,22 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+"http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node name="/tts/xxx">
+  <interface name="com.iflytek.aiservice.tts">
+     <method name='startCompose'>
+        <arg name='params' type='a{sv}'  direction='in'/>
+        <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="QVariantMap"/>
+        <arg name='sessionId' type='s'  direction='out'/>
+    </method>
+    <method name='stopCompose'>
+        <arg name='code' type='s'  direction='out'/>
+    </method>
+    <method name='putText'>
+        <arg name='text' type='s'  direction='in'/>
+        <arg name='code' type='s'  direction='out'/>
+    </method>
+    <signal name="onNotify">
+        <arg name='data' type='ay' direction='out'/>
+        <arg name='code' type='s'  direction='out'/>
+    </signal>
+  </interface>
+</node>

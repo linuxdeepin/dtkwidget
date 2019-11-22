@@ -1,0 +1,31 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+"http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node name="/asr/xxx">
+  <interface name="com.iflytek.aiservice.asr">
+     <!--开始转写-->
+     <method name='startAsr'>
+        <!--
+        param为QVariantMap，目前支持以下参数
+        filePath:
+        必填，待转写文件路径，时长最大为5小时，5分钟以上效果最佳
+        fileDuration:
+        音频真实时长，单位是毫秒 服务端将针对用户上传的duration和服务端转码后的音频时长进行对比，如果偏差在10秒内（含10秒），则视为合法。
+        srcLanguage:
+        选填，用于上传的语种识别，仅可填入en、cn中的某一个值。en：英文，cn：中文，默认cn
+        targetLanguage:
+        选填，如果该字段不为空，代表客户需要使用转写+翻译的功能；字段值支持cn：中文，en：英文；该字段需要和 language 字段配套使用。language代表源语言，targetLanguage代表翻译后的语言。例如：language=cn，targetLanguage=en，表示中翻英。
+         -->
+         <arg name='param' type='a{sv}'  direction='in'/>
+         <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="QVariantMap"/>
+        <!--返回值,具体请见错误码-->
+        <arg name='code' type='s'  direction='out'/>
+    </method>
+    <!--停止转写，如果转写尚未结束，调用此接口会自动停止转写，如果转写已经完成，调用此结果则不会做任何动作-->
+    <method name='stopAsr'/>
+    <!--转写状态及结果通知-->
+    <signal name="onNotify">
+      <!--result内容为json字符串形式，具体见定义-->
+      <arg name="msg" type="s" direction="out"/>
+    </signal>
+  </interface>
+</node>

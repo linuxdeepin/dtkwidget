@@ -53,7 +53,7 @@ public:
 
     QWidget *iconWidget;
 
-#ifdef ENABLE_XFYUN
+#ifdef ENABLE_AI
     QAction *voiceAction;
     QAudioInput *voiceInput = nullptr;
     VoiceDevice *voiceIODevice = nullptr;

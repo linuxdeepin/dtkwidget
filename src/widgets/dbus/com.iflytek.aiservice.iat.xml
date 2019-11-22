@@ -1,0 +1,51 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+"http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node name="/iat/interface">
+  <interface name="com.iflytek.aiservice.iat">
+     <!--录音启动接口-->
+     <method name='startIat'>
+        <!--传入参数，param为QVariantMap，用户听写控制-->
+        <arg name='param' type='a{sv}'  direction='in'/>
+        <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="QVariantMap"/>
+        <!--传出参数，json对象，表示函数返回值,json对象field如下：
+        status:
+            -1 : 未知错误
+            0  : 操作成功
+            1  : 录音设备被占用
+            2  : 参数错误
+        msg:   错误信息
+        session_id: session信息
+        -->
+        <arg name='status' type='s'  direction='out'/>
+    </method>
+     <method name='putAudio'>
+       <!--传入参数-->
+       <arg name='audio_buf' type='ay'  direction='in'/>
+       <!--传入参数-->
+       <arg name='finish' type='b'  direction='in'/>
+    </method>
+    <!--录音停止接口，供用户主动调用-->
+    <method name='stopIat'/>
+    <!--语音输入的文本结果，该结果是可能是语音输入的流式文本
+    客户端需要监听该信号-->
+    <signal name="onResult">
+      <!--返回参数，json格式，形式如下：
+        text: 文本结果,{"sn":1,"ls":false,"bg":0,"ed":0,"ws":[{"bg":78,"cw":[{"sc":0.0,"w":"灰"}]},{"bg":94,"cw":[{"sc":0.0,"w":"化肥"}]},{"bg":134,"cw":[{"sc":0.0,"w":"挥发"}]},{"bg":174,"cw":[{"sc":0.0,"w":"会"}]},{"bg":194,"cw":[{"sc":0.0,"w":"发"}]},{"bg":210,"cw":[{"sc":0.0,"w":"灰"}]}]}
+        session_id: session信息
+      -->
+      <arg name="result" type="s" direction="out"/>
+    </signal>
+    <!--听写服务出现异常-->
+    <signal name="onError">
+      <!--在线听写服务的异常错误信息，json 对象，field如下：
+      errInfo: 错误文本信息
+      errCode: 错误码
+      -->
+      <arg name="errInfo" type="s" direction="out"/>
+    </signal>
+    <!--听写结束，云端主动通知客户端听写结束，客户端需要监听该信号，
+    客户端若希望继续听写，需要重新调用startIat接口
+    -->
+    <signal name="onEnd"/>
+  </interface>
+</node>

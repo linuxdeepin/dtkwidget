@@ -1,0 +1,28 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+"http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node name="/">
+  <interface name="com.iflytek.aiservice.ocr">
+    <!--ocr识别要求：照片为jpg格式，大小不超过4M-->
+     <method name='sendpictureByPath'>
+        <!--图片路径-->
+        <arg name='path' type='s'  direction='in'/>
+        <!--是否异步,默认异步-->
+        <arg name='isSync' type='b'  direction='in'/>
+        <!--错误码，0：成功，-1：打开文件失败-->
+        <arg name='errorcode' type='i'  direction='out'/>
+    </method>
+    <!--图像数据的方式，非图片的路径-->
+    <method name='sendpicture'>
+        <!--图像数据-->
+        <arg name='array' type='ay'  direction='in'/>
+        <!--是否异步,默认异步-->
+        <arg name='isSync' type='b'  direction='in'/>
+        <!--错误码，0：成功，-1：失败-->
+        <arg name='errorcode' type='i'  direction='out'/>
+    </method>
+    <signal name="signalOCRResult">
+      <!--result内容为json字符串形式，具体见定义-->
+      <arg name="result" type="s" direction="out"/>
+    </signal>
+  </interface>
+</node>
