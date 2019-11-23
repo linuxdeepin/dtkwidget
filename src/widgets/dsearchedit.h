@@ -33,6 +33,7 @@ public:
 
     void setPlaceHolder(QString placeHolder);
     QString placeHolder() const;
+    void clear();
 
 Q_SIGNALS:
     void voiceInputFinished();
