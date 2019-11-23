@@ -878,6 +878,7 @@ void DBlurEffectWidget::paintEvent(QPaintEvent *event)
         if (d->customSourceImage) {
             image = d->sourceImage.copy(paintRect.adjusted(0, 0, 2 * radius, 2 * radius) * device_pixel_ratio);
             image.setDevicePixelRatio(device_pixel_ratio);
+            pa.setOpacity(0.2);
         } else {// 非customSourceImage不考虑缩放产生的影响
             image = d->sourceImage.copy(paintRect.adjusted(0, 0, 2 * radius, 2 * radius));
         }
@@ -886,6 +887,7 @@ void DBlurEffectWidget::paintEvent(QPaintEvent *event)
         pa.translate(paintRect.topLeft() - QPoint(radius, radius));
         qt_blurImage(&pa, image, radius, false, false);
         pa.setTransform(old_transform);
+        pa.setOpacity(1);
     }
 
     pa.fillRect(rect(), maskColor());
