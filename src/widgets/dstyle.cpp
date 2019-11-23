@@ -1925,6 +1925,14 @@ QBrush DStyle::generatedBrush(StateFlags flags, const QBrush &base, QPalette::Co
         case QPalette::Highlight:
             colorNew = adjustColor(colorNew, 0, 0, +20);
             break;
+        case QPalette::ButtonText: {
+            DGuiApplicationHelper::ColorType type = DGuiApplicationHelper::toColorType(option->palette);
+            colorNew = adjustColor(colorNew, 0, 0, type == DGuiApplicationHelper::DarkType ? 20 : -50);
+            break;
+        }
+        case QPalette::HighlightedText:
+            colorNew = adjustColor(colorNew, 0, 0, 20);
+            break;
         default:
             break;
         }
@@ -1948,6 +1956,11 @@ QBrush DStyle::generatedBrush(StateFlags flags, const QBrush &base, QPalette::Co
         }
         case QPalette::Highlight:
             colorNew = adjustColor(colorNew, 0, 0, -10);
+            break;
+        case QPalette::ButtonText:
+            return option->palette.highlight();
+        case QPalette::HighlightedText:
+            colorNew = adjustColor(colorNew, 0, 0, 0, 0, 0, 0, -40);
             break;
         default:
             break;
@@ -2023,6 +2036,10 @@ QBrush DStyle::generatedBrush(StateFlags flags, const QBrush &base, QPalette::Co
                        : adjustColor(colorNew, 0, 0, +10, 0, 0, 0, +10);
             break;
         }
+        case DPalette::TextWarning: {
+            colorNew = adjustColor(colorNew, 0, 0, -10);
+            break;
+        }
         default:
             break;
         }
@@ -2036,6 +2053,10 @@ QBrush DStyle::generatedBrush(StateFlags flags, const QBrush &base, QPalette::Co
         case DPalette::DarkLively:
             colorNew = adjustColor(colorNew, 0, 0, -20, 0, 0, 0, 0);
             break;
+        case DPalette::TextWarning: {
+            colorNew = adjustColor(colorNew, 0, 0, -30);
+            break;
+        }
         default:
             break;
         }
