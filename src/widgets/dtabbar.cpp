@@ -1219,8 +1219,6 @@ void DTabBarPrivate::tabLayoutChange()
 void DTabBarPrivate::initStyleOption(QStyleOptionTab *option, int tabIndex) const
 {
     QTabBar::initStyleOption(option, tabIndex);
-    // 因为没有背景，因此使用高亮色作为文本颜色
-    option->palette.setBrush(QPalette::HighlightedText, option->palette.highlight());
 }
 
 QTabBarPrivate *DTabBarPrivate::dd() const
