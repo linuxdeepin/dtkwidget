@@ -198,6 +198,16 @@ QString DSearchEdit::placeHolder() const
     return d->placeHolder;
 }
 
+void DSearchEdit::clear()
+{
+    D_D(DSearchEdit);
+
+    DLineEdit::clear();
+    if (!hasFocus()) {
+       d->_q_toEditMode(false);
+    }
+}
+
 DSearchEditPrivate::DSearchEditPrivate(DSearchEdit *q)
     : DLineEditPrivate(q)
     , action(nullptr)
@@ -282,13 +292,12 @@ void DSearchEditPrivate::_q_toEditMode(bool focus)
 {
     D_Q(DSearchEdit);
 
-    if (focus) {
+    if (focus  || !q->lineEdit()->text().isEmpty()) {
         action->setVisible(true);
         iconWidget->setVisible(false);
     } else {
         action->setVisible(false);
         iconWidget->setVisible(true);
-        q->lineEdit()->clear();
     }
 }
 
