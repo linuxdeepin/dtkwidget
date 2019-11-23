@@ -66,6 +66,9 @@ void DSwitchButton::initStyleOption(DStyleOptionButton *option) const
     } else {
         option->state |= QStyle::State_Off;
     }
+
+    // 针对switch button禁用hover状态
+    option->state &= ~QStyle::State_MouseOver;
 }
 
 DSwitchButtonPrivate::DSwitchButtonPrivate(DSwitchButton *qq)
