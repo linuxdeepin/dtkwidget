@@ -311,7 +311,8 @@ bool DArrowRectangle::event(QEvent *e)
     case QEvent::WindowDeactivate:  Q_EMIT windowDeactivate();    break;
     case QEvent::Polish: {
         D_D(DArrowRectangle);
-        d->m_radius = DStyleHelper(style()).pixelMetric(DStyle::PM_TopLevelWindowRadius);
+        if (d->m_radius < 0)
+            d->m_radius = DStyleHelper(style()).pixelMetric(DStyle::PM_TopLevelWindowRadius);
         break;
     }
     default:;
