@@ -156,7 +156,14 @@ void DLabel::paintEvent(QPaintEvent *event)
                 if (!style->styleHint(QStyle::SH_UnderlineShortcut, &opt, this))
                     flags |= Qt::TextHideMnemonic;
             }
-            style->drawItemText(&painter, lr.toRect(), flags, opt.palette, isEnabled(), d->text, foregroundRole());
+
+            QPalette palette = opt.palette;
+
+            if (d_func()->color != DPalette::NoType) {
+                palette.setBrush(foregroundRole(), DApplicationHelper::instance()->palette(this).brush(d_func()->color));
+            }
+
+            style->drawItemText(&painter, lr.toRect(), flags, palette, isEnabled(), d->text, foregroundRole());
         }
     } else
 #ifndef QT_NO_PICTURE
