@@ -22,6 +22,7 @@
 #include "dobject_p.h"
 #include "dstyleoption.h"
 #include "dapplicationhelper.h"
+#include "dstyle.h"
 
 #include <QDebug>
 #include <QApplication>
@@ -691,7 +692,8 @@ void DStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
     style->drawPrimitive(QStyle::PE_PanelItemViewItem, &opt, painter, widget);
 
     // draw the background
-    if (d->backgroundType != NoBackground && !(opt.state & QStyle::State_Selected)) {
+    if (backgroundType() != NoBackground && !(opt.state & QStyle::State_Selected)
+            && !(d->backgroundType & NoNormalState && DStyle::getState(&opt) == DStyle::SS_NormalState)) {
         DStyleOptionBackgroundGroup boption;
         boption.init(widget);
         boption.QStyleOption::operator =(opt);
@@ -703,7 +705,7 @@ void DStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
 
         boption.rect = opt.rect;
 
-        if (d->backgroundType != RoundedBackground) {
+        if (backgroundType() != RoundedBackground) {
             boption.directions = Qt::Vertical;
         }
 
@@ -931,8 +933,7 @@ QSize DStyledItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QM
 DStyledItemDelegate::BackgroundType DStyledItemDelegate::backgroundType() const
 {
     D_DC(DStyledItemDelegate);
-
-    return d->backgroundType;
+    return DStyledItemDelegate::BackgroundType(d->backgroundType & BackgroundType_Mask);
 }
 
 QMargins DStyledItemDelegate::margins() const
@@ -956,17 +957,17 @@ int DStyledItemDelegate::spacing() const
     return d->itemSpacing;
 }
 
-void DStyledItemDelegate::setBackgroundType(DStyledItemDelegate::BackgroundType backgroundType)
+void DStyledItemDelegate::setBackgroundType(DStyledItemDelegate::BackgroundType type)
 {
     D_D(DStyledItemDelegate);
 
-    if (d->backgroundType == backgroundType)
+    if (d->backgroundType == type)
         return;
 
-    d->backgroundType = backgroundType;
+    d->backgroundType = type;
     d->margins = QMargins();
 
-    if (d->backgroundType != NoBackground) {
+    if (backgroundType() != NoBackground) {
         QStyle *style = qApp->style();
 
         if (QWidget *w = qobject_cast<QWidget *>(parent())) {

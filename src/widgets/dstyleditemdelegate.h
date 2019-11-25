@@ -65,7 +65,7 @@ public:
     void setWidget(QWidget *widget);
     QWidget *widget() const;
 };
-typedef QList<DViewItemAction*> DViewItemActionList;
+typedef QList<DViewItemAction *> DViewItemActionList;
 
 class DStyledItemDelegatePrivate;
 class DStyledItemDelegate : public QStyledItemDelegate, public DCORE_NAMESPACE::DObject
@@ -79,9 +79,11 @@ class DStyledItemDelegate : public QStyledItemDelegate, public DCORE_NAMESPACE::
 
 public:
     enum BackgroundType {
-        NoBackground,
-        ClipCornerBackground,
-        RoundedBackground
+        NoBackground = 0,
+        ClipCornerBackground = 1,
+        RoundedBackground = 2,
+        BackgroundType_Mask = 0xff,
+        NoNormalState = 0x100
     };
 
     explicit DStyledItemDelegate(QAbstractItemView *parent = nullptr);

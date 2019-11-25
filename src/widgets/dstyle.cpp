@@ -1656,7 +1656,7 @@ QPalette DStyle::standardPalette() const
     return pa.resolve(QCommonStyle::standardPalette());
 }
 
-static DStyle::StyleState getState(const QStyleOption *option)
+DStyle::StyleState DStyle::getState(const QStyleOption *option)
 {
     DStyle::StyleState state = DStyle::SS_NormalState;
 

@@ -682,9 +682,9 @@ void DListView::setBackgroundType(DStyledItemDelegate::BackgroundType background
     if (DStyledItemDelegate *d = qobject_cast<DStyledItemDelegate *>(itemDelegate())) {
         d->setBackgroundType(backgroundType);
 
-        if (backgroundType == DStyledItemDelegate::RoundedBackground) {
+        if (d->backgroundType() == DStyledItemDelegate::RoundedBackground) {
             d->setItemSpacing(10);
-        } else if (backgroundType == DStyledItemDelegate::ClipCornerBackground) {
+        } else if (d->backgroundType() == DStyledItemDelegate::ClipCornerBackground) {
             d->setItemSpacing(1);
         } else {
             d->setItemSpacing(0);
