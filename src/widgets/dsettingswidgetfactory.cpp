@@ -47,43 +47,62 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-static QMap<QString, DKeySequenceEdit *> shortcutMap;
+class DSettingsWidgetFactoryPrivate;
+
+class KeySequenceEdit : public DKeySequenceEdit
+{
+public:
+    KeySequenceEdit(DTK_CORE_NAMESPACE::DSettingsOption *opt, QWidget *parent = nullptr)
+        : DKeySequenceEdit(parent)
+    {
+        m_poption = opt;
+    }
+    DTK_CORE_NAMESPACE::DSettingsOption *option()
+    {
+        return m_poption;
+    }
+private:
+    DTK_CORE_NAMESPACE::DSettingsOption *m_poption = nullptr;
+};
+
+static QMap<QString, KeySequenceEdit *> shortcutMap;
 
 class ChangeDDialog : public DDialog
 {
 public:
-    ChangeDDialog(QString key, DKeySequenceEdit*edit, QString text = QString())
+    ChangeDDialog(QString key, KeySequenceEdit *edit, QString text = QString())
     {
-//        qApp->translate
         QPushButton *cancel = new QPushButton(qApp->translate("DSettingsDialog", "Cancel"));
         DSuggestButton *replace = new DSuggestButton(qApp->translate("DSettingsDialog", "Replace"));
 
-        QString str = qApp->translate("DSettingsDialog" ,"This shortcut conflicts with %1, click on Add to make this shortcut effective immediately")
+        QString str = qApp->translate("DSettingsDialog", "This shortcut conflicts with %1, click on Add to make this shortcut effective immediately")
                       .arg(QString("<span style=\"color: rgba(255, 90, 90, 1);\">%1 %2</span>").arg(text).arg(QString("[%1]").arg(key)));
         setMessage(str);
         insertButton(1, cancel);
         insertButton(1, replace);
-        connect(replace, &DSuggestButton::clicked, [=] {
+        connect(replace, &DSuggestButton::clicked, [ = ] {  //替换
+            shortcutMap.value(key)->option()->setValue(QString());
             shortcutMap.value(key)->clear();
             shortcutMap.remove(shortcutMap.key(edit));
             shortcutMap[key] = edit;
+            edit->option()->setValue(key);
         });
-        connect(cancel, &QPushButton::clicked, [=] {
+        connect(cancel, &QPushButton::clicked, [ = ] {  //取消
             cancelSettings(edit);
         });
-        connect(this, &DDialog::closed, [=] {
+        connect(this, &DDialog::closed, [ = ] {
             cancelSettings(edit);
         });
-        connect(this, &DDialog::rejected, [=]{
+        connect(this, &DDialog::rejected, [ = ] {
             cancelSettings(edit);
         });
     }
 private:
-    void cancelSettings(DKeySequenceEdit*edit)
+    void cancelSettings(KeySequenceEdit *edit)
     {
-        if (shortcutMap.key(edit).isEmpty()) {
+        if (shortcutMap.key(edit).isEmpty()) {  //第一次被设置
             edit->clear();
-        }else {
+        } else {
             edit->setKeySequence(QKeySequence(shortcutMap.key(edit)));
         }
     }
@@ -175,41 +194,56 @@ QPair<QWidget *, QWidget *> createShortcutEditOptionHandle(DSettingsWidgetFactor
     }
 
     auto option = qobject_cast<DTK_CORE_NAMESPACE::DSettingsOption *>(opt);
-    auto rightWidget = new DKeySequenceEdit;
+    auto rightWidget = new KeySequenceEdit(option);
+
+    rightWidget->setObjectName("OptionShortcutEdit");
     rightWidget->ShortcutDirection(Qt::AlignLeft);
+
     auto optionValue = option->value();
     auto translateContext = opt->property(PRIVATE_PROPERTY_translateContext).toByteArray();
 
-    QObject::connect(rightWidget, &DKeySequenceEdit::editingFinished, [=](const QKeySequence & sequence){
+    option->connect(rightWidget, &KeySequenceEdit::editingFinished, [ = ](const QKeySequence & sequence) {
 
         QString keyseq = sequence.toString();
-        if (shortcutMap.value(sequence.toString()) == rightWidget)
+        if (shortcutMap.value(sequence.toString()) == rightWidget) //键位于自己相同
             return;
 
-        if (shortcutMap.value(keyseq)) {
+        if (shortcutMap.value(keyseq)) { //重复
             ChangeDDialog frame(keyseq, rightWidget, rightWidget->text());
             frame.exec();
-        }else {
+        } else {
             shortcutMap.remove(shortcutMap.key(rightWidget));
             shortcutMap.insert(keyseq, rightWidget);
+            option->setValue(keyseq);
         }
     });
 
-    rightWidget->setObjectName("OptionShortcutEdit");
-
-    auto updateWidgetValue = [rightWidget](const QVariant & optionValue) {
+    auto updateWidgetValue = [ = ](const QVariant & optionValue, DTK_CORE_NAMESPACE::DSettingsOption * opt) {
         QString keyseq = optionValue.toString();
         QKeySequence sequence(optionValue.toString());
 
         if (shortcutMap.value(keyseq)) {    //如果重复,退出
-            return false;
+            return;
         }
-        return rightWidget->setKeySequence(sequence);
-    };
 
-    if (updateWidgetValue(optionValue)) { //如果快捷键添加成功，保存信息
-        shortcutMap.insert(optionValue.toString(), rightWidget);
-    }
+        if (rightWidget->setKeySequence(sequence)) {
+            shortcutMap.insert(optionValue.toString(), rightWidget);
+            opt->setValue(optionValue.toString());
+        }
+    };
+    updateWidgetValue(optionValue, option);
+
+    option->connect(option, &DTK_CORE_NAMESPACE::DSettingsOption::valueChanged, rightWidget, [ = ](const QVariant & value) { //恢复默认设置
+        if (value.isNull())
+            return;
+
+        if (!shortcutMap.key(rightWidget).isEmpty()) {  //清空map列表
+            rightWidget->clear();
+            shortcutMap.remove(shortcutMap.key(rightWidget));
+        }
+
+        updateWidgetValue(value, option);
+    });
 
     return DSettingsWidgetFactory::createStandardItem(translateContext, option, rightWidget);
 }

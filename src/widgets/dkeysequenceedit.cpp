@@ -173,10 +173,6 @@ void DKeySequenceEdit::keyPressEvent(QKeyEvent *e)
     QString modifiers = QKeySequence(e->modifiers()).toString();
     QString key =  QKeySequence(e->key()).toString();
 
-    if (modifiers.isEmpty() || e->modifiers() == Qt::KeypadModifier) {
-        return;
-    }
-
     QKeySequence sequence(modifiers + key);
     bool flags = setKeySequence(sequence);
     if (!flags)
