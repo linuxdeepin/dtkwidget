@@ -22,6 +22,7 @@ public:
 
     QHBoxLayout *layout = nullptr;
     DBlurEffectWidget *background = nullptr;
+    int framRadius {-1};
 
     D_DECLARE_PUBLIC(DFloatingWidget)
 };

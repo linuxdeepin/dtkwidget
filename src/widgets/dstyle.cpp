@@ -1348,8 +1348,13 @@ int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyle
         return 30;
     case PM_SwithcButtonHandleHeight:
         return 24;
-    case PM_FloatingWidgetRadius:
+    case PM_FloatingWidgetRadius: {
+        if (const DStyleOptionFloatingWidget *wid = qstyleoption_cast<const DStyleOptionFloatingWidget *>(opt)) {
+            if (wid->frameRadius != -1)
+                return wid->frameRadius;
+        }
         return dstyle.pixelMetric(PM_TopLevelWindowRadius, opt, widget);
+    }
     case PM_FloatingWidgetShadowRadius:
         return 8;
     case PM_FloatingWidgetShadowHOffset:

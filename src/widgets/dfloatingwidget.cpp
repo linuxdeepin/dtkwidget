@@ -86,6 +86,15 @@ void DFloatingWidget::setWidget(QWidget *widget)
     d->adjustPalette();
 }
 
+void DFloatingWidget::setFramRadius(int radius)
+{
+    D_D(DFloatingWidget);
+    if (d->framRadius == radius)
+        return;
+    d->framRadius = radius;
+    update();
+}
+
 /*!
  * \~chinese \brief 构造函数
  * \~chinese \param[in] dd 是 DFloatingWidgetPrivate 的对象引用
@@ -183,6 +192,7 @@ void DFloatingWidget::initStyleOption(DStyleOptionFloatingWidget *option) const
     option->init(this);
     option->initFrom(this);
     option->noBackground = blurBackgroundIsEnabled();
+    option->frameRadius = d_func()->framRadius;
 }
 
 /*!

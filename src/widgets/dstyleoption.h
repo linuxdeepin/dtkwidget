@@ -147,6 +147,7 @@ class DStyleOptionFloatingWidget : public QStyleOption, public DStyleOption
 public:
     using DStyleOption::init;
     bool noBackground;
+    int frameRadius = -1;
 };
 
 class DFontSizeManagerPrivate;

@@ -43,6 +43,7 @@ public:
 
     QSize sizeHint() const override;
     void setWidget(QWidget *widget);
+    void setFramRadius(int radius);
 
 protected:
     DFloatingWidget(DFloatingWidgetPrivate &dd, QWidget *parent);
