@@ -62,10 +62,6 @@ DSpinner::DSpinner(QWidget *parent) :
 {
     Q_D(DSpinner);
 
-    d->indicatorColors << d->createDefaultIndicatorColorList(QColor(200, 46, 255));
-    d->indicatorColors << d->createDefaultIndicatorColorList(QColor(207, 225, 0));
-    d->indicatorColors << d->createDefaultIndicatorColorList(QColor(0, 255, 241));
-
     d->refreshTimer.setInterval(30);
 
     connect(&d->refreshTimer, &QTimer::timeout,
@@ -125,6 +121,11 @@ void DSpinner::setBackgroundColor(QColor color)
 void DSpinner::paintEvent(QPaintEvent *)
 {
     Q_D(DSpinner);
+
+    if (d->indicatorColors.isEmpty()) {
+        for (int i = 0; i < 3; ++i)
+            d->indicatorColors << d->createDefaultIndicatorColorList(palette().highlight().color());
+    }
 
     QPainter painter(this);
     painter.setRenderHints(QPainter::Antialiasing);

@@ -21,6 +21,8 @@
 #include <QTimer>
 #include <QPainter>
 #include <QGraphicsDropShadowEffect>
+#include <QEvent>
+#include <QIcon>
 
 #include <DObjectPrivate>
 #include <DSvgRenderer>
@@ -174,6 +176,17 @@ void DWaterProgress::paintEvent(QPaintEvent *)
     d->paint(&p);
 }
 
+void DWaterProgress::changeEvent(QEvent *e)
+{
+    if (e->type() == QEvent::PaletteChange) {
+        D_D(DWaterProgress);
+        d->waterBackImage = QImage();
+        d->waterFrontImage = QImage();
+    }
+
+    return QWidget::changeEvent(e);
+}
+
 void DWaterProgressPrivate::resizePixmap(QSize sz)
 {
     // resize water;
@@ -182,19 +195,19 @@ void DWaterProgressPrivate::resizePixmap(QSize sz)
     auto waterSize = QSizeF(waterWidth, waterHeight).toSize();
 
     if (waterFrontImage.size() != waterSize) {
-        DSvgRenderer renderer(QString(":/images/water_front.svg"));
+        QIcon renderer = QIcon::fromTheme("water_front");
         QImage image(waterWidth, waterHeight, QImage::Format_ARGB32);
         image.fill(Qt::transparent);  // partly transparent red-ish background
         QPainter waterPainter(&image);
-        renderer.render(&waterPainter);
+        renderer.paint(&waterPainter, image.rect());
         waterFrontImage = image;
     }
     if (waterBackImage.size() != waterSize) {
-        DSvgRenderer renderer(QString(":/images/water_back.svg"));
+        QIcon renderer = QIcon::fromTheme("water_back");
         QImage image(waterWidth, waterHeight, QImage::Format_ARGB32);
         image.fill(Qt::transparent);  // partly transparent red-ish background
         QPainter waterPainter(&image);
-        renderer.render(&waterPainter);
+        renderer.paint(&waterPainter, image.rect());
         waterBackImage = image;
     }
 }

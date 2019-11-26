@@ -2,5 +2,9 @@
     <qresource prefix="/icons/deepin/builtin">
         <file>dark/texts/titlebar_shadow_20px.svg</file>
         <file>light/texts/titlebar_shadow_20px.svg</file>
+        <file>dark/icons/water_front_383px.svg</file>
+        <file>dark/icons/water_back_383px.svg</file>
+        <file>light/icons/water_back_383px.svg</file>
+        <file>light/icons/water_front_383px.svg</file>
     </qresource>
 </RCC>
