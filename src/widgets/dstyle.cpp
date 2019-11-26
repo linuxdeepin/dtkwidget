@@ -1116,9 +1116,9 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
             QMargins shadow_margin(shadowMargins, shadowMargins, shadowMargins, shadowMargins);
 
             //先绘画阴影
-            DDrawUtils::drawShadow(p, btn->rect + shadow_margin, frameRadius, frameRadius, QColor(0, 0, 0, 0.15 * 255), shadowRadius, QPoint(offsetX, offsetY));
+            DDrawUtils::drawShadow(p, btn->rect + shadow_margin, frameRadius, frameRadius, QColor(0, 0, 0, 0.25 * 255), shadowRadius, QPoint(offsetX, offsetY));
             //再绘画上面的待显示区域
-            p->setPen(QPen(btn->dpalette.frameBorder(), 1));
+            p->setPen(QPen(btn->dpalette.frameShadowBorder(), 1));
             p->setBrush(btn->noBackground ? Qt::NoBrush : p->background());
             p->drawRoundedRect(opt->rect, frameRadius, frameRadius);
         }
