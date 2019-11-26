@@ -84,6 +84,11 @@ Qt::TextFormat DStyle::tooltipTextFormat()
     return textFormat;
 }
 
+void DStyle::setFocusRectVisible(QWidget *widget, bool visible)
+{
+    widget->setProperty("_d_dtk_noFocusRect", !visible);
+}
+
 namespace DDrawUtils {
 static QImage dropShadow(const QPixmap &px, qreal radius, const QColor &color)
 {
@@ -1211,7 +1216,7 @@ void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const Q
     case CE_ButtonBoxButtonBevel: {
         if (const DStyleOptionButtonBoxButton *btn = qstyleoption_cast<const DStyleOptionButtonBoxButton *>(opt)) {
             bool checked = btn->state & State_On;
-            bool disable = !(btn->state & State_Active);
+            bool disable = !(btn->state & State_Enabled);
             bool hover = btn->state & State_MouseOver;
             bool press = btn->state & State_Sunken;
 
