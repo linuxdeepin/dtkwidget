@@ -78,6 +78,7 @@ Q_SIGNALS:
 protected:
     DLineEdit(DLineEditPrivate &q, QWidget *parent);
     bool eventFilter(QObject *watched, QEvent *event) override;
+    bool event(QEvent *event) override;
 
     friend class DStyleOptionLineEdit;
 };

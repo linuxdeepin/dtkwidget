@@ -22,6 +22,7 @@
 
 #include <DObjectPrivate>
 #include <QPointer>
+#include <DFloatingWidget>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -37,6 +38,7 @@ public:
 
     bool m_isAlert = false;
     QPointer<DToolTip> tooltip;
+    QPointer<DFloatingWidget> frame;
 
     QWidget *leftWidget;
     QWidget *rightWidget;

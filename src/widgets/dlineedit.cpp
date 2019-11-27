@@ -127,12 +127,23 @@ void DLineEdit::showAlertMessage(const QString &text, int duration)
         d->tooltip = new DToolTip(text);
         d->tooltip->setObjectName("AlertTooltip");
         d->tooltip->setForegroundRole(DPalette::TextWarning);
+
+        d->frame = new DFloatingWidget;
+        d->frame->setFramRadius(DStyle::pixelMetric(style(), DStyle::PM_FrameRadius));
+        d->frame->setBackgroundRole(QPalette::ToolTipBase);
+        d->frame->setWidget(d->tooltip);
+        d->frame->setParent(parentWidget());
+        d->frame->adjustSize();
+        d->frame->raise();
+        updateGeometry();
     }
 
     d->tooltip->setText(text);
-
-    const QPoint &pos = mapToGlobal(QPoint(0, height()));
-    d->tooltip->show(pos, duration);
+    if (duration < 0)
+        return;
+    QTimer::singleShot(duration, this, [=] {
+        d->frame->close();
+    });
 }
 
 /*!
@@ -321,9 +332,22 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
     return QWidget::eventFilter(watched, event);
 }
 
+bool DLineEdit::event(QEvent *e)
+{
+    D_D(DLineEdit);
+    if (e->type() == QEvent::Move || e->type() == QEvent::Resize) {
+        if (d->frame) {
+            int w = DStyle::pixelMetric(style(), DStyle::PM_FloatingWidgetShadowMargins);
+            d->frame->move(geometry().x() - w, geometry().y() + lineEdit()->height() + lineEdit()->y());
+        }
+    }
+    return QWidget::event(e);
+}
+
 DLineEditPrivate::DLineEditPrivate(DLineEdit *q)
     : DObjectPrivate(q)
     , tooltip(nullptr)
+    , frame(nullptr)
     , leftWidget(nullptr)
     , rightWidget(nullptr)
     , lineEdit(nullptr)

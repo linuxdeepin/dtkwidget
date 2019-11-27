@@ -125,7 +125,9 @@ QSize DFloatingWidget::sizeHint() const
 
     QSize size = d->layout ? d->layout->sizeHint() : QSize(0, 0);
     DStyleHelper dstyle(style());
-    size = dstyle.sizeFromContents(DStyle::CT_FloatingWidget, nullptr, size, this);
+    DStyleOptionFloatingWidget opt;
+    opt.frameRadius = d_func()->framRadius;
+    size = dstyle.sizeFromContents(DStyle::CT_FloatingWidget, &opt, size, this);
 
     return size;
 }
