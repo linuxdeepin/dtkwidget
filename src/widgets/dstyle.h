@@ -225,6 +225,7 @@ public:
     static Qt::TextFormat tooltipTextFormat();
     static DStyle::StyleState getState(const QStyleOption *option);
     static void setFocusRectVisible(QWidget *widget, bool visible);
+    static void setFrameRadius(QWidget *widget, int radius);
     DStyle();
 
     static void drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, const QStyleOption *opt, QPainter *p, const QWidget *w = nullptr);

@@ -104,6 +104,7 @@ public Q_SLOTS:
     void setItemMargins(const QMargins &itemMargins);
     void setItemSize(QSize itemSize);
     void setItemSpacing(int spacing);
+    void setItemRadius(int radius);
 
 Q_SIGNALS:
     void rowCountChanged();

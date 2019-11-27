@@ -89,6 +89,11 @@ void DStyle::setFocusRectVisible(QWidget *widget, bool visible)
     widget->setProperty("_d_dtk_noFocusRect", !visible);
 }
 
+void DStyle::setFrameRadius(QWidget *widget, int radius)
+{
+    widget->setProperty("_d_dtk_frameRadius", radius);
+}
+
 namespace DDrawUtils {
 static QImage dropShadow(const QPixmap &px, qreal radius, const QColor &color)
 {
@@ -1319,6 +1324,14 @@ int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyle
     case PM_FocusBorderSpacing:
         return 2;
     case PM_FrameRadius:
+        if (widget) {
+            const QVariant &radius_value = widget->property("_d_dtk_frameRadius");
+            bool ok = false;
+            int radius = radius_value.toInt(&ok);
+            if (ok && radius >= 0) {
+               return radius;
+            }
+        }
         return 8;
     case PM_TopLevelWindowRadius:
         return 18;

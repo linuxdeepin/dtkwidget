@@ -24,6 +24,7 @@
 #include "dflowlayout.h"
 #include "dstyleoption.h"
 #include "dstyleditemdelegate.h"
+#include "dstyle.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -710,6 +711,14 @@ void DListView::setItemSpacing(int spacing)
 {
     if (DStyledItemDelegate *d = qobject_cast<DStyledItemDelegate *>(itemDelegate())) {
         return d->setItemSpacing(spacing);
+    }
+}
+
+void DListView::setItemRadius(int radius)
+{
+    if (DStyledItemDelegate *d = qobject_cast<DStyledItemDelegate *>(itemDelegate())) {
+        DStyle::setFrameRadius(this, radius);
+        update();
     }
 }
 
