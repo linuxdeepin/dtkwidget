@@ -3,6 +3,7 @@
 #include <QtMath>
 #include <QPainter>
 #include <QTimer>
+#include <QEvent>
 
 #include <DObjectPrivate>
 
@@ -155,6 +156,16 @@ void DSpinner::paintEvent(QPaintEvent *)
             painter.fillPath(path, colors.value(j));
         }
     }
+}
+
+void DSpinner::changeEvent(QEvent *e)
+{
+    Q_D(DSpinner);
+
+    if (e->type() == QEvent::PaletteChange)
+        d->indicatorColors.clear();
+
+    QWidget::changeEvent(e);
 }
 
 QList<QColor> DSpinnerPrivate::createDefaultIndicatorColorList(QColor color)

@@ -27,6 +27,7 @@ public Q_SLOTS:
 
 protected:
     void paintEvent(QPaintEvent *) Q_DECL_OVERRIDE;
+    void changeEvent(QEvent *e) override;
 
 private:
     D_DECLARE_PRIVATE(DSpinner)
