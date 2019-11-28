@@ -51,6 +51,7 @@ public:
 
     bool loadDtkTranslator(QList<QLocale> localeFallback);
     bool loadTranslator(QList<DPathBuf> translateDirs, const QString &name, QList<QLocale> localeFallback);
+    void _q_onNewInstanceStarted();
 
     static bool isUserManualExists();
 public:
@@ -71,6 +72,7 @@ public:
     bool visibleMenuShortcutText   = false;
     bool visibleMenuCheckboxWidget = false;
     bool visibleMenuIcon           = false;
+    bool autoActivateWindows       = false;
 
     DAboutDialog *aboutDialog = Q_NULLPTR;
 };

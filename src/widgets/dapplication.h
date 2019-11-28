@@ -46,6 +46,7 @@ class LIBDTKWIDGETSHARED_EXPORT DApplication : public QApplication, public DTK_C
     Q_PROPERTY(bool visibleMenuShortcutText READ visibleMenuShortcutText WRITE setVisibleMenuShortcutText)
     Q_PROPERTY(bool visibleMenuCheckboxWidget READ visibleMenuCheckboxWidget WRITE setVisibleMenuCheckboxWidget)
     Q_PROPERTY(bool visibleMenuIcon READ visibleMenuIcon WRITE setVisibleMenuIcon)
+    Q_PROPERTY(bool autoActivateWindows READ autoActivateWindows WRITE setAutoActivateWindows)
 
 public:
     DApplication(int &argc, char **argv);
@@ -62,9 +63,8 @@ public:
     void setOOMScoreAdj(const int score);
 #endif
 
-    D_DECL_DEPRECATED_X("Use DGuiApplicationHelper::setSingleInstance") bool setSingleInstance(const QString &key);
-
-    D_DECL_DEPRECATED_X("Use DGuiApplicationHelper::setSingleInstance") bool setSingleInstance(const QString &key, SingleScope singleScope);
+    bool setSingleInstance(const QString &key);
+    bool setSingleInstance(const QString &key, SingleScope singleScope);
 
     bool loadTranslator(QList<QLocale> localeFallback = QList<QLocale>() << QLocale::system());
 
@@ -118,6 +118,9 @@ public:
     bool visibleMenuIcon() const;
     void setVisibleMenuIcon(bool value);
 
+    bool autoActivateWindows() const;
+    void setAutoActivateWindows(bool autoActivateWindows);
+
 #ifdef VERSION
     static inline QString buildVersion(const QString &fallbackVersion)
     {
@@ -152,6 +155,8 @@ protected:
 private:
     friend class DTitlebarPrivate;
     friend class DMainWindowPrivate;
+
+    D_PRIVATE_SLOT(void _q_onNewInstanceStarted())
 };
 
 class DtkBuildVersion {

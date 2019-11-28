@@ -50,6 +50,7 @@
 #include "dthememanager.h"
 #include "private/dapplication_p.h"
 #include "daboutdialog.h"
+#include "dmainwindow.h"
 
 #include <DPlatformHandle>
 #include <DGuiApplicationHelper>
@@ -295,6 +296,20 @@ bool DApplicationPrivate::loadTranslator(QList<DPathBuf> translateDirs, const QS
     return false;
 }
 
+// 自动激活DMainWindow类型的窗口
+void DApplicationPrivate::_q_onNewInstanceStarted()
+{
+    if (!autoActivateWindows)
+        return;
+
+    for (QWidget *window : qApp->topLevelWidgets()) {
+        if (qobject_cast<DMainWindow*>(window)) {
+            window->activateWindow();
+            break; // 只激活找到的第一个窗口
+        }
+    }
+}
+
 bool DApplicationPrivate::isUserManualExists()
 {
 #ifdef Q_OS_LINUX
@@ -511,7 +526,7 @@ void DApplication::setOOMScoreAdj(const int score)
  */
 bool DApplication::setSingleInstance(const QString &key)
 {
-    return setSingleInstance(key, SystemScope);
+    return setSingleInstance(key, UserScope);
 }
 
 /*!
@@ -526,24 +541,11 @@ bool DApplication::setSingleInstance(const QString &key, SingleScope singleScope
 {
     D_D(DApplication);
 
-    QString k = key;
+    auto scope = singleScope == SystemScope ? DGuiApplicationHelper::WorldScope : DGuiApplicationHelper::UserScope;
+    connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::newProcessInstance,
+            this, &DApplication::newInstanceStarted, Qt::UniqueConnection);
 
-#ifdef Q_OS_UNIX
-    switch (singleScope) {
-    case DApplication::UserScope:
-        k += QString("_%1").arg(getuid());
-        break;
-    default:
-        break;
-    }
-#endif
-
-#ifdef Q_OS_UNIX
-    if (!qEnvironmentVariableIsSet("DTK_USE_SEMAPHORE_SINGLEINSTANCE")) {
-        return d->setSingleInstanceByDbus(k);
-    }
-#endif
-    return d->setSingleInstanceBySemaphore(k);
+    return DGuiApplicationHelper::setSingleInstance(key, scope);
 }
 
 /*!
@@ -986,6 +988,28 @@ void DApplication::setVisibleMenuIcon(bool value)
     d->visibleMenuIcon = value;
 }
 
+bool DApplication::autoActivateWindows() const
+{
+    D_DC(DApplication);
+
+    return d->autoActivateWindows;
+}
+
+void DApplication::setAutoActivateWindows(bool autoActivateWindows)
+{
+    D_D(DApplication);
+
+    d->autoActivateWindows = autoActivateWindows;
+
+    if (autoActivateWindows) {
+        connect(DGuiApplicationHelper::instance(), SIGNAL(newProcessInstance(qint64, const QStringList &)),
+                this, SLOT(_q_onNewInstanceStarted()));
+    } else {
+        disconnect(DGuiApplicationHelper::instance(), SIGNAL(newProcessInstance(qint64, const QStringList &)),
+                this, SLOT(_q_onNewInstanceStarted()));
+    }
+}
+
 /**
  * \~english @brief DApplication::handleHelpAction
  *
@@ -1093,3 +1117,5 @@ bool DApplication::notify(QObject *obj, QEvent *event)
 int DtkBuildVersion::value = 0;
 
 DWIDGET_END_NAMESPACE
+
+#include "moc_dapplication.cpp"
