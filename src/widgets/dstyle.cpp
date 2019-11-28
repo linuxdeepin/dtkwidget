@@ -573,6 +573,7 @@ void drawTitleBarMenuButton(QPainter *pa, const QRectF &rect)
     content_rect.moveCenter(rect.center());
     pa->setPen(pen);
 
+    pa->setRenderHint(QPainter::Antialiasing);
     pa->drawLine(content_rect.x(), content_rect.y(), content_rect.topRight().x() - 2, content_rect.topRight().y());
     pa->drawLine(content_rect.bottomLeft(), content_rect.bottomRight());
 
@@ -588,6 +589,7 @@ void drawTitleBarMinButton(QPainter *pa, const QRectF &rect)
     QRectF content_rect(0, 0, rect.width() / 5, rect.height() / 5);
     content_rect.moveCenter(rect.center());
     pa->setPen(pen);
+    pa->setRenderHint(QPainter::Antialiasing);
     drawDecreaseElement(pa, content_rect);
 }
 
@@ -599,7 +601,7 @@ void drawTitleBarMaxButton(QPainter *pa, const QRectF &rect)
     QRectF content_rect(0, 0, rect.width() / 5, rect.height() / 5);
     content_rect.moveCenter(rect.center());
     pa->setPen(pen);
-
+    pa->setRenderHint(QPainter::Antialiasing);
     pa->drawRect(content_rect);
 }
 
@@ -611,6 +613,7 @@ void drawTitleBarCloseButton(QPainter *pa, const QRectF &rect)
     QRectF content_rect(0, 0, rect.width() / 5, rect.height() / 5);
     content_rect.moveCenter(rect.center());
     pa->setPen(pen);
+    pa->setRenderHint(QPainter::Antialiasing);
     drawForkElement(pa, content_rect);
 }
 
