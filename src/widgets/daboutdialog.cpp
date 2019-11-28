@@ -163,8 +163,8 @@ void DAboutDialogPrivate::init()
 
 void DAboutDialogPrivate::loadDistributionInfo()
 {
-    logoPath = DSysInfo::deepinDistributorLogo(DSysInfo::Light, ":/images/deepin-logo.svg");
-    auto websiteInfo = DSysInfo::deepinDistributorWebsite(); // will always return a valid result.
+    logoPath = DSysInfo::distributionOrgLogo(DSysInfo::Distribution, DSysInfo::Light, ":/images/deepin-logo.svg");
+    auto websiteInfo = DSysInfo::distributionOrgWebsite(DSysInfo::Distribution); // will always return a valid result.
     websiteName = websiteInfo.first;
     websiteLink = websiteInfo.second;
 }
