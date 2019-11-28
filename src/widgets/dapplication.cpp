@@ -304,6 +304,10 @@ void DApplicationPrivate::_q_onNewInstanceStarted()
 
     for (QWidget *window : qApp->topLevelWidgets()) {
         if (qobject_cast<DMainWindow*>(window)) {
+            // 如果窗口最小化，應當先將其show出來
+            if (window->isMinimized())
+                window->showNormal();
+
             window->activateWindow();
             break; // 只激活找到的第一个窗口
         }
