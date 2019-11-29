@@ -9,12 +9,12 @@
         <translation>Acknowledgements</translation>
     </message>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1067"/>
+        <location filename="../widgets/dapplication.cpp" line="1071"/>
         <source>Version: %1</source>
         <translation>Version: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1071"/>
+        <location filename="../widgets/dapplication.cpp" line="1075"/>
         <source>%1 is released under %2</source>
         <translation>%1 is released under %2</translation>
     </message>
@@ -124,7 +124,7 @@
     <name>DKeySequenceEdit</name>
     <message>
         <location filename="../widgets/dkeysequenceedit.cpp" line="41"/>
-        <source>Please re-enter the new shortcut key</source>
+        <source>Enter a new shortcut</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -191,37 +191,37 @@
 <context>
     <name>TitleBarMenu</name>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="486"/>
+        <location filename="../widgets/dtitlebar.cpp" line="488"/>
         <source>Theme</source>
         <translation>Theme</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="487"/>
+        <location filename="../widgets/dtitlebar.cpp" line="489"/>
         <source>Light Theme</source>
         <translation>Light Theme</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="488"/>
+        <location filename="../widgets/dtitlebar.cpp" line="490"/>
         <source>Dark Theme</source>
         <translation>Dark Theme</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="489"/>
+        <location filename="../widgets/dtitlebar.cpp" line="491"/>
         <source>System Theme</source>
         <translation>System Theme</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="512"/>
+        <location filename="../widgets/dtitlebar.cpp" line="514"/>
         <source>Help</source>
         <translation>Help</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="519"/>
+        <location filename="../widgets/dtitlebar.cpp" line="521"/>
         <source>About</source>
         <translation>About</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="526"/>
+        <location filename="../widgets/dtitlebar.cpp" line="528"/>
         <source>Exit</source>
         <translation>Exit</translation>
     </message>

@@ -38,7 +38,7 @@ public:
         : QWidget(parent)
     {
         QHBoxLayout *layout = new QHBoxLayout(this);
-        label = new DTipLabel(qApp->translate("DKeySequenceEdit", "Enter a new shortcut "));
+        label = new DTipLabel(qApp->translate("DKeySequenceEdit", "Enter a new shortcut"));
 
         layout->addWidget(label);
         setFocusPolicy(Qt::FocusPolicy::ClickFocus);
