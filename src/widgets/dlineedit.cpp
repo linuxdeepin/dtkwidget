@@ -133,19 +133,19 @@ void DLineEdit::showAlertMessage(const QString &text, int duration)
         d->frame->setBackgroundRole(QPalette::ToolTipBase);
         d->frame->setWidget(d->tooltip);
         d->frame->setParent(parentWidget());
-        d->frame->show();
-        d->frame->adjustSize();
-        d->frame->raise();
-        int w = DStyle::pixelMetric(style(), DStyle::PM_FloatingWidgetShadowMargins);
-        d->frame->move(geometry().x() - w, geometry().y() + lineEdit()->height() + lineEdit()->y());
     }
 
     d->tooltip->setText(text);
-    if (duration < 0)
+    int w = DStyle::pixelMetric(style(), DStyle::PM_FloatingWidgetShadowMargins);
+    d->frame->move(geometry().x() - w, geometry().y() + lineEdit()->height() + lineEdit()->y());
+    d->frame->show();
+    d->frame->adjustSize();
+    d->frame->raise();
+
+    if (duration <= 0)
         return;
-    QTimer::singleShot(duration, this, [=] {
-        d->frame->close();
-    });
+
+    QTimer::singleShot(duration, d->frame, &QWidget::close);
 }
 
 /*!
@@ -156,8 +156,8 @@ void DLineEdit:: hideAlertMessage()
 {
     Q_D(DLineEdit);
 
-    if (d->tooltip) {
-        d->tooltip->hide();
+    if (d->frame) {
+        d->frame->hide();
     }
 }
 
