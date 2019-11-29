@@ -202,9 +202,10 @@ void DSearchEdit::clear()
 {
     D_D(DSearchEdit);
 
-    DLineEdit::clear();
+    lineEdit()->clear();
     if (!hasFocus()) {
        d->_q_toEditMode(false);
+       setFocus();
     }
 }
 
@@ -272,7 +273,10 @@ void DSearchEditPrivate::init()
 
         for (int i = 0; i < list.count(); i++) {
             if (list.at(i)->defaultAction() == clearAction) {
-                q->connect(list.at(i), SIGNAL(clicked()), q, SLOT(_q_clearFocus()));
+                QToolButton *clearBtn = list.at(i);
+                //屏蔽lineedit清除按钮的槽函数,_q_clearFocus()获得有效的判断条件
+                q->disconnect(clearBtn, SIGNAL(clicked()), q->lineEdit(), nullptr);
+                q->connect(clearBtn, SIGNAL(clicked()), q, SLOT(_q_clearFocus()));
             }
         }
     }
@@ -350,7 +354,10 @@ void DSearchEditPrivate::_q_onVoiceActionTrigger(bool checked)
 void DSearchEditPrivate::_q_clearFocus()
 {
     Q_Q(DSearchEdit);
-    q->setFocus();
+
+    if (!q->text().isEmpty()) {
+        q->clear();
+    }
     Q_EMIT q->searchAborted();
 }
 
