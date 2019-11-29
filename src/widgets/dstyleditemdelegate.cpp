@@ -34,6 +34,7 @@
 #include <QListView>
 #include <QLineEdit>
 #include <QTableView>
+#include <QListWidget>
 #include <private/qlayoutengine_p.h>
 
 Q_DECLARE_METATYPE(QMargins)
@@ -696,8 +697,8 @@ void DStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
     QStyle *style = widget ? widget->style() : QApplication::style();
     bool editing = false;
 
-    if (auto view = qobject_cast<const QAbstractItemView*>(widget)) {
-        editing = view->isPersistentEditorOpen(index);
+    if (auto view = qobject_cast<const QListView*>(widget)) {
+        editing = !qobject_cast<const QListWidget*>(view) && view->isPersistentEditorOpen(index);
     }
 
     if (!editing)
