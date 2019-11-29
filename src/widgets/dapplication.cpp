@@ -1115,6 +1115,23 @@ static inline bool basePrintPropertiesDialog(const QWidget *w)
 
 bool DApplication::notify(QObject *obj, QEvent *event)
 {
+    if (event->type() == QEvent::FocusIn) {
+        QFocusEvent *fe = static_cast<QFocusEvent*>(event);
+        QWidget *widget = qobject_cast<QWidget*>(obj);
+
+        if (widget && fe->reason() == Qt::ActiveWindowFocusReason && !widget->isTopLevel()) {
+            // 针对激活窗口所获得的焦点，为了避免被默认给到窗口内部的控件上，此处将焦点还给主窗口
+            // 并且只设置一次
+#define NON_FIRST_ACTIVE "_d_dtk_non_first_active_focus"
+            QWidget *top_window = widget->topLevelWidget();
+
+            if (top_window->isWindow() && !top_window->property(NON_FIRST_ACTIVE).toBool()) {
+                top_window->setFocus();
+                top_window->setProperty(NON_FIRST_ACTIVE, true);
+            }
+        }
+    }
+
     return QApplication::notify(obj, event);
 }
 

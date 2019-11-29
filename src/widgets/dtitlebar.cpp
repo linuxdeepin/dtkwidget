@@ -240,8 +240,6 @@ void DTitlebarPrivate::init()
     q->setBackgroundRole(QPalette::Base);
     q->setAutoFillBackground(true);
     q->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-    // 为了窗口显示后的默认焦点对象不要到标题栏按钮上，因为将标题栏本身设置为强焦点策略
-    q->setFocusPolicy(Qt::StrongFocus);
 }
 
 QWidget *DTitlebarPrivate::targetWindow()
