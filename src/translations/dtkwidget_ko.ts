@@ -2,19 +2,19 @@
 <context>
     <name>DAboutDialog</name>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="191"/>
+        <location filename="../widgets/daboutdialog.cpp" line="180"/>
         <source>Acknowledgements</source>
-        <translation>승인</translation>
+        <translation>감사의 말</translation>
     </message>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1043"/>
+        <location filename="../widgets/dapplication.cpp" line="1071"/>
         <source>Version: %1</source>
         <translation>버전: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1047"/>
+        <location filename="../widgets/dapplication.cpp" line="1075"/>
         <source>%1 is released under %2</source>
-        <translation>%1는 %2하에 배포됩니다</translation>
+        <translation>%1은(는) %2에 따라 배포됩니다</translation>
     </message>
 </context>
 <context>
@@ -119,11 +119,37 @@
     </message>
 </context>
 <context>
+    <name>DKeySequenceEdit</name>
+    <message>
+        <location filename="../widgets/dkeysequenceedit.cpp" line="41"/>
+        <source>Enter a new shortcut</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>DSearchEdit</name>
     <message>
-        <location filename="../widgets/dsearchedit.cpp" line="98"/>
+        <location filename="../widgets/dsearchedit.cpp" line="233"/>
         <source>Search</source>
         <translation>검색</translation>
+    </message>
+</context>
+<context>
+    <name>DSettingsDialog</name>
+    <message>
+        <location filename="../widgets/dsettingswidgetfactory.cpp" line="75"/>
+        <source>Cancel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/dsettingswidgetfactory.cpp" line="76"/>
+        <source>Replace</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/dsettingswidgetfactory.cpp" line="78"/>
+        <source>This shortcut conflicts with %1, click on Add to make this shortcut effective immediately</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -131,7 +157,7 @@
     <message>
         <location filename="../widgets/dshortcutedit.cpp" line="31"/>
         <source>Please input a new shortcut</source>
-        <translation>새 단축키를 입력하세요</translation>
+        <translation>새 단축키를 입력하십시오</translation>
     </message>
     <message>
         <location filename="../widgets/dshortcutedit.cpp" line="102"/>
@@ -147,7 +173,7 @@
         <translation>검색 결과 없음</translation>
     </message>
     <message>
-        <location filename="../widgets/private/settings/content.cpp" line="216"/>
+        <location filename="../widgets/private/settings/content.cpp" line="280"/>
         <source>Restore Defaults</source>
         <translation>기본값 복원</translation>
     </message>
@@ -155,45 +181,45 @@
 <context>
     <name>ShortcutEdit</name>
     <message>
-        <location filename="../widgets/private/settings/shortcutedit.cpp" line="118"/>
+        <location filename="../widgets/private/settings/shortcutedit.cpp" line="116"/>
         <source>Please enter a new shortcut</source>
-        <translation>새 단축키를 입력하세요</translation>
+        <translation>새 단축키를 입력하십시오</translation>
     </message>
 </context>
 <context>
     <name>TitleBarMenu</name>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="481"/>
+        <location filename="../widgets/dtitlebar.cpp" line="488"/>
         <source>Theme</source>
         <translation>테마</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="482"/>
+        <location filename="../widgets/dtitlebar.cpp" line="489"/>
         <source>Light Theme</source>
-        <translation>밝은 테마</translation>
+        <translation>밝은 색상 테마</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="483"/>
+        <location filename="../widgets/dtitlebar.cpp" line="490"/>
         <source>Dark Theme</source>
-        <translation>어두운 테마</translation>
+        <translation>어두운 색상 테마</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="484"/>
+        <location filename="../widgets/dtitlebar.cpp" line="491"/>
         <source>System Theme</source>
         <translation>시스템 테마</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="507"/>
+        <location filename="../widgets/dtitlebar.cpp" line="514"/>
         <source>Help</source>
         <translation>도움말</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="514"/>
+        <location filename="../widgets/dtitlebar.cpp" line="521"/>
         <source>About</source>
-        <translation>소개</translation>
+        <translation>프로그램 정보</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="521"/>
+        <location filename="../widgets/dtitlebar.cpp" line="528"/>
         <source>Exit</source>
         <translation>종료</translation>
     </message>

@@ -2,17 +2,17 @@
 <context>
     <name>DAboutDialog</name>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="191"/>
+        <location filename="../widgets/daboutdialog.cpp" line="180"/>
         <source>Acknowledgements</source>
         <translation>Заслуге</translation>
     </message>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1043"/>
+        <location filename="../widgets/dapplication.cpp" line="1071"/>
         <source>Version: %1</source>
         <translation>Верзија: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1047"/>
+        <location filename="../widgets/dapplication.cpp" line="1075"/>
         <source>%1 is released under %2</source>
         <translation>%1 је објављен под %2</translation>
     </message>
@@ -119,11 +119,37 @@
     </message>
 </context>
 <context>
+    <name>DKeySequenceEdit</name>
+    <message>
+        <location filename="../widgets/dkeysequenceedit.cpp" line="41"/>
+        <source>Enter a new shortcut</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>DSearchEdit</name>
     <message>
-        <location filename="../widgets/dsearchedit.cpp" line="98"/>
+        <location filename="../widgets/dsearchedit.cpp" line="233"/>
         <source>Search</source>
         <translation>Претражи</translation>
+    </message>
+</context>
+<context>
+    <name>DSettingsDialog</name>
+    <message>
+        <location filename="../widgets/dsettingswidgetfactory.cpp" line="75"/>
+        <source>Cancel</source>
+        <translation>Откажи</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dsettingswidgetfactory.cpp" line="76"/>
+        <source>Replace</source>
+        <translation>Замени</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dsettingswidgetfactory.cpp" line="78"/>
+        <source>This shortcut conflicts with %1, click on Add to make this shortcut effective immediately</source>
+        <translation>Ова пречица је у сукобу са %1, кликните на Додај да пречица ступи на снагу</translation>
     </message>
 </context>
 <context>
@@ -131,7 +157,7 @@
     <message>
         <location filename="../widgets/dshortcutedit.cpp" line="31"/>
         <source>Please input a new shortcut</source>
-        <translation>Молимо унесите нову пречицу</translation>
+        <translation>Унесите нову пречицу</translation>
     </message>
     <message>
         <location filename="../widgets/dshortcutedit.cpp" line="102"/>
@@ -147,7 +173,7 @@
         <translation>Нема резултата претраге</translation>
     </message>
     <message>
-        <location filename="../widgets/private/settings/content.cpp" line="216"/>
+        <location filename="../widgets/private/settings/content.cpp" line="280"/>
         <source>Restore Defaults</source>
         <translation>Врати Подразумевано</translation>
     </message>
@@ -155,45 +181,45 @@
 <context>
     <name>ShortcutEdit</name>
     <message>
-        <location filename="../widgets/private/settings/shortcutedit.cpp" line="118"/>
+        <location filename="../widgets/private/settings/shortcutedit.cpp" line="116"/>
         <source>Please enter a new shortcut</source>
-        <translation>Молимо унесите нову пречицу</translation>
+        <translation>Унесите нову пречицу</translation>
     </message>
 </context>
 <context>
     <name>TitleBarMenu</name>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="481"/>
+        <location filename="../widgets/dtitlebar.cpp" line="488"/>
         <source>Theme</source>
         <translation>Тема</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="482"/>
+        <location filename="../widgets/dtitlebar.cpp" line="489"/>
         <source>Light Theme</source>
         <translation>Светла тема</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="483"/>
+        <location filename="../widgets/dtitlebar.cpp" line="490"/>
         <source>Dark Theme</source>
         <translation>Тамна тема</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="484"/>
+        <location filename="../widgets/dtitlebar.cpp" line="491"/>
         <source>System Theme</source>
         <translation>Системска тема</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="507"/>
+        <location filename="../widgets/dtitlebar.cpp" line="514"/>
         <source>Help</source>
         <translation>Помоћ</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="514"/>
+        <location filename="../widgets/dtitlebar.cpp" line="521"/>
         <source>About</source>
         <translation>О програму</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="521"/>
+        <location filename="../widgets/dtitlebar.cpp" line="528"/>
         <source>Exit</source>
         <translation>Изађи</translation>
     </message>

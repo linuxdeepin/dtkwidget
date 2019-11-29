@@ -2,17 +2,17 @@
 <context>
     <name>DAboutDialog</name>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="191"/>
+        <location filename="../widgets/daboutdialog.cpp" line="180"/>
         <source>Acknowledgements</source>
         <translation>Erkenningen</translation>
     </message>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1043"/>
+        <location filename="../widgets/dapplication.cpp" line="1071"/>
         <source>Version: %1</source>
         <translation>Versie: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1047"/>
+        <location filename="../widgets/dapplication.cpp" line="1075"/>
         <source>%1 is released under %2</source>
         <translation>%1 is uitgebracht onder de %2</translation>
     </message>
@@ -119,11 +119,37 @@
     </message>
 </context>
 <context>
+    <name>DKeySequenceEdit</name>
+    <message>
+        <location filename="../widgets/dkeysequenceedit.cpp" line="41"/>
+        <source>Enter a new shortcut</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>DSearchEdit</name>
     <message>
-        <location filename="../widgets/dsearchedit.cpp" line="98"/>
+        <location filename="../widgets/dsearchedit.cpp" line="233"/>
         <source>Search</source>
         <translation>Zoeken</translation>
+    </message>
+</context>
+<context>
+    <name>DSettingsDialog</name>
+    <message>
+        <location filename="../widgets/dsettingswidgetfactory.cpp" line="75"/>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dsettingswidgetfactory.cpp" line="76"/>
+        <source>Replace</source>
+        <translation>Vervangen</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dsettingswidgetfactory.cpp" line="78"/>
+        <source>This shortcut conflicts with %1, click on Add to make this shortcut effective immediately</source>
+        <translation>Deze sneltoets is al in gebruik voor &apos;%1&apos;. Klik op &apos;Toevoegen&apos; om déze sneltoets toe te wijzen.</translation>
     </message>
 </context>
 <context>
@@ -147,7 +173,7 @@
         <translation>Geen zoekresultaten</translation>
     </message>
     <message>
-        <location filename="../widgets/private/settings/content.cpp" line="216"/>
+        <location filename="../widgets/private/settings/content.cpp" line="280"/>
         <source>Restore Defaults</source>
         <translation>Standaardwaarden herstellen</translation>
     </message>
@@ -155,7 +181,7 @@
 <context>
     <name>ShortcutEdit</name>
     <message>
-        <location filename="../widgets/private/settings/shortcutedit.cpp" line="118"/>
+        <location filename="../widgets/private/settings/shortcutedit.cpp" line="116"/>
         <source>Please enter a new shortcut</source>
         <translation>Druk op een nieuwe sneltoets</translation>
     </message>
@@ -163,37 +189,37 @@
 <context>
     <name>TitleBarMenu</name>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="481"/>
+        <location filename="../widgets/dtitlebar.cpp" line="488"/>
         <source>Theme</source>
         <translation>Thema</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="482"/>
+        <location filename="../widgets/dtitlebar.cpp" line="489"/>
         <source>Light Theme</source>
         <translation>Licht thema</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="483"/>
+        <location filename="../widgets/dtitlebar.cpp" line="490"/>
         <source>Dark Theme</source>
         <translation>Donker thema</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="484"/>
+        <location filename="../widgets/dtitlebar.cpp" line="491"/>
         <source>System Theme</source>
         <translation>Systeemthema</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="507"/>
+        <location filename="../widgets/dtitlebar.cpp" line="514"/>
         <source>Help</source>
         <translation>Hulp</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="514"/>
+        <location filename="../widgets/dtitlebar.cpp" line="521"/>
         <source>About</source>
         <translation>Over</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="521"/>
+        <location filename="../widgets/dtitlebar.cpp" line="528"/>
         <source>Exit</source>
         <translation>Afsluiten</translation>
     </message>

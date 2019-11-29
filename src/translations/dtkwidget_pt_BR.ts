@@ -2,17 +2,17 @@
 <context>
     <name>DAboutDialog</name>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="191"/>
+        <location filename="../widgets/daboutdialog.cpp" line="180"/>
         <source>Acknowledgements</source>
         <translation>Agradecimentos</translation>
     </message>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1043"/>
+        <location filename="../widgets/dapplication.cpp" line="1071"/>
         <source>Version: %1</source>
         <translation>Versão: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1047"/>
+        <location filename="../widgets/dapplication.cpp" line="1075"/>
         <source>%1 is released under %2</source>
         <translation>%1 é lançado em %2</translation>
     </message>
@@ -32,7 +32,7 @@
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="761"/>
         <source>Dark Gray</source>
-        <translation>Cinza escuro</translation>
+        <translation>Cinza Escuro</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="764"/>
@@ -42,7 +42,7 @@
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="767"/>
         <source>Light Gray</source>
-        <translation>Cinza claro</translation>
+        <translation>Cinza Claro</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="770"/>
@@ -77,32 +77,32 @@
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="788"/>
         <source>Dark Red</source>
-        <translation>Vermelho escuro</translation>
+        <translation>Vermelho Escuro</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="791"/>
         <source>Dark Green</source>
-        <translation>Verde escuro</translation>
+        <translation>Verde Escuro</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="794"/>
         <source>Dark Blue</source>
-        <translation>Azul escuro</translation>
+        <translation>Azul Escuro</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="797"/>
         <source>Dark Cyan</source>
-        <translation>Ciano escuro</translation>
+        <translation>Ciano Escuro</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="800"/>
         <source>Dark Magenta</source>
-        <translation>Magenta escuro</translation>
+        <translation>Magenta Escuro</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="803"/>
         <source>Dark Yellow</source>
-        <translation>Amarelo escuro</translation>
+        <translation>Amarelo Escuro</translation>
     </message>
 </context>
 <context>
@@ -119,11 +119,37 @@
     </message>
 </context>
 <context>
+    <name>DKeySequenceEdit</name>
+    <message>
+        <location filename="../widgets/dkeysequenceedit.cpp" line="41"/>
+        <source>Enter a new shortcut</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>DSearchEdit</name>
     <message>
-        <location filename="../widgets/dsearchedit.cpp" line="98"/>
+        <location filename="../widgets/dsearchedit.cpp" line="233"/>
         <source>Search</source>
         <translation>Pesquisar</translation>
+    </message>
+</context>
+<context>
+    <name>DSettingsDialog</name>
+    <message>
+        <location filename="../widgets/dsettingswidgetfactory.cpp" line="75"/>
+        <source>Cancel</source>
+        <translation>Cancelar</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dsettingswidgetfactory.cpp" line="76"/>
+        <source>Replace</source>
+        <translation>Substituir</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dsettingswidgetfactory.cpp" line="78"/>
+        <source>This shortcut conflicts with %1, click on Add to make this shortcut effective immediately</source>
+        <translation>Este atalho entra em conflito com %1. Clique em Adicionar para efetivar esse atalho</translation>
     </message>
 </context>
 <context>
@@ -131,7 +157,7 @@
     <message>
         <location filename="../widgets/dshortcutedit.cpp" line="31"/>
         <source>Please input a new shortcut</source>
-        <translation>Insira um novo atalho</translation>
+        <translation>Insira o Novo Atalho</translation>
     </message>
     <message>
         <location filename="../widgets/dshortcutedit.cpp" line="102"/>
@@ -144,10 +170,10 @@
     <message>
         <location filename="../widgets/dsimplelistview.cpp" line="1331"/>
         <source>No search result</source>
-        <translation>Nenhum resultado encontrado</translation>
+        <translation>Nenhum Resultado</translation>
     </message>
     <message>
-        <location filename="../widgets/private/settings/content.cpp" line="216"/>
+        <location filename="../widgets/private/settings/content.cpp" line="280"/>
         <source>Restore Defaults</source>
         <translation>Restaurar Padrões</translation>
     </message>
@@ -155,45 +181,45 @@
 <context>
     <name>ShortcutEdit</name>
     <message>
-        <location filename="../widgets/private/settings/shortcutedit.cpp" line="118"/>
+        <location filename="../widgets/private/settings/shortcutedit.cpp" line="116"/>
         <source>Please enter a new shortcut</source>
-        <translation>Digite um novo atalho</translation>
+        <translation>Digite o Novo Atalho</translation>
     </message>
 </context>
 <context>
     <name>TitleBarMenu</name>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="481"/>
+        <location filename="../widgets/dtitlebar.cpp" line="488"/>
         <source>Theme</source>
         <translation>Tema</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="482"/>
+        <location filename="../widgets/dtitlebar.cpp" line="489"/>
         <source>Light Theme</source>
-        <translation>Tema Claro</translation>
+        <translation>Claro</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="483"/>
+        <location filename="../widgets/dtitlebar.cpp" line="490"/>
         <source>Dark Theme</source>
-        <translation>Tema Escuro</translation>
+        <translation>Escuro</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="484"/>
+        <location filename="../widgets/dtitlebar.cpp" line="491"/>
         <source>System Theme</source>
-        <translation>Tema do Sistema</translation>
+        <translation>Padrão</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="507"/>
+        <location filename="../widgets/dtitlebar.cpp" line="514"/>
         <source>Help</source>
         <translation>Ajuda</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="514"/>
+        <location filename="../widgets/dtitlebar.cpp" line="521"/>
         <source>About</source>
         <translation>Sobre</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="521"/>
+        <location filename="../widgets/dtitlebar.cpp" line="528"/>
         <source>Exit</source>
         <translation>Sair</translation>
     </message>
