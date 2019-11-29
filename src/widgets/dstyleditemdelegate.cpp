@@ -690,9 +690,6 @@ void DStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
     QStyleOptionViewItem opt(option);
     initStyleOption(&opt, index);
 
-    if (opt.state & QStyle::State_Editing)
-        return;
-
     QRect backup_opt_rect = opt.rect;
 
     const QWidget *widget = option.widget;
