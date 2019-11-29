@@ -133,9 +133,11 @@ void DLineEdit::showAlertMessage(const QString &text, int duration)
         d->frame->setBackgroundRole(QPalette::ToolTipBase);
         d->frame->setWidget(d->tooltip);
         d->frame->setParent(parentWidget());
+        d->frame->show();
         d->frame->adjustSize();
         d->frame->raise();
-        updateGeometry();
+        int w = DStyle::pixelMetric(style(), DStyle::PM_FloatingWidgetShadowMargins);
+        d->frame->move(geometry().x() - w, geometry().y() + lineEdit()->height() + lineEdit()->y());
     }
 
     d->tooltip->setText(text);
