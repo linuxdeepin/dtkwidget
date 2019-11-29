@@ -125,6 +125,8 @@ void DMainWindowPrivate::updateTitleShadowGeometry()
 
     QRect rect(0, titlebar->rect().bottom() + 1, q->width(), titleShadow->sizeHint().height());
     titleShadow->setGeometry(rect);
+    // 全凭时会隐藏窗口标题栏，因此不应该显示标题栏的阴影
+    titleShadow->setVisible(!q->isFullScreen());
     titleShadow->raise();
 }
 
@@ -604,6 +606,16 @@ void DMainWindow::resizeEvent(QResizeEvent *event)
     d->updateTitleShadowGeometry();
 
     return QMainWindow::resizeEvent(event);
+}
+
+void DMainWindow::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::WindowStateChange) {
+        D_D(DMainWindow);
+        d->updateTitleShadowGeometry();
+    }
+
+    return QMainWindow::changeEvent(event);
 }
 
 DWIDGET_END_NAMESPACE
