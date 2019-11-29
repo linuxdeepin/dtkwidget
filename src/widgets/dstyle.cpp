@@ -1172,14 +1172,22 @@ void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const Q
                 dstyle.drawPrimitive(PE_IconButtonIcon, &new_opt, p, w);
             }
 
-            if ((btn->features & DStyleOptionButton::FloatingButton) && (btn->state & State_HasFocus)) {
-                int border_width = dstyle.pixelMetric(PM_FocusBorderWidth, opt, w);
-                QColor color = dstyle.getColor(opt, QPalette::Highlight);
+            if (btn->state & State_HasFocus) {
+                if (btn->features & DStyleOptionButton::FloatingButton) {
+                    int border_width = dstyle.pixelMetric(PM_FocusBorderWidth, opt, w);
+                    QColor color = dstyle.getColor(opt, QPalette::Highlight);
 
-                p->setPen(QPen(color, border_width, Qt::SolidLine));
-                p->setBrush(Qt::NoBrush);
-                p->setRenderHint(QPainter::Antialiasing);
-                p->drawEllipse(QRectF(opt->rect).adjusted(1, 1, -1, -1));
+                    p->setPen(QPen(color, border_width, Qt::SolidLine));
+                    p->setBrush(Qt::NoBrush);
+                    p->setRenderHint(QPainter::Antialiasing);
+                    p->drawEllipse(QRectF(opt->rect).adjusted(1, 1, -1, -1));
+                } else if (btn->features & DStyleOptionButton::TitleBarButton) {
+                    QStyleOption option = *opt;
+                    option.rect.adjust(6, 6, -6, -6);
+                    style->drawPrimitive(PE_FrameFocusRect, &option, p, w);
+                } else {
+                    style->drawPrimitive(PE_FrameFocusRect, opt, p, w);
+                }
             }
         }
         break;
@@ -1663,6 +1671,8 @@ int DStyle::styleHint(QStyle::StyleHint sh, const QStyleOption *opt, const QWidg
         return QAbstractItemView::ScrollPerPixel;
     case SH_Widget_Animation_Duration:
         return 300;
+    case SH_Button_FocusPolicy:
+        return Qt::TabFocus;
     default:
         break;
     }
