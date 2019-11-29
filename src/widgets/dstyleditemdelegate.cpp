@@ -24,12 +24,17 @@
 #include "dapplicationhelper.h"
 #include "dstyle.h"
 
+#include "dlistview.h"
+
 #include <QDebug>
 #include <QApplication>
 #include <QTextLayout>
 #include <DStyle>
 #include <QPainter>
 #include <QListView>
+#include <QLineEdit>
+#include <QTableView>
+#include <private/qlayoutengine_p.h>
 
 Q_DECLARE_METATYPE(QMargins)
 
@@ -684,15 +689,25 @@ void DStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
 
     QStyleOptionViewItem opt(option);
     initStyleOption(&opt, index);
+
+    if (opt.state & QStyle::State_Editing)
+        return;
+
     QRect backup_opt_rect = opt.rect;
 
     const QWidget *widget = option.widget;
     QStyle *style = widget ? widget->style() : QApplication::style();
+    bool editing = false;
 
-    style->drawPrimitive(QStyle::PE_PanelItemViewItem, &opt, painter, widget);
+    if (auto view = qobject_cast<const QAbstractItemView*>(widget)) {
+        editing = view->isPersistentEditorOpen(index);
+    }
+
+    if (!editing)
+        style->drawPrimitive(QStyle::PE_PanelItemViewItem, &opt, painter, widget);
 
     // draw the background
-    if (backgroundType() != NoBackground && !(opt.state & QStyle::State_Selected)
+    if (!editing && backgroundType() != NoBackground && !(opt.state & QStyle::State_Selected)
             && !(d->backgroundType & NoNormalState && DStyle::getState(&opt) == DStyle::SS_NormalState)) {
         DStyleOptionBackgroundGroup boption;
         boption.init(widget);
@@ -928,6 +943,50 @@ QSize DStyledItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QM
     }
 
     return QRect(QPoint(0, 0), size).marginsAdded(margins).size();
+}
+
+void DStyledItemDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+    if (!editor)
+        return;
+    Q_ASSERT(index.isValid());
+    const QWidget *widget = option.widget;
+
+    QStyleOptionViewItem opt = option;
+    initStyleOption(&opt, index);
+
+    QRect rect = opt.rect;
+
+    if (opt.features & QStyleOptionViewItem::HasDecoration) {
+        opt.showDecorationSelected = true;
+
+        QStyle *style = widget ? widget->style() : QApplication::style();
+        QRect geom = style->subElementRect(QStyle::SE_ItemViewItemDecoration, &opt, widget);
+        int spacing = DStyleHelper(style).pixelMetric(DStyle::PM_ContentsSpacing, &opt, widget);
+
+        // 排除掉图标的位置，剩下的空间全都给输入框
+        switch (opt.decorationPosition) {
+        case QStyleOptionViewItem::Left:
+            rect.setLeft(geom.right() + spacing);
+            break;
+        case QStyleOptionViewItem::Right:
+            rect.setRight(geom.left() - spacing);
+            break;
+        case QStyleOptionViewItem::Top:
+            rect.setTop(geom.bottom() + spacing);
+            break;
+        case QStyleOptionViewItem::Bottom:
+            rect.setBottom(geom.top() - spacing);
+            break;
+        default:
+            break;
+        }
+    }
+
+    // 确保输入框的高度不会超出范围
+    rect.setHeight(qMin(rect.height(), editor->sizeHint().height()));
+
+    editor->setGeometry(rect);
 }
 
 DStyledItemDelegate::BackgroundType DStyledItemDelegate::backgroundType() const

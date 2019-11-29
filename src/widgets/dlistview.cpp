@@ -716,10 +716,8 @@ void DListView::setItemSpacing(int spacing)
 
 void DListView::setItemRadius(int radius)
 {
-    if (DStyledItemDelegate *d = qobject_cast<DStyledItemDelegate *>(itemDelegate())) {
-        DStyle::setFrameRadius(this, radius);
-        update();
-    }
+    DStyle::setFrameRadius(this, radius);
+    update();
 }
 
 #if(QT_VERSION < 0x050500)
