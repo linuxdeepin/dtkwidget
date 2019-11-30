@@ -33,7 +33,7 @@ QT_END_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
 class DThumbnailProviderPrivate;
-class DThumbnailProvider : public QThread, public DTK_CORE_NAMESPACE::DObject
+class D_DECL_DEPRECATED_X("Use libdtkgui") DThumbnailProvider : public QThread, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
 

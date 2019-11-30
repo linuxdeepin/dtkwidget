@@ -47,11 +47,8 @@ packagesExist(gtk+-2.0) {
 includes.files += $$PWD/*.h \
             $$PWD/DWidgetUtil \
             $$PWD/DDesktopServices \
-            $$PWD/DTrashManager \
-            $$PWD/DThumbnailProvider \
             $$PWD/DFileIconProvider \
-            $$PWD/DHiDPIHelper \
-            $$PWD/DSvgRenderer
+            $$PWD/DHiDPIHelper
 
 DISTFILES += \
     $$PWD/desktop.pri \

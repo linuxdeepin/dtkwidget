@@ -31,7 +31,7 @@ QT_END_NAMESPACE
 #ifdef Q_OS_LINUX
 DWIDGET_BEGIN_NAMESPACE
 class DSvgRendererPrivate;
-class DSvgRenderer : public QObject, public DTK_CORE_NAMESPACE::DObject
+class D_DECL_DEPRECATED_X("Use libdtkgui") DSvgRenderer : public QObject, public DTK_CORE_NAMESPACE::DObject
 {
     Q_PROPERTY(QRectF viewBox READ viewBoxF WRITE setViewBox)
 public:

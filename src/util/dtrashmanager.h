@@ -27,7 +27,7 @@
 DWIDGET_BEGIN_NAMESPACE
 
 class DTrashManagerPrivate;
-class DTrashManager : public QObject, public DTK_CORE_NAMESPACE::DObject
+class D_DECL_DEPRECATED_X("Use libdtkcore") DTrashManager : public QObject, public DTK_CORE_NAMESPACE::DObject
 {
 public:
     static DTrashManager *instance();

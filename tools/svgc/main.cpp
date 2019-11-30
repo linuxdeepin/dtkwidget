@@ -1,11 +1,11 @@
-#include <QApplication>
+#include <QGuiApplication>
 #include <QCommandLineParser>
 #include <QCommandLineOption>
 #include <QSvgRenderer>
 #include <QImage>
 #include <QPainter>
 
-#include "DSvgRenderer"
+#include <DSvgRenderer>
 
 static int String2Int(QString str, int defaultValue)
 {
@@ -42,7 +42,7 @@ static QSize parseSize(QString sizeString, QSize origin = QSize(128, 128))
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
+    QGuiApplication app(argc, argv);
     app.setOrganizationName("deepin");
     app.setApplicationName("dtk-scgc");
 
@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
     QPainter outputPainter(&outPutimage);
 
     if ("DSvgRenderer" == renderValue) {
-        Dtk::Widget::DSvgRenderer renderer(input);
+        Dtk::Gui::DSvgRenderer renderer(input);
         renderer.render(&outputPainter);
     } else {
         QSvgRenderer renderer(input);

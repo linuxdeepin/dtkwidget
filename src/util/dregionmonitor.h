@@ -9,7 +9,7 @@
 DWIDGET_BEGIN_NAMESPACE
 
 class DRegionMonitorPrivate;
-class DRegionMonitor : public QObject, public DTK_CORE_NAMESPACE::DObject
+class D_DECL_DEPRECATED_X("Use libdtkgui") DRegionMonitor : public QObject, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
     D_DECLARE_PRIVATE(DRegionMonitor)

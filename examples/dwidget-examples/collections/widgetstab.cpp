@@ -19,14 +19,14 @@
 #include "darrowrectangle.h"
 #ifdef Q_OS_LINUX
 #include "dmpriscontrol.h"
-#include "dregionmonitor.h"
-using Dtk::Widget::DRegionMonitor;
+#include <DRegionMonitor>
 #endif
 
 #include <QCheckBox>
 #include <QPushButton>
 
 DWIDGET_USE_NAMESPACE
+DGUI_USE_NAMESPACE
 
 WidgetsTab::WidgetsTab(QWidget *parent) : QLabel(parent)
 {

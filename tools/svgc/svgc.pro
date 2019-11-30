@@ -1,5 +1,5 @@
 QT += gui svg
-QT += dtkcore
+QT += dtkcore dtkgui
 
 TARGET = dtk-svgc
 CONFIG += c++11
@@ -29,11 +29,3 @@ load(dtk_build_config)
 target.path = $$TOOL_INSTALL_DIR
 
 INSTALLS += target
-
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../src/release/ -ldtkwidget
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../src/debug/ -ldtkwidget
-else:unix: LIBS += -L$$OUT_PWD/../../src/ -ldtkwidget
-
-INCLUDEPATH += $$PWD/../../src
-INCLUDEPATH += $$PWD/../../src/util
-DEPENDPATH += $$PWD/../../src
