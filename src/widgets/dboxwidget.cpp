@@ -167,7 +167,7 @@ void DBoxWidget::setDirection(QBoxLayout::Direction direction)
  */
 void DBoxWidget::updateSize(const QSize &size)
 {
-    if(direction() == QBoxLayout::TopToBottom || QBoxLayout::BottomToTop) {
+    if(direction() == QBoxLayout::TopToBottom || direction() == QBoxLayout::BottomToTop) {
         setFixedHeight(size.height());
 
         if(size.width() > minimumWidth())
