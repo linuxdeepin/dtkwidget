@@ -1119,7 +1119,8 @@ bool DApplication::notify(QObject *obj, QEvent *event)
         QFocusEvent *fe = static_cast<QFocusEvent*>(event);
         QWidget *widget = qobject_cast<QWidget*>(obj);
 
-        if (widget && fe->reason() == Qt::ActiveWindowFocusReason && !widget->isTopLevel()) {
+        if (widget && fe->reason() == Qt::ActiveWindowFocusReason && !widget->isTopLevel()
+                && (widget->focusPolicy() & Qt::StrongFocus) != Qt::StrongFocus) {
             // 针对激活窗口所获得的焦点，为了避免被默认给到窗口内部的控件上，此处将焦点还给主窗口
             // 并且只设置一次
 #define NON_FIRST_ACTIVE "_d_dtk_non_first_active_focus"
