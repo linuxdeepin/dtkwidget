@@ -112,14 +112,20 @@ bool DLineEdit::isAlert() const
     return d->m_isAlert;
 }
 
+void DLineEdit::showAlertMessage(const QString &text, int duration)
+{
+    showAlertMessage(text, nullptr, duration);
+}
+
 /*!
  * \~chinese \brief DLineEdit::showAlertMessage显示警告消息
  * \~chinese \row 显示指定的文本消息，超过指定时间后警告消息消失.
  * \~chinese \row \note 时间参数为-1时，警告消息将一直存在
  * \~chinese \param text警告的文本
  * \~chinese \param duration显示的时间长度，单位毫秒
+ * \~chinese \param parent tooltip跟随
  */
-void DLineEdit::showAlertMessage(const QString &text, int duration)
+void DLineEdit::showAlertMessage(const QString &text, QWidget *follower, int duration)
 {
     D_D(DLineEdit);
 
@@ -132,20 +138,34 @@ void DLineEdit::showAlertMessage(const QString &text, int duration)
         d->frame->setFramRadius(DStyle::pixelMetric(style(), DStyle::PM_FrameRadius));
         d->frame->setBackgroundRole(QPalette::ToolTipBase);
         d->frame->setWidget(d->tooltip);
+    }
+
+    if (follower) {
+        d->frame->setParent(follower->parentWidget());
+        d->follower = follower;
+        installEventFilter(follower);
+    } else {
         d->frame->setParent(parentWidget());
+        d->follower = nullptr;
     }
 
     d->tooltip->setText(text);
-    int w = DStyle::pixelMetric(style(), DStyle::PM_FloatingWidgetShadowMargins);
-    d->frame->move(geometry().x() - w, geometry().y() + lineEdit()->height() + lineEdit()->y());
-    d->frame->show();
-    d->frame->adjustSize();
-    d->frame->raise();
-
-    if (duration <= 0)
+    if (d->frame->parent()) {
+        d->updateTooltipPos();
+        d->frame->show();
+        d->frame->adjustSize();
+        d->frame->raise();
+    }
+    if (duration < 0)
         return;
 
-    QTimer::singleShot(duration, d->frame, &QWidget::close);
+    QTimer::singleShot(duration, this, [ = ] {
+        d->frame->close();
+        if (d->follower) {
+            this->removeEventFilter(d->follower);
+            d->follower = nullptr;
+        }
+    });
 }
 
 /*!
@@ -158,6 +178,10 @@ void DLineEdit:: hideAlertMessage()
 
     if (d->frame) {
         d->frame->hide();
+        if (d->follower) {
+            this->removeEventFilter(d->follower);
+            d->follower = nullptr;
+        }
     }
 }
 
@@ -323,12 +347,19 @@ void DLineEdit::setEchoMode(QLineEdit::EchoMode mode)
  */
 bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
 {
-    Q_UNUSED(watched)
+    D_D(DLineEdit);
 
     if (event->type() == QEvent::FocusIn) {
         Q_EMIT focusChanged(true);
     } else if (event->type() == QEvent::FocusOut) {
         Q_EMIT focusChanged(false);
+    }
+
+    if (d->frame)
+    {
+        if (watched == d->follower && event->type() == QEvent::Move) {
+            d->updateTooltipPos();
+        }
     }
 
     return QWidget::eventFilter(watched, event);
@@ -337,11 +368,10 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
 bool DLineEdit::event(QEvent *e)
 {
     D_D(DLineEdit);
+
     if (e->type() == QEvent::Move || e->type() == QEvent::Resize) {
-        if (d->frame) {
-            int w = DStyle::pixelMetric(style(), DStyle::PM_FloatingWidgetShadowMargins);
-            d->frame->move(geometry().x() - w, geometry().y() + lineEdit()->height() + lineEdit()->y());
-        }
+        if (d->frame)
+            d->updateTooltipPos();
     }
     return QWidget::event(e);
 }
@@ -356,6 +386,14 @@ DLineEditPrivate::DLineEditPrivate(DLineEdit *q)
     , hLayout(nullptr)
 {
 
+}
+
+void DLineEditPrivate::updateTooltipPos()
+{
+    Q_Q(DLineEdit);
+    int w = DStyle::pixelMetric(q->style(), DStyle::PM_FloatingWidgetShadowMargins) / 2;
+    QPoint point = QPoint(q->lineEdit()->x() - w, q->lineEdit()->y() + q->lineEdit()->height() - w);
+    frame->move(q->mapTo(qobject_cast<QWidget *>(frame->parentWidget()), point));
 }
 
 void DLineEditPrivate::init()

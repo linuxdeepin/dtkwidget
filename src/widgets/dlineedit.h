@@ -45,6 +45,7 @@ public:
     void setAlert(bool isAlert);
     bool isAlert() const;
     void showAlertMessage(const QString &text, int duration = 3000);
+    void showAlertMessage(const QString &text, QWidget *follower, int duration = 3000);
     void hideAlertMessage();
 
     void setLeftWidgets(const QList<QWidget *> &list);
