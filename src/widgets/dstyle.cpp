@@ -1592,10 +1592,10 @@ case SP_##Value: { \
         return QIcon::fromTheme("go-down");
     case SP_ArrowEnter:
     case SP_ArrowNext:
-        return QIcon::fromTheme("go-next");
+        return QIcon::fromTheme("next_indicator");
     case SP_ArrowLeave:
     case SP_ArrowPrev:
-        return QIcon::fromTheme("go-previous");
+        return QIcon::fromTheme("prev_indicator");
     case SP_EditElement:
         return QIcon::fromTheme("edit");
     case SP_MediaVolumeLowElement:
