@@ -1591,9 +1591,11 @@ case SP_##Value: { \
     case SP_ReduceElement:
         return QIcon::fromTheme("go-down");
     case SP_ArrowEnter:
+        return style->standardIcon(SP_ArrowForward);
     case SP_ArrowNext:
         return QIcon::fromTheme("next_indicator");
     case SP_ArrowLeave:
+        return style->standardIcon(SP_ArrowBack);
     case SP_ArrowPrev:
         return QIcon::fromTheme("prev_indicator");
     case SP_EditElement:
