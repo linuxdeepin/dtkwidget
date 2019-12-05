@@ -30,7 +30,6 @@
 #include <QMimeData>
 #include <QDragMoveEvent>
 #include <QTimer>
-#include <QDebug>
 
 #include <private/qtabbar_p.h>
 #define private public
@@ -154,7 +153,7 @@ public:
 
         qq->setFocusProxy(this);
 
-        connect(this, &DTabBarPrivate::currentChanged, qq, &DTabBar::currentChanged);
+        connect(this, &DTabBarPrivate::currentChanged, this, &DTabBarPrivate::onCurrentChanged);
         connect(this, &DTabBarPrivate::tabCloseRequested, qq, &DTabBar::tabCloseRequested);
         connect(this, &DTabBarPrivate::tabMoved, qq, &DTabBar::tabMoved);
         connect(this, &DTabBarPrivate::tabBarClicked, qq, &DTabBar::tabBarClicked);
@@ -241,6 +240,9 @@ public:
 
     void startMove(int index);
     void stopMove();
+
+    void onCurrentChanged(int current);
+    void updateCloseButtonVisible();
 
     QList<QSize> tabMinimumSize;
     QList<QSize> tabMaximumSize;
@@ -844,6 +846,35 @@ void DTabBarPrivate::stopMove()
     setMovable(movable);
 }
 
+void DTabBarPrivate::onCurrentChanged(int current)
+{
+    updateCloseButtonVisible();
+    D_Q(DTabBar);
+    Q_EMIT q->currentChanged(current);
+}
+
+// 只允许当前标签页显示关闭按钮
+void DTabBarPrivate::updateCloseButtonVisible()
+{
+    if (!tabsClosable())
+        return;
+
+    int current = currentIndex();
+
+    for (int i = 0; i < this->count(); ++i) {
+        QWidget *close_button = tabButton(i, QTabBar::RightSide);
+
+        if (!close_button || close_button->metaObject()->className() != QByteArrayLiteral("CloseButton")) {
+            close_button = tabButton(i, QTabBar::LeftSide);
+        }
+
+        if (!close_button || close_button->metaObject()->className() != QByteArrayLiteral("CloseButton"))
+            continue;
+
+        close_button->setVisible(i == current);
+    }
+}
+
 bool DTabBarPrivate::eventFilter(QObject *watched, QEvent *event)
 {
     QTabBarPrivate *d = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
@@ -1214,6 +1245,9 @@ void DTabBarPrivate::tabLayoutChange()
         q->tabLayoutChange();
     else
         q->DTabBar::tabLayoutChange();
+
+    // 更新关闭按钮的显示
+    updateCloseButtonVisible();
 }
 
 void DTabBarPrivate::initStyleOption(QStyleOptionTab *option, int tabIndex) const
