@@ -598,7 +598,7 @@ void drawTitleBarMaxButton(QPainter *pa, const QRectF &rect)
     const QPen pen = pa->pen();
     pa->setPen(Qt::NoPen);
     pa->drawRect(rect);
-    QRect content_rect(0, 0, rect.width() / 5, rect.height() / 5);
+    QRect content_rect(0, 0, rect.width() / 5, rect.height() / 6);
     content_rect.moveCenter(rect.center().toPoint());
     pa->setPen(pen);
     pa->setRenderHint(QPainter::Antialiasing, pa->device()->devicePixelRatioF() > 1.0);
