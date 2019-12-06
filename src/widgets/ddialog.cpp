@@ -849,6 +849,12 @@ void DDialog::setTitle(const QString &title)
     Q_EMIT titleChanged(title);
 }
 
+void DDialog::setWordWrapTitle(bool wordWrap)
+{
+    D_D(DDialog);
+    d->titleLabel->setWordWrap(wordWrap);
+}
+
 /*!
  * \~chinese \brief 设置对话框消息内容
  */
@@ -864,6 +870,12 @@ void DDialog::setMessage(const QString &message)
     d->messageLabel->setHidden(message.isEmpty());
 
     Q_EMIT messageChanged(message);
+}
+
+void DDialog::setWordWrapMessage(bool wordWrap)
+{
+    D_D(DDialog);
+    d->messageLabel->setWordWrap(wordWrap);
 }
 
 /*!

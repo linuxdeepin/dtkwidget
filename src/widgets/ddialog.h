@@ -105,7 +105,9 @@ public Q_SLOTS:
     void setButtonText(int index, const QString &text);
     void setButtonIcon(int index, const QIcon &icon);
     void setTitle(const QString &title);
+    void setWordWrapTitle(bool wordWrap);
     void setMessage(const QString& message);
+    void setWordWrapMessage(bool wordWrap);
     void setIcon(const QIcon &icon);
     D_DECL_DEPRECATED void setIcon(const QIcon &icon, const QSize &expectedSize);
     D_DECL_DEPRECATED void setIconPixmap(const QPixmap &iconPixmap);
