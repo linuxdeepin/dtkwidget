@@ -81,6 +81,10 @@ DBaseExpandPrivate::DBaseExpandPrivate(DBaseExpand *qq)
         qq->setFixedHeight(qq->sizeHint().height());
     });
 
+
+    m_hSeparator->setFrameStyle(QFrame::NoFrame);
+    m_bottom_separator->setFrameStyle(QFrame::NoFrame);
+
     mainLayout->addLayout(m_headerLayout);
     mainLayout->addWidget(m_hSeparator);
     mainLayout->addWidget(m_contentLoader);
