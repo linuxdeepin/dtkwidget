@@ -1,2 +1,1 @@
-#include "dwidgetstype.h"
-#include <QTextEdit>
+#include "dtextedit.h"

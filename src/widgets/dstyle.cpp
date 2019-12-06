@@ -1675,6 +1675,8 @@ int DStyle::styleHint(QStyle::StyleHint sh, const QStyleOption *opt, const QWidg
         return 300;
     case SH_Button_FocusPolicy:
         return Qt::TabFocus;
+    case SH_ScrollView_FrameOnlyAroundContents:
+        return false;
     default:
         break;
     }
