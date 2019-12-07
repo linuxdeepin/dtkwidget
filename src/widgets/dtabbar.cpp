@@ -117,37 +117,34 @@ public:
         });
 
         setAcceptDrops(true);
-        setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
+        setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Fixed);
+        setDrawBase(false);
 
         QTabBarPrivate *d = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
 
-        leftScrollButton = new QToolButton(qq);
-        rightScrollButton = new QToolButton(qq);
+        leftScrollButton = new DIconButton(DStyle::SP_ArrowLeft, qq);
+        rightScrollButton = new DIconButton(DStyle::SP_ArrowRight, qq);
 
         leftScrollButton->setVisible(d->leftB->isVisible());
         leftScrollButton->setAutoRepeat(true);
-        leftScrollButton->setArrowType(Qt::LeftArrow);
-        leftScrollButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
         rightScrollButton->setVisible(d->rightB->isVisible());
         rightScrollButton->setAutoRepeat(true);
-        rightScrollButton->setArrowType(Qt::RightArrow);
-        rightScrollButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
 
         d->leftB->setFixedSize(0, 0);
         d->leftB->installEventFilter(this);
         d->rightB->setFixedSize(0, 0);
         d->rightB->installEventFilter(this);
 
-        connect(leftScrollButton, &QToolButton::clicked, d->leftB, &QToolButton::click);
-        connect(rightScrollButton, &QToolButton::clicked, d->rightB, &QToolButton::click);
+        connect(leftScrollButton, &DIconButton::clicked, d->leftB, &QToolButton::click);
+        connect(rightScrollButton, &DIconButton::clicked, d->rightB, &QToolButton::click);
 
         QHBoxLayout *layout = new QHBoxLayout(qq);
 
         layout->setContentsMargins(0, 0, 0, 0);
         layout->setSpacing(0);
         layout->addWidget(leftScrollButton);
-        layout->addWidget(rightScrollButton);
         layout->addWidget(this);
+        layout->addWidget(rightScrollButton);
         layout->addWidget(addButton);
         layout->addStretch();
 
@@ -264,8 +261,8 @@ public:
     qreal opacityOnFlash = 1;
     int flashTabIndex = -1;
 
-    QToolButton *leftScrollButton;
-    QToolButton *rightScrollButton;
+    DIconButton *leftScrollButton;
+    DIconButton *rightScrollButton;
 
     class FullWidget : public QWidget {
     public:
@@ -875,6 +872,24 @@ void DTabBarPrivate::updateCloseButtonVisible()
     }
 }
 
+static QIcon getArrowIcon(const QStyle *style, Qt::ArrowType type)
+{
+    switch (type) {
+    case Qt::UpArrow:
+        return style->standardIcon(QStyle::SP_ArrowUp);
+    case Qt::DownArrow:
+        return style->standardIcon(QStyle::SP_ArrowDown);
+    case Qt::LeftArrow:
+        return style->standardIcon(QStyle::SP_ArrowLeft);
+    case Qt::RightArrow:
+        return style->standardIcon(QStyle::SP_ArrowRight);
+    default:
+        break;
+    }
+
+    return QIcon();
+}
+
 bool DTabBarPrivate::eventFilter(QObject *watched, QEvent *event)
 {
     QTabBarPrivate *d = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
@@ -891,7 +906,7 @@ bool DTabBarPrivate::eventFilter(QObject *watched, QEvent *event)
             leftScrollButton->setEnabled(d->leftB->isEnabled());
             break;
         case QEvent::UpdateRequest:
-            leftScrollButton->setArrowType(d->leftB->arrowType());
+            leftScrollButton->setIcon(getArrowIcon(style(), d->leftB->arrowType()));
             break;
         default:
             break;
@@ -912,7 +927,7 @@ bool DTabBarPrivate::eventFilter(QObject *watched, QEvent *event)
             rightScrollButton->setEnabled(d->rightB->isEnabled());
             break;
         case QEvent::UpdateRequest:
-            rightScrollButton->setArrowType(d->rightB->arrowType());
+            rightScrollButton->setIcon(getArrowIcon(style(), d->rightB->arrowType()));
             break;
         default:
             break;
@@ -1191,26 +1206,26 @@ QSize DTabBarPrivate::tabSizeHint(int index) const
 {
     D_QC(DTabBar);
 
-    if (qApp->buildDtkVersion() > DTK_VERSION_CHECK(2, 0, 8, 1))
-        return q->tabSizeHint(index);
-
-    return q->DTabBar::tabSizeHint(index);
+    return q->tabSizeHint(index);
 }
 
 QSize DTabBarPrivate::minimumTabSizeHint(int index) const
 {
     D_QC(DTabBar);
 
-    const QSize &min = qApp->buildDtkVersion() > DTK_VERSION_CHECK(2, 0, 8, 1) ? q->minimumTabSizeHint(index) : q->DTabBar::minimumTabSizeHint(index);
+    const QSize &min = q->minimumTabSizeHint(index);
 
     if (min.isValid())
         return min;
 
     QSize size = QTabBar::tabSizeHint(index);
-    const QSize &max = qApp->buildDtkVersion() > DTK_VERSION_CHECK(2, 0, 8, 1) ? q->maximumTabSizeHint(index) : q->DTabBar::maximumTabSizeHint(index);
+    const QSize &max = q->maximumTabSizeHint(index);
 
-    if (max.isValid()) {
+    if (max.width() > 0) {
         size.setWidth(qMin(size.width(), max.width()));
+    }
+
+    if (max.height() > 0) {
         size.setHeight(qMin(size.height(), max.height()));
     }
 
@@ -1221,31 +1236,21 @@ void DTabBarPrivate::tabInserted(int index)
 {
     D_Q(DTabBar);
 
-    if (qApp->buildDtkVersion() > DTK_VERSION_CHECK(2, 0, 8, 1))
-        q->tabInserted(index);
-    else
-        q->DTabBar::tabInserted(index);
+    q->tabInserted(index);
 }
 
 void DTabBarPrivate::tabRemoved(int index)
 {
     D_Q(DTabBar);
 
-    if (qApp->buildDtkVersion() > DTK_VERSION_CHECK(2, 0, 8, 1))
-        q->tabRemoved(index);
-    else
-        q->DTabBar::tabRemoved(index);
+    q->tabRemoved(index);
 }
 
 void DTabBarPrivate::tabLayoutChange()
 {
     D_Q(DTabBar);
 
-    if (qApp->buildDtkVersion() > DTK_VERSION_CHECK(2, 0, 8, 1))
-        q->tabLayoutChange();
-    else
-        q->DTabBar::tabLayoutChange();
-
+    q->tabLayoutChange();
     // 更新关闭按钮的显示
     updateCloseButtonVisible();
 }
@@ -1376,8 +1381,8 @@ void DTabBar::setShape(QTabBar::Shape shape)
         }
 
         if (new_vertical) {
-            d->leftScrollButton->setArrowType(Qt::UpArrow);
-            d->rightScrollButton->setArrowType(Qt::DownArrow);
+            d->leftScrollButton->setIcon(getArrowIcon(style(), Qt::UpArrow));
+            d->rightScrollButton->setIcon(getArrowIcon(style(), Qt::DownArrow));
             d->leftScrollButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
             d->rightScrollButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
             d->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
@@ -1386,8 +1391,8 @@ void DTabBar::setShape(QTabBar::Shape shape)
             d->addButton->setMinimumWidth(0);
             d->addButton->setMaximumWidth(9999);
         } else {
-            d->leftScrollButton->setArrowType(Qt::LeftArrow);
-            d->rightScrollButton->setArrowType(Qt::RightArrow);
+            d->leftScrollButton->setIcon(getArrowIcon(style(), Qt::LeftArrow));
+            d->rightScrollButton->setIcon(getArrowIcon(style(), Qt::RightArrow));
             d->leftScrollButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
             d->rightScrollButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
             d->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
@@ -2046,16 +2051,17 @@ QSize DTabBar::tabSizeHint(int index) const
         size.setHeight(qMax(size.height(), d->height()));
     }
 
-    const QSize &min = qApp->buildDtkVersion() > DTK_VERSION_CHECK(2, 0, 8, 1) ? minimumTabSizeHint(index) : DTabBar::minimumTabSizeHint(index);
-    const QSize &max = qApp->buildDtkVersion() > DTK_VERSION_CHECK(2, 0, 8, 1) ? maximumTabSizeHint(index) : DTabBar::maximumTabSizeHint(index);
+    const QSize &min = minimumTabSizeHint(index);
+    const QSize &max = maximumTabSizeHint(index);
 
     size.setWidth(qMax(size.width(), min.width()));
     size.setHeight(qMax(size.height(), min.height()));
 
-    if (max.isValid()) {
+    if (max.width() > 0)
         size.setWidth(qMin(size.width(), max.width()));
+
+    if (max.height() > 0)
         size.setHeight(qMin(size.height(), max.height()));
-    }
 
     return size;
 }
