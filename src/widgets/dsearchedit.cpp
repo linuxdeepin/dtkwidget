@@ -21,6 +21,8 @@
 #include "private/dsearchedit_p.h"
 #include "diconbutton.h"
 
+#include <DSysInfo>
+
 #ifdef ENABLE_AI
 // 讯飞语言相关
 #include "session_interface.h"
@@ -43,6 +45,9 @@
 DWIDGET_BEGIN_NAMESPACE
 
 #ifdef ENABLE_AI
+
+DCORE_USE_NAMESPACE
+
 class VoiceDevice : public QIODevice
 {
     Q_OBJECT
@@ -283,12 +288,14 @@ void DSearchEditPrivate::init()
 
 #ifdef ENABLE_AI
     // 语音输入按钮
-    voiceAction = new QAction(q);
-    voiceAction->setIcon(QIcon::fromTheme("button_voice"));
-    voiceAction->setCheckable(true);
-    lineEdit->addAction(voiceAction, QLineEdit::TrailingPosition);
+    if (DSysInfo::deepinType() != DSysInfo::DeepinServer) {
+        voiceAction = new QAction(q);
+        voiceAction->setIcon(QIcon::fromTheme("button_voice"));
+        voiceAction->setCheckable(true);
+        lineEdit->addAction(voiceAction, QLineEdit::TrailingPosition);
 
-    q->connect(voiceAction, SIGNAL(triggered(bool)), q, SLOT(_q_onVoiceActionTrigger(bool)));
+        q->connect(voiceAction, SIGNAL(triggered(bool)), q, SLOT(_q_onVoiceActionTrigger(bool)));
+    }
 #endif
 }
 
@@ -302,6 +309,11 @@ void DSearchEditPrivate::_q_toEditMode(bool focus)
     } else {
         action->setVisible(false);
         iconWidget->setVisible(true);
+    }
+    //焦点消失，清除语音check
+    if (voiceAction) {
+        voiceAction->setChecked(false);
+        _q_onVoiceActionTrigger(false);
     }
 }
 
