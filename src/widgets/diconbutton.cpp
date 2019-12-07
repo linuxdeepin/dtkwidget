@@ -50,6 +50,7 @@ DIconButton::DIconButton(DStyle::StandardPixmap iconType, QWidget *parent)
     : DIconButton(parent)
 {
     d_func()->iconType = static_cast<qint64>(iconType);
+    setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
 }
 
 DIconButton::~DIconButton()
