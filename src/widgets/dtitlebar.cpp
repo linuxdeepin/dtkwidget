@@ -1190,6 +1190,17 @@ void DTitlebar::setQuitMenuDisabled(bool disabled)
     d->quitAction->setEnabled(!disabled);
 }
 
+void DTitlebar::setQuitMenuVisible(bool visible)
+{
+    D_D(DTitlebar);
+
+    if (!d->quitAction) {
+        d->_q_addDefaultMenuItems();
+    }
+
+    d->quitAction->setVisible(visible);
+}
+
 bool DTitlebar::switchThemeMenuIsVisible() const
 {
     D_DC(DTitlebar);

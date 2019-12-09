@@ -65,6 +65,7 @@ public:
 
     bool quitMenuIsDisabled() const;
     void setQuitMenuDisabled(bool disabled);
+    void setQuitMenuVisible(bool visible);
 
     bool switchThemeMenuIsVisible() const;
     void setSwitchThemeMenuVisible(bool visible);
