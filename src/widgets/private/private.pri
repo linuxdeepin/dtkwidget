@@ -48,7 +48,8 @@ HEADERS += \
     $$PWD/dslider_p.h \
     $$PWD/dtiplabel_p.h \
     $$PWD/dkeysequenceedit_p.h \
-    $$PWD/dlabel_p.h
+    $$PWD/dlabel_p.h \
+    $$PWD/dframe_p.h
 
 SOURCES += \
     $$PWD/dthemehelper.cpp

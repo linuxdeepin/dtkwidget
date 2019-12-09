@@ -20,6 +20,7 @@
  */
 #include "dframe.h"
 #include "dapplicationhelper.h"
+#include "private/dframe_p.h"
 
 #include <DObjectPrivate>
 
@@ -29,18 +30,13 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DFramePrivate : public DCORE_NAMESPACE::DObjectPrivate
+DFramePrivate::DFramePrivate(DFrame *qq)
+    : DCORE_NAMESPACE::DObjectPrivate(qq)
+    , frameRounded(true)
+    , backType(DPalette::NoType)
 {
-public:
-    DFramePrivate(DFrame *qq)
-        : DObjectPrivate(qq)
-    {
 
-    }
-
-    bool frameRounded = true;
-    DPalette::ColorType backType = DPalette::NoType;
-};
+}
 
 DFrame::DFrame(QWidget *parent)
     : QFrame(parent)
