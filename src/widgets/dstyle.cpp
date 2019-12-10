@@ -1755,10 +1755,11 @@ void DStyle::drawPrimitive(QStyle::PrimitiveElement pe, const QStyleOption *opt,
     case PE_IndicatorHeaderArrow:
         if (const QStyleOptionHeader *header = qstyleoption_cast<const QStyleOptionHeader *>(opt)) {
             p->setPen(QPen(opt->palette.foreground(), 1));
+            // sort up draw down icon, since both windows, mac and even wikipedia did this...
             if (header->sortIndicator & QStyleOptionHeader::SortUp) {
-                return DDrawUtils::drawArrowElement(Qt::DownArrow, p, opt->rect);
+                return proxy()->drawPrimitive(PE_IndicatorArrowDown, opt, p, w);
             } else if (header->sortIndicator & QStyleOptionHeader::SortDown) {
-                return DDrawUtils::drawArrowElement(Qt::UpArrow, p, opt->rect);
+                return proxy()->drawPrimitive(PE_IndicatorArrowUp, opt, p, w);
             }
         }
         return;
