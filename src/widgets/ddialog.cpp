@@ -108,6 +108,8 @@ void DDialogPrivate::init()
                                      DIALOG::BUTTON_LAYOUT_TOP_MARGIN,
                                      DIALOG::BUTTON_LAYOUT_RIGHT_MARGIN,
                                      DIALOG::BUTTON_LAYOUT_BOTTOM_MARGIN);
+    int spacing = DStyleHelper(q->style()).pixelMetric(DStyle::PM_ContentsSpacing);
+    mainLayout->addSpacing(spacing);
     mainLayout->addLayout(buttonLayout);
 
     QAction *button_action = new QAction(q);
