@@ -231,6 +231,19 @@ QSize DListView::viewportSizeHint() const
     return sizeAdjustPolicy() == QAbstractScrollArea::AdjustToContents ? QSize(0, 0) : QListView::viewportSizeHint();
 }
 
+int DListView::horizontalOffset() const
+{
+    if (viewMode() != IconMode || flow() != LeftToRight || !isWrapping()
+            || (!gridSize().isValid() && !itemSize().isValid())) {
+        return QListView::horizontalOffset();
+    }
+
+    int width = contentsSize().width();
+    int offset = gridSize().isValid() ? 0 : spacing() / 2;
+
+    return -(viewport()->width() - width) / 2 + offset;
+}
+
 QSize DListView::minimumSizeHint() const
 {
     QSize size = QListView::minimumSizeHint();

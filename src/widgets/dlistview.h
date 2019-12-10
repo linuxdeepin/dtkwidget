@@ -127,6 +127,7 @@ protected:
     virtual QModelIndex moveCursor(CursorAction cursorAction,
                                    Qt::KeyboardModifiers modifiers) override;
     QSize viewportSizeHint() const override;
+    int horizontalOffset() const override;
 
 private:
     void setFlow(QListView::Flow flow);
