@@ -256,6 +256,9 @@ void DSearchEditPrivate::init()
     q->lineEdit()->setContextMenuPolicy(Qt::NoContextMenu);
 
     q->connect(q, SIGNAL(focusChanged(bool)), q, SLOT(_q_toEditMode(bool)));
+    q->connect(q,&DLineEdit::textChanged, q, [=]{
+        _q_toEditMode(false);
+    });
 
     QHBoxLayout *layout = new QHBoxLayout(q->lineEdit());
 
