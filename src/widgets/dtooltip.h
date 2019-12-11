@@ -16,9 +16,6 @@ public:
 
     QSize sizeHint() const override;
     void show(const QPoint &pos, int duration);
-
-private:
-    bool event(QEvent *event) override;
 };
 
 DWIDGET_END_NAMESPACE

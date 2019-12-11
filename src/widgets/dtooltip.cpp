@@ -42,18 +42,6 @@ QSize DToolTip::sizeHint() const
     return fontSize;
 }
 
-bool DToolTip::event(QEvent *e)
-{
-    if (e->type() == QEvent::Polish) {
-        DPlatformWindowHandle handle(this);
-        int radius = DStyleHelper(style()).pixelMetric(DStyle::PM_FrameRadius);
-        handle.setWindowRadius(radius);
-        setContentsMargins(radius / 2, 0, radius / 2, 0);
-    }
-
-    return QLabel::event(e);
-}
-
 /*!
  * \chinese \brief DToolTip::show设置提示消息出现的位置
  * \chinese \param pos提示消息位置
