@@ -54,7 +54,7 @@ public:
     QWidget *iconWidget;
 
 #ifdef ENABLE_AI
-    QAction *voiceAction;
+    QAction *voiceAction = nullptr;
     QAudioInput *voiceInput = nullptr;
     VoiceDevice *voiceIODevice = nullptr;
 #endif
