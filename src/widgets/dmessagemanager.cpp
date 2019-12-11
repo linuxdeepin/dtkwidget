@@ -31,11 +31,24 @@ void DMessageManager::sendMessage(QWidget *par, DFloatingMessage *floMsg)
         content->show();
     }
 
-    content->layout()->addWidget(floMsg);
+    static_cast<QBoxLayout*>(content->layout())->addWidget(floMsg, 0, Qt::AlignHCenter);
 }
 
 void DMessageManager::sendMessage(QWidget *par, const QIcon &icon, const QString &message)
 {
+    QWidget *content = par->findChild<QWidget *>(D_MESSAGE_MANAGER_CONTENT);
+    int text_message_count = 0;
+
+    for (DFloatingMessage *message : content->findChildren<DFloatingMessage*>()) {
+        if (message->messageType() == DFloatingMessage::TransientType) {
+            ++text_message_count;
+        }
+    }
+
+    // TransientType 类型的通知消息，最多只允许同时显示三个
+    if (text_message_count >= 3)
+        return;
+
     DFloatingMessage *floMsg = new DFloatingMessage(DFloatingMessage::TransientType);
     floMsg->setAttribute(Qt::WA_DeleteOnClose);
     floMsg->setIcon(icon);
@@ -56,6 +69,12 @@ bool DMessageManager::eventFilter(QObject *watched, QEvent *event)
             }
 
             QWidget *par = content->parentWidget();
+
+            // 限制通知消息的最大宽度
+            for (DFloatingMessage *message : content->findChildren<DFloatingMessage*>()) {
+                message->setMaximumWidth(par->width() * 0.8);
+            }
+
             QRect geometry(QPoint(0, 0), content->sizeHint());
             geometry.moveCenter(par->rect().center());
             geometry.moveBottom(par->rect().bottom());

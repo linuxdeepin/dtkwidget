@@ -43,11 +43,14 @@ public:
     };
 
     explicit DFloatingMessage(MessageType notifyType = MessageType::TransientType, QWidget *parent = nullptr);
+    MessageType messageType() const;
 
     void setIcon(const QIcon &ico);
     void setMessage(const QString &str);
     void setWidget(QWidget *w);
     void setDuration(int msec);
+
+    QSize sizeHint() const;
 
 Q_SIGNALS:
     void closeButtonClicked();

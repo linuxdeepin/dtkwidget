@@ -54,6 +54,7 @@ void DFloatingMessagePrivate::init()
     hBoxLayout = new QHBoxLayout(widget);
     iconButton = new DIconButton(nullptr);
     labMessage = new QLabel();
+    labMessage->setWordWrap(true);
 
     iconButton->setFlat(true);
     iconButton->setFocusPolicy(Qt::NoFocus);
@@ -122,6 +123,13 @@ DFloatingMessage::DFloatingMessage(MessageType notifyType, QWidget *parent)
     d->init();
 }
 
+DFloatingMessage::MessageType DFloatingMessage::messageType() const
+{
+    D_DC(DFloatingMessage);
+
+    return d->notifyType;
+}
+
 /*!
  * \~chinese \brief 设置控件图标 icon
  * \~chinese \param[in] ico 是最终的效果图标
@@ -171,6 +179,17 @@ void DFloatingMessage::setDuration(int msec)
         return;
 
     d->timer->setInterval(msec);
+}
+
+QSize DFloatingMessage::sizeHint() const
+{
+    int max_width = maximumWidth();
+    QSize size_hint = DFloatingWidget::sizeHint();
+
+    if (max_width < size_hint.width())
+        return QSize(max_width, heightForWidth(max_width));
+
+    return DFloatingWidget::sizeHint();
 }
 
 /*!
