@@ -51,15 +51,15 @@ void NavigationDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         painter->setPen(pen);
         painter->setFont(DFontSizeManager::instance()->get(DFontSizeManager::T4, QFont::Medium, opt.font));
         QRect rect = opt.rect.marginsRemoved(QMargins(10, 0, 10, 0));
-        auto text = opt.fontMetrics.elidedText(index.data().toString(), Qt::ElideMiddle, rect.width());
+        auto text = opt.fontMetrics.elidedText(index.data().toString(), Qt::ElideRight, rect.width());
         painter->drawText(rect, Qt::AlignLeft | Qt::AlignVCenter, text);
         break;
     }
     case Level2: {
         QColor pen = option.palette.color(isSelected ? QPalette::HighlightedText : QPalette::WindowText);
         painter->setPen(pen);
-        auto text = opt.fontMetrics.elidedText(index.data().toString(), Qt::ElideMiddle, option.rect.width());
         auto rect = option.rect.marginsRemoved(QMargins(30, 0, 10, 0));
+        auto text = opt.fontMetrics.elidedText(index.data().toString(), Qt::ElideRight, rect.width());
         painter->setFont(opt.font);
         painter->drawText(rect, Qt::AlignLeft | Qt::AlignVCenter, text);
         break;
