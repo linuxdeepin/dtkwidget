@@ -23,6 +23,7 @@
 #include <QGraphicsDropShadowEffect>
 #include <QEvent>
 #include <QIcon>
+#include <QLinearGradient>
 
 #include <DObjectPrivate>
 #include <DSvgRenderer>
@@ -273,7 +274,7 @@ void DWaterProgressPrivate::initUI()
 void DWaterProgressPrivate::setValue(int v)
 {
     value = v;
-    progressText = QString("%1%").arg(v);
+    progressText = QString("%1").arg(v);
 }
 
 void DWaterProgressPrivate::paint(QPainter *p)
@@ -294,7 +295,21 @@ void DWaterProgressPrivate::paint(QPainter *p)
     QPainter waterPinter(&waterImage);
     waterPinter.setRenderHint(QPainter::Antialiasing);
     waterPinter.setCompositionMode(QPainter::CompositionMode_Source);
-    waterPinter.fillRect(waterImage.rect(), QColor(43, 146, 255, 255 * 3 / 10));
+
+    QPointF pointStart(sz.width() / 2, 0);
+    QPointF pointEnd(sz.width() / 2, sz.height());
+    QLinearGradient linear(pointStart, pointEnd);
+    QColor startColor("#1F08FF");
+    startColor.setAlphaF(1);
+    QColor endColor("#50FFF7");
+    endColor.setAlphaF(0.28);
+    linear.setColorAt(0, startColor);
+    linear.setColorAt(1, endColor);
+    linear.setSpread(QGradient::PadSpread);
+    waterPinter.setPen(Qt::NoPen);
+    waterPinter.setBrush(linear);
+    waterPinter.drawEllipse(waterImage.rect().center(), sz.width() / 2, sz.height() / 2);
+
     waterPinter.setCompositionMode(QPainter::CompositionMode_SourceOver);
     waterPinter.drawImage(static_cast<int>(backXOffset), yOffset, waterBackImage);
     waterPinter.drawImage(static_cast<int>(backXOffset) - waterBackImage.width(), yOffset, waterBackImage);
@@ -307,31 +322,37 @@ void DWaterProgressPrivate::paint(QPainter *p)
             QPainterPath popPath;
             popPath.addEllipse(pop.xOffset * sz.width() / 100, (100 - pop.yOffset) * sz.height() / 100,
                                pop.size * sz.width() / 100, pop.size * sz.height() / 100);
-            waterPinter.fillPath(popPath, QColor(77, 208, 255));
+            QColor color(255, 255, 255, 255 * 0.3);
+            waterPinter.fillPath(popPath, color);
         }
     }
 
-    double borderWidth = 2.0 * sz.width() / 100.0;
-    auto outRect = QRectF(0, 0, sz.width(), sz.height());
-    QPainterPath pathBorder;
-    auto factor = 0.5;
-    auto margin = QMarginsF(borderWidth * factor, borderWidth * factor,
-                            borderWidth * factor, borderWidth * factor);
-    pathBorder.addEllipse(outRect.marginsRemoved(margin));
-    waterPinter.strokePath(pathBorder, QPen(QColor(43, 146, 255, 255 * 7 / 10), borderWidth));
-    QPainterPath pathInnerBorder;
-    auto interFactor = 1.5;
-    auto innerMargin = QMarginsF(borderWidth * interFactor, borderWidth * interFactor,
-                                 borderWidth * interFactor, borderWidth * interFactor);
-    pathInnerBorder.addEllipse(outRect.marginsRemoved(innerMargin));
-    waterPinter.strokePath(pathInnerBorder, QPen(QColor(234, 242, 255, 255 * 5 / 10), borderWidth));
-
     if (textVisible) {
         auto font = waterPinter.font();
-        font.setPixelSize(sz.height() * 20 / 100);
+        font.setPixelSize(sz.height() * 40 / 100);
         waterPinter.setFont(font);
+
+        QRect rectValue;
+        if (progressText == "100") {
+            rectValue.setWidth(sz.width() * 65 / 100);
+            rectValue.setHeight(sz.height() * 40 / 100);
+            rectValue.moveCenter(rect.center().toPoint());
+            rectValue.moveLeft(rect.left() + rect.width() * 10 / 100);
+        } else {
+            rectValue.setWidth(sz.width() * 45 / 100);
+            rectValue.setHeight(sz.height() * 40 / 100);
+            rectValue.moveCenter(rect.center().toPoint());
+        }
+
         waterPinter.setPen(Qt::white);
-        waterPinter.drawText(rect, Qt::AlignCenter, progressText);
+        waterPinter.drawText(rectValue, Qt::AlignCenter, progressText);
+
+        waterPinter.setPen(Qt::white);
+        font.setPixelSize(font.pixelSize() / 2);
+        waterPinter.setFont(font);
+        QRect rectPerent(QPoint(rectValue.right(), rectValue.bottom()  - rect.height() * 20 / 100),
+                         QPoint(rectValue.right() + rect.width() * 20 / 100, rectValue.bottom()));
+        waterPinter.drawText(rectPerent, Qt::AlignCenter, "%");
     }
     waterPinter.end();
 
