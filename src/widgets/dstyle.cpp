@@ -1043,7 +1043,12 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
                 }
             } else {
                 pa.setBrush(QPalette::Background, dstyle.generatedBrush(opt, pa.button(), pa.currentColorGroup(), QPalette::Button));
-                pa.setBrush(QPalette::Foreground, dstyle.generatedBrush(opt, pa.buttonText(), pa.currentColorGroup(), QPalette::ButtonText));
+
+                if (opt->state & QStyle::State_On) {
+                    pa.setBrush(QPalette::Foreground, dstyle.generatedBrush(opt, pa.highlightedText(), pa.currentColorGroup(), QPalette::HighlightedText));
+                } else {
+                    pa.setBrush(QPalette::Foreground, dstyle.generatedBrush(opt, pa.buttonText(), pa.currentColorGroup(), QPalette::ButtonText));
+                }
             }
 
             icon_option.palette = pa;
