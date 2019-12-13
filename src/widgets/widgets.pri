@@ -116,7 +116,10 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dkeysequenceedit.h \
     $$PWD/dprogressbar.h \
     $$PWD/dlabel.h \
-    $$PWD/dtextedit.h
+    $$PWD/dtextedit.h \
+    $$PWD/ddrawer.h \
+    $$PWD/darrowlinedrawer.h \
+    $$PWD/ddrawergroup.h
 
 SOURCES += $$PWD/dslider.cpp \
     $$PWD/dbackgroundgroup.cpp \
@@ -192,7 +195,10 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dkeysequenceedit.cpp \
     $$PWD/dprogressbar.cpp \
     $$PWD/dlabel.cpp \
-    $$PWD/dtextedit.cpp
+    $$PWD/dtextedit.cpp \
+    $$PWD/ddrawer.cpp \
+    $$PWD/darrowlinedrawer.cpp \
+    $$PWD/ddrawergroup.cpp
 
 RESOURCES += \
     $$PWD/icons.qrc \
@@ -346,4 +352,7 @@ includes.files += \
     $$PWD/DShadowLine \
     $$PWD/DColoredProgressBar \
     $$PWD/DAbstractdialog \
-    $$PWD/DLabel
+    $$PWD/DLabel \
+    $$PWD/DDrawer \
+    $$PWD/DDrawerGroup \
+    $$PWD/DArrowLineDrawer

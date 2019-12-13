@@ -49,7 +49,8 @@ HEADERS += \
     $$PWD/dtiplabel_p.h \
     $$PWD/dkeysequenceedit_p.h \
     $$PWD/dlabel_p.h \
-    $$PWD/dframe_p.h
+    $$PWD/dframe_p.h \
+    $$PWD/ddrawer_p.h
 
 SOURCES += \
     $$PWD/dthemehelper.cpp

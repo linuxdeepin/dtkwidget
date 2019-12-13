@@ -43,6 +43,8 @@ public:
     using QFrame::setBackgroundRole;
 
 protected:
+    DFrame(DFramePrivate &dd, QWidget *parent = nullptr);
+
     void paintEvent(QPaintEvent *event) override;
 };
 

@@ -39,11 +39,9 @@ DFramePrivate::DFramePrivate(DFrame *qq)
 }
 
 DFrame::DFrame(QWidget *parent)
-    : QFrame(parent)
-    , DObject(*new DFramePrivate(this))
+    : DFrame(*new DFramePrivate(this), parent)
 {
-    setBackgroundRole(QPalette::Base);
-    setFrameShape(QFrame::StyledPanel);
+
 }
 
 void DFrame::setFrameRounded(bool on)
@@ -66,6 +64,14 @@ void DFrame::setBackgroundRole(DPalette::ColorType type)
 
     d->backType = type;
     update();
+}
+
+DFrame::DFrame(DFramePrivate &dd, QWidget *parent)
+    : QFrame(parent)
+    , DObject(dd)
+{
+    setBackgroundRole(QPalette::Base);
+    setFrameShape(QFrame::StyledPanel);
 }
 
 void DFrame::paintEvent(QPaintEvent *event)

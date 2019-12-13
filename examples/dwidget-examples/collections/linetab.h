@@ -25,9 +25,9 @@
 #include "dheaderline.h"
 #include "dbaseline.h"
 #include "dbaseexpand.h"
-#include "darrowlineexpand.h"
+#include <DArrowLineExpand>
 #include "dswitchlineexpand.h"
-#include "dexpandgroup.h"
+#include <DExpandGroup>
 
 DWIDGET_USE_NAMESPACE
 

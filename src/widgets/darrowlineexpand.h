@@ -27,7 +27,7 @@
 #include "dheaderline.h"
 DWIDGET_BEGIN_NAMESPACE
 
-class ArrowHeaderLine : public DHeaderLine
+class D_DECL_DEPRECATED ArrowHeaderLine : public DHeaderLine
 {
     Q_OBJECT
 public:
@@ -46,7 +46,7 @@ private:
     DIconButton *m_arrowButton = nullptr;
 };
 
-class LIBDTKWIDGETSHARED_EXPORT DArrowLineExpand : public DBaseExpand
+class LIBDTKWIDGETSHARED_EXPORT D_DECL_DEPRECATED_X("Use DArrowLineDrawer") DArrowLineExpand : public DBaseExpand
 {
     Q_OBJECT
 public:

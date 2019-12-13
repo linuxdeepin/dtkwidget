@@ -1,5 +1,9 @@
 /*
- * Copyright (C) 2015 ~ 2017 Deepin Technology Co., Ltd.
+ * Copyright (C) 2019 ~ 2019 Deepin Technology Co., Ltd.
+ *
+ * Author:     zccrs <zccrs@live.com>
+ *
+ * Maintainer: zccrs <zhangjide@deepin.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,39 +18,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#ifndef DDRAWER_H
+#define DDRAWER_H
 
-#ifndef DBASEEXPAND_H
-#define DBASEEXPAND_H
-
-#include <QLabel>
-#include <QWidget>
-#include <QVBoxLayout>
-#include <QPropertyAnimation>
-
-#include <DHorizontalLine>
-
-#include "dtkwidget_global.h"
-#include "dconstants.h"
+#include <DFrame>
 
 DWIDGET_BEGIN_NAMESPACE
-
-class D_DECL_DEPRECATED ContentLoader : public QFrame
+class DDrawerPrivate;
+class LIBDTKWIDGETSHARED_EXPORT DDrawer : public DFrame
 {
     Q_OBJECT
-    Q_PROPERTY(int height READ height WRITE setFixedHeight)
-public:
-    explicit ContentLoader(QWidget *parent = nullptr) : QFrame(parent){}
-};
+    D_DECLARE_PRIVATE(DDrawer)
 
-class DBoxWidget;
-
-class DBaseExpandPrivate;
-class LIBDTKWIDGETSHARED_EXPORT D_DECL_DEPRECATED_X("Use DDrawer") DBaseExpand : public QWidget
-{
-    Q_OBJECT
 public:
-    explicit DBaseExpand(QWidget *parent = nullptr);
-    ~DBaseExpand() override;
+    explicit DDrawer(QWidget *parent = nullptr);
+    ~DDrawer() override;
 
     void setHeader(QWidget *header);
     void setContent(QWidget *content, Qt::Alignment alignment = Qt::AlignHCenter);
@@ -64,14 +50,10 @@ Q_SIGNALS:
     void sizeChanged(QSize s);
 
 protected:
+    DDrawer(DDrawerPrivate &dd, QWidget *parent = nullptr);
     void resizeEvent(QResizeEvent *e) Q_DECL_OVERRIDE;
-
-private:
-    QScopedPointer<DBaseExpandPrivate> d_private;
-
-    Q_DECLARE_PRIVATE_D(d_private, DBaseExpand)
 };
 
 DWIDGET_END_NAMESPACE
 
-#endif // DBASEEXPAND_H
+#endif // DDRAWER_H

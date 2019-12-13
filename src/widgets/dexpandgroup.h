@@ -27,7 +27,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class LIBDTKWIDGETSHARED_EXPORT DExpandGroup : public QObject
+class LIBDTKWIDGETSHARED_EXPORT D_DECL_DEPRECATED_X("Use DDrawerGroup") DExpandGroup : public QObject
 {
     Q_OBJECT
 public:
