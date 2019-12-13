@@ -133,6 +133,7 @@ void DLineEdit::showAlertMessage(const QString &text, QWidget *follower, int dur
         d->tooltip = new DToolTip(text);
         d->tooltip->setObjectName("AlertTooltip");
         d->tooltip->setForegroundRole(DPalette::TextWarning);
+        d->tooltip->setWordWrap(true);
 
         d->frame = new DFloatingWidget;
         d->frame->setFramRadius(DStyle::pixelMetric(style(), DStyle::PM_FrameRadius));
@@ -394,6 +395,10 @@ void DLineEditPrivate::updateTooltipPos()
     int w = DStyle::pixelMetric(q->style(), DStyle::PM_FloatingWidgetShadowMargins) / 2;
     QPoint point = QPoint(q->lineEdit()->x() - w, q->lineEdit()->y() + q->lineEdit()->height() - w);
     frame->move(q->mapTo(qobject_cast<QWidget *>(frame->parentWidget()), point));
+    int tipWidget = frame->parentWidget()->width() * 0.8;
+    tooltip->setMaximumWidth(tipWidget);
+    frame->setMinimumHeight(tooltip->heightForWidth(tipWidget) + frame->layout()->spacing() *2);
+    frame->adjustSize();
 }
 
 void DLineEditPrivate::init()
