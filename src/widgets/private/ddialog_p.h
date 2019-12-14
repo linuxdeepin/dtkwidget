@@ -20,6 +20,7 @@
 
 #include <QPointer>
 #include <QPushButton>
+#include <QSpacerItem>
 #include "ddialog.h"
 #include "dabstractdialogprivate_p.h"
 
@@ -56,6 +57,7 @@ private:
     QVBoxLayout *contentLayout;
     QHBoxLayout *buttonLayout;
     const QScreen *targetScreen = nullptr;
+    QSpacerItem *spacer = nullptr;
 
     QList<QAbstractButton*> buttonList;
     QList<QWidget*> contentList;
@@ -71,6 +73,7 @@ private:
     QString elideString(QString str, const QFontMetrics &fm, int width) const;
 
     void updateSize();
+    void setSpacer(int height);
 
     void _q_onButtonClicked();
     void _q_defaultButtonTriggered();

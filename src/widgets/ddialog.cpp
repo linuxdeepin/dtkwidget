@@ -95,6 +95,7 @@ void DDialogPrivate::init()
     QObject::connect(q, &DDialog::windowTitleChanged, titleBar, &DTitlebar::setTitle);
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
+    spacer = new QSpacerItem(1, 0);
 
     // MainLayout--TopLayout
     mainLayout->addWidget(titleBar);
@@ -108,8 +109,7 @@ void DDialogPrivate::init()
                                      DIALOG::BUTTON_LAYOUT_TOP_MARGIN,
                                      DIALOG::BUTTON_LAYOUT_RIGHT_MARGIN,
                                      DIALOG::BUTTON_LAYOUT_BOTTOM_MARGIN);
-    int spacing = DStyleHelper(q->style()).pixelMetric(DStyle::PM_ContentsSpacing);
-    mainLayout->addSpacing(spacing);
+    mainLayout->addSpacerItem(spacer);
     mainLayout->addLayout(buttonLayout);
 
     QAction *button_action = new QAction(q);
@@ -201,6 +201,11 @@ void DDialogPrivate::updateSize()
         q->resize(size);
         q->setAttribute(Qt::WA_Resized, false);
     }
+}
+
+void DDialogPrivate::setSpacer(int height)
+{
+    spacer->changeSize(1, height);
 }
 
 void DDialogPrivate::_q_onButtonClicked()
@@ -525,6 +530,10 @@ void DDialog::insertButton(int index, QAbstractButton *button, bool isDefault)
     d->buttonLayout->insertWidget(index * 2 , line);
     d->buttonLayout->insertWidget(index * 2 + 1, button);
     d->buttonList << button;
+    if (d->buttonList.count() == 1) {
+        int spacing = DStyleHelper(style()).pixelMetric(DStyle::PM_ContentsSpacing);
+        d->setSpacer(spacing);
+    }
     line->show();
     d->buttonLayout->itemAt(0)->widget()->hide();
 
@@ -596,6 +605,10 @@ void DDialog::removeButton(int index)
     }
 
     d->buttonList.removeAt(index);
+
+    if (d->buttonList.isEmpty()) {
+        d->setSpacer(0);
+    }
 }
 
 /*!
@@ -629,6 +642,7 @@ void DDialog::clearButtons()
     D_D(DDialog);
 
     d->buttonList.clear();
+    d->setSpacer(0);
 
     while (d->buttonLayout->count()) {
         QLayoutItem *item = d->buttonLayout->takeAt(0);
