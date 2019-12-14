@@ -49,8 +49,6 @@ private:
     void onExpandChanged(bool v);
 };
 
-typedef DDrawerGroup DExpandGroup;
-
 DWIDGET_END_NAMESPACE
 
 #endif // DDRAWERGROUP_H

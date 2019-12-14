@@ -43,8 +43,6 @@ private:
     void resizeEvent(QResizeEvent *e);
 };
 
-typedef DArrowLineDrawer DArrowLineExpand;
-
 DWIDGET_END_NAMESPACE
 
 #endif // DARROWLINEDRAWER_H
