@@ -30,8 +30,8 @@
 
 #include <DSettings>
 #include <DSettingsGroup>
-#include <DSettingsOption>
 #include <DSuggestButton>
+#include <DPushButton>
 #include <DFontSizeManager>
 
 #include "dsettingswidgetfactory.h"
@@ -277,7 +277,7 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
     QWidget *box = new QWidget();
     QHBoxLayout *box_layout = new QHBoxLayout(box);
     box_layout->setContentsMargins(0, 30, 0, 0);
-    auto resetBt = new DSuggestButton(QObject::tr("Restore Defaults"), box);
+    auto resetBt = new DPushButton(QObject::tr("Restore Defaults"), box);
     resetBt->setObjectName("SettingsContentReset");
     resetBt->setMaximumWidth(300);
     box_layout->addWidget(resetBt);
