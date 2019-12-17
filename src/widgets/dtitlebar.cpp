@@ -240,6 +240,9 @@ void DTitlebarPrivate::init()
     q->setBackgroundRole(QPalette::Base);
     q->setAutoFillBackground(true);
     q->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    // 确保点击标题栏后输入框能失去焦点
+    // 另外，让标题栏接收焦点，还是为了避免一个focus控件隐藏时，会把焦点转移给标题栏上的按钮控件
+    q->setFocusPolicy(Qt::StrongFocus);
 }
 
 QWidget *DTitlebarPrivate::targetWindow()
