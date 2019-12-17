@@ -33,7 +33,7 @@ QT_END_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
 class DBoxWidget;
-class ContentLoader;
+class ContentBox;
 class DDrawerPrivate : public DFramePrivate
 {
 public:
@@ -47,7 +47,7 @@ public:
     DBoxWidget *m_boxWidget = nullptr;
     QVBoxLayout *m_headerLayout = nullptr;
     QBoxLayout *m_contentLayout = nullptr;
-    ContentLoader *m_contentLoader = nullptr;
+    ContentBox *m_contentLoader = nullptr;
     DHorizontalLine * m_hSeparator = nullptr;
     DHorizontalLine *m_bottom_separator = nullptr;
     QPropertyAnimation *m_animation = nullptr;

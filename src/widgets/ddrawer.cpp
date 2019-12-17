@@ -27,12 +27,12 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class ContentLoader : public QWidget
+class ContentBox : public QWidget
 {
     Q_OBJECT
     Q_PROPERTY(int height READ height WRITE setFixedHeight)
 public:
-    explicit ContentLoader(QWidget *parent = nullptr) : QWidget(parent){}
+    explicit ContentBox(QWidget *parent = nullptr) : QWidget(parent){}
 };
 
 DDrawerPrivate::DDrawerPrivate(DDrawer *qq)
@@ -62,7 +62,7 @@ void DDrawerPrivate::init()
 
     qq->connect(qq, &DDrawer::expandChange, m_bottom_separator, &QWidget::setVisible);
 
-    m_contentLoader = new ContentLoader();
+    m_contentLoader = new ContentBox();
     m_contentLoader->setFixedHeight(0); // default to not expanded.
 
     m_boxWidget = new DVBoxWidget;
@@ -317,3 +317,5 @@ void DDrawer::resizeEvent(QResizeEvent *e)
 }
 
 DWIDGET_END_NAMESPACE
+
+#include "ddrawer.moc"

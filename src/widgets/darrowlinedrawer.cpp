@@ -84,6 +84,10 @@ class DArrowLineDrawerPrivate : public DDrawerPrivate
 {
 public:
     D_DECLARE_PUBLIC(DArrowLineDrawer)
+    explicit DArrowLineDrawerPrivate(DDrawer *qq)
+        : DDrawerPrivate(qq) {
+
+    }
 
     ArrowHeaderLine *headerLine = nullptr;
 };
@@ -102,7 +106,7 @@ public:
  * \~chinese \param parent 为实例的父控件
  */
 DArrowLineDrawer::DArrowLineDrawer(QWidget *parent)
-    : DDrawer(*new DDrawerPrivate(this), parent)
+    : DDrawer(*new DArrowLineDrawerPrivate(this), parent)
 {
     D_D(DArrowLineDrawer);
     d->headerLine = new ArrowHeaderLine(this);
