@@ -222,6 +222,7 @@ QPair<QWidget *, QWidget *> createShortcutEditOptionHandle(DSettingsWidgetFactor
         QString keyseq = optionValue.toString();
         QKeySequence sequence(optionValue.toString());
 
+        shortcutMap.remove(keyseq);
         if (shortcutMap.value(keyseq)) {    //如果重复,退出
             return;
         }

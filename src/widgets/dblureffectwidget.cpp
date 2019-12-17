@@ -28,6 +28,13 @@
 #include <QDebug>
 
 #include <qpa/qplatformbackingstore.h>
+#include <private/qwidget_p.h>
+#ifndef slots
+#define slots Q_SLOTS
+#endif
+#define private public
+#include <private/qwidgetbackingstore_p.h>
+#undef private
 
 #define MASK_COLOR_ALPHA_DEFAULT 204
 
@@ -60,7 +67,7 @@ bool DBlurEffectWidgetPrivate::isFull() const
 {
     D_QC(DBlurEffectWidget);
 
-    return full || (q->isTopLevel() && !static_cast<bool>(blurRectXRadius * blurRectYRadius) && maskPath.isEmpty());
+    return full || (q->isTopLevel() && !(blurRectXRadius && blurRectYRadius) && maskPath.isEmpty());
 }
 
 void DBlurEffectWidgetPrivate::addToBlurEffectWidgetHash()
@@ -682,6 +689,9 @@ void DBlurEffectWidget::setBlendMode(DBlurEffectWidget::BlendMode blendMode)
 
     if (blendMode == BehindWindowBlend) {
         d->addToBlurEffectWidgetHash();
+
+        // 移除针对顶层窗口的事件过滤器
+        topLevelWidget()->removeEventFilter(this);
     } else {
         if (blendMode == InWindowBlend) {
             d->maskColor.setAlpha(d->getMaskColorAlpha());
@@ -689,6 +699,11 @@ void DBlurEffectWidget::setBlendMode(DBlurEffectWidget::BlendMode blendMode)
 
         if (d->blendMode == BehindWindowBlend) {
             d->removeFromBlurEffectWidgetHash();
+        }
+
+        if (isVisible()) {
+            // 给顶层窗口添加事件过滤器
+            topLevelWidget()->installEventFilter(this);
         }
     }
 
@@ -942,6 +957,9 @@ void DBlurEffectWidget::showEvent(QShowEvent *event)
             d->sourceImage.setDevicePixelRatio(devicePixelRatioF());
         }
 
+        // 给顶层窗口添加事件过滤器
+        topLevelWidget()->installEventFilter(this);
+
         return QWidget::showEvent(event);
     }
 
@@ -978,6 +996,45 @@ void DBlurEffectWidget::changeEvent(QEvent *event)
     }
 
     QWidget::changeEvent(event);
+}
+
+bool DBlurEffectWidget::eventFilter(QObject *watched, QEvent *event)
+{
+    if (event->type() != QEvent::UpdateRequest) {
+        return QWidget::eventFilter(watched, event);
+    }
+
+    // 截获顶层窗口的绘制请求事件，判断需要重绘的区域是否在模糊半径内
+    // 是的话则重绘模糊控件，因为避免由于DBlurEffectWidget控件外部（但是在模糊半径内，所以需要将此区域的内容计算到模糊）的重绘
+    if (QWidget *widget = qobject_cast<QWidget*>(watched)) {
+        auto wd = QWidgetPrivate::get(widget);
+
+        if (!wd->maybeBackingStore()) {
+            return QWidget::eventFilter(watched, event);
+        }
+
+        // 当前待绘制的区域
+        QRegion dirty;
+        for (const QWidget *w : wd->maybeBackingStore()->dirtyWidgets) {
+            dirty |= QWidgetPrivate::get(w)->dirty.translated(w->mapToGlobal(QPoint(0, 0)));
+        }
+
+        if (dirty.isEmpty()) {
+            return QWidget::eventFilter(watched, event);
+        }
+
+        D_DC(DBlurEffectWidget);
+        const QPoint &offset = mapToGlobal(QPoint(0, 0));
+        const QRect frame_rect = rect() + QMargins(d->radius, d->radius, d->radius, d->radius);
+        QRegion radius_edge = QRegion(frame_rect) - QRegion(rect());
+
+        // 如果更新内容区域包含控件外围的区域（主要时radius半径下的区域），应当更新模糊绘制
+        if (!(dirty & radius_edge.translated(offset)).isEmpty()) {
+            update();
+        }
+    }
+
+    return QWidget::eventFilter(watched, event);
 }
 
 DWIDGET_END_NAMESPACE

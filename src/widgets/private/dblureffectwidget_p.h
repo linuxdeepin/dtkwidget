@@ -34,7 +34,7 @@ public:
     bool autoScaleSourceImage = false;
     DBlurEffectWidget::BlendMode blendMode = DBlurEffectWidget::InWindowBlend;
 
-    int radius = 10;
+    int radius = 35;
     int blurRectXRadius = 0;
     int blurRectYRadius = 0;
     qint16 maskAlpha = -1;
