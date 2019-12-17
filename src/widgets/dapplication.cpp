@@ -1079,8 +1079,8 @@ void DApplication::handleAboutAction()
     }
     aboutDialog->setAcknowledgementVisible(d->acknowledgementPageVisible);
 
-    aboutDialog->exec();
-    aboutDialog->deleteLater();
+    aboutDialog->show();
+    aboutDialog->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 /**
