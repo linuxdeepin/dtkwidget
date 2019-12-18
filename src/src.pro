@@ -20,6 +20,13 @@ linux* {
     isEqual(ARCH, sw_64) | isEqual(ARCH, mips64) | isEqual(ARCH, mips32) {
         DEFINES += FORCE_RASTER_WIDGETS
     }
+
+    isEmpty(DTK_NO_AI_SERVICE) {
+        DEFINES += ENABLE_AI
+        DBUS_INTERFACES += \
+            $$PWD/widgets/dbus/com.iflytek.aiservice.iat.xml\
+            $$PWD/widgets/dbus/com.iflytek.aiservice.session.xml
+    }
 }
 
 mac* {
@@ -40,13 +47,6 @@ win* {
 !isEmpty(DTK_STATIC_LIB){
     DEFINES += DTK_STATIC_LIB
     CONFIG += staticlib
-}
-
-isEmpty(DTK_NO_AI_SERVICE) {
-    DEFINES += ENABLE_AI
-    DBUS_INTERFACES += \
-        $$PWD/widgets/dbus/com.iflytek.aiservice.iat.xml\
-        $$PWD/widgets/dbus/com.iflytek.aiservice.session.xml
 }
 
 HEADERS += dtkwidget_global.h
