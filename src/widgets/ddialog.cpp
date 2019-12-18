@@ -28,6 +28,7 @@
 #include <QScreen>
 #include <QAction>
 #include <QRegularExpression>
+#include <DFontSizeManager>
 
 #include "private/ddialog_p.h"
 
@@ -53,6 +54,14 @@ QBoxLayout *DDialogPrivate::getContentLayout()
     return contentLayout;
 }
 
+static void palrtteTransparency(QWidget *widget, qint8 alphaFloat)
+{
+    QPalette palette = widget->palette();
+    QColor color = DGuiApplicationHelper::adjustColor(palette.color(QPalette::WindowText), 0, 0, 0, 0, 0, 0, alphaFloat);
+    palette.setColor(QPalette::WindowText, color);
+    widget->setPalette(palette);
+}
+
 void DDialogPrivate::init()
 {
     D_Q(DDialog);
@@ -64,6 +73,8 @@ void DDialogPrivate::init()
     titleLabel->setWordWrap(true);
     titleLabel->setAlignment(Qt::AlignCenter);
     titleLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+    DFontSizeManager::instance()->bind(titleLabel, DFontSizeManager::T5, QFont::DemiBold);
+    palrtteTransparency(titleLabel, -10);
     titleLabel->hide();
 
     messageLabel = new QLabel;
@@ -72,6 +83,7 @@ void DDialogPrivate::init()
     messageLabel->setWordWrap(true);
     messageLabel->setAlignment(Qt::AlignCenter);
     messageLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    palrtteTransparency(messageLabel, -30);
     messageLabel->hide();
 
     QVBoxLayout *textLayout = new QVBoxLayout;
