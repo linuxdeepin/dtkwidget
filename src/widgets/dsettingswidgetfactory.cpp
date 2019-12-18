@@ -84,7 +84,7 @@ public:
             shortcutMap.value(key)->option()->setValue(QString());
             shortcutMap.value(key)->clear();
             shortcutMap.remove(shortcutMap.key(edit));
-            shortcutMap[key] = edit;
+            shortcutMap.insert(key, edit);
             edit->option()->setValue(key);
         });
         connect(cancel, &QPushButton::clicked, [ = ] {  //取消
@@ -103,7 +103,7 @@ private:
         if (shortcutMap.key(edit).isEmpty()) {  //第一次被设置
             edit->clear();
         } else {
-            edit->setKeySequence(QKeySequence(shortcutMap.key(edit)));
+            edit->setKeySequence(edit->option()->value().toString());
         }
     }
 };
@@ -222,28 +222,28 @@ QPair<QWidget *, QWidget *> createShortcutEditOptionHandle(DSettingsWidgetFactor
         QString keyseq = optionValue.toString();
         QKeySequence sequence(optionValue.toString());
 
-        shortcutMap.remove(keyseq);
-        if (shortcutMap.value(keyseq)) {    //如果重复,退出
-            return;
+        shortcutMap.remove(shortcutMap.key(rightWidget));   //清理当前快捷键
+        rightWidget->clear();
+
+        if (auto edit = shortcutMap.take(keyseq)) { //清理冲突快捷键
+            edit->clear();
+            edit->option()->setValue(QString());
         }
 
-        if (rightWidget->setKeySequence(sequence)) {
+        if (rightWidget->setKeySequence(sequence)) {    //设置新的快捷键
             shortcutMap.insert(optionValue.toString(), rightWidget);
-            opt->setValue(optionValue.toString());
+            opt->setValue(keyseq);
         }
     };
     updateWidgetValue(optionValue, option);
 
-    option->connect(option, &DTK_CORE_NAMESPACE::DSettingsOption::valueChanged, rightWidget, [ = ](const QVariant & value) { //恢复默认设置
+    option->connect(option, &DTK_CORE_NAMESPACE::DSettingsOption::valueChanged, rightWidget, [ = ](const QVariant & value) {
         if (value.isNull())
             return;
 
-        if (!shortcutMap.key(rightWidget).isEmpty()) {  //清空map列表
-            rightWidget->clear();
-            shortcutMap.remove(shortcutMap.key(rightWidget));
-        }
-
+        rightWidget->blockSignals(true);
         updateWidgetValue(value, option);
+        rightWidget->blockSignals(false);
     });
 
     return DSettingsWidgetFactory::createStandardItem(translateContext, option, rightWidget);
