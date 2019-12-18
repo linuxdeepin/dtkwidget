@@ -54,7 +54,8 @@ public:
 
     enum BlendMode {
         InWindowBlend,
-        BehindWindowBlend
+        BehindWindowBlend,
+        InWidgetBlend
     };
 
     Q_ENUMS(BlendMode)
@@ -101,6 +102,8 @@ public Q_SLOTS:
     void setFull(bool full);
     void setBlurEnabled(bool blurEnabled);
 
+    void updateBlurSourceImage(const QRegion &ren);
+
 Q_SIGNALS:
     void radiusChanged(int radius);
     void modeChanged(BlurMode mode);
@@ -112,6 +115,8 @@ Q_SIGNALS:
     void maskColorChanged(QColor maskColor);
     void fullChanged(bool full);
     void blurEnabledChanged(bool blurEnabled);
+
+    void blurSourceImageDirtied();
 
 protected:
     DBlurEffectWidget(DBlurEffectWidgetPrivate &dd, QWidget *parent = 0);

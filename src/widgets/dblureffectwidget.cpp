@@ -293,7 +293,7 @@ bool DBlurEffectWidgetPrivate::updateWindowBlurArea(QWidget *topLevelWidget)
  * \~chinese \class DBlurEffectWidget
  * \~chinese \brief 用于实现主窗口或控件背景的实时模糊效果。
  *
- * \~chinese 分为主窗口模糊 DBlurEffectWidget::BehindWindowBlend 和控件模糊 DBlurEffectWidget::InWindowBlend
+ * \~chinese 分为主窗口模糊 DBlurEffectWidget::BehindWindowBlend 和控件模糊 DBlurEffectWidget::InWindowBlend DBlurEffectWidget::InWindowBlend
  * \~chinese 这两种不同的模式，主窗口模糊效果依赖于窗口管理器的实现，目前仅支持 deepin-wm 和 kwin，
  * \~chinese 可以使用DWindowManagerHelper::hasBlurWindow 判断当前运行环境中的窗口管理器是否支持
  * \~chinese 模糊特效，使用 DPlatformWindowHandle::setWindowBlurAreaByWM 设置主窗口背景的模糊
@@ -366,7 +366,7 @@ bool DBlurEffectWidgetPrivate::updateWindowBlurArea(QWidget *topLevelWidget)
  * \~chinese 属性的情况下，无论 full 属性的值为多少，都将和值为 true 时的行为保持一致。
  * \~chinese \note 可读可写
  * \~chinese \note 此属性不影响蒙版的绘制区域
- * \~chinese \note 只在模糊的混合模式为 BehindWindowBlend 时生效
+ * \~chinese \note 只在模糊的混合模式为 BehindWindowBlend 或 DBlurEffectWidget::InWindowBlend 时生效
  * \~chinese \see DBlurEffectWidget::blurRectXRadius BlurEffectWidget::blurRectYRadius
  * \~chinese \see DBlurEffectWidget::maskColor
  * \~chinese \see DBlurEffectWidget::blendMode
@@ -413,14 +413,19 @@ bool DBlurEffectWidgetPrivate::updateWindowBlurArea(QWidget *topLevelWidget)
  *
  * \~chinese \var DBlurEffectWidget::BehindWindowBlend DBlurEffectWidget::BehindWindowBlend
  * \~chinese 以外部的其它窗口作为模糊背景
+ *
+ * * \~chinese \var DBlurEffectWidget::InWidgetBlend DBlurEffectWidget::InWidgetBlend
+ * \~chinese 同 DBlurEffectWidget::InWindowBlend，区别是不会自动更新用于模糊的源图片
+ * \~chinese 可手动调用 DBlurEffectWidget::updateBlurSourceImage 更新，以此来实现自行控制模糊
+ * \~chinese 源图片的更新时机
  */
 
 /*!
  * \~chinese \enum DBlurEffectWidget::MaskColorType
  * \~chinese DBlurEffectWidget::MaskColorType 内置的几种颜色模式。分为三种情况：
  * \~chinese \arg \c A：模式为 DBlurEffectWidget::InWindowBlend 或当前窗口管理器支持混成且支持窗口背景模糊
- * \~chinese \arg \c B：模式为 DBlurEffectWidget::BehindWindowBlend 窗口管理器不支持混成
- * \~chinese \arg \c C：模式为 DBlurEffectWidget::BehindWindowBlend 窗口管理器不支持模糊
+ * \~chinese \arg \c B：模式为 DBlurEffectWidget::BehindWindowBlend 或 DBlurEffectWidget::InWindowBlend 窗口管理器不支持混成
+ * \~chinese \arg \c C：模式为 DBlurEffectWidget::BehindWindowBlend 或 DBlurEffectWidget::InWindowBlend 窗口管理器不支持模糊
  * \~chinese \see DBlurEffectWidget::maskAlpha
  *
  * \~chinese \var DBlurEffectWidget::DarkColor DBlurEffectWidget::DarkColor
@@ -685,15 +690,13 @@ void DBlurEffectWidget::setBlendMode(DBlurEffectWidget::BlendMode blendMode)
         return;
     }
 
-    d->blendMode = blendMode;
-
     if (blendMode == BehindWindowBlend) {
         d->addToBlurEffectWidgetHash();
 
         // 移除针对顶层窗口的事件过滤器
         topLevelWidget()->removeEventFilter(this);
     } else {
-        if (blendMode == InWindowBlend) {
+        if (blendMode != BehindWindowBlend) {
             d->maskColor.setAlpha(d->getMaskColorAlpha());
         }
 
@@ -707,6 +710,8 @@ void DBlurEffectWidget::setBlendMode(DBlurEffectWidget::BlendMode blendMode)
         }
     }
 
+    // 前面还有用到 d->blendMode 读取上一次的值
+    d->blendMode = blendMode;
     update();
 
     Q_EMIT blendModeChanged(blendMode);
@@ -814,16 +819,51 @@ void DBlurEffectWidget::setBlurEnabled(bool blurEnabled)
     Q_EMIT blurEnabledChanged(d->blurEnabled);
 }
 
+inline QRect operator *(const QRect &rect, qreal scale)
+{
+    return QRect(rect.left() * scale, rect.top() * scale, rect.width() * scale, rect.height() * scale);
+}
+
+void DBlurEffectWidget::updateBlurSourceImage(const QRegion &ren)
+{
+    D_D(DBlurEffectWidget);
+    const qreal device_pixel_ratio = devicePixelRatioF();
+    const QPoint point_offset = mapTo(window(), QPoint(0, 0));
+
+    if (d->sourceImage.isNull()) {
+        const QRect &tmp_rect = rect().translated(point_offset).adjusted(-d->radius, -d->radius, d->radius, d->radius);
+
+        d->sourceImage = window()->backingStore()->handle()->toImage().copy(tmp_rect * device_pixel_ratio);
+        d->sourceImage = d->sourceImage.scaledToWidth(d->sourceImage.width() / device_pixel_ratio);
+    } else if (!d->customSourceImage) {
+        QPainter pa_image(&d->sourceImage);
+
+        pa_image.setCompositionMode(QPainter::CompositionMode_Source);
+
+        if (device_pixel_ratio > 1) {
+            const QRect &tmp_rect = this->rect().translated(point_offset);
+            QImage area = window()->backingStore()->handle()->toImage().copy(tmp_rect * device_pixel_ratio);
+            area = area.scaledToWidth(area.width() / device_pixel_ratio);
+
+            for (const QRect &rect : ren.rects()) {
+                pa_image.drawImage(rect.topLeft() + QPoint(d->radius, d->radius), rect == area.rect() ? area : area.copy(rect));
+            }
+        } else {
+            for (const QRect &rect : ren.rects()) {
+                pa_image.drawImage(rect.topLeft() + QPoint(d->radius, d->radius),
+                                   window()->backingStore()->handle()->toImage().copy(rect.translated(point_offset)));
+            }
+        }
+
+        pa_image.end();
+    }
+}
+
 DBlurEffectWidget::DBlurEffectWidget(DBlurEffectWidgetPrivate &dd, QWidget *parent)
     : QWidget(parent)
     , DObject(dd)
 {
 
-}
-
-inline QRect operator *(const QRect &rect, qreal scale)
-{
-    return QRect(rect.left() * scale, rect.top() * scale, rect.width() * scale, rect.height() * scale);
 }
 
 void DBlurEffectWidget::paintEvent(QPaintEvent *event)
@@ -859,50 +899,31 @@ void DBlurEffectWidget::paintEvent(QPaintEvent *event)
         pa.setCompositionMode(QPainter::CompositionMode_Source);
     } else {
         int radius = d->radius;
-        QPoint point_offset = mapTo(window(), QPoint(0, 0));
-        const QRect &paintRect = event->rect();
         qreal device_pixel_ratio = devicePixelRatioF();
 
-        if (d->sourceImage.isNull()) {
-            const QRect &tmp_rect = rect().translated(point_offset).adjusted(-radius, -radius, radius, radius);
+        // 此模式下是自行控制sourceImage的更新
+        if (d->blendMode != InWidgetBlend) {
+            updateBlurSourceImage(event->region());
+        }
 
-            d->sourceImage = window()->backingStore()->handle()->toImage().copy(tmp_rect * device_pixel_ratio);
-            d->sourceImage = d->sourceImage.scaledToWidth(d->sourceImage.width() / device_pixel_ratio);
-        } else if (!d->customSourceImage) {
-            QPainter pa_image(&d->sourceImage);
+        if (d->customSourceImage || !d->sourceImage.isNull()) {
+            QImage image;
+            const QRect &paintRect = event->rect();
 
-            pa_image.setCompositionMode(QPainter::CompositionMode_Source);
-
-            for (const QRect &rect : event->region().rects()) {
-                if (device_pixel_ratio > 1) {
-                    const QRect &tmp_rect = this->rect().translated(point_offset);
-                    const QImage &area = window()->backingStore()->handle()->toImage().copy(tmp_rect * device_pixel_ratio);
-
-                    pa_image.drawImage(rect.topLeft() + QPoint(radius, radius), area.scaledToWidth(area.width() / device_pixel_ratio).copy(rect));
-                } else {
-                    pa_image.drawImage(rect.topLeft() + QPoint(radius, radius),
-                                       window()->backingStore()->handle()->toImage().copy(rect.translated(point_offset)));
-                }
+            if (d->customSourceImage) {
+                image = d->sourceImage.copy(paintRect.adjusted(0, 0, 2 * radius, 2 * radius) * device_pixel_ratio);
+                image.setDevicePixelRatio(device_pixel_ratio);
+                pa.setOpacity(0.2);
+            } else {// 非customSourceImage不考虑缩放产生的影响
+                image = d->sourceImage.copy(paintRect.adjusted(0, 0, 2 * radius, 2 * radius));
             }
 
-            pa_image.end();
+            QTransform old_transform = pa.transform();
+            pa.translate(paintRect.topLeft() - QPoint(radius, radius));
+            qt_blurImage(&pa, image, radius, false, false);
+            pa.setTransform(old_transform);
+            pa.setOpacity(1);
         }
-
-        QImage image;
-
-        if (d->customSourceImage) {
-            image = d->sourceImage.copy(paintRect.adjusted(0, 0, 2 * radius, 2 * radius) * device_pixel_ratio);
-            image.setDevicePixelRatio(device_pixel_ratio);
-            pa.setOpacity(0.2);
-        } else {// 非customSourceImage不考虑缩放产生的影响
-            image = d->sourceImage.copy(paintRect.adjusted(0, 0, 2 * radius, 2 * radius));
-        }
-
-        QTransform old_transform = pa.transform();
-        pa.translate(paintRect.topLeft() - QPoint(radius, radius));
-        qt_blurImage(&pa, image, radius, false, false);
-        pa.setTransform(old_transform);
-        pa.setOpacity(1);
     }
 
     pa.fillRect(rect(), maskColor());
@@ -916,7 +937,8 @@ void DBlurEffectWidget::moveEvent(QMoveEvent *event)
         return QWidget::moveEvent(event);
     }
 
-    if (d->blendMode == DBlurEffectWidget::InWindowBlend) {
+    if (d->blendMode == DBlurEffectWidget::InWindowBlend
+            || d->blendMode == DBlurEffectWidget::InWindowBlend) {
         d->resetSourceImage();
 
         return QWidget::moveEvent(event);
@@ -973,6 +995,9 @@ void DBlurEffectWidget::hideEvent(QHideEvent *event)
     D_D(DBlurEffectWidget);
 
     if (!d->isBehindWindowBlendMode()) {
+        // 移除事件过滤器
+        topLevelWidget()->removeEventFilter(this);
+
         return QWidget::hideEvent(event);
     }
 
@@ -1023,14 +1048,20 @@ bool DBlurEffectWidget::eventFilter(QObject *watched, QEvent *event)
             return QWidget::eventFilter(watched, event);
         }
 
-        D_DC(DBlurEffectWidget);
+        D_D(DBlurEffectWidget);
         const QPoint &offset = mapToGlobal(QPoint(0, 0));
         const QRect frame_rect = rect() + QMargins(d->radius, d->radius, d->radius, d->radius);
         QRegion radius_edge = QRegion(frame_rect) - QRegion(rect());
 
         // 如果更新内容区域包含控件外围的区域（主要时radius半径下的区域），应当更新模糊绘制
         if (!(dirty & radius_edge.translated(offset)).isEmpty()) {
-            update();
+            // 此区域已经脏了，应当重置source image
+            d->resetSourceImage();
+
+            if (d->blendMode == InWidgetBlend)
+                Q_EMIT blurSourceImageDirtied();
+            else
+                update();
         }
     }
 

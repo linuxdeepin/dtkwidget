@@ -28,6 +28,7 @@
 #include <QHBoxLayout>
 #include <QEvent>
 #include <QDebug>
+#include <QPaintEvent>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -136,6 +137,13 @@ void DFloatingWidget::paintEvent(QPaintEvent *e)
 {
     Q_UNUSED(e)
 
+    // 更新模糊背景的源图片，在此处更新是为了避免阴影部分会进入到模糊控件的源图片
+    D_D(DFloatingWidget);
+
+    if (d->background) {
+        d->background->updateBlurSourceImage(e->region().translated(-d->background->pos()) & d->background->rect());
+    }
+
     DStylePainter painter(this);
     DStyleOptionFloatingWidget opt;
     initStyleOption(&opt);
@@ -242,6 +250,10 @@ void DFloatingWidget::setBlurBackgroundEnabled(bool blurBackgroundEnabled)
 
         d->background->setBlurRectXRadius(radius);
         d->background->setBlurRectYRadius(radius);
+        d->background->setBlendMode(DBlurEffectWidget::InWidgetBlend);
+
+        connect(d->background, &DBlurEffectWidget::blurSourceImageDirtied,
+                this, static_cast<void(DFloatingWidget::*)()>(&DFloatingWidget::update));
     } else {
         d->background->hide();
         d->background->deleteLater();
