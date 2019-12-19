@@ -329,30 +329,36 @@ void DWaterProgressPrivate::paint(QPainter *p)
 
     if (textVisible) {
         auto font = waterPinter.font();
-        font.setPixelSize(sz.height() * 40 / 100);
-        waterPinter.setFont(font);
 
         QRect rectValue;
         if (progressText == "100") {
-            rectValue.setWidth(sz.width() * 65 / 100);
-            rectValue.setHeight(sz.height() * 40 / 100);
+            font.setPixelSize(sz.height() * 35 / 100);
+            waterPinter.setFont(font);
+
+            rectValue.setWidth(sz.width() * 60 / 100);
+            rectValue.setHeight(sz.height() * 35 / 100);
             rectValue.moveCenter(rect.center().toPoint());
-            rectValue.moveLeft(rect.left() + rect.width() * 10 / 100);
+            waterPinter.setPen(Qt::white);
+            waterPinter.drawText(rectValue, Qt::AlignCenter, progressText);
+
         } else {
+            font.setPixelSize(sz.height() * 40 / 100);
+            waterPinter.setFont(font);
+
             rectValue.setWidth(sz.width() * 45 / 100);
             rectValue.setHeight(sz.height() * 40 / 100);
             rectValue.moveCenter(rect.center().toPoint());
+            rectValue.moveLeft(rect.left() + rect.width() * 0.45 * 0.5);
+
+            waterPinter.setPen(Qt::white);
+            waterPinter.drawText(rectValue, Qt::AlignCenter, progressText);
+            font.setPixelSize(font.pixelSize() / 2);
+            waterPinter.setFont(font);
+            QRect rectPerent(QPoint(rectValue.right(), rectValue.bottom()  - rect.height() * 20 / 100),
+                             QPoint(rectValue.right() + rect.width() * 20 / 100, rectValue.bottom()));
+
+            waterPinter.drawText(rectPerent, Qt::AlignCenter, "%");
         }
-
-        waterPinter.setPen(Qt::white);
-        waterPinter.drawText(rectValue, Qt::AlignCenter, progressText);
-
-        waterPinter.setPen(Qt::white);
-        font.setPixelSize(font.pixelSize() / 2);
-        waterPinter.setFont(font);
-        QRect rectPerent(QPoint(rectValue.right(), rectValue.bottom()  - rect.height() * 20 / 100),
-                         QPoint(rectValue.right() + rect.width() * 20 / 100, rectValue.bottom()));
-        waterPinter.drawText(rectPerent, Qt::AlignCenter, "%");
     }
     waterPinter.end();
 
