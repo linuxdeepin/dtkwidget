@@ -43,11 +43,9 @@
 #include <QToolButton>
 
 DWIDGET_BEGIN_NAMESPACE
-
-#ifdef ENABLE_AI
-
 DCORE_USE_NAMESPACE
 
+#ifdef ENABLE_AI
 class VoiceDevice : public QIODevice
 {
     Q_OBJECT
@@ -314,11 +312,14 @@ void DSearchEditPrivate::_q_toEditMode(bool focus)
         action->setVisible(false);
         iconWidget->setVisible(true);
     }
+
+#ifdef ENABLE_AI
     //焦点消失，清除语音check
     if (voiceAction) {
         voiceAction->setChecked(false);
         _q_onVoiceActionTrigger(false);
     }
+#endif
 }
 
 void DSearchEditPrivate::_q_onVoiceActionTrigger(bool checked)
