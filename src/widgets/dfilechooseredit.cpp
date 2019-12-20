@@ -18,7 +18,8 @@
 #include "dfilechooseredit.h"
 #include "private/dfilechooseredit_p.h"
 
-#include <DIconButton>
+#include <DStyleHelper>
+#include <DSuggestButton>
 
 #include <QScreen>
 #include <QGuiApplication>
@@ -201,9 +202,8 @@ void DFileChooserEditPrivate::init()
     dialog->setFileMode(QFileDialog::ExistingFile);
 
     QList<QWidget *> list;
-    DIconButton *btn = new DIconButton(nullptr);
+    DSuggestButton *btn = new DSuggestButton(nullptr);
     btn->setIcon(DStyleHelper(q->style()).standardIcon(DStyle::SP_SelectElement, nullptr));
-    btn->setBackgroundRole(QPalette::ColorRole::Highlight);
     btn->setIconSize(QSize(24, 24));
 
     q->setDialogDisplayPosition(DFileChooserEdit::DialogDisplayPosition::CurrentMonitorCenter);
