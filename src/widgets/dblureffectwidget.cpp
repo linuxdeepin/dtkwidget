@@ -624,6 +624,13 @@ void DBlurEffectWidget::setMaskPath(const QPainterPath &path)
     update();
 }
 
+/*!
+ * \~chinese \brief DBlurEffectWidget::setSourceImage
+ * \~chinese \param image
+ * \~chinese \param autoScale
+ * \~chinese \warning
+ * \~chinese \see
+ */
 void DBlurEffectWidget::setSourceImage(const QImage &image, bool autoScale)
 {
     D_D(DBlurEffectWidget);
@@ -639,6 +646,10 @@ void DBlurEffectWidget::setSourceImage(const QImage &image, bool autoScale)
     }
 }
 
+/*!
+ * \~chinese \brief DBlurEffectWidget::isFull
+ * \~chinese \return　true 窗口占据了整个模糊区域,反之为false
+ */
 bool DBlurEffectWidget::isFull() const
 {
     D_DC(DBlurEffectWidget);
@@ -646,6 +657,10 @@ bool DBlurEffectWidget::isFull() const
     return d->full;
 }
 
+/*!
+ * \~chinese \brief DBlurEffectWidget::blurEnabled
+ * \~chinese \return true 模糊区域可伸缩调整
+ */
 bool DBlurEffectWidget::blurEnabled() const
 {
     D_DC(DBlurEffectWidget);
@@ -653,6 +668,10 @@ bool DBlurEffectWidget::blurEnabled() const
     return d->blurEnabled;
 }
 
+/*!
+ * \~chinese \brief DBlurEffectWidget::setRadius
+ * \~chinese \param radius　模糊区域的圆角大小　如果设定值和原值不一致会发送信号radiusChanged
+ */
 void DBlurEffectWidget::setRadius(int radius)
 {
     D_D(DBlurEffectWidget);
@@ -669,6 +688,10 @@ void DBlurEffectWidget::setRadius(int radius)
     Q_EMIT radiusChanged(radius);
 }
 
+/*!
+ * \~chinese \brief DBlurEffectWidget::setMode
+ * \~chinese \param mode 设定模糊算法,默认为高斯模糊算法GaussianBlur
+ */
 void DBlurEffectWidget::setMode(DBlurEffectWidget::BlurMode mode)
 {
     D_D(DBlurEffectWidget);
@@ -682,6 +705,10 @@ void DBlurEffectWidget::setMode(DBlurEffectWidget::BlurMode mode)
     Q_EMIT modeChanged(mode);
 }
 
+/*!
+ * \~chinese \brief DBlurEffectWidget::setBlendMode
+ * \~chinese \param blendMode 窗口混合模式，模式设定变化发送blendModeChanged信号
+ */
 void DBlurEffectWidget::setBlendMode(DBlurEffectWidget::BlendMode blendMode)
 {
     D_D(DBlurEffectWidget);
@@ -717,6 +744,10 @@ void DBlurEffectWidget::setBlendMode(DBlurEffectWidget::BlendMode blendMode)
     Q_EMIT blendModeChanged(blendMode);
 }
 
+/*!
+ * \~chinese \brief DBlurEffectWidget::setBlurRectXRadius
+ * \~chinese \param blurRectXRadius 模糊区域矩形的X圆角大小
+ */
 void DBlurEffectWidget::setBlurRectXRadius(int blurRectXRadius)
 {
     D_D(DBlurEffectWidget);
@@ -732,6 +763,10 @@ void DBlurEffectWidget::setBlurRectXRadius(int blurRectXRadius)
     Q_EMIT blurRectXRadiusChanged(blurRectXRadius);
 }
 
+/*!
+ * \~chinese \brief DBlurEffectWidget::setBlurRectYRadius
+ * \~chinese \param blurRectYRadius 模糊区域矩形的Y圆角大小
+ */
 void DBlurEffectWidget::setBlurRectYRadius(int blurRectYRadius)
 {
     D_D(DBlurEffectWidget);
@@ -747,6 +782,10 @@ void DBlurEffectWidget::setBlurRectYRadius(int blurRectYRadius)
     Q_EMIT blurRectYRadiusChanged(blurRectYRadius);
 }
 
+/*!
+ * \~chinese \brief DBlurEffectWidget::setMaskAlpha
+ * \~chinese \param alpha　设置Alpha通道,值变化发送maskAlphaChanged信号
+ */
 void DBlurEffectWidget::setMaskAlpha(quint8 alpha) {
     D_D(DBlurEffectWidget);
 
@@ -757,6 +796,10 @@ void DBlurEffectWidget::setMaskAlpha(quint8 alpha) {
     Q_EMIT maskAlphaChanged(alpha);
 }
 
+/*!
+ * \~chinese \brief DBlurEffectWidget::setMaskColor
+ * \~chinese \param maskColor 设定mask的颜色
+ */
 void DBlurEffectWidget::setMaskColor(QColor maskColor)
 {
     D_D(DBlurEffectWidget);
@@ -792,6 +835,10 @@ void DBlurEffectWidget::setMaskColor(DBlurEffectWidget::MaskColorType type)
     update();
 }
 
+/*!
+ * \~chinese \brief DBlurEffectWidget::setFull
+ * \~chinese \param full 设置时候模糊区域占满整个窗口大小
+ */
 void DBlurEffectWidget::setFull(bool full)
 {
     D_D(DBlurEffectWidget);
@@ -805,6 +852,10 @@ void DBlurEffectWidget::setFull(bool full)
     Q_EMIT fullChanged(full);
 }
 
+/*!
+ * \~chinese \brief DBlurEffectWidget::setBlurEnabled
+ * \~chinese \param blurEnabled 设定模糊区域是否可以伸缩
+ */
 void DBlurEffectWidget::setBlurEnabled(bool blurEnabled)
 {
     D_D(DBlurEffectWidget);
@@ -824,6 +875,10 @@ inline QRect operator *(const QRect &rect, qreal scale)
     return QRect(rect.left() * scale, rect.top() * scale, rect.width() * scale, rect.height() * scale);
 }
 
+/*!
+ * \~chinese \brief DBlurEffectWidget::updateBlurSourceImage
+ * \~chinese \param ren 设定模糊区域的背景图片
+ */
 void DBlurEffectWidget::updateBlurSourceImage(const QRegion &ren)
 {
     D_D(DBlurEffectWidget);
