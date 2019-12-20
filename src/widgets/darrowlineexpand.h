@@ -39,6 +39,7 @@ Q_SIGNALS:
 
 protected:
     void mousePressEvent(QMouseEvent *);
+    void mouseMoveEvent(QMouseEvent *);
 
 private:
     void reverseArrowDirection();

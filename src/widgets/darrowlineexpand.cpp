@@ -48,6 +48,12 @@ void ArrowHeaderLine::mousePressEvent(QMouseEvent *)
     Q_EMIT mousePress();
 }
 
+void ArrowHeaderLine::mouseMoveEvent(QMouseEvent *event)
+{
+    //屏蔽掉鼠标移动事件
+    event->accept();
+}
+
 void ArrowHeaderLine::reverseArrowDirection()
 {
     setExpand(!m_isExpanded);
