@@ -90,65 +90,90 @@ DCrumbTextFormat::DCrumbTextFormat()
 
 }
 
+/*!
+ * \~chinese \brief DCrumbTextFormat::tagColor
+ * \~chinese \return 返回标签的文字的颜色
+ */
 QColor DCrumbTextFormat::tagColor() const
 {
     return colorProperty(QTextFormat::UserProperty);
 }
 
 /*!
- * \~chinese \brief 设置标签颜色
+ * \~chinese \brief DCrumbTextFormat::setTagColor 设置标签颜色
+ * \~chinese \param color 标签的颜色
  */
 void DCrumbTextFormat::setTagColor(const QColor &color)
 {
     setProperty(QTextFormat::UserProperty, color);
 }
 
+/*!
+ * \~chinese \brief DCrumbTextFormat::text
+ * \~chinese \return 返回标签的文本内容
+ */
 QString DCrumbTextFormat::text() const
 {
     return stringProperty(QTextFormat::UserProperty + 1);
 }
 
 /*!
- * \~chinese \brief 设置文本内容（标签名称）
+ * \~chinese \brief DCrumbTextFormat::setText 设置文本内容（标签名称）
+ * \~chinese \param text 文本内容
  */
 void DCrumbTextFormat::setText(const QString &text)
 {
     setProperty(QTextFormat::UserProperty + 1, text);
 }
 
+/*!
+ * \~chinese \brief DCrumbTextFormat::textColor
+ * \~chinese \return 返回文本的颜色
+ */
 QColor DCrumbTextFormat::textColor() const
 {
     return colorProperty(QTextFormat::UserProperty + 2);
 }
 
 /*!
- * \~chinese \brief 设置文本颜色
+ * \~chinese \brief DCrumbTextFormat::setTextColor 设置文本颜色
+ * \~chinese \param color 文本的颜色
  */
 void DCrumbTextFormat::setTextColor(const QColor &color)
 {
     setProperty(QTextFormat::UserProperty + 2, color);
 }
 
+/*!
+ * \~chinese \brief DCrumbTextFormat::background
+ * \~chinese \return 返回背景画刷
+ */
 QBrush DCrumbTextFormat::background() const
 {
     return brushProperty(QTextFormat::UserProperty + 3);
 }
 
 /*!
- * \~chinese \brief 设置背景
+ * \~chinese \brief DCrumbTextFormat::setBackground 设置背景
+ * \~chinese \param background 背景画刷
  */
 void DCrumbTextFormat::setBackground(const QBrush &background)
 {
     setProperty(QTextFormat::UserProperty + 3, background);
 }
 
+/*!
+ * \~chinese \brief DCrumbTextFormat::backgroundRadius
+ * \~chinese \return 返回背景的圆角
+ */
 int DCrumbTextFormat::backgroundRadius() const
 {
     return intProperty(QTextFormat::UserProperty + 4);
 }
 
 /*!
- * \~chinese \brief 设置背景圆角程度
+ * \~chinese \brief DCrumbTextFormat::setBackgroundRadius 设置背景圆角程度
+ * \~chinese \param radius 圆角的大小
  */
 void DCrumbTextFormat::setBackgroundRadius(int radius)
 {
