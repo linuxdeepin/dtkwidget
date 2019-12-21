@@ -34,6 +34,10 @@ DIconButtonPrivate::DIconButtonPrivate(DIconButton *qq)
 
 }
 
+/*!
+ * \~chinese \brief DIconButton::DIconButton 实现一个方便定义图标的button
+ * \~chinese \param parent
+ */
 DIconButton::DIconButton(QWidget *parent)
     : DIconButton(*new DIconButtonPrivate(this), parent)
 {
@@ -58,6 +62,10 @@ DIconButton::~DIconButton()
 
 }
 
+/*!
+ * \~chinese \brief DIconButton::setIcon　设置button的图标
+ * \~chinese \param icon　button的图标
+ */
 void DIconButton::setIcon(const QIcon &icon)
 {
     D_D(DIconButton);
@@ -66,6 +74,10 @@ void DIconButton::setIcon(const QIcon &icon)
     QAbstractButton::setIcon(icon);
 }
 
+/*!
+ * \~chinese \brief DIconButton::setIcon 设置button图标的类型,传入QT预定义枚举值
+ * \~chinese \param iconType icon类型
+ */
 void DIconButton::setIcon(QStyle::StandardPixmap iconType)
 {
     D_D(DIconButton);
@@ -74,6 +86,10 @@ void DIconButton::setIcon(QStyle::StandardPixmap iconType)
     QAbstractButton::setIcon(style()->standardIcon(iconType, nullptr, this));
 }
 
+/*!
+ * \~chinese \brief DIconButton::setIcon 设置button图标的类型,传入DTK预定义枚举值
+ * \~chinese \param iconType icon类型
+ */
 void DIconButton::setIcon(DStyle::StandardPixmap iconType)
 {
     D_D(DIconButton);
@@ -107,6 +123,10 @@ QSize DIconButton::minimumSizeHint() const
     return sizeHint();
 }
 
+/*!
+ * \~chinese \brief DIconButton::iconSize
+ * \~chinese \return 返回ICON的尺寸
+ */
 QSize DIconButton::iconSize() const
 {
     QAbstractButtonPrivate *bp = static_cast<QAbstractButtonPrivate*>(QAbstractButton::d_ptr.data());
@@ -126,6 +146,10 @@ QSize DIconButton::iconSize() const
     return QAbstractButton::iconSize();
 }
 
+/*!
+ * \~chinese \brief DIconButton::isFlat
+ * \~chinese \return true无边框　false有边框
+ */
 bool DIconButton::isFlat() const
 {
     D_DC(DIconButton);
@@ -133,6 +157,10 @@ bool DIconButton::isFlat() const
     return d->flat;
 }
 
+/*!
+ * \~chinese \brief DIconButton::setFlat 设置是否保留边框
+ * \~chinese \param flat true无边框　false有边框
+ */
 void DIconButton::setFlat(bool flat)
 {
     D_D(DIconButton);
