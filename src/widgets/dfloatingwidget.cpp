@@ -87,6 +87,10 @@ void DFloatingWidget::setWidget(QWidget *widget)
     d->adjustPalette();
 }
 
+/*!
+ * \~chinese \brief DFloatingWidget::setFramRadius 设置边框的圆角大小
+ * \~chinese \param radius 圆角大小
+ */
 void DFloatingWidget::setFramRadius(int radius)
 {
     D_D(DFloatingWidget);
