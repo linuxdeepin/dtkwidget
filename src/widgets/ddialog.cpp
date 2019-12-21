@@ -372,6 +372,11 @@ QAbstractButton *DDialog::getButton(int index) const
     return d->buttonList.at(index);
 }
 
+/*!
+ * \~chinese \brief DDialog::getContent 获取指定下标对应的内容控件
+ * \~chinese \param index　控件下标
+ * \~chinese \return 返回对应的内容控件
+ */
 QWidget *DDialog::getContent(int index) const
 {
     D_DC(DDialog);
@@ -379,6 +384,10 @@ QWidget *DDialog::getContent(int index) const
     return d->contentList.at(index);
 }
 
+/*!
+ * \~chinese \brief DDialog::title
+ * \~chinese \return 返回对话框的标题内容
+ */
 QString DDialog::title() const
 {
     D_DC(DDialog);
@@ -386,6 +395,10 @@ QString DDialog::title() const
     return d->title;
 }
 
+/*!
+ * \~chinese \brief DDialog::message
+ * \~chinese \return 返回对话框的显示信息
+ */
 QString DDialog::message() const
 {
     D_DC(DDialog);
@@ -393,6 +406,10 @@ QString DDialog::message() const
     return d->message;
 }
 
+/*!
+ * \~chinese \brief DDialog::icon
+ * \~chinese \return  返回对话框的icon
+ */
 QIcon DDialog::icon() const
 {
     D_DC(DDialog);
@@ -400,6 +417,10 @@ QIcon DDialog::icon() const
     return d->icon;
 }
 
+/*!
+ * \~chinese \brief DDialog::iconPixmap
+ * \~chinese \return 返回ICON的pixmap
+ */
 QPixmap DDialog::iconPixmap() const
 {
     D_DC(DDialog);
@@ -411,6 +432,10 @@ QPixmap DDialog::iconPixmap() const
     }
 }
 
+/*!
+ * \~chinese \brief DDialog::textFormat
+ * \~chinese \return 返回设定的文本格式
+ */
 Qt::TextFormat DDialog::textFormat() const
 {
     D_DC(DDialog);
@@ -428,6 +453,10 @@ bool DDialog::onButtonClickedClose() const
     return d->onButtonClickedClose;
 }
 
+/*!
+ * \~chinese \brief DDialog::setContentLayoutContentsMargins 设定内容布局的内容margin
+ * \~chinese \param margins 具体的margins
+ */
 void DDialog::setContentLayoutContentsMargins(const QMargins &margins)
 {
     D_D(DDialog);
@@ -435,6 +464,10 @@ void DDialog::setContentLayoutContentsMargins(const QMargins &margins)
     d->contentLayout->setContentsMargins(margins);
 }
 
+/*!
+ * \~chinese \brief DDialog::contentLayoutContentsMargins
+ * \~chinese \return 返回内容布局的内容margin
+ */
 QMargins DDialog::contentLayoutContentsMargins() const
 {
     D_DC(DDialog);
@@ -442,6 +475,10 @@ QMargins DDialog::contentLayoutContentsMargins() const
     return d->contentLayout->contentsMargins();
 }
 
+/*!
+ * \~chinese \brief DDialog::closeButtonVisible
+ * \~chinese \return 返回关闭按钮是否可见的bool值
+ */
 bool DDialog::closeButtonVisible() const
 {
     return windowFlags().testFlag(Qt::WindowCloseButtonHint);
@@ -865,6 +902,10 @@ void DDialog::setTitle(const QString &title)
     Q_EMIT titleChanged(title);
 }
 
+/*!
+ * \~chinese \brief DDialog::setWordWrapTitle 设定标题Label内容是否可截断换行
+ * \~chinese \param wordWrap true可换行　false不可以换行
+ */
 void DDialog::setWordWrapTitle(bool wordWrap)
 {
     D_D(DDialog);
