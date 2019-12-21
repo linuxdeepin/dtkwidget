@@ -24,6 +24,10 @@ public:
     D_DECLARE_PUBLIC(DTextEdit)
 };
 
+/*!
+ * \~chinese \brief DTextEdit::DTextEdit 实现一个用于编辑和显示纯文本和富文本的控件
+ * \~chinese \param parent
+ */
 DTextEdit::DTextEdit(QWidget *parent)
     : QTextEdit(parent)
     , DObject(*new DTextEditPrivate(this))
