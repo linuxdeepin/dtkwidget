@@ -70,6 +70,10 @@ QImage DSvgRendererPrivate::getImage(const QSize &size, const QString &elementId
     return image;
 }
 
+/*!
+ * \~chinese \brief DSvgRenderer::DSvgRenderer 这个类已经废弃不用，请使用libdtkgui
+ * \~chinese \param parent
+ */
 DSvgRenderer::DSvgRenderer(QObject *parent)
     : QObject(parent)
     , DObject(*new DSvgRendererPrivate(this))
