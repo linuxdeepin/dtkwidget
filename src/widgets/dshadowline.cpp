@@ -42,6 +42,10 @@ public:
     QPixmap shadow;
 };
 
+/*!
+ * \~chinese \brief DShadowLine::DShadowLine 提供一个以titlebar_shadow为主题背景的线条形状的控件
+ * \~chinese \param parent
+ */
 DShadowLine::DShadowLine(QWidget *parent)
     : QWidget(parent)
     , DObject(*new DShadowLinePrivate(this))
