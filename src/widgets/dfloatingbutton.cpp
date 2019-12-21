@@ -27,6 +27,10 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+/*!
+ * \~chinese \brief DFloatingButton::DFloatingButton 用于定制化的button，根据传入的图标参数具体调整
+ * \~chinese \param parent
+ */
 DFloatingButton::DFloatingButton(QWidget *parent)
     : DIconButton(parent)
 {
