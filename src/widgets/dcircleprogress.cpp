@@ -231,6 +231,10 @@ void DCircleProgress::setLineWidth(const int width)
     d->m_lineWidth = width;
 }
 
+/*!
+ * \~chinese \brief DCircleProgress::topLabel
+ * \~chinese \return 返回环形进度条顶部文字Label
+ */
 QLabel *DCircleProgress::topLabel()
 {
     Q_D(DCircleProgress);
@@ -238,6 +242,10 @@ QLabel *DCircleProgress::topLabel()
     return &d->m_topLabel;
 }
 
+/*!
+ * \~chinese \brief DCircleProgress::bottomLabel
+ * \~chinese \return 返回环形进度条底部文字Label
+ */
 QLabel *DCircleProgress::bottomLabel()
 {
     Q_D(DCircleProgress);
