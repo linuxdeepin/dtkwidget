@@ -542,7 +542,7 @@ void DListView::removeHeaderWidget(int index)
 }
 
 /*!
- * \brief 与 DListView::getHeaderWidget 类似，但返回要移除的顶部控件的对象
+ * \~chinese \brief 与 DListView::getHeaderWidget 类似，但返回要移除的顶部控件的对象
  * \~chinese \sa DListView::getHeaderWidget
  */
 QWidget *DListView::takeHeaderWidget(int index)
@@ -683,14 +683,18 @@ void DListView::setOrientation(QListView::Flow flow, bool wrapping)
 }
 
 /*!
- * \brief 开始编辑一个item
- * \param index 指定要编辑的item的位置
+ * \~chinese \brief 开始编辑一个item
+ * \~chinese \param index 指定要编辑的item的位置
  */
 void DListView::edit(const QModelIndex &index)
 {
     QListView::edit(index);
 }
 
+/*!
+ * \~chinese \brief DListView::setBackgroundType 设定item的背景色类型
+ * \~chinese \param backgroundType 背景色类型
+ */
 void DListView::setBackgroundType(DStyledItemDelegate::BackgroundType backgroundType)
 {
     if (DStyledItemDelegate *d = qobject_cast<DStyledItemDelegate *>(itemDelegate())) {
@@ -706,6 +710,10 @@ void DListView::setBackgroundType(DStyledItemDelegate::BackgroundType background
     }
 }
 
+/*!
+ * \~chinese \brief DListView::setItemMargins 设定item的内容margin
+ * \~chinese \param itemMargins margin值
+ */
 void DListView::setItemMargins(const QMargins &itemMargins)
 {
     if (DStyledItemDelegate *d = qobject_cast<DStyledItemDelegate *>(itemDelegate())) {
@@ -713,6 +721,10 @@ void DListView::setItemMargins(const QMargins &itemMargins)
     }
 }
 
+/*!
+ * \~chinese \brief DListView::setItemSize设定item的尺寸
+ * \~chinese \param itemSize 尺寸的大小
+ */
 void DListView::setItemSize(QSize itemSize)
 {
     if (DStyledItemDelegate *d = qobject_cast<DStyledItemDelegate *>(itemDelegate())) {
@@ -720,6 +732,10 @@ void DListView::setItemSize(QSize itemSize)
     }
 }
 
+/*!
+ * \~chinese \brief DListView::setItemSpacing　设定item的间距大小
+ * \~chinese \param spacing　间距大小值
+ */
 void DListView::setItemSpacing(int spacing)
 {
     if (DStyledItemDelegate *d = qobject_cast<DStyledItemDelegate *>(itemDelegate())) {
@@ -727,6 +743,10 @@ void DListView::setItemSpacing(int spacing)
     }
 }
 
+/*!
+ * \~chinese \brief DListView::setItemRadius 设定item的圆角大小
+ * \~chinese \param radius 圆角大小值
+ */
 void DListView::setItemRadius(int radius)
 {
     DStyle::setFrameRadius(this, radius);
