@@ -22,6 +22,10 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+/*!
+ * \~chinese \brief DDialogCloseButton::DDialogCloseButton 实现一个带有关闭按钮的button
+ * \~chinese \param parent
+ */
 DDialogCloseButton::DDialogCloseButton(QWidget *parent)
     : DIconButton(DStyle::SP_CloseButton, parent)
 {
