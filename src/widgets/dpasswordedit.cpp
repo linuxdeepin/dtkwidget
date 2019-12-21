@@ -62,14 +62,14 @@ DPasswordEdit::DPasswordEdit(QWidget *parent)
  * \~english \brief This property holds whether the user input should be displayed directly
  * or show as dots.
  *
- * \see QLineEdit::EchoMode
+ * \~chinese \see QLineEdit::EchoMode
  */
 
 /*!
  * \~chinese \property DPasswordEdit::isEchoMode
  * \~chinese \brief 该属性会控制用户输入是否可见
  *
- * \see QLineEdit::EchoMode
+ * \~chinese \see QLineEdit::EchoMode
  */
 bool DPasswordEdit::isEchoMode() const
 {
@@ -78,7 +78,7 @@ bool DPasswordEdit::isEchoMode() const
 
 /*!
  * \~chinese \brief 设置显示模式
- * \see QLineEdit::EchoMode
+ * \~chinese \see QLineEdit::EchoMode
  * @param mode
  */
 void DPasswordEdit::setEchoMode(QLineEdit::EchoMode mode)
@@ -100,6 +100,10 @@ void DPasswordEdit::setEchoMode(QLineEdit::EchoMode mode)
     }
 }
 
+/*!
+ * \~chinese \brief DPasswordEdit::setEchoButtonIsVisible 设置输入密码是否可见
+ * \~chinese \param visible　true输入密码可见　false不可见
+ */
 void DPasswordEdit::setEchoButtonIsVisible(bool visible)
 {
     D_D(DPasswordEdit);
@@ -108,6 +112,10 @@ void DPasswordEdit::setEchoButtonIsVisible(bool visible)
     setRightWidgetsVisible(visible);
 }
 
+/*!
+ * \~chinese \brief DPasswordEdit::echoButtonIsVisible
+ * \~chinese \return true输入密码可见　false不可见
+ */
 bool DPasswordEdit::echoButtonIsVisible() const
 {
     D_DC(DPasswordEdit);
