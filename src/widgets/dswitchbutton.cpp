@@ -25,6 +25,10 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+/*!
+ * \~chinese \brief DSwitchButton::DSwitchButton　实现一个开关按钮
+ * \~chinese \param parent
+ */
 DSwitchButton::DSwitchButton(QWidget *parent)
     : QAbstractButton(parent)
     , DObject(*new DSwitchButtonPrivate(this))
