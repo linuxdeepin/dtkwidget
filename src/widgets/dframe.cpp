@@ -38,12 +38,20 @@ DFramePrivate::DFramePrivate(DFrame *qq)
 
 }
 
+/*!
+ * \~chinese \brief DFrame::DFrame 用于其他需要边框的widget的基类
+ * \~chinese \param parent
+ */
 DFrame::DFrame(QWidget *parent)
     : DFrame(*new DFramePrivate(this), parent)
 {
 
 }
 
+/*!
+ * \~chinese \brief DFrame::setFrameRounded设置边框圆角是否开启
+ * \~chinese \param on true开启　false关闭
+ */
 void DFrame::setFrameRounded(bool on)
 {
     D_D(DFrame);
@@ -55,6 +63,10 @@ void DFrame::setFrameRounded(bool on)
     update();
 }
 
+/*!
+ * \~chinese \brief DFrame::setBackgroundRole　设置边框背景画刷的角色类型
+ * \~chinese \param type 背景画刷的角色类型
+ */
 void DFrame::setBackgroundRole(DPalette::ColorType type)
 {
     D_D(DFrame);
