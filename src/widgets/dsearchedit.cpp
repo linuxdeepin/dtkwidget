@@ -187,6 +187,10 @@ DSearchEdit::~DSearchEdit()
 
 }
 
+/*!
+ * \~chinese \brief DSearchEdit::setPlaceHolder 设置灰色的占位符文本
+ * \~chinese \param placeHolder 占位符文本内容
+ */
 void DSearchEdit::setPlaceHolder(QString placeHolder)
 {
     Q_D(DSearchEdit);
@@ -194,6 +198,10 @@ void DSearchEdit::setPlaceHolder(QString placeHolder)
     d->placeHolder = placeHolder;
 }
 
+/*!
+ * \~chinese \brief DSearchEdit::placeHolder
+ * \~chinese \return 返回占位符文本内容
+ */
 QString DSearchEdit::placeHolder() const
 {
     D_DC(DSearchEdit);
@@ -201,6 +209,9 @@ QString DSearchEdit::placeHolder() const
     return d->placeHolder;
 }
 
+/*!
+ * \~chinese \brief DSearchEdit::clear 清空输入框内容
+ */
 void DSearchEdit::clear()
 {
     D_D(DSearchEdit);
