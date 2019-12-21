@@ -104,6 +104,10 @@ protected:
     }
 };
 
+/*!
+ * \~chinese \brief DKeySequenceEdit::DKeySequenceEdit 一个快捷键编辑展示的控件
+ * \~chinese \param parent
+ */
 DKeySequenceEdit::DKeySequenceEdit(QWidget *parent)
     : QLineEdit(parent)
     , DObject(*new DKeySequenceEditPrivate(this))
@@ -113,6 +117,9 @@ DKeySequenceEdit::DKeySequenceEdit(QWidget *parent)
     d->init();
 }
 
+/*!
+ * \~chinese \brief DKeySequenceEdit::clear 清空内容
+ */
 void DKeySequenceEdit::clear()
 {
     D_D(DKeySequenceEdit);
@@ -121,6 +128,11 @@ void DKeySequenceEdit::clear()
     d->rightWidget->setKeyVisible(false);
 }
 
+/*!
+ * \~chinese \brief DKeySequenceEdit::setKeySequence 设定快捷键
+ * \~chinese \param keySequence 快捷键
+ * \~chinese \return true设定成功　false设定失败
+ */
 bool DKeySequenceEdit::setKeySequence(const QKeySequence &keySequence)
 {
     D_D(DKeySequenceEdit);
@@ -138,12 +150,20 @@ bool DKeySequenceEdit::setKeySequence(const QKeySequence &keySequence)
     return true;
 }
 
+/*!
+ * \~chinese \brief DKeySequenceEdit::keySequence 返回设定的快捷键
+ * \~chinese \return
+ */
 QKeySequence DKeySequenceEdit::keySequence()
 {
     D_D(DKeySequenceEdit);
     return d->sequencekey;
 }
 
+/*!
+ * \~chinese \brief DKeySequenceEdit::ShortcutDirection　快捷键文本展示方向
+ * \~chinese \param alig 设定方向的枚举值
+ */
 void DKeySequenceEdit::ShortcutDirection(Qt::AlignmentFlag alig)
 {
     if (alig == Qt::AlignLeft || alig == Qt::AlignRight) {
