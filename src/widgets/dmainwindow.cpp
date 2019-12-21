@@ -406,6 +406,10 @@ bool DMainWindow::autoInputMaskByClipPath() const
     return d->handle->autoInputMaskByClipPath();
 }
 
+/*!
+ * \~chinese \brief DMainWindow::titlebarShadowIsEnabled
+ * \~chinese \return true　titleBar阴影开启　false 阴影关闭
+ */
 bool DMainWindow::titlebarShadowIsEnabled() const
 {
     D_DC(DMainWindow);
@@ -413,6 +417,10 @@ bool DMainWindow::titlebarShadowIsEnabled() const
     return d->titleShadow;
 }
 
+/*!
+ * \~chinese \brief DMainWindow::setWindowRadius　设定窗口的圆角
+ * \~chinese \param windowRadius　窗口的圆角值
+ */
 void DMainWindow::setWindowRadius(int windowRadius)
 {
     D_D(DMainWindow);
@@ -424,6 +432,10 @@ void DMainWindow::setWindowRadius(int windowRadius)
     d->handle->setWindowRadius(windowRadius);
 }
 
+/*!
+ * \~chinese \brief DMainWindow::setBorderWidth 设定边框的宽度
+ * \~chinese \param borderWidth　边框的宽度
+ */
 void DMainWindow::setBorderWidth(int borderWidth)
 {
     D_D(DMainWindow);
@@ -435,6 +447,10 @@ void DMainWindow::setBorderWidth(int borderWidth)
     d->handle->setBorderWidth(borderWidth);
 }
 
+/*!
+ * \~chinese \brief DMainWindow::setBorderColor 设定边框的颜色
+ * \~chinese \param borderColor　边框的颜色
+ */
 void DMainWindow::setBorderColor(const QColor &borderColor)
 {
     D_D(DMainWindow);
@@ -446,6 +462,10 @@ void DMainWindow::setBorderColor(const QColor &borderColor)
     d->handle->setBorderColor(borderColor);
 }
 
+/*!
+ * \~chinese \brief DMainWindow::setShadowRadius 设定阴影区域的圆角
+ * \~chinese \param shadowRadius　阴影区域圆角大小
+ */
 void DMainWindow::setShadowRadius(int shadowRadius)
 {
     D_D(DMainWindow);
@@ -457,6 +477,10 @@ void DMainWindow::setShadowRadius(int shadowRadius)
     d->handle->setShadowRadius(shadowRadius);
 }
 
+/*!
+ * \~chinese \brief DMainWindow::setShadowOffset 设定阴影区域的偏移距离
+ * \~chinese \param shadowOffset　阴影区域的偏移距离
+ */
 void DMainWindow::setShadowOffset(const QPoint &shadowOffset)
 {
     D_D(DMainWindow);
@@ -468,6 +492,10 @@ void DMainWindow::setShadowOffset(const QPoint &shadowOffset)
     d->handle->setShadowOffset(shadowOffset);
 }
 
+/*!
+ * \~chinese \brief DMainWindow::setShadowColor 设定阴影的颜色
+ * \~chinese \param shadowColor　阴影的颜色
+ */
 void DMainWindow::setShadowColor(const QColor &shadowColor)
 {
     D_D(DMainWindow);
@@ -479,6 +507,10 @@ void DMainWindow::setShadowColor(const QColor &shadowColor)
     d->handle->setShadowColor(shadowColor);
 }
 
+/*!
+ * \~chinese \brief DMainWindow::setClipPath 设定裁剪路径
+ * \~chinese \param clipPath　裁剪的路径
+ */
 void DMainWindow::setClipPath(const QPainterPath &clipPath)
 {
     D_D(DMainWindow);
@@ -490,6 +522,10 @@ void DMainWindow::setClipPath(const QPainterPath &clipPath)
     d->handle->setClipPath(clipPath);
 }
 
+/*!
+ * \~chinese \brief DMainWindow::setFrameMask 设定边框的mask区域
+ * \~chinese \param frameMask mask区域
+ */
 void DMainWindow::setFrameMask(const QRegion &frameMask)
 {
     D_D(DMainWindow);
@@ -501,6 +537,10 @@ void DMainWindow::setFrameMask(const QRegion &frameMask)
     d->handle->setFrameMask(frameMask);
 }
 
+/*!
+ * \~chinese \brief DMainWindow::setTranslucentBackground 设定时候擦除背景
+ * \~chinese \param translucentBackground true擦除背景　false不擦除背景
+ */
 void DMainWindow::setTranslucentBackground(bool translucentBackground)
 {
     D_D(DMainWindow);
@@ -512,6 +552,10 @@ void DMainWindow::setTranslucentBackground(bool translucentBackground)
     d->handle->setTranslucentBackground(translucentBackground);
 }
 
+/*!
+ * \~chinese \brief DMainWindow::setEnableSystemResize　设定是否允许系统调整窗口大小
+ * \~chinese \param enableSystemResize　true允许系统调整　false不允许系统调整
+ */
 void DMainWindow::setEnableSystemResize(bool enableSystemResize)
 {
     D_D(DMainWindow);
@@ -523,6 +567,10 @@ void DMainWindow::setEnableSystemResize(bool enableSystemResize)
     d->handle->setEnableSystemResize(enableSystemResize);
 }
 
+/*!
+ * \~chinese \brief DMainWindow::setEnableSystemMove 设定时候允许系统移动窗口
+ * \~chinese \param enableSystemMove　true允许移动　false不允许移动
+ */
 void DMainWindow::setEnableSystemMove(bool enableSystemMove)
 {
     D_D(DMainWindow);
@@ -534,6 +582,10 @@ void DMainWindow::setEnableSystemMove(bool enableSystemMove)
     d->handle->setEnableSystemMove(enableSystemMove);
 }
 
+/*!
+ * \~chinese \brief DMainWindow::setEnableBlurWindow　设定时候能伸缩窗口
+ * \~chinese \param enableBlurWindow true能伸缩　false不能伸缩
+ */
 void DMainWindow::setEnableBlurWindow(bool enableBlurWindow)
 {
     D_D(DMainWindow);
@@ -545,6 +597,10 @@ void DMainWindow::setEnableBlurWindow(bool enableBlurWindow)
     d->handle->setEnableBlurWindow(enableBlurWindow);
 }
 
+/*!
+ * \~chinese \brief DMainWindow::setAutoInputMaskByClipPath 通过裁剪区域自动设定mask
+ * \~chinese \param autoInputMaskByClipPath true自动设定　false不自动设定
+ */
 void DMainWindow::setAutoInputMaskByClipPath(bool autoInputMaskByClipPath)
 {
     D_D(DMainWindow);
@@ -556,16 +612,29 @@ void DMainWindow::setAutoInputMaskByClipPath(bool autoInputMaskByClipPath)
     d->handle->setAutoInputMaskByClipPath(autoInputMaskByClipPath);
 }
 
+/*!
+ * \~chinese \brief DMainWindow::sendMessage 发送消息
+ * \~chinese \param icon 消息展示图标
+ * \~chinese \param message　消息内容
+ */
 void DMainWindow::sendMessage(const QIcon &icon, const QString &message)
 {
     DMessageManager::instance()->sendMessage(this, icon, message);
 }
 
+/*!
+ * \~chinese \brief DMainWindow::sendMessage 发送消息
+ * \~chinese \param message　DFloatingMessage消息
+ */
 void DMainWindow::sendMessage(DFloatingMessage *message)
 {
     DMessageManager::instance()->sendMessage(this, message);
 }
 
+/*!
+ * \~chinese \brief DMainWindow::setTitlebarShadowEnabled设定titleBar是否有阴影区域
+ * \~chinese \param titlebarShadowEnabled true titleBar有阴影　false无阴影
+ */
 void DMainWindow::setTitlebarShadowEnabled(bool titlebarShadowEnabled)
 {
     D_D(DMainWindow);
