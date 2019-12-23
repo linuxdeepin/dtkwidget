@@ -409,6 +409,7 @@ QPair<QWidget *, QWidget *> createRadioGroupOptionHandle(QObject *opt)
     rightWidget->setContentsMargins(0, 0, 0, 0);
     rightWidget->setObjectName("OptionRadioGroup");
     rightWidget->setAlignment(Qt::AlignLeft);
+    rightWidget->setFlat(false);
     rightWidget->setFixedHeight(24 * items.length() + 8);
 
     auto rgLayout = new QVBoxLayout;
