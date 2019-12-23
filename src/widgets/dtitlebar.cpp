@@ -1151,30 +1151,50 @@ void DTitlebar::setEmbedMode(bool visible)
     d->updateButtonsState(windowFlags());
 }
 
+/*!
+ * \~chinese \brief DTitlebar::menuIsVisible
+ * \~chinese \return true 菜单可见 false菜单不可见
+ */
 bool DTitlebar::menuIsVisible() const
 {
     D_DC(DTitlebar);
     return !d->optionButton->isVisible();
 }
 
+/*!
+ * \~chinese \brief DTitlebar::setMenuVisible 设置菜单是否可见
+ * \~chinese \param visible true 菜单可见 false菜单不可见
+ */
 void DTitlebar::setMenuVisible(bool visible)
 {
     D_D(DTitlebar);
     d->optionButton->setVisible(visible);
 }
 
+/*!
+ * \~chinese \brief DTitlebar::menuIsDisabled
+ * \~chinese \return true 菜单被禁用 false 菜单没有被禁用
+ */
 bool DTitlebar::menuIsDisabled() const
 {
     D_DC(DTitlebar);
     return !d->optionButton->isEnabled();
 }
 
+/*!
+ * \~chinese \brief DTitlebar::setMenuDisabled 设置菜单是否被禁用
+ * \~chinese \param disabled true 菜单被禁用 false菜单没有被禁用
+ */
 void DTitlebar::setMenuDisabled(bool disabled)
 {
     D_D(DTitlebar);
     d->optionButton->setDisabled(disabled);
 }
 
+/*!
+ * \~chinese \brief DTitlebar::quitMenuIsDisabled
+ * \~chinese \return true 退出菜单被禁用 false退出菜单没有被禁用
+ */
 bool DTitlebar::quitMenuIsDisabled() const
 {
     D_DC(DTitlebar);
@@ -1182,6 +1202,10 @@ bool DTitlebar::quitMenuIsDisabled() const
     return d->quitAction && !d->quitAction->isEnabled();
 }
 
+/*!
+ * \~chinese \brief DTitlebar::setQuitMenuDisabled 设置退出菜单是否被禁用
+ * \~chinese \param disabled true 退出菜单被禁用 false退出菜单没有被禁用
+ */
 void DTitlebar::setQuitMenuDisabled(bool disabled)
 {
     D_D(DTitlebar);
@@ -1193,6 +1217,10 @@ void DTitlebar::setQuitMenuDisabled(bool disabled)
     d->quitAction->setEnabled(!disabled);
 }
 
+/*!
+ * \~chinese \brief DTitlebar::setQuitMenuVisible 设置退出菜单是否被可见
+ * \~chinese \param visible true 退出菜单可见 false退出菜单不可见
+ */
 void DTitlebar::setQuitMenuVisible(bool visible)
 {
     D_D(DTitlebar);
@@ -1204,6 +1232,10 @@ void DTitlebar::setQuitMenuVisible(bool visible)
     d->quitAction->setVisible(visible);
 }
 
+/*!
+ * \~chinese \brief DTitlebar::switchThemeMenuIsVisible
+ * \~chinese \return true 切换主题菜单可见 false切换主题菜单不可见
+ */
 bool DTitlebar::switchThemeMenuIsVisible() const
 {
     D_DC(DTitlebar);
@@ -1211,6 +1243,10 @@ bool DTitlebar::switchThemeMenuIsVisible() const
     return d->switchThemeMenu;
 }
 
+/*!
+ * \~chinese \brief DTitlebar::setSwitchThemeMenuVisible 设置切换主题菜单是否可见
+ * \~chinese \param visible true 切换主题菜单可见 false切换主题菜单不可见
+ */
 void DTitlebar::setSwitchThemeMenuVisible(bool visible)
 {
     D_D(DTitlebar);
