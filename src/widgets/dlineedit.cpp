@@ -273,8 +273,8 @@ void DLineEdit::setRightWidgetsVisible(bool visible)
 }
 
 /*!
- * \~chinese \brief DLineEdit::setClearButtonEnabled
- * \~chinese \sa QLineEdit::setClearButtonEnabled()
+ * \~chinese \brief DLineEdit::setClearButtonEnabled 设置清除按钮是否可见
+ * \~chinese \param enable true 按钮可见 false 按钮不可见
  */
 void DLineEdit::setClearButtonEnabled(bool enable)
 {
@@ -284,7 +284,7 @@ void DLineEdit::setClearButtonEnabled(bool enable)
 
 /*!
  * \~chinese \brief DLineEdit::isClearButtonEnabled
- * \~shinese \sa QLineEdit::isClearButtonEnabled()
+ * \~chinese \return true 清除按钮可见 false 清除按钮不可见
  */
 bool DLineEdit::isClearButtonEnabled() const
 {
@@ -293,8 +293,8 @@ bool DLineEdit::isClearButtonEnabled() const
 }
 
 /*!
- * \~chinese \brief DLineEdit::setText
- * \~chinese \sa QLineEdit::setText()
+ * \~chinese \brief DLineEdit::setText 设置显示的文本
+ * \~chinese \param text 显示的文本
  */
 void DLineEdit::setText(const QString &text)
 {
@@ -304,7 +304,7 @@ void DLineEdit::setText(const QString &text)
 
 /*!
  * \~chinese \brief DLineEdit::text
- * \~chinese \sa QLineEdit::text()
+ * \~chinese \return 返回显示的文本
  */
 QString DLineEdit::text()
 {
@@ -313,8 +313,7 @@ QString DLineEdit::text()
 }
 
 /*!
- * \~chinese \brief DLineEdit::clear
- * \~chinese \sa QLineEdit::clear();
+ * \~chinese \brief DLineEdit::clear 清空编辑的内容
  */
 void DLineEdit::clear()
 {
@@ -324,7 +323,7 @@ void DLineEdit::clear()
 
 /*!
  * \~chinese \brief DLineEdit::echoMode
- * \~chinese \sa QLineEdit::echoMode();
+ * \~chinese \return 返回回显的模式
  */
 QLineEdit::EchoMode DLineEdit::echoMode() const
 {
@@ -333,8 +332,8 @@ QLineEdit::EchoMode DLineEdit::echoMode() const
 }
 
 /*!
- * \~chinese \brief DLineEdit::setEchoMode
- * \~chinese \sa QLineEdit::setEchoMode()
+ * \~chinese \brief DLineEdit::setEchoMode 设置回显的模式
+ * \~chinese \param mode 回显的模式
  */
 void DLineEdit::setEchoMode(QLineEdit::EchoMode mode)
 {
