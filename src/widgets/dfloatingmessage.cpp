@@ -60,7 +60,7 @@ void DFloatingMessagePrivate::init()
     iconButton->setFocusPolicy(Qt::NoFocus);
     iconButton->setAttribute(Qt::WA_TransparentForMouseEvents);
     iconButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    iconButton->setIconSize(QSize(20, 20));
+    iconButton->setIconSize(QSize(30, 30));
 
     hBoxLayout->addWidget(iconButton);
     hBoxLayout->addWidget(labMessage);
