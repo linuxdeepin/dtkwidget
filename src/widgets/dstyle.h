@@ -220,6 +220,7 @@ public:
                               qint8 hueFloat = 0, qint8 saturationFloat = 0, qint8 lightnessFloat = 0,
                               qint8 redFloat = 0, qint8 greenFloat = 0, qint8 blueFloat = 0, qint8 alphaFloat = 0);
     static QColor blendColor(const QColor &substrate, const QColor &superstratum);
+    static QPair<QIcon::Mode, QIcon::State> toIconModeState(const QStyleOption *option);
 
     static void setTooltipTextFormat(Qt::TextFormat format);
     static Qt::TextFormat tooltipTextFormat();

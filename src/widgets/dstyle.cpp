@@ -68,6 +68,28 @@ QColor DStyle::blendColor(const QColor &substrate, const QColor &superstratum)
 }
 
 /*!
+ * \~chinese \brief DStyle::toIconModeState 根据option中的QStyle::State返回图标应有
+ * \~chinese 的模式和状态
+ */
+QPair<QIcon::Mode, QIcon::State> DStyle::toIconModeState(const QStyleOption *option)
+{
+    QIcon::Mode mode = QIcon::Normal;
+    QIcon::State state = option->state & State_On ? QIcon::On : QIcon::Off;
+
+    if (option->state & QStyle::State_Enabled) {
+        if (option->state & State_HasFocus) {
+            mode = QIcon::Active;
+        } else if (option->state & (State_Sunken | State_Selected)) {
+            mode = QIcon::Selected;
+        }
+    } else {
+        mode = QIcon::Disabled;
+    }
+
+    return qMakePair(mode, state);
+}
+
+/*!
  * \~chinese \brief DStyle::setTooltipTextFormat 设置 tooltip 文本格式
  * \~chinese \sa Qt::TextFormat
  */
