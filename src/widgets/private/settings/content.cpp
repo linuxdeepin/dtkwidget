@@ -75,7 +75,6 @@ Content::Content(QWidget *parent)
     d->contentArea = new QScrollArea;
     d->contentArea->setContentsMargins(0, 0, 0, 0);
     d->contentArea->setWidgetResizable(true);
-    d->contentArea->setVerticalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
     d->contentArea->setFrameShape(QFrame::NoFrame);
 
     // 设置列表支持触屏滚动
