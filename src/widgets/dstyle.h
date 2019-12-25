@@ -258,6 +258,7 @@ public:
     QIcon standardIcon(QStyle::StandardPixmap st, const QStyleOption *opt = nullptr, const QWidget *widget = nullptr) const override;
 
     QPalette standardPalette() const override;
+    QPixmap generatedIconPixmap(QIcon::Mode iconMode, const QPixmap &pixmap, const QStyleOption *opt) const override;
 
     // 获取一个加工后的画笔
     QBrush generatedBrush(const QStyleOption *option, const QBrush &base,

@@ -77,10 +77,10 @@ QPair<QIcon::Mode, QIcon::State> DStyle::toIconModeState(const QStyleOption *opt
     QIcon::State state = option->state & State_On ? QIcon::On : QIcon::Off;
 
     if (option->state & QStyle::State_Enabled) {
-        if (option->state & State_HasFocus) {
-            mode = QIcon::Active;
-        } else if (option->state & (State_Sunken | State_Selected)) {
+        if (option->state & (State_Sunken | State_Selected)) {
             mode = QIcon::Selected;
+        } else if (option->state & State_MouseOver) {
+            mode = QIcon::Active;
         }
     } else {
         mode = QIcon::Disabled;
@@ -1092,24 +1092,10 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
             if (DStyledIconEngine *engine = dynamic_cast<DStyledIconEngine *>(data->engine)) {
                 engine->paint(p, opt->palette, opt->rect);
             } else {
-                QIcon::Mode mode = QIcon::Normal;
-                QIcon::State state = QIcon::Off;
-
-                if (!(opt->state & QStyle::State_Enabled)) {
-                    mode = QIcon::Disabled;
-                } else if (opt->state & QStyle::State_Selected) {
-                    mode = QIcon::Selected;
-                } else if (opt->state & QStyle::State_MouseOver) {
-                    mode = QIcon::Active;
-                }
-
-                if (opt->state & QStyle::State_On) {
-                    state = QIcon::On;
-                }
-
+                auto icon_mode_state = toIconModeState(opt);
                 p->setBrush(opt->palette.background());
                 p->setPen(QPen(opt->palette.foreground(), 1));
-                icon_opt->icon.paint(p, opt->rect, Qt::AlignCenter, mode, state);
+                icon_opt->icon.paint(p, opt->rect, Qt::AlignCenter, icon_mode_state.first, icon_mode_state.second);
             }
         }
         break;
@@ -1722,6 +1708,31 @@ QPalette DStyle::standardPalette() const
     // 防止在QApplication initSystemPalette的setSystemPalette中获取到一个和 QGuiApplicationPrivate::platformTheme()->palette()
     // 一样的QPalette对象，这样将导致QApplicationPrivate::setPalette_helper中将 app_pal 和新的QPalette对比时认为他们没有变化
     return pa.resolve(QCommonStyle::standardPalette());
+}
+
+QPixmap DStyle::generatedIconPixmap(QIcon::Mode iconMode, const QPixmap &pixmap, const QStyleOption *opt) const
+{
+    Q_UNUSED(opt)
+
+    if (iconMode == QIcon::Active) {
+        QImage image = pixmap.toImage();
+        QPainter pa(&image);
+
+        if (!pa.isActive())
+            return pixmap;
+
+        pa.setCompositionMode(QPainter::CompositionMode_SourceAtop);
+
+        if (DGuiApplicationHelper::toColorType(opt->palette) == DGuiApplicationHelper::DarkType) {
+            pa.fillRect(image.rect(), QColor(255, 255, 255, 0.1 * 255));
+        } else {
+            pa.fillRect(image.rect(), QColor(0, 0, 0, 0.1 * 255));
+        }
+
+        return QPixmap::fromImage(image);
+    }
+
+    return pixmap;
 }
 
 DStyle::StyleState DStyle::getState(const QStyleOption *option)
