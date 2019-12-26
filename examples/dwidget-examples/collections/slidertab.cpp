@@ -17,6 +17,7 @@
 
 #include "dslider.h"
 #include "slidertab.h"
+#include "darrowrectangle.h"
 
 DWIDGET_USE_NAMESPACE
 
@@ -30,3 +31,9 @@ SliderTab::SliderTab(QWidget *parent) : QLabel(parent)
     slider->move(20, 50);
 }
 
+void SliderTab::mousePressEvent(QMouseEvent *event)
+{
+    auto ptr = new DArrowRectangle(DArrowRectangle::ArrowBottom, DArrowRectangle::FloatWidget, this);
+    ptr->setFixedSize(80,300);
+    ptr->show(event->x(), event->y());
+}

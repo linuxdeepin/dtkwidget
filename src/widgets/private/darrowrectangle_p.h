@@ -72,7 +72,7 @@ public:
     int m_shadowWidth = 5; //Abandoned
     int m_borderWidth = 1;
     QColor m_borderColor = QColor(0, 0, 0, 255 * 0.1);
-    QColor m_backgroundColor = QColor(255, 255, 255, 255);
+    QColor m_backgroundColor;
 
     DArrowRectangle::ArrowDirection m_arrowDirection;
     QPoint m_lastPos = QPoint(0, 0);

@@ -56,12 +56,12 @@ int main(int argc, char *argv[])
     DApplicationSettings as;
     Q_UNUSED(as)
 
-    DMainWindow w;
-    DIconButton *button = new DIconButton(&w);
-    button->setIconSize(QSize(30, 30));
-    button->setFlat(true);
-    button->setIcon(QIcon::fromTheme("button_edit-clear"));
-    w.setCentralWidget(button);
+    MainWindow w;
+//    DIconButton *button = new DIconButton(&w);
+//    button->setIconSize(QSize(30, 30));
+//    button->setFlat(true);
+//    button->setIcon(QIcon::fromTheme("button_edit-clear"));
+//    w.setCentralWidget(button);
     w.show();
     Dtk::Widget::moveToCenter(&w);
 

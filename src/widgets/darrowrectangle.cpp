@@ -1197,10 +1197,18 @@ void DArrowRectanglePrivate::paintEvent(QPaintEvent *e)
         return;
     }
 
+    QColor bk_color;
+
+    if (!m_backgroundColor.isValid()) {
+        bk_color = qApp->palette().background().color();
+    } else {
+        bk_color = m_backgroundColor;
+    }
+
     QPainter painter(q);
 
     if (m_handle) {
-        painter.fillRect(e->rect(), m_backgroundColor);
+        painter.fillRect(e->rect(), bk_color);
     } else {
         painter.setRenderHint(QPainter::Antialiasing);
 
@@ -1224,7 +1232,7 @@ void DArrowRectanglePrivate::paintEvent(QPaintEvent *e)
         }
 
         painter.setClipPath(border);
-        painter.fillPath(border, QBrush(m_backgroundColor));
+        painter.fillPath(border, QBrush(bk_color));
 
         QPen strokePen;
         strokePen.setColor(m_borderColor);
