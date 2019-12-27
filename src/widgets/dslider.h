@@ -68,6 +68,8 @@ public:
 
     void setMouseWheelEnabled(bool enabled);
 
+    void setTipValue(const QString &value);
+
     QSlider::TickPosition tickPosition() const;
 
 Q_SIGNALS:
@@ -84,6 +86,7 @@ Q_SIGNALS:
 protected:
     DSlider(DSliderPrivate &q, QWidget *parent);
 
+    bool event(QEvent *event) override;
     bool eventFilter(QObject *watched, QEvent *event) override;
 };
 

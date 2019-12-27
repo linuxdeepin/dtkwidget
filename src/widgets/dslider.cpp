@@ -82,6 +82,15 @@ DSlider::DSlider(DSliderPrivate &q, QWidget *parent)
 
 }
 
+bool DSlider::event(QEvent *e)
+{
+    D_D(DSlider);
+    if (d->tipvalue && (e->type() == QEvent::Resize || e->type() == QEvent::LayoutRequest)) {
+        d->updtateTool(value());
+    }
+    return QWidget::event(e);
+}
+
 /*!
  * \~chinese \brief DSlider::eventFilter
  * \~chinese \row 此函数处理了鼠标滚轮事件
@@ -361,6 +370,57 @@ void DSlider::setMouseWheelEnabled(bool enabled)
     d->mouseWheelEnabled = enabled;
 }
 
+void DSliderPrivate::updtateTool(int value)
+{
+    Q_Q(DSlider);
+
+    if (!tipvalue)
+        return;
+
+    int min = q->minimum();
+    int max = q->maximum();
+    QStyleOptionSlider opt;
+    const QRectF rectHandle = q->style()->subControlRect(QStyle::CC_Slider, &opt, QStyle::SC_SliderHandle, slider); //滑块
+
+    double x = ((value - min) * 1.0 / (max -min)) * (slider->rect().width() - rectHandle.width());
+    tipvalue->raise();
+    tipvalue->adjustSize();
+    tipvalue->move(x + (rectHandle.width() - tipvalue->width()) / 2.0, slider->y() + slider->height());  //x是以实际滑槽为起始坐标，而非DSlider为参考坐标（实际滑槽长度 == Slider长度 - 滑块长度）
+}
+
+/*!
+ * \~chinese \brief DSlider::setTipValue 此函数会创建气泡，气泡将跟随滑块移动
+ * \~chinese \param open value非空开启气泡 value空关闭气泡(销毁)
+ */
+void DSlider::setTipValue(const QString &value)
+{
+    D_D(DSlider);
+
+    if (d->tipvalue == nullptr) {
+        d->label = new DLabel(value);
+        d->tipvalue = new DFloatingWidget;
+        d->tipvalue->setWidget(d->label);
+        d->tipvalue->setParent(this);
+        d->label->setForegroundRole(DPalette::HighlightedText);
+        d->label->setAlignment(Qt::AlignCenter);
+        d->tipvalue->setBackgroundRole(QPalette::Highlight);
+        d->tipvalue->setFramRadius(DStyle::pixelMetric(d->label->style(), DStyle::PM_FrameRadius));
+        d->tipvalue->show();
+    }
+
+    if (value.isEmpty()) {
+        d->tipvalue->deleteLater();
+        d->tipvalue = nullptr;
+        return;
+    }
+
+    d->label->setText(value);
+
+    connect(d->slider, &QSlider::valueChanged, this,[ = ](const int value) {
+        d->updtateTool(value);
+    });
+}
+
 /*!
  * \~chinese \brief DSlider::tickPosition返回滑块的记号位置
  * \~chinese \row 获取滑块刻度当前朝向
@@ -393,6 +453,8 @@ DSliderPrivate::DSliderPrivate(DSlider *q)
     , rightIcon(nullptr)
     , left(nullptr)
     , right(nullptr)
+    , tipvalue(nullptr)
+    , label(nullptr)
     , mouseWheelEnabled(false)
 {
 

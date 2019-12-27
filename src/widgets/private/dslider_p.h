@@ -26,6 +26,8 @@
 
 #include <DObjectPrivate>
 #include <DIconButton>
+#include <DFloatingWidget>
+#include <DLabel>
 
 #include <QLayout>
 
@@ -53,9 +55,13 @@ public:
     SliderStrip *right;
 
     QGridLayout *layout;
+    DFloatingWidget *tipvalue;
+    DLabel *label;
 
     QSize iconSize;
     bool mouseWheelEnabled;
+
+    void updtateTool(int value);
 };
 
 DWIDGET_END_NAMESPACE
