@@ -308,7 +308,7 @@ void DWaterProgressPrivate::paint(QPainter *p)
     linear.setSpread(QGradient::PadSpread);
     waterPinter.setPen(Qt::NoPen);
     waterPinter.setBrush(linear);
-    waterPinter.drawEllipse(waterImage.rect().center(), sz.width() / 2, sz.height() / 2);
+    waterPinter.drawEllipse(waterImage.rect().center(), sz.width() / 2 + 1, sz.height() / 2  + 1);
 
     waterPinter.setCompositionMode(QPainter::CompositionMode_SourceOver);
     waterPinter.drawImage(static_cast<int>(backXOffset), yOffset, waterBackImage);
