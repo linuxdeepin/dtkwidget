@@ -17,9 +17,10 @@
 
 #include "dpasswordedit.h"
 #include "private/dpasswordedit_p.h"
-#include "diconbutton.h"
 
 #include <DUtil>
+#include <DStyle>
+#include <DSuggestButton>
 
 #include <QDebug>
 #include <QTimer>
@@ -93,9 +94,9 @@ void DPasswordEdit::setEchoMode(QLineEdit::EchoMode mode)
         D_D(DPasswordEdit);
 
         if (isEchoMode()) {
-            d->togglePasswordVisibleButton->setIcon(DStyle::SP_HidePassword);
+            d->togglePasswordVisibleButton->setIcon(DStyle::standardIcon(style(), DStyle::SP_HidePassword));
         } else {
-            d->togglePasswordVisibleButton->setIcon(DStyle::SP_ShowPassword);
+            d->togglePasswordVisibleButton->setIcon(DStyle::standardIcon(style(),DStyle::SP_ShowPassword));
         }
     }
 }
@@ -135,8 +136,8 @@ void DPasswordEditPrivate::init()
     q->lineEdit()->setEchoMode(QLineEdit::Password);
 
     QList<QWidget *> list;
-    togglePasswordVisibleButton = new DIconButton(DStyle::SP_ShowPassword);
-    togglePasswordVisibleButton->setBackgroundRole(QPalette::ColorRole::Highlight);
+    togglePasswordVisibleButton = new DSuggestButton;
+    togglePasswordVisibleButton->setIcon(DStyle::standardIcon(q->style(), DStyle::SP_HidePassword));
     togglePasswordVisibleButton->setIconSize(QSize(24, 24));
 
     list.append(togglePasswordVisibleButton);
@@ -150,10 +151,10 @@ void DPasswordEditPrivate::_q_toggleEchoMode()
     D_Q(DPasswordEdit);
 
     if (q->isEchoMode()) {
-        togglePasswordVisibleButton->setIcon(DStyle::SP_ShowPassword);
+        togglePasswordVisibleButton->setIcon(DStyle::standardIcon(q->style(),DStyle::SP_ShowPassword));
         q->setEchoMode(q->lineEdit()->Password);
     } else {
-        togglePasswordVisibleButton->setIcon(DStyle::SP_HidePassword);
+        togglePasswordVisibleButton->setIcon(DStyle::standardIcon(q->style(), DStyle::SP_HidePassword));
         q->setEchoMode(q->lineEdit()->Normal);
     }
 }
