@@ -21,6 +21,8 @@
 #include "private/darrowrectangle_p.h"
 #include "dstyle.h"
 
+#include <DGuiApplicationHelper>
+
 #ifdef Q_OS_LINUX
 #include <X11/extensions/shape.h>
 #include <QX11Info>
@@ -1176,7 +1178,7 @@ void DArrowRectanglePrivate::resizeWithContent()
 
 #ifdef Q_OS_LINUX
     const qreal ratio = qApp->devicePixelRatio();
-    if (!m_handle && !floatMode) {
+    if (!m_handle && !floatMode && DGUI_NAMESPACE::DGuiApplicationHelper::instance()->isXWindowPlatform()) {
         XRectangle m_contentXRect;
         m_contentXRect.x = m_content->pos().x() * ratio;
         m_contentXRect.y = m_content->pos().y() * ratio;

@@ -59,31 +59,31 @@ enum class XCursorType
     kTopLeft = 134,
 };
 
-void ChangeWindowMaximizedState(const QWidget *widget, int wm_state);
-CornerEdge GetCornerEdge(const QWidget *widget, int x, int y, const QMargins &margins, int border_width);
-bool UpdateCursorShape(const QWidget *widget, int x, int y, const QMargins &margins, int border_width);
-bool IsCornerEdget(const QWidget *widget, int x, int y, const QMargins &margins, int border_width);
-void MoveResizeWindow(const QWidget *widget, Qt::MouseButton qbutton, int x, int y, const QMargins &margins, int border_width);
+D_DECL_DEPRECATED void ChangeWindowMaximizedState(const QWidget *widget, int wm_state);
+D_DECL_DEPRECATED CornerEdge GetCornerEdge(const QWidget *widget, int x, int y, const QMargins &margins, int border_width);
+D_DECL_DEPRECATED bool UpdateCursorShape(const QWidget *widget, int x, int y, const QMargins &margins, int border_width);
+D_DECL_DEPRECATED bool IsCornerEdget(const QWidget *widget, int x, int y, const QMargins &margins, int border_width);
+D_DECL_DEPRECATED void MoveResizeWindow(const QWidget *widget, Qt::MouseButton qbutton, int x, int y, const QMargins &margins, int border_width);
 
-void StartResizing(const QWidget *w, const QPoint &globalPoint, const CornerEdge &ce);
-void SendMoveResizeMessage(const QWidget *widget, Qt::MouseButton qbutton, int action);
-void MoveWindow(const QWidget *widget, Qt::MouseButton qbutton);
-void CancelMoveWindow(const QWidget *widget, Qt::MouseButton qbutton);
+D_DECL_DEPRECATED void StartResizing(const QWidget *w, const QPoint &globalPoint, const CornerEdge &ce);
+D_DECL_DEPRECATED void SendMoveResizeMessage(const QWidget *widget, Qt::MouseButton qbutton, int action);
+D_DECL_DEPRECATED void MoveWindow(const QWidget *widget, Qt::MouseButton qbutton);
+D_DECL_DEPRECATED void CancelMoveWindow(const QWidget *widget, Qt::MouseButton qbutton);
 
-void ResetCursorShape(const QWidget *widget);
-bool SetCursorShape(const QWidget *widget, int cursor_id);
-void ShowFullscreenWindow(const QWidget *widget, bool is_fullscreen);
-void ShowMaximizedWindow(const QWidget *widget);
-void ShowMinimizedWindow(const QWidget *widget, bool minimized);
-void ShowNormalWindow(const QWidget *widget);
-void ToggleMaximizedWindow(const QWidget *widget);
-void SkipTaskbarPager(const QWidget *widget);
-void SetStayOnTop(const QWidget *widget, bool on);
-void SetMouseTransparent(const QWidget *widget, bool on);
-void SetWindowExtents(const QWidget *widget, const QMargins &margins, const int resizeHandlSize);
-void SetWindowExtents(uint wid, const QRect &windowRect, const QMargins &margins, const int resizeHandleSize);
-void PropagateSizeHints(const QWidget *w);
-void DisableResize(const QWidget *w);
+D_DECL_DEPRECATED void ResetCursorShape(const QWidget *widget);
+D_DECL_DEPRECATED bool SetCursorShape(const QWidget *widget, int cursor_id);
+D_DECL_DEPRECATED void ShowFullscreenWindow(const QWidget *widget, bool is_fullscreen);
+D_DECL_DEPRECATED void ShowMaximizedWindow(const QWidget *widget);
+D_DECL_DEPRECATED void ShowMinimizedWindow(const QWidget *widget, bool minimized);
+D_DECL_DEPRECATED void ShowNormalWindow(const QWidget *widget);
+D_DECL_DEPRECATED void ToggleMaximizedWindow(const QWidget *widget);
+D_DECL_DEPRECATED void SkipTaskbarPager(const QWidget *widget);
+D_DECL_DEPRECATED void SetStayOnTop(const QWidget *widget, bool on);
+D_DECL_DEPRECATED void SetMouseTransparent(const QWidget *widget, bool on);
+D_DECL_DEPRECATED void SetWindowExtents(const QWidget *widget, const QMargins &margins, const int resizeHandlSize);
+D_DECL_DEPRECATED void SetWindowExtents(uint wid, const QRect &windowRect, const QMargins &margins, const int resizeHandleSize);
+D_DECL_DEPRECATED void PropagateSizeHints(const QWidget *w);
+D_DECL_DEPRECATED void DisableResize(const QWidget *w);
 
 }
 

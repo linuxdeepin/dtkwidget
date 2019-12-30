@@ -16,6 +16,7 @@
  */
 
 #include <DObjectPrivate>
+#include <DGuiApplicationHelper>
 
 #include "dfileiconprovider.h"
 
@@ -96,7 +97,8 @@ void DFileIconProviderPrivate::init()
     gnome_icon_lookup_sync = (Ptr_gnome_icon_lookup_sync)QLibrary::resolve(QLatin1String("gnomeui-2"), 0, "gnome_icon_lookup_sync");
     gnome_vfs_init = (Ptr_gnome_vfs_init)QLibrary::resolve(QLatin1String("gnomevfs-2"), 0, "gnome_vfs_init");
 
-    gtk_icon_theme_get_default = (Ptr_gtk_icon_theme_get_default)QLibrary::resolve(QLatin1String("gtk-x11-2.0"), 0, "gtk_icon_theme_get_default");
+    if (DGUI_NAMESPACE::DGuiApplicationHelper::instance()->isXWindowPlatform())
+        gtk_icon_theme_get_default = (Ptr_gtk_icon_theme_get_default)QLibrary::resolve(QLatin1String("gtk-x11-2.0"), 0, "gtk_icon_theme_get_default");
 #endif
 }
 

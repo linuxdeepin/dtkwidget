@@ -32,9 +32,6 @@
 #include "dwindowminbutton.h"
 #include "dwindowoptionbutton.h"
 #include "dplatformwindowhandle.h"
-#ifdef Q_OS_LINUX
-#include "../platforms/x11/xutil.h"
-#endif
 #include "daboutdialog.h"
 #include "dapplication.h"
 #include "private/dapplication_p.h"

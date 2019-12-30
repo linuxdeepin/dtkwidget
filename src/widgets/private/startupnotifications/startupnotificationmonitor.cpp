@@ -21,6 +21,8 @@
 #include <libsn/sn-monitor.h>
 #include <xcb/xcb_aux.h>
 
+#include <DGuiApplicationHelper>
+
 #include "startupnotificationmonitor.h"
 
 class StartupNotificationMonitorSub : public StartupNotificationMonitor
@@ -78,6 +80,9 @@ static void monitor_event_func (SnMonitorEvent *event, void *user_data)
 StartupNotificationMonitor::StartupNotificationMonitor() :
     QObject()
 {
+    if (!DTK_GUI_NAMESPACE::DGuiApplicationHelper::instance()->isXWindowPlatform())
+        return;
+
     int screen = 0;
 
     xcb_screen_t *s = xcb_aux_get_screen (QX11Info::connection(), screen);
