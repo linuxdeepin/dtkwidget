@@ -285,7 +285,11 @@ void DLabelPrivate::ensureTextLayouted(QLabelPrivate *d)
                 QTextDocument *doc = d->control->document();
                 if (d->textDirty) {
         #ifndef QT_NO_TEXTHTMLPARSER
+        #if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+                    if (d->textformat == Qt::TextFormat::RichText)
+        #else
                     if (d->isRichText)
+        #endif
                         doc->setHtml(d->text);
                     else
                         doc->setPlainText(d->text);
