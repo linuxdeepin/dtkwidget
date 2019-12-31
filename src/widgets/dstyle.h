@@ -149,7 +149,6 @@ public:
         PM_ContentsMargins,                                     //内容的边距（一般只用于左右边距）
         PM_ContentsSpacing,                                     //内容的间距（可用于列表项中每一项的距离）
         PM_ButtonMinimizedSize,                                 //按钮控件的最小大小
-        PM_IndicatorItemChekedSize,                            //checked状态（对勾）
         PM_CustomBase = QStyle::PM_CustomBase + 0xf00000
     };
 

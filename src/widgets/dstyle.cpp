@@ -1411,8 +1411,6 @@ int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyle
         return 10;
     case PM_ButtonMinimizedSize:
         return 36;
-    case PM_IndicatorItemChekedSize:
-        return 30;
     default:
         break;
     }
@@ -2201,8 +2199,8 @@ QSize DStyle::viewItemSize(const QStyle *style, const QStyleOptionViewItem *opti
     switch (role) {
     case Qt::CheckStateRole:
         if (option->features & QStyleOptionViewItem::HasCheckIndicator)
-            return QSize(DStyle::pixelMetric(style, DStyle::PM_IndicatorItemChekedSize, option, widget),
-                         DStyle::pixelMetric(style, DStyle::PM_IndicatorItemChekedSize, option, widget));
+            return QSize(style->pixelMetric(QStyle::PM_IndicatorWidth, option, widget),
+                         style->pixelMetric(QStyle::PM_IndicatorHeight, option, widget));
         break;
     case Qt::DisplayRole:
         if (option->features & QStyleOptionViewItem::HasDisplay) {
