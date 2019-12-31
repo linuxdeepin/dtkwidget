@@ -1081,6 +1081,12 @@ void DApplication::handleAboutAction()
 
     aboutDialog->show();
     aboutDialog->setAttribute(Qt::WA_DeleteOnClose);
+
+    //目前的关于对话框是非模态的,这里的处理是防止关于对话框可以打开多个的情况
+    d->aboutDialog = aboutDialog;
+    connect(d->aboutDialog, &DAboutDialog::aboutToClose, this, [=] {
+        d->aboutDialog = nullptr;
+    });
 }
 
 /**
