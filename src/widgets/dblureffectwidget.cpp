@@ -32,8 +32,15 @@
 #ifndef slots
 #define slots Q_SLOTS
 #endif
+
 #define private public
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+#include <private/qwidgetrepaintmanager_p.h>
+#else
 #include <private/qwidgetbackingstore_p.h>
+#endif
+
 #undef private
 
 #define MASK_COLOR_ALPHA_DEFAULT 204
@@ -1089,13 +1096,21 @@ bool DBlurEffectWidget::eventFilter(QObject *watched, QEvent *event)
     if (QWidget *widget = qobject_cast<QWidget*>(watched)) {
         auto wd = QWidgetPrivate::get(widget);
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+        if (!wd->maybeRepaintManager()) {
+#else
         if (!wd->maybeBackingStore()) {
+#endif
             return QWidget::eventFilter(watched, event);
         }
 
         // 当前待绘制的区域
         QRegion dirty;
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+        for (const QWidget *w : wd->maybeRepaintManager()->dirtyWidgets) {
+#else
         for (const QWidget *w : wd->maybeBackingStore()->dirtyWidgets) {
+#endif
             dirty |= QWidgetPrivate::get(w)->dirty.translated(w->mapToGlobal(QPoint(0, 0)));
         }
 
