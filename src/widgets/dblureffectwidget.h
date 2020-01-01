@@ -18,15 +18,14 @@
 #ifndef DBLUREFFECTWIDGET_H
 #define DBLUREFFECTWIDGET_H
 
-#include "dtkwidget_global.h"
-#include "dobject.h"
+#include <dtkwidget_global.h>
+#include <DObject>
 
 #include <QWidget>
 
 DWIDGET_BEGIN_NAMESPACE
 
 class DBlurEffectWidgetPrivate;
-
 class LIBDTKWIDGETSHARED_EXPORT DBlurEffectWidget : public QWidget, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
@@ -131,6 +130,22 @@ protected:
 
 private:
     D_DECLARE_PRIVATE(DBlurEffectWidget)
+    friend class DBlurEffectGroup;
+};
+
+class DBlurEffectGroupPrivate;
+class DBlurEffectGroup : public DTK_CORE_NAMESPACE::DObject
+{
+    D_DECLARE_PRIVATE(DBlurEffectGroup)
+public:
+    explicit DBlurEffectGroup();
+    ~DBlurEffectGroup();
+
+    void setSourceImage(QImage image, int blurRadius = 35);
+    void addWidget(DBlurEffectWidget *widget, const QPoint &offset = QPoint(0, 0));
+    void removeWidget(DBlurEffectWidget *widget);
+
+    void paint(QPainter *pa, DBlurEffectWidget *widget) const;
 };
 
 DWIDGET_END_NAMESPACE

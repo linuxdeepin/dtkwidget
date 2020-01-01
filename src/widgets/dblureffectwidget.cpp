@@ -161,7 +161,8 @@ QColor DBlurEffectWidgetPrivate::getMaskColor(const QColor &baseColor) const
 void DBlurEffectWidgetPrivate::resetSourceImage()
 {
     // 设置了自定义的image时忽略此请求
-    if (customSourceImage)
+    // 属于某个组时也忽略
+    if (customSourceImage || group)
         return;
 
     sourceImage = QImage();
@@ -501,6 +502,11 @@ DBlurEffectWidget::~DBlurEffectWidget()
 
     if (d->isBehindWindowBlendMode()) {
         d->removeFromBlurEffectWidgetHash();
+    }
+
+    // clean group
+    if (d->group) {
+        d->group->removeWidget(this);
     }
 }
 
@@ -889,6 +895,11 @@ inline QRect operator *(const QRect &rect, qreal scale)
 void DBlurEffectWidget::updateBlurSourceImage(const QRegion &ren)
 {
     D_D(DBlurEffectWidget);
+
+    // 自定义模式，或者属于某个组时不需要以下操作
+    if (d->customSourceImage || d->group)
+        return;
+
     const qreal device_pixel_ratio = devicePixelRatioF();
     const QPoint point_offset = mapTo(window(), QPoint(0, 0));
 
@@ -897,7 +908,7 @@ void DBlurEffectWidget::updateBlurSourceImage(const QRegion &ren)
 
         d->sourceImage = window()->backingStore()->handle()->toImage().copy(tmp_rect * device_pixel_ratio);
         d->sourceImage = d->sourceImage.scaledToWidth(d->sourceImage.width() / device_pixel_ratio);
-    } else if (!d->customSourceImage) {
+    } else {
         QPainter pa_image(&d->sourceImage);
 
         pa_image.setCompositionMode(QPainter::CompositionMode_Source);
@@ -960,15 +971,14 @@ void DBlurEffectWidget::paintEvent(QPaintEvent *event)
     if (d->isBehindWindowBlendMode()) {
         pa.setCompositionMode(QPainter::CompositionMode_Source);
     } else {
-        int radius = d->radius;
-        qreal device_pixel_ratio = devicePixelRatioF();
-
         // 此模式下是自行控制sourceImage的更新
         if (d->blendMode != InWidgetBlend) {
             updateBlurSourceImage(event->region());
         }
 
         if (d->customSourceImage || !d->sourceImage.isNull()) {
+            int radius = d->radius;
+            qreal device_pixel_ratio = devicePixelRatioF();
             QImage image;
             const QRect &paintRect = event->rect();
 
@@ -985,6 +995,8 @@ void DBlurEffectWidget::paintEvent(QPaintEvent *event)
             qt_blurImage(&pa, image, radius, false, false);
             pa.setTransform(old_transform);
             pa.setOpacity(1);
+        } else if (d->group) { // 组模式
+            d->group->paint(&pa, this);
         }
     }
 
@@ -1136,6 +1148,89 @@ bool DBlurEffectWidget::eventFilter(QObject *watched, QEvent *event)
     }
 
     return QWidget::eventFilter(watched, event);
+}
+
+class DBlurEffectGroupPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
+{
+public:
+    DBlurEffectGroupPrivate(DBlurEffectGroup *qq)
+        : DObjectPrivate(qq)
+    {
+
+    }
+
+    D_DECLARE_PUBLIC(DBlurEffectGroup)
+    QHash<DBlurEffectWidget*, QPoint> effectWidgetMap;
+    QPixmap blurPixmap;
+};
+
+DBlurEffectGroup::DBlurEffectGroup()
+    : DObject(*new DBlurEffectGroupPrivate(this))
+{
+
+}
+
+DBlurEffectGroup::~DBlurEffectGroup()
+{
+    D_DC(DBlurEffectGroup);
+
+    for (DBlurEffectWidget *widget : d->effectWidgetMap.keys()) {
+        widget->d_func()->group = nullptr;
+        widget->update();
+    }
+}
+
+void DBlurEffectGroup::setSourceImage(QImage image, int blurRadius)
+{
+    D_D(DBlurEffectGroup);
+
+    if (image.isNull()) {
+        d->blurPixmap = QPixmap();
+        return;
+    }
+
+    QImage tmp(image.size(), image.format());
+    QPainter pa(&tmp);
+    qt_blurImage(&pa, image, blurRadius, false, false);
+    pa.end();
+
+    d->blurPixmap = QPixmap::fromImage(tmp);
+    d->blurPixmap.setDevicePixelRatio(image.devicePixelRatio());
+
+    // 重绘制模糊控件
+    for (auto begin = d->effectWidgetMap.constBegin(); begin != d->effectWidgetMap.constEnd(); ++begin) {
+        begin.key()->update();
+    }
+}
+
+void DBlurEffectGroup::addWidget(DBlurEffectWidget *widget, const QPoint &offset)
+{
+    if (widget->d_func()->group && widget->d_func()->group != this) {
+        widget->d_func()->group->removeWidget(widget);
+    }
+
+    widget->d_func()->group = this;
+    D_D(DBlurEffectGroup);
+    d->effectWidgetMap[widget] = offset;
+
+    widget->update();
+}
+
+void DBlurEffectGroup::removeWidget(DBlurEffectWidget *widget)
+{
+    D_D(DBlurEffectGroup);
+
+    if (d->effectWidgetMap.remove(widget)) {
+        widget->d_func()->group = nullptr;
+        widget->update();
+    }
+}
+
+void DBlurEffectGroup::paint(QPainter *pa, DBlurEffectWidget *widget) const
+{
+    D_DC(DBlurEffectGroup);
+
+    pa->drawPixmap(widget->rect(), d->blurPixmap, widget->geometry().translated(d->effectWidgetMap[widget]));
 }
 
 DWIDGET_END_NAMESPACE

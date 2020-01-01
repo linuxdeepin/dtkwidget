@@ -46,6 +46,9 @@ public:
     DBlurEffectWidget::MaskColorType maskColorType = DBlurEffectWidget::AutoColor;
     QPainterPath maskPath;
 
+    // group
+    DBlurEffectGroup *group = nullptr;
+
     bool isBehindWindowBlendMode() const;
     bool isFull() const;
 
