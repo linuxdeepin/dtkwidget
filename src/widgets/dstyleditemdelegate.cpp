@@ -463,7 +463,7 @@ DViewItemAction::DViewItemAction(Qt::Alignment alignment, const QSize &iconSize,
     D_D(DViewItemAction);
 
     d->alignment = alignment;
-    d->iconSize = iconSize;
+    d->iconSize = iconSize.isValid() ? iconSize : QSize(qApp->style()->pixelMetric(DStyle::PM_IndicatorWidth), qApp->style()->pixelMetric(DStyle::PM_IndicatorHeight));
     d->maxSize = maxSize;
     d->clickable = clickable;
 }
