@@ -71,6 +71,7 @@ public:
     void setTipValue(const QString &value);
 
     QSlider::TickPosition tickPosition() const;
+    QSize sizeHint() const override;
 
 Q_SIGNALS:
     void valueChanged(int value);

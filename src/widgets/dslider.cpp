@@ -24,6 +24,7 @@
 
 #include <QPainter>
 #include <QEvent>
+#include <QtMath>
 #include <QDebug>
 
 #include <DApplicationHelper>
@@ -383,9 +384,16 @@ void DSliderPrivate::updtateTool(int value)
     const QRectF rectHandle = q->style()->subControlRect(QStyle::CC_Slider, &opt, QStyle::SC_SliderHandle, slider); //滑块
 
     double x = ((value - min) * 1.0 / (max -min)) * (slider->rect().width() - rectHandle.width());
+
+    if (slider->invertedAppearance()) {
+        tipvalue->move(slider->width() - x - (tipvalue->width() + rectHandle.width()) / 2.0 , slider->y() + slider->height());
+    } else {
+        tipvalue->move(x + (rectHandle.width() - tipvalue->width()) / 2.0, slider->y() + slider->height());
+    }
+    //x是以实际滑槽为起始坐标，而非DSlider为参考坐标（实际滑槽长度 == Slider长度 - 滑块长度）
+
     tipvalue->raise();
     tipvalue->adjustSize();
-    tipvalue->move(x + (rectHandle.width() - tipvalue->width()) / 2.0, slider->y() + slider->height());  //x是以实际滑槽为起始坐标，而非DSlider为参考坐标（实际滑槽长度 == Slider长度 - 滑块长度）
 }
 
 /*!
@@ -405,6 +413,7 @@ void DSlider::setTipValue(const QString &value)
         d->label->setAlignment(Qt::AlignCenter);
         d->tipvalue->setBackgroundRole(QPalette::Highlight);
         d->tipvalue->setFramRadius(DStyle::pixelMetric(d->label->style(), DStyle::PM_FrameRadius));
+        d->tipvalue->adjustSize();
         d->tipvalue->show();
     }
 
@@ -415,10 +424,7 @@ void DSlider::setTipValue(const QString &value)
     }
 
     d->label->setText(value);
-
-    connect(d->slider, &QSlider::valueChanged, this,[ = ](const int value) {
-        d->updtateTool(value);
-    });
+    d->updtateTool(slider()->value());
 }
 
 /*!
@@ -444,6 +450,15 @@ QSlider::TickPosition DSlider::tickPosition() const
     }
 
     return QSlider::NoTicks;
+}
+
+QSize DSlider::sizeHint() const
+{
+    D_DC(DSlider);
+    QSize size = QWidget::sizeHint();
+    if (d->tipvalue && d->right == nullptr)
+        size.setHeight(size.height() + d->tipvalue->height());
+    return size;
 }
 
 DSliderPrivate::DSliderPrivate(DSlider *q)
@@ -476,7 +491,7 @@ void DSliderPrivate::init()
 
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
-    layout->addWidget(slider, 1, 1);
+    layout->addWidget(slider, 1, 1, Qt::AlignTop);
 
     if (q->orientation() == Qt::Horizontal) {
         q->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
