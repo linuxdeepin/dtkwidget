@@ -144,6 +144,10 @@ bool DKeySequenceEdit::setKeySequence(const QKeySequence &keySequence)
         return false;
     }
 
+    for (int i = 0; i < keyText.count(); ++i) {
+        keyText[i] = d->replaceWriting(keyText[i]);
+    }
+
     d->rightWidget->setKeyName(keyText);
     d->sequencekey = keySequence;
     Q_EMIT keySequenceChanged(keySequence);
@@ -221,6 +225,15 @@ void DKeySequenceEditPrivate::init()
 
     q->setReadOnly(true);
     q->setFocusPolicy(Qt::FocusPolicy::ClickFocus);
+
+    copywritingList.insert("PgUp", "PageUp");
+    copywritingList.insert("PgDown", "PageDown");
+    copywritingList.insert("Return", "Enter");
+}
+
+QString DKeySequenceEditPrivate::replaceWriting(QString copywriting)
+{
+    return copywritingList.value(copywriting, copywriting);
 }
 
 void DKeyWidget::setKeyName(const QStringList &keyList)

@@ -15,9 +15,11 @@ public:
     DKeySequenceEditPrivate(DKeySequenceEdit *q);
 
     void init();
+    QString replaceWriting(QString writing);
 private:
     DKeyWidget *rightWidget;
     QKeySequence sequencekey;
+    QMap<QString , QString> copywritingList;
 };
 
 DWIDGET_END_NAMESPACE
