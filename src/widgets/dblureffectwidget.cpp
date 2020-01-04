@@ -142,7 +142,7 @@ QColor DBlurEffectWidgetPrivate::getMaskColor(const QColor &baseColor) const
     if (DGuiApplicationHelper::DarkType == ct) {
         color = DGuiApplicationHelper::adjustColor(color, 0, 0, -10, 0, 0, 0, 0);
     } else {
-        color = DGuiApplicationHelper::adjustColor(color, 0, 0, +100, 0, 0, 0, 0);
+        color = DGuiApplicationHelper::adjustColor(color, 0, 0, -5, 0, 0, 0, 0);
     }
 
     int maskAlpha = this->getMaskColorAlpha();
