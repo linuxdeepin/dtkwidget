@@ -1354,7 +1354,7 @@ int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyle
             bool ok = false;
             int radius = radius_value.toInt(&ok);
             if (ok && radius >= 0) {
-               return radius;
+                return radius;
             }
         }
         return 8;
@@ -1571,7 +1571,7 @@ case SP_##Value: { \
         return QIcon(icon_engine);}
 
     switch (st) {
-    CASE_ICON(SelectElement)
+        CASE_ICON(SelectElement)
 
     case SP_IndicatorUnchecked:
         return QIcon::fromTheme("unselected_indicator");
@@ -1719,7 +1719,7 @@ QPixmap DStyle::generatedIconPixmap(QIcon::Mode iconMode, const QPixmap &pixmap,
         QPainter pa(&image);
 
         if (!pa.isActive())
-            return pixmap;
+            return QCommonStyle::generatedIconPixmap(iconMode, pixmap, opt);
 
         pa.setCompositionMode(QPainter::CompositionMode_SourceAtop);
 
@@ -1732,7 +1732,7 @@ QPixmap DStyle::generatedIconPixmap(QIcon::Mode iconMode, const QPixmap &pixmap,
         return QPixmap::fromImage(image);
     }
 
-    return pixmap;
+    return QCommonStyle::generatedIconPixmap(iconMode, pixmap, opt);
 }
 
 DStyle::StyleState DStyle::getState(const QStyleOption *option)
@@ -1934,7 +1934,7 @@ QIcon DStyle::standardIcon(QStyle::StandardPixmap st, const QStyleOption *opt, c
         CASE_ICON(TitleBarCloseButton)
         CASE_ICON(TitleBarNormalButton)
     case SP_LineEditClearButton:
-            return QIcon::fromTheme("button_edit-clear");
+        return QIcon::fromTheme("button_edit-clear");
         break;
     default:
         break;
