@@ -69,7 +69,11 @@ public:
             return false;
 
         m_iat = new com::iflytek::aiservice::iat("com.iflytek.aiservice", path.path(), QDBusConnection::sessionBus(), this);
-        const QString &json_data = m_iat->startIat({});
+
+        QVariantMap param_dict;
+        param_dict[QString("accent")] = QVariant(QString("mandarin"));
+        param_dict[QString("ptt")] = QVariant(QString("0"));
+        const QString &json_data = m_iat->startIat(param_dict);
         QJsonDocument document = QJsonDocument::fromJson(json_data.toLocal8Bit());
 
         if (document.object().value("status").toInt(-1) != 0) {
@@ -223,6 +227,12 @@ void DSearchEdit::clear()
     }
 }
 
+bool DSearchEdit::isVoiceInput() const
+{
+    D_DC(DSearchEdit);
+    return d->voiceInput && d->voiceInput->state() == QAudio::ActiveState;
+}
+
 DSearchEditPrivate::DSearchEditPrivate(DSearchEdit *q)
     : DLineEditPrivate(q)
     , action(nullptr)
@@ -358,6 +368,8 @@ void DSearchEditPrivate::_q_onVoiceActionTrigger(bool checked)
                 _q_onVoiceActionTrigger(false);
                 Q_EMIT q->voiceInputFinished();
             });
+
+            q->connect(voiceInput, &QAudioInput::stateChanged, q, &DSearchEdit::voiceChanged);
         }
 
         if (voiceIODevice->open(QIODevice::WriteOnly))

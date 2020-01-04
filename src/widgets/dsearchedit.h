@@ -26,6 +26,7 @@ class DSearchEditPrivate;
 class LIBDTKWIDGETSHARED_EXPORT DSearchEdit : public DLineEdit
 {
     Q_OBJECT
+    Q_PROPERTY(bool voiceInput READ isVoiceInput NOTIFY voiceChanged)
 
 public:
     explicit DSearchEdit(QWidget *parent = nullptr);
@@ -35,9 +36,12 @@ public:
     QString placeHolder() const;
     void clear();
 
+    bool isVoiceInput() const;
+
 Q_SIGNALS:
     void voiceInputFinished();
     void searchAborted();
+    void voiceChanged();
 
 protected:
     Q_DISABLE_COPY(DSearchEdit)
