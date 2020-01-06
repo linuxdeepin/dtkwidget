@@ -384,13 +384,26 @@ void DSliderPrivate::updtateTool(int value)
     const QRectF rectHandle = q->style()->subControlRect(QStyle::CC_Slider, &opt, QStyle::SC_SliderHandle, slider); //滑块
 
     double x = ((value - min) * 1.0 / (max -min)) * (slider->rect().width() - rectHandle.width());
+    double y = slider->y() + slider->height();
 
-    if (slider->invertedAppearance()) {
-        tipvalue->move(slider->width() - x - (tipvalue->width() + rectHandle.width()) / 2.0 , slider->y() + slider->height());
-    } else {
-        tipvalue->move(x + (rectHandle.width() - tipvalue->width()) / 2.0, slider->y() + slider->height());
-    }
     //x是以实际滑槽为起始坐标，而非DSlider为参考坐标（实际滑槽长度 == Slider长度 - 滑块长度）
+    //气泡位置
+    if (slider->invertedAppearance()) {
+        tipvalue->move(slider->width() - x - (tipvalue->width() + rectHandle.width()) / 2.0 , y);
+    } else {
+        tipvalue->move(x + (rectHandle.width() - tipvalue->width()) / 2.0, y);
+    }
+
+    int shadowMarge = DStyle::pixelMetric(q->style(), DStyle::PM_FloatingWidgetShadowMargins) - 1;
+
+    //气泡贴边
+    if (tipvalue->x() < 0) {
+         tipvalue->move(0 - shadowMarge, y);
+    }
+
+    if (tipvalue->x() + tipvalue->width() > slider->width()) {
+        tipvalue->move(slider->width() - tipvalue->width() + shadowMarge, y);
+    }
 
     tipvalue->raise();
     tipvalue->adjustSize();
@@ -457,7 +470,7 @@ QSize DSlider::sizeHint() const
     D_DC(DSlider);
     QSize size = QWidget::sizeHint();
     if (d->tipvalue && d->right == nullptr)
-        size.setHeight(size.height() + d->tipvalue->height());
+        size.setHeight(size.height() + d->tipvalue->height() * 2);
     return size;
 }
 
@@ -491,7 +504,7 @@ void DSliderPrivate::init()
 
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
-    layout->addWidget(slider, 1, 1, Qt::AlignTop);
+    layout->addWidget(slider, 1, 1);
 
     if (q->orientation() == Qt::Horizontal) {
         q->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
