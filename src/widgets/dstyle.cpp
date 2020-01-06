@@ -1250,11 +1250,6 @@ void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const Q
             bool hover = btn->state & State_MouseOver;
             bool press = btn->state & State_Sunken;
 
-            // normal状态时不进行任何绘制，此时可直接使用button box的背景
-            if (!checked && !disable && !hover && !press) {
-                return;
-            }
-
             DStyleHelper dstyle(style);
             const QColor &background = dstyle.getColor(opt, checked ? QPalette::Highlight : QPalette::Button);
             p->setBrush(background);
