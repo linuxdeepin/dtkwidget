@@ -39,7 +39,8 @@ namespace HeaderLine {
         void mousePress();
 
     protected:
-        void mousePressEvent(QMouseEvent *);
+        void mousePressEvent(QMouseEvent *) override;
+        void mouseMoveEvent(QMouseEvent *event) override;
 
     private:
         void reverseArrowDirection();
@@ -71,6 +72,12 @@ namespace HeaderLine {
     void ArrowHeaderLine::mousePressEvent(QMouseEvent *)
     {
         Q_EMIT mousePress();
+    }
+
+    void ArrowHeaderLine::mouseMoveEvent(QMouseEvent *event)
+    {
+        //屏蔽掉鼠标移动事件
+        event->accept();
     }
 
     void ArrowHeaderLine::reverseArrowDirection()
