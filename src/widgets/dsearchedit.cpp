@@ -213,17 +213,24 @@ QString DSearchEdit::placeHolder() const
     return d->placeHolder;
 }
 
-/*!
- * \~chinese \brief DSearchEdit::clear 清空输入框内容
- */
 void DSearchEdit::clear()
+{
+    lineEdit()->clear();
+}
+
+
+/*!
+ * \~chinese \brief DSearchEdit::clearEdit 清除内容，退出编辑状态
+ */
+void DSearchEdit::clearEdit()
 {
     D_D(DSearchEdit);
 
     lineEdit()->clear();
-    if (!hasFocus()) {
-       d->_q_toEditMode(false);
-       setFocus();
+    d->_q_toEditMode(false);
+
+    if (lineEdit()->hasFocus()) {
+        setFocus();
     }
 }
 
@@ -392,7 +399,7 @@ void DSearchEditPrivate::_q_clearFocus()
     Q_Q(DSearchEdit);
 
     if (!q->text().isEmpty()) {
-        q->clear();
+        q->clearEdit();
     }
     Q_EMIT q->searchAborted();
 }

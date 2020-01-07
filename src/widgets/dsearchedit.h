@@ -34,7 +34,9 @@ public:
 
     void setPlaceHolder(QString placeHolder);
     QString placeHolder() const;
+
     void clear();
+    void clearEdit();
 
     bool isVoiceInput() const;
 
