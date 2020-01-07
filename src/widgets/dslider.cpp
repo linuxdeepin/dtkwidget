@@ -544,7 +544,9 @@ void SliderStrip::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event)
     QPainter pa(this);
-    pa.setPen(QPen(DApplicationHelper::instance()->palette(this).textTips(), 1));
+    auto dpa = DApplicationHelper::instance()->palette(this);
+    QPen penLine = QPen(dpa.color(DPalette::ObviousBackground), 1);
+    QPen penNumber = QPen(dpa.textTips(), 1);
 
     int tickSize = fontMetrics().height() / 2;
     int offsetSize = style()->pixelMetric(QStyle::PM_SliderLength, nullptr, this) / 2;
@@ -568,20 +570,26 @@ void SliderStrip::paintEvent(QPaintEvent *event)
             endY = startY - tickSize;
         }
 
+        pa.setPen(penLine);
         pa.drawLine(QPointF(startX, startY), QPointF(endX, endY));
+        pa.setPen(penNumber);
         pa.drawText(QRectF(endX - offsetSize, textPos, width, height - tickSize), Qt::AlignLeft, scaleInfo[0]);
 
         for (int i = 1; i < paragraph - 1; i++) {
             startX += average;
             endX = startX;
+            pa.setPen(penLine);
             pa.drawLine(QPointF(startX, startY), QPointF(endX, endY));
+            pa.setPen(penNumber);
             pa.drawText(QRectF(endX - width / 2, textPos, width, height - tickSize), Qt::AlignHCenter, scaleInfo[i]);
         }
 
         if (paragraph > 1) {
             startX += average;
             endX = startX;
+            pa.setPen(penLine);
             pa.drawLine(QPointF(startX, startY), QPointF(endX, endY));
+            pa.setPen(penNumber);
             pa.drawText(QRectF(endX - width + offsetSize, textPos, width, height - tickSize), Qt::AlignRight, scaleInfo[paragraph - 1]);
         }
     } else {
@@ -603,7 +611,9 @@ void SliderStrip::paintEvent(QPaintEvent *event)
         }
 
         for (int i = 0; i < paragraph; i++) {
+            pa.setPen(penLine);
             pa.drawLine(QPointF(startX, startY), QPointF(endX, endY));
+            pa.setPen(penNumber);
             pa.drawText(QRectF(textPos, endY - average / 2, width - tickSize, average), text_flags, scaleInfo[i]);
             startY += average;
             endY = startY;
