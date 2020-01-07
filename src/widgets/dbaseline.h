@@ -49,7 +49,7 @@ private:
     QHBoxLayout *m_leftLayout= NULL;
     QHBoxLayout *m_rightLayout = NULL;
 
-    int m_leftMargin = HEADER_LEFT_MARGIN;
+    int m_leftMargin = 10;
     int m_rightMargin = HEADER_RIGHT_MARGIN;
 };
 
