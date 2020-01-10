@@ -121,6 +121,11 @@ Content::Content(QWidget *parent)
             }
         }
 
+        if (value > d->sortTitles.last()->y())
+            currentTitle = d->sortTitles.last();
+        if (value < d->sortTitles.first()->y())
+            currentTitle = d->sortTitles.first();
+
         if (currentTitle) {
             Q_EMIT scrollToGroup(currentTitle->property("key").toString());
         }
