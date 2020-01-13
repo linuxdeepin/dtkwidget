@@ -4,6 +4,8 @@
 
 #define D_MESSAGE_MANAGER_CONTENT "_d_message_manager_content"
 
+Q_DECLARE_METATYPE(QMargins)
+
 DMessageManager::DMessageManager()               //私有静态构造函数
 {
 }
@@ -22,6 +24,13 @@ void DMessageManager::sendMessage(QWidget *par, DFloatingMessage *floMsg)
         content = new QWidget(par);
         content->setObjectName(D_MESSAGE_MANAGER_CONTENT);
         content->setAttribute(Qt::WA_AlwaysStackOnTop);
+
+        QMargins magins = par->property("_d_margins").value<QMargins>();
+        if (par->property("_d_margins").isValid())
+            content->setContentsMargins(magins);
+        else
+            content->setContentsMargins(QMargins(20, 0, 20, 0));
+
         content->installEventFilter(this);
         par->installEventFilter(this);
         QVBoxLayout *layout = new QVBoxLayout(content);
@@ -56,6 +65,18 @@ void DMessageManager::sendMessage(QWidget *par, const QIcon &icon, const QString
     sendMessage(par, floMsg);
 }
 
+bool DMessageManager::setContentMargens(QWidget *par, const QMargins &margins)
+{
+    QWidget *content = par->findChild<QWidget *>(D_MESSAGE_MANAGER_CONTENT);
+    if (content) {
+        content->setContentsMargins(margins);
+        return true;
+    } else {
+        par->setProperty("_d_margins", QVariant::fromValue(margins));
+        return false;
+    }
+}
+
 bool DMessageManager::eventFilter(QObject *watched, QEvent *event)
 {
     if (event->type() == QEvent::LayoutRequest || event->type() == QEvent::Resize) {
@@ -72,7 +93,7 @@ bool DMessageManager::eventFilter(QObject *watched, QEvent *event)
 
             // 限制通知消息的最大宽度
             for (DFloatingMessage *message : content->findChildren<DFloatingMessage*>()) {
-                message->setMaximumWidth(par->width() * 0.8);
+                message->setMaximumWidth(par->rect().marginsRemoved(content->contentsMargins()).width());
             }
 
             QRect geometry(QPoint(0, 0), content->sizeHint());

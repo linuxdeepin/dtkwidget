@@ -21,6 +21,7 @@ public:
 
     void sendMessage(QWidget *par, DFloatingMessage *floMsg);
     void sendMessage(QWidget *par, const QIcon &icon, const QString &message);
+    bool setContentMargens(QWidget *par, const QMargins &margins);
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;

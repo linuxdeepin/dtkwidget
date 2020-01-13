@@ -28,6 +28,14 @@
 #include <QLabel>
 #include <QDebug>
 
+class MessageLabel : public QLabel
+{
+public:
+    QSize sizeHint() const override
+    {
+        return fontMetrics().size(Qt::TextSingleLine, text());
+    }
+};
 DWIDGET_BEGIN_NAMESPACE
 
 DFloatingMessagePrivate::DFloatingMessagePrivate(DFloatingMessage *qq)
@@ -53,7 +61,7 @@ void DFloatingMessagePrivate::init()
     q->DFloatingWidget::setWidget(widget);
     hBoxLayout = new QHBoxLayout(widget);
     iconButton = new DIconButton(nullptr);
-    labMessage = new QLabel();
+    labMessage = new MessageLabel();
     labMessage->setWordWrap(true);
 
     iconButton->setFlat(true);

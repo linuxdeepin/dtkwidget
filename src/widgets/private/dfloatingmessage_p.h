@@ -10,6 +10,7 @@ class QWidget;
 class QHBoxLayout;
 class DIconButton;
 class QLabel;
+class MessageLabel;
 QT_END_NAMESPACE
 
 DWIDGET_BEGIN_NAMESPACE
@@ -26,7 +27,7 @@ public:
     QWidget *widget = nullptr;
     QHBoxLayout *hBoxLayout = nullptr;
     DIconButton *iconButton = nullptr;
-    QLabel *labMessage = nullptr;
+    MessageLabel *labMessage = nullptr;
     QWidget *content = nullptr;
     DIconButton *closeButton = nullptr;
     DFloatingMessage::MessageType notifyType;
