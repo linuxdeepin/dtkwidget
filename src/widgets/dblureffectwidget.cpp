@@ -152,7 +152,7 @@ QColor DBlurEffectWidgetPrivate::getMaskColor(const QColor &baseColor) const
     } else if (DWindowManagerHelper::instance()->hasComposite()) {
         color.setAlpha(DWindowManagerHelper::instance()->hasBlurWindow() ? maskAlpha : MASK_COLOR_ALPHA_DEFAULT);
     } else {
-        return ct == DGuiApplicationHelper::DarkType ? "#373F47" : "#FCFCFC";
+        return ct == DGuiApplicationHelper::DarkType ? "#202020" : "#D2D2D2";
     }
 
     return color;
