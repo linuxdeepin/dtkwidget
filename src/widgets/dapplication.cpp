@@ -87,7 +87,7 @@ DApplicationPrivate::DApplicationPrivate(DApplication *q) :
     auto cancelNotification = [this, q](const QString id) {
         m_monitoredStartupApps.removeAll(id);
         if (m_monitoredStartupApps.isEmpty()) {
-            q->setOverrideCursor(Qt::ArrowCursor);
+            q->restoreOverrideCursor();
         }
     };
     QObject::connect(monitor, &StartupNotificationMonitor::appStartup,
