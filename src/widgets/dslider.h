@@ -66,6 +66,8 @@ public:
     void setAboveTicks(const QStringList &info);
     void setBelowTicks(const QStringList &info);
 
+    void setMarkPositions(QList<int> list);
+
     void setMouseWheelEnabled(bool enabled);
 
     void setTipValue(const QString &value);

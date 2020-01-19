@@ -44,6 +44,10 @@ public:
     QSize sizeHint() const override;
 
     void setScaleInfo(QStringList scaleInfo, QSlider::TickPosition tickPosition);
+    void setMarkList(QList<int> list, QSlider::TickPosition tickPosition);
+    QList<int> getList();
+    QStringList getScaleInfo();
+
 protected:
     void paintEvent(QPaintEvent *event) override;
     bool event(QEvent *e) override;
@@ -53,6 +57,7 @@ private:
     Qt::Orientation orient;
     QSlider::TickPosition tick;
     QStringList scaleInfo;
+    QList<int> list;
 };
 
 /*!
@@ -290,8 +295,10 @@ void DSlider::setLeftTicks(const QStringList &info)
 
     if (info.isEmpty()) {
         if (d->left) {
-            d->left->deleteLater();
-            d->left = nullptr;
+            if (d->left->getList().empty()) {
+                d->left->deleteLater();
+                d->left = nullptr;
+            }
         }
 
         return;
@@ -323,8 +330,10 @@ void DSlider::setRightTicks(const QStringList &info)
 
     if (info.isEmpty()) {
         if (d->right) {
-            d->right->deleteLater();
-            d->right = nullptr;
+            if (d->right->getList().isEmpty()){
+                d->right->deleteLater();
+                d->right = nullptr;
+            }
         }
 
         return;
@@ -359,6 +368,52 @@ void DSlider::setAboveTicks(const QStringList &info)
 void DSlider::setBelowTicks(const QStringList &info)
 {
     setRightTicks(info);
+}
+
+void DSlider::setMarkPositions(QList<int> list)
+{
+    D_D(DSlider);
+
+    if (list.isEmpty()) {
+        if (d->left) {
+            if (d->left->getScaleInfo().isEmpty()) {
+                d->left->deleteLater();
+                d->left = nullptr;
+            }
+        }
+
+        if (d->right) {
+            if (d->right->getScaleInfo().isEmpty()) {
+                d->right->deleteLater();
+                d->right = nullptr;
+            }
+        }
+
+        return;
+    }
+
+    if (d->left == nullptr) {
+        d->left = new SliderStrip(orientation());
+
+        if (orientation() == Qt::Horizontal) {
+            d->layout->addWidget(d->left, 0, 1, Qt::AlignTop);
+        } else {
+            d->layout->addWidget(d->left, 1, 0, Qt::AlignRight);
+        }
+    }
+
+    if (d->right == nullptr) {
+        d->right = new SliderStrip(orientation());
+
+        if (orientation() == Qt::Horizontal) {
+            d->layout->addWidget(d->right, 2, 1, Qt::AlignTop);
+        } else {
+            d->layout->addWidget(d->right, 1, 2, Qt::AlignLeft);
+        }
+    }
+
+    d->left->setMarkList(list, QSlider::TicksLeft);
+    d->right->setMarkList(list, QSlider::TicksRight);
 }
 
 /*!
@@ -540,6 +595,22 @@ void SliderStrip::setScaleInfo(QStringList scaleInfo, QSlider::TickPosition tick
     this->tick = tickPosition;
 }
 
+void SliderStrip::setMarkList(QList<int> list, QSlider::TickPosition tickPosition)
+{
+    this->list = list;
+    this->tick = tickPosition;
+}
+
+QList<int> SliderStrip::getList()
+{
+    return this->list;
+}
+
+QStringList SliderStrip::getScaleInfo()
+{
+    return this->scaleInfo;
+}
+
 void SliderStrip::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event)
@@ -555,6 +626,29 @@ void SliderStrip::paintEvent(QPaintEvent *event)
     int paragraph = scaleInfo.count();    //刻度个数
     qreal average = 0;    //每一段的距离
     qreal textPos = 0;    //字体位置
+
+    QSlider* slider = static_cast<DSlider *>(this->parent())->slider();
+    for (int i = 0; i < list.count(); i++) {
+        qreal percentage = (list.at(i) - slider->minimum()) * 1.0 / (slider->maximum() - slider->minimum());
+        pa.setPen(penLine);
+
+        if (orient == Qt::Horizontal) {
+            qreal sliderX = percentage * width;
+            if (tick == QSlider::TicksAbove)
+                pa.drawLine(QPointF(sliderX + offsetSize, height), QPointF(sliderX + offsetSize,  height - tickSize));
+            if (tick == QSlider::TicksBelow)
+                pa.drawLine(QPointF(sliderX + offsetSize, 0), QPointF(sliderX + offsetSize, tickSize));
+        } else {
+            qreal sliderX = percentage * height;
+            if (tick == QSlider::TicksLeft)
+                pa.drawLine(QPointF(width - tickSize, height - (sliderX + offsetSize)), QPointF(width, height - (sliderX + offsetSize)));
+            if (tick == QSlider::TicksRight)
+                pa.drawLine(QPointF(0, height - (sliderX + offsetSize)), QPointF(tickSize, height - (sliderX + offsetSize)));
+        }
+    }
+
+    if (scaleInfo.isEmpty())
+        return;
 
     if (orient == Qt::Horizontal) {
         width -= 2 * offsetSize;
