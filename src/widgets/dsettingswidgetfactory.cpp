@@ -82,7 +82,8 @@ public:
         insertButton(1, replace);
         connect(replace, &DSuggestButton::clicked, [ = ] {  //替换
             shortcutMap.value(key)->option()->setValue(QString());
-            shortcutMap.value(key)->clear();
+            if (auto value = shortcutMap.value(key))
+                value->clear();
             shortcutMap.remove(shortcutMap.key(edit));
             shortcutMap.insert(key, edit);
             edit->option()->setValue(key);
