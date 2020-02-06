@@ -1725,6 +1725,17 @@ QPixmap DStyle::generatedIconPixmap(QIcon::Mode iconMode, const QPixmap &pixmap,
         }
 
         return QPixmap::fromImage(image);
+    } else if (iconMode == QIcon::Disabled) {
+        QImage image = pixmap.toImage();
+        QPainter pa(&image);
+
+        if (!pa.isActive())
+            return QCommonStyle::generatedIconPixmap(iconMode, pixmap, opt);
+
+        pa.setCompositionMode(QPainter::CompositionMode_DestinationIn);
+        pa.fillRect(image.rect(), QColor(0, 0, 0, 255 * 0.4));
+
+        return QPixmap::fromImage(image);
     }
 
     return QCommonStyle::generatedIconPixmap(iconMode, pixmap, opt);
