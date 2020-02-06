@@ -30,6 +30,7 @@ Q_SIGNALS:
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;
+    bool event(QEvent *e) override;
 };
 
 DWIDGET_END_NAMESPACE

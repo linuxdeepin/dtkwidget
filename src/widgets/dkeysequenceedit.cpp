@@ -41,7 +41,6 @@ public:
         label = new DTipLabel(qApp->translate("DKeySequenceEdit", "Enter a new shortcut"));
 
         layout->addWidget(label);
-        setFocusPolicy(Qt::FocusPolicy::ClickFocus);
     }
 
     void setKeyVisible(bool visible)    //true 隐藏文字 false显示文字
@@ -80,11 +79,11 @@ private:
 protected:
     void mousePressEvent(QMouseEvent *event) override
     {
-        Q_UNUSED(event);
-
+        parentWidget()->setFocus();
         if (fastMode) {
             setKeyVisible(false);
         }
+        QWidget::mousePressEvent(event);
     }
 
     void focusOutEvent(QFocusEvent *event) override
@@ -205,6 +204,17 @@ void DKeySequenceEdit::keyPressEvent(QKeyEvent *e)
     d_func()->sequencekey = sequence;
     Q_EMIT editingFinished(sequence);
 }
+
+bool DKeySequenceEdit::event(QEvent *e)
+{
+    D_D(DKeySequenceEdit);
+    if (e->type() == QEvent::FocusOut) {
+        if (!d->sequencekey.isEmpty())
+            d->rightWidget->setKeyVisible(true);
+    }
+    return QLineEdit::event(e);
+}
+
 
 DKeySequenceEditPrivate::DKeySequenceEditPrivate(DKeySequenceEdit *q)
     : DObjectPrivate(q)
