@@ -115,6 +115,7 @@ public Q_SLOTS:
     void setDualClickMakeCrumb(bool flag) Q_DECL_NOEXCEPT;
 
 protected:
+    bool event(QEvent *e) override;
     void paintEvent(QPaintEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
     void mouseDoubleClickEvent(QMouseEvent *event) override;

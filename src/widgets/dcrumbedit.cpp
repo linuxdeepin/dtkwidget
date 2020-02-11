@@ -20,6 +20,7 @@
  */
 #include "dcrumbedit.h"
 #include "dobject_p.h"
+#include "DStyle"
 
 #include <QAbstractTextDocumentLayout>
 #include <QPainter>
@@ -203,7 +204,10 @@ public:
         : DObjectPrivate(qq)
         , object(new CrumbObjectInterface(qq))
     {
-
+        widgetTop = new QWidget(qq);
+        widgetBottom = new QWidget(qq);
+        widgetLeft = new QWidget(qq);
+        widgetRight = new QWidget(qq);
     }
 
     void registerHandler(QAbstractTextDocumentLayout *layout)
@@ -436,6 +440,12 @@ public:
     QMap<QString, DCrumbTextFormat> formats;
 
     bool dualClickMakeCrumb = false;
+
+public:
+    QWidget* widgetTop;
+    QWidget* widgetBottom;
+    QWidget* widgetLeft;
+    QWidget* widgetRight;
 };
 
 QSizeF CrumbObjectInterface::intrinsicSize(QTextDocument *doc, int posInDocument, const QTextFormat &format)
@@ -525,6 +535,18 @@ DCrumbEdit::DCrumbEdit(QWidget *parent)
     : QTextEdit(parent)
     , DObject(*new DCrumbEditPrivate(this))
 {
+    Q_D(DCrumbEdit);
+
+    d->widgetTop->setFixedWidth(1);
+    d->widgetBottom->setFixedWidth(1);
+    d->widgetLeft->setFixedHeight(1);
+    d->widgetRight->setFixedHeight(1);
+
+    addScrollBarWidget(d->widgetTop, Qt::AlignTop);
+    addScrollBarWidget(d->widgetBottom, Qt::AlignBottom);
+    addScrollBarWidget(d->widgetLeft, Qt::AlignLeft);
+    addScrollBarWidget(d->widgetRight, Qt::AlignRight);
+
     d_func()->registerHandler(document()->documentLayout());
 
     connect(document(), SIGNAL(documentLayoutChanged()),
@@ -903,6 +925,22 @@ void DCrumbEdit::setDualClickMakeCrumb(bool flag) Q_DECL_NOEXCEPT
     D_D(DCrumbEdit);
 
     d->dualClickMakeCrumb = flag;
+}
+
+bool DCrumbEdit::event(QEvent *e)
+{
+    D_D(DCrumbEdit);
+
+    if (e->type() == QEvent::Polish) {
+        DStyleHelper dstyle(style());
+        int frame_radius = dstyle.pixelMetric(DStyle::PM_FrameRadius, nullptr, this);
+        d->widgetTop->setFixedHeight(frame_radius);
+        d->widgetBottom->setFixedHeight(frame_radius);
+        d->widgetLeft->setFixedWidth(frame_radius);
+        d->widgetRight->setFixedWidth(frame_radius);
+    }
+
+    return QTextEdit::event(e);
 }
 
 /*!\reimp */
