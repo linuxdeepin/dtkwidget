@@ -40,6 +40,9 @@ public:
 
     bool isVoiceInput() const;
 
+    void setPlaceholderText(const QString &text);
+    QString placeholderText() const;
+
 Q_SIGNALS:
     void voiceInputFinished();
     void searchAborted();

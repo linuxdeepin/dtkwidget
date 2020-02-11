@@ -240,6 +240,19 @@ bool DSearchEdit::isVoiceInput() const
     return d->voiceInput && d->voiceInput->state() == QAudio::ActiveState;
 }
 
+void DSearchEdit::setPlaceholderText(const QString &text)
+{
+    D_D(DSearchEdit);
+    d->placeholderText = text;
+    if (lineEdit()->hasFocus())
+        lineEdit()->setPlaceholderText(text);
+}
+
+QString DSearchEdit::placeholderText() const
+{
+    return d_func()->placeholderText;
+}
+
 DSearchEditPrivate::DSearchEditPrivate(DSearchEdit *q)
     : DLineEditPrivate(q)
     , action(nullptr)
@@ -332,9 +345,11 @@ void DSearchEditPrivate::_q_toEditMode(bool focus)
     if (focus  || !q->lineEdit()->text().isEmpty()) {
         action->setVisible(true);
         iconWidget->setVisible(false);
+        lineEdit->setPlaceholderText(placeholderText);
     } else {
         action->setVisible(false);
         iconWidget->setVisible(true);
+        lineEdit->setPlaceholderText(QString());
     }
 
 #ifdef ENABLE_AI

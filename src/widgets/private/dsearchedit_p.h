@@ -50,6 +50,7 @@ public:
 public:
     QAction *action;
     QString placeHolder;
+    QString placeholderText;
 
     QWidget *iconWidget;
 
