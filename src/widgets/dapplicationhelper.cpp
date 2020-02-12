@@ -70,6 +70,10 @@ DPalette DApplicationHelper::palette(const QWidget *widget, const QPalette &base
 {
     DPalette palette;
 
+    if (!widget) {
+        return applicationPalette();
+    }
+
     do {
         // 先从缓存中取数据
         if (d->paletteCache.contains(widget)) {
