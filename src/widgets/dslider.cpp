@@ -370,6 +370,27 @@ void DSlider::setBelowTicks(const QStringList &info)
     setRightTicks(info);
 }
 
+/*!
+ * \~chinese \brief DSlider::setMarkPositions 设置显示双边的刻度线（不显示刻度值）
+ * \~chinese \li 举例用途：比如调节音量的 DSlider，需要在 value = 100 的地方标记一个刻度，而不需要显示其他的刻度值（并且实际音量值是可以超过 100 的）
+ * \~chinese \li 其他：设置指定数值的刻度线(setMarkPositions)和设置刻度线+刻度值(setBelowTicks)是两个相互独立的，且互不干扰，若是同时使用，也会同时绘画各自的线；
+ * \~chinese         另外两个的先后顺序也并没有关系
+ *
+ * \~chinese \code 示例代码
+ * \~chinese \row DSlider* slider = new DSlider(Qt::Horizontal, wTemp);
+ * \~chinese \row QStringList list1;
+ * \~chinese \row list1<<"0"<<"25"<<"50"<<"75"<<"100";
+ * \~chinese \row slider->setBelowTicks(list1);
+ * \~chinese \row QStringList list2;
+ * \~chinese \row list2<<"0"<<"25"<<"50"<<"75"<<"100"";
+ * \~chinese \row slider->setAboveTicks(list2);
+ * \~chinese \row QList<int> list3;
+ * \~chinese \row list3<<0<<30<<80;
+ * \~chinese \row slider->setMarkPositions(list3);
+ * \~chinese \row slider->setMinimum(0);
+ * \~chinese \row slider->setMaximum(100);
+ * \~chinese \endcode
+ */
 void DSlider::setMarkPositions(QList<int> list)
 {
     D_D(DSlider);
@@ -589,23 +610,41 @@ QSize SliderStrip::sizeHint() const
     return size;
 }
 
+/*!
+ * \~chines \brief SliderStrip::setScaleInfo 设置显示刻度线和刻度值
+ * \~chines \param scaleInfo 显示的刻度值
+ * \~chines \param tickPosition 显示的方向枚举值
+ */
 void SliderStrip::setScaleInfo(QStringList scaleInfo, QSlider::TickPosition tickPosition)
 {
     this->scaleInfo = scaleInfo;
     this->tick = tickPosition;
 }
 
+/*!
+ * \~chines \brief SliderStrip::setMarkList 设置显示刻度线（不显示刻度值）
+ * \~chines \param list 显示的刻度线的list
+ * \~chines \param tickPosition 显示的方向枚举值
+ */
 void SliderStrip::setMarkList(QList<int> list, QSlider::TickPosition tickPosition)
 {
     this->list = list;
     this->tick = tickPosition;
 }
 
+/*!
+ * \~chines \brief SliderStrip::getList 返回刻度线的 list
+ * \~chines \return 刻度线的 list
+ */
 QList<int> SliderStrip::getList()
 {
     return this->list;
 }
 
+/*!
+ * \~chines \brief SliderStrip::getScaleInfo 返回刻度值的 list
+ * \~chines \return 度值的 list
+ */
 QStringList SliderStrip::getScaleInfo()
 {
     return this->scaleInfo;
