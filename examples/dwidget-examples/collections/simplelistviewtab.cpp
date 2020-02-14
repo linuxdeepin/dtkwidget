@@ -23,10 +23,10 @@
 SimpleListViewTab::SimpleListViewTab(QWidget *parent) : QWidget(parent)
 {
     QHBoxLayout *layout = new QHBoxLayout(this);
-    SingleListView *singleListView = new SingleListView();
+    //SingleListView *singleListView = new SingleListView();
     MultiListView *multiListView = new MultiListView();
 
-    layout->addWidget(singleListView);
+    //layout->addWidget(singleListView);
     layout->addWidget(multiListView);
 }
 

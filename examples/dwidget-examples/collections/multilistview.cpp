@@ -30,6 +30,8 @@ MultiListView::MultiListView(DSimpleListView *parent) : DSimpleListView(parent)
     MultiListItem *item3 = new MultiListItem("Eric Clapton", "Tears In Heaven", "4:34");
     MultiListItem *item4 = new MultiListItem("John Lennon", "Imagine", "3:56");
 
+    setColumnTitleInfo({"artistName", "songName", "songLength"}, {30, 80, 30}, 30);
+    setColumnHideFlags(QList<bool>() << true << true << true, 0);
     items << item1;
     items << item2;
     items << item3;

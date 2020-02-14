@@ -237,7 +237,7 @@ void DSimpleListView::setColumnHideFlags(QList<bool> toggleHideFlags, int visibl
 {
     D_D(DSimpleListView);
 
-    Q_ASSERT_X(toggleHideFlags.contains(false), "toggleHideFlags", "at least have one 'false' in list.");
+    //Q_ASSERT_X(toggleHideFlags.contains(false), "toggleHideFlags", "at least have one 'false' in list.");
     Q_ASSERT_X(toggleHideFlags.count() == d->columnTitles.count(), "toggleHideFlags", "hide flags length is not same as titles list.");
 
     d->alwaysVisibleColumn = visibleColumnIndex;
@@ -994,12 +994,14 @@ void DSimpleListView::mousePressEvent(QMouseEvent *mouseEvent)
                         action->setChecked(columnVisibles[i]);
 
                         connect(action, &QAction::triggered, this, [this, action, i] {
-                                                                       columnVisibles[i] = !columnVisibles[i];
+                            if (i>=columnVisibles.size()) return ;
 
-                                                                       changeColumnVisible(i, columnVisibles[i], columnVisibles);
+                           columnVisibles[i] = !columnVisibles[i];
 
-                                                                       repaint();
-                                                                   });
+                           changeColumnVisible(i, columnVisibles[i], columnVisibles);
+
+                           repaint();
+                       });
 
                         menu->addAction(action);
                     }
@@ -1603,17 +1605,17 @@ QList<int> DSimpleListView::getRenderWidths()
         if (d->columnWidths.contains(-1)) {
             for (int i = 0; i < d->columnWidths.count(); i++) {
                 if (d->columnWidths[i] != -1) {
-                    if (columnVisibles[i]) {
+                    if (columnVisibles.value(i)) {
                         renderWidths << d->columnWidths[i];
                     } else {
                         renderWidths << 0;
                     }
                 } else {
-                    if (columnVisibles[i]) {
+                    if (columnVisibles.value(i)) {
                         int totalWidthOfOtherColumns = 0;
 
                         for (int j = 0; j < d->columnWidths.count(); j++) {
-                            if (d->columnWidths[j] != -1 && columnVisibles[j]) {
+                            if (d->columnWidths[j] != -1 && columnVisibles.value(j)) {
                                 totalWidthOfOtherColumns += d->columnWidths[j];
                             }
                         }
@@ -1626,7 +1628,7 @@ QList<int> DSimpleListView::getRenderWidths()
             }
         } else {
             for (int i = 0; i < d->columnWidths.count(); i++) {
-                if (columnVisibles[i]) {
+                if (columnVisibles.value(i)) {
                     renderWidths << d->columnWidths[i];
                 } else {
                     renderWidths << 0;
