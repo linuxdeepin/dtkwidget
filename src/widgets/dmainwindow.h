@@ -124,6 +124,7 @@ Q_SIGNALS:
 
 protected:
     DMainWindow(DMainWindowPrivate &dd, QWidget *parent = 0);
+    void mouseMoveEvent(QMouseEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
     void changeEvent(QEvent *event) override;
 

@@ -24,6 +24,7 @@
 #include <QWidget>
 #include <QLabel>
 #include <QDebug>
+#include <QComboBox>
 
 #include "danchors.h"
 #include "dialog_constants.h"
@@ -338,6 +339,11 @@ void DAbstractDialog::mouseReleaseEvent(QMouseEvent *event)
 void DAbstractDialog::mouseMoveEvent(QMouseEvent *event)
 {
     D_D(DAbstractDialog);
+
+    QWidget *compoment = childAt(event->pos());
+    if (qobject_cast<QComboBox *>(compoment)) {
+       return;
+    }
 
     if (d->handle) {
         d->handle->setEnableSystemMove(true);

@@ -28,6 +28,7 @@
 #include <QShortcut>
 #include <QWindow>
 #include <QMouseEvent>
+#include <QComboBox>
 
 #ifdef Q_OS_MAC
 #include "osxwindow.h"
@@ -665,6 +666,15 @@ DMainWindow::DMainWindow(DMainWindowPrivate &dd, QWidget *parent)
     , DObject(dd)
 {
     d_func()->init();
+}
+
+void DMainWindow::mouseMoveEvent(QMouseEvent *event)
+{
+    QWidget *compoment = childAt(event->pos());
+    if (qobject_cast<QComboBox *>(compoment)) {
+       return;
+    }
+    return QMainWindow::mouseMoveEvent(event);
 }
 
 void DMainWindow::resizeEvent(QResizeEvent *event)
