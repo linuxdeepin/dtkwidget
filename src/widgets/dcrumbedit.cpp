@@ -537,6 +537,9 @@ DCrumbEdit::DCrumbEdit(QWidget *parent)
 {
     Q_D(DCrumbEdit);
 
+    viewport()->setAutoFillBackground(false);
+    setFrameShape(QFrame::NoFrame);
+
     d->widgetTop->setFixedWidth(1);
     d->widgetBottom->setFixedWidth(1);
     d->widgetLeft->setFixedHeight(1);
