@@ -125,6 +125,7 @@ void DKeySequenceEdit::clear()
 
     d->rightWidget->keyDelete();
     d->rightWidget->setKeyVisible(false);
+    d->sequencekey = QKeySequence();
 }
 
 /*!
