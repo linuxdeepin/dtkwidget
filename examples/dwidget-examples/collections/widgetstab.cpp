@@ -17,6 +17,8 @@
 
 #include "widgetstab.h"
 #include "darrowrectangle.h"
+#include "dtextedit.h"
+#include "dlineedit.h"
 #ifdef Q_OS_LINUX
 #include "dmpriscontrol.h"
 #include <DRegionMonitor>
@@ -87,5 +89,11 @@ WidgetsTab::WidgetsTab(QWidget *parent) : QLabel(parent)
 
     connect(togglePic, SIGNAL(toggled(bool)), control, SLOT(setPictureVisible(bool)));
 #endif
+
+    DLineEdit *pLineEdit = new DLineEdit(this);
+    pLineEdit->move(50, 100);
+
+    DTextEdit *pTextEdit = new DTextEdit(this);
+    pTextEdit->move(50, 150);
 }
 

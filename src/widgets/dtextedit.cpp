@@ -2,6 +2,11 @@
 
 #include <QPainter>
 #include <QEvent>
+#include <QContextMenuEvent>
+#include <QMenu>
+#include <QDBusInterface>
+#include <QDBusReply>
+#include <QDebug>
 
 #include <DStyle>
 #include <DObjectPrivate>
@@ -79,6 +84,67 @@ bool DTextEdit::event(QEvent *e)
     }
 
     return QTextEdit::event(e);
+}
+
+void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
+{
+    QDBusInterface testSpeech("com.iflytek.aiassistant",
+                               "/aiassistant/tts",
+                               "com.iflytek.aiassistant.tts",
+                               QDBusConnection::sessionBus());
+    //测试朗读接口是否开启
+    QDBusReply<bool> speechReply = testSpeech.call(QDBus::AutoDetect, "getTTSEnable");
+
+    QDBusInterface testTranslate("com.iflytek.aiassistant",
+                               "/aiassistant/trans",
+                               "com.iflytek.aiassistant.trans",
+                               QDBusConnection::sessionBus());
+    //测试翻译接口是否开启
+    QDBusReply<bool> translateReply = testTranslate.call(QDBus::AutoDetect, "getTransEnable");
+
+    //测试服务是否存在
+    if (!speechReply.isValid() && !translateReply.value()) {
+        QTextEdit::contextMenuEvent(e);
+        return;
+    }
+
+    QMenu *menu = createStandardContextMenu();
+    menu->addSeparator();
+
+    if (speechReply.value()) {
+        QAction *pAction = menu->addAction(tr("Text to Speech"));
+        connect(pAction, &QAction::triggered, this, [] {
+            QDBusInterface speechInterface("com.iflytek.aiassistant",
+                                 "/aiassistant/deepinmain",
+                                 "com.iflytek.aiassistant.mainWindow",
+                                 QDBusConnection::sessionBus());
+
+            if (speechInterface.isValid()) {
+                speechInterface.call(QDBus::BlockWithGui, "TextToSpeech");//执行朗读
+            } else {
+                qWarning() << "[DTextEdit] TextToSpeech ERROR";
+            }
+        });
+    }
+
+    if (translateReply.value()) {
+        QAction *pAction_2 = menu->addAction(tr("Translation"));
+        connect(pAction_2, &QAction::triggered, this, [] {
+            QDBusInterface translationInterface("com.iflytek.aiassistant",
+                                 "/aiassistant/deepinmain",
+                                 "com.iflytek.aiassistant.mainWindow",
+                                 QDBusConnection::sessionBus());
+
+            if (translationInterface.isValid()) {
+                translationInterface.call(QDBus::BlockWithGui, "TextToTranslate");//执行翻译
+            } else {
+                qWarning() << "[DTextEdit] Translation ERROR";
+            }
+        });
+    }
+
+    menu->setAttribute(Qt::WA_DeleteOnClose);
+    menu->popup(e->globalPos());
 }
 
 DTextEditPrivate::DTextEditPrivate(DTextEdit *qq)

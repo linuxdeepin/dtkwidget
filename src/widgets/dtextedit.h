@@ -6,6 +6,10 @@
 #include <dtkwidget_global.h>
 #include <DObject>
 
+QT_BEGIN_NAMESPACE
+class QContextMenuEvent;
+QT_END_NAMESPACE
+
 DWIDGET_BEGIN_NAMESPACE
 class DTextEditPrivate;
 class DTextEdit : public QTextEdit, public DCORE_NAMESPACE::DObject
@@ -16,6 +20,7 @@ public:
 
 protected:
     bool event(QEvent *e) override;
+    void contextMenuEvent(QContextMenuEvent *e) override;
 
 private:
     D_DECLARE_PRIVATE(DTextEdit)

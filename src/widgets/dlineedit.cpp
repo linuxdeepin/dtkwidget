@@ -15,6 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QMenu>
+#include <QDBusInterface>
+#include <QDBusReply>
+#include <QDebug>
+
 #include "dlineedit.h"
 #include "private/dlineedit_p.h"
 #include "darrowrectangle.h"
@@ -365,6 +370,66 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
         Q_EMIT focusChanged(true);
     } else if (event->type() == QEvent::FocusOut) {
         Q_EMIT focusChanged(false);
+    } else if (watched == lineEdit() && event->type() == QEvent::ContextMenu) {
+        QDBusInterface testSpeech("com.iflytek.aiassistant",
+                                   "/aiassistant/tts",
+                                   "com.iflytek.aiassistant.tts",
+                                   QDBusConnection::sessionBus());
+        //测试朗读接口是否开启
+        QDBusReply<bool> speechReply = testSpeech.call(QDBus::AutoDetect, "getTTSEnable");
+
+        QDBusInterface testTranslate("com.iflytek.aiassistant",
+                                   "/aiassistant/trans",
+                                   "com.iflytek.aiassistant.trans",
+                                   QDBusConnection::sessionBus());
+        //测试翻译接口是否开启
+        QDBusReply<bool> translateReply = testTranslate.call(QDBus::AutoDetect, "getTransEnable");
+
+        //朗读和翻译都没有开启，则直接返回
+        if (!speechReply.value() && !translateReply.value()) {
+            return QWidget::eventFilter(watched, event);
+        }
+
+        QLineEdit *pLineEdit = static_cast<QLineEdit*>(watched);
+        QMenu *menu = pLineEdit->createStandardContextMenu();
+        menu->addSeparator();
+
+        if (speechReply.value()) {
+            QAction *pAction_1 = menu->addAction(tr("Text to Speech"));
+            connect(pAction_1, &QAction::triggered, this, [] {
+                QDBusInterface speechInterface("com.iflytek.aiassistant",
+                                                "/aiassistant/deepinmain",
+                                                "com.iflytek.aiassistant.mainWindow",
+                                                QDBusConnection::sessionBus());
+
+                if (speechInterface.isValid()) {
+                    speechInterface.call(QDBus::BlockWithGui, "TextToSpeech");//执行朗读
+                } else {
+                    qWarning() << "[DLineEdit] TextToSpeech ERROR";
+                }
+            });
+        }
+
+        if (translateReply.value()) {
+            QAction *pAction_2 = menu->addAction(tr("Translation"));
+            connect(pAction_2, &QAction::triggered, this, [] {
+                QDBusInterface translationInterface("com.iflytek.aiassistant",
+                                     "/aiassistant/deepinmain",
+                                     "com.iflytek.aiassistant.mainWindow",
+                                     QDBusConnection::sessionBus());
+
+                if (translationInterface.isValid()) {
+                    translationInterface.call(QDBus::BlockWithGui, "TextToTranslate");//执行翻译
+                } else {
+                    qWarning() << "[DLineEdit] Translation ERROR";
+                }
+            });
+        }
+
+        menu->setAttribute(Qt::WA_DeleteOnClose);
+        menu->popup(static_cast<QContextMenuEvent*>(event)->globalPos());
+        event->accept();
+        return true;
     }
 
     if (d->frame)
