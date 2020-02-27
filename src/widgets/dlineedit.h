@@ -65,6 +65,8 @@ public:
     QLineEdit::EchoMode echoMode() const;
     void setEchoMode(QLineEdit::EchoMode mode);
 
+    void setContextMenuPolicy(Qt::ContextMenuPolicy policy);
+
 Q_SIGNALS:
     void alertChanged(bool alert) const;
     void focusChanged(bool onFocus) const;

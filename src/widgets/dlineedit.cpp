@@ -342,6 +342,18 @@ void DLineEdit::setEchoMode(QLineEdit::EchoMode mode)
 }
 
 /*!
+ * \~chinese \brief DLineEdit::setContextMenuPolicy
+ * \~chinese \param policy 显示右键菜单的方式
+ * \~chinese \row 转发实际变量 QLineEdit 的 ContextMenuEvent 消息
+ * \~chinese \see QLineEdit::setContextMenuPolicy
+ */
+void DLineEdit::setContextMenuPolicy(Qt::ContextMenuPolicy policy)
+{
+    D_D(DLineEdit);
+    d->lineEdit->setContextMenuPolicy(policy);
+}
+
+/*!
  * \~chinese \brief DLineEdit::eventFilter
  * \~chinese \row 该过滤器不做任何过滤动作，但会监控输入框的焦点状态，并发送信号 focusChanged()。
  */
