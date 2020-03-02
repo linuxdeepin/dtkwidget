@@ -42,6 +42,8 @@ public:
 
     void setForegroundRole(QPalette::ColorRole role);
     void setForegroundRole(DPalette::ColorType color);
+    void setElideMode(Qt::TextElideMode elideMode);
+    Qt::TextElideMode elideMode() const;
 
 protected:
     DLabel(DLabelPrivate &dd, QWidget *parent = nullptr);

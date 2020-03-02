@@ -78,6 +78,22 @@ void DLabel::setForegroundRole(DPalette::ColorType color)
     d->color = color;
 }
 
+void DLabel::setElideMode(Qt::TextElideMode elideMode)
+{
+    D_D(DLabel);
+    if (d->elideMode == elideMode) {
+        return;
+    }
+    d->elideMode = elideMode;
+    update();
+}
+
+Qt::TextElideMode DLabel::elideMode() const
+{
+    D_DC(DLabel);
+    return d->elideMode;
+}
+
 DLabel::DLabel(DLabelPrivate &dd, QWidget *parent)
     : QLabel(parent)
     , DObject(dd)
@@ -163,7 +179,12 @@ void DLabel::paintEvent(QPaintEvent *event)
                 palette.setBrush(foregroundRole(), DApplicationHelper::instance()->palette(this).brush(d_func()->color));
             }
 
-            style->drawItemText(&painter, lr.toRect(), flags, palette, isEnabled(), d->text, foregroundRole());
+            QString text = d->text;
+            if (elideMode() != Qt::ElideNone) {
+                const QFontMetrics fm(fontMetrics());
+                text = fm.elidedText(text, elideMode(), width(), Qt::TextShowMnemonic);
+            }
+            style->drawItemText(&painter, lr.toRect(), flags, palette, isEnabled(), text, foregroundRole());
         }
     } else
 #ifndef QT_NO_PICTURE

@@ -43,6 +43,7 @@ public:
     static void ensureTextLayouted(QLabelPrivate *d);
 
     DPalette::ColorType color = DPalette::NoType;
+    Qt::TextElideMode elideMode = Qt::ElideNone;
 };
 
 DWIDGET_END_NAMESPACE

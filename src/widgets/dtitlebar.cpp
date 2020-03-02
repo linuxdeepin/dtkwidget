@@ -153,6 +153,7 @@ void DTitlebarPrivate::init()
     separatorTop    = new DHorizontalLine(q);
     separator       = new DHorizontalLine(q);
     titleLabel      = centerArea;
+    titleLabel->setElideMode(Qt::ElideMiddle);
 
     optionButton->setObjectName("DTitlebarDWindowOptionButton");
     optionButton->setIconSize(QSize(DefaultTitlebarHeight, DefaultTitlebarHeight));
