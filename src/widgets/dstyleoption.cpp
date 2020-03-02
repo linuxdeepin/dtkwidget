@@ -178,7 +178,8 @@ void DStyleOptionLineEdit::init(const QWidget *widget)
 void DStyleOptionBackgroundGroup::init(const QWidget *widget)
 {
     DStyleOption::init(widget);
-    rect = widget->geometry();
+    if (widget)
+        rect = widget->geometry();
 }
 
 class DFontSizeManagerPrivate
