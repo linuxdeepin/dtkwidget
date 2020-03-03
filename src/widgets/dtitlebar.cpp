@@ -307,7 +307,8 @@ void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
     bool useDXcb = DPlatformWindowHandle::isEnabledDXcb(targetWindow());
     bool isFullscreen = targetWindow()->windowState().testFlag(Qt::WindowFullScreen);
 
-    bool forceShow = !useDXcb;
+//    bool forceShow = !useDXcb;
+    bool forceShow = false;
 #ifndef Q_OS_LINUX
     forceShow = false;
 #endif
@@ -318,7 +319,7 @@ void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
     }
 
     // Never show in embed/fullscreen
-    bool forceHide = embedMode || isFullscreen;
+    bool forceHide = useDXcb || embedMode || isFullscreen;
 
     bool showMin = (type.testFlag(Qt::WindowMinimizeButtonHint) || forceShow) && !forceHide;
     minButton->setVisible(showMin);
