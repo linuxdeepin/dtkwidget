@@ -76,7 +76,6 @@ Navigation::Navigation(QWidget *parent) :
     DApplicationHelper::instance()->setPalette(d->navbar, pa);
 
     d->navbar->setSelectionMode(QListView::SingleSelection);
-    d->navbar->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     d->navbar->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     d->navbarModel = new QStandardItemModel;
