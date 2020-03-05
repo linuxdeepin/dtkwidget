@@ -47,6 +47,8 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+#define SHORTCUT_VALUE "shortcut_null"
+
 class DSettingsWidgetFactoryPrivate;
 
 class KeySequenceEdit : public DKeySequenceEdit
@@ -81,11 +83,10 @@ public:
         insertButton(1, cancel);
         insertButton(1, replace);
         connect(replace, &DSuggestButton::clicked, [ = ] {  //替换
-            shortcutMap.value(key)->option()->setValue(QString());
-            if (auto value = shortcutMap.value(key))
-                value->clear();
-            shortcutMap.remove(shortcutMap.key(edit));
-            shortcutMap.insert(key, edit);
+            auto value = shortcutMap.value(key);
+            value->option()->setValue(SHORTCUT_VALUE);
+            shortcutMap.remove(key);
+
             edit->option()->setValue(key);
         });
         connect(cancel, &QPushButton::clicked, [ = ] {  //取消
@@ -209,7 +210,7 @@ QPair<QWidget *, QWidget *> createShortcutEditOptionHandle(DSettingsWidgetFactor
         if (shortcutMap.value(sequence.toString()) == rightWidget) //键位于自己相同
             return;
 
-        if (shortcutMap.value(keyseq)) { //重复
+        if (shortcutMap.value(keyseq)) {
             ChangeDDialog frame(keyseq, rightWidget, rightWidget->text());
             frame.exec();
         } else {
@@ -220,31 +221,36 @@ QPair<QWidget *, QWidget *> createShortcutEditOptionHandle(DSettingsWidgetFactor
     });
 
     auto updateWidgetValue = [ = ](const QVariant & optionValue, DTK_CORE_NAMESPACE::DSettingsOption * opt) {
-        QString keyseq = optionValue.toString();
         QKeySequence sequence(optionValue.toString());
+        QString keyseq = sequence.toString();
 
-        shortcutMap.remove(shortcutMap.key(rightWidget));   //清理当前快捷键
-        rightWidget->clear();
-
-        if (auto edit = shortcutMap.take(keyseq)) { //清理冲突快捷键
-            edit->clear();
-            edit->option()->setValue(QString());
+        if (auto edit = shortcutMap.value(keyseq)) {
+            return;
         }
 
-        if (rightWidget->setKeySequence(sequence)) {    //设置新的快捷键
-            shortcutMap.insert(optionValue.toString(), rightWidget);
+        if (rightWidget->setKeySequence(sequence)) {
+            shortcutMap.insert(keyseq, rightWidget);
             opt->setValue(keyseq);
         }
     };
     updateWidgetValue(optionValue, option);
 
     option->connect(option, &DTK_CORE_NAMESPACE::DSettingsOption::valueChanged, rightWidget, [ = ](const QVariant & value) {
-        if (value.isNull())
-            return;
 
-        rightWidget->blockSignals(true);
-        updateWidgetValue(value, option);
-        rightWidget->blockSignals(false);
+        if (value.toString() == SHORTCUT_VALUE) {
+            rightWidget->clear();
+            return;
+        }
+        QKeySequence sequence(value.toString());
+        QString keyseq = sequence.toString();
+
+        shortcutMap.remove(shortcutMap.key(rightWidget));
+
+        if (rightWidget->setKeySequence(sequence)) {    //设置快捷键
+
+            shortcutMap.insert(keyseq, rightWidget);
+            option->setValue(keyseq);
+        }
     });
 
     return DSettingsWidgetFactory::createStandardItem(translateContext, option, rightWidget);
