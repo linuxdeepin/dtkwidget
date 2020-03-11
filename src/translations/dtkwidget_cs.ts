@@ -131,12 +131,17 @@
 <context>
     <name>DLineEdit</name>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="398"/>
+        <location filename="../widgets/dlineedit.cpp" line="407"/>
+        <source>Stop reading</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/dlineedit.cpp" line="409"/>
         <source>Text to Speech</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="414"/>
+        <location filename="../widgets/dlineedit.cpp" line="427"/>
         <source>Translation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -183,12 +188,17 @@
 <context>
     <name>DTextEdit</name>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="115"/>
+        <location filename="../widgets/dtextedit.cpp" line="124"/>
+        <source>Stop reading</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/dtextedit.cpp" line="126"/>
         <source>Text to Speech</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="131"/>
+        <location filename="../widgets/dtextedit.cpp" line="144"/>
         <source>Translation</source>
         <translation type="unfinished"></translation>
     </message>
