@@ -142,7 +142,7 @@
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="427"/>
-        <source>Translation</source>
+        <source>Translate</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -199,7 +199,7 @@
     </message>
     <message>
         <location filename="../widgets/dtextedit.cpp" line="144"/>
-        <source>Translation</source>
+        <source>Translate</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
