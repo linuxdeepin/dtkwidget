@@ -424,7 +424,7 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
         }
 
         if (translateReply.value()) {
-            QAction *pAction_2 = menu->addAction(tr("Translation"));
+            QAction *pAction_2 = menu->addAction(tr("Translate"));
             connect(pAction_2, &QAction::triggered, this, [] {
                 QDBusInterface translationInterface("com.iflytek.aiassistant",
                                      "/aiassistant/deepinmain",
