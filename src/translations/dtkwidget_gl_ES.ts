@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="gl_ES">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="gl_ES" version="2.1">
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -125,7 +123,7 @@
     <message>
         <location filename="../widgets/dkeysequenceedit.cpp" line="41"/>
         <source>Enter a new shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Inserir atallo novo</translation>
     </message>
 </context>
 <context>
@@ -133,17 +131,17 @@
     <message>
         <location filename="../widgets/dlineedit.cpp" line="407"/>
         <source>Stop reading</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="409"/>
         <source>Text to Speech</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="427"/>
         <source>Translate</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -151,7 +149,7 @@
     <message>
         <location filename="../widgets/dsearchedit.cpp" line="278"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Buscar</translation>
     </message>
 </context>
 <context>
@@ -159,17 +157,17 @@
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="77"/>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="78"/>
         <source>Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>Substituír</translation>
     </message>
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="80"/>
         <source>This shortcut conflicts with %1, click on Add to make this shortcut effective immediately</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -190,17 +188,17 @@
     <message>
         <location filename="../widgets/dtextedit.cpp" line="124"/>
         <source>Stop reading</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/dtextedit.cpp" line="126"/>
         <source>Text to Speech</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/dtextedit.cpp" line="144"/>
         <source>Translate</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -229,22 +227,22 @@
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="488"/>
         <source>Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Tema</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="489"/>
         <source>Light Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Tema claro</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="490"/>
         <source>Dark Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Tema escuro</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="491"/>
         <source>System Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Tema do sistema</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="514"/>

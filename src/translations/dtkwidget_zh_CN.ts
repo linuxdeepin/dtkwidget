@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="zh_CN">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_CN" version="2.1">
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -133,17 +131,17 @@
     <message>
         <location filename="../widgets/dlineedit.cpp" line="407"/>
         <source>Stop reading</source>
-        <translation type="unfinished"></translation>
+        <translation>停止朗读</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="409"/>
         <source>Text to Speech</source>
-        <translation type="unfinished"></translation>
+        <translation>语音朗读</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="427"/>
         <source>Translate</source>
-        <translation type="unfinished"></translation>
+        <translation>翻译</translation>
     </message>
 </context>
 <context>
@@ -190,17 +188,17 @@
     <message>
         <location filename="../widgets/dtextedit.cpp" line="124"/>
         <source>Stop reading</source>
-        <translation type="unfinished"></translation>
+        <translation>停止朗读</translation>
     </message>
     <message>
         <location filename="../widgets/dtextedit.cpp" line="126"/>
         <source>Text to Speech</source>
-        <translation type="unfinished"></translation>
+        <translation>语音朗读</translation>
     </message>
     <message>
         <location filename="../widgets/dtextedit.cpp" line="144"/>
         <source>Translate</source>
-        <translation type="unfinished"></translation>
+        <translation>翻译</translation>
     </message>
 </context>
 <context>

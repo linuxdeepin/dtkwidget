@@ -1,20 +1,20 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="pt_BR" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="fa" version="2.1">
 <context>
     <name>DAboutDialog</name>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="180"/>
         <source>Acknowledgements</source>
-        <translation>Agradecimentos</translation>
+        <translation>سپاسگزاریها</translation>
     </message>
     <message>
         <location filename="../widgets/dapplication.cpp" line="1071"/>
         <source>Version: %1</source>
-        <translation>Versão: %1</translation>
+        <translation>نسخه:%1</translation>
     </message>
     <message>
         <location filename="../widgets/dapplication.cpp" line="1075"/>
         <source>%1 is released under %2</source>
-        <translation>%1 é lançado em %2</translation>
+        <translation>%1 زیر %2 منتشر می شود</translation>
     </message>
 </context>
 <context>
@@ -22,87 +22,87 @@
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="805"/>
         <source>Black</source>
-        <translation>Preto</translation>
+        <translation>مشکی</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="808"/>
         <source>White</source>
-        <translation>Branco</translation>
+        <translation>سفید</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="811"/>
         <source>Dark Gray</source>
-        <translation>Cinza Escuro</translation>
+        <translation>خاکستری تیره</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="814"/>
         <source>Gray</source>
-        <translation>Cinza</translation>
+        <translation>خاکستری</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="817"/>
         <source>Light Gray</source>
-        <translation>Cinza Claro</translation>
+        <translation>خاکستری روشن</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="820"/>
         <source>Red</source>
-        <translation>Vermelho</translation>
+        <translation>قرمز</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="823"/>
         <source>Green</source>
-        <translation>Verde</translation>
+        <translation>سبز</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="826"/>
         <source>Blue</source>
-        <translation>Azul</translation>
+        <translation>آبی</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="829"/>
         <source>Cyan</source>
-        <translation>Ciano</translation>
+        <translation>فیروزه ای</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="832"/>
         <source>Magenta</source>
-        <translation>Magenta</translation>
+        <translation>ارغوانی</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="835"/>
         <source>Yellow</source>
-        <translation>Amarelo</translation>
+        <translation>زرد</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="838"/>
         <source>Dark Red</source>
-        <translation>Vermelho Escuro</translation>
+        <translation>قرمز تیره</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="841"/>
         <source>Dark Green</source>
-        <translation>Verde Escuro</translation>
+        <translation>سبز تیره</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="844"/>
         <source>Dark Blue</source>
-        <translation>Azul Escuro</translation>
+        <translation>آبی تیره</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="847"/>
         <source>Dark Cyan</source>
-        <translation>Ciano Escuro</translation>
+        <translation>فیروزه ای تیره</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="850"/>
         <source>Dark Magenta</source>
-        <translation>Magenta Escuro</translation>
+        <translation>ارغوانی تیره</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="853"/>
         <source>Dark Yellow</source>
-        <translation>Amarelo Escuro</translation>
+        <translation>زرد تیره</translation>
     </message>
 </context>
 <context>
@@ -110,12 +110,12 @@
     <message>
         <location filename="../widgets/dinputdialog.cpp" line="42"/>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation>لغو</translation>
     </message>
     <message>
         <location filename="../widgets/dinputdialog.cpp" line="43"/>
         <source>Confirm</source>
-        <translation>Confirmar</translation>
+        <translation>تائید</translation>
     </message>
 </context>
 <context>
@@ -123,7 +123,7 @@
     <message>
         <location filename="../widgets/dkeysequenceedit.cpp" line="41"/>
         <source>Enter a new shortcut</source>
-        <translation>Digite o Novo Atalho</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -149,7 +149,7 @@
     <message>
         <location filename="../widgets/dsearchedit.cpp" line="278"/>
         <source>Search</source>
-        <translation>Pesquisar</translation>
+        <translation>جستجو</translation>
     </message>
 </context>
 <context>
@@ -157,17 +157,17 @@
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="77"/>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="78"/>
         <source>Replace</source>
-        <translation>Substituir</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="80"/>
         <source>This shortcut conflicts with %1, click on Add to make this shortcut effective immediately</source>
-        <translation>Este atalho entra em conflito com %1. Clique em Adicionar para efetivar esse atalho</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -175,12 +175,12 @@
     <message>
         <location filename="../widgets/dshortcutedit.cpp" line="31"/>
         <source>Please input a new shortcut</source>
-        <translation>Insira o Novo Atalho</translation>
+        <translation>لطفا میانبر جدید وارد کنید</translation>
     </message>
     <message>
         <location filename="../widgets/dshortcutedit.cpp" line="102"/>
         <source>None</source>
-        <translation>Nenhum</translation>
+        <translation>هیچ کدام</translation>
     </message>
 </context>
 <context>
@@ -206,12 +206,12 @@
     <message>
         <location filename="../widgets/dsimplelistview.cpp" line="1333"/>
         <source>No search result</source>
-        <translation>Nenhum Resultado</translation>
+        <translation>جستجو نتیجه ایی نداشت</translation>
     </message>
     <message>
         <location filename="../widgets/private/settings/content.cpp" line="284"/>
         <source>Restore Defaults</source>
-        <translation>Restaurar Padrões</translation>
+        <translation>بازیابی پیش فرض</translation>
     </message>
 </context>
 <context>
@@ -219,7 +219,7 @@
     <message>
         <location filename="../widgets/private/settings/shortcutedit.cpp" line="116"/>
         <source>Please enter a new shortcut</source>
-        <translation>Digite o Novo Atalho</translation>
+        <translation>لطفا میانبر جدید وارد کنید</translation>
     </message>
 </context>
 <context>
@@ -227,37 +227,37 @@
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="488"/>
         <source>Theme</source>
-        <translation>Tema</translation>
+        <translation>تم</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="489"/>
         <source>Light Theme</source>
-        <translation>Claro</translation>
+        <translation>تم روشن</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="490"/>
         <source>Dark Theme</source>
-        <translation>Escuro</translation>
+        <translation>تم تیره</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="491"/>
         <source>System Theme</source>
-        <translation>Padrão</translation>
+        <translation>تم سیستم</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="514"/>
         <source>Help</source>
-        <translation>Ajuda</translation>
+        <translation>راهنما</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="521"/>
         <source>About</source>
-        <translation>Sobre</translation>
+        <translation>درباره</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="528"/>
         <source>Exit</source>
-        <translation>Sair</translation>
+        <translation>خروج</translation>
     </message>
 </context>
 </TS>

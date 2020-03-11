@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="fi">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="fi" version="2.1">
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -125,7 +123,7 @@
     <message>
         <location filename="../widgets/dkeysequenceedit.cpp" line="41"/>
         <source>Enter a new shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Tee pikakuvake</translation>
     </message>
 </context>
 <context>
@@ -133,17 +131,17 @@
     <message>
         <location filename="../widgets/dlineedit.cpp" line="407"/>
         <source>Stop reading</source>
-        <translation type="unfinished"></translation>
+        <translation>Lopeta lukeminen</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="409"/>
         <source>Text to Speech</source>
-        <translation type="unfinished"></translation>
+        <translation>Teksti puheeksi</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="427"/>
         <source>Translate</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -177,7 +175,7 @@
     <message>
         <location filename="../widgets/dshortcutedit.cpp" line="31"/>
         <source>Please input a new shortcut</source>
-        <translation>Syötä uusi pikakuvake</translation>
+        <translation>Uusi pikakuvake</translation>
     </message>
     <message>
         <location filename="../widgets/dshortcutedit.cpp" line="102"/>
@@ -190,17 +188,17 @@
     <message>
         <location filename="../widgets/dtextedit.cpp" line="124"/>
         <source>Stop reading</source>
-        <translation type="unfinished"></translation>
+        <translation>Lopeta lukeminen</translation>
     </message>
     <message>
         <location filename="../widgets/dtextedit.cpp" line="126"/>
         <source>Text to Speech</source>
-        <translation type="unfinished"></translation>
+        <translation>Teksti puheeksi</translation>
     </message>
     <message>
         <location filename="../widgets/dtextedit.cpp" line="144"/>
         <source>Translate</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -234,17 +232,17 @@
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="489"/>
         <source>Light Theme</source>
-        <translation>Teema vaalea</translation>
+        <translation>Vaalea</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="490"/>
         <source>Dark Theme</source>
-        <translation>Teema tumma</translation>
+        <translation>Tumma</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="491"/>
         <source>System Theme</source>
-        <translation>Järjestelmän teema</translation>
+        <translation>Järjestelmän</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="514"/>

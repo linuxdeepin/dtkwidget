@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="lt">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="lt" version="2.1">
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -125,7 +123,7 @@
     <message>
         <location filename="../widgets/dkeysequenceedit.cpp" line="41"/>
         <source>Enter a new shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Įveskite naują trumpinį</translation>
     </message>
 </context>
 <context>
@@ -133,17 +131,17 @@
     <message>
         <location filename="../widgets/dlineedit.cpp" line="407"/>
         <source>Stop reading</source>
-        <translation type="unfinished"></translation>
+        <translation>Stabdyti skaitymą</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="409"/>
         <source>Text to Speech</source>
-        <translation type="unfinished"></translation>
+        <translation>Garsinis teksto atkūrimas</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="427"/>
         <source>Translate</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -190,17 +188,17 @@
     <message>
         <location filename="../widgets/dtextedit.cpp" line="124"/>
         <source>Stop reading</source>
-        <translation type="unfinished"></translation>
+        <translation>Stabdyti skaitymą</translation>
     </message>
     <message>
         <location filename="../widgets/dtextedit.cpp" line="126"/>
         <source>Text to Speech</source>
-        <translation type="unfinished"></translation>
+        <translation>Garsinis teksto atkūrimas</translation>
     </message>
     <message>
         <location filename="../widgets/dtextedit.cpp" line="144"/>
         <source>Translate</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

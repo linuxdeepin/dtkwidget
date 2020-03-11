@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="es">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="es" version="2.1">
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -125,7 +123,7 @@
     <message>
         <location filename="../widgets/dkeysequenceedit.cpp" line="41"/>
         <source>Enter a new shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Introducir un nuevo acceso directo</translation>
     </message>
 </context>
 <context>
@@ -133,17 +131,17 @@
     <message>
         <location filename="../widgets/dlineedit.cpp" line="407"/>
         <source>Stop reading</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="409"/>
         <source>Text to Speech</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="427"/>
         <source>Translate</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -159,17 +157,17 @@
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="77"/>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="78"/>
         <source>Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>Reemplazar</translation>
     </message>
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="80"/>
         <source>This shortcut conflicts with %1, click on Add to make this shortcut effective immediately</source>
-        <translation type="unfinished"></translation>
+        <translation>Este acceso directo tiene conflicto con %1, haga clic en Añadir para que este atajo sea efectivo inmediatamente.</translation>
     </message>
 </context>
 <context>
@@ -190,17 +188,17 @@
     <message>
         <location filename="../widgets/dtextedit.cpp" line="124"/>
         <source>Stop reading</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/dtextedit.cpp" line="126"/>
         <source>Text to Speech</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/dtextedit.cpp" line="144"/>
         <source>Translate</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -234,17 +232,17 @@
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="489"/>
         <source>Light Theme</source>
-        <translation>Tema Claro</translation>
+        <translation>Tema claro</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="490"/>
         <source>Dark Theme</source>
-        <translation>Tema Oscuro</translation>
+        <translation>Tema oscuro</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="491"/>
         <source>System Theme</source>
-        <translation>Tema del Sistema</translation>
+        <translation>Tema del sistema</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="514"/>

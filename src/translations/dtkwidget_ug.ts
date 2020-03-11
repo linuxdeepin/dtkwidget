@@ -1,20 +1,20 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="pt_BR" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="ug" version="2.1">
 <context>
     <name>DAboutDialog</name>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="180"/>
         <source>Acknowledgements</source>
-        <translation>Agradecimentos</translation>
+        <translation>مۇقىملاشتۇرۇش </translation>
     </message>
     <message>
         <location filename="../widgets/dapplication.cpp" line="1071"/>
         <source>Version: %1</source>
-        <translation>Versão: %1</translation>
+        <translation>نەشرى : %1</translation>
     </message>
     <message>
         <location filename="../widgets/dapplication.cpp" line="1075"/>
         <source>%1 is released under %2</source>
-        <translation>%1 é lançado em %2</translation>
+        <translation>%1 قۇيۇپ بېرىش ئاستىداi %2</translation>
     </message>
 </context>
 <context>
@@ -22,87 +22,87 @@
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="805"/>
         <source>Black</source>
-        <translation>Preto</translation>
+        <translation>قارا رەڭ</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="808"/>
         <source>White</source>
-        <translation>Branco</translation>
+        <translation>ئاق رەڭ</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="811"/>
         <source>Dark Gray</source>
-        <translation>Cinza Escuro</translation>
+        <translation>قېنىق كۈلرەڭ </translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="814"/>
         <source>Gray</source>
-        <translation>Cinza</translation>
+        <translation>كۈلرەڭ</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="817"/>
         <source>Light Gray</source>
-        <translation>Cinza Claro</translation>
+        <translation> سۇس كۈلرەڭ </translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="820"/>
         <source>Red</source>
-        <translation>Vermelho</translation>
+        <translation> قىزىل رەڭ </translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="823"/>
         <source>Green</source>
-        <translation>Verde</translation>
+        <translation> يېشىل رەڭ </translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="826"/>
         <source>Blue</source>
-        <translation>Azul</translation>
+        <translation> كۆك رەڭ </translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="829"/>
         <source>Cyan</source>
-        <translation>Ciano</translation>
+        <translation> كۆك يېشىل رەڭ </translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="832"/>
         <source>Magenta</source>
-        <translation>Magenta</translation>
+        <translation>ماگېن </translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="835"/>
         <source>Yellow</source>
-        <translation>Amarelo</translation>
+        <translation> سېرىق رەڭ </translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="838"/>
         <source>Dark Red</source>
-        <translation>Vermelho Escuro</translation>
+        <translation> قېنىق قىزىل رەڭ </translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="841"/>
         <source>Dark Green</source>
-        <translation>Verde Escuro</translation>
+        <translation> قېنىق يېشىل رەڭ </translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="844"/>
         <source>Dark Blue</source>
-        <translation>Azul Escuro</translation>
+        <translation> قېنىق كۆك رەڭ </translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="847"/>
         <source>Dark Cyan</source>
-        <translation>Ciano Escuro</translation>
+        <translation> قېنىق كۆك يېشىل رەڭ </translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="850"/>
         <source>Dark Magenta</source>
-        <translation>Magenta Escuro</translation>
+        <translation>قېنىق ماگېن </translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="853"/>
         <source>Dark Yellow</source>
-        <translation>Amarelo Escuro</translation>
+        <translation> قېنىق سېرىق رەڭ </translation>
     </message>
 </context>
 <context>
@@ -110,12 +110,12 @@
     <message>
         <location filename="../widgets/dinputdialog.cpp" line="42"/>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation> ئەمەلدىن قالدۇرۇش </translation>
     </message>
     <message>
         <location filename="../widgets/dinputdialog.cpp" line="43"/>
         <source>Confirm</source>
-        <translation>Confirmar</translation>
+        <translation>مۇقىملاش</translation>
     </message>
 </context>
 <context>
@@ -123,7 +123,7 @@
     <message>
         <location filename="../widgets/dkeysequenceedit.cpp" line="41"/>
         <source>Enter a new shortcut</source>
-        <translation>Digite o Novo Atalho</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -149,7 +149,7 @@
     <message>
         <location filename="../widgets/dsearchedit.cpp" line="278"/>
         <source>Search</source>
-        <translation>Pesquisar</translation>
+        <translation> ئىزدەش </translation>
     </message>
 </context>
 <context>
@@ -157,17 +157,17 @@
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="77"/>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="78"/>
         <source>Replace</source>
-        <translation>Substituir</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="80"/>
         <source>This shortcut conflicts with %1, click on Add to make this shortcut effective immediately</source>
-        <translation>Este atalho entra em conflito com %1. Clique em Adicionar para efetivar esse atalho</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -175,12 +175,12 @@
     <message>
         <location filename="../widgets/dshortcutedit.cpp" line="31"/>
         <source>Please input a new shortcut</source>
-        <translation>Insira o Novo Atalho</translation>
+        <translation>يېڭى بىر تېزلەتمە شەكلىنى كىرگۈزۈڭ</translation>
     </message>
     <message>
         <location filename="../widgets/dshortcutedit.cpp" line="102"/>
         <source>None</source>
-        <translation>Nenhum</translation>
+        <translation>قۇرۇق</translation>
     </message>
 </context>
 <context>
@@ -206,12 +206,12 @@
     <message>
         <location filename="../widgets/dsimplelistview.cpp" line="1333"/>
         <source>No search result</source>
-        <translation>Nenhum Resultado</translation>
+        <translation>ئىزدەش نەتىجىسى يوق</translation>
     </message>
     <message>
         <location filename="../widgets/private/settings/content.cpp" line="284"/>
         <source>Restore Defaults</source>
-        <translation>Restaurar Padrões</translation>
+        <translation>ئەسلىدىكى تەڭشەك ھالىتىگە قايتۇرۇش</translation>
     </message>
 </context>
 <context>
@@ -219,7 +219,7 @@
     <message>
         <location filename="../widgets/private/settings/shortcutedit.cpp" line="116"/>
         <source>Please enter a new shortcut</source>
-        <translation>Digite o Novo Atalho</translation>
+        <translation>يېڭى بىر تېزلەتمە شەكلىنى كىرگۈزۈڭ</translation>
     </message>
 </context>
 <context>
@@ -227,37 +227,37 @@
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="488"/>
         <source>Theme</source>
-        <translation>Tema</translation>
+        <translation>ئۇسلۇب</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="489"/>
         <source>Light Theme</source>
-        <translation>Claro</translation>
+        <translation>يورۇق ئۇسلۇب</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="490"/>
         <source>Dark Theme</source>
-        <translation>Escuro</translation>
+        <translation>قارا ئۇسلۇب</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="491"/>
         <source>System Theme</source>
-        <translation>Padrão</translation>
+        <translation>سېستىما ئۇسلۇبى</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="514"/>
         <source>Help</source>
-        <translation>Ajuda</translation>
+        <translation>ياردەم</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="521"/>
         <source>About</source>
-        <translation>Sobre</translation>
+        <translation>ھەققىدە</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="528"/>
         <source>Exit</source>
-        <translation>Sair</translation>
+        <translation>چېكىنىش</translation>
     </message>
 </context>
 </TS>
