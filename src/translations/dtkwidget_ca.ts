@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ca" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="ca">
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -20,87 +22,87 @@
 <context>
     <name>DCrumbEdit</name>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="755"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="805"/>
         <source>Black</source>
         <translation>Negre</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="758"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="808"/>
         <source>White</source>
         <translation>Blanc</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="761"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="811"/>
         <source>Dark Gray</source>
         <translation>Gris fosc</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="764"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="814"/>
         <source>Gray</source>
         <translation>Gris</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="767"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="817"/>
         <source>Light Gray</source>
         <translation>Gris clar</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="770"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="820"/>
         <source>Red</source>
         <translation>Vermell</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="773"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="823"/>
         <source>Green</source>
         <translation>Verd</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="776"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="826"/>
         <source>Blue</source>
         <translation>Blau</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="779"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="829"/>
         <source>Cyan</source>
         <translation>Cian</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="782"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="832"/>
         <source>Magenta</source>
         <translation>Magenta</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="785"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="835"/>
         <source>Yellow</source>
         <translation>Groc</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="788"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="838"/>
         <source>Dark Red</source>
         <translation>Vermell fosc</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="791"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="841"/>
         <source>Dark Green</source>
         <translation>Verd fosc</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="794"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="844"/>
         <source>Dark Blue</source>
         <translation>Blau fosc</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="797"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="847"/>
         <source>Dark Cyan</source>
         <translation>Cian fosc</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="800"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="850"/>
         <source>Dark Magenta</source>
         <translation>Magenta fosc</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="803"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="853"/>
         <source>Dark Yellow</source>
         <translation>Groc fosc</translation>
     </message>
@@ -123,13 +125,26 @@
     <message>
         <location filename="../widgets/dkeysequenceedit.cpp" line="41"/>
         <source>Enter a new shortcut</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DLineEdit</name>
+    <message>
+        <location filename="../widgets/dlineedit.cpp" line="398"/>
+        <source>Text to Speech</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/dlineedit.cpp" line="414"/>
+        <source>Translation</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>DSearchEdit</name>
     <message>
-        <location filename="../widgets/dsearchedit.cpp" line="233"/>
+        <location filename="../widgets/dsearchedit.cpp" line="278"/>
         <source>Search</source>
         <translation>Cerca</translation>
     </message>
@@ -137,17 +152,17 @@
 <context>
     <name>DSettingsDialog</name>
     <message>
-        <location filename="../widgets/dsettingswidgetfactory.cpp" line="75"/>
+        <location filename="../widgets/dsettingswidgetfactory.cpp" line="77"/>
         <source>Cancel</source>
         <translation>Cancel·la</translation>
     </message>
     <message>
-        <location filename="../widgets/dsettingswidgetfactory.cpp" line="76"/>
+        <location filename="../widgets/dsettingswidgetfactory.cpp" line="78"/>
         <source>Replace</source>
         <translation>Reemplaça</translation>
     </message>
     <message>
-        <location filename="../widgets/dsettingswidgetfactory.cpp" line="78"/>
+        <location filename="../widgets/dsettingswidgetfactory.cpp" line="80"/>
         <source>This shortcut conflicts with %1, click on Add to make this shortcut effective immediately</source>
         <translation>Aquesta drecera té conflicte amb %1. Cliqueu a Afegeix per fer-la efectiva immediatament.</translation>
     </message>
@@ -166,14 +181,27 @@
     </message>
 </context>
 <context>
+    <name>DTextEdit</name>
+    <message>
+        <location filename="../widgets/dtextedit.cpp" line="115"/>
+        <source>Text to Speech</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/dtextedit.cpp" line="131"/>
+        <source>Translation</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
-        <location filename="../widgets/dsimplelistview.cpp" line="1331"/>
+        <location filename="../widgets/dsimplelistview.cpp" line="1333"/>
         <source>No search result</source>
         <translation>Cap resultat de la cerca</translation>
     </message>
     <message>
-        <location filename="../widgets/private/settings/content.cpp" line="280"/>
+        <location filename="../widgets/private/settings/content.cpp" line="284"/>
         <source>Restore Defaults</source>
         <translation>Restableix els valors per defecte</translation>
     </message>

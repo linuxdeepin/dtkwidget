@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="pl" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="pl">
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -20,87 +22,87 @@
 <context>
     <name>DCrumbEdit</name>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="755"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="805"/>
         <source>Black</source>
         <translation>Czarny</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="758"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="808"/>
         <source>White</source>
         <translation>Biały</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="761"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="811"/>
         <source>Dark Gray</source>
         <translation>Ciemnoszary</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="764"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="814"/>
         <source>Gray</source>
         <translation>Szary</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="767"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="817"/>
         <source>Light Gray</source>
         <translation>Jasnoszary</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="770"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="820"/>
         <source>Red</source>
         <translation>Czerwony</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="773"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="823"/>
         <source>Green</source>
         <translation>Zielony</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="776"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="826"/>
         <source>Blue</source>
         <translation>Niebieski</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="779"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="829"/>
         <source>Cyan</source>
         <translation>Turkusowy</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="782"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="832"/>
         <source>Magenta</source>
         <translation>Purpurowy</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="785"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="835"/>
         <source>Yellow</source>
         <translation>Żółty</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="788"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="838"/>
         <source>Dark Red</source>
         <translation>Ciemnoczerwony</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="791"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="841"/>
         <source>Dark Green</source>
         <translation>Ciemnozielony</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="794"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="844"/>
         <source>Dark Blue</source>
         <translation>Ciemnoniebieski</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="797"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="847"/>
         <source>Dark Cyan</source>
         <translation>Ciemnoturkusowy</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="800"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="850"/>
         <source>Dark Magenta</source>
         <translation>Ciemnopurpurowy</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="803"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="853"/>
         <source>Dark Yellow</source>
         <translation>Ciemnożółty</translation>
     </message>
@@ -123,13 +125,26 @@
     <message>
         <location filename="../widgets/dkeysequenceedit.cpp" line="41"/>
         <source>Enter a new shortcut</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DLineEdit</name>
+    <message>
+        <location filename="../widgets/dlineedit.cpp" line="398"/>
+        <source>Text to Speech</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/dlineedit.cpp" line="414"/>
+        <source>Translation</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>DSearchEdit</name>
     <message>
-        <location filename="../widgets/dsearchedit.cpp" line="233"/>
+        <location filename="../widgets/dsearchedit.cpp" line="278"/>
         <source>Search</source>
         <translation>Szukaj</translation>
     </message>
@@ -137,19 +152,19 @@
 <context>
     <name>DSettingsDialog</name>
     <message>
-        <location filename="../widgets/dsettingswidgetfactory.cpp" line="75"/>
+        <location filename="../widgets/dsettingswidgetfactory.cpp" line="77"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../widgets/dsettingswidgetfactory.cpp" line="76"/>
-        <source>Replace</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Anuluj</translation>
     </message>
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="78"/>
+        <source>Replace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/dsettingswidgetfactory.cpp" line="80"/>
         <source>This shortcut conflicts with %1, click on Add to make this shortcut effective immediately</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -166,14 +181,27 @@
     </message>
 </context>
 <context>
+    <name>DTextEdit</name>
+    <message>
+        <location filename="../widgets/dtextedit.cpp" line="115"/>
+        <source>Text to Speech</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/dtextedit.cpp" line="131"/>
+        <source>Translation</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
-        <location filename="../widgets/dsimplelistview.cpp" line="1331"/>
+        <location filename="../widgets/dsimplelistview.cpp" line="1333"/>
         <source>No search result</source>
         <translation>Brak wyników wyszukiwania</translation>
     </message>
     <message>
-        <location filename="../widgets/private/settings/content.cpp" line="280"/>
+        <location filename="../widgets/private/settings/content.cpp" line="284"/>
         <source>Restore Defaults</source>
         <translation>Przywróć domyślne</translation>
     </message>
