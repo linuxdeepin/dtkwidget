@@ -378,6 +378,13 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
         //测试朗读接口是否开启
         QDBusReply<bool> speechReply = testSpeech.call(QDBus::AutoDetect, "getTTSEnable");
 
+        QDBusInterface testReading("com.iflytek.aiassistant",
+                                   "/aiassistant/tts",
+                                   "com.iflytek.aiassistant.tts",
+                                   QDBusConnection::sessionBus());
+        //测试朗读是否在进行
+        QDBusReply<bool> readingReply = testReading.call(QDBus::AutoDetect, "isTTSInWorking");
+
         QDBusInterface testTranslate("com.iflytek.aiassistant",
                                    "/aiassistant/trans",
                                    "com.iflytek.aiassistant.trans",
@@ -395,7 +402,13 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
         menu->addSeparator();
 
         if (speechReply.value()) {
-            QAction *pAction_1 = menu->addAction(tr("Text to Speech"));
+            QAction *pAction_1 = nullptr;
+            if (readingReply.value()) {
+                pAction_1 = menu->addAction(tr("Stop reading"));
+            } else {
+                pAction_1 = menu->addAction(tr("Text to Speech"));
+            }
+
             connect(pAction_1, &QAction::triggered, this, [] {
                 QDBusInterface speechInterface("com.iflytek.aiassistant",
                                                 "/aiassistant/deepinmain",
@@ -403,7 +416,7 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
                                                 QDBusConnection::sessionBus());
 
                 if (speechInterface.isValid()) {
-                    speechInterface.call(QDBus::BlockWithGui, "TextToSpeech");//执行朗读
+                    speechInterface.call(QDBus::BlockWithGui, "TextToSpeech");//此函在第一次调用时朗读，在朗读状态下再次调用为停止朗读
                 } else {
                     qWarning() << "[DLineEdit] TextToSpeech ERROR";
                 }

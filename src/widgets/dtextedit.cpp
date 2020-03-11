@@ -95,6 +95,13 @@ void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
     //测试朗读接口是否开启
     QDBusReply<bool> speechReply = testSpeech.call(QDBus::AutoDetect, "getTTSEnable");
 
+    QDBusInterface testReading("com.iflytek.aiassistant",
+                               "/aiassistant/tts",
+                               "com.iflytek.aiassistant.tts",
+                               QDBusConnection::sessionBus());
+    //测试朗读是否在进行
+    QDBusReply<bool> readingReply = testReading.call(QDBus::AutoDetect, "isTTSInWorking");
+
     QDBusInterface testTranslate("com.iflytek.aiassistant",
                                "/aiassistant/trans",
                                "com.iflytek.aiassistant.trans",
@@ -103,7 +110,7 @@ void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
     QDBusReply<bool> translateReply = testTranslate.call(QDBus::AutoDetect, "getTransEnable");
 
     //测试服务是否存在
-    if (!speechReply.isValid() && !translateReply.value()) {
+    if (!speechReply.value() && !translateReply.value()) {
         QTextEdit::contextMenuEvent(e);
         return;
     }
@@ -112,7 +119,13 @@ void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
     menu->addSeparator();
 
     if (speechReply.value()) {
-        QAction *pAction = menu->addAction(tr("Text to Speech"));
+        QAction *pAction = nullptr;
+        if (readingReply.value()) {
+            pAction = menu->addAction(tr("Stop reading"));
+        } else {
+            pAction = menu->addAction(tr("Text to Speech"));
+        }
+
         connect(pAction, &QAction::triggered, this, [] {
             QDBusInterface speechInterface("com.iflytek.aiassistant",
                                  "/aiassistant/deepinmain",
@@ -120,7 +133,7 @@ void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
                                  QDBusConnection::sessionBus());
 
             if (speechInterface.isValid()) {
-                speechInterface.call(QDBus::BlockWithGui, "TextToSpeech");//执行朗读
+                speechInterface.call(QDBus::BlockWithGui, "TextToSpeech");//此函在第一次调用时朗读，在朗读状态下再次调用为停止朗读
             } else {
                 qWarning() << "[DTextEdit] TextToSpeech ERROR";
             }
