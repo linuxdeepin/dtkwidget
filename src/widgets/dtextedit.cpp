@@ -109,8 +109,15 @@ void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
     //测试翻译接口是否开启
     QDBusReply<bool> translateReply = testTranslate.call(QDBus::AutoDetect, "getTransEnable");
 
+    QDBusInterface testSpeechToText("com.iflytek.aiassistant",
+                               "/aiassistant/iat",
+                               "com.iflytek.aiassistant.iat",
+                               QDBusConnection::sessionBus());
+    //测试听写接口是否开启
+    QDBusReply<bool> speechToTextReply = testSpeechToText.call(QDBus::AutoDetect, "getIatEnable");
+
     //测试服务是否存在
-    if (!speechReply.value() && !translateReply.value()) {
+    if (!speechReply.value() && !translateReply.value() && !speechToTextReply.value()) {
         QTextEdit::contextMenuEvent(e);
         return;
     }
@@ -152,6 +159,22 @@ void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
                 translationInterface.call(QDBus::BlockWithGui, "TextToTranslate");//执行翻译
             } else {
                 qWarning() << "[DTextEdit] Translation ERROR";
+            }
+        });
+    }
+
+    if (speechToTextReply.value()) {
+        QAction *pAction_3 = menu->addAction(tr("Speech To Text"));
+        connect(pAction_3, &QAction::triggered, this, [] {
+            QDBusInterface speechToTextInterface("com.iflytek.aiassistant",
+                                 "/aiassistant/deepinmain",
+                                 "com.iflytek.aiassistant.mainWindow",
+                                 QDBusConnection::sessionBus());
+
+            if (speechToTextInterface.isValid()) {
+                speechToTextInterface.call(QDBus::BlockWithGui, "SpeechToText");//执行听写
+            } else {
+                qWarning() << "[DTextEdit] SpeechToText ERROR";
             }
         });
     }
