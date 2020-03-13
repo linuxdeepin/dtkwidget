@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ja" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="ja">
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -123,25 +125,30 @@
     <message>
         <location filename="../widgets/dkeysequenceedit.cpp" line="41"/>
         <source>Enter a new shortcut</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>DLineEdit</name>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="407"/>
+        <location filename="../widgets/dlineedit.cpp" line="434"/>
         <source>Stop reading</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="409"/>
+        <location filename="../widgets/dlineedit.cpp" line="436"/>
         <source>Text to Speech</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="427"/>
+        <location filename="../widgets/dlineedit.cpp" line="454"/>
         <source>Translate</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/dlineedit.cpp" line="470"/>
+        <source>Speech To Text</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -149,7 +156,7 @@
     <message>
         <location filename="../widgets/dsearchedit.cpp" line="278"/>
         <source>Search</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -157,17 +164,17 @@
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="77"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">キャンセル</translation>
     </message>
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="78"/>
         <source>Replace</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="80"/>
         <source>This shortcut conflicts with %1, click on Add to make this shortcut effective immediately</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -186,19 +193,24 @@
 <context>
     <name>DTextEdit</name>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="124"/>
+        <location filename="../widgets/dtextedit.cpp" line="132"/>
         <source>Stop reading</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="126"/>
+        <location filename="../widgets/dtextedit.cpp" line="134"/>
         <source>Text to Speech</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="144"/>
+        <location filename="../widgets/dtextedit.cpp" line="152"/>
         <source>Translate</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/dtextedit.cpp" line="168"/>
+        <source>Speech To Text</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -227,22 +239,22 @@
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="488"/>
         <source>Theme</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="489"/>
         <source>Light Theme</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="490"/>
         <source>Dark Theme</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="491"/>
         <source>System Theme</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="514"/>

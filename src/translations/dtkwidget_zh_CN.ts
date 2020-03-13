@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_CN" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="zh_CN">
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -129,19 +131,24 @@
 <context>
     <name>DLineEdit</name>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="407"/>
+        <location filename="../widgets/dlineedit.cpp" line="434"/>
         <source>Stop reading</source>
         <translation>停止朗读</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="409"/>
+        <location filename="../widgets/dlineedit.cpp" line="436"/>
         <source>Text to Speech</source>
         <translation>语音朗读</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="427"/>
+        <location filename="../widgets/dlineedit.cpp" line="454"/>
         <source>Translate</source>
         <translation>翻译</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dlineedit.cpp" line="470"/>
+        <source>Speech To Text</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -186,19 +193,24 @@
 <context>
     <name>DTextEdit</name>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="124"/>
+        <location filename="../widgets/dtextedit.cpp" line="132"/>
         <source>Stop reading</source>
         <translation>停止朗读</translation>
     </message>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="126"/>
+        <location filename="../widgets/dtextedit.cpp" line="134"/>
         <source>Text to Speech</source>
         <translation>语音朗读</translation>
     </message>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="144"/>
+        <location filename="../widgets/dtextedit.cpp" line="152"/>
         <source>Translate</source>
         <translation>翻译</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dtextedit.cpp" line="168"/>
+        <source>Speech To Text</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
