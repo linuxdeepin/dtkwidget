@@ -431,9 +431,9 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
         if (speechReply.value()) {
             QAction *pAction_1 = nullptr;
             if (readingReply.value()) {
-                pAction_1 = menu->addAction(tr("Stop reading"));
+                pAction_1 = menu->addAction(QCoreApplication::translate("DLineEdit", "Stop reading"));
             } else {
-                pAction_1 = menu->addAction(tr("Text to Speech"));
+                pAction_1 = menu->addAction(QCoreApplication::translate("DLineEdit", "Text to Speech"));
             }
 
             connect(pAction_1, &QAction::triggered, this, [] {
@@ -451,7 +451,7 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
         }
 
         if (translateReply.value()) {
-            QAction *pAction_2 = menu->addAction(tr("Translate"));
+            QAction *pAction_2 = menu->addAction(QCoreApplication::translate("DLineEdit", "Translate"));
             connect(pAction_2, &QAction::triggered, this, [] {
                 QDBusInterface translationInterface("com.iflytek.aiassistant",
                                      "/aiassistant/deepinmain",
@@ -467,7 +467,7 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
         }
 
         if (speechToTextReply.value() && speechToTextIsEnabled()) {
-            QAction *pAction_3 = menu->addAction(tr("Speech To Text"));
+            QAction *pAction_3 = menu->addAction(QCoreApplication::translate("DLineEdit", "Speech To Text"));
             connect(pAction_3, &QAction::triggered, this, [] {
                 QDBusInterface speechToTextInterface("com.iflytek.aiassistant",
                                      "/aiassistant/deepinmain",

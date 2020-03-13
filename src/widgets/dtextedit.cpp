@@ -7,6 +7,7 @@
 #include <QDBusInterface>
 #include <QDBusReply>
 #include <QDebug>
+#include <QCoreApplication>
 
 #include <DStyle>
 #include <DObjectPrivate>
@@ -128,9 +129,9 @@ void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
     if (speechReply.value()) {
         QAction *pAction = nullptr;
         if (readingReply.value()) {
-            pAction = menu->addAction(tr("Stop reading"));
+            pAction = menu->addAction(QCoreApplication::translate("DTextEdit", "Stop reading"));
         } else {
-            pAction = menu->addAction(tr("Text to Speech"));
+            pAction = menu->addAction(QCoreApplication::translate("DTextEdit", "Text to Speech"));
         }
 
         connect(pAction, &QAction::triggered, this, [] {
@@ -148,7 +149,7 @@ void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
     }
 
     if (translateReply.value()) {
-        QAction *pAction_2 = menu->addAction(tr("Translate"));
+        QAction *pAction_2 = menu->addAction(QCoreApplication::translate("DTextEdit", "Translate"));
         connect(pAction_2, &QAction::triggered, this, [] {
             QDBusInterface translationInterface("com.iflytek.aiassistant",
                                  "/aiassistant/deepinmain",
@@ -164,7 +165,7 @@ void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
     }
 
     if (speechToTextReply.value()) {
-        QAction *pAction_3 = menu->addAction(tr("Speech To Text"));
+        QAction *pAction_3 = menu->addAction(QCoreApplication::translate("DTextEdit", "Speech To Text"));
         connect(pAction_3, &QAction::triggered, this, [] {
             QDBusInterface speechToTextInterface("com.iflytek.aiassistant",
                                  "/aiassistant/deepinmain",
