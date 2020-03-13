@@ -391,6 +391,10 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
     } else if (event->type() == QEvent::FocusOut) {
         Q_EMIT focusChanged(false);
     } else if (watched == lineEdit() && event->type() == QEvent::ContextMenu) {
+        if (static_cast<QLineEdit*>(watched)->echoMode() == QLineEdit::Password) {
+            return QWidget::eventFilter(watched, event);
+        }
+
         QDBusInterface testSpeech("com.iflytek.aiassistant",
                                    "/aiassistant/tts",
                                    "com.iflytek.aiassistant.tts",
