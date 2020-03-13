@@ -47,6 +47,8 @@ public:
 
     QLineEdit *lineEdit;
     QHBoxLayout *hLayout;
+
+    bool bSpeechToText = true;
 };
 
 DWIDGET_END_NAMESPACE

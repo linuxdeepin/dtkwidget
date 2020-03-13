@@ -67,6 +67,9 @@ public:
 
     void setContextMenuPolicy(Qt::ContextMenuPolicy policy);
 
+    bool speechToTextIsEnabled() const;
+    void setSpeechToTextEnabled(bool enable);
+
 Q_SIGNALS:
     void alertChanged(bool alert) const;
     void focusChanged(bool onFocus) const;

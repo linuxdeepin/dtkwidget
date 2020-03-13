@@ -359,6 +359,26 @@ void DLineEdit::setContextMenuPolicy(Qt::ContextMenuPolicy policy)
 }
 
 /*!
+ * \~chinese \brief DLineEdit::speechToTextIsEnabled
+ * \~chinese \return true 显示语音听写菜单项 false不显示
+ */
+bool DLineEdit::speechToTextIsEnabled() const
+{
+    D_D(const DLineEdit);
+    return d->bSpeechToText;
+}
+
+/*!
+ * \~chinese \brief DLineEdit::setSpeechToTextEnabled 设置是否显示语音听写菜单项
+ * \~chinese \param enable true显示 flase不显示
+ */
+void DLineEdit::setSpeechToTextEnabled(bool enable)
+{
+    D_D(DLineEdit);
+    d->bSpeechToText = enable;
+}
+
+/*!
  * \~chinese \brief DLineEdit::eventFilter
  * \~chinese \row 该过滤器不做任何过滤动作，但会监控输入框的焦点状态，并发送信号 focusChanged()。
  */
@@ -446,7 +466,7 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
             });
         }
 
-        if (speechToTextReply.value()) {
+        if (speechToTextReply.value() && speechToTextIsEnabled()) {
             QAction *pAction_3 = menu->addAction(tr("Speech To Text"));
             connect(pAction_3, &QAction::triggered, this, [] {
                 QDBusInterface speechToTextInterface("com.iflytek.aiassistant",
