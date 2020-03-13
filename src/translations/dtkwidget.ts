@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="en">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="en" version="2.1">
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -148,7 +146,7 @@
     <message>
         <location filename="../widgets/dlineedit.cpp" line="470"/>
         <source>Speech To Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Speech To Text</translation>
     </message>
 </context>
 <context>
@@ -210,7 +208,7 @@
     <message>
         <location filename="../widgets/dtextedit.cpp" line="168"/>
         <source>Speech To Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Speech To Text</translation>
     </message>
 </context>
 <context>
