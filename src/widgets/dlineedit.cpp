@@ -440,6 +440,11 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
                 pAction_1 = menu->addAction(QCoreApplication::translate("DLineEdit", "Text to Speech"));
             }
 
+            //没有选中文本，则菜单置灰色
+            if (!pLineEdit->hasSelectedText()) {
+                pAction_1->setEnabled(false);
+            }
+
             connect(pAction_1, &QAction::triggered, this, [] {
                 QDBusInterface speechInterface("com.iflytek.aiassistant",
                                                 "/aiassistant/deepinmain",
@@ -456,6 +461,12 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
 
         if (translateReply.value()) {
             QAction *pAction_2 = menu->addAction(QCoreApplication::translate("DLineEdit", "Translate"));
+
+            //没有选中文本，则菜单置灰色
+            if (!pLineEdit->hasSelectedText()) {
+                pAction_2->setEnabled(false);
+            }
+
             connect(pAction_2, &QAction::triggered, this, [] {
                 QDBusInterface translationInterface("com.iflytek.aiassistant",
                                      "/aiassistant/deepinmain",

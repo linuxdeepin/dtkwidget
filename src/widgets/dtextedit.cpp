@@ -134,6 +134,11 @@ void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
             pAction = menu->addAction(QCoreApplication::translate("DTextEdit", "Text to Speech"));
         }
 
+        //没有选中文本，则菜单置灰色
+        if (textCursor().selectedText().isEmpty()) {
+            pAction->setEnabled(false);
+        }
+
         connect(pAction, &QAction::triggered, this, [] {
             QDBusInterface speechInterface("com.iflytek.aiassistant",
                                  "/aiassistant/deepinmain",
@@ -150,6 +155,12 @@ void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
 
     if (translateReply.value()) {
         QAction *pAction_2 = menu->addAction(QCoreApplication::translate("DTextEdit", "Translate"));
+
+        //没有选中文本，则菜单置灰色
+        if (textCursor().selectedText().isEmpty()) {
+            pAction_2->setEnabled(false);
+        }
+
         connect(pAction_2, &QAction::triggered, this, [] {
             QDBusInterface translationInterface("com.iflytek.aiassistant",
                                  "/aiassistant/deepinmain",
