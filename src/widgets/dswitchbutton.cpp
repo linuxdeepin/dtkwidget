@@ -78,7 +78,7 @@ void DSwitchButton::initStyleOption(DStyleOptionButton *option) const
 DSwitchButtonPrivate::DSwitchButtonPrivate(DSwitchButton *qq)
     : DObjectPrivate(qq)
 {
-    init();
+
 }
 
 DSwitchButtonPrivate::~DSwitchButtonPrivate()
