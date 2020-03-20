@@ -44,7 +44,8 @@ public:
     void init();
 
 public:
-    QSlider *slider;
+    SpecialSlider *slider;
+    bool handleVisible;
     Qt::Orientation orientation = Qt::Horizontal;
     QSlider::TickPosition aleDirection = QSlider::NoTicks;
 

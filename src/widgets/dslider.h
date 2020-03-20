@@ -24,6 +24,8 @@
 
 #include <QWidget>
 #include <QSlider>
+#include <QStyleOption>
+#include <QPainter>
 
 #include <dtkwidget_global.h>
 #include <dobject.h>
@@ -75,6 +77,9 @@ public:
     QSlider::TickPosition tickPosition() const;
     QSize sizeHint() const override;
 
+    void setHandleVisible(bool b);
+    bool handleVisible() const;
+
 Q_SIGNALS:
     void valueChanged(int value);
 
@@ -91,6 +96,31 @@ protected:
 
     bool event(QEvent *event) override;
     bool eventFilter(QObject *watched, QEvent *event) override;
+};
+
+class SpecialSlider : public QSlider {
+public:
+    SpecialSlider(Qt::Orientation orientation, QWidget *parent = nullptr) : QSlider(orientation, parent) {
+    }
+
+    void paintEvent(QPaintEvent *ev) {
+        Q_UNUSED(ev)
+        QPainter p(this);
+        QStyleOptionSlider opt;
+        initStyleOption(&opt);
+
+        DSlider* dSlider = qobject_cast<DSlider *>(this->parent());
+
+        if (!dSlider)
+            return;
+
+        if (dSlider->handleVisible())
+            opt.subControls = QStyle::SC_SliderGroove | QStyle::SC_SliderHandle;
+        else
+            opt.subControls = QStyle::SC_SliderGroove;
+
+        style()->drawComplexControl(QStyle::CC_Slider, &opt, &p, this);
+    }
 };
 
 DWIDGET_END_NAMESPACE

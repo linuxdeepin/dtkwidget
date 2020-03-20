@@ -550,6 +550,23 @@ QSize DSlider::sizeHint() const
     return size;
 }
 
+void DSlider::setHandleVisible(bool b)
+{
+    D_D(DSlider);
+
+    if (d->handleVisible == b)
+        return;
+
+    d->handleVisible = b;
+    update();
+}
+
+bool DSlider::handleVisible() const
+{
+    D_DC(DSlider);
+    return d->handleVisible;
+}
+
 DSliderPrivate::DSliderPrivate(DSlider *q)
     : DObjectPrivate(q)
     , slider(nullptr)
@@ -559,6 +576,7 @@ DSliderPrivate::DSliderPrivate(DSlider *q)
     , right(nullptr)
     , tipvalue(nullptr)
     , label(nullptr)
+    , handleVisible(true)
     , mouseWheelEnabled(false)
 {
 
@@ -568,7 +586,7 @@ void DSliderPrivate::init()
 {
     D_Q(DSlider);
 
-    slider = new QSlider(orientation);
+    slider = new SpecialSlider(orientation, q);
     q->connect(slider, &QSlider::valueChanged, q, &DSlider::valueChanged);
     q->connect(slider, &QSlider::sliderPressed, q, &DSlider::sliderPressed);
     q->connect(slider, &QSlider::sliderMoved, q, &DSlider::sliderMoved);
