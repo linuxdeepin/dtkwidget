@@ -184,6 +184,7 @@ DSearchEdit::DSearchEdit(QWidget *parent)
     D_D(DSearchEdit);
 
     d->init();
+    setSpeechToTextEnabled(false);
 }
 
 DSearchEdit::~DSearchEdit()
