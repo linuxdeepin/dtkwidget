@@ -138,15 +138,16 @@ public:
         connect(leftScrollButton, &DIconButton::clicked, d->leftB, &QToolButton::click);
         connect(rightScrollButton, &DIconButton::clicked, d->rightB, &QToolButton::click);
 
-        QHBoxLayout *layout = new QHBoxLayout(qq);
-
+        layout = new QHBoxLayout(qq);
+        stretch = new QSpacerItem(1, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
         layout->setContentsMargins(0, 0, 0, 0);
         layout->setSpacing(0);
         layout->addWidget(leftScrollButton);
         layout->addWidget(this);
         layout->addWidget(rightScrollButton);
         layout->addWidget(addButton);
-        layout->addStretch();
+        layout->addSpacerItem(stretch);
+        d->expanding = false;
 
         qq->setFocusProxy(this);
 
@@ -263,6 +264,8 @@ public:
 
     DIconButton *leftScrollButton;
     DIconButton *rightScrollButton;
+    QHBoxLayout *layout;
+    QSpacerItem *stretch;
 
     class FullWidget : public QWidget {
     public:
@@ -1673,12 +1676,27 @@ void DTabBar::setSelectionBehaviorOnRemove(QTabBar::SelectionBehavior behavior)
 
 bool DTabBar::expanding() const
 {
-    return d_func()->expanding();
+    QTabBarPrivate *dd = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_func()->d_ptr));
+    return dd->expanding;
 }
 
 void DTabBar::setExpanding(bool enabled)
 {
-    d_func()->setExpanding(enabled);
+    D_D(DTabBar);
+
+    if (enabled == expanding())
+        return;
+    QTabBarPrivate *dd = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d->d_ptr));
+    dd->expanding = enabled;
+    QHBoxLayout *auto_layout = d->layout;
+
+    if (enabled) {
+        auto_layout->removeItem(d->stretch);
+        d->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+    } else {
+        auto_layout->addSpacerItem(d->stretch);
+        d->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Fixed);
+    }
 }
 
 bool DTabBar::isMovable() const
