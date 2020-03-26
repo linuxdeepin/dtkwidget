@@ -154,6 +154,8 @@ public:
 
     QWindow *dragIconWindow() const;
 
+    void setEnabledEmbedStyle(bool enable);
+
 Q_SIGNALS:
     void currentChanged(int index);
     void tabCloseRequested(int index);

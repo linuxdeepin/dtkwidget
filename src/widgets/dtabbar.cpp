@@ -124,6 +124,7 @@ public:
 
         leftScrollButton = new DIconButton(DStyle::SP_ArrowLeft, qq);
         rightScrollButton = new DIconButton(DStyle::SP_ArrowRight, qq);
+        rightScrollButton->setObjectName("rightButton");
 
         leftScrollButton->setVisible(d->leftB->isVisible());
         leftScrollButton->setAutoRepeat(true);
@@ -145,6 +146,7 @@ public:
         layout->addWidget(leftScrollButton);
         layout->addWidget(this);
         layout->addWidget(rightScrollButton);
+        layout->addSpacing(DStyle::pixelMetric(style(), DStyle::PM_ContentsSpacing));
         layout->addWidget(addButton);
         layout->addSpacerItem(stretch);
         d->expanding = false;
@@ -1772,6 +1774,16 @@ QWindow *DTabBar::dragIconWindow() const
     }
 
     return nullptr;
+}
+
+/*!
+ * \~chinese \brief DTabBar::setEnabledEmbedStyle 启用直角样式的Tabbar
+ * \~chinese \row 此风格适用于切换窗口的操作,多用于支持多开的应用
+ * \param replace true 启用，false 恢复
+ */
+void DTabBar::setEnabledEmbedStyle(bool enable)
+{
+    setProperty("_d_dtk_tabbartab_type", enable);
 }
 
 /*!
