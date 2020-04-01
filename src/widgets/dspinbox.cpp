@@ -136,6 +136,11 @@ int DSpinBox::defaultValue() const
     return 0;
 }
 
+void DSpinBox::setEnabledEmbedStyle(bool enabled)
+{
+    setProperty("_d_dtk_spinBox", enabled);
+}
+
 void DSpinBox::setAlert(bool alert)
 {
     D_D(DSpinBox);

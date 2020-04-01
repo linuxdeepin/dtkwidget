@@ -41,6 +41,8 @@ public:
     bool isAlert() const;
     D_DECL_DEPRECATED int defaultValue() const;
 
+    void setEnabledEmbedStyle(bool enabled);
+
 public Q_SLOTS:
     void setAlert(bool alert);
     D_DECL_DEPRECATED void setDefaultValue(int defaultValue);
