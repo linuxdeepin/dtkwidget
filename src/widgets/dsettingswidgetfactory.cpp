@@ -389,7 +389,7 @@ QPair<QWidget *, QWidget *> createButtonGroupOptionHandle(QObject *opt)
 
     auto items = option->data("items").toStringList();
     rightWidget->setButtons(items);
-    rightWidget->setCheckedButton(0);
+    rightWidget->setCheckedButton(option->value().toInt());
 
     auto translateContext = opt->property(PRIVATE_PROPERTY_translateContext).toByteArray();
 
