@@ -86,6 +86,7 @@ Content::Content(QWidget *parent)
     d->contentLayout->setRowWrapPolicy(QFormLayout::DontWrapRows);
     d->contentLayout->setLabelAlignment(Qt::AlignLeft);
     d->contentLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
+    d->contentLayout->setContentsMargins(0, 0, d->contentArea->verticalScrollBar()->height(), 0);
     layout->addWidget(d->contentArea);
 
     d->contentArea->setWidget(d->contentFrame);
