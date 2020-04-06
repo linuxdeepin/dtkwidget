@@ -8,6 +8,7 @@
 #include <QDBusReply>
 #include <QDebug>
 #include <QCoreApplication>
+#include <QTimer>
 
 #include <DStyle>
 #include <DObjectPrivate>
@@ -191,7 +192,17 @@ void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
         });
     }
 
-    menu->setAttribute(Qt::WA_DeleteOnClose);
+    //FIXME: 由于Qt在UOS系统环境下不明原因的bug,使用menu->setAttribute(Qt::WA_DeleteOnClose) 销毁menu会在特定情况下出现崩溃的问题，这里采用一种变通的做法
+    connect(menu, &QMenu::aboutToHide, this, [=] {
+        if (menu->activeAction()) {
+            menu->deleteLater();
+        } else {
+            QTimer::singleShot(0, this, [=] {
+                menu->deleteLater();
+            });
+        }
+    });
+
     menu->popup(e->globalPos());
 }
 

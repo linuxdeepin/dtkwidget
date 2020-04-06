@@ -19,6 +19,7 @@
 #include <QDBusInterface>
 #include <QDBusReply>
 #include <QDebug>
+#include <QTimer>
 
 #include "dlineedit.h"
 #include "private/dlineedit_p.h"
@@ -497,7 +498,17 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
             });
         }
 
-        menu->setAttribute(Qt::WA_DeleteOnClose);
+        //FIXME: 由于Qt在UOS系统环境下不明原因的bug,使用menu->setAttribute(Qt::WA_DeleteOnClose) 销毁menu会在特定情况下出现崩溃的问题，这里采用一种变通的做法
+        connect(menu, &QMenu::aboutToHide, this, [=] {
+            if (menu->activeAction()) {
+                menu->deleteLater();
+            } else {
+                QTimer::singleShot(0, this, [=] {
+                    menu->deleteLater();
+                });
+            }
+        });
+
         menu->popup(static_cast<QContextMenuEvent*>(event)->globalPos());
         event->accept();
         return true;
