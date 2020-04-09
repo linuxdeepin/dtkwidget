@@ -1685,6 +1685,8 @@ int DStyle::styleHint(QStyle::StyleHint sh, const QStyleOption *opt, const QWidg
         return Qt::TabFocus;
     case SH_ScrollView_FrameOnlyAroundContents:
         return false;
+    case SH_LineEdit_PasswordCharacter:
+        return 0x25CF;
     default:
         break;
     }
