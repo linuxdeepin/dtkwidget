@@ -37,6 +37,7 @@
 #include <DFontSizeManager>
 #include <DKeySequenceEdit>
 #include <DSuggestButton>
+#include <DButtonBox>
 #include <DTipLabel>
 #include <DDialog>
 
@@ -383,23 +384,30 @@ QPair<QWidget *, QWidget *> createComboBoxOptionHandle(QObject *opt)
 
 QPair<QWidget *, QWidget *> createButtonGroupOptionHandle(QObject *opt)
 {
-    auto option = qobject_cast<DTK_CORE_NAMESPACE::DSettingsOption *>(opt);
-    auto rightWidget = new ButtonGroup();
-    rightWidget->setObjectName("OptionButtonGroup");
+    QList<DButtonBoxButton *> btnList;
 
+    auto option = qobject_cast<DTK_CORE_NAMESPACE::DSettingsOption *>(opt);
     auto items = option->data("items").toStringList();
-    rightWidget->setButtons(items);
-    rightWidget->setCheckedButton(option->value().toInt());
+    for (const auto item : items) {
+        auto btn = new DButtonBoxButton(item);
+        btnList.append(btn);
+    }
+
+    auto rightWidget = new DButtonBox();
+    rightWidget->setObjectName("OptionButtonBox");
+    rightWidget->setButtonList(btnList, true);
+    rightWidget->setMaximumWidth(60 * btnList.count());
+    btnList.at(option->value().toInt())->setChecked(true);
 
     auto translateContext = opt->property(PRIVATE_PROPERTY_translateContext).toByteArray();
-
-    option->connect(rightWidget, &ButtonGroup::buttonChecked,
-    option, [ = ](int id) {
-        option->setValue(id);
+    option->connect(rightWidget, &DButtonBox::buttonToggled, option, [option, rightWidget ] (QAbstractButton * toggleBtn, bool) {
+        int index = rightWidget->buttonList().indexOf(toggleBtn);
+        option->setValue(index);
     });
     option->connect(option, &DTK_CORE_NAMESPACE::DSettingsOption::valueChanged,
-    rightWidget, [ = ](const QVariant & value) {
-        rightWidget->setCheckedButton(value.toInt());
+                    rightWidget, [ = ](const QVariant & value) {
+        int index = value.toInt();
+        btnList.at(index)->setChecked(true);
         rightWidget->update();
     });
 
