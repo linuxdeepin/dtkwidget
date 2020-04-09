@@ -21,13 +21,18 @@
 #include "dipv4lineedit.h"
 #include "dspinbox.h"
 #include "dcrumbedit.h"
+#include "dalertcontrol.h"
 
+#include <QComboBox>
 #include <dthememanager.h>
 
 #include <QPixmap>
 #include <QDebug>
 #include <QTimer>
 #include <QCheckBox>
+#include <QVariantAnimation>
+#include <QEasingCurve>
+
 
 InputTab::InputTab(QWidget *parent) : QLabel(parent)
 {
@@ -42,10 +47,63 @@ InputTab::InputTab(QWidget *parent) : QLabel(parent)
     DTK_WIDGET_NAMESPACE::DPasswordEdit *pwdEdit2 = new DTK_WIDGET_NAMESPACE::DPasswordEdit(this);
     pwdEdit2->setText("password");
     pwdEdit2->setEchoMode(QLineEdit::Normal);
-    pwdEdit2->setAlert(true);
+
+    pwdEdit2->showAlertMessage("this is an alert message...");
     pwdEdit2->move(20, 50);
     connect(pwdEdit2, &DTK_WIDGET_NAMESPACE::DPasswordEdit::focusChanged, [](bool focus) {qDebug() << "focus: " << focus;});
-    connect(pwdEdit2, &DTK_WIDGET_NAMESPACE::DPasswordEdit::textChanged, [](const QString &text) {qDebug() << "text: " << text;});
+    connect(pwdEdit2, &DTK_WIDGET_NAMESPACE::DPasswordEdit::textChanged, [=](const QString &text) {
+        qDebug() << "text: " << text << pwdEdit2->alertMessageAlignment();
+        if (pwdEdit2->isAlert()) {
+            pwdEdit2->setAlertMessageAlignment(Qt::AlignLeft);
+        } else if (pwdEdit2->isEchoMode()) {
+            pwdEdit2->setAlertMessageAlignment(Qt::AlignRight);
+        } else {
+            pwdEdit2->setAlertMessageAlignment(Qt::AlignCenter);
+        }
+
+        pwdEdit2->showAlertMessage("this is an alert message..."+text, nullptr);
+        pwdEdit2->setAlert(!pwdEdit2->isAlert());
+    });
+
+    QComboBox *combo = new QComboBox(this);
+    combo->setEditable(true);
+    combo->addItem("left");
+    combo->addItem("right");
+    combo->addItem("center");
+    combo->addItem("item");
+    DTK_WIDGET_NAMESPACE::DAlertControl *ac = new DTK_WIDGET_NAMESPACE::DAlertControl(combo/*->lineEdit()*/, combo);
+    ac->setMessageAlignment(Qt::AlignRight);
+
+    combo->move(550, 150);
+    combo->setMinimumWidth(150);
+
+    QVariantAnimation *ma = new QVariantAnimation(combo);
+    connect(ma, &QVariantAnimation::valueChanged, [combo](const QVariant &value){
+        QPoint p = combo->pos();
+        p.setX(value.toInt());
+        combo->move(p);
+    });
+    ma->setDuration(6000);
+    ma->setStartValue(550);
+    ma->setEndValue(700);
+
+    connect(combo, &QComboBox::editTextChanged,  [=](const QString &text){
+        //ac->showAlertMessage("this is an alert message...");
+        if (text == "left") {
+            ac->setMessageAlignment(Qt::AlignLeft);
+        } else if (text == "right") {
+            ac->setMessageAlignment(Qt::AlignRight);
+        } else if (text == "center") {
+            ac->setMessageAlignment(Qt::AlignCenter);
+        }
+
+        ac->showAlertMessage("this is an alert message..."+text, combo, 10000);
+        ac->setAlert(!ac->isAlert());
+
+        combo->move(550, 150);
+        ma->start();
+    });
+
 
     DTK_WIDGET_NAMESPACE::DSearchEdit *searchEdit = new DTK_WIDGET_NAMESPACE::DSearchEdit(this);
     //searchEdit->setSearchIcon(":/images/button.png");

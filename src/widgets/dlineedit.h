@@ -46,6 +46,8 @@ public:
     bool isAlert() const;
     void showAlertMessage(const QString &text, int duration = 3000);
     void showAlertMessage(const QString &text, QWidget *follower, int duration = 3000);
+    void setAlertMessageAlignment(Qt::Alignment alignment);
+    Qt::Alignment alertMessageAlignment() const;
     void hideAlertMessage();
 
     void setLeftWidgets(const QList<QWidget *> &list);

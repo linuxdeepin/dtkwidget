@@ -49,7 +49,8 @@ HEADERS += \
     $$PWD/dkeysequenceedit_p.h \
     $$PWD/dlabel_p.h \
     $$PWD/dframe_p.h \
-    $$PWD/ddrawer_p.h
+    $$PWD/ddrawer_p.h \
+    $$PWD/dalertcontrol_p.h
 
 SOURCES += \
     $$PWD/dthemehelper.cpp

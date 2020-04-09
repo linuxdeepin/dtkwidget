@@ -1,5 +1,9 @@
 /*
- * Copyright (C) 2015 ~ 2017 Deepin Technology Co., Ltd.
+ * Copyright (C) 2020 ~ 2021 Deepin Technology Co., Ltd.
+ *
+ * Author:     ck <chenke@uniontech.com>
+ *
+ * Maintainer: ck <chenke@uniontech.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,41 +19,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DLINEEDIT_P_H
-#define DLINEEDIT_P_H
-
-#include "dlineedit.h"
+#ifndef DALERTCONTROL_P_H
+#define DALERTCONTROL_P_H
 #include "dalertcontrol.h"
-
 #include <DObjectPrivate>
 #include <QPointer>
-#include <DFloatingWidget>
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DToolTip;
-class DLineEditPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
+class DAlertControlPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 {
-    Q_DECLARE_PUBLIC(DLineEdit)
-
+    Q_DECLARE_PUBLIC(DAlertControl)
 public:
-    DLineEditPrivate(DLineEdit *q);
+    DAlertControlPrivate(DAlertControl *q);
+
     void updateTooltipPos();
 
-    void init();
-
-    DAlertControl *control{nullptr};
-
-    QWidget *leftWidget;
-    QWidget *rightWidget;
-
-    QLineEdit *lineEdit;
-    QHBoxLayout *hLayout;
-
-    bool bSpeechToText = true;
+private:
+    bool isAlert = false;
+    QPointer<DToolTip> tooltip;
+    QPointer<DFloatingWidget> frame;
+    QWidget *follower{nullptr};
+    QWidget *target{nullptr};
+    QColor  alertColor;
+    Qt::Alignment alignment{Qt::AlignLeft};
 };
 
 DWIDGET_END_NAMESPACE
 
-#endif // DLINEEDIT_P_H
-
+#endif // DALERTCONTROL_P_H

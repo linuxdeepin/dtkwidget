@@ -119,7 +119,8 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dtextedit.h \
     $$PWD/ddrawer.h \
     $$PWD/darrowlinedrawer.h \
-    $$PWD/ddrawergroup.h
+    $$PWD/ddrawergroup.h \
+    $$PWD/dalertcontrol.h
 
 SOURCES += $$PWD/dslider.cpp \
     $$PWD/dbackgroundgroup.cpp \
@@ -198,7 +199,8 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dtextedit.cpp \
     $$PWD/ddrawer.cpp \
     $$PWD/darrowlinedrawer.cpp \
-    $$PWD/ddrawergroup.cpp
+    $$PWD/ddrawergroup.cpp \
+    $$PWD/dalertcontrol.cpp
 
 RESOURCES += \
     $$PWD/icons.qrc \
@@ -355,4 +357,5 @@ includes.files += \
     $$PWD/DLabel \
     $$PWD/DDrawer \
     $$PWD/DDrawerGroup \
-    $$PWD/DArrowLineDrawer
+    $$PWD/DArrowLineDrawer \
+    $$PWD/DAlertControl

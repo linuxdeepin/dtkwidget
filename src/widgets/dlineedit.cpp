@@ -88,24 +88,8 @@ DLineEdit::DLineEdit(DLineEditPrivate &q, QWidget *parent)
 void DLineEdit::setAlert(bool isAlert)
 {
     Q_D(DLineEdit);
-
-    if (isAlert == d->m_isAlert) {
-        return;
-    }
-
-    d->m_isAlert = isAlert;
-
-    DPalette p = palette();
-
-    if (isAlert) {
-        p.setColor(QPalette::Button, QColor(241, 57, 50, qRound(0.15 * 255)));
-        d->lineEdit->setPalette(p);
-    } else {
-        d->lineEdit->setPalette(QPalette());
-    }
-    update();
-
-    Q_EMIT alertChanged(isAlert);
+    //qDebug() << "setAlert..." << isAlert;
+    d->control->setAlert(isAlert);
 }
 
 /*!
@@ -114,8 +98,7 @@ void DLineEdit::setAlert(bool isAlert)
 bool DLineEdit::isAlert() const
 {
     D_DC(DLineEdit);
-
-    return d->m_isAlert;
+    return d->control->isAlert();
 }
 
 void DLineEdit::showAlertMessage(const QString &text, int duration)
@@ -134,45 +117,25 @@ void DLineEdit::showAlertMessage(const QString &text, int duration)
 void DLineEdit::showAlertMessage(const QString &text, QWidget *follower, int duration)
 {
     D_D(DLineEdit);
+    d->control->showAlertMessage(text, follower ? follower : this, duration);
+}
 
-    if (!d->tooltip) {
-        d->tooltip = new DToolTip(text);
-        d->tooltip->setObjectName("AlertTooltip");
-        d->tooltip->setForegroundRole(DPalette::TextWarning);
-        d->tooltip->setWordWrap(true);
+/*!
+ * \~chinese \brief DLineEdit::setAlertMessageAlignment 指定对齐方式
+ * \~chinese \row 现只支持(下)左，(下)右，(下水平)居中， 默认左对齐.
+ * \~chinese \row \note 参数为其他时，默认左对齐
+ * \~chinese \param alignment 消息对齐方式
+ */
+void DLineEdit::setAlertMessageAlignment(Qt::Alignment alignment)
+{
+    D_D(DLineEdit);
+    d->control->setMessageAlignment(alignment);
+}
 
-        d->frame = new DFloatingWidget;
-        d->frame->setFramRadius(DStyle::pixelMetric(style(), DStyle::PM_FrameRadius));
-        d->frame->setBackgroundRole(QPalette::ToolTipBase);
-        d->frame->setWidget(d->tooltip);
-    }
-
-    if (follower) {
-        d->frame->setParent(follower->parentWidget());
-        d->follower = follower;
-        installEventFilter(follower);
-    } else {
-        d->frame->setParent(parentWidget());
-        d->follower = nullptr;
-    }
-
-    d->tooltip->setText(text);
-    if (d->frame->parent()) {
-        d->updateTooltipPos();
-        d->frame->show();
-        d->frame->adjustSize();
-        d->frame->raise();
-    }
-    if (duration < 0)
-        return;
-
-    QTimer::singleShot(duration, this, [ = ] {
-        d->frame->close();
-        if (d->follower) {
-            this->removeEventFilter(d->follower);
-            d->follower = nullptr;
-        }
-    });
+Qt::Alignment DLineEdit::alertMessageAlignment() const
+{
+    D_DC(DLineEdit);
+    return d->control->messageAlignment();
 }
 
 /*!
@@ -182,14 +145,16 @@ void DLineEdit::showAlertMessage(const QString &text, QWidget *follower, int dur
 void DLineEdit:: hideAlertMessage()
 {
     Q_D(DLineEdit);
-
-    if (d->frame) {
-        d->frame->hide();
-        if (d->follower) {
-            this->removeEventFilter(d->follower);
-            d->follower = nullptr;
-        }
+    if (d->control) {
+        d->control->hideAlertMessage();
     }
+//    if (d->frame) {
+//        d->frame->hide();
+//        if (d->follower) {
+//            this->removeEventFilter(d->follower);
+//            d->follower = nullptr;
+//        }
+//    }
 }
 
 /*!
@@ -518,31 +483,29 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
         return true;
     }
 
-    if (d->frame)
-    {
-        if (watched == d->follower && event->type() == QEvent::Move) {
-            d->updateTooltipPos();
-        }
-    }
+//    if (d->frame)
+//    {
+//        if (watched == d->follower && event->type() == QEvent::Move) {
+//            d->updateTooltipPos();
+//        }
+//    }
 
     return QWidget::eventFilter(watched, event);
 }
 
 bool DLineEdit::event(QEvent *e)
 {
-    D_D(DLineEdit);
+    //D_D(DLineEdit);
 
-    if (e->type() == QEvent::Move || e->type() == QEvent::Resize) {
-        if (d->frame)
-            d->updateTooltipPos();
-    }
+//    if (e->type() == QEvent::Move || e->type() == QEvent::Resize) {
+//        if (d->frame)
+//            d->updateTooltipPos();
+//    }
     return QWidget::event(e);
 }
 
 DLineEditPrivate::DLineEditPrivate(DLineEdit *q)
     : DObjectPrivate(q)
-    , tooltip(nullptr)
-    , frame(nullptr)
     , leftWidget(nullptr)
     , rightWidget(nullptr)
     , lineEdit(nullptr)
@@ -553,14 +516,7 @@ DLineEditPrivate::DLineEditPrivate(DLineEdit *q)
 
 void DLineEditPrivate::updateTooltipPos()
 {
-    Q_Q(DLineEdit);
-    int w = DStyle::pixelMetric(q->style(), DStyle::PM_FloatingWidgetShadowMargins) / 2;
-    QPoint point = QPoint(q->lineEdit()->x() - w, q->lineEdit()->y() + q->lineEdit()->height() - w);
-    frame->move(q->mapTo(qobject_cast<QWidget *>(frame->parentWidget()), point));
-    int tipWidget = frame->parentWidget()->width() * 0.8;
-    tooltip->setMaximumWidth(tipWidget);
-    frame->setMinimumHeight(tooltip->heightForWidth(tipWidget) + frame->layout()->spacing() *2);
-    frame->adjustSize();
+    //control->updateTooltipPos();
 }
 
 void DLineEditPrivate::init()
@@ -568,7 +524,10 @@ void DLineEditPrivate::init()
     Q_Q(DLineEdit);
 
     hLayout = new QHBoxLayout(q);
-    lineEdit = new QLineEdit;
+    lineEdit = new QLineEdit(q);
+
+    control = new DAlertControl(lineEdit, q);
+    q->connect(control, &DAlertControl::alertChanged, q, &DLineEdit::alertChanged);
 
     hLayout->setContentsMargins(0, 0, 0, 0);
     hLayout->addWidget(lineEdit);
