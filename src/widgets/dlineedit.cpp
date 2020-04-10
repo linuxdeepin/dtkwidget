@@ -514,6 +514,7 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
 
         menu->popup(static_cast<QContextMenuEvent*>(event)->globalPos());
         event->accept();
+        pLineEdit->setFocus();
         return true;
     }
 
