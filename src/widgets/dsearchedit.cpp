@@ -328,7 +328,13 @@ void DSearchEditPrivate::init()
 
 #ifdef ENABLE_AI
     // 语音输入按钮
-    if (DSysInfo::deepinType() != DSysInfo::DeepinServer) {
+    QDBusInterface testSpeechToText("com.iflytek.aiassistant",
+                               "/aiassistant/iat",
+                               "com.iflytek.aiassistant.iat",
+                               QDBusConnection::sessionBus());
+    // 测试听写接口是否开启
+    QDBusReply<bool> speechToTextReply = testSpeechToText.call(QDBus::AutoDetect, "getIatEnable");
+    if (speechToTextReply.isValid() && speechToTextReply.value()) {
         voiceAction = new QAction(q);
         voiceAction->setIcon(QIcon::fromTheme("button_voice"));
         voiceAction->setCheckable(true);
