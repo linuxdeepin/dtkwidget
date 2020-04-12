@@ -424,13 +424,16 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
         //测试听写接口是否开启
         QDBusReply<bool> speechToTextReply = testSpeechToText.call(QDBus::AutoDetect, "getIatEnable");
 
-        //朗读,翻译,听写都没有开启，则直接返回
-        if (!speechReply.value() && !translateReply.value() && !speechToTextReply.value()) {
-            return QWidget::eventFilter(watched, event);
-        }
-
         QLineEdit *pLineEdit = static_cast<QLineEdit*>(watched);
         QMenu *menu = pLineEdit->createStandardContextMenu();
+
+        //朗读,翻译,听写都没有开启，则弹出默认菜单
+        if (!speechReply.value() && !translateReply.value() && !speechToTextReply.value()) {
+            menu->popup(static_cast<QContextMenuEvent*>(event)->globalPos());
+            event->accept();
+            return true;
+        }
+
         menu->addSeparator();
 
         if (speechReply.value()) {
