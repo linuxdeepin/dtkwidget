@@ -143,10 +143,6 @@ public:
 
             // 先找到最大宽度
             for (const DViewItemAction *action : list) {
-                if (!action->isVisible()) {
-                    continue;
-                }
-
                 size_list.append(actionSize(action, action->maximumSize(), fallbackIconSize, spacing));
 
                 if (action->alignment().testFlag(Qt::AlignVCenter)) {
@@ -167,10 +163,6 @@ public:
 
             // 开始布局
             for (int i = 0; i < list.size(); ++i) {
-                if (!list.at(i)->isVisible()) {
-                    continue;
-                }
-
                 const DViewItemAction *action = list.at(i);
 
                 if (action->alignment().testFlag(Qt::AlignVCenter)) {
@@ -195,10 +187,6 @@ public:
 
             // 先找到最大高度
             for (const DViewItemAction *action : list) {
-                if (!action->isVisible()) {
-                    continue;
-                }
-
                 size_list.append(actionSize(action, action->maximumSize(), fallbackIconSize, spacing));
 
                 if (action->alignment().testFlag(Qt::AlignHCenter)) {
@@ -219,10 +207,6 @@ public:
 
             // 开始布局
             for (int i = 0; i < list.size(); ++i) {
-                if (!list.at(i)->isVisible()) {
-                    continue;
-                }
-
                 const DViewItemAction *action = list.at(i);
 
                 if (action->alignment().testFlag(Qt::AlignHCenter)) {
