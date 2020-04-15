@@ -1,2 +1,1 @@
-#include "dwidgetstype.h"
-#include <QSpinBox>
+#include "dspinbox.h"
