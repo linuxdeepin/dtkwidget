@@ -297,9 +297,16 @@ public:
     static QSize drawActions(QPainter *pa, const QStyleOptionViewItem &option, const QVariant &value, Qt::Edge edge, QList<QPair<QAction*, QRect>> *clickableActionRect)
     {
         const DViewItemActionList &actionList = qvariant_cast<DViewItemActionList>(value);
+        DViewItemActionList visiable_actionList;
+        for (auto action : actionList) {
+            if (action->isVisible()) {
+                visiable_actionList.append(action);
+            }
+        }
+
         const Qt::Orientation orientation = (edge == Qt::TopEdge || edge == Qt::BottomEdge) ? Qt::Vertical : Qt::Horizontal;
         QSize bounding;
-        const QList<QRect> &list = doActionsLayout(option.rect, actionList, orientation, option.direction, option.decorationSize, &bounding);
+        const QList<QRect> &list = doActionsLayout(option.rect, visiable_actionList, orientation, option.direction, option.decorationSize, &bounding);
         QPoint origin(0, 0);
         int spacing = DStyleHelper(qApp->style()).pixelMetric(DStyle::PM_ContentsSpacing);
 
@@ -315,7 +322,7 @@ public:
         }
 
         for (int i = 0; i < list.count(); ++i) {
-            DViewItemAction *action = actionList.at(i);
+            DViewItemAction *action = visiable_actionList.at(i);
             const QRect &rect = list.at(i).translated(origin);
 
             drawAction(pa, option, rect, action, spacing);
