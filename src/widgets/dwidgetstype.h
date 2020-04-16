@@ -93,8 +93,6 @@ typedef QDockWidget DDockWidget;
 typedef QComboBox DComboBox;
 typedef QFontComboBox DFontComboBox;
 typedef QPlainTextEdit DPlainTextEdit;
-typedef QSpinBox DSpinBox;
-typedef QDoubleSpinBox DDoubleSpinBox;
 typedef QTimeEdit DTimeEdit;
 typedef QDateEdit DDateEdit;
 typedef QDateTimeEdit DDateTimeEdit;
