@@ -57,7 +57,7 @@ QBoxLayout *DDialogPrivate::getContentLayout()
 static void palrtteTransparency(QWidget *widget, qint8 alphaFloat)
 {
     QPalette palette = widget->palette();
-    QColor color = DGuiApplicationHelper::adjustColor(palette.color(QPalette::WindowText), 0, 0, 0, 0, 0, 0, alphaFloat);
+    QColor color = DGuiApplicationHelper::adjustColor(palette.color(QPalette::BrightText), 0, 0, 0, 0, 0, 0, alphaFloat);
     palette.setColor(QPalette::WindowText, color);
     widget->setPalette(palette);
 }

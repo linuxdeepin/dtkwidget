@@ -23,6 +23,7 @@
 #include <QTextCodec>
 #include <QDebug>
 #include <QTemporaryFile>
+#include <DDialog>
 
 #include "qsettingbackend.h"
 #include "dsettingsdialog.h"
@@ -236,7 +237,11 @@ void MainWindow::menuItemInvoked(QAction *action)
         return;
     }
 
-    QMessageBox::warning(this, "menu clieck",  action->text() + ", was cliecked");
+    //QMessageBox::warning(this, "menu clieck",  action->text() + ", was cliecked");
+    DDialog dlg("menu clicked", action->text() + ", was clicked");
+    dlg.addButton("ok", true, DDialog::ButtonWarning);
+    dlg.setIcon(QIcon::fromTheme("dialog-information"));
+    dlg.exec();
     qDebug() << "click" << action << action->isChecked();
 }
 
