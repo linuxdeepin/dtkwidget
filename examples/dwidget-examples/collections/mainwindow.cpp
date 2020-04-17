@@ -154,6 +154,15 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
     titlebar->addWidget(new DSearchEdit(titlebar));
+
+    QPushButton *pb1 = new QPushButton("button1");
+    QPushButton *pb2 = new QPushButton("button2");
+
+    QLineEdit *le = new QLineEdit("lineEdit");
+
+    titlebar->addWidget(pb1);
+    titlebar->addWidget(pb2);
+    titlebar->addWidget(le);
 }
 
 void MainWindow::menuItemInvoked(QAction *action)

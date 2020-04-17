@@ -82,6 +82,7 @@ private:
 #endif
 
     void setIconVisible(bool visible);
+    void updateTabOrder();
 
     QHBoxLayout         *mainLayout;
     QWidget             *leftArea;
@@ -585,6 +586,35 @@ void DTitlebarPrivate::setIconVisible(bool visible)
     }
 }
 
+void DTitlebarPrivate::updateTabOrder()
+{
+    D_Q(DTitlebar);
+
+    QList<QWidget *> orderWidget;
+    QList<QHBoxLayout *> orderLayout;
+    orderLayout << leftLayout << centerLayout << rightLayout;
+
+    //查找 leftLayout、centerLayout、rightLayout 三个区域中有 TabFocus 属性的 widget
+    for (QHBoxLayout * lyt : orderLayout) {
+        for (int i = 0; i < lyt->count(); ++i) {
+            QWidget *wdg = lyt->itemAt(i)->widget();
+            if (wdg->focusPolicy() & Qt::FocusPolicy::TabFocus) {
+                orderWidget.append(wdg);
+            }
+        }
+    }
+
+    if (orderWidget.isEmpty()) {
+        return;
+    }
+
+    //对筛选出来的 widget 重新设置 taborder
+    QWidget::setTabOrder(q, orderWidget.first());
+    for (int i = 0; i < orderWidget.count() - 1; ++i) {
+        QWidget::setTabOrder(orderWidget.at(i), orderWidget.at(i + 1));
+    }
+}
+
 #endif
 
 /*!
@@ -908,6 +938,7 @@ void DTitlebar::addWidget(QWidget *w, Qt::Alignment alignment)
     }
 
     updateGeometry();
+    d->updateTabOrder();
 }
 
 void DTitlebar::removeWidget(QWidget *w)
@@ -924,6 +955,7 @@ void DTitlebar::removeWidget(QWidget *w)
     }
 
     updateGeometry();
+    d->updateTabOrder();
 }
 
 /*!
