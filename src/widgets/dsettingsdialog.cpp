@@ -21,7 +21,7 @@
 #include <QHBoxLayout>
 
 #include <DSettingsOption>
-#include <DSuggestButton>
+#include <DPushButton>
 #include <DSettings>
 #include <DTitlebar>
 #include <DFrame>
@@ -152,7 +152,7 @@ bool DSettingsDialog::groupIsVisible(const QString &groupKey) const
 void DSettingsDialog::setResetVisible(bool visible)
 {
     D_D(DSettingsDialog);
-    DSuggestButton *btn = d->content->findChild<DSuggestButton *>();
+    DPushButton *btn = d->content->findChild<DPushButton *>("SettingsContentReset");
     if (btn == nullptr)
         return;
     btn->setVisible(visible);
