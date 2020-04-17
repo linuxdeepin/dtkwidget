@@ -920,6 +920,7 @@ bool DTabBarPrivate::eventFilter(QObject *watched, QEvent *event)
         switch (event->type()) {
         case QEvent::Show:
             rightScrollButton->show();
+            rightScrollButton->updateGeometry();
             // ###(zccrs): 当主窗口从最大化还原后，此button的大小会被布局改为 0x40 （原因不明）
             QTimer::singleShot(100, rightScrollButton, [this] {
                 rightScrollButton->resize(rightScrollButton->sizeHint().width(), rightScrollButton->height());
