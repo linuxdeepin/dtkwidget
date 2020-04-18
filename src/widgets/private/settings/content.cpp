@@ -115,7 +115,7 @@ Content::Content(QWidget *parent)
 
         if (!visableTitleList.isEmpty()) {
             auto lastTitle = d->sortTitles.last();
-            if (value + viewHeight + 180 >= lastTitle->y()) {
+            if (value + viewHeight - 180 >= lastTitle->y()) {
                 currentTitle = visableTitleList.last();
             } else {
                 currentTitle = visableTitleList.first();
@@ -165,7 +165,7 @@ void Content::setGroupVisible(const QString &key, bool visible)
 
     for (QObject *obj : d->contentFrame->children()) {
         if (obj->property("_d_dtk_group_key").toString() == key) {
-            if (ContentTitle *title = qobject_cast<ContentTitle*>(obj)) {
+            if (ContentTitle *title = qobject_cast<ContentTitle *>(obj)) {
                 const QString &key = title->property("key").toString();
 
                 if (d->titles.contains(key)) {
@@ -174,7 +174,7 @@ void Content::setGroupVisible(const QString &key, bool visible)
                 }
             }
 
-            if (QWidget *w = qobject_cast<QWidget*>(obj)) {
+            if (QWidget *w = qobject_cast<QWidget *>(obj)) {
                 if (!visible || w->parentWidget()) // 无父控件时禁止其显示
                     w->setVisible(visible);
             }
@@ -253,7 +253,7 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
 
                 // 先尝试创建item
                 if (widget.first || widget.second) {
-                    if (QLabel *label = qobject_cast<QLabel*>(widget.first)) {
+                    if (QLabel *label = qobject_cast<QLabel *>(widget.first)) {
                         if (widget.second)
                             label->setBuddy(widget.second);
                     }
