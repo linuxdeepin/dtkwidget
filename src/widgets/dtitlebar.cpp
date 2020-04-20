@@ -596,9 +596,13 @@ void DTitlebarPrivate::updateTabOrder()
 
     //查找 leftLayout、centerLayout、rightLayout 三个区域中有 TabFocus 属性的 widget
     for (QHBoxLayout * lyt : orderLayout) {
+        if (!lyt) {
+            continue;
+        }
+
         for (int i = 0; i < lyt->count(); ++i) {
             QWidget *wdg = lyt->itemAt(i)->widget();
-            if (wdg->focusPolicy() & Qt::FocusPolicy::TabFocus) {
+            if (wdg && (wdg->focusPolicy() & Qt::FocusPolicy::TabFocus)) {
                 orderWidget.append(wdg);
             }
         }
