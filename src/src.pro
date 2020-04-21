@@ -3,6 +3,7 @@ TEMPLATE = lib
 QT += dtkcore
 
 CONFIG += internal_module
+CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT
 
 QT += network concurrent multimedia multimediawidgets dtkgui
 greaterThan(QT_MAJOR_VERSION, 4) {
