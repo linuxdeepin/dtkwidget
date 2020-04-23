@@ -400,8 +400,8 @@ QPair<QWidget *, QWidget *> createButtonGroupOptionHandle(QObject *opt)
     btnList.at(option->value().toInt())->setChecked(true);
 
     auto translateContext = opt->property(PRIVATE_PROPERTY_translateContext).toByteArray();
-    option->connect(rightWidget, &DButtonBox::buttonToggled, option, [option, rightWidget ] (QAbstractButton * toggleBtn, bool) {
-        int index = rightWidget->buttonList().indexOf(toggleBtn);
+    option->connect(rightWidget, &DButtonBox::buttonClicked, option, [option, rightWidget ] (QAbstractButton * btn) {
+        int index = rightWidget->buttonList().indexOf(btn);
         option->setValue(index);
     });
     option->connect(option, &DTK_CORE_NAMESPACE::DSettingsOption::valueChanged,
