@@ -71,6 +71,9 @@ Content::Content(QWidget *parent)
     setObjectName("RightFrame");
 
     auto layout = new QVBoxLayout(this);
+    auto margins = layout->contentsMargins();
+    margins.setRight(0);
+    layout->setContentsMargins(margins);
 
     d->contentArea = new QScrollArea;
     d->contentArea->setContentsMargins(0, 0, 0, 0);
