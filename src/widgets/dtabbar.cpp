@@ -238,7 +238,7 @@ public:
     void setDragingFromOther(bool v);
     int tabInsertIndexFromMouse(QPoint pos);
 
-    void startMove(int index);
+    Q_INVOKABLE void startMove(int index);
     void stopMove();
 
     void onCurrentChanged(int current);
@@ -823,11 +823,11 @@ void DTabBarPrivate::startMove(int index)
     mouse_animation->setStartValue(QCursor::pos());
     mouse_animation->setEndValue(mapToGlobal(index_rect.center()));
 
-    connect(mouse_animation, &QVariantAnimation::valueChanged, this, [] (const QVariant &value) {
-        const QPoint pos = value.toPoint();
-
-        QCursor::setPos(pos.x(), pos.y());
-    });
+    // 不要改变鼠标位置。会导致光标不受控的体验，bug-18362
+//    connect(mouse_animation, &QVariantAnimation::valueChanged, this, [=] (const QVariant &value) {
+//        const QPoint pos = value.toPoint();
+//        QCursor::setPos(pos.x(), pos.y());
+//    });
 
     connect(mouse_animation, &QVariantAnimation::finished, this, [this, mouse_animation] {
         mouse_animation->deleteLater();
@@ -1863,9 +1863,7 @@ void DTabBar::dragEnterEvent(QDragEnterEvent *e)
             d->ghostTabIndex = index;
             insertFromMimeDataOnDragEnter(index, e->mimeData());
             // 延时启动startMove， 此时tabbar的大小还没有更新
-            QTimer::singleShot(10, [d, index] {
-                d->startMove(index);
-            });
+            QMetaObject::invokeMethod(d, "startMove", Qt::QueuedConnection, Q_ARG(int, index));
         }
     }
 }
