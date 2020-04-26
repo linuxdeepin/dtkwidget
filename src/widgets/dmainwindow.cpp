@@ -104,7 +104,6 @@ void DMainWindowPrivate::init()
 
     if (!help && DApplicationPrivate::isUserManualExists()) {
         help = new QShortcut(QKeySequence(Qt::Key_F1), q);
-        help->setContext(Qt::ApplicationShortcut);
         QObject::connect(help, &QShortcut::activated,
         q, [ = ]() {
             DApplication *dapp = qobject_cast<DApplication *>(qApp);
@@ -113,8 +112,6 @@ void DMainWindowPrivate::init()
             }
         });
     }
-
-
 }
 
 void DMainWindowPrivate::updateTitleShadowGeometry()
@@ -672,7 +669,7 @@ void DMainWindow::mouseMoveEvent(QMouseEvent *event)
 {
     QWidget *compoment = childAt(event->pos());
     if (qobject_cast<QComboBox *>(compoment)) {
-       return;
+        return;
     }
     return QMainWindow::mouseMoveEvent(event);
 }
