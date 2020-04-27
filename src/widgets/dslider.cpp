@@ -567,6 +567,15 @@ bool DSlider::handleVisible() const
     return d->handleVisible;
 }
 
+/*!
+ * \~chinese \brief DSlider::setEnabledAcrossStyle 启用滑块划过位置无活动色
+ * \param replace true 启用，false 关闭
+ */
+void DSlider::setEnabledAcrossStyle(bool enabled)
+{
+    slider()->setProperty("_d_dtk_sldier_across", enabled);
+}
+
 DSliderPrivate::DSliderPrivate(DSlider *q)
     : DObjectPrivate(q)
     , slider(nullptr)

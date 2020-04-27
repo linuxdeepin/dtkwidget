@@ -80,6 +80,8 @@ public:
     void setHandleVisible(bool b);
     bool handleVisible() const;
 
+    void setEnabledAcrossStyle(bool enabled);
+
 Q_SIGNALS:
     void valueChanged(int value);
 
