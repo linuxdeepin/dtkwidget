@@ -1783,7 +1783,20 @@ QWindow *DTabBar::dragIconWindow() const
  */
 void DTabBar::setEnabledEmbedStyle(bool enable)
 {
+    D_D(DTabBar);
+
+    int radius;
     setProperty("_d_dtk_tabbartab_type", enable);
+
+    if (enable) {
+        radius = DStyle::pixelMetric(style(), DStyle::PM_FloatingWidgetRadius);
+    } else {
+        radius = DStyle::pixelMetric(style(), DStyle::PM_FrameRadius);
+    }
+
+    DStyle::setFrameRadius(d->rightScrollButton, radius);
+    DStyle::setFrameRadius(d->leftScrollButton, radius);
+    DStyle::setFrameRadius(d->addButton, radius);
 }
 
 /*!
