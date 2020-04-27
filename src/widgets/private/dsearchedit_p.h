@@ -53,6 +53,7 @@ public:
     QString placeholderText;
 
     QWidget *iconWidget;
+    QLabel *label;
 
 #ifdef ENABLE_AI
     QAction *voiceAction = nullptr;

@@ -199,8 +199,10 @@ DSearchEdit::~DSearchEdit()
 void DSearchEdit::setPlaceHolder(QString placeHolder)
 {
     Q_D(DSearchEdit);
-
+    if (d->placeHolder == placeHolder)
+        return;
     d->placeHolder = placeHolder;
+    d->label->setText(placeHolder);
 }
 
 /*!
@@ -258,6 +260,7 @@ DSearchEditPrivate::DSearchEditPrivate(DSearchEdit *q)
     : DLineEditPrivate(q)
     , action(nullptr)
     , iconWidget(nullptr)
+    , label(nullptr)
 {
 }
 
@@ -269,7 +272,7 @@ DSearchEditPrivate::~DSearchEditPrivate()
 void DSearchEditPrivate::init()
 {
     D_Q(DSearchEdit);
-    QLabel *label = new QLabel;
+    label = new QLabel;
     DIconButton *iconbtn = new DIconButton(DStyle::SP_IndicatorSearch);
 
     iconbtn->setFlat(true);
