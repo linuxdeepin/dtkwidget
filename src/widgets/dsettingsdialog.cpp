@@ -160,6 +160,19 @@ void DSettingsDialog::setResetVisible(bool visible)
 }
 
 /*!
+ * /~chinese \brief DSettingsDialog::scrollToGroup 使对话框跳转到指定的 group 项目
+ * /~chinese \param groupKey DSettings中 groupKeys 以及其子项 childGroups
+ * /~chinese \note 请在对话框 show 以后调用
+ */
+void DSettingsDialog::scrollToGroup(const QString &groupKey)
+{
+    D_D(DSettingsDialog);
+
+    d->leftFrame->onSelectGroup(groupKey);
+    d->content->onScrollToGroup(groupKey);
+}
+
+/*!
  * \~english \brief Create all widget for settings options.
  * Warnning that you can only call the once.
  * \param settings Dtk::Core::DSettings object from json
