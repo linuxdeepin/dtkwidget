@@ -20,15 +20,15 @@ public:
     DKeyLabel(QString text, QWidget *parent = nullptr)
         : DFrame(parent)
     {
-        label = new DTipLabel(text);
+        label = new DLabel(text);
         QVBoxLayout *layout = new QVBoxLayout(this);
         layout->setContentsMargins(layout->contentsMargins().left(), 0, layout->contentsMargins().right(), 0);
         layout->setSpacing(0);
-        label->setForegroundRole(DPalette::LightLively);
+        label->setForegroundRole(QPalette::Highlight);
         layout->addWidget(label);
     }
 private:
-    DTipLabel *label;
+    DLabel *label;
 };
 
 class DKeyWidget : public QWidget
