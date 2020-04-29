@@ -140,14 +140,28 @@ public:
         connect(rightScrollButton, &DIconButton::clicked, d->rightB, &QToolButton::click);
 
         layout = new QHBoxLayout(qq);
-        stretch = new QSpacerItem(1, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
-        layout->setContentsMargins(0, 0, 0, 0);
+        layout->setMargin(0);
         layout->setSpacing(0);
+        stretch = new QSpacerItem(1, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        leftBtnR = new QSpacerItem(0, 0);
+        leftBtnL = new QSpacerItem(0, 0);
+        rightBtnL = new QSpacerItem(0, 0);
+        addBtnL = new QSpacerItem(DStyle::pixelMetric(style(), DStyle::PM_ContentsSpacing), 0);
+        addBtnR = new QSpacerItem(DStyle::pixelMetric(style(), DStyle::PM_ContentsSpacing), 0);
+
+        layout->addSpacerItem(leftBtnL);
+        layout->setContentsMargins(0, 0, 0, 0);
         layout->addWidget(leftScrollButton);
+
+        layout->addSpacerItem(leftBtnR);
         layout->addWidget(this);
+        layout->addSpacerItem(rightBtnL);
+
         layout->addWidget(rightScrollButton);
-        layout->addSpacing(DStyle::pixelMetric(style(), DStyle::PM_ContentsSpacing));
-        layout->addWidget(addButton);
+        layout->addSpacerItem(addBtnL);
+        layout->addWidget(addButton, Qt::AlignCenter);
+
+        layout->addSpacerItem(addBtnR);
         layout->addSpacerItem(stretch);
         d->expanding = false;
 
@@ -268,6 +282,11 @@ public:
     DIconButton *rightScrollButton;
     QHBoxLayout *layout;
     QSpacerItem *stretch;
+    QSpacerItem *leftBtnL;
+    QSpacerItem *leftBtnR;
+    QSpacerItem *rightBtnL;
+    QSpacerItem *addBtnL;
+    QSpacerItem *addBtnR;
 
     class FullWidget : public QWidget {
     public:
@@ -897,14 +916,30 @@ static QIcon getArrowIcon(const QStyle *style, Qt::ArrowType type)
 
 bool DTabBarPrivate::eventFilter(QObject *watched, QEvent *event)
 {
+    D_Q(DTabBar);
     QTabBarPrivate *d = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
+    bool enabled = q->property("_d_dtk_tabbartab_type").toBool();
 
     if (watched == d->leftB) {
         switch (event->type()) {
         case QEvent::Show:
+            if (enabled) {
+                leftBtnL->changeSize(10, 0);
+                leftBtnR->changeSize(10, 0);
+                rightBtnL->changeSize(10, 0);
+                if (!q->visibleAddButton())
+                    addBtnL->changeSize(10, 0);
+            }
             leftScrollButton->show();
             break;
         case QEvent::Hide:
+            if (enabled) {
+                leftBtnR->changeSize(0, 0);
+                leftBtnL->changeSize(0, 0);
+                rightBtnL->changeSize(0, 0);
+                if (!q->visibleAddButton())
+                    addBtnL->changeSize(0, 0);
+            }
             leftScrollButton->hide();
             break;
         case QEvent::EnabledChange:
@@ -1790,8 +1825,15 @@ void DTabBar::setEnabledEmbedStyle(bool enable)
 
     if (enable) {
         radius = DStyle::pixelMetric(style(), DStyle::PM_FloatingWidgetRadius);
+        d->addButton->setMaximumSize(QSize(24, 24));
+        d->rightScrollButton->setMaximumSize(QSize(24, 24));
+        d->leftScrollButton->setMaximumSize(QSize(24, 24));
     } else {
         radius = DStyle::pixelMetric(style(), DStyle::PM_FrameRadius);
+        QSize size = d->addButton->sizeHint();
+        d->addButton->setMaximumSize(size);
+        d->rightScrollButton->setMaximumSize(size);
+        d->leftScrollButton->setMaximumSize(size);
     }
 
     DStyle::setFrameRadius(d->rightScrollButton, radius);
@@ -1816,6 +1858,14 @@ void DTabBar::setVisibleAddButton(bool visibleAddButton)
 
     d->visibleAddButton = visibleAddButton;
     d->addButton->setVisible(visibleAddButton);
+
+    if (visibleAddButton) {
+        d->addBtnL->changeSize(10, 0);
+        d->addBtnR->changeSize(10, 0);
+    } else {
+        d->addBtnL->changeSize(0, 0);
+        d->addBtnR->changeSize(0, 0);
+    }
 }
 
 /*!
