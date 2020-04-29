@@ -39,6 +39,8 @@ public:
     {
         QHBoxLayout *layout = new QHBoxLayout(this);
         label = new DTipLabel(qApp->translate("DKeySequenceEdit", "Enter a new shortcut"));
+        layout->setContentsMargins(layout->contentsMargins().left(), 0, layout->contentsMargins().right(), 0);
+        layout->setAlignment(Qt::AlignVCenter);
 
         layout->addWidget(label);
     }
@@ -253,6 +255,7 @@ void DKeyWidget::setKeyName(const QStringList &keyList)
 
     for (QString key : keyList) {
         DKeyLabel *label = new DKeyLabel(key);
+        label->setMinimumHeight(24);
         layout()->addWidget(label);
         labelList.append(label);
     }
