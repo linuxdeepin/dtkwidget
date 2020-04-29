@@ -288,6 +288,7 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
     auto resetBt = new DPushButton(QObject::tr("Restore Defaults"), box);
     resetBt->setObjectName("SettingsContentReset");
     resetBt->setMaximumWidth(300);
+    resetBt->setAutoDefault(false);
     box_layout->addWidget(resetBt);
     box->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 
