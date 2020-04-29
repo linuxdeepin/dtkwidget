@@ -307,6 +307,7 @@ void DSearchEditPrivate::init()
     QHBoxLayout *layout = new QHBoxLayout(q->lineEdit());
 
     iconWidget = new QWidget;
+    iconWidget->setObjectName("iconWidget");
     QHBoxLayout *center_layout = new QHBoxLayout(iconWidget);
     center_layout->setMargin(0);
     center_layout->setSpacing(0);
