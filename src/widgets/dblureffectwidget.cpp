@@ -1190,9 +1190,13 @@ void DBlurEffectGroup::setSourceImage(QImage image, int blurRadius)
     }
 
     QImage tmp(image.size(), image.format());
-    QPainter pa(&tmp);
-    qt_blurImage(&pa, image, blurRadius, false, false);
-    pa.end();
+    if (blurRadius > 0) {
+        QPainter pa(&tmp);
+        qt_blurImage(&pa, image, blurRadius, false, false);
+        pa.end();
+    } else {
+        qWarning() << "blurRadius" << blurRadius;
+    }
 
     d->blurPixmap = QPixmap::fromImage(tmp);
     d->blurPixmap.setDevicePixelRatio(image.devicePixelRatio());
