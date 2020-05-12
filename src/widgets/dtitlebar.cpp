@@ -347,7 +347,8 @@ void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
 
 void DTitlebarPrivate::updateButtonsFunc()
 {
-    if (!targetWindowHandle) {
+    // TASK-18145 (bug-17474) do not setMotifFunctions on wayland
+    if (!targetWindowHandle || !qgetenv("WAYLAND_DISPLAY").isEmpty()) {
         return;
     }
 
