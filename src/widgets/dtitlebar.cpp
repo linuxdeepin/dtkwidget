@@ -156,6 +156,12 @@ void DTitlebarPrivate::init()
     titleLabel      = centerArea;
     titleLabel->setElideMode(Qt::ElideMiddle);
 
+    minButton->installEventFilter(q);
+    maxButton->installEventFilter(q);
+    closeButton->installEventFilter(q);
+    optionButton->installEventFilter(q);
+    quitFullButton->installEventFilter(q);
+
     optionButton->setObjectName("DTitlebarDWindowOptionButton");
     optionButton->setIconSize(QSize(DefaultTitlebarHeight, DefaultTitlebarHeight));
     minButton->setObjectName("DTitlebarDWindowMinButton");
@@ -813,6 +819,16 @@ void DTitlebar::mouseReleaseEvent(QMouseEvent *event)
 bool DTitlebar::eventFilter(QObject *obj, QEvent *event)
 {
     D_D(DTitlebar);
+
+    if (event->type() == QEvent::MouseButtonPress &&
+            static_cast<QMouseEvent *>(event)->button() == Qt::RightButton &&
+            (obj ==d->minButton || obj == d->maxButton ||
+            obj == d->closeButton || obj == d->optionButton ||
+            obj == d->quitFullButton))
+    {
+        event->accept(); // button on titlebar should not show kwin menu
+        return true;
+    }
 
     if (obj == d->targetWindow()) {
         switch (event->type()) {
