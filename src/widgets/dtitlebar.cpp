@@ -763,11 +763,10 @@ void DTitlebar::showMenu()
         }
 
         d->menu->exec(d->optionButton->mapToGlobal(d->optionButton->rect().bottomLeft()));
+        d->optionButton->update(); // FIX: bug-25253 sometimes optionButton not udpate after menu exec(but why?)
     }
 }
 #endif
-
-
 
 void DTitlebar::showEvent(QShowEvent *event)
 {
