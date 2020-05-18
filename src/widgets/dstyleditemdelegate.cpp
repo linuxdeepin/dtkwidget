@@ -335,7 +335,7 @@ public:
         return bounding;
     }
 
-    DStyledItemDelegate::BackgroundType backgroundType;
+    DStyledItemDelegate::BackgroundType backgroundType = DStyledItemDelegate::NoBackground;
     QMargins margins;
     QSize itemSize;
     int itemSpacing = 0;

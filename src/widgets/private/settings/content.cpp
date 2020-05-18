@@ -45,7 +45,7 @@ class ContentPrivate
 public:
     ContentPrivate(Content *parent) : q_ptr(parent)
     {
-        widgetFactory = new DSettingsWidgetFactory;
+        widgetFactory = new DSettingsWidgetFactory(parent);
     }
 
 
