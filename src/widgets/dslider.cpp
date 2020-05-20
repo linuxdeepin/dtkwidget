@@ -541,6 +541,10 @@ QSlider::TickPosition DSlider::tickPosition() const
     return QSlider::NoTicks;
 }
 
+/*!
+ * \~chinese \brief DSlider::sizeHint
+ * \~chinese \sa  QSlider::sizeHint
+ */
 QSize DSlider::sizeHint() const
 {
     D_DC(DSlider);
@@ -550,6 +554,10 @@ QSize DSlider::sizeHint() const
     return size;
 }
 
+/*!
+ * \~chinese \brief DSlider::setHandleVisible 设置滑块时候显示
+ * \~chinese \param b 显示滑块的 bool 值
+ */
 void DSlider::setHandleVisible(bool b)
 {
     D_D(DSlider);
@@ -561,6 +569,10 @@ void DSlider::setHandleVisible(bool b)
     update();
 }
 
+/*!
+ * \~chinese \brief DSlider::handleVisible 获取滑块是否显示的状态
+ * \~chinese \return 返回滑块是否显示的状态
+ */
 bool DSlider::handleVisible() const
 {
     D_DC(DSlider);
@@ -569,7 +581,7 @@ bool DSlider::handleVisible() const
 
 /*!
  * \~chinese \brief DSlider::setEnabledAcrossStyle 启用滑块划过位置无活动色
- * \param replace true 启用，false 关闭
+ * \~chinese \param replace true 启用，false 关闭
  */
 void DSlider::setEnabledAcrossStyle(bool enabled)
 {
@@ -677,6 +689,10 @@ QStringList SliderStrip::getScaleInfo()
     return this->scaleInfo;
 }
 
+/*!
+ * \~chines \brief SliderStrip::paintEvent
+ * \~chines \sa QWidget::paintEvent()
+ */
 void SliderStrip::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event)
@@ -781,6 +797,10 @@ void SliderStrip::paintEvent(QPaintEvent *event)
     }
 }
 
+/*!
+ * \~chines \brief SliderStrip::event
+ * \~chines \sa QWidget::event()
+ */
 bool SliderStrip::event(QEvent *e)
 {
     if (e->type() == QEvent::FontChange || e->type() == QEvent::ApplicationFontChange) {
