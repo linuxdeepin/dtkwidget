@@ -10,12 +10,21 @@ DMessageManager::DMessageManager()               //私有静态构造函数
 {
 }
 
+/*!
+ * \~chinese \brief DMessageManager::instance 构造一个单例对象
+ * \~chinese \return 返回对象引用
+ */
 DMessageManager *DMessageManager::instance()  //公有静态函数
 {
     static DMessageManager instance;             //局部静态变量
     return &instance;
 }
 
+/*!
+ * \~chinese \brief DMessageManager::sendMessage 发送弹窗消息
+ * \~chinese \param par 父控件
+ * \~chinese \param floMsg 弹窗浮动消息（控件）
+ */
 void DMessageManager::sendMessage(QWidget *par, DFloatingMessage *floMsg)
 {
     QWidget *content = par->findChild<QWidget *>(D_MESSAGE_MANAGER_CONTENT);
@@ -43,6 +52,12 @@ void DMessageManager::sendMessage(QWidget *par, DFloatingMessage *floMsg)
     static_cast<QBoxLayout*>(content->layout())->addWidget(floMsg, 0, Qt::AlignHCenter);
 }
 
+/*!
+ * \~chinese \brief DMessageManager::sendMessage 发送弹窗消息
+ * \~chinese \param par 父控件
+ * \~chinese \param icon 消息图标
+ * \~chinese \param message 消息文字
+ */
 void DMessageManager::sendMessage(QWidget *par, const QIcon &icon, const QString &message)
 {
     QWidget *content = par->findChild<QWidget *>(D_MESSAGE_MANAGER_CONTENT);
@@ -65,6 +80,12 @@ void DMessageManager::sendMessage(QWidget *par, const QIcon &icon, const QString
     sendMessage(par, floMsg);
 }
 
+/*!
+ * \~chinese \brief DMessageManager::setContentMargens 设置中间间隔值
+ * \~chinese \param par 父控件
+ * \~chinese \param margins四周的间隔值
+ * \~chinese \return 是否设置成功
+ */
 bool DMessageManager::setContentMargens(QWidget *par, const QMargins &margins)
 {
     QWidget *content = par->findChild<QWidget *>(D_MESSAGE_MANAGER_CONTENT);
@@ -77,6 +98,12 @@ bool DMessageManager::setContentMargens(QWidget *par, const QMargins &margins)
     }
 }
 
+/*!
+ * \~chinese \brief DMessageManager::eventFilter 消息过滤
+ * \~chinese \param watched 查看对象
+ * \~chinese \param event 消息事件
+ * \~chinese \return 成功与否
+ */
 bool DMessageManager::eventFilter(QObject *watched, QEvent *event)
 {
     if (event->type() == QEvent::LayoutRequest || event->type() == QEvent::Resize) {
