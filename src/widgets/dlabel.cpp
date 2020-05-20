@@ -60,6 +60,10 @@ DLabel::~DLabel()
 
 }
 
+/*!
+ * \~chinese \brief DLabel::setForegroundRole 显示的字体颜色
+ * \~chinese \param role 字体颜色（QPalette::ColorRole）
+ */
 void DLabel::setForegroundRole(QPalette::ColorRole role)
 {
     D_D(DLabel);
@@ -78,6 +82,10 @@ void DLabel::setForegroundRole(DPalette::ColorType color)
     d->color = color;
 }
 
+/*!
+ * \~chinese \brief DLabel::setElideMode 设置省略号显示的模式
+ * \~chinese \param elideMode 省略模式枚举
+ */
 void DLabel::setElideMode(Qt::TextElideMode elideMode)
 {
     D_D(DLabel);
@@ -88,12 +96,21 @@ void DLabel::setElideMode(Qt::TextElideMode elideMode)
     update();
 }
 
+/*!
+ * \~chinese \brief DLabel::elideMode 获取省略号的模式
+ * \~chinese \return 返回省略号的模式
+ */
 Qt::TextElideMode DLabel::elideMode() const
 {
     D_DC(DLabel);
     return d->elideMode;
 }
 
+/*!
+ * \~chinese \brief DLabel::DLabel 构造函数
+ * \~chinese \param dd 私有类成员变量
+ * \~chinese \param parent 父控件
+ */
 DLabel::DLabel(DLabelPrivate &dd, QWidget *parent)
     : QLabel(parent)
     , DObject(dd)
@@ -101,6 +118,10 @@ DLabel::DLabel(DLabelPrivate &dd, QWidget *parent)
     dd.init();
 }
 
+/*!
+ * \~chinese \brief DLabel::initPainter 初始化 painter
+ * \~chinese \param painter painter 形参
+ */
 void DLabel::initPainter(QPainter *painter) const
 {
     D_DC(DLabel);
@@ -111,6 +132,11 @@ void DLabel::initPainter(QPainter *painter) const
     }
 }
 
+/*!
+ * \~chinese \brief DLabel::paintEvent
+ * \~chinese \param event 消息事件
+ * \~chinese \see 参考 QLabel::paintEvent()
+ */
 void DLabel::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event)
