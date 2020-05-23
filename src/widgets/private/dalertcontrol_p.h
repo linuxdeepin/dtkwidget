@@ -24,6 +24,7 @@
 #include "dalertcontrol.h"
 #include <DObjectPrivate>
 #include <QPointer>
+#include <QTimer>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -43,6 +44,7 @@ private:
     QWidget *target{nullptr};
     QColor  alertColor;
     Qt::Alignment alignment{Qt::AlignLeft};
+    QTimer timer;
 };
 
 DWIDGET_END_NAMESPACE

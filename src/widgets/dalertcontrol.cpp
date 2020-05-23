@@ -33,6 +33,7 @@ DAlertControlPrivate::DAlertControlPrivate(DAlertControl *q)
  : DObjectPrivate(q)
 {
     alertColor = q->defaultAlertColor();
+    QObject::connect(&timer, &QTimer::timeout, q, &DAlertControl::hideAlertMessage);
 }
 
 void DAlertControlPrivate::updateTooltipPos()
@@ -232,7 +233,7 @@ void DAlertControl::showAlertMessage(const QString &text, QWidget *follower, int
     if (duration < 0)
         return;
 
-    QTimer::singleShot(duration, this, &DAlertControl::hideAlertMessage);
+    d->timer.start(duration);
 }
 
 /*!
