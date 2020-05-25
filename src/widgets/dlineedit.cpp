@@ -344,6 +344,46 @@ void DLineEdit::setSpeechToTextEnabled(bool enable)
     d->bSpeechToText = enable;
 }
 
+
+/*!
+ * \~chinese \brief DLineEdit::textToSpeechIsEnabled
+ * \~chinese \return true 显示语音朗读菜单项 false不显示
+ */
+bool DLineEdit::textToSpeechIsEnabled() const
+{
+    D_D(const DLineEdit);
+    return d->bTextToSpeech;
+}
+
+/*!
+ * \~chinese \brief DLineEdit::setTextToSpeechEnabled 设置是否显示语音朗读菜单项
+ * \~chinese \param enable true显示 flase不显示
+ */
+void DLineEdit::setTextToSpeechEnabled(bool enable)
+{
+    D_D(DLineEdit);
+    d->bTextToSpeech = enable;
+}
+
+/*!
+ * \~chinese \brief DLineEdit::textToTranslateIsEnabled
+ * \~chinese \return true 显示文本翻译菜单项 false不显示
+ */
+bool DLineEdit::textToTranslateIsEnabled() const
+{
+    D_D(const DLineEdit);
+    return d->bTextToTranslate;
+}
+
+/*!
+ * \~chinese \brief DLineEdit::setTextToTranslateEnabled 设置是否显示文本翻译菜单项
+ * \~chinese \param enable true显示 flase不显示
+ */
+void DLineEdit::setTextToTranslateEnabled(bool enable)
+{
+    D_D(DLineEdit);
+    d->bTextToTranslate = enable;
+}
 /*!
  * \~chinese \brief DLineEdit::eventFilter
  * \~chinese \row 该过滤器不做任何过滤动作，但会监控输入框的焦点状态，并发送信号 focusChanged()。
@@ -358,7 +398,8 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
         Q_EMIT focusChanged(false);
     } else if (watched == lineEdit() && event->type() == QEvent::ContextMenu) {
         QLineEdit *le = static_cast<QLineEdit *>(watched);
-        if (!le->isEnabled() || le->echoMode() == QLineEdit::Password) {
+        if (!le->isEnabled() || le->echoMode() == QLineEdit::Password ||
+                (!textToSpeechIsEnabled() && !textToTranslateIsEnabled() && !speechToTextIsEnabled())) {
             return QWidget::eventFilter(watched, event);
         }
 
@@ -402,7 +443,7 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
 
         menu->addSeparator();
 
-        if (speechReply.value()) {
+        if (speechReply.value() && textToSpeechIsEnabled()) {
             QAction *pAction_1 = nullptr;
             if (readingReply.value()) {
                 pAction_1 = menu->addAction(QCoreApplication::translate("DLineEdit", "Stop reading"));
@@ -429,7 +470,7 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
             });
         }
 
-        if (translateReply.value()) {
+        if (translateReply.value() && textToTranslateIsEnabled()) {
             QAction *pAction_2 = menu->addAction(QCoreApplication::translate("DLineEdit", "Translate"));
 
             //没有选中文本，则菜单置灰色

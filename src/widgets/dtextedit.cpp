@@ -27,6 +27,10 @@ public:
     QWidget* widgetLeft;
     QWidget* widgetRight;
 
+    bool bSpeechToText = true;
+    bool bTextToSpeech = true;
+    bool bTextToTranslate = true;
+
 public:
     D_DECLARE_PUBLIC(DTextEdit)
 };
@@ -119,7 +123,8 @@ void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
     QDBusReply<bool> speechToTextReply = testSpeechToText.call(QDBus::AutoDetect, "getIatEnable");
 
     //测试服务是否存在
-    if (!speechReply.value() && !translateReply.value() && !speechToTextReply.value()) {
+    if ((!speechReply.value() && !translateReply.value() && !speechToTextReply.value())
+            || (!textToSpeechIsEnabled() && !textToTranslateIsEnabled() && !speechToTextIsEnabled())) {
         QTextEdit::contextMenuEvent(e);
         return;
     }
@@ -127,7 +132,7 @@ void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
     QMenu *menu = createStandardContextMenu();
     menu->addSeparator();
 
-    if (speechReply.value()) {
+    if (speechReply.value() && textToSpeechIsEnabled()) {
         QAction *pAction = nullptr;
         if (readingReply.value()) {
             pAction = menu->addAction(QCoreApplication::translate("DTextEdit", "Stop reading"));
@@ -154,7 +159,7 @@ void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
         });
     }
 
-    if (translateReply.value()) {
+    if (translateReply.value() && textToTranslateIsEnabled()) {
         QAction *pAction_2 = menu->addAction(QCoreApplication::translate("DTextEdit", "Translate"));
 
         //没有选中文本，则菜单置灰色
@@ -176,7 +181,7 @@ void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
         });
     }
 
-    if (speechToTextReply.value()) {
+    if (speechToTextReply.value() && speechToTextIsEnabled()) {
         QAction *pAction_3 = menu->addAction(QCoreApplication::translate("DTextEdit", "Speech To Text"));
         connect(pAction_3, &QAction::triggered, this, [] {
             QDBusInterface speechToTextInterface("com.iflytek.aiassistant",
@@ -204,6 +209,67 @@ void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
     });
 
     menu->popup(e->globalPos());
+}
+
+
+/*!
+ * \~chinese \brief DLineEdit::speechToTextIsEnabled
+ * \~chinese \return true 显示语音听写菜单项 false不显示
+ */
+bool DTextEdit::speechToTextIsEnabled() const
+{
+    D_D(const DTextEdit);
+    return d->bSpeechToText;
+}
+
+/*!
+ * \~chinese \brief DLineEdit::setSpeechToTextEnabled 设置是否显示语音听写菜单项
+ * \~chinese \param enable true显示 flase不显示
+ */
+void DTextEdit::setSpeechToTextEnabled(bool enable)
+{
+    D_D(DTextEdit);
+    d->bSpeechToText = enable;
+}
+
+/*!
+ * \~chinese \brief DTextEdit::textToSpeechIsEnabled
+ * \~chinese \return true 显示语音朗读菜单项 false不显示
+ */
+bool DTextEdit::textToSpeechIsEnabled() const
+{
+    D_D(const DTextEdit);
+    return d->bTextToSpeech;
+}
+
+/*!
+ * \~chinese \brief DTextEdit::setTextToSpeechEnabled 设置是否显示语音朗读菜单项
+ * \~chinese \param enable true显示 flase不显示
+ */
+void DTextEdit::setTextToSpeechEnabled(bool enable)
+{
+    D_D(DTextEdit);
+    d->bTextToSpeech = enable;
+}
+
+/*!
+ * \~chinese \brief DTextEdit::textToTranslateIsEnabled
+ * \~chinese \return true 显示文本翻译菜单项 false不显示
+ */
+bool DTextEdit::textToTranslateIsEnabled() const
+{
+    D_D(const DTextEdit);
+    return d->bTextToTranslate;
+}
+
+/*!
+ * \~chinese \brief DTextEdit::setTextToTranslateEnabled 设置是否显示文本翻译菜单项
+ * \~chinese \param enable true显示 flase不显示
+ */
+void DTextEdit::setTextToTranslateEnabled(bool enable)
+{
+    D_D(DTextEdit);
+    d->bTextToTranslate = enable;
 }
 
 DTextEditPrivate::DTextEditPrivate(DTextEdit *qq)

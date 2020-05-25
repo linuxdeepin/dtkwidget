@@ -18,6 +18,16 @@ public:
     explicit DTextEdit(QWidget *parent = nullptr);
     explicit DTextEdit(const QString& text, QWidget* parent = nullptr);
 
+public:
+    bool speechToTextIsEnabled() const;
+    void setSpeechToTextEnabled(bool enable);
+
+    bool textToSpeechIsEnabled() const;
+    void setTextToSpeechEnabled(bool enable);
+
+    bool textToTranslateIsEnabled() const;
+    void setTextToTranslateEnabled(bool enable);
+
 protected:
     bool event(QEvent *e) override;
     void contextMenuEvent(QContextMenuEvent *e) override;

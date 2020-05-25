@@ -47,6 +47,8 @@ public:
     QHBoxLayout *hLayout;
 
     bool bSpeechToText = true;
+    bool bTextToSpeech = true;
+    bool bTextToTranslate = true;
 };
 
 DWIDGET_END_NAMESPACE

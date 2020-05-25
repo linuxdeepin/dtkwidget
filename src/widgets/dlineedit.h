@@ -72,6 +72,12 @@ public:
     bool speechToTextIsEnabled() const;
     void setSpeechToTextEnabled(bool enable);
 
+    bool textToSpeechIsEnabled() const;
+    void setTextToSpeechEnabled(bool enable);
+
+    bool textToTranslateIsEnabled() const;
+    void setTextToTranslateEnabled(bool enable);
+
 Q_SIGNALS:
     void alertChanged(bool alert) const;
     void focusChanged(bool onFocus) const;
