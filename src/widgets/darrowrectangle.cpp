@@ -1088,7 +1088,7 @@ void DArrowRectanglePrivate::init(DArrowRectangle::FloatMode mode)
     }
 
     if (DApplication::isDXcbPlatform() && (DArrowRectangle::FloatWindow == floatMode)) {
-        m_handle = new DPlatformWindowHandle(q);
+        m_handle = new DPlatformWindowHandle(q, q);
         m_handle->setTranslucentBackground(true);
 
         m_blurBackground = new DBlurEffectWidget(q);
