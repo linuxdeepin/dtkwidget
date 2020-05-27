@@ -275,7 +275,7 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
 
                     if (widget) {
                         widget->setProperty("_d_dtk_group_key", current_subGroupKey);
-                        d->contentLayout->setWidget(d->contentLayout->rowCount(), QFormLayout::SpanningRole, widget);
+                        d->contentLayout->addRow(widget);
                     }
                 }
             }
