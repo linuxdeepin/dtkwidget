@@ -1,26 +1,27 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/arrow_right_white.png</file>
-        <file>images/arrow_right_press.png</file>
-        <file>images/arrow_right_normal.png</file>
-        <file>images/arrow_right_hover.png</file>
-        <file>images/arrow_left_white.png</file>
-        <file>images/arrow_left_press.png</file>
-        <file>images/arrow_left_normal.png</file>
-        <file>images/arrow_left_hover.png</file>
-        <file>images/deepin-logo.svg</file>
-        <file>images/dialog_close_round_hover@2x.png</file>
-        <file>images/dialog_close_round_hover.png</file>
-        <file>images/dialog_close_round_press@2x.png</file>
-        <file>images/dialog_close_round_normal@2x.png</file>
-        <file>images/dialog_close_round_normal.png</file>
-        <file>images/dialog_close_round_press.png</file>
-        <file>images/play_pause.svg</file>
-        <file>images/play_start.svg</file>
-        <file>images/play_previous.svg</file>
-        <file>images/play_next.svg</file>
-        <file>images/water_back.svg</file>
-        <file>images/water_front.svg</file>
-        <file>images/uos.svg</file>
+        <file>assets/images/arrow_right_white.png</file>
+        <file>assets/images/arrow_right_press.png</file>
+        <file>assets/images/arrow_right_normal.png</file>
+        <file>assets/images/arrow_right_hover.png</file>
+        <file>assets/images/arrow_left_white.png</file>
+        <file>assets/images/arrow_left_press.png</file>
+        <file>assets/images/arrow_left_normal.png</file>
+        <file>assets/images/arrow_left_hover.png</file>
+        <file>assets/images/deepin-logo.svg</file>
+        <file>assets/images/dialog_close_round_hover@2x.png</file>
+        <file>assets/images/dialog_close_round_hover.png</file>
+        <file>assets/images/dialog_close_round_press@2x.png</file>
+        <file>assets/images/dialog_close_round_normal@2x.png</file>
+        <file>assets/images/dialog_close_round_normal.png</file>
+        <file>assets/images/dialog_close_round_press.png</file>
+        <file>assets/images/play_pause.svg</file>
+        <file>assets/images/play_start.svg</file>
+        <file>assets/images/play_previous.svg</file>
+        <file>assets/images/play_next.svg</file>
+        <file>assets/images/water_back.svg</file>
+        <file>assets/images/water_front.svg</file>
+        <file>assets/images/uos.svg</file>
+
     </qresource>
 </RCC>

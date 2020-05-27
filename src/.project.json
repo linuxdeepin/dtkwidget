@@ -1,0 +1,6 @@
+{
+    "Type": "homebrew",
+    "3rdparty": [],
+    "ignore": ["translations","widgets/assets"],
+    "license": ["GPLv3"]
+}

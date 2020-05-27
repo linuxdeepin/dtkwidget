@@ -204,7 +204,7 @@ SOURCES += $$PWD/dslider.cpp \
 
 RESOURCES += \
     $$PWD/icons.qrc \
-    $$PWD/icons/dtk-icon-theme.qrc
+    $$PWD/assets/icons/dtk-icon-theme.qrc
 
 INCLUDEPATH += $$PWD
 
