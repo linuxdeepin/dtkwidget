@@ -92,8 +92,13 @@ DApplicationPrivate::DApplicationPrivate(DApplication *q) :
     };
     QObject::connect(monitor, &StartupNotificationMonitor::appStartup,
                      q, [this, q, cancelNotification](const QString id) {
+        // FIX bug start app quikly cursor will not restore...
+        // Every setOverrideCursor() must eventually be followed by a corresponding restoreOverrideCursor(),
+        // otherwise the stack will never be emptied.
+        if (m_monitoredStartupApps.isEmpty()) {
+            q->setOverrideCursor(Qt::WaitCursor);
+        }
         m_monitoredStartupApps.append(id);
-        q->setOverrideCursor(Qt::WaitCursor);
         // Set a timeout of 5s in case that some apps like pamac-tray started
         // with StartupNotify but don't show a window after startup finished.
         QTimer::singleShot(5 * 1000, q, [id, cancelNotification](){
