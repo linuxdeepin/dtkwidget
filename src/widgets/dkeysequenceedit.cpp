@@ -183,7 +183,7 @@ void DKeySequenceEdit::keyPressEvent(QKeyEvent *e)
     D_D(DKeySequenceEdit);
 
     if (d->rightWidget->isFastMode()) {
-        return;
+        return QLineEdit::keyPressEvent(e);
     }
 
     int nextKey = e->key();
