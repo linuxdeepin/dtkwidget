@@ -21,6 +21,8 @@
 #include <QKeyEvent>
 #include <QDebug>
 #include <QLabel>
+#include <DFrame>
+#include <DStyle>
 
 #include "dthememanager.h"
 #include "dipv4lineedit.h"
@@ -40,7 +42,16 @@ void DIpv4LineEditPrivate::init()
 {
     D_Q(DIpv4LineEdit);
 
-    editMainWidget = new QWidget(q);
+    // 和子edit保持一致不显示菜单
+    q->setContextMenuPolicy(Qt::NoContextMenu);
+    // 带圆角的自绘制背景的frame，挡住背后的edit文字
+    DFrame *frame = new DFrame(q);
+    frame->setFrameRounded(true);
+    frame->setFrameShape(QFrame::NoFrame);
+    editMainWidget = frame;
+
+    editMainWidget->setBackgroundRole(QPalette::Button);
+    editMainWidget->setAutoFillBackground(true);
 
     QHBoxLayout *hbox_layout = new QHBoxLayout;
 
@@ -85,6 +96,8 @@ QLineEdit *DIpv4LineEditPrivate::getEdit()
     edit->setAttribute(Qt::WA_InputMethodEnabled, false);
     edit->setContextMenuPolicy(Qt::NoContextMenu);
     edit->installEventFilter(q);
+    // 禁止绘制子edit的焦点框
+    edit->setProperty("_d_dtk_noFocusRect", true);
 
     editList << edit;
 
@@ -102,6 +115,8 @@ void DIpv4LineEditPrivate::setFocus(bool focus)
 
     this->focus = focus;
 
+    // 焦点改变时边框重绘一下
+    q->update();
     Q_EMIT q->focusChanged(focus);
 }
 
@@ -407,8 +422,14 @@ bool DIpv4LineEdit::eventFilter(QObject *obj, QEvent *e)
             QKeyEvent *event = static_cast<QKeyEvent *>(e);
 
             if (event) {
-                D_D(DIpv4LineEdit);
+                // 按住shlft+left/right 时选中当前的edit文字，而非移动光标
+                if (event->modifiers() == Qt::ShiftModifier &&
+                    (event->key() == Qt::Key_Left ||
+                     event->key() == Qt::Key_Right)) {
+                  return QLineEdit::eventFilter(obj, e);
+                }
 
+                D_D(DIpv4LineEdit);
                 if (event->key() <= Qt::Key_9 && event->key() >= Qt::Key_0) {
                     if (edit->cursorPosition() == edit->text().count()) {
                         QRegularExpression rx(RX_PATTERN_IP);
@@ -490,10 +511,12 @@ bool DIpv4LineEdit::eventFilter(QObject *obj, QEvent *e)
                             return true;
                         } else if (event->key() == Qt::Key_A) {
                             selectAll();
-                        } else if (event->key() == Qt::Key_X) {
+                        } else if (!selectedText().isEmpty() && event->matches(QKeySequence::Cut))  {
                             cut();
+                        } else if (!selectedText().isEmpty() && event->matches(QKeySequence::Copy)) {
+                            copy();
                         } else {
-                            QLineEdit::keyPressEvent(event);
+                            return QLineEdit::eventFilter(obj, e);
                         }
 
                         return true;
@@ -505,10 +528,13 @@ bool DIpv4LineEdit::eventFilter(QObject *obj, QEvent *e)
         QLineEdit *edit = qobject_cast<QLineEdit *>(obj);
 
         if (edit) {
-          QLineEdit::setCursorPosition(cursorPosition());
+            // focusProxy 只能设置一个， 所以每次focusIn时设置当前这个edit为FocusProxy吧
+            setFocusProxy(edit);
+            QLineEdit::setCursorPosition(cursorPosition());
         }
 
         d_func()->setFocus(true);
+
     } else if (e->type() == QEvent::FocusOut || e->type() == QEvent::MouseButtonPress) {
         D_D(DIpv4LineEdit);
 
@@ -537,7 +563,13 @@ DIpv4LineEdit::DIpv4LineEdit(DIpv4LineEditPrivate &q, QWidget *parent)
 void DIpv4LineEdit::resizeEvent(QResizeEvent *event)
 {
     D_D(DIpv4LineEdit);
-    d->editMainWidget->resize(event->size());
+    QSize s = event->size();
+    QStyleOptionFrame opt;
+    initStyleOption(&opt);
+    int radius = DStyle::pixelMetric(style(), DStyle::PM_FrameRadius, &opt, this);
+    s -= {radius, radius};
+    d->editMainWidget->resize(s);
+    d->editMainWidget->move(radius / 2, radius / 2);
 }
 
 DWIDGET_END_NAMESPACE
