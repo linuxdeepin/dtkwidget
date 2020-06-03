@@ -112,10 +112,10 @@ void DMPRISControlPrivate::init()
     m_nextBtn         = new DFloatingButton(m_controlWidget);
     m_tickEffect      = new DTickEffect(m_title, m_title);
 
-    m_prevBtn->setIcon(QIcon::fromTheme(":/images/play_previous.svg"));
-    m_playBtn->setIcon(QIcon::fromTheme(":/images/play_start.svg"));
-    m_nextBtn->setIcon(QIcon::fromTheme(":/images/play_next.svg"));
-    m_pauseBtn->setIcon(QIcon::fromTheme(":/images/play_pause.svg"));
+    m_prevBtn->setIcon(QIcon::fromTheme(":/assets/images/play_previous.svg"));
+    m_playBtn->setIcon(QIcon::fromTheme(":/assets/images/play_start.svg"));
+    m_nextBtn->setIcon(QIcon::fromTheme(":/assets/images/play_next.svg"));
+    m_pauseBtn->setIcon(QIcon::fromTheme(":/assets/images/play_pause.svg"));
     m_prevBtn->setBackgroundRole(DPalette::Button);
     m_playBtn->setBackgroundRole(DPalette::Button);
     m_nextBtn->setBackgroundRole(DPalette::Button);
@@ -148,10 +148,11 @@ void DMPRISControlPrivate::init()
 
 #ifdef QT_DEBUG
     m_title->setText("MPRIS Title");
-    m_nextBtn->setIcon(QIcon::fromTheme("://images/arrow_right_normal.png"));
-    m_pauseBtn->setIcon(QIcon::fromTheme("://images/arrow_left_white.png"));
-    m_playBtn->setIcon(QIcon::fromTheme("://images/arrow_right_white.png"));
-    m_prevBtn->setIcon(QIcon::fromTheme("://images/arrow_left_normal.png"));
+
+    m_nextBtn->setIcon(QIcon::fromTheme(":/assets/images/arrow_right_normal.png"));
+    m_pauseBtn->setIcon(QIcon::fromTheme(":/assets/images/arrow_left_white.png"));
+    m_playBtn->setIcon(QIcon::fromTheme(":/assets/images/arrow_right_white.png"));
+    m_prevBtn->setIcon(QIcon::fromTheme(":/assets/images/arrow_left_normal.png"));
 #endif
 
     QHBoxLayout *controlLayout = new QHBoxLayout;

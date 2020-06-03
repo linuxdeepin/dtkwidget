@@ -1,0 +1,6 @@
+{
+    "Type": "homebrew",
+    "3rdparty": [],
+    "ignore": ["src/translations","src/widgets/assets","doc","examples",".tx","debian"],
+    "license": ["GPLv3"]
+}
