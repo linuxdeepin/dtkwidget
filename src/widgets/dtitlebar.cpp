@@ -794,7 +794,7 @@ void DTitlebar::showEvent(QShowEvent *event)
 void DTitlebar::mousePressEvent(QMouseEvent *event)
 {
     D_D(DTitlebar);
-    d->mousePressed = (event->buttons() == Qt::LeftButton);
+    d->mousePressed = (event->button() == Qt::LeftButton);
 
     if (event->button() == Qt::RightButton) {
         DWindowManagerHelper::popupSystemWindowMenu(window()->windowHandle());
@@ -810,7 +810,7 @@ void DTitlebar::mousePressEvent(QMouseEvent *event)
 void DTitlebar::mouseReleaseEvent(QMouseEvent *event)
 {
     D_D(DTitlebar);
-    if (event->buttons() == Qt::LeftButton) {
+    if (event->button() == Qt::LeftButton) {
         d->mousePressed = false;
     }
 }
@@ -1368,8 +1368,13 @@ bool DTitlebar::blurBackground() const
 
 void DTitlebar::mouseMoveEvent(QMouseEvent *event)
 {
+    D_D(DTitlebar);
+
     Qt::MouseButton button = event->buttons() & Qt::LeftButton ? Qt::LeftButton : Qt::NoButton;
     if (event->buttons() == Qt::LeftButton /*&& d->mousePressed*/) {
+        if (!d->mousePressed) {
+            return;
+        }
         Q_EMIT mouseMoving(button);
     }
 
