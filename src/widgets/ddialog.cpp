@@ -949,9 +949,6 @@ void DDialog::setWordWrapMessage(bool wordWrap)
 
 /*!
  * \~chinese \brief 设置对话框图标
- *
- * \~chinese 注意：该接口将会在未来版本中废弃，
- * 请使用 setIcon(const QIcon &icon, const QSize &expectedSize) 这个重载。
  */
 void DDialog::setIcon(const QIcon &icon)
 {
