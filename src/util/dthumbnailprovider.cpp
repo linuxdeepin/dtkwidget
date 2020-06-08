@@ -51,7 +51,7 @@ inline QByteArray dataToMd5Hex(const QByteArray &data)
 class DThumbnailProviderPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 {
 public:
-    DThumbnailProviderPrivate(DThumbnailProvider *qq);
+    explicit DThumbnailProviderPrivate(DThumbnailProvider *qq);
 
     void init();
 

@@ -58,9 +58,9 @@ public:
         FloatWidget,
     };
 
-    explicit DArrowRectangle(ArrowDirection direction, QWidget *parent = 0);
-    explicit DArrowRectangle(ArrowDirection direction, FloatMode floatMode, QWidget *parent = 0);
-    ~DArrowRectangle();
+    explicit DArrowRectangle(ArrowDirection direction, QWidget *parent = nullptr);
+    explicit DArrowRectangle(ArrowDirection direction, FloatMode floatMode, QWidget *parent = nullptr);
+    ~DArrowRectangle() override;
 
     Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor)
     Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor)
@@ -71,8 +71,6 @@ public:
     Q_PROPERTY(int arrowX READ arrowX WRITE setArrowX)
     Q_PROPERTY(int arrowY READ arrowY WRITE setArrowY)
     Q_PROPERTY(int margin READ margin WRITE setMargin)
-    Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor)
-    Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor)
     Q_PROPERTY(ArrowDirection arrowDirection READ arrowDirection WRITE setArrowDirection)
     Q_PROPERTY(qreal shadowXOffset READ shadowXOffset WRITE setShadowXOffset)
     Q_PROPERTY(qreal shadowYOffset READ shadowYOffset WRITE setShadowYOffset)

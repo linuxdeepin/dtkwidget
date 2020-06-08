@@ -37,10 +37,10 @@ static SnMonitorContext *context;
 
 static void monitor_event_func (SnMonitorEvent *event, void *user_data)
 {
-    SnMonitorContext *context;
+    //SnMonitorContext *context;
     SnStartupSequence *sequence;
 
-    context = sn_monitor_event_get_context (event);
+    sn_monitor_event_get_context (event);
     sequence = sn_monitor_event_get_startup_sequence (event);
 
     const char* app_id = sn_startup_sequence_get_id(sequence);

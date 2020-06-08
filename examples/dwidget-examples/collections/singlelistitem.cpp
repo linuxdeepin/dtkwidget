@@ -32,6 +32,7 @@ bool SingleListItem::sameAs(DSimpleListItem *item)
 
 void SingleListItem::drawBackground(QRect rect, QPainter *painter, int index, bool isSelect, bool isHover)
 {
+    Q_UNUSED(isHover);
     QPainterPath path;
     path.addRect(QRectF(rect));
     
@@ -45,6 +46,9 @@ void SingleListItem::drawBackground(QRect rect, QPainter *painter, int index, bo
 
 void SingleListItem::drawForeground(QRect rect, QPainter *painter, int column, int index, bool isSelect, bool isHover)
 {
+    Q_UNUSED(column);
+    Q_UNUSED(index);
+    Q_UNUSED(isHover);
     painter->setOpacity(1);
     if (isSelect) {
         painter->setPen(QPen(QColor("#FFFFFF")));    

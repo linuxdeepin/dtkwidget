@@ -34,6 +34,7 @@ bool MultiListItem::sameAs(DSimpleListItem *item)
 
 void MultiListItem::drawBackground(QRect rect, QPainter *painter, int index, bool isSelect, bool isHover)
 {
+    Q_UNUSED(isHover);
     QPainterPath path;
     path.addRect(QRectF(rect));
     
@@ -47,6 +48,8 @@ void MultiListItem::drawBackground(QRect rect, QPainter *painter, int index, boo
 
 void MultiListItem::drawForeground(QRect rect, QPainter *painter, int column, int index, bool isSelect, bool isHover)
 {
+    Q_UNUSED(index);
+    Q_UNUSED(isHover);
     int padding = 10;
     painter->setOpacity(1);
     

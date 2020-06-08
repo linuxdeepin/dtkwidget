@@ -1246,9 +1246,6 @@ void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const Q
     case CE_ButtonBoxButtonBevel: {
         if (const DStyleOptionButtonBoxButton *btn = qstyleoption_cast<const DStyleOptionButtonBoxButton *>(opt)) {
             bool checked = btn->state & State_On;
-            bool disable = !(btn->state & State_Enabled);
-            bool hover = btn->state & State_MouseOver;
-            bool press = btn->state & State_Sunken;
 
             DStyleHelper dstyle(style);
             const QColor &background = dstyle.getColor(opt, checked ? QPalette::Highlight : QPalette::Button);

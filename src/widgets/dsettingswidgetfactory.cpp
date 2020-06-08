@@ -225,7 +225,7 @@ QPair<QWidget *, QWidget *> createShortcutEditOptionHandle(DSettingsWidgetFactor
         QKeySequence sequence(optionValue.toString());
         QString keyseq = sequence.toString();
 
-        if (auto edit = shortcutMap.value(keyseq)) {
+        if (shortcutMap.value(keyseq)) {
             return;
         }
 
