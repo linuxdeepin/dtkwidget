@@ -192,6 +192,7 @@ void DMPRISControlPrivate::_q_onPrevClicked()
         return;
 
     m_mprisInter->Previous();
+    m_prevBtn->setFocus();
 }
 
 void DMPRISControlPrivate::_q_onPlayClicked()
@@ -200,6 +201,7 @@ void DMPRISControlPrivate::_q_onPlayClicked()
         return;
 
     m_mprisInter->Play();
+    m_pauseBtn->setFocus();
 }
 
 void DMPRISControlPrivate::_q_onPauseClicked()
@@ -208,6 +210,7 @@ void DMPRISControlPrivate::_q_onPauseClicked()
         return;
 
     m_mprisInter->Pause();
+    m_playBtn->setFocus();
 }
 
 void DMPRISControlPrivate::_q_onNextClicked()
@@ -216,6 +219,7 @@ void DMPRISControlPrivate::_q_onNextClicked()
         return;
 
     m_mprisInter->Next();
+    m_nextBtn->setFocus();
 }
 
 void DMPRISControlPrivate::_q_onMetaDataChanged()
@@ -255,12 +259,10 @@ void DMPRISControlPrivate::_q_onPlaybackStatusChanged()
 
     if (stat == "Playing") {
         m_pauseBtn->setVisible(true);
-        m_pauseBtn->setFocus();
         m_playBtn->setVisible(false);
     } else {
         m_pauseBtn->setVisible(false);
         m_playBtn->setVisible(true);
-        m_playBtn->setFocus();
     }
 }
 
