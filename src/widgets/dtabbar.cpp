@@ -30,6 +30,7 @@
 #include <QMimeData>
 #include <QDragMoveEvent>
 #include <QTimer>
+#include <QToolTip>
 
 #include <private/qtabbar_p.h>
 #define private public
@@ -210,6 +211,7 @@ public:
     };
 
     bool eventFilter(QObject *watched, QEvent *event) override;
+    bool event(QEvent *e) override;
 
     QSize minimumSizeHint() const override;
 
@@ -271,6 +273,8 @@ public:
     bool canInsertFromDrag = false;
     // 为true忽略drag move事件
     bool ignoreDragEvent = false;
+
+    bool mousePress = false;
 
     QColor maskColor;
     QColor flashColor;
@@ -976,6 +980,25 @@ bool DTabBarPrivate::eventFilter(QObject *watched, QEvent *event)
     }
 
     return QTabBar::eventFilter(watched, event);
+}
+
+bool DTabBarPrivate::event(QEvent *e)
+{
+    QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(e);
+
+    if (e->type() == QEvent::ToolTip) {
+        if (const QTabBarPrivate::Tab *tab = dd()->at(currentIndex())) {
+            if (!tab->toolTip.isEmpty()) {
+                if(mousePress)
+                    return true;
+            }
+        }
+    } if (e->type() == QEvent::MouseButtonPress && mouseEvent->button() == Qt::LeftButton) {
+        mousePress = true;
+    } if (e->type() == QEvent::MouseButtonRelease && mouseEvent->button() == Qt::LeftButton) {
+        mousePress = false;
+    }
+    return QTabBar::event(e);
 }
 
 QSize DTabBarPrivate::minimumSizeHint() const
