@@ -2162,7 +2162,7 @@ QSize DTabBar::tabSizeHint(int index) const
     if (is_vertical) {
         size.setWidth(qMax(size.width(), d->width()));
     } else {
-        size.setHeight(qMax(size.height(), d->height()));
+        size.setHeight(qMax(size.height(), dd->leftB->height()));
     }
 
     const QSize &min = minimumTabSizeHint(index);
