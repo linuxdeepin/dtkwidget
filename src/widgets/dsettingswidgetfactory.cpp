@@ -467,6 +467,7 @@ QPair<QWidget *, QWidget *> createSpinButtonOptionHandle(QObject *opt)
 {
     auto option = qobject_cast<DTK_CORE_NAMESPACE::DSettingsOption *>(opt);
     auto rightWidget = new QSpinBox();
+    rightWidget->setButtonSymbols(QAbstractSpinBox::PlusMinus);
     rightWidget->setObjectName("OptionDSpinBox");
     rightWidget->setValue(option->value().toInt());
 
