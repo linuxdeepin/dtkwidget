@@ -22,6 +22,7 @@
 #include <QBackingStore>
 #include <QPainter>
 #include <QPaintEvent>
+#include <QPainterPath>
 #include <QDebug>
 
 #include <qpa/qplatformbackingstore.h>

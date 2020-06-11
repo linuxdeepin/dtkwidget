@@ -18,6 +18,7 @@
 #include <QDebug>
 #include <QPainter>
 #include <QPaintEvent>
+#include <QPainterPath>
 #include <QApplication>
 
 #include "dsegmentedcontrol.h"

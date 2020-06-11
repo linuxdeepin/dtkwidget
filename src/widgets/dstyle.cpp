@@ -29,6 +29,7 @@
 #include <QPixmapCache>
 #include <QGuiApplication>
 #include <QAbstractItemView>
+#include <QPainterPath>
 
 #include <qmath.h>
 #include <private/qfixed_p.h>

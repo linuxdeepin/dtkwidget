@@ -2,6 +2,7 @@
 
 #include <QtMath>
 #include <QPainter>
+#include <QPainterPath>
 #include <QTimer>
 #include <QEvent>
 

@@ -94,8 +94,8 @@ public Q_SLOTS:
     bool setDefaultButton(int index);
     bool setDefaultButton(const QString &str);
     void setDefaultButton(QAbstractButton *button);
-    void addContent(QWidget *widget, Qt::Alignment alignment = 0);
-    void insertContent(int index, QWidget *widget, Qt::Alignment alignment = 0);
+    void addContent(QWidget *widget, Qt::Alignment alignment = {});
+    void insertContent(int index, QWidget *widget, Qt::Alignment alignment = {});
     void removeContent(QWidget *widget, bool isDelete = true);
     void clearContents(bool isDelete = true);
     void setSpacing(int spacing);
