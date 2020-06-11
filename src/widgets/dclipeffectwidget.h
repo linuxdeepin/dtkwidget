@@ -22,6 +22,7 @@
 #include "dobject.h"
 
 #include <QWidget>
+#include <QPainterPath>
 
 DWIDGET_BEGIN_NAMESPACE
 

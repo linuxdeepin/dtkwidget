@@ -24,6 +24,7 @@
 
 #include <QAbstractTextDocumentLayout>
 #include <QPainter>
+#include <QPainterPath>
 #include <QTextBlock>
 #include <QStyleOptionFrame>
 #include <QMouseEvent>

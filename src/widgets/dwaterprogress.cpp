@@ -20,6 +20,7 @@
 #include <QtMath>
 #include <QTimer>
 #include <QPainter>
+#include <QPainterPath>
 #include <QGraphicsDropShadowEffect>
 #include <QEvent>
 #include <QIcon>

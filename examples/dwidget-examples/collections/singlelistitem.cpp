@@ -17,6 +17,7 @@
 
 #include "singlelistitem.h"
 #include <QColor>
+#include <QPainterPath>
 
 DWIDGET_USE_NAMESPACE
 

@@ -18,6 +18,7 @@
 #ifndef DBLUREFFECTWIDGET_P_H
 #define DBLUREFFECTWIDGET_P_H
 
+#include <QPainterPath>
 #include <DObjectPrivate>
 #include "dblureffectwidget.h"
 

@@ -24,6 +24,7 @@
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
 #include <QPainter>
+#include <QPainterPath>
 #include <QPointer>
 
 DWIDGET_BEGIN_NAMESPACE

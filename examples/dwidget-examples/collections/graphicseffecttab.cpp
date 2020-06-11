@@ -21,6 +21,7 @@
 
 #include <QLabel>
 #include <QDebug>
+#include <QPainterPath>
 DWIDGET_USE_NAMESPACE
 
 GraphicsEffectTab::GraphicsEffectTab(QWidget *parent) : QWidget(parent)

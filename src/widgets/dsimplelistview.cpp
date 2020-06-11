@@ -31,6 +31,7 @@
 #include <QWheelEvent>
 #include <QtMath>
 #include <QPointer>
+#include <QPainterPath>
 
 #include "dhidpihelper.h"
 
