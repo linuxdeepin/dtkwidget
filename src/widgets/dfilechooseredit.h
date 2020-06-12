@@ -53,6 +53,8 @@ public:
     void setFileDialog(QFileDialog *fileDialog);
     QFileDialog *fileDialog() const;
 
+    void initDialog();
+
 Q_SIGNALS:
     void fileChoosed(const QString &fileName);
     void dialogOpened();

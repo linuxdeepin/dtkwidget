@@ -38,7 +38,7 @@ public:
 
     DFileChooserEdit::DialogDisplayPosition dialogDisplayPosition;
 
-    QFileDialog *dialog;
+    QFileDialog *dialog = nullptr;
 };
 
 DWIDGET_END_NAMESPACE

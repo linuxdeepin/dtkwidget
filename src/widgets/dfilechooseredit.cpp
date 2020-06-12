@@ -121,6 +121,19 @@ QFileDialog *DFileChooserEdit::fileDialog() const
     return d->dialog;
 }
 
+void DFileChooserEdit::initDialog()
+{
+    D_D(DFileChooserEdit);
+
+    if (d->dialog) {
+        return;
+    }
+
+    d->dialog = new QFileDialog(this);
+    d->dialog->setAcceptMode(QFileDialog::AcceptOpen);
+    d->dialog->setFileMode(QFileDialog::ExistingFile);
+}
+
 /*!
  * \~chinese \brief 设置文件选择模式
  * \~chinese \param mode 要使用的模式
@@ -129,6 +142,10 @@ QFileDialog *DFileChooserEdit::fileDialog() const
 void DFileChooserEdit::setFileMode(QFileDialog::FileMode mode)
 {
     D_D(DFileChooserEdit);
+
+    if (!d->dialog) {
+        initDialog();
+    }
     d->dialog->setFileMode(mode);
 }
 
@@ -143,6 +160,10 @@ void DFileChooserEdit::setFileMode(QFileDialog::FileMode mode)
 QFileDialog::FileMode DFileChooserEdit::fileMode() const
 {
     D_DC(DFileChooserEdit);
+
+    if (!d->dialog) {
+        return QFileDialog::FileMode::AnyFile;
+    }
     return d->dialog->fileMode();
 }
 
@@ -154,6 +175,10 @@ QFileDialog::FileMode DFileChooserEdit::fileMode() const
 void  DFileChooserEdit::setNameFilters(const QStringList &filters)
 {
     D_D(DFileChooserEdit);
+
+    if (!d->dialog) {
+        initDialog();
+    }
     d->dialog->setNameFilters(filters);
 }
 
@@ -170,6 +195,10 @@ void  DFileChooserEdit::setNameFilters(const QStringList &filters)
 QStringList DFileChooserEdit::nameFilters() const
 {
     D_DC(DFileChooserEdit);
+
+    if (!d->dialog) {
+        return QStringList();
+    }
     return d->dialog->nameFilters();
 }
 
@@ -177,6 +206,9 @@ void DFileChooserEdit::setDirectoryUrl(const QUrl &directory)
 {
     D_D(DFileChooserEdit);
 
+    if (!d->dialog) {
+        initDialog();
+    }
     d->dialog->setDirectoryUrl(directory);
 }
 
@@ -184,6 +216,9 @@ QUrl DFileChooserEdit::directoryUrl()
 {
     D_D(DFileChooserEdit);
 
+    if (!d->dialog) {
+        initDialog();
+    }
     return d->dialog->directoryUrl();
 }
 
@@ -196,10 +231,6 @@ DFileChooserEditPrivate::DFileChooserEditPrivate(DFileChooserEdit *q)
 void DFileChooserEditPrivate::init()
 {
     D_Q(DFileChooserEdit);
-
-    dialog = new QFileDialog(q);
-    dialog->setAcceptMode(QFileDialog::AcceptOpen);
-    dialog->setFileMode(QFileDialog::ExistingFile);
 
     QList<QWidget *> list;
     DSuggestButton *btn = new DSuggestButton(nullptr);
@@ -219,6 +250,10 @@ void DFileChooserEditPrivate::init()
 void DFileChooserEditPrivate::_q_showFileChooserDialog()
 {
     D_Q(DFileChooserEdit);
+
+    if (!dialog) {
+        q->initDialog();
+    }
 
     if (dialogDisplayPosition == DFileChooserEdit::CurrentMonitorCenter) {
         QPoint pos = QCursor::pos();
