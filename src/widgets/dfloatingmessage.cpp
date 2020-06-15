@@ -81,6 +81,8 @@ void DFloatingMessagePrivate::init()
     } else {  //常驻消息
         content  = nullptr;
         closeButton = new DDialogCloseButton(q);
+        // FIX bug-20506 close button too small
+        closeButton->setIconSize(QSize(32, 32));
 
         hBoxLayout->addWidget(closeButton);
         q->connect(closeButton, &DIconButton::clicked, q, &DFloatingMessage::closeButtonClicked);
