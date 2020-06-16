@@ -30,6 +30,12 @@ static QWindow *ensureWindowHandle(QWidget *widget)
     if (!handle) {
         bool save_flag = qApp->testAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
         qApp->setAttribute(Qt::AA_DontCreateNativeWidgetSiblings, true);
+
+        if (window->testAttribute(Qt::WA_NativeWindow)) {
+            // FIX null handle return on app kdevelop
+            window->setAttribute(Qt::WA_NativeWindow, false);
+        }
+
         window->setAttribute(Qt::WA_NativeWindow);
         handle = window->windowHandle();
         window->setAttribute(Qt::WA_NativeWindow, false);
