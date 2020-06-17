@@ -107,7 +107,6 @@ void DMPRISControlPrivate::init()
     m_pictureVisible  = true;
     m_controlWidget   = new QWidget;
     m_prevBtn         = new DFloatingButton(m_controlWidget);
-    m_pauseBtn        = new DFloatingButton(m_controlWidget);
     m_playBtn         = new DFloatingButton(m_controlWidget);
     m_nextBtn         = new DFloatingButton(m_controlWidget);
     m_tickEffect      = new DTickEffect(m_title, m_title);
@@ -115,20 +114,16 @@ void DMPRISControlPrivate::init()
     m_prevBtn->setIcon(QIcon::fromTheme(":/assets/images/play_previous.svg"));
     m_playBtn->setIcon(QIcon::fromTheme(":/assets/images/play_start.svg"));
     m_nextBtn->setIcon(QIcon::fromTheme(":/assets/images/play_next.svg"));
-    m_pauseBtn->setIcon(QIcon::fromTheme(":/assets/images/play_pause.svg"));
     m_prevBtn->setBackgroundRole(DPalette::Button);
     m_playBtn->setBackgroundRole(DPalette::Button);
     m_nextBtn->setBackgroundRole(DPalette::Button);
-    m_pauseBtn->setBackgroundRole(DPalette::Button);
     m_prevBtn->setAutoExclusive(true);
-    m_pauseBtn->setAutoExclusive(true);
     m_playBtn->setAutoExclusive(true);
     m_nextBtn->setAutoExclusive(true);
 
     m_title->setAlignment(Qt::AlignCenter);
     m_picture->setFixedSize(200, 200);
     m_prevBtn->setObjectName("PrevBtn");
-    m_pauseBtn->setObjectName("PauseBtn");
     m_playBtn->setObjectName("PlayBtn");
     m_nextBtn->setObjectName("NextBtn");
 
@@ -150,7 +145,6 @@ void DMPRISControlPrivate::init()
     m_title->setText("MPRIS Title");
 
     m_nextBtn->setIcon(QIcon::fromTheme(":/assets/images/arrow_right_normal.png"));
-    m_pauseBtn->setIcon(QIcon::fromTheme(":/assets/images/arrow_left_white.png"));
     m_playBtn->setIcon(QIcon::fromTheme(":/assets/images/arrow_right_white.png"));
     m_prevBtn->setIcon(QIcon::fromTheme(":/assets/images/arrow_left_normal.png"));
 #endif
@@ -158,7 +152,6 @@ void DMPRISControlPrivate::init()
     QHBoxLayout *controlLayout = new QHBoxLayout;
     controlLayout->addWidget(m_prevBtn);
     controlLayout->addStretch();
-    controlLayout->addWidget(m_pauseBtn);
     controlLayout->addWidget(m_playBtn);
     controlLayout->addStretch();
     controlLayout->addWidget(m_nextBtn);
@@ -179,7 +172,6 @@ void DMPRISControlPrivate::init()
     q->connect(m_mprisMonitor, SIGNAL(mprisAcquired(const QString &)), q, SLOT(_q_loadMPRISPath(const QString &)));
     q->connect(m_mprisMonitor, SIGNAL(mprisLost(const QString &)), q, SLOT(_q_removeMPRISPath(const QString &)));
     q->connect(m_prevBtn, SIGNAL(clicked()), q, SLOT(_q_onPrevClicked()));
-    q->connect(m_pauseBtn, SIGNAL(clicked()), q, SLOT(_q_onPauseClicked()));
     q->connect(m_playBtn, SIGNAL(clicked()), q, SLOT(_q_onPlayClicked()));
     q->connect(m_nextBtn, SIGNAL(clicked()), q, SLOT(_q_onNextClicked()));
 
@@ -200,17 +192,18 @@ void DMPRISControlPrivate::_q_onPlayClicked()
     if (!m_mprisInter)
         return;
 
-    m_mprisInter->Play();
-    m_pauseBtn->setFocus();
+    if (m_playStatus) {
+        m_mprisInter->Pause();
+    } else {
+        m_mprisInter->Play();
+    }
+
+    m_playBtn->setFocus();
 }
 
 void DMPRISControlPrivate::_q_onPauseClicked()
 {
-    if (!m_mprisInter)
-        return;
-
-    m_mprisInter->Pause();
-    m_playBtn->setFocus();
+    //
 }
 
 void DMPRISControlPrivate::_q_onNextClicked()
@@ -256,14 +249,23 @@ void DMPRISControlPrivate::_q_onMetaDataChanged()
 void DMPRISControlPrivate::_q_onPlaybackStatusChanged()
 {
     const QString stat = m_mprisInter->playbackStatus();
-
+#ifdef QT_DEBUG
     if (stat == "Playing") {
-        m_pauseBtn->setVisible(true);
-        m_playBtn->setVisible(false);
+        m_playStatus = true;
+        m_playBtn->setIcon(QIcon::fromTheme(":/assets/images/arrow_right_white.png"));
     } else {
-        m_pauseBtn->setVisible(false);
-        m_playBtn->setVisible(true);
+        m_playStatus = false;
+        m_playBtn->setIcon(QIcon::fromTheme(":/assets/images/arrow_left_white.png"));
     }
+#else
+    if (stat == "Playing") {
+        m_playStatus = true;
+        m_playBtn->setIcon(QIcon::fromTheme(":/assets/images/play_pause.svg"));
+    } else {
+        m_playStatus = false;
+        m_playBtn->setIcon(QIcon::fromTheme(":/assets/images/play_start.svg"));
+    }
+#endif
 }
 
 void DMPRISControlPrivate::_q_loadMPRISPath(const QString &path)

@@ -65,9 +65,9 @@ public:
     QWidget *     m_controlWidget;
     DFloatingButton *m_prevBtn;
     DFloatingButton *m_playBtn;
-    DFloatingButton *m_pauseBtn;
     DFloatingButton *m_nextBtn;
 
+    bool m_playStatus = false;
     bool m_pictureVisible;
 
     QString     m_lastPath;
