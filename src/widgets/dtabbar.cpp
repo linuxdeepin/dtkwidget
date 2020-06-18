@@ -1043,8 +1043,6 @@ void DTabBarPrivate::paintEvent(QPaintEvent *e)
     for (int i = 0; i < d->tabList.count(); ++i) {
         QStyleOptionTab tab;
         initStyleOption(&tab, i);
-        // 强制让文本居中
-        tab.rightButtonSize = QSize();
         if (d->paintWithOffsets && d->tabList[i].dragOffset != 0) {
             if (vertical) {
                 tab.rect.moveTop(tab.rect.y() + d->tabList[i].dragOffset);
@@ -1084,8 +1082,6 @@ void DTabBarPrivate::paintEvent(QPaintEvent *e)
     if (selected >= 0) {
         QStyleOptionTab tab;
         initStyleOption(&tab, selected);
-        // 强制让文本居中
-        tab.rightButtonSize = QSize();
         if (d->paintWithOffsets && d->tabList[selected].dragOffset != 0) {
             if (vertical) {
                 tab.rect.moveTop(tab.rect.y() + d->tabList[selected].dragOffset);
@@ -1321,6 +1317,8 @@ void DTabBarPrivate::tabLayoutChange()
 void DTabBarPrivate::initStyleOption(QStyleOptionTab *option, int tabIndex) const
 {
     QTabBar::initStyleOption(option, tabIndex);
+    // 强制让文本居中
+    option->rightButtonSize = QSize();
 }
 
 QTabBarPrivate *DTabBarPrivate::dd() const
