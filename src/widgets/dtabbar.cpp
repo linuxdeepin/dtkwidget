@@ -360,6 +360,8 @@ void DTabBarPrivate::setupMovableTab()
     QStyleOptionTab tab;
     initStyleOption(&tab, d->pressedIndex);
     tab.rect.moveTopLeft(QPoint(taboverlap, 0));
+    // 强制让文本居中
+    tab.rightButtonSize = QSize();
     q_func()->paintTab(&p, d->pressedIndex, tab);
 
     reinterpret_cast<DMovableTabWidget*>(d->movingTab)->setPixmap(grabImage);
@@ -443,6 +445,8 @@ void DTabBarPrivate::setupDragableTab()
     QTabBarPrivate *d = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
     QStyleOptionTab opt;
     initStyleOption(&opt, d->pressedIndex);
+    // 强制让文本居中
+    opt.rightButtonSize = QSize();
 
     QMimeData *mime_data = q->createMimeDataFromTab(d->pressedIndex, opt);
 
@@ -1043,6 +1047,8 @@ void DTabBarPrivate::paintEvent(QPaintEvent *e)
     for (int i = 0; i < d->tabList.count(); ++i) {
         QStyleOptionTab tab;
         initStyleOption(&tab, i);
+        // 强制让文本居中
+        tab.rightButtonSize = QSize();
         if (d->paintWithOffsets && d->tabList[i].dragOffset != 0) {
             if (vertical) {
                 tab.rect.moveTop(tab.rect.y() + d->tabList[i].dragOffset);
@@ -1082,6 +1088,8 @@ void DTabBarPrivate::paintEvent(QPaintEvent *e)
     if (selected >= 0) {
         QStyleOptionTab tab;
         initStyleOption(&tab, selected);
+        // 强制让文本居中
+        tab.rightButtonSize = QSize();
         if (d->paintWithOffsets && d->tabList[selected].dragOffset != 0) {
             if (vertical) {
                 tab.rect.moveTop(tab.rect.y() + d->tabList[selected].dragOffset);
@@ -1317,8 +1325,6 @@ void DTabBarPrivate::tabLayoutChange()
 void DTabBarPrivate::initStyleOption(QStyleOptionTab *option, int tabIndex) const
 {
     QTabBar::initStyleOption(option, tabIndex);
-    // 强制让文本居中
-    option->rightButtonSize = QSize();
 }
 
 QTabBarPrivate *DTabBarPrivate::dd() const
