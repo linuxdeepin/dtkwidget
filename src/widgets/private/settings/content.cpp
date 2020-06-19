@@ -33,6 +33,7 @@
 #include <DSuggestButton>
 #include <DPushButton>
 #include <DFontSizeManager>
+#include <DFrame>
 
 #include "dsettingswidgetfactory.h"
 
@@ -89,7 +90,7 @@ Content::Content(QWidget *parent)
     d->contentLayout->setRowWrapPolicy(QFormLayout::DontWrapRows);
     d->contentLayout->setLabelAlignment(Qt::AlignLeft);
     d->contentLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
-    d->contentLayout->setContentsMargins(0, 0, d->contentArea->verticalScrollBar()->height(), 0);
+    d->contentLayout->setContentsMargins(0, 0, 10, 0);
     layout->addWidget(d->contentArea);
 
     d->contentArea->setWidget(d->contentFrame);
@@ -221,9 +222,15 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
         title->label()->setForegroundRole(QPalette::BrightText);
 
         DFontSizeManager::instance()->bind(title, DFontSizeManager::T4, QFont::Medium);
-        d->contentLayout->setWidget(d->contentLayout->rowCount(), QFormLayout::LabelRole, title);
+
+        DWidget *widTile = new DWidget();
+        QHBoxLayout *hLayTile = new QHBoxLayout(widTile);
+        hLayTile->addWidget(title);
+        d->contentLayout->setWidget(d->contentLayout->rowCount(), QFormLayout::SpanningRole, widTile);
+
         d->sortTitles.push_back(title);
         d->titles.insert(groupKey, title);
+        d->contentLayout->setSpacing(10);
 
         for (auto subgroup : settings->group(groupKey)->childGroups()) {
             if (subgroup->isHidden()) {
@@ -242,7 +249,12 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
                 title->setProperty("key", subgroup->key());
                 title->setProperty("_d_dtk_group_key", current_groupKey);
 
-                d->contentLayout->setWidget(d->contentLayout->rowCount(), QFormLayout::LabelRole, title);
+                DWidget *wid = new DWidget();
+                QHBoxLayout *hLay = new QHBoxLayout(wid);
+                hLay->setContentsMargins(10, 0, 0, 0);
+                hLay->addWidget(title);
+                d->contentLayout->setWidget(d->contentLayout->rowCount(), QFormLayout::LabelRole, wid);
+
                 d->sortTitles.push_back(title);
                 d->titles.insert(subgroup->key(), title);
             }
@@ -261,7 +273,15 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
                             label->setBuddy(widget.second);
                     }
 
-                    d->contentLayout->addRow(widget.first, widget.second);
+                    DFrame *frame = new DFrame();
+                    frame->setLineWidth(0);
+                    frame->setBackgroundRole(DPalette::ItemBackground);
+                    QHBoxLayout *hLay = new QHBoxLayout(frame);
+                    QMargins margins = hLay->contentsMargins();
+                    hLay->setContentsMargins(15, margins.top(), margins.right(), margins.bottom());
+                    hLay->addWidget(widget.first, 2);
+                    hLay->addWidget(widget.second, 3);
+                    d->contentLayout->addRow(frame);
 
                     if (widget.first) {
                         widget.first->setProperty("_d_dtk_group_key", current_subGroupKey);
@@ -275,11 +295,21 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
 
                     if (widget) {
                         widget->setProperty("_d_dtk_group_key", current_subGroupKey);
-                        d->contentLayout->addRow(widget);
+                        DFrame *frame = new DFrame();
+                        frame->setLineWidth(0);
+                        frame->setBackgroundRole(DPalette::ItemBackground);
+                        QHBoxLayout *hLay = new QHBoxLayout(frame);
+                        QMargins margins = hLay->contentsMargins();
+                        hLay->setContentsMargins(15, margins.top(), margins.right(), margins.bottom());
+                        hLay->addWidget(widget);
+                        d->contentLayout->addRow(frame);
+
                     }
                 }
             }
         }
+        QSpacerItem *spaceItem = new QSpacerItem(0, 20,QSizePolicy::Minimum,QSizePolicy::Expanding);
+        d->contentLayout->setItem(d->contentLayout->rowCount(), QFormLayout::LabelRole, spaceItem);
     }
 
     QWidget *box = new QWidget();
