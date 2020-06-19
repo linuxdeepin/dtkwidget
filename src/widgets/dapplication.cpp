@@ -272,6 +272,7 @@ bool DApplicationPrivate::loadTranslator(QList<DPathBuf> translateDirs, const QS
 {
     D_Q(DApplication);
 
+    QStringList missingQmfiles;
     for (auto &locale : localeFallback) {
         QString translateFilename = QString("%1_%2").arg(name).arg(locale.name());
         for (auto &path : translateDirs) {
@@ -283,6 +284,11 @@ bool DApplicationPrivate::loadTranslator(QList<DPathBuf> translateDirs, const QS
                 q->installTranslator(translator);
                 return true;
             }
+        }
+
+        // fix english does not need to translation..
+        if (locale.language() != QLocale::English) {
+            missingQmfiles << translateFilename + ".qm";
         }
 
         QStringList parseLocalNameList = locale.name().split("_", QString::SkipEmptyParts);
@@ -300,9 +306,16 @@ bool DApplicationPrivate::loadTranslator(QList<DPathBuf> translateDirs, const QS
                 }
             }
         }
+
+        // fix english does not need to translation..
+        if (locale.language() != QLocale::English) {
+            missingQmfiles << translateFilename + ".qm";
+        }
     }
 
-    qWarning() << name << "can not find qm files" ;
+    if (missingQmfiles.size() > 0) {
+        qWarning() << name << "can not find qm files" << missingQmfiles;
+    }
     return false;
 }
 
