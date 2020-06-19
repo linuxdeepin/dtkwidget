@@ -33,6 +33,7 @@
 #include <DSuggestButton>
 #include <DPushButton>
 #include <DFontSizeManager>
+#include <DFrame>
 
 #include "dsettingswidgetfactory.h"
 
@@ -219,11 +220,15 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
         title->setTitle(trName);
         title->setProperty("key", groupKey);
         title->label()->setForegroundRole(QPalette::BrightText);
+        QSpacerItem *spaceItem = new QSpacerItem(0, 20,QSizePolicy::Minimum,QSizePolicy::Expanding);
+        d->contentLayout->setItem(d->contentLayout->rowCount(), QFormLayout::LabelRole, spaceItem);
 
         DFontSizeManager::instance()->bind(title, DFontSizeManager::T4, QFont::Medium);
         d->contentLayout->setWidget(d->contentLayout->rowCount(), QFormLayout::LabelRole, title);
+        d->contentLayout->setWidget(d->contentLayout->rowCount(), QFormLayout::SpanningRole, title);
         d->sortTitles.push_back(title);
         d->titles.insert(groupKey, title);
+
 
         for (auto subgroup : settings->group(groupKey)->childGroups()) {
             if (subgroup->isHidden()) {
@@ -242,9 +247,15 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
                 title->setProperty("key", subgroup->key());
                 title->setProperty("_d_dtk_group_key", current_groupKey);
 
+                QSpacerItem *spaceUp = new QSpacerItem(0, 6,QSizePolicy::Minimum,QSizePolicy::Expanding);
+                d->contentLayout->setItem(d->contentLayout->rowCount(), QFormLayout::LabelRole, spaceUp);
+
                 d->contentLayout->setWidget(d->contentLayout->rowCount(), QFormLayout::LabelRole, title);
                 d->sortTitles.push_back(title);
                 d->titles.insert(subgroup->key(), title);
+
+                QSpacerItem *spaceDown = new QSpacerItem(0, 6,QSizePolicy::Minimum,QSizePolicy::Expanding);
+                d->contentLayout->setItem(d->contentLayout->rowCount(), QFormLayout::LabelRole, spaceDown);
             }
 
             for (auto option : subgroup->childOptions()) {
@@ -260,8 +271,26 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
                         if (widget.second)
                             label->setBuddy(widget.second);
                     }
+#if 1
+                    DFrame *frame = new DFrame();
+                    frame->setBackgroundRole(QPalette::Window);
+                    QHBoxLayout *hLay = new QHBoxLayout(frame);
+                    hLay->addWidget(widget.first);
+                    hLay->addWidget(widget.second);
+                    qDebug()<<"--->"<<widget.first<<widget.second;
+                    d->contentLayout->addRow(frame);
 
-                    d->contentLayout->addRow(widget.first, widget.second);
+#else
+                    DWidget *wid = new DWidget();
+                    wid->setStyleSheet("background-color: gray");
+                    QHBoxLayout *hLay = new QHBoxLayout(wid);
+                    hLay->addWidget(widget.first);
+                    hLay->addWidget(widget.second);
+                    qDebug()<<"--->"<<widget.first<<widget.second;
+                    d->contentLayout->addRow(wid);
+//                    d->contentLayout->addRow(widget.first, widget.second);
+
+#endif
 
                     if (widget.first) {
                         widget.first->setProperty("_d_dtk_group_key", current_subGroupKey);
@@ -273,9 +302,17 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
                 } else {
                     QWidget *widget = d->widgetFactory->createWidget(translateContext, option);
 
+//                    widget->setStyleSheet("background-color: yellow");
+
                     if (widget) {
                         widget->setProperty("_d_dtk_group_key", current_subGroupKey);
-                        d->contentLayout->addRow(widget);
+                        DFrame *frame = new DFrame();
+                        frame->setBackgroundRole(QPalette::Window);
+                        QHBoxLayout *hLay = new QHBoxLayout(frame);
+                        hLay->addWidget(widget);
+                        d->contentLayout->addRow(frame);
+//                        d->contentLayout->addRow(widget);
+
                     }
                 }
             }
