@@ -175,6 +175,13 @@ public:
         connect(this, &DTabBarPrivate::tabBarDoubleClicked, qq, &DTabBar::tabBarDoubleClicked);
     }
 
+    ~DTabBarPrivate() override
+    {
+        if (stretch) {
+            delete stretch;
+        }
+    }
+
     void moveTabOffset(int index, int offset)
     {
         QTabBarPrivate *d = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
