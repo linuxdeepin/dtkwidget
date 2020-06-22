@@ -43,10 +43,10 @@ public:
     QString getQssForWidget(const QString className, const QString &theme = QString()) const;
     QString getQssForWidget(const QWidget *widget) const;
 
-    static void registerWidget(QWidget *widget, QStringList propertys = QStringList());
+    static void registerWidget(QWidget *widget, QStringList properties = QStringList());
     // TODO: use blow instead, the only thing should do is rebuilding
-    // static void registerWidget(QWidget *widget, const QStringList &propertys = QStringList());
-    static void registerWidget(QWidget *widget, const QString &filename, const QStringList &propertys = QStringList());
+    // static void registerWidget(QWidget *widget, const QStringList &properties = QStringList());
+    static void registerWidget(QWidget *widget, const QString &filename, const QStringList &properties = QStringList());
 
 public Q_SLOTS:
     void updateQss();

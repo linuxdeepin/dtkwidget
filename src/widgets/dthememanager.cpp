@@ -224,7 +224,7 @@ class DThemeManagerPrivate : public DCORE_NAMESPACE::DObjectPrivate
     D_DECLARE_PUBLIC(DThemeManager)
 
     QString themeName;
-    QMap<QWidget *, QMap<QString, QString> > watchedDynamicPropertys;
+    QMap<QWidget *, QMap<QString, QString> > watchedDynamicProperties;
 
 public:
     DThemeManagerPrivate(DThemeManager *qq)
@@ -310,7 +310,7 @@ public:
         return "";
     }
 
-    void registerWidget(QWidget *widget, const QString &filename, const QStringList &propertys)
+    void registerWidget(QWidget *widget, const QString &filename, const QStringList &properties)
     {
         if (filename.isEmpty()) {
             qWarning() << "can not load qss with out filename" << widget;
@@ -348,29 +348,29 @@ public:
         });
 
         auto meta = widget->metaObject();
-        QMap<QString, QString> dynamicPropertys;
-        for (auto &prop : propertys) {
+        QMap<QString, QString> dynamicProperties;
+        for (auto &prop : properties) {
             auto propIndex = meta->indexOfProperty(prop.toLatin1().data());
             if (propIndex < 0) {
-                dynamicPropertys.insert(prop, prop);
+                dynamicProperties.insert(prop, prop);
                 continue;
             }
             dtm->connect(widget, meta->property(propIndex).notifySignal(),
                          dtm, dtm->metaObject()->method(dtm->metaObject()->indexOfMethod("updateQss()")));
         }
 
-        if (!dynamicPropertys.isEmpty()) {
+        if (!dynamicProperties.isEmpty()) {
             widget->installEventFilter(dtm);
-            if (dtm->d_func()->watchedDynamicPropertys.contains(widget)) {
-                QMap<QString, QString> oldProps = dtm->d_func()->watchedDynamicPropertys.value(widget);
+            if (dtm->d_func()->watchedDynamicProperties.contains(widget)) {
+                QMap<QString, QString> oldProps = dtm->d_func()->watchedDynamicProperties.value(widget);
                 for (auto &key : oldProps.keys()) {
-                    dynamicPropertys.insert(key, oldProps.value(key));
+                    dynamicProperties.insert(key, oldProps.value(key));
                 }
             }
-            dtm->d_func()->watchedDynamicPropertys.insert(widget, dynamicPropertys);
+            dtm->d_func()->watchedDynamicProperties.insert(widget, dynamicProperties);
 
             dtm->connect(widget, &QObject::destroyed, dtm, [ = ]() {
-                dtm->d_func()->watchedDynamicPropertys.remove(widget);
+                dtm->d_func()->watchedDynamicProperties.remove(widget);
             });
         }
     }
@@ -561,31 +561,31 @@ QString DThemeManager::getQssForWidget(const QWidget *widget) const
 /*!
  * \~chinese \brief DThemeManager::registerWidget 用于将控件注册到 DThemeManager 的管理范围内。
  * \~chinese 只有通过 registerWidget() 注册的控件才会受到 DThemeManager 的自动管理，
- * \~chinese 通常注册的动作都会在实例的构造过程中完成。\ref propertys 参数用来注册属性，
+ * \~chinese 通常注册的动作都会在实例的构造过程中完成。\ref properties 参数用来注册属性，
  * \~chinese 注册的属性发生变化时 DThemeManager 会自动刷新控件的样式。
  * \~chinese \param widget 需要注册的控件。
- * \~chinese \param propertys 需要注册的控件属性。
+ * \~chinese \param properties 需要注册的控件属性。
  */
-void DThemeManager::registerWidget(QWidget *widget, QStringList propertys)
+void DThemeManager::registerWidget(QWidget *widget, QStringList properties)
 {
     auto dtm = DThemeManager::instance();
     auto fileName = dtm->d_func()->fallbackWidgetThemeFilename(widget);
-    registerWidget(widget, fileName, propertys);
+    registerWidget(widget, fileName, properties);
 }
 
 /*!
  * \~chinese \brief DThemeManager::registerWidget 用于将控件注册到 DThemeManager 的管理范围内。
  * \~chinese \param widget 需要注册的控件。
  * \~chinese \param filename 需要注册的控件所对应的主题文件名。
- * \~chinese \param propertys 需要注册的控件属性。
+ * \~chinese \param properties 需要注册的控件属性。
  *
  *
- * \sa registerWidget(QWidget *widget, QStringList propertys)
+ * \sa registerWidget(QWidget *widget, QStringList properties)
  */
-void DThemeManager::registerWidget(QWidget *widget, const QString &filename, const QStringList &propertys)
+void DThemeManager::registerWidget(QWidget *widget, const QString &filename, const QStringList &properties)
 {
     auto dtm = DThemeManager::instance();
-    dtm->d_func()->registerWidget(widget, filename, propertys);
+    dtm->d_func()->registerWidget(widget, filename, properties);
 }
 
 /*!
@@ -622,7 +622,7 @@ bool DThemeManager::eventFilter(QObject *watched, QEvent *event)
     }
 
     auto widget = qobject_cast<QWidget *>(watched);
-    if (!d->watchedDynamicPropertys.contains(widget)) {
+    if (!d->watchedDynamicProperties.contains(widget)) {
         return QObject::eventFilter(watched, event);
     }
 
@@ -631,7 +631,7 @@ bool DThemeManager::eventFilter(QObject *watched, QEvent *event)
         return QObject::eventFilter(watched, event);
     }
 
-    auto props = d->watchedDynamicPropertys.value(widget);
+    auto props = d->watchedDynamicProperties.value(widget);
     auto propName = QString::fromLatin1(propEvent->propertyName().data());
     if (props.contains(propName) && widget) {
         widget->setStyleSheet(widget->styleSheet());
