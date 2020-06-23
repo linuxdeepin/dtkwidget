@@ -242,6 +242,7 @@ void DKeySequenceEditPrivate::init()
     copywritingList.insert("PgUp", "PageUp");
     copywritingList.insert("PgDown", "PageDown");
     copywritingList.insert("Return", "Enter");
+    copywritingList.insert("Meta", "Super");
 }
 
 QString DKeySequenceEditPrivate::replaceWriting(QString copywriting)
