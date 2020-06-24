@@ -124,6 +124,7 @@ public:
         QTabBarPrivate *d = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
 
         leftScrollButton = new DIconButton(DStyle::SP_ArrowLeft, qq);
+        leftScrollButton->setObjectName("leftButton");
         rightScrollButton = new DIconButton(DStyle::SP_ArrowRight, qq);
         rightScrollButton->setObjectName("rightButton");
 
