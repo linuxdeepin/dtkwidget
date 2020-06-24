@@ -177,7 +177,7 @@ public:
 
     ~DTabBarPrivate() override
     {
-        if (stretch) {
+        if (stretchIsRemove && stretch) {
             delete stretch;
         }
     }
@@ -282,6 +282,7 @@ public:
     bool ignoreDragEvent = false;
 
     bool mousePress = false;
+    bool stretchIsRemove = false;
 
     QColor maskColor;
     QColor flashColor;
@@ -1763,9 +1764,11 @@ void DTabBar::setExpanding(bool enabled)
 
     if (enabled) {
         auto_layout->removeItem(d->stretch);
+        d->stretchIsRemove = true;
         d->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     } else {
         auto_layout->addSpacerItem(d->stretch);
+        d->stretchIsRemove = false;
         d->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Fixed);
     }
 }
