@@ -41,6 +41,7 @@
 #include <QAudioDeviceInfo>
 #include <QCoreApplication>
 #include <QToolButton>
+#include <QDBusPendingCallWatcher>
 
 DWIDGET_BEGIN_NAMESPACE
 DCORE_USE_NAMESPACE
@@ -335,21 +336,30 @@ void DSearchEditPrivate::init()
     }
 
 #ifdef ENABLE_AI
+    voiceAction = new QAction(q);
+    voiceAction->setIcon(QIcon::fromTheme("button_voice"));
+    voiceAction->setCheckable(true);
+    voiceAction->setEnabled(false);
+    lineEdit->addAction(voiceAction, QLineEdit::TrailingPosition);
+
+    q->connect(voiceAction, SIGNAL(triggered(bool)), q, SLOT(_q_onVoiceActionTrigger(bool)));
     // 语音输入按钮
     QDBusInterface testSpeechToText("com.iflytek.aiassistant",
                                "/aiassistant/iat",
                                "com.iflytek.aiassistant.iat",
                                QDBusConnection::sessionBus());
     // 测试听写接口是否开启
-    QDBusReply<bool> speechToTextReply = testSpeechToText.call(QDBus::AutoDetect, "getIatEnable");
-    if (speechToTextReply.isValid() && speechToTextReply.value()) {
-        voiceAction = new QAction(q);
-        voiceAction->setIcon(QIcon::fromTheme("button_voice"));
-        voiceAction->setCheckable(true);
-        lineEdit->addAction(voiceAction, QLineEdit::TrailingPosition);
-
-        q->connect(voiceAction, SIGNAL(triggered(bool)), q, SLOT(_q_onVoiceActionTrigger(bool)));
-    }
+    QDBusPendingCall call = testSpeechToText.asyncCall("getIatEnable");
+    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, q);
+    QObject::connect(watcher, &QDBusPendingCallWatcher::finished, q, [this](QDBusPendingCallWatcher *pWatcher) {
+        QDBusPendingReply<bool> reply = *pWatcher;
+        if (reply.isError()) {
+            qWarning() << "getIatEnable is ERROR";
+        } else {
+            voiceAction->setEnabled(reply.argumentAt<0>());
+        }
+        pWatcher->deleteLater();
+    });
 #endif
 }
 
