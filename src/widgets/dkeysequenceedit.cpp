@@ -142,6 +142,10 @@ bool DKeySequenceEdit::setKeySequence(const QKeySequence &keySequence)
     QStringList keyText;
     keyText << keySequence.toString().split("+", QString::SkipEmptyParts);
 
+    if (keySequence.toString().contains("++")) {
+        keyText << "+";
+    }
+
     if (keyText.isEmpty() || (keyText.count() > 4)) {
         return false;
     }
