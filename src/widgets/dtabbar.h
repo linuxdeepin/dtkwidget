@@ -156,6 +156,9 @@ public:
 
     void setEnabledEmbedStyle(bool enable);
 
+    void setTabLabelAlignment(Qt::Alignment alignment);
+    Qt::Alignment tabLabelAlignment();
+
 Q_SIGNALS:
     void currentChanged(int index);
     void tabCloseRequested(int index);

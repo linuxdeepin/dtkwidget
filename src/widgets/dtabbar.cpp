@@ -290,6 +290,8 @@ public:
     // 要闪动绘制的Tab
     qreal opacityOnFlash = 1;
     int flashTabIndex = -1;
+    //tab文字对齐方式
+    Qt::Alignment alignment = Qt::AlignCenter;
 
     DIconButton *leftScrollButton;
     DIconButton *rightScrollButton;
@@ -1877,6 +1879,23 @@ void DTabBar::setEnabledEmbedStyle(bool enable)
     DStyle::setFrameRadius(d->rightScrollButton, radius);
     DStyle::setFrameRadius(d->leftScrollButton, radius);
     DStyle::setFrameRadius(d->addButton, radius);
+}
+
+/*!
+ * \~chinese \brief DTabBar::setTabLabelAlignment 设置tab标签文字对齐方式
+ * \~chinese \param alignment 对齐
+ */
+void DTabBar::setTabLabelAlignment(Qt::Alignment alignment)
+{
+    D_D(DTabBar);
+    d->alignment = alignment;
+}
+/*!
+ * \~chinese  \brief DTabBar::tabLabelAlignment 返回tab对齐方式
+ */
+Qt::Alignment DTabBar::tabLabelAlignment()
+{
+    return d_func()->alignment;
 }
 
 /*!
