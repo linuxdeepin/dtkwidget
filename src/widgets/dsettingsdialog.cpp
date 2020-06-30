@@ -61,6 +61,7 @@ public:
 
     Navigation      *leftFrame;
     Content         *content;
+    DTitlebar       *frameBar;
 
     DSettingsDialog *q_ptr;
     Q_DECLARE_PUBLIC(DSettingsDialog)
@@ -85,9 +86,9 @@ DSettingsDialog::DSettingsDialog(QWidget *parent) :
     rightFrame->setContentsMargins(10, 10, 10, 10);
 
     QVBoxLayout *rightlayout = new QVBoxLayout(rightFrame);
-    DTitlebar *frameBar = new DTitlebar;
-    frameBar->setMenuVisible(false);
-    frameBar->setTitle(QString());
+    d->frameBar = new DTitlebar;
+    d->frameBar->setMenuVisible(false);
+    d->frameBar->setTitle(QString());
 
     d->leftFrame->setObjectName("LeftFrame");
     d->content->setObjectName("RightFrame");
@@ -101,7 +102,7 @@ DSettingsDialog::DSettingsDialog(QWidget *parent) :
     bottomlayout->addWidget(rightFrame);
     bottomlayout->setContentsMargins(0, 0, 0, 0);
 
-    mainlayout->addWidget(frameBar);
+    mainlayout->addWidget(d->frameBar);
     mainlayout->addLayout(bottomlayout);
 
     setMinimumWidth(680);
@@ -113,8 +114,8 @@ DSettingsDialog::DSettingsDialog(QWidget *parent) :
         d->leftFrame->blockSignals(false);
     });
 
-    connect(this, &DSettingsDialog::windowIconChanged, frameBar, &DTitlebar::setIcon);
-    connect(this, &DSettingsDialog::windowTitleChanged, frameBar, &DTitlebar::setTitle);
+    connect(this, &DSettingsDialog::windowIconChanged, d->frameBar, &DTitlebar::setIcon);
+    connect(this, &DSettingsDialog::windowTitleChanged, d->frameBar, &DTitlebar::setTitle);
 }
 
 DSettingsDialog::~DSettingsDialog()
@@ -170,6 +171,17 @@ void DSettingsDialog::scrollToGroup(const QString &groupKey)
 
     d->leftFrame->onSelectGroup(groupKey);
     d->content->onScrollToGroup(groupKey);
+}
+
+/*!
+ * \brief DSettingsDialog::setIcon 设置标题栏的图标 QIcon
+ * \param icon 设置的 Icon
+ */
+void DSettingsDialog::setIcon(const QIcon &icon)
+{
+    D_D(DSettingsDialog);
+
+    d->frameBar->setIcon(icon);
 }
 
 /*!

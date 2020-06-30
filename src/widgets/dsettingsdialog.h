@@ -39,6 +39,7 @@ public:
     bool groupIsVisible(const QString &groupKey) const;
     void setResetVisible(bool visible);
     void scrollToGroup(const QString &groupKey); //需要在对话框 show 以后使用
+    void setIcon(const QIcon &icon);
 
 public Q_SLOTS:
     void updateSettings(DTK_CORE_NAMESPACE::DSettings *settings);
