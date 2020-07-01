@@ -218,18 +218,17 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
                       : qApp->translate(translateContext.constData(), group->name().toStdString().c_str());
         auto title = new ContentTitle;
         title->setTitle(trName);
-        title->setProperty("key", groupKey);
         title->label()->setForegroundRole(QPalette::BrightText);
-
         DFontSizeManager::instance()->bind(title, DFontSizeManager::T4, QFont::Medium);
 
         DWidget *widTile = new DWidget();
+        widTile->setProperty("key", groupKey);
         QHBoxLayout *hLayTile = new QHBoxLayout(widTile);
         hLayTile->addWidget(title);
         d->contentLayout->setWidget(d->contentLayout->rowCount(), QFormLayout::SpanningRole, widTile);
 
-        d->sortTitles.push_back(title);
-        d->titles.insert(groupKey, title);
+        d->sortTitles.push_back(widTile);
+        d->titles.insert(groupKey, widTile);
         d->contentLayout->setSpacing(10);
 
         for (auto subgroup : settings->group(groupKey)->childGroups()) {
@@ -246,17 +245,18 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
 
                 title->setTitle(trName);
                 DFontSizeManager::instance()->bind(title, DFontSizeManager::T5, QFont::Medium);
-                title->setProperty("key", subgroup->key());
-                title->setProperty("_d_dtk_group_key", current_groupKey);
 
                 DWidget *wid = new DWidget();
+                wid->setProperty("key", subgroup->key());
+                wid->setProperty("_d_dtk_group_key", current_groupKey);
                 QHBoxLayout *hLay = new QHBoxLayout(wid);
                 hLay->setContentsMargins(10, 0, 0, 0);
                 hLay->addWidget(title);
+
                 d->contentLayout->setWidget(d->contentLayout->rowCount(), QFormLayout::LabelRole, wid);
 
-                d->sortTitles.push_back(title);
-                d->titles.insert(subgroup->key(), title);
+                d->sortTitles.push_back(wid);
+                d->titles.insert(subgroup->key(), wid);
             }
 
             for (auto option : subgroup->childOptions()) {
