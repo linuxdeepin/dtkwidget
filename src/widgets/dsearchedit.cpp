@@ -22,6 +22,7 @@
 #include "diconbutton.h"
 
 #include <DSysInfo>
+#undef ENABLE_AI
 
 #ifdef ENABLE_AI
 // 讯飞语言相关
