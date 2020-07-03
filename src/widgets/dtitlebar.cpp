@@ -493,28 +493,31 @@ void DTitlebarPrivate::_q_addDefaultMenuItems()
 
     // add switch theme sub menu
     if (!switchThemeMenu) {
-        switchThemeMenu = new QMenu(qApp->translate("TitleBarMenu", "Theme"), menu);
-        lightThemeAction = switchThemeMenu->addAction(qApp->translate("TitleBarMenu", "Light Theme"));
-        darkThemeAction = switchThemeMenu->addAction(qApp->translate("TitleBarMenu", "Dark Theme"));
-        autoThemeAction = switchThemeMenu->addAction(qApp->translate("TitleBarMenu", "System Theme"));
+        bool disableDtkSwitchThemeMenu = qEnvironmentVariableIsSet("KLU_DISABLE_MENU_THEME");
+        if (!disableDtkSwitchThemeMenu) {
+            switchThemeMenu = new QMenu(qApp->translate("TitleBarMenu", "Theme"), menu);
+            lightThemeAction = switchThemeMenu->addAction(qApp->translate("TitleBarMenu", "Light Theme"));
+            darkThemeAction = switchThemeMenu->addAction(qApp->translate("TitleBarMenu", "Dark Theme"));
+            autoThemeAction = switchThemeMenu->addAction(qApp->translate("TitleBarMenu", "System Theme"));
 
-        autoThemeAction->setCheckable(true);
-        lightThemeAction->setCheckable(true);
-        darkThemeAction->setCheckable(true);
+            autoThemeAction->setCheckable(true);
+            lightThemeAction->setCheckable(true);
+            darkThemeAction->setCheckable(true);
 
-        QActionGroup *group = new QActionGroup(switchThemeMenu);
-        group->addAction(autoThemeAction);
-        group->addAction(lightThemeAction);
-        group->addAction(darkThemeAction);
+            QActionGroup *group = new QActionGroup(switchThemeMenu);
+            group->addAction(autoThemeAction);
+            group->addAction(lightThemeAction);
+            group->addAction(darkThemeAction);
 
-        QObject::connect(group, SIGNAL(triggered(QAction*)),
-                         q, SLOT(_q_switchThemeActionTriggered(QAction*)));
+            QObject::connect(group, SIGNAL(triggered(QAction*)),
+                             q, SLOT(_q_switchThemeActionTriggered(QAction*)));
 
-        menu->addMenu(switchThemeMenu);
-        themeSeparator = menu->addSeparator();
+            menu->addMenu(switchThemeMenu);
+            themeSeparator = menu->addSeparator();
 
-        switchThemeMenu->menuAction()->setVisible(canSwitchTheme);
-        themeSeparator->setVisible(canSwitchTheme);
+            switchThemeMenu->menuAction()->setVisible(canSwitchTheme);
+            themeSeparator->setVisible(canSwitchTheme);
+        }
     }
 
     // add help menu item.
