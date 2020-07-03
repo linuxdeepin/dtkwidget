@@ -298,7 +298,6 @@ void DSearchEditPrivate::init()
     label->setText(placeHolder);
 
     q->setFocusPolicy(Qt::ClickFocus);
-    q->lineEdit()->setContextMenuPolicy(Qt::NoContextMenu);
 
     q->connect(q, SIGNAL(focusChanged(bool)), q, SLOT(_q_toEditMode(bool)));
     q->connect(q, &DLineEdit::textChanged, q, [ = ](QString text) {

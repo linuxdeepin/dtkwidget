@@ -396,7 +396,7 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
         Q_EMIT focusChanged(true);
     } else if (event->type() == QEvent::FocusOut) {
         Q_EMIT focusChanged(false);
-    } else if (watched == lineEdit() && event->type() == QEvent::ContextMenu && lineEdit()->contextMenuPolicy() != Qt::NoContextMenu) {
+    } else if (watched == lineEdit() && event->type() == QEvent::ContextMenu && lineEdit()->contextMenuPolicy() == Qt::DefaultContextMenu) {
         QLineEdit *le = static_cast<QLineEdit *>(watched);
         if (!le->isEnabled() || le->echoMode() == QLineEdit::Password ||
                 (!textToSpeechIsEnabled() && !textToTranslateIsEnabled() && !speechToTextIsEnabled())) {
