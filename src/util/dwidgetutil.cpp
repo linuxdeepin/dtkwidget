@@ -81,4 +81,27 @@ void moveToCenter(QWidget *w)
     w->move(parentRect.center() - w->rect().center());
 }
 
+QIcon getCircleIcon(const QPixmap &pixmap, int diameter)
+{
+    QPixmap output(QSize(diameter, diameter));
+    output.fill(Qt::transparent);
+    QPainter painter(&output);
+    // 抗锯齿 + 平滑边缘处理
+    painter.setRenderHints(QPainter::Antialiasing, true);
+    painter.setRenderHints(QPainter::SmoothPixmapTransform, true);
+    painter.setPen(Qt::NoPen);
+
+    QPainterPath path;
+    path.addEllipse(0, 0, diameter, diameter);
+    painter.setClipPath(path);
+    painter.drawPixmap(0, 0, diameter, diameter, pixmap);
+    return QIcon(output);
+}
+
+QIcon getCircleIcon(const QIcon &icon, int diameter)
+{
+    QPixmap pixmap = icon.pixmap(QSize(diameter, diameter));
+    return getCircleIcon(pixmap, diameter);
+}
+
 DWIDGET_END_NAMESPACE

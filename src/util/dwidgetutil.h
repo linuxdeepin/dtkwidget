@@ -22,6 +22,7 @@
 
 #include <QImage>
 #include <QColor>
+#include <QIcon>
 #include <QTextOption>
 
 DWIDGET_BEGIN_NAMESPACE
@@ -37,6 +38,9 @@ QStringList elideText(const QString &text, const QSize &size,
                       QTextOption::WrapMode wordWrap,
                       Qt::TextElideMode mode,
                       int flags = 0);
+
+QIcon getCircleIcon(const QPixmap &pixmap, int diameter = 36);
+QIcon getCircleIcon(const QIcon &icon, int diameter = 36);
 
 void moveToCenter(QWidget *w);
 
