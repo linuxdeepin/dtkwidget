@@ -138,11 +138,12 @@ void DKeySequenceEdit::clear()
 bool DKeySequenceEdit::setKeySequence(const QKeySequence &keySequence)
 {
     D_D(DKeySequenceEdit);
+    QKeySequence writing = d->replaceWriting(keySequence);
 
     QStringList keyText;
-    keyText << keySequence.toString().split("+", QString::SkipEmptyParts);
+    keyText << writing.toString().split("+", QString::SkipEmptyParts);
 
-    if (keySequence.toString().contains("++")) {
+    if (writing.toString().contains("++")) {
         keyText << "+";
     }
 
@@ -155,8 +156,8 @@ bool DKeySequenceEdit::setKeySequence(const QKeySequence &keySequence)
     }
 
     d->rightWidget->setKeyName(keyText);
-    d->sequencekey = keySequence;
-    Q_EMIT keySequenceChanged(keySequence);
+    d->sequencekey = writing;
+    Q_EMIT keySequenceChanged(writing);
     return true;
 }
 
@@ -208,8 +209,8 @@ void DKeySequenceEdit::keyPressEvent(QKeyEvent *e)
     if (!flags)
         return;
 
-    d_func()->sequencekey = sequence;
-    Q_EMIT editingFinished(sequence);
+    d->sequencekey = d->replaceWriting(sequence);
+    Q_EMIT editingFinished(d->sequencekey);
 }
 
 bool DKeySequenceEdit::event(QEvent *e)
@@ -252,6 +253,13 @@ void DKeySequenceEditPrivate::init()
 QString DKeySequenceEditPrivate::replaceWriting(QString copywriting)
 {
     return copywritingList.value(copywriting, copywriting);
+}
+
+QKeySequence DKeySequenceEditPrivate::replaceWriting(QKeySequence writing)
+{
+    if (replaceWriting(writing.toString()).isNull())
+        return writing;
+    return replaceWriting(writing.toString());
 }
 
 void DKeyWidget::setKeyName(const QStringList &keyList)
