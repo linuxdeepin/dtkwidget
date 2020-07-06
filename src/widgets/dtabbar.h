@@ -157,7 +157,7 @@ public:
     void setEnabledEmbedStyle(bool enable);
 
     void setTabLabelAlignment(Qt::Alignment alignment);
-    Qt::Alignment tabLabelAlignment();
+    Qt::Alignment tabLabelAlignment() const;
 
 Q_SIGNALS:
     void currentChanged(int index);

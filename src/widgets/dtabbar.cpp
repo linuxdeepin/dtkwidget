@@ -1893,7 +1893,7 @@ void DTabBar::setTabLabelAlignment(Qt::Alignment alignment)
 /*!
  * \~chinese  \brief DTabBar::tabLabelAlignment 返回tab对齐方式
  */
-Qt::Alignment DTabBar::tabLabelAlignment()
+Qt::Alignment DTabBar::tabLabelAlignment() const
 {
     return d_func()->alignment;
 }
