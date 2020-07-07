@@ -19,6 +19,7 @@
 
 #include <QPixmap>
 #include <QPainter>
+#include <QPainterPath>
 #include <QTextLayout>
 #include <QApplication>
 #include <QDesktopWidget>
