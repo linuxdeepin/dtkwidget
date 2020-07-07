@@ -167,6 +167,7 @@ public:
         layout->addSpacerItem(stretch);
         d->expanding = false;
 
+        qq->setTabLabelAlignment(Qt::AlignCenter);
         qq->setFocusProxy(this);
 
         connect(this, &DTabBarPrivate::currentChanged, this, &DTabBarPrivate::onCurrentChanged);
@@ -290,8 +291,6 @@ public:
     // 要闪动绘制的Tab
     qreal opacityOnFlash = 1;
     int flashTabIndex = -1;
-    //tab文字对齐方式
-    Qt::Alignment alignment = Qt::AlignCenter;
 
     DIconButton *leftScrollButton;
     DIconButton *rightScrollButton;
@@ -1887,15 +1886,7 @@ void DTabBar::setEnabledEmbedStyle(bool enable)
  */
 void DTabBar::setTabLabelAlignment(Qt::Alignment alignment)
 {
-    D_D(DTabBar);
-    d->alignment = alignment;
-}
-/*!
- * \~chinese  \brief DTabBar::tabLabelAlignment 返回tab对齐方式
- */
-Qt::Alignment DTabBar::tabLabelAlignment() const
-{
-    return d_func()->alignment;
+    setProperty("_d_dtk_tabbar_alignment", int(alignment));
 }
 
 /*!
