@@ -82,6 +82,7 @@ public:
     DPlatformWindowHandle *m_handle = NULL;
     DBlurEffectWidget *m_blurBackground = NULL;
     DWindowManagerHelper *m_wmHelper;
+    bool leftRightRadius = false;
 };
 
 DWIDGET_END_NAMESPACE

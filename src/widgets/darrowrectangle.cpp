@@ -367,6 +367,15 @@ void DArrowRectangle::setShadowYOffset(const qreal &shadowYOffset)
 }
 
 /*!
+ * \~chinese \brief DArrowRectangle::setLeftRightRadius 设置左右箭头时的圆角
+ */
+void DArrowRectangle::setLeftRightRadius(bool enable)
+{
+    D_D(DArrowRectangle);
+    d->leftRightRadius = enable;
+}
+
+/*!
  * \~english \property DArrowRectangle::shadowXOffset
  * \~english \brief the offset of the widget and its shadow on x axis.
  */
@@ -814,23 +823,43 @@ QPainterPath DArrowRectanglePrivate::getLeftCornerPath()
     QPoint bottomRight(rect.x() + rect.width(), rect.y() + rect.height());
     QPoint bottomLeft(rect.x() + m_arrowHeight, rect.y() + rect.height());
     int radius =  m_radius > (rect.height() / 2) ? (rect.height() / 2) : m_radius;
+    int arrowWidth = m_arrowWidth - m_arrowHeight;
+    int widgetRadius = rect.height() > 4 * radius ? 2 * radius : radius;
     if (!radiusEnabled()) {
         radius = 0;
     }
 
     QPainterPath border;
-    border.moveTo(topLeft.x() + radius, topLeft.y());
+    border.moveTo(topLeft.x() + arrowWidth, topLeft.y());
     border.lineTo(topRight.x() - radius, topRight.y());
     border.arcTo(topRight.x() - 2 * radius, topRight.y(), 2 * radius, 2 * radius, 90, -90);
     border.lineTo(bottomRight.x(), bottomRight.y() - radius);
     border.arcTo(bottomRight.x() - 2 * radius, bottomRight.y() - 2 * radius, 2 * radius, 2 * radius, 0, -90);
-    border.lineTo(bottomLeft.x() + radius, bottomLeft.y());
-    border.arcTo(bottomLeft.x(), bottomLeft.y() - 2 * radius, 2 * radius, 2 * radius, -90, -90);
-    border.lineTo(cornerPoint.x() + m_arrowHeight, cornerPoint.y() + m_arrowWidth / 2);
+
+
+    if (leftRightRadius) {
+        border.lineTo(bottomLeft.x() + arrowWidth, bottomLeft.y());
+        border.arcTo(bottomLeft.x(), bottomLeft.y() -  widgetRadius, widgetRadius, widgetRadius, -90, -90);
+        border.lineTo(bottomLeft.x(), cornerPoint.y() + m_arrowWidth / 2);
+    } else {
+        border.lineTo(bottomLeft.x(), bottomLeft.y());
+
+        if (cornerPoint.y() > m_arrowWidth)
+            border.lineTo(bottomLeft.x(), cornerPoint.y() + m_arrowWidth / 2);
+    }
+
     border.lineTo(cornerPoint);
-    border.lineTo(cornerPoint.x() + m_arrowHeight, cornerPoint.y() - m_arrowWidth / 2);
-    border.lineTo(topLeft.x(), topLeft.y() + radius);
-    border.arcTo(topLeft.x(), topLeft.y(), 2 * radius, 2 * radius, -180, -90);
+
+    if (leftRightRadius) {
+        border.lineTo(topLeft.x(), cornerPoint.y() - m_arrowWidth / 2);
+        border.lineTo(topLeft.x(), topLeft.y() + radius);
+        border.arcTo(topLeft.x(), topLeft.y(), widgetRadius, widgetRadius, -180, -90);
+    } else {
+        if (cornerPoint.y() > m_arrowWidth)
+            border.lineTo(topLeft.x(), cornerPoint.y() - m_arrowWidth / 2);
+
+        border.lineTo(topLeft.x(), topLeft.y());
+    }
 
     return border;
 }
@@ -853,19 +882,41 @@ QPainterPath DArrowRectanglePrivate::getRightCornerPath()
     QPoint bottomRight(rect.x() + rect.width() - m_arrowHeight, rect.y() + rect.height());
     QPoint bottomLeft(rect.x(), rect.y() + rect.height());
     int radius = this->m_radius > (rect.height() / 2) ? rect.height() / 2 : this->m_radius;
+    int arrowWidth = m_arrowWidth - m_arrowHeight;
+    int widgetRadius = rect.height() >= 4 * radius ? 2 * radius : radius;
+
     if (!radiusEnabled()) {
         radius = 0;
     }
 
     QPainterPath border;
-    border.moveTo(topLeft.x() + radius, topLeft.y());
-    border.lineTo(topRight.x() - radius, topRight.y());
-    border.arcTo(topRight.x() - 2 * radius, topRight.y(), 2 * radius, 2 * radius, 90, -90);
-    border.lineTo(cornerPoint.x() - m_arrowHeight, cornerPoint.y() - m_arrowWidth / 2);
+    border.moveTo(topLeft.x(), topLeft.y());
+
+    if (leftRightRadius) {
+        border.lineTo(topRight.x() - radius, topRight.y());
+        border.arcTo(topRight.x() - widgetRadius, topRight.y(), widgetRadius, widgetRadius, 90, -90);
+        border.lineTo(topRight.x(), cornerPoint.y() - m_arrowWidth / 2);
+    } else {
+        border.lineTo(topRight.x(), topRight.y());
+
+        if (cornerPoint.y() > m_arrowWidth)
+            border.lineTo(topRight.x(), cornerPoint.y() - m_arrowWidth / 2);
+    }
+
     border.lineTo(cornerPoint);
-    border.lineTo(cornerPoint.x() - m_arrowHeight, cornerPoint.y() + m_arrowWidth / 2);
-    border.lineTo(bottomRight.x(), bottomRight.y() - radius);
-    border.arcTo(bottomRight.x() - 2 * radius, bottomRight.y() - 2 * radius, 2 * radius, 2 * radius, 0, -90);
+
+    if (leftRightRadius) {
+        border.lineTo(bottomRight.x(), cornerPoint.y() + m_arrowWidth / 2);
+        border.lineTo(bottomRight.x(), bottomRight.y() - radius);
+        border.arcTo(bottomRight.x() - widgetRadius, bottomRight.y() - widgetRadius, widgetRadius, widgetRadius, 0, -90);
+
+    } else {
+        if (cornerPoint.y() > m_arrowWidth)
+            border.lineTo(bottomRight.x(), cornerPoint.y() + m_arrowWidth / 2);
+
+        border.lineTo(bottomRight.x(), bottomRight.y());
+    }
+
     border.lineTo(bottomLeft.x() + radius, bottomLeft.y());
     border.arcTo(bottomLeft.x(), bottomLeft.y() - 2 * radius, 2 * radius, 2 * radius, -90, -90);
     border.lineTo(topLeft.x(), topLeft.y() + radius);
@@ -1066,11 +1117,13 @@ DArrowRectangle::~DArrowRectangle()
 }
 
 Dtk::Widget::DArrowRectanglePrivate::DArrowRectanglePrivate(DArrowRectangle::ArrowDirection direction, DArrowRectangle *q)
-    : DObjectPrivate(q),
-
-      m_arrowDirection(direction)
+    : DObjectPrivate(q)
+    , m_arrowDirection(direction)
 {
-
+    if (direction == DArrowRectangle::ArrowLeft || direction == DArrowRectangle::ArrowRight) {
+        m_arrowWidth = 16;
+        m_arrowHeight = 16;
+    }
 }
 
 void DArrowRectanglePrivate::init(DArrowRectangle::FloatMode mode)
