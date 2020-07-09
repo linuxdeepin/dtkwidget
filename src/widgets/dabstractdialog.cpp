@@ -61,7 +61,8 @@ void DAbstractDialogPrivate::init(bool blurIfPossible)
         bgBlurWidget->setBlurEnabled(blurIfPossible);
         q->setAttribute(Qt::WA_TranslucentBackground, blurIfPossible);
     } else {
-        q->setWindowFlags(q->windowFlags() | Qt::FramelessWindowHint);
+        // fix wayland no titlebar
+        //q->setWindowFlags(q->windowFlags() | Qt::FramelessWindowHint);
     }
 
     q->resize(DIALOG::DEFAULT_WIDTH, DIALOG::DEFAULT_HEIGHT);
