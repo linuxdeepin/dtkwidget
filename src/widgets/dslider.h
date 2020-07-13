@@ -121,7 +121,7 @@ public:
         else
             opt.subControls = QStyle::SC_SliderGroove;
 
-        style()->drawComplexControl(QStyle::CC_Slider, &opt, &p, this);
+        style()->drawComplexControl(QStyle::CC_Slider, &opt, &p, parentWidget());
     }
 };
 
