@@ -31,6 +31,7 @@ public:
 protected:
     bool event(QEvent *e) override;
     void contextMenuEvent(QContextMenuEvent *e) override;
+    virtual void keyPressEvent(QKeyEvent *e) override;
 
 private:
     D_DECLARE_PRIVATE(DTextEdit)

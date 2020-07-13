@@ -7,8 +7,10 @@
 #include <QDBusInterface>
 #include <QDBusReply>
 #include <QDebug>
-#include <QCoreApplication>
+#include <QApplication>
 #include <QTimer>
+#include <QClipboard>
+#include <QKeySequence>
 
 #include <DStyle>
 #include <DObjectPrivate>
@@ -92,6 +94,15 @@ bool DTextEdit::event(QEvent *e)
     return QTextEdit::event(e);
 }
 
+void DTextEdit::keyPressEvent(QKeyEvent *event)
+{
+    if (event == QKeySequence::SelectAll) {
+        QApplication::clipboard()->setText(this->toPlainText(), QClipboard::Mode::Selection);
+    }
+
+    QTextEdit::keyPressEvent(event);
+}
+
 void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
 {
     QDBusInterface testSpeech("com.iflytek.aiassistant",
@@ -131,6 +142,12 @@ void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
 
     QMenu *menu = createStandardContextMenu();
     menu->addSeparator();
+
+    connect(menu, &QMenu::triggered, this, [this](QAction *pAction) {
+        if (pAction->text().startsWith(qApp->translate("QWidgetTextControl", "Select All"))) {
+            QApplication::clipboard()->setText(this->toPlainText(), QClipboard::Mode::Selection);
+        }
+    });
 
     if (speechReply.value() && textToSpeechIsEnabled()) {
         QAction *pAction = nullptr;

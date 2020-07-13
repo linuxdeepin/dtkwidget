@@ -396,6 +396,11 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
         Q_EMIT focusChanged(true);
     } else if (event->type() == QEvent::FocusOut) {
         Q_EMIT focusChanged(false);
+    } else if (watched == lineEdit() && event->type() == QEvent::KeyPress) {
+        QKeyEvent *pKeyEvent = static_cast<QKeyEvent *>(event);
+        if (pKeyEvent == QKeySequence::SelectAll) {
+            QApplication::clipboard()->setText(lineEdit()->text(), QClipboard::Mode::Selection);
+        }
     } else if (watched == lineEdit() && event->type() == QEvent::ContextMenu && lineEdit()->contextMenuPolicy() == Qt::DefaultContextMenu) {
         QLineEdit *le = static_cast<QLineEdit *>(watched);
         if (!le->isEnabled() || le->echoMode() == QLineEdit::Password ||
@@ -433,6 +438,12 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
 
         QLineEdit *pLineEdit = static_cast<QLineEdit*>(watched);
         QMenu *menu = pLineEdit->createStandardContextMenu();
+
+        connect(menu, &QMenu::triggered, this, [pLineEdit](QAction *pAction) {
+            if (pAction->text().startsWith(QLineEdit::tr("Select All"))) {
+                QApplication::clipboard()->setText(pLineEdit->text(), QClipboard::Mode::Selection);
+            }
+        });
 
         //朗读,翻译,听写都没有开启，则弹出默认菜单
         if (!speechReply.value() && !translateReply.value() && !speechToTextReply.value()) {
