@@ -27,7 +27,7 @@ class SingleListView : public DSimpleListView
     Q_OBJECT
     
 public:
-    SingleListView(DSimpleListView *parent=0);
+    SingleListView(DSimpleListView *parent = nullptr);
 };	
 
 #endif

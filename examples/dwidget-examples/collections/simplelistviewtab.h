@@ -25,7 +25,7 @@ class SimpleListViewTab : public QWidget
     Q_OBJECT
     
 public:
-    SimpleListViewTab(QWidget *parent=0);
+    SimpleListViewTab(QWidget *parent = nullptr);
     ~SimpleListViewTab(); 
 };	
 

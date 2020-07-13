@@ -35,7 +35,7 @@ class ButtonTab : public QLabel
 {
     Q_OBJECT
 public:
-    explicit ButtonTab(QWidget *parent = 0);
+    explicit ButtonTab(QWidget *parent = nullptr);
 
 public Q_SLOTS:
     void buttonClickTest();

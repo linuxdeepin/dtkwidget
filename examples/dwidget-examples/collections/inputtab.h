@@ -28,7 +28,7 @@ class InputTab : public QLabel
 {
     Q_OBJECT
 public:
-    explicit InputTab(QWidget *parent = 0);
+    explicit InputTab(QWidget *parent = nullptr);
 };
 
 #endif // INPUTTAB_H

@@ -20,6 +20,7 @@
 
 #include <QFrame>
 #include "dsegmentedcontrol.h"
+#include "dbuttonbox.h"
 #include "dtkwidget_global.h"
 
 DWIDGET_USE_NAMESPACE
@@ -28,10 +29,10 @@ class Segmentedcontrol : public QFrame
 {
     Q_OBJECT
 public:
-    explicit Segmentedcontrol(QWidget *parent = 0);
+    explicit Segmentedcontrol(QWidget *parent = nullptr);
 
 private:
-    DSegmentedControl *segmentedControl;
+    DButtonBox *buttonBox;
 };
 
 #endif // SEGMENTEDCONTROL_H

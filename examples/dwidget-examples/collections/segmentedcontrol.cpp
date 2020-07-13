@@ -20,22 +20,25 @@
 
 Segmentedcontrol::Segmentedcontrol(QWidget *parent) :
     QFrame(parent),
-    segmentedControl(new DSegmentedControl(this))
+    buttonBox(new DButtonBox(this))
 {
-    segmentedControl->addSegmented("page1");
-    segmentedControl->addSegmented("page2");
-    segmentedControl->addSegmented("page3");
-    segmentedControl->move(100, 50);
+    QVBoxLayout *layout = new QVBoxLayout(this);
+
+    buttonBox->setButtonList({new DButtonBoxButton("page 1"), new DButtonBoxButton("page 2"), new DButtonBoxButton("page 3")}, true);
+
+    for (int i = 0; i < buttonBox->buttonList().count(); ++i)
+        buttonBox->setId(buttonBox->buttonList().at(i), i+1);
+
+    layout->addWidget(buttonBox, 1, Qt::AlignCenter);
 
     QLabel *label = new QLabel(this);
     QPalette pa = label->palette();
-    pa.setColor(QPalette::Foreground, Qt::white);
+    pa.setColor(QPalette::Foreground, Qt::blue);
     label->setPalette(pa);
-    label->move(100, 150);
-    label->setText(QString("current paga %1").arg(segmentedControl->currentIndex()+1));
+    layout->addWidget(label, 5, Qt::AlignCenter);
 
-    connect(segmentedControl, &DSegmentedControl::currentChanged, [=](){
-        label->setText(QString("current paga %1").arg(segmentedControl->currentIndex()+1));
+    connect(buttonBox, &DButtonBox::buttonClicked, [=](QAbstractButton *button){
+        label->setText(QString("current paga %1").arg(buttonBox->id(button)));
     });
 }
 

@@ -142,18 +142,6 @@ MainWindow::MainWindow(QWidget *parent)
         titlebar->setAutoHideOnFullscreen(true);
     }
 
-    auto toast = new DToast(this);
-    toast->setText("Successfully close window");
-    toast->setIcon(":/images/light/images/window/close_press.svg");
-    QTimer::singleShot(1000, [ = ]() {
-        toast->pop();
-        toast->move((width() - toast->width()) / 2,
-                    (height() - toast->height()) / 2);
-    });
-    QTimer::singleShot(4000, [ = ]() {
-        toast->pop();
-    });
-
     titlebar->addWidget(new DSearchEdit(titlebar));
 
     QPushButton *pb1 = new QPushButton("button1");

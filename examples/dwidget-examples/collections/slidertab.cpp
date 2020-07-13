@@ -24,11 +24,12 @@ DWIDGET_USE_NAMESPACE
 SliderTab::SliderTab(QWidget *parent) : QLabel(parent)
 {
     setStyleSheet("SliderTab{background-color:  #1A1B1B}");
+    QHBoxLayout *layout = new QHBoxLayout(this);
 
     DSlider * slider = new DSlider(Qt::Horizontal, this);
     slider->setFixedWidth(300);
     slider->setFixedHeight(40);
-    slider->move(20, 50);
+    layout->addWidget(slider, 0, Qt::AlignTop | Qt::AlignHCenter);
 }
 
 void SliderTab::mousePressEvent(QMouseEvent *event)

@@ -27,6 +27,9 @@
 #include "dbaseexpand.h"
 #include <DArrowLineExpand>
 #include "dswitchlineexpand.h"
+#include "ddrawer.h"
+#include "darrowlinedrawer.h"
+#include "ddrawergroup.h"
 #include <DExpandGroup>
 
 DWIDGET_USE_NAMESPACE
@@ -35,7 +38,7 @@ class LineTab : public QLabel
 {
     Q_OBJECT
 public:
-    explicit LineTab(QWidget *parent = 0);
+    explicit LineTab(QWidget *parent = nullptr);
 };
 
 #endif // LINETAB_H

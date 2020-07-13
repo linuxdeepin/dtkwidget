@@ -44,7 +44,7 @@ class MainWindow : public DMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = 0);
+    MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 protected Q_SLOTS:
@@ -54,7 +54,7 @@ private:
     void initTabWidget();
 
 private:
-    QTabWidget *m_mainTab = NULL;
+    QTabWidget *m_mainTab = Q_NULLPTR;
 };
 
 #endif // MAINWINDOW_H

@@ -25,7 +25,7 @@ class SliderTab : public QLabel
 {
     Q_OBJECT
 public:
-    explicit SliderTab(QWidget *parent = 0);
+    explicit SliderTab(QWidget *parent = nullptr);
 
 private:
     void mousePressEvent(QMouseEvent *event);

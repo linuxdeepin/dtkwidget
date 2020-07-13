@@ -30,7 +30,7 @@ class IndicatorTab : public QLabel
 {
     Q_OBJECT
 public:
-    explicit IndicatorTab(QWidget *parent = 0);
+    explicit IndicatorTab(QWidget *parent = nullptr);
 };
 
 #endif // INDICATORTAB_H

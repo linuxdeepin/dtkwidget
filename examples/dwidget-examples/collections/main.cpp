@@ -63,6 +63,7 @@ int main(int argc, char *argv[])
 //    button->setIcon(QIcon::fromTheme("button_edit-clear"));
 //    w.setCentralWidget(button);
     w.show();
+
     Dtk::Widget::moveToCenter(&w);
 
     return a.exec();

@@ -33,6 +33,7 @@ DGUI_USE_NAMESPACE
 WidgetsTab::WidgetsTab(QWidget *parent) : QLabel(parent)
 {
     setStyleSheet("WidgetsTab {background-color:#252627;} QCheckBox {color:#666;}");
+    QHBoxLayout *mLayout = new QHBoxLayout(this);
 
 #ifdef Q_OS_LINUX
     DRegionMonitor *rm = new DRegionMonitor(this);
@@ -42,31 +43,33 @@ WidgetsTab::WidgetsTab(QWidget *parent) : QLabel(parent)
     connect(rm, &DRegionMonitor::buttonPress, [=](const QPoint &p, const int flag) { qDebug() << "btn press:" << p << flag; });
     connect(rm, &DRegionMonitor::buttonRelease, [=](const QPoint &p, const int flag) { qDebug() << "btn release:" << p << flag; });
 #endif
-
+    QWidget *checkBoxWidget = new QWidget(this);
+    QVBoxLayout *checkBoxLayout = new QVBoxLayout(checkBoxWidget);
     QCheckBox *lunarVisible = new QCheckBox(this);
     lunarVisible->setText("lunar visible");
-    lunarVisible->move(320, 50);
     lunarVisible->setChecked(true);
+    checkBoxLayout->addWidget(lunarVisible);
     QCheckBox *festivalHighlight = new QCheckBox(this);
     festivalHighlight->setText("lunar festival highlight");
     festivalHighlight->setChecked(true);
-    festivalHighlight->move(320, 80);
+    checkBoxLayout->addWidget(festivalHighlight);
     QCheckBox *cellSelectable = new QCheckBox(this);
     cellSelectable->setText("cell selectable");
     cellSelectable->setChecked(true);
-    cellSelectable->move(320, 110);
+    checkBoxLayout->addWidget(cellSelectable);
     QCheckBox *controlPanelVisible = new QCheckBox(this);
     controlPanelVisible->setText("control panel visible");
-    controlPanelVisible->move(320, 140);
+    checkBoxLayout->addWidget(controlPanelVisible);
     controlPanelVisible->setChecked(true);
     QCheckBox *dateInfoVisible = new QCheckBox(this);
     dateInfoVisible->setText("date info visible");
     dateInfoVisible->setChecked(false);
-    dateInfoVisible->move(320, 170);
+    checkBoxLayout->addWidget(dateInfoVisible);
     QCheckBox *togglePic = new QCheckBox(this);
     togglePic->setText("toggle music picture");
     togglePic->setChecked(false);
-    togglePic->move(320, 200);
+    checkBoxLayout->addWidget(togglePic);
+    mLayout->addWidget(checkBoxWidget);
 
     ////////////////////ArrowRectangle//////////////////
     DArrowRectangle *rectangle = new DArrowRectangle(DArrowRectangle::ArrowLeft);
@@ -78,22 +81,24 @@ WidgetsTab::WidgetsTab(QWidget *parent) : QLabel(parent)
     button->setFixedSize(200, 30);
     rectangle->setContent(button);
     rectangle->show(200, 200);
-    rectangle->setBackgroundColor(QColor(255, 255, 255, 0.5));
+    rectangle->setBackgroundColor(QColor(255, 255, 255, 127));
 
 #ifdef Q_OS_LINUX
     // mpris
     DMPRISControl *control = new DMPRISControl(this);
     control->setFixedSize(300, 300);
-    control->move(500, 0);
+    mLayout->addWidget(control);
     control->setStyleSheet("background-color:red;");
 
     connect(togglePic, SIGNAL(toggled(bool)), control, SLOT(setPictureVisible(bool)));
 #endif
-
+    QWidget *editWidget = new QWidget(this);
+    QVBoxLayout *editLayout = new QVBoxLayout(editWidget);
     DLineEdit *pLineEdit = new DLineEdit(this);
-    pLineEdit->move(50, 100);
+    editLayout->addWidget(pLineEdit);
 
     DTextEdit *pTextEdit = new DTextEdit(this);
-    pTextEdit->move(50, 150);
+    editLayout->addWidget(pTextEdit);
+    mLayout->addWidget(editWidget);
 }
 

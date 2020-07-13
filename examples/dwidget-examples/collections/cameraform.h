@@ -37,7 +37,7 @@ class CameraForm : public QWidget
     Q_OBJECT
 
 public:
-    explicit CameraForm(QWidget *parent = 0);
+    explicit CameraForm(QWidget *parent = nullptr);
     ~CameraForm();
 
 private Q_SLOTS:

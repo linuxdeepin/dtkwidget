@@ -25,7 +25,7 @@ class BarTab : public QFrame
     Q_OBJECT
 
 public:
-    explicit BarTab(QWidget *parent = 0);
+    explicit BarTab(QWidget *parent = nullptr);
 };
 
 #endif // BARTAB_H

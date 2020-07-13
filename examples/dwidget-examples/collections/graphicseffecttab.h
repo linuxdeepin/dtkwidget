@@ -30,9 +30,8 @@ class GraphicsEffectTab : public QWidget
 {
     Q_OBJECT
 public:
-    explicit GraphicsEffectTab(QWidget *parent = 0);
-    ~GraphicsEffectTab();
-
+    explicit GraphicsEffectTab(QWidget *parent = nullptr);
+    ~GraphicsEffectTab() override;
 
     virtual void paintEvent(QPaintEvent *) Q_DECL_OVERRIDE;
 

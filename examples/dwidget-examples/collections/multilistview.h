@@ -27,7 +27,7 @@ class MultiListView : public DSimpleListView
     Q_OBJECT
 
 public:
-    MultiListView(DSimpleListView *parent=0);
+    MultiListView(DSimpleListView *parent = nullptr);
 
 public Q_SLOTS:
     void popupMenu(QPoint pos, QList<DSimpleListItem*> items);

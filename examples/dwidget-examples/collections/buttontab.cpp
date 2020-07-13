@@ -24,39 +24,49 @@ DWIDGET_USE_NAMESPACE
 ButtonTab::ButtonTab(QWidget *parent) : QLabel(parent)
 {
     setStyleSheet("ButtonTab{background-color: #252627;}");
+    QVBoxLayout *layout = new QVBoxLayout(this);
+    QHBoxLayout *winButtonLayout = new QHBoxLayout;
+    QHBoxLayout *imageButtonLayout = new QHBoxLayout;
+
+    winButtonLayout->setSpacing(20);
+    imageButtonLayout->setSpacing(20);
+    layout->addLayout(winButtonLayout, 1);
+    layout->addLayout(imageButtonLayout, 5);
 
     DArrowButton * arrowButton = new DArrowButton(this);
     arrowButton->setArrowDirection(DArrowButton::ArrowDown);
-    arrowButton->move(5, 5);
+    winButtonLayout->addWidget(arrowButton);
 
     DWindowMinButton * minButton = new DWindowMinButton(this);
-    minButton->move(30, 5);
+    winButtonLayout->addWidget(minButton);
 
     DWindowMaxButton * maxButton = new DWindowMaxButton(this);
-    maxButton->move(50, 5);
+    winButtonLayout->addWidget(maxButton);
 
     DWindowCloseButton * closeButton = new DWindowCloseButton(this);
-    closeButton->move(90, 5);
+    winButtonLayout->addWidget(closeButton);
 
     DWindowOptionButton * optionButton = new DWindowOptionButton(this);
-    optionButton->move(110, 5);
+    winButtonLayout->addWidget(optionButton);
+    winButtonLayout->addStretch();
 
     //////////////////////////////////////////////////////////////--DTextButton
 
-    DImageButton *imageButton = new DImageButton(":/images/button.png", ":/images/buttonHover.png", ":/images/buttonPress.png", this);
-    imageButton->move(5, 100);
+    DIconButton *imageButton = new DIconButton(this);
+    imageButton->setIcon(QIcon(":/images/button.png"));
+    imageButtonLayout->addWidget(imageButton);
     imageButton->setChecked(true);
 
-    DImageButton *imageButton2 = new DImageButton(this);
-    imageButton2->setNormalPic(":/images/buttonHover.png");
-    imageButton2->move(35, 100);
+    DIconButton *imageButton2 = new DIconButton(this);
+    imageButton2->setIcon(QIcon(":/images/buttonHover.png"));
+    imageButtonLayout->addWidget(imageButton2);
 
-    DImageButton *checkableImageButton = new DImageButton(":/images/button.png", ":/images/buttonHover.png", ":/images/buttonPress.png", ":/images/buttonChecked.png", this);
-    checkableImageButton->move(85, 100);
-    connect(checkableImageButton, SIGNAL(clicked()), this, SLOT(buttonClickTest()));
+    imageButtonLayout->addStretch();
+
+    connect(imageButton2, SIGNAL(clicked()), this, SLOT(buttonClickTest()));
 
     DSwitchButton *switchButton = new DSwitchButton(this);
-    switchButton->move(85, 200);
+    layout->addWidget(switchButton, 1);
 }
 
 void ButtonTab::buttonClickTest()

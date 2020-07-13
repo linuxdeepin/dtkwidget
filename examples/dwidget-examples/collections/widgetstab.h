@@ -24,7 +24,7 @@ class WidgetsTab : public QLabel
 {
     Q_OBJECT
 public:
-    explicit WidgetsTab(QWidget *parent = 0);
+    explicit WidgetsTab(QWidget *parent = nullptr);
 };
 
 #endif // WIDGETSTAB_H
