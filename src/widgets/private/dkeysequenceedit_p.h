@@ -16,7 +16,6 @@ public:
 
     void init();
     QString replaceWriting(QString writing);
-    QKeySequence replaceWriting(QKeySequence writing);
 private:
     DKeyWidget *rightWidget;
     QKeySequence sequencekey;

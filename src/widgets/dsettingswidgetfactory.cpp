@@ -79,7 +79,7 @@ public:
         DSuggestButton *replace = new DSuggestButton(qApp->translate("DSettingsDialog", "Replace"));
 
         QString str = qApp->translate("DSettingsDialog", "This shortcut conflicts with %1, click on Add to make this shortcut effective immediately")
-                      .arg(QString("<span style=\"color: rgba(255, 90, 90, 1);\">%1 %2</span>").arg(text).arg(QString("[%1]").arg(key)));
+                      .arg(QString("<span style=\"color: rgba(255, 90, 90, 1);\">%1 %2</span>").arg(text).arg(QString("[%1]").arg(edit->getKeySequence(key))));
         setMessage(str);
         insertButton(1, cancel);
         insertButton(1, replace);

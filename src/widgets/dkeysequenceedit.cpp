@@ -138,12 +138,11 @@ void DKeySequenceEdit::clear()
 bool DKeySequenceEdit::setKeySequence(const QKeySequence &keySequence)
 {
     D_D(DKeySequenceEdit);
-    QKeySequence writing = d->replaceWriting(keySequence);
-
+    QString writing = getKeySequence(keySequence);
     QStringList keyText;
-    keyText << writing.toString().split("+", QString::SkipEmptyParts);
+    keyText << writing.split("+", QString::SkipEmptyParts);
 
-    if (writing.toString().contains("++")) {
+    if (writing.contains("++")) {
         keyText << "+";
     }
 
@@ -156,8 +155,8 @@ bool DKeySequenceEdit::setKeySequence(const QKeySequence &keySequence)
     }
 
     d->rightWidget->setKeyName(keyText);
-    d->sequencekey = writing;
-    Q_EMIT keySequenceChanged(writing);
+    d->sequencekey = keySequence;
+    Q_EMIT keySequenceChanged(keySequence);
     return true;
 }
 
@@ -181,6 +180,16 @@ void DKeySequenceEdit::ShortcutDirection(Qt::AlignmentFlag alig)
        layout()->setAlignment(alig);
        setAlignment(alig == Qt::AlignLeft ? Qt::AlignRight : Qt::AlignLeft);
     }
+}
+
+/*!
+ * \~chinese \brief DKeySequenceEdit::getKeySequence 将Qt快捷键文案转换为Dtk文案
+ * \~chinese \return Dtk文案
+ */
+QString DKeySequenceEdit::getKeySequence(QKeySequence sequence)
+{
+    D_D(DKeySequenceEdit);
+    return d->replaceWriting(sequence.toString());
 }
 
 void DKeySequenceEdit::keyPressEvent(QKeyEvent *e)
@@ -209,8 +218,8 @@ void DKeySequenceEdit::keyPressEvent(QKeyEvent *e)
     if (!flags)
         return;
 
-    d->sequencekey = d->replaceWriting(sequence);
-    Q_EMIT editingFinished(d->sequencekey);
+    d->sequencekey = sequence;
+    Q_EMIT editingFinished(sequence);
 }
 
 bool DKeySequenceEdit::event(QEvent *e)
@@ -253,13 +262,6 @@ void DKeySequenceEditPrivate::init()
 QString DKeySequenceEditPrivate::replaceWriting(QString copywriting)
 {
     return copywritingList.value(copywriting, copywriting);
-}
-
-QKeySequence DKeySequenceEditPrivate::replaceWriting(QKeySequence writing)
-{
-    if (replaceWriting(writing.toString()).isNull())
-        return writing;
-    return replaceWriting(writing.toString());
 }
 
 void DKeyWidget::setKeyName(const QStringList &keyList)

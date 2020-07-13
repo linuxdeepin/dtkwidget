@@ -24,6 +24,8 @@ public:
     QKeySequence keySequence();
     void ShortcutDirection(Qt::AlignmentFlag alig);
 
+    QString getKeySequence(QKeySequence sequence);
+
 Q_SIGNALS:
     void editingFinished(const QKeySequence &keySequence);
     void keySequenceChanged(const QKeySequence &keySequence);
