@@ -31,6 +31,7 @@
 #include <QApplication>
 #include <QImageReader>
 #include <DSysInfo>
+#include <QScrollArea>
 
 #ifdef Q_OS_UNIX
 #include <unistd.h>
@@ -153,9 +154,18 @@ void DAboutDialogPrivate::init()
     mainLayout->addSpacing(7);
     mainLayout->addWidget(licenseLabel, Qt::AlignHCenter);
 
+    QScrollArea *mainScrollArea = new QScrollArea;
     QWidget  *mainContent = new QWidget;
+    QPalette scrollPalette;
+
+    scrollPalette.setBrush(QPalette::Background, Qt::transparent);
+    mainScrollArea->setFrameShape(QFrame::NoFrame);
+    mainScrollArea->setWidget(mainContent);
+    mainScrollArea->setWidgetResizable(true);
+    mainScrollArea->setPalette(scrollPalette);
+
     mainContent->setLayout(mainLayout);
-    q->addContent(mainContent);
+    q->addContent(mainScrollArea);
 
     // make active
     q->setFocus();
