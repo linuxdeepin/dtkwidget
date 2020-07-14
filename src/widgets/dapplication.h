@@ -150,6 +150,7 @@ protected:
     virtual void handleAboutAction();
     virtual void handleQuitAction();
 
+public:
     bool notify(QObject *obj, QEvent *event) Q_DECL_OVERRIDE;
 
 private:
