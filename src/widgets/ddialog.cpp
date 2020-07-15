@@ -73,11 +73,13 @@ void DDialogPrivate::init()
     titleLabel->setWordWrap(true);
     titleLabel->setAlignment(Qt::AlignCenter);
     titleLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
-    DFontSizeManager::instance()->bind(titleLabel, DFontSizeManager::T5, QFont::DemiBold);
+    DFontSizeManager *fontManager =  DFontSizeManager::instance();
+    fontManager->bind(titleLabel, DFontSizeManager::T5, QFont::Medium);
     palrtteTransparency(titleLabel, -10);
     titleLabel->hide();
 
     messageLabel = new QLabel;
+    fontManager->bind(messageLabel, DFontSizeManager::T6, QFont::Medium);
     messageLabel->setObjectName("MessageLabel");
     messageLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
     messageLabel->setWordWrap(true);
