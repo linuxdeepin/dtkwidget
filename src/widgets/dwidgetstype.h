@@ -7,7 +7,6 @@ QT_BEGIN_NAMESPACE
 
 class QScrollBar;
 class QPushButton;
-class QToolButton;
 class QRadioButton;
 class QDialogButtonBox;
 class QListWidget;
@@ -75,7 +74,6 @@ DWIDGET_BEGIN_NAMESPACE
 
 typedef QScrollBar DScrollBar;
 typedef QPushButton DPushButton;
-typedef QToolButton DToolButton;
 typedef QRadioButton  DRadioButton;
 typedef QDialogButtonBox DDialogButtonBox;
 typedef QListWidget DListWidget;
