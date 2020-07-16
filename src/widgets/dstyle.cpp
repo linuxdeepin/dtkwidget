@@ -1057,6 +1057,14 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
             if (btn->features & DStyleOptionButton::TitleBarButton) {
                 if (!(opt->state & (State_MouseOver | State_Sunken))) {
                     pa.setBrush(QPalette::Background, Qt::transparent);
+                } else {
+                    QColor color;
+                    DGuiApplicationHelper *guiAppHelp = DGuiApplicationHelper::instance();
+                    if (guiAppHelp->themeType() == DGuiApplicationHelper::ColorType::DarkType)
+                        color = QColor(255, 255, 255, 255 * 0.05);
+                    else
+                        color = QColor(0, 0, 0, 255 * 0.05);
+                    pa.setBrush(QPalette::Background, color);
                 }
 
                 if (opt->state & State_Sunken) {
