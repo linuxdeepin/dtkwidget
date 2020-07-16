@@ -69,6 +69,7 @@ class QUndoView;
 class QWhatsThis;
 class QWizard;
 class QWizardPage;
+class QSizeGrip;
 
 QT_END_NAMESPACE
 
@@ -133,6 +134,7 @@ typedef QUndoView DUndoView;
 typedef QWhatsThis DWhatsThis;
 typedef QWizard DWizard;
 typedef QWizardPage DWizardPage;
+typedef QSizeGrip DSizeGrip;
 
 DWIDGET_END_NAMESPACE
 
