@@ -3,30 +3,74 @@
 
 #include "dprintpreviewdialog.h"
 #include "ddialog_p.h"
+#include <DWidget>
+#include <DPushButton>
+#include <DComboBox>
+#include <DRadioButton>
 class QVBoxLayout;
-class QPushButton;
+class QButtonGroup;
+class DScrollArea;
 DWIDGET_BEGIN_NAMESPACE
 class DFrame;
 class DIconButton;
 class DLineEdit;
 class DLabel;
+class DSpinBox;
+class DSwitchButton;
 class DPrintPreviewDialogPrivate : public DDialogPrivate
 {
 public:
     explicit DPrintPreviewDialogPrivate(DPrintPreviewDialog *qq);
+    void startup();
     void initui();
     void initleft(QVBoxLayout *layout);
     void initright(QVBoxLayout *layout);
+    void initbasicui();
+    void initadvanceui();
+    void initdata();
+    void initconnections();
+    void setfrmaeback(DWidget *frame);
+    void showadvancesetting();
 
     DFrame *pview;
+    DWidget *basicsettingwdg;
+    DWidget *advancesettingwdg;
     DIconButton *firstBtn;
     DIconButton *prevPageBtn;
     DLineEdit *jumpPageEdit;
     DLabel *totalPageLabel;
     DIconButton *nextPageBtn;
     DIconButton *lastBtn;
-    QPushButton *cancelBtn;
-    QPushButton *printBtn;
+    DPushButton *cancelBtn;
+    DPushButton *printBtn;
+    DPushButton *advanceBtn;
+    DScrollArea *scrollarea;
+    DComboBox *printDeviceCombo;
+    DSpinBox *copycountspinbox;
+    DComboBox *pageRangeCombo;
+    DSpinBox *fromeSpin;
+    DSpinBox *toSpin;
+    QButtonGroup *orientationgroup;
+    DComboBox *colorModeCombo;
+    DComboBox *marginsCombo;
+    DSpinBox *marginTopSpin;
+    DSpinBox *marginBottomSpin;
+    DSpinBox *marginLeftSpin;
+    DSpinBox *marginRightSpin;
+    QButtonGroup *scaleGroup;
+    DLineEdit *scaleRateEdit;
+    DComboBox *paperSizeCombo;
+    DSwitchButton *duplexSwitchBtn;
+    DComboBox *pagePerSheetCombo;
+    DIconButton *lrtbBtn; //左右上下
+    DIconButton *rltbBtn; //右左上下
+    DIconButton *tblrBtn; //上下左右
+    DIconButton *tbrlBtn; //上下右左
+    QButtonGroup *printOrderGroup; //打印顺序
+    DComboBox *inorderCombo;
+    DComboBox *waterTypeCombo; //添加水印类型
+    DIconButton *waterColorBtn;
+    DLineEdit *waterTextEdit;
     Q_DECLARE_PUBLIC(DPrintPreviewDialog)
 };
 
