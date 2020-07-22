@@ -621,9 +621,8 @@ void DPrintPreviewDialogPrivate::initadvanceui()
 void DPrintPreviewDialogPrivate::initdata()
 {
     Q_Q(DPrintPreviewDialog);
-    QPrinter printer;
-    printer.setPrinterName("Canon-iR2520");
-    QPrinterInfo info(printer);
+    printer->setPrinterName("Canon-iR2520");
+    QPrinterInfo info(*printer);
     qDebug() << QPrinterInfo::availablePrinterNames() << info.supportedDuplexModes()
              << info.supportedPageSizes() << info.supportsCustomPageSizes();
     printDeviceCombo->addItems(QPrinterInfo::availablePrinterNames());
