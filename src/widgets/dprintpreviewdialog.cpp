@@ -103,13 +103,16 @@ void DPrintPreviewDialogPrivate::initleft(QVBoxLayout *layout)
     jumpPageEdit = new DLineEdit();
     jumpPageEdit->setMaximumWidth(50);
     jumpPageEdit->setClearButtonEnabled(false);
-    totalPageLabel = new DLabel("/123");
+    jumpPageEdit->setText("1");
+    DLabel *spaceLabel = new DLabel("/");
+    totalPageLabel = new DLabel("123");
     nextPageBtn = new DIconButton(DStyle::SP_ArrowRight);
     lastBtn = new DIconButton(DStyle::SP_ArrowNext);
     pbottomlayout->addWidget(firstBtn);
     pbottomlayout->addWidget(prevPageBtn);
     pbottomlayout->addStretch();
     pbottomlayout->addWidget(jumpPageEdit);
+    pbottomlayout->addWidget(spaceLabel);
     pbottomlayout->addWidget(totalPageLabel);
     pbottomlayout->addStretch();
     pbottomlayout->addWidget(nextPageBtn);
@@ -135,13 +138,16 @@ void DPrintPreviewDialogPrivate::initright(QVBoxLayout *layout)
     scrollarea->hide();
 
     advanceBtn = new DPushButton(q->tr("Advanced"));
+    advanceBtn->setLayoutDirection(Qt::RightToLeft);
+    advanceBtn->setIcon(QIcon(":/assets/icons/light/icons/printer_dropdown_14px.svg"));
     DPalette pa = advanceBtn->palette();
     pa.setColor(DPalette::ButtonText, pa.link().color());
     advanceBtn->setPalette(pa);
     advanceBtn->setFlat(true);
     QHBoxLayout *advancelayout = new QHBoxLayout;
+    advancelayout->addStretch();
     advancelayout->addWidget(advanceBtn);
-
+    advancelayout->addStretch();
     ptoplayout->addWidget(basicsettingwdg);
     ptoplayout->addLayout(advancelayout);
     ptoplayout->addWidget(scrollarea);
@@ -153,6 +159,7 @@ void DPrintPreviewDialogPrivate::initright(QVBoxLayout *layout)
     pbottomlayout->setContentsMargins(0, 10, 0, 10);
     cancelBtn = new DPushButton(q->tr("Cancel"));
     printBtn = new DPushButton(q->tr("Print"));
+
     cancelBtn->setFixedSize(170, 36);
     printBtn->setFixedSize(170, 36);
     pbottomlayout->addWidget(cancelBtn);
@@ -160,6 +167,8 @@ void DPrintPreviewDialogPrivate::initright(QVBoxLayout *layout)
 
     layout->addWidget(ptopwidget);
     layout->addLayout(pbottomlayout);
+    q->slotPageRangeCombox(0);
+    q->slotPageMarginCombox(0);
 }
 
 void DPrintPreviewDialogPrivate::initbasicui()
@@ -207,12 +216,14 @@ void DPrintPreviewDialogPrivate::initbasicui()
 
     //页码范围
     DFrame *pageFrame = new DFrame(basicsettingwdg);
+    pageFrame->setObjectName("pageFrame");
     layout->addWidget(pageFrame);
     pageFrame->setFixedSize(422, 94);
     setfrmaeback(pageFrame);
     QVBoxLayout *pagelayout = new QVBoxLayout(pageFrame);
     DLabel *pagerangelabel = new DLabel(q->tr("Page range"), pageFrame);
     pageRangeCombo = new DComboBox(pageFrame);
+    pageRangeCombo->setFixedSize(275, 36);
     pageRangeCombo->addItem(q->tr("All"));
     pageRangeCombo->addItem(q->tr("Current page"));
     pageRangeCombo->addItem(q->tr("Select pages"));
@@ -222,11 +233,19 @@ void DPrintPreviewDialogPrivate::initbasicui()
 
     DLabel *fromLabel = new DLabel(q->tr("From"), pageFrame);
     fromeSpin = new DSpinBox(pageFrame);
+
     DLabel *toLabel = new DLabel(q->tr("To"), pageFrame);
     toSpin = new DSpinBox(pageFrame);
+    fromeSpin->setRange(1, 9999);
+    toSpin->setRange(1, 9999);
     fromeSpin->setEnabledEmbedStyle(true);
     toSpin->setEnabledEmbedStyle(true);
     QHBoxLayout *hfromtolayout = new QHBoxLayout();
+    fromLabel->setFixedWidth(40);
+    fromeSpin->setFixedWidth(95);
+    toLabel->setFixedWidth(30);
+    toSpin->setFixedWidth(95);
+    hfromtolayout->addStretch();
     hfromtolayout->addWidget(fromLabel);
     hfromtolayout->addWidget(fromeSpin);
     hfromtolayout->addWidget(toLabel);
@@ -245,8 +264,12 @@ void DPrintPreviewDialogPrivate::initbasicui()
     QVBoxLayout *orientationlayout = new QVBoxLayout;
     orientationlayout->setContentsMargins(0, 0, 0, 0);
     DRadioButton *verRadio = new DRadioButton;
-    verRadio->setText("sbkebcmj");
+    //    verRadio->setText("sbkebcmj");
+    verRadio->setIcon(QIcon(":/assets/icons/light/icons/printer_portrait_40px.svg"));
+    verRadio->setIconSize(QSize(36, 36));
     DRadioButton *horRadio = new DRadioButton;
+    horRadio->setIcon(QIcon(":/assets/icons/light/icons/printer_landscape_40px.svg"));
+    horRadio->setIconSize(QSize(36, 36));
     orientationgroup = new QButtonGroup(q);
     orientationgroup->addButton(verRadio, 0);
     orientationgroup->addButton(horRadio, 1);
@@ -255,22 +278,24 @@ void DPrintPreviewDialogPrivate::initbasicui()
     DWidget *portraitwdg = new DWidget;
     portraitwdg->setFixedSize(422, 48);
     QHBoxLayout *portraitlayout = new QHBoxLayout;
-    DLabel *orientationlabel = new DLabel;
+    //    DLabel *orientationlabel = new DLabel;
     DLabel *orientationTextLabel = new DLabel(q->tr("Portrait"), portraitwdg);
     portraitlayout->addWidget(verRadio);
-    portraitlayout->addWidget(orientationlabel);
+    //    portraitlayout->addWidget(orientationlabel);
     portraitlayout->addWidget(orientationTextLabel);
+    portraitlayout->addStretch();
     portraitwdg->setLayout(portraitlayout);
 
     //横向
     DWidget *landscapewdg = new DWidget;
     landscapewdg->setFixedSize(422, 48);
     QHBoxLayout *landscapelayout = new QHBoxLayout;
-    DLabel *landscapelabel = new DLabel;
+    //    DLabel *landscapelabel = new DLabel;
     DLabel *landscapeTextLabel = new DLabel(q->tr("Landscape"), portraitwdg);
     landscapelayout->addWidget(horRadio);
-    landscapelayout->addWidget(landscapelabel);
+    //    landscapelayout->addWidget(landscapelabel);
     landscapelayout->addWidget(landscapeTextLabel);
+    landscapelayout->addStretch();
     landscapewdg->setLayout(landscapelayout);
 
     orientationlayout->addWidget(portraitwdg);
@@ -296,7 +321,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     DLabel *pagesLabel = new DLabel(q->tr("Pages"), advancesettingwdg);
     setwidgetfont(pagesLabel, DFontSizeManager::T5);
     QHBoxLayout *pagestitlelayout = new QHBoxLayout;
-    pagestitlelayout->setContentsMargins(0, 0, 0, 0);
+    pagestitlelayout->setContentsMargins(0, 20, 0, 0);
     pagestitlelayout->addWidget(pagesLabel, Qt::AlignLeft | Qt::AlignBottom);
 
     DFrame *colorframe = new DFrame;
@@ -312,6 +337,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     colorlayout->setContentsMargins(10, 4, 10, 4);
 
     DFrame *marginsframe = new DFrame;
+    marginsframe->setObjectName("marginsFrame");
     setfrmaeback(marginsframe);
     marginsframe->setFixedHeight(102);
     QVBoxLayout *marginslayout = new QVBoxLayout(marginsframe);
@@ -321,6 +347,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     DLabel *marginlabel = new DLabel(q->tr("Margins"));
     marginlabel->setFixedWidth(123);
     marginsCombo = new DComboBox;
+    marginsCombo->addItems(QStringList() << q->tr("ordinary") << q->tr("narrow") << q->tr("moderate") << q->tr("custom"));
     marginsCombo->setFixedHeight(36);
     marginscombolayout->addWidget(marginlabel);
     marginscombolayout->addWidget(marginsCombo);
@@ -361,7 +388,6 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     pagelayout->addLayout(pagestitlelayout);
     pagelayout->addWidget(colorframe);
     pagelayout->addWidget(marginsframe);
-    layout->addLayout(pagelayout);
 
     //缩放
     QVBoxLayout *scalinglayout = new QVBoxLayout;
@@ -375,16 +401,17 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     scaleGroup = new QButtonGroup(q);
     QVBoxLayout *scalingcontentlayout = new QVBoxLayout;
     scalingcontentlayout->setContentsMargins(0, 0, 0, 0);
-    DWidget *fitwdg = new DWidget;
-    fitwdg->setFixedHeight(48);
-    QHBoxLayout *fitlayout = new QHBoxLayout(fitwdg);
-    DRadioButton *fitPaperRadio = new DRadioButton(q->tr("Fit to paper size"));
-    scaleGroup->addButton(fitPaperRadio, 0);
-    fitlayout->addWidget(fitPaperRadio);
+    //    DWidget *fitwdg = new DWidget;
+    //    fitwdg->setFixedHeight(48);
+    //    QHBoxLayout *fitlayout = new QHBoxLayout(fitwdg);
+    //    DRadioButton *fitPaperRadio = new DRadioButton(q->tr("Fit to paper size"));
+    //    scaleGroup->addButton(fitPaperRadio, 0);
+    //    fitlayout->addWidget(fitPaperRadio);
     DWidget *actualwdg = new DWidget;
     actualwdg->setFixedHeight(48);
     QHBoxLayout *actuallayout = new QHBoxLayout(actualwdg);
     DRadioButton *actualSizeRadio = new DRadioButton(q->tr("Actual size"));
+    actualSizeRadio->setChecked(true);
     scaleGroup->addButton(actualSizeRadio, 1);
     actuallayout->addWidget(actualSizeRadio);
     DWidget *shrinkwdg = new DWidget;
@@ -399,12 +426,18 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     colorlayout->setContentsMargins(10, 1, 10, 1);
     DRadioButton *customSizeRadio = new DRadioButton(q->tr("Scale"));
     scaleGroup->addButton(customSizeRadio, 3);
-    scaleRateEdit = new DLineEdit;
+    scaleRateEdit = new DSpinBox;
+    scaleRateEdit->setSuffix("%");
+    scaleRateEdit->setRange(10, 200);
+    qDebug() << scaleRateEdit->value();
+    //    scaleRateEdit->lineEdit()->setText("");
+    //    scaleRateEdit->lineEdit()->setPlaceholderText("90%");
+    scaleRateEdit->setButtonSymbols(QAbstractSpinBox::ButtonSymbols::NoButtons);
     scaleRateEdit->setFixedWidth(78);
     customlayout->addWidget(customSizeRadio);
     customlayout->addWidget(scaleRateEdit);
     customlayout->addStretch(1);
-    scalingcontentlayout->addWidget(fitwdg);
+    //    scalingcontentlayout->addWidget(fitwdg);
     scalingcontentlayout->addWidget(actualwdg);
     scalingcontentlayout->addWidget(shrinkwdg);
     scalingcontentlayout->addWidget(customscalewdg);
@@ -415,7 +448,6 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     DApplicationHelper::instance()->setPalette(back, pa);
     scalinglayout->addLayout(scalingtitlelayout);
     scalinglayout->addWidget(back);
-    layout->addLayout(scalinglayout);
 
     //纸张
     QVBoxLayout *paperlayout = new QVBoxLayout;
@@ -423,7 +455,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     DLabel *paperLabel = new DLabel(q->tr("Paper"), advancesettingwdg);
     setwidgetfont(paperLabel, DFontSizeManager::T5);
     QHBoxLayout *papertitlelayout = new QHBoxLayout;
-    papertitlelayout->setContentsMargins(0, 20, 0, 0);
+    papertitlelayout->setContentsMargins(0, 0, 0, 0);
     papertitlelayout->addWidget(paperLabel, Qt::AlignLeft | Qt::AlignBottom);
 
     DFrame *paperframe = new DFrame;
@@ -439,7 +471,6 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     paperframelayout->setContentsMargins(10, 4, 10, 4);
     paperlayout->addLayout(papertitlelayout);
     paperlayout->addWidget(paperframe);
-    layout->addLayout(paperlayout);
 
     //打印方式
     QVBoxLayout *drawinglayout = new QVBoxLayout;
@@ -460,45 +491,45 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     duplexlayout->addWidget(duplexlabel);
     duplexlayout->addStretch(1);
     duplexlayout->addWidget(duplexSwitchBtn, Qt::AlignRight);
+    /*
+        DFrame  *drawingframe = new DFrame;
+        setfrmaeback(drawingframe);
+        drawingframe->setFixedHeight(94);
+        QVBoxLayout *drawingframelayout = new QVBoxLayout(drawingframe);
+        drawingframelayout->setSpacing(10);
+        QHBoxLayout *pagepersheetlayout = new QHBoxLayout;
+        pagepersheetlayout->setContentsMargins(0, 0, 0, 0);
+        DLabel *sheetlabel = new DLabel(q->tr("Pages per sheet"));
+        sheetlabel->setFixedWidth(123);
+        pagePerSheetCombo = new DComboBox;
+        pagePerSheetCombo->setFixedHeight(36);
+        pagepersheetlayout->addWidget(sheetlabel);
+        pagepersheetlayout->addWidget(pagePerSheetCombo);
+        drawingframelayout->addLayout(pagepersheetlayout);
 
-    DFrame *drawingframe = new DFrame;
-    setfrmaeback(drawingframe);
-    drawingframe->setFixedHeight(94);
-    QVBoxLayout *drawingframelayout = new QVBoxLayout(drawingframe);
-    drawingframelayout->setSpacing(10);
-    QHBoxLayout *pagepersheetlayout = new QHBoxLayout;
-    pagepersheetlayout->setContentsMargins(0, 0, 0, 0);
-    DLabel *sheetlabel = new DLabel(q->tr("Pages per sheet"));
-    sheetlabel->setFixedWidth(123);
-    pagePerSheetCombo = new DComboBox;
-    pagePerSheetCombo->setFixedHeight(36);
-    pagepersheetlayout->addWidget(sheetlabel);
-    pagepersheetlayout->addWidget(pagePerSheetCombo);
-    drawingframelayout->addLayout(pagepersheetlayout);
-
-    QHBoxLayout *printdirectlayout = new QHBoxLayout;
-    printdirectlayout->setContentsMargins(0, 0, 0, 0);
-    printdirectlayout->setSpacing(10);
-    DLabel *directlabel = new DLabel(q->tr("Layout direction"));
-    directlabel->setFixedWidth(123);
-    lrtbBtn = new DIconButton(DStyle::SP_IncreaseElement);
-    rltbBtn = new DIconButton(DStyle::SP_IncreaseElement);
-    tblrBtn = new DIconButton(DStyle::SP_IncreaseElement);
-    tbrlBtn = new DIconButton(DStyle::SP_IncreaseElement);
-    printdirectlayout->addWidget(directlabel);
-    printdirectlayout->addWidget(lrtbBtn);
-    printdirectlayout->addWidget(rltbBtn);
-    printdirectlayout->addWidget(tblrBtn);
-    printdirectlayout->addWidget(tbrlBtn);
-    printdirectlayout->addStretch(1);
-    drawingframelayout->addLayout(printdirectlayout);
-
+        QHBoxLayout *printdirectlayout = new QHBoxLayout;
+        printdirectlayout->setContentsMargins(0, 0, 0, 0);
+        printdirectlayout->setSpacing(10);
+        DLabel *directlabel = new DLabel(q->tr("Layout direction"));
+        directlabel->setFixedWidth(123);
+        lrtbBtn = new DIconButton(DStyle::SP_IncreaseElement);
+        rltbBtn = new DIconButton(DStyle::SP_IncreaseElement);
+        tblrBtn = new DIconButton(DStyle::SP_IncreaseElement);
+        tbrlBtn = new DIconButton(DStyle::SP_IncreaseElement);
+        printdirectlayout->addWidget(directlabel);
+        printdirectlayout->addWidget(lrtbBtn);
+        printdirectlayout->addWidget(rltbBtn);
+        printdirectlayout->addWidget(tblrBtn);
+        printdirectlayout->addWidget(tbrlBtn);
+        printdirectlayout->addStretch(1);
+        drawingframelayout->addLayout(printdirectlayout);
+    */
     drawinglayout->addLayout(drawingtitlelayout);
     drawinglayout->addWidget(duplexframe);
-    drawinglayout->addWidget(drawingframe);
-    layout->addLayout(drawinglayout);
+    //        drawinglayout->addWidget(drawingframe);
 
     //打印顺序
+    /*
     QVBoxLayout *orderlayout = new QVBoxLayout;
     orderlayout->setContentsMargins(10, 0, 10, 0);
     DLabel *orderLabel = new DLabel(q->tr("Page Order"), advancesettingwdg);
@@ -537,10 +568,10 @@ void DPrintPreviewDialogPrivate::initadvanceui()
 
     orderlayout->addLayout(ordertitlelayout);
     orderlayout->addWidget(backorder);
-    layout->addLayout(orderlayout);
+    */
 
     //水印
-    QVBoxLayout *watermarklayout = new QVBoxLayout;
+    /*QVBoxLayout *watermarklayout = new QVBoxLayout;
     watermarklayout->setContentsMargins(10, 0, 10, 0);
     DLabel *watermarkLabel = new DLabel(q->tr("Watermark"), advancesettingwdg);
     QHBoxLayout *watermarktitlelayout = new QHBoxLayout;
@@ -576,7 +607,15 @@ void DPrintPreviewDialogPrivate::initadvanceui()
 
     watermarklayout->addLayout(watermarktitlelayout);
     watermarklayout->addWidget(watermarkframe);
-    layout->addLayout(watermarklayout);
+    */
+
+    layout->addLayout(paperlayout);
+    layout->addLayout(drawinglayout);
+    layout->addLayout(pagelayout);
+    layout->addLayout(scalinglayout);
+
+    //    layout->addLayout(orderlayout);
+    //    layout->addLayout(watermarklayout);
 }
 
 void DPrintPreviewDialogPrivate::initdata()
@@ -594,13 +633,18 @@ void DPrintPreviewDialogPrivate::initdata()
 void DPrintPreviewDialogPrivate::initconnections()
 {
     Q_Q(DPrintPreviewDialog);
+
     QObject::connect(advanceBtn, &QPushButton::clicked, q, [this] { this->showadvancesetting(); });
     QObject::connect(printDeviceCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(printerChanged(int)));
+
+    //    QObject::connect(advanceBtn, &QPushButton::clicked, q, &DPrintPreviewDialog::showAdvanceSetting);
+    QObject::connect(pageRangeCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(slotPageRangeCombox(int)));
+    QObject::connect(marginsCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(slotPageMarginCombox(int)));
 }
 
 void DPrintPreviewDialogPrivate::setfrmaeback(DWidget *frame)
 {
-    Q_Q(DPrintPreviewDialog);
+    //    Q_Q(DPrintPreviewDialog);
     DPalette pa = DApplicationHelper::instance()->palette(frame);
     pa.setBrush(DPalette::Base, pa.itemBackground());
     DApplicationHelper::instance()->setPalette(frame, pa);
@@ -612,9 +656,11 @@ void DPrintPreviewDialogPrivate::showadvancesetting()
     if (scrollarea->isHidden()) {
         basicsettingwdg->hide();
         scrollarea->show();
+        advanceBtn->setIcon(QIcon(":/assets/icons/light/icons/printer_dropup_14px.svg"));
     } else {
         basicsettingwdg->show();
         scrollarea->hide();
+        advanceBtn->setIcon(QIcon(":/assets/icons/light/icons/printer_dropdown_14px.svg"));
     }
 }
 
@@ -641,6 +687,57 @@ void DPrintPreviewDialogPrivate::test()
             duplexModes = ppdFindOption(m_ppd, "DefaultDuplex");
             if (duplexModes)
                 qDebug() << QPrintUtils::ppdChoiceToDuplexMode(duplexModes->choices[0].choice);
+        }
+    }
+}
+
+void DPrintPreviewDialogPrivate::setEnable(const int &value, DComboBox *combox)
+{
+    DFrame *pageFrame = basicsettingwdg->findChild<DFrame *>("pageFrame");
+    QList<DLabel *> pagelist = pageFrame->findChildren<DLabel *>();
+    if (combox == pageRangeCombo) {
+        if (value != pageRangeCombo->count() - 1) {
+            fromeSpin->setDisabled(true);
+            toSpin->setDisabled(true);
+            for (int i = 1; i < pagelist.size(); i++) {
+                DPalette pa = DApplicationHelper::instance()->palette(pagelist.at(i));
+                pa.setBrush(DPalette::Text, pa.placeholderText());
+                pagelist.at(i)->setPalette(pa);
+            }
+        } else {
+            fromeSpin->setDisabled(false);
+            toSpin->setDisabled(false);
+            for (int i = 1; i < pagelist.size(); i++) {
+                DPalette pa = DApplicationHelper::instance()->palette(pagelist.at(i));
+                pa.setBrush(DPalette::Text, pa.buttonText());
+                pagelist.at(i)->setPalette(pa);
+            }
+        }
+    }
+    DFrame *marginframe = advancesettingwdg->findChild<DFrame *>("marginsFrame");
+    QList<DLabel *> marginlist = marginframe->findChildren<DLabel *>();
+    if (combox == marginsCombo) {
+        if (value != marginsCombo->count() - 1) {
+            marginTopSpin->setDisabled(true);
+            marginLeftSpin->setDisabled(true);
+            marginRightSpin->setDisabled(true);
+            marginBottomSpin->setDisabled(true);
+            qDebug() << marginsCombo->count();
+            for (int i = 1; i < marginlist.size(); i++) {
+                DPalette pa = DApplicationHelper::instance()->palette(marginlist.at(i));
+                pa.setBrush(DPalette::Text, pa.placeholderText());
+                marginlist.at(i)->setPalette(pa);
+            }
+        } else {
+            marginTopSpin->setDisabled(false);
+            marginLeftSpin->setDisabled(false);
+            marginRightSpin->setDisabled(false);
+            marginBottomSpin->setDisabled(false);
+            for (int i = 1; i < marginlist.size(); i++) {
+                DPalette pa = DApplicationHelper::instance()->palette(marginlist.at(i));
+                pa.setBrush(DPalette::Text, pa.buttonText());
+                marginlist.at(i)->setPalette(pa);
+            }
         }
     }
 }
@@ -679,6 +776,32 @@ void DPrintPreviewDialog::printerChanged(int index)
 
     } else {
         //actual printer
+    }
+}
+
+void DPrintPreviewDialog::slotPageRangeCombox(int value)
+{
+    qDebug() << value;
+    Q_D(DPrintPreviewDialog);
+    d->setEnable(value, d->pageRangeCombo);
+    if (value == 0) {
+        d->fromeSpin->setValue(1);
+        d->toSpin->setValue(d->totalPageLabel->text().toInt());
+    } else if (value == 1) {
+        d->fromeSpin->setValue(d->jumpPageEdit->text().toInt());
+        d->toSpin->setValue(d->jumpPageEdit->text().toInt());
+    } else {
+        d->fromeSpin->setValue(d->jumpPageEdit->text().toInt());
+        d->toSpin->setValue(d->totalPageLabel->text().toInt());
+    }
+    qDebug() << d->jumpPageEdit->text().toInt();
+}
+
+void DPrintPreviewDialog::slotPageMarginCombox(int value)
+{
+    Q_D(DPrintPreviewDialog);
+    d->setEnable(value, d->marginsCombo);
+    if (value == 0) {
     }
 }
 

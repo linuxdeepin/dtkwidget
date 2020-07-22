@@ -35,6 +35,8 @@ public:
 
     void test();
 
+    void setEnable(const int &value, DComboBox *combox); //控件可用
+
     //printer
     QPrinter *printer;
     bool ownPrinter;
@@ -66,7 +68,7 @@ public:
     DSpinBox *marginLeftSpin;
     DSpinBox *marginRightSpin;
     QButtonGroup *scaleGroup;
-    DLineEdit *scaleRateEdit;
+    DSpinBox *scaleRateEdit;
     DComboBox *paperSizeCombo;
     DSwitchButton *duplexSwitchBtn;
     DComboBox *pagePerSheetCombo;
