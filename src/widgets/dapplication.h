@@ -69,7 +69,7 @@ public:
     bool loadTranslator(QList<QLocale> localeFallback = QList<QLocale>() << QLocale::system());
 
     //! warning: Must call before QGuiApplication defined object
-    static bool loadDXcbPlugin();
+    D_DECL_DEPRECATED static bool loadDXcbPlugin();
     static bool isDXcbPlatform();
 
     // return the libdtkwidget version of build application
