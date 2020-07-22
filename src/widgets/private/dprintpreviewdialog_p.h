@@ -7,6 +7,7 @@
 #include <DPushButton>
 #include <DComboBox>
 #include <DRadioButton>
+#include "QtPrintSupport/private/qprintdevice_p.h"
 class QVBoxLayout;
 class QButtonGroup;
 class DScrollArea;
@@ -18,6 +19,8 @@ class DLineEdit;
 class DLabel;
 class DSpinBox;
 class DSwitchButton;
+class DDoubleSpinBox;
+class DSuggestButton;
 class DPrintPreviewDialogPrivate : public DDialogPrivate
 {
 public:
@@ -52,7 +55,7 @@ public:
     DIconButton *nextPageBtn;
     DIconButton *lastBtn;
     DPushButton *cancelBtn;
-    DPushButton *printBtn;
+    DSuggestButton *printBtn;
     DPushButton *advanceBtn;
     DScrollArea *scrollarea;
     DComboBox *printDeviceCombo;
@@ -63,7 +66,7 @@ public:
     QButtonGroup *orientationgroup;
     DComboBox *colorModeCombo;
     DComboBox *marginsCombo;
-    DSpinBox *marginTopSpin;
+    DDoubleSpinBox *marginTopSpin;
     DSpinBox *marginBottomSpin;
     DSpinBox *marginLeftSpin;
     DSpinBox *marginRightSpin;
@@ -81,6 +84,8 @@ public:
     DComboBox *waterTypeCombo; //添加水印类型
     DIconButton *waterColorBtn;
     DLineEdit *waterTextEdit;
+
+    QPrintDevice m_currentPrintDevice;
     Q_DECLARE_PUBLIC(DPrintPreviewDialog)
 };
 
