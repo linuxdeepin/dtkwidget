@@ -10,6 +10,7 @@
 class QVBoxLayout;
 class QButtonGroup;
 class DScrollArea;
+class QPrinter;
 DWIDGET_BEGIN_NAMESPACE
 class DFrame;
 class DIconButton;
@@ -21,7 +22,7 @@ class DPrintPreviewDialogPrivate : public DDialogPrivate
 {
 public:
     explicit DPrintPreviewDialogPrivate(DPrintPreviewDialog *qq);
-    void startup();
+    void startup(QPrinter *printer = nullptr);
     void initui();
     void initleft(QVBoxLayout *layout);
     void initright(QVBoxLayout *layout);
@@ -32,6 +33,13 @@ public:
     void setfrmaeback(DWidget *frame);
     void showadvancesetting();
 
+    void test();
+
+    //printer
+    QPrinter *printer;
+    bool ownPrinter;
+
+    //control
     DFrame *pview;
     DWidget *basicsettingwdg;
     DWidget *advancesettingwdg;

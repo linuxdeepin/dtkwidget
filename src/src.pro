@@ -5,7 +5,7 @@ QT += dtkcore
 CONFIG += internal_module
 CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT
 
-QT += network concurrent multimedia dtkgui printsupport
+QT += network concurrent multimedia dtkgui printsupport printsupport-private
 greaterThan(QT_MAJOR_VERSION, 4) {
   QT += widgets widgets-private
   # Qt >= 5.8
@@ -15,7 +15,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 
 linux* {
     QT += x11extras dbus
-
+    LIBS += -lcups
     ###(zccrs): use load(dtk_qmake), dtkcore > 2.0.9
     ARCH = $$QMAKE_HOST.arch
     isEqual(ARCH, sw_64) | isEqual(ARCH, mips64) | isEqual(ARCH, mips32) {

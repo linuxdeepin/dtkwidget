@@ -15,7 +15,12 @@
 #include <QVBoxLayout>
 #include <QButtonGroup>
 #include <QtPrintSupport/QPrinterInfo>
+#include <QPrinter>
 #include <QDebug>
+#include <cups/ppd.h>
+#include <cups/cups.h>
+#include <private/qprint_p.h>
+#include <QTime>
 
 DWIDGET_BEGIN_NAMESPACE
 void setwidgetfont(QWidget *widget, DFontSizeManager::SizeType type = DFontSizeManager::T5)
@@ -31,11 +36,28 @@ DPrintPreviewDialogPrivate::DPrintPreviewDialogPrivate(DPrintPreviewDialog *qq)
 {
 }
 
-void DPrintPreviewDialogPrivate::startup()
+void DPrintPreviewDialogPrivate::startup(QPrinter *printer)
 {
+    if (nullptr == printer) {
+        this->printer = new QPrinter;
+    } else {
+        ownPrinter = true;
+        this->printer = printer;
+    }
+    QTime tm;
+    tm.start();
+    //临时测试方法后期移除
+    test();
+    qDebug() << __FUNCTION__ << "test cost time******" << tm.elapsed();
+    tm.restart();
     initui();
+    qDebug() << __FUNCTION__ << "initui cost time******" << tm.elapsed();
+    tm.restart();
     initdata();
+    qDebug() << __FUNCTION__ << "initdata cost time******" << tm.elapsed();
+    tm.restart();
     initconnections();
+    qDebug() << __FUNCTION__ << "initconnections cost time******" << tm.elapsed();
 }
 
 void DPrintPreviewDialogPrivate::initui()
@@ -560,7 +582,11 @@ void DPrintPreviewDialogPrivate::initadvanceui()
 void DPrintPreviewDialogPrivate::initdata()
 {
     Q_Q(DPrintPreviewDialog);
-    qDebug() << QPrinterInfo::availablePrinterNames();
+    QPrinter printer;
+    printer.setPrinterName("Canon-iR2520");
+    QPrinterInfo info(printer);
+    qDebug() << QPrinterInfo::availablePrinterNames() << info.supportedDuplexModes()
+             << info.supportedPageSizes() << info.supportsCustomPageSizes();
     printDeviceCombo->addItems(QPrinterInfo::availablePrinterNames());
     printDeviceCombo->addItem(q->tr("Print to PDF"));
 }
@@ -568,7 +594,8 @@ void DPrintPreviewDialogPrivate::initdata()
 void DPrintPreviewDialogPrivate::initconnections()
 {
     Q_Q(DPrintPreviewDialog);
-    QObject::connect(advanceBtn, &QPushButton::clicked, q, &DPrintPreviewDialog::showAdvanceSetting);
+    QObject::connect(advanceBtn, &QPushButton::clicked, q, [this] { this->showadvancesetting(); });
+    QObject::connect(printDeviceCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(printerChanged(int)));
 }
 
 void DPrintPreviewDialogPrivate::setfrmaeback(DWidget *frame)
@@ -591,6 +618,33 @@ void DPrintPreviewDialogPrivate::showadvancesetting()
     }
 }
 
+void DPrintPreviewDialogPrivate::test()
+{
+    //"Canon-iR2520", "HP_LaserJet_Professional_M1213nf_MFP_052BD1_"
+    QString m_cupsName = "Canon-iR2520";
+    cups_dest_t *m_cupsDest = cupsGetNamedDest(CUPS_HTTP_DEFAULT, m_cupsName.toStdString().c_str(), nullptr);
+    const char *ppdFile = cupsGetPPD("Canon-iR2520");
+    ppd_file_t *m_ppd = nullptr;
+    if (ppdFile) {
+        m_ppd = ppdOpenFile(ppdFile);
+        unlink(ppdFile);
+    }
+
+    ppd_option_t *duplexModes = ppdFindOption(m_ppd, "Duplex");
+    bool find = false;
+    if (duplexModes) {
+        for (int i = 0; i < duplexModes->num_choices; ++i) {
+            qDebug() << QPrintUtils::ppdChoiceToDuplexMode(duplexModes->choices[i].choice);
+            find = true;
+        }
+        if (find) {
+            duplexModes = ppdFindOption(m_ppd, "DefaultDuplex");
+            if (duplexModes)
+                qDebug() << QPrintUtils::ppdChoiceToDuplexMode(duplexModes->choices[0].choice);
+        }
+    }
+}
+
 DPrintPreviewDialog::DPrintPreviewDialog(QWidget *parent)
     : DDialog(*new DPrintPreviewDialogPrivate(this), parent)
 {
@@ -599,10 +653,33 @@ DPrintPreviewDialog::DPrintPreviewDialog(QWidget *parent)
     d->startup();
 }
 
-void DPrintPreviewDialog::showAdvanceSetting()
+DPrintPreviewDialog::DPrintPreviewDialog(QPrinter *printer, QWidget *parent)
+    : DDialog(*new DPrintPreviewDialogPrivate(this), parent)
 {
     Q_D(DPrintPreviewDialog);
-    d->showadvancesetting();
+    setFixedSize(851, 606);
+    d->startup(printer);
+}
+
+DPrintPreviewDialog::~DPrintPreviewDialog()
+{
+    Q_D(DPrintPreviewDialog);
+    if (d->ownPrinter)
+        delete d->printer;
+}
+
+void DPrintPreviewDialog::printerChanged(int index)
+{
+    Q_D(DPrintPreviewDialog);
+    d->printer->setPrinterName(d->printDeviceCombo->currentText());
+    QPrinterInfo info(*d->printer);
+    qDebug() << info.supportedDuplexModes() << info.supportedPageSizes();
+    if (index == d->printDeviceCombo->count() - 1) {
+        //pdf
+
+    } else {
+        //actual printer
+    }
 }
 
 DWIDGET_END_NAMESPACE
