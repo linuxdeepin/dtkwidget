@@ -40,7 +40,8 @@
 #include <DSettingsWidgetFactory>
 
 #include <DApplication>
-
+#include "dprintpreviewdialog.h"
+#include "dprintpreviewwidget.h"
 #include "mainwindow.h"
 #include "graphicseffecttab.h"
 #include "simplelistviewtab.h"
@@ -144,7 +145,24 @@ MainWindow::MainWindow(QWidget *parent)
 
     titlebar->addWidget(new DSearchEdit(titlebar));
 
-    QPushButton *pb1 = new QPushButton("button1");
+    QPushButton *pb1 = new QPushButton("DPrintPreviewDialog");
+    connect(pb1, &QPushButton::clicked, [=]() {
+        DPrintPreviewDialog dialog(this);
+        connect(&dialog, &DPrintPreviewDialog::paintRequested,
+                this, [=](DPrinter *_printer) {
+                    _printer->setFromTo(1, 1);
+                    QPainter painter(_printer);
+                    double xscale = _printer->pageRect().width() / double(this->width());
+                    double yscale = _printer->pageRect().height() / double(this->height());
+                    double scale = qMin(xscale, yscale);
+                    painter.translate(_printer->paperRect().center());
+                    painter.scale(scale, scale);
+                    painter.translate(-this->width() / 2, -this->height() / 2);
+                    this->render(&painter);
+                });
+        dialog.exec();
+    });
+
     QPushButton *pb2 = new QPushButton("button2");
 
     QLineEdit *le = new QLineEdit("lineEdit");

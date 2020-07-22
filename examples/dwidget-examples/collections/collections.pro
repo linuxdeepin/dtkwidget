@@ -1,6 +1,6 @@
 QT += core gui svg
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-QT += dtkcore dtkgui
+QT += dtkcore dtkgui printsupport-private
 linux* {
     CONFIG += link_pkgconfig
 }

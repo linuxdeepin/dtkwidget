@@ -22,7 +22,7 @@ class DPrintPreviewDialogPrivate : public DDialogPrivate
 {
 public:
     explicit DPrintPreviewDialogPrivate(DPrintPreviewDialog *qq);
-    void startup(QPrinter *printer = nullptr);
+    void startup(DPrinter *printer = nullptr);
     void initui();
     void initleft(QVBoxLayout *layout);
     void initright(QVBoxLayout *layout);
@@ -38,11 +38,11 @@ public:
     void setEnable(const int &value, DComboBox *combox); //控件可用
 
     //printer
-    QPrinter *printer;
+    DPrinter *printer;
     bool ownPrinter;
 
     //control
-    DFrame *pview;
+    DPrintPreviewWidget *pview;
     DWidget *basicsettingwdg;
     DWidget *advancesettingwdg;
     DIconButton *firstBtn;
