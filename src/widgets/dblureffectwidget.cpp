@@ -524,7 +524,7 @@ int DBlurEffectWidget::radius() const
 
 /*!
  * \~english \property DBlurEffectWidget::mode
- * \~english \brief This property holds which blur alghorithm to be used.
+ * \~english \brief This property holds which blur algorithm to be used.
  *
  * \~english Currently it only supports DBlurEffectWidget::GaussianBlur.
  */
