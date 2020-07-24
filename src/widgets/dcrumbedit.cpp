@@ -32,9 +32,72 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
-#include <QDebug>
+#include <QTime>
 
 DWIDGET_BEGIN_NAMESPACE
+
+enum Background {
+    red,
+    grey,
+    black,
+    brown,
+    yellow,
+    darkBlue,
+    lightBlue,
+    turquoise,
+    lightGreen,
+    oliveGreen,
+    darkMagenta,
+    lightMagenta
+};
+
+QBrush static getGradientBrush(Background background)
+{
+    QStringList gradient;
+    switch (background) {
+    case Background::lightGreen:
+        gradient = QStringList{"#81c704","#429321"};
+        break;
+    case Background::lightBlue:
+        gradient = QStringList{"#0090f0", "#0456b4"};
+        break;
+    case Background::grey:
+        gradient = QStringList{"#7a7a7a", "#585858"};
+        break;
+    case Background::brown:
+        gradient = QStringList{"#b06e1f", "#875110"};
+        break;
+    case Background::yellow:
+        gradient = QStringList{"#fabd2b", "#d08c05"};
+        break;
+    case Background::turquoise:
+        gradient = QStringList{"#00f06b", "#429aff"};
+        break;
+    case Background::darkBlue:
+        gradient = QStringList{"#0055f3", "#0405b4"};
+        break;
+    case Background::darkMagenta:
+        gradient = QStringList{"#8c00f0", "#5d04b4"};
+        break;
+    case Background::lightMagenta:
+        gradient = QStringList{"#ec2cff", "#ad007b"};
+        break;
+    case Background::red:
+        gradient = QStringList{"#ff7130", "#db071d"};
+        break;
+    case Background::oliveGreen:
+        gradient = QStringList{"#91a800", "#426300"};
+        break;
+    case Background::black:
+        gradient = QStringList{"#4e4e4e", "#000000"};
+        break;
+    }
+
+    QLinearGradient lg;
+    lg.setColorAt(0, QColor(gradient[0]));
+    lg.setColorAt(1, QColor(gradient[1]));
+    return QBrush(lg);
+}
 
 class CrumbObjectInterface : public QObject, public QTextObjectInterface
 {
@@ -42,10 +105,15 @@ class CrumbObjectInterface : public QObject, public QTextObjectInterface
     Q_INTERFACES(QTextObjectInterface)
 
 public:
-    explicit CrumbObjectInterface(QObject *parent = 0)
+    enum TextMargin
+    {
+        TopMargin = 2,
+        LeftMargin = 4,
+    };
+
+    explicit CrumbObjectInterface(QObject *parent = nullptr)
         : QObject(parent)
     {
-
     }
 
     QSizeF intrinsicSize(QTextDocument *doc, int posInDocument,
@@ -53,8 +121,9 @@ public:
 
     void drawObject(QPainter *painter, const QRectF &rect, QTextDocument *doc,
                     int posInDocument, const QTextFormat &format) Q_DECL_OVERRIDE;
-};
 
+    QBrush backgroundBrush(const QRect &rect, const QBrush &brush);
+};
 
 /*!
     \~english \class DCrumbTextFormat
@@ -94,7 +163,7 @@ DCrumbTextFormat::DCrumbTextFormat()
 
 /*!
  * \~chinese \brief DCrumbTextFormat::tagColor
- * \~chinese \return 返回标签的文字的颜色
+ * \~chinese \return 返回标签的颜色
  */
 QColor DCrumbTextFormat::tagColor() const
 {
@@ -185,7 +254,8 @@ void DCrumbTextFormat::setBackgroundRadius(int radius)
 DCrumbTextFormat::DCrumbTextFormat(int objectType)
 {
     setObjectType(objectType);
-    setBackground(QColor("#76c1ff"));
+
+    setBackground(getGradientBrush(static_cast<Background>(qrand() % 12)));
     setTextColor(Qt::white);
     setVerticalAlignment(QTextCharFormat::AlignBaseline);
 }
@@ -209,6 +279,7 @@ public:
         widgetBottom = new QWidget(qq);
         widgetLeft = new QWidget(qq);
         widgetRight = new QWidget(qq);
+        crumbRadius = DStyle::pixelMetric(qq->style(), DStyle::PM_FrameRadius);
     }
 
     void registerHandler(QAbstractTextDocumentLayout *layout)
@@ -461,7 +532,7 @@ QSizeF CrumbObjectInterface::intrinsicSize(QTextDocument *doc, int posInDocument
     if (crumb_format.tagColor().isValid())
         return QSizeF(font_metrics.width(crumb_format.text()) + font_metrics.height() + radius + 2, font_metrics.height() + 2);
 
-    return QSizeF(font_metrics.width(crumb_format.text()) + 2 * radius + 2, font_metrics.height() + 2);
+    return QSizeF(font_metrics.width(crumb_format.text()) + 2 * radius + 2, font_metrics.height() + 2 + TopMargin *2);
 }
 
 void CrumbObjectInterface::drawObject(QPainter *painter, const QRectF &rect,
@@ -470,7 +541,7 @@ void CrumbObjectInterface::drawObject(QPainter *painter, const QRectF &rect,
     Q_UNUSED(doc)
     Q_UNUSED(posInDocument)
 
-    const QRectF new_rect = rect.adjusted(1, 1, -1, -1);
+    const QRect new_rect = rect.adjusted(LeftMargin, TopMargin, 0, -TopMargin).toRect();
     const DCrumbTextFormat crumb_format(format);
     const QFontMetricsF font_metrics(crumb_format.font());
     const int radius = crumb_format.backgroundRadius();
@@ -483,7 +554,7 @@ void CrumbObjectInterface::drawObject(QPainter *painter, const QRectF &rect,
     background_path.addRoundedRect(new_rect, radius, crumb_format.backgroundRadius());
 
     painter->setRenderHint(QPainter::Antialiasing);
-    painter->fillPath(background_path, crumb_format.background());
+    painter->fillPath(background_path, backgroundBrush(new_rect, crumb_format.background()));
 
     if (crumb_format.tagColor().isValid()) {
         painter->fillPath(tag_path, crumb_format.tagColor());
@@ -493,8 +564,19 @@ void CrumbObjectInterface::drawObject(QPainter *painter, const QRectF &rect,
                           crumb_format.text(), Qt::AlignVCenter | Qt::AlignRight);
     } else {
         painter->setPen(crumb_format.textColor());
-        painter->drawText(new_rect.adjusted(radius, 0, -radius, 0), crumb_format.text());
+        painter->drawText(new_rect, Qt::AlignCenter, crumb_format.text());
     }
+}
+
+QBrush CrumbObjectInterface::backgroundBrush(const QRect &rect, const QBrush &brush)
+{
+    QLinearGradient *lg = static_cast<QLinearGradient *>(const_cast<QGradient*>(brush.gradient()));
+    if (lg) {
+        lg->setStart(QPointF(rect.x(), rect.y()));
+        lg->setFinalStop(QPointF(rect.x(), rect.y() + rect.height()));
+    }
+
+    return brush;
 }
 
 /*!
@@ -537,6 +619,8 @@ DCrumbEdit::DCrumbEdit(QWidget *parent)
     , DObject(*new DCrumbEditPrivate(this))
 {
     Q_D(DCrumbEdit);
+
+    qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
 
     viewport()->setAutoFillBackground(false);
     setFrameShape(QFrame::NoFrame);
