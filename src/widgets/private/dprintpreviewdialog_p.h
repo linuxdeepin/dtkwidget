@@ -7,7 +7,7 @@
 #include <DPushButton>
 #include <DComboBox>
 #include <DRadioButton>
-#include "QtPrintSupport/private/qprintdevice_p.h"
+#include <private/qprintdevice_p.h>
 class QVBoxLayout;
 class QButtonGroup;
 class DScrollArea;
@@ -19,7 +19,7 @@ class DLineEdit;
 class DLabel;
 class DSpinBox;
 class DSwitchButton;
-class DDoubleSpinBox;
+class DCommandLinkButton;
 class DSuggestButton;
 class DPrintPreviewDialogPrivate : public DDialogPrivate
 {
@@ -35,14 +35,17 @@ public:
     void initconnections();
     void setfrmaeback(DWidget *frame);
     void showadvancesetting();
-
+    void setupPrinter();
+    void setScaling(int index);
     void test();
+    void updateSetteings(int index);
 
     void setEnable(const int &value, DComboBox *combox); //控件可用
 
     //printer
     DPrinter *printer;
     bool ownPrinter;
+    QPrintDevice m_currentPrintDevice;
 
     //control
     DPrintPreviewWidget *pview;
@@ -50,7 +53,7 @@ public:
     DWidget *advancesettingwdg;
     DIconButton *firstBtn;
     DIconButton *prevPageBtn;
-    DLineEdit *jumpPageEdit;
+    DSpinBox *jumpPageEdit;
     DLabel *totalPageLabel;
     DIconButton *nextPageBtn;
     DIconButton *lastBtn;
@@ -63,10 +66,12 @@ public:
     DComboBox *pageRangeCombo;
     DSpinBox *fromeSpin;
     DSpinBox *toSpin;
+    DLabel *fromLabel;
+    DLabel *toLabel;
     QButtonGroup *orientationgroup;
     DComboBox *colorModeCombo;
     DComboBox *marginsCombo;
-    DDoubleSpinBox *marginTopSpin;
+    DSpinBox *marginTopSpin;
     DSpinBox *marginBottomSpin;
     DSpinBox *marginLeftSpin;
     DSpinBox *marginRightSpin;
@@ -85,7 +90,6 @@ public:
     DIconButton *waterColorBtn;
     DLineEdit *waterTextEdit;
 
-    QPrintDevice m_currentPrintDevice;
     Q_DECLARE_PUBLIC(DPrintPreviewDialog)
 };
 

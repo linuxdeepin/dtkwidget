@@ -1,10 +1,9 @@
 #ifndef DPRINTPREVIEWDIALOG_H
 #define DPRINTPREVIEWDIALOG_H
 
-#include "ddialog.h"
+#include <DDialog>
 #include "dprintpreviewwidget.h"
 
-class QPrinter;
 DWIDGET_BEGIN_NAMESPACE
 class DPrintPreviewDialogPrivate;
 class DPrintPreviewDialog : public DDialog
@@ -14,12 +13,11 @@ public:
     explicit DPrintPreviewDialog(QWidget *parent = nullptr);
     explicit DPrintPreviewDialog(DPrinter *printer, QWidget *parent = nullptr);
     ~DPrintPreviewDialog();
-
 public Q_SLOTS:
-
     void printerChanged(int index);
     void slotPageRangeCombox(int value);
     void slotPageMarginCombox(int value);
+    void slotStartPrint(bool clicked);
 
 Q_SIGNALS:
     void paintRequested(DPrinter *printer);
