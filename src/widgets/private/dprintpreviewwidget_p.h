@@ -8,6 +8,8 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+#define PREVIEW_WIDGET_MARGIN_RATIO   50
+
 class GraphicsView : public QGraphicsView
 {
     Q_OBJECT
@@ -43,11 +45,13 @@ public:
     void init();
     void populateScene();
     void generatePreview();
+    void generateTargetPictures();
     void fitView();
 
     GraphicsView *graphicsView;
     QGraphicsScene *scene;
 
+    QList<QPicture> targetPictures;
     QList<const QPicture *> pictures;
     QList<QGraphicsItem *> pages;
 

@@ -40,8 +40,8 @@ void DPrintPreviewWidgetPrivate::populateScene()
     QRect pageRect = previewPrinter->pageLayout().paintRectPixels(previewPrinter->resolution());
 
     int page = 1;
-    for (auto *picture : qAsConst(pictures)) {
-        PageItem *item = new PageItem(page++, picture, paperSize, pageRect);
+    for (int i = 0; i < targetPictures.size(); i++) {
+        PageItem *item = new PageItem(page++, &targetPictures[i], paperSize, pageRect);
         scene->addItem(item);
         pages.append(item);
     }
@@ -54,9 +54,25 @@ void DPrintPreviewWidgetPrivate::generatePreview()
     Q_EMIT q->paintRequested(previewPrinter);
     previewPrinter->setPreviewMode(false);
     pictures = previewPrinter->getPrinterPages();
+    generateTargetPictures();
     populateScene();
     scene->setSceneRect(scene->itemsBoundingRect());
     fitView();
+}
+
+void DPrintPreviewWidgetPrivate::generateTargetPictures()
+{
+    targetPictures.clear();
+
+    for (auto *picture : qAsConst(pictures)) {
+        QPicture target;
+        QPainter painter;
+        painter.begin(&target);
+        painter.drawPicture(0, 0, *picture);
+        //todo scale,black and white,watermarking,……
+        painter.end();
+        targetPictures.append(target);
+    }
 }
 
 void DPrintPreviewWidgetPrivate::fitView()
