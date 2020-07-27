@@ -29,41 +29,6 @@ public:
 private:
 };
 
-class PageItem : public QGraphicsItem
-{
-public:
-    PageItem(int _pageNum, const QPicture *_pagePicture, QSize _paperSize, QRect _pageRect)
-        : pageNum(_pageNum)
-        , pagePicture(_pagePicture)
-        , paperSize(_paperSize)
-        , pageRect(_pageRect)
-    {
-        qreal border = qMax(paperSize.height(), paperSize.width()) / 50;
-        brect = QRectF(QPointF(-border, -border),
-                       QSizeF(paperSize) + QSizeF(2 * border, 2 * border));
-        setCacheMode(DeviceCoordinateCache);
-    }
-
-    QRectF boundingRect() const override
-    {
-        return brect;
-    }
-
-    inline int pageNumber() const
-    {
-        return pageNum;
-    }
-
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) override;
-
-private:
-    int pageNum;
-    const QPicture *pagePicture;
-    QSize paperSize;
-    QRect pageRect;
-    QRectF brect;
-};
-
 class LIBDTKWIDGETSHARED_EXPORT DPrintPreviewWidget : public QWidget
     , public DTK_CORE_NAMESPACE::DObject
 {
