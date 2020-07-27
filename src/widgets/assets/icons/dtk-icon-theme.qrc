@@ -6,5 +6,15 @@
         <file>dark/icons/water_back_383px.svg</file>
         <file>light/icons/water_back_383px.svg</file>
         <file>light/icons/water_front_383px.svg</file>
+        <file>light/icons/printer_colorselect_18px.svg</file>
+        <file>light/icons/printer_dropdown_14px.svg</file>
+        <file>light/icons/printer_dropup_14px.svg</file>
+        <file>light/icons/printer_landscape_40px.svg</file>
+        <file>light/icons/printer_lrtb_1_24px.svg</file>
+        <file>light/icons/printer_lrtb_2_24px.svg</file>
+        <file>light/icons/printer_lrtb_3_24px.svg</file>
+        <file>light/icons/printer_lrtb_4_24px.svg</file>
+        <file>light/icons/printer_lrtb_5_24px.svg</file>
+        <file>light/icons/printer_portrait_40px.svg</file>
     </qresource>
 </RCC>

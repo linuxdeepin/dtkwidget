@@ -152,7 +152,7 @@ void DPrintPreviewDialogPrivate::initright(QVBoxLayout *layout)
 
     advanceBtn = new DPushButton(q->tr("Advanced"));
     advanceBtn->setLayoutDirection(Qt::RightToLeft);
-    advanceBtn->setIcon(QIcon::fromTheme("printer_dropdown", QIcon(":/assets/icons/light/icons/printer_dropdown_14px.svg")));
+    advanceBtn->setIcon(QIcon::fromTheme("printer_dropdown"));
     DPalette pa = advanceBtn->palette();
     pa.setColor(DPalette::ButtonText, pa.link().color());
     advanceBtn->setPalette(pa);
@@ -276,10 +276,10 @@ void DPrintPreviewDialogPrivate::initbasicui()
     QVBoxLayout *orientationlayout = new QVBoxLayout;
     orientationlayout->setContentsMargins(0, 0, 0, 0);
     DRadioButton *verRadio = new DRadioButton;
-    verRadio->setIcon(QIcon::fromTheme("printer_portrait", QIcon(":/assets/icons/light/icons/printer_portrait_40px.svg")));
+    verRadio->setIcon(QIcon::fromTheme("printer_portrait"));
     verRadio->setIconSize(QSize(36, 36));
     DRadioButton *horRadio = new DRadioButton;
-    horRadio->setIcon(QIcon::fromTheme("printer_landscape", QIcon(":/assets/icons/light/icons/printer_landscape_40px.svg")));
+    horRadio->setIcon(QIcon::fromTheme("printer_landscape"));
     horRadio->setIconSize(QSize(36, 36));
     orientationgroup = new QButtonGroup(q);
     orientationgroup->addButton(verRadio, 0);
@@ -656,11 +656,11 @@ void DPrintPreviewDialogPrivate::showadvancesetting()
     if (scrollarea->isHidden()) {
         basicsettingwdg->hide();
         scrollarea->show();
-        advanceBtn->setIcon(QIcon::fromTheme("printer_dropup", QIcon(":/assets/icons/light/icons/printer_dropup_14px.svg")));
+        advanceBtn->setIcon(QIcon::fromTheme("printer_dropup"));
     } else {
         basicsettingwdg->show();
         scrollarea->hide();
-        advanceBtn->setIcon(QIcon::fromTheme("printer_dropdown", QIcon(":/assets/icons/light/icons/printer_dropdown_14px.svg")));
+        advanceBtn->setIcon(QIcon::fromTheme("printer_dropdown"));
     }
 }
 
