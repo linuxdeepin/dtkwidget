@@ -30,6 +30,12 @@
 
 #include <cups/ppd.h>
 #include <cups/cups.h>
+#define NORMAL_LEFT_RIGHT 31.8
+#define NORMAL_MODERATE_TOP_BOTTRM 25.4
+#define NARROW_ALL 12.7
+#define MODERATE_LEFT_RIGHT 19.1
+#define PrcEight_Weight 285
+#define PrcEight_Height 420
 DWIDGET_BEGIN_NAMESPACE
 void setwidgetfont(QWidget *widget, DFontSizeManager::SizeType type = DFontSizeManager::T5)
 {
@@ -681,20 +687,29 @@ void DPrintPreviewDialogPrivate::setupPrinter() //设置打印属性
     if (printDeviceCombo->currentIndex() != printDeviceCombo->count() - 1) {
         printer->setPageSize(prInfo.supportedPageSizes().at(paperSizeCombo->currentIndex())); //设置纸张大小
     } else {
-        if (paperSizeCombo->currentIndex() == 0) {
+        switch (paperSizeCombo->currentIndex()) {
+        case 0:
             printer->setPageSize(QPrinter::A3);
-        } else if (paperSizeCombo->currentIndex() == 1) {
+            break;
+        case 1:
             printer->setPageSize(QPrinter::A4);
-        } else if (paperSizeCombo->currentIndex() == 2) {
+            break;
+        case 2:
             printer->setPageSize(QPrinter::A5);
-        } else if (paperSizeCombo->currentIndex() == 3) {
+            break;
+        case 3:
             printer->setPageSize(QPrinter::B4);
-        } else if (paperSizeCombo->currentIndex() == 4) {
+            break;
+        case 4:
             printer->setPageSize(QPrinter::B5);
-        } else if (paperSizeCombo->currentIndex() == 5) {
+            break;
+        case 5:
+            printer->setPageSize(QPrinter::Custom);
+            printer->setPageSizeMM(QSizeF(PrcEight_Weight, PrcEight_Height));
+            break;
+        case 6:
             printer->setPageSize(QPrinter::Prc16K);
-        } else {
-            printer->setPageSize(QPrinter::Prc16K);
+            break;
         }
     }
 
@@ -921,13 +936,13 @@ void DPrintPreviewDialog::slotPageMarginCombox(int value) //设置纸张边距
     Q_D(DPrintPreviewDialog);
     d->setEnable(value, d->marginsCombo);
     if (value == 1) {
-        d->printer->setPageMargins(QMarginsF(12.7, 12.7, 12.7, 12.7));
+        d->printer->setPageMargins(QMarginsF(NARROW_ALL, NARROW_ALL, NARROW_ALL, NARROW_ALL));
     } else if (value == 2) {
-        d->printer->setPageMargins(QMarginsF(19.1, 25.4, 19.1, 25.4));
+        d->printer->setPageMargins(QMarginsF(MODERATE_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM, MODERATE_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM));
     } else if (value == 3) {
         d->printer->setPageMargins(QMarginsF(d->marginLeftSpin->value(), d->marginTopSpin->value(), d->marginRightSpin->value(), d->marginBottomSpin->value()));
     } else {
-        d->printer->setPageMargins(QMarginsF(31.8, 25.4, 31.8, 25.4));
+        d->printer->setPageMargins(QMarginsF(NORMAL_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM, NORMAL_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM));
     }
 }
 
