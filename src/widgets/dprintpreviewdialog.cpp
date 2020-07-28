@@ -669,22 +669,28 @@ void DPrintPreviewDialogPrivate::showadvancesetting()
     }
 }
 
-void DPrintPreviewDialogPrivate::setupPrinter() //设置打印属性
+/*!
+ * \~chinese DPrintPreviewDialogPrivate::setupPrinter 设置打印的相关基础属性和高级属性
+ */
+void DPrintPreviewDialogPrivate::setupPrinter()
 {
     Q_Q(DPrintPreviewDialog);
-    //--基础设置--
-    printer->setNumCopies(copycountspinbox->value()); //设置打印份数
-    _q_pageRangeChanged(pageRangeCombo->currentIndex()); //设置打印范围
+    //基础设置
+    //设置打印份数
+    printer->setNumCopies(copycountspinbox->value());
+    //设置打印范围
+    _q_pageRangeChanged(pageRangeCombo->currentIndex());
+    //设置打印方向
     if (orientationgroup->checkedId() == 0)
         printer->setOrientation(QPrinter::Portrait);
     else {
         printer->setOrientation(QPrinter::Landscape);
-    } //设置打印方向
-    //--高级设置--
+    }
+    //高级设置
+    //设置纸张大小
     QPrinterInfo prInfo(*printer);
-    qDebug() << prInfo.supportedPageSizes() << paperSizeCombo->currentIndex() << paperSizeCombo->count() - 1;
     if (printDeviceCombo->currentIndex() != printDeviceCombo->count() - 1) {
-        printer->setPageSize(prInfo.supportedPageSizes().at(paperSizeCombo->currentIndex())); //设置纸张大小
+        printer->setPageSize(prInfo.supportedPageSizes().at(paperSizeCombo->currentIndex()));
     } else {
         switch (paperSizeCombo->currentIndex()) {
         case 0:
@@ -711,26 +717,28 @@ void DPrintPreviewDialogPrivate::setupPrinter() //设置打印属性
             break;
         }
     }
-
+    //设置双面打印
     if (duplexSwitchBtn->isChecked())
         printer->setDuplex(QPrinter::DuplexAuto);
     else {
         printer->setDuplex(QPrinter::DuplexNone);
-    } //设置双面打印
+    }
+    //设置色彩打印
     if (colorModeCombo->currentIndex() == 0)
         printer->setColorMode(QPrinter::Color);
     else {
         printer->setColorMode(QPrinter::GrayScale);
-    } //设置色彩打印
-    _q_pageMarginChanged(marginsCombo->currentIndex()); //设置纸张打印边距
-    qDebug() << printer->resolution() << __func__;
+    }
+    //设置纸张打印边距
+    _q_pageMarginChanged(marginsCombo->currentIndex());
+    //设置缩放比例
     if (scaleGroup->checkedId() == 1)
         printer->setResolution(static_cast<int>(printer->resolution() * 1.5));
     else if (scaleGroup->checkedId() == 2) {
         printer->setResolution(static_cast<int>(printer->resolution() * (1 / (scaleRateEdit->value() / 100))));
     } else {
         return;
-    } //设置缩放比例
+    }
 }
 
 void DPrintPreviewDialogPrivate::test()
@@ -760,11 +768,14 @@ void DPrintPreviewDialogPrivate::test()
     }
 }
 
-void DPrintPreviewDialogPrivate::updateSetteings(int index) //刷新页面属性
+/*!
+ * \~chinese \brief DPrintPreviewDialogPrivate::updateSetteings 具体对每个控件和属性进行更新
+ * \~chinese \param index 判断当前的打印设备
+ */
+void DPrintPreviewDialogPrivate::updateSetteings(int index)
 {
     Q_Q(DPrintPreviewDialog);
     QPrinterInfo updateinfo(*printer);
-
     copycountspinbox->setValue(1);
     paperSizeCombo->setCurrentIndex(0);
     _q_pageRangeChanged(0);
@@ -780,15 +791,15 @@ void DPrintPreviewDialogPrivate::updateSetteings(int index) //刷新页面属性
         }
         paperSizeCombo->addItems(pageSizeList);
         paperSizeCombo->setCurrentText("A4");
-        qDebug() << updateinfo.supportedDuplexModes() << __func__;
+        //判断当前打印机是否支持双面打印，不支持禁用双面打印按钮，pdf不做判断
         if (updateinfo.supportedDuplexModes().contains(QPrinter::DuplexLongSide) || updateinfo.supportedDuplexModes().contains(QPrinter::DuplexShortSide)) {
             duplexSwitchBtn->setEnabled(true);
         } else {
             duplexSwitchBtn->setEnabled(false);
-        } //判断当前打印机是否支持双面打印，不支持禁用双面打印按钮，pdf不做判断
+        }
+        //判断当前打印机是否支持彩色打印，不支持彩色打印删除彩色打印选择选项，pdf不做判断
         QPlatformPrinterSupport *ps = QPlatformPrinterSupportPlugin::get();
         QPrintDevice currentDevice = ps->createPrintDevice(printDeviceCombo->currentText());
-        qDebug() << currentDevice.supportedColorModes() << __func__;
         if (!currentDevice.supportedColorModes().contains(QPrint::Color)) {
             if (colorModeCombo->count() != 1)
                 colorModeCombo->removeItem(0);
@@ -796,7 +807,7 @@ void DPrintPreviewDialogPrivate::updateSetteings(int index) //刷新页面属性
             if (colorModeCombo->count() == 1)
                 colorModeCombo->insertItem(0, q->tr("Color"));
         }
-        //判断当前打印机是否支持彩色打印，不支持彩色打印删除彩色打印选择选项，pdf不做判断
+
     } else {
         if (colorModeCombo->count() == 1)
             colorModeCombo->insertItem(0, q->tr("Color"));
@@ -816,6 +827,11 @@ void DPrintPreviewDialogPrivate::updateSetteings(int index) //刷新页面属性
     colorModeCombo->setCurrentIndex(0);
 }
 
+/*!
+ * \~chinese \brief DPrintPreviewDialogPrivate::setEnable 设置纸张范围自定义可输入状态
+ * \~chinese \param value 判断选择的范围类型
+ * \~chinese \param combox 选择的具体的combox
+ */
 void DPrintPreviewDialogPrivate::setEnable(const int &value, DComboBox *combox)
 {
     if (combox == pageRangeCombo) {
@@ -855,6 +871,10 @@ void DPrintPreviewDialogPrivate::setEnable(const int &value, DComboBox *combox)
     }
 }
 
+/*!
+ * \~chinese \brief DPrintPreviewDialogPrivate::_q_printerChanged 根据选取不同的打印设备刷新界面和属性
+ * \~chinese \param index 判断选取的打印设备
+ */
 void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
 {
     qDebug() << printDeviceCombo->itemText(index);
@@ -881,6 +901,10 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
     updateSetteings(index);
 }
 
+/*!
+ * \~chinese \brief DPrintPreviewDialogPrivate::slotPageRangeCombox 根据选取的不同纸张范围类型设置纸张范围
+ * \~chinese \param index 判断不同的范围类型
+ */
 void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
 {
     setEnable(index, pageRangeCombo);
@@ -902,6 +926,10 @@ void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
     }
 }
 
+/*!
+ * \~chinese \brief DPrintPreviewDialogPrivate::_q_pageMarginChanged 根据选择不同的设置边距类型设置边距
+ * \~chinese \param index 判断选取的不同的设置边距的类型
+ */
 void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
 {
     setEnable(index, marginsCombo);
@@ -932,6 +960,10 @@ void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
     }
 }
 
+/*!
+ * \~chinese \brief DPrintPreviewDialogPrivate::_q_startPrint 点击开始打印，设置属性
+ * \~chinese \param clicked 判断按钮点击状态
+ */
 void DPrintPreviewDialogPrivate::_q_startPrint(bool clicked)
 {
     Q_Q(DPrintPreviewDialog);
@@ -939,7 +971,7 @@ void DPrintPreviewDialogPrivate::_q_startPrint(bool clicked)
         setupPrinter();
     }
     if (printDeviceCombo->currentIndex() == printDeviceCombo->count() - 1) {
-        //----设置pdf保存文本信息，可以外部通过setDocName设置，如果不做任何操作默认保存名称print.pdf-----
+        //设置pdf保存文本信息，可以外部通过setDocName设置，如果不做任何操作默认保存名称print.pdf
         QString desktopPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
         desktopPath += QStringLiteral("/");
         if (printer == nullptr) {
@@ -954,7 +986,6 @@ void DPrintPreviewDialogPrivate::_q_startPrint(bool clicked)
         } else {
             desktopPath = printer->outputFileName();
         }
-        qDebug() << desktopPath;
         QString str = DFileDialog::getSaveFileName(q, q->tr("Save Text"), desktopPath, q->tr("Text Files (*.pdf)"));
         printer->setOutputFileName(str);
     }
