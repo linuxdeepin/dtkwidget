@@ -34,17 +34,16 @@ public:
     explicit DPrintPreviewDialog(QWidget *parent = nullptr);
     explicit DPrintPreviewDialog(DPrinter *printer, QWidget *parent = nullptr);
     ~DPrintPreviewDialog();
-public Q_SLOTS:
-    void printerChanged(int index);
-    void slotPageRangeCombox(int value);
-    void slotPageMarginCombox(int value);
-    void slotStartPrint(bool clicked);
 
 Q_SIGNALS:
     void paintRequested(DPrinter *printer);
 
 private:
     D_DECLARE_PRIVATE(DPrintPreviewDialog)
+    D_PRIVATE_SLOT(void _q_printerChanged(int))
+    D_PRIVATE_SLOT(void _q_pageRangeChanged(int))
+    D_PRIVATE_SLOT(void _q_pageMarginChanged(int))
+    D_PRIVATE_SLOT(void _q_startPrint(bool))
 };
 
 DWIDGET_END_NAMESPACE

@@ -640,12 +640,12 @@ void DPrintPreviewDialogPrivate::initconnections()
     Q_Q(DPrintPreviewDialog);
 
     QObject::connect(advanceBtn, &QPushButton::clicked, q, [this] { this->showadvancesetting(); });
-    QObject::connect(printDeviceCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(printerChanged(int)));
+    QObject::connect(printDeviceCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_printerChanged(int)));
     QObject::connect(cancelBtn, &DPushButton::clicked, q, &DPrintPreviewDialog::close);
     //    QObject::connect(advanceBtn, &QPushButton::clicked, q, &DPrintPreviewDialog::showAdvanceSetting);
-    QObject::connect(pageRangeCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(slotPageRangeCombox(int)));
-    QObject::connect(marginsCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(slotPageMarginCombox(int)));
-    QObject::connect(printBtn, &DPushButton::clicked, q, &DPrintPreviewDialog::slotStartPrint);
+    QObject::connect(pageRangeCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_pageRangeChanged(int)));
+    QObject::connect(marginsCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_pageMarginChanged(int)));
+    QObject::connect(printBtn, SIGNAL(clicked(bool)), q, SLOT(_q_startPrint(bool)));
 }
 
 void DPrintPreviewDialogPrivate::setfrmaeback(DWidget *frame)
@@ -674,7 +674,7 @@ void DPrintPreviewDialogPrivate::setupPrinter() //设置打印属性
     Q_Q(DPrintPreviewDialog);
     //--基础设置--
     printer->setNumCopies(copycountspinbox->value()); //设置打印份数
-    q->slotPageRangeCombox(pageRangeCombo->currentIndex()); //设置打印范围
+    _q_pageRangeChanged(pageRangeCombo->currentIndex()); //设置打印范围
     if (orientationgroup->checkedId() == 0)
         printer->setOrientation(QPrinter::Portrait);
     else {
@@ -722,7 +722,7 @@ void DPrintPreviewDialogPrivate::setupPrinter() //设置打印属性
     else {
         printer->setColorMode(QPrinter::GrayScale);
     } //设置色彩打印
-    q->slotPageMarginCombox(marginsCombo->currentIndex()); //设置纸张打印边距
+    _q_pageMarginChanged(marginsCombo->currentIndex()); //设置纸张打印边距
     qDebug() << printer->resolution() << __func__;
     if (scaleGroup->checkedId() == 1)
         printer->setResolution(static_cast<int>(printer->resolution() * 1.5));
@@ -767,8 +767,8 @@ void DPrintPreviewDialogPrivate::updateSetteings(int index) //刷新页面属性
 
     copycountspinbox->setValue(1);
     paperSizeCombo->setCurrentIndex(0);
-    q->slotPageRangeCombox(0);
-    q->slotPageMarginCombox(0);
+    _q_pageRangeChanged(0);
+    _q_pageMarginChanged(0);
     scaleGroup->button(1)->setChecked(true);
     orientationgroup->button(0)->setChecked(true);
     scaleRateEdit->setValue(90);
@@ -855,6 +855,114 @@ void DPrintPreviewDialogPrivate::setEnable(const int &value, DComboBox *combox)
     }
 }
 
+void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
+{
+    qDebug() << printDeviceCombo->itemText(index);
+    printer->setPrinterName(printDeviceCombo->itemText(index));
+    if (index == printDeviceCombo->count() - 1) {
+        //pdf
+        copycountspinbox->setDisabled(true);
+        copycountspinbox->setValue(1);
+        paperSizeCombo->clear();
+        duplexSwitchBtn->setChecked(false);
+        duplexSwitchBtn->setEnabled(false);
+        printer->setOutputFormat(QPrinter::PdfFormat);
+        colorModeCombo->setEnabled(false);
+    } else {
+        //actual printer
+        if (printer) {
+            copycountspinbox->setDisabled(false);
+            paperSizeCombo->clear();
+            paperSizeCombo->setEnabled(true);
+            duplexSwitchBtn->setEnabled(true);
+            colorModeCombo->setEnabled(true);
+        }
+    }
+    updateSetteings(index);
+}
+
+void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
+{
+    setEnable(index, pageRangeCombo);
+    if (index == 0) {
+        fromeSpin->setValue(1);
+        toSpin->setValue(totalPageLabel->text().toInt());
+        printer->setPrintRange(QPrinter::AllPages);
+        printer->setFromTo(1, totalPageLabel->text().toInt());
+    } else if (index == 1) {
+        fromeSpin->setValue(jumpPageEdit->value());
+        toSpin->setValue(jumpPageEdit->value());
+        printer->setPrintRange(QPrinter::CurrentPage);
+        printer->setFromTo(jumpPageEdit->value(), jumpPageEdit->value());
+    } else {
+        fromeSpin->setValue(jumpPageEdit->value());
+        toSpin->setValue(totalPageLabel->text().toInt());
+        printer->setPrintRange(QPrinter::PageRange);
+        printer->setFromTo(fromeSpin->value(), toSpin->value());
+    }
+}
+
+void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
+{
+    setEnable(index, marginsCombo);
+    if (index == 1) {
+        marginLeftSpin->setValue(NARROW_ALL);
+        marginTopSpin->setValue(NARROW_ALL);
+        marginRightSpin->setValue(NARROW_ALL);
+        marginBottomSpin->setValue(NARROW_ALL);
+        printer->setPageMargins(QMarginsF(NARROW_ALL, NARROW_ALL, NARROW_ALL, NARROW_ALL));
+    } else if (index == 2) {
+        marginLeftSpin->setValue(MODERATE_LEFT_RIGHT);
+        marginTopSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
+        marginRightSpin->setValue(MODERATE_LEFT_RIGHT);
+        marginBottomSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
+        printer->setPageMargins(QMarginsF(MODERATE_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM, MODERATE_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM));
+    } else if (index == 3) {
+        marginTopSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
+        marginLeftSpin->setValue(NORMAL_LEFT_RIGHT);
+        marginRightSpin->setValue(NORMAL_LEFT_RIGHT);
+        marginBottomSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
+        printer->setPageMargins(QMarginsF(marginLeftSpin->value(), marginTopSpin->value(), marginRightSpin->value(), marginBottomSpin->value()));
+    } else {
+        marginTopSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
+        marginLeftSpin->setValue(NORMAL_LEFT_RIGHT);
+        marginRightSpin->setValue(NORMAL_LEFT_RIGHT);
+        marginBottomSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
+        printer->setPageMargins(QMarginsF(NORMAL_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM, NORMAL_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM));
+    }
+}
+
+void DPrintPreviewDialogPrivate::_q_startPrint(bool clicked)
+{
+    Q_Q(DPrintPreviewDialog);
+    if (!clicked) {
+        setupPrinter();
+    }
+    if (printDeviceCombo->currentIndex() == printDeviceCombo->count() - 1) {
+        //----设置pdf保存文本信息，可以外部通过setDocName设置，如果不做任何操作默认保存名称print.pdf-----
+        QString desktopPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+        desktopPath += QStringLiteral("/");
+        if (printer == nullptr) {
+            return;
+        }
+        if (printer->outputFileName().isEmpty()) {
+            if (printer->docName().isEmpty())
+                desktopPath += QStringLiteral("print.pdf");
+            else {
+                desktopPath += printer->docName();
+            }
+        } else {
+            desktopPath = printer->outputFileName();
+        }
+        qDebug() << desktopPath;
+        QString str = DFileDialog::getSaveFileName(q, q->tr("Save Text"), desktopPath, q->tr("Text Files (*.pdf)"));
+        printer->setOutputFileName(str);
+    }
+    Q_EMIT q->paintRequested(printer);
+
+    q->done(0);
+}
+
 DPrintPreviewDialog::DPrintPreviewDialog(QWidget *parent)
     : DDialog(*new DPrintPreviewDialogPrivate(this), parent)
 {
@@ -878,119 +986,5 @@ DPrintPreviewDialog::~DPrintPreviewDialog()
         delete d->printer;
 }
 
-void DPrintPreviewDialog::printerChanged(int index)
-{
-    Q_D(DPrintPreviewDialog);
-    qDebug() << d->printDeviceCombo->itemText(index);
-    d->printer->setPrinterName(d->printDeviceCombo->itemText(index));
-    QPrinterInfo info(*d->printer);
-    //    qDebug() << info.supportedDuplexModes() << info.supportedPageSizes() << __func__;
-    if (index == d->printDeviceCombo->count() - 1) {
-        //pdf
-        d->copycountspinbox->setDisabled(true);
-        d->copycountspinbox->setValue(1);
-        d->paperSizeCombo->clear();
-        d->duplexSwitchBtn->setChecked(false);
-        d->duplexSwitchBtn->setEnabled(false);
-        d->printer->setOutputFormat(QPrinter::PdfFormat);
-        d->colorModeCombo->setEnabled(false);
-    } else {
-        //actual printer
-        if (d->printer) {
-            d->copycountspinbox->setDisabled(false);
-            d->paperSizeCombo->clear();
-            d->paperSizeCombo->setEnabled(true);
-            d->duplexSwitchBtn->setEnabled(true);
-            d->colorModeCombo->setEnabled(true);
-        }
-    }
-    d->updateSetteings(index);
-}
-
-void DPrintPreviewDialog::slotPageRangeCombox(int value)
-{
-    qDebug() << value;
-    Q_D(DPrintPreviewDialog);
-    d->setEnable(value, d->pageRangeCombo);
-    if (value == 0) {
-        d->fromeSpin->setValue(1);
-        d->toSpin->setValue(d->totalPageLabel->text().toInt());
-        d->printer->setPrintRange(QPrinter::AllPages);
-        d->printer->setFromTo(1, d->totalPageLabel->text().toInt());
-    } else if (value == 1) {
-        d->fromeSpin->setValue(d->jumpPageEdit->value());
-        d->toSpin->setValue(d->jumpPageEdit->value());
-        d->printer->setPrintRange(QPrinter::CurrentPage);
-        d->printer->setFromTo(d->jumpPageEdit->value(), d->jumpPageEdit->value());
-    } else {
-        d->fromeSpin->setValue(d->jumpPageEdit->value());
-        d->toSpin->setValue(d->totalPageLabel->text().toInt());
-        d->printer->setPrintRange(QPrinter::PageRange);
-        d->printer->setFromTo(d->fromeSpin->value(), d->toSpin->value());
-    }
-    qDebug() << d->jumpPageEdit->text().toInt();
-}
-
-void DPrintPreviewDialog::slotPageMarginCombox(int value) //设置纸张边距
-{
-    Q_D(DPrintPreviewDialog);
-    d->setEnable(value, d->marginsCombo);
-    if (value == 1) {
-        d->marginLeftSpin->setValue(NARROW_ALL);
-        d->marginTopSpin->setValue(NARROW_ALL);
-        d->marginRightSpin->setValue(NARROW_ALL);
-        d->marginBottomSpin->setValue(NARROW_ALL);
-        d->printer->setPageMargins(QMarginsF(NARROW_ALL, NARROW_ALL, NARROW_ALL, NARROW_ALL));
-    } else if (value == 2) {
-        d->marginLeftSpin->setValue(MODERATE_LEFT_RIGHT);
-        d->marginTopSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
-        d->marginRightSpin->setValue(MODERATE_LEFT_RIGHT);
-        d->marginBottomSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
-        d->printer->setPageMargins(QMarginsF(MODERATE_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM, MODERATE_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM));
-    } else if (value == 3) {
-        d->marginTopSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
-        d->marginLeftSpin->setValue(NORMAL_LEFT_RIGHT);
-        d->marginRightSpin->setValue(NORMAL_LEFT_RIGHT);
-        d->marginBottomSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
-        d->printer->setPageMargins(QMarginsF(d->marginLeftSpin->value(), d->marginTopSpin->value(), d->marginRightSpin->value(), d->marginBottomSpin->value()));
-    } else {
-        d->marginTopSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
-        d->marginLeftSpin->setValue(NORMAL_LEFT_RIGHT);
-        d->marginRightSpin->setValue(NORMAL_LEFT_RIGHT);
-        d->marginBottomSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
-        d->printer->setPageMargins(QMarginsF(NORMAL_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM, NORMAL_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM));
-    }
-}
-
-void DPrintPreviewDialog::slotStartPrint(bool clicked) //开始打印
-{
-    Q_D(DPrintPreviewDialog);
-    if (!clicked) {
-        d->setupPrinter();
-    }
-    if (d->printDeviceCombo->currentIndex() == d->printDeviceCombo->count() - 1) {
-        //----设置pdf保存文本信息，可以外部通过setDocName设置，如果不做任何操作默认保存名称print.pdf-----
-        QString desktopPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
-        desktopPath += QStringLiteral("/");
-        if (d->printer == nullptr) {
-            return;
-        }
-        if (d->printer->outputFileName().isEmpty()) {
-            if (d->printer->docName().isEmpty())
-                desktopPath += QStringLiteral("print.pdf");
-            else {
-                desktopPath += d->printer->docName();
-            }
-        } else {
-            desktopPath = d->printer->outputFileName();
-        }
-        qDebug() << desktopPath;
-        QString str = DFileDialog::getSaveFileName(this, tr("Save Text"), desktopPath, tr("Text Files (*.pdf)"));
-        d->printer->setOutputFileName(str);
-    }
-    Q_EMIT paintRequested(d->printer);
-
-    done(0);
-}
-
 DWIDGET_END_NAMESPACE
+#include "moc_dprintpreviewdialog.cpp"

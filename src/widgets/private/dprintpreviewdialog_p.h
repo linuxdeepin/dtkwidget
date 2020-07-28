@@ -63,6 +63,10 @@ public:
     void updateSetteings(int index);
 
     void setEnable(const int &value, DComboBox *combox); //控件可用
+    void _q_printerChanged(int index);
+    void _q_pageRangeChanged(int index);
+    void _q_pageMarginChanged(int index);
+    void _q_startPrint(bool clicked);
 
     //printer
     DPrinter *printer;
