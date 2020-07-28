@@ -15,7 +15,6 @@
 #include "dapplicationhelper.h"
 #include "dstyleoption.h"
 #include <DScrollArea>
-
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QButtonGroup>
@@ -370,21 +369,13 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     QHBoxLayout *marginsspinlayout = new QHBoxLayout;
     marginsspinlayout->setSpacing(5);
     DLabel *toplabel = new DLabel(q->tr("Top"));
-    marginTopSpin = new DSpinBox;
-    marginTopSpin->setEnabledEmbedStyle(true);
-    marginTopSpin->setMinimum(0);
+    marginTopSpin = new DDoubleSpinBox;
     DLabel *bottomlabel = new DLabel(q->tr("Bottom"));
-    marginBottomSpin = new DSpinBox;
-    marginBottomSpin->setEnabledEmbedStyle(true);
-    marginBottomSpin->setMinimum(0);
+    marginBottomSpin = new DDoubleSpinBox;
     DLabel *leftlabel = new DLabel(q->tr("Left"));
-    marginLeftSpin = new DSpinBox;
-    marginLeftSpin->setEnabledEmbedStyle(true);
-    marginLeftSpin->setMinimum(0);
+    marginLeftSpin = new DDoubleSpinBox;
     DLabel *rightlabel = new DLabel(q->tr("Right"));
-    marginRightSpin = new DSpinBox;
-    marginRightSpin->setEnabledEmbedStyle(true);
-    marginRightSpin->setMinimum(0);
+    marginRightSpin = new DDoubleSpinBox;
     marginsspinlayout->addWidget(toplabel);
     marginsspinlayout->addWidget(marginTopSpin);
     marginsspinlayout->addWidget(bottomlabel);
@@ -394,6 +385,14 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     marginsspinlayout->addWidget(rightlabel);
     marginsspinlayout->addWidget(marginRightSpin);
     marginslayout->addLayout(marginsspinlayout);
+    QList<DDoubleSpinBox *> list = marginsframe->findChildren<DDoubleSpinBox *>();
+    for (int i = 0; i < list.size(); i++) {
+        list.at(i)->setProperty("_d_dtk_spinBox", true);
+        DLineEdit *edit = list.at(i)->findChild<DLineEdit *>();
+        edit->setClearButtonEnabled(false);
+        list.at(i)->setDecimals(1);
+        list.at(i)->setMinimum(0);
+    }
 
     pagelayout->addLayout(pagestitlelayout);
     pagelayout->addWidget(colorframe);
@@ -765,16 +764,17 @@ void DPrintPreviewDialogPrivate::updateSetteings(int index) //刷新页面属性
 {
     Q_Q(DPrintPreviewDialog);
     QPrinterInfo updateinfo(*printer);
-    QStringList pageSizeList;
+
     copycountspinbox->setValue(1);
     paperSizeCombo->setCurrentIndex(0);
     q->slotPageRangeCombox(0);
     q->slotPageMarginCombox(0);
     scaleGroup->button(1)->setChecked(true);
     orientationgroup->button(0)->setChecked(true);
+    scaleRateEdit->setValue(90);
+
     if (index != printDeviceCombo->count() - 1) {
-        //        qDebug() << QPrinterInfo::availablePrinterNames() << updateinfo.supportedDuplexModes()
-        //                 << updateinfo.supportedPageSizes() << updateinfo.supportsCustomPageSizes();
+        QStringList pageSizeList;
         for (int i = 0; i < updateinfo.supportedPageSizes().size(); i++) {
             pageSizeList.append(updateinfo.supportedPageSizes().at(i).key());
         }
@@ -936,12 +936,28 @@ void DPrintPreviewDialog::slotPageMarginCombox(int value) //设置纸张边距
     Q_D(DPrintPreviewDialog);
     d->setEnable(value, d->marginsCombo);
     if (value == 1) {
+        d->marginLeftSpin->setValue(NARROW_ALL);
+        d->marginTopSpin->setValue(NARROW_ALL);
+        d->marginRightSpin->setValue(NARROW_ALL);
+        d->marginBottomSpin->setValue(NARROW_ALL);
         d->printer->setPageMargins(QMarginsF(NARROW_ALL, NARROW_ALL, NARROW_ALL, NARROW_ALL));
     } else if (value == 2) {
+        d->marginLeftSpin->setValue(MODERATE_LEFT_RIGHT);
+        d->marginTopSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
+        d->marginRightSpin->setValue(MODERATE_LEFT_RIGHT);
+        d->marginBottomSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
         d->printer->setPageMargins(QMarginsF(MODERATE_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM, MODERATE_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM));
     } else if (value == 3) {
+        d->marginTopSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
+        d->marginLeftSpin->setValue(NORMAL_LEFT_RIGHT);
+        d->marginRightSpin->setValue(NORMAL_LEFT_RIGHT);
+        d->marginBottomSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
         d->printer->setPageMargins(QMarginsF(d->marginLeftSpin->value(), d->marginTopSpin->value(), d->marginRightSpin->value(), d->marginBottomSpin->value()));
     } else {
+        d->marginTopSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
+        d->marginLeftSpin->setValue(NORMAL_LEFT_RIGHT);
+        d->marginRightSpin->setValue(NORMAL_LEFT_RIGHT);
+        d->marginBottomSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
         d->printer->setPageMargins(QMarginsF(NORMAL_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM, NORMAL_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM));
     }
 }

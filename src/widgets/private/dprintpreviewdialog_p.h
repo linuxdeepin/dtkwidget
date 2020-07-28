@@ -42,6 +42,7 @@ class DSpinBox;
 class DSwitchButton;
 class DCommandLinkButton;
 class DSuggestButton;
+class DDoubleSpinBox;
 class DPrintPreviewDialogPrivate : public DDialogPrivate
 {
 public:
@@ -92,10 +93,10 @@ public:
     QButtonGroup *orientationgroup;
     DComboBox *colorModeCombo;
     DComboBox *marginsCombo;
-    DSpinBox *marginTopSpin;
-    DSpinBox *marginBottomSpin;
-    DSpinBox *marginLeftSpin;
-    DSpinBox *marginRightSpin;
+    DDoubleSpinBox *marginTopSpin;
+    DDoubleSpinBox *marginBottomSpin;
+    DDoubleSpinBox *marginLeftSpin;
+    DDoubleSpinBox *marginRightSpin;
     QButtonGroup *scaleGroup;
     DSpinBox *scaleRateEdit;
     DComboBox *paperSizeCombo;
