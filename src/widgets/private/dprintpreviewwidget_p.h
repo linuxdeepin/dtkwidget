@@ -104,12 +104,16 @@ public:
     void generateTargetPictures();
     void fitView();
 
+    void setPageRangeAll();
+
     GraphicsView *graphicsView;
     QGraphicsScene *scene;
 
     QList<QPicture> targetPictures;
     QList<const QPicture *> pictures;
     QList<QGraphicsItem *> pages;
+    QVector<int> pageRange;
+    int currentPageNumber = 0;
 
     DPrinter *previewPrinter;
 

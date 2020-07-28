@@ -58,9 +58,17 @@ public:
     explicit DPrintPreviewWidget(DPrinter *printer, QWidget *parent = nullptr);
 
     void setVisible(bool visible) override;
+    void setPageRange(const QVector<int> &rangePages);
+    int pagesCount();
+    bool turnPageAble();
+    void showPage(int pageNumber);
 
 public Q_SLOTS:
     void updatePreview();
+    void turnFront();
+    void turnBack();
+    void turnBegin();
+    void turnEnd();
 
 Q_SIGNALS:
     void paintRequested(DPrinter *printer);
