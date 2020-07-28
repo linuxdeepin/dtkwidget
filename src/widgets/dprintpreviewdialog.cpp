@@ -1003,7 +1003,9 @@ void DPrintPreviewDialogPrivate::_q_startPrint(bool clicked)
         } else {
             desktopPath = printer->outputFileName();
         }
-        QString str = DFileDialog::getSaveFileName(q, q->tr("Save Text"), desktopPath, q->tr("Text Files (*.pdf)"));
+        QString str = DFileDialog::getSaveFileName(q, q->tr("Save as PDF"), desktopPath, q->tr("PDF file (.pdf)"));
+        if (str.isEmpty())
+            return;
         printer->setOutputFileName(str);
     }
     Q_EMIT q->paintRequested(printer);
