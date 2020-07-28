@@ -34,7 +34,7 @@ class LIBDTKWIDGETSHARED_EXPORT DSpinBox : public QSpinBox, public DTK_CORE_NAME
     Q_PROPERTY(int defaultValue READ defaultValue WRITE setDefaultValue NOTIFY defaultValueChanged)
 
 public:
-    explicit DSpinBox(QWidget *parent = 0);
+    explicit DSpinBox(QWidget *parent = nullptr);
 
     QLineEdit *lineEdit() const;
 
@@ -56,7 +56,7 @@ private:
 };
 
 class DDoubleSpinBoxPrivate;
-class DDoubleSpinBox : public QDoubleSpinBox, public DTK_CORE_NAMESPACE::DObject
+class LIBDTKWIDGETSHARED_EXPORT DDoubleSpinBox : public QDoubleSpinBox, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
 
@@ -64,10 +64,13 @@ class DDoubleSpinBox : public QDoubleSpinBox, public DTK_CORE_NAMESPACE::DObject
     Q_PROPERTY(double defaultValue READ defaultValue WRITE setDefaultValue NOTIFY defaultValueChanged)
 
 public:
-    explicit DDoubleSpinBox(QWidget *parent = 0);
+    explicit DDoubleSpinBox(QWidget *parent = nullptr);
 
     bool isAlert() const;
     D_DECL_DEPRECATED double defaultValue() const;
+
+    QLineEdit *lineEdit() const;
+    void setEnabledEmbedStyle(bool enabled);
 
 public Q_SLOTS:
     void setAlert(bool alert);

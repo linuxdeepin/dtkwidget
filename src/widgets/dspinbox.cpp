@@ -165,6 +165,7 @@ void DDoubleSpinBoxPrivate::init()
     D_Q(DDoubleSpinBox);
 
     lineEdit = new DLineEdit(q);
+    lineEdit->setClearButtonEnabled(false);
     q->setLineEdit(lineEdit->lineEdit());
     q->connect(lineEdit, &DLineEdit::alertChanged, q, &DDoubleSpinBox::alertChanged);
 }
@@ -191,6 +192,16 @@ bool DDoubleSpinBox::isAlert() const
 double DDoubleSpinBox::defaultValue() const
 {
     return 0;
+}
+
+QLineEdit *DDoubleSpinBox::lineEdit() const
+{
+    return QDoubleSpinBox::lineEdit();
+}
+
+void DDoubleSpinBox::setEnabledEmbedStyle(bool enabled)
+{
+    setProperty("_d_dtk_spinBox", enabled);
 }
 
 void DDoubleSpinBox::setAlert(bool alert)
