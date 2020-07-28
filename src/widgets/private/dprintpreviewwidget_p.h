@@ -24,12 +24,16 @@
 
 #include "dprintpreviewwidget.h"
 #include <DObjectPrivate>
+
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include <QWheelEvent>
 
 DWIDGET_BEGIN_NAMESPACE
 
 #define PREVIEW_WIDGET_MARGIN_RATIO   50
+#define PREVIEW_ENLARGE_RATIO 1.25
+#define PREVIEW_NARROW_RATIO 0.8
 
 class GraphicsView : public QGraphicsView
 {
@@ -43,11 +47,18 @@ Q_SIGNALS:
     void resized();
 
 protected:
+    void wheelEvent(QWheelEvent *e) override
+    {
+        if (0 > e->angleDelta().y()) {
+            scale(PREVIEW_NARROW_RATIO, PREVIEW_NARROW_RATIO);
+        } else {
+            scale(PREVIEW_ENLARGE_RATIO, PREVIEW_ENLARGE_RATIO);
+        }
+    }
+
     void resizeEvent(QResizeEvent *e) override
     {
-        {
-            QGraphicsView::resizeEvent(e);
-        }
+        QGraphicsView::resizeEvent(e);
         Q_EMIT resized();
     }
 
