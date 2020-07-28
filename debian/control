@@ -36,7 +36,7 @@ Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends},
  libdtkwidget5( =${binary:Version}),
  qtmultimedia5-dev, libqt5x11extras5-dev, libdtkcore-dev, libqt5svg5-dev,
- libdtkgui-dev libcups2-dev
+ libdtkgui-dev, libcups2-dev
 Description: Deepin graphical user interface library
  DtkWidget is Deepin graphical user interface for deepin desktop development.
  .
