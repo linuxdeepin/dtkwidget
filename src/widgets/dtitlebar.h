@@ -77,6 +77,7 @@ public:
     QSize minimumSizeHint() const;
 
     bool blurBackground() const;
+    void setFullScreenButtonVisible(bool enabled);
 
 Q_SIGNALS:
     void optionClicked();

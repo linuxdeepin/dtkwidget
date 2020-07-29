@@ -90,6 +90,7 @@ void drawTitleBarMinButton(QPainter *pa, const QRectF &rect);
 void drawTitleBarMaxButton(QPainter *pa, const QRectF &rect);
 void drawTitleBarCloseButton(QPainter *pa, const QRectF &rect);
 void drawTitleBarNormalButton(QPainter *pa, const QRectF &rect);
+void drawTitleQuitFullButton(QPainter *pa, const QRectF &rect);
 void drawArrowUp(QPainter *pa, const QRectF &rect);
 void drawArrowDown(QPainter *pa, const QRectF &rect);
 void drawArrowLeft(QPainter *pa, const QRectF &rect);
@@ -213,6 +214,7 @@ public:
         SP_IndicatorChecked,                        //搜索标识（对勾）
         SP_DeleteButton,                            //删除按钮
         SP_AddButton,                               //新增按钮
+        SP_TitleQuitFullButton,                     //标题栏(「」)
         SP_CustomBase = QStyle::SP_CustomBase + 0xf00000
     };
 

@@ -655,6 +655,32 @@ void drawTitleBarNormalButton(QPainter *pa, const QRectF &rect)
     pa->drawLine(content_rect.right() + 1, content_rect.y(), content_rect.right() + 1, content_rect.bottom() - 2);
 }
 
+void drawTitleQuitFullButton(QPainter *pa, const QRectF &rect)
+{
+    const QPen pen = pa->pen();
+    pa->setPen(Qt::NoPen);
+    pa->drawRect(rect);
+    QRectF content_rect(0, 0, rect.width() / 5, rect.height() / 5);
+    content_rect.moveCenter(rect.center());
+    pa->setPen(pen);
+    pa->setRenderHint(QPainter::Antialiasing, pa->device()->devicePixelRatioF() > 1.0);
+    qreal x = content_rect.x();
+    qreal y = content_rect.y();
+    qreal w = content_rect.width();
+    qreal h = content_rect.height();
+    qreal mean = w / 11;
+
+    QRectF right(x + mean * 6, y, mean * 5, mean * 5);
+    pa->drawLine(QPointF(x + mean * 7, y), QPointF(x + mean * 7, y + mean * 5));
+    pa->drawLine(QPointF(x + mean * 7, y + mean * 5), QPointF(x + w, y + mean * 5));
+    pa->drawPoint(right.center());
+
+    QRectF left(x, y + mean * 6, mean * 5, mean * 5);
+    pa->drawLine(QPointF(x, y + mean * 7), QPointF(x + mean * 5, y + mean * 7));
+    pa->drawLine(QPointF(x + mean * 5, y + mean * 7), QPointF(x + mean * 5, y + h));
+    pa->drawPoint(left.center());
+}
+
 void drawArrowUp(QPainter *pa, const QRectF &rect)
 {
     QRectF ar(0, 0, rect.width(), rect.height() / 2);
@@ -1947,6 +1973,7 @@ QIcon DStyle::standardIcon(QStyle::StandardPixmap st, const QStyleOption *opt, c
         CASE_ICON(TitleBarMaxButton)
         CASE_ICON(TitleBarCloseButton)
         CASE_ICON(TitleBarNormalButton)
+        CASE_ICON(TitleQuitFullButton)
     case SP_LineEditClearButton:
         return QIcon::fromTheme("button_edit-clear");
         break;

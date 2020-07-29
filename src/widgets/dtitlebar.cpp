@@ -31,6 +31,7 @@
 #include "dwindowmaxbutton.h"
 #include "dwindowminbutton.h"
 #include "dwindowoptionbutton.h"
+#include "dwindowquitfullbutton.h"
 #include "dplatformwindowhandle.h"
 #include "daboutdialog.h"
 #include "dapplication.h"
@@ -97,7 +98,7 @@ private:
     DWindowMaxButton    *maxButton;
     DWindowCloseButton  *closeButton;
     DWindowOptionButton *optionButton;
-    DImageButton        *quitFullButton;
+    DWindowQuitFullButton *quitFullButton;
     DLabel              *titleLabel;
     QWidget             *customWidget = nullptr;
 
@@ -125,6 +126,7 @@ private:
     bool                mousePressed    = false;
     bool                embedMode       = false;
     bool                autoHideOnFullscreen = false;
+    bool                fullScreenButtonVisible = true;
 
     Q_DECLARE_PUBLIC(DTitlebar)
 };
@@ -150,7 +152,7 @@ void DTitlebarPrivate::init()
     maxButton       = new DWindowMaxButton;
     closeButton     = new DWindowCloseButton;
     optionButton    = new DWindowOptionButton;
-    quitFullButton  = new DImageButton;
+    quitFullButton  = new DWindowQuitFullButton;
     separatorTop    = new DHorizontalLine(q);
     separator       = new DHorizontalLine(q);
     titleLabel      = centerArea;
@@ -171,6 +173,7 @@ void DTitlebarPrivate::init()
     closeButton->setObjectName("DTitlebarDWindowCloseButton");
     closeButton->setIconSize(QSize(DefaultTitlebarHeight, DefaultTitlebarHeight));
     quitFullButton->setObjectName("DTitlebarDWindowQuitFullscreenButton");
+    quitFullButton->setIconSize(QSize(DefaultTitlebarHeight, DefaultTitlebarHeight));
     quitFullButton->hide();
 
     iconLabel->setIconSize(QSize(DefaultIconWidth, DefaultIconHeight));
@@ -200,8 +203,8 @@ void DTitlebarPrivate::init()
     buttonLayout->addWidget(optionButton);
     buttonLayout->addWidget(minButton);
     buttonLayout->addWidget(maxButton);
-    buttonLayout->addWidget(closeButton);
     buttonLayout->addWidget(quitFullButton);
+    buttonLayout->addWidget(closeButton);
 
     rightArea->setWindowFlag(Qt::WindowTransparentForInput);
     rightArea->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
@@ -229,7 +232,7 @@ void DTitlebarPrivate::init()
     q->setFixedHeight(DefaultTitlebarHeight);
     q->setMinimumHeight(DefaultTitlebarHeight);
 
-    q->connect(quitFullButton, &DImageButton::clicked, q, [ = ]() {
+    q->connect(quitFullButton, &DWindowQuitFullButton::clicked, q, [ = ]() {
         bool isFullscreen = targetWindow()->windowState().testFlag(Qt::WindowFullScreen);
         if (isFullscreen) {
             targetWindow()->showNormal();
@@ -340,15 +343,16 @@ void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
     }
 
     bool showMax = (type.testFlag(Qt::WindowMaximizeButtonHint) || forceShow) && !forceHide && allowResize;
+    bool showClose = type.testFlag(Qt::WindowCloseButtonHint) && useDXcb;
+    bool showQuit = isFullscreen && useDXcb && fullScreenButtonVisible;
 //    qDebug() << "max:"
 //             << "allowResize" << allowResize
 //             << "useDXcb" << useDXcb
 //             << "forceHide" << forceHide
 //             << "type.testFlag(Qt::WindowMaximizeButtonHint)" << type.testFlag(Qt::WindowMaximizeButtonHint);
     maxButton->setVisible(showMax);
-
-    bool showClose = (type.testFlag(Qt::WindowCloseButtonHint) || forceShow) && !forceHide;
     closeButton->setVisible(showClose);
+    quitFullButton->setVisible(showQuit);
 }
 
 void DTitlebarPrivate::updateButtonsFunc()
@@ -1367,6 +1371,12 @@ bool DTitlebar::blurBackground() const
 {
     D_DC(DTitlebar);
     return d->blurWidget;
+}
+
+void DTitlebar::setFullScreenButtonVisible(bool visible)
+{
+    D_D(DTitlebar);
+    d->fullScreenButtonVisible = visible;
 }
 
 void DTitlebar::mouseMoveEvent(QMouseEvent *event)
