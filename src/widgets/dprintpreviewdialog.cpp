@@ -135,6 +135,12 @@ void DPrintPreviewDialogPrivate::initleft(QVBoxLayout *layout)
 
     Q_Q(DPrintPreviewDialog);
     QObject::connect(pview, &DPrintPreviewWidget::paintRequested, q, &DPrintPreviewDialog::paintRequested);
+    QObject::connect(firstBtn, &DIconButton::clicked, pview, &DPrintPreviewWidget::turnBegin);
+    QObject::connect(prevPageBtn, &DIconButton::clicked, pview, &DPrintPreviewWidget::turnFront);
+    QObject::connect(nextPageBtn, &DIconButton::clicked, pview, &DPrintPreviewWidget::turnBack);
+    QObject::connect(lastBtn, &DIconButton::clicked, pview, &DPrintPreviewWidget::turnEnd);
+    QObject::connect(pview, &DPrintPreviewWidget::currentPageChanged, jumpPageEdit, &QSpinBox::setValue);
+    QObject::connect(jumpPageEdit, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), pview, &DPrintPreviewWidget::setCurrentPage);
 }
 
 void DPrintPreviewDialogPrivate::initright(QVBoxLayout *layout)

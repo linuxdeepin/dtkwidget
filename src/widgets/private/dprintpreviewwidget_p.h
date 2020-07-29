@@ -118,6 +118,7 @@ public:
     QImage imageGrayscale(const QImage *origin);
 
     void setPageRangeAll();
+    void setCurrentPage(int page);
 
     GraphicsView *graphicsView;
     QGraphicsScene *scene;

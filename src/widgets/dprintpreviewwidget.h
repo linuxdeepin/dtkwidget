@@ -70,10 +70,12 @@ public Q_SLOTS:
     void turnBack();
     void turnBegin();
     void turnEnd();
+    void setCurrentPage(int page);
 
 Q_SIGNALS:
     void paintRequested(DPrinter *printer);
     void previewChanged();
+    void currentPageChanged(int page);
 
 private:
     D_DECLARE_PRIVATE(DPrintPreviewWidget)

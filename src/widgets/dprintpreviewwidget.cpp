@@ -44,10 +44,14 @@ void DPrintPreviewWidgetPrivate::populateScene()
     int page = 1;
     for (int i = 0; i < targetPictures.size(); i++) {
         PageItem *item = new PageItem(page++, &targetPictures[i], paperSize, pageRect);
+        item->setVisible(false);
         scene->addItem(item);
         pages.append(item);
     }
-    currentPageNumber = 1;
+    if (!pages.isEmpty()) {
+        currentPageNumber = 1;
+        pages.at(0)->setVisible(true);
+    }
     setPageRangeAll();
 }
 
@@ -94,6 +98,20 @@ void DPrintPreviewWidgetPrivate::setPageRangeAll()
     int size = pages.size();
     for (int i = 1; i <= size; i++) {
         pageRange.append(i);
+    }
+}
+
+void DPrintPreviewWidgetPrivate::setCurrentPage(int page)
+{
+    if (page < 1 || page > pages.count())
+        return;
+
+    int lastPage = currentPageNumber;
+    currentPageNumber = page;
+
+    if (lastPage != currentPageNumber && lastPage > 0 && lastPage <= pages.count()) {
+        pages.at(lastPage - 1)->setVisible(false);
+        pages.at(currentPageNumber - 1)->setVisible(true);
     }
 }
 
@@ -176,15 +194,6 @@ bool DPrintPreviewWidget::turnPageAble()
     return d->pages.size() > 1;
 }
 
-void DPrintPreviewWidget::showPage(int pageNumber)
-{
-    Q_D(DPrintPreviewWidget);
-    if (pageNumber < 1 || pageNumber > d->pages.size())
-        return;
-    d->currentPageNumber = pageNumber;
-    d->pages[pageNumber - 1]->setVisible(true);
-}
-
 void DPrintPreviewWidget::setColorMode(const QPrinter::ColorMode &colorMode)
 {
     Q_D(DPrintPreviewWidget);
@@ -205,7 +214,7 @@ void DPrintPreviewWidget::turnFront()
     Q_D(DPrintPreviewWidget);
     if (d->currentPageNumber < 2)
         return;
-    showPage(d->currentPageNumber - 1);
+    setCurrentPage(d->currentPageNumber - 1);
 }
 
 void DPrintPreviewWidget::turnBack()
@@ -213,7 +222,7 @@ void DPrintPreviewWidget::turnBack()
     Q_D(DPrintPreviewWidget);
     if (d->currentPageNumber >= d->pages.size())
         return;
-    showPage(d->currentPageNumber + 1);
+    setCurrentPage(d->currentPageNumber + 1);
 }
 
 void DPrintPreviewWidget::turnBegin()
@@ -221,7 +230,7 @@ void DPrintPreviewWidget::turnBegin()
     Q_D(DPrintPreviewWidget);
     if (d->pageRange.isEmpty())
         return;
-    showPage(1);
+    setCurrentPage(1);
 }
 
 void DPrintPreviewWidget::turnEnd()
@@ -229,7 +238,16 @@ void DPrintPreviewWidget::turnEnd()
     Q_D(DPrintPreviewWidget);
     if (d->pageRange.isEmpty())
         return;
-    showPage(d->pages.size());
+    setCurrentPage(d->pages.size());
+}
+
+void DPrintPreviewWidget::setCurrentPage(int page)
+{
+    Q_D(DPrintPreviewWidget);
+    if (page == d->currentPageNumber)
+        return;
+    d->setCurrentPage(page);
+    Q_EMIT currentPageChanged(page);
 }
 
 DPrinter::DPrinter(QPrinter::PrinterMode mode)
