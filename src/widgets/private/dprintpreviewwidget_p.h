@@ -114,6 +114,8 @@ public:
     void generatePreview();
     void generateTargetPictures();
     void fitView();
+    void grayscalePaint(const QPicture &picture, QPicture &target);
+    QImage imageGrayscale(const QImage *origin);
 
     void setPageRangeAll();
 
@@ -125,6 +127,7 @@ public:
     QList<QGraphicsItem *> pages;
     QVector<int> pageRange;
     int currentPageNumber = 0;
+    DPrinter::ColorMode colorMode;
 
     DPrinter *previewPrinter;
 

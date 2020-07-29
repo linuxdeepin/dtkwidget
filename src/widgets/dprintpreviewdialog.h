@@ -35,6 +35,8 @@ public:
     explicit DPrintPreviewDialog(DPrinter *printer, QWidget *parent = nullptr);
     ~DPrintPreviewDialog();
 
+
+
 Q_SIGNALS:
     void paintRequested(DPrinter *printer);
 
@@ -43,6 +45,7 @@ private:
     D_PRIVATE_SLOT(void _q_printerChanged(int))
     D_PRIVATE_SLOT(void _q_pageRangeChanged(int))
     D_PRIVATE_SLOT(void _q_pageMarginChanged(int))
+    D_PRIVATE_SLOT(void _q_ColorModeChange(int))
     D_PRIVATE_SLOT(void _q_startPrint(bool))
 };
 

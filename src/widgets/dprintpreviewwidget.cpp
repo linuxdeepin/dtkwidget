@@ -27,6 +27,8 @@ void DPrintPreviewWidgetPrivate::init()
     QVBoxLayout *layout = new QVBoxLayout(q);
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(graphicsView);
+
+    colorMode = previewPrinter->colorMode();
 }
 
 void DPrintPreviewWidgetPrivate::populateScene()
@@ -73,6 +75,10 @@ void DPrintPreviewWidgetPrivate::generateTargetPictures()
         painter.drawPicture(0, 0, *picture);
         //todo scale,black and white,watermarking,……
         painter.end();
+
+        // 图像灰度处理
+        grayscalePaint(*picture, target);
+
         targetPictures.append(target);
     }
 }
@@ -89,6 +95,50 @@ void DPrintPreviewWidgetPrivate::setPageRangeAll()
     for (int i = 1; i <= size; i++) {
         pageRange.append(i);
     }
+}
+
+void DPrintPreviewWidgetPrivate::grayscalePaint(const QPicture &picture, QPicture &target)
+{
+    if (colorMode == DPrinter::Color)
+        return;
+
+    QImage image(previewPrinter->pageLayout().fullRectPixels(previewPrinter->resolution()).size(), QImage::Format_Grayscale8);
+    QPainter imageP;
+
+    image.fill(Qt::transparent);
+    imageP.begin(&image);
+    imageP.drawPicture(0, 0, picture);
+    imageP.end();
+
+    image = imageGrayscale(&image);
+
+    QPicture temp;
+    QPainter tempP;
+
+    tempP.begin(&temp);
+    tempP.drawImage(previewPrinter->pageLayout().fullRectPixels(previewPrinter->resolution()), image);
+    tempP.end();
+
+    target = temp;
+}
+
+QImage DPrintPreviewWidgetPrivate::imageGrayscale(const QImage *origin)
+{
+    QImage newImage = QImage(origin->width(), origin->height(), QImage::Format_ARGB32);
+    QColor newColor;
+
+    for (int x = 0; x < newImage.width(); ++x) {
+        for (int y = 0; y < newImage.height(); ++y) {
+            newColor = QColor(origin->pixel(x,y));
+
+            if (newColor == QColor(0, 0, 0, 255))
+                newColor = QColor(255, 255, 255, 0);
+
+            newImage.setPixel(x, y, newColor.rgba());
+        }
+    }
+
+    return newImage;
 }
 
 DPrintPreviewWidget::DPrintPreviewWidget(DPrinter *printer, QWidget *parent)
@@ -133,6 +183,14 @@ void DPrintPreviewWidget::showPage(int pageNumber)
         return;
     d->currentPageNumber = pageNumber;
     d->pages[pageNumber - 1]->setVisible(true);
+}
+
+void DPrintPreviewWidget::setColorMode(const QPrinter::ColorMode &colorMode)
+{
+    Q_D(DPrintPreviewWidget);
+
+    d->colorMode = colorMode;
+    d->generatePreview();
 }
 
 void DPrintPreviewWidget::updatePreview()

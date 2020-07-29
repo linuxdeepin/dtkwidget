@@ -646,6 +646,7 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(pageRangeCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_pageRangeChanged(int)));
     QObject::connect(marginsCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_pageMarginChanged(int)));
     QObject::connect(printBtn, SIGNAL(clicked(bool)), q, SLOT(_q_startPrint(bool)));
+    QObject::connect(colorModeCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_ColorModeChange(int)));
 }
 
 void DPrintPreviewDialogPrivate::setfrmaeback(DWidget *frame)
@@ -957,6 +958,22 @@ void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
         marginRightSpin->setValue(NORMAL_LEFT_RIGHT);
         marginBottomSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
         printer->setPageMargins(QMarginsF(NORMAL_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM, NORMAL_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM));
+    }
+}
+
+/*!
+ * \~chinese \brief DPrintPreviewDialogPrivate::_q_ColorModeChange 根据色彩选项，调整预览图中的色彩为黑白或者彩色
+ * \~chinese \param clicked 判断按钮点击状态
+ */
+void DPrintPreviewDialogPrivate::_q_ColorModeChange(int index)
+{
+    setEnable(index, colorModeCombo);
+    if (index == 0) {
+        // color
+        pview->setColorMode(DPrinter::Color);
+    } else {
+        // gray
+        pview->setColorMode(DPrinter::GrayScale);
     }
 }
 
