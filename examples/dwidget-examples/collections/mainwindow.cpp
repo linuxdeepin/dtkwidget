@@ -78,11 +78,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(enableButtons, &QPushButton::clicked, [ = ] {
         titlebar()->setDisableFlags(Qt::Widget);
     });
-    connect(disableButtons, &QPushButton::clicked, [ = ] {
+    connect(disableButtons, &QPushButton::clicked, [=] {
         titlebar()->setDisableFlags(Qt::WindowMinimizeButtonHint
-        | Qt::WindowCloseButtonHint
-        | Qt::WindowMaximizeButtonHint
-        | Qt::WindowSystemMenuHint);
+                                    | Qt::WindowCloseButtonHint
+                                    | Qt::WindowMaximizeButtonHint
+                                    | Qt::WindowSystemMenuHint);
     });
     connect(fullscreenButtons, &QPushButton::clicked, [ = ] {
         if (!isFullScreen())
@@ -150,15 +150,42 @@ MainWindow::MainWindow(QWidget *parent)
         DPrintPreviewDialog dialog(this);
         connect(&dialog, &DPrintPreviewDialog::paintRequested,
                 this, [=](DPrinter *_printer) {
-                    _printer->setFromTo(1, 1);
+                    // 此函数内代码为调试打印内容代码，调整较随意！
+                    _printer->setFromTo(1, 10);
                     QPainter painter(_printer);
-                    double xscale = _printer->pageRect().width() / double(this->width());
-                    double yscale = _printer->pageRect().height() / double(this->height());
-                    double scale = qMin(xscale, yscale);
-                    painter.translate(_printer->paperRect().center());
-                    painter.scale(scale, scale);
-                    painter.translate(-this->width() / 2, -this->height() / 2);
-                    this->render(&painter);
+                    bool firstPage = true;
+                    for (int page = _printer->fromPage(); page <= _printer->toPage(); ++page) {
+                        painter.resetTransform();
+                        if (!firstPage)
+                            _printer->newPage();
+                        qApp->processEvents();
+
+                        // 给出调用方widget界面作为打印内容
+                        double xscale = _printer->pageRect().width() / double(this->width());
+                        double yscale = _printer->pageRect().height() / double(this->height());
+                        double scale = qMin(xscale, yscale);
+                        painter.translate(_printer->pageRect().width() / 2.0, _printer->pageRect().height() / 2.0);
+                        painter.scale(scale, scale);
+                        painter.translate(-this->width() / 2, -this->height() / 2);
+                        this->render(&painter);
+
+                        painter.resetTransform();
+                        QFont font /*("CESI仿宋-GB2312")*/;
+                        font.setPixelSize(16);
+                        font = QFont(font, painter.device());
+                        QRectF rect = _printer->pageRect();
+                        rect = QRectF(0, 0, rect.width(), rect.height());
+                        painter.setFont(font);
+                        // 画可用页面矩形,提供调试效果参考
+                        painter.drawRect(rect);
+                        QFontMetricsF fontMetrics(font);
+                        QString text = QString("统信软件 第%1页").arg(page);
+                        QRectF stringRect = fontMetrics.boundingRect(text);
+                        //添加页脚页面信息
+                        painter.drawText(QPointF(rect.bottomRight().x() - stringRect.width(), rect.bottomRight().y() - stringRect.height()),
+                                         QString("统信软件 第%1页").arg(page));
+                        firstPage = false;
+                    }
                 });
         dialog.exec();
     });
@@ -229,8 +256,8 @@ void MainWindow::menuItemInvoked(QAction *action)
         encoding->setValue(0);
 
         DSettingsDialog dsd(this);
-        dsd.widgetFactory()->registerWidget("custom-button", [] (QObject *obj) -> QWidget* {
-            if (DSettingsOption *option = qobject_cast<DSettingsOption*>(obj)) {
+        dsd.widgetFactory()->registerWidget("custom-button", [](QObject *obj) -> QWidget * {
+            if (DSettingsOption *option = qobject_cast<DSettingsOption *>(obj)) {
                 qDebug() << "create custom button:" << option->value();
                 QPushButton *button = new QPushButton(option->value().toString());
                 return button;
