@@ -238,6 +238,7 @@ void DPrintPreviewDialogPrivate::initbasicui()
     pageFrame->setFixedSize(422, 94);
     setfrmaeback(pageFrame);
     QVBoxLayout *pagelayout = new QVBoxLayout(pageFrame);
+    pagelayout->setContentsMargins(10, 0, 10, 0);
     DLabel *pagerangelabel = new DLabel(q->tr("Page range"), pageFrame);
     pageRangeCombo = new DComboBox(pageFrame);
     pageRangeCombo->setFixedSize(275, 36);
@@ -354,9 +355,8 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     setfrmaeback(marginsframe);
     marginsframe->setFixedHeight(102);
     QVBoxLayout *marginslayout = new QVBoxLayout(marginsframe);
-    marginslayout->setSpacing(10);
+    marginslayout->setContentsMargins(10, 0, 10, 0);
     QHBoxLayout *marginscombolayout = new QHBoxLayout;
-    marginscombolayout->setContentsMargins(0, 0, 0, 0);
     DLabel *marginlabel = new DLabel(q->tr("Margins"));
     marginlabel->setFixedWidth(123);
     marginsCombo = new DComboBox;
@@ -432,7 +432,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     DWidget *customscalewdg = new DWidget;
     customscalewdg->setFixedHeight(48);
     QHBoxLayout *customlayout = new QHBoxLayout(customscalewdg);
-    colorlayout->setContentsMargins(10, 1, 10, 1);
+    customlayout->setContentsMargins(10, 0, 10, 0);
     DRadioButton *customSizeRadio = new DRadioButton(q->tr("Scale"));
     scaleGroup->addButton(customSizeRadio, 3);
     scaleRateEdit = new DSpinBox;
