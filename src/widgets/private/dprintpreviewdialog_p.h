@@ -47,7 +47,7 @@ class DPrintPreviewDialogPrivate : public DDialogPrivate
 {
 public:
     explicit DPrintPreviewDialogPrivate(DPrintPreviewDialog *qq);
-    void startup(DPrinter *printer = nullptr);
+    void startup();
     void initui();
     void initleft(QVBoxLayout *layout);
     void initright(QVBoxLayout *layout);
@@ -71,7 +71,6 @@ public:
 
     //printer
     DPrinter *printer;
-    bool ownPrinter;
     QPrintDevice m_currentPrintDevice;
 
     //control

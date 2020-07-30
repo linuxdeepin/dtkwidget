@@ -32,7 +32,6 @@ class DPrintPreviewDialog : public DDialog
     Q_OBJECT
 public:
     explicit DPrintPreviewDialog(QWidget *parent = nullptr);
-    explicit DPrintPreviewDialog(DPrinter *printer, QWidget *parent = nullptr);
     ~DPrintPreviewDialog();
 
 
