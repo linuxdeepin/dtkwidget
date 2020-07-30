@@ -25,12 +25,10 @@
 #include "dheaderline.h"
 #include "dbaseline.h"
 #include "dbaseexpand.h"
-#include <DArrowLineExpand>
 #include "dswitchlineexpand.h"
 #include "ddrawer.h"
 #include "darrowlinedrawer.h"
 #include "ddrawergroup.h"
-#include <DExpandGroup>
 
 DWIDGET_USE_NAMESPACE
 

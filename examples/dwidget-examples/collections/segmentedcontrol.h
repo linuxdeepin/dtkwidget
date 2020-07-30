@@ -19,7 +19,7 @@
 #define SEGMENTEDCONTROL_H
 
 #include <QFrame>
-#include "dsegmentedcontrol.h"
+#include <QVBoxLayout>
 #include "dbuttonbox.h"
 #include "dtkwidget_global.h"
 

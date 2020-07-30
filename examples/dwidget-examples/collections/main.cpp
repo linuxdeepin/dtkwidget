@@ -34,9 +34,6 @@ int main(int argc, char *argv[])
 #if defined(DTK_STATIC_LIB)
     DWIDGET_INIT_RESOURCE();
 #endif
-
-    DApplication::loadDXcbPlugin();
-
     DApplication a(argc, argv);
     qDebug() <<  a.arguments();
     DApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
