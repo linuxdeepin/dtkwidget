@@ -5,7 +5,7 @@ QT += dtkcore
 CONFIG += internal_module
 CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT
 
-QT += network concurrent multimedia multimediawidgets dtkgui
+QT += network concurrent multimedia dtkgui
 greaterThan(QT_MAJOR_VERSION, 4) {
   QT += widgets widgets-private
   # Qt >= 5.8
@@ -42,7 +42,7 @@ win* {
 
 !isEmpty(DTK_NO_MULTIMEDIA){
     DEFINES += DTK_NO_MULTIMEDIA
-    QT -= multimedia multimediawidgets
+    QT -= multimedia
 }
 
 !isEmpty(DTK_STATIC_LIB){

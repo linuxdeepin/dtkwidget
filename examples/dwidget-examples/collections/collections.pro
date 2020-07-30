@@ -1,4 +1,4 @@
-QT += core gui multimedia multimediawidgets svg
+QT += core gui svg
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 QT += dtkcore dtkgui
 linux* {
@@ -16,17 +16,17 @@ unix {
     QT += dbus
 }
 
-!isEmpty(DTK_NO_MULTIMEDIA){
+#!isEmpty(DTK_NO_MULTIMEDIA){
     DEFINES += DTK_NO_MULTIMEDIA
-    QT -= multimedia multimediawidgets
-} else {
-    HEADERS  += \
-        cameraform.h
-    SOURCES += \
-        cameraform.cpp
-    FORMS += \
-        cameraform.ui
-}
+#    QT -= multimedia
+#} else {
+#    HEADERS  += \
+#        cameraform.h
+#    SOURCES += \
+#        cameraform.cpp
+#    FORMS += \
+#        cameraform.ui
+#}
 
 !isEmpty(DTK_STATIC_LIB){
     DEFINES += DTK_STATIC_LIB
