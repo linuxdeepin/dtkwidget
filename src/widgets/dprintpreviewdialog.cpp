@@ -969,7 +969,7 @@ void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
 
 /*!
  * \~chinese \brief DPrintPreviewDialogPrivate::_q_ColorModeChange 根据色彩选项，调整预览图中的色彩为黑白或者彩色
- * \~chinese \param clicked 判断按钮点击状态
+ * \~chinese \param index 当前选择彩色预览还是黑白预览
  */
 void DPrintPreviewDialogPrivate::_q_ColorModeChange(int index)
 {

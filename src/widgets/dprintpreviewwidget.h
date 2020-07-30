@@ -63,6 +63,7 @@ public:
     bool turnPageAble();
     void showPage(int pageNumber);
     void setColorMode(const DPrinter::ColorMode &colorMode);
+    DPrinter::ColorMode getColorMode();
 
 public Q_SLOTS:
     void updatePreview();

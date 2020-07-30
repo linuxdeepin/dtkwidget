@@ -80,9 +80,6 @@ void DPrintPreviewWidgetPrivate::generateTargetPictures()
         //todo scale,black and white,watermarking,……
         painter.end();
 
-        // 图像灰度处理
-        grayscalePaint(*picture, target);
-
         targetPictures.append(target);
     }
 }
@@ -115,12 +112,9 @@ void DPrintPreviewWidgetPrivate::setCurrentPage(int page)
     }
 }
 
-void DPrintPreviewWidgetPrivate::grayscalePaint(const QPicture &picture, QPicture &target)
+QPicture PageItem::grayscalePaint(const QPicture &picture)
 {
-    if (colorMode == DPrinter::Color)
-        return;
-
-    QImage image(previewPrinter->pageLayout().fullRectPixels(previewPrinter->resolution()).size(), QImage::Format_Grayscale8);
+    QImage image(paperSize, QImage::Format_ARGB32);
     QPainter imageP;
 
     image.fill(Qt::transparent);
@@ -134,29 +128,28 @@ void DPrintPreviewWidgetPrivate::grayscalePaint(const QPicture &picture, QPictur
     QPainter tempP;
 
     tempP.begin(&temp);
-    tempP.drawImage(previewPrinter->pageLayout().fullRectPixels(previewPrinter->resolution()), image);
+    tempP.drawImage(0, 0, image);
     tempP.end();
 
-    target = temp;
+    return temp;
 }
 
-QImage DPrintPreviewWidgetPrivate::imageGrayscale(const QImage *origin)
+QImage PageItem::imageGrayscale(const QImage *origin)
 {
-    QImage newImage = QImage(origin->width(), origin->height(), QImage::Format_ARGB32);
-    QColor newColor;
+    int w = origin->width();
+    int h = origin->height();
+    QImage iGray(w, h, QImage::Format_ARGB32);
 
-    for (int x = 0; x < newImage.width(); ++x) {
-        for (int y = 0; y < newImage.height(); ++y) {
-            newColor = QColor(origin->pixel(x,y));
-
-            if (newColor == QColor(0, 0, 0, 255))
-                newColor = QColor(255, 255, 255, 0);
-
-            newImage.setPixel(x, y, newColor.rgba());
+    for (int i = 0; i < w; i++) {
+        for (int j = 0; j < h; j++) {
+            QRgb pixel = origin->pixel(i, j);
+            int gray = qGray(pixel);
+            QColor color(gray, gray, gray, qAlpha(pixel));
+            iGray.setPixel(i, j, color.rgba());
         }
     }
 
-    return newImage;
+    return iGray;
 }
 
 DPrintPreviewWidget::DPrintPreviewWidget(DPrinter *printer, QWidget *parent)
@@ -199,7 +192,13 @@ void DPrintPreviewWidget::setColorMode(const QPrinter::ColorMode &colorMode)
     Q_D(DPrintPreviewWidget);
 
     d->colorMode = colorMode;
-    d->generatePreview();
+    d->pages.at(d->currentPageNumber - 1)->update();
+}
+
+DPrinter::ColorMode DPrintPreviewWidget::getColorMode()
+{
+    Q_D(DPrintPreviewWidget);
+    return d->colorMode;
 }
 
 void DPrintPreviewWidget::updatePreview()
@@ -276,7 +275,15 @@ void PageItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     if (!pagePicture)
         return;
 
-    painter->drawPicture(pageRect.topLeft(), *pagePicture);
+    DPrintPreviewWidget *pwidget = qobject_cast<DPrintPreviewWidget *>(scene()->parent()->parent());
+
+    if (pwidget && (pwidget->getColorMode() == QPrinter::GrayScale)) {
+        // 图像灰度处理
+        grayPagePictrue = new QPicture(grayscalePaint(*pagePicture));
+        painter->drawPicture(pageRect.topLeft(), *grayPagePictrue);
+    } else if (pwidget && (pwidget->getColorMode() == QPrinter::Color)) {
+        painter->drawPicture(pageRect.topLeft(), *pagePicture);
+    }
 
     painter->setPen(QPen(Qt::black, 0));
     painter->setBrush(Qt::NoBrush);

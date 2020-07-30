@@ -96,9 +96,14 @@ public:
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) override;
 
+protected:
+    QPicture grayscalePaint(const QPicture &picture);
+    QImage imageGrayscale(const QImage *origin);
+
 private:
     int pageNum;
     const QPicture *pagePicture;
+    const QPicture *grayPagePictrue;
     QSize paperSize;
     QRect pageRect;
     QRectF brect;
@@ -114,8 +119,6 @@ public:
     void generatePreview();
     void generateTargetPictures();
     void fitView();
-    void grayscalePaint(const QPicture &picture, QPicture &target);
-    QImage imageGrayscale(const QImage *origin);
 
     void setPageRangeAll();
     void setCurrentPage(int page);
