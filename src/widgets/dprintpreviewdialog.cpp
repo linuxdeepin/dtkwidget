@@ -159,6 +159,7 @@ void DPrintPreviewDialogPrivate::initright(QVBoxLayout *layout)
     advanceBtn = new DPushButton(q->tr("Advanced"));
     advanceBtn->setLayoutDirection(Qt::RightToLeft);
     advanceBtn->setIcon(QIcon::fromTheme("printer_dropdown"));
+    advanceBtn->setIconSize(QSize(9, 10));
     DPalette pa = advanceBtn->palette();
     pa.setColor(DPalette::ButtonText, pa.link().color());
     advanceBtn->setPalette(pa);
@@ -239,7 +240,7 @@ void DPrintPreviewDialogPrivate::initbasicui()
     pageFrame->setFixedSize(422, 94);
     setfrmaeback(pageFrame);
     QVBoxLayout *pagelayout = new QVBoxLayout(pageFrame);
-    pagelayout->setContentsMargins(10, 0, 10, 0);
+    pagelayout->setContentsMargins(10, 5, 10, 5);
     DLabel *pagerangelabel = new DLabel(q->tr("Page range"), pageFrame);
     pageRangeCombo = new DComboBox(pageFrame);
     pageRangeCombo->setFixedSize(275, 36);
@@ -250,27 +251,9 @@ void DPrintPreviewDialogPrivate::initbasicui()
     hrangebox->addWidget(pagerangelabel);
     hrangebox->addWidget(pageRangeCombo);
 
-    fromLabel = new DLabel(q->tr("From"), pageFrame);
-    fromeSpin = new DSpinBox(pageFrame);
-
-    toLabel = new DLabel(q->tr("To"), pageFrame);
-    toSpin = new DSpinBox(pageFrame);
-    fromeSpin->setRange(1, totalPageLabel->text().toInt());
-    toSpin->setRange(1, totalPageLabel->text().toInt());
-    fromeSpin->setEnabledEmbedStyle(true);
-    toSpin->setEnabledEmbedStyle(true);
-    QHBoxLayout *hfromtolayout = new QHBoxLayout();
-    fromLabel->setFixedWidth(40);
-    fromeSpin->setFixedWidth(95);
-    toLabel->setFixedWidth(30);
-    toSpin->setFixedWidth(95);
-    hfromtolayout->addStretch();
-    hfromtolayout->addWidget(fromLabel);
-    hfromtolayout->addWidget(fromeSpin);
-    hfromtolayout->addWidget(toLabel);
-    hfromtolayout->addWidget(toSpin);
+    pageRangeEdit = new DLineEdit;
     pagelayout->addLayout(hrangebox);
-    pagelayout->addLayout(hfromtolayout);
+    pagelayout->addWidget(pageRangeEdit);
 
     //打印方向
     DLabel *orientationLabel = new DLabel(q->tr("Orientation"), basicsettingwdg);
@@ -354,45 +337,56 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     DFrame *marginsframe = new DFrame;
     marginsframe->setObjectName("marginsFrame");
     setfrmaeback(marginsframe);
-    marginsframe->setFixedHeight(102);
-    QVBoxLayout *marginslayout = new QVBoxLayout(marginsframe);
-    marginslayout->setContentsMargins(10, 0, 10, 0);
-    QHBoxLayout *marginscombolayout = new QHBoxLayout;
+    QHBoxLayout *marginslayout = new QHBoxLayout(marginsframe);
+    marginslayout->setContentsMargins(10, 5, 10, 5);
+    QVBoxLayout *marginscombolayout = new QVBoxLayout;
     DLabel *marginlabel = new DLabel(q->tr("Margins"));
-    marginlabel->setFixedWidth(123);
+    marginlabel->setFixedSize(123, 36);
     marginsCombo = new DComboBox;
     marginsCombo->addItems(QStringList() << q->tr("Ordinary") << q->tr("Narrow") << q->tr("Moderate") << q->tr("Customize"));
-    marginsCombo->setFixedHeight(36);
+    //    marginsCombo->setFixedSize(275, 36);
     marginscombolayout->addWidget(marginlabel);
-    marginscombolayout->addWidget(marginsCombo);
+    marginscombolayout->addStretch();
     marginslayout->addLayout(marginscombolayout);
 
+    QVBoxLayout *marginlayout = new QVBoxLayout;
     QHBoxLayout *marginsspinlayout = new QHBoxLayout;
-    marginsspinlayout->setSpacing(5);
+    marginsspinlayout->setContentsMargins(0, 0, 0, 0);
     DLabel *toplabel = new DLabel(q->tr("Top"));
     marginTopSpin = new DDoubleSpinBox;
-    DLabel *bottomlabel = new DLabel(q->tr("Bottom"));
-    marginBottomSpin = new DDoubleSpinBox;
     DLabel *leftlabel = new DLabel(q->tr("Left"));
     marginLeftSpin = new DDoubleSpinBox;
+    DLabel *bottomlabel = new DLabel(q->tr("Bottom"));
+    marginBottomSpin = new DDoubleSpinBox;
     DLabel *rightlabel = new DLabel(q->tr("Right"));
     marginRightSpin = new DDoubleSpinBox;
-    marginsspinlayout->addWidget(toplabel);
-    marginsspinlayout->addWidget(marginTopSpin);
-    marginsspinlayout->addWidget(bottomlabel);
-    marginsspinlayout->addWidget(marginBottomSpin);
-    marginsspinlayout->addWidget(leftlabel);
-    marginsspinlayout->addWidget(marginLeftSpin);
-    marginsspinlayout->addWidget(rightlabel);
-    marginsspinlayout->addWidget(marginRightSpin);
-    marginslayout->addLayout(marginsspinlayout);
+    QVBoxLayout *marginslabellayout1 = new QVBoxLayout;
+    marginslabellayout1->addWidget(toplabel);
+    marginslabellayout1->addWidget(leftlabel);
+    QVBoxLayout *marginsspinboxlayout1 = new QVBoxLayout;
+    marginsspinboxlayout1->addWidget(marginTopSpin);
+    marginsspinboxlayout1->addWidget(marginLeftSpin);
+    QVBoxLayout *marginslabellayout2 = new QVBoxLayout;
+    marginslabellayout2->addWidget(bottomlabel);
+    marginslabellayout2->addWidget(rightlabel);
+    QVBoxLayout *marginsspinboxlayout2 = new QVBoxLayout;
+    marginsspinboxlayout2->addWidget(marginBottomSpin);
+    marginsspinboxlayout2->addWidget(marginRightSpin);
+
+    marginsspinlayout->addLayout(marginslabellayout1);
+    marginsspinlayout->addLayout(marginsspinboxlayout1);
+    marginsspinlayout->addLayout(marginslabellayout2);
+    marginsspinlayout->addLayout(marginsspinboxlayout2);
+    marginlayout->addWidget(marginsCombo);
+    marginlayout->addLayout(marginsspinlayout);
+    marginslayout->addLayout(marginlayout);
+
     QList<DDoubleSpinBox *> list = marginsframe->findChildren<DDoubleSpinBox *>();
     for (int i = 0; i < list.size(); i++) {
         list.at(i)->setProperty("_d_dtk_spinBox", true);
         DLineEdit *edit = list.at(i)->findChild<DLineEdit *>();
         edit->setClearButtonEnabled(false);
-        list.at(i)->setDecimals(1);
-        list.at(i)->setMinimum(0);
+        list.at(i)->setRange(0, 58.88);
     }
 
     pagelayout->addLayout(pagestitlelayout);
@@ -424,18 +418,18 @@ void DPrintPreviewDialogPrivate::initadvanceui()
 
     scaleGroup->addButton(actualSizeRadio, 1);
     actuallayout->addWidget(actualSizeRadio);
-    DWidget *shrinkwdg = new DWidget;
-    shrinkwdg->setFixedHeight(48);
-    QHBoxLayout *shrinklayout = new QHBoxLayout(shrinkwdg);
-    DRadioButton *shrinkPageRadio = new DRadioButton(q->tr("Shrink oversized pages"));
-    scaleGroup->addButton(shrinkPageRadio, 2);
-    shrinklayout->addWidget(shrinkPageRadio);
+    //    DWidget *shrinkwdg = new DWidget;
+    //    shrinkwdg->setFixedHeight(48);
+    //    QHBoxLayout *shrinklayout = new QHBoxLayout(shrinkwdg);
+    //    DRadioButton *shrinkPageRadio = new DRadioButton(q->tr("Shrink oversized pages"));
+    //    scaleGroup->addButton(shrinkPageRadio, 2);
+    //    shrinklayout->addWidget(shrinkPageRadio);
     DWidget *customscalewdg = new DWidget;
     customscalewdg->setFixedHeight(48);
     QHBoxLayout *customlayout = new QHBoxLayout(customscalewdg);
     customlayout->setContentsMargins(10, 0, 10, 0);
     DRadioButton *customSizeRadio = new DRadioButton(q->tr("Scale"));
-    scaleGroup->addButton(customSizeRadio, 3);
+    scaleGroup->addButton(customSizeRadio, 2);
     scaleRateEdit = new DSpinBox;
     scaleRateEdit->setSuffix("%");
     scaleRateEdit->setRange(10, 200);
@@ -449,7 +443,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     customlayout->addStretch(1);
     //    scalingcontentlayout->addWidget(fitwdg);
     scalingcontentlayout->addWidget(actualwdg);
-    scalingcontentlayout->addWidget(shrinkwdg);
+    //    scalingcontentlayout->addWidget(shrinkwdg);
     scalingcontentlayout->addWidget(customscalewdg);
     DBackgroundGroup *back = new DBackgroundGroup(scalingcontentlayout);
     back->setItemSpacing(1);
@@ -655,6 +649,7 @@ void DPrintPreviewDialogPrivate::setfrmaeback(DWidget *frame)
 {
     DPalette pa = DApplicationHelper::instance()->palette(frame);
     pa.setBrush(DPalette::Base, pa.itemBackground());
+    pa.setBrush(DPalette::FrameBorder, pa.toolTipBase());
     DApplicationHelper::instance()->setPalette(frame, pa);
     //frame->setAutoFillBackground(true);
 }
@@ -786,6 +781,7 @@ void DPrintPreviewDialogPrivate::updateSetteings(int index)
     scaleGroup->button(1)->setChecked(true);
     orientationgroup->button(0)->setChecked(true);
     scaleRateEdit->setValue(90);
+    pageRangeEdit->lineEdit()->setPlaceholderText(q->tr("Please use “,” or “-” to separate the page numbers (1,3,5,7-12)"));
 
     if (index != printDeviceCombo->count() - 1) {
         QStringList pageSizeList;
@@ -839,15 +835,9 @@ void DPrintPreviewDialogPrivate::setEnable(const int &value, DComboBox *combox)
 {
     if (combox == pageRangeCombo) {
         if (value != pageRangeCombo->count() - 1) {
-            fromeSpin->setEnabled(false);
-            toSpin->setEnabled(false);
-            fromLabel->setEnabled(false);
-            toLabel->setEnabled(false);
+            pageRangeEdit->setEnabled(false);
         } else {
-            fromeSpin->setEnabled(true);
-            toSpin->setEnabled(true);
-            fromLabel->setEnabled(true);
-            toLabel->setEnabled(true);
+            pageRangeEdit->setEnabled(true);
         }
     }
     DFrame *marginframe = advancesettingwdg->findChild<DFrame *>("marginsFrame");
@@ -912,20 +902,8 @@ void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
 {
     setEnable(index, pageRangeCombo);
     if (index == 0) {
-        fromeSpin->setValue(1);
-        toSpin->setValue(totalPageLabel->text().toInt());
-        printer->setPrintRange(QPrinter::AllPages);
-        printer->setFromTo(1, totalPageLabel->text().toInt());
     } else if (index == 1) {
-        fromeSpin->setValue(jumpPageEdit->value());
-        toSpin->setValue(jumpPageEdit->value());
-        printer->setPrintRange(QPrinter::CurrentPage);
-        printer->setFromTo(jumpPageEdit->value(), jumpPageEdit->value());
     } else {
-        fromeSpin->setValue(jumpPageEdit->value());
-        toSpin->setValue(totalPageLabel->text().toInt());
-        printer->setPrintRange(QPrinter::PageRange);
-        printer->setFromTo(fromeSpin->value(), toSpin->value());
     }
 }
 
