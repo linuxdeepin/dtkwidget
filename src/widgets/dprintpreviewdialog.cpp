@@ -881,7 +881,6 @@ void DPrintPreviewDialogPrivate::setEnable(const int &value, DComboBox *combox)
 void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
 {
     qDebug() << printDeviceCombo->itemText(index);
-    printer->setPrinterName(printDeviceCombo->itemText(index));
     if (index == printDeviceCombo->count() - 1) {
         //pdf
         copycountspinbox->setDisabled(true);
@@ -889,8 +888,8 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
         paperSizeCombo->clear();
         duplexSwitchBtn->setChecked(false);
         duplexSwitchBtn->setEnabled(false);
-        printer->setOutputFormat(QPrinter::PdfFormat);
         colorModeCombo->setEnabled(false);
+        printer->setPrinterName("");
     } else {
         //actual printer
         if (printer) {
@@ -899,6 +898,7 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
             paperSizeCombo->setEnabled(true);
             duplexSwitchBtn->setEnabled(true);
             colorModeCombo->setEnabled(true);
+            printer->setPrinterName(printDeviceCombo->itemText(index));
         }
     }
     updateSetteings(index);
