@@ -648,6 +648,7 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(marginsCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_pageMarginChanged(int)));
     QObject::connect(printBtn, SIGNAL(clicked(bool)), q, SLOT(_q_startPrint(bool)));
     QObject::connect(colorModeCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_ColorModeChange(int)));
+    QObject::connect(orientationgroup, SIGNAL(buttonClicked(int)), q, SLOT(_q_orientationChanged(int)));
 }
 
 void DPrintPreviewDialogPrivate::setfrmaeback(DWidget *frame)
@@ -975,6 +976,21 @@ void DPrintPreviewDialogPrivate::_q_ColorModeChange(int index)
     } else {
         // gray
         pview->setColorMode(DPrinter::GrayScale);
+    }
+}
+
+/*!
+ * \~chinese \brief DPrintPreviewDialogPrivate::_q_orientationChanged 根据按钮索引切换打印方向为横向或者纵向
+ * \~chinese \param index 当前按钮是横向按钮还是纵向按钮
+ */
+void DPrintPreviewDialogPrivate::_q_orientationChanged(int index)
+{
+    if (index == 0) {
+        // 纵向按钮
+        pview->setOrientation(DPrinter::Portrait);
+    } else {
+        // 横向按钮
+        pview->setOrientation(DPrinter::Landscape);
     }
 }
 

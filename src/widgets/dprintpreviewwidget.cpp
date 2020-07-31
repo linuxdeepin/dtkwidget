@@ -195,6 +195,14 @@ void DPrintPreviewWidget::setColorMode(const QPrinter::ColorMode &colorMode)
     d->pages.at(d->currentPageNumber - 1)->update();
 }
 
+void DPrintPreviewWidget::setOrientation(const QPrinter::Orientation &pageOrientation)
+{
+    Q_D(DPrintPreviewWidget);
+
+    d->previewPrinter->setOrientation(pageOrientation);
+    d->generatePreview();
+}
+
 DPrinter::ColorMode DPrintPreviewWidget::getColorMode()
 {
     Q_D(DPrintPreviewWidget);
