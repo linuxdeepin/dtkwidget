@@ -103,7 +103,6 @@ protected:
 private:
     int pageNum;
     const QPicture *pagePicture;
-    const QPicture *grayPagePictrue;
     QSize paperSize;
     QRect pageRect;
     QRectF brect;

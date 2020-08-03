@@ -287,8 +287,7 @@ void PageItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
     if (pwidget && (pwidget->getColorMode() == QPrinter::GrayScale)) {
         // 图像灰度处理
-        grayPagePictrue = new QPicture(grayscalePaint(*pagePicture));
-        painter->drawPicture(pageRect.topLeft(), *grayPagePictrue);
+        painter->drawPicture(pageRect.topLeft(), grayscalePaint(*pagePicture));
     } else if (pwidget && (pwidget->getColorMode() == QPrinter::Color)) {
         painter->drawPicture(pageRect.topLeft(), *pagePicture);
     }
