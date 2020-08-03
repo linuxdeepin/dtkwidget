@@ -28,6 +28,7 @@
 #include <QDesktopServices>
 #include <QRegExp>
 #include <QRegExpValidator>
+#include <QTimer>
 
 #include <cups/ppd.h>
 #include <cups/cups.h>
@@ -65,7 +66,11 @@ DPrintPreviewDialogPrivate::DPrintPreviewDialogPrivate(DPrintPreviewDialog *qq)
 
 void DPrintPreviewDialogPrivate::startup()
 {
+    Q_Q(DPrintPreviewDialog);
+
     this->printer = new DPrinter;
+    this->marginTimer = new QTimer(q);
+    this->marginTimer->setSingleShot(true);
     QTime tm;
     tm.start();
     //临时测试方法后期移除
@@ -718,6 +723,12 @@ void DPrintPreviewDialogPrivate::initconnections()
         }
         pview->updatePreview();
     });
+
+    QObject::connect(marginTimer, SIGNAL(timeout()), q, SLOT(_q_marginTimerOut()));
+    QObject::connect(marginTopSpin, SIGNAL(valueChanged(double)), q, SLOT(_q_marginspinChanged(double)));
+    QObject::connect(marginRightSpin, SIGNAL(valueChanged(double)), q, SLOT(_q_marginspinChanged(double)));
+    QObject::connect(marginLeftSpin, SIGNAL(valueChanged(double)), q, SLOT(_q_marginspinChanged(double)));
+    QObject::connect(marginBottomSpin, SIGNAL(valueChanged(double)), q, SLOT(_q_marginspinChanged(double)));
 }
 
 void DPrintPreviewDialogPrivate::setfrmaeback(DWidget *frame)
@@ -1020,29 +1031,71 @@ void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
 {
     setEnable(index, marginsCombo);
     if (index == 1) {
+        if (marginTimer->isActive())
+            marginTimer->stop();
+
+        marginLeftSpin->blockSignals(true);
+        marginTopSpin->blockSignals(true);
+        marginRightSpin->blockSignals(true);
+        marginBottomSpin->blockSignals(true);
+
         marginLeftSpin->setValue(NARROW_ALL);
         marginTopSpin->setValue(NARROW_ALL);
         marginRightSpin->setValue(NARROW_ALL);
         marginBottomSpin->setValue(NARROW_ALL);
         printer->setPageMargins(QMarginsF(NARROW_ALL, NARROW_ALL, NARROW_ALL, NARROW_ALL));
+
+        pview->updatePreview();
     } else if (index == 2) {
+        if (marginTimer->isActive())
+            marginTimer->stop();
+
+        marginLeftSpin->blockSignals(true);
+        marginTopSpin->blockSignals(true);
+        marginRightSpin->blockSignals(true);
+        marginBottomSpin->blockSignals(true);
+
         marginLeftSpin->setValue(MODERATE_LEFT_RIGHT);
         marginTopSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
         marginRightSpin->setValue(MODERATE_LEFT_RIGHT);
         marginBottomSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
         printer->setPageMargins(QMarginsF(MODERATE_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM, MODERATE_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM));
+
+        pview->updatePreview();
     } else if (index == 3) {
+        marginLeftSpin->blockSignals(true);
+        marginTopSpin->blockSignals(true);
+        marginRightSpin->blockSignals(true);
+        marginBottomSpin->blockSignals(true);
+
         marginTopSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
         marginLeftSpin->setValue(NORMAL_LEFT_RIGHT);
         marginRightSpin->setValue(NORMAL_LEFT_RIGHT);
         marginBottomSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
         printer->setPageMargins(QMarginsF(marginLeftSpin->value(), marginTopSpin->value(), marginRightSpin->value(), marginBottomSpin->value()));
+
+        pview->updatePreview();
+
+        marginLeftSpin->blockSignals(false);
+        marginTopSpin->blockSignals(false);
+        marginRightSpin->blockSignals(false);
+        marginBottomSpin->blockSignals(false);
     } else {
+        if (marginTimer->isActive())
+            marginTimer->stop();
+
+        marginLeftSpin->blockSignals(true);
+        marginTopSpin->blockSignals(true);
+        marginRightSpin->blockSignals(true);
+        marginBottomSpin->blockSignals(true);
+
         marginTopSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
         marginLeftSpin->setValue(NORMAL_LEFT_RIGHT);
         marginRightSpin->setValue(NORMAL_LEFT_RIGHT);
         marginBottomSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
+
         printer->setPageMargins(QMarginsF(NORMAL_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM, NORMAL_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM));
+        pview->updatePreview();
     }
 }
 
@@ -1104,6 +1157,34 @@ void DPrintPreviewDialogPrivate::_q_customPagesFinished()
     QVector<int> page = checkDuplication(pagesrange);
     qDebug() << page << __func__;
     pview->setPageRange(page);
+}
+
+/*!
+ * \~chinese \brief DPrintPreviewDialogPrivate::_q_marginTimerOut 自定义边距计时器时间结束的槽函数
+ * \~chinese \param
+ */
+void DPrintPreviewDialogPrivate::_q_marginTimerOut()
+{
+    qreal leftMarginF = this->marginLeftSpin->value();
+    qreal topMarginF = this->marginTopSpin->value();
+    qreal rightMarginF = this->marginRightSpin->value();
+    qreal bottomMarginF = this->marginBottomSpin->value();
+
+    this->printer->setPageMargins(QMarginsF(leftMarginF, topMarginF, rightMarginF, bottomMarginF));
+    this->pview->updatePreview();
+}
+
+/*!
+ * \~chinese \brief DPrintPreviewDialogPrivate::_q_marginspinChanged 自定义页边距spinbox值改变
+ * \~chinese \param clicked 判断按钮点击状态
+ */
+void DPrintPreviewDialogPrivate::_q_marginspinChanged(double)
+{
+    if (marginTimer->isActive())
+        marginTimer->stop();
+
+    // 默认1秒的定时器，时间到了就刷新预览页面
+    marginTimer->start(1000);
 }
 
 /*!

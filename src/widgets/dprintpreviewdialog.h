@@ -48,6 +48,8 @@ private:
     D_PRIVATE_SLOT(void _q_startPrint(bool))
     D_PRIVATE_SLOT(void _q_orientationChanged(int))
     D_PRIVATE_SLOT(void _q_customPagesFinished())
+    D_PRIVATE_SLOT(void _q_marginTimerOut())
+    D_PRIVATE_SLOT(void _q_marginspinChanged(double))
 };
 
 DWIDGET_END_NAMESPACE

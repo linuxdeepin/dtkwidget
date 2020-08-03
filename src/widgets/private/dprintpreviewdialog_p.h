@@ -72,6 +72,8 @@ public:
     void _q_startPrint(bool clicked);
     void _q_orientationChanged(int index);
     void _q_customPagesFinished();
+    void _q_marginTimerOut();
+    void _q_marginspinChanged(double);
 
     //printer
     DPrinter *printer;
@@ -117,6 +119,7 @@ public:
     DComboBox *waterTypeCombo; //添加水印类型
     DIconButton *waterColorBtn;
     DLineEdit *waterTextEdit;
+    QTimer *marginTimer;
 
     Q_DECLARE_PUBLIC(DPrintPreviewDialog)
 };
