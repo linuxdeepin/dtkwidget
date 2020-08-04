@@ -37,11 +37,6 @@ void DPrintPreviewWidgetPrivate::init()
 
 void DPrintPreviewWidgetPrivate::populateScene()
 {
-    for (auto *page : qAsConst(pages))
-        scene->removeItem(page);
-    qDeleteAll(pages);
-    pages.clear();
-
     QSize paperSize = previewPrinter->pageLayout().fullRectPixels(previewPrinter->resolution()).size();
     QRect pageRect = previewPrinter->pageLayout().paintRectPixels(previewPrinter->resolution());
 
@@ -65,6 +60,11 @@ void DPrintPreviewWidgetPrivate::populateScene()
 
 void DPrintPreviewWidgetPrivate::generatePreview()
 {
+    for (auto *page : qAsConst(pages))
+        scene->removeItem(page);
+    qDeleteAll(pages);
+    pages.clear();
+
     Q_Q(DPrintPreviewWidget);
     previewPrinter->setPreviewMode(true);
     Q_EMIT q->paintRequested(previewPrinter);
