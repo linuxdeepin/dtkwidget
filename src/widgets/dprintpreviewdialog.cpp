@@ -33,8 +33,10 @@
 #define NORMAL_MODERATE_TOP_BOTTRM 25.4
 #define NARROW_ALL 12.7
 #define MODERATE_LEFT_RIGHT 19.1
-#define PrcEight_Weight 285
-#define PrcEight_Height 420
+#define EightK_Weight 270
+#define EightK_Height 390
+#define SixteenK_Weight 195
+#define SixteenK_Height 270
 DWIDGET_BEGIN_NAMESPACE
 void setwidgetfont(QWidget *widget, DFontSizeManager::SizeType type = DFontSizeManager::T5)
 {
@@ -677,7 +679,7 @@ void DPrintPreviewDialogPrivate::setupPrinter()
     //设置打印份数
     printer->setNumCopies(copycountspinbox->value());
     //设置打印范围
-    _q_pageRangeChanged(pageRangeCombo->currentIndex());
+//    printer->setFromTo(fromeSpin->value(), toSpin->value());
     //设置打印方向
     if (orientationgroup->checkedId() == 0)
         printer->setOrientation(QPrinter::Portrait);
@@ -708,10 +710,11 @@ void DPrintPreviewDialogPrivate::setupPrinter()
             break;
         case 5:
             printer->setPageSize(QPrinter::Custom);
-            printer->setPageSizeMM(QSizeF(PrcEight_Weight, PrcEight_Height));
+            printer->setPageSizeMM(QSizeF(EightK_Weight, EightK_Height));
             break;
         case 6:
-            printer->setPageSize(QPrinter::Prc16K);
+            printer->setPageSize(QPrinter::Custom);
+            printer->setPageSizeMM(QSizeF(SixteenK_Weight, SixteenK_Height));
             break;
         }
     }
@@ -728,7 +731,7 @@ void DPrintPreviewDialogPrivate::setupPrinter()
         printer->setColorMode(QPrinter::GrayScale);
     }
     //设置纸张打印边距
-    _q_pageMarginChanged(marginsCombo->currentIndex());
+    printer->setPageMargins(QMarginsF(marginLeftSpin->value(), marginTopSpin->value(), marginRightSpin->value(), marginBottomSpin->value()));
     //设置缩放比例
     if (scaleGroup->checkedId() == 1)
         printer->setResolution(static_cast<int>(printer->resolution() * 1.5));
@@ -782,6 +785,7 @@ void DPrintPreviewDialogPrivate::updateSetteings(int index)
     orientationgroup->button(0)->setChecked(true);
     scaleRateEdit->setValue(90);
     pageRangeEdit->lineEdit()->setPlaceholderText(q->tr("Please use “,” or “-” to separate the page numbers (1,3,5,7-12)"));
+    marginsCombo->setCurrentIndex(0);
 
     if (index != printDeviceCombo->count() - 1) {
         QStringList pageSizeList;
@@ -948,6 +952,11 @@ void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
 void DPrintPreviewDialogPrivate::_q_ColorModeChange(int index)
 {
     setEnable(index, colorModeCombo);
+    //如果打印机不支持彩打
+    if (colorModeCombo->count() == 1) {
+        pview->setColorMode(DPrinter::GrayScale);
+        return;
+    }
     if (index == 0) {
         // color
         pview->setColorMode(DPrinter::Color);
@@ -998,7 +1007,7 @@ void DPrintPreviewDialogPrivate::_q_startPrint(bool clicked)
         } else {
             desktopPath = printer->outputFileName();
         }
-        QString str = DFileDialog::getSaveFileName(q, q->tr("Save as PDF"), desktopPath, q->tr("PDF file (.pdf)"));
+        QString str = DFileDialog::getSaveFileName(q, q->tr("Save as PDF"), desktopPath, q->tr("PDF file"));
         if (str.isEmpty())
             return;
         printer->setOutputFileName(str);
