@@ -46,6 +46,9 @@
 #define PAGERANGE_SELECT 2
 #define FIRST_PAGE 1
 
+#define ACTUAL_SIZE 1
+#define SCALE 2
+
 DWIDGET_BEGIN_NAMESPACE
 void setwidgetfont(QWidget *widget, DFontSizeManager::SizeType type = DFontSizeManager::T5)
 {
@@ -422,7 +425,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     QHBoxLayout *actuallayout = new QHBoxLayout(actualwdg);
     DRadioButton *actualSizeRadio = new DRadioButton(q->tr("Actual size"));
 
-    scaleGroup->addButton(actualSizeRadio, 1);
+    scaleGroup->addButton(actualSizeRadio, ACTUAL_SIZE);
     actuallayout->addWidget(actualSizeRadio);
     //    DWidget *shrinkwdg = new DWidget;
     //    shrinkwdg->setFixedHeight(48);
@@ -435,7 +438,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     QHBoxLayout *customlayout = new QHBoxLayout(customscalewdg);
     customlayout->setContentsMargins(10, 0, 10, 0);
     DRadioButton *customSizeRadio = new DRadioButton(q->tr("Scale"));
-    scaleGroup->addButton(customSizeRadio, 2);
+    scaleGroup->addButton(customSizeRadio, SCALE);
     scaleRateEdit = new DSpinBox;
     scaleRateEdit->setSuffix("%");
     scaleRateEdit->setRange(10, 200);
@@ -697,6 +700,23 @@ void DPrintPreviewDialogPrivate::initconnections()
         }
         pview->updatePreview();
     });
+
+    QObject::connect(scaleRateEdit, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), q, [this](int value) {
+        if (scaleGroup->checkedId() == SCALE) {
+            qreal scale = scaleRateEdit->value() / 100.0;
+            pview->setScale(scale);
+            pview->updatePreview();
+        }
+    });
+    QObject::connect(scaleGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), q, [this](int id) {
+        if (id == ACTUAL_SIZE) {
+            pview->setScale(1);
+        } else if (id == SCALE) {
+            qreal scale = scaleRateEdit->value() / 100.0;
+            pview->setScale(scale);
+        }
+        pview->updatePreview();
+    });
 }
 
 void DPrintPreviewDialogPrivate::setfrmaeback(DWidget *frame)
@@ -785,9 +805,9 @@ void DPrintPreviewDialogPrivate::setupPrinter()
     //设置纸张打印边距
     printer->setPageMargins(QMarginsF(marginLeftSpin->value(), marginTopSpin->value(), marginRightSpin->value(), marginBottomSpin->value()));
     //设置缩放比例
-    if (scaleGroup->checkedId() == 1)
+    if (scaleGroup->checkedId() == ACTUAL_SIZE)
         printer->setResolution(static_cast<int>(printer->resolution() * 1.5));
-    else if (scaleGroup->checkedId() == 2) {
+    else if (scaleGroup->checkedId() == SCALE) {
         printer->setResolution(static_cast<int>(printer->resolution() * (1 / (scaleRateEdit->value() / 100))));
     } else {
         return;

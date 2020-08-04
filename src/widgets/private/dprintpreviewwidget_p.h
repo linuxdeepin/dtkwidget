@@ -137,6 +137,7 @@ public:
     DPrinter::ColorMode colorMode;
     DPrintPreviewWidget::Imposition imposition;
     bool isGenerate = false; // 是否重新生成页面后没有显示过第一页
+    qreal scale = 1.0;
 
     DPrinter *previewPrinter;
 

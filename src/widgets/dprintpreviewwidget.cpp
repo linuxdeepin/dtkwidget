@@ -288,6 +288,18 @@ DPrinter::ColorMode DPrintPreviewWidget::getColorMode()
     return d->colorMode;
 }
 
+void DPrintPreviewWidget::setScale(qreal scale)
+{
+    Q_D(DPrintPreviewWidget);
+    d->scale = scale;
+}
+
+qreal DPrintPreviewWidget::getScale() const
+{
+    D_DC(DPrintPreviewWidget);
+    return d->scale;
+}
+
 void DPrintPreviewWidget::updatePreview()
 {
     Q_D(DPrintPreviewWidget);
@@ -366,14 +378,16 @@ void PageItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
         return;
 
     DPrintPreviewWidget *pwidget = qobject_cast<DPrintPreviewWidget *>(scene()->parent()->parent());
-
+    qreal scale = pwidget->getScale();
+    painter->scale(scale, scale);
     if (pwidget && (pwidget->getColorMode() == QPrinter::GrayScale)) {
         // 图像灰度处理
-        painter->drawPicture(pageRect.topLeft(), grayscalePaint(*pagePicture));
+        painter->drawPicture(QPointF(pageRect.topLeft().x() / scale, pageRect.topLeft().y() / scale), grayscalePaint(*pagePicture));
     } else if (pwidget && (pwidget->getColorMode() == QPrinter::Color)) {
-        painter->drawPicture(pageRect.topLeft(), *pagePicture);
+        painter->drawPicture(QPointF(pageRect.topLeft().x() / scale, pageRect.topLeft().y() / scale), *pagePicture);
     }
 
+    painter->resetTransform();
     painter->setPen(QPen(Qt::black, 0));
     painter->setBrush(Qt::NoBrush);
     painter->drawRect(paperRect);

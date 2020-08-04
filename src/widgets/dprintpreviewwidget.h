@@ -75,6 +75,8 @@ public:
     void setColorMode(const DPrinter::ColorMode &colorMode);
     void setOrientation(const DPrinter::Orientation &pageOrientation);
     DPrinter::ColorMode getColorMode();
+    void setScale(qreal scale);
+    qreal getScale() const;
 
 public Q_SLOTS:
     void updatePreview();
