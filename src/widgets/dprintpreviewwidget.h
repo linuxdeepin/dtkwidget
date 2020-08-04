@@ -55,13 +55,23 @@ class LIBDTKWIDGETSHARED_EXPORT DPrintPreviewWidget : public QWidget
 {
     Q_OBJECT
 public:
+    enum Imposition {
+        None,
+        OneTwo,
+        TwoTwo,
+        TwoThree,
+        ThreeThree,
+        FourFour
+    };
+
     explicit DPrintPreviewWidget(DPrinter *printer, QWidget *parent = nullptr);
 
     void setVisible(bool visible) override;
     void setPageRange(const QVector<int> &rangePages);
+    void setPageRange(int from, int to);
+    void setPageRangeALL();
     int pagesCount();
     bool turnPageAble();
-    void showPage(int pageNumber);
     void setColorMode(const DPrinter::ColorMode &colorMode);
     void setOrientation(const DPrinter::Orientation &pageOrientation);
     DPrinter::ColorMode getColorMode();
@@ -79,8 +89,11 @@ Q_SIGNALS:
     void paintRequested(DPrinter *printer);
     void previewChanged();
     void currentPageChanged(int page);
+    void totalPages(int);
 
 private:
+    void setCurrentTargetPage(int page);
+
     D_DECLARE_PRIVATE(DPrintPreviewWidget)
 };
 

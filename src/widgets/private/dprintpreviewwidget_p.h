@@ -121,6 +121,10 @@ public:
 
     void setPageRangeAll();
     void setCurrentPage(int page);
+    int pagesCount();
+    int targetPage(int page);
+    int index2page(int index);
+    int page2index(int page);
 
     GraphicsView *graphicsView;
     QGraphicsScene *scene;
@@ -131,6 +135,8 @@ public:
     QVector<int> pageRange;
     int currentPageNumber = 0;
     DPrinter::ColorMode colorMode;
+    DPrintPreviewWidget::Imposition imposition;
+    bool isGenerate = false; // 是否重新生成页面后没有显示过第一页
 
     DPrinter *previewPrinter;
 

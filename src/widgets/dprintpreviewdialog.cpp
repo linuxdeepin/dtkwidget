@@ -33,10 +33,17 @@
 #define NORMAL_MODERATE_TOP_BOTTRM 25.4
 #define NARROW_ALL 12.7
 #define MODERATE_LEFT_RIGHT 19.1
+
 #define EightK_Weight 270
 #define EightK_Height 390
 #define SixteenK_Weight 195
 #define SixteenK_Height 270
+
+#define PAGERANGE_ALL 0
+#define PAGERANGE_CURRENT 1
+#define PAGERANGE_SELECT 2
+#define FIRST_PAGE 1
+
 DWIDGET_BEGIN_NAMESPACE
 void setwidgetfont(QWidget *widget, DFontSizeManager::SizeType type = DFontSizeManager::T5)
 {
@@ -129,15 +136,6 @@ void DPrintPreviewDialogPrivate::initleft(QVBoxLayout *layout)
     pbottomlayout->addWidget(nextPageBtn);
     pbottomlayout->addSpacing(10);
     pbottomlayout->addWidget(lastBtn);
-
-    Q_Q(DPrintPreviewDialog);
-    QObject::connect(pview, &DPrintPreviewWidget::paintRequested, q, &DPrintPreviewDialog::paintRequested);
-    QObject::connect(firstBtn, &DIconButton::clicked, pview, &DPrintPreviewWidget::turnBegin);
-    QObject::connect(prevPageBtn, &DIconButton::clicked, pview, &DPrintPreviewWidget::turnFront);
-    QObject::connect(nextPageBtn, &DIconButton::clicked, pview, &DPrintPreviewWidget::turnBack);
-    QObject::connect(lastBtn, &DIconButton::clicked, pview, &DPrintPreviewWidget::turnEnd);
-    QObject::connect(pview, &DPrintPreviewWidget::currentPageChanged, jumpPageEdit, &QSpinBox::setValue);
-    QObject::connect(jumpPageEdit, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), pview, &DPrintPreviewWidget::setCurrentPage);
 }
 
 void DPrintPreviewDialogPrivate::initright(QVBoxLayout *layout)
@@ -636,6 +634,8 @@ void DPrintPreviewDialogPrivate::initconnections()
 {
     Q_Q(DPrintPreviewDialog);
 
+    QObject::connect(pview, &DPrintPreviewWidget::paintRequested, q, &DPrintPreviewDialog::paintRequested);
+
     QObject::connect(advanceBtn, &QPushButton::clicked, q, [this] { this->showadvancesetting(); });
     QObject::connect(printDeviceCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_printerChanged(int)));
     QObject::connect(cancelBtn, &DPushButton::clicked, q, &DPrintPreviewDialog::close);
@@ -645,6 +645,17 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(printBtn, SIGNAL(clicked(bool)), q, SLOT(_q_startPrint(bool)));
     QObject::connect(colorModeCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_ColorModeChange(int)));
     QObject::connect(orientationgroup, SIGNAL(buttonClicked(int)), q, SLOT(_q_orientationChanged(int)));
+
+    QObject::connect(pview, &DPrintPreviewWidget::totalPages, [this](int pages) {
+        totalPageLabel->setText(QString::number(pages));
+        totalPages = pages;
+    });
+    QObject::connect(firstBtn, &DIconButton::clicked, pview, &DPrintPreviewWidget::turnBegin);
+    QObject::connect(prevPageBtn, &DIconButton::clicked, pview, &DPrintPreviewWidget::turnFront);
+    QObject::connect(nextPageBtn, &DIconButton::clicked, pview, &DPrintPreviewWidget::turnBack);
+    QObject::connect(lastBtn, &DIconButton::clicked, pview, &DPrintPreviewWidget::turnEnd);
+    QObject::connect(pview, &DPrintPreviewWidget::currentPageChanged, jumpPageEdit, &QSpinBox::setValue);
+    QObject::connect(jumpPageEdit, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), pview, &DPrintPreviewWidget::setCurrentPage);
 }
 
 void DPrintPreviewDialogPrivate::setfrmaeback(DWidget *frame)
@@ -906,8 +917,14 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
 void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
 {
     setEnable(index, pageRangeCombo);
-    if (index == 0) {
-    } else if (index == 1) {
+    if (index == PAGERANGE_ALL) {
+        if (totalPages != 0) {
+            totalPageLabel->setNum(totalPages);
+            printer->setPrintRange(QPrinter::AllPages);
+            printer->setFromTo(FIRST_PAGE, totalPages);
+            pview->setPageRangeALL();
+        }
+    } else if (index == PAGERANGE_CURRENT) {
     } else {
     }
 }

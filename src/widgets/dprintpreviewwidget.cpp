@@ -4,10 +4,14 @@
 #include <private/qprinter_p.h>
 #include <QPicture>
 
+#define FIRST_PAGE 1
+#define FIRST_INDEX 0
+
 DWIDGET_BEGIN_NAMESPACE
 
 DPrintPreviewWidgetPrivate::DPrintPreviewWidgetPrivate(DPrintPreviewWidget *qq)
     : DObjectPrivate(qq)
+    , imposition(DPrintPreviewWidget::Imposition::None)
 {
 }
 
@@ -49,12 +53,14 @@ void DPrintPreviewWidgetPrivate::populateScene()
         scene->addItem(item);
         pages.append(item);
     }
-
-    if (!pages.isEmpty()) {
-        currentPageNumber = 1;
-        pages.at(0)->setVisible(true);
+    if (pageRange.isEmpty()) {
+        setPageRangeAll();
     }
-    setPageRangeAll();
+    if (!pages.isEmpty()) {
+        currentPageNumber = FIRST_PAGE;
+        isGenerate = true;
+        pages.at(index2page(FIRST_INDEX) - 1)->setVisible(true);
+    }
 }
 
 void DPrintPreviewWidgetPrivate::generatePreview()
@@ -92,23 +98,77 @@ void DPrintPreviewWidgetPrivate::print()
 void DPrintPreviewWidgetPrivate::setPageRangeAll()
 {
     int size = pages.size();
-    for (int i = 1; i <= size; i++) {
+    pageRange.clear();
+    for (int i = FIRST_PAGE; i <= size; i++) {
         pageRange.append(i);
     }
+    isGenerate = false;
+    Q_Q(DPrintPreviewWidget);
+    Q_EMIT q->totalPages(size);
+}
+
+int DPrintPreviewWidgetPrivate::pagesCount()
+{
+    return targetPage(pageRange.size());
 }
 
 void DPrintPreviewWidgetPrivate::setCurrentPage(int page)
 {
-    if (page < 1 || page > pages.count())
+    int pageCount = pagesCount();
+    if (page < FIRST_PAGE || page > pageCount || (page == FIRST_PAGE && page == currentPageNumber && isGenerate))
         return;
-
-    int lastPage = currentPageNumber;
+    if (page == FIRST_PAGE)
+        isGenerate = true;
+    int pageNumber = index2page(page - 1);
+    int lastPage = index2page(currentPageNumber - 1);
     currentPageNumber = page;
 
-    if (lastPage != currentPageNumber && lastPage > 0 && lastPage <= pages.count()) {
-        pages.at(lastPage - 1)->setVisible(false);
-        pages.at(currentPageNumber - 1)->setVisible(true);
+    pages.at(lastPage - 1)->setVisible(false);
+    pages.at(pageNumber - 1)->setVisible(true);
+
+    Q_Q(DPrintPreviewWidget);
+    Q_EMIT q->currentPageChanged(page);
+}
+
+int DPrintPreviewWidgetPrivate::targetPage(int page)
+{
+    int mod = 0;
+    switch (imposition) {
+    case DPrintPreviewWidget::Imposition::None:
+        break;
+    case DPrintPreviewWidget::Imposition::OneTwo:
+        mod = page % 2;
+        break;
+    case DPrintPreviewWidget::Imposition::TwoTwo:
+        mod = page % 4;
+        break;
+    case DPrintPreviewWidget::Imposition::TwoThree:
+        mod = page % 6;
+        break;
+    case DPrintPreviewWidget::Imposition::ThreeThree:
+        mod = page % 9;
+        break;
+    case DPrintPreviewWidget::Imposition::FourFour:
+        mod = page % 16;
+        break;
+    default:
+        break;
     }
+    if (mod)
+        page += 1;
+    return page;
+}
+
+int DPrintPreviewWidgetPrivate::index2page(int index)
+{
+    if (index >= pageRange.size())
+        return -1;
+    return pageRange.at(index);
+}
+
+int DPrintPreviewWidgetPrivate::page2index(int page)
+{
+    return pageRange.indexOf(page);
 }
 
 QPicture PageItem::grayscalePaint(const QPicture &picture)
@@ -168,22 +228,42 @@ void DPrintPreviewWidget::setVisible(bool visible)
     }
 }
 
+void DPrintPreviewWidget::setPageRangeALL()
+{
+    Q_D(DPrintPreviewWidget);
+    d->setPageRangeAll();
+    if (!d->pageRange.isEmpty())
+        d->setCurrentPage(FIRST_PAGE);
+}
+
 void DPrintPreviewWidget::setPageRange(const QVector<int> &rangePages)
 {
     Q_D(DPrintPreviewWidget);
     d->pageRange = rangePages;
+    d->generatePreview();
+}
+
+void DPrintPreviewWidget::setPageRange(int from, int to)
+{
+    Q_D(DPrintPreviewWidget);
+    if (from > to)
+        return;
+    d->pageRange.clear();
+    for (int i = from; i <= to; i++)
+        d->pageRange.append(i);
+    d->generatePreview();
 }
 
 int DPrintPreviewWidget::pagesCount()
 {
     Q_D(DPrintPreviewWidget);
-    return d->pages.size();
+    return d->pagesCount();
 }
 
 bool DPrintPreviewWidget::turnPageAble()
 {
     Q_D(DPrintPreviewWidget);
-    return d->pages.size() > 1;
+    return pagesCount() > 1;
 }
 
 void DPrintPreviewWidget::setColorMode(const QPrinter::ColorMode &colorMode)
@@ -226,7 +306,7 @@ void DPrintPreviewWidget::turnFront()
 void DPrintPreviewWidget::turnBack()
 {
     Q_D(DPrintPreviewWidget);
-    if (d->currentPageNumber >= d->pages.size())
+    if (d->currentPageNumber >= d->pagesCount())
         return;
     setCurrentPage(d->currentPageNumber + 1);
 }
@@ -236,7 +316,7 @@ void DPrintPreviewWidget::turnBegin()
     Q_D(DPrintPreviewWidget);
     if (d->pageRange.isEmpty())
         return;
-    setCurrentPage(1);
+    setCurrentPage(FIRST_PAGE);
 }
 
 void DPrintPreviewWidget::turnEnd()
@@ -244,16 +324,13 @@ void DPrintPreviewWidget::turnEnd()
     Q_D(DPrintPreviewWidget);
     if (d->pageRange.isEmpty())
         return;
-    setCurrentPage(d->pages.size());
+    setCurrentPage(d->pageRange.size());
 }
 
 void DPrintPreviewWidget::setCurrentPage(int page)
 {
     Q_D(DPrintPreviewWidget);
-    if (page == d->currentPageNumber)
-        return;
     d->setCurrentPage(page);
-    Q_EMIT currentPageChanged(page);
 }
 
 void DPrintPreviewWidget::print()
