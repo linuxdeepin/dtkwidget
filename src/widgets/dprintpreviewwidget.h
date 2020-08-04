@@ -73,6 +73,7 @@ public Q_SLOTS:
     void turnBegin();
     void turnEnd();
     void setCurrentPage(int page);
+    void print();
 
 Q_SIGNALS:
     void paintRequested(DPrinter *printer);

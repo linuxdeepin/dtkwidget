@@ -116,8 +116,8 @@ public:
     void init();
     void populateScene();
     void generatePreview();
-    void generateTargetPictures();
     void fitView();
+    void print();
 
     void setPageRangeAll();
     void setCurrentPage(int page);

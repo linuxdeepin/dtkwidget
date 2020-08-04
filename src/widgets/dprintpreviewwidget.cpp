@@ -42,12 +42,14 @@ void DPrintPreviewWidgetPrivate::populateScene()
     QRect pageRect = previewPrinter->pageLayout().paintRectPixels(previewPrinter->resolution());
 
     int page = 1;
-    for (int i = 0; i < targetPictures.size(); i++) {
-        PageItem *item = new PageItem(page++, &targetPictures[i], paperSize, pageRect);
+    //todo 多页显示接口添加
+    for (int i = 0; i < pictures.size(); i++) {
+        PageItem *item = new PageItem(page++, pictures[i], paperSize, pageRect);
         item->setVisible(false);
         scene->addItem(item);
         pages.append(item);
     }
+
     if (!pages.isEmpty()) {
         currentPageNumber = 1;
         pages.at(0)->setVisible(true);
@@ -62,32 +64,29 @@ void DPrintPreviewWidgetPrivate::generatePreview()
     Q_EMIT q->paintRequested(previewPrinter);
     previewPrinter->setPreviewMode(false);
     pictures = previewPrinter->getPrinterPages();
-    generateTargetPictures();
     populateScene();
     scene->setSceneRect(scene->itemsBoundingRect());
     fitView();
-}
-
-void DPrintPreviewWidgetPrivate::generateTargetPictures()
-{
-    targetPictures.clear();
-
-    for (auto *picture : qAsConst(pictures)) {
-        QPicture target;
-        QPainter painter;
-        painter.begin(&target);
-        painter.drawPicture(0, 0, *picture);
-        //todo scale,black and white,watermarking,……
-        painter.end();
-
-        targetPictures.append(target);
-    }
 }
 
 void DPrintPreviewWidgetPrivate::fitView()
 {
     QRectF target = scene->sceneRect();
     graphicsView->fitInView(target, Qt::KeepAspectRatio);
+}
+
+void DPrintPreviewWidgetPrivate::print()
+{
+    QPainter painter(previewPrinter);
+    previewPrinter->setFromTo(1, pictures.count());
+    for (int i = 0; i < pictures.count(); i++) {
+        if (0 != i)
+            previewPrinter->newPage();
+        painter.save();
+        //todo scale,black and white,watermarking,……
+        painter.drawPicture(0, 0, *(pictures[i]));
+        painter.restore();
+    }
 }
 
 void DPrintPreviewWidgetPrivate::setPageRangeAll()
@@ -255,6 +254,12 @@ void DPrintPreviewWidget::setCurrentPage(int page)
         return;
     d->setCurrentPage(page);
     Q_EMIT currentPageChanged(page);
+}
+
+void DPrintPreviewWidget::print()
+{
+    Q_D(DPrintPreviewWidget);
+    d->print();
 }
 
 DPrinter::DPrinter(QPrinter::PrinterMode mode)
