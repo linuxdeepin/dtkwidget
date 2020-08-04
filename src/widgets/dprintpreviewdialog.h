@@ -47,6 +47,7 @@ private:
     D_PRIVATE_SLOT(void _q_ColorModeChange(int))
     D_PRIVATE_SLOT(void _q_startPrint(bool))
     D_PRIVATE_SLOT(void _q_orientationChanged(int))
+    D_PRIVATE_SLOT(void _q_customPagesFinished())
 };
 
 DWIDGET_END_NAMESPACE

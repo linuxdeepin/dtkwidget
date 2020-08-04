@@ -26,6 +26,8 @@
 #include <qpa/qplatformprintersupport.h>
 #include <QTime>
 #include <QDesktopServices>
+#include <QRegExp>
+#include <QRegExpValidator>
 
 #include <cups/ppd.h>
 #include <cups/cups.h>
@@ -254,6 +256,10 @@ void DPrintPreviewDialogPrivate::initbasicui()
     pageRangeEdit = new DLineEdit;
     pagelayout->addLayout(hrangebox);
     pagelayout->addWidget(pageRangeEdit);
+
+    QRegExp reg("^[0-9,-]*[0-9,-]"); //||^[0-9-]*[0-9-]
+    QRegExpValidator *val = new QRegExpValidator(reg);
+    pageRangeEdit->lineEdit()->setValidator(val);
 
     //打印方向
     DLabel *orientationLabel = new DLabel(q->tr("Orientation"), basicsettingwdg);
@@ -640,6 +646,7 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(printDeviceCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_printerChanged(int)));
     QObject::connect(cancelBtn, &DPushButton::clicked, q, &DPrintPreviewDialog::close);
     //    QObject::connect(advanceBtn, &QPushButton::clicked, q, &DPrintPreviewDialog::showAdvanceSetting);
+    QObject::connect(pageRangeEdit, SIGNAL(editingFinished()), q, SLOT(_q_customPagesFinished()));
     QObject::connect(pageRangeCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_pageRangeChanged(int)));
     QObject::connect(marginsCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_pageMarginChanged(int)));
     QObject::connect(printBtn, SIGNAL(clicked(bool)), q, SLOT(_q_startPrint(bool)));
@@ -876,6 +883,19 @@ void DPrintPreviewDialogPrivate::updateSetteings(int index)
     colorModeCombo->setCurrentIndex(0);
 }
 
+QVector<int> DPrintPreviewDialogPrivate::checkDuplication(QVector<int> data)
+{
+    for (int i = 0; i < data.size(); i++) {
+        for (int j = i + 1; j < data.size(); j++) {
+            if (data.at(i) == data.at(j)) {
+                data.remove(j);
+                j--;
+            }
+        }
+    }
+    return data;
+}
+
 /*!
  * \~chinese \brief DPrintPreviewDialogPrivate::setEnable 设置纸张范围自定义可输入状态
  * \~chinese \param value 判断选择的范围类型
@@ -951,15 +971,26 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
 void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
 {
     setEnable(index, pageRangeCombo);
+    QVector<int> pagesrange;
     if (index == PAGERANGE_ALL) {
         if (totalPages != 0) {
             totalPageLabel->setNum(totalPages);
             printer->setPrintRange(QPrinter::AllPages);
             printer->setFromTo(FIRST_PAGE, totalPages);
             pview->setPageRangeALL();
+            for (int i = 1; i < totalPageLabel->text().toInt(); i++) {
+                pagesrange.append(i);
+            }
+            pageRangeEdit->setText("1-" + totalPageLabel->text());
+            qDebug() << "121212";
         }
     } else if (index == PAGERANGE_CURRENT) {
+        pagesrange.clear();
+        pagesrange.clear();
+        pagesrange.append(jumpPageEdit->value());
+        pageRangeEdit->setText(jumpPageEdit->text());
     } else {
+        pageRangeEdit->setText("");
     }
 }
 
@@ -1031,6 +1062,30 @@ void DPrintPreviewDialogPrivate::_q_orientationChanged(int index)
         // 横向按钮
         pview->setOrientation(DPrinter::Landscape);
     }
+}
+
+void DPrintPreviewDialogPrivate::_q_customPagesFinished()
+{
+    QString cuspages = pageRangeEdit->text();
+    QVector<int> pagesrange;
+    QStringList list = cuspages.split(",");
+    for (int i = 0; i < list.size(); i++) {
+        if (list.at(i).contains("-")) {
+            QStringList list1 = list.at(i).split("-");
+            if (list1.at(0).toInt() <= list1.at(1).toInt()) {
+                for (int page = list1.at(0).toInt(); page <= list1.at(1).toInt(); page++) {
+                    if (page != 0)
+                        pagesrange.append(page);
+                }
+            }
+        } else {
+            if (list.at(i).toInt() != 0)
+                pagesrange.append(list.at(i).toInt());
+        }
+    }
+    QVector<int> page = checkDuplication(pagesrange);
+    qDebug() << page << __func__;
+    pview->setPageRange(page);
 }
 
 /*!

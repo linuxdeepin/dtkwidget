@@ -61,14 +61,17 @@ public:
     void setScaling(int index);
     void test();
     void updateSetteings(int index);
+    QVector<int> checkDuplication(QVector<int> data);
 
     void setEnable(const int &value, DComboBox *combox); //控件可用
+
     void _q_printerChanged(int index);
     void _q_pageRangeChanged(int index);
     void _q_pageMarginChanged(int index);
     void _q_ColorModeChange(int index);
     void _q_startPrint(bool clicked);
     void _q_orientationChanged(int index);
+    void _q_customPagesFinished();
 
     //printer
     DPrinter *printer;
