@@ -656,6 +656,40 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(lastBtn, &DIconButton::clicked, pview, &DPrintPreviewWidget::turnEnd);
     QObject::connect(pview, &DPrintPreviewWidget::currentPageChanged, jumpPageEdit, &QSpinBox::setValue);
     QObject::connect(jumpPageEdit, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), pview, &DPrintPreviewWidget::setCurrentPage);
+
+    QObject::connect(paperSizeCombo, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), q, [this](int index) {
+        QPrinterInfo prInfo(*printer);
+        if (printDeviceCombo->currentIndex() != printDeviceCombo->count() - 1) {
+            printer->setPageSize(prInfo.supportedPageSizes().at(paperSizeCombo->currentIndex()));
+        } else {
+            switch (paperSizeCombo->currentIndex()) {
+            case 0:
+                printer->setPageSize(QPrinter::A3);
+                break;
+            case 1:
+                printer->setPageSize(QPrinter::A4);
+                break;
+            case 2:
+                printer->setPageSize(QPrinter::A5);
+                break;
+            case 3:
+                printer->setPageSize(QPrinter::B4);
+                break;
+            case 4:
+                printer->setPageSize(QPrinter::B5);
+                break;
+            case 5:
+                printer->setPageSize(QPrinter::Custom);
+                printer->setPageSizeMM(QSizeF(EightK_Weight, EightK_Height));
+                break;
+            case 6:
+                printer->setPageSize(QPrinter::Custom);
+                printer->setPageSizeMM(QSizeF(SixteenK_Weight, SixteenK_Height));
+                break;
+            }
+        }
+        pview->updatePreview();
+    });
 }
 
 void DPrintPreviewDialogPrivate::setfrmaeback(DWidget *frame)
