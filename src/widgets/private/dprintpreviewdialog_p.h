@@ -77,7 +77,6 @@ public:
 
     //printer
     DPrinter *printer;
-    QPrintDevice m_currentPrintDevice;
     int totalPages = 0;
 
     //control

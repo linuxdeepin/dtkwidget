@@ -675,6 +675,10 @@ void DPrintPreviewDialogPrivate::initconnections()
 
     QObject::connect(paperSizeCombo, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), q, [this](int index) {
         QPrinterInfo prInfo(*printer);
+        if (paperSizeCombo->count() == 0) {
+            printer->setPageSize(QPrinter::A4);
+            return ;
+        }
         if (printDeviceCombo->currentIndex() != printDeviceCombo->count() - 1) {
             printer->setPageSize(prInfo.supportedPageSizes().at(paperSizeCombo->currentIndex()));
         } else {
@@ -762,8 +766,6 @@ void DPrintPreviewDialogPrivate::setupPrinter()
     //基础设置
     //设置打印份数
     printer->setNumCopies(copycountspinbox->value());
-    //设置打印范围
-//    printer->setFromTo(fromeSpin->value(), toSpin->value());
     //设置打印方向
     if (orientationgroup->checkedId() == 0)
         printer->setOrientation(QPrinter::Portrait);
@@ -816,14 +818,6 @@ void DPrintPreviewDialogPrivate::setupPrinter()
     }
     //设置纸张打印边距
     printer->setPageMargins(QMarginsF(marginLeftSpin->value(), marginTopSpin->value(), marginRightSpin->value(), marginBottomSpin->value()));
-    //设置缩放比例
-    if (scaleGroup->checkedId() == ACTUAL_SIZE)
-        printer->setResolution(static_cast<int>(printer->resolution() * 1.5));
-    else if (scaleGroup->checkedId() == SCALE) {
-        printer->setResolution(static_cast<int>(printer->resolution() * (1 / (scaleRateEdit->value() / 100))));
-    } else {
-        return;
-    }
 }
 
 void DPrintPreviewDialogPrivate::test()
@@ -1006,7 +1000,7 @@ void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
         qDebug() << totalPages;
         if (totalPages != 0) {
             totalPageLabel->setNum(totalPages);
-            printer->setPrintRange(QPrinter::AllPages);
+            printer->setPrintRange(DPrinter::AllPages);
             printer->setFromTo(FIRST_PAGE, totalPages);
             pview->setPageRangeALL();
             for (int i = 1; i < totalPageLabel->text().toInt(); i++) {
@@ -1018,8 +1012,10 @@ void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
         pagesrange.clear();
         pagesrange.append(jumpPageEdit->value());
         pageRangeEdit->setText(jumpPageEdit->text());
+        printer->setPrintRange(DPrinter::CurrentPage);
     } else {
         pageRangeEdit->setText("");
+        printer->setPrintRange(DPrinter::Selection);
     }
 }
 

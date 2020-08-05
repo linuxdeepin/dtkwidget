@@ -84,14 +84,28 @@ void DPrintPreviewWidgetPrivate::fitView()
 void DPrintPreviewWidgetPrivate::print()
 {
     QPainter painter(previewPrinter);
-    previewPrinter->setFromTo(1, pictures.count());
-    for (int i = 0; i < pictures.count(); i++) {
-        if (0 != i)
-            previewPrinter->newPage();
+    if (previewPrinter->printRange() == DPrinter::AllPages) {
+        previewPrinter->setFromTo(1, pictures.count());
+        for (int i = 0; i < pictures.count(); i++) {
+            if (0 != i)
+                previewPrinter->newPage();
+            painter.save();
+            //todo scale,black and white,watermarking,……
+            painter.drawPicture(0, 0, *(pictures[i]));
+            painter.restore();
+        }
+    } else if (previewPrinter->printRange() == DPrinter::CurrentPage) {
         painter.save();
-        //todo scale,black and white,watermarking,……
-        painter.drawPicture(0, 0, *(pictures[i]));
+        painter.drawPicture(0, 0, *(pictures[currentPageNumber - 1]));
         painter.restore();
+    } else {
+        for (int i = 0; i <= pageRange.size() - 1; i++) {
+            painter.save();
+            if (i != 0)
+                previewPrinter->newPage();
+            painter.drawPicture(0, 0, *(pictures[pageRange.at(i) - 1]));
+            painter.restore();
+        }
     }
 }
 
