@@ -86,6 +86,13 @@ void DSwitchButton::initStyleOption(DStyleOptionButton *option) const
 
     // 针对switch button禁用hover状态
     option->state &= ~QStyle::State_MouseOver;
+
+    if (hasFocus()) {
+        option->state |= QStyle::State_HasFocus;
+    }
+
+    //按照设计要求: 这里需要预留绘制focusRect的区域
+    option->rect.adjust(4, 4, -4, -4);
 }
 
 DSwitchButtonPrivate::DSwitchButtonPrivate(DSwitchButton *qq)

@@ -1249,6 +1249,31 @@ void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const Q
             dstyle.drawPrimitive(PE_SwitchButtonGroove, &option, p, w);
             option.rect = dstyle.subElementRect(SE_SwitchButtonHandle, opt, w);
             dstyle.drawPrimitive(PE_SwitchButtonHandle, &option, p, w);
+
+            if (btn->state & State_HasFocus) {
+                QStyleOptionFocusRect fropt;
+                fropt.QStyleOption::operator=(*btn);
+                fropt.rect = dstyle.subElementRect(SE_SwitchButtonGroove, btn, w);
+                QColor color = dstyle.getColor(opt, QPalette::Highlight);
+                int frame_radius = dstyle.pixelMetric(DStyle::PM_FrameRadius, opt, w);
+
+                p->save();
+                p->setRenderHint(QPainter::Antialiasing);
+                p->setPen(Qt::NoPen);
+                p->setBrush(color);
+                QPainterPath path;
+
+                fropt.rect.adjust(-4, -4, 4, 4);
+                //添加外边框路径
+                path.addRoundedRect(fropt.rect, frame_radius + 3, frame_radius + 3);
+
+                fropt.rect.adjust(2, 2, -2, -2);
+                //添加内边框路径
+                path.addRoundedRect(fropt.rect, frame_radius + 1, frame_radius + 1);
+
+                p->drawPath(path);
+                p->restore();
+            }
         }
         break;
     }
@@ -1478,7 +1503,8 @@ QRect DStyle::subElementRect(const QStyle *style, DStyle::SubElement r, const QS
             DStyleHelper dstyle(style);
             int handleWidth = dstyle.pixelMetric(PM_SwitchButtonHandleWidth, opt, widget);
             int handleHeight = dstyle.pixelMetric(PM_SwithcButtonHandleHeight, opt, widget);
-            QRect rectHandle(0, 0, handleWidth, handleHeight);
+            //这里的borderWidth为2,间隙宽度为2, 所以为4
+            QRect rectHandle(4, 4, handleWidth, handleHeight);
 
             if (btn->state & QStyle::State_On) {
                 rectHandle.moveRight(opt->rect.right());
@@ -1539,6 +1565,8 @@ QSize DStyle::sizeFromContents(const QStyle *style, DStyle::ContentsType ct, con
         int w = dstyle.pixelMetric(PM_SwitchButtonHandleWidth, opt, widget);
         int h = dstyle.pixelMetric(PM_SwithcButtonHandleHeight, opt, widget);
         QSize size(qMax(contentsSize.width(), w * 5 / 3), qMax(contentsSize.height(), h));
+        //按照设计要求: 在保持现有控件的尺寸下,这里需要预留绘制focusRect的区域,borderWidth为2,间隙宽度为2,所以 (2+2)*2=8
+        size += QSize(8, 8);
 
         return size;
     }
