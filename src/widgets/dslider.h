@@ -39,6 +39,10 @@ class LIBDTKWIDGETSHARED_EXPORT DSlider : public QWidget, public DTK_CORE_NAMESP
     Q_DISABLE_COPY(DSlider)
     D_DECLARE_PRIVATE(DSlider)
 public:
+    enum SliderIcons {
+        LeftIcon,
+        RightIcon
+    };
     DSlider(Qt::Orientation orientation = Qt::Horizontal, QWidget *parent = nullptr);
 
     Qt::Orientation orientation() const;
@@ -92,6 +96,7 @@ Q_SIGNALS:
     void rangeChanged(int min, int max);
 
     void actionTriggered(int action);
+    void iconClicked(SliderIcons icon, bool checked);
 
 protected:
     DSlider(DSliderPrivate &q, QWidget *parent);

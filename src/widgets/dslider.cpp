@@ -68,6 +68,21 @@ private:
  */
 
 /*!
+ * \~chinese \fn DSlider::valueChanged
+ * \~chinese \brief 信号会在 slider value 属性的值改变时被发送
+ * \~chinese \fn DSlider::sliderMoved
+ * \~chinese \brief 信号会在 slider 拖动时被发送
+ * \~chinese \fn DSlider::sliderReleased
+ * \~chinese \brief 信号会在 slider被松开时被发送
+ * \~chinese \fn DSlider::rangeChanged
+ * \~chinese \brief 信号会在 range 属性的值改变时被发送
+ * \~chinese \fn DSlider::actionTriggered
+ * \~chinese \brief 信号会在 slider actoin 触发时被发送
+ * \~chinese \fn DSlider::iconClicked
+ * \~chinese \brief 信号会在左右 iconbutton 被点击时被发送
+ */
+
+/*!
  * \~chinese \brief DSlider的构造函数
  * \~chinese \param \sa orientation Qt::Orientation
  * \~chinese \param parent参数被发送到 QWidget 构造函数。
@@ -144,6 +159,9 @@ void DSlider::setLeftIcon(const QIcon &left)
         d->leftIcon->setFlat(true);
         d->leftIcon->setFocusPolicy(Qt::NoFocus);
         d->leftIcon->setAttribute(Qt::WA_TransparentForMouseEvents);
+        connect(d->leftIcon, &DIconButton::clicked, this, [this](bool checked) {
+            this->iconClicked(LeftIcon, checked);
+        });
 
         if (orientation() == Qt::Horizontal) {
             d->layout->addWidget(d->leftIcon, 1, 0, Qt::AlignVCenter);
@@ -176,6 +194,9 @@ void DSlider::setRightIcon(const QIcon &right)
         } else {
             d->layout->addWidget(d->rightIcon, 2, 1, Qt::AlignHCenter);
         }
+        connect(d->rightIcon, &DIconButton::clicked, this, [this](bool checked) {
+            this->iconClicked(RightIcon, checked);
+        });
 
         if (d->iconSize.isValid())
             d->rightIcon->setIconSize(d->iconSize);
