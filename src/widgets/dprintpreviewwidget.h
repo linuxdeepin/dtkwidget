@@ -92,6 +92,7 @@ Q_SIGNALS:
     void previewChanged();
     void currentPageChanged(int page);
     void totalPages(int);
+    void pagesCountChanged(int pages);
 
 private:
     void setCurrentTargetPage(int page);

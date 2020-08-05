@@ -666,6 +666,7 @@ void DPrintPreviewDialogPrivate::initconnections()
         totalPages = pages;
         pageRangeEdit->setText("1-" + QString::number(totalPages));
     });
+    QObject::connect(pview, &DPrintPreviewWidget::pagesCountChanged, totalPageLabel, static_cast<void (QLabel::*)(int)>(&QLabel::setNum));
     QObject::connect(firstBtn, &DIconButton::clicked, pview, &DPrintPreviewWidget::turnBegin);
     QObject::connect(prevPageBtn, &DIconButton::clicked, pview, &DPrintPreviewWidget::turnFront);
     QObject::connect(nextPageBtn, &DIconButton::clicked, pview, &DPrintPreviewWidget::turnBack);
