@@ -51,6 +51,7 @@ DDrawerPrivate::~DDrawerPrivate()
 void DDrawerPrivate::init()
 {
     DDrawer *qq = q_func();
+    qq->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
     QVBoxLayout *mainLayout = new QVBoxLayout(qq);
     mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->setSpacing(0);
