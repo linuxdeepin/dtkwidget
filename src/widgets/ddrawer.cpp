@@ -32,7 +32,10 @@ class ContentBox : public QWidget
     Q_OBJECT
     Q_PROPERTY(int height READ height WRITE setFixedHeight)
 public:
-    explicit ContentBox(QWidget *parent = nullptr) : QWidget(parent){}
+    explicit ContentBox(QWidget *parent = nullptr)
+        : QWidget(parent)
+    {
+    }
 };
 
 DDrawerPrivate::DDrawerPrivate(DDrawer *qq)
@@ -81,10 +84,6 @@ void DDrawerPrivate::init()
     qq->connect(m_animation, &QPropertyAnimation::valueChanged, qq, [qq] {
         qq->setFixedHeight(qq->sizeHint().height());
     });
-
-
-    m_hSeparator->setFrameStyle(QFrame::NoFrame);
-    m_bottom_separator->setFrameStyle(QFrame::NoFrame);
 
     mainLayout->addLayout(m_headerLayout);
     mainLayout->addWidget(m_hSeparator);

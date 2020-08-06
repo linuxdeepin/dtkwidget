@@ -26,7 +26,7 @@ DWIDGET_BEGIN_NAMESPACE
 class DBaseExpandPrivate
 {
 public:
-    DBaseExpandPrivate(DBaseExpand* qq);
+    DBaseExpandPrivate(DBaseExpand *qq);
     ~DBaseExpandPrivate();
 
     QWidget *m_header = nullptr;
@@ -35,7 +35,7 @@ public:
     QVBoxLayout *m_headerLayout = nullptr;
     QBoxLayout *m_contentLayout = nullptr;
     ContentLoader *m_contentLoader = nullptr;
-    DHorizontalLine * m_hSeparator = nullptr;
+    DHorizontalLine *m_hSeparator = nullptr;
     DHorizontalLine *m_bottom_separator = nullptr;
     QPropertyAnimation *m_animation = nullptr;
     bool m_expand = false;
@@ -80,10 +80,6 @@ DBaseExpandPrivate::DBaseExpandPrivate(DBaseExpand *qq)
     qq->connect(m_animation, &QPropertyAnimation::valueChanged, qq, [qq] {
         qq->setFixedHeight(qq->sizeHint().height());
     });
-
-
-    m_hSeparator->setFrameStyle(QFrame::NoFrame);
-    m_bottom_separator->setFrameStyle(QFrame::NoFrame);
 
     mainLayout->addLayout(m_headerLayout);
     mainLayout->addWidget(m_hSeparator);
