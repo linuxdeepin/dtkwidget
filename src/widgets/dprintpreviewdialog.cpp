@@ -127,6 +127,8 @@ void DPrintPreviewDialogPrivate::initleft(QVBoxLayout *layout)
     layout->addLayout(pbottomlayout);
     firstBtn = new DIconButton(DStyle::SP_ArrowPrev);
     prevPageBtn = new DIconButton(DStyle::SP_ArrowLeft);
+    firstBtn->setEnabled(false);
+    prevPageBtn->setEnabled(false);
     jumpPageEdit = new DSpinBox;
     jumpPageEdit->setMaximumWidth(50);
     jumpPageEdit->setButtonSymbols(QAbstractSpinBox::ButtonSymbols::NoButtons);
@@ -243,6 +245,10 @@ void DPrintPreviewDialogPrivate::initbasicui()
     copycountlayout->addWidget(copycountlabel);
     copycountlayout->addWidget(copycountspinbox);
 
+    QRegExp re("^[1-9][0-9][0-9]$");
+    QRegExpValidator *va = new QRegExpValidator(re);
+    copycountspinbox->lineEdit()->setValidator(va);
+
     //页码范围
     DFrame *pageFrame = new DFrame(basicsettingwdg);
     pageFrame->setObjectName("pageFrame");
@@ -265,7 +271,7 @@ void DPrintPreviewDialogPrivate::initbasicui()
     pagelayout->addLayout(hrangebox);
     pagelayout->addWidget(pageRangeEdit);
 
-    QRegExp reg("^[0-9,-]*[0-9,-]"); //||^[0-9-]*[0-9-]
+    QRegExp reg("^(([1-9][0-9]*)+(\\,|\\-)?)*");
     QRegExpValidator *val = new QRegExpValidator(reg);
     pageRangeEdit->lineEdit()->setValidator(val);
 
@@ -668,6 +674,7 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(printBtn, SIGNAL(clicked(bool)), q, SLOT(_q_startPrint(bool)));
     QObject::connect(colorModeCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_ColorModeChange(int)));
     QObject::connect(orientationgroup, SIGNAL(buttonClicked(int)), q, SLOT(_q_orientationChanged(int)));
+    QObject::connect(jumpPageEdit, SIGNAL(valueChanged(int)), q, SLOT(_q_currentPageSpinChanged(int)));
 
     QObject::connect(pview, &DPrintPreviewWidget::totalPages, [this](int pages) {
         totalPageLabel->setText(QString::number(pages));
@@ -748,7 +755,7 @@ void DPrintPreviewDialogPrivate::setfrmaeback(DWidget *frame)
 {
     DPalette pa = DApplicationHelper::instance()->palette(frame);
     pa.setBrush(DPalette::Base, pa.itemBackground());
-    pa.setBrush(DPalette::FrameBorder, pa.toolTipBase());
+    pa.setBrush(DPalette::FrameBorder, pa.base());
     DApplicationHelper::instance()->setPalette(frame, pa);
     //frame->setAutoFillBackground(true);
 }
@@ -871,7 +878,7 @@ void DPrintPreviewDialogPrivate::updateSetteings(int index)
     _q_orientationChanged(0);
     scaleGroup->button(1)->setChecked(true);
     orientationgroup->button(0)->setChecked(true);
-    scaleRateEdit->setValue(90);
+    scaleRateEdit->setValue(100);
     pageRangeEdit->lineEdit()->setPlaceholderText("1,3,5-7,11-15,18,21");
     marginsCombo->setCurrentIndex(0);
 
@@ -928,6 +935,7 @@ QVector<int> DPrintPreviewDialogPrivate::checkDuplication(QVector<int> data)
             }
         }
     }
+    qSort(data.begin(), data.end());
     return data;
 }
 
@@ -983,10 +991,12 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
         duplexSwitchBtn->setChecked(false);
         duplexSwitchBtn->setEnabled(false);
         colorModeCombo->setEnabled(false);
+        paperSizeCombo->clear();
         printer->setPrinterName("");
     } else {
         //actual printer
         if (printer) {
+            paperSizeCombo->clear();
             copycountspinbox->setDisabled(false);
             paperSizeCombo->setEnabled(true);
             duplexSwitchBtn->setEnabled(true);
@@ -1011,7 +1021,7 @@ void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
             totalPageLabel->setNum(totalPages);
             printer->setPrintRange(DPrinter::AllPages);
             printer->setFromTo(FIRST_PAGE, totalPages);
-            pview->setPageRangeALL();
+            jumpPageEdit->setValue(1);
             for (int i = 1; i < totalPageLabel->text().toInt(); i++) {
                 pagesrange.append(i);
             }
@@ -1025,7 +1035,9 @@ void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
     } else {
         pageRangeEdit->setText("");
         printer->setPrintRange(DPrinter::Selection);
+        jumpPageEdit->setValue(1);
     }
+    pview->setPageRange(pagesrange);
 }
 
 /*!
@@ -1150,13 +1162,17 @@ void DPrintPreviewDialogPrivate::_q_customPagesFinished()
             QStringList list1 = list.at(i).split("-");
             if (list1.at(0).toInt() <= list1.at(1).toInt()) {
                 for (int page = list1.at(0).toInt(); page <= list1.at(1).toInt(); page++) {
-                    if (page != 0)
+                    if (page != 0 && page <= totalPages)
                         pagesrange.append(page);
+                    else
+                        return;
                 }
             }
         } else {
-            if (list.at(i).toInt() != 0)
+            if (list.at(i).toInt() != 0 && list.at(i).toInt() <= totalPages)
                 pagesrange.append(list.at(i).toInt());
+            else
+                return;
         }
     }
     QVector<int> page = checkDuplication(pagesrange);
@@ -1190,6 +1206,26 @@ void DPrintPreviewDialogPrivate::_q_marginspinChanged(double)
 
     // 默认1秒的定时器，时间到了就刷新预览页面
     marginTimer->start(1000);
+}
+
+void DPrintPreviewDialogPrivate::_q_currentPageSpinChanged(int value)
+{
+    if (value == 1) {
+        firstBtn->setEnabled(false);
+        prevPageBtn->setEnabled(false);
+        lastBtn->setEnabled(true);
+        nextPageBtn->setEnabled(true);
+    } else if (value == totalPageLabel->text().toInt()) {
+        lastBtn->setEnabled(false);
+        nextPageBtn->setEnabled(false);
+        firstBtn->setEnabled(true);
+        prevPageBtn->setEnabled(true);
+    } else {
+        firstBtn->setEnabled(true);
+        prevPageBtn->setEnabled(true);
+        lastBtn->setEnabled(true);
+        nextPageBtn->setEnabled(true);
+    }
 }
 
 /*!

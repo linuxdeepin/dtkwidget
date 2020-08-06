@@ -74,6 +74,7 @@ public:
     void _q_customPagesFinished();
     void _q_marginTimerOut();
     void _q_marginspinChanged(double);
+    void _q_currentPageSpinChanged(int value);
 
     //printer
     DPrinter *printer;
