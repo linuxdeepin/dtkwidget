@@ -68,6 +68,7 @@ public:
     DFloatingButton *m_nextBtn;
 
     bool m_playStatus = false;
+    bool m_clickedStatus = false;
     bool m_pictureVisible;
 
     QString     m_lastPath;

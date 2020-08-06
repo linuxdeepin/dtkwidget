@@ -47,6 +47,8 @@ public Q_SLOTS:
     void setPictureSize(const QSize &size);
 
 protected:
+    void showEvent(QShowEvent *event);
+
     D_PRIVATE_SLOT(void _q_onMetaDataChanged())
     D_PRIVATE_SLOT(void _q_onPlaybackStatusChanged())
     D_PRIVATE_SLOT(void _q_onPrevClicked())

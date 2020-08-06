@@ -22,6 +22,7 @@
 #include <QPainter>
 #include <QDebug>
 #include <QVBoxLayout>
+#include <QTimer>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -89,6 +90,15 @@ void DMPRISControl::setPictureSize(const QSize &size)
     D_D(DMPRISControl);
 
     d->m_picture->setFixedSize(size);
+}
+
+void DMPRISControl::showEvent(QShowEvent *event)
+{
+    D_D(DMPRISControl);
+
+    d->_q_onPlaybackStatusChanged();
+
+    QFrame::showEvent(event);
 }
 
 DMPRISControlPrivate::DMPRISControlPrivate(DMPRISControl *q)
@@ -172,7 +182,14 @@ void DMPRISControlPrivate::init()
     q->connect(m_mprisMonitor, SIGNAL(mprisAcquired(const QString &)), q, SLOT(_q_loadMPRISPath(const QString &)));
     q->connect(m_mprisMonitor, SIGNAL(mprisLost(const QString &)), q, SLOT(_q_removeMPRISPath(const QString &)));
     q->connect(m_prevBtn, SIGNAL(clicked()), q, SLOT(_q_onPrevClicked()));
-    q->connect(m_playBtn, SIGNAL(clicked()), q, SLOT(_q_onPlayClicked()));
+
+    q->connect(m_playBtn, &DFloatingButton::clicked, q, [q, this] {
+        if (m_clickedStatus)
+            return;
+        m_clickedStatus = true;
+        QTimer::singleShot(100, q, SLOT(_q_onPlayClicked()));
+    });
+
     q->connect(m_nextBtn, SIGNAL(clicked()), q, SLOT(_q_onNextClicked()));
 
     m_mprisMonitor->init();
@@ -189,6 +206,7 @@ void DMPRISControlPrivate::_q_onPrevClicked()
 
 void DMPRISControlPrivate::_q_onPlayClicked()
 {
+    m_clickedStatus = false;
     if (!m_mprisInter)
         return;
 
@@ -248,6 +266,9 @@ void DMPRISControlPrivate::_q_onMetaDataChanged()
 
 void DMPRISControlPrivate::_q_onPlaybackStatusChanged()
 {
+    if (!m_mprisInter)
+        return;
+
     const QString stat = m_mprisInter->playbackStatus();
 #ifdef QT_DEBUG
     if (stat == "Playing") {
