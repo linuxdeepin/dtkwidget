@@ -639,8 +639,16 @@ void DPrintPreviewDialogPrivate::initadvanceui()
 void DPrintPreviewDialogPrivate::initdata()
 {
     Q_Q(DPrintPreviewDialog);
-    printDeviceCombo->addItems(QPrinterInfo::availablePrinterNames());
-    printDeviceCombo->addItem(q->tr("Print to PDF"));
+    QStringList itemlist;
+    itemlist << QPrinterInfo::availablePrinterNames() << q->tr("Print to PDF");
+    printDeviceCombo->addItems(itemlist);
+    QString defauledevice = QPrinterInfo::defaultPrinterName();
+    for (int i = 0; i < itemlist.size(); ++i) {
+        if (defauledevice.count(itemlist.at(i)) > 0) {
+            printDeviceCombo->setCurrentIndex(i);
+            break;
+        }
+    }
     updateSetteings(0);
 }
 
