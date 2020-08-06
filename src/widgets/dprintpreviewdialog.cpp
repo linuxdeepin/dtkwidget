@@ -1248,7 +1248,18 @@ void DPrintPreviewDialogPrivate::_q_startPrint(bool clicked)
         if (printer->outputFileName().isEmpty()) {
             if (printer->docName().isEmpty())
                 desktopPath += QStringLiteral("print.pdf");
-            else {
+            QFileInfo file(desktopPath);
+            QString path = desktopPath;
+            if (file.isFile()) {
+                int i = 1;
+                do {
+                    QString stres("(%1).pdf");
+                    path = desktopPath.remove(".pdf") + stres.arg(i);
+                    file.setFile(path);
+                    i++;
+                } while (file.isFile());
+                desktopPath = path;
+            } else {
                 desktopPath += printer->docName();
             }
         } else {
