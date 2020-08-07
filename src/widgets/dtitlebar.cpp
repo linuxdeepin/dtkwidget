@@ -325,7 +325,12 @@ void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
 
     bool showTitle = (type.testFlag(Qt::WindowTitleHint) || forceShow) && !embedMode;
     if (titleLabel) {
-        titleLabel->setVisible(showTitle);
+        if (showTitle) {
+            titleLabel->setText(q->property("_dtk_title").toString());
+        } else {
+            q->setProperty("_dtk_title", titleLabel->text());
+            titleLabel->clear();
+        }
     }
 
     // Never show in embed/fullscreen
@@ -979,6 +984,7 @@ void DTitlebar::removeWidget(QWidget *w)
     if (d->centerLayout->isEmpty()) {
         d->titleLabel = d->centerArea;
         d->titleLabel->setText(d->targetWindowHandle->title());
+        setProperty("_dtk_title", d->titleLabel->text());
     }
 
     updateGeometry();
@@ -1053,6 +1059,7 @@ void DTitlebar::setTitle(const QString &title)
     } else if (parentWidget()) {
         parentWidget()->setWindowTitle(title);
     }
+    setProperty("_dtk_title", d->titleLabel->text());
 }
 
 /*!
