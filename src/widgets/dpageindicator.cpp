@@ -17,6 +17,9 @@
 
 #include "dpageindicator.h"
 #include "private/dpageindicator_p.h"
+#include "dapplicationhelper.h"
+
+#include <DPalette>
 
 #include <QDebug>
 #include <QPainter>
@@ -62,6 +65,7 @@ DPageIndicator::DPageIndicator(QWidget *parent)
     : QWidget(parent),
       DObject(*new DPageIndicatorPrivate(this), this)
 {
+    setMinimumHeight(d_func()->pointRadius * 2);
 }
 
 /*!
@@ -257,6 +261,13 @@ void DPageIndicator::paintEvent(QPaintEvent *e)
     QColor currentPtColor = d->pointColor;
     QColor nonCurrentPtColor = d->secondaryPointColor;
 
+    if (!d->pointColor.isValid())
+        currentPtColor = this->palette().highlight().color();
+
+    if (!d->secondaryPointColor.isValid()) {
+        nonCurrentPtColor = this->palette().button().color();
+    }
+
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(Qt::transparent);
@@ -273,11 +284,10 @@ void DPageIndicator::paintEvent(QPaintEvent *e)
     }
 }
 
-DPageIndicatorPrivate::DPageIndicatorPrivate(DPageIndicator *q) :
-    DObjectPrivate(q),
-    pageCount(0),
-    currentPage(-1),
-    pointColor(Qt::red)
+DPageIndicatorPrivate::DPageIndicatorPrivate(DPageIndicator *q)
+    : DObjectPrivate(q)
+    , pageCount(3)
+    , currentPage(1)
 {
 
 }
@@ -293,7 +303,7 @@ void DPageIndicatorPrivate::setPageCount(const int count)
 
 void DPageIndicatorPrivate::nextPage()
 {
-    currentPage = (currentPage + 1) % pageCount;
+    currentPage = (pageCount == 0) ? 0 : (currentPage + 1) % pageCount;
 
     D_Q(DPageIndicator);
 
