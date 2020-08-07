@@ -52,9 +52,7 @@ void DPrintPreviewWidgetPrivate::populateScene()
         setPageRangeAll();
     }
     if (!pages.isEmpty()) {
-        currentPageNumber = FIRST_PAGE;
-        isGenerate = true;
-        pages.at(index2page(FIRST_INDEX) - 1)->setVisible(true);
+        setCurrentPage(FIRST_PAGE);
     }
 }
 
@@ -116,7 +114,6 @@ void DPrintPreviewWidgetPrivate::setPageRangeAll()
     for (int i = FIRST_PAGE; i <= size; i++) {
         pageRange.append(i);
     }
-    isGenerate = false;
     Q_Q(DPrintPreviewWidget);
     Q_EMIT q->totalPages(size);
 }
@@ -129,11 +126,11 @@ int DPrintPreviewWidgetPrivate::pagesCount()
 void DPrintPreviewWidgetPrivate::setCurrentPage(int page)
 {
     int pageCount = pagesCount();
-    if (page < FIRST_PAGE || page > pageCount || (page == FIRST_PAGE && page == currentPageNumber && isGenerate))
+    if (page < FIRST_PAGE || page > pageCount)
         return;
-    if (page == FIRST_PAGE)
-        isGenerate = true;
     int pageNumber = index2page(page - 1);
+    if (currentPageNumber == 0)
+        currentPageNumber = FIRST_PAGE;
     int lastPage = index2page(currentPageNumber - 1);
     currentPageNumber = page;
 
@@ -175,7 +172,7 @@ int DPrintPreviewWidgetPrivate::targetPage(int page)
 
 int DPrintPreviewWidgetPrivate::index2page(int index)
 {
-    if (index >= pageRange.size())
+    if (index < 0 || index >= pageRange.size())
         return -1;
     return pageRange.at(index);
 }
@@ -314,6 +311,14 @@ qreal DPrintPreviewWidget::getScale() const
 {
     D_DC(DPrintPreviewWidget);
     return d->scale;
+}
+
+void DPrintPreviewWidget::updateView()
+{
+    Q_D(DPrintPreviewWidget);
+    if (d->currentPageNumber < 0 || d->currentPageNumber > d->pages.count())
+        return;
+    d->pages.at(d->currentPageNumber - 1)->update();
 }
 
 void DPrintPreviewWidget::updatePreview()

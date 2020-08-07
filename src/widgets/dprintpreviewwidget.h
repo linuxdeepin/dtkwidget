@@ -77,6 +77,7 @@ public:
     DPrinter::ColorMode getColorMode();
     void setScale(qreal scale);
     qreal getScale() const;
+    void updateView();
 
 public Q_SLOTS:
     void updatePreview();
