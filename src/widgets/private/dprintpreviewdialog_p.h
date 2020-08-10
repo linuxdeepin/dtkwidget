@@ -60,7 +60,7 @@ public:
     void setupPrinter();
     void setScaling(int index);
     void test();
-    void updateSetteings(int index);
+    void updateSetteings(int index, bool isInit);
     QVector<int> checkDuplication(QVector<int> data);
 
     void setEnable(const int &value, DComboBox *combox); //控件可用

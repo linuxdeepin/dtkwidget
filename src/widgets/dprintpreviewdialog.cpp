@@ -102,7 +102,7 @@ void DPrintPreviewDialogPrivate::initui()
     mainlayout->setSpacing(0);
     DFrame *pframe = new DFrame;
     pframe->setLayout(mainlayout);
-
+    pframe->setFixedHeight(536);
     QVBoxLayout *pleftlayout = new QVBoxLayout;
     initleft(pleftlayout);
     DVerticalLine *pvline = new DVerticalLine;
@@ -127,6 +127,7 @@ void DPrintPreviewDialogPrivate::initleft(QVBoxLayout *layout)
     layout->addLayout(pbottomlayout);
     firstBtn = new DIconButton(DStyle::SP_ArrowPrev);
     prevPageBtn = new DIconButton(DStyle::SP_ArrowLeft);
+    firstBtn->setIcon(QIcon::fromTheme("printer_original"));
     firstBtn->setEnabled(false);
     prevPageBtn->setEnabled(false);
     jumpPageEdit = new DSpinBox;
@@ -137,6 +138,7 @@ void DPrintPreviewDialogPrivate::initleft(QVBoxLayout *layout)
     jumpPageEdit->setRange(1, totalPageLabel->text().toInt());
     nextPageBtn = new DIconButton(DStyle::SP_ArrowRight);
     lastBtn = new DIconButton(DStyle::SP_ArrowNext);
+    lastBtn->setIcon(QIcon::fromTheme("printer_final"));
     pbottomlayout->addWidget(firstBtn);
     pbottomlayout->addSpacing(10);
     pbottomlayout->addWidget(prevPageBtn);
@@ -171,7 +173,7 @@ void DPrintPreviewDialogPrivate::initright(QVBoxLayout *layout)
     advanceBtn = new DPushButton(q->tr("Advanced"));
     advanceBtn->setLayoutDirection(Qt::RightToLeft);
     advanceBtn->setIcon(QIcon::fromTheme("printer_dropdown"));
-    advanceBtn->setIconSize(QSize(9, 10));
+    advanceBtn->setIconSize(QSize(12, 12));
     DPalette pa = advanceBtn->palette();
     pa.setColor(DPalette::ButtonText, pa.link().color());
     advanceBtn->setPalette(pa);
@@ -655,7 +657,7 @@ void DPrintPreviewDialogPrivate::initdata()
             break;
         }
     }
-    updateSetteings(0);
+    updateSetteings(0, true);
 }
 
 void DPrintPreviewDialogPrivate::initconnections()
@@ -866,19 +868,22 @@ void DPrintPreviewDialogPrivate::test()
  * \~chinese \brief DPrintPreviewDialogPrivate::updateSetteings 具体对每个控件和属性进行更新
  * \~chinese \param index 判断当前的打印设备
  */
-void DPrintPreviewDialogPrivate::updateSetteings(int index)
+void DPrintPreviewDialogPrivate::updateSetteings(int index, bool isInit)
 {
     Q_Q(DPrintPreviewDialog);
     QPrinterInfo updateinfo(*printer);
-    copycountspinbox->setValue(1);
-    paperSizeCombo->setCurrentIndex(0);
-    _q_pageRangeChanged(0);
-    _q_pageMarginChanged(0);
-    _q_orientationChanged(0);
-    scaleGroup->button(1)->setChecked(true);
-    orientationgroup->button(0)->setChecked(true);
-    scaleRateEdit->setValue(100);
-    marginsCombo->setCurrentIndex(0);
+    if (isInit) {
+        copycountspinbox->setValue(1);
+        paperSizeCombo->setCurrentIndex(0);
+        _q_pageRangeChanged(0);
+        _q_pageMarginChanged(0);
+        _q_orientationChanged(0);
+        scaleGroup->button(1)->setChecked(true);
+        orientationgroup->button(0)->setChecked(true);
+        scaleRateEdit->setValue(100);
+        marginsCombo->setCurrentIndex(0);
+        pageRangeCombo->setCurrentIndex(0);
+    }
 
     if (index != printDeviceCombo->count() - 1) {
         QStringList pageSizeList;
@@ -891,6 +896,7 @@ void DPrintPreviewDialogPrivate::updateSetteings(int index)
         if (updateinfo.supportedDuplexModes().contains(QPrinter::DuplexLongSide) || updateinfo.supportedDuplexModes().contains(QPrinter::DuplexShortSide)) {
             duplexSwitchBtn->setEnabled(true);
         } else {
+            duplexSwitchBtn->setChecked(false);
             duplexSwitchBtn->setEnabled(false);
         }
         //判断当前打印机是否支持彩色打印，不支持彩色打印删除彩色打印选择选项，pdf不做判断
@@ -1002,7 +1008,7 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
             printer->setPrinterName(printDeviceCombo->itemText(index));
         }
     }
-    updateSetteings(index);
+    updateSetteings(index, false);
 }
 
 /*!
@@ -1170,6 +1176,7 @@ void DPrintPreviewDialogPrivate::_q_customPagesFinished()
                 return;
         }
     }
+    jumpPageEdit->setValue(1);
     QVector<int> page = checkDuplication(pagesrange);
     qDebug() << page << __func__;
     pview->setPageRange(page);

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>printer_dropdown_14px_dark</title>
+    <defs>
+        <filter id="filter-1">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.000000 0 0 0 0 0.350370 0 0 0 0 0.822096 0 0 0 1.000000 0"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="printer_dropdown_14px_dark" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g filter="url(#filter-1)" id="combobox_arrow">
+            <g transform="translate(4.000000, 3.000000)">
+                <polyline id="down-copy-2" stroke="#0081FF" stroke-width="1.2" points="7.07106781 7.0832229e-14 3.53553391 3.53553391 -4.4408921e-16 7.0832229e-14"></polyline>
+                <polyline id="down-copy-2备份" stroke="#0081FF" stroke-width="1.2" points="7.07106781 5 3.53553391 8.53553391 -4.4408921e-16 5"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>

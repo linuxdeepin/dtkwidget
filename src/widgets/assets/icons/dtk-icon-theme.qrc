@@ -16,5 +16,19 @@
         <file>light/icons/printer_lrtb_4_24px.svg</file>
         <file>light/icons/printer_lrtb_5_24px.svg</file>
         <file>light/icons/printer_portrait_40px.svg</file>
+        <file>dark/icons/printer_colorselect_18px.svg</file>
+        <file>dark/icons/printer_dropdown_14px.svg</file>
+        <file>dark/icons/printer_dropup_14px.svg</file>
+        <file>dark/icons/printer_landscape_40px.svg</file>
+        <file>dark/icons/printer_lrtb_1_24px.svg</file>
+        <file>dark/icons/printer_lrtb_2_24px.svg</file>
+        <file>dark/icons/printer_lrtb_3_24px.svg</file>
+        <file>dark/icons/printer_lrtb_4_24px.svg</file>
+        <file>dark/icons/printer_lrtb_5_24px.svg</file>
+        <file>dark/icons/printer_portrait_40px.svg</file>
+        <file>light/icons/printer_final_12px.svg</file>
+        <file>light/icons/printer_original_12px.svg</file>
+        <file>dark/icons/printer_final_12px.svg</file>
+        <file>dark/icons/printer_original_12px.svg</file>
     </qresource>
 </RCC>
