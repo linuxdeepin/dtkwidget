@@ -1059,7 +1059,7 @@ void DTitlebar::setTitle(const QString &title)
     } else if (parentWidget()) {
         parentWidget()->setWindowTitle(title);
     }
-    setProperty("_dtk_title", d->titleLabel->text());
+    setProperty("_dtk_title", title);
 }
 
 /*!
