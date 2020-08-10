@@ -251,7 +251,6 @@ void DKeySequenceEditPrivate::init()
     layout->addWidget(rightWidget, 0, Qt::AlignRight);
 
     q->setReadOnly(true);
-    q->setFocusPolicy(Qt::FocusPolicy::ClickFocus);
 
     copywritingList.insert("PgUp", "PageUp");
     copywritingList.insert("PgDown", "PageDown");
