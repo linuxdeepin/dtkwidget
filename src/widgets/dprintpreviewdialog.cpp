@@ -651,8 +651,9 @@ void DPrintPreviewDialogPrivate::initdata()
     itemlist << QPrinterInfo::availablePrinterNames() << q->tr("Print to PDF");
     printDeviceCombo->addItems(itemlist);
     QString defauledevice = QPrinterInfo::defaultPrinterName();
+    qDebug() << defauledevice;
     for (int i = 0; i < itemlist.size(); ++i) {
-        if (defauledevice.count(itemlist.at(i)) > 0) {
+        if (defauledevice.compare(itemlist.at(i)) == 0) {
             printDeviceCombo->setCurrentIndex(i);
             break;
         }
