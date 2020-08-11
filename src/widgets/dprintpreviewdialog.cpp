@@ -887,6 +887,7 @@ void DPrintPreviewDialogPrivate::updateSetteings(int index, bool isInit)
 
     if (index != printDeviceCombo->count() - 1) {
         QStringList pageSizeList;
+        printBtn->setText(q->tr("Print"));
         for (int i = 0; i < updateinfo.supportedPageSizes().size(); i++) {
             pageSizeList.append(updateinfo.supportedPageSizes().at(i).key());
         }
@@ -913,6 +914,7 @@ void DPrintPreviewDialogPrivate::updateSetteings(int index, bool isInit)
     } else {
         if (colorModeCombo->count() == 1)
             colorModeCombo->insertItem(0, q->tr("Color"));
+        printBtn->setText(q->tr("Save"));
         copycountspinbox->setDisabled(true);
         copycountspinbox->setValue(1);
         paperSizeCombo->clear();
