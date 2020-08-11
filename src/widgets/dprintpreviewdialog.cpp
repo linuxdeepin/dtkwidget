@@ -512,11 +512,13 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     setfrmaeback(duplexframe);
     duplexframe->setFixedHeight(48);
     QHBoxLayout *duplexlayout = new QHBoxLayout(duplexframe);
-    DLabel *duplexlabel = new DLabel(q->tr("Duplex"));
-    duplexSwitchBtn = new DSwitchButton;
-    duplexlayout->addWidget(duplexlabel);
-    duplexlayout->addStretch(1);
-    duplexlayout->addWidget(duplexSwitchBtn, Qt::AlignRight);
+    duplexCombo = new DComboBox;
+    duplexCheckBox = new DCheckBox(q->tr("Duplex"));
+    duplexCheckBox->setFixedWidth(123);
+    duplexCombo->setFixedHeight(36);
+    duplexlayout->setContentsMargins(14, 4, 10, 4);
+    duplexlayout->addWidget(duplexCheckBox);
+    duplexlayout->addWidget(duplexCombo);
     /*
         DFrame  *drawingframe = new DFrame;
         setfrmaeback(drawingframe);
@@ -751,6 +753,7 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(marginRightSpin, SIGNAL(valueChanged(double)), q, SLOT(_q_marginspinChanged(double)));
     QObject::connect(marginLeftSpin, SIGNAL(valueChanged(double)), q, SLOT(_q_marginspinChanged(double)));
     QObject::connect(marginBottomSpin, SIGNAL(valueChanged(double)), q, SLOT(_q_marginspinChanged(double)));
+    QObject::connect(duplexCheckBox, SIGNAL(stateChanged(int)), q, SLOT(_q_checkStateChanged(int)));
 }
 
 void DPrintPreviewDialogPrivate::setfrmaeback(DWidget *frame)
@@ -823,13 +826,27 @@ void DPrintPreviewDialogPrivate::setupPrinter()
         }
     }
     //设置双面打印
-    if (duplexSwitchBtn->isChecked())
-        printer->setDuplex(QPrinter::DuplexAuto);
-    else {
+    if (duplexCheckBox->isChecked()) {
+        if (duplexCombo->count() == 1) {
+            if (supportedDuplexFlag)
+                printer->setDuplex(QPrinter::DuplexLongSide);
+            else
+                printer->setDuplex(QPrinter::DuplexShortSide);
+        } else {
+            switch (duplexCombo->currentIndex()) {
+            case 0:
+                printer->setDuplex(QPrinter::DuplexLongSide);
+                break;
+            case 1:
+                printer->setDuplex(QPrinter::DuplexShortSide);
+                break;
+            }
+        }
+    } else {
         printer->setDuplex(QPrinter::DuplexNone);
     }
     //设置色彩打印
-    if (colorModeCombo->currentIndex() == 0)
+    if (supportedColorMode)
         printer->setColorMode(QPrinter::Color);
     else {
         printer->setColorMode(QPrinter::GrayScale);
@@ -896,10 +913,22 @@ void DPrintPreviewDialogPrivate::updateSetteings(int index, bool isInit)
         paperSizeCombo->setCurrentText("A4");
         //判断当前打印机是否支持双面打印，不支持禁用双面打印按钮，pdf不做判断
         if (updateinfo.supportedDuplexModes().contains(QPrinter::DuplexLongSide) || updateinfo.supportedDuplexModes().contains(QPrinter::DuplexShortSide)) {
-            duplexSwitchBtn->setEnabled(true);
+            duplexCombo->setEnabled(true);
+            if (!updateinfo.supportedDuplexModes().contains(QPrinter::DuplexLongSide)) {
+                duplexCombo->addItem(q->tr("Flip on short edge"));
+                supportedDuplexFlag = false;
+            } else if (!updateinfo.supportedDuplexModes().contains(QPrinter::DuplexShortSide)) {
+                duplexCombo->addItem(q->tr("Flip on long edge"));
+                supportedDuplexFlag = true;
+            } else if (updateinfo.supportedDuplexModes().contains(QPrinter::DuplexLongSide) && updateinfo.supportedDuplexModes().contains(QPrinter::DuplexShortSide)) {
+                duplexCombo->addItem(q->tr("Flip on long edge"));
+                duplexCombo->addItem(q->tr("Flip on short edge"));
+            }
         } else {
-            duplexSwitchBtn->setChecked(false);
-            duplexSwitchBtn->setEnabled(false);
+            duplexCheckBox->setCheckState(Qt::Unchecked);
+            duplexCheckBox->setEnabled(false);
+            duplexCombo->clear();
+            duplexCombo->setEnabled(false);
         }
         //判断当前打印机是否支持彩色打印，不支持彩色打印删除彩色打印选择选项，pdf不做判断
         QPlatformPrinterSupport *ps = QPlatformPrinterSupportPlugin::get();
@@ -907,9 +936,11 @@ void DPrintPreviewDialogPrivate::updateSetteings(int index, bool isInit)
         if (!currentDevice.supportedColorModes().contains(QPrint::Color)) {
             if (colorModeCombo->count() != 1)
                 colorModeCombo->removeItem(0);
+            supportedColorMode = true;
         } else {
             if (colorModeCombo->count() == 1)
                 colorModeCombo->insertItem(0, q->tr("Color"));
+            supportedColorMode = false;
         }
 
     } else {
@@ -927,9 +958,10 @@ void DPrintPreviewDialogPrivate::updateSetteings(int index, bool isInit)
                                                << "8K"
                                                << "16K");
         paperSizeCombo->setCurrentIndex(1);
-        duplexSwitchBtn->setEnabled(false);
+        colorModeCombo->setEnabled(false);
     }
     colorModeCombo->setCurrentIndex(0);
+    duplexCombo->setEnabled(false);
 }
 
 QVector<int> DPrintPreviewDialogPrivate::checkDuplication(QVector<int> data)
@@ -995,8 +1027,10 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
         //pdf
         copycountspinbox->setDisabled(true);
         copycountspinbox->setValue(1);
-        duplexSwitchBtn->setChecked(false);
-        duplexSwitchBtn->setEnabled(false);
+        duplexCheckBox->setCheckState(Qt::Unchecked);
+        duplexCheckBox->setEnabled(false);
+        duplexCombo->clear();
+        duplexCombo->setEnabled(false);
         colorModeCombo->setEnabled(false);
         paperSizeCombo->clear();
         printer->setPrinterName("");
@@ -1006,7 +1040,8 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
             paperSizeCombo->clear();
             copycountspinbox->setDisabled(false);
             paperSizeCombo->setEnabled(true);
-            duplexSwitchBtn->setEnabled(true);
+            duplexCheckBox->setEnabled(true);
+            duplexCombo->setEnabled(true);
             colorModeCombo->setEnabled(true);
             printer->setPrinterName(printDeviceCombo->itemText(index));
         }
@@ -1230,6 +1265,19 @@ void DPrintPreviewDialogPrivate::_q_currentPageSpinChanged(int value)
         prevPageBtn->setEnabled(true);
         lastBtn->setEnabled(true);
         nextPageBtn->setEnabled(true);
+    }
+}
+
+/*!
+ * \~chinese \brief DPrintPreviewDialogPrivate::_q_checkStateChanged 点击双面打印按钮
+ * \~chinese \param state 判断是否选中双面打印按钮
+ */
+void DPrintPreviewDialogPrivate::_q_checkStateChanged(int state)
+{
+    if (!state)
+        duplexCombo->setEnabled(false);
+    else {
+        duplexCombo->setEnabled(true);
     }
 }
 

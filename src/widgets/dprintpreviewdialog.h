@@ -51,6 +51,7 @@ private:
     D_PRIVATE_SLOT(void _q_marginTimerOut())
     D_PRIVATE_SLOT(void _q_marginspinChanged(double))
     D_PRIVATE_SLOT(void _q_currentPageSpinChanged(int))
+    D_PRIVATE_SLOT(void _q_checkStateChanged(int))
 };
 
 DWIDGET_END_NAMESPACE

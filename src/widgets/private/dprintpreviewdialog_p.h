@@ -26,6 +26,7 @@
 #include "ddialog_p.h"
 #include <DWidget>
 #include <DPushButton>
+#include <DCheckBox>
 #include <DComboBox>
 #include <DRadioButton>
 #include <private/qprintdevice_p.h>
@@ -75,6 +76,7 @@ public:
     void _q_marginTimerOut();
     void _q_marginspinChanged(double);
     void _q_currentPageSpinChanged(int value);
+    void _q_checkStateChanged(int state);
 
     //printer
     DPrinter *printer;
@@ -107,8 +109,9 @@ public:
     DDoubleSpinBox *marginRightSpin;
     QButtonGroup *scaleGroup;
     DSpinBox *scaleRateEdit;
+    DComboBox *duplexCombo;
+    DCheckBox *duplexCheckBox;
     DComboBox *paperSizeCombo;
-    DSwitchButton *duplexSwitchBtn;
     DComboBox *pagePerSheetCombo;
     DIconButton *lrtbBtn; //左右上下
     DIconButton *rltbBtn; //右左上下
@@ -120,6 +123,8 @@ public:
     DIconButton *waterColorBtn;
     DLineEdit *waterTextEdit;
     QTimer *marginTimer;
+    bool supportedDuplexFlag = false;
+    bool supportedColorMode = false;
 
     Q_DECLARE_PUBLIC(DPrintPreviewDialog)
 };
