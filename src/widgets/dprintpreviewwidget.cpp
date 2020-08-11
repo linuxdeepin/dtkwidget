@@ -401,11 +401,20 @@ void PageItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     DPrintPreviewWidget *pwidget = qobject_cast<DPrintPreviewWidget *>(scene()->parent()->parent());
     qreal scale = pwidget->getScale();
     painter->scale(scale, scale);
+
+    QPointF leftTopPoint;
+    if (scale >= 1.0) {
+        leftTopPoint.setX(pageRect.x() / scale);
+        leftTopPoint.setY(pageRect.y() / scale);
+    } else {
+        leftTopPoint.setX((pageRect.x() + (pageRect.width() * (1.0 - scale) / 2.0)) / scale);
+        leftTopPoint.setY((pageRect.y() + (pageRect.height() * (1.0 - scale) / 2.0)) / scale);
+    }
     if (pwidget && (pwidget->getColorMode() == QPrinter::GrayScale)) {
         // 图像灰度处理
-        painter->drawPicture(QPointF(pageRect.topLeft().x() / scale, pageRect.topLeft().y() / scale), grayscalePaint(*pagePicture));
+        painter->drawPicture(leftTopPoint, grayscalePaint(*pagePicture));
     } else if (pwidget && (pwidget->getColorMode() == QPrinter::Color)) {
-        painter->drawPicture(QPointF(pageRect.topLeft().x() / scale, pageRect.topLeft().y() / scale), *pagePicture);
+        painter->drawPicture(leftTopPoint, *pagePicture);
     }
 
     painter->resetTransform();
