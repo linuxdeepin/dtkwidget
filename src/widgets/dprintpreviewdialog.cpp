@@ -889,6 +889,7 @@ void DPrintPreviewDialogPrivate::test()
 void DPrintPreviewDialogPrivate::updateSetteings(int index, bool isInit)
 {
     Q_Q(DPrintPreviewDialog);
+    pview->refreshBegin();
     QPrinterInfo updateinfo(*printer);
     if (isInit) {
         copycountspinbox->setValue(1);
@@ -962,6 +963,7 @@ void DPrintPreviewDialogPrivate::updateSetteings(int index, bool isInit)
     }
     colorModeCombo->setCurrentIndex(0);
     duplexCombo->setEnabled(false);
+    pview->refreshEnd();
 }
 
 QVector<int> DPrintPreviewDialogPrivate::checkDuplication(QVector<int> data)

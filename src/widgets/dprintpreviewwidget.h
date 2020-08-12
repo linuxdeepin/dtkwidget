@@ -78,6 +78,8 @@ public:
     void setScale(qreal scale);
     qreal getScale() const;
     void updateView();
+    void refreshBegin();
+    void refreshEnd();
 
 public Q_SLOTS:
     void updatePreview();

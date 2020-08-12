@@ -12,6 +12,7 @@ DWIDGET_BEGIN_NAMESPACE
 DPrintPreviewWidgetPrivate::DPrintPreviewWidgetPrivate(DPrintPreviewWidget *qq)
     : DObjectPrivate(qq)
     , imposition(DPrintPreviewWidget::Imposition::None)
+    , refreshMode(DPrintPreviewWidgetPrivate::RefreshImmediately)
 {
 }
 
@@ -58,6 +59,9 @@ void DPrintPreviewWidgetPrivate::populateScene()
 
 void DPrintPreviewWidgetPrivate::generatePreview()
 {
+    if (refreshMode == RefreshDelay)
+        return;
+
     for (auto *page : qAsConst(pages))
         scene->removeItem(page);
     qDeleteAll(pages);
@@ -330,6 +334,21 @@ void DPrintPreviewWidget::updateView()
     if (d->currentPageNumber < 0 || d->currentPageNumber > d->pages.count())
         return;
     d->pages.at(d->currentPageNumber - 1)->update();
+}
+
+void DPrintPreviewWidget::refreshBegin()
+{
+    Q_D(DPrintPreviewWidget);
+
+    d->refreshMode = DPrintPreviewWidgetPrivate::RefreshDelay;
+}
+
+void DPrintPreviewWidget::refreshEnd()
+{
+    Q_D(DPrintPreviewWidget);
+
+    d->refreshMode = DPrintPreviewWidgetPrivate::RefreshImmediately;
+    updatePreview();
 }
 
 void DPrintPreviewWidget::updatePreview()

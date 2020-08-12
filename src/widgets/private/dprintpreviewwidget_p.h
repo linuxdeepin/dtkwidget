@@ -111,6 +111,9 @@ private:
 class DPrintPreviewWidgetPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 {
 public:
+    // 预览刷新机制，包括立刻刷新和延时刷新
+    enum RefreshMode { RefreshImmediately,
+                       RefreshDelay };
     explicit DPrintPreviewWidgetPrivate(DPrintPreviewWidget *qq);
 
     void init();
@@ -139,6 +142,7 @@ public:
     qreal scale = 1.0;
 
     DPrinter *previewPrinter;
+    RefreshMode refreshMode;
 
     Q_DECLARE_PUBLIC(DPrintPreviewWidget)
 };
