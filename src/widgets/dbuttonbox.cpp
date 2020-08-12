@@ -256,6 +256,18 @@ void DButtonBoxButton::keyPressEvent(QKeyEvent *event)
             break;
         }
         Q_FALLTHROUGH();
+    case Qt::Key_Left:
+    case Qt::Key_Right:
+        if (DButtonBox *p = qobject_cast<DButtonBox *>(parent())) {
+            if (p->focusWidget() == this) {
+                int index = p->buttonList().indexOf(this);
+                if (event->key() == Qt::Key_Right)
+                    p->buttonList().at((index + 1) >= p->buttonList().length() ? 0 : index + 1)->setFocus();
+                else
+                    p->buttonList().at((index - 1) < 0 ? p->buttonList().length() - 1 : index - 1)->setFocus();
+            }
+        }
+        break;
     default:
         QAbstractButton::keyPressEvent(event);
     }
