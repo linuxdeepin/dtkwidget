@@ -90,10 +90,19 @@ void DPrintPreviewDialogPrivate::startup()
 void DPrintPreviewDialogPrivate::initui()
 {
     Q_Q(DPrintPreviewDialog);
+    DWidget *mainWidget = new DWidget(q);
+    mainWidget->setGeometry(0, 0, q->width(), q->height());
+
     DWidget *titleWidget = new DWidget(q);
     titleWidget->setGeometry(0, 0, q->width(), 50);
+
+    DPalette pa1 = DApplicationHelper::instance()->palette(mainWidget);
+    pa1.setBrush(DPalette::Window, pa1.window());
+    DApplicationHelper::instance()->setPalette(mainWidget, pa1);
+    mainWidget->setAutoFillBackground(true);
+
     DPalette pa = DApplicationHelper::instance()->palette(titleWidget);
-    pa.setBrush(DPalette::Base, pa.base());
+    pa.setBrush(DPalette::Background, pa.base());
     DApplicationHelper::instance()->setPalette(titleWidget, pa);
     titleWidget->setAutoFillBackground(true);
 
@@ -111,6 +120,7 @@ void DPrintPreviewDialogPrivate::initui()
     mainlayout->addLayout(pleftlayout);
     mainlayout->addWidget(pvline);
     mainlayout->addLayout(prightlayout);
+    q->addSpacing(5);
     q->addContent(pframe);
 }
 
@@ -213,7 +223,7 @@ void DPrintPreviewDialogPrivate::initbasicui()
     setwidgetfont(basicLabel);
     QHBoxLayout *basictitlelayout = new QHBoxLayout;
     layout->addLayout(basictitlelayout);
-    basictitlelayout->setContentsMargins(0, 0, 0, 0);
+    basictitlelayout->setContentsMargins(10, 0, 0, 0);
     basictitlelayout->addWidget(basicLabel);
     basictitlelayout->setAlignment(basicLabel, Qt::AlignLeft | Qt::AlignBottom);
 
@@ -281,6 +291,7 @@ void DPrintPreviewDialogPrivate::initbasicui()
     DLabel *orientationLabel = new DLabel(q->tr("Orientation"), basicsettingwdg);
     setwidgetfont(orientationLabel);
     QHBoxLayout *orientationtitlelayout = new QHBoxLayout;
+    orientationtitlelayout->setContentsMargins(10, 0, 0, 0);
     orientationtitlelayout->addWidget(orientationLabel);
     orientationtitlelayout->setAlignment(orientationLabel, Qt::AlignLeft | Qt::AlignBottom);
     layout->addLayout(orientationtitlelayout);
@@ -341,7 +352,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     DLabel *pagesLabel = new DLabel(q->tr("Pages"), advancesettingwdg);
     setwidgetfont(pagesLabel, DFontSizeManager::T5);
     QHBoxLayout *pagestitlelayout = new QHBoxLayout;
-    pagestitlelayout->setContentsMargins(0, 20, 0, 0);
+    pagestitlelayout->setContentsMargins(10, 20, 0, 0);
     pagestitlelayout->addWidget(pagesLabel, Qt::AlignLeft | Qt::AlignBottom);
 
     DFrame *colorframe = new DFrame;
@@ -420,7 +431,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     scalinglayout->setContentsMargins(10, 0, 10, 0);
     DLabel *scalingLabel = new DLabel(q->tr("Scaling"), advancesettingwdg);
     QHBoxLayout *scalingtitlelayout = new QHBoxLayout;
-    scalingtitlelayout->setContentsMargins(0, 20, 0, 0);
+    scalingtitlelayout->setContentsMargins(10, 20, 0, 0);
     scalingtitlelayout->addWidget(scalingLabel, Qt::AlignLeft | Qt::AlignBottom);
     setwidgetfont(scalingLabel, DFontSizeManager::T5);
 
@@ -436,6 +447,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     DWidget *actualwdg = new DWidget;
     actualwdg->setFixedHeight(48);
     QHBoxLayout *actuallayout = new QHBoxLayout(actualwdg);
+    actuallayout->setContentsMargins(10, 0, 10, 0);
     DRadioButton *actualSizeRadio = new DRadioButton(q->tr("Actual size"));
 
     scaleGroup->addButton(actualSizeRadio, ACTUAL_SIZE);
@@ -481,7 +493,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     DLabel *paperLabel = new DLabel(q->tr("Paper"), advancesettingwdg);
     setwidgetfont(paperLabel, DFontSizeManager::T5);
     QHBoxLayout *papertitlelayout = new QHBoxLayout;
-    papertitlelayout->setContentsMargins(0, 0, 0, 0);
+    papertitlelayout->setContentsMargins(10, 0, 0, 0);
     papertitlelayout->addWidget(paperLabel, Qt::AlignLeft | Qt::AlignBottom);
 
     DFrame *paperframe = new DFrame;
@@ -505,7 +517,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     DLabel *drawingLabel = new DLabel(q->tr("Layout"), advancesettingwdg);
     setwidgetfont(drawingLabel, DFontSizeManager::T5);
     QHBoxLayout *drawingtitlelayout = new QHBoxLayout;
-    drawingtitlelayout->setContentsMargins(0, 20, 0, 0);
+    drawingtitlelayout->setContentsMargins(10, 20, 0, 0);
     drawingtitlelayout->addWidget(drawingLabel, Qt::AlignLeft | Qt::AlignBottom);
 
     DFrame *duplexframe = new DFrame;
@@ -612,7 +624,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     setfrmaeback(watermarkframe);
     QVBoxLayout *watercontentlayout = new QVBoxLayout(watermarkframe);
     watercontentlayout->setSpacing(10);
-    watercontentlayout->setContentsMargins(14, 10, 10, 10);
+    watercontentlayout->setContentsMargins(10, 10, 10, 10);
     QHBoxLayout *texttypelayout = new QHBoxLayout;
     texttypelayout->setContentsMargins(0, 0, 0, 0);
     DLabel *addlabel = new DLabel(q->tr("Add watermark"));
