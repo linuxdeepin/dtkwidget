@@ -696,6 +696,7 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(pview, &DPrintPreviewWidget::totalPages, [this](int pages) {
         totalPageLabel->setText(QString::number(pages));
         totalPages = pages;
+        jumpPageEdit->setRange(1, totalPages);
     });
     QObject::connect(pview, &DPrintPreviewWidget::pagesCountChanged, totalPageLabel, static_cast<void (QLabel::*)(int)>(&QLabel::setNum));
     QObject::connect(firstBtn, &DIconButton::clicked, pview, &DPrintPreviewWidget::turnBegin);
@@ -1231,6 +1232,7 @@ void DPrintPreviewDialogPrivate::_q_customPagesFinished()
     jumpPageEdit->setValue(1);
     QVector<int> page = checkDuplication(pagesrange);
     qDebug() << page << __func__;
+    jumpPageEdit->setRange(1, page.size());
     pview->setPageRange(page);
 }
 
