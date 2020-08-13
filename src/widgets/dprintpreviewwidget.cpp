@@ -294,6 +294,7 @@ void DPrintPreviewWidget::setColorMode(const QPrinter::ColorMode &colorMode)
     Q_D(DPrintPreviewWidget);
 
     d->colorMode = colorMode;
+    d->previewPrinter->setColorMode(colorMode);
     d->pages.at(d->currentPageNumber - 1)->update();
 }
 
