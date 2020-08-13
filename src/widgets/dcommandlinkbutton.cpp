@@ -6,6 +6,14 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+enum Margins{
+    LeftMargins = 3,
+    RightMargins = LeftMargins,
+    TopLeftMargins = 3,
+    BottomMargins = LeftMargins,
+    TextMargins = 4
+};
+
 /*!
  * \~chinese \class 一个继承于 QAbstractButton 的按钮,外形和链接很像;也可以是带有箭头的链接
  *                  常用于点击之后,跳转到另外一个窗口或者页面,比如浏览器的前进后退按钮
@@ -30,7 +38,7 @@ QSize DCommandLinkButton::sizeHint() const
 {
     QString text = this->text();
     QSize size = fontMetrics().size(0, text);
-
+    size += QSize(LeftMargins + RightMargins + TextMargins *2, TopLeftMargins + BottomMargins);
     return size;
 }
 

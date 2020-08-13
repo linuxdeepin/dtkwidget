@@ -1379,7 +1379,11 @@ void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const Q
         if (const QStyleOptionButton *option = qstyleoption_cast<const QStyleOptionButton *>(opt)) {
             DStyleHelper dstyle(style);
             p->setPen(dstyle.getColor(option, QPalette::Highlight));
-            p->drawText(opt->rect, option->text);
+            p->drawText(opt->rect, Qt::AlignCenter, option->text);
+
+            if (option->state & QStyle::State_HasFocus) {
+                style->drawPrimitive(QStyle::PE_FrameFocusRect, option, p, w);
+            }
         }
         break;
     }
