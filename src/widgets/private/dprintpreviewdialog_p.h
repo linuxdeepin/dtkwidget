@@ -61,7 +61,7 @@ public:
     void setupPrinter();
     void setScaling(int index);
     void test();
-    void updateSetteings(int index, bool isInit);
+    void judgeSupportedAttributes(const QString &lastPaperSize);
     QVector<int> checkDuplication(QVector<int> data);
 
     void setEnable(const int &value, DComboBox *combox); //控件可用
@@ -125,7 +125,7 @@ public:
     QTimer *marginTimer;
     bool supportedDuplexFlag = false;
     bool supportedColorMode = false;
-
+    bool isInited = false;
     Q_DECLARE_PUBLIC(DPrintPreviewDialog)
 };
 

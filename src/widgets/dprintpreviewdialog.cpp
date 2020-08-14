@@ -672,7 +672,15 @@ void DPrintPreviewDialogPrivate::initdata()
             break;
         }
     }
-    updateSetteings(0, true);
+    _q_pageRangeChanged(0);
+    _q_pageMarginChanged(0);
+    _q_orientationChanged(0);
+    scaleGroup->button(1)->setChecked(true);
+    orientationgroup->button(0)->setChecked(true);
+    scaleRateEdit->setValue(100);
+    duplexCombo->setEnabled(false);
+    _q_printerChanged(0);
+    isInited = true;
 }
 
 void DPrintPreviewDialogPrivate::initconnections()
@@ -741,7 +749,8 @@ void DPrintPreviewDialogPrivate::initconnections()
                 break;
             }
         }
-        pview->updatePreview();
+        if (isInited)
+            pview->updatePreview();
     });
 
     QObject::connect(scaleRateEdit, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), q, [this](int value) {
@@ -895,88 +904,45 @@ void DPrintPreviewDialogPrivate::test()
     }
 }
 
-/*!
- * \~chinese \brief DPrintPreviewDialogPrivate::updateSetteings 具体对每个控件和属性进行更新
- * \~chinese \param index 判断当前的打印设备
- */
-void DPrintPreviewDialogPrivate::updateSetteings(int index, bool isInit)
+void DPrintPreviewDialogPrivate::judgeSupportedAttributes(const QString &lastPaperSize)
 {
     Q_Q(DPrintPreviewDialog);
-    pview->refreshBegin();
     QPrinterInfo updateinfo(*printer);
-    if (isInit) {
-        copycountspinbox->setValue(1);
-        paperSizeCombo->setCurrentIndex(0);
-        _q_pageRangeChanged(0);
-        _q_pageMarginChanged(0);
-        _q_orientationChanged(0);
-        scaleGroup->button(1)->setChecked(true);
-        orientationgroup->button(0)->setChecked(true);
-        scaleRateEdit->setValue(100);
-        marginsCombo->setCurrentIndex(0);
-        pageRangeCombo->setCurrentIndex(0);
+
+    QStringList pageSizeList;
+    for (int i = 0; i < updateinfo.supportedPageSizes().size(); i++) {
+        pageSizeList.append(updateinfo.supportedPageSizes().at(i).key());
     }
-
-    if (index != printDeviceCombo->count() - 1) {
-        QStringList pageSizeList;
-        printBtn->setText(q->tr("Print"));
-        for (int i = 0; i < updateinfo.supportedPageSizes().size(); i++) {
-            pageSizeList.append(updateinfo.supportedPageSizes().at(i).key());
-        }
-        paperSizeCombo->addItems(pageSizeList);
-        paperSizeCombo->setCurrentText("A4");
-        //判断当前打印机是否支持双面打印，不支持禁用双面打印按钮，pdf不做判断
-        if (updateinfo.supportedDuplexModes().contains(QPrinter::DuplexLongSide) || updateinfo.supportedDuplexModes().contains(QPrinter::DuplexShortSide)) {
-            duplexCombo->setEnabled(true);
-            if (!updateinfo.supportedDuplexModes().contains(QPrinter::DuplexLongSide)) {
-                duplexCombo->addItem(q->tr("Flip on short edge"));
-                supportedDuplexFlag = false;
-            } else if (!updateinfo.supportedDuplexModes().contains(QPrinter::DuplexShortSide)) {
-                duplexCombo->addItem(q->tr("Flip on long edge"));
-                supportedDuplexFlag = true;
-            } else if (updateinfo.supportedDuplexModes().contains(QPrinter::DuplexLongSide) && updateinfo.supportedDuplexModes().contains(QPrinter::DuplexShortSide)) {
-                duplexCombo->addItem(q->tr("Flip on long edge"));
-                duplexCombo->addItem(q->tr("Flip on short edge"));
-            }
-        } else {
-            duplexCheckBox->setCheckState(Qt::Unchecked);
-            duplexCheckBox->setEnabled(false);
-            duplexCombo->clear();
-            duplexCombo->setEnabled(false);
-        }
-        //判断当前打印机是否支持彩色打印，不支持彩色打印删除彩色打印选择选项，pdf不做判断
-        QPlatformPrinterSupport *ps = QPlatformPrinterSupportPlugin::get();
-        QPrintDevice currentDevice = ps->createPrintDevice(printDeviceCombo->currentText());
-        if (!currentDevice.supportedColorModes().contains(QPrint::Color)) {
-            if (colorModeCombo->count() != 1)
-                colorModeCombo->removeItem(0);
-            supportedColorMode = true;
-        } else {
-            if (colorModeCombo->count() == 1)
-                colorModeCombo->insertItem(0, q->tr("Color"));
-            supportedColorMode = false;
-        }
-
+    paperSizeCombo->addItems(pageSizeList);
+    if (pageSizeList.contains(lastPaperSize)) {
+        paperSizeCombo->setCurrentText(lastPaperSize);
     } else {
-        if (colorModeCombo->count() == 1)
-            colorModeCombo->insertItem(0, q->tr("Color"));
-        printBtn->setText(q->tr("Save"));
-        copycountspinbox->setDisabled(true);
-        copycountspinbox->setValue(1);
-        paperSizeCombo->clear();
-        paperSizeCombo->addItems(QStringList() << "A3"
-                                               << "A4"
-                                               << "A5"
-                                               << "B4"
-                                               << "B5"
-                                               << "8K"
-                                               << "16K");
-        paperSizeCombo->setCurrentIndex(1);
-        colorModeCombo->setEnabled(false);
+        //调用绘制预览
+        paperSizeCombo->blockSignals(false);
+        paperSizeCombo->setCurrentText("A4");
     }
-    colorModeCombo->setCurrentIndex(0);
-    duplexCombo->setEnabled(false);
-    pview->refreshEnd();
+
+    //判断当前打印机是否支持双面打印，不支持禁用双面打印按钮，pdf不做判断
+    QString lastDuplexComboText = duplexCombo->currentText();
+    duplexCombo->clear();
+    if (updateinfo.supportedDuplexModes().contains(QPrinter::DuplexLongSide) || updateinfo.supportedDuplexModes().contains(QPrinter::DuplexShortSide)) {
+        duplexCheckBox->setEnabled(true);
+        if (!updateinfo.supportedDuplexModes().contains(QPrinter::DuplexLongSide)) {
+            duplexCombo->addItem(q->tr("Flip on short edge"));
+            supportedDuplexFlag = false;
+        } else if (!updateinfo.supportedDuplexModes().contains(QPrinter::DuplexShortSide)) {
+            duplexCombo->addItem(q->tr("Flip on long edge"));
+            supportedDuplexFlag = true;
+        } else if (updateinfo.supportedDuplexModes().contains(QPrinter::DuplexLongSide) && updateinfo.supportedDuplexModes().contains(QPrinter::DuplexShortSide)) {
+            duplexCombo->addItem(q->tr("Flip on long edge"));
+            duplexCombo->addItem(q->tr("Flip on short edge"));
+            duplexCombo->setCurrentText(lastDuplexComboText);
+        }
+    } else {
+        duplexCheckBox->setChecked(false);
+        duplexCheckBox->setEnabled(false);
+        duplexCombo->setEnabled(false);
+    }
 }
 
 QVector<int> DPrintPreviewDialogPrivate::checkDuplication(QVector<int> data)
@@ -1037,7 +1003,11 @@ void DPrintPreviewDialogPrivate::setEnable(const int &value, DComboBox *combox)
  */
 void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
 {
+    Q_Q(DPrintPreviewDialog);
     qDebug() << printDeviceCombo->itemText(index);
+    QString lastPaperSize = paperSizeCombo->currentText();
+    paperSizeCombo->clear();
+    paperSizeCombo->blockSignals(true);
     if (index == printDeviceCombo->count() - 1) {
         //pdf
         copycountspinbox->setDisabled(true);
@@ -1047,21 +1017,50 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
         duplexCombo->clear();
         duplexCombo->setEnabled(false);
         colorModeCombo->setEnabled(false);
-        paperSizeCombo->clear();
+        if (colorModeCombo->count() == 1)
+            colorModeCombo->insertItem(0, q->tr("Color"));
+        printBtn->setText(q->tr("Save"));
+        paperSizeCombo->setCurrentIndex(1);
+        QStringList pdfPaperSize = QStringList() << "A3"
+                                                 << "A4"
+                                                 << "A5"
+                                                 << "B4"
+                                                 << "B5"
+                                                 << "8K"
+                                                 << "16K";
+        paperSizeCombo->addItems(pdfPaperSize);
+        if (pdfPaperSize.contains(lastPaperSize))
+            paperSizeCombo->setCurrentText(lastPaperSize);
+        else {
+            //调用绘制预览
+            paperSizeCombo->blockSignals(false);
+            paperSizeCombo->setCurrentIndex(1);
+        }
         printer->setPrinterName("");
     } else {
         //actual printer
         if (printer) {
-            paperSizeCombo->clear();
             copycountspinbox->setDisabled(false);
             paperSizeCombo->setEnabled(true);
-            duplexCheckBox->setEnabled(true);
-            duplexCombo->setEnabled(true);
             colorModeCombo->setEnabled(true);
             printer->setPrinterName(printDeviceCombo->itemText(index));
+            printBtn->setText(q->tr("Print"));
+            judgeSupportedAttributes(lastPaperSize);
+        }
+        //判断当前打印机是否支持彩色打印，不支持彩色打印删除彩色打印选择选项，pdf不做判断
+        QPlatformPrinterSupport *ps = QPlatformPrinterSupportPlugin::get();
+        QPrintDevice currentDevice = ps->createPrintDevice(printDeviceCombo->currentText());
+        if (!currentDevice.supportedColorModes().contains(QPrint::Color)) {
+            if (colorModeCombo->count() != 1)
+                colorModeCombo->removeItem(0);
+            supportedColorMode = true;
+        } else {
+            if (colorModeCombo->count() == 1)
+                colorModeCombo->insertItem(0, q->tr("Color"));
+            supportedColorMode = false;
         }
     }
-    updateSetteings(index, false);
+    paperSizeCombo->blockSignals(false);
 }
 
 /*!
@@ -1073,17 +1072,16 @@ void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
     setEnable(index, pageRangeCombo);
     pageRangeEdit->lineEdit()->setPlaceholderText("");
     pageRangeEdit->setText("");
-    QVector<int> pagesrange;
     if (index == PAGERANGE_ALL) {
         qDebug() << totalPages;
         if (totalPages != 0) {
             totalPageLabel->setNum(totalPages);
             printer->setPrintRange(DPrinter::AllPages);
             printer->setFromTo(FIRST_PAGE, totalPages);
-            pview->setPageRange(FIRST_PAGE, totalPages);
+            if (isInited)
+                pview->setPageRange(FIRST_PAGE, totalPages);
         }
     } else if (index == PAGERANGE_CURRENT) {
-        pagesrange.clear();
         printer->setPrintRange(DPrinter::CurrentPage);
         pview->setPageRange(FIRST_PAGE, totalPages);
     } else {
@@ -1091,7 +1089,6 @@ void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
         jumpPageEdit->setValue(1);
         pageRangeEdit->lineEdit()->setPlaceholderText("1,3,5-7,11-15,18,21");
     }
-    pview->setPageRange(pagesrange);
 }
 
 /*!
@@ -1166,7 +1163,9 @@ void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
         marginBottomSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
 
         printer->setPageMargins(QMarginsF(NORMAL_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM, NORMAL_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM));
-        pview->updatePreview();
+        if (isInited) {
+            pview->updatePreview();
+        }
     }
 }
 
@@ -1199,7 +1198,8 @@ void DPrintPreviewDialogPrivate::_q_orientationChanged(int index)
 {
     if (index == 0) {
         // 纵向按钮
-        pview->setOrientation(DPrinter::Portrait);
+        if (isInited)
+            pview->setOrientation(DPrinter::Portrait);
     } else {
         // 横向按钮
         pview->setOrientation(DPrinter::Landscape);
