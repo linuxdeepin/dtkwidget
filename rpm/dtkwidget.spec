@@ -3,7 +3,7 @@ Version:        5.2.2.3
 Release:        1%{?dist}
 Summary:        Deepin tool kit widget modules
 License:        GPLv3
-URL:            https://shuttle.deepin.com/cache/repos/apricot/release-candidate/RERFLWR0a2NvcmXmm7TmlrA1Njg/pool/main/d/dtkwidget/
+URL:            https://github.com/linuxdeepin/dtkwidget
 Source0:        %{name}_%{version}.orig.tar.xz
 
 BuildRequires:  gcc-c++
@@ -67,8 +67,8 @@ export PATH=%{_qt5_bindir}:$PATH
 %doc README.md
 %license LICENSE
 %{_libdir}/lib%{name}.so.*
-%{_libdir}/libdtk-5.2.1/DWidget/bin/dtk-svgc
-%{_datadir}/libdtk-5.2.1/DWidget/translations
+%{_libdir}/libdtk-5.2.2/DWidget/bin/dtk-svgc
+%{_datadir}/libdtk-5.2.2/DWidget/translations
 
 %files devel
 %{_includedir}/libdtk-*/
