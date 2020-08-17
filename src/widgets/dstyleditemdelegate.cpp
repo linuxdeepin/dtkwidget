@@ -301,6 +301,8 @@ public:
         for (auto action : actionList) {
             if (action->isVisible()) {
                 visiable_actionList.append(action);
+                if (action->widget())
+                    action->widget()->setVisible(true);
             }
         }
 
@@ -631,6 +633,7 @@ void DViewItemAction::setWidget(QWidget *widget)
     D_D(DViewItemAction);
 
     d->widget = widget;
+    d->widget->setVisible(false);
 }
 
 /*!
