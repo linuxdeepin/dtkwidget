@@ -6,7 +6,6 @@ HEADERS += \
     $$PWD/dwidgetutil.h \
     $$PWD/ddesktopservices.h \
     $$PWD/dtrashmanager.h \
-    $$PWD/dsvgrenderer.h \
     $$PWD/dhidpihelper.h \
     $$PWD/dapplicationsettings.h
 
@@ -19,7 +18,7 @@ SOURCES += \
 
 linux* {
 CONFIG += link_pkgconfig
-PKGCONFIG += gsettings-qt librsvg-2.0 dframeworkdbus
+PKGCONFIG += gsettings-qt dframeworkdbus
 
 HEADERS += \
     $$PWD/dregionmonitor.h \
@@ -28,7 +27,6 @@ HEADERS += \
 SOURCES += \
     $$PWD/ddesktopservices_linux.cpp \
     $$PWD/dtrashmanager_linux.cpp \
-    $$PWD/dsvgrenderer.cpp\
     $$PWD/dregionmonitor.cpp
 }
 
