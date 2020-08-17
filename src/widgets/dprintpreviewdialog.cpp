@@ -776,6 +776,7 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(marginLeftSpin, SIGNAL(valueChanged(double)), q, SLOT(_q_marginspinChanged(double)));
     QObject::connect(marginBottomSpin, SIGNAL(valueChanged(double)), q, SLOT(_q_marginspinChanged(double)));
     QObject::connect(duplexCheckBox, SIGNAL(stateChanged(int)), q, SLOT(_q_checkStateChanged(int)));
+    QObject::connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, pview, &DPrintPreviewWidget::themeTypeChanged);
 }
 
 void DPrintPreviewDialogPrivate::setfrmaeback(DWidget *frame)

@@ -26,7 +26,7 @@ void DPrintPreviewWidgetPrivate::init()
     graphicsView->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
 
     scene = new QGraphicsScene(graphicsView);
-    scene->setBackgroundBrush(Qt::gray);
+    q->themeTypeChanged(DGuiApplicationHelper::instance()->themeType());
     graphicsView->setScene(scene);
 
     QVBoxLayout *layout = new QVBoxLayout(q);
@@ -400,6 +400,15 @@ void DPrintPreviewWidget::print()
 {
     Q_D(DPrintPreviewWidget);
     d->print();
+}
+
+void DPrintPreviewWidget::themeTypeChanged(DGuiApplicationHelper::ColorType themeType)
+{
+    Q_D(DPrintPreviewWidget);
+    if (DGuiApplicationHelper::DarkType == themeType)
+        d->scene->setBackgroundBrush(QColor(255, 255, 255, 5));
+    else
+        d->scene->setBackgroundBrush(QColor(0, 0, 0, 3));
 }
 
 DPrinter::DPrinter(QPrinter::PrinterMode mode)

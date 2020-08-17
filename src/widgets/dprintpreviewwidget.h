@@ -23,7 +23,9 @@
 #define DPRINTPREVIEWWIDGET_H
 
 #include <dtkwidget_global.h>
+#include <DApplicationHelper>
 #include <DObject>
+
 #include <QWidget>
 #include <QPainter>
 #include <QStyleOption>
@@ -89,6 +91,7 @@ public Q_SLOTS:
     void turnEnd();
     void setCurrentPage(int page);
     void print();
+    void themeTypeChanged(DGuiApplicationHelper::ColorType themeType);
 
 Q_SIGNALS:
     void paintRequested(DPrinter *printer);
