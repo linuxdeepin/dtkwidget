@@ -244,7 +244,7 @@ public:
 
      QTabBarPrivate *dd() const;
 
-    Q_SLOT void startDrag(int tabIndex);
+    Q_SLOT void startDrag();
 
     void setupMovableTab();
     void updateMoveingTabPosition(const QPoint &mouse);
@@ -324,24 +324,23 @@ public:
     int ghostTabIndex = -1;
 };
 
-void DTabBarPrivate::startDrag(int tabIndex)
+void DTabBarPrivate::startDrag()
 {
+    QTabBarPrivate *d = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
     Qt::DropAction action = drag->exec(Qt::MoveAction | Qt::CopyAction, Qt::CopyAction);
 
     Q_EMIT q_func()->dragEnd(action);
 
     if (action == Qt::IgnoreAction) {
-        Q_EMIT q_func()->tabReleaseRequested(tabIndex);
+        Q_EMIT q_func()->tabReleaseRequested(d->pressedIndex);
     } else if (drag->target() != this) {
         if (DTabBarPrivate *tbp = qobject_cast<DTabBarPrivate*>(drag->target()))
-            Q_EMIT q_func()->tabDroped(tabIndex, action, tbp->q_func());
+            Q_EMIT q_func()->tabDroped(d->pressedIndex, action, tbp->q_func());
         else
-            Q_EMIT q_func()->tabDroped(tabIndex, action, drag->target());
+            Q_EMIT q_func()->tabDroped(d->pressedIndex, action, drag->target());
     }
 
     drag->setProperty("_d_DTabBarPrivate_drity", true);
-
-    QTabBarPrivate *d = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
 
     // Be safe!
     if (d->dragInProgress && d->pressedIndex != -1) {
@@ -477,7 +476,11 @@ void DTabBarPrivate::setupDragableTab()
 
     qRegisterMetaType<Qt::DropAction>();
 
-    QMetaObject::invokeMethod(this, "startDrag", Qt::QueuedConnection, Q_ARG(int, d->pressedIndex));
+
+    //task34370
+    //该函数于事件循环结束后调用，d->pressedIndex在事件中已经更新
+    //然传入参数非更新后的参数，故去除此函数参数
+    QMetaObject::invokeMethod(this, "startDrag", Qt::QueuedConnection);
     QMetaObject::invokeMethod(q, "dragStarted", Qt::QueuedConnection);
     QMetaObject::invokeMethod(q, "dragActionChanged", Qt::QueuedConnection, Q_ARG(Qt::DropAction, Qt::IgnoreAction));
 
