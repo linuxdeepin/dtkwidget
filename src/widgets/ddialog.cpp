@@ -57,7 +57,7 @@ QBoxLayout *DDialogPrivate::getContentLayout()
 static void palrtteTransparency(QWidget *widget, qint8 alphaFloat)
 {
     QPalette palette = widget->palette();
-    QColor color = DGuiApplicationHelper::adjustColor(palette.color(QPalette::BrightText), 0, 0, 0, 0, 0, 0, alphaFloat);
+    QColor color = DGuiApplicationHelper::adjustColor(palette.color(QPalette::Active, QPalette::BrightText), 0, 0, 0, 0, 0, 0, alphaFloat);
     palette.setColor(QPalette::WindowText, color);
     widget->setPalette(palette);
 }
@@ -132,7 +132,10 @@ void DDialogPrivate::init()
     button_action->setAutoRepeat(false);
 
     QObject::connect(button_action, SIGNAL(triggered(bool)), q, SLOT(_q_defaultButtonTriggered()));
-
+    QObject::connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged, q, [this]() {
+        palrtteTransparency(titleLabel, -10);
+        palrtteTransparency(messageLabel, -30);
+    });
     q->setLayout(mainLayout);
     q->addAction(button_action);
     q->setFocusPolicy(Qt::ClickFocus);
