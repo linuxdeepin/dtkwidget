@@ -22,7 +22,7 @@ void DPrintPreviewWidgetPrivate::init()
 
     graphicsView = new GraphicsView;
     graphicsView->setInteractive(false);
-    graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
+    graphicsView->setDragMode(QGraphicsView::NoDrag);
     graphicsView->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
 
     scene = new QGraphicsScene(graphicsView);
