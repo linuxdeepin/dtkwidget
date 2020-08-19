@@ -42,6 +42,9 @@
 #define SixteenK_Weight 195
 #define SixteenK_Height 270
 
+#define MARGIN_SIZE_LESS 90
+#define MARGIN_SIZE_MORE 169
+
 #define PAGERANGE_ALL 0
 #define PAGERANGE_CURRENT 1
 #define PAGERANGE_SELECT 2
@@ -373,19 +376,17 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     DFrame *marginsframe = new DFrame;
     marginsframe->setObjectName("marginsFrame");
     setfrmaeback(marginsframe);
-    QHBoxLayout *marginslayout = new QHBoxLayout(marginsframe);
+    QVBoxLayout *marginslayout = new QVBoxLayout(marginsframe);
     marginslayout->setContentsMargins(10, 5, 10, 5);
-    QVBoxLayout *marginscombolayout = new QVBoxLayout;
+    QHBoxLayout *marginscombolayout = new QHBoxLayout;
     DLabel *marginlabel = new DLabel(q->tr("Margins"));
     marginlabel->setFixedSize(123, 36);
     marginsCombo = new DComboBox;
     marginsCombo->addItems(QStringList() << q->tr("Ordinary") << q->tr("Narrow") << q->tr("Moderate") << q->tr("Customize"));
     //    marginsCombo->setFixedSize(275, 36);
     marginscombolayout->addWidget(marginlabel);
-    marginscombolayout->addStretch();
-    marginslayout->addLayout(marginscombolayout);
+    marginscombolayout->addWidget(marginsCombo);
 
-    QVBoxLayout *marginlayout = new QVBoxLayout;
     QHBoxLayout *marginsspinlayout = new QHBoxLayout;
     marginsspinlayout->setContentsMargins(0, 0, 0, 0);
     DLabel *toplabel = new DLabel(q->tr("Top"));
@@ -408,14 +409,15 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     QVBoxLayout *marginsspinboxlayout2 = new QVBoxLayout;
     marginsspinboxlayout2->addWidget(marginBottomSpin);
     marginsspinboxlayout2->addWidget(marginRightSpin);
+    marginsspinlayout->addStretch();
+    marginsLayout(true);
 
     marginsspinlayout->addLayout(marginslabellayout1);
     marginsspinlayout->addLayout(marginsspinboxlayout1);
     marginsspinlayout->addLayout(marginslabellayout2);
     marginsspinlayout->addLayout(marginsspinboxlayout2);
-    marginlayout->addWidget(marginsCombo);
-    marginlayout->addLayout(marginsspinlayout);
-    marginslayout->addLayout(marginlayout);
+    marginslayout->addLayout(marginscombolayout);
+    marginslayout->addLayout(marginsspinlayout);
 
     QList<DDoubleSpinBox *> list = marginsframe->findChildren<DDoubleSpinBox *>();
     for (int i = 0; i < list.size(); i++) {
@@ -659,6 +661,21 @@ void DPrintPreviewDialogPrivate::initadvanceui()
 
     //    layout->addLayout(orderlayout);
     //    layout->addLayout(watermarklayout);
+}
+
+void DPrintPreviewDialogPrivate::marginsLayout(bool adapted)
+{
+    if (adapted) {
+        marginTopSpin->setMaximumWidth(MARGIN_SIZE_LESS);
+        marginLeftSpin->setMaximumWidth(MARGIN_SIZE_LESS);
+        marginRightSpin->setMaximumWidth(MARGIN_SIZE_LESS);
+        marginBottomSpin->setMaximumWidth(MARGIN_SIZE_LESS);
+    } else {
+        marginTopSpin->setMaximumWidth(MARGIN_SIZE_MORE);
+        marginLeftSpin->setMaximumWidth(MARGIN_SIZE_MORE);
+        marginRightSpin->setMaximumWidth(MARGIN_SIZE_MORE);
+        marginBottomSpin->setMaximumWidth(MARGIN_SIZE_MORE);
+    }
 }
 
 void DPrintPreviewDialogPrivate::initdata()
@@ -1373,5 +1390,14 @@ DPrintPreviewDialog::~DPrintPreviewDialog()
         delete d->printer;
 }
 
+void DPrintPreviewDialog::changeEvent(QEvent *)
+{
+    Q_D(DPrintPreviewDialog);
+    if (DFontSizeManager::fontPixelSize(d->marginLeftSpin->font()) <= 15)
+        d->marginsLayout(true);
+    else {
+        d->marginsLayout(false);
+    }
+}
 DWIDGET_END_NAMESPACE
 #include "moc_dprintpreviewdialog.cpp"

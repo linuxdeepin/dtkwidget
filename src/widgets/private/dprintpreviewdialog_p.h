@@ -54,6 +54,7 @@ public:
     void initright(QVBoxLayout *layout);
     void initbasicui();
     void initadvanceui();
+    void marginsLayout(bool adapted);
     void initdata();
     void initconnections();
     void setfrmaeback(DWidget *frame);
