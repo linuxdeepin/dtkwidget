@@ -71,6 +71,42 @@ protected:
     }
 };
 
+
+class ContentItem : public QGraphicsItem
+{
+public:
+    ContentItem(const QPicture *_pagePicture, QRect _pageRect, QGraphicsItem *parent = nullptr)
+        : QGraphicsItem(parent)
+        , pagePicture(_pagePicture)
+        , pageRect(_pageRect)
+    {
+        brect = QRectF(QPointF(0, 0), QSizeF(pageRect.size()));
+        setCacheMode(DeviceCoordinateCache);
+        setPos(pageRect.topLeft());
+    }
+
+    QRectF boundingRect() const override
+    {
+        return brect;
+    }
+
+    void setRect(const QRectF &rect)
+    {
+        setPos(rect.topLeft());
+        brect = QRectF(QPointF(0, 0), QSizeF(rect.size()));
+    }
+
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) override;
+
+protected:
+    QPicture grayscalePaint(const QPicture &picture);
+    QImage imageGrayscale(const QImage *origin);
+private:
+    const QPicture *pagePicture;
+    QRect pageRect;
+    QRectF brect;
+};
+
 class PageItem : public QGraphicsItem
 {
 public:
@@ -79,6 +115,7 @@ public:
         , pagePicture(_pagePicture)
         , paperSize(_paperSize)
         , pageRect(_pageRect)
+        , content(new ContentItem(_pagePicture, _pageRect, this))
     {
         qreal border = qMax(paperSize.height(), paperSize.width()) / PREVIEW_WIDGET_MARGIN_RATIO;
         brect = QRectF(QPointF(-border, -border),
@@ -98,22 +135,19 @@ public:
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) override;
 
-protected:
-    QPicture grayscalePaint(const QPicture &picture);
-    QImage imageGrayscale(const QImage *origin);
-
 private:
     int pageNum;
     const QPicture *pagePicture;
     QSize paperSize;
     QRect pageRect;
     QRectF brect;
+    ContentItem *content;
 };
 
 class DPrintPreviewWidgetPrivate : public DFramePrivate
 {
 public:
-    // 预览刷新机制，包括立刻刷新和延时刷新
+// 预览刷新机制，包括立刻刷新和延时刷新
     enum RefreshMode { RefreshImmediately,
                        RefreshDelay };
     explicit DPrintPreviewWidgetPrivate(DPrintPreviewWidget *qq);

@@ -196,46 +196,6 @@ int DPrintPreviewWidgetPrivate::page2index(int page)
     return pageRange.indexOf(page);
 }
 
-QPicture PageItem::grayscalePaint(const QPicture &picture)
-{
-    QImage image(paperSize, QImage::Format_ARGB32);
-    QPainter imageP;
-
-    image.fill(Qt::transparent);
-    imageP.begin(&image);
-    imageP.drawPicture(0, 0, picture);
-    imageP.end();
-
-    image = imageGrayscale(&image);
-
-    QPicture temp;
-    QPainter tempP;
-
-    tempP.begin(&temp);
-    tempP.drawImage(0, 0, image);
-    tempP.end();
-
-    return temp;
-}
-
-QImage PageItem::imageGrayscale(const QImage *origin)
-{
-    int w = origin->width();
-    int h = origin->height();
-    QImage iGray(w, h, QImage::Format_ARGB32);
-
-    for (int i = 0; i < w; i++) {
-        for (int j = 0; j < h; j++) {
-            QRgb pixel = origin->pixel(i, j);
-            int gray = qGray(pixel);
-            QColor color(gray, gray, gray, qAlpha(pixel));
-            iGray.setPixel(i, j, color.rgba());
-        }
-    }
-
-    return iGray;
-}
-
 DPrintPreviewWidget::DPrintPreviewWidget(DPrinter *printer, QWidget *parent)
     : DFrame(*new DPrintPreviewWidgetPrivate(this))
 {
@@ -436,28 +396,73 @@ void PageItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     if (!pagePicture)
         return;
 
+    content->setRect(QRectF(pageRect.topLeft(), pageRect.size()));
+    content->update();
+}
+
+void ContentItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
+{
+    Q_UNUSED(widget);
+    painter->setClipRect(brect & item->exposedRect);
+
     DPrintPreviewWidget *pwidget = qobject_cast<DPrintPreviewWidget *>(scene()->parent()->parent());
     qreal scale = pwidget->getScale();
     painter->scale(scale, scale);
 
     QPointF leftTopPoint;
     if (scale >= 1.0) {
-        leftTopPoint.setX(pageRect.x() / scale);
-        leftTopPoint.setY(pageRect.y() / scale);
+        leftTopPoint = QPointF(0, 0);
     } else {
-        leftTopPoint.setX((pageRect.x() + (pageRect.width() * (1.0 - scale) / 2.0)) / scale);
-        leftTopPoint.setY((pageRect.y() + (pageRect.height() * (1.0 - scale) / 2.0)) / scale);
+        leftTopPoint.setX(((pageRect.width() * (1.0 - scale) / 2.0)) / scale);
+        leftTopPoint.setY(((pageRect.height() * (1.0 - scale) / 2.0)) / scale);
     }
+
     if (pwidget && (pwidget->getColorMode() == QPrinter::GrayScale)) {
         // 图像灰度处理
         painter->drawPicture(leftTopPoint, grayscalePaint(*pagePicture));
     } else if (pwidget && (pwidget->getColorMode() == QPrinter::Color)) {
         painter->drawPicture(leftTopPoint, *pagePicture);
     }
-
-    painter->resetTransform();
-    painter->setPen(QPen(Qt::black, 0));
-    painter->setBrush(Qt::NoBrush);
-    painter->drawRect(paperRect);
 }
+
+QPicture ContentItem::grayscalePaint(const QPicture &picture)
+{
+    QImage image(pageRect.size(), QImage::Format_ARGB32);
+    QPainter imageP;
+
+    image.fill(Qt::transparent);
+    imageP.begin(&image);
+    imageP.drawPicture(0, 0, picture);
+    imageP.end();
+
+    image = imageGrayscale(&image);
+
+    QPicture temp;
+    QPainter tempP;
+
+    tempP.begin(&temp);
+    tempP.drawImage(0, 0, image);
+    tempP.end();
+
+    return temp;
+}
+
+QImage ContentItem::imageGrayscale(const QImage *origin)
+{
+    int w = origin->width();
+    int h = origin->height();
+    QImage iGray(w, h, QImage::Format_ARGB32);
+
+    for (int i = 0; i < w; i++) {
+        for (int j = 0; j < h; j++) {
+            QRgb pixel = origin->pixel(i, j);
+            int gray = qGray(pixel);
+            QColor color(gray, gray, gray, qAlpha(pixel));
+            iGray.setPixel(i, j, color.rgba());
+        }
+    }
+
+    return iGray;
+}
+
 DWIDGET_END_NAMESPACE
