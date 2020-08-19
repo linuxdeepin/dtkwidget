@@ -23,7 +23,7 @@
 #define DPRINTPREVIEWWIDGET_P_H
 
 #include "dprintpreviewwidget.h"
-#include <DObjectPrivate>
+#include "private/dframe_p.h"
 
 #include <QGraphicsScene>
 #include <QGraphicsView>
@@ -110,7 +110,7 @@ private:
     QRectF brect;
 };
 
-class DPrintPreviewWidgetPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
+class DPrintPreviewWidgetPrivate : public DFramePrivate
 {
 public:
     // 预览刷新机制，包括立刻刷新和延时刷新

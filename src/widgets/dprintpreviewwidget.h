@@ -24,7 +24,7 @@
 
 #include <dtkwidget_global.h>
 #include <DApplicationHelper>
-#include <DObject>
+#include <DFrame>
 
 #include <QWidget>
 #include <QPainter>
@@ -52,8 +52,7 @@ public:
 private:
 };
 
-class LIBDTKWIDGETSHARED_EXPORT DPrintPreviewWidget : public QWidget
-    , public DTK_CORE_NAMESPACE::DObject
+class LIBDTKWIDGETSHARED_EXPORT DPrintPreviewWidget : public DFrame
 {
     Q_OBJECT
 public:

@@ -10,7 +10,7 @@
 DWIDGET_BEGIN_NAMESPACE
 
 DPrintPreviewWidgetPrivate::DPrintPreviewWidgetPrivate(DPrintPreviewWidget *qq)
-    : DObjectPrivate(qq)
+    : DFramePrivate(qq)
     , imposition(DPrintPreviewWidget::Imposition::None)
     , refreshMode(DPrintPreviewWidgetPrivate::RefreshImmediately)
 {
@@ -30,7 +30,7 @@ void DPrintPreviewWidgetPrivate::init()
     graphicsView->setScene(scene);
 
     QVBoxLayout *layout = new QVBoxLayout(q);
-    layout->setContentsMargins(0, 0, 0, 0);
+    layout->setContentsMargins(10, 10, 10, 10);
     layout->addWidget(graphicsView);
 
     colorMode = previewPrinter->colorMode();
@@ -237,8 +237,7 @@ QImage PageItem::imageGrayscale(const QImage *origin)
 }
 
 DPrintPreviewWidget::DPrintPreviewWidget(DPrinter *printer, QWidget *parent)
-    : QWidget(parent)
-    , DObject(*new DPrintPreviewWidgetPrivate(this))
+    : DFrame(*new DPrintPreviewWidgetPrivate(this))
 {
     Q_D(DPrintPreviewWidget);
     d->previewPrinter = printer;
