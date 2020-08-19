@@ -18,16 +18,13 @@ SOURCES += \
 
 linux* {
 CONFIG += link_pkgconfig
-PKGCONFIG += gsettings-qt dframeworkdbus
+PKGCONFIG += gsettings-qt
 
-HEADERS += \
-    $$PWD/dregionmonitor.h \
-    $$PWD/private/dregionmonitor_p.h
+HEADERS +=
 
 SOURCES += \
     $$PWD/ddesktopservices_linux.cpp \
-    $$PWD/dtrashmanager_linux.cpp \
-    $$PWD/dregionmonitor.cpp
+    $$PWD/dtrashmanager_linux.cpp
 }
 
 win32* | macx* {
