@@ -24,6 +24,7 @@ void DPrintPreviewWidgetPrivate::init()
     graphicsView->setInteractive(false);
     graphicsView->setDragMode(QGraphicsView::NoDrag);
     graphicsView->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
+    graphicsView->setLineWidth(0);
 
     scene = new QGraphicsScene(graphicsView);
     q->themeTypeChanged(DGuiApplicationHelper::instance()->themeType());
@@ -366,9 +367,9 @@ void DPrintPreviewWidget::themeTypeChanged(DGuiApplicationHelper::ColorType them
 {
     Q_D(DPrintPreviewWidget);
     if (DGuiApplicationHelper::DarkType == themeType)
-        d->scene->setBackgroundBrush(QColor(255, 255, 255, 5));
-    else
         d->scene->setBackgroundBrush(QColor(0, 0, 0, 3));
+    else
+        d->scene->setBackgroundBrush(QColor(255, 255, 255, 5));
 }
 
 DPrinter::DPrinter(QPrinter::PrinterMode mode)
