@@ -86,8 +86,9 @@ void DPrintPreviewWidgetPrivate::fitView()
 void DPrintPreviewWidgetPrivate::print()
 {
     QPainter painter(previewPrinter);
-    painter.scale(scale, scale);
     QRect pageRect = previewPrinter->pageRect();
+    painter.setClipRect(0, 0, pageRect.width(), pageRect.height());
+    painter.scale(scale, scale);
     QPointF leftTopPoint;
     if (scale >= 1.0) {
         leftTopPoint.setX(0.0);
