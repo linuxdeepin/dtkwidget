@@ -473,15 +473,18 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     DRadioButton *customSizeRadio = new DRadioButton(q->tr("Scale"));
     scaleGroup->addButton(customSizeRadio, SCALE);
     scaleRateEdit = new DSpinBox;
-    scaleRateEdit->setSuffix("%");
-    scaleRateEdit->setRange(10, 200);
-    qDebug() << scaleRateEdit->value();
+    QRegExp reg("^([1-9][0-9]?|[1][0-9]{2}|200)$");
+    QRegExpValidator *val = new QRegExpValidator(reg);
+    scaleRateEdit->lineEdit()->setValidator(val);
+    scaleRateEdit->setEnabledEmbedStyle(true);
+    scaleRateEdit->setMaximum(200);
     //    scaleRateEdit->lineEdit()->setText("");
     //    scaleRateEdit->lineEdit()->setPlaceholderText("90%");
-    scaleRateEdit->setButtonSymbols(QAbstractSpinBox::ButtonSymbols::NoButtons);
     scaleRateEdit->setFixedWidth(78);
+    DLabel *scaleLabel = new DLabel("%");
     customlayout->addWidget(customSizeRadio);
     customlayout->addWidget(scaleRateEdit);
+    customlayout->addWidget(scaleLabel);
     customlayout->addStretch(1);
     //    scalingcontentlayout->addWidget(fitwdg);
     scalingcontentlayout->addWidget(actualwdg);
@@ -701,6 +704,7 @@ void DPrintPreviewDialogPrivate::initdata()
     scaleGroup->button(1)->setChecked(true);
     orientationgroup->button(0)->setChecked(true);
     scaleRateEdit->setValue(100);
+    scaleRateEdit->setEnabled(false);
     duplexCombo->setEnabled(false);
     _q_printerChanged(0);
     isInited = true;
@@ -779,8 +783,10 @@ void DPrintPreviewDialogPrivate::initconnections()
             pview->updatePreview();
     });
 
-    QObject::connect(scaleRateEdit, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), q, [this](int value) {
+    QObject::connect(scaleRateEdit->lineEdit(), &QLineEdit::editingFinished, q, [=] {
         if (scaleGroup->checkedId() == SCALE) {
+            if (scaleRateEdit->value() < 10)
+                scaleRateEdit->setValue(10);
             qreal scale = scaleRateEdit->value() / 100.0;
             pview->setScale(scale);
             pview->updateView();
@@ -789,9 +795,11 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(scaleGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), q, [this](int id) {
         if (id == ACTUAL_SIZE) {
             pview->setScale(1);
+            scaleRateEdit->setEnabled(false);
         } else if (id == SCALE) {
             qreal scale = scaleRateEdit->value() / 100.0;
             pview->setScale(scale);
+            scaleRateEdit->setEnabled(true);
         }
         pview->updateView();
     });
