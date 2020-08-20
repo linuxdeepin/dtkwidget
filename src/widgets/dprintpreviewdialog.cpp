@@ -473,9 +473,9 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     DRadioButton *customSizeRadio = new DRadioButton(q->tr("Scale"));
     scaleGroup->addButton(customSizeRadio, SCALE);
     scaleRateEdit = new DSpinBox;
-    QRegExp reg("^([1-9][0-9]?|[1][0-9]{2}|200)$");
-    QRegExpValidator *val = new QRegExpValidator(reg);
-    scaleRateEdit->lineEdit()->setValidator(val);
+    QRegExp scaleReg("^([1-9][0-9]?|[1][0-9]{2}|200)$");
+    QRegExpValidator *scaleVal = new QRegExpValidator(scaleReg);
+    scaleRateEdit->lineEdit()->setValidator(scaleVal);
     scaleRateEdit->setEnabledEmbedStyle(true);
     scaleRateEdit->setMaximum(200);
     //    scaleRateEdit->lineEdit()->setText("");
@@ -1044,6 +1044,7 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
     QString lastColormode = colorModeCombo->currentText();
     paperSizeCombo->clear();
     paperSizeCombo->blockSignals(true);
+    colorModeCombo->blockSignals(true);
     if (index == printDeviceCombo->count() - 1) {
         //pdf
         copycountspinbox->setDisabled(true);
@@ -1054,6 +1055,7 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
         duplexCombo->setEnabled(false);
         if (colorModeCombo->count() == 1)
             colorModeCombo->insertItem(0, q->tr("Color"));
+        colorModeCombo->blockSignals(false);
         colorModeCombo->setCurrentIndex(0);
         colorModeCombo->setEnabled(false);
         supportedColorMode = true;
@@ -1090,16 +1092,19 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
         QPrintDevice currentDevice = ps->createPrintDevice(printDeviceCombo->currentText());
         colorModeCombo->clear();
         if (!currentDevice.supportedColorModes().contains(QPrint::Color)) {
+            colorModeCombo->blockSignals(false);
             colorModeCombo->addItem(q->tr("Grayscale"));
             supportedColorMode = false;
         } else {
             colorModeCombo->addItems(QStringList() << q->tr("Color") << q->tr("Grayscale"));
+            colorModeCombo->blockSignals(false);
             if (colorModeCombo->currentText() == lastColormode) {
                 colorModeCombo->setCurrentIndex(0);
+                supportedColorMode = true;
             } else {
                 colorModeCombo->setCurrentIndex(1);
+                supportedColorMode = false;
             }
-            supportedColorMode = true;
         }
     }
     paperSizeCombo->blockSignals(false);
@@ -1221,14 +1226,17 @@ void DPrintPreviewDialogPrivate::_q_ColorModeChange(int index)
     //如果打印机不支持彩打
     if (colorModeCombo->count() == 1) {
         pview->setColorMode(DPrinter::GrayScale);
+        supportedColorMode = false;
         return;
     }
     if (index == 0) {
         // color
         pview->setColorMode(DPrinter::Color);
+        supportedColorMode = true;
     } else {
         // gray
         pview->setColorMode(DPrinter::GrayScale);
+        supportedColorMode = false;
     }
 }
 
