@@ -419,12 +419,15 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     marginslayout->addLayout(marginscombolayout);
     marginslayout->addLayout(marginsspinlayout);
 
+    QRegExp reg("^([1-5][0-8]|[1-4][0-9]|[0-9])((\\.[0-8][0-8])|(\\.[0-7][0-9]))");
+    QRegExpValidator *val = new QRegExpValidator(reg);
     QList<DDoubleSpinBox *> list = marginsframe->findChildren<DDoubleSpinBox *>();
     for (int i = 0; i < list.size(); i++) {
         list.at(i)->setProperty("_d_dtk_spinBox", true);
         DLineEdit *edit = list.at(i)->findChild<DLineEdit *>();
         edit->setClearButtonEnabled(false);
-        list.at(i)->setRange(0, 58.88);
+        edit->lineEdit()->setValidator(val);
+        list.at(i)->setMaximum(58.88);
     }
 
     pagelayout->addLayout(pagestitlelayout);
