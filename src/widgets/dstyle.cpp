@@ -1063,6 +1063,14 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
                 p->setBrush(color);
                 p->setRenderHint(QPainter::Antialiasing);
                 p->drawEllipse(content_rect);
+            } else if (btn->features & DStyleOptionButton::CircleButton) {
+                QRect content_rect = opt->rect;
+                QColor color = dstyle.getColor(opt, QPalette::Button);
+
+                p->setPen(Qt::NoPen);
+                p->setBrush(color);
+                p->setRenderHint(QPainter::Antialiasing);
+                p->drawEllipse(content_rect.adjusted(3, 3, -3, -3));
             } else {
                 style->drawControl(CE_PushButtonBevel, opt, p, w);
             }
@@ -1229,6 +1237,25 @@ void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const Q
                     p->setBrush(Qt::NoBrush);
                     p->setRenderHint(QPainter::Antialiasing);
                     p->drawEllipse(QRectF(opt->rect).adjusted(1, 1, -1, -1));
+                } else if (btn->features & DStyleOptionButton::CircleButton) {
+                    DStyleOptionButton fropt = *btn;
+                    QColor color = dstyle.getColor(opt, QPalette::Highlight);
+
+                    p->save();
+                    p->setRenderHint(QPainter::Antialiasing);
+                    p->setPen(Qt::NoPen);
+                    p->setBrush(color);
+                    QPainterPath path;
+
+                    //添加外边框路径
+                    path.addEllipse(fropt.rect);
+
+                    fropt.rect.adjust(2, 2, -2, -2);
+                    //添加内边框路径
+                    path.addEllipse(fropt.rect);
+
+                    p->fillPath(path, color);
+                    p->restore();
                 } else if (btn->features & DStyleOptionButton::TitleBarButton) {
                     QStyleOption option = *opt;
                     option.rect.adjust(6, 6, -6, -6);
@@ -1561,7 +1588,14 @@ QSize DStyle::sizeFromContents(const QStyle *style, DStyle::ContentsType ct, con
                 return contentsSize.expandedTo(btn->iconSize);
             }
 
-            return style->sizeFromContents(CT_PushButton, opt, btn->iconSize, widget);
+            QSize size = style->sizeFromContents(CT_PushButton, opt, btn->iconSize, widget);
+
+            if (btn->features & DStyleOptionButton::CircleButton) {
+                //这里需要预留绘制focusRect的区域,borderWidth为2,间隙宽度为1,所以 (2+1)*2=6
+                size += QSize(6, 6);
+            }
+
+            return size;
         }
         Q_FALLTHROUGH();
     case CT_SwitchButton: {

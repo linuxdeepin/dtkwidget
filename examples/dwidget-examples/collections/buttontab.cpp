@@ -60,6 +60,8 @@ ButtonTab::ButtonTab(QWidget *parent) : QLabel(parent)
     DIconButton *imageButton2 = new DIconButton(this);
     imageButton2->setIcon(QIcon(":/images/buttonHover.png"));
     imageButtonLayout->addWidget(imageButton2);
+    // 设置button为圆形
+    imageButton2->setEnabledCircle(true);
 
     imageButtonLayout->addStretch();
 

@@ -54,6 +54,9 @@ public:
 
     bool isFlat() const;
 
+    void setEnabledCircle(bool status);
+    bool enabledCircle() const;
+
 public Q_SLOTS:
     void setFlat(bool flat);
 

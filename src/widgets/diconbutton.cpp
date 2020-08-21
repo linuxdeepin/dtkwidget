@@ -157,6 +157,24 @@ bool DIconButton::isFlat() const
     return d->flat;
 }
 
+void DIconButton::setEnabledCircle(bool status)
+{
+    D_D(DIconButton);
+
+    if (status == d->circleStatus)
+        return;
+
+    d->circleStatus = status;
+    update();
+}
+
+bool DIconButton::enabledCircle() const
+{
+    D_D(const DIconButton);
+
+    return d->circleStatus;
+}
+
 /*!
  * \~chinese \brief DIconButton::setFlat 设置是否保留边框
  * \~chinese \param flat true无边框　false有边框
@@ -207,6 +225,10 @@ void DIconButton::initStyleOption(DStyleOptionButton *option) const
 
     if (!d->flat && !isDown())
         option->state |= QStyle::State_Raised;
+
+    if (enabledCircle()) {
+        option->features = QStyleOptionButton::ButtonFeature(DStyleOptionButton::CircleButton);
+    }
 
     option->text = text();
     option->icon = icon();
