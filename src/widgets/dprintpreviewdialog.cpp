@@ -695,6 +695,7 @@ void DPrintPreviewDialogPrivate::initdata()
     for (int i = 0; i < itemlist.size(); ++i) {
         if (defauledevice.compare(itemlist.at(i)) == 0) {
             printDeviceCombo->setCurrentIndex(i);
+            _q_printerChanged(i);
             break;
         }
     }
@@ -706,7 +707,6 @@ void DPrintPreviewDialogPrivate::initdata()
     scaleRateEdit->setValue(100);
     scaleRateEdit->setEnabled(false);
     duplexCombo->setEnabled(false);
-    _q_printerChanged(0);
     isInited = true;
 }
 
