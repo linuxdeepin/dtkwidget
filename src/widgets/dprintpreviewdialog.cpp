@@ -695,19 +695,20 @@ void DPrintPreviewDialogPrivate::initdata()
     for (int i = 0; i < itemlist.size(); ++i) {
         if (defauledevice.compare(itemlist.at(i)) == 0) {
             printDeviceCombo->setCurrentIndex(i);
-            _q_printerChanged(i);
             break;
         }
     }
     _q_pageRangeChanged(0);
     _q_pageMarginChanged(0);
     _q_orientationChanged(0);
+    _q_printerChanged(printDeviceCombo->currentIndex());
     scaleGroup->button(1)->setChecked(true);
     orientationgroup->button(0)->setChecked(true);
     scaleRateEdit->setValue(100);
     scaleRateEdit->setEnabled(false);
     duplexCombo->setEnabled(false);
     isInited = true;
+    fontSizeMore = true;
 }
 
 void DPrintPreviewDialogPrivate::initconnections()
@@ -1409,14 +1410,18 @@ DPrintPreviewDialog::~DPrintPreviewDialog()
         delete d->printer;
 }
 
-void DPrintPreviewDialog::changeEvent(QEvent *)
+bool DPrintPreviewDialog::event(QEvent *event)
 {
     Q_D(DPrintPreviewDialog);
-    if (DFontSizeManager::fontPixelSize(d->marginLeftSpin->font()) <= 15)
-        d->marginsLayout(true);
-    else {
-        d->marginsLayout(false);
+    if (event->type() == QEvent::ApplicationFontChange || d->fontSizeMore == true) {
+        if (DFontSizeManager::fontPixelSize(qGuiApp->font()) <= 15)
+            d->marginsLayout(true);
+        else {
+            d->marginsLayout(false);
+        }
+        d->fontSizeMore = false;
     }
+    return DDialog::event(event);
 }
 DWIDGET_END_NAMESPACE
 #include "moc_dprintpreviewdialog.cpp"

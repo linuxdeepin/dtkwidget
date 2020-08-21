@@ -53,9 +53,9 @@ private:
     D_PRIVATE_SLOT(void _q_currentPageSpinChanged(int))
     D_PRIVATE_SLOT(void _q_checkStateChanged(int))
 
-    // QWidget interface
-protected:
-    virtual void changeEvent(QEvent *) override;
+    // QObject interface
+public:
+    virtual bool event(QEvent *event) override;
 };
 
 DWIDGET_END_NAMESPACE
