@@ -130,12 +130,9 @@ void DPrintPreviewWidgetPrivate::setCurrentPage(int page)
     if (page < FIRST_PAGE || page > pageCount)
         return;
     int pageNumber = index2page(page - 1);
-    if (currentPageNumber == 0)
-        currentPageNumber = FIRST_PAGE;
-    int lastPage = index2page(currentPageNumber - 1);
+    if (pageNumber < 0)
+        return;
     currentPageNumber = page;
-
-    pages.at(lastPage - 1)->setVisible(false);
     pages.at(pageNumber - 1)->setVisible(true);
 
     Q_Q(DPrintPreviewWidget);
@@ -211,6 +208,9 @@ void DPrintPreviewWidget::setPageRange(const QVector<int> &rangePages)
 {
     Q_D(DPrintPreviewWidget);
     d->pageRange = rangePages;
+    int currentPage = d->index2page(d->currentPageNumber - 1);
+    d->pages.at(currentPage - 1)->setVisible(false);
+    d->currentPageNumber = 0;
     Q_EMIT pagesCountChanged(d->pagesCount());
     d->generatePreview();
 }
@@ -231,6 +231,12 @@ int DPrintPreviewWidget::pagesCount()
 {
     Q_D(DPrintPreviewWidget);
     return d->pagesCount();
+}
+
+int DPrintPreviewWidget::currentPage()
+{
+    Q_D(DPrintPreviewWidget);
+    return d->index2page(d->currentPageNumber - 1);
 }
 
 bool DPrintPreviewWidget::turnPageAble()

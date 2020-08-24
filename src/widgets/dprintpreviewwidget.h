@@ -72,6 +72,7 @@ public:
     void setPageRange(int from, int to);
     void setPageRangeALL();
     int pagesCount();
+    int currentPage();
     bool turnPageAble();
     void setColorMode(const DPrinter::ColorMode &colorMode);
     void setOrientation(const DPrinter::Orientation &pageOrientation);
