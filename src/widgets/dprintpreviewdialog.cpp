@@ -910,7 +910,7 @@ void DPrintPreviewDialogPrivate::setupPrinter()
         printer->setColorMode(QPrinter::GrayScale);
     }
     //设置纸张打印边距
-    printer->setPageMargins(QMarginsF(marginLeftSpin->value(), marginTopSpin->value(), marginRightSpin->value(), marginBottomSpin->value()));
+    printer->setPageMargins(QMarginsF(marginLeftSpin->value(), marginTopSpin->value(), marginRightSpin->value(), marginBottomSpin->value()),QPageLayout::Millimeter);
 }
 
 void DPrintPreviewDialogPrivate::test()
@@ -1155,7 +1155,7 @@ void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
         marginTopSpin->setValue(NARROW_ALL);
         marginRightSpin->setValue(NARROW_ALL);
         marginBottomSpin->setValue(NARROW_ALL);
-        printer->setPageMargins(QMarginsF(NARROW_ALL, NARROW_ALL, NARROW_ALL, NARROW_ALL));
+        printer->setPageMargins(QMarginsF(NARROW_ALL, NARROW_ALL, NARROW_ALL, NARROW_ALL),QPageLayout::Millimeter);
 
         pview->updatePreview();
     } else if (index == 2) {
@@ -1171,7 +1171,7 @@ void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
         marginTopSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
         marginRightSpin->setValue(MODERATE_LEFT_RIGHT);
         marginBottomSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
-        printer->setPageMargins(QMarginsF(MODERATE_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM, MODERATE_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM));
+        printer->setPageMargins(QMarginsF(MODERATE_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM, MODERATE_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM),QPageLayout::Millimeter);
 
         pview->updatePreview();
     } else if (index == 3) {
@@ -1184,7 +1184,7 @@ void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
         marginLeftSpin->setValue(NORMAL_LEFT_RIGHT);
         marginRightSpin->setValue(NORMAL_LEFT_RIGHT);
         marginBottomSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
-        printer->setPageMargins(QMarginsF(marginLeftSpin->value(), marginTopSpin->value(), marginRightSpin->value(), marginBottomSpin->value()));
+        printer->setPageMargins(QMarginsF(marginLeftSpin->value(), marginTopSpin->value(), marginRightSpin->value(), marginBottomSpin->value()),QPageLayout::Millimeter);
 
         pview->updatePreview();
 
@@ -1206,7 +1206,7 @@ void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
         marginRightSpin->setValue(NORMAL_LEFT_RIGHT);
         marginBottomSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
 
-        printer->setPageMargins(QMarginsF(NORMAL_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM, NORMAL_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM));
+        printer->setPageMargins(QMarginsF(NORMAL_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM, NORMAL_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM),QPageLayout::Millimeter);
         if (isInited) {
             pview->updatePreview();
         }
@@ -1293,7 +1293,7 @@ void DPrintPreviewDialogPrivate::_q_marginTimerOut()
     qreal rightMarginF = this->marginRightSpin->value();
     qreal bottomMarginF = this->marginBottomSpin->value();
 
-    this->printer->setPageMargins(QMarginsF(leftMarginF, topMarginF, rightMarginF, bottomMarginF));
+    this->printer->setPageMargins(QMarginsF(leftMarginF, topMarginF, rightMarginF, bottomMarginF),QPageLayout::Millimeter);
     this->pview->updatePreview();
 }
 
