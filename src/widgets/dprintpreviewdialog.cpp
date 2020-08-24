@@ -1124,16 +1124,12 @@ void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
         qDebug() << totalPages;
         if (totalPages != 0) {
             totalPageLabel->setNum(totalPages);
-            printer->setPrintRange(DPrinter::AllPages);
-            printer->setFromTo(FIRST_PAGE, totalPages);
             if (isInited)
                 pview->setPageRange(FIRST_PAGE, totalPages);
         }
     } else if (index == PAGERANGE_CURRENT) {
-        printer->setPrintRange(DPrinter::CurrentPage);
         pview->setPageRange(FIRST_PAGE, FIRST_PAGE);
     } else {
-        printer->setPrintRange(DPrinter::Selection);
         pview->setPageRange(FIRST_PAGE, totalPages);
         pageRangeEdit->lineEdit()->setPlaceholderText("1,3,5-7,11-15,18,21");
     }
