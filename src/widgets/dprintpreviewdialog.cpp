@@ -1131,10 +1131,10 @@ void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
         }
     } else if (index == PAGERANGE_CURRENT) {
         printer->setPrintRange(DPrinter::CurrentPage);
-        pview->setPageRange(FIRST_PAGE, totalPages);
+        pview->setPageRange(FIRST_PAGE, FIRST_PAGE);
     } else {
         printer->setPrintRange(DPrinter::Selection);
-        jumpPageEdit->setValue(1);
+        pview->setPageRange(FIRST_PAGE, totalPages);
         pageRangeEdit->lineEdit()->setPlaceholderText("1,3,5-7,11-15,18,21");
     }
 }
