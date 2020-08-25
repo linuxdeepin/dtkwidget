@@ -1117,6 +1117,7 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
  */
 void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
 {
+    Q_Q(DPrintPreviewDialog);
     setEnable(index, pageRangeCombo);
     pageRangeEdit->lineEdit()->setPlaceholderText("");
     pageRangeEdit->setText("");
@@ -1131,8 +1132,13 @@ void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
         int currentPage = pview->currentPage();
         pview->setPageRange(currentPage, currentPage);
     } else {
-        pview->setPageRange(FIRST_PAGE, totalPages);
-        pageRangeEdit->lineEdit()->setPlaceholderText("1,3,5-7,11-15,18,21");
+        if (lastPageRange.isEmpty()) {
+            pageRangeEdit->lineEdit()->setPlaceholderText(q->tr("1-%1. For example,1,3,5-7,11-15,18,21").arg(QString::number(totalPages)));
+            pview->setPageRange(FIRST_PAGE, totalPages);
+        } else {
+            pageRangeEdit->setText(lastPageRange);
+            _q_customPagesFinished();
+        }
     }
     _q_currentPageSpinChanged(1);
 }
@@ -1282,6 +1288,7 @@ void DPrintPreviewDialogPrivate::_q_customPagesFinished()
     QVector<int> page = checkDuplication(pagesrange);
     qDebug() << page << __func__;
     pview->setPageRange(page);
+    lastPageRange = cuspages;
     _q_currentPageSpinChanged(1);
 }
 

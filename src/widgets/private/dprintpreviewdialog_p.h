@@ -83,6 +83,7 @@ public:
     DPrinter *printer;
     int totalPages = 0;
     bool fontSizeMore = false;
+    QString lastPageRange = "";
 
     //control
     DPrintPreviewWidget *pview;
