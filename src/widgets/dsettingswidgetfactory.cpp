@@ -425,7 +425,7 @@ QPair<QWidget *, QWidget *> createRadioGroupOptionHandle(QObject *opt)
     rightWidget->setObjectName("OptionRadioGroup");
     rightWidget->setAlignment(Qt::AlignLeft);
     rightWidget->setFlat(true);
-    rightWidget->setFixedHeight(24 * items.length() + 8);
+    rightWidget->setMinimumHeight(24 * items.length() + 8);
 
     auto rgLayout = new QVBoxLayout;
     rgLayout->setContentsMargins(0, 0, 0, 0);
@@ -433,7 +433,8 @@ QPair<QWidget *, QWidget *> createRadioGroupOptionHandle(QObject *opt)
     QList<QRadioButton *> buttonList;
     for (auto item : items)  {
         auto rb = new QRadioButton(DWIDGET_NAMESPACE::tr(translateContext, item.toStdString().c_str()));
-        rb->setFixedHeight(24);
+        // fix 加大字体后显示截断，不应该 fixedheight
+        rb->setMinimumHeight(24);
         rb->setProperty("_dtk_widget_settings_radiogroup_index", index);
         rgLayout->addWidget(rb);
         ++index;
