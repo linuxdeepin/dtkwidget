@@ -382,7 +382,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     DLabel *marginlabel = new DLabel(q->tr("Margins"));
     marginlabel->setFixedSize(123, 36);
     marginsCombo = new DComboBox;
-    marginsCombo->addItems(QStringList() << q->tr("Ordinary") << q->tr("Narrow") << q->tr("Moderate") << q->tr("Customize"));
+    marginsCombo->addItems(QStringList() << q->tr("Normal(mm)") << q->tr("Narrow(mm)") << q->tr("Moderate(mm)") << q->tr("Customize(mm)"));
     //    marginsCombo->setFixedSize(275, 36);
     marginscombolayout->addWidget(marginlabel);
     marginscombolayout->addWidget(marginsCombo);
