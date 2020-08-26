@@ -50,11 +50,13 @@ void DPrintPreviewWidgetPrivate::populateScene()
         scene->addItem(item);
         pages.append(item);
     }
-    if (pageRange.isEmpty()) {
+    if (isGenerate || pageRange.isEmpty()) {
         setPageRangeAll();
     }
     if (!pages.isEmpty()) {
-        setCurrentPage(FIRST_PAGE);
+        if (currentPageNumber == 0)
+            currentPageNumber = FIRST_PAGE;
+        setCurrentPage(currentPageNumber);
     }
 }
 
@@ -117,6 +119,8 @@ void DPrintPreviewWidgetPrivate::setPageRangeAll()
     }
     Q_Q(DPrintPreviewWidget);
     Q_EMIT q->totalPages(size);
+
+    isGenerate = false;
 }
 
 int DPrintPreviewWidgetPrivate::pagesCount()
@@ -127,12 +131,23 @@ int DPrintPreviewWidgetPrivate::pagesCount()
 void DPrintPreviewWidgetPrivate::setCurrentPage(int page)
 {
     int pageCount = pagesCount();
-    if (page < FIRST_PAGE || page > pageCount)
+    if (page < FIRST_PAGE)
         return;
+    if (page > pageCount)
+        page = pageCount;
     int pageNumber = index2page(page - 1);
     if (pageNumber < 0)
         return;
+    int lastPage = index2page(currentPageNumber - 1);
+    if (lastPage > -1) {
+        if (lastPage > pages.size())
+            pages.back()->setVisible(false);
+        else
+            pages.at(lastPage - 1)->setVisible(false);
+    }
     currentPageNumber = page;
+    if (pageNumber > pages.size())
+        return;
     pages.at(pageNumber - 1)->setVisible(true);
 
     Q_Q(DPrintPreviewWidget);
@@ -204,6 +219,12 @@ void DPrintPreviewWidget::setPageRangeALL()
         d->setCurrentPage(FIRST_PAGE);
 }
 
+void DPrintPreviewWidget::setReGenerate(bool generate)
+{
+    Q_D(DPrintPreviewWidget);
+    d->isGenerate = generate;
+}
+
 void DPrintPreviewWidget::setPageRange(const QVector<int> &rangePages)
 {
     Q_D(DPrintPreviewWidget);
@@ -259,6 +280,7 @@ void DPrintPreviewWidget::setOrientation(const QPrinter::Orientation &pageOrient
     Q_D(DPrintPreviewWidget);
 
     d->previewPrinter->setOrientation(pageOrientation);
+    setReGenerate(true);
     d->generatePreview();
 }
 
@@ -306,6 +328,7 @@ void DPrintPreviewWidget::refreshEnd()
 void DPrintPreviewWidget::updatePreview()
 {
     Q_D(DPrintPreviewWidget);
+    setReGenerate(true);
     d->generatePreview();
     d->graphicsView->updateGeometry();
 }

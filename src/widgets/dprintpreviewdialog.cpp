@@ -742,7 +742,11 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(prevPageBtn, &DIconButton::clicked, pview, &DPrintPreviewWidget::turnFront);
     QObject::connect(nextPageBtn, &DIconButton::clicked, pview, &DPrintPreviewWidget::turnBack);
     QObject::connect(lastBtn, &DIconButton::clicked, pview, &DPrintPreviewWidget::turnEnd);
-    QObject::connect(pview, &DPrintPreviewWidget::currentPageChanged, jumpPageEdit, &QSpinBox::setValue);
+    QObject::connect(pview, &DPrintPreviewWidget::currentPageChanged, q, [this](int page) {
+        if (jumpPageEdit->value() == page)
+            return;
+        jumpPageEdit->setValue(page);
+    });
     QObject::connect(jumpPageEdit, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), pview, &DPrintPreviewWidget::setCurrentPage);
 
     QObject::connect(paperSizeCombo, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), q, [this](int index) {
@@ -1253,11 +1257,14 @@ void DPrintPreviewDialogPrivate::_q_orientationChanged(int index)
 {
     if (index == 0) {
         // 纵向按钮
-        if (isInited)
+        if (isInited) {
             pview->setOrientation(DPrinter::Portrait);
+            pview->setReGenerate(true);
+        }
     } else {
         // 横向按钮
         pview->setOrientation(DPrinter::Landscape);
+        pview->setReGenerate(true);
     }
 }
 

@@ -71,6 +71,7 @@ public:
     void setPageRange(const QVector<int> &rangePages);
     void setPageRange(int from, int to);
     void setPageRangeALL();
+    void setReGenerate(bool generate);
     int pagesCount();
     int currentPage();
     bool turnPageAble();

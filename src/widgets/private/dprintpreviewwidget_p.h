@@ -176,6 +176,7 @@ public:
     DPrinter::ColorMode colorMode;
     DPrintPreviewWidget::Imposition imposition;
     qreal scale = 1.0;
+    bool isGenerate = true;
 
     DPrinter *previewPrinter;
     RefreshMode refreshMode;
