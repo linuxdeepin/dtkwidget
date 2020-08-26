@@ -76,6 +76,7 @@ public:
     void _q_customPagesFinished();
     void _q_marginTimerOut();
     void _q_marginspinChanged(double);
+    void _q_marginEditFinished();
     void _q_currentPageSpinChanged(int value);
     void _q_checkStateChanged(int state);
 
@@ -129,6 +130,7 @@ public:
     bool supportedDuplexFlag = false;
     bool supportedColorMode = false;
     bool isInited = false;
+    QVector<qreal> marginOldValue; // 记录margin自定义时的旧值  如果旧值和新值一致，就不需要刷新，top left right bottom
     Q_DECLARE_PUBLIC(DPrintPreviewDialog)
 };
 

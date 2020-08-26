@@ -50,12 +50,14 @@ private:
     D_PRIVATE_SLOT(void _q_customPagesFinished())
     D_PRIVATE_SLOT(void _q_marginTimerOut())
     D_PRIVATE_SLOT(void _q_marginspinChanged(double))
+    D_PRIVATE_SLOT(void _q_marginEditFinished())
     D_PRIVATE_SLOT(void _q_currentPageSpinChanged(int))
     D_PRIVATE_SLOT(void _q_checkStateChanged(int))
 
     // QObject interface
 public:
     virtual bool event(QEvent *event) override;
+    bool eventFilter(QObject *watched, QEvent *event) override;
 };
 
 DWIDGET_END_NAMESPACE

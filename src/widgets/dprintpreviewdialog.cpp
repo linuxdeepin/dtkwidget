@@ -29,6 +29,7 @@
 #include <QRegExp>
 #include <QRegExpValidator>
 #include <QTimer>
+#include <QKeyEvent>
 
 #include <cups/ppd.h>
 #include <cups/cups.h>
@@ -391,12 +392,16 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     marginsspinlayout->setContentsMargins(0, 0, 0, 0);
     DLabel *toplabel = new DLabel(q->tr("Top"));
     marginTopSpin = new DDoubleSpinBox;
+    marginTopSpin->installEventFilter(q);
     DLabel *leftlabel = new DLabel(q->tr("Left"));
     marginLeftSpin = new DDoubleSpinBox;
+    marginLeftSpin->installEventFilter(q);
     DLabel *bottomlabel = new DLabel(q->tr("Bottom"));
     marginBottomSpin = new DDoubleSpinBox;
+    marginBottomSpin->installEventFilter(q);
     DLabel *rightlabel = new DLabel(q->tr("Right"));
     marginRightSpin = new DDoubleSpinBox;
+    marginRightSpin->installEventFilter(q);
     QVBoxLayout *marginslabellayout1 = new QVBoxLayout;
     marginslabellayout1->addWidget(toplabel);
     marginslabellayout1->addWidget(leftlabel);
@@ -816,6 +821,10 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(marginBottomSpin, SIGNAL(valueChanged(double)), q, SLOT(_q_marginspinChanged(double)));
     QObject::connect(duplexCheckBox, SIGNAL(stateChanged(int)), q, SLOT(_q_checkStateChanged(int)));
     QObject::connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, pview, &DPrintPreviewWidget::themeTypeChanged);
+    QObject::connect(marginTopSpin, SIGNAL(editingFinished()), q, SLOT(_q_marginEditFinished()));
+    QObject::connect(marginRightSpin, SIGNAL(editingFinished()), q, SLOT(_q_marginEditFinished()));
+    QObject::connect(marginLeftSpin, SIGNAL(editingFinished()), q, SLOT(_q_marginEditFinished()));
+    QObject::connect(marginBottomSpin, SIGNAL(editingFinished()), q, SLOT(_q_marginEditFinished()));
 }
 
 void DPrintPreviewDialogPrivate::setfrmaeback(DWidget *frame)
@@ -1196,6 +1205,7 @@ void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
         marginLeftSpin->setValue(NORMAL_LEFT_RIGHT);
         marginRightSpin->setValue(NORMAL_LEFT_RIGHT);
         marginBottomSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
+        marginOldValue << marginTopSpin->value() << marginLeftSpin->value() << marginRightSpin->value() << marginBottomSpin->value();
         printer->setPageMargins(QMarginsF(marginLeftSpin->value(), marginTopSpin->value(), marginRightSpin->value(), marginBottomSpin->value()), QPageLayout::Millimeter);
 
         pview->updatePreview();
@@ -1310,6 +1320,11 @@ void DPrintPreviewDialogPrivate::_q_marginTimerOut()
     qreal rightMarginF = this->marginRightSpin->value();
     qreal bottomMarginF = this->marginBottomSpin->value();
 
+    if (qFuzzyCompare(topMarginF, marginOldValue[0]) && qFuzzyCompare(leftMarginF, marginOldValue[1]) && qFuzzyCompare(rightMarginF, marginOldValue[2]) && qFuzzyCompare(bottomMarginF, marginOldValue[3]))
+        return;
+
+    marginOldValue.clear();
+    marginOldValue << topMarginF << leftMarginF << rightMarginF << bottomMarginF;
     this->printer->setPageMargins(QMarginsF(leftMarginF, topMarginF, rightMarginF, bottomMarginF), QPageLayout::Millimeter);
     this->pview->updatePreview();
 }
@@ -1325,6 +1340,25 @@ void DPrintPreviewDialogPrivate::_q_marginspinChanged(double)
 
     // 默认1秒的定时器，时间到了就刷新预览页面
     marginTimer->start(1000);
+}
+
+/*!
+ * \~chinese \brief DPrintPreviewDialogPrivate::_q_marginspinChanged 自定义页边距spinbox焦点改变输入结束
+ * \~chinese \param
+ */
+void DPrintPreviewDialogPrivate::_q_marginEditFinished()
+{
+    Q_Q(DPrintPreviewDialog);
+
+    if (!marginTimer->isActive())
+        return;
+
+    if (q->focusWidget() == marginTopSpin || q->focusWidget() == marginLeftSpin
+        || q->focusWidget() == marginBottomSpin || q->focusWidget() == marginRightSpin)
+        return;
+
+    marginTimer->stop();
+    _q_marginTimerOut();
 }
 
 void DPrintPreviewDialogPrivate::_q_currentPageSpinChanged(int value)
@@ -1440,6 +1474,23 @@ bool DPrintPreviewDialog::event(QEvent *event)
         d->fontSizeMore = false;
     }
     return DDialog::event(event);
+}
+
+bool DPrintPreviewDialog::eventFilter(QObject *watched, QEvent *event)
+{
+    Q_D(DPrintPreviewDialog);
+
+    if (event->type() == QEvent::ShortcutOverride) {
+        QKeyEvent *keye = dynamic_cast<QKeyEvent *>(event);
+        if (keye->key() == Qt::Key_Enter || keye->key() == Qt::Key_Return) {
+            if (watched == d->marginTopSpin || watched == d->marginLeftSpin || watched == d->marginRightSpin || watched == d->marginBottomSpin)
+                d->_q_marginTimerOut();
+        }
+
+        return false;
+    }
+
+    return DDialog::eventFilter(watched, event);
 }
 DWIDGET_END_NAMESPACE
 #include "moc_dprintpreviewdialog.cpp"
