@@ -251,6 +251,9 @@ void DTitlebarPrivate::init()
     // 确保点击标题栏后输入框能失去焦点
     // 另外，让标题栏接收焦点，还是为了避免一个focus控件隐藏时，会把焦点转移给标题栏上的按钮控件
     q->setFocusPolicy(Qt::StrongFocus);
+
+    // fix wayland 下显示了两个应用图标，系统标题栏 和 dtk标题栏 均显示应用图标
+    q->setEmbedMode(!DApplication::isDXcbPlatform());
 }
 
 QWidget *DTitlebarPrivate::targetWindow()
