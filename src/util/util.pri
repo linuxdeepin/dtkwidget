@@ -20,11 +20,14 @@ linux* {
 CONFIG += link_pkgconfig
 PKGCONFIG += gsettings-qt
 
-HEADERS +=
+HEADERS += \
+    $$PWD/dregionmonitor.h \
+    $$PWD/private/dregionmonitor_p.h
 
 SOURCES += \
     $$PWD/ddesktopservices_linux.cpp \
-    $$PWD/dtrashmanager_linux.cpp
+    $$PWD/dtrashmanager_linux.cpp \
+    $$PWD/dregionmonitor.cpp
 }
 
 win32* | macx* {
