@@ -99,10 +99,8 @@ void DPrintPreviewDialogPrivate::initui()
 
     DWidget *titleWidget = new DWidget(q);
     titleWidget->setGeometry(0, 0, q->width(), 50);
+    titleWidget->setObjectName("titlewidget");
 
-    DPalette pa1 = DApplicationHelper::instance()->palette(mainWidget);
-    pa1.setBrush(DPalette::Window, pa1.window());
-    DApplicationHelper::instance()->setPalette(mainWidget, pa1);
     mainWidget->setAutoFillBackground(true);
 
     DPalette pa = DApplicationHelper::instance()->palette(titleWidget);
@@ -116,6 +114,8 @@ void DPrintPreviewDialogPrivate::initui()
     DFrame *pframe = new DFrame;
     pframe->setLayout(mainlayout);
     pframe->setFixedHeight(536);
+    pframe->setLineWidth(0);
+
     QVBoxLayout *pleftlayout = new QVBoxLayout;
     initleft(pleftlayout);
     DVerticalLine *pvline = new DVerticalLine;
@@ -132,7 +132,7 @@ void DPrintPreviewDialogPrivate::initleft(QVBoxLayout *layout)
 {
     pview = new DPrintPreviewWidget(this->printer);
     //    pview->setFixedSize(364, 470);
-    setfrmaeback(pview);
+    pview->setLineWidth(0);
     layout->setContentsMargins(10, 10, 10, 10);
     layout->addWidget(pview);
     //    layout->setAlignment(pview, Qt::AlignCenter);
@@ -167,6 +167,10 @@ void DPrintPreviewDialogPrivate::initleft(QVBoxLayout *layout)
     QRegExp reg("^([1-9][0-9]*)");
     QRegExpValidator *val = new QRegExpValidator(reg);
     jumpPageEdit->lineEdit()->setValidator(val);
+
+    DPalette m_pa = DApplicationHelper::instance()->palette(pview);
+    m_pa.setBrush(DPalette::Base, m_pa.itemBackground());
+    DApplicationHelper::instance()->setPalette(pview, m_pa);
 }
 
 void DPrintPreviewDialogPrivate::initright(QVBoxLayout *layout)
@@ -837,15 +841,15 @@ void DPrintPreviewDialogPrivate::initconnections()
         // 使用和margin相同的定时器，定时1秒钟
         marginTimer->start(1000);
     });
+    QObject::connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, q, [this](DGuiApplicationHelper::ColorType themeType) { this->themeTypeChange(themeType); });
 }
 
-void DPrintPreviewDialogPrivate::setfrmaeback(DWidget *frame)
+void DPrintPreviewDialogPrivate::setfrmaeback(DFrame *frame)
 {
+    frame->setLineWidth(0);
     DPalette pa = DApplicationHelper::instance()->palette(frame);
     pa.setBrush(DPalette::Base, pa.itemBackground());
-    pa.setBrush(DPalette::FrameBorder, pa.base());
     DApplicationHelper::instance()->setPalette(frame, pa);
-    //frame->setAutoFillBackground(true);
 }
 
 void DPrintPreviewDialogPrivate::showadvancesetting()
@@ -1019,6 +1023,33 @@ void DPrintPreviewDialogPrivate::setMininumMargins()
         marginRightSpin->setValue(printer->pageLayout().minimumMargins().right());
     if (marginBottomSpin->value() < printer->pageLayout().minimumMargins().bottom())
         marginBottomSpin->setValue(printer->pageLayout().minimumMargins().bottom());
+}
+
+void DPrintPreviewDialogPrivate::themeTypeChange(DGuiApplicationHelper::ColorType themeType)
+{
+    Q_Q(DPrintPreviewDialog);
+    DWidget *titleWidget = q->findChild<DWidget *>("titlewidget");
+    DPalette m_pa = DApplicationHelper::instance()->palette(titleWidget);
+    m_pa.setBrush(DPalette::Background, m_pa.base());
+    DApplicationHelper::instance()->setPalette(titleWidget, m_pa);
+    titleWidget->setAutoFillBackground(true);
+
+    QList<DFrame *> m_frameList = q->findChildren<DFrame *>();
+    QList<DBackgroundGroup *> m_back = q->findChildren<DBackgroundGroup *>();
+
+    DPalette pa;
+    if (themeType == DGuiApplicationHelper::LightType) {
+        pa.setBrush(DPalette::Base, QColor(0, 0, 0, 8));
+    } else if (themeType == DGuiApplicationHelper::DarkType) {
+        pa.setBrush(DPalette::Base, QColor(255, 255, 255, 10));
+    }
+    pa.setBrush(DPalette::FrameBorder, pa.base());
+    for (int i = 1; i < m_frameList.size(); i++) {
+        DApplicationHelper::instance()->setPalette(m_frameList.at(i), pa);
+    }
+    for (int i = 0; i < m_back.size(); i++) {
+        DApplicationHelper::instance()->setPalette(m_back.at(i), pa);
+    }
 }
 
 QVector<int> DPrintPreviewDialogPrivate::checkDuplication(QVector<int> data)

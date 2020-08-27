@@ -57,13 +57,14 @@ public:
     void marginsLayout(bool adapted);
     void initdata();
     void initconnections();
-    void setfrmaeback(DWidget *frame);
+    void setfrmaeback(DFrame *frame);
     void showadvancesetting();
     void setupPrinter();
     void setScaling(int index);
     void test();
     void judgeSupportedAttributes(const QString &lastPaperSize);
     void setMininumMargins();
+    void themeTypeChange(DGuiApplicationHelper::ColorType themeType);
     QVector<int> checkDuplication(QVector<int> data);
 
     void setEnable(const int &value, DComboBox *combox); //控件可用
