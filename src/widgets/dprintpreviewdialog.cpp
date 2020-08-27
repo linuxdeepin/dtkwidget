@@ -486,6 +486,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     //    scaleRateEdit->lineEdit()->setText("");
     //    scaleRateEdit->lineEdit()->setPlaceholderText("90%");
     scaleRateEdit->setFixedWidth(78);
+    scaleRateEdit->installEventFilter(q);
     DLabel *scaleLabel = new DLabel("%");
     customlayout->addWidget(customSizeRadio);
     customlayout->addWidget(scaleRateEdit);
@@ -832,6 +833,10 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(marginRightSpin, SIGNAL(editingFinished()), q, SLOT(_q_marginEditFinished()));
     QObject::connect(marginLeftSpin, SIGNAL(editingFinished()), q, SLOT(_q_marginEditFinished()));
     QObject::connect(marginBottomSpin, SIGNAL(editingFinished()), q, SLOT(_q_marginEditFinished()));
+    QObject::connect(scaleRateEdit, QOverload<int>::of(&DSpinBox::valueChanged), q, [=] {
+        // 使用和margin相同的定时器，定时1秒钟
+        marginTimer->start(1000);
+    });
 }
 
 void DPrintPreviewDialogPrivate::setfrmaeback(DWidget *frame)
@@ -1234,7 +1239,6 @@ void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
         marginLeftSpin->setValue(NORMAL_LEFT_RIGHT);
         marginRightSpin->setValue(NORMAL_LEFT_RIGHT);
         marginBottomSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
-        marginOldValue << marginTopSpin->value() << marginLeftSpin->value() << marginRightSpin->value() << marginBottomSpin->value();
         printer->setPageMargins(QMarginsF(marginLeftSpin->value(), marginTopSpin->value(), marginRightSpin->value(), marginBottomSpin->value()), QPageLayout::Millimeter);
 
         pview->updatePreview();
@@ -1262,6 +1266,11 @@ void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
             pview->updatePreview();
         }
     }
+
+    if (marginOldValue.length() > 4)
+        marginOldValue.clear();
+
+    marginOldValue << marginTopSpin->value() << marginLeftSpin->value() << marginRightSpin->value() << marginBottomSpin->value();
 }
 
 /*!
@@ -1344,6 +1353,9 @@ void DPrintPreviewDialogPrivate::_q_customPagesFinished()
  */
 void DPrintPreviewDialogPrivate::_q_marginTimerOut()
 {
+    // 调用一次缩放页面的刷新，因为margin和scaleRatio使用同一个定时器
+    Q_EMIT scaleRateEdit->lineEdit()->editingFinished();
+
     qreal leftMarginF = this->marginLeftSpin->value();
     qreal topMarginF = this->marginTopSpin->value();
     qreal rightMarginF = this->marginRightSpin->value();
@@ -1519,6 +1531,8 @@ bool DPrintPreviewDialog::eventFilter(QObject *watched, QEvent *event)
                 d->setMininumMargins();
                 d->_q_marginTimerOut();
             }
+            else if (watched == d->scaleRateEdit)
+                Q_EMIT d->scaleRateEdit->lineEdit()->editingFinished();
         }
 
         return false;
