@@ -100,14 +100,14 @@ void DPrintPreviewWidgetPrivate::print()
         leftTopPoint.setX((pageRect.width() * (1.0 - scale) / (2.0 * scale)));
         leftTopPoint.setY((pageRect.height() * (1.0 - scale) / (2.0 * scale)));
     }
-        for (int i = 0; i < pageRange.size(); i++) {
-            if (0 != i)
-                previewPrinter->newPage();
-            painter.save();
-            //todo scale,black and white,watermarking,……
-            painter.drawPicture(leftTopPoint, *(pictures[pageRange.at(i)-1]));
-            painter.restore();
-        } 
+    for (int i = 0; i < pageRange.size(); i++) {
+        if (0 != i)
+            previewPrinter->newPage();
+        painter.save();
+        //todo scale,black and white,watermarking,……
+        painter.drawPicture(leftTopPoint, *(pictures[pageRange.at(i) - 1]));
+        painter.restore();
+    }
 }
 
 void DPrintPreviewWidgetPrivate::setPageRangeAll()

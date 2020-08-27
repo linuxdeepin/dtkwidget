@@ -424,7 +424,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     marginslayout->addLayout(marginscombolayout);
     marginslayout->addLayout(marginsspinlayout);
 
-    QRegExp reg("^([5-5][0-4]|[1-4][0-9]|[0-9])(\\.[0-9][0-9])|55.88|55(\\.[0-7][0-9])");
+    QRegExp reg("^([5-5][0-4]|[1-4][0-9]|[0-9])(\\.[0-9][0-9])|55(\\.[8-8][0-8])|55(\\.[0-7][0-9])");
     QRegExpValidator *val = new QRegExpValidator(reg);
     QList<DDoubleSpinBox *> list = marginsframe->findChildren<DDoubleSpinBox *>();
     for (int i = 0; i < list.size(); i++) {
@@ -789,8 +789,15 @@ void DPrintPreviewDialogPrivate::initconnections()
                 break;
             }
         }
-        if (isInited)
+        if (isInited) {
+            if (marginsCombo->currentIndex() == 3) {
+                setMininumMargins();
+                printer->setPageMargins(printer->pageLayout().minimumMargins(), QPageLayout::Millimeter);
+                if (marginTimer->isActive())
+                    marginTimer->stop();
+            }
             pview->updatePreview();
+        }
     });
 
     QObject::connect(scaleRateEdit->lineEdit(), &QLineEdit::editingFinished, q, [=] {
@@ -994,6 +1001,21 @@ void DPrintPreviewDialogPrivate::judgeSupportedAttributes(const QString &lastPap
     }
 }
 
+/*!
+ * \~chinese DPrintPreviewDialogPrivate::setMininumMargins 如果边距小于最小边距,设置成最小边距
+ */
+void DPrintPreviewDialogPrivate::setMininumMargins()
+{
+    if (marginLeftSpin->value() < printer->pageLayout().minimumMargins().left())
+        marginLeftSpin->setValue(printer->pageLayout().minimumMargins().left());
+    if (marginTopSpin->value() < printer->pageLayout().minimumMargins().top())
+        marginTopSpin->setValue(printer->pageLayout().minimumMargins().top());
+    if (marginRightSpin->value() < printer->pageLayout().minimumMargins().right())
+        marginRightSpin->setValue(printer->pageLayout().minimumMargins().right());
+    if (marginBottomSpin->value() < printer->pageLayout().minimumMargins().bottom())
+        marginBottomSpin->setValue(printer->pageLayout().minimumMargins().bottom());
+}
+
 QVector<int> DPrintPreviewDialogPrivate::checkDuplication(QVector<int> data)
 {
     for (int i = 0; i < data.size(); i++) {
@@ -1120,6 +1142,13 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
                 supportedColorMode = false;
             }
         }
+    }
+    if (marginsCombo->currentIndex() == 3) {
+        setMininumMargins();
+        printer->setPageMargins(printer->pageLayout().minimumMargins(), QPageLayout::Millimeter);
+        if (marginTimer->isActive())
+            marginTimer->stop();
+        pview->updatePreview();
     }
     paperSizeCombo->blockSignals(false);
 }
@@ -1325,8 +1354,12 @@ void DPrintPreviewDialogPrivate::_q_marginTimerOut()
 
     marginOldValue.clear();
     marginOldValue << topMarginF << leftMarginF << rightMarginF << bottomMarginF;
-    this->printer->setPageMargins(QMarginsF(leftMarginF, topMarginF, rightMarginF, bottomMarginF), QPageLayout::Millimeter);
-    this->pview->updatePreview();
+    QPageLayout m_pageLayout = printer->pageLayout();
+    QMarginsF minumMargins = m_pageLayout.minimumMargins();
+    if (marginLeftSpin->value() >= minumMargins.left() && marginTopSpin->value() >= minumMargins.top() && marginRightSpin->value() >= minumMargins.right() && marginBottomSpin->value() >= minumMargins.bottom()) {
+        this->printer->setPageMargins(QMarginsF(leftMarginF, topMarginF, rightMarginF, bottomMarginF), QPageLayout::Millimeter);
+        this->pview->updatePreview();
+    }
 }
 
 /*!
@@ -1349,14 +1382,13 @@ void DPrintPreviewDialogPrivate::_q_marginspinChanged(double)
 void DPrintPreviewDialogPrivate::_q_marginEditFinished()
 {
     Q_Q(DPrintPreviewDialog);
-
+    setMininumMargins();
     if (!marginTimer->isActive())
         return;
 
     if (q->focusWidget() == marginTopSpin || q->focusWidget() == marginLeftSpin
-        || q->focusWidget() == marginBottomSpin || q->focusWidget() == marginRightSpin)
+            || q->focusWidget() == marginBottomSpin || q->focusWidget() == marginRightSpin)
         return;
-
     marginTimer->stop();
     _q_marginTimerOut();
 }
@@ -1483,8 +1515,10 @@ bool DPrintPreviewDialog::eventFilter(QObject *watched, QEvent *event)
     if (event->type() == QEvent::ShortcutOverride) {
         QKeyEvent *keye = dynamic_cast<QKeyEvent *>(event);
         if (keye->key() == Qt::Key_Enter || keye->key() == Qt::Key_Return) {
-            if (watched == d->marginTopSpin || watched == d->marginLeftSpin || watched == d->marginRightSpin || watched == d->marginBottomSpin)
+            if (watched == d->marginTopSpin || watched == d->marginLeftSpin || watched == d->marginRightSpin || watched == d->marginBottomSpin) {
+                d->setMininumMargins();
                 d->_q_marginTimerOut();
+            }
         }
 
         return false;

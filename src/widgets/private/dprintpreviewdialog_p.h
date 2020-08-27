@@ -63,6 +63,7 @@ public:
     void setScaling(int index);
     void test();
     void judgeSupportedAttributes(const QString &lastPaperSize);
+    void setMininumMargins();
     QVector<int> checkDuplication(QVector<int> data);
 
     void setEnable(const int &value, DComboBox *combox); //控件可用
@@ -85,6 +86,9 @@ public:
     int totalPages = 0;
     bool fontSizeMore = false;
     QString lastPageRange = "";
+    bool supportedDuplexFlag = false;
+    bool supportedColorMode = false;
+    bool isInited = false;
 
     //control
     DPrintPreviewWidget *pview;
@@ -127,9 +131,6 @@ public:
     DIconButton *waterColorBtn;
     DLineEdit *waterTextEdit;
     QTimer *marginTimer;
-    bool supportedDuplexFlag = false;
-    bool supportedColorMode = false;
-    bool isInited = false;
     QVector<qreal> marginOldValue; // 记录margin自定义时的旧值  如果旧值和新值一致，就不需要刷新，top left right bottom
     Q_DECLARE_PUBLIC(DPrintPreviewDialog)
 };
