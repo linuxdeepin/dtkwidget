@@ -83,6 +83,7 @@ public:
     DBlurEffectWidget *m_blurBackground = NULL;
     DWindowManagerHelper *m_wmHelper;
     bool leftRightRadius = false;
+    bool radiusArrowStyleEnable = false;
 };
 
 DWIDGET_END_NAMESPACE

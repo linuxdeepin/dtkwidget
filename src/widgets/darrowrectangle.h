@@ -118,6 +118,7 @@ public:
     void setShadowYOffset(const qreal &shadowYOffset);
 
     void setLeftRightRadius(bool enable);
+    void setRadiusArrowStyleEnable(bool enable);
 
 Q_SIGNALS:
     void windowDeactivate() const;

@@ -376,6 +376,17 @@ void DArrowRectangle::setLeftRightRadius(bool enable)
 }
 
 /*!
+ * \~chinese \brief DArrowRectangle::setArrowStyleEnable 设置圆角箭头样式
+ */
+void DArrowRectangle::setRadiusArrowStyleEnable(bool enable)
+{
+    D_D(DArrowRectangle);
+    d->radiusArrowStyleEnable = enable;
+    setArrowWidth(40);
+    setArrowHeight(24);
+}
+
+/*!
  * \~english \property DArrowRectangle::shadowXOffset
  * \~english \brief the offset of the widget and its shadow on x axis.
  */
@@ -822,7 +833,7 @@ QPainterPath DArrowRectanglePrivate::getLeftCornerPath()
     QPoint topRight(rect.x() + rect.width(), rect.y());
     QPoint bottomRight(rect.x() + rect.width(), rect.y() + rect.height());
     QPoint bottomLeft(rect.x() + m_arrowHeight, rect.y() + rect.height());
-    int radius =  m_radius > (rect.height() / 2) ? (rect.height() / 2) : m_radius;
+    int radius = m_radius > (rect.height() / 2) ? (rect.height() / 2) : m_radius;
     int arrowWidth = m_arrowWidth - m_arrowHeight;
     int widgetRadius = rect.height() > 4 * radius ? 2 * radius : radius;
     if (!radiusEnabled()) {
@@ -836,29 +847,49 @@ QPainterPath DArrowRectanglePrivate::getLeftCornerPath()
     border.lineTo(bottomRight.x(), bottomRight.y() - radius);
     border.arcTo(bottomRight.x() - 2 * radius, bottomRight.y() - 2 * radius, 2 * radius, 2 * radius, 0, -90);
 
-
-    if (leftRightRadius) {
+    if (radiusArrowStyleEnable) {
         border.lineTo(bottomLeft.x() + arrowWidth, bottomLeft.y());
-        border.arcTo(bottomLeft.x(), bottomLeft.y() -  widgetRadius, widgetRadius, widgetRadius, -90, -90);
-        border.lineTo(bottomLeft.x(), cornerPoint.y() + m_arrowWidth / 2);
-    } else {
-        border.lineTo(bottomLeft.x(), bottomLeft.y());
+        border.arcTo(bottomLeft.x(), bottomLeft.y() - widgetRadius, widgetRadius, widgetRadius, -90, -90);
+        border.lineTo(bottomLeft.x(), cornerPoint.y() + m_arrowWidth / 2 + radius / 2);
 
-        if (cornerPoint.y() > m_arrowWidth)
-            border.lineTo(bottomLeft.x(), cornerPoint.y() + m_arrowWidth / 2);
-    }
+        border.cubicTo(QPointF(bottomLeft.x(), cornerPoint.y() + m_arrowWidth / 2 + radius / 2),
+                       QPointF(bottomLeft.x(), cornerPoint.y() + m_arrowWidth / 2),
+                       QPointF(cornerPoint.x() + m_arrowHeight / 2, cornerPoint.y() + m_arrowWidth / 4.5));
 
-    border.lineTo(cornerPoint);
+        border.cubicTo(QPointF(cornerPoint.x() + m_arrowHeight / 2, cornerPoint.y() + m_arrowWidth / 4.5),
+                       QPointF(cornerPoint),
+                       QPointF(cornerPoint.x() + m_arrowHeight / 2, cornerPoint.y() - m_arrowWidth / 4.5));
 
-    if (leftRightRadius) {
-        border.lineTo(topLeft.x(), cornerPoint.y() - m_arrowWidth / 2);
-        border.lineTo(topLeft.x(), topLeft.y() + radius);
+        border.cubicTo(QPointF(cornerPoint.x() + m_arrowHeight / 2, cornerPoint.y() - m_arrowWidth / 4.5),
+                       QPointF(cornerPoint.x() + m_arrowHeight, cornerPoint.y() - m_arrowWidth / 2),
+                       QPointF(topLeft.x(), cornerPoint.y() - m_arrowWidth / 2 - radius / 2));
+
+        border.lineTo(topLeft.x(), cornerPoint.y() - m_arrowWidth / 2 - radius / 2);
         border.arcTo(topLeft.x(), topLeft.y(), widgetRadius, widgetRadius, -180, -90);
     } else {
-        if (cornerPoint.y() > m_arrowWidth)
-            border.lineTo(topLeft.x(), cornerPoint.y() - m_arrowWidth / 2);
+        if (leftRightRadius) {
+            border.lineTo(bottomLeft.x() + arrowWidth, bottomLeft.y());
+            border.arcTo(bottomLeft.x(), bottomLeft.y() - widgetRadius, widgetRadius, widgetRadius, -90, -90);
+            border.lineTo(bottomLeft.x(), cornerPoint.y() + m_arrowWidth / 2);
+        } else {
+            border.lineTo(bottomLeft.x(), bottomLeft.y());
 
-        border.lineTo(topLeft.x(), topLeft.y());
+            if (cornerPoint.y() > m_arrowWidth)
+                border.lineTo(bottomLeft.x(), cornerPoint.y() + m_arrowWidth / 2);
+        }
+
+        border.lineTo(cornerPoint);
+
+        if (leftRightRadius) {
+            border.lineTo(topLeft.x(), cornerPoint.y() - m_arrowWidth / 2);
+            border.lineTo(topLeft.x(), topLeft.y() + radius);
+            border.arcTo(topLeft.x(), topLeft.y(), widgetRadius, widgetRadius, -180, -90);
+        } else {
+            if (cornerPoint.y() > m_arrowWidth)
+                border.lineTo(topLeft.x(), cornerPoint.y() - m_arrowWidth / 2);
+
+            border.lineTo(topLeft.x(), topLeft.y());
+        }
     }
 
     return border;
@@ -882,7 +913,6 @@ QPainterPath DArrowRectanglePrivate::getRightCornerPath()
     QPoint bottomRight(rect.x() + rect.width() - m_arrowHeight, rect.y() + rect.height());
     QPoint bottomLeft(rect.x(), rect.y() + rect.height());
     int radius = this->m_radius > (rect.height() / 2) ? rect.height() / 2 : this->m_radius;
-    int arrowWidth = m_arrowWidth - m_arrowHeight;
     int widgetRadius = rect.height() >= 4 * radius ? 2 * radius : radius;
 
     if (!radiusEnabled()) {
@@ -892,29 +922,50 @@ QPainterPath DArrowRectanglePrivate::getRightCornerPath()
     QPainterPath border;
     border.moveTo(topLeft.x(), topLeft.y());
 
-    if (leftRightRadius) {
+    if (radiusArrowStyleEnable) {
         border.lineTo(topRight.x() - radius, topRight.y());
         border.arcTo(topRight.x() - widgetRadius, topRight.y(), widgetRadius, widgetRadius, 90, -90);
-        border.lineTo(topRight.x(), cornerPoint.y() - m_arrowWidth / 2);
-    } else {
-        border.lineTo(topRight.x(), topRight.y());
+        border.lineTo(topRight.x(), cornerPoint.y() - m_arrowWidth / 2 - radius / 2);
 
-        if (cornerPoint.y() > m_arrowWidth)
-            border.lineTo(topRight.x(), cornerPoint.y() - m_arrowWidth / 2);
-    }
+        border.cubicTo(QPointF(topRight.x(), cornerPoint.y() - m_arrowWidth / 2 - radius / 2),
+                       QPointF(topRight.x(), cornerPoint.y() - m_arrowWidth / 2),
+                       QPointF(cornerPoint.x() - m_arrowHeight / 2, cornerPoint.y() - m_arrowWidth / 4.5));
 
-    border.lineTo(cornerPoint);
+        border.cubicTo(QPointF(cornerPoint.x() - m_arrowHeight / 2, cornerPoint.y() - m_arrowWidth / 4.5),
+                       QPointF(cornerPoint),
+                       QPointF(cornerPoint.x() - m_arrowHeight / 2, cornerPoint.y() + m_arrowWidth / 4.5));
 
-    if (leftRightRadius) {
-        border.lineTo(bottomRight.x(), cornerPoint.y() + m_arrowWidth / 2);
-        border.lineTo(bottomRight.x(), bottomRight.y() - radius);
+        border.cubicTo(QPointF(cornerPoint.x() - m_arrowHeight / 2, cornerPoint.y() + m_arrowWidth / 4.5),
+                       QPointF(bottomRight.x(), cornerPoint.y() + m_arrowWidth / 2),
+                       QPointF(bottomRight.x(), cornerPoint.y() + m_arrowWidth / 2 + radius / 2));
+
+        border.lineTo(bottomRight.x(), cornerPoint.y() + m_arrowWidth / 2 + radius / 2);
         border.arcTo(bottomRight.x() - widgetRadius, bottomRight.y() - widgetRadius, widgetRadius, widgetRadius, 0, -90);
-
     } else {
-        if (cornerPoint.y() > m_arrowWidth)
-            border.lineTo(bottomRight.x(), cornerPoint.y() + m_arrowWidth / 2);
+        if (leftRightRadius) {
+            border.lineTo(topRight.x() - radius, topRight.y());
+            border.arcTo(topRight.x() - widgetRadius, topRight.y(), widgetRadius, widgetRadius, 90, -90);
+            border.lineTo(topRight.x(), cornerPoint.y() - m_arrowWidth / 2);
+        } else {
+            border.lineTo(topRight.x(), topRight.y());
 
-        border.lineTo(bottomRight.x(), bottomRight.y());
+            if (cornerPoint.y() > m_arrowWidth)
+                border.lineTo(topRight.x(), cornerPoint.y() - m_arrowWidth / 2);
+        }
+
+        border.lineTo(cornerPoint);
+
+        if (leftRightRadius) {
+            border.lineTo(bottomRight.x(), cornerPoint.y() + m_arrowWidth / 2);
+            border.lineTo(bottomRight.x(), bottomRight.y() - radius);
+            border.arcTo(bottomRight.x() - widgetRadius, bottomRight.y() - widgetRadius, widgetRadius, widgetRadius, 0, -90);
+
+        } else if (!leftRightRadius){
+            if (cornerPoint.y() > m_arrowWidth)
+                border.lineTo(bottomRight.x(), cornerPoint.y() + m_arrowWidth / 2);
+
+            border.lineTo(bottomRight.x(), bottomRight.y());
+        }
     }
 
     border.lineTo(bottomLeft.x() + radius, bottomLeft.y());
@@ -948,9 +999,27 @@ QPainterPath DArrowRectanglePrivate::getTopCornerPath()
 
     QPainterPath border;
     border.moveTo(topLeft.x() + radius, topLeft.y());
-    border.lineTo(cornerPoint.x() - m_arrowWidth / 2, cornerPoint.y() + m_arrowHeight);
-    border.lineTo(cornerPoint);
-    border.lineTo(cornerPoint.x() + m_arrowWidth / 2, cornerPoint.y() + m_arrowHeight);
+
+    if (radiusArrowStyleEnable) {
+        border.lineTo(cornerPoint.x() - m_arrowWidth / 2 - radius / 2, cornerPoint.y() + m_arrowHeight);
+        border.cubicTo(QPointF(cornerPoint.x() - m_arrowWidth / 2 - radius / 2, topLeft.y()),
+                       QPointF(cornerPoint.x() - m_arrowWidth / 2, topLeft.y()),
+                       QPointF(cornerPoint.x() - m_arrowWidth / 4.5, cornerPoint.y() + m_arrowHeight / 2));
+
+        border.cubicTo(QPointF(cornerPoint.x() - m_arrowWidth / 4.5, cornerPoint.y() + m_arrowHeight / 2),
+                       QPointF(cornerPoint),
+                       QPointF(cornerPoint.x() + m_arrowWidth / 4.5, cornerPoint.y() + m_arrowHeight / 2));
+
+        border.cubicTo(QPointF(cornerPoint.x() + m_arrowWidth / 4.5, cornerPoint.y() + m_arrowHeight / 2),
+                       QPointF(cornerPoint.x() + m_arrowWidth / 2, topLeft.y()),
+                       QPointF(cornerPoint.x() + m_arrowWidth / 2 + radius / 2, cornerPoint.y() + m_arrowHeight));
+        border.lineTo(cornerPoint.x() + m_arrowWidth / 2 + radius / 2, cornerPoint.y() + m_arrowHeight);
+    } else {
+        border.lineTo(cornerPoint.x() - m_arrowWidth / 2, cornerPoint.y() + m_arrowHeight);
+        border.lineTo(cornerPoint);
+        border.lineTo(cornerPoint.x() + m_arrowWidth / 2, cornerPoint.y() + m_arrowHeight);
+    }
+
     border.lineTo(topRight.x() - radius, topRight.y());
     border.arcTo(topRight.x() - 2 * radius, topRight.y(), 2 * radius, 2 * radius, 90, -90);
     border.lineTo(bottomRight.x(), bottomRight.y() - radius);
@@ -972,10 +1041,10 @@ QPainterPath DArrowRectanglePrivate::getBottomCornerPath()
     if (!m_handle) {
         qreal delta = q->shadowBlurRadius() + m_shadowDistance;
 
-        rect = rect.marginsRemoved(QMargins(delta, delta, delta, (DArrowRectangle::FloatWidget == floatMode) ?  0 : delta));
+        rect = rect.marginsRemoved(QMargins(delta, delta, delta, (DArrowRectangle::FloatWidget == floatMode) ? 0 : delta));
     }
 
-    QPoint cornerPoint(rect.x() + (m_arrowX > 0 ? m_arrowX : qRound(double(rect.width()) / 2)), rect.y()  + rect.height());
+    QPoint cornerPoint(rect.x() + (m_arrowX > 0 ? m_arrowX : qRound(double(rect.width()) / 2)), rect.y() + rect.height());
     QPoint topLeft(rect.x(), rect.y());
     QPoint topRight(rect.x() + rect.width(), rect.y());
     QPoint bottomRight(rect.x() + rect.width(), rect.y() + rect.height() - m_arrowHeight);
@@ -991,9 +1060,29 @@ QPainterPath DArrowRectanglePrivate::getBottomCornerPath()
     border.arcTo(topRight.x() - 2 * radius, topRight.y(), 2 * radius, 2 * radius, 90, -90);
     border.lineTo(bottomRight.x(), bottomRight.y() - radius);
     border.arcTo(bottomRight.x() - 2 * radius, bottomRight.y() - 2 * radius, 2 * radius, 2 * radius, 0, -90);
-    border.lineTo(cornerPoint.x() + m_arrowWidth / 2, cornerPoint.y() - m_arrowHeight);
-    border.lineTo(cornerPoint);
-    border.lineTo(cornerPoint.x() - m_arrowWidth / 2, cornerPoint.y() - m_arrowHeight);
+
+    if (radiusArrowStyleEnable) {
+        border.lineTo(cornerPoint.x() + m_arrowWidth / 2 + radius / 2, cornerPoint.y() - m_arrowHeight);
+
+        border.cubicTo(QPointF(cornerPoint.x() + m_arrowWidth / 2 + radius / 2, cornerPoint.y() - m_arrowHeight),
+                       QPointF(cornerPoint.x() + m_arrowWidth / 2, bottomRight.y()),
+                       QPointF(cornerPoint.x() + m_arrowWidth / 4.5, cornerPoint.y() - m_arrowHeight / 2));
+
+        border.cubicTo(QPointF(cornerPoint.x() + m_arrowWidth / 4.5 , cornerPoint.y() - m_arrowHeight / 2),
+                       QPointF(cornerPoint),
+                       QPointF(cornerPoint.x() - m_arrowWidth / 4.5 , cornerPoint.y() - m_arrowHeight / 2));
+
+        border.cubicTo(QPointF(cornerPoint.x() - m_arrowWidth / 4.5 , cornerPoint.y() - m_arrowHeight / 2),
+                       QPointF(cornerPoint.x() - m_arrowWidth / 2, bottomLeft.y()),
+                       QPointF(cornerPoint.x() - m_arrowWidth / 2 - radius / 2, cornerPoint.y() - m_arrowHeight));
+
+        border.lineTo(cornerPoint.x() - m_arrowWidth / 2 - radius / 2, cornerPoint.y() - m_arrowHeight);
+    } else {
+        border.lineTo(cornerPoint.x() + m_arrowWidth / 2, cornerPoint.y() - m_arrowHeight);
+        border.lineTo(cornerPoint);
+        border.lineTo(cornerPoint.x() - m_arrowWidth / 2, cornerPoint.y() - m_arrowHeight);
+    }
+
     border.lineTo(bottomLeft.x() + radius, bottomLeft.y());
     border.arcTo(bottomLeft.x(), bottomLeft.y() - 2 * radius, 2 * radius, 2 * radius, -90, -90);
     border.lineTo(topLeft.x(), topLeft.y() + radius);
