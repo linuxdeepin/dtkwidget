@@ -125,12 +125,12 @@ protected:
     void closeEvent(QCloseEvent *event) override;
     void childEvent(QChildEvent *event) Q_DECL_OVERRIDE;
     void resizeEvent(QResizeEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
 
 private:
     D_DECLARE_PRIVATE(DDialog)
 
     Q_PRIVATE_SLOT(d_func(), void _q_onButtonClicked())
-    Q_PRIVATE_SLOT(d_func(), void _q_defaultButtonTriggered())
 };
 
 DWIDGET_END_NAMESPACE

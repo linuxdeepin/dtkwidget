@@ -126,18 +126,11 @@ void DDialogPrivate::init()
     mainLayout->addSpacerItem(spacer);
     mainLayout->addLayout(buttonLayout);
 
-    QAction *button_action = new QAction(q);
-
-    button_action->setShortcuts(QKeySequence::InsertParagraphSeparator);
-    button_action->setAutoRepeat(false);
-
-    QObject::connect(button_action, SIGNAL(triggered(bool)), q, SLOT(_q_defaultButtonTriggered()));
     QObject::connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged, q, [this]() {
         palrtteTransparency(titleLabel, -10);
         palrtteTransparency(messageLabel, -30);
     });
     q->setLayout(mainLayout);
-    q->addAction(button_action);
     q->setFocusPolicy(Qt::ClickFocus);
     q->setFocus();
 }
@@ -1105,6 +1098,16 @@ void DDialog::childEvent(QChildEvent *event)
 void DDialog::resizeEvent(QResizeEvent *event)
 {
     return DAbstractDialog::resizeEvent(event);
+}
+
+void DDialog::keyPressEvent(QKeyEvent *event)
+{
+    D_D(DDialog);
+    if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) {
+        d->_q_defaultButtonTriggered();
+    } else {
+        DAbstractDialog::keyPressEvent(event);
+    }
 }
 
 DWIDGET_END_NAMESPACE
