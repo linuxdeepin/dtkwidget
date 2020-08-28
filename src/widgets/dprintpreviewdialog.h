@@ -32,9 +32,7 @@ class DPrintPreviewDialog : public DDialog
     Q_OBJECT
 public:
     explicit DPrintPreviewDialog(QWidget *parent = nullptr);
-    ~DPrintPreviewDialog();
-
-
+    ~DPrintPreviewDialog() override;
 
 Q_SIGNALS:
     void paintRequested(DPrinter *printer);
@@ -54,7 +52,6 @@ private:
     D_PRIVATE_SLOT(void _q_currentPageSpinChanged(int))
     D_PRIVATE_SLOT(void _q_checkStateChanged(int))
 
-    // QObject interface
 public:
     virtual bool event(QEvent *event) override;
     bool eventFilter(QObject *watched, QEvent *event) override;

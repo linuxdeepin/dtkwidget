@@ -24,12 +24,13 @@
 
 #include "dprintpreviewdialog.h"
 #include "ddialog_p.h"
+
 #include <DWidget>
 #include <DPushButton>
 #include <DCheckBox>
 #include <DComboBox>
 #include <DRadioButton>
-#include <private/qprintdevice_p.h>
+
 class QVBoxLayout;
 class QButtonGroup;
 class DScrollArea;
@@ -61,7 +62,6 @@ public:
     void showadvancesetting();
     void setupPrinter();
     void setScaling(int index);
-    void test();
     void judgeSupportedAttributes(const QString &lastPaperSize);
     void setMininumMargins();
     void themeTypeChange(DGuiApplicationHelper::ColorType themeType);
