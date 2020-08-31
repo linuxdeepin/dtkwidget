@@ -289,7 +289,7 @@ void DPrintPreviewDialogPrivate::initbasicui()
     pagelayout->addLayout(hrangebox);
     pagelayout->addWidget(pageRangeEdit);
 
-    QRegExp reg("^(([1-9][0-9]*)+(\\,|\\-)?)*");
+    QRegExp reg("^(([1-9][0-9]*)+(\\,)?|([1-9][0-9]*-[1-9][0-9]*)+(\\,)?)*");
     QRegExpValidator *val = new QRegExpValidator(reg);
     pageRangeEdit->lineEdit()->setValidator(val);
 
