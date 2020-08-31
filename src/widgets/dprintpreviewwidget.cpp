@@ -50,8 +50,30 @@ void DPrintPreviewWidgetPrivate::populateScene()
         scene->addItem(item);
         pages.append(item);
     }
+    Q_Q(DPrintPreviewWidget);
     if (isGenerate || pageRange.isEmpty()) {
-        setPageRangeAll();
+        int page = pages.count();
+        switch (pageRangeMode) {
+        case DPrintPreviewWidget::AllPage:
+            setPageRangeAll();
+            break;
+        case DPrintPreviewWidget::CurrentPage:
+            if (pageRange.at(0) > page)
+                pageRange[0] = page;
+            Q_EMIT q->pagesCountChanged(1);
+            break;
+        case DPrintPreviewWidget::SelectPage:
+            for (int i = 0; i < pageRange.count();) {
+                if (pageRange.at(i) > page) {
+                    pageRange.removeAt(i);
+                } else
+                    i++;
+            }
+            Q_EMIT q->pagesCountChanged(pageRange.count());
+            break;
+        }
+        if (currentPageNumber > pageRange.count())
+            currentPageNumber = pageRange.count();
     }
     if (!pages.isEmpty()) {
         if (currentPageNumber == 0)
@@ -217,6 +239,18 @@ void DPrintPreviewWidget::setPageRangeALL()
     d->setPageRangeAll();
     if (!d->pageRange.isEmpty())
         d->setCurrentPage(FIRST_PAGE);
+}
+
+void DPrintPreviewWidget::setPageRangeMode(PageRange mode)
+{
+    Q_D(DPrintPreviewWidget);
+    d->pageRangeMode = mode;
+}
+
+DPrintPreviewWidget::PageRange DPrintPreviewWidget::pageRangeMode()
+{
+    Q_D(DPrintPreviewWidget);
+    return d->pageRangeMode;
 }
 
 void DPrintPreviewWidget::setReGenerate(bool generate)

@@ -607,11 +607,16 @@ void DPrintPreviewDialogPrivate::initconnections()
     });
 
     QObject::connect(pview, &DPrintPreviewWidget::totalPages, [this](int pages) {
+        jumpPageEdit->setRange(1, pages);
         totalPageLabel->setText(QString::number(pages));
         totalPages = pages;
         jumpPageEdit->setMaximum(totalPages);
+        setTurnPageBtnStatus();
     });
-    QObject::connect(pview, &DPrintPreviewWidget::pagesCountChanged, totalPageLabel, static_cast<void (QLabel::*)(int)>(&QLabel::setNum));
+    QObject::connect(pview, &DPrintPreviewWidget::pagesCountChanged, [this](int pages) {
+        totalPageLabel->setNum(pages);
+        setTurnPageBtnStatus();
+    });
     QObject::connect(firstBtn, &DIconButton::clicked, pview, &DPrintPreviewWidget::turnBegin);
     QObject::connect(prevPageBtn, &DIconButton::clicked, pview, &DPrintPreviewWidget::turnFront);
     QObject::connect(nextPageBtn, &DIconButton::clicked, pview, &DPrintPreviewWidget::turnBack);
@@ -620,9 +625,12 @@ void DPrintPreviewDialogPrivate::initconnections()
         if (jumpPageEdit->value() == page)
             return;
         jumpPageEdit->setValue(page);
+        setTurnPageBtnStatus();
     });
-    QObject::connect(jumpPageEdit, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), pview, &DPrintPreviewWidget::setCurrentPage);
-
+    QObject::connect(jumpPageEdit->lineEdit(), &QLineEdit::editingFinished, [this]() {
+        pview->setCurrentPage(jumpPageEdit->value());
+        setTurnPageBtnStatus();
+    });
     QObject::connect(paperSizeCombo, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), q, [this](int index) {
         QPrinterInfo prInfo(*printer);
         if (paperSizeCombo->count() == 0) {
@@ -667,7 +675,8 @@ void DPrintPreviewDialogPrivate::initconnections()
             }
             pview->updatePreview();
         }
-        _q_customPagesFinished();
+        if (pview->pageRangeMode() != DPrintPreviewWidget::AllPage)
+            _q_customPagesFinished();
     });
 
     QObject::connect(scaleRateEdit->lineEdit(), &QLineEdit::editingFinished, q, [=] {
@@ -677,6 +686,9 @@ void DPrintPreviewDialogPrivate::initconnections()
             qreal scale = scaleRateEdit->value() / 100.0;
             pview->setScale(scale);
             pview->updateView();
+
+            if (pview->pageRangeMode() != DPrintPreviewWidget::AllPage)
+                _q_customPagesFinished();
         }
     });
     QObject::connect(scaleGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), q, [this](int id) {
@@ -689,6 +701,9 @@ void DPrintPreviewDialogPrivate::initconnections()
             scaleRateEdit->setEnabled(true);
         }
         pview->updateView();
+
+        if (pview->pageRangeMode() != DPrintPreviewWidget::AllPage)
+            _q_customPagesFinished();
     });
 
     QObject::connect(marginTimer, SIGNAL(timeout()), q, SLOT(_q_marginTimerOut()));
@@ -950,6 +965,36 @@ void DPrintPreviewDialogPrivate::setEnable(const int &value, DComboBox *combox)
 }
 
 /*!
+ * \~chinese \brief DPrintPreviewDialogPrivate::setEnable 设置翻页按钮状态
+ */
+void DPrintPreviewDialogPrivate::setTurnPageBtnStatus()
+{
+    int currentPage = jumpPageEdit->value();
+    int totalPage = totalPageLabel->text().toInt();
+    if (currentPage > 1 && currentPage < totalPage) {
+        firstBtn->setEnabled(true);
+        prevPageBtn->setEnabled(true);
+        nextPageBtn->setEnabled(true);
+        lastBtn->setEnabled(true);
+    } else if (currentPage == 1 && currentPage == totalPage) {
+        firstBtn->setEnabled(false);
+        prevPageBtn->setEnabled(false);
+        nextPageBtn->setEnabled(false);
+        lastBtn->setEnabled(false);
+    } else if (currentPage == 1) {
+        firstBtn->setEnabled(false);
+        prevPageBtn->setEnabled(false);
+        nextPageBtn->setEnabled(true);
+        lastBtn->setEnabled(true);
+    } else if (currentPage == totalPage) {
+        firstBtn->setEnabled(true);
+        prevPageBtn->setEnabled(true);
+        nextPageBtn->setEnabled(false);
+        lastBtn->setEnabled(false);
+    }
+}
+
+/*!
  * \~chinese \brief DPrintPreviewDialogPrivate::_q_printerChanged 根据选取不同的打印设备刷新界面和属性
  * \~chinese \param index 判断选取的打印设备
  */
@@ -1044,18 +1089,21 @@ void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
     setEnable(index, pageRangeCombo);
     pageRangeEdit->lineEdit()->setPlaceholderText("");
     pageRangeEdit->setText("");
-    if (index == PAGERANGE_ALL) {
+    if (index == DPrintPreviewWidget::AllPage) {
+        pview->setPageRangeMode(DPrintPreviewWidget::AllPage);
         pageRangeEdit->setAlert(false);
         if (totalPages != 0) {
             totalPageLabel->setNum(totalPages);
             if (isInited)
                 pview->setPageRange(FIRST_PAGE, totalPages);
         }
-    } else if (index == PAGERANGE_CURRENT) {
+    } else if (index == DPrintPreviewWidget::CurrentPage) {
+        pview->setPageRangeMode(DPrintPreviewWidget::CurrentPage);
         pageRangeEdit->setAlert(false);
         int currentPage = pview->currentPage();
         pview->setPageRange(currentPage, currentPage);
     } else {
+        pview->setPageRangeMode(DPrintPreviewWidget::SelectPage);
         if (lastPageRange.isEmpty()) {
             pageRangeEdit->lineEdit()->setPlaceholderText(q->tr("1-%1. For example, 1,3,5-7,11-15,18,21").arg(QString::number(totalPages)));
             pview->setPageRange(FIRST_PAGE, totalPages);
@@ -1144,6 +1192,9 @@ void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
         }
     }
 
+    if (pview->pageRangeMode() != DPrintPreviewWidget::AllPage)
+        _q_customPagesFinished();
+
     if (marginOldValue.length() > 4)
         marginOldValue.clear();
 
@@ -1226,12 +1277,14 @@ void DPrintPreviewDialogPrivate::_q_customPagesFinished()
             }
         }
     }
+
     pageRangeEdit->setAlert(false);
     jumpPageEdit->setValue(1);
+    //jumpPageEdit->setValue(1);
     QVector<int> page = checkDuplication(pagesrange);
     pview->setPageRange(page);
     lastPageRange = cuspages;
-    _q_currentPageSpinChanged(1);
+    //_q_currentPageSpinChanged(1);
 }
 
 /*!
@@ -1259,7 +1312,8 @@ void DPrintPreviewDialogPrivate::_q_marginTimerOut()
         this->printer->setPageMargins(QMarginsF(leftMarginF, topMarginF, rightMarginF, bottomMarginF), QPageLayout::Millimeter);
         this->pview->updatePreview();
     }
-    _q_customPagesFinished();
+    if (pview->pageRangeMode() != DPrintPreviewWidget::AllPage)
+        _q_customPagesFinished();
 }
 
 /*!

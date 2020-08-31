@@ -65,6 +65,12 @@ public:
         FourFour
     };
 
+    enum PageRange {
+        AllPage,
+        CurrentPage,
+        SelectPage
+    };
+
     explicit DPrintPreviewWidget(DPrinter *printer, QWidget *parent = nullptr);
 
     void setVisible(bool visible) override;
@@ -72,6 +78,8 @@ public:
     void setPageRange(int from, int to);
     void setPageRangeALL();
     void setReGenerate(bool generate);
+    void setPageRangeMode(PageRange mode);
+    PageRange pageRangeMode();
     int pagesCount();
     int currentPage();
     bool turnPageAble();

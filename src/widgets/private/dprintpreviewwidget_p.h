@@ -179,6 +179,7 @@ public:
     DPrintPreviewWidget::Imposition imposition;
     qreal scale = 1.0;
     bool isGenerate = true;
+    DPrintPreviewWidget::PageRange pageRangeMode = DPrintPreviewWidget::AllPage;
 
     DPrinter *previewPrinter;
     RefreshMode refreshMode;
