@@ -65,6 +65,7 @@ public:
     void judgeSupportedAttributes(const QString &lastPaperSize);
     void setMininumMargins();
     void themeTypeChange(DGuiApplicationHelper::ColorType themeType);
+    void setWaringPage();
     QVector<int> checkDuplication(QVector<int> data);
 
     void setEnable(const int &value, DComboBox *combox); //控件可用

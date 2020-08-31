@@ -288,6 +288,7 @@ void DPrintPreviewDialogPrivate::initbasicui()
     pageRangeEdit = new DLineEdit;
     pagelayout->addLayout(hrangebox);
     pagelayout->addWidget(pageRangeEdit);
+    pageRangeEdit->installEventFilter(q);
 
     QRegExp reg("^(([1-9][0-9]*)+(\\,)?|([1-9][0-9]*-[1-9][0-9]*)+(\\,)?)*");
     QRegExpValidator *val = new QRegExpValidator(reg);
@@ -609,6 +610,7 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(pview, &DPrintPreviewWidget::totalPages, [this](int pages) {
         totalPageLabel->setText(QString::number(pages));
         totalPages = pages;
+        jumpPageEdit->setMaximum(totalPages);
     });
     QObject::connect(pview, &DPrintPreviewWidget::pagesCountChanged, totalPageLabel, static_cast<void (QLabel::*)(int)>(&QLabel::setNum));
     QObject::connect(firstBtn, &DIconButton::clicked, pview, &DPrintPreviewWidget::turnBegin);
@@ -666,6 +668,7 @@ void DPrintPreviewDialogPrivate::initconnections()
             }
             pview->updatePreview();
         }
+        _q_customPagesFinished();
     });
 
     QObject::connect(scaleRateEdit->lineEdit(), &QLineEdit::editingFinished, q, [=] {
@@ -887,6 +890,15 @@ void DPrintPreviewDialogPrivate::themeTypeChange(DGuiApplicationHelper::ColorTyp
     }
 }
 
+/*!
+ * \~chinese DPrintPreviewDialogPrivate::setWaringPage 当自定义页码不合理,设置警告颜色
+ */
+void DPrintPreviewDialogPrivate::setWaringPage()
+{
+    pageRangeEdit->setAlert(true);
+    pview->setCurrentPage(1);
+}
+
 QVector<int> DPrintPreviewDialogPrivate::checkDuplication(QVector<int> data)
 {
     for (int i = 0; i < data.size(); i++) {
@@ -1019,6 +1031,7 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
             marginTimer->stop();
         pview->updatePreview();
     }
+    _q_customPagesFinished();
     paperSizeCombo->blockSignals(false);
 }
 
@@ -1033,12 +1046,14 @@ void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
     pageRangeEdit->lineEdit()->setPlaceholderText("");
     pageRangeEdit->setText("");
     if (index == PAGERANGE_ALL) {
+        pageRangeEdit->setAlert(false);
         if (totalPages != 0) {
             totalPageLabel->setNum(totalPages);
             if (isInited)
                 pview->setPageRange(FIRST_PAGE, totalPages);
         }
     } else if (index == PAGERANGE_CURRENT) {
+        pageRangeEdit->setAlert(false);
         int currentPage = pview->currentPage();
         pview->setPageRange(currentPage, currentPage);
     } else {
@@ -1134,6 +1149,7 @@ void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
         marginOldValue.clear();
 
     marginOldValue << marginTopSpin->value() << marginLeftSpin->value() << marginRightSpin->value() << marginBottomSpin->value();
+    _q_customPagesFinished();
 }
 
 /*!
@@ -1181,6 +1197,8 @@ void DPrintPreviewDialogPrivate::_q_orientationChanged(int index)
 
 void DPrintPreviewDialogPrivate::_q_customPagesFinished()
 {
+    if (pageRangeCombo->currentIndex() != 2)
+        return;
     QString cuspages = pageRangeEdit->text();
     QVector<int> pagesrange;
     QStringList list = cuspages.split(",");
@@ -1189,20 +1207,27 @@ void DPrintPreviewDialogPrivate::_q_customPagesFinished()
             QStringList list1 = list.at(i).split("-");
             if (list1.at(0).toInt() <= list1.at(1).toInt()) {
                 for (int page = list1.at(0).toInt(); page <= list1.at(1).toInt(); page++) {
-                    if (page != 0 && page <= totalPages)
+                    if (page != 0 && page <= totalPages){
                         pagesrange.append(page);
-                    else
+                    }else {
+                        setWaringPage();
                         return;
+                    }
                 }
-            } else
+            } else {
+                setWaringPage();
                 return;
+            }
         } else {
-            if (list.at(i).toInt() != 0 && list.at(i).toInt() <= totalPages)
+            if (list.at(i).toInt() != 0 && list.at(i).toInt() <= totalPages){
                 pagesrange.append(list.at(i).toInt());
-            else
+            }else {
+                setWaringPage();
                 return;
+            }
         }
     }
+    pageRangeEdit->setAlert(false);
     jumpPageEdit->setValue(1);
     QVector<int> page = checkDuplication(pagesrange);
     pview->setPageRange(page);
@@ -1235,6 +1260,7 @@ void DPrintPreviewDialogPrivate::_q_marginTimerOut()
         this->printer->setPageMargins(QMarginsF(leftMarginF, topMarginF, rightMarginF, bottomMarginF), QPageLayout::Millimeter);
         this->pview->updatePreview();
     }
+    _q_customPagesFinished();
 }
 
 /*!
@@ -1392,10 +1418,14 @@ bool DPrintPreviewDialog::eventFilter(QObject *watched, QEvent *event)
             if (watched == d->marginTopSpin || watched == d->marginLeftSpin || watched == d->marginRightSpin || watched == d->marginBottomSpin) {
                 d->setMininumMargins();
                 d->_q_marginTimerOut();
-            }
-            else if (watched == d->scaleRateEdit)
+            } else if (watched == d->pageRangeEdit){
+                d->_q_customPagesFinished();
+                return true;
+            } else if (watched == d->scaleRateEdit){
                 Q_EMIT d->scaleRateEdit->lineEdit()->editingFinished();
-        }
+                return true;
+            }
+         }
 
         return false;
     }
