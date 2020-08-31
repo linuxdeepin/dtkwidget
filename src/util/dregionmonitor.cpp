@@ -76,7 +76,4 @@ DRegionMonitorPrivate::~DRegionMonitorPrivate()
 {
 }
 
-//fix Qt undefined reference to `vtable for * * * '
-#include "moc_dregionmonitor.cpp"
-
 DWIDGET_END_NAMESPACE
