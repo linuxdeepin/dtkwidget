@@ -30,6 +30,7 @@
 #include <QTimer>
 #include <QKeyEvent>
 #include <private/qprint_p.h>
+#include <private/qcups_p.h>
 #include <private/qprintdevice_p.h>
 #include <qpa/qplatformprintplugin.h>
 #include <qpa/qplatformprintersupport.h>
@@ -795,9 +796,9 @@ void DPrintPreviewDialogPrivate::setupPrinter()
     }
     //设置色彩打印
     if (supportedColorMode)
-        printer->setColorMode(QPrinter::Color);
+        QCUPSSupport::setCupsOption(printer, "ColorModel", "RGB");
     else {
-        printer->setColorMode(QPrinter::GrayScale);
+        QCUPSSupport::setCupsOption(printer, "ColorModel", "Gray");
     }
     //设置纸张打印边距
     printer->setPageMargins(QMarginsF(marginLeftSpin->value(), marginTopSpin->value(), marginRightSpin->value(), marginBottomSpin->value()), QPageLayout::Millimeter);
