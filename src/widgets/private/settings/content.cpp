@@ -84,6 +84,11 @@ Content::Content(QWidget *parent)
     // 设置列表支持触屏滚动
     QScroller::grabGesture(d->contentArea);
 
+    connect(QScroller::scroller(d->contentArea->viewport()), &QScroller::stateChanged, this, [d](QScroller::State newstate) {
+        // fix bug-44587 防止滑动时(DKeyWidget)鼠标事件导致viewport位置发生偏移。
+        bool isDragging = newstate == QScroller::Dragging;
+        d->contentArea->viewport()->setAttribute(Qt::WA_TransparentForMouseEvents, isDragging);
+    });
     d->contentFrame = new QWidget(this);
     d->contentFrame->setObjectName("SettingsContent");
     d->contentLayout = new QFormLayout(d->contentFrame);
