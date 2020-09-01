@@ -68,6 +68,7 @@ Navigation::Navigation(QWidget *parent) :
 
     d->navbar = new DListView(this);
     d->navbar->setObjectName("NavigationBar");
+    d->navbar->setAccessibleName("NavigationBar");
     d->navbar->setContentsMargins(0, 0, 0, 0);
     d->navbar->setAutoFillBackground(true);
     d->navbar->setViewportMargins(10, 0, 10, 0);

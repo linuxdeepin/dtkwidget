@@ -102,6 +102,7 @@ public:
 
         addButton = new DIconButton(DStyle::SP_IncreaseElement, qq);
         addButton->setObjectName("AddButton");
+        addButton->setAccessibleName("DTabBarAddButton");
 
         connect(addButton, &DIconButton::clicked,
                 qq, &DTabBar::tabAddRequested);

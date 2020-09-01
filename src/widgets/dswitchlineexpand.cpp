@@ -42,6 +42,7 @@ DSwitchHeaderLine::DSwitchHeaderLine(QWidget *parent) :
     DHeaderLine(parent)
 {
     m_switchButton = new DSwitchButton(this);
+    m_switchButton->setAccessibleName("DSwitchHeaderLineSwitchButton");
     connect(m_switchButton, &DSwitchButton::checkedChanged, this, &DSwitchHeaderLine::checkedChanged);
     setContent(m_switchButton);
 }
@@ -81,6 +82,7 @@ DSwitchLineExpand::DSwitchLineExpand(QWidget *parent) :
 {
     m_headerLine = new DSwitchHeaderLine(this);
     m_headerLine->setExpand(expand());
+    m_headerLine->setAccessibleName("DSwitchLineExpandHeaderLine");
     connect(m_headerLine, &DSwitchHeaderLine::checkedChanged, [ = ](bool arg) {
         DBaseExpand::setExpand(arg);
     });

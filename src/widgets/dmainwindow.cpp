@@ -44,6 +44,7 @@ DMainWindowPrivate::DMainWindowPrivate(DMainWindow *qq)
     : DObjectPrivate(qq)
 {
     titlebar = new DTitlebar(qq);
+    titlebar->setAccessibleName("DMainWindowTitlebar");
     if (DApplication::isDXcbPlatform()) {
         handle = new DPlatformWindowHandle(qq, qq);
         qq->setMenuWidget(titlebar);
@@ -57,6 +58,7 @@ DMainWindowPrivate::DMainWindowPrivate(DMainWindow *qq)
     }
 
     qq->setMinimumWidth(titlebar->minimumSizeHint().width());
+    qq->setAccessibleName("DMainWindow");
 }
 
 void DMainWindowPrivate::init()
@@ -642,6 +644,7 @@ void DMainWindow::setTitlebarShadowEnabled(bool titlebarShadowEnabled)
 
     if (titlebarShadowEnabled) {
         d->titleShadow = new DShadowLine(this);
+        d->titleShadow->setAccessibleName("DMainWindowTitleShadowLine");
         d->titleShadow->setAttribute(Qt::WA_AlwaysStackOnTop);
         d->updateTitleShadowGeometry();
     } else {

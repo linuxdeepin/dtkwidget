@@ -84,15 +84,19 @@ DSettingsDialog::DSettingsDialog(QWidget *parent) :
     DFrame *rightFrame = new DFrame;
     rightFrame->setLineWidth(0);
     rightFrame->setContentsMargins(10, 10, 10, 10);
+    rightFrame->setAccessibleName("DSettingDialogRightFrame");
 
     QVBoxLayout *rightlayout = new QVBoxLayout(rightFrame);
     d->frameBar = new DTitlebar;
     d->frameBar->setMenuVisible(false);
     d->frameBar->setTitle(QString());
+    d->frameBar->setAccessibleName("DSettingTitleBar");
 
     d->leftFrame->setObjectName("LeftFrame");
+    d->leftFrame->setAccessibleName("DSettingDialogLeftFrame");
     d->content->setObjectName("RightFrame");
     d->content->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    d->content->setAccessibleName("DSettingDialogContentWidget");
 
     rightlayout->setMargin(0);
     rightlayout->addWidget(d->content);

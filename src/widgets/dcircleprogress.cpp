@@ -31,9 +31,11 @@ DCircleProgressPrivate::DCircleProgressPrivate(DCircleProgress *q)
     m_topLabel.setAttribute(Qt::WA_TranslucentBackground);
     m_topLabel.setAlignment(Qt::AlignCenter);
     m_topLabel.setObjectName("TopLabel");
+    m_topLabel.setAccessibleName("DCircleProgressTopLabel");
     m_bottomLabel.setAttribute(Qt::WA_TranslucentBackground);
     m_bottomLabel.setAlignment(Qt::AlignCenter);
     m_bottomLabel.setObjectName("BottomLabel");
+    m_bottomLabel.setAccessibleName("DCircleProgressBottomLabel");
     m_bottomLabel.hide();
 
     QBoxLayout *mainLayout = new QVBoxLayout;

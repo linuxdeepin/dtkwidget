@@ -34,6 +34,7 @@ void DSpinBoxPrivate::init()
     D_Q(DSpinBox);
 
     lineEdit = new DLineEdit(q);
+    lineEdit->setAccessibleName("DSpinBoxChildDLineEdit");
     lineEdit->setClearButtonEnabled(false);
     q->setLineEdit(lineEdit->lineEdit());
     q->connect(lineEdit, &DLineEdit::alertChanged, q, &DSpinBox::alertChanged);

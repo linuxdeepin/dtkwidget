@@ -1235,6 +1235,7 @@ void DArrowRectanglePrivate::init(DArrowRectangle::FloatMode mode)
 
         m_blurBackground = new DBlurEffectWidget(q);
         m_blurBackground->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
+        m_blurBackground->setAccessibleName("DArrowRectangleBlurBackground");
 
         m_wmHelper = DWindowManagerHelper::instance();
 

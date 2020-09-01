@@ -280,6 +280,11 @@ public:
         widgetLeft = new QWidget(qq);
         widgetRight = new QWidget(qq);
         crumbRadius = DStyle::pixelMetric(qq->style(), DStyle::PM_FrameRadius);
+
+        widgetTop->setAccessibleName("DCrumbEditTopWidget");
+        widgetBottom->setAccessibleName("DCrumbEditBottomWidget");
+        widgetLeft->setAccessibleName("DCrumbEditLeftWidget");
+        widgetRight->setAccessibleName("DCrumbEditRightWidget");
     }
 
     void registerHandler(QAbstractTextDocumentLayout *layout)
@@ -623,6 +628,7 @@ DCrumbEdit::DCrumbEdit(QWidget *parent)
     qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
 
     viewport()->setAutoFillBackground(false);
+    viewport()->setAccessibleName("DCrumbViewport");
     setFrameShape(QFrame::NoFrame);
 
     d->widgetTop->setFixedWidth(1);

@@ -59,14 +59,18 @@ DBaseExpandPrivate::DBaseExpandPrivate(DBaseExpand *qq)
     m_hSeparator = new DHorizontalLine();
     m_bottom_separator = new DHorizontalLine;
     m_bottom_separator->hide();
+    m_hSeparator->setAccessibleName("DBaseExpandHorizontalSeparator");
+    m_bottom_separator->setAccessibleName("DBaseExpandBottomSeparator");
 
     qq->connect(qq, &DBaseExpand::expandChange, m_bottom_separator, &QWidget::setVisible);
 
     m_contentLoader = new ContentLoader();
     m_contentLoader->setFixedHeight(0); // default to not expanded.
+    m_contentLoader->setAccessibleName("DBaseExpandContentLoader");
 
     m_boxWidget = new DVBoxWidget;
     m_contentLayout = m_boxWidget->layout();
+    m_boxWidget->setAccessibleName("DBaseExpandVBoxWidget");
 
     QVBoxLayout *layout_contentLoader = new QVBoxLayout(m_contentLoader);
 

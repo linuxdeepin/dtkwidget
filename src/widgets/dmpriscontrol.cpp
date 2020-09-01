@@ -23,6 +23,7 @@
 #include <QDebug>
 #include <QVBoxLayout>
 #include <QTimer>
+#include <QScrollBar>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -122,8 +123,11 @@ void DMPRISControlPrivate::init()
     m_tickEffect      = new DTickEffect(m_title, m_title);
 
     m_prevBtn->setIcon(QIcon::fromTheme(":/assets/images/play_previous.svg"));
+    m_prevBtn->setAccessibleName("DMPRISControlPrevFloatingButton");
     m_playBtn->setIcon(QIcon::fromTheme(":/assets/images/play_start.svg"));
+    m_playBtn->setAccessibleName("DMPRISControlPlayFloatingButton");
     m_nextBtn->setIcon(QIcon::fromTheme(":/assets/images/play_next.svg"));
+    m_nextBtn->setAccessibleName("DMPRISControlNextFloatingButton");
     m_prevBtn->setBackgroundRole(DPalette::Button);
     m_playBtn->setBackgroundRole(DPalette::Button);
     m_nextBtn->setBackgroundRole(DPalette::Button);
@@ -132,7 +136,9 @@ void DMPRISControlPrivate::init()
     m_nextBtn->setAutoExclusive(true);
 
     m_title->setAlignment(Qt::AlignCenter);
+    m_title->setAccessibleName("DMPRISControlTitleLabel");
     m_picture->setFixedSize(200, 200);
+    m_picture->setAccessibleName("DMPRISControlPictureLabel");
     m_prevBtn->setObjectName("PrevBtn");
     m_playBtn->setObjectName("PlayBtn");
     m_nextBtn->setObjectName("NextBtn");
@@ -150,6 +156,8 @@ void DMPRISControlPrivate::init()
     m_titleScrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     m_titleScrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     m_titleScrollArea->setStyleSheet("background-color:transparent;");
+    m_titleScrollArea->setAccessibleName("DMPRISControlScrollArea");
+    m_titleScrollArea->viewport()->setAccessibleName("DMPRISControlScrollAreaViewPort");
 
 #ifdef QT_DEBUG
     m_title->setText("MPRIS Title");
@@ -167,7 +175,7 @@ void DMPRISControlPrivate::init()
     controlLayout->addWidget(m_nextBtn);
     controlLayout->setContentsMargins(0, 5, 0, 0);
     m_controlWidget->setLayout(controlLayout);
-
+    m_controlWidget->setAccessibleName("DMPRISControlCentralWidget");
 
     QVBoxLayout *centralLayout = new QVBoxLayout;
     centralLayout->addWidget(m_titleScrollArea);

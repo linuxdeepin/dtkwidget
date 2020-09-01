@@ -69,6 +69,7 @@ void DDialogPrivate::init()
     // TopLayout--TextLabel
     titleLabel = new QLabel;
     titleLabel->setObjectName("TitleLabel");
+    titleLabel->setAccessibleName("DDialogTitleLabel");
     titleLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
     titleLabel->setWordWrap(true);
     titleLabel->setAlignment(Qt::AlignCenter);
@@ -81,6 +82,7 @@ void DDialogPrivate::init()
     messageLabel = new QLabel;
     fontManager->bind(messageLabel, DFontSizeManager::T6, QFont::Medium);
     messageLabel->setObjectName("MessageLabel");
+    messageLabel->setAccessibleName("DDialogMessageLabel");
     messageLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
     messageLabel->setWordWrap(true);
     messageLabel->setAlignment(Qt::AlignCenter);
@@ -101,6 +103,7 @@ void DDialogPrivate::init()
     contentLayout->addLayout(textLayout);
 
     titleBar = new DTitlebar();
+    titleBar->setAccessibleName("DDialogTitleBar");
     titleBar->setIcon(icon); //设置标题icon
     titleBar->setMenuVisible(false);
     titleBar->setBackgroundTransparent(true);
@@ -554,6 +557,7 @@ void DDialog::insertButton(int index, const QString &text, bool isDefault, Butto
 
     button->setText(text);
     button->setObjectName("ActionButton");
+    button->setAccessibleName(text);
     button->setAttribute(Qt::WA_NoMousePropagation);
 
     insertButton(index, button, isDefault);

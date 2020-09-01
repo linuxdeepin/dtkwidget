@@ -21,6 +21,7 @@ public:
         : DFrame(parent)
     {
         label = new DLabel(text);
+        label->setAccessibleName("DKeyLabelTextLabel");
         QVBoxLayout *layout = new QVBoxLayout(this);
         layout->setContentsMargins(layout->contentsMargins().left(), 0, layout->contentsMargins().right(), 0);
         layout->setSpacing(0);
@@ -245,6 +246,7 @@ void DKeySequenceEditPrivate::init()
     QHBoxLayout *layout = new QHBoxLayout(q);
     rightWidget = new DKeyWidget(q);
 
+    rightWidget->setAccessibleName("DKeySequenceEditKeyWidget");
     layout->setMargin(0);
     layout->setSpacing(0);
 
@@ -269,6 +271,7 @@ void DKeyWidget::setKeyName(const QStringList &keyList)
 
     for (QString key : keyList) {
         DKeyLabel *label = new DKeyLabel(key);
+        label->setAccessibleName(QString("DKeyWidgetKeyLabelAt").append(key));
         label->setMinimumHeight(24);
         layout()->addWidget(label);
         labelList.append(label);

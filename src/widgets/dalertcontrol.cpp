@@ -203,10 +203,12 @@ void DAlertControl::showAlertMessage(const QString &text, QWidget *follower, int
     if (!d->tooltip) {
         d->tooltip = new DToolTip(text);
         d->tooltip->setObjectName("AlertTooltip");
+        d->tooltip->setAccessibleName("DAlertControlAlertToolTip");
         d->tooltip->setForegroundRole(DPalette::TextWarning);
         d->tooltip->setWordWrap(true);
 
         d->frame = new DFloatingWidget;
+        d->frame->setAccessibleName("DAlertControlFloatingWidget");
         d->frame->setFramRadius(DStyle::pixelMetric(d->target->style(), DStyle::PM_FrameRadius));
         d->frame->setBackgroundRole(QPalette::ToolTipBase);
         d->frame->setWidget(d->tooltip);

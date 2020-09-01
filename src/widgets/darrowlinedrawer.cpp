@@ -53,6 +53,7 @@ namespace HeaderLine {
     {
         m_arrowButton = new DIconButton(DStyle::SP_ReduceElement, this);
         m_arrowButton->setFlat(true);
+        m_arrowButton->setAccessibleName("ArrowHeaderArrowButton");
         setExpand(false);
         connect(m_arrowButton, &DIconButton::clicked, this, &ArrowHeaderLine::mousePress);
         setContent(m_arrowButton);
@@ -118,6 +119,7 @@ DArrowLineDrawer::DArrowLineDrawer(QWidget *parent)
     D_D(DArrowLineDrawer);
     d->headerLine = new ArrowHeaderLine(this);
     d->headerLine->setExpand(expand());
+    d->headerLine->setAccessibleName("DArrowLineDrawerHeaderLine");
     connect(d->headerLine, &ArrowHeaderLine::mousePress, [=]{
         setExpand(!expand());
     });

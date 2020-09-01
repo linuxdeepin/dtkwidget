@@ -212,6 +212,7 @@ void DLineEdit::setRightWidgets(const QList<QWidget *> &list)
         return;
 
     d->rightWidget = new QWidget;
+    d->rightWidget->setAccessibleName("DLineEditRightWidget");
     QHBoxLayout *layout = new QHBoxLayout(d->rightWidget);
     layout->setContentsMargins(0, 0, 0, 0);
     d->hLayout->addWidget(d->rightWidget);
@@ -251,6 +252,10 @@ void DLineEdit::setClearButtonEnabled(bool enable)
 {
     Q_D(DLineEdit);
     d->lineEdit->setClearButtonEnabled(enable);
+
+    if (enable)
+        if (QToolButton *lineEditClearButton = d->lineEdit->findChild<QToolButton *>())
+            lineEditClearButton->setAccessibleName("DLineEditClearButton");
 }
 
 /*!
@@ -586,8 +591,8 @@ void DLineEditPrivate::init()
     hLayout->addWidget(lineEdit);
 
     lineEdit->installEventFilter(q);
-
-    q->lineEdit()->setClearButtonEnabled(true);
+    lineEdit->setAccessibleName("DLineEditChildLineEdit");
+    q->setClearButtonEnabled(true);
 
     q->connect(lineEdit, &QLineEdit::textChanged, q, &DLineEdit::textChanged);
     q->connect(lineEdit, &QLineEdit::textEdited, q, &DLineEdit::textEdited);

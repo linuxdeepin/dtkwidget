@@ -81,6 +81,8 @@ public:
         QString str = qApp->translate("DSettingsDialog", "This shortcut conflicts with %1, click on Add to make this shortcut effective immediately")
                       .arg(QString("<span style=\"color: rgba(255, 90, 90, 1);\">%1 %2</span>").arg(text).arg(QString("[%1]").arg(edit->getKeySequence(key))));
         setMessage(str);
+        cancel->setAccessibleName("ChangeDDialogCancelButton");
+        replace->setAccessibleName("ChangeDDialogReplaceButton");
         insertButton(1, cancel);
         insertButton(1, replace);
         connect(replace, &DSuggestButton::clicked, [ = ] {  //替换
@@ -161,6 +163,7 @@ QWidget *DSettingsWidgetFactory::createTwoColumWidget(const QByteArray &translat
 {
     auto optionFrame = new QWidget;
     optionFrame->setObjectName("OptionFrame");
+    optionFrame->setAccessibleName("OptionFrame");
 
     auto optionLayout = new QFormLayout(optionFrame);
     optionLayout->setContentsMargins(0, 0, 0, 0);
@@ -200,6 +203,7 @@ QPair<QWidget *, QWidget *> createShortcutEditOptionHandle(DSettingsWidgetFactor
     auto rightWidget = new KeySequenceEdit(option);
 
     rightWidget->setObjectName("OptionShortcutEdit");
+    rightWidget->setAccessibleName("OptionShortcutEdit");
     rightWidget->ShortcutDirection(Qt::AlignLeft);
 
     auto optionValue = option->value();
@@ -213,6 +217,7 @@ QPair<QWidget *, QWidget *> createShortcutEditOptionHandle(DSettingsWidgetFactor
 
         if (shortcutMap.value(keyseq)) {
             ChangeDDialog frame(keyseq, rightWidget, rightWidget->text());
+            frame.setAccessibleName("ChangeDDialog");
             frame.exec();
         } else {
             shortcutMap.remove(shortcutMap.key(rightWidget));
@@ -267,6 +272,7 @@ QPair<QWidget *, QWidget *> createCheckboxOptionHandle(QObject *opt)
     auto rightWidget = new QCheckBox(trName);
 
     rightWidget->setObjectName("OptionCheckbox");
+    rightWidget->setAccessibleName("OptionCheckbox");
     rightWidget->setChecked(option->value().toBool());
 
     option->connect(rightWidget, &QCheckBox::stateChanged,
@@ -290,6 +296,7 @@ QPair<QWidget *, QWidget *> createLineEditOptionHandle(QObject *opt)
     auto trName = DWIDGET_NAMESPACE::tr(translateContext, value.toStdString().c_str());
     auto rightWidget = new QLineEdit(trName);
     rightWidget->setObjectName("OptionLineEdit");
+    rightWidget->setAccessibleName("OptionLineEdit");
     rightWidget->setText(option->value().toString());
 
     option->connect(rightWidget, &QLineEdit::editingFinished,
@@ -312,6 +319,7 @@ QPair<QWidget *, QWidget *> createComboBoxOptionHandle(QObject *opt)
     auto rightWidget = new ComboBox();
     rightWidget->setFocusPolicy(Qt::StrongFocus);
     rightWidget->setObjectName("OptionLineEdit");
+    rightWidget->setAccessibleName("OptionComboBox");
 
     auto initComboxList = [ = ](const QStringList & data) {
         for (auto item : data) {
@@ -395,6 +403,7 @@ QPair<QWidget *, QWidget *> createButtonGroupOptionHandle(QObject *opt)
 
     auto rightWidget = new DButtonBox();
     rightWidget->setObjectName("OptionButtonBox");
+    rightWidget->setAccessibleName("OptionButtonBox");
     rightWidget->setButtonList(btnList, true);
     rightWidget->setMaximumWidth(60 * btnList.count());
     btnList.at(option->value().toInt())->setChecked(true);
@@ -423,6 +432,7 @@ QPair<QWidget *, QWidget *> createRadioGroupOptionHandle(QObject *opt)
     auto rightWidget = new QGroupBox;
     rightWidget->setContentsMargins(0, 0, 0, 0);
     rightWidget->setObjectName("OptionRadioGroup");
+    rightWidget->setAccessibleName("OptionRadioGroup");
     rightWidget->setAlignment(Qt::AlignLeft);
     rightWidget->setFlat(true);
     rightWidget->setMinimumHeight(24 * items.length() + 8);
@@ -436,6 +446,7 @@ QPair<QWidget *, QWidget *> createRadioGroupOptionHandle(QObject *opt)
         // fix 加大字体后显示截断，不应该 fixedheight
         rb->setMinimumHeight(24);
         rb->setProperty("_dtk_widget_settings_radiogroup_index", index);
+        rb->setAccessibleName(QString("OptionRadioButtonAt").append(QString::number(items.indexOf(item) + 1)));
         rgLayout->addWidget(rb);
         ++index;
 
@@ -470,6 +481,7 @@ QPair<QWidget *, QWidget *> createSpinButtonOptionHandle(QObject *opt)
     auto rightWidget = new QSpinBox();
     rightWidget->setButtonSymbols(QAbstractSpinBox::PlusMinus);
     rightWidget->setObjectName("OptionDSpinBox");
+    rightWidget->setAccessibleName("OptionDSpinBox");
     rightWidget->setValue(option->value().toInt());
 
     if (option->data("max").isValid()) {
@@ -499,6 +511,7 @@ QPair<QWidget *, QWidget *> createSliderOptionHandle(QObject *opt)
     auto option = qobject_cast<DTK_CORE_NAMESPACE::DSettingsOption *>(opt);
     auto rightWidget = new QSlider();
     rightWidget->setObjectName("OptionQSlider");
+    rightWidget->setAccessibleName("OptionQSlider");
     rightWidget->setOrientation(Qt::Horizontal);
     rightWidget->setMaximum(option->data("max").toInt());
     rightWidget->setMinimum(option->data("min").toInt());
@@ -526,6 +539,7 @@ QPair<QWidget *, QWidget *> createSwitchButton(QObject *opt)
     auto option = qobject_cast<DTK_CORE_NAMESPACE::DSettingsOption *>(opt);
     auto rightWidget = new DSwitchButton();
     rightWidget->setObjectName("OptionDSwitchButton");
+    rightWidget->setAccessibleName("OptionDSwitchButton");
     rightWidget->setChecked(option->value().toBool());
 
     auto translateContext = opt->property(PRIVATE_PROPERTY_translateContext).toByteArray();
@@ -544,6 +558,7 @@ QPair<QWidget *, QWidget *> createSwitchButton(QObject *opt)
 
     QWidget *widget = new  QWidget();
     QHBoxLayout *layout = new QHBoxLayout(widget);
+    widget->setAccessibleName("OptionDSwitchButtonWidget");
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(rightWidget, 0, Qt::AlignRight);
 
@@ -558,6 +573,7 @@ QPair<QWidget *, QWidget *> createTitle1(QObject *opt)
 
     auto title = new ContentTitle;
     title->setTitle(trName);
+    title->setAccessibleName(trName);
     title->label()->setForegroundRole(QPalette::BrightText);
     DFontSizeManager::instance()->bind(title, DFontSizeManager::T4, QFont::Medium);
 
@@ -571,6 +587,7 @@ QPair<QWidget *, QWidget *> createTitle2(QObject *opt)
     auto trName = DWIDGET_NAMESPACE::tr(translateContext, option->value().toString().toLocal8Bit().constData());
 
     auto title = new ContentTitle;
+    title->setAccessibleName(trName);
     title->setTitle(trName);
     DFontSizeManager::instance()->bind(title, DFontSizeManager::T5, QFont::Medium);
 
@@ -583,6 +600,7 @@ QWidget *createUnsupportHandle(QObject *opt)
     auto rightWidget = new QLabel();
     rightWidget->setFixedHeight(24);
     rightWidget->setObjectName("OptionUnsupport");
+    rightWidget->setAccessibleName("OptionUnsupport");
     rightWidget->setText("Unsupport option type: " + option->viewType());
     rightWidget->setWordWrap(true);
 

@@ -55,6 +55,7 @@ void DPictureSequenceViewPrivate::init()
     q->setFrameShape(QFrame::NoFrame);
 
     q->connect(refreshTimer, SIGNAL(timeout()), q, SLOT(_q_refreshPicture()));
+    q->viewport()->setAccessibleName("DPictureSequenceViewport");
 }
 
 void DPictureSequenceViewPrivate::play()

@@ -63,13 +63,17 @@ void DDrawerPrivate::init()
     m_hSeparator = new DHorizontalLine();
     m_bottom_separator = new DHorizontalLine;
     m_bottom_separator->hide();
+    m_hSeparator->setAccessibleName("DDrawerHorizontalSeparator");
+    m_bottom_separator->setAccessibleName("DDrawerBottomSeparator");
 
     qq->connect(qq, &DDrawer::expandChange, m_bottom_separator, &QWidget::setVisible);
 
     m_contentLoader = new ContentBox();
     m_contentLoader->setFixedHeight(0); // default to not expanded.
+    m_contentLoader->setAccessibleName("DDrawerContentBox");
 
     m_boxWidget = new DVBoxWidget;
+    m_boxWidget->setAccessibleName("DDrawerVBoxWidget");
     m_contentLayout = m_boxWidget->layout();
 
     QVBoxLayout *layout_contentLoader = new QVBoxLayout(m_contentLoader);

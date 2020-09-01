@@ -166,25 +166,32 @@ void DTitlebarPrivate::init()
 
     optionButton->setObjectName("DTitlebarDWindowOptionButton");
     optionButton->setIconSize(QSize(DefaultTitlebarHeight, DefaultTitlebarHeight));
+    optionButton->setAccessibleName("DTitlebarDWindowOptionButton");
     minButton->setObjectName("DTitlebarDWindowMinButton");
     minButton->setIconSize(QSize(DefaultTitlebarHeight, DefaultTitlebarHeight));
+    minButton->setAccessibleName("DTitlebarDWindowMinButton");
     maxButton->setObjectName("DTitlebarDWindowMaxButton");
     maxButton->setIconSize(QSize(DefaultTitlebarHeight, DefaultTitlebarHeight));
+    maxButton->setAccessibleName("DTitlebarDWindowMaxButton");
     closeButton->setObjectName("DTitlebarDWindowCloseButton");
+    closeButton->setAccessibleName("DTitlebarDWindowCloseButton");
     closeButton->setIconSize(QSize(DefaultTitlebarHeight, DefaultTitlebarHeight));
     quitFullButton->setObjectName("DTitlebarDWindowQuitFullscreenButton");
+    quitFullButton->setAccessibleName("DTitlebarDWindowQuitFullscreenButton");
     quitFullButton->setIconSize(QSize(DefaultTitlebarHeight, DefaultTitlebarHeight));
     quitFullButton->hide();
 
     iconLabel->setIconSize(QSize(DefaultIconWidth, DefaultIconHeight));
     iconLabel->setWindowFlags(Qt::WindowTransparentForInput);
     iconLabel->setFocusPolicy(Qt::NoFocus);
+    iconLabel->setAccessibleName("DTitlebarIconLabel");
     iconLabel->setFlat(true);
     // 默认无图标，所以隐藏
     iconLabel->hide();
 
     leftArea->setWindowFlag(Qt::WindowTransparentForInput);
     leftArea->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+    leftArea->setAccessibleName("DTitlebarLeftArea");
     leftLayout->setContentsMargins(0, 0, 0, 0);
 
     centerLayout->setContentsMargins(0, 0, 0, 0);
@@ -194,9 +201,11 @@ void DTitlebarPrivate::init()
     centerArea->setAutoFillBackground(false);
     centerArea->setBackgroundRole(QPalette::NoRole);
     centerArea->setAlignment(Qt::AlignCenter);
+    centerArea->setAccessibleName("DTitlebarCenterArea");
 
     buttonArea->setWindowFlag(Qt::WindowTransparentForInput);
     buttonArea->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+    buttonArea->setAccessibleName("DTitlebarButtonArea");
     QHBoxLayout *buttonLayout = new QHBoxLayout(buttonArea);
     buttonLayout->setContentsMargins(0, 0, 0, 0);
     buttonLayout->setSpacing(0);
@@ -208,6 +217,7 @@ void DTitlebarPrivate::init()
 
     rightArea->setWindowFlag(Qt::WindowTransparentForInput);
     rightArea->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+    rightArea->setAccessibleName("DTitlebarRightArea");
     rightLayout->setContentsMargins(0, 0, 0, 0);
     auto rightAreaLayout = new QHBoxLayout(rightArea);
     rightAreaLayout->setContentsMargins(0, 0, 0, 0);
@@ -217,10 +227,12 @@ void DTitlebarPrivate::init()
     rightAreaLayout->addWidget(buttonArea);
 
     separatorTop->setFixedHeight(1);
+    separatorTop->setAccessibleName("DTitlebarTopHorizontalLine");
     separatorTop->hide();
     separatorTop->setWindowFlags(Qt::WindowTransparentForInput);
 
     separator->setFixedHeight(1);
+    separator->setAccessibleName("DTitlebarHorizontalLine");
     separator->hide();
     separator->setWindowFlags(Qt::WindowTransparentForInput);
 
@@ -508,6 +520,7 @@ void DTitlebarPrivate::_q_addDefaultMenuItems()
         bool disableDtkSwitchThemeMenu = qEnvironmentVariableIsSet("KLU_DISABLE_MENU_THEME");
         if (!disableDtkSwitchThemeMenu) {
             switchThemeMenu = new QMenu(qApp->translate("TitleBarMenu", "Theme"), menu);
+            switchThemeMenu->setAccessibleName("DTitlebarThemeMenu");
             lightThemeAction = switchThemeMenu->addAction(qApp->translate("TitleBarMenu", "Light Theme"));
             darkThemeAction = switchThemeMenu->addAction(qApp->translate("TitleBarMenu", "Dark Theme"));
             autoThemeAction = switchThemeMenu->addAction(qApp->translate("TitleBarMenu", "System Theme"));
@@ -716,6 +729,7 @@ void DTitlebar::setMenu(QMenu *menu)
 
     d->menu = menu;
     if (d->menu) {
+        d->menu->setAccessibleName("DTitlebarMainMenu");
         disconnect(this, &DTitlebar::optionClicked, 0, 0);
         connect(this, &DTitlebar::optionClicked, this, &DTitlebar::showMenu);
     }

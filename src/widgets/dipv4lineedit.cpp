@@ -46,6 +46,7 @@ void DIpv4LineEditPrivate::init()
     q->setContextMenuPolicy(Qt::NoContextMenu);
     // 带圆角的自绘制背景的frame，挡住背后的edit文字
     DFrame *frame = new DFrame(q);
+    frame->setAccessibleName("DIpv4LineEditFrame");
     frame->setFrameRounded(true);
     frame->setFrameShape(QFrame::NoFrame);
     editMainWidget = frame;

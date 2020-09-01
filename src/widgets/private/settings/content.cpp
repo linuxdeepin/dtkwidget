@@ -80,6 +80,8 @@ Content::Content(QWidget *parent)
     d->contentArea->setContentsMargins(0, 0, 0, 0);
     d->contentArea->setWidgetResizable(true);
     d->contentArea->setFrameShape(QFrame::NoFrame);
+    d->contentArea->setAccessibleName("ContentScrollArea");
+    d->contentArea->viewport()->setAccessibleName("ContentScrollAreaViewPort");
 
     // 设置列表支持触屏滚动
     QScroller::grabGesture(d->contentArea->viewport());
@@ -91,6 +93,7 @@ Content::Content(QWidget *parent)
     });
     d->contentFrame = new QWidget(this);
     d->contentFrame->setObjectName("SettingsContent");
+    d->contentFrame->setAccessibleName("ContentSettingsFrame");
     d->contentLayout = new QFormLayout(d->contentFrame);
     d->contentLayout->setRowWrapPolicy(QFormLayout::DontWrapRows);
     d->contentLayout->setLabelAlignment(Qt::AlignLeft);
@@ -224,10 +227,12 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
         auto title = new ContentTitle;
         title->setTitle(trName);
         title->label()->setForegroundRole(QPalette::BrightText);
+        title->setAccessibleName(QString("ContentTitleWidgetFor").append(current_groupKey));
         DFontSizeManager::instance()->bind(title, DFontSizeManager::T4, QFont::Medium);
 
         DWidget *widTile = new DWidget();
         widTile->setProperty("key", groupKey);
+        widTile->setAccessibleName(QString("ContentWidTileFor").append(groupKey));
         QHBoxLayout *hLayTile = new QHBoxLayout(widTile);
         hLayTile->addWidget(title);
         d->contentLayout->setWidget(d->contentLayout->rowCount(), QFormLayout::SpanningRole, widTile);
@@ -247,13 +252,14 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
                 auto trName = translateContext.isEmpty() ? QObject::tr(subgroup->name().toStdString().c_str())
                               : qApp->translate(translateContext.constData(), subgroup->name().toStdString().c_str());
                 auto title = new ContentTitle;
-
+                title->setAccessibleName(QString("ContentTitleWidgetFor").append(current_subGroupKey));
                 title->setTitle(trName);
                 DFontSizeManager::instance()->bind(title, DFontSizeManager::T5, QFont::Medium);
 
                 DWidget *wid = new DWidget();
                 wid->setProperty("key", subgroup->key());
                 wid->setProperty("_d_dtk_group_key", current_groupKey);
+                wid->setAccessibleName(QString("ContentWidgetFor").append(current_subGroupKey));
                 QHBoxLayout *hLay = new QHBoxLayout(wid);
                 hLay->setContentsMargins(10, 0, 0, 0);
                 hLay->addWidget(title);
@@ -287,6 +293,7 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
                     hLay->addWidget(widget.first, 2);
                     hLay->addWidget(widget.second, 3);
                     d->contentLayout->addRow(frame);
+                    frame->setAccessibleName(QString("ContentItemFrameAtRow").append(QString::number(d->contentLayout->count())));
 
                     if (widget.first) {
                         widget.first->setProperty("_d_dtk_group_key", current_subGroupKey);
@@ -308,7 +315,7 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
                         hLay->setContentsMargins(15, margins.top(), margins.right(), margins.bottom());
                         hLay->addWidget(widget);
                         d->contentLayout->addRow(frame);
-
+                        frame->setAccessibleName(QString("ContentItemWidgetAtRow").append(QString::number(d->contentLayout->count())));
                     }
                 }
             }
@@ -324,8 +331,10 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
     resetBt->setObjectName("SettingsContentReset");
     resetBt->setMaximumWidth(300);
     resetBt->setAutoDefault(false);
+    resetBt->setAccessibleName("ContentSettingsResetButton");
     box_layout->addWidget(resetBt);
     box->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    box->setAccessibleName("ContentBottomWidget");
 
     d->contentLayout->setWidget(d->contentLayout->rowCount(), QFormLayout::SpanningRole, box);
 

@@ -650,6 +650,7 @@ void DSliderPrivate::init()
     }
     slider->setTickPosition(QSlider::NoTicks);
     slider->installEventFilter(q);
+    slider->setAccessibleName("DSliderSpecialSlider");
 }
 
 QSize SliderStrip::sizeHint() const

@@ -84,17 +84,20 @@ DArrowButton::DArrowButton(QWidget *parent)
     setFixedSize(IMAGE_BUTTON_WIDTH, BUTTON_HEIGHT);
 
     m_normalLabel = new ArrowButtonIcon(this);
+    m_normalLabel->setAccessibleName("DArrowButtonNormalLabel");
     m_normalLabel->setObjectName("ArrowButtonIconNormal");
     m_normalLabel->setFixedSize(size());
     m_normalLabel->move(0, 0);
 
     m_hoverLabel = new ArrowButtonIcon(this);
+    m_hoverLabel->setAccessibleName("DArrowButtonHoverLabel");
     m_hoverLabel->setObjectName("ArrowButtonIconHover");
     m_hoverLabel->setFixedSize(size());
     m_hoverLabel->move(0, 0);
     m_hoverLabel->setVisible(false);
 
     m_pressLabel = new ArrowButtonIcon(this);
+    m_pressLabel->setAccessibleName("DArrowButtonPressedLabel");
     m_pressLabel->setObjectName("ArrowButtonIconPress");
     m_pressLabel->setFixedSize(size());
     m_pressLabel->move(0, 0);

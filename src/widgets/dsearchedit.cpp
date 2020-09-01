@@ -280,6 +280,7 @@ void DSearchEditPrivate::init()
     iconbtn->setFlat(true);
     iconbtn->setFocusPolicy(Qt::NoFocus);
     iconbtn->setAttribute(Qt::WA_TransparentForMouseEvents);
+    iconbtn->setAccessibleName("DSearchEditIconButton");
 
     placeHolder = qApp->translate("DSearchEdit", "Search");
 
@@ -296,6 +297,7 @@ void DSearchEditPrivate::init()
 
     label->setPalette(pe);
     label->setText(placeHolder);
+    label->setAccessibleName("DSearchEditPlaceHolderLabel");
 
     q->setFocusPolicy(Qt::ClickFocus);
 
@@ -309,6 +311,7 @@ void DSearchEditPrivate::init()
 
     iconWidget = new QWidget;
     iconWidget->setObjectName("iconWidget");
+    iconWidget->setAccessibleName("DSearchEditIconWidget");
     QHBoxLayout *center_layout = new QHBoxLayout(iconWidget);
     center_layout->setMargin(0);
     center_layout->setSpacing(0);

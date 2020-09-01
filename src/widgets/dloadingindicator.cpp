@@ -40,6 +40,7 @@ void DLoadingIndicatorPrivate::init()
     q->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
     q->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     q->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    q->viewport()->setAccessibleName("DLoadingIndicatorViewport");
 
     rotateAni.setDuration(1000);
     rotateAni.setEasingCurve(QEasingCurve::OutInQuad);

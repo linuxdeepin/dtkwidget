@@ -137,6 +137,7 @@ void DPasswordEditPrivate::init()
 
     QList<QWidget *> list;
     togglePasswordVisibleButton = new DSuggestButton;
+    togglePasswordVisibleButton->setAccessibleName("DPasswordEditPasswordVisibleButton");
     togglePasswordVisibleButton->setIcon(DStyle::standardIcon(q->style(), DStyle::SP_ShowPassword));
     togglePasswordVisibleButton->setIconSize(QSize(24, 24));
 

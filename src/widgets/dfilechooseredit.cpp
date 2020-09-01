@@ -234,6 +234,7 @@ void DFileChooserEditPrivate::init()
 
     QList<QWidget *> list;
     DSuggestButton *btn = new DSuggestButton(nullptr);
+    btn->setAccessibleName("DFileChooserEditSuggestButton");
     btn->setIcon(DStyleHelper(q->style()).standardIcon(DStyle::SP_SelectElement, nullptr));
     btn->setIconSize(QSize(24, 24));
 
