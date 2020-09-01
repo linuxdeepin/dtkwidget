@@ -228,10 +228,11 @@ void DPrintPreviewWidget::setReGenerate(bool generate)
 void DPrintPreviewWidget::setPageRange(const QVector<int> &rangePages)
 {
     Q_D(DPrintPreviewWidget);
-    d->pageRange = rangePages;
     int currentPage = d->index2page(d->currentPageNumber - 1);
-    d->pages.at(currentPage - 1)->setVisible(false);
-    d->currentPageNumber = 0;
+    if (currentPage > 0) {
+        d->pages.at(currentPage - 1)->setVisible(false);
+    }
+    d->pageRange = rangePages;
     Q_EMIT pagesCountChanged(d->pagesCount());
     d->generatePreview();
 }
@@ -272,7 +273,9 @@ void DPrintPreviewWidget::setColorMode(const QPrinter::ColorMode &colorMode)
 
     d->colorMode = colorMode;
     d->previewPrinter->setColorMode(colorMode);
-    d->pages.at(d->currentPageNumber - 1)->update();
+    int page = d->index2page(d->currentPageNumber - 1);
+    if (page > 0)
+        d->pages.at(page - 1)->update();
 }
 
 void DPrintPreviewWidget::setOrientation(const QPrinter::Orientation &pageOrientation)
