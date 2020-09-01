@@ -427,10 +427,9 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     QRegExpValidator *val = new QRegExpValidator(reg);
     QList<DDoubleSpinBox *> list = marginsframe->findChildren<DDoubleSpinBox *>();
     for (int i = 0; i < list.size(); i++) {
-        list.at(i)->setProperty("_d_dtk_spinBox", true);
-        DLineEdit *edit = list.at(i)->findChild<DLineEdit *>();
-        edit->setClearButtonEnabled(false);
-        edit->lineEdit()->setValidator(val);
+        list.at(i)->setEnabledEmbedStyle(true);
+        list.at(i)->lineEdit()->setClearButtonEnabled(false);
+        list.at(i)->lineEdit()->setValidator(val);
         list.at(i)->setMaximum(55.88);
     }
 
