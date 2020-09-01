@@ -82,7 +82,7 @@ Content::Content(QWidget *parent)
     d->contentArea->setFrameShape(QFrame::NoFrame);
 
     // 设置列表支持触屏滚动
-    QScroller::grabGesture(d->contentArea);
+    QScroller::grabGesture(d->contentArea->viewport());
 
     connect(QScroller::scroller(d->contentArea->viewport()), &QScroller::stateChanged, this, [d](QScroller::State newstate) {
         // fix bug-44587 防止滑动时(DKeyWidget)鼠标事件导致viewport位置发生偏移。
