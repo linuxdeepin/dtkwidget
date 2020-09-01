@@ -368,4 +368,5 @@ includes.files += \
     $$PWD/DDrawerGroup \
     $$PWD/DArrowLineDrawer \
     $$PWD/DAlertControl \
-    $$PWD/DSearchComboBox
+    $$PWD/DSearchComboBox \
+    $$PWD/DPrintPreviewDialog

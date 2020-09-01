@@ -40,8 +40,7 @@
 #include <DSettingsWidgetFactory>
 
 #include <DApplication>
-#include "dprintpreviewdialog.h"
-#include "dprintpreviewwidget.h"
+#include <DPrintPreviewDialog>
 #include "mainwindow.h"
 #include "graphicseffecttab.h"
 #include "simplelistviewtab.h"
