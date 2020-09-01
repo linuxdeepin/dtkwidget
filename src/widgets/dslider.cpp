@@ -770,7 +770,7 @@ void SliderStrip::paintEvent(QPaintEvent *event)
         pa.setPen(penLine);
         pa.drawLine(QPointF(startX, startY), QPointF(endX, endY));
         pa.setPen(penNumber);
-        pa.drawText(QRectF(endX - offsetSize, textPos, width, height - tickSize), Qt::AlignLeft, scaleInfo[0]);
+        pa.drawText(QRectF(endX, textPos, width, height - tickSize), Qt::AlignLeft, scaleInfo[0]);
 
         for (int i = 1; i < paragraph - 1; i++) {
             startX += average;
@@ -787,7 +787,7 @@ void SliderStrip::paintEvent(QPaintEvent *event)
             pa.setPen(penLine);
             pa.drawLine(QPointF(startX, startY), QPointF(endX, endY));
             pa.setPen(penNumber);
-            pa.drawText(QRectF(endX - width + offsetSize, textPos, width, height - tickSize), Qt::AlignRight, scaleInfo[paragraph - 1]);
+            pa.drawText(QRectF(endX - width, textPos, width, height - tickSize), Qt::AlignRight, scaleInfo[paragraph - 1]);
         }
     } else {
         startY = offsetSize;
@@ -807,13 +807,27 @@ void SliderStrip::paintEvent(QPaintEvent *event)
             text_flags |= Qt::AlignLeft;
         }
 
-        for (int i = 0; i < paragraph; i++) {
+        pa.setPen(penLine);
+        pa.drawLine(QPointF(startX, startY), QPointF(endX, endY));
+        pa.setPen(penNumber);
+        pa.drawText(QRectF(textPos, endY - average / 2 + offsetSize / 2, width - tickSize, average), text_flags, scaleInfo[0]);
+
+        for (int i = 1; i < paragraph - 1; i++) {
+            startY += average;
+            endY = startY;
             pa.setPen(penLine);
             pa.drawLine(QPointF(startX, startY), QPointF(endX, endY));
             pa.setPen(penNumber);
             pa.drawText(QRectF(textPos, endY - average / 2, width - tickSize, average), text_flags, scaleInfo[i]);
+        }
+
+        if (paragraph > 1) {
             startY += average;
             endY = startY;
+            pa.setPen(penLine);
+            pa.drawLine(QPointF(startX, startY), QPointF(endX, endY));
+            pa.setPen(penNumber);
+            pa.drawText(QRectF(textPos, endY - average / 2 - offsetSize / 2, width - tickSize, average), text_flags, scaleInfo[paragraph - 1]);
         }
     }
 }
