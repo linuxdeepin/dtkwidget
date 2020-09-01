@@ -1043,7 +1043,7 @@ void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
         pview->setPageRange(currentPage, currentPage);
     } else {
         if (lastPageRange.isEmpty()) {
-            pageRangeEdit->lineEdit()->setPlaceholderText(q->tr("1-%1. For example,1,3,5-7,11-15,18,21").arg(QString::number(totalPages)));
+            pageRangeEdit->lineEdit()->setPlaceholderText(q->tr("1-%1. For example, 1,3,5-7,11-15,18,21").arg(QString::number(totalPages)));
             pview->setPageRange(FIRST_PAGE, totalPages);
         } else {
             pageRangeEdit->setText(lastPageRange);
