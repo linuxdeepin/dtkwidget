@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="cs">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="cs" version="2.1">
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -16,7 +14,7 @@
     <message>
         <location filename="../widgets/dapplication.cpp" line="1098"/>
         <source>%1 is released under %2</source>
-        <translation>%1 je vydán pod %2</translation>
+        <translation>%1 je vydáno pod %2</translation>
     </message>
 </context>
 <context>
@@ -112,7 +110,7 @@
     <message>
         <location filename="../widgets/dinputdialog.cpp" line="42"/>
         <source>Cancel</source>
-        <translation>Zrušit</translation>
+        <translation>Storno</translation>
     </message>
     <message>
         <location filename="../widgets/dinputdialog.cpp" line="43"/>
@@ -133,22 +131,22 @@
     <message>
         <location filename="../widgets/dlineedit.cpp" line="460"/>
         <source>Stop reading</source>
-        <translation type="unfinished"></translation>
+        <translation>Přestat předčítat</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="462"/>
         <source>Text to Speech</source>
-        <translation type="unfinished"></translation>
+        <translation>Text na řeč</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="485"/>
         <source>Translate</source>
-        <translation type="unfinished"></translation>
+        <translation>Přeložit</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="507"/>
         <source>Speech To Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Řeč na text</translation>
     </message>
 </context>
 <context>
@@ -156,209 +154,209 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="189"/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokročilé</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="211"/>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Storno</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="212"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="992"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Tisk</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="228"/>
         <source>Basic</source>
-        <translation type="unfinished"></translation>
+        <translation>Základní</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="243"/>
         <source>Printer</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiskárna</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="258"/>
         <source>Copies</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopie</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="278"/>
         <source>Page range</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozsah stránek</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="281"/>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Vše</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="282"/>
         <source>Current page</source>
-        <translation type="unfinished"></translation>
+        <translation>Stávající stránka</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="283"/>
         <source>Select pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Vybrat stránky</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="297"/>
         <source>Orientation</source>
-        <translation type="unfinished"></translation>
+        <translation>Orientace</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="321"/>
         <source>Portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>Na výšku</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="331"/>
         <source>Landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>Na šířku</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="358"/>
         <source>Pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Stránky</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="368"/>
         <source>Color mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Barevný režim</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="371"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="962"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1004"/>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Barva</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="371"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1001"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1004"/>
         <source>Grayscale</source>
-        <translation type="unfinished"></translation>
+        <translation>Stupně šedé</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="382"/>
         <source>Margins</source>
-        <translation type="unfinished"></translation>
+        <translation>Okraje</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="385"/>
         <source>Normal(mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Normální (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="385"/>
         <source>Narrow(mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Úzké (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="385"/>
         <source>Moderate(mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Střední (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="385"/>
         <source>Customize(mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Přizpůsobit (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="391"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Nahoře</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="394"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Vlevo</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="397"/>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Dole</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="400"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Vpravo</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="443"/>
         <source>Scaling</source>
-        <translation type="unfinished"></translation>
+        <translation>Změna měřítka</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="457"/>
         <source>Actual size</source>
-        <translation type="unfinished"></translation>
+        <translation>Stávající velikost</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="466"/>
         <source>Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Měřítko</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="496"/>
         <source>Paper</source>
-        <translation type="unfinished"></translation>
+        <translation>Papír</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="506"/>
         <source>Paper size</source>
-        <translation type="unfinished"></translation>
+        <translation>Velikost papíru</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="520"/>
         <source>Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozvržení</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="531"/>
         <source>Duplex</source>
-        <translation type="unfinished"></translation>
+        <translation>Oboustranně</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="566"/>
         <source>Print to PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytisknout do PDF</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="831"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="838"/>
         <source>Flip on short edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Převrátit na krátké straně</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="834"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="837"/>
         <source>Flip on long edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Převrátit na dlouhé straně</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="967"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1046"/>
         <source>1-%1. For example, 1,3,5-7,11-15,18,21</source>
-        <translation type="unfinished"></translation>
+        <translation>1-%1. Například, 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1346"/>
         <source>Save as PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložit jako PDF</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1346"/>
         <source>PDF file</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF soubor</translation>
     </message>
 </context>
 <context>
@@ -374,7 +372,7 @@
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="78"/>
         <source>Cancel</source>
-        <translation>Zrušit</translation>
+        <translation>Storno</translation>
     </message>
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="79"/>
@@ -384,7 +382,7 @@
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="81"/>
         <source>This shortcut conflicts with %1, click on Add to make this shortcut effective immediately</source>
-        <translation>Tato klávesová zkratka se střetává s %1. Klepněte na Přidat, abyste ji okamžitě zprovoznili</translation>
+        <translation>Tato klávesová zkratka se střetává s %1. Aby začala platit, klikněte na Přidat</translation>
     </message>
 </context>
 <context>
@@ -392,7 +390,7 @@
     <message>
         <location filename="../widgets/dshortcutedit.cpp" line="31"/>
         <source>Please input a new shortcut</source>
-        <translation>Zadejte, prosím, novou zkratku</translation>
+        <translation>Zadejte novou zkratku</translation>
     </message>
     <message>
         <location filename="../widgets/dshortcutedit.cpp" line="102"/>
@@ -405,22 +403,22 @@
     <message>
         <location filename="../widgets/dtextedit.cpp" line="155"/>
         <source>Stop reading</source>
-        <translation type="unfinished"></translation>
+        <translation>Přestat předčítat</translation>
     </message>
     <message>
         <location filename="../widgets/dtextedit.cpp" line="157"/>
         <source>Text to Speech</source>
-        <translation type="unfinished"></translation>
+        <translation>Text na řeč</translation>
     </message>
     <message>
         <location filename="../widgets/dtextedit.cpp" line="180"/>
         <source>Translate</source>
-        <translation type="unfinished"></translation>
+        <translation>Přeložit</translation>
     </message>
     <message>
         <location filename="../widgets/dtextedit.cpp" line="202"/>
         <source>Speech To Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Řeč na text</translation>
     </message>
 </context>
 <context>
@@ -428,7 +426,7 @@
     <message>
         <location filename="../widgets/dlineedit.cpp" line="443"/>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Vybrat vše</translation>
     </message>
 </context>
 <context>
@@ -436,12 +434,12 @@
     <message>
         <location filename="../widgets/dsimplelistview.cpp" line="1334"/>
         <source>No search result</source>
-        <translation>Žádný výsledek hledání</translation>
+        <translation>Nic nenalezeno</translation>
     </message>
     <message>
         <location filename="../widgets/private/settings/content.cpp" line="318"/>
         <source>Restore Defaults</source>
-        <translation>Obnovit výchozí</translation>
+        <translation>Vráti na výchozí hodnoty</translation>
     </message>
 </context>
 <context>
@@ -449,7 +447,7 @@
     <message>
         <location filename="../widgets/dtextedit.cpp" line="147"/>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Vybrat vše</translation>
     </message>
 </context>
 <context>
@@ -457,7 +455,7 @@
     <message>
         <location filename="../widgets/private/settings/shortcutedit.cpp" line="117"/>
         <source>Please enter a new shortcut</source>
-        <translation>Zadejte, prosím, novou zkratku</translation>
+        <translation>Zadejte novou zkratku</translation>
     </message>
 </context>
 <context>
@@ -490,7 +488,7 @@
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="544"/>
         <source>About</source>
-        <translation>O programu</translation>
+        <translation>O aplikaci</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="551"/>

@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="zh_CN">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_CN" version="2.1">
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -156,209 +154,209 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="189"/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>高级设置</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="211"/>
         <source>Cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="212"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="992"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>打印</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="228"/>
         <source>Basic</source>
-        <translation type="unfinished"></translation>
+        <translation>基础设置</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="243"/>
         <source>Printer</source>
-        <translation type="unfinished"></translation>
+        <translation>打印机</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="258"/>
         <source>Copies</source>
-        <translation type="unfinished"></translation>
+        <translation>打印份数</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="278"/>
         <source>Page range</source>
-        <translation type="unfinished"></translation>
+        <translation>页码范围</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="281"/>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>全部</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="282"/>
         <source>Current page</source>
-        <translation type="unfinished"></translation>
+        <translation>当前页</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="283"/>
         <source>Select pages</source>
-        <translation type="unfinished"></translation>
+        <translation>指定页面</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="297"/>
         <source>Orientation</source>
-        <translation type="unfinished"></translation>
+        <translation>打印方向</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="321"/>
         <source>Portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>纵向</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="331"/>
         <source>Landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>横向</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="358"/>
         <source>Pages</source>
-        <translation type="unfinished"></translation>
+        <translation>页面设置</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="368"/>
         <source>Color mode</source>
-        <translation type="unfinished"></translation>
+        <translation>色彩</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="371"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="962"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1004"/>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>彩色</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="371"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1001"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1004"/>
         <source>Grayscale</source>
-        <translation type="unfinished"></translation>
+        <translation>黑白</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="382"/>
         <source>Margins</source>
-        <translation type="unfinished"></translation>
+        <translation>页边距</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="385"/>
         <source>Normal(mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>普通 (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="385"/>
         <source>Narrow(mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>窄 (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="385"/>
         <source>Moderate(mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>适中 (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="385"/>
         <source>Customize(mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>自定义 (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="391"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>上</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="394"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>左</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="397"/>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>下</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="400"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>右</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="443"/>
         <source>Scaling</source>
-        <translation type="unfinished"></translation>
+        <translation>缩放</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="457"/>
         <source>Actual size</source>
-        <translation type="unfinished"></translation>
+        <translation>实际大小</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="466"/>
         <source>Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>自定义比例</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="496"/>
         <source>Paper</source>
-        <translation type="unfinished"></translation>
+        <translation>纸张</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="506"/>
         <source>Paper size</source>
-        <translation type="unfinished"></translation>
+        <translation>纸张大小</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="520"/>
         <source>Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>打印方式</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="531"/>
         <source>Duplex</source>
-        <translation type="unfinished"></translation>
+        <translation>双面打印</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="566"/>
         <source>Print to PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>存为PDF</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="831"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="838"/>
         <source>Flip on short edge</source>
-        <translation type="unfinished"></translation>
+        <translation>短边翻转</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="834"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="837"/>
         <source>Flip on long edge</source>
-        <translation type="unfinished"></translation>
+        <translation>长边翻转</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="967"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>保存</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1046"/>
         <source>1-%1. For example, 1,3,5-7,11-15,18,21</source>
-        <translation type="unfinished"></translation>
+        <translation>1-xxx。可输入格式：1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1346"/>
         <source>Save as PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>保存为PDF</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1346"/>
         <source>PDF file</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF文件格式</translation>
     </message>
 </context>
 <context>
@@ -428,7 +426,7 @@
     <message>
         <location filename="../widgets/dlineedit.cpp" line="443"/>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>全选</translation>
     </message>
 </context>
 <context>
@@ -449,7 +447,7 @@
     <message>
         <location filename="../widgets/dtextedit.cpp" line="147"/>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>全选</translation>
     </message>
 </context>
 <context>

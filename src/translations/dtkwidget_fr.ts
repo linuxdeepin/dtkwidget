@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="fr">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="fr" version="2.1">
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -133,22 +131,22 @@
     <message>
         <location filename="../widgets/dlineedit.cpp" line="460"/>
         <source>Stop reading</source>
-        <translation type="unfinished"></translation>
+        <translation>Arrêter la lecture</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="462"/>
         <source>Text to Speech</source>
-        <translation type="unfinished"></translation>
+        <translation>Texte vers voix</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="485"/>
         <source>Translate</source>
-        <translation type="unfinished"></translation>
+        <translation>Traduire</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="507"/>
         <source>Speech To Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Voix vers texte</translation>
     </message>
 </context>
 <context>
@@ -156,209 +154,209 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="189"/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Avancés</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="211"/>
         <source>Cancel</source>
-        <translation type="unfinished">Annuler</translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="212"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="992"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Impression</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="228"/>
         <source>Basic</source>
-        <translation type="unfinished"></translation>
+        <translation>De base</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="243"/>
         <source>Printer</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimante</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="258"/>
         <source>Copies</source>
-        <translation type="unfinished"></translation>
+        <translation>Copies</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="278"/>
         <source>Page range</source>
-        <translation type="unfinished"></translation>
+        <translation>Intervalle de pages</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="281"/>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Tout</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="282"/>
         <source>Current page</source>
-        <translation type="unfinished"></translation>
+        <translation>Page actuelle</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="283"/>
         <source>Select pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner les pages</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="297"/>
         <source>Orientation</source>
-        <translation type="unfinished"></translation>
+        <translation>Orientation</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="321"/>
         <source>Portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>Portrait</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="331"/>
         <source>Landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>Paysage</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="358"/>
         <source>Pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Pages</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="368"/>
         <source>Color mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Mode de couleur</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="371"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="962"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1004"/>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Couleur</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="371"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1001"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1004"/>
         <source>Grayscale</source>
-        <translation type="unfinished"></translation>
+        <translation>Niveaux de gris</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="382"/>
         <source>Margins</source>
-        <translation type="unfinished"></translation>
+        <translation>Marges</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="385"/>
         <source>Normal(mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Normale (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="385"/>
         <source>Narrow(mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Étroit (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="385"/>
         <source>Moderate(mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Modéré (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="385"/>
         <source>Customize(mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Personnaliser (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="391"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Haut</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="394"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Gauche</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="397"/>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Bas</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="400"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Droite</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="443"/>
         <source>Scaling</source>
-        <translation type="unfinished"></translation>
+        <translation>Mise à l&apos;échelle</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="457"/>
         <source>Actual size</source>
-        <translation type="unfinished"></translation>
+        <translation>Taille actuelle</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="466"/>
         <source>Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Échelle</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="496"/>
         <source>Paper</source>
-        <translation type="unfinished"></translation>
+        <translation>Papier</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="506"/>
         <source>Paper size</source>
-        <translation type="unfinished"></translation>
+        <translation>Taille du papier</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="520"/>
         <source>Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Disposition</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="531"/>
         <source>Duplex</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplex</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="566"/>
         <source>Print to PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimer au format PDF</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="831"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="838"/>
         <source>Flip on short edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Retourner sur le bord court</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="834"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="837"/>
         <source>Flip on long edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Retourner sur le bord long</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="967"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegarder</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1046"/>
         <source>1-%1. For example, 1,3,5-7,11-15,18,21</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1346"/>
         <source>Save as PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>Enregistrer au format PDF</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1346"/>
         <source>PDF file</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier PDF</translation>
     </message>
 </context>
 <context>
@@ -366,7 +364,7 @@
     <message>
         <location filename="../widgets/dsearchedit.cpp" line="284"/>
         <source>Search</source>
-        <translation>Chercher</translation>
+        <translation>Rechercher</translation>
     </message>
 </context>
 <context>
@@ -405,22 +403,22 @@
     <message>
         <location filename="../widgets/dtextedit.cpp" line="155"/>
         <source>Stop reading</source>
-        <translation type="unfinished"></translation>
+        <translation>Arrêter la lecture</translation>
     </message>
     <message>
         <location filename="../widgets/dtextedit.cpp" line="157"/>
         <source>Text to Speech</source>
-        <translation type="unfinished"></translation>
+        <translation>Texte vers voix</translation>
     </message>
     <message>
         <location filename="../widgets/dtextedit.cpp" line="180"/>
         <source>Translate</source>
-        <translation type="unfinished"></translation>
+        <translation>Traduire</translation>
     </message>
     <message>
         <location filename="../widgets/dtextedit.cpp" line="202"/>
         <source>Speech To Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Voix vers texte</translation>
     </message>
 </context>
 <context>
@@ -428,7 +426,7 @@
     <message>
         <location filename="../widgets/dlineedit.cpp" line="443"/>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Tout sélectionner</translation>
     </message>
 </context>
 <context>
@@ -436,7 +434,7 @@
     <message>
         <location filename="../widgets/dsimplelistview.cpp" line="1334"/>
         <source>No search result</source>
-        <translation>Aucun résultat de recherche</translation>
+        <translation>Aucun résultat trouvé</translation>
     </message>
     <message>
         <location filename="../widgets/private/settings/content.cpp" line="318"/>
@@ -449,7 +447,7 @@
     <message>
         <location filename="../widgets/dtextedit.cpp" line="147"/>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Tout sélectionner</translation>
     </message>
 </context>
 <context>
@@ -495,7 +493,7 @@
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="551"/>
         <source>Exit</source>
-        <translation>Sortir</translation>
+        <translation>Quitter</translation>
     </message>
 </context>
 </TS>

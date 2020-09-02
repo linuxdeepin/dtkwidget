@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="tr">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="tr" version="2.1">
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -148,7 +146,7 @@
     <message>
         <location filename="../widgets/dlineedit.cpp" line="507"/>
         <source>Speech To Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Sesten Metne Dönüştür</translation>
     </message>
 </context>
 <context>
@@ -156,209 +154,209 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="189"/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelişmiş</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="211"/>
         <source>Cancel</source>
-        <translation type="unfinished">İptal</translation>
+        <translation>İptal</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="212"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="992"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazdır</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="228"/>
         <source>Basic</source>
-        <translation type="unfinished"></translation>
+        <translation>Basit</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="243"/>
         <source>Printer</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazıcı</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="258"/>
         <source>Copies</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopyalar</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="278"/>
         <source>Page range</source>
-        <translation type="unfinished"></translation>
+        <translation>Sayfa aralığı</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="281"/>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Tümü</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="282"/>
         <source>Current page</source>
-        <translation type="unfinished"></translation>
+        <translation>Mevcut sayfa</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="283"/>
         <source>Select pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Sayfaları seç</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="297"/>
         <source>Orientation</source>
-        <translation type="unfinished"></translation>
+        <translation>Oryantasyon</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="321"/>
         <source>Portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>Portre</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="331"/>
         <source>Landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>Manzara</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="358"/>
         <source>Pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Sayfalar</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="368"/>
         <source>Color mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Renk kipi</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="371"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="962"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1004"/>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Renk</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="371"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1001"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1004"/>
         <source>Grayscale</source>
-        <translation type="unfinished"></translation>
+        <translation>Gri tonlamalı</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="382"/>
         <source>Margins</source>
-        <translation type="unfinished"></translation>
+        <translation>Kenar boşlukları</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="385"/>
         <source>Normal(mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Normal (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="385"/>
         <source>Narrow(mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dar (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="385"/>
         <source>Moderate(mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Orta (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="385"/>
         <source>Customize(mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Özelleştir (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="391"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Üst</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="394"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Sol</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="397"/>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="400"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Sağ</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="443"/>
         <source>Scaling</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçeklendir</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="457"/>
         <source>Actual size</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerçek boyut</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="466"/>
         <source>Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçek</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="496"/>
         <source>Paper</source>
-        <translation type="unfinished"></translation>
+        <translation>Kağıt</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="506"/>
         <source>Paper size</source>
-        <translation type="unfinished"></translation>
+        <translation>Kağıt boyutu</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="520"/>
         <source>Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Düzen</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="531"/>
         <source>Duplex</source>
-        <translation type="unfinished"></translation>
+        <translation>İkili</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="566"/>
         <source>Print to PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF olarak yazdır</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="831"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="838"/>
         <source>Flip on short edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Kısa kenarda çevir</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="834"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="837"/>
         <source>Flip on long edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzun kenarda çevir</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="967"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaydet</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1046"/>
         <source>1-%1. For example, 1,3,5-7,11-15,18,21</source>
-        <translation type="unfinished"></translation>
+        <translation>1-%1. Örneğin, 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1346"/>
         <source>Save as PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF olarak kaydet</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1346"/>
         <source>PDF file</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF dosyası</translation>
     </message>
 </context>
 <context>
@@ -420,7 +418,7 @@
     <message>
         <location filename="../widgets/dtextedit.cpp" line="202"/>
         <source>Speech To Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Sesten Metne Dönüştür</translation>
     </message>
 </context>
 <context>
@@ -428,7 +426,7 @@
     <message>
         <location filename="../widgets/dlineedit.cpp" line="443"/>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Tümünü Seç</translation>
     </message>
 </context>
 <context>
@@ -449,7 +447,7 @@
     <message>
         <location filename="../widgets/dtextedit.cpp" line="147"/>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Tümünü Seç</translation>
     </message>
 </context>
 <context>
