@@ -23,7 +23,9 @@
 #include <QTextCodec>
 #include <QDebug>
 #include <QTemporaryFile>
+#include <QScreen>
 #include <DDialog>
+#include <DStandardItem>
 
 #include "qsettingbackend.h"
 #include "dsettingsdialog.h"
@@ -56,71 +58,42 @@ DWIDGET_USE_NAMESPACE
 MainWindow::MainWindow(QWidget *parent)
     : DMainWindow(parent)
 {
-    auto flags = windowFlags() & ~Qt::WindowMaximizeButtonHint;
-    flags = flags & ~Qt::WindowMinimizeButtonHint;
-    setWindowFlags(flags);
-    setAttribute(Qt::WA_TranslucentBackground);
+    setMinimumSize(qApp->primaryScreen()->availableSize() / 5 * 3);
 
-    initTabWidget();
-
-    QVBoxLayout *mainLayout = new QVBoxLayout();
-
-    mainLayout->setMargin(5);
-    mainLayout->addWidget(m_mainTab);
-
-    QHBoxLayout *styleLayout = new QHBoxLayout();
-    QPushButton *enableButtons = new QPushButton("Enable Titlebar ", this);
-    QPushButton *disableButtons = new QPushButton("Disable Titlebar", this);
-    QPushButton *toggleMinMaxButtons = new QPushButton("Toggle MinMax", this);
-    QPushButton *fullscreenButtons = new QPushButton("Fullscreen", this);
-
-    connect(enableButtons, &QPushButton::clicked, [ = ] {
-        titlebar()->setDisableFlags(Qt::Widget);
-    });
-    connect(disableButtons, &QPushButton::clicked, [=] {
-        titlebar()->setDisableFlags(Qt::WindowMinimizeButtonHint
-                                    | Qt::WindowCloseButtonHint
-                                    | Qt::WindowMaximizeButtonHint
-                                    | Qt::WindowSystemMenuHint);
-    });
-    connect(fullscreenButtons, &QPushButton::clicked, [ = ] {
-        if (!isFullScreen())
-        {
-            showFullScreen();
-        } else
-        {
-            showNormal();
-        }
-    });
-
-    connect(toggleMinMaxButtons, &QPushButton::clicked, [ = ] {
-        auto flags = windowFlags();
-        if (flags.testFlag(Qt::WindowMinimizeButtonHint))
-        {
-            flags  &= ~Qt::WindowMaximizeButtonHint;
-            flags  &= ~Qt::WindowMinimizeButtonHint;
-        } else
-        {
-            flags |= Qt::WindowMaximizeButtonHint;
-            flags |= Qt::WindowMinimizeButtonHint;
-        }
-        setWindowFlags(flags);
-        show();
-    });
-
-    styleLayout->addWidget(enableButtons);
-    styleLayout->addWidget(disableButtons);
-    styleLayout->addWidget(toggleMinMaxButtons);
-    styleLayout->addWidget(fullscreenButtons);
-    styleLayout->addStretch();
-
-    mainLayout->addLayout(styleLayout);
+    QHBoxLayout *mainLayout = new QHBoxLayout();
+    mainLayout->setMargin(0);
+    mainLayout->setSpacing(5);
 
     QWidget *centralWidget = new QWidget(this);
-
     centralWidget->setLayout(mainLayout);
-
     setCentralWidget(centralWidget);
+
+    m_pStackedWidget = new QStackedWidget;
+    m_pPrimaryMenuModel = new QStandardItemModel(this);
+
+    m_pPrimaryListView = new DListView(this);
+    m_pPrimaryListView->setFixedWidth(200);
+    m_pPrimaryListView->setItemSpacing(0);
+    m_pPrimaryListView->setItemSize(QSize(200, 50));
+    m_pPrimaryListView->setModel(m_pPrimaryMenuModel);
+
+    m_pSubListView = new DListView(this);
+    m_pSubListView->setFixedWidth(330);
+    m_pSubListView->setItemSpacing(10);
+    m_pSubListView->setItemSize(QSize(330, 60));
+
+    mainLayout->addWidget(m_pPrimaryListView);
+    mainLayout->addWidget(m_pSubListView);
+
+    mainLayout->addWidget(m_pStackedWidget);
+
+    initListView();
+    initModel();
+
+    Q_ASSERT(m_primaryMenu.size() == m_pPrimaryMenuModel->rowCount());
+
+    connect(m_pPrimaryListView, SIGNAL(currentChanged(const QModelIndex &)), this, SLOT(onPrimaryIndexChanged(const QModelIndex &)));
+    connect(m_pSubListView, SIGNAL(currentChanged(const QModelIndex &)), this, SLOT(onSubIndexChanged(const QModelIndex &)));
 
     DTitlebar *titlebar = this->titlebar();
 
@@ -129,8 +102,7 @@ MainWindow::MainWindow(QWidget *parent)
         titlebar->setSeparatorVisible(true);
         titlebar->menu()->addAction("dfm-settings");
         titlebar->menu()->addAction("dt-settings");
-        titlebar->menu()->addAction("testmenu1");
-        titlebar->menu()->addAction("testmenu2");
+        titlebar->menu()->addAction("testPrinter");
         QMenu *menu = titlebar->menu()->addMenu("menu1");
         menu->addAction("menu1->action1");
         menu->addAction("menu1->action2");
@@ -142,10 +114,35 @@ MainWindow::MainWindow(QWidget *parent)
         titlebar->setAutoHideOnFullscreen(true);
     }
 
-    titlebar->addWidget(new DSearchEdit(titlebar));
+    DButtonBox *buttonBox = new DButtonBox(titlebar);
+    buttonBox->setFixedWidth(220);
+    buttonBox->setButtonList({new DButtonBoxButton("浅色模式"), new DButtonBoxButton("深色模式")}, true);
+    buttonBox->setId(buttonBox->buttonList().at(0), 0);
+    buttonBox->setId(buttonBox->buttonList().at(1), 1);
 
-    QPushButton *pb1 = new QPushButton("DPrintPreviewDialog");
-    connect(pb1, &QPushButton::clicked, [=]() {
+    if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::LightType) {
+        buttonBox->buttonList().at(0)->click();
+    } else {
+        buttonBox->buttonList().at(1)->click();
+    }
+
+    connect(buttonBox, &DButtonBox::buttonClicked, this, [buttonBox](QAbstractButton *button) {
+        if (buttonBox->id(button) == 0) {
+            DGuiApplicationHelper::instance()->setPaletteType(DGuiApplicationHelper::LightType);
+        } else {
+            DGuiApplicationHelper::instance()->setPaletteType(DGuiApplicationHelper::DarkType);
+        }
+    });
+
+    titlebar->addWidget(buttonBox);
+
+    //初始化选中主菜单第一项
+    m_pPrimaryListView->setCurrentIndex(m_pPrimaryMenuModel->index(0, 0));
+}
+
+void MainWindow::menuItemInvoked(QAction *action)
+{
+    if (action->text() == "testPrinter") {
         DPrintPreviewDialog dialog(this);
         connect(&dialog, &DPrintPreviewDialog::paintRequested,
                 this, [=](DPrinter *_printer) {
@@ -187,19 +184,8 @@ MainWindow::MainWindow(QWidget *parent)
                     }
                 });
         dialog.exec();
-    });
-
-    QPushButton *pb2 = new QPushButton("button2");
-
-    QLineEdit *le = new QLineEdit("lineEdit");
-
-    titlebar->addWidget(pb1);
-    titlebar->addWidget(pb2);
-    titlebar->addWidget(le);
-}
-
-void MainWindow::menuItemInvoked(QAction *action)
-{
+        return;
+    }
     if (action->text() == "dfm-settings") {
         QTemporaryFile tmpFile;
         tmpFile.open();
@@ -269,7 +255,6 @@ void MainWindow::menuItemInvoked(QAction *action)
         return;
     }
 
-    //QMessageBox::warning(this, "menu clieck",  action->text() + ", was cliecked");
     DDialog dlg("menu clicked", action->text() + ", was clicked");
     dlg.addButton("ok", true, DDialog::ButtonWarning);
     dlg.setIcon(QIcon::fromTheme("dialog-information"));
@@ -277,54 +262,168 @@ void MainWindow::menuItemInvoked(QAction *action)
     qDebug() << "click" << action << action->isChecked();
 }
 
-void MainWindow::initTabWidget()
+void MainWindow::initListView()
 {
-    m_mainTab = new QTabWidget(this);
+    //test菜单放一些测试控件的例子
+    registerPage("Test", "Widgets", new WidgetsTab(this));
+    registerPage("Test", "GraphicsEffect", new GraphicsEffectTab(this));
+    registerPage("Test", "Indicator", new IndicatorTab(this));
+    registerPage("Test", "Line", new LineTab(this));
+    registerPage("Test", "Bar", new BarTab(this));
+    registerPage("Test", "Button", new ButtonTab(this));
+    registerPage("Test", "Input", new InputTab(this));
+    registerPage("Test", "Slider", new SliderTab(this));
+    registerPage("Test", "segmentedControl", new Segmentedcontrol(this));
+    registerPage("Test", "SimpleListViewTab", new SimpleListViewTab(this));
 
-    LineTab *lineTab = new LineTab(this);
+    registerPage("Button", "DPushButton", new QLabel("DPushButton"));
+    registerPage("Button", "DWarningButton", new QLabel("DWarningButton"));
+    registerPage("Button", "DSuggestButton", new QLabel("DSuggestButton"));
+    registerPage("Button", "DToolButton", new QLabel("DToolButton"));
+    registerPage("Button", "DIconButton", new QLabel("DIconButton"));
+    registerPage("Button", "DButtonBox", new QLabel("DButtonBox"));
+    registerPage("Button", "DFloatingButton", new QLabel("DFloatingButton"));
+    registerPage("Button", "DSwitchButton", new QLabel("DSwitchButton"));
+    registerPage("Button", "DCheckButton", new QLabel("DCheckButton"));
+    registerPage("Button", "DComboBox", new QLabel("DComboBox"));
 
-    BarTab *barTab = new BarTab(this);
+    registerPage("Edit", "DSearchEdit", new QLabel("DSearchEdit"));
+    registerPage("Edit", "DLineEdit", new QLabel("DLineEdit"));
+    registerPage("Edit", "DIpv4LineEdit", new QLabel("DIpv4LineEdit"));
+    registerPage("Edit", "DPasswordEdit", new QLabel("DPasswordEdit"));
+    registerPage("Edit", "DFileChooserEdit", new QLabel("DFileChooserEdit"));
+    registerPage("Edit", "DSpinBox", new QLabel("DSpinBox"));
+    registerPage("Edit", "DTextEdit", new QLabel("DTextEdit"));
+    registerPage("Edit", "DCrumbTextFormat", new QLabel("DCrumbTextFormat"));
+    registerPage("Edit", "DKeySequenceEdit", new QLabel("DKeySequenceEdit"));
 
-    ButtonTab *buttonTab = new ButtonTab(this);
+    registerPage("Slider", "DSlider", new QLabel("DSlider"));
 
-    InputTab *inputTab = new InputTab(this);
+    registerPage("ListView", "DBackgroundGroup", new QLabel("DBackgroundGroup"));
+    registerPage("ListView", "DListView", new QLabel("DListView"));
+    registerPage("ListView", "DGroupBox", new QLabel("DGroupBox"));
+    registerPage("ListView", "DTreeView", new QLabel("DTreeView"));
+    registerPage("ListView", "DColumnView", new QLabel("DColumnView"));
 
-    SliderTab *sliderTab = new SliderTab(this);
+    registerPage("Window", "DTitleBar", new QLabel("DTitleBar"));
+    registerPage("Window", "DMainWindow", new QLabel("DMainWindow"));
+    registerPage("Window", "DStatusBar", new QLabel("DStatusBar"));
+    registerPage("Window", "DTabBar", new QLabel("DTabBar"));
 
-    IndicatorTab *indicatorTab = new IndicatorTab(this);
+    registerPage("ToolTip", "DToolTip", new QLabel("DToolTip"));
+    registerPage("ToolTip", "DArrowRectangle", new QLabel("DArrowRectangle"));
+    registerPage("ToolTip", "DSpinner", new QLabel("DSpinner"));
 
-    Segmentedcontrol *segmentedControl = new Segmentedcontrol(this);
+    registerPage("Dialog", "DDialog", new QLabel("DDialog"));
+    registerPage("Dialog", "DFileDialog", new QLabel("DSpinner"));
+    registerPage("Dialog", "DMessageManager", new QLabel("DMessageManager"));
 
-    WidgetsTab *widgetsTab = new WidgetsTab(this);
+    registerPage("ProgressBar", "DProgressBar", new QLabel("DProgressBar"));
+    registerPage("ProgressBar", "DWaterProgress", new QLabel("DWaterProgress"));
 
-#ifndef DTK_NO_MULTIMEDIA
-    CameraForm *cameraform = new CameraForm(this);
-#endif
+    registerPage("Layout", "DFrame", new QLabel("DFrame"));
+    registerPage("Layout", "DSplitter", new QLabel("DWaterProgress"));
+    registerPage("Layout", "DVerticalLine", new QLabel("DVerticalLine"));
+    registerPage("Layout", "DHorizontalLine", new QLabel("DHorizontalLine"));
 
-    GraphicsEffectTab *effectTab = new GraphicsEffectTab(this);
+    registerPage("ScrollBar", "DScrollBar", new QLabel("DScrollBar"));
 
-    SimpleListViewTab *simplelistviewTab = new SimpleListViewTab(this);
+    registerPage("RubberBand", "DRubberBand", new QLabel("DRubberBand"));
 
-    m_mainTab->addTab(widgetsTab, "Widgets");
-    m_mainTab->addTab(effectTab, "GraphicsEffect");
-    m_mainTab->addTab(indicatorTab, "Indicator");
-    m_mainTab->addTab(lineTab, "Line");
-    m_mainTab->addTab(barTab, "Bar");
-    m_mainTab->addTab(buttonTab, "Button");
-    m_mainTab->addTab(inputTab, "Input");
-    m_mainTab->addTab(sliderTab, "Slider");
-
-    m_mainTab->addTab(segmentedControl, "Segmented Control");
-#ifndef DTK_NO_MULTIMEDIA
-    m_mainTab->addTab(cameraform, "Camera View");
-#endif
-    m_mainTab->addTab(simplelistviewTab, "SimpleListView");
-
-    m_mainTab->setCurrentIndex(0);
-
+    registerPage("Widget", "DCalendarWidget", new QLabel("DCalendarWidget"));
+    registerPage("Widget", "DTableWidget", new QLabel("DTableWidget"));
 }
 
 MainWindow::~MainWindow()
 {
+    for (auto pItem : m_primaryMenu) {
+        delete pItem;
+    }
+}
 
+void MainWindow::registerPage(const QString &primaryMenuName, const QString &subMenuName, QWidget *pPageWindow)
+{
+    Q_ASSERT(pPageWindow != nullptr);
+
+    int item_index = -1;
+
+    for (int index = 0; index < m_primaryMenu.size(); ++index) {
+        if (m_primaryMenu[index]->m_itemName == primaryMenuName) {
+            item_index = index;
+            break;
+        }
+    }
+
+    if (item_index != -1) {
+        int sub_item_index = -1;
+        for (int index = 0; index < m_primaryMenu[item_index]->m_itemVector.size(); ++index) {
+            if (m_primaryMenu[item_index]->m_itemVector[index]->m_itemName == subMenuName) {
+                sub_item_index = index;
+                qWarning() << "pageWindow has been registered !!!!!!!";
+                Q_ASSERT(false);
+                break;
+            }
+        }
+
+        if (sub_item_index == -1) {
+            auto pItem = new ItemInfo(subMenuName);
+            m_primaryMenu[item_index]->m_itemVector.push_back(pItem);
+            pItem->m_pPageWindow = pPageWindow;
+        }
+
+        return;
+    }
+
+    auto primaryMenuItem = new ItemInfo(primaryMenuName);
+    m_primaryMenu.push_back(primaryMenuItem);
+
+    auto subMenuItem = new ItemInfo(subMenuName);
+    primaryMenuItem->m_itemVector.push_back(subMenuItem);
+
+    subMenuItem->m_pPageWindow = pPageWindow;
+}
+
+void MainWindow::initModel()
+{
+    for (auto pItem : m_primaryMenu) {
+        auto pModelItem = new DStandardItem(pItem->m_itemName);
+        pModelItem->setEditable(false);
+        m_pPrimaryMenuModel->appendRow(pModelItem);
+
+        for (auto pSubItem : pItem->m_itemVector) {
+            m_pStackedWidget->addWidget(pSubItem->m_pPageWindow);
+        }
+    }
+}
+
+void MainWindow::onPrimaryIndexChanged(const QModelIndex & /*modelIndex*/)
+{
+    QStandardItemModel *pSubModel = new QStandardItemModel(this);
+    for (auto pSubMenuItem : m_primaryMenu[m_pPrimaryListView->currentIndex().row()]->m_itemVector) {
+        auto pSubModelItem = new DStandardItem(pSubMenuItem->m_itemName);
+        pSubModelItem->setEditable(false);
+        pSubModel->appendRow(pSubModelItem);
+    }
+    //之前的model在设置新的model后会自动销毁
+    m_pSubListView->setModel(pSubModel);
+
+    //主动刷新页面
+    m_pSubListView->setCurrentIndex(pSubModel->index(0, 0));
+    QWidget *pPageWindow = m_primaryMenu[m_pPrimaryListView->currentIndex().row()]->m_itemVector[m_pSubListView->currentIndex().row()]->m_pPageWindow;
+    Q_ASSERT(pPageWindow != nullptr);
+    int currentIndex = m_pStackedWidget->indexOf(pPageWindow);
+    m_pStackedWidget->setCurrentIndex(currentIndex);
+}
+
+void MainWindow::onSubIndexChanged(const QModelIndex &modelIndex)
+{
+    if (!modelIndex.isValid()) {
+        return;
+    }
+
+    int primaryMenuIndex = m_pPrimaryListView->currentIndex().row();
+    QWidget *pPageWindow = m_primaryMenu[primaryMenuIndex]->m_itemVector[m_pSubListView->currentIndex().row()]->m_pPageWindow;
+    Q_ASSERT(pPageWindow != nullptr);
+    int currentIndex = m_pStackedWidget->indexOf(pPageWindow);
+    m_pStackedWidget->setCurrentIndex(currentIndex);
 }

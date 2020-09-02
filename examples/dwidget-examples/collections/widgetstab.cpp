@@ -72,16 +72,16 @@ WidgetsTab::WidgetsTab(QWidget *parent) : QLabel(parent)
     mLayout->addWidget(checkBoxWidget);
 
     ////////////////////ArrowRectangle//////////////////
-    DArrowRectangle *rectangle = new DArrowRectangle(DArrowRectangle::ArrowLeft);
-//    rectangle->setArrowY(15);
-    rectangle->setArrowX(25);
-    rectangle->setArrowWidth(30);
-    rectangle->setArrowHeight(10);
-    QPushButton *button = new QPushButton("DArrowRectangle Test");
-    button->setFixedSize(200, 30);
-    rectangle->setContent(button);
-    rectangle->show(200, 200);
-    rectangle->setBackgroundColor(QColor(255, 255, 255, 127));
+    //    DArrowRectangle *rectangle = new DArrowRectangle(DArrowRectangle::ArrowLeft);
+    ////    rectangle->setArrowY(15);
+    //    rectangle->setArrowX(25);
+    //    rectangle->setArrowWidth(30);
+    //    rectangle->setArrowHeight(10);
+    //    QPushButton *button = new QPushButton("DArrowRectangle Test");
+    //    button->setFixedSize(200, 30);
+    //    rectangle->setContent(button);
+    //    rectangle->show(200, 200);
+    //    rectangle->setBackgroundColor(QColor(255, 255, 255, 127));
 
 #ifdef Q_OS_LINUX
     // mpris
