@@ -46,7 +46,8 @@ SOURCES += main.cpp\
     singlelistitem.cpp \
     multilistview.cpp \
     multilistitem.cpp \
-    graphicseffecttab.cpp
+    graphicseffecttab.cpp \
+    buttonexample.cpp
 
 HEADERS  += mainwindow.h \
     buttontab.h \
@@ -62,7 +63,8 @@ HEADERS  += mainwindow.h \
     singlelistitem.h \
     multilistview.h \
     multilistitem.h \
-    graphicseffecttab.h
+    graphicseffecttab.h \
+    buttonexample.h
 
 RESOURCES += \
     images.qrc \

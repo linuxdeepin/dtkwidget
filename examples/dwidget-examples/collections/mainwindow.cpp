@@ -47,6 +47,7 @@
 #include "graphicseffecttab.h"
 #include "simplelistviewtab.h"
 #include "dtoast.h"
+#include "buttonexample.h"
 
 #ifndef DTK_NO_MULTIMEDIA
 #include "cameraform.h"
@@ -276,9 +277,9 @@ void MainWindow::initListView()
     registerPage("Test", "segmentedControl", new Segmentedcontrol(this));
     registerPage("Test", "SimpleListViewTab", new SimpleListViewTab(this));
 
-    registerPage("Button", "DPushButton", new QLabel("DPushButton"));
-    registerPage("Button", "DWarningButton", new QLabel("DWarningButton"));
-    registerPage("Button", "DSuggestButton", new QLabel("DSuggestButton"));
+    registerPage("Button", "DPushButton", new DPushButtonExample(this));
+    registerPage("Button", "DWarningButton", new DWarningButtonExample(this));
+    registerPage("Button", "DSuggestButton", new DSuggestButtonExample(this));
     registerPage("Button", "DToolButton", new QLabel("DToolButton"));
     registerPage("Button", "DIconButton", new QLabel("DIconButton"));
     registerPage("Button", "DButtonBox", new QLabel("DButtonBox"));
