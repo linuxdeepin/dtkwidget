@@ -112,7 +112,7 @@ void DDialogPrivate::init()
     spacer = new QSpacerItem(1, 0);
 
     // MainLayout--TopLayout
-    mainLayout->addWidget(titleBar);
+    mainLayout->addWidget(titleBar, 0, Qt::AlignTop);
     mainLayout->addLayout(contentLayout);
     mainLayout->setContentsMargins(QMargins(0, 0, 0, 0));
 
