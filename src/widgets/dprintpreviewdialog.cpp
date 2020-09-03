@@ -1396,32 +1396,38 @@ void DPrintPreviewDialogPrivate::_q_startPrint(bool clicked)
         setupPrinter();
     }
     if (printDeviceCombo->currentIndex() == printDeviceCombo->count() - 1) {
-        //设置pdf保存文本信息，可以外部通过setDocName设置，如果不做任何操作默认保存名称print.pdf
+        /*设置pdf保存文本信息，如果设置outputfilename优先设置,如果outputfilename为空,
+        外部通过setDocName设置，如果不做任何操作默认保存名称print.pdf*/
         QString desktopPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
         desktopPath += QStringLiteral("/");
         if (printer == nullptr) {
             return;
         }
         if (printer->outputFileName().isEmpty()) {
-            if (printer->docName().isEmpty())
+            if (printer->docName().isEmpty()) {
                 desktopPath += QStringLiteral("print.pdf");
-            QFileInfo file(desktopPath);
-            QString path = desktopPath;
-            if (file.isFile()) {
-                int i = 1;
-                do {
-                    QString stres("(%1).pdf");
-                    path = desktopPath.remove(".pdf") + stres.arg(i);
-                    file.setFile(path);
-                    i++;
-                } while (file.isFile());
-                desktopPath = path;
             } else {
                 desktopPath += printer->docName();
             }
         } else {
             desktopPath = printer->outputFileName();
         }
+        if (desktopPath.right(4).compare(".pdf", Qt::CaseInsensitive)) {
+            desktopPath += ".pdf";
+        }
+        QFileInfo file(desktopPath);
+        QString path = desktopPath;
+        if (file.isFile()) {
+            int i = 1;
+            do {
+                QString stres("(%1).pdf");
+                path = desktopPath.remove(path.right(4)) + stres.arg(i);
+                file.setFile(path);
+                i++;
+            } while (file.isFile());
+            desktopPath = path;
+        }
+
         QString str = DFileDialog::getSaveFileName(q, q->tr("Save as PDF"), desktopPath, q->tr("PDF file"));
         if (str.isEmpty())
             return;
