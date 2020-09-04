@@ -19,8 +19,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BUTTONEXAMPLE_H
-#define BUTTONEXAMPLE_H
+#ifndef EDITEXAMPLE_H
+#define EDITEXAMPLE_H
+
 #include <QWidget>
 #include <QLabel>
 
@@ -28,132 +29,120 @@
 #include "examplewindowinterface.h"
 #include "pagewindowinterface.h"
 
-class ButtonExampleWindow : public PageWindowInterface
+class EditExampleWindow : public PageWindowInterface
 {
     Q_OBJECT
 
 public:
-    explicit ButtonExampleWindow(QWidget *parent = nullptr);
+    explicit EditExampleWindow(QWidget *parent = nullptr);
 };
 
-class DPushButtonExample : public ExampleWindowInterface
+class DSearchEditExample : public ExampleWindowInterface
 {
     Q_OBJECT
 
 public:
-    explicit DPushButtonExample(QWidget *parent = nullptr);
+    explicit DSearchEditExample(QWidget *parent = nullptr);
 
     QString getTitleName() const override;
     QString getDescriptionInfo() const override;
     int getFixedHeight() const override;
 };
 
-class DWarningButtonExample : public ExampleWindowInterface
+class DLineEditExample : public ExampleWindowInterface
 {
     Q_OBJECT
 
 public:
-    explicit DWarningButtonExample(QWidget *parent = nullptr);
+    explicit DLineEditExample(QWidget *parent = nullptr);
 
     QString getTitleName() const override;
     QString getDescriptionInfo() const override;
     int getFixedHeight() const override;
 };
 
-class DSuggestButtonExample : public ExampleWindowInterface
+class DIpv4LineEditExample : public ExampleWindowInterface
 {
     Q_OBJECT
 
 public:
-    explicit DSuggestButtonExample(QWidget *parent = nullptr);
+    explicit DIpv4LineEditExample(QWidget *parent = nullptr);
 
     QString getTitleName() const override;
     QString getDescriptionInfo() const override;
     int getFixedHeight() const override;
 };
 
-class DToolButtonExample : public ExampleWindowInterface
+class DPasswordEditExample : public ExampleWindowInterface
 {
     Q_OBJECT
 
 public:
-    explicit DToolButtonExample(QWidget *parent = nullptr);
+    explicit DPasswordEditExample(QWidget *parent = nullptr);
 
     QString getTitleName() const override;
     QString getDescriptionInfo() const override;
     int getFixedHeight() const override;
 };
 
-class DIconButtonExample : public ExampleWindowInterface
+class DFileChooserEditExample : public ExampleWindowInterface
 {
     Q_OBJECT
 
 public:
-    explicit DIconButtonExample(QWidget *parent = nullptr);
+    explicit DFileChooserEditExample(QWidget *parent = nullptr);
 
     QString getTitleName() const override;
     QString getDescriptionInfo() const override;
     int getFixedHeight() const override;
 };
 
-class DButtonBoxExample : public ExampleWindowInterface
+class DSpinBoxExample : public ExampleWindowInterface
 {
     Q_OBJECT
 
 public:
-    explicit DButtonBoxExample(QWidget *parent = nullptr);
+    explicit DSpinBoxExample(QWidget *parent = nullptr);
 
     QString getTitleName() const override;
     QString getDescriptionInfo() const override;
     int getFixedHeight() const override;
 };
 
-class DFloatingButtonExample : public ExampleWindowInterface
+class DTextEditExample : public ExampleWindowInterface
 {
     Q_OBJECT
 
 public:
-    explicit DFloatingButtonExample(QWidget *parent = nullptr);
+    explicit DTextEditExample(QWidget *parent = nullptr);
 
     QString getTitleName() const override;
     QString getDescriptionInfo() const override;
     int getFixedHeight() const override;
 };
 
-class DSwitchButtonExample : public ExampleWindowInterface
+class DCrumbTextFormatExample : public ExampleWindowInterface
 {
     Q_OBJECT
 
 public:
-    explicit DSwitchButtonExample(QWidget *parent = nullptr);
+    explicit DCrumbTextFormatExample(QWidget *parent = nullptr);
 
     QString getTitleName() const override;
     QString getDescriptionInfo() const override;
     int getFixedHeight() const override;
 };
 
-class DCheckButtonExample : public ExampleWindowInterface
+class DKeySequenceEditExample : public ExampleWindowInterface
 {
     Q_OBJECT
 
 public:
-    explicit DCheckButtonExample(QWidget *parent = nullptr);
+    explicit DKeySequenceEditExample(QWidget *parent = nullptr);
 
     QString getTitleName() const override;
     QString getDescriptionInfo() const override;
     int getFixedHeight() const override;
 };
 
-class DComboBoxExample : public ExampleWindowInterface
-{
-    Q_OBJECT
-
-public:
-    explicit DComboBoxExample(QWidget *parent = nullptr);
-
-    QString getTitleName() const override;
-    QString getDescriptionInfo() const override;
-    int getFixedHeight() const override;
-};
-
-#endif // BUTTONEXAMPLE_H
+#endif // EDITEXAMPLE_H

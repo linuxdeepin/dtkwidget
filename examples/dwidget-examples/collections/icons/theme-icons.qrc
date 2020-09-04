@@ -1,0 +1,20 @@
+<RCC>
+    <qresource prefix="/icons/deepin/builtin">
+        <file>actions/icon_button_16px.svg</file>
+        <file>actions/icon_Dial_16px.svg</file>
+        <file>actions/icon_Dialog_16px.svg</file>
+        <file>actions/icon_edit_16px.svg</file>
+        <file>actions/icon_Layout_16px.svg</file>
+        <file>actions/icon_LCDNumber_16px.svg</file>
+        <file>actions/icon_ListView_16px.svg</file>
+        <file>actions/icon_menu_16px.svg</file>
+        <file>actions/icon_ProgressBar_16px.svg</file>
+        <file>actions/icon_RubberBand_16px.svg</file>
+        <file>actions/icon_ScrollBar_16px.svg</file>
+        <file>actions/icon_slider_16px.svg</file>
+        <file>actions/icon_Spinner_16px.svg</file>
+        <file>actions/icon_Tooltip_16px.svg</file>
+        <file>actions/icon_Widget_16px.svg</file>
+        <file>actions/icon_Window_16px.svg</file>
+    </qresource>
+</RCC>

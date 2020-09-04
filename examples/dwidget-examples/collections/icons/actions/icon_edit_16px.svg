@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon_edit/normal</title>
+    <g id="icon_edit/normal" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M14,5 C15.1045695,5 16,5.8954305 16,7 L16,9 C16,10.1045695 15.1045695,11 14,11 L2,11 C0.8954305,11 1.3527075e-16,10.1045695 0,9 L0,7 C-1.3527075e-16,5.8954305 0.8954305,5 2,5 L14,5 Z M14.2,6 L13,7.2 L11.8,6 L11,6.8 L12.2,8 L11,9.2 L11.8,10 L13,8.8 L14.2,10 L15,9.2 L13.8,8 L15,6.8 L14.2,6 Z M3,6 L2,6 L2,10 L3,10 L3,6 Z" id="形状结合" fill="#626E88"></path>
+    </g>
+</svg>

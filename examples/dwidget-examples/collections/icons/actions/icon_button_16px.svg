@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon_button/normal</title>
+    <g id="icon_button/normal" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M12,4 C14.209139,4 16,5.790861 16,8 C16,10.209139 14.209139,12 12,12 L4,12 C1.790861,12 2.705415e-16,10.209139 0,8 C-2.705415e-16,5.790861 1.790861,4 4,4 L12,4 Z M12,5 C10.3431458,5 9,6.34314575 9,8 C9,9.65685425 10.3431458,11 12,11 C13.6568542,11 15,9.65685425 15,8 C15,6.34314575 13.6568542,5 12,5 Z" id="形状结合" fill="#626E88"></path>
+    </g>
+</svg>

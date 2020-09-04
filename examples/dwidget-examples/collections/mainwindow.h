@@ -19,50 +19,17 @@
 #define MAINWINDOW_H
 
 #include <QWidget>
-#include <QLabel>
-#include <QTabWidget>
-#include <QVBoxLayout>
-#include <QVector>
 #include <QStandardItemModel>
 #include <QStackedWidget>
 #include <qtypetraits.h>
 #include <DListView>
 
 #include "widgets/dmainwindow.h"
+#include "dtkwidget_global.h"
 
-#include "bartab.h"
-#include "buttontab.h"
-#include "inputtab.h"
-#include "linetab.h"
-#include "slidertab.h"
-#include "indicatortab.h"
-#include "widgetstab.h"
-
-
-class QAction;
+class PageWindowInterface;
 
 DWIDGET_USE_NAMESPACE
-
-struct ItemInfo {
-    ItemInfo(const QString &itemName)
-        : m_itemName(itemName)
-        , m_pModel(nullptr)
-        , m_pPageWindow(nullptr)
-    {
-    }
-
-    ~ItemInfo()
-    {
-        for (auto pItem : m_itemVector) {
-            delete pItem;
-        }
-    }
-
-    QString m_itemName;
-    QVector<ItemInfo *> m_itemVector;
-    QStandardItemModel *m_pModel;
-    QWidget *m_pPageWindow;
-};
 
 class MainWindow : public DMainWindow
 {
@@ -74,20 +41,16 @@ public:
 
 protected Q_SLOTS:
     void menuItemInvoked(QAction *action);
-    void onPrimaryIndexChanged(const QModelIndex &modelIndex);
-    void onSubIndexChanged(const QModelIndex &modelIndex);
+    void onCurrentIndexChanged(const QModelIndex &index);
 
 private:
-    void initListView();
-    void registerPage(const QString &primaryMenuName, const QString &subMenuName, QWidget *pPageWindow);
     void initModel();
+    void registerPage(const QString &pageName, PageWindowInterface *pPageWindow, const QIcon &icon = QIcon());
 
 private:
-    QVector<ItemInfo *> m_primaryMenu;
     QStackedWidget *m_pStackedWidget;
-    DListView *m_pPrimaryListView;
-    DListView *m_pSubListView;
-    QStandardItemModel *m_pPrimaryMenuModel;
+    DListView *m_pListView;
+    QStandardItemModel *m_pListViewModel;
 };
 
 #endif // MAINWINDOW_H

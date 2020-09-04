@@ -22,6 +22,8 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QMenu>
+#include <QScrollArea>
+#include <QDebug>
 
 #include <DDialog>
 #include <DStyle>
@@ -29,13 +31,28 @@
 #include <DMessageBox>
 #include <DWarningButton>
 #include <DSuggestButton>
+#include <DFrame>
 
 #include "buttonexample.h"
 
 DWIDGET_USE_NAMESPACE
 
+ButtonExampleWindow::ButtonExampleWindow(QWidget *parent)
+    : PageWindowInterface(parent)
+{
+    addExampleWindow(new DPushButtonExample(this));
+    addExampleWindow(new DWarningButtonExample(this));
+    addExampleWindow(new DSuggestButtonExample(this));
+    addExampleWindow(new DToolButtonExample(this));
+    addExampleWindow(new DIconButtonExample(this));
+    addExampleWindow(new DButtonBoxExample(this));
+    addExampleWindow(new DFloatingButtonExample(this));
+    addExampleWindow(new DSwitchButtonExample(this));
+    addExampleWindow(new DCheckButtonExample(this));
+}
+
 DPushButtonExample::DPushButtonExample(QWidget *parent)
-    : QWidget(parent)
+    : ExampleWindowInterface(parent)
 {
     QHBoxLayout *pHBoxLayout_1 = new QHBoxLayout;
     QHBoxLayout *pHBoxLayout_2 = new QHBoxLayout;
@@ -91,8 +108,24 @@ DPushButtonExample::DPushButtonExample(QWidget *parent)
     });
 }
 
+QString DPushButtonExample::getTitleName() const
+{
+    return "DPushButton";
+}
+
+QString DPushButtonExample::getDescriptionInfo() const
+{
+    return "普通的文字按钮和带菜单的文字按钮\n"
+           "按钮的文字随着菜单的选择而改变";
+}
+
+int DPushButtonExample::getFixedHeight() const
+{
+    return 402;
+}
+
 DWarningButtonExample::DWarningButtonExample(QWidget *parent)
-    : QWidget(parent)
+    : ExampleWindowInterface(parent)
 {
     QHBoxLayout *pHBoxLayout_1 = new QHBoxLayout;
     QVBoxLayout *pVBoxLayout = new QVBoxLayout;
@@ -126,8 +159,24 @@ DWarningButtonExample::DWarningButtonExample(QWidget *parent)
     });
 }
 
+QString DWarningButtonExample::getTitleName() const
+{
+    return "DWarningButton";
+}
+
+QString DWarningButtonExample::getDescriptionInfo() const
+{
+    return "功能和普通的文字按钮一致,不过用在\n"
+           "警告语上,告诉用户有危险操作.";
+}
+
+int DWarningButtonExample::getFixedHeight() const
+{
+    return 368;
+}
+
 DSuggestButtonExample::DSuggestButtonExample(QWidget *parent)
-    : QWidget(parent)
+    : ExampleWindowInterface(parent)
 {
     QHBoxLayout *pHBoxLayout_1 = new QHBoxLayout;
     QHBoxLayout *pHBoxLayout_2 = new QHBoxLayout;
@@ -175,4 +224,162 @@ DSuggestButtonExample::DSuggestButtonExample(QWidget *parent)
         dialog.addButton("确定");
         dialog.exec();
     });
+}
+
+QString DSuggestButtonExample::getTitleName() const
+{
+    return "DSuggestButton";
+}
+
+QString DSuggestButtonExample::getDescriptionInfo() const
+{
+    return "往往不会单独出现,绝大多数情况都是\n"
+           "和DPushButton一起出现,显示在\n"
+           "DPushButton的右边,主要是起引导用\n"
+           "户点击的作用.";
+}
+
+int DSuggestButtonExample::getFixedHeight() const
+{
+    return 400;
+}
+
+DToolButtonExample::DToolButtonExample(QWidget *parent)
+    : ExampleWindowInterface(parent)
+{
+}
+
+QString DToolButtonExample::getTitleName() const
+{
+    return "DToolButton";
+}
+
+QString DToolButtonExample::getDescriptionInfo() const
+{
+    return QString();
+}
+
+int DToolButtonExample::getFixedHeight() const
+{
+    return 300;
+}
+
+DIconButtonExample::DIconButtonExample(QWidget *parent)
+    : ExampleWindowInterface(parent)
+{
+}
+
+QString DIconButtonExample::getTitleName() const
+{
+    return "DIconButton";
+}
+
+QString DIconButtonExample::getDescriptionInfo() const
+{
+    return QString();
+}
+
+int DIconButtonExample::getFixedHeight() const
+{
+    return 300;
+}
+
+DButtonBoxExample::DButtonBoxExample(QWidget *parent)
+    : ExampleWindowInterface(parent)
+{
+}
+
+QString DButtonBoxExample::getTitleName() const
+{
+    return "DButtonBox";
+}
+
+QString DButtonBoxExample::getDescriptionInfo() const
+{
+    return QString();
+}
+
+int DButtonBoxExample::getFixedHeight() const
+{
+    return 300;
+}
+
+DFloatingButtonExample::DFloatingButtonExample(QWidget *parent)
+    : ExampleWindowInterface(parent)
+{
+}
+
+QString DFloatingButtonExample::getTitleName() const
+{
+    return "DFloatingButton";
+}
+
+QString DFloatingButtonExample::getDescriptionInfo() const
+{
+    return QString();
+}
+
+int DFloatingButtonExample::getFixedHeight() const
+{
+    return 300;
+}
+
+DSwitchButtonExample::DSwitchButtonExample(QWidget *parent)
+    : ExampleWindowInterface(parent)
+{
+}
+
+QString DSwitchButtonExample::getTitleName() const
+{
+    return "DSwitchButton";
+}
+
+QString DSwitchButtonExample::getDescriptionInfo() const
+{
+    return QString();
+}
+
+int DSwitchButtonExample::getFixedHeight() const
+{
+    return 300;
+}
+
+DCheckButtonExample::DCheckButtonExample(QWidget *parent)
+    : ExampleWindowInterface(parent)
+{
+}
+
+QString DCheckButtonExample::getTitleName() const
+{
+    return "DCheckButton";
+}
+
+QString DCheckButtonExample::getDescriptionInfo() const
+{
+    return QString();
+}
+
+int DCheckButtonExample::getFixedHeight() const
+{
+    return 300;
+}
+
+DComboBoxExample::DComboBoxExample(QWidget *parent)
+    : ExampleWindowInterface(parent)
+{
+}
+
+QString DComboBoxExample::getTitleName() const
+{
+    return "DComboBox";
+}
+
+QString DComboBoxExample::getDescriptionInfo() const
+{
+    return QString();
+}
+
+int DComboBoxExample::getFixedHeight() const
+{
+    return 300;
 }

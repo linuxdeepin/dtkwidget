@@ -157,5 +157,6 @@
         <file>images/eLoading/eLoading_59.png</file>
         <file>images/eLoading/eLoading_60.png</file>
         <file>images/default_background.jpg</file>
+        <file>images/logo_icon.svg</file>
     </qresource>
 </RCC>

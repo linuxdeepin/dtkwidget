@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon_Dial/normal</title>
+    <g id="icon_Dial/normal" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="dial-icon" transform="translate(1.000000, 1.000000)" fill="#626E88">
+            <path d="M7,0 C10.8659932,0 14,3.13400675 14,7 C14,10.8659932 10.8659932,14 7,14 C3.13400675,14 0,10.8659932 0,7 C0,3.13400675 3.13400675,0 7,0 Z M7,7.875 C5.55025253,7.875 4.375,9.05025253 4.375,10.5 C4.375,11.9497475 5.55025253,13.125 7,13.125 C8.44974747,13.125 9.625,11.9497475 9.625,10.5 C9.625,9.05025253 8.44974747,7.875 7,7.875 Z" id="形状结合"></path>
+        </g>
+    </g>
+</svg>

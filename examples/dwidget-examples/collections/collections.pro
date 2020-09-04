@@ -33,42 +33,41 @@ unix {
 
 SOURCES += main.cpp\
     mainwindow.cpp \
-    buttontab.cpp \
-    linetab.cpp \
-    bartab.cpp \
-    inputtab.cpp \
-    slidertab.cpp \
-    segmentedcontrol.cpp\
-    indicatortab.cpp \
-    widgetstab.cpp \
-    simplelistviewtab.cpp \
-    singlelistview.cpp \
-    singlelistitem.cpp \
-    multilistview.cpp \
-    multilistitem.cpp \
-    graphicseffecttab.cpp \
-    buttonexample.cpp
+    buttonexample.cpp \
+    examplewindowinterface.cpp \
+    pagewindowinterface.cpp \
+    editexample.cpp \
+    sliderexample.cpp \
+    listviewexample.cpp \
+    windowexample.cpp \
+    tooltipexample.cpp \
+    dialogexample.cpp \
+    progressbarexample.cpp \
+    layoutexample.cpp \
+    scrollbarexample.cpp \
+    rubberbandexample.cpp \
+    widgetexample.cpp
 
 HEADERS  += mainwindow.h \
-    buttontab.h \
-    linetab.h \
-    bartab.h \
-    inputtab.h \
-    slidertab.h \
-    segmentedcontrol.h \
-    indicatortab.h \
-    widgetstab.h \
-    simplelistviewtab.h \
-    singlelistview.h \
-    singlelistitem.h \
-    multilistview.h \
-    multilistitem.h \
-    graphicseffecttab.h \
-    buttonexample.h
+    buttonexample.h \
+    examplewindowinterface.h \
+    pagewindowinterface.h \
+    editexample.h \
+    sliderexample.h \
+    listviewexample.h \
+    windowexample.h \
+    tooltipexample.h \
+    dialogexample.h \
+    progressbarexample.h \
+    layoutexample.h \
+    scrollbarexample.h \
+    rubberbandexample.h \
+    widgetexample.h
 
 RESOURCES += \
     images.qrc \
-    resources.qrc
+    resources.qrc \
+    icons/theme-icons.qrc
 
 
 win32* {

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon_LCDNumber/normal</title>
+    <g id="icon_LCDNumber/normal" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="lcdnumber-icon" transform="translate(1.000000, 2.000000)" fill="#626E88">
+            <g id="8">
+                <polygon id="矩形" transform="translate(6.000000, 3.508189) scale(-1, 1) translate(-6.000000, -3.508189) " points="5 2.5 6 1.5 7 2.5 7 4.51637828 5 5.51637828"></polygon>
+                <polygon id="矩形" transform="translate(6.000000, 8.508189) scale(-1, -1) translate(-6.000000, -8.508189) " points="5 7.5 6 6.5 7 7.5 7 9.51637828 5 10.5163783"></polygon>
+                <polygon id="矩形" transform="translate(1.000000, 8.508189) scale(1, -1) translate(-1.000000, -8.508189) " points="0 7.5 1 6.5 2 7.5 2 9.51637828 0 10.5163783"></polygon>
+                <polygon id="矩形" points="0 2.5 1 1.5 2 2.5 2 4.51637828 0 5.51637828"></polygon>
+                <polygon id="矩形" transform="translate(3.516378, 1.000000) scale(-1, 1) rotate(90.000000) translate(-3.516378, -1.000000) " points="2.51637828 -0.488138023 3.51637828 -1.51637828 4.51637828 -0.488138023 4.51637828 2.51186198 3.51637828 3.51637828 2.51637828 2.51186198"></polygon>
+                <polygon id="矩形" transform="translate(3.516378, 11.016378) scale(-1, -1) rotate(90.000000) translate(-3.516378, -11.016378) " points="2.51637828 9.52824026 3.51637828 8.5 4.51637828 9.52824026 4.51637828 12.5282403 3.51637828 13.5327566 2.51637828 12.5282403"></polygon>
+                <polygon id="矩形备份-2" transform="translate(3.500000, 6.016378) scale(-1, 1) rotate(90.000000) translate(-3.500000, -6.016378) " points="2.5 4.54461854 3.5 2.51637828 4.5 4.54461854 4.5 7.54461854 3.5 9.51637828 2.5 7.54461854"></polygon>
+            </g>
+            <g id="8" transform="translate(7.000000, 0.000000)">
+                <polygon id="矩形" transform="translate(6.000000, 3.508189) scale(-1, 1) translate(-6.000000, -3.508189) " points="5 2.5 6 1.5 7 2.5 7 4.51637828 5 5.51637828"></polygon>
+                <polygon id="矩形" transform="translate(6.000000, 8.508189) scale(-1, -1) translate(-6.000000, -8.508189) " points="5 7.5 6 6.5 7 7.5 7 9.51637828 5 10.5163783"></polygon>
+                <polygon id="矩形" transform="translate(1.000000, 8.508189) scale(1, -1) translate(-1.000000, -8.508189) " points="0 7.5 1 6.5 2 7.5 2 9.51637828 0 10.5163783"></polygon>
+                <polygon id="矩形" points="0 2.5 1 1.5 2 2.5 2 4.51637828 0 5.51637828"></polygon>
+                <polygon id="矩形" transform="translate(3.516378, 1.000000) scale(-1, 1) rotate(90.000000) translate(-3.516378, -1.000000) " points="2.51637828 -0.488138023 3.51637828 -1.51637828 4.51637828 -0.488138023 4.51637828 2.51186198 3.51637828 3.51637828 2.51637828 2.51186198"></polygon>
+                <polygon id="矩形" transform="translate(3.516378, 11.016378) scale(-1, -1) rotate(90.000000) translate(-3.516378, -11.016378) " points="2.51637828 9.52824026 3.51637828 8.5 4.51637828 9.52824026 4.51637828 12.5282403 3.51637828 13.5327566 2.51637828 12.5282403"></polygon>
+                <polygon id="矩形备份-2" transform="translate(3.500000, 6.016378) scale(-1, 1) rotate(90.000000) translate(-3.500000, -6.016378) " points="2.5 4.54461854 3.5 2.51637828 4.5 4.54461854 4.5 7.54461854 3.5 9.51637828 2.5 7.54461854"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>
