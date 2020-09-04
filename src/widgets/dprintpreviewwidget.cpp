@@ -342,7 +342,7 @@ qreal DPrintPreviewWidget::getScale() const
 void DPrintPreviewWidget::updateView()
 {
     Q_D(DPrintPreviewWidget);
-    if (d->currentPageNumber < 0 || d->currentPageNumber > d->pages.count())
+    if (d->currentPageNumber < 0 || d->currentPageNumber > d->pages.count() || d->pages.empty())
         return;
     d->pages.at(d->currentPageNumber - 1)->update();
 }
