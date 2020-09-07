@@ -601,8 +601,9 @@ bool DSlider::handleVisible() const
 }
 
 /*!
- * \~chinese \brief DSlider::setEnabledAcrossStyle 启用滑块划过位置无活动色
- * \~chinese \param replace true 启用，false 关闭
+ * \~chinese \brief DSlider::setEnabledAcrossStyle 滑槽是否禁用活动色填充已经滑过的滑槽
+ * \~chinese 默认普通 DSlider 滑过的滑槽是活动色填充， 调用过 setXXXTicks 的 DSlider 则默认禁用活动色填充
+ * \~chinese \param enabled true 无活动色，可用于音量平衡等不需要显示滑过的，false 滑过的位置(如左侧)是高亮色显示，如调节亮度等(默认)
  */
 void DSlider::setEnabledAcrossStyle(bool enabled)
 {
