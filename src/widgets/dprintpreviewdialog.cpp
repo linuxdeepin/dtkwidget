@@ -600,7 +600,6 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(printBtn, SIGNAL(clicked(bool)), q, SLOT(_q_startPrint(bool)));
     QObject::connect(colorModeCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_ColorModeChange(int)));
     QObject::connect(orientationgroup, SIGNAL(buttonClicked(int)), q, SLOT(_q_orientationChanged(int)));
-    QObject::connect(jumpPageEdit, SIGNAL(valueChanged(int)), q, SLOT(_q_currentPageSpinChanged(int)));
     QObject::connect(jumpPageEdit->lineEdit(), &QLineEdit::textChanged, q, [ = ](QString str) {
         if (str.toInt() > totalPageLabel->text().toInt())
             jumpPageEdit->lineEdit()->setText(totalPageLabel->text());
@@ -1117,7 +1116,7 @@ void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
             _q_customPagesFinished();
         }
     }
-    _q_currentPageSpinChanged(1);
+    setTurnPageBtnStatus();
 }
 
 /*!
