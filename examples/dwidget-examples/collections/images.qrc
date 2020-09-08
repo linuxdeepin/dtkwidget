@@ -158,5 +158,60 @@
         <file>images/eLoading/eLoading_60.png</file>
         <file>images/default_background.jpg</file>
         <file>images/logo_icon.svg</file>
+        <file>images/example/DArrowRectangle.png</file>
+        <file>images/example/DBackgroundGroup.png</file>
+        <file>images/example/DButtonBox.png</file>
+        <file>images/example/DCalendarWidget.png</file>
+        <file>images/example/DCheckButton.png</file>
+        <file>images/example/DComboBox_1.png</file>
+        <file>images/example/DComboBox_2.png</file>
+        <file>images/example/DCommandLinkButton.png</file>
+        <file>images/example/DCrumbEdit.png</file>
+        <file>images/example/DFileChooserEdit.png</file>
+        <file>images/example/DFloatingButton.png</file>
+        <file>images/example/DFontComboBox.png</file>
+        <file>images/example/DFrame.png</file>
+        <file>images/example/DGroupBox_1.png</file>
+        <file>images/example/DGroupBox_2.png</file>
+        <file>images/example/DHeaderView.png</file>
+        <file>images/example/DIconButton.png</file>
+        <file>images/example/DIpv4LineEdit.png</file>
+        <file>images/example/DKeySequenceEdit.png</file>
+        <file>images/example/DLCDNumber.png</file>
+        <file>images/example/DLineEdit.png</file>
+        <file>images/example/DListView.png</file>
+        <file>images/example/DMainWindow.png</file>
+        <file>images/example/DMenu.png</file>
+        <file>images/example/DMessageManager.png</file>
+        <file>images/example/DPasswordEdit.png</file>
+        <file>images/example/DProgressBar_1.png</file>
+        <file>images/example/DProgressBar_2.png</file>
+        <file>images/example/DPushButton.png</file>
+        <file>images/example/DRadioButton.png</file>
+        <file>images/example/DRubberBand.png</file>
+        <file>images/example/DScrollBar.png</file>
+        <file>images/example/DSearchEdit.png</file>
+        <file>images/example/DSizegrip.png</file>
+        <file>images/example/DSlider_1.png</file>
+        <file>images/example/DSlider_2.png</file>
+        <file>images/example/DSpinBox.png</file>
+        <file>images/example/DSpinner.png</file>
+        <file>images/example/DSplitter.png</file>
+        <file>images/example/DStatusBar.png</file>
+        <file>images/example/DSuggestButton.png</file>
+        <file>images/example/DSwitchButton.png</file>
+        <file>images/example/DTabBar_1.png</file>
+        <file>images/example/DTabBar_2.png</file>
+        <file>images/example/DTextEdit.png</file>
+        <file>images/example/DTitlebar_1.png</file>
+        <file>images/example/DTitlebar_2.png</file>
+        <file>images/example/DTitlebar_3.png</file>
+        <file>images/example/DTitlebar_4.png</file>
+        <file>images/example/DToolButton.png</file>
+        <file>images/example/DToolTip.png</file>
+        <file>images/example/DTreeView.png</file>
+        <file>images/example/DVerticalLine.png</file>
+        <file>images/example/DWarningButton.png</file>
+        <file>images/example/DWaterProgress.png</file>
     </qresource>
 </RCC>
