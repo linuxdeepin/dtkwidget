@@ -132,6 +132,18 @@ public:
     int getFixedHeight() const override;
 };
 
+class DRadioButtonExample : public ExampleWindowInterface
+{
+    Q_OBJECT
+
+public:
+    explicit DRadioButtonExample(QWidget *parent = nullptr);
+
+    QString getTitleName() const override;
+    QString getDescriptionInfo() const override;
+    int getFixedHeight() const override;
+};
+
 class DCheckButtonExample : public ExampleWindowInterface
 {
     Q_OBJECT
@@ -150,6 +162,18 @@ class DComboBoxExample : public ExampleWindowInterface
 
 public:
     explicit DComboBoxExample(QWidget *parent = nullptr);
+
+    QString getTitleName() const override;
+    QString getDescriptionInfo() const override;
+    int getFixedHeight() const override;
+};
+
+class DFontComboBoxExample : public ExampleWindowInterface
+{
+    Q_OBJECT
+
+public:
+    explicit DFontComboBoxExample(QWidget *parent = nullptr);
 
     QString getTitleName() const override;
     QString getDescriptionInfo() const override;
