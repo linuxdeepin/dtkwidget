@@ -26,6 +26,7 @@
 #include <QEvent>
 #include <QtMath>
 #include <QDebug>
+#include <DStyle>
 
 #include <DApplicationHelper>
 #include <DFontSizeManager>
@@ -726,6 +727,8 @@ void SliderStrip::paintEvent(QPaintEvent *event)
 
     int tickSize = fontMetrics().height() / 2;
     int offsetSize = style()->pixelMetric(QStyle::PM_SliderLength, nullptr, this) / 2;
+    int margin = DStyle::pixelMetric(style(), DStyle::PM_FocusBorderSpacing) + \
+                    DStyle::pixelMetric(style(), DStyle::PM_FocusBorderSpacing);
     qreal startX = 0, startY = 0, endX = 0, endY = 0;
     int width = this->width(), height = this->height();    //slider宽高
     int paragraph = scaleInfo.count();    //刻度个数
@@ -756,8 +759,8 @@ void SliderStrip::paintEvent(QPaintEvent *event)
         return;
 
     if (orient == Qt::Horizontal) {
-        width -= 2 * offsetSize;
-        startX += offsetSize;
+        width -= 2 * offsetSize + margin * 2;
+        startX += offsetSize + margin;
         endX = startX;
         average = width / static_cast<qreal>(paragraph - 1);
 
@@ -792,8 +795,8 @@ void SliderStrip::paintEvent(QPaintEvent *event)
             pa.drawText(QRectF(endX - width, textPos, width, height - tickSize), Qt::AlignRight, scaleInfo[paragraph - 1]);
         }
     } else {
-        startY = offsetSize;
-        height -= offsetSize * 2;
+        startY = offsetSize + margin;
+        height -= offsetSize * 2 + margin * 2;
         endY = startY;
         average = height / static_cast<qreal>(paragraph - 1);
         Qt::Alignment text_flags = Qt::AlignVCenter;
