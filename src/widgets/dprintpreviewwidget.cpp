@@ -63,6 +63,7 @@ void DPrintPreviewWidgetPrivate::populateScene()
             Q_EMIT q->pagesCountChanged(1);
             break;
         case DPrintPreviewWidget::SelectPage:
+            Q_EMIT q->totalPages(pages.size());
             for (int i = 0; i < pageRange.count();) {
                 if (pageRange.at(i) > page) {
                     pageRange.removeAt(i);

@@ -616,6 +616,8 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(pview, &DPrintPreviewWidget::pagesCountChanged, [this](int pages) {
         totalPageLabel->setNum(pages);
         setTurnPageBtnStatus();
+        if (!pages)
+            pview->setPageRangeALL();
     });
     QObject::connect(firstBtn, &DIconButton::clicked, pview, &DPrintPreviewWidget::turnBegin);
     QObject::connect(prevPageBtn, &DIconButton::clicked, pview, &DPrintPreviewWidget::turnFront);
@@ -909,6 +911,7 @@ void DPrintPreviewDialogPrivate::themeTypeChange(DGuiApplicationHelper::ColorTyp
  */
 void DPrintPreviewDialogPrivate::setWaringPage()
 {
+    printBtn->setEnabled(false);
     pageRangeEdit->setAlert(true);
     pview->setCurrentPage(1);
 }
@@ -1091,6 +1094,7 @@ void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
     pageRangeEdit->setText("");
     if (index == DPrintPreviewWidget::AllPage) {
         pview->setPageRangeMode(DPrintPreviewWidget::AllPage);
+        printBtn->setEnabled(true);
         pageRangeEdit->setAlert(false);
         if (totalPages != 0) {
             totalPageLabel->setNum(totalPages);
@@ -1099,6 +1103,7 @@ void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
         }
     } else if (index == DPrintPreviewWidget::CurrentPage) {
         pview->setPageRangeMode(DPrintPreviewWidget::CurrentPage);
+        printBtn->setEnabled(true);
         pageRangeEdit->setAlert(false);
         int currentPage = pview->currentPage();
         pview->setPageRange(currentPage, currentPage);
@@ -1243,6 +1248,8 @@ void DPrintPreviewDialogPrivate::_q_orientationChanged(int index)
         pview->setOrientation(DPrinter::Landscape);
         pview->setReGenerate(true);
     }
+    if (pview->pageRangeMode() != DPrintPreviewWidget::AllPage)
+        _q_customPagesFinished();
 }
 
 void DPrintPreviewDialogPrivate::_q_customPagesFinished()
@@ -1252,6 +1259,8 @@ void DPrintPreviewDialogPrivate::_q_customPagesFinished()
     QString cuspages = pageRangeEdit->text();
     QVector<int> pagesrange;
     QStringList list = cuspages.split(",");
+    printBtn->setEnabled(true);
+    pageRangeEdit->setAlert(false);
     for (int i = 0; i < list.size(); i++) {
         if (list.at(i).contains("-")) {
             QStringList list1 = list.at(i).split("-");
@@ -1277,10 +1286,7 @@ void DPrintPreviewDialogPrivate::_q_customPagesFinished()
             }
         }
     }
-
-    pageRangeEdit->setAlert(false);
     jumpPageEdit->setValue(1);
-    //jumpPageEdit->setValue(1);
     QVector<int> page = checkDuplication(pagesrange);
     pview->setPageRange(page);
     lastPageRange = cuspages;
