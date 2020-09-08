@@ -268,7 +268,7 @@ void DPrintPreviewWidget::setPageRange(const QVector<int> &rangePages)
     }
     d->pageRange = rangePages;
     Q_EMIT pagesCountChanged(d->pagesCount());
-    d->generatePreview();
+    d->setCurrentPage(d->currentPageNumber);
 }
 
 void DPrintPreviewWidget::setPageRange(int from, int to)
@@ -276,11 +276,15 @@ void DPrintPreviewWidget::setPageRange(int from, int to)
     Q_D(DPrintPreviewWidget);
     if (from > to)
         return;
+    int currentPage = d->index2page(d->currentPageNumber - 1);
+    if (currentPage > 0) {
+        d->pages.at(currentPage - 1)->setVisible(false);
+    }
     d->pageRange.clear();
     for (int i = from; i <= to; i++)
         d->pageRange.append(i);
     Q_EMIT pagesCountChanged(d->pagesCount());
-    d->generatePreview();
+    d->setCurrentPage(d->currentPageNumber);
 }
 
 int DPrintPreviewWidget::pagesCount()
