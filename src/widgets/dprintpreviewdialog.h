@@ -55,6 +55,10 @@ private:
 public:
     virtual bool event(QEvent *event) override;
     bool eventFilter(QObject *watched, QEvent *event) override;
+
+    // QWidget interface
+protected:
+    virtual void resizeEvent(QResizeEvent *event) override;
 };
 
 DWIDGET_END_NAMESPACE

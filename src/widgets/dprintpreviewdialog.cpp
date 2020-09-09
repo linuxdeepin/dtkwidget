@@ -92,10 +92,9 @@ void DPrintPreviewDialogPrivate::initui()
 {
     Q_Q(DPrintPreviewDialog);
     DWidget *mainWidget = new DWidget(q);
-    mainWidget->setGeometry(0, 0, q->width(), q->height());
+    mainWidget->setObjectName("mainwidget");
 
     DWidget *titleWidget = new DWidget(q);
-    titleWidget->setGeometry(0, 0, q->width(), 50);
     titleWidget->setObjectName("titlewidget");
 
     mainWidget->setAutoFillBackground(true);
@@ -110,7 +109,6 @@ void DPrintPreviewDialogPrivate::initui()
     mainlayout->setSpacing(0);
     DFrame *pframe = new DFrame;
     pframe->setLayout(mainlayout);
-    pframe->setFixedHeight(536);
     pframe->setLineWidth(0);
 
     QVBoxLayout *pleftlayout = new QVBoxLayout;
@@ -1496,6 +1494,13 @@ bool DPrintPreviewDialog::eventFilter(QObject *watched, QEvent *event)
     }
 
     return DDialog::eventFilter(watched, event);
+}
+
+void DPrintPreviewDialog::resizeEvent(QResizeEvent *event)
+{
+    Q_UNUSED(event);
+    this->findChild<DWidget *>("titlewidget")->setGeometry(0, 0, this->width(), 50);
+    this->findChild<DWidget *>("mainwidget")->setGeometry(0, 0, this->width(), this->height());
 }
 DWIDGET_END_NAMESPACE
 #include "moc_dprintpreviewdialog.cpp"
