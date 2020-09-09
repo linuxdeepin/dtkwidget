@@ -118,6 +118,7 @@ DPalette DApplicationHelper::palette(const QWidget *widget, const QPalette &base
 void DApplicationHelper::setPalette(QWidget *widget, const DPalette &palette)
 {
     d->paletteCache.insert(widget, palette);
+    widget->installEventFilter(const_cast<DApplicationHelper *>(this));
     // 记录此控件被设置过palette
     widget->setProperty("_d_set_palette", true);
     widget->setPalette(palette);
@@ -154,6 +155,13 @@ bool DApplicationHelper::eventFilter(QObject *watched, QEvent *event)
     if (Q_UNLIKELY(event->type() == QEvent::PaletteChange)) {
         if (QWidget *widget = qobject_cast<QWidget*>(watched)) {
             if (!widget->property("_d_set_palette").toBool()) {
+                // 清理缓存
+                d->paletteCache.remove(widget);
+            }
+        }
+    } else if (Q_UNLIKELY(event->type() == QEvent::Destroy)) {
+        if (QWidget *widget = qobject_cast<QWidget *>(watched)) {
+            if (d->paletteCache.contains(widget)) {
                 // 清理缓存
                 d->paletteCache.remove(widget);
             }
