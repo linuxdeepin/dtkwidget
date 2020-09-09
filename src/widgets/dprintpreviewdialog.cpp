@@ -593,6 +593,9 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(advanceBtn, &QPushButton::clicked, q, [this] { this->showadvancesetting(); });
     QObject::connect(printDeviceCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_printerChanged(int)));
     QObject::connect(cancelBtn, &DPushButton::clicked, q, &DPrintPreviewDialog::close);
+    QObject::connect(pageRangeEdit, &DLineEdit::editingFinished, q, [=] {
+        pagesControl = false;
+    });
     QObject::connect(pageRangeEdit, SIGNAL(editingFinished()), q, SLOT(_q_customPagesFinished()));
     QObject::connect(pageRangeCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_pageRangeChanged(int)));
     QObject::connect(marginsCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_pageMarginChanged(int)));
@@ -675,8 +678,11 @@ void DPrintPreviewDialogPrivate::initconnections()
             }
             pview->updatePreview();
         }
-        if (pview->pageRangeMode() != DPrintPreviewWidget::AllPage)
+        if (pview->pageRangeMode() != DPrintPreviewWidget::AllPage) {
+            if (printBtn->isEnabled() && !pageRangeEdit->isAlert())
+                pagesControl = true;
             _q_customPagesFinished();
+        }
     });
 
     QObject::connect(scaleRateEdit->lineEdit(), &QLineEdit::editingFinished, q, [=] {
@@ -687,8 +693,11 @@ void DPrintPreviewDialogPrivate::initconnections()
             pview->setScale(scale);
             pview->updateView();
 
-            if (pview->pageRangeMode() != DPrintPreviewWidget::AllPage)
+            if (pview->pageRangeMode() != DPrintPreviewWidget::AllPage) {
+                if (printBtn->isEnabled() && !pageRangeEdit->isAlert())
+                    pagesControl = true;
                 _q_customPagesFinished();
+            }
         }
     });
     QObject::connect(scaleGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), q, [this](int id) {
@@ -702,8 +711,11 @@ void DPrintPreviewDialogPrivate::initconnections()
         }
         pview->updateView();
 
-        if (pview->pageRangeMode() != DPrintPreviewWidget::AllPage)
+        if (pview->pageRangeMode() != DPrintPreviewWidget::AllPage) {
+            if (printBtn->isEnabled() && !pageRangeEdit->isAlert())
+                pagesControl = true;
             _q_customPagesFinished();
+        }
     });
 
     QObject::connect(marginTimer, SIGNAL(timeout()), q, SLOT(_q_marginTimerOut()));
@@ -1076,6 +1088,8 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
             marginTimer->stop();
         pview->updatePreview();
     }
+    if (printBtn->isEnabled() && !pageRangeEdit->isAlert())
+        pagesControl = true;
     _q_customPagesFinished();
     paperSizeCombo->blockSignals(false);
 }
@@ -1112,6 +1126,8 @@ void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
             pview->setPageRange(FIRST_PAGE, totalPages);
         } else {
             pageRangeEdit->setText(lastPageRange);
+            if (printBtn->isEnabled() && !pageRangeEdit->isAlert())
+                pagesControl = true;
             _q_customPagesFinished();
         }
     }
@@ -1195,9 +1211,11 @@ void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
         }
     }
 
-    if (pview->pageRangeMode() != DPrintPreviewWidget::AllPage)
+    if (pview->pageRangeMode() != DPrintPreviewWidget::AllPage) {
+        if (printBtn->isEnabled() && !pageRangeEdit->isAlert())
+            pagesControl = true;
         _q_customPagesFinished();
-
+    }
     if (marginOldValue.length() > 4)
         marginOldValue.clear();
 
@@ -1246,8 +1264,11 @@ void DPrintPreviewDialogPrivate::_q_orientationChanged(int index)
         pview->setOrientation(DPrinter::Landscape);
         pview->setReGenerate(true);
     }
-    if (pview->pageRangeMode() != DPrintPreviewWidget::AllPage)
+    if (pview->pageRangeMode() != DPrintPreviewWidget::AllPage) {
+        if (printBtn->isEnabled() && !pageRangeEdit->isAlert())
+            pagesControl = true;
         _q_customPagesFinished();
+    }
 }
 
 void DPrintPreviewDialogPrivate::_q_customPagesFinished()
@@ -1268,19 +1289,21 @@ void DPrintPreviewDialogPrivate::_q_customPagesFinished()
                         pagesrange.append(page);
                     }else {
                         setWaringPage();
-                        return;
                     }
                 }
             } else {
                 setWaringPage();
-                return;
             }
         } else {
             if (list.at(i).toInt() != 0 && list.at(i).toInt() <= totalPages){
                 pagesrange.append(list.at(i).toInt());
             }else {
+                if (list.at(i).toInt() == 0 && pagesControl == true) {
+                    QVector<int> page = checkDuplication(pagesrange);
+                    pview->setPageRange(page);
+                    return;
+                }
                 setWaringPage();
-                return;
             }
         }
     }
@@ -1316,8 +1339,11 @@ void DPrintPreviewDialogPrivate::_q_marginTimerOut()
         this->printer->setPageMargins(QMarginsF(leftMarginF, topMarginF, rightMarginF, bottomMarginF), QPageLayout::Millimeter);
         this->pview->updatePreview();
     }
-    if (pview->pageRangeMode() != DPrintPreviewWidget::AllPage)
+    if (pview->pageRangeMode() != DPrintPreviewWidget::AllPage) {
+        if (printBtn->isEnabled() && !pageRangeEdit->isAlert())
+            pagesControl = true;
         _q_customPagesFinished();
+    }
 }
 
 /*!
@@ -1482,6 +1508,7 @@ bool DPrintPreviewDialog::eventFilter(QObject *watched, QEvent *event)
                 d->setMininumMargins();
                 d->_q_marginTimerOut();
             } else if (watched == d->pageRangeEdit){
+                d->pagesControl = false;
                 d->_q_customPagesFinished();
                 return true;
             } else if (watched == d->scaleRateEdit){
