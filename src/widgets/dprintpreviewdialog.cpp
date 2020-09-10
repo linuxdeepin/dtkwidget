@@ -41,7 +41,6 @@
 
 #define NORMAL_LEFT_RIGHT 31.8
 #define NORMAL_MODERATE_TOP_BOTTRM 25.4
-#define NARROW_ALL 12.7
 #define MODERATE_LEFT_RIGHT 19.1
 
 #define EightK_Weight 270
@@ -382,7 +381,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     DLabel *marginlabel = new DLabel(qApp->translate("PrintPreviewDialog", "Margins"));
     marginlabel->setFixedSize(123, 36);
     marginsCombo = new DComboBox;
-    marginsCombo->addItems(QStringList() << qApp->translate("PrintPreviewDialog", "Normal(mm)") << qApp->translate("PrintPreviewDialog", "Narrow(mm)") << qApp->translate("PrintPreviewDialog", "Moderate(mm)") << qApp->translate("PrintPreviewDialog", "Customize(mm)"));
+    marginsCombo->addItems(QStringList() << qApp->translate("PrintPreviewDialog", "Narrow(mm)") << qApp->translate("PrintPreviewDialog", "Normal(mm)") << qApp->translate("PrintPreviewDialog", "Moderate(mm)") << qApp->translate("PrintPreviewDialog", "Customize(mm)"));
     marginscombolayout->addWidget(marginlabel);
     marginscombolayout->addWidget(marginsCombo);
 
@@ -675,8 +674,14 @@ void DPrintPreviewDialogPrivate::initconnections()
                 printer->setPageMargins(printer->pageLayout().minimumMargins(), QPageLayout::Millimeter);
                 if (marginTimer->isActive())
                     marginTimer->stop();
+                pview->updatePreview();
+            } else if (marginsCombo->currentIndex() == 0) {
+                if (!marginsControl)
+                    _q_pageMarginChanged(0);
+                marginsControl = false;
+            } else {
+                pview->updatePreview();
             }
-            pview->updatePreview();
         }
         if (pview->pageRangeMode() != DPrintPreviewWidget::AllPage) {
             if (printBtn->isEnabled() && !pageRangeEdit->isAlert())
@@ -848,6 +853,8 @@ void DPrintPreviewDialogPrivate::judgeSupportedAttributes(const QString &lastPap
     } else {
         //调用绘制预览
         paperSizeCombo->blockSignals(false);
+        if (isInited)
+            marginsControl = true;
         paperSizeCombo->setCurrentText("A4");
     }
 
@@ -1048,6 +1055,8 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
         else {
             //调用绘制预览
             paperSizeCombo->blockSignals(false);
+            if (isInited)
+                marginsControl = true;
             paperSizeCombo->setCurrentIndex(1);
         }
         printer->setPrinterName("");
@@ -1087,7 +1096,10 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
         if (marginTimer->isActive())
             marginTimer->stop();
         pview->updatePreview();
+    } else if (marginsCombo->currentIndex() == 0) {
+        _q_pageMarginChanged(0);
     }
+
     if (printBtn->isEnabled() && !pageRangeEdit->isAlert())
         pagesControl = true;
     _q_customPagesFinished();
@@ -1144,23 +1156,21 @@ void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
     if (index == 1) {
         if (marginTimer->isActive())
             marginTimer->stop();
-
         marginLeftSpin->blockSignals(true);
         marginTopSpin->blockSignals(true);
         marginRightSpin->blockSignals(true);
         marginBottomSpin->blockSignals(true);
 
-        marginLeftSpin->setValue(NARROW_ALL);
-        marginTopSpin->setValue(NARROW_ALL);
-        marginRightSpin->setValue(NARROW_ALL);
-        marginBottomSpin->setValue(NARROW_ALL);
-        printer->setPageMargins(QMarginsF(NARROW_ALL, NARROW_ALL, NARROW_ALL, NARROW_ALL), QPageLayout::Millimeter);
+        marginTopSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
+        marginLeftSpin->setValue(NORMAL_LEFT_RIGHT);
+        marginRightSpin->setValue(NORMAL_LEFT_RIGHT);
+        marginBottomSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
+        printer->setPageMargins(QMarginsF(NORMAL_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM, NORMAL_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM), QPageLayout::Millimeter);
 
         pview->updatePreview();
     } else if (index == 2) {
         if (marginTimer->isActive())
             marginTimer->stop();
-
         marginLeftSpin->blockSignals(true);
         marginTopSpin->blockSignals(true);
         marginRightSpin->blockSignals(true);
@@ -1178,11 +1188,10 @@ void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
         marginTopSpin->blockSignals(true);
         marginRightSpin->blockSignals(true);
         marginBottomSpin->blockSignals(true);
-
-        marginTopSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
-        marginLeftSpin->setValue(NORMAL_LEFT_RIGHT);
-        marginRightSpin->setValue(NORMAL_LEFT_RIGHT);
-        marginBottomSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
+        marginTopSpin->setValue(printer->pageLayout().minimumMargins().top());
+        marginLeftSpin->setValue(printer->pageLayout().minimumMargins().left());
+        marginRightSpin->setValue(printer->pageLayout().minimumMargins().right());
+        marginBottomSpin->setValue(printer->pageLayout().minimumMargins().bottom());
         printer->setPageMargins(QMarginsF(marginLeftSpin->value(), marginTopSpin->value(), marginRightSpin->value(), marginBottomSpin->value()), QPageLayout::Millimeter);
 
         pview->updatePreview();
@@ -1200,12 +1209,12 @@ void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
         marginRightSpin->blockSignals(true);
         marginBottomSpin->blockSignals(true);
 
-        marginTopSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
-        marginLeftSpin->setValue(NORMAL_LEFT_RIGHT);
-        marginRightSpin->setValue(NORMAL_LEFT_RIGHT);
-        marginBottomSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
-
-        printer->setPageMargins(QMarginsF(NORMAL_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM, NORMAL_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM), QPageLayout::Millimeter);
+        printer->setPageMargins(printer->pageLayout().minimumMargins(), QPageLayout::Millimeter);
+        marginTopSpin->setValue(printer->pageLayout().minimumMargins().top());
+        marginLeftSpin->setValue(printer->pageLayout().minimumMargins().left());
+        marginRightSpin->setValue(printer->pageLayout().minimumMargins().right());
+        marginBottomSpin->setValue(printer->pageLayout().minimumMargins().bottom());
+        printer->setPageMargins(QMarginsF(printer->pageLayout().minimumMargins().left(), printer->pageLayout().minimumMargins().top(), printer->pageLayout().minimumMargins().right(), printer->pageLayout().minimumMargins().bottom()), QPageLayout::Millimeter);
         if (isInited) {
             pview->updatePreview();
         }

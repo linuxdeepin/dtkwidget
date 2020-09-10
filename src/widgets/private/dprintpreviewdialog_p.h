@@ -93,6 +93,7 @@ public:
     bool supportedColorMode = false;
     bool isInited = false;
     bool pagesControl = false;
+    bool marginsControl = false;
 
     //control
     DPrintPreviewWidget *pview;
