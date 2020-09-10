@@ -370,4 +370,5 @@ includes.files += \
     $$PWD/DArrowLineDrawer \
     $$PWD/DAlertControl \
     $$PWD/DSearchComboBox \
-    $$PWD/DPrintPreviewDialog
+    $$PWD/DPrintPreviewDialog \
+    $$PWD/DFileChooserEdit
