@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>google-chrome-32px</title>
+    <defs>
+        <filter x="-13.3%" y="-13.3%" width="126.7%" height="126.7%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.15 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <linearGradient x1="49.9991752%" y1="-0.00154750851%" x2="49.9991752%" y2="100.000774%" id="linearGradient-2">
+            <stop stop-color="#FF624E" offset="0%"></stop>
+            <stop stop-color="#FF264F" offset="57.19%"></stop>
+            <stop stop-color="#E701B1" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="29.7212189%" y2="100%" id="linearGradient-3">
+            <stop stop-color="#FFD000" offset="0%"></stop>
+            <stop stop-color="#A1EC00" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="49.9979635%" y1="-0.000919624793%" x2="49.9979635%" y2="100.00092%" id="linearGradient-4">
+            <stop stop-color="#8FE820" offset="0%"></stop>
+            <stop stop-color="#009986" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-5">
+            <stop stop-color="#FCFCFC" offset="0%"></stop>
+            <stop stop-color="#C0FF89" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="48.2715014%" y1="0%" x2="45.6018669%" y2="104.424695%" id="linearGradient-6">
+            <stop stop-color="#07C1FF" offset="0%"></stop>
+            <stop stop-color="#0038FB" offset="100%"></stop>
+        </linearGradient>
+        <circle id="path-7" cx="15.0666667" cy="14.9333333" r="5.3"></circle>
+        <filter x="-18.9%" y="-9.4%" width="137.7%" height="137.7%" filterUnits="objectBoundingBox" id="filter-8">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="0.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.0689125446   0 0 0 0 0.441933305   0 0 0 0 0.788318452  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="桌面版" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="默认程序" transform="translate(-990.000000, -273.000000)">
+            <g id="控制中心" transform="translate(518.000000, 195.000000)">
+                <g id="分组-4" transform="translate(450.000000, 60.000000)">
+                    <g id="浏览器" transform="translate(10.000000, 10.000000)">
+                        <g id="选项">
+                            <g id="Group-2">
+                                <g id="google-chrome-32px" transform="translate(12.000000, 7.000000)">
+                                    <g id="Group" filter="url(#filter-1)" transform="translate(1.000000, 1.000000)">
+                                        <path d="M28.5137778,8.35768889 C26.0704,3.42542222 20.9788444,0.032 15.0922667,0.032 C9.93742222,0.032 5.34151111,2.70862222 2.64924444,6.66524444 L9.52426667,18.4128 L28.5137778,8.35768889 L28.5137778,8.35768889 Z" id="path11852" fill="url(#linearGradient-2)"></path>
+                                        <path d="M14.0917333,29.8631111 C19.5928889,30.2435556 24.9838222,27.5050667 27.952,22.4327111 C30.5504,17.9918222 30.5809778,12.672 28.5130667,8.35768889 L14.9976889,8.32924444 L14.0917333,29.8631111 L14.0917333,29.8631111 Z" id="path11854" fill="url(#linearGradient-3)"></path>
+                                        <path d="M9.52426667,18.4128 L2.64924444,6.66524444 C1.05422222,9.03893333 0.123377778,11.8940444 0.123377778,14.9660444 C0.123377778,22.8785778 6.29226667,29.3504 14.0924444,29.8631111 L21.0748444,17.9669333 L9.52426667,18.4128 L9.52426667,18.4128 Z" id="path11865" fill="url(#linearGradient-4)"></path>
+                                        <path d="M15.0666667,21.8666667 C11.2436267,21.8666667 8.13333333,18.75568 8.13333333,14.93264 C8.13333333,11.1096 11.2436267,8 15.0666667,8 C18.8890133,8 22,11.1096 22,14.93264 C22,18.75568 18.8890133,21.8666667 15.0666667,21.8666667 L15.0666667,21.8666667 Z" id="path11878" fill="url(#linearGradient-5)"></path>
+                                        <g id="circle11885">
+                                            <use fill="black" fill-opacity="1" filter="url(#filter-8)" xlink:href="#path-7"></use>
+                                            <use fill="url(#linearGradient-6)" fill-rule="evenodd" xlink:href="#path-7"></use>
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

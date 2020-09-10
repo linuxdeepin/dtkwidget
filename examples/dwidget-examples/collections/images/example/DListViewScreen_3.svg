@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="43px" height="26px" viewBox="0 0 43 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组</title>
+    <defs>
+        <filter x="-10.8%" y="-20.0%" width="121.6%" height="140.0%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="2" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0.41176792   0 0 0 0 1  0 0 0 0.2 0" type="matrix" in="shadowOffsetOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="桌面版" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="显示1" transform="translate(-1472.000000, -485.000000)">
+            <g id="控制中心" transform="translate(995.000000, 223.000000)">
+                <g id="分组-2" transform="translate(198.000000, 60.000000)">
+                    <g id="分组-4" transform="translate(252.000000, 0.000000)">
+                        <g id="显示模式" transform="translate(10.000000, 10.000000)">
+                            <g id="只在1" transform="translate(0.000000, 168.000000)">
+                                <g id="编组" filter="url(#filter-1)" transform="translate(20.000000, 27.000000)">
+                                    <rect id="矩形" stroke="#4F89CA" fill="#B6DAE1" opacity="0.200000003" x="13.5" y="0.5" width="23" height="15" rx="2"></rect>
+                                    <path d="M30,0 L35,0 C36.1045695,-2.02906125e-16 37,0.8954305 37,2 L37,7 L37,7 C33.1340068,7 30,3.86599325 30,0 L30,0 L30,0 Z" id="矩形" fill="#722CC2" opacity="0.200000003"></path>
+                                    <rect id="矩形" stroke="#4F89CA" fill="#B6DAE1" opacity="0.200000003" x="23.5" y="15.5" width="3" height="4"></rect>
+                                    <rect id="矩形" stroke="#4F89CA" fill="#B6DAE1" opacity="0.200000003" x="21.5" y="19.5" width="7" height="1"></rect>
+                                    <path d="M16,8.5 L4,8.5 C3.58578644,8.5 3.21078644,8.66789322 2.93933983,8.93933983 C2.66789322,9.21078644 2.5,9.58578644 2.5,10 L2.5,18.5 L17.5,18.5 L17.5,10 C17.5,9.58578644 17.3321068,9.21078644 17.0606602,8.93933983 C16.7892136,8.66789322 16.4142136,8.5 16,8.5 Z" id="矩形" stroke="#4F89CA" fill="#E1DFB6"></path>
+                                    <rect id="矩形" fill="#4663FF" x="5" y="11" width="4" height="5"></rect>
+                                    <rect id="矩形" stroke="#4F89CA" fill="#B6DAE1" x="0.5" y="19.5" width="19" height="1"></rect>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -85,6 +85,18 @@ public:
     int getFixedHeight() const override;
 };
 
+class DHeaderViewExample : public ExampleWindowInterface
+{
+    Q_OBJECT
+
+public:
+    explicit DHeaderViewExample(QWidget *parent = nullptr);
+
+    QString getTitleName() const override;
+    QString getDescriptionInfo() const override;
+    int getFixedHeight() const override;
+};
+
 class DColumnViewExample : public ExampleWindowInterface
 {
     Q_OBJECT

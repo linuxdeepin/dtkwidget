@@ -171,15 +171,12 @@
         <file>images/example/DFloatingButton.png</file>
         <file>images/example/DFontComboBox.png</file>
         <file>images/example/DFrame.png</file>
-        <file>images/example/DGroupBox_1.png</file>
-        <file>images/example/DGroupBox_2.png</file>
         <file>images/example/DHeaderView.png</file>
         <file>images/example/DIconButton.png</file>
         <file>images/example/DIpv4LineEdit.png</file>
         <file>images/example/DKeySequenceEdit.png</file>
         <file>images/example/DLCDNumber.png</file>
         <file>images/example/DLineEdit.png</file>
-        <file>images/example/DListView.png</file>
         <file>images/example/DMainWindow.png</file>
         <file>images/example/DMenu.png</file>
         <file>images/example/DMessageManager.png</file>
@@ -214,5 +211,32 @@
         <file>images/example/DVerticalLine.png</file>
         <file>images/example/DWarningButton.png</file>
         <file>images/example/DWaterProgress.png</file>
+        <file>images/example/DListViewEditAction.svg</file>
+        <file>images/example/DListViewBrowser_1.svg</file>
+        <file>images/example/DListViewBrowser_2.svg</file>
+        <file>images/example/DListViewBrowser_3.svg</file>
+        <file>images/example/DListViewBrowser_4.svg</file>
+        <file>images/example/DListViewScreen_4.svg</file>
+        <file>images/example/DListViewScreen_3.svg</file>
+        <file>images/example/DListViewScreen_2.svg</file>
+        <file>images/example/DListViewScreen_1.svg</file>
+        <file>images/example/DTreeViewIcon_5.svg</file>
+        <file>images/example/DTreeViewIcon_4.svg</file>
+        <file>images/example/DTreeViewIcon_3.svg</file>
+        <file>images/example/DTreeViewIcon_1.svg</file>
+        <file>images/example/DTreeViewIcon_2.svg</file>
+        <file>images/example/DColumViewPicIcon_4.png</file>
+        <file>images/example/DColumViewPicIcon_9.png</file>
+        <file>images/example/DColumViewPicIcon_8.png</file>
+        <file>images/example/DColumViewPicIcon_5.png</file>
+        <file>images/example/DColumViewPicIcon_6.png</file>
+        <file>images/example/DColumViewPicIcon_7.png</file>
+        <file>images/example/DColumViewPicIcon_3.png</file>
+        <file>images/example/DColumViewPicIcon_2.png</file>
+        <file>images/example/DColumViewPicIcon_1.png</file>
+        <file>images/example/DListView_3.png</file>
+        <file>images/example/DListView_2.png</file>
+        <file>images/example/DListView_1.png</file>
+        <file>images/example/DGroupBox.png</file>
     </qresource>
 </RCC>
