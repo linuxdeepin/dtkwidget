@@ -43,12 +43,14 @@
 #include "listviewexample.h"
 #include "windowexample.h"
 #include "tooltipexample.h"
+#include "spinnerexample.h"
 #include "dialogexample.h"
 #include "progressbarexample.h"
 #include "layoutexample.h"
 #include "scrollbarexample.h"
 #include "rubberbandexample.h"
 #include "widgetexample.h"
+#include "lcdnumberexample.h"
 #include "mainwindow.h"
 #include "dsettingsbackend.h"
 #include "qsettingbackend.h"
@@ -271,12 +273,14 @@ void MainWindow::initModel()
     registerPage("ListView", new ListViewExampleWindow(this), QIcon::fromTheme("icon_ListView"));
     registerPage("Window", new WindowExampleWindow(this), QIcon::fromTheme("icon_Window"));
     registerPage("ToolTip", new ToolTipExampleWindow(this), QIcon::fromTheme("icon_Tooltip"));
+    registerPage("Spinner", new SpinnerExampleWindow(this), QIcon::fromTheme("icon_Spinner"));
     registerPage("Dialog", new DialogExampleWindow(this), QIcon::fromTheme("icon_Dialog"));
     registerPage("ProgressBar", new ProgressBarExampleWindow(this), QIcon::fromTheme("icon_ProgressBar"));
     registerPage("Layout", new LayoutExampleWindow(this), QIcon::fromTheme("icon_Layout"));
     registerPage("ScrollBar", new ScrollBarExampleWindow(this), QIcon::fromTheme("icon_ScrollBar"));
     registerPage("RubberBand", new RubberBandExampleWindow(this), QIcon::fromTheme("icon_RubberBand"));
     registerPage("Widget", new WidgetExampleWindow(this), QIcon::fromTheme("icon_Widget"));
+    registerPage("LCDNumber", new LCDNumberExampleWindow(this), QIcon::fromTheme("icon_LCDNumber"));
 }
 
 void MainWindow::registerPage(const QString &pageName, PageWindowInterface *pPageWindow, const QIcon &icon)

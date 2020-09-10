@@ -180,4 +180,16 @@ public:
     int getFixedHeight() const override;
 };
 
+class DSearchComboBoxExample : public ExampleWindowInterface
+{
+    Q_OBJECT
+
+public:
+    explicit DSearchComboBoxExample(QWidget *parent = nullptr);
+
+    QString getTitleName() const override;
+    QString getDescriptionInfo() const override;
+    int getFixedHeight() const override;
+};
+
 #endif // BUTTONEXAMPLE_H

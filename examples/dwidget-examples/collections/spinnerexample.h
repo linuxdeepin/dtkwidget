@@ -19,8 +19,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TOOLTIPEXAMPLE_H
-#define TOOLTIPEXAMPLE_H
+#ifndef SPINNEREXAMPLE_H
+#define SPINNEREXAMPLE_H
 
 #include <QWidget>
 #include <QLabel>
@@ -29,36 +29,24 @@
 #include "examplewindowinterface.h"
 #include "pagewindowinterface.h"
 
-class ToolTipExampleWindow : public PageWindowInterface
+class SpinnerExampleWindow : public PageWindowInterface
 {
     Q_OBJECT
 
 public:
-    explicit ToolTipExampleWindow(QWidget *parent = nullptr);
+    explicit SpinnerExampleWindow(QWidget *parent = nullptr);
 };
 
-class DToolTipExample : public ExampleWindowInterface
+class DSpinnerExample : public ExampleWindowInterface
 {
     Q_OBJECT
 
 public:
-    explicit DToolTipExample(QWidget *parent = nullptr);
+    explicit DSpinnerExample(QWidget *parent = nullptr);
 
     QString getTitleName() const override;
     QString getDescriptionInfo() const override;
     int getFixedHeight() const override;
 };
 
-class DArrowRectangleExample : public ExampleWindowInterface
-{
-    Q_OBJECT
-
-public:
-    explicit DArrowRectangleExample(QWidget *parent = nullptr);
-
-    QString getTitleName() const override;
-    QString getDescriptionInfo() const override;
-    int getFixedHeight() const override;
-};
-
-#endif // TOOLTIPEXAMPLE_H
+#endif // SPINNEREXAMPLE_H

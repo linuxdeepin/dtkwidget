@@ -43,6 +43,7 @@
 #include <DComboBox>
 #include <DFontComboBox>
 #include <DListView>
+#include <DSearchComboBox>
 
 #include "buttonexample.h"
 
@@ -63,6 +64,7 @@ ButtonExampleWindow::ButtonExampleWindow(QWidget *parent)
     addExampleWindow(new DCheckButtonExample(this));
     addExampleWindow(new DComboBoxExample(this));
     addExampleWindow(new DFontComboBoxExample(this));
+    addExampleWindow(new DSearchComboBoxExample(this));
 }
 
 DPushButtonExample::DPushButtonExample(QWidget *parent)
@@ -364,23 +366,31 @@ DIconButtonExample::DIconButtonExample(QWidget *parent)
     pButton_4->setEnabled(false);
     pButton_4->setFixedSize(36, 36);
 
-    DIconButton *pButton_5 = new DIconButton(DStyle::SP_IncreaseElement, this);
-    pButton_5->setFixedSize(36, 36);
-    pButton_5->setEnabledCircle(true);
+    DIconButton *pButton_5 = new DIconButton(DStyle::SP_DeleteButton, this);
+    pButton_5->setFlat(true);
+    pButton_5->setFixedSize(QSize(24, 24));
+    pButton_5->setIconSize(QSize(16, 16));
+    DStyle::setFocusRectVisible(pButton_5, false);
 
-    DIconButton *pButton_6 = new DIconButton(DStyle::SP_IncreaseElement, this);
-    pButton_6->setFixedSize(36, 36);
-    pButton_6->setEnabledCircle(true);
+    DIconButton *pButton_6 = new DIconButton(DStyle::SP_AddButton, this);
+    pButton_6->setFlat(true);
+    pButton_6->setFixedSize(QSize(24, 24));
+    pButton_6->setIconSize(QSize(16, 16));
+    DStyle::setFocusRectVisible(pButton_6, false);
 
-    DIconButton *pButton_7 = new DIconButton(DStyle::SP_IncreaseElement, this);
-    pButton_7->setFixedSize(36, 36);
+    DIconButton *pButton_7 = new DIconButton(DStyle::SP_DeleteButton, this);
     pButton_7->setEnabled(false);
-    pButton_7->setEnabledCircle(true);
+    pButton_7->setFlat(true);
+    pButton_7->setFixedSize(QSize(24, 24));
+    pButton_7->setIconSize(QSize(16, 16));
+    DStyle::setFocusRectVisible(pButton_7, false);
 
-    DIconButton *pButton_8 = new DIconButton(DStyle::SP_IncreaseElement, this);
-    pButton_8->setFixedSize(36, 36);
+    DIconButton *pButton_8 = new DIconButton(DStyle::SP_AddButton, this);
     pButton_8->setEnabled(false);
-    pButton_8->setEnabledCircle(true);
+    pButton_8->setFlat(true);
+    pButton_8->setFixedSize(QSize(24, 24));
+    pButton_8->setIconSize(QSize(16, 16));
+    DStyle::setFocusRectVisible(pButton_8, false);
 
     pHBoxLayout->addStretch();
     pHBoxLayout->addWidget(pButton_1);
@@ -915,6 +925,61 @@ QString DFontComboBoxExample::getDescriptionInfo() const
 }
 
 int DFontComboBoxExample::getFixedHeight() const
+{
+    return 700;
+}
+
+DSearchComboBoxExample::DSearchComboBoxExample(QWidget *parent)
+    : ExampleWindowInterface(parent)
+{
+    QVBoxLayout *pVBoxLayout = new QVBoxLayout;
+    pVBoxLayout->setMargin(0);
+    pVBoxLayout->setSpacing(0);
+    setLayout(pVBoxLayout);
+
+    QHBoxLayout *pHBoxLayout_1 = new QHBoxLayout;
+    pHBoxLayout_1->setMargin(0);
+    pHBoxLayout_1->setSpacing(0);
+
+    DSearchComboBox *pComboBox_1 = new DSearchComboBox;
+    pComboBox_1->setEditable(true);
+    pComboBox_1->addItem("手动选择驱动方案");
+    pComboBox_1->addItem("手动选择驱动方案");
+    pComboBox_1->addItem("手动选择驱动方案");
+    pComboBox_1->setFixedSize(240, 36);
+    pHBoxLayout_1->addWidget(pComboBox_1);
+
+    pVBoxLayout->addSpacing(30);
+    pVBoxLayout->addLayout(pHBoxLayout_1);
+    pVBoxLayout->addSpacing(30);
+
+    QLabel *pLabel_1 = new QLabel;
+    QPixmap pix_1(":/images/example/DSearchComboBox.png");
+    pLabel_1->setFixedSize(568, 444);
+    pLabel_1->setPixmap(pix_1);
+    pLabel_1->setScaledContents(true);
+
+    QHBoxLayout *pHBoxLayout_pic_1 = new QHBoxLayout;
+    pHBoxLayout_pic_1->setMargin(0);
+    pHBoxLayout_pic_1->setSpacing(0);
+    pHBoxLayout_pic_1->addWidget(pLabel_1);
+
+    pVBoxLayout->addSpacing(30);
+    pVBoxLayout->addLayout(pHBoxLayout_pic_1);
+    pVBoxLayout->addSpacing(20);
+}
+
+QString DSearchComboBoxExample::getTitleName() const
+{
+    return "DSearchComboBox";
+}
+
+QString DSearchComboBoxExample::getDescriptionInfo() const
+{
+    return "一个带搜索功能的ComboBox控件.";
+}
+
+int DSearchComboBoxExample::getFixedHeight() const
 {
     return 700;
 }

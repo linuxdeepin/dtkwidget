@@ -238,5 +238,11 @@
         <file>images/example/DListView_1.png</file>
         <file>images/example/DGroupBox.png</file>
         <file>images/example/DVerticalline.png</file>
+        <file>images/example/DSearchComboBox.png</file>
+        <file>images/example/drive-harddisk-48px_1.svg</file>
+        <file>images/example/drive-harddisk-48px_2.svg</file>
+        <file>images/example/drive-harddisk-48px_3.svg</file>
+        <file>images/example/drive-harddisk-48px.svg</file>
+        <file>images/example/Oval_186.svg</file>
     </qresource>
 </RCC>

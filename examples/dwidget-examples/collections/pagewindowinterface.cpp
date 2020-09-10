@@ -53,6 +53,7 @@ QWidget *PageWindowInterface::doLayout(ExampleWindowInterface *pExample)
     pDescriptionLabel->setFixedHeight(pExample->getFixedHeight());
 
     QLabel *pLabel_1 = new QLabel;
+    pLabel_1->setTextInteractionFlags(Qt::TextBrowserInteraction);
     pLabel_1->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     QFont font_1;
     font_1.setPixelSize(24);
@@ -60,6 +61,7 @@ QWidget *PageWindowInterface::doLayout(ExampleWindowInterface *pExample)
     pLabel_1->setText(pExample->getTitleName());
 
     QLabel *pLabel_2 = new QLabel;
+    pLabel_2->setTextInteractionFlags(Qt::TextBrowserInteraction);
     pLabel_2->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     QFont font_2;
     font_2.setPixelSize(12);

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="38px" height="44px" viewBox="0 0 38 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>drive-harddisk-48px</title>
+    <defs>
+        <filter x="-19.1%" y="-16.2%" width="138.2%" height="132.5%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <linearGradient x1="102.549264%" y1="57.6822305%" x2="-2.65228894%" y2="57.6822305%" id="linearGradient-2">
+            <stop stop-color="#0067BC" offset="0%"></stop>
+            <stop stop-color="#30EA7F" offset="4.57146722%"></stop>
+            <stop stop-color="#00D887" offset="9.93130604%"></stop>
+            <stop stop-color="#00B160" offset="88.9446523%"></stop>
+            <stop stop-color="#00C165" offset="93.7925209%"></stop>
+            <stop stop-color="#008CBD" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="100%" y1="56.4295561%" x2="0%" y2="56.4295561%" id="linearGradient-3">
+            <stop stop-color="#FFFFFF" stop-opacity="0.5" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0.9" offset="9.93588454%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0.7" offset="52.3560063%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0.9" offset="87.6484117%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0.5" offset="100%"></stop>
+        </linearGradient>
+        <path d="M0,31.9999433 C0,29.7908356 1.79203193,28 4.00021236,28 L29.9997876,28 C32.2090439,28 34,29.7996535 34,31.9999433 L34,36.4903342 C34,36.7718148 33.7828827,37 33.4929861,37 L0.507013887,37 C0.226997849,37 0,36.7775269 0,36.4903342 L0,31.9999433 Z" id="path-4"></path>
+        <filter x="-1.5%" y="-5.6%" width="102.9%" height="111.1%" filterUnits="objectBoundingBox" id="filter-5">
+            <feMorphology radius="1" operator="erode" in="SourceAlpha" result="shadowSpreadInner1"></feMorphology>
+            <feOffset dx="0" dy="0" in="shadowSpreadInner1" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 0.5 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+        <radialGradient cx="48.2392027%" cy="19.1031265%" fx="48.2392027%" fy="19.1031265%" r="78.6539217%" gradientTransform="translate(0.482392,0.191031),scale(0.205882,1.000000),rotate(90.000000),scale(1.000000,3.580713),translate(-0.482392,-0.191031)" id="radialGradient-6">
+            <stop stop-color="#7CFFFE" offset="0%"></stop>
+            <stop stop-color="#D6CDE6" offset="100%"></stop>
+        </radialGradient>
+        <path d="M0,36.5 C0,34.5670034 1.57170124,33 3.49466128,33 L30.5053387,33 C32.4353869,33 34,34.5709366 34,36.5 L34,36.5 C34,38.4329966 32.4282988,40 30.5053387,40 L3.49466128,40 C1.56461315,40 0,38.4290634 0,36.5 L0,36.5 Z" id="path-7"></path>
+        <filter x="-1.5%" y="-7.1%" width="102.9%" height="114.3%" filterUnits="objectBoundingBox" id="filter-8">
+            <feMorphology radius="1" operator="erode" in="SourceAlpha" result="shadowSpreadInner1"></feMorphology>
+            <feOffset dx="0" dy="0" in="shadowSpreadInner1" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0.239215686   0 0 0 0 0.611764706  0 0 0 0.2 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-9">
+            <stop stop-color="#0174FF" offset="0%"></stop>
+            <stop stop-color="#01C2FF" offset="50.8499801%"></stop>
+            <stop stop-color="#0056FF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="light" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="6" transform="translate(-1070.000000, -931.000000)">
+            <g id="ToolTip" transform="translate(492.000000, 157.000000)">
+                <g id="DArrowRectangle" transform="translate(196.000000, 620.000000)">
+                    <g id="Group-3" transform="translate(367.000000, 30.000000)">
+                        <g id="磁盘" transform="translate(0.000000, 113.000000)">
+                            <g id="drive-harddisk-usb-48px" transform="translate(10.000000, 8.000000)">
+                                <g id="drive-harddisk-48px">
+                                    <g id="Group-2" filter="url(#filter-1)" transform="translate(7.000000, 4.000000)">
+                                        <path d="M0,6.00641141 C0,2.68916199 2.68211672,0 6.00025246,0 L27.9997475,0 C31.3135955,0 34,2.69075263 34,6.00641141 L34,34.9976004 C34,36.1034952 33.1080589,37 32.0000796,37 L1.9999204,37 C0.895394863,37 0,36.1037214 0,34.9976004 L0,6.00641141 Z" id="Rectangle-1" fill="url(#linearGradient-2)"></path>
+                                        <g id="Rectangle-3">
+                                            <use fill="url(#linearGradient-3)" fill-rule="evenodd" xlink:href="#path-4"></use>
+                                            <use fill="black" fill-opacity="1" filter="url(#filter-5)" xlink:href="#path-4"></use>
+                                        </g>
+                                        <g id="Rectangle-1">
+                                            <use fill="url(#radialGradient-6)" fill-rule="evenodd" xlink:href="#path-7"></use>
+                                            <use fill="black" fill-opacity="1" filter="url(#filter-8)" xlink:href="#path-7"></use>
+                                        </g>
+                                        <g id="Group" transform="translate(19.500000, 35.000000)" fill="url(#linearGradient-9)">
+                                            <path d="M11,0 C11.2761424,0 11.5,0.215752602 11.5,0.495388985 L11.5,2.50461102 C11.5,2.74780727 11.3167438,2.95007308 11.0877486,2.99201862 L11,3 C10.7238576,3 10.5,2.7842474 10.5,2.50461102 L10.5,0.495388985 C10.5,0.252192734 10.6832562,0.0499269165 10.9122514,0.00798137978 L11,0 Z M9,0 C9.27614237,0 9.5,0.215752602 9.5,0.495388985 L9.5,2.50461102 C9.5,2.74780727 9.31674383,2.95007308 9.08774863,2.99201862 L9,3 C8.72385763,3 8.5,2.7842474 8.5,2.50461102 L8.5,0.495388985 C8.5,0.252192734 8.68325617,0.0499269165 8.91225137,0.00798137978 L9,0 Z M7,0 C7.27614237,0 7.5,0.215752602 7.5,0.495388985 L7.5,2.50461102 C7.5,2.74780727 7.31674383,2.95007308 7.08774863,2.99201862 L7,3 C6.72385763,3 6.5,2.7842474 6.5,2.50461102 L6.5,0.495388985 C6.5,0.252192734 6.68325617,0.0499269165 6.91225137,0.00798137978 L7,0 Z M5,0 C5.27614237,0 5.5,0.215752602 5.5,0.495388985 L5.5,2.50461102 C5.5,2.74780727 5.31674383,2.95007308 5.08774863,2.99201862 L5,3 C4.72385763,3 4.5,2.7842474 4.5,2.50461102 L4.5,0.495388985 C4.5,0.252192734 4.68325617,0.0499269165 4.91225137,0.00798137978 L5,0 Z M3,0 C3.27614237,0 3.5,0.215752602 3.5,0.495388985 L3.5,2.50461102 C3.5,2.74780727 3.31674383,2.95007308 3.08774863,2.99201862 L3,3 C2.72385763,3 2.5,2.7842474 2.5,2.50461102 L2.5,0.495388985 C2.5,0.252192734 2.68325617,0.0499269165 2.91225137,0.00798137978 L3,0 Z M1,0 C1.27614237,0 1.5,0.215752602 1.5,0.495388985 L1.5,2.50461102 C1.5,2.74780727 1.31674383,2.95007308 1.08774863,2.99201862 L1,3 C0.723857625,3 0.5,2.7842474 0.5,2.50461102 L0.5,0.495388985 C0.5,0.252192734 0.683256173,0.0499269165 0.912251372,0.00798137978 L1,0 Z" id="Combined-Shape"></path>
+                                        </g>
+                                        <path d="M4,35.5 C3.72385763,35.5 3.47385763,35.6119288 3.29289322,35.7928932 C3.11192881,35.9738576 3,36.2238576 3,36.5 C3,36.7761424 3.11192881,37.0261424 3.29289322,37.2071068 C3.47385763,37.3880712 3.72385763,37.5 4,37.5 C4.27614237,37.5 4.52614237,37.3880712 4.70710678,37.2071068 C4.88807119,37.0261424 5,36.7761424 5,36.5 C5,36.2238576 4.88807119,35.9738576 4.70710678,35.7928932 C4.52614237,35.6119288 4.27614237,35.5 4,35.5 Z" id="Oval" stroke="#54D800" fill="#A5F532"></path>
+                                    </g>
+                                </g>
+                                <g id="Group" transform="translate(19.000000, 8.000000)" fill="#FFFFFF">
+                                    <circle id="Oval" cx="5.447" cy="18.394" r="2.064"></circle>
+                                    <polygon id="Shape" points="3.72 3.718 7.125 3.718 5.452 0.944"></polygon>
+                                    <circle id="Oval" cx="2.044" cy="8.348" r="1.493"></circle>
+                                    <polygon id="Rectangle-path" points="7.388 5.23 10.43 5.23 10.43 8.272 7.388 8.272"></polygon>
+                                    <polygon id="Shape" points="5.867 2.949 5.107 2.949 5.107 17.962 5.107 19.68 5.867 19.68"></polygon>
+                                    <path d="M8.552,6.849 L8.552,9.262 C8.552,9.662 8.506,9.819 8.189,10.121 L5.447,12.042 L5.447,12.864 L8.65,10.543 C8.65,10.543 9.202,10.212 9.202,9.315 L9.2,9.315 L9.2,6.848 L8.552,6.848 L8.552,6.849 Z" id="Shape"></path>
+                                    <path d="M2.387,9.157 L2.387,11.522 C2.387,11.914 2.433,12.068 2.75,12.364 L5.492,14.247 L5.492,15.053 L2.289,12.778 C2.289,12.778 1.737,12.453 1.737,11.575 L1.74,11.575 L1.74,9.158 L2.387,9.158 L2.387,9.157 Z" id="Shape"></path>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

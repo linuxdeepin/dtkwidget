@@ -41,12 +41,14 @@ SOURCES += main.cpp\
     listviewexample.cpp \
     windowexample.cpp \
     tooltipexample.cpp \
+    spinnerexample.cpp \
     dialogexample.cpp \
     progressbarexample.cpp \
     layoutexample.cpp \
     scrollbarexample.cpp \
     rubberbandexample.cpp \
-    widgetexample.cpp
+    widgetexample.cpp \
+    lcdnumberexample.cpp
 
 HEADERS  += mainwindow.h \
     buttonexample.h \
@@ -57,12 +59,14 @@ HEADERS  += mainwindow.h \
     listviewexample.h \
     windowexample.h \
     tooltipexample.h \
+    spinnerexample.h \
     dialogexample.h \
     progressbarexample.h \
     layoutexample.h \
     scrollbarexample.h \
     rubberbandexample.h \
-    widgetexample.h
+    widgetexample.h \
+    lcdnumberexample.h
 
 RESOURCES += \
     images.qrc \
