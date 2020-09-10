@@ -246,6 +246,7 @@ includes.files += \
     $$PWD/DToast \
     $$PWD/DFileDialog \
     $$PWD/DLineEdit \
+    $$PWD/DIpv4LineEdit \
     $$PWD/DStyleOptionLineEdit \
     $$PWD/DAnchors \
     $$PWD/DSegmentedControl \
