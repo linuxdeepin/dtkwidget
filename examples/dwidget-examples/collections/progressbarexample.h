@@ -22,9 +22,6 @@
 #ifndef PROGRESSBAREXAMPLE_H
 #define PROGRESSBAREXAMPLE_H
 
-#include <QWidget>
-#include <QLabel>
-
 #include "dtkwidget_global.h"
 #include "examplewindowinterface.h"
 #include "pagewindowinterface.h"
@@ -55,6 +52,18 @@ class DWaterProgressExample : public ExampleWindowInterface
 
 public:
     explicit DWaterProgressExample(QWidget *parent = nullptr);
+
+    QString getTitleName() const override;
+    QString getDescriptionInfo() const override;
+    int getFixedHeight() const override;
+};
+
+class DColoredProgressBarExample : public ExampleWindowInterface
+{
+    Q_OBJECT
+
+public:
+    explicit DColoredProgressBarExample(QWidget *parent = nullptr);
 
     QString getTitleName() const override;
     QString getDescriptionInfo() const override;
