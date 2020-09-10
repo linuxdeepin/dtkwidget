@@ -22,12 +22,12 @@
 #ifndef EDITEXAMPLE_H
 #define EDITEXAMPLE_H
 
-#include <QWidget>
-#include <QLabel>
-
 #include "dtkwidget_global.h"
 #include "examplewindowinterface.h"
 #include "pagewindowinterface.h"
+
+class QWidget;
+class QLabel;
 
 class EditExampleWindow : public PageWindowInterface
 {
