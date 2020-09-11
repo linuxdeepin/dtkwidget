@@ -26,7 +26,6 @@
 #include <DBackgroundGroup>
 #include <DListView>
 #include <DGroupBox>
-#include <QToolButton>
 #include <DTreeView>
 #include <DTableView>
 #include <DHeaderView>
@@ -50,7 +49,7 @@ ListViewExampleWindow::ListViewExampleWindow(QWidget *parent)
 DBackgroundGroupExample::DBackgroundGroupExample(QWidget *parent)
     : ExampleWindowInterface(parent)
 {
-    this->setFixedHeight(636);
+    this->setFixedHeight(706);
     QVBoxLayout *layout = new QVBoxLayout(this);
     QWidget *bgWidget = new QWidget(this);
     QWidget *bgPicWidget = new QWidget(this);
@@ -61,23 +60,20 @@ DBackgroundGroupExample::DBackgroundGroupExample(QWidget *parent)
     QLabel *bgPicLabel = new QLabel(bgPicWidget);
 
     bgPicLabel->setAlignment(Qt::AlignCenter);
-    bgPicLabel->setPixmap(QPixmap(":/images/example/DBackgroundGroup.png").scaled(550, 356));
+    bgPicLabel->setPixmap(QPixmap(":/images/example/DBackgroundGroup.png").scaled(550, 426, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
     bgpicLayout->addWidget(bgPicLabel);
 
     bgGroup->setItemSpacing(1);
     bgGroup->setItemMargins(QMargins(0, 0, 0, 0));
-    bgGroup->setUseWidgetBackground(true);
+    bgGroup->setBackgroundRole(QPalette::Window);
 
-    QFrame *frame1 = new QFrame;
-    QFrame *frame2 = new QFrame;
-    QFrame *frame3 = new QFrame;
+    QWidget *frame1 = new QWidget;
+    QWidget *frame2 = new QWidget;
+    QWidget *frame3 = new QWidget;
 
-    frame1->setMinimumHeight(36);
-    frame2->setMinimumHeight(36);
-    frame3->setMinimumHeight(36);
-    frame1->setBackgroundRole(DPalette::AlternateBase);
-    frame2->setBackgroundRole(DPalette::Shadow);
-    frame3->setBackgroundRole(DPalette::AlternateBase);
+    frame1->setFixedHeight(36);
+    frame2->setFixedHeight(36);
+    frame3->setFixedHeight(36);
 
     bgGLayout->addWidget(frame1);
     bgGLayout->addWidget(frame2);
@@ -89,8 +85,8 @@ DBackgroundGroupExample::DBackgroundGroupExample(QWidget *parent)
 
     layout->setContentsMargins(10, 0, 10, 0);
     layout->addSpacing(30);
-    layout->setSpacing(70);
     layout->addWidget(bgWidget);
+    layout->addSpacing(70);
     layout->addWidget(bgPicWidget);
     layout->addStretch();
 }
@@ -107,7 +103,7 @@ QString DBackgroundGroupExample::getDescriptionInfo() const
 
 int DBackgroundGroupExample::getFixedHeight() const
 {
-    return 636;
+    return 706;
 }
 
 DListViewExample::DListViewExample(QWidget *parent)
@@ -144,9 +140,9 @@ DListViewExample::DListViewExample(QWidget *parent)
     picLabel1->setAlignment(Qt::AlignCenter);
     picLabel2->setAlignment(Qt::AlignCenter);
     picLabel3->setAlignment(Qt::AlignCenter);
-    picLabel1->setPixmap(QPixmap(":/images/example/DListView_1.png").scaled(550, 426));
-    picLabel2->setPixmap(QPixmap(":/images/example/DListView_2.png").scaled(550, 426));
-    picLabel3->setPixmap(QPixmap(":/images/example/DListView_3.png").scaled(550, 426));
+    picLabel1->setPixmap(QPixmap(":/images/example/DListView_1.png").scaled(550, 426, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+    picLabel2->setPixmap(QPixmap(":/images/example/DListView_2.png").scaled(550, 426, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+    picLabel3->setPixmap(QPixmap(":/images/example/DListView_3.png").scaled(550, 426, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 
     DStandardItem *fingerPrintItem1 = new DStandardItem("右手大拇指");
     DStandardItem *fingerPrintItem2 = new DStandardItem("手指2");
@@ -229,7 +225,7 @@ QString DListViewExample::getTitleName() const
 
 QString DListViewExample::getDescriptionInfo() const
 {
-    return "标准的单行列表。";
+    return "标准的单行列表\n带图标的单行列表\n带图标的多行列表";
 }
 
 int DListViewExample::getFixedHeight() const
@@ -256,7 +252,7 @@ DGroupBoxExample::DGroupBoxExample(QWidget *parent)
     QLabel *gbPicLabel = new QLabel(gbPicWidget);
 
     gbPicLabel->setAlignment(Qt::AlignCenter);
-    gbPicLabel->setPixmap(QPixmap(":/images/example/DGroupBox.png").scaled(568, 444));
+    gbPicLabel->setPixmap(QPixmap(":/images/example/DGroupBox.png").scaled(568, 444, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
     contentComboBox->addItems({"自动"});
     contentComboBox->setMinimumWidth(213);
     groupBoxWidget->setFixedHeight(48);
@@ -289,7 +285,7 @@ QString DGroupBoxExample::getTitleName() const
 
 QString DGroupBoxExample::getDescriptionInfo() const
 {
-    return "带图标的单行列表\n带图标的多行列表";
+    return "提供一个可以存放多个控件的区域，里\n面内容可以随意组合。";
 }
 
 int DGroupBoxExample::getFixedHeight() const
@@ -313,7 +309,7 @@ DTreeViewExample::DTreeViewExample(QWidget *parent)
     QLabel *picLabel = new QLabel;
 
     picLabel->setAlignment(Qt::AlignCenter);
-    picLabel->setPixmap(QPixmap(":/images/example/DTreeView.png").scaled(550, 414));
+    picLabel->setPixmap(QPixmap(":/images/example/DTreeView.png").scaled(550, 414, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
 
     treeView->setItemDelegate(delegate);
     treeView->setModel(model);
@@ -415,7 +411,7 @@ DHeaderViewExample::DHeaderViewExample(QWidget *parent)
     headerview->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     headerview->setModel(hmodel);
     picLabel->setAlignment(Qt::AlignCenter);
-    picLabel->setPixmap(QPixmap(":/images/example/DHeaderView.png").scaled(560, 373));
+    picLabel->setPixmap(QPixmap(":/images/example/DHeaderView.png").scaled(560, 373, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
     headerview->setMaximumHeight(36);
     headerview->setSectionResizeMode(DHeaderView::Stretch);
     headerview->setSortIndicator(0, Qt::SortOrder::DescendingOrder);

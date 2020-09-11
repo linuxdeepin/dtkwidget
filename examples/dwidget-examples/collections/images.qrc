@@ -208,7 +208,6 @@
         <file>images/example/DToolButton.png</file>
         <file>images/example/DToolTip.png</file>
         <file>images/example/DTreeView.png</file>
-        <file>images/example/DVerticalLine.png</file>
         <file>images/example/DWarningButton.png</file>
         <file>images/example/DWaterProgress.png</file>
         <file>images/example/DListViewEditAction.svg</file>
@@ -238,5 +237,6 @@
         <file>images/example/DListView_2.png</file>
         <file>images/example/DListView_1.png</file>
         <file>images/example/DGroupBox.png</file>
+        <file>images/example/DVerticalline.png</file>
     </qresource>
 </RCC>
