@@ -41,6 +41,7 @@ public:
     virtual ~DLineEdit() override;
 
     QLineEdit *lineEdit() const;
+    void setPlaceholderText(const QString &);
 
     void setAlert(bool isAlert);
     bool isAlert() const;

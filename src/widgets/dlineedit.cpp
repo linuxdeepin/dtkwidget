@@ -339,6 +339,12 @@ bool DLineEdit::speechToTextIsEnabled() const
     return d->bSpeechToText;
 }
 
+void DLineEdit::setPlaceholderText(const QString& placeholderText)
+{
+    D_D(DLineEdit);
+    d->lineEdit->setPlaceholderText(placeholderText);
+}
+
 /*!
  * \~chinese \brief DLineEdit::setSpeechToTextEnabled 设置是否显示语音听写菜单项
  * \~chinese \param enable true显示 flase不显示
