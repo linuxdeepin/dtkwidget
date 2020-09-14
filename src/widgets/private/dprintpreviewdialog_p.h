@@ -65,7 +65,7 @@ public:
     void judgeSupportedAttributes(const QString &lastPaperSize);
     void setMininumMargins();
     void themeTypeChange(DGuiApplicationHelper::ColorType themeType);
-    void setWaringPage();
+    void setPageIsLegal(bool islegal);
     QVector<int> checkDuplication(QVector<int> data);
 
     void setEnable(const int &value, DComboBox *combox); //控件可用
@@ -92,7 +92,6 @@ public:
     bool supportedDuplexFlag = false;
     bool supportedColorMode = false;
     bool isInited = false;
-    bool pagesControl = false;
     bool marginsControl = false;
 
     //control
