@@ -23,6 +23,14 @@ public:
         D_QC(DBackgroundGroup);
 
         QList<QWidget*> items = q->findChildren<QWidget*>(QString(), Qt::FindDirectChildrenOnly);
+        // fix-bug-36867：隐藏的 widget 不应该在列表中占用位置
+        for (auto it = items.begin(); it != items.end();) {
+            if (!*it || !(*it)->isVisible())
+                it = items.erase(it);
+            else
+                ++it;
+        }
+
         QList<QPair<QWidget*, DStyleOptionBackgroundGroup::ItemBackgroundPosition>> itemStyleOptions;
         itemStyleOptions.reserve(items.size());
 
@@ -226,7 +234,8 @@ bool DBackgroundGroup::event(QEvent *event)
         update(); //重绘全部区域
         Q_FALLTHROUGH();
     }
-    case QEvent::LayoutDirectionChange: {
+    case QEvent::LayoutDirectionChange:
+    case QEvent::LayoutRequest: {
         D_D(DBackgroundGroup);
         d->updateOptions();
         break;
