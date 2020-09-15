@@ -73,6 +73,18 @@ public:
     int getFixedHeight() const override;
 };
 
+class DSizegripExample : public ExampleWindowInterface
+{
+    Q_OBJECT
+
+public:
+    explicit DSizegripExample(QWidget *parent = nullptr);
+
+    QString getTitleName() const override;
+    QString getDescriptionInfo() const override;
+    int getFixedHeight() const override;
+};
+
 class DTabBarExample : public ExampleWindowInterface
 {
     Q_OBJECT

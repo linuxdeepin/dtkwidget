@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="130px" height="131px" viewBox="0 0 130 131" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 56.2 (81672) - https://sketch.com -->
+    <title>deepin-movie-128px 2</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-13.6%" y="-13.6%" width="127.1%" height="127.1%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <linearGradient x1="50%" y1="2.37536127%" x2="50%" y2="100%" id="linearGradient-2">
+            <stop stop-color="#3E3E3E" offset="0%"></stop>
+            <stop stop-color="#0F0F0F" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="40.7675756%" y1="0%" x2="50%" y2="100%" id="linearGradient-3">
+            <stop stop-color="#B0FAFF" offset="0%"></stop>
+            <stop stop-color="#0D96C2" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="按钮规范" transform="translate(-245.000000, -28.000000)">
+            <g id="deepin-movie-128px-2" transform="translate(245.000000, 28.000000)">
+                <g id="deepin-movie-128px" transform="translate(1.000000, 0.000000)">
+                    <g id="7-movie" filter="url(#filter-1)" transform="translate(5.000000, 5.000000)">
+                        <circle id="Oval" stroke="url(#linearGradient-3)" stroke-width="5.33333333" fill="url(#linearGradient-2)" cx="59" cy="59" r="56.3333333"></circle>
+                        <path d="M48.776549,83.8212534 C43.9293948,86.5876199 40,84.3198912 40,78.7442023 L40,38.2493358 C40,32.6789913 43.9514245,30.4184909 48.776549,33.1722846 L84.3728908,53.4878193 C89.220045,56.2541858 89.1980153,60.751925 84.3728908,63.5057187 L48.776549,83.8212534 Z" id="Path-359" fill="#FF006B"></path>
+                        <path d="M72,46.4263664 L72,70.5671717 L56,79.6986874 L56,37.2948506 L72,46.4263664 Z M48.4514698,84 L41.9820659,84 C43.5276179,85.2869731 45.8444759,85.3789015 48.4514698,84 Z M40,78.7442023 L40,38.2493358 L40,78.7442023 Z" id="Combined-Shape" fill="#FFB600"></path>
+                        <path d="M56,37.2948506 L56,79.6986874 L48.776549,83.8212534 C43.9293948,86.5876199 40,84.3198912 40,78.7442023 L40,38.2493358 C40,32.6789913 43.9514245,30.4184909 48.776549,33.1722846 L56,37.2948506 Z" id="Combined-Shape" fill="#1473FF"></path>
+                        <path d="M48.2808742,82.9527452 L83.877216,62.6372105 C88.0382501,60.2624263 88.0436047,56.7341678 83.877216,54.3563275 L48.2808742,34.0407928 C44.1132883,31.6622693 41,33.4570494 41,38.2493358 L41,78.7442023 C41,83.5493704 44.0978243,85.3400943 48.2808742,82.9527452 Z" id="Path-359" stroke-opacity="0.3" stroke="#FFFFFF" stroke-width="2"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

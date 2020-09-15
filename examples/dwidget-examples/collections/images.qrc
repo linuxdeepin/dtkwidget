@@ -244,5 +244,7 @@
         <file>images/example/drive-harddisk-48px_3.svg</file>
         <file>images/example/drive-harddisk-48px.svg</file>
         <file>images/example/Oval_186.svg</file>
+        <file>images/example/movie-logo.svg</file>
+        <file>images/example/background.png</file>
     </qresource>
 </RCC>
