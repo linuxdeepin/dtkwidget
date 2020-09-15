@@ -134,7 +134,6 @@ public:
     DComboBox *waterTypeCombo; //添加水印类型
     DIconButton *waterColorBtn;
     DLineEdit *waterTextEdit;
-    QTimer *marginTimer;
     QVector<qreal> marginOldValue; // 记录margin自定义时的旧值  如果旧值和新值一致，就不需要刷新，top left right bottom
     Q_DECLARE_PUBLIC(DPrintPreviewDialog)
 };

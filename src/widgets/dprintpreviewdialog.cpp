@@ -79,8 +79,6 @@ void DPrintPreviewDialogPrivate::startup()
     Q_Q(DPrintPreviewDialog);
 
     this->printer = new DPrinter;
-    this->marginTimer = new QTimer(q);
-    this->marginTimer->setSingleShot(true);
 
     initui();
     initdata();
@@ -669,8 +667,6 @@ void DPrintPreviewDialogPrivate::initconnections()
             if (marginsCombo->currentIndex() == 3) {
                 setMininumMargins();
                 printer->setPageMargins(printer->pageLayout().minimumMargins(), QPageLayout::Millimeter);
-                if (marginTimer->isActive())
-                    marginTimer->stop();
                 pview->updatePreview();
             } else if (marginsCombo->currentIndex() == 0) {
                 if (!marginsControl)
@@ -714,21 +710,12 @@ void DPrintPreviewDialogPrivate::initconnections()
         }
     });
 
-    QObject::connect(marginTimer, SIGNAL(timeout()), q, SLOT(_q_marginTimerOut()));
-    QObject::connect(marginTopSpin, SIGNAL(valueChanged(double)), q, SLOT(_q_marginspinChanged(double)));
-    QObject::connect(marginRightSpin, SIGNAL(valueChanged(double)), q, SLOT(_q_marginspinChanged(double)));
-    QObject::connect(marginLeftSpin, SIGNAL(valueChanged(double)), q, SLOT(_q_marginspinChanged(double)));
-    QObject::connect(marginBottomSpin, SIGNAL(valueChanged(double)), q, SLOT(_q_marginspinChanged(double)));
     QObject::connect(duplexCheckBox, SIGNAL(stateChanged(int)), q, SLOT(_q_checkStateChanged(int)));
     QObject::connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, pview, &DPrintPreviewWidget::themeTypeChanged);
     QObject::connect(marginTopSpin, SIGNAL(editingFinished()), q, SLOT(_q_marginEditFinished()));
     QObject::connect(marginRightSpin, SIGNAL(editingFinished()), q, SLOT(_q_marginEditFinished()));
     QObject::connect(marginLeftSpin, SIGNAL(editingFinished()), q, SLOT(_q_marginEditFinished()));
     QObject::connect(marginBottomSpin, SIGNAL(editingFinished()), q, SLOT(_q_marginEditFinished()));
-    QObject::connect(scaleRateEdit, QOverload<int>::of(&DSpinBox::valueChanged), q, [=] {
-        // 使用和margin相同的定时器，定时1秒钟
-        marginTimer->start(1000);
-    });
     QObject::connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, q, [this](DGuiApplicationHelper::ColorType themeType) { this->themeTypeChange(themeType); });
 }
 
@@ -1087,8 +1074,6 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
     if (marginsCombo->currentIndex() == 3) {
         setMininumMargins();
         printer->setPageMargins(printer->pageLayout().minimumMargins(), QPageLayout::Millimeter);
-        if (marginTimer->isActive())
-            marginTimer->stop();
         pview->updatePreview();
     } else if (marginsCombo->currentIndex() == 0) {
         _q_pageMarginChanged(0);
@@ -1143,8 +1128,6 @@ void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
 {
     setEnable(index, marginsCombo);
     if (index == 1) {
-        if (marginTimer->isActive())
-            marginTimer->stop();
         marginLeftSpin->blockSignals(true);
         marginTopSpin->blockSignals(true);
         marginRightSpin->blockSignals(true);
@@ -1158,8 +1141,6 @@ void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
 
         pview->updatePreview();
     } else if (index == 2) {
-        if (marginTimer->isActive())
-            marginTimer->stop();
         marginLeftSpin->blockSignals(true);
         marginTopSpin->blockSignals(true);
         marginRightSpin->blockSignals(true);
@@ -1190,9 +1171,6 @@ void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
         marginRightSpin->blockSignals(false);
         marginBottomSpin->blockSignals(false);
     } else {
-        if (marginTimer->isActive())
-            marginTimer->stop();
-
         marginLeftSpin->blockSignals(true);
         marginTopSpin->blockSignals(true);
         marginRightSpin->blockSignals(true);
@@ -1270,6 +1248,7 @@ void DPrintPreviewDialogPrivate::_q_customPagesFinished()
     if (pageRangeCombo->currentIndex() != 2)
         return;
     QString cuspages = pageRangeEdit->text();
+    lastPageRange = cuspages;
     QVector<int> pagesrange;
     QStringList list = cuspages.split(",");
     setPageIsLegal(true);
@@ -1301,7 +1280,6 @@ void DPrintPreviewDialogPrivate::_q_customPagesFinished()
     jumpPageEdit->setValue(1);
     QVector<int> page = checkDuplication(pagesrange);
     pview->setPageRange(page);
-    lastPageRange = cuspages;
     //_q_currentPageSpinChanged(1);
 }
 
@@ -1311,8 +1289,6 @@ void DPrintPreviewDialogPrivate::_q_customPagesFinished()
  */
 void DPrintPreviewDialogPrivate::_q_marginTimerOut()
 {
-    // 调用一次缩放页面的刷新，因为margin和scaleRatio使用同一个定时器
-    Q_EMIT scaleRateEdit->lineEdit()->editingFinished();
 
     qreal leftMarginF = this->marginLeftSpin->value();
     qreal topMarginF = this->marginTopSpin->value();
@@ -1341,11 +1317,7 @@ void DPrintPreviewDialogPrivate::_q_marginTimerOut()
  */
 void DPrintPreviewDialogPrivate::_q_marginspinChanged(double)
 {
-    if (marginTimer->isActive())
-        marginTimer->stop();
 
-    // 默认1秒的定时器，时间到了就刷新预览页面
-    marginTimer->start(1000);
 }
 
 /*!
@@ -1356,13 +1328,10 @@ void DPrintPreviewDialogPrivate::_q_marginEditFinished()
 {
     Q_Q(DPrintPreviewDialog);
     setMininumMargins();
-    if (!marginTimer->isActive())
-        return;
 
     if (q->focusWidget() == marginTopSpin || q->focusWidget() == marginLeftSpin
             || q->focusWidget() == marginBottomSpin || q->focusWidget() == marginRightSpin)
         return;
-    marginTimer->stop();
     _q_marginTimerOut();
 }
 
