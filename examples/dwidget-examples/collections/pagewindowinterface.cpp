@@ -84,7 +84,7 @@ QWidget *PageWindowInterface::doLayout(ExampleWindowInterface *pExample)
 
     pWidget->setLayout(pHBoxLayout);
 
-    pExample->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    pExample->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     pHBoxLayout->addWidget(pDescriptionLabel);
     pHBoxLayout->addWidget(new DVerticalLine);
     pHBoxLayout->addWidget(pExample);

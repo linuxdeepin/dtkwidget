@@ -25,6 +25,8 @@
 #include <QWidget>
 #include <QLabel>
 
+#include <DRubberBand>
+
 #include "dtkwidget_global.h"
 #include "examplewindowinterface.h"
 #include "pagewindowinterface.h"
@@ -47,6 +49,15 @@ public:
     QString getTitleName() const override;
     QString getDescriptionInfo() const override;
     int getFixedHeight() const override;
+
+protected:
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
+
+private:
+    Dtk::Widget::DRubberBand *m_pRubberBand;
+    QPoint m_origin;
 };
 
 #endif // RUBBERBANDEXAMPLE_H
