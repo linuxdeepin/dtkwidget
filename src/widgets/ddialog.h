@@ -126,6 +126,7 @@ protected:
     void childEvent(QChildEvent *event) Q_DECL_OVERRIDE;
     void resizeEvent(QResizeEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
+    bool eventFilter(QObject *watched, QEvent *event) override;
 
 private:
     D_DECLARE_PRIVATE(DDialog)

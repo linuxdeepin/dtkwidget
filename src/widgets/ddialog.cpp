@@ -74,6 +74,7 @@ void DDialogPrivate::init()
     titleLabel->setWordWrap(true);
     titleLabel->setAlignment(Qt::AlignCenter);
     titleLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+    titleLabel->installEventFilter(q);
     DFontSizeManager *fontManager =  DFontSizeManager::instance();
     fontManager->bind(titleLabel, DFontSizeManager::T5, QFont::Medium);
     palrtteTransparency(titleLabel, -10);
@@ -87,6 +88,7 @@ void DDialogPrivate::init()
     messageLabel->setWordWrap(true);
     messageLabel->setAlignment(Qt::AlignCenter);
     messageLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    messageLabel->installEventFilter(q);
     palrtteTransparency(messageLabel, -30);
     messageLabel->hide();
 
@@ -1112,6 +1114,27 @@ void DDialog::keyPressEvent(QKeyEvent *event)
     } else {
         DAbstractDialog::keyPressEvent(event);
     }
+}
+
+bool DDialog::eventFilter(QObject *watched, QEvent *event)
+{
+    Q_D(DDialog);
+
+    if (watched == d->messageLabel || watched == d->titleLabel) {
+        if (event->type() == QEvent::FontChange) {
+            QLabel *label = qobject_cast<QLabel *>(watched);
+
+            if (label && !label->text().isEmpty() && label->wordWrap()) {
+                QSize sz = style()->itemTextRect(label->fontMetrics(), label->rect(), Qt::TextWordWrap, false, label->text()).size();
+
+                label->setMinimumHeight(qMax(sz.height(), label->height()));
+            }
+        }
+
+        return false;
+    }
+
+    return DAbstractDialog::eventFilter(watched, event);
 }
 
 DWIDGET_END_NAMESPACE
