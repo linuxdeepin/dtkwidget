@@ -234,6 +234,7 @@ bool DBackgroundGroup::event(QEvent *event)
         update(); //重绘全部区域
         Q_FALLTHROUGH();
     }
+    case QEvent::Show:
     case QEvent::LayoutDirectionChange:
     case QEvent::LayoutRequest: {
         D_D(DBackgroundGroup);
