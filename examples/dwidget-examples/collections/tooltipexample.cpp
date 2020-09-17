@@ -203,18 +203,13 @@ DArrowRectangleExample::DArrowRectangleExample(QWidget *parent)
     pContentWidget_2->setFixedSize(90, 40);
     pRectangle_2->setContent(pContentWidget_2);
 
-    QVBoxLayout *pVBoxLayout_1 = new QVBoxLayout;
-    pVBoxLayout_1->setMargin(0);
-    pVBoxLayout_1->setSpacing(0);
-    pVBoxLayout_1->addWidget(pRectangle_2);
-    pVBoxLayout_1->addStretch();
-
     pHBoxLayout_1->addStretch();
-    pHBoxLayout_1->addWidget(pRectangle_1);
+    pHBoxLayout_1->addWidget(pRectangle_1, 0, Qt::AlignTop | Qt::AlignHCenter);
     pHBoxLayout_1->addStretch();
-    pHBoxLayout_1->addLayout(pVBoxLayout_1);
+    pHBoxLayout_1->addWidget(pRectangle_2, 0, Qt::AlignTop | Qt::AlignHCenter);
     pHBoxLayout_1->addStretch();
 
+    pVBoxLayout->addSpacing(20);
     pVBoxLayout->addLayout(pHBoxLayout_1);
 
     QLabel *pLabel_1 = new QLabel;
