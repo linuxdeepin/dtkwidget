@@ -48,7 +48,8 @@ SOURCES += main.cpp\
     scrollbarexample.cpp \
     rubberbandexample.cpp \
     widgetexample.cpp \
-    lcdnumberexample.cpp
+    lcdnumberexample.cpp \
+    menuexample.cpp
 
 HEADERS  += mainwindow.h \
     buttonexample.h \
@@ -66,7 +67,8 @@ HEADERS  += mainwindow.h \
     scrollbarexample.h \
     rubberbandexample.h \
     widgetexample.h \
-    lcdnumberexample.h
+    lcdnumberexample.h \
+    menuexample.h
 
 RESOURCES += \
     images.qrc \

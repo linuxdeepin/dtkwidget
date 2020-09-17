@@ -178,7 +178,6 @@
         <file>images/example/DLCDNumber.png</file>
         <file>images/example/DLineEdit.png</file>
         <file>images/example/DMainWindow.png</file>
-        <file>images/example/DMenu.png</file>
         <file>images/example/DMessageManager.png</file>
         <file>images/example/DPasswordEdit.png</file>
         <file>images/example/DProgressBar_1.png</file>
@@ -246,5 +245,10 @@
         <file>images/example/Oval_186.svg</file>
         <file>images/example/movie-logo.svg</file>
         <file>images/example/background.png</file>
+        <file>images/example/DMenu.png</file>
+        <file>images/example/DMenuPicture_1.png</file>
+        <file>images/example/DMenuPicture_2.png</file>
+        <file>images/example/DMenuPicture_4.png</file>
+        <file>images/example/DMenuPicture_3.png</file>
     </qresource>
 </RCC>

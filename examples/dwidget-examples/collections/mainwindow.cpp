@@ -40,6 +40,7 @@
 #include "buttonexample.h"
 #include "editexample.h"
 #include "sliderexample.h"
+#include "menuexample.h"
 #include "listviewexample.h"
 #include "windowexample.h"
 #include "tooltipexample.h"
@@ -270,6 +271,7 @@ void MainWindow::initModel()
     registerPage("Button", new ButtonExampleWindow(this), QIcon::fromTheme("icon_button"));
     registerPage("Edit", new EditExampleWindow(this), QIcon::fromTheme("icon_edit"));
     registerPage("Slider", new SliderExampleWindow(this), QIcon::fromTheme("icon_slider"));
+    registerPage("Menu", new MenuExampleWindow(this), QIcon::fromTheme("icon_menu"));
     registerPage("ListView", new ListViewExampleWindow(this), QIcon::fromTheme("icon_ListView"));
     registerPage("Window", new WindowExampleWindow(this), QIcon::fromTheme("icon_Window"));
     registerPage("ToolTip", new ToolTipExampleWindow(this), QIcon::fromTheme("icon_Tooltip"));
