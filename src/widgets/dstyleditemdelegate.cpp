@@ -303,6 +303,10 @@ public:
                 visiable_actionList.append(action);
                 if (action->widget())
                     action->widget()->setVisible(true);
+            } else {
+                // action为隐藏状态需要将widget隐藏
+                if (action->widget())
+                    action->widget()->setVisible(false);
             }
         }
 
