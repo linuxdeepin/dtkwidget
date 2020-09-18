@@ -22,12 +22,20 @@
 #ifndef WIDGETEXAMPLE_H
 #define WIDGETEXAMPLE_H
 
-#include <QWidget>
-#include <QLabel>
-
 #include "dtkwidget_global.h"
 #include "examplewindowinterface.h"
 #include "pagewindowinterface.h"
+
+#include <DGuiApplicationHelper>
+
+#include <QWidget>
+#include <QLabel>
+#include <QAbstractTableModel>
+
+DGUI_USE_NAMESPACE
+DWIDGET_USE_NAMESPACE
+
+class QTableView;
 
 class WidgetExampleWindow : public PageWindowInterface
 {
@@ -59,6 +67,32 @@ public:
     QString getTitleName() const override;
     QString getDescriptionInfo() const override;
     int getFixedHeight() const override;
+
+private:
+    QTableView *tableView;
+};
+
+class CalendarModel : public QAbstractTableModel
+{
+    Q_OBJECT
+public:
+    CalendarModel(QObject *parent = nullptr);
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    QVariant headerData(int section, Qt::Orientation orientation,
+                        int role = Qt::DisplayRole) const override;
+
+private:
+    QStringList header;
+    int days; // 当月总天数
+    int preDays; // 前一月总天数
+    int month; // 当月月份
+    int day; // 当前日
+    int firstDayOfWeek; // 当月第一天周几
+    int lastDayOfWeek; // 当月最后一天周几
+    int firstDayRow; // 当月第一天在第几周几
+    int lastDayRow; // 当月最后一天在第几周几
 };
 
 #endif // WIDGETEXAMPLE_H
