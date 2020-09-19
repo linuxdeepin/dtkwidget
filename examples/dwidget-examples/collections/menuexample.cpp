@@ -26,6 +26,7 @@
 #include <QLabel>
 #include <QPainter>
 #include <QVBoxLayout>
+#include <QPainterPath>
 #include <QPropertyAnimation>
 
 DWIDGET_USE_NAMESPACE
