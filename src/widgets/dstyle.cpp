@@ -1321,11 +1321,13 @@ void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const Q
             DStyleOptionButton subopt = *btn;
             subopt.rect = dstyle.subElementRect(SE_ButtonBoxButtonContents, btn, w);
             dstyle.drawControl(CE_ButtonBoxButtonLabel, &subopt, p, w);
-            if (btn->state & State_HasFocus) {
-                QStyleOptionFocusRect fropt;
-                fropt.QStyleOption::operator=(*btn);
-                fropt.rect = dstyle.subElementRect(SE_ButtonBoxButtonFocusRect, btn, w);
-                style->drawPrimitive(PE_FrameFocusRect, &fropt, p, w);
+            if ((btn->state & State_HasFocus)) {
+                if (const DStyleOptionButtonBoxButton *boxbtn = qstyleoption_cast<const DStyleOptionButtonBoxButton *>(opt)) {
+                    DStyleOptionButtonBoxButton fropt;
+                    fropt = *boxbtn;
+                    fropt.rect = dstyle.subElementRect(SE_ButtonBoxButtonFocusRect, btn, w);
+                    style->drawPrimitive(PE_FrameFocusRect, &fropt, p, w);
+                }
             }
         }
         break;
