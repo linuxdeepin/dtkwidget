@@ -258,13 +258,23 @@ void DButtonBoxButton::keyPressEvent(QKeyEvent *event)
         Q_FALLTHROUGH();
     case Qt::Key_Left:
     case Qt::Key_Right:
+    case Qt::Key_Up:
+    case Qt::Key_Down:
         if (DButtonBox *p = qobject_cast<DButtonBox *>(parent())) {
             if (p->focusWidget() == this) {
                 int index = p->buttonList().indexOf(this);
-                if (event->key() == Qt::Key_Right)
-                    p->buttonList().at((index + 1) >= p->buttonList().length() ? 0 : index + 1)->setFocus();
-                else
-                    p->buttonList().at((index - 1) < 0 ? p->buttonList().length() - 1 : index - 1)->setFocus();
+
+                if (p->orientation() == Qt::Horizontal) {
+                    if (event->key() == Qt::Key_Right)
+                        p->buttonList().at((index + 1) >= p->buttonList().length() ? 0 : index + 1)->setFocus();
+                    else if (event->key() == Qt::Key_Left)
+                        p->buttonList().at((index - 1) < 0 ? p->buttonList().length() - 1 : index - 1)->setFocus();
+                } else {
+                    if (event->key() == Qt::Key_Down)
+                        p->buttonList().at((index + 1) >= p->buttonList().length() ? 0 : index + 1)->setFocus();
+                    else if ((event->key() == Qt::Key_Up))
+                        p->buttonList().at((index - 1) < 0 ? p->buttonList().length() - 1 : index - 1)->setFocus();
+                }
             }
         }
         break;
