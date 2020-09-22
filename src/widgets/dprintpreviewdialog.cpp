@@ -36,9 +36,6 @@
 #include <qpa/qplatformprintplugin.h>
 #include <qpa/qplatformprintersupport.h>
 
-#include <cups/ppd.h>
-#include <cups/cups.h>
-
 #define NORMAL_LEFT_RIGHT 31.8
 #define NORMAL_MODERATE_TOP_BOTTRM 25.4
 #define MODERATE_LEFT_RIGHT 19.1
