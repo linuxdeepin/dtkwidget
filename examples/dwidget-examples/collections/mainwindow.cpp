@@ -102,9 +102,19 @@ MainWindow::MainWindow(QWidget *parent)
         titlebar->menu()->addAction("dfm-settings");
         titlebar->menu()->addAction("dt-settings");
         titlebar->menu()->addAction("testPrinter");
-        QMenu *menu = titlebar->menu()->addMenu("menu1");
-        menu->addAction("menu1->action1");
-        menu->addAction("menu1->action2");
+        QMenu *menu = titlebar->menu()->addMenu("sub-menu");
+        connect(menu->addAction("show full screen"), &QAction::triggered, this, [this]() {
+            this->isFullScreen() ? this->showNormal() : this->showFullScreen();
+            if (QAction *action = qobject_cast<QAction *>(sender())) {
+                action->setText(this->isFullScreen() ? "show normal window" : "show full screen");
+            }
+        });
+        connect(menu->addAction("ddialog"), &QAction::triggered, this, []() {
+            DDialog dlg("this is title", "this is message text......");
+            dlg.addButton("ok", true, DDialog::ButtonWarning);
+            dlg.setIcon(QIcon::fromTheme("dialog-information"));
+            dlg.exec();
+        });
         connect(titlebar->menu(), &QMenu::triggered, this, &MainWindow::menuItemInvoked);
 
         titlebar->setDisableFlags(Qt::WindowMinimizeButtonHint
@@ -254,10 +264,6 @@ void MainWindow::menuItemInvoked(QAction *action)
         return;
     }
 
-    DDialog dlg("menu clicked", action->text() + ", was clicked");
-    dlg.addButton("ok", true, DDialog::ButtonWarning);
-    dlg.setIcon(QIcon::fromTheme("dialog-information"));
-    dlg.exec();
     qDebug() << "click" << action << action->isChecked();
 }
 
