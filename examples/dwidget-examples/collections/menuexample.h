@@ -35,6 +35,7 @@ public:
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
+    void paintRegion();
     void restoreAnimation();
 
 private:

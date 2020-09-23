@@ -96,7 +96,7 @@ DMenuExample::DMenuExample(QWidget *parent)
         animation->stop();
         restoreAnimation();
         acolor = QColor(15, 207, 255, 0);
-        label->update();
+        paintRegion();
     });
 
     connect(leftMenu, &QMenu::aboutToHide, [=]() {
@@ -105,7 +105,7 @@ DMenuExample::DMenuExample(QWidget *parent)
             animation->start();
         } else {
             restoreAnimation();
-            label->update();
+            paintRegion();
         }
     });
 
@@ -184,41 +184,18 @@ QColor DMenuExample::getAColor()
 void DMenuExample::setAColor(const QColor &color)
 {
     acolor = color;
-    this->findChild<QLabel *>("menuPicLabel")->update();
+    paintRegion();
 }
 
 bool DMenuExample::eventFilter(QObject *watched, QEvent *event)
 {
     if (watched == this->findChild<QLabel *>("menuPicLabel")) {
-        if (event->type() == QEvent::Paint) {
-            QLabel *menuPicLabel = this->findChild<QLabel *>("menuPicLabel");
-            QPixmap tPixmap = this->pixmap;
-            QPainter p(&tPixmap);
-            QPainterPath path;
-
-            path.moveTo(QPoint(76, 236));
-            path.lineTo(QPoint(278, 236));
-            path.lineTo(QPoint(278, 136));
-            path.lineTo(QPoint(537, 136));
-            path.lineTo(QPoint(537, 345));
-            path.lineTo(QPoint(76, 345));
-            path.lineTo(QPoint(76, 236));
-
-            p.setPen(this->acolor);
-            p.setBrush(Qt::NoBrush);
-
-            p.drawPath(path);
-
-            p.drawText(QPoint(370, 218), "右键点击空白区域");
-            menuPicLabel->setPixmap(tPixmap);
-        } else if (event->type() == QEvent::Enter) {
+        if (event->type() == QEvent::Enter) {
             animation->start();
         } else if (event->type() == QEvent::Leave && !leftMenu->isVisible()) {
             animation->stop();
             restoreAnimation();
-
-            QLabel *menuPicLabel = this->findChild<QLabel *>("menuPicLabel");
-            menuPicLabel->update();
+            paintRegion();
         } else if (event->type() == QEvent::MouseButtonRelease) {
             QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
             QLabel *menuPicLabel = this->findChild<QLabel *>("menuPicLabel");
@@ -237,6 +214,30 @@ bool DMenuExample::eventFilter(QObject *watched, QEvent *event)
     }
 
     return false;
+}
+
+void DMenuExample::paintRegion()
+{
+    QLabel *menuPicLabel = this->findChild<QLabel *>("menuPicLabel");
+    QPixmap tPixmap = this->pixmap;
+    QPainter p(&tPixmap);
+    QPainterPath path;
+
+    path.moveTo(QPoint(76, 236));
+    path.lineTo(QPoint(278, 236));
+    path.lineTo(QPoint(278, 136));
+    path.lineTo(QPoint(537, 136));
+    path.lineTo(QPoint(537, 345));
+    path.lineTo(QPoint(76, 345));
+    path.lineTo(QPoint(76, 236));
+
+    p.setPen(this->acolor);
+    p.setBrush(Qt::NoBrush);
+
+    p.drawPath(path);
+
+    p.drawText(QPoint(370, 218), "右键点击空白区域");
+    menuPicLabel->setPixmap(tPixmap);
 }
 
 void DMenuExample::restoreAnimation()
