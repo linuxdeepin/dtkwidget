@@ -1,18 +1,21 @@
 Name:           dtkwidget
-Version:        5.2.2.3
+Version:        5.2.2.16
 Release:        1%{?dist}
 Summary:        Deepin tool kit widget modules
-License:        GPLv3
+License:        LGPLv3+
+%if 0%{?fedora}
+URL:            https://github.com/linuxdeepin/dtkwidget
+Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
+%else
 URL:            https://github.com/linuxdeepin/dtkwidget
 Source0:        %{name}_%{version}.orig.tar.xz
+%endif
 
 BuildRequires:  gcc-c++
 BuildRequires:  qt5-linguist
 BuildRequires:  qt5-qtbase-static
 BuildRequires:  dtkgui-devel
-BuildRequires:  dtkgui
 BuildRequires:  dtkcore-devel
-BuildRequires:  dtkcore
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Concurrent)
 BuildRequires:  pkgconfig(Qt5DBus)
@@ -44,13 +47,14 @@ DtkWidget is Deepin graphical user interface for deepin desktop development.
 %package devel
 Summary:        Development package for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       dtkcore-devel%{?_isa}
+Requires:       dtkgui-devel%{?_isa}
 
 %description devel
 Header files and libraries for %{name}.
 
 %prep
 %setup -q
-sed -i 's|/lib|/libexec|' tools/svgc/svgc.pro
 
 %build
 # help find (and prefer) qt5 utilities, e.g. qmake, lrelease
@@ -61,14 +65,12 @@ export PATH=%{_qt5_bindir}:$PATH
 %install
 %make_install INSTALL_ROOT=%{buildroot}
 
-%ldconfig_scriptlets
-
 %files
 %doc README.md
 %license LICENSE
-%{_libdir}/lib%{name}.so.*
-%{_libdir}/libdtk-5.2.2/DWidget/bin/dtk-svgc
-%{_datadir}/libdtk-5.2.2/DWidget/translations
+%{_libdir}/lib%{name}.so.5*
+%{_libdir}/libdtk-*/
+%{_datadir}/libdtk-*/
 
 %files devel
 %{_includedir}/libdtk-*/
