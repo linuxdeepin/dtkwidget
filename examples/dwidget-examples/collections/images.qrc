@@ -250,5 +250,12 @@
         <file>images/example/DMenuPicture_2.png</file>
         <file>images/example/DMenuPicture_4.png</file>
         <file>images/example/DMenuPicture_3.png</file>
+        <file>images/example/DDialog.png</file>
+        <file>images/example/DFileDialog.png</file>
+        <file>images/example/dock_notice.png</file>
+        <file>images/example/DDialog_1.png</file>
+        <file>images/example/DDialog_2.png</file>
+        <file>images/example/DFileDialog_2.png</file>
+        <file>images/example/DFileDialog_1.png</file>
     </qresource>
 </RCC>
