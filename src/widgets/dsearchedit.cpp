@@ -285,7 +285,8 @@ void DSearchEditPrivate::init()
     placeHolder = qApp->translate("DSearchEdit", "Search");
 
     action = new QAction(q);
-    action->setIcon(DStyleHelper(q->style()).standardIcon(DStyle::SP_IndicatorSearch, nullptr));
+    action->setObjectName("_d_search_leftAction");
+    action->setIcon(QIcon::fromTheme("search_action"));
     q->lineEdit()->addAction(action, QLineEdit::LeadingPosition);
     action->setVisible(false);
     iconbtn->setIconSize(QSize(32, 32));

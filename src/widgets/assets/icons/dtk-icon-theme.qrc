@@ -30,5 +30,7 @@
         <file>light/icons/printer_original_12px.svg</file>
         <file>dark/icons/printer_final_12px.svg</file>
         <file>dark/icons/printer_original_12px.svg</file>
+        <file>dark/icons/search_action_36px.svg</file>
+        <file>light/icons/search_action_36px.svg</file>
     </qresource>
 </RCC>
