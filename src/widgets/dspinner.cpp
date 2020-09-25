@@ -23,6 +23,7 @@ public:
     double currentDegree = 0.0;
 
     QList<QList<QColor>> indicatorColors;
+    QPalette::ColorGroup colorGroup;
 
     D_DECLARE_PUBLIC(DSpinner)
 };
@@ -65,6 +66,7 @@ DSpinner::DSpinner(QWidget *parent) :
     Q_D(DSpinner);
 
     d->refreshTimer.setInterval(30);
+    d->colorGroup = palette().currentColorGroup();
 
     connect(&d->refreshTimer, &QTimer::timeout,
     this, [ = ]() {
@@ -123,6 +125,11 @@ void DSpinner::setBackgroundColor(QColor color)
 void DSpinner::paintEvent(QPaintEvent *)
 {
     Q_D(DSpinner);
+
+    if (d->colorGroup != palette().currentColorGroup()) {
+        d->colorGroup = palette().currentColorGroup();
+        d->indicatorColors.clear();
+    }
 
     if (d->indicatorColors.isEmpty()) {
         for (int i = 0; i < 3; ++i)
