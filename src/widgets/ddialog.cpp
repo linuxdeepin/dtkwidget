@@ -73,7 +73,7 @@ void DDialogPrivate::init()
     titleLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
     titleLabel->setWordWrap(true);
     titleLabel->setAlignment(Qt::AlignCenter);
-    titleLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+    titleLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     titleLabel->installEventFilter(q);
     DFontSizeManager *fontManager =  DFontSizeManager::instance();
     fontManager->bind(titleLabel, DFontSizeManager::T5, QFont::Medium);
