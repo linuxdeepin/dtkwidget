@@ -26,6 +26,7 @@
 
 #include <DWindowManagerHelper>
 #include <DObjectPrivate>
+#include <DPlatformTheme>
 
 #include "dwindowclosebutton.h"
 #include "dwindowmaxbutton.h"
@@ -255,6 +256,9 @@ void DTitlebarPrivate::init()
     q->connect(optionButton, &DWindowOptionButton::clicked, q, &DTitlebar::optionClicked);
     q->connect(DWindowManagerHelper::instance(), SIGNAL(windowMotifWMHintsChanged(quint32)),
                q, SLOT(_q_onTopWindowMotifHintsChanged(quint32)));
+    q->connect(DGuiApplicationHelper::instance()->systemTheme(), &DPlatformTheme::iconThemeNameChanged, q, [ = ]() {
+        iconLabel->update();
+    });
 
     q->setFrameShape(QFrame::NoFrame);
     q->setBackgroundRole(QPalette::Base);
