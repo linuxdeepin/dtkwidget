@@ -1961,6 +1961,7 @@ int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QW
         return 6;
     case PM_IndicatorWidth:
     case PM_IndicatorHeight:
+        return 16; // 解决 select_indicator 缩放 1.25 后截断的问题，大小改成16x16
     case PM_ExclusiveIndicatorHeight:
     case PM_ExclusiveIndicatorWidth:
         return 14;
