@@ -9,6 +9,9 @@
 #include <DPalette>
 #include <DFrame>
 #include <DTipLabel>
+#include <DGuiApplicationHelper>
+#include <DApplicationHelper>
+#include <DStyle>
 
 #include <QVBoxLayout>
 
@@ -28,6 +31,46 @@ public:
         label->setForegroundRole(QPalette::Highlight);
         layout->addWidget(label);
     }
+
+    void paintEvent(QPaintEvent *event)
+    {
+        Q_UNUSED(event)
+        QStyleOptionFrame opt;
+        initStyleOption(&opt);
+        QPainter p(this);
+        drawShadow(&p, event->rect() - contentsMargins(), QColor(0, 0, 0, 20));
+
+        opt.features |= QStyleOptionFrame::Rounded;
+
+        const DPalette &dp = DApplicationHelper::instance()->palette(this);
+
+        if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::LightType) {
+            p.setBackground(QColor(255, 255, 255));
+        } else {
+            p.setBackground(QColor(109, 109, 109));
+        }
+
+        p.setPen(QPen(dp.frameBorder(), opt.lineWidth));
+        style()->drawControl(QStyle::CE_ShapedFrame, &opt, &p, this);
+    }
+
+    void drawShadow(QPainter *p, const QRect &rect, const QColor &color) const
+    {
+        DStyle dstyle;
+        int frame_radius = dstyle.pixelMetric(DStyle::PM_FrameRadius);
+        int shadow_xoffset = dstyle.pixelMetric(DStyle::PM_ShadowHOffset);
+        int shadow_yoffset = dstyle.pixelMetric(DStyle::PM_ShadowVOffset);
+
+        QRect shadow = rect;
+        QPoint pointOffset(rect.center().x() + shadow_xoffset, rect.center().y() + shadow_yoffset);
+        shadow.moveCenter(pointOffset);
+
+        p->setBrush(color);
+        p->setPen(Qt::NoPen);
+        p->setRenderHint(QPainter::Antialiasing);
+        p->drawRoundedRect(shadow, frame_radius, frame_radius);
+    }
+
 private:
     DLabel *label;
 };
