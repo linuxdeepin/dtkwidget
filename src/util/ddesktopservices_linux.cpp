@@ -21,9 +21,7 @@
 #include <QDBusPendingCall>
 #include <QDebug>
 #include <QFile>
-#include <QMediaPlayer>
 #include <QGSettings/QGSettings>
-#include <QSound>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -57,6 +55,14 @@ static QDBusInterface *fileManager1DBusInterface()
     return &interface;
 }
 
+static QDBusInterface *soundEffectDBusInterface()
+{
+    static QDBusInterface interface(QStringLiteral("com.deepin.daemon.SoundEffect"),
+                                        QStringLiteral("/com/deepin/daemon/SoundEffect"),
+                                        QStringLiteral("com.deepin.daemon.SoundEffect"));
+    return &interface;
+}
+
 static QStringList urls2uris(const QList<QUrl> &urls)
 {
     QStringList list;
@@ -81,37 +87,6 @@ static QList<QUrl> path2urls(const QList<QString> &paths)
     }
 
     return list;
-}
-
-static QMediaPlayer *soundEffectPlayer()
-{
-    static QMediaPlayer *player = Q_NULLPTR;
-
-    if (!player) {
-        player = new QMediaPlayer;
-        player->setVolume(70);
-    }
-
-    return player;
-}
-
-static QString soundEffectFilePath(const QString &name)
-{
-    // TODO: super simple version of sound theme file search shema :)
-    // will need to be replaced by more advanced approch like libcanberra.
-    QString temp = QString("/usr/share/sounds/deepin/stereo/%1").arg(name);
-
-    const QString tempWav = temp + ".wav";
-    if (QFile::exists(tempWav)) {
-        return tempWav;
-    }
-
-    const QString tempOgg = temp + ".ogg";
-    if (QFile::exists(tempOgg)) {
-        return tempOgg;
-    }
-
-    return QString();
 }
 
 /*!
@@ -256,21 +231,13 @@ bool DDesktopServices::previewSystemSoundEffect(const DDesktopServices::SystemSo
 
 bool DDesktopServices::previewSystemSoundEffect(const QString &name)
 {
-    const QString path = soundEffectFilePath(name);
-
-    if (path.isEmpty()) {
+    if (name.isEmpty()) {
         return false;
     }
 
-    if (path.endsWith("wav")) {
-        QSound::play(path);
-    } else {
-        QMediaPlayer *player = soundEffectPlayer();
-        player->setMedia(QUrl::fromLocalFile(path));
-        player->play();
-    }
-
-    return true;
+    // 使用后端 dbus 接口播放系统音频，音频存放目录： /usr/share/sounds/deepin/stereo/
+    QDBusInterface *interface = soundEffectDBusInterface();
+    return interface && interface->call("PlaySound", name).type() != QDBusMessage::ErrorMessage;
 }
 
 QString DDesktopServices::getNameByEffectType(const DDesktopServices::SystemSoundEffect &effect)
