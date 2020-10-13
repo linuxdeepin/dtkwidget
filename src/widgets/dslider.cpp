@@ -159,7 +159,6 @@ void DSlider::setLeftIcon(const QIcon &left)
         d->leftIcon = new DIconButton(nullptr);
         d->leftIcon->setFlat(true);
         d->leftIcon->setFocusPolicy(Qt::NoFocus);
-        d->leftIcon->setAttribute(Qt::WA_TransparentForMouseEvents);
         connect(d->leftIcon, &DIconButton::clicked, this, [this](bool checked) {
             this->iconClicked(LeftIcon, checked);
         });
@@ -188,8 +187,6 @@ void DSlider::setRightIcon(const QIcon &right)
         d->rightIcon = new DIconButton(nullptr);
         d->rightIcon->setFlat(true);
         d->rightIcon->setFocusPolicy(Qt::NoFocus);
-        d->rightIcon->setAttribute(Qt::WA_TransparentForMouseEvents);
-
         if (orientation() == Qt::Horizontal) {
             d->layout->addWidget(d->rightIcon, 1, 2, Qt::AlignVCenter);
         } else {

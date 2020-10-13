@@ -48,6 +48,13 @@ DSliderExample::DSliderExample(QWidget *parent)
 {
     DSlider *vSlider = new DSlider(Qt::Vertical);
     DSlider *hSlider = new DSlider(Qt::Horizontal);
+    hSlider->setLeftIcon(QIcon::fromTheme("emblem-remove"));
+    hSlider->setRightIcon(QIcon::fromTheme("emblem-added"));
+    hSlider->setIconSize({16, 16});
+    connect(hSlider, &DSlider::iconClicked, this, [hSlider](DSlider::SliderIcons icon, bool checked){
+        qDebug() << "........." << icon << checked;
+        hSlider->setValue(hSlider->value() + hSlider->pageStep());
+    });
     DSlider *hCalibration = new DSlider(Qt::Horizontal);
     DLabel *hLabel = new DLabel;
     DLabel *vLabel = new DLabel;
