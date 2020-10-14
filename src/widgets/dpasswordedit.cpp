@@ -134,6 +134,7 @@ void DPasswordEditPrivate::init()
     D_Q(DPasswordEdit);
 
     q->lineEdit()->setEchoMode(QLineEdit::Password);
+    q->lineEdit()->setAttribute(Qt::WA_InputMethodEnabled, false);
 
     QList<QWidget *> list;
     togglePasswordVisibleButton = new DSuggestButton;
