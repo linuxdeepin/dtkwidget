@@ -17,6 +17,7 @@
 #include "dapplication.h"
 
 #include <DScrollArea>
+#include <DScrollBar>
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -173,11 +174,13 @@ void DPrintPreviewDialogPrivate::initright(QVBoxLayout *layout)
 
     basicsettingwdg = new DWidget;
     advancesettingwdg = new DWidget;
+    basicsettingwdg->setFixedHeight(435);
     scrollarea = new DScrollArea;
-    scrollarea->setWidget(advancesettingwdg);
+    scrollarea->setWidget(ptopwidget);
     scrollarea->setWidgetResizable(true);
     scrollarea->setFrameShape(QFrame::NoFrame);
-    scrollarea->hide();
+    scrollarea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    advancesettingwdg->hide();
 
     advanceBtn = new DPushButton(qApp->translate("DPrintPreviewDialogPrivate", "Advanced"));
     advanceBtn->setLayoutDirection(Qt::RightToLeft);
@@ -194,7 +197,7 @@ void DPrintPreviewDialogPrivate::initright(QVBoxLayout *layout)
     advancelayout->addStretch();
     ptoplayout->addWidget(basicsettingwdg);
     ptoplayout->addLayout(advancelayout);
-    ptoplayout->addWidget(scrollarea);
+    ptoplayout->addWidget(advancesettingwdg);
 
     initbasicui();
     initadvanceui();
@@ -209,7 +212,7 @@ void DPrintPreviewDialogPrivate::initright(QVBoxLayout *layout)
     pbottomlayout->addWidget(cancelBtn);
     pbottomlayout->addWidget(printBtn);
 
-    layout->addWidget(ptopwidget);
+    layout->addWidget(scrollarea);
     layout->addLayout(pbottomlayout);
 }
 
@@ -726,13 +729,11 @@ void DPrintPreviewDialogPrivate::setfrmaeback(DFrame *frame)
 
 void DPrintPreviewDialogPrivate::showadvancesetting()
 {
-    if (scrollarea->isHidden()) {
-        basicsettingwdg->hide();
-        scrollarea->show();
+    if (advancesettingwdg->isHidden()) {
+        advancesettingwdg->show();
         advanceBtn->setIcon(QIcon::fromTheme("printer_dropup"));
     } else {
-        basicsettingwdg->show();
-        scrollarea->hide();
+        advancesettingwdg->hide();
         advanceBtn->setIcon(QIcon::fromTheme("printer_dropdown"));
     }
 }
