@@ -31,6 +31,7 @@
 #include <QWidget>
 #include <QLabel>
 #include <QAbstractTableModel>
+#include <QDate>
 
 DGUI_USE_NAMESPACE
 DWIDGET_USE_NAMESPACE
@@ -85,14 +86,7 @@ public:
 
 private:
     QStringList header;
-    int days; // 当月总天数
-    int preDays; // 前一月总天数
-    int month; // 当月月份
-    int day; // 当前日
-    int firstDayOfWeek; // 当月第一天周几
-    int lastDayOfWeek; // 当月最后一天周几
-    int firstDayRow; // 当月第一天在第几周几
-    int lastDayRow; // 当月最后一天在第几周几
+    QVector<QVector<QDate>> m_tableData; // row = 6, col = 7
 };
 
 #endif // WIDGETEXAMPLE_H

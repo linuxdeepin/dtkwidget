@@ -115,125 +115,73 @@ CalendarModel::CalendarModel(QObject *parent)
            << "周四"
            << "周五"
            << "周六";
-    QDate date = QDate::currentDate();
-    days = date.daysInMonth();
-    month = date.month();
-    day = date.day();
-    firstDayOfWeek = date.addDays(1 - day).dayOfWeek() % 7;
-    lastDayOfWeek = date.addDays(days - day).dayOfWeek() % 7;
-    preDays = date.addMonths(-1).daysInMonth();
 
-    if (firstDayOfWeek == 0) {
-        firstDayRow = 1;
-        if (lastDayOfWeek == 6)
-            lastDayRow = days / 7;
-        else
-            lastDayRow = days / 7 + 1;
-    } else {
-        firstDayRow = 0;
-        if (lastDayOfWeek == 6)
-            lastDayRow = (days + firstDayOfWeek) / 7 - 1;
-        else
-            lastDayRow = (days + firstDayOfWeek) / 7;
+    //生成一个6行7列的数组
+    for (int index = 0; index < 6; ++index) {
+        m_tableData.push_back(QVector<QDate>(7));
+    }
+
+    const QDate curMonthFirstDay(QDate::currentDate().year(), QDate::currentDate().month(), 1);
+    const int first_day_index = curMonthFirstDay.dayOfWeek() % 7;
+    //本月第一天在数组中初始化
+    m_tableData[0][first_day_index] = curMonthFirstDay;
+
+    const int days_in_month = QDate::currentDate().daysInMonth();
+    const QDate curMonthLastDay(QDate::currentDate().year(), QDate::currentDate().month(), days_in_month);
+
+    const int last_day_index = first_day_index + days_in_month - 1;
+    //本月最后一天在数组中初始化
+    m_tableData[last_day_index / 7][last_day_index % 7] = curMonthLastDay;
+
+    for (int rowIndex = 0; rowIndex < 6; ++rowIndex) {
+        for (int colIndex = 0; colIndex < 7; ++colIndex) {
+            if (m_tableData[rowIndex][colIndex].isValid()) {
+                continue;
+            }
+
+            int index = rowIndex * 7 + colIndex;
+            m_tableData[rowIndex][colIndex] = curMonthFirstDay.addDays(index - first_day_index);
+        }
     }
 }
 
-int CalendarModel::rowCount(const QModelIndex &parent) const
+int CalendarModel::rowCount(const QModelIndex &) const
 {
-    return 6;
+    return m_tableData.size();
 }
 
-int CalendarModel::columnCount(const QModelIndex &parent) const
+int CalendarModel::columnCount(const QModelIndex &) const
 {
     return header.size();
 }
 
 QVariant CalendarModel::data(const QModelIndex &index, int role) const
 {
-    int row = index.row();
-    int col = index.column();
     DPalette palette = DGuiApplicationHelper::instance()->applicationPalette();
 
     switch (role) {
     case Qt::DisplayRole: {
-        // 设置文字
-        if (firstDayOfWeek == 0) {
-            if (row == 0)
-                return preDays + col - 6;
-            if (row == firstDayRow && col == 0)
-                return QString("%1/1").arg(month);
-            if (row < lastDayRow)
-                return col + 1 + (row - firstDayRow) * 7;
-            else if (row == lastDayRow) {
-                if (col <= lastDayOfWeek) {
-                    return col + 1 + (row - firstDayRow) * 7;
-                } else if (col == lastDayOfWeek + 1) {
-                    return QString("%1/1").arg(month + 1);
-                } else {
-                    return col - lastDayOfWeek + (row - lastDayRow) * 7;
-                }
-            } else {
-                return col - lastDayOfWeek + (row + 1 - lastDayRow) * 7;
-            }
+        int days = m_tableData[index.row()][index.column()].day();
+        if (days == 1) {
+            return QString("%1/1").arg(m_tableData[index.row()][index.column()].month());
         } else {
-            if (row == 0) {
-                if (col < firstDayOfWeek)
-                    return (preDays + col + 1 - firstDayOfWeek);
-                else if (col == firstDayOfWeek)
-                    return QString("%1/1").arg(month);
-                else
-                    return col - firstDayOfWeek + 1;
-            } else {
-                if (lastDayOfWeek != 6) {
-                    if (row < lastDayRow) {
-                        return col - firstDayOfWeek + 1 + row * 7;
-                    } else if (row == lastDayRow) {
-                        if (col <= lastDayOfWeek)
-                            return col - firstDayOfWeek + 1 + row * 7;
-                        else if (col == lastDayOfWeek + 1)
-                            return QString("%1/1").arg(month + 1);
-                        else
-                            return col - lastDayOfWeek + (row - lastDayRow) * 7;
-                    } else {
-                        return col - lastDayOfWeek + (row - lastDayRow) * 7;
-                    }
-                } else {
-                    if (row <= lastDayRow) {
-                        return col - firstDayOfWeek + 1 + row * 7;
-                    } else if (row == lastDayRow + 1) {
-                        if (col == 0)
-                            return QString("%1/1").arg(month + 1);
-                        else
-                            return col - lastDayOfWeek + (row - lastDayRow) * 7;
-                    } else {
-                        return col - lastDayOfWeek + (row - lastDayRow) * 7;
-                    }
-                }
-            }
+            return QString::number(days);
         }
-    } break;
+    }
     case Qt::TextColorRole: {
         // 设置文字颜色
-        if (row < firstDayRow) {
-            return palette.color(DPalette::PlaceholderText);
-        } else if (row == firstDayRow) {
-            if (col < firstDayOfWeek)
-                return palette.color(DPalette::PlaceholderText);
-            else
-                return palette.color(DPalette::TextTitle);
-        } else if (row < lastDayRow) {
+        if (m_tableData[index.row()][index.column()].month() == QDate::currentDate().month()) {
             return palette.color(DPalette::TextTitle);
-        } else if (row == lastDayRow) {
-            if (col <= lastDayOfWeek)
-                return palette.color(DPalette::TextTitle);
-            else
-                palette.color(DPalette::PlaceholderText);
         } else {
             return palette.color(DPalette::PlaceholderText);
         }
-    } break;
+    }
+    case Qt::TextAlignmentRole:
+        return Qt::AlignCenter;
     case Qt::BackgroundRole:
         // 设置单元格背景色
+        break;
+    default:
         break;
     }
     return QVariant();
