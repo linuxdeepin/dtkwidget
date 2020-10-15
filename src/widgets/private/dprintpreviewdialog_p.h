@@ -64,6 +64,7 @@ public:
     void setScaling(int index);
     void judgeSupportedAttributes(const QString &lastPaperSize);
     void setMininumMargins();
+    void marginsUpdate(bool isPrinterChanged);
     void themeTypeChange(DGuiApplicationHelper::ColorType themeType);
     void setPageIsLegal(bool islegal);
     QVector<int> checkDuplication(QVector<int> data);
@@ -92,7 +93,6 @@ public:
     bool supportedDuplexFlag = false;
     bool supportedColorMode = false;
     bool isInited = false;
-    bool marginsControl = false;
 
     //control
     DPrintPreviewWidget *pview;
@@ -135,6 +135,7 @@ public:
     DIconButton *waterColorBtn;
     DLineEdit *waterTextEdit;
     QVector<qreal> marginOldValue; // 记录margin自定义时的旧值  如果旧值和新值一致，就不需要刷新，top left right bottom
+    QList<qreal> minnumMargins;
     Q_DECLARE_PUBLIC(DPrintPreviewDialog)
 };
 

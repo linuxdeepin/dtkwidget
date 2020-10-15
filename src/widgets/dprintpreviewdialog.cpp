@@ -673,17 +673,7 @@ void DPrintPreviewDialogPrivate::initconnections()
             }
         }
         if (isInited) {
-            if (marginsCombo->currentIndex() == 3) {
-                setMininumMargins();
-                printer->setPageMargins(printer->pageLayout().minimumMargins(), QPageLayout::Millimeter);
-                pview->updatePreview();
-            } else if (marginsCombo->currentIndex() == 0) {
-                if (!marginsControl)
-                    _q_pageMarginChanged(0);
-                marginsControl = false;
-            } else {
-                pview->updatePreview();
-            }
+            this->marginsUpdate(false);
         }
         if (pview->pageRangeMode() != DPrintPreviewWidget::AllPage) {
             _q_customPagesFinished();
@@ -719,6 +709,10 @@ void DPrintPreviewDialogPrivate::initconnections()
         }
     });
 
+    QObject::connect(marginTopSpin, SIGNAL(valueChanged(double)), q, SLOT(_q_marginspinChanged(double)));
+    QObject::connect(marginRightSpin, SIGNAL(valueChanged(double)), q, SLOT(_q_marginspinChanged(double)));
+    QObject::connect(marginLeftSpin, SIGNAL(valueChanged(double)), q, SLOT(_q_marginspinChanged(double)));
+    QObject::connect(marginBottomSpin, SIGNAL(valueChanged(double)), q, SLOT(_q_marginspinChanged(double)));
     QObject::connect(duplexCheckBox, SIGNAL(stateChanged(int)), q, SLOT(_q_checkStateChanged(int)));
     QObject::connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, pview, &DPrintPreviewWidget::themeTypeChanged);
     QObject::connect(marginTopSpin, SIGNAL(editingFinished()), q, SLOT(_q_marginEditFinished()));
@@ -838,8 +832,6 @@ void DPrintPreviewDialogPrivate::judgeSupportedAttributes(const QString &lastPap
     } else {
         //调用绘制预览
         paperSizeCombo->blockSignals(false);
-        if (isInited)
-            marginsControl = true;
         paperSizeCombo->setCurrentText("A4");
     }
 
@@ -871,14 +863,45 @@ void DPrintPreviewDialogPrivate::judgeSupportedAttributes(const QString &lastPap
  */
 void DPrintPreviewDialogPrivate::setMininumMargins()
 {
-    if (marginLeftSpin->value() < printer->pageLayout().minimumMargins().left())
-        marginLeftSpin->setValue(printer->pageLayout().minimumMargins().left());
-    if (marginTopSpin->value() < printer->pageLayout().minimumMargins().top())
-        marginTopSpin->setValue(printer->pageLayout().minimumMargins().top());
-    if (marginRightSpin->value() < printer->pageLayout().minimumMargins().right())
-        marginRightSpin->setValue(printer->pageLayout().minimumMargins().right());
-    if (marginBottomSpin->value() < printer->pageLayout().minimumMargins().bottom())
-        marginBottomSpin->setValue(printer->pageLayout().minimumMargins().bottom());
+    if (marginLeftSpin->value() < minnumMargins.first())
+        marginLeftSpin->setValue(minnumMargins.first());
+    if (marginTopSpin->value() < minnumMargins.at(1))
+        marginTopSpin->setValue(minnumMargins.at(1));
+    if (marginRightSpin->value() < minnumMargins.at(2))
+        marginRightSpin->setValue(minnumMargins.at(2));
+    if (marginBottomSpin->value() < minnumMargins.last())
+        marginBottomSpin->setValue(minnumMargins.last());
+}
+
+/*!
+ * \~chinese \brief DPrintPreviewDialogPrivate::marginsUpdate 切换打印机和纸张切换对于边距的刷新和预览页面的刷新
+ * \~chinese \param isPrinterchanged 判断是打印机切换或者是纸张切换
+ */
+void DPrintPreviewDialogPrivate::marginsUpdate(bool isPrinterChanged)
+{
+    //切换打印机,如果无属性变换,不刷新预览界面,如果属性变换,刷新一次预览界面,如果是纸张大小变换,刷新一次
+    minnumMargins.clear();
+    QMarginsF minumMargin = printer->pageLayout().minimumMargins();
+    minnumMargins << minumMargin.left() << minumMargin.top() << minumMargin.right() << minumMargin.bottom();
+    //若是窄边距,切换变成当前打印机最小边据,刷新预览界面
+    if ((marginsCombo->currentIndex() == 0)) {
+        _q_pageMarginChanged(0);
+    } else if (marginsCombo->currentIndex() == marginsCombo->count() - 1) {
+        //当边距选项为自定义选项,若切换之前的边距有小于当前printer的最小边距,刷新边距数据,刷新预览界面,反之,若全部边距大于最小边距,不刷新数据,若是纸张变化,刷新预览界面
+        if (marginLeftSpin->value() < minumMargin.left() || marginTopSpin->value() < minumMargin.top() || marginRightSpin->value() < minumMargin.right() || marginBottomSpin->value() < minumMargin.bottom()) {
+            setMininumMargins();
+            QMarginsF currentMargin = QMarginsF(marginLeftSpin->value(), marginTopSpin->value(), marginRightSpin->value(), marginBottomSpin->value());
+            printer->setPageMargins(currentMargin, QPageLayout::Millimeter);
+            pview->updatePreview();
+        } else {
+            if (!isPrinterChanged)
+                pview->updatePreview();
+        }
+    } else {
+        //不是窄或者自定义选项,若是纸张切换,刷新预览界面
+        if (!isPrinterChanged)
+            pview->updatePreview();
+    }
 }
 
 void DPrintPreviewDialogPrivate::themeTypeChange(DGuiApplicationHelper::ColorType themeType)
@@ -947,27 +970,6 @@ void DPrintPreviewDialogPrivate::setEnable(const int &value, DComboBox *combox)
             pageRangeEdit->setEnabled(false);
         } else {
             pageRangeEdit->setEnabled(true);
-        }
-    }
-    DFrame *marginframe = advancesettingwdg->findChild<DFrame *>("marginsFrame");
-    QList<DLabel *> marginlist = marginframe->findChildren<DLabel *>();
-    if (combox == marginsCombo) {
-        if (value != marginsCombo->count() - 1) {
-            marginTopSpin->setDisabled(true);
-            marginLeftSpin->setDisabled(true);
-            marginRightSpin->setDisabled(true);
-            marginBottomSpin->setDisabled(true);
-            for (int i = 1; i < marginlist.size(); i++) {
-                marginlist.at(i)->setEnabled(false);
-            }
-        } else {
-            marginTopSpin->setDisabled(false);
-            marginLeftSpin->setDisabled(false);
-            marginRightSpin->setDisabled(false);
-            marginBottomSpin->setDisabled(false);
-            for (int i = 1; i < marginlist.size(); i++) {
-                marginlist.at(i)->setEnabled(true);
-            }
         }
     }
 }
@@ -1043,8 +1045,6 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
         else {
             //调用绘制预览
             paperSizeCombo->blockSignals(false);
-            if (isInited)
-                marginsControl = true;
             paperSizeCombo->setCurrentIndex(1);
         }
         printer->setPrinterName("");
@@ -1078,14 +1078,7 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
             }
         }
     }
-    if (marginsCombo->currentIndex() == 3) {
-        setMininumMargins();
-        printer->setPageMargins(printer->pageLayout().minimumMargins(), QPageLayout::Millimeter);
-        pview->updatePreview();
-    } else if (marginsCombo->currentIndex() == 0) {
-        _q_pageMarginChanged(0);
-    }
-
+    marginsUpdate(true);
     _q_customPagesFinished();
     paperSizeCombo->blockSignals(false);
 }
@@ -1134,66 +1127,42 @@ void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
 void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
 {
     setEnable(index, marginsCombo);
+    marginLeftSpin->blockSignals(true);
+    marginTopSpin->blockSignals(true);
+    marginRightSpin->blockSignals(true);
+    marginBottomSpin->blockSignals(true);
     if (index == 1) {
-        marginLeftSpin->blockSignals(true);
-        marginTopSpin->blockSignals(true);
-        marginRightSpin->blockSignals(true);
-        marginBottomSpin->blockSignals(true);
-
         marginTopSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
         marginLeftSpin->setValue(NORMAL_LEFT_RIGHT);
         marginRightSpin->setValue(NORMAL_LEFT_RIGHT);
         marginBottomSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
         printer->setPageMargins(QMarginsF(NORMAL_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM, NORMAL_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM), QPageLayout::Millimeter);
-
-        pview->updatePreview();
     } else if (index == 2) {
-        marginLeftSpin->blockSignals(true);
-        marginTopSpin->blockSignals(true);
-        marginRightSpin->blockSignals(true);
-        marginBottomSpin->blockSignals(true);
-
         marginLeftSpin->setValue(MODERATE_LEFT_RIGHT);
         marginTopSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
         marginRightSpin->setValue(MODERATE_LEFT_RIGHT);
         marginBottomSpin->setValue(NORMAL_MODERATE_TOP_BOTTRM);
         printer->setPageMargins(QMarginsF(MODERATE_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM, MODERATE_LEFT_RIGHT, NORMAL_MODERATE_TOP_BOTTRM), QPageLayout::Millimeter);
-
-        pview->updatePreview();
     } else if (index == 3) {
-        marginLeftSpin->blockSignals(true);
-        marginTopSpin->blockSignals(true);
-        marginRightSpin->blockSignals(true);
-        marginBottomSpin->blockSignals(true);
         marginTopSpin->setValue(printer->pageLayout().minimumMargins().top());
         marginLeftSpin->setValue(printer->pageLayout().minimumMargins().left());
         marginRightSpin->setValue(printer->pageLayout().minimumMargins().right());
         marginBottomSpin->setValue(printer->pageLayout().minimumMargins().bottom());
         printer->setPageMargins(QMarginsF(marginLeftSpin->value(), marginTopSpin->value(), marginRightSpin->value(), marginBottomSpin->value()), QPageLayout::Millimeter);
-
-        pview->updatePreview();
-
-        marginLeftSpin->blockSignals(false);
-        marginTopSpin->blockSignals(false);
-        marginRightSpin->blockSignals(false);
-        marginBottomSpin->blockSignals(false);
     } else {
-        marginLeftSpin->blockSignals(true);
-        marginTopSpin->blockSignals(true);
-        marginRightSpin->blockSignals(true);
-        marginBottomSpin->blockSignals(true);
-
-        printer->setPageMargins(printer->pageLayout().minimumMargins(), QPageLayout::Millimeter);
         marginTopSpin->setValue(printer->pageLayout().minimumMargins().top());
         marginLeftSpin->setValue(printer->pageLayout().minimumMargins().left());
         marginRightSpin->setValue(printer->pageLayout().minimumMargins().right());
         marginBottomSpin->setValue(printer->pageLayout().minimumMargins().bottom());
         printer->setPageMargins(QMarginsF(printer->pageLayout().minimumMargins().left(), printer->pageLayout().minimumMargins().top(), printer->pageLayout().minimumMargins().right(), printer->pageLayout().minimumMargins().bottom()), QPageLayout::Millimeter);
-        if (isInited) {
-            pview->updatePreview();
-        }
     }
-
+    marginLeftSpin->blockSignals(false);
+    marginTopSpin->blockSignals(false);
+    marginRightSpin->blockSignals(false);
+    marginBottomSpin->blockSignals(false);
+    if (isInited) {
+        pview->updatePreview();
+    }
     if (pview->pageRangeMode() != DPrintPreviewWidget::AllPage) {
         _q_customPagesFinished();
     }
@@ -1201,7 +1170,6 @@ void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
         marginOldValue.clear();
 
     marginOldValue << marginTopSpin->value() << marginLeftSpin->value() << marginRightSpin->value() << marginBottomSpin->value();
-    _q_customPagesFinished();
 }
 
 /*!
@@ -1296,23 +1264,18 @@ void DPrintPreviewDialogPrivate::_q_customPagesFinished()
  */
 void DPrintPreviewDialogPrivate::_q_marginTimerOut()
 {
-
+    setMininumMargins();
     qreal leftMarginF = this->marginLeftSpin->value();
     qreal topMarginF = this->marginTopSpin->value();
     qreal rightMarginF = this->marginRightSpin->value();
     qreal bottomMarginF = this->marginBottomSpin->value();
-
     if (qFuzzyCompare(topMarginF, marginOldValue[0]) && qFuzzyCompare(leftMarginF, marginOldValue[1]) && qFuzzyCompare(rightMarginF, marginOldValue[2]) && qFuzzyCompare(bottomMarginF, marginOldValue[3]))
         return;
 
     marginOldValue.clear();
     marginOldValue << topMarginF << leftMarginF << rightMarginF << bottomMarginF;
-    QPageLayout m_pageLayout = printer->pageLayout();
-    QMarginsF minumMargins = m_pageLayout.minimumMargins();
-    if (marginLeftSpin->value() >= minumMargins.left() && marginTopSpin->value() >= minumMargins.top() && marginRightSpin->value() >= minumMargins.right() && marginBottomSpin->value() >= minumMargins.bottom()) {
-        this->printer->setPageMargins(QMarginsF(leftMarginF, topMarginF, rightMarginF, bottomMarginF), QPageLayout::Millimeter);
-        this->pview->updatePreview();
-    }
+    this->printer->setPageMargins(QMarginsF(leftMarginF, topMarginF, rightMarginF, bottomMarginF), QPageLayout::Millimeter);
+    this->pview->updatePreview();
     if (pview->pageRangeMode() != DPrintPreviewWidget::AllPage) {
         _q_customPagesFinished();
     }
@@ -1324,7 +1287,9 @@ void DPrintPreviewDialogPrivate::_q_marginTimerOut()
  */
 void DPrintPreviewDialogPrivate::_q_marginspinChanged(double)
 {
-
+    marginsCombo->blockSignals(true);
+    marginsCombo->setCurrentIndex(marginsCombo->count() - 1);
+    marginsCombo->blockSignals(false);
 }
 
 /*!
@@ -1334,8 +1299,6 @@ void DPrintPreviewDialogPrivate::_q_marginspinChanged(double)
 void DPrintPreviewDialogPrivate::_q_marginEditFinished()
 {
     Q_Q(DPrintPreviewDialog);
-    setMininumMargins();
-
     if (q->focusWidget() == marginTopSpin || q->focusWidget() == marginLeftSpin
             || q->focusWidget() == marginBottomSpin || q->focusWidget() == marginRightSpin)
         return;
