@@ -102,20 +102,25 @@ void DPrintPreviewDialogPrivate::initui()
     QHBoxLayout *mainlayout = new QHBoxLayout();
     mainlayout->setContentsMargins(QMargins(0, 0, 0, 0));
     mainlayout->setSpacing(0);
-    DFrame *pframe = new DFrame;
-    pframe->setLayout(mainlayout);
-    pframe->setLineWidth(0);
 
     QVBoxLayout *pleftlayout = new QVBoxLayout;
     initleft(pleftlayout);
-    DVerticalLine *pvline = new DVerticalLine;
     QVBoxLayout *prightlayout = new QVBoxLayout;
     initright(prightlayout);
-    mainlayout->addLayout(pleftlayout);
-    mainlayout->addWidget(pvline);
-    mainlayout->addLayout(prightlayout);
+
+    DWidget *leftWidget = new DWidget;
+    DWidget *rightWidget = new DWidget;
+    rightWidget->setObjectName("rightWidget");
+    mainlayout->addWidget(leftWidget);
+    mainlayout->addWidget(rightWidget);
+    leftWidget->setLayout(pleftlayout);
+    rightWidget->setLayout(prightlayout);
+    DBackgroundGroup *back = new DBackgroundGroup(mainlayout);
+    back->setObjectName("backGround");
+    back->setItemSpacing(2);
+
     q->addSpacing(5);
-    q->addContent(pframe);
+    q->addContent(back);
 }
 
 void DPrintPreviewDialogPrivate::initleft(QVBoxLayout *layout)
@@ -169,7 +174,7 @@ void DPrintPreviewDialogPrivate::initright(QVBoxLayout *layout)
     QVBoxLayout *ptoplayout = new QVBoxLayout;
     ptoplayout->setContentsMargins(0, 0, 0, 0);
     DWidget *ptopwidget = new DWidget;
-    ptopwidget->setFixedWidth(442);
+    ptopwidget->setMinimumWidth(442);
     ptopwidget->setLayout(ptoplayout);
 
     basicsettingwdg = new DWidget;
@@ -197,6 +202,7 @@ void DPrintPreviewDialogPrivate::initright(QVBoxLayout *layout)
     advancelayout->addStretch();
     ptoplayout->addWidget(basicsettingwdg);
     ptoplayout->addLayout(advancelayout);
+    ptoplayout->addStretch();
     ptoplayout->addWidget(advancesettingwdg);
 
     initbasicui();
@@ -232,13 +238,14 @@ void DPrintPreviewDialogPrivate::initbasicui()
     //打印机选择
     DFrame *printerFrame = new DFrame(basicsettingwdg);
     layout->addWidget(printerFrame);
-    printerFrame->setFixedSize(422, 48);
+    printerFrame->setMinimumSize(422, 48);
     setfrmaeback(printerFrame);
     QHBoxLayout *printerlayout = new QHBoxLayout(printerFrame);
     printerlayout->setContentsMargins(10, 0, 10, 0);
     DLabel *printerlabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Printer"), printerFrame);
+    printerlabel->setFixedWidth(123);
     printDeviceCombo = new DComboBox(basicsettingwdg);
-    printDeviceCombo->setFixedSize(275, 36);
+    printDeviceCombo->setMinimumSize(275, 36);
     printerlayout->addWidget(printerlabel);
     printerlayout->addWidget(printDeviceCombo);
     printerlayout->setAlignment(printDeviceCombo, Qt::AlignVCenter);
@@ -247,15 +254,16 @@ void DPrintPreviewDialogPrivate::initbasicui()
     DFrame *copycountFrame = new DFrame(basicsettingwdg);
     copycountFrame->setObjectName("copucountframe");
     layout->addWidget(copycountFrame);
-    copycountFrame->setFixedSize(422, 48);
+    copycountFrame->setMinimumSize(422, 48);
     setfrmaeback(copycountFrame);
     QHBoxLayout *copycountlayout = new QHBoxLayout(copycountFrame);
     copycountlayout->setContentsMargins(10, 0, 10, 0);
     DLabel *copycountlabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Copies"), copycountFrame);
+    copycountlabel->setFixedWidth(123);
     copycountspinbox = new DSpinBox(copycountFrame);
     copycountspinbox->setEnabledEmbedStyle(true);
     copycountspinbox->setRange(1, 999);
-    copycountspinbox->setFixedSize(275, 36);
+    copycountspinbox->setMinimumSize(275, 36);
     copycountlayout->addWidget(copycountlabel);
     copycountlayout->addWidget(copycountspinbox);
 
@@ -267,13 +275,14 @@ void DPrintPreviewDialogPrivate::initbasicui()
     DFrame *pageFrame = new DFrame(basicsettingwdg);
     pageFrame->setObjectName("pageFrame");
     layout->addWidget(pageFrame);
-    pageFrame->setFixedSize(422, 94);
+    pageFrame->setMinimumSize(422, 94);
     setfrmaeback(pageFrame);
     QVBoxLayout *pagelayout = new QVBoxLayout(pageFrame);
     pagelayout->setContentsMargins(10, 5, 10, 5);
     DLabel *pagerangelabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Page range"), pageFrame);
+    pagerangelabel->setFixedWidth(123);
     pageRangeCombo = new DComboBox(pageFrame);
-    pageRangeCombo->setFixedSize(275, 36);
+    pageRangeCombo->setMinimumSize(275, 36);
     pageRangeCombo->addItem(qApp->translate("DPrintPreviewDialogPrivate", "All"));
     pageRangeCombo->addItem(qApp->translate("DPrintPreviewDialogPrivate", "Current page"));
     pageRangeCombo->addItem(qApp->translate("DPrintPreviewDialogPrivate", "Select pages"));
@@ -313,7 +322,7 @@ void DPrintPreviewDialogPrivate::initbasicui()
 
     //纵向
     DWidget *portraitwdg = new DWidget;
-    portraitwdg->setFixedSize(422, 48);
+    portraitwdg->setMinimumSize(422, 48);
     QHBoxLayout *portraitlayout = new QHBoxLayout;
     DLabel *orientationTextLabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Portrait"), portraitwdg);
     portraitlayout->addWidget(verRadio);
@@ -323,7 +332,7 @@ void DPrintPreviewDialogPrivate::initbasicui()
 
     //横向
     DWidget *landscapewdg = new DWidget;
-    landscapewdg->setFixedSize(422, 48);
+    landscapewdg->setMinimumSize(422, 48);
     QHBoxLayout *landscapelayout = new QHBoxLayout;
     DLabel *landscapeTextLabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Landscape"), portraitwdg);
     landscapelayout->addWidget(horRadio);
@@ -346,7 +355,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     Q_Q(DPrintPreviewDialog);
     QVBoxLayout *layout = new QVBoxLayout(advancesettingwdg);
     layout->setContentsMargins(0, 0, 0, 0);
-    advancesettingwdg->setFixedWidth(442);
+    advancesettingwdg->setMinimumWidth(442);
 
     //页面设置
     QVBoxLayout *pagelayout = new QVBoxLayout;
@@ -1428,7 +1437,8 @@ DPrintPreviewDialog::DPrintPreviewDialog(QWidget *parent)
     : DDialog(*new DPrintPreviewDialogPrivate(this), parent)
 {
     Q_D(DPrintPreviewDialog);
-    setFixedSize(851, 606);
+    setMinimumSize(851, 606);
+    setWindowFlag(Qt::WindowMaximizeButtonHint);
     d->startup();
 }
 
@@ -1481,8 +1491,19 @@ bool DPrintPreviewDialog::eventFilter(QObject *watched, QEvent *event)
 void DPrintPreviewDialog::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event);
+    Q_D(DPrintPreviewDialog);
     this->findChild<DWidget *>("titlewidget")->setGeometry(0, 0, this->width(), 50);
     this->findChild<DWidget *>("mainwidget")->setGeometry(0, 0, this->width(), this->height());
+    double per = static_cast<double>(this->width()) / static_cast<double>(851);
+    if (per >= 1.2) {
+        this->findChild<DWidget *>("rightWidget")->setMaximumWidth(452 * 1.2);
+        this->findChild<DBackgroundGroup *>("backGround")->setItemSpacing(10);
+        d->marginsLayout(false);
+    } else {
+        this->findChild<DWidget *>("rightWidget")->setMaximumWidth(452 * per);
+        this->findChild<DBackgroundGroup *>("backGround")->setItemSpacing(2);
+        d->marginsLayout(true);
+    }
 }
 DWIDGET_END_NAMESPACE
 #include "moc_dprintpreviewdialog.cpp"
