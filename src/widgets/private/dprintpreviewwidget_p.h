@@ -25,6 +25,8 @@
 #include "dprintpreviewwidget.h"
 #include "private/dframe_p.h"
 
+#include <DIconButton>
+
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QWheelEvent>
@@ -34,43 +36,34 @@ DWIDGET_BEGIN_NAMESPACE
 #define PREVIEW_WIDGET_MARGIN_RATIO   50
 #define PREVIEW_ENLARGE_RATIO 1.25
 #define PREVIEW_NARROW_RATIO 0.8
+#define PREVIEW_SCALEBUTTON_MARGIN 10
 
 class GraphicsView : public QGraphicsView
 {
     Q_OBJECT
 public:
-    GraphicsView(QWidget *parent = nullptr)
-        : QGraphicsView(parent)
-    {
-    }
+    GraphicsView(QWidget *parent = nullptr);
+
+public Q_SLOTS:
+    void resetScale(bool autoReset = true);
+
 Q_SIGNALS:
     void resized();
 
 protected:
-    void wheelEvent(QWheelEvent *e) override
-    {
-        QGraphicsView::wheelEvent(e);
-        return;
+    void mousePressEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void wheelEvent(QWheelEvent *e) override;
+    void resizeEvent(QResizeEvent *e) override;
+    void showEvent(QShowEvent *e) override;
+    void changeEvent(QEvent *e) override;
 
-        //SP3无预览效果缩放设计，暂时无效
-        if (0 > e->angleDelta().y()) {
-            scale(PREVIEW_NARROW_RATIO, PREVIEW_NARROW_RATIO);
-        } else {
-            scale(PREVIEW_ENLARGE_RATIO, PREVIEW_ENLARGE_RATIO);
-        }
-    }
+private Q_SLOTS:
+    void onThemeTypeChanged(DGuiApplicationHelper::ColorType themeType);
 
-    void resizeEvent(QResizeEvent *e) override
-    {
-        QGraphicsView::resizeEvent(e);
-        Q_EMIT resized();
-    }
-
-    void showEvent(QShowEvent *e) override
-    {
-        QGraphicsView::showEvent(e);
-        Q_EMIT resized();
-    }
+private:
+    DIconButton *scaleResetButton;
+    double scaleRatio;
 };
 
 

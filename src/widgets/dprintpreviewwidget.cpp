@@ -22,9 +22,12 @@ void DPrintPreviewWidgetPrivate::init()
     Q_Q(DPrintPreviewWidget);
 
     graphicsView = new GraphicsView;
-    graphicsView->setInteractive(false);
+    graphicsView->setInteractive(true);
     graphicsView->setDragMode(QGraphicsView::NoDrag);
     graphicsView->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
+    graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    graphicsView->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
     graphicsView->setLineWidth(0);
 
     scene = new QGraphicsScene(graphicsView);
@@ -84,6 +87,7 @@ void DPrintPreviewWidgetPrivate::fitView()
 {
     QRectF target = scene->sceneRect();
     graphicsView->fitInView(target, Qt::KeepAspectRatio);
+    graphicsView->resetScale();
 }
 
 void DPrintPreviewWidgetPrivate::print()
@@ -555,6 +559,115 @@ QImage ContentItem::imageGrayscale(const QImage *origin)
     }
 
     return iGray;
+}
+
+GraphicsView::GraphicsView(QWidget *parent)
+    : QGraphicsView(parent)
+{
+    scaleRatio = 1.0;
+
+    scaleResetButton = new DIconButton(this);
+    scaleResetButton->setFixedSize(36, 36);
+    scaleResetButton->setIcon(QIcon::fromTheme("print_previewscale"));
+    scaleResetButton->setIconSize(QSize(18, 18));
+    scaleResetButton->setVisible(false);
+
+    onThemeTypeChanged(DGuiApplicationHelper::instance()->themeType());
+
+    connect(scaleResetButton, &DIconButton::clicked, this, [this]() {
+        resetScale(false);
+    });
+}
+
+void GraphicsView::resetScale(bool autoReset)
+{
+    if (!autoReset) {
+        this->scale(1.0 / scaleRatio,
+                    1.0 / scaleRatio);
+    }
+
+    scaleRatio = 1.0;
+    scaleResetButton->setVisible(false);
+}
+
+void GraphicsView::mousePressEvent(QMouseEvent *e)
+{
+    if (e->button() & Qt::LeftButton)
+        this->setDragMode(QGraphicsView::ScrollHandDrag);
+
+    QGraphicsView::mousePressEvent(e);
+}
+
+void GraphicsView::mouseReleaseEvent(QMouseEvent *e)
+{
+    if (e->button() & Qt::LeftButton)
+        this->setDragMode(QGraphicsView::NoDrag);
+
+    QGraphicsView::mouseReleaseEvent(e);
+}
+
+void GraphicsView::wheelEvent(QWheelEvent *e)
+{
+    if (0 > e->angleDelta().y()) {
+        if (scaleRatio * 100 > 10) {
+            scale(PREVIEW_NARROW_RATIO, PREVIEW_NARROW_RATIO);
+            scaleRatio *= PREVIEW_NARROW_RATIO;
+            scaleResetButton->setVisible(true);
+        }
+    } else {
+        if (scaleRatio * 100 < 200) {
+            scale(PREVIEW_ENLARGE_RATIO, PREVIEW_ENLARGE_RATIO);
+            scaleRatio *= PREVIEW_ENLARGE_RATIO;
+            scaleResetButton->setVisible(true);
+        }
+    }
+
+    if (qFuzzyCompare(scaleRatio, 1))
+        scaleResetButton->setVisible(false);
+}
+
+void GraphicsView::resizeEvent(QResizeEvent *e)
+{
+    QGraphicsView::resizeEvent(e);
+    scaleResetButton->move(this->width() - scaleResetButton->width() - PREVIEW_SCALEBUTTON_MARGIN,
+                           PREVIEW_SCALEBUTTON_MARGIN);
+    this->fitInView(scene()->sceneRect(), Qt::KeepAspectRatio);
+    this->resetScale();
+    Q_EMIT resized();
+}
+
+void GraphicsView::showEvent(QShowEvent *e)
+{
+    QGraphicsView::showEvent(e);
+    scaleResetButton->move(this->width() - scaleResetButton->width() - PREVIEW_SCALEBUTTON_MARGIN,
+                           PREVIEW_SCALEBUTTON_MARGIN);
+    Q_EMIT resized();
+}
+
+void GraphicsView::changeEvent(QEvent *e)
+{
+    switch (e->type()) {
+    case QEvent::PaletteChange:
+        onThemeTypeChanged(DGuiApplicationHelper::instance()->themeType());
+        break;
+
+    default:
+        QGraphicsView::changeEvent(e);
+    }
+}
+
+void GraphicsView::onThemeTypeChanged(DGuiApplicationHelper::ColorType themeType)
+{
+    QPalette btnPalette = scaleResetButton->palette();
+    if (themeType == DGuiApplicationHelper::LightType) {
+        btnPalette.setColor(QPalette::Light, QColor(247, 247, 247, qRound(0.7 * 255)));
+        btnPalette.setColor(QPalette::Dark, QColor(247, 247, 247, qRound(0.7 * 255)));
+    } else if (themeType == DGuiApplicationHelper::DarkType) {
+        btnPalette.setColor(QPalette::Light, QColor(32, 32, 32, qRound(0.5 * 255)));
+        btnPalette.setColor(QPalette::Dark, QColor(32, 32, 32, qRound(0.5 * 255)));
+    }
+
+    scaleResetButton->setPalette(btnPalette);
 }
 
 DWIDGET_END_NAMESPACE
