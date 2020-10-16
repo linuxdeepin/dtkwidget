@@ -11,7 +11,8 @@ DWIDGET_BEGIN_NAMESPACE
 
 DPrintPreviewWidgetPrivate::DPrintPreviewWidgetPrivate(DPrintPreviewWidget *qq)
     : DFramePrivate(qq)
-    , imposition(DPrintPreviewWidget::Imposition::None)
+    , imposition(DPrintPreviewWidget::One)
+    , order(DPrintPreviewWidget::L2R_T2B)
     , refreshMode(DPrintPreviewWidgetPrivate::RefreshImmediately)
 {
 }
@@ -50,32 +51,6 @@ void DPrintPreviewWidgetPrivate::populateScene()
         scene->addItem(item);
         pages.append(item);
     }
-    Q_Q(DPrintPreviewWidget);
-    if (isGenerate || pageRange.isEmpty()) {
-        int page = pages.count();
-        switch (pageRangeMode) {
-        case DPrintPreviewWidget::AllPage:
-            setPageRangeAll();
-            break;
-        case DPrintPreviewWidget::CurrentPage:
-            if (pageRange.at(0) > page)
-                pageRange[0] = page;
-            Q_EMIT q->pagesCountChanged(1);
-            break;
-        case DPrintPreviewWidget::SelectPage:
-            Q_EMIT q->totalPages(pages.size());
-            for (int i = 0; i < pageRange.count();) {
-                if (pageRange.at(i) > page) {
-                    pageRange.removeAt(i);
-                } else
-                    i++;
-            }
-            Q_EMIT q->pagesCountChanged(pageRange.count());
-            break;
-        }
-        if (currentPageNumber > pageRange.count())
-            currentPageNumber = pageRange.count();
-    }
     if (!pages.isEmpty()) {
         if (currentPageNumber == 0)
             currentPageNumber = FIRST_PAGE;
@@ -98,7 +73,9 @@ void DPrintPreviewWidgetPrivate::generatePreview()
     Q_EMIT q->paintRequested(previewPrinter);
     previewPrinter->setPreviewMode(false);
     pictures = previewPrinter->getPrinterPages();
+    setPageRangeAll();
     populateScene();
+    impositionPages();
     scene->setSceneRect(scene->itemsBoundingRect());
     fitView();
 }
@@ -135,7 +112,8 @@ void DPrintPreviewWidgetPrivate::print()
 
 void DPrintPreviewWidgetPrivate::setPageRangeAll()
 {
-    int size = pages.size();
+    int size = pictures.count();
+    size = targetPage(size);
     pageRange.clear();
     for (int i = FIRST_PAGE; i <= size; i++) {
         pageRange.append(i);
@@ -143,12 +121,12 @@ void DPrintPreviewWidgetPrivate::setPageRangeAll()
     Q_Q(DPrintPreviewWidget);
     Q_EMIT q->totalPages(size);
 
-    isGenerate = false;
+    reviewChanged = false;
 }
 
 int DPrintPreviewWidgetPrivate::pagesCount()
 {
-    return targetPage(pageRange.size());
+    return pageRange.size();
 }
 
 void DPrintPreviewWidgetPrivate::setCurrentPage(int page)
@@ -181,21 +159,21 @@ int DPrintPreviewWidgetPrivate::targetPage(int page)
 {
     int mod = 0;
     switch (imposition) {
-    case DPrintPreviewWidget::Imposition::None:
+    case DPrintPreviewWidget::Imposition::One:
         break;
-    case DPrintPreviewWidget::Imposition::OneTwo:
+    case DPrintPreviewWidget::Imposition::OneRowTwoCol:
         mod = page % 2;
         break;
-    case DPrintPreviewWidget::Imposition::TwoTwo:
+    case DPrintPreviewWidget::Imposition::TwoRowTwoCol:
         mod = page % 4;
         break;
-    case DPrintPreviewWidget::Imposition::TwoThree:
+    case DPrintPreviewWidget::Imposition::TwoRowThreeCol:
         mod = page % 6;
         break;
-    case DPrintPreviewWidget::Imposition::ThreeThree:
+    case DPrintPreviewWidget::Imposition::ThreeRowThreeCol:
         mod = page % 9;
         break;
-    case DPrintPreviewWidget::Imposition::FourFour:
+    case DPrintPreviewWidget::Imposition::FourRowFourCol:
         mod = page % 16;
         break;
     default:
@@ -216,6 +194,42 @@ int DPrintPreviewWidgetPrivate::index2page(int index)
 int DPrintPreviewWidgetPrivate::page2index(int page)
 {
     return pageRange.indexOf(page);
+}
+
+void DPrintPreviewWidgetPrivate::impositionPages()
+{
+    QSize paperSize = previewPrinter->pageLayout().fullRectPixels(previewPrinter->resolution()).size();
+    QRect pageRect = previewPrinter->pageLayout().paintRectPixels(previewPrinter->resolution());
+
+    switch (imposition) {
+    case DPrintPreviewWidget::Imposition::One:
+    {
+        for (int i = 0, page = 1; i < pageRange.count(); i++) {
+            PageItem *item = new PageItem(page++, pictures[i], paperSize, pageRect);
+            item->setVisible(false);
+            scene->addItem(item);
+            pages.append(item);
+        }
+        if (!pages.isEmpty()) {
+            if (currentPageNumber == 0)
+                currentPageNumber = FIRST_PAGE;
+            setCurrentPage(currentPageNumber);
+        }
+    }
+        break;
+    case DPrintPreviewWidget::Imposition::OneRowTwoCol:
+        break;
+    case DPrintPreviewWidget::Imposition::TwoRowTwoCol:
+        break;
+    case DPrintPreviewWidget::Imposition::TwoRowThreeCol:
+        break;
+    case DPrintPreviewWidget::Imposition::ThreeRowThreeCol:
+        break;
+    case DPrintPreviewWidget::Imposition::FourRowFourCol:
+        break;
+    default:
+        break;
+    }
 }
 
 DPrintPreviewWidget::DPrintPreviewWidget(DPrinter *printer, QWidget *parent)
@@ -242,6 +256,11 @@ void DPrintPreviewWidget::setPageRangeALL()
         d->setCurrentPage(FIRST_PAGE);
 }
 
+void DPrintPreviewWidget::setReGenerate(bool generate)
+{
+    reviewChange(generate);
+}
+
 void DPrintPreviewWidget::setPageRangeMode(PageRange mode)
 {
     Q_D(DPrintPreviewWidget);
@@ -254,10 +273,11 @@ DPrintPreviewWidget::PageRange DPrintPreviewWidget::pageRangeMode()
     return d->pageRangeMode;
 }
 
-void DPrintPreviewWidget::setReGenerate(bool generate)
+void DPrintPreviewWidget::reviewChange(bool generate)
 {
     Q_D(DPrintPreviewWidget);
-    d->isGenerate = generate;
+    d->reviewChanged = generate;
+    d->impositionPages();
 }
 
 void DPrintPreviewWidget::setPageRange(const QVector<int> &rangePages)
@@ -322,7 +342,7 @@ void DPrintPreviewWidget::setOrientation(const QPrinter::Orientation &pageOrient
     Q_D(DPrintPreviewWidget);
 
     d->previewPrinter->setOrientation(pageOrientation);
-    setReGenerate(true);
+    reviewChange(true);
     d->generatePreview();
 }
 
@@ -367,10 +387,24 @@ void DPrintPreviewWidget::refreshEnd()
     updatePreview();
 }
 
+void DPrintPreviewWidget::setImposition(Imposition im)
+{
+    Q_D(DPrintPreviewWidget);
+    d->imposition = im;
+    d->impositionPages();
+}
+
+void DPrintPreviewWidget::setOrder(Order order)
+{
+    Q_D(DPrintPreviewWidget);
+    d->order = order;
+    d->impositionPages();
+}
+
 void DPrintPreviewWidget::updatePreview()
 {
     Q_D(DPrintPreviewWidget);
-    setReGenerate(true);
+    reviewChange(true);
     d->generatePreview();
     d->graphicsView->updateGeometry();
 }

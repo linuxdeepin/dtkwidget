@@ -166,6 +166,7 @@ public:
     int targetPage(int page);
     int index2page(int index);
     int page2index(int page);
+    void impositionPages();
 
     GraphicsView *graphicsView;
     QGraphicsScene *scene;
@@ -177,9 +178,10 @@ public:
     int currentPageNumber = 0;
     DPrinter::ColorMode colorMode;
     DPrintPreviewWidget::Imposition imposition;
+    DPrintPreviewWidget::Order order;
     qreal scale = 1.0;
-    bool isGenerate = true;
     DPrintPreviewWidget::PageRange pageRangeMode = DPrintPreviewWidget::AllPage;
+    bool reviewChanged = true;
 
     DPrinter *previewPrinter;
     RefreshMode refreshMode;

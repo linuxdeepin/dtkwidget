@@ -56,19 +56,25 @@ class LIBDTKWIDGETSHARED_EXPORT DPrintPreviewWidget : public DFrame
 {
     Q_OBJECT
 public:
-    enum Imposition {
-        None,
-        OneTwo,
-        TwoTwo,
-        TwoThree,
-        ThreeThree,
-        FourFour
+    enum Imposition { // 并打
+        One, // 单页
+        OneRowTwoCol, // 一行两列
+        TwoRowTwoCol, // 两行两列
+        TwoRowThreeCol, // 两行三列
+        ThreeRowThreeCol, // 三行三列
+        FourRowFourCol // 四行四列
     };
-
     enum PageRange {
         AllPage,
         CurrentPage,
         SelectPage
+    };
+    enum Order { // 并打顺序
+        L2R_T2B, // 从左到右，从上到下
+        R2L_T2B, // 从右到左，从上到下
+        T2B_L2R, // 从上到下，从左到右
+        T2B_R2L, // 从上到下，从右到左
+        Copy // 重复
     };
 
     explicit DPrintPreviewWidget(DPrinter *printer, QWidget *parent = nullptr);
@@ -77,9 +83,10 @@ public:
     void setPageRange(const QVector<int> &rangePages);
     void setPageRange(int from, int to);
     void setPageRangeALL();
-    void setReGenerate(bool generate);
+    D_DECL_DEPRECATED void setReGenerate(bool generate);
     void setPageRangeMode(PageRange mode);
     PageRange pageRangeMode();
+    void reviewChange(bool generate);
     int pagesCount();
     int currentPage();
     bool turnPageAble();
@@ -91,6 +98,8 @@ public:
     void updateView();
     void refreshBegin();
     void refreshEnd();
+    void setImposition(Imposition im);
+    void setOrder(Order order);
 
 public Q_SLOTS:
     void updatePreview();

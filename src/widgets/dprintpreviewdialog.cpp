@@ -1094,7 +1094,7 @@ void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
     setEnable(index, pageRangeCombo);
     pageRangeEdit->lineEdit()->setPlaceholderText("");
     pageRangeEdit->setText("");
-    if (index == DPrintPreviewWidget::AllPage) {
+    if (index == DPrintPreviewWidget::AllPage || index == DPrintPreviewWidget::CurrentPage) {
         pview->setPageRangeMode(DPrintPreviewWidget::AllPage);
         setPageIsLegal(true);
         if (totalPages != 0) {
@@ -1102,11 +1102,6 @@ void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
             if (isInited)
                 pview->setPageRange(FIRST_PAGE, totalPages);
         }
-    } else if (index == DPrintPreviewWidget::CurrentPage) {
-        pview->setPageRangeMode(DPrintPreviewWidget::CurrentPage);
-        setPageIsLegal(true);
-        int currentPage = pview->currentPage();
-        pview->setPageRange(currentPage, currentPage);
     } else {
         pview->setPageRangeMode(DPrintPreviewWidget::SelectPage);
         if (lastPageRange.isEmpty()) {
@@ -1207,12 +1202,12 @@ void DPrintPreviewDialogPrivate::_q_orientationChanged(int index)
         // 纵向按钮
         if (isInited) {
             pview->setOrientation(DPrinter::Portrait);
-            pview->setReGenerate(true);
+            pview->reviewChange(true);
         }
     } else {
         // 横向按钮
         pview->setOrientation(DPrinter::Landscape);
-        pview->setReGenerate(true);
+        pview->reviewChange(true);
     }
     if (pview->pageRangeMode() != DPrintPreviewWidget::AllPage) {
         _q_customPagesFinished();
