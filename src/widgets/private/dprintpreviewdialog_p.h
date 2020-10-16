@@ -93,6 +93,7 @@ public:
     bool supportedDuplexFlag = false;
     bool supportedColorMode = false;
     bool isInited = false;
+    bool isChangePageRange = false;
 
     //control
     DPrintPreviewWidget *pview;
