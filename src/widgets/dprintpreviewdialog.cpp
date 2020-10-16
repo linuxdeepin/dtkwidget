@@ -18,6 +18,7 @@
 
 #include <DScrollArea>
 #include <DScrollBar>
+#include <DPlatformWindowHandle>
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -179,7 +180,7 @@ void DPrintPreviewDialogPrivate::initright(QVBoxLayout *layout)
 
     basicsettingwdg = new DWidget;
     advancesettingwdg = new DWidget;
-    basicsettingwdg->setFixedHeight(435);
+    basicsettingwdg->setFixedHeight(415);
     scrollarea = new DScrollArea;
     scrollarea->setWidget(ptopwidget);
     scrollarea->setWidgetResizable(true);
@@ -1402,6 +1403,11 @@ DPrintPreviewDialog::DPrintPreviewDialog(QWidget *parent)
     Q_D(DPrintPreviewDialog);
     setMinimumSize(851, 606);
     setWindowFlag(Qt::WindowMaximizeButtonHint);
+    if (qApp->isDXcbPlatform()) {
+        DPlatformWindowHandle *handle = new DPlatformWindowHandle(this, nullptr);
+        handle->setEnableSystemResize(true);
+        handle->deleteLater();
+    }
     d->startup();
 }
 
