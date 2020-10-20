@@ -29,17 +29,6 @@ mac{
     LIBS += -framework Foundation -framework Cocoa
 }
 
-isEmpty(DTK_NO_MULTIMEDIA){
-    HEADERS += \
-        $$PWD/dvideowidget.h
-
-    SOURCES += \
-        $$PWD/dvideowidget.cpp
-
-    includes.files += \
-        $$PWD/DVideoWidget
-}
-
 HEADERS += $$PWD/dslider.h\
     $$PWD/dbackgroundgroup.h \
     $$PWD/dthememanager.h \
