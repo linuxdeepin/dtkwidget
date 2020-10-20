@@ -48,6 +48,12 @@ class DDoubleSpinBox;
 class DPrintPreviewDialogPrivate : public DDialogPrivate
 {
 public:
+    enum TipsNum {
+        NullTip,
+        MaxTip,
+        CommaTip,
+        FormatTip
+    };
     explicit DPrintPreviewDialogPrivate(DPrintPreviewDialog *qq);
     void startup();
     void initui();
@@ -67,6 +73,7 @@ public:
     void marginsUpdate(bool isPrinterChanged);
     void themeTypeChange(DGuiApplicationHelper::ColorType themeType);
     void setPageIsLegal(bool islegal);
+    void tipSelected(TipsNum tipNum);
     QVector<int> checkDuplication(QVector<int> data);
 
     void setEnable(const int &value, DComboBox *combox); //控件可用
@@ -94,6 +101,7 @@ public:
     bool supportedColorMode = false;
     bool isInited = false;
     bool isChangePageRange = false;
+    int strLengths = 0;
 
     //control
     DPrintPreviewWidget *pview;

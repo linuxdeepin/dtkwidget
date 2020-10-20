@@ -111,6 +111,7 @@ void DPrintPreviewDialogPrivate::initui()
 
     DWidget *leftWidget = new DWidget;
     DWidget *rightWidget = new DWidget;
+    leftWidget->setObjectName("leftWidget");
     rightWidget->setObjectName("rightWidget");
     mainlayout->addWidget(leftWidget);
     mainlayout->addWidget(rightWidget);
@@ -608,6 +609,11 @@ void DPrintPreviewDialogPrivate::initconnections()
         isChangePageRange = false;
         _q_customPagesFinished();
     });
+    QObject::connect(pageRangeEdit, &DLineEdit::focusChanged, q, [this](bool onFocus) {
+        if (pageRangeEdit->text().right(1) == "-" && !onFocus) {
+            this->_q_customPagesFinished();
+        }
+    });
     QObject::connect(jumpPageEdit->lineEdit(), &QLineEdit::textChanged, q, [ = ](QString str) {
         if (str.toInt() > totalPageLabel->text().toInt())
             jumpPageEdit->lineEdit()->setText(totalPageLabel->text());
@@ -936,11 +942,30 @@ void DPrintPreviewDialogPrivate::setPageIsLegal(bool islegal)
 {
     if (isChangePageRange && !islegal) {
         pageRangeCombo->setCurrentIndex(PAGERANGE_ALL);
-
         return;
     }
     printBtn->setEnabled(islegal);
     pageRangeEdit->setAlert(!islegal);
+}
+
+void DPrintPreviewDialogPrivate::tipSelected(TipsNum tipNum)
+{
+    switch (tipNum) {
+    case NullTip:
+        pageRangeEdit->showAlertMessage(qApp->translate("DPrintPreviewDialogPrivate", "Input page numbers please"), static_cast<DFrame *>(pageRangeEdit->parent()), 2000);
+        break;
+    case MaxTip:
+        pageRangeEdit->showAlertMessage(qApp->translate("DPrintPreviewDialogPrivate", "Maximum page number reached"), static_cast<DFrame *>(pageRangeEdit->parent()), 2000);
+        break;
+    case CommaTip:
+        pageRangeEdit->showAlertMessage(qApp->translate("DPrintPreviewDialogPrivate", "Input English comma please"), static_cast<DFrame *>(pageRangeEdit->parent()), 2000);
+        break;
+    case FormatTip:
+        pageRangeEdit->showAlertMessage(qApp->translate("DPrintPreviewDialogPrivate", "Input page numbers like this: 1,3,5-7,11-15,18,21"), static_cast<DFrame *>(pageRangeEdit->parent()), 2000);
+        break;
+    default:
+        break;
+    }
 }
 
 QVector<int> DPrintPreviewDialogPrivate::checkDuplication(QVector<int> data)
@@ -1117,7 +1142,7 @@ void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
         }
         if (pageRangeEdit->isAlert()) {
             pageRangeEdit->clear();
-            pageRangeEdit->lineEdit()->setPlaceholderText(qApp->translate("DPrintPreviewDialogPrivate", "1-%1. For example, 1,3,5-7,11-15,18,21").arg(QString::number(totalPages)));
+            pageRangeEdit->lineEdit()->setPlaceholderText(qApp->translate("DPrintPreviewDialogPrivate", "For example, 1,3,5-7,11-15,18,21"));
         }
     }
     setTurnPageBtnStatus();
@@ -1227,6 +1252,10 @@ void DPrintPreviewDialogPrivate::_q_orientationChanged(int index)
     }
 }
 
+/*!
+ * \~chinese \brief DPrintPreviewDialogPrivate::_q_customPagesFinished 自定义页面时，页码处理
+ * \~chinese \param index
+ */
 void DPrintPreviewDialogPrivate::_q_customPagesFinished()
 {
     if (pageRangeCombo->currentIndex() != 2)
@@ -1234,32 +1263,63 @@ void DPrintPreviewDialogPrivate::_q_customPagesFinished()
     QString cuspages = pageRangeEdit->text();
     lastPageRange = cuspages;
     QVector<int> pagesrange;
-    QStringList list = cuspages.split(",");
     setPageIsLegal(true);
-    for (int i = 0; i < list.size(); i++) {
-        if (list.at(i).contains("-")) {
-            QStringList list1 = list.at(i).split("-");
-            if (list1.at(0).toInt() <= list1.at(1).toInt()) {
-                for (int page = list1.at(0).toInt(); page <= list1.at(1).toInt(); page++) {
-                    if (page != 0 && page <= totalPages){
-                        pagesrange.append(page);
-                    }else {
+    //输入框为空，失去焦点或回车给出相应提示
+    if (!cuspages.isEmpty()) {
+        //自定义页未输入完整，如“1-”“1,”，若不符合，失去焦点或回车给出相应提示
+        if (pageRangeEdit->text().right(1) != "-" && pageRangeEdit->text().right(1) != ",") {
+            QStringList list = cuspages.split(",");
+            //处理输入的页码
+            for (int i = 0; i < list.size(); i++) {
+                //输入的页码中，含“-”，对前后数值进行判断以及处理
+                if (list.at(i).contains("-")) {
+                    QStringList list1 = list.at(i).split("-");
+                    if (list1.at(0).toInt() <= list1.at(1).toInt()) {
+                        for (int page = list1.at(0).toInt(); page <= list1.at(1).toInt(); page++) {
+                            if (page != 0 && page <= totalPages) {
+                                pagesrange.append(page);
+                            } else {
+                                setPageIsLegal(false);
+                                tipSelected(MaxTip);
+                                return;
+                            }
+                        }
+                    } else { //“-”后值大于前值，则回车自动格式化
+                        QString temp = "";
+                        temp = list1.at(0);
+                        list1.replace(0, list1.at(1));
+                        list1.replace(1, temp);
+                        QString str = list1.join("-");
+                        list.replace(i, str);
+                        pageRangeEdit->setText(list.join(","));
+                        if (list1.at(0).toInt() > totalPages || list1.at(1).toInt() > totalPages) {
+                            setPageIsLegal(false);
+                            tipSelected(MaxTip);
+                            return;
+                        } else {
+                            for (int page = list1.at(0).toInt(); page <= list1.at(1).toInt(); page++) {
+                                pagesrange.append(page);
+                            }
+                        }
+                    }
+                } else {
+                    if (list.at(i).toInt() != 0 && list.at(i).toInt() <= totalPages) {
+                        pagesrange.append(list.at(i).toInt());
+                    } else {
                         setPageIsLegal(false);
+                        tipSelected(MaxTip);
                         return;
                     }
                 }
-            } else {
-                setPageIsLegal(false);
-                return;
             }
         } else {
-            if (list.at(i).toInt() != 0 && list.at(i).toInt() <= totalPages){
-                pagesrange.append(list.at(i).toInt());
-            }else {
-                setPageIsLegal(false);
-                return;
-            }
+            setPageIsLegal(false);
+            tipSelected(FormatTip);
+            return;
         }
+    } else {
+        setPageIsLegal(false);
+        tipSelected(NullTip);
     }
     jumpPageEdit->setValue(1);
     QVector<int> page = checkDuplication(pagesrange);
@@ -1445,7 +1505,7 @@ bool DPrintPreviewDialog::eventFilter(QObject *watched, QEvent *event)
 {
     Q_D(DPrintPreviewDialog);
 
-    if (event->type() == QEvent::ShortcutOverride) {
+    if (event->type() == QEvent::KeyRelease) {
         QKeyEvent *keye = dynamic_cast<QKeyEvent *>(event);
         if (keye->key() == Qt::Key_Enter || keye->key() == Qt::Key_Return) {
             if (watched == d->marginTopSpin || watched == d->marginLeftSpin || watched == d->marginRightSpin || watched == d->marginBottomSpin) {
@@ -1459,6 +1519,28 @@ bool DPrintPreviewDialog::eventFilter(QObject *watched, QEvent *event)
                 Q_EMIT d->scaleRateEdit->lineEdit()->editingFinished();
                 return true;
             }
+         }
+
+         QString str = d->pageRangeEdit->text();
+         int strLengthNow = str.length();
+         if (watched == d->pageRangeEdit) {
+             if ((keye->key() >= Qt::Key_A && keye->key() <= Qt::Key_Z) || (keye->key() >= Qt::Key_Space && keye->key() <= Qt::Key_Slash && keye->key() != Qt::Key_Comma) || keye->key() == Qt::Key_0) {
+                 if (str.isEmpty() || (d->strLengths == strLengthNow)) {
+                     d->tipSelected(DPrintPreviewDialogPrivate::TipsNum::FormatTip);
+                 }
+                 d->strLengths = strLengthNow;
+                 return true;
+             }
+             if (keye->key() == Qt::Key_Comma) {
+                 if (str.isEmpty() || ((d->strLengths == strLengthNow) && (d->pageRangeEdit->text().right(1) == "," || d->pageRangeEdit->text().right(1) == "-"))) {
+                     d->tipSelected(DPrintPreviewDialogPrivate::TipsNum::FormatTip);
+                 } else if (!str.isEmpty() && (d->strLengths == strLengthNow)) {
+                     d->tipSelected(DPrintPreviewDialogPrivate::TipsNum::CommaTip);
+                 }
+                 d->strLengths = strLengthNow;
+                 return true;
+             }
+             d->strLengths = strLengthNow;
          }
 
         return false;
@@ -1476,10 +1558,12 @@ void DPrintPreviewDialog::resizeEvent(QResizeEvent *event)
     double per = static_cast<double>(this->width()) / static_cast<double>(851);
     if (per >= 1.2) {
         this->findChild<DWidget *>("rightWidget")->setMaximumWidth(452 * 1.2);
+        this->findChild<DWidget *>("leftWidget")->setMaximumWidth(this->width() - 20 - 10 - 452 * 1.2);
         this->findChild<DBackgroundGroup *>("backGround")->setItemSpacing(10);
         d->marginsLayout(false);
     } else {
         this->findChild<DWidget *>("rightWidget")->setMaximumWidth(452 * per);
+        this->findChild<DWidget *>("leftWidget")->setMaximumWidth(this->width() - 20 - 2 - 452 * per);
         this->findChild<DBackgroundGroup *>("backGround")->setItemSpacing(2);
         d->marginsLayout(true);
     }
