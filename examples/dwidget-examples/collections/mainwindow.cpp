@@ -153,6 +153,8 @@ void MainWindow::menuItemInvoked(QAction *action)
 {
     if (action->text() == "testPrinter") {
         DPrintPreviewDialog dialog(this);
+        //测试保存PDF文件名称接口
+        dialog.setDocName("test");
         connect(&dialog, &DPrintPreviewDialog::paintRequested,
                 this, [=](DPrinter *_printer) {
                     // 此函数内代码为调试打印内容代码，调整较随意！

@@ -46,7 +46,6 @@ private:
     D_PRIVATE_SLOT(void _q_startPrint(bool))
     D_PRIVATE_SLOT(void _q_orientationChanged(int))
     D_PRIVATE_SLOT(void _q_customPagesFinished())
-    D_PRIVATE_SLOT(void _q_marginTimerOut())
     D_PRIVATE_SLOT(void _q_marginspinChanged(double))
     D_PRIVATE_SLOT(void _q_marginEditFinished())
     D_PRIVATE_SLOT(void _q_currentPageSpinChanged(int))
@@ -55,6 +54,8 @@ private:
 public:
     virtual bool event(QEvent *event) override;
     bool eventFilter(QObject *watched, QEvent *event) override;
+    void setDocName(const QString &);
+    QString docName() const;
 
     // QWidget interface
 protected:

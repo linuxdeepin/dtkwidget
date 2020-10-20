@@ -71,6 +71,7 @@ public:
     void judgeSupportedAttributes(const QString &lastPaperSize);
     void setMininumMargins();
     void marginsUpdate(bool isPrinterChanged);
+    void adjustMargins();
     void themeTypeChange(DGuiApplicationHelper::ColorType themeType);
     void setPageIsLegal(bool islegal);
     void tipSelected(TipsNum tipNum);
@@ -86,7 +87,6 @@ public:
     void _q_startPrint(bool clicked);
     void _q_orientationChanged(int index);
     void _q_customPagesFinished();
-    void _q_marginTimerOut();
     void _q_marginspinChanged(double);
     void _q_marginEditFinished();
     void _q_currentPageSpinChanged(int value);

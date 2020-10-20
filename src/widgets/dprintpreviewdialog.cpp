@@ -1320,6 +1320,7 @@ void DPrintPreviewDialogPrivate::_q_customPagesFinished()
     } else {
         setPageIsLegal(false);
         tipSelected(NullTip);
+        return;
     }
     jumpPageEdit->setValue(1);
     QVector<int> page = checkDuplication(pagesrange);
@@ -1327,10 +1328,9 @@ void DPrintPreviewDialogPrivate::_q_customPagesFinished()
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialogPrivate::_q_marginTimerOut 自定义边距计时器时间结束的槽函数
- * \~chinese \param
+ * \~chinese \brief DPrintPreviewDialogPrivate::adjustMargins 根据输入的边距数据调整边距
  */
-void DPrintPreviewDialogPrivate::_q_marginTimerOut()
+void DPrintPreviewDialogPrivate::adjustMargins()
 {
     setMininumMargins();
     qreal leftMarginF = this->marginLeftSpin->value();
@@ -1353,10 +1353,11 @@ void DPrintPreviewDialogPrivate::_q_marginTimerOut()
 
 /*!
  * \~chinese \brief DPrintPreviewDialogPrivate::_q_marginspinChanged 自定义页边距spinbox值改变
- * \~chinese \param clicked 判断按钮点击状态
+ * \~chinese \param marginValue 改变的值的大小
  */
-void DPrintPreviewDialogPrivate::_q_marginspinChanged(double)
+void DPrintPreviewDialogPrivate::_q_marginspinChanged(double marginValue)
 {
+    Q_UNUSED(marginValue);
     marginsCombo->blockSignals(true);
     marginsCombo->setCurrentIndex(marginsCombo->count() - 1);
     marginsCombo->blockSignals(false);
@@ -1364,7 +1365,6 @@ void DPrintPreviewDialogPrivate::_q_marginspinChanged(double)
 
 /*!
  * \~chinese \brief DPrintPreviewDialogPrivate::_q_marginspinChanged 自定义页边距spinbox焦点改变输入结束
- * \~chinese \param
  */
 void DPrintPreviewDialogPrivate::_q_marginEditFinished()
 {
@@ -1372,9 +1372,13 @@ void DPrintPreviewDialogPrivate::_q_marginEditFinished()
     if (q->focusWidget() == marginTopSpin || q->focusWidget() == marginLeftSpin
             || q->focusWidget() == marginBottomSpin || q->focusWidget() == marginRightSpin)
         return;
-    _q_marginTimerOut();
+    adjustMargins();
 }
 
+/*!
+ * \~chinese \brief DPrintPreviewDialogPrivate::_q_currentPageSpinChanged 根据当前页的页码的变化,变化翻页按钮的状态
+ * \~chinese \param value 当前页码
+ */
 void DPrintPreviewDialogPrivate::_q_currentPageSpinChanged(int value)
 {
     if (value == 1 && value != totalPageLabel->text().toInt()) {
@@ -1424,21 +1428,16 @@ void DPrintPreviewDialogPrivate::_q_startPrint(bool clicked)
         setupPrinter();
     }
     if (printDeviceCombo->currentIndex() == printDeviceCombo->count() - 1) {
-        /*设置pdf保存文本信息，如果设置outputfilename优先设置,如果outputfilename为空,
-        外部通过setDocName设置，如果不做任何操作默认保存名称print.pdf*/
+        /*外部通过setDocName设置，如果不做任何操作默认保存名称print.pdf*/
         QString desktopPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
         desktopPath += QStringLiteral("/");
         if (printer == nullptr) {
             return;
         }
-        if (printer->outputFileName().isEmpty()) {
-            if (printer->docName().isEmpty()) {
-                desktopPath += QStringLiteral("print.pdf");
-            } else {
-                desktopPath += printer->docName();
-            }
+        if (q->docName().isEmpty()) {
+            desktopPath += QStringLiteral("print.pdf");
         } else {
-            desktopPath = printer->outputFileName();
+            desktopPath += q->docName();
         }
         if (desktopPath.right(4).compare(".pdf", Qt::CaseInsensitive)) {
             desktopPath += ".pdf";
@@ -1510,7 +1509,7 @@ bool DPrintPreviewDialog::eventFilter(QObject *watched, QEvent *event)
         if (keye->key() == Qt::Key_Enter || keye->key() == Qt::Key_Return) {
             if (watched == d->marginTopSpin || watched == d->marginLeftSpin || watched == d->marginRightSpin || watched == d->marginBottomSpin) {
                 d->setMininumMargins();
-                d->_q_marginTimerOut();
+                d->adjustMargins();
             } else if (watched == d->pageRangeEdit){
                 d->isChangePageRange = false;
                 d->_q_customPagesFinished();
@@ -1547,6 +1546,26 @@ bool DPrintPreviewDialog::eventFilter(QObject *watched, QEvent *event)
     }
 
     return DDialog::eventFilter(watched, event);
+}
+
+/*!
+ * \~chinese \brief DPrintPreviewDialog::setDocName 设置保存PDF的文件名称
+ * \~chinese \param str 文件名称
+ */
+void DPrintPreviewDialog::setDocName(const QString &str)
+{
+    Q_D(DPrintPreviewDialog);
+    d->printer->setDocName(str);
+}
+
+/*!
+ * \~chinese \brief DPrintPreviewDialog::docName 保存PDF的文件名称
+ * \~chinese \return  文件名称
+ */
+QString DPrintPreviewDialog::docName() const
+{
+    D_DC(DPrintPreviewDialog);
+    return d->printer->docName();
 }
 
 void DPrintPreviewDialog::resizeEvent(QResizeEvent *event)
