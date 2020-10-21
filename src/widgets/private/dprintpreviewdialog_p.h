@@ -102,6 +102,7 @@ public:
     bool isInited = false;
     bool isChangePageRange = false;
     int strLengths = 0;
+    bool isOnFocus = false;
 
     //control
     DPrintPreviewWidget *pview;

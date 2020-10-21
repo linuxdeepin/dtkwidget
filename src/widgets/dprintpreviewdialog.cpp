@@ -610,6 +610,7 @@ void DPrintPreviewDialogPrivate::initconnections()
         _q_customPagesFinished();
     });
     QObject::connect(pageRangeEdit, &DLineEdit::focusChanged, q, [this](bool onFocus) {
+        isOnFocus = true;
         if (pageRangeEdit->text().right(1) == "-" && !onFocus) {
             this->_q_customPagesFinished();
         }
@@ -1281,7 +1282,9 @@ void DPrintPreviewDialogPrivate::_q_customPagesFinished()
                                 pagesrange.append(page);
                             } else {
                                 setPageIsLegal(false);
-                                tipSelected(MaxTip);
+                                if (isOnFocus)
+                                    tipSelected(MaxTip);
+                                isOnFocus = false;
                                 return;
                             }
                         }
@@ -1295,7 +1298,9 @@ void DPrintPreviewDialogPrivate::_q_customPagesFinished()
                         pageRangeEdit->setText(list.join(","));
                         if (list1.at(0).toInt() > totalPages || list1.at(1).toInt() > totalPages) {
                             setPageIsLegal(false);
-                            tipSelected(MaxTip);
+                            if (isOnFocus)
+                                tipSelected(MaxTip);
+                            isOnFocus = false;
                             return;
                         } else {
                             for (int page = list1.at(0).toInt(); page <= list1.at(1).toInt(); page++) {
@@ -1308,19 +1313,25 @@ void DPrintPreviewDialogPrivate::_q_customPagesFinished()
                         pagesrange.append(list.at(i).toInt());
                     } else {
                         setPageIsLegal(false);
-                        tipSelected(MaxTip);
+                        if (isOnFocus)
+                            tipSelected(MaxTip);
+                        isOnFocus = false;
                         return;
                     }
                 }
             }
         } else {
             setPageIsLegal(false);
-            tipSelected(FormatTip);
+            if (isOnFocus)
+                tipSelected(FormatTip);
+            isOnFocus = false;
             return;
         }
     } else {
         setPageIsLegal(false);
-        tipSelected(NullTip);
+        if (isOnFocus)
+            tipSelected(NullTip);
+        isOnFocus = false;
         return;
     }
     jumpPageEdit->setValue(1);
@@ -1514,6 +1525,7 @@ bool DPrintPreviewDialog::eventFilter(QObject *watched, QEvent *event)
             } else if (watched == d->pageRangeEdit){
                 d->isChangePageRange = false;
                 d->_q_customPagesFinished();
+                d->isOnFocus = true;
                 return true;
             } else if (watched == d->scaleRateEdit){
                 Q_EMIT d->scaleRateEdit->lineEdit()->editingFinished();
