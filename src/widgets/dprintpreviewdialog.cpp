@@ -1129,7 +1129,8 @@ void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
             totalPageLabel->setNum(totalPages);
             if (isInited)
                 pview->setPageRange(FIRST_PAGE, totalPages);
-            pview->setCurrentPage(FIRST_PAGE);
+            if (index == DPrintPreviewWidget::AllPage)
+                pview->setCurrentPage(FIRST_PAGE);
         }
     } else {
         pview->setPageRangeMode(DPrintPreviewWidget::SelectPage);
