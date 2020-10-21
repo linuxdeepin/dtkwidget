@@ -570,7 +570,9 @@ void DPrintPreviewDialogPrivate::initdata()
 {
     Q_Q(DPrintPreviewDialog);
     QStringList itemlist;
-    itemlist << QPrinterInfo::availablePrinterNames() << qApp->translate("DPrintPreviewDialogPrivate", "Print to PDF");
+    itemlist << QPrinterInfo::availablePrinterNames()
+             << qApp->translate("DPrintPreviewDialogPrivate", "Print to PDF")
+             << qApp->translate("DPrintPreviewDialogPrivate", "Save as Image");
     printDeviceCombo->addItems(itemlist);
     QString defauledevice = QPrinterInfo::defaultPrinterName();
     for (int i = 0; i < itemlist.size(); ++i) {
@@ -763,7 +765,8 @@ void DPrintPreviewDialogPrivate::setupPrinter()
     //高级设置
     //设置纸张大小
     QPrinterInfo prInfo(*printer);
-    if (printDeviceCombo->currentIndex() != printDeviceCombo->count() - 1) {
+    if (printDeviceCombo->currentIndex() != printDeviceCombo->count() - 1
+        && printDeviceCombo->currentIndex() != printDeviceCombo->count() - 2) {
         printer->setPageSize(prInfo.supportedPageSizes().at(paperSizeCombo->currentIndex()));
     } else {
         switch (paperSizeCombo->currentIndex()) {
@@ -1041,7 +1044,8 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
     paperSizeCombo->clear();
     paperSizeCombo->blockSignals(true);
     colorModeCombo->blockSignals(true);
-    if (index == printDeviceCombo->count() - 1) {
+    if (index == printDeviceCombo->count() - 1
+        || index == printDeviceCombo->count() - 2) {
         //pdf
         copycountspinbox->setDisabled(true);
         copycountspinbox->setValue(1);
@@ -1439,10 +1443,12 @@ void DPrintPreviewDialogPrivate::_q_startPrint(bool clicked)
     if (!clicked) {
         setupPrinter();
     }
-    if (printDeviceCombo->currentIndex() == printDeviceCombo->count() - 1) {
+
+    bool isSavePicture = (printDeviceCombo->currentIndex() == printDeviceCombo->count() - 1);
+    QString desktopPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+    desktopPath += QStringLiteral("/");
+    if (printDeviceCombo->currentIndex() == printDeviceCombo->count() - 2) {
         /*外部通过setDocName设置，如果不做任何操作默认保存名称print.pdf*/
-        QString desktopPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
-        desktopPath += QStringLiteral("/");
         if (printer == nullptr) {
             return;
         }
@@ -1471,8 +1477,59 @@ void DPrintPreviewDialogPrivate::_q_startPrint(bool clicked)
         if (str.isEmpty())
             return;
         printer->setOutputFileName(str);
+    } else if (isSavePicture) {
+        if (printer == nullptr) {
+            return;
+        }
+
+        if (q->docName().isEmpty()) {
+            desktopPath += QStringLiteral("print");
+        } else {
+            desktopPath += q->docName();
+        }
+
+        QFileInfo file(desktopPath);
+        QString suffix = file.suffix();
+        QString stres("(%1)");
+
+        if (!suffix.isEmpty()) {
+            // 删除后缀名 + .
+            desktopPath.remove(desktopPath.right(suffix.length() + 1));
+        }
+
+        desktopPath.append(QStringLiteral("/"));
+        stres.append(QStringLiteral("/"));
+
+        file.setFile(desktopPath);
+        QString path = desktopPath;
+        int i = 1;
+        while (file.isDir()) {
+            path = desktopPath.left(desktopPath.length() - 1) + stres.arg(i);
+            file.setFile(path);
+            i++;
+        };
+
+        desktopPath = path;
+        QString str = DFileDialog::getSaveFileName(q, qApp->translate("DPrintPreviewDialogPrivate", "Save as image"),
+                                                   desktopPath.left(desktopPath.length() - 1),
+                                                   qApp->translate("DPrintPreviewDialogPrivate", "Images"),
+                                                   nullptr, QFileDialog::ShowDirsOnly);
+
+        QDir savedDir(str);
+        if (!savedDir.exists() && !savedDir.mkpath(str))
+            return;
+
+        QString imageSuffix = QFileInfo(q->docName()).suffix();
+        imageSuffix = !imageSuffix.compare("jpeg", Qt::CaseInsensitive) ? "jpeg" : "png";
+        QString imageName = QFileInfo(str).fileName();
+        str.append("/").append(imageName).append(".").append(imageSuffix);
+
+        if (str.isEmpty())
+            return;
+        printer->setOutputFileName(str);
     }
-    pview->print();
+
+    pview->print(isSavePicture);
 
     q->done(0);
 }

@@ -3,6 +3,7 @@
 #include <QVBoxLayout>
 #include <private/qprinter_p.h>
 #include <QPicture>
+#include <QFileInfo>
 
 #define FIRST_PAGE 1
 #define FIRST_INDEX 0
@@ -90,20 +91,42 @@ void DPrintPreviewWidgetPrivate::fitView()
     graphicsView->resetScale();
 }
 
-void DPrintPreviewWidgetPrivate::print()
+void DPrintPreviewWidgetPrivate::print(bool printAsPicture)
 {
-    QPainter painter(previewPrinter);
     QRect pageRect = previewPrinter->pageRect();
-    painter.setClipRect(0, 0, pageRect.width(), pageRect.height());
+    QSize paperSize = previewPrinter->pageLayout().fullRectPixels(previewPrinter->resolution()).size();
+    QMargins pageMargins = previewPrinter->pageLayout().marginsPixels(previewPrinter->resolution());
+    QImage savedImages(paperSize, QImage::Format_ARGB32);
+    QString outPutFileName = previewPrinter->outputFileName();
+    QString suffix = QFileInfo(outPutFileName).suffix();
+    bool isJpegImage = !suffix.compare(QLatin1String("jpeg"), Qt::CaseInsensitive);
+    QPainter painter;
+
+    if (printAsPicture) {
+        painter.begin(&savedImages);
+        painter.setClipRect(0, 0, paperSize.width(), paperSize.height());
+    } else {
+        painter.begin(previewPrinter);
+        painter.setClipRect(0, 0, pageRect.width(), pageRect.height());
+    }
+
+    savedImages.fill(Qt::white);
     painter.scale(scale, scale);
     QPointF leftTopPoint;
+    double lt_x, lt_y;
     if (scale >= 1.0) {
-        leftTopPoint.setX(0.0);
-        leftTopPoint.setY(0.0);
+        lt_x = printAsPicture ? pageMargins.left() : 0.0;
+        lt_y = printAsPicture ? pageMargins.top() : 0.0;
     } else {
-        leftTopPoint.setX((pageRect.width() * (1.0 - scale) / (2.0 * scale)));
-        leftTopPoint.setY((pageRect.height() * (1.0 - scale) / (2.0 * scale)));
+        lt_x = printAsPicture ? (paperSize.width() * (1.0 - scale) / (2.0 * scale) + pageMargins.left())
+                              : (pageRect.width() * (1.0 - scale) / (2.0 * scale));
+        lt_y = printAsPicture ? (paperSize.height() * (1.0 - scale) / (2.0 * scale) + pageMargins.top())
+                              : (pageRect.height() * (1.0 - scale) / (2.0 * scale));
     }
+
+    leftTopPoint.setX(lt_x);
+    leftTopPoint.setY(lt_y);
+
     QVector<int> pageVector;
     if (pageRangeMode == DPrintPreviewWidget::CurrentPage)
         pageVector.append(pageRange.at(currentPageNumber - 1));
@@ -111,13 +134,25 @@ void DPrintPreviewWidgetPrivate::print()
         pageVector = pageRange;
     }
     for (int i = 0; i < pageVector.size(); i++) {
-        if (0 != i)
+        if (0 != i && !printAsPicture)
             previewPrinter->newPage();
+
         painter.save();
         //todo scale,black and white,watermarking,……
         painter.drawPicture(leftTopPoint, *(pictures[pageVector.at(i) - 1]));
         painter.restore();
+
+        if (printAsPicture) {
+            // write image
+            QString stres = outPutFileName.right(suffix.length() + 1);
+            QString tmpString = QString(outPutFileName).remove(stres) + QString("(%1)").arg(QString::number(i + 1)) + stres;
+
+            savedImages.save(tmpString, isJpegImage ? "JPEG" : "PNG");
+            savedImages.fill(Qt::white);
+        }
     }
+
+    painter.end();
 }
 
 void DPrintPreviewWidgetPrivate::setPageRangeAll()
@@ -457,10 +492,10 @@ void DPrintPreviewWidget::setCurrentPage(int page)
     d->setCurrentPage(page);
 }
 
-void DPrintPreviewWidget::print()
+void DPrintPreviewWidget::print(bool isSavedPicture)
 {
     Q_D(DPrintPreviewWidget);
-    d->print();
+    d->print(isSavedPicture);
 }
 
 void DPrintPreviewWidget::themeTypeChanged(DGuiApplicationHelper::ColorType themeType)

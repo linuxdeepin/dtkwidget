@@ -108,7 +108,7 @@ public Q_SLOTS:
     void turnBegin();
     void turnEnd();
     void setCurrentPage(int page);
-    void print();
+    void print(bool isSavedPicture = false);
     void themeTypeChanged(DGuiApplicationHelper::ColorType themeType);
 
 Q_SIGNALS:

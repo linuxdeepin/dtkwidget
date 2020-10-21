@@ -151,7 +151,7 @@ public:
     void populateScene();
     void generatePreview();
     void fitView();
-    void print();
+    void print(bool printAsPicture = false);
 
     void setPageRangeAll();
     void setCurrentPage(int page);
