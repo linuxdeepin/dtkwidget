@@ -741,9 +741,11 @@ void DPrintPreviewDialogPrivate::showadvancesetting()
 {
     if (advancesettingwdg->isHidden()) {
         advancesettingwdg->show();
+        advanceBtn->setText(qApp->translate("DPrintPreviewDialogPrivate", "Collapse"));
         advanceBtn->setIcon(QIcon::fromTheme("printer_dropup"));
     } else {
         advancesettingwdg->hide();
+        advanceBtn->setText(qApp->translate("DPrintPreviewDialogPrivate", "Advanced"));
         advanceBtn->setIcon(QIcon::fromTheme("printer_dropdown"));
     }
 }
