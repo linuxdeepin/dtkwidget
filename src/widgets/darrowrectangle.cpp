@@ -825,7 +825,11 @@ QPainterPath DArrowRectanglePrivate::getLeftCornerPath()
     if (!m_handle) {
         qreal delta = q->shadowBlurRadius() + m_shadowDistance;
 
-        rect = rect.marginsRemoved(QMargins((DArrowRectangle::FloatWidget == floatMode) ? 0 : delta, delta, delta, delta));
+        if (DApplication::isDXcbPlatform())
+            rect = rect.marginsRemoved(QMargins((DArrowRectangle::FloatWidget == floatMode) ? 0 : delta, delta, delta - q->margin(), delta));
+        else
+            rect = rect.marginsRemoved(QMargins((DArrowRectangle::FloatWidget == floatMode) ? 0 : 0, delta,
+                                                (DArrowRectangle::FloatWidget == floatMode) ? delta - q->margin() : delta *2, delta));
     }
 
     QPoint cornerPoint(rect.x(), rect.y() + (m_arrowY > 0 ? m_arrowY : (rect.height() / 2)));
@@ -904,7 +908,10 @@ QPainterPath DArrowRectanglePrivate::getRightCornerPath()
     if (!m_handle) {
         qreal delta = q->shadowBlurRadius() + m_shadowDistance;
 
-        rect = rect.marginsRemoved(QMargins(delta, delta, (DArrowRectangle::FloatWidget == floatMode) ? 0 : delta, delta));
+        if (DApplication::isDXcbPlatform())
+            rect = rect.marginsRemoved(QMargins((DArrowRectangle::FloatWidget == floatMode) ? delta - q->margin() : delta, delta, (DArrowRectangle::FloatWidget == floatMode) ? 0 : delta, delta));
+        else
+            rect = rect.marginsRemoved(QMargins((DArrowRectangle::FloatWidget == floatMode) ? delta -q->margin() : delta *2, delta, (DArrowRectangle::FloatWidget == floatMode) ? 0 : 0, delta));
     }
 
     QPoint cornerPoint(rect.x() + rect.width(), rect.y() + (m_arrowY > 0 ? m_arrowY : rect.height() / 2));
@@ -984,7 +991,11 @@ QPainterPath DArrowRectanglePrivate::getTopCornerPath()
 
     if (!m_handle) {
         qreal delta = q->shadowBlurRadius() + m_shadowDistance;
-        rect = rect.marginsRemoved(QMargins(delta, (DArrowRectangle::FloatWidget == floatMode) ? 0 : delta, delta, delta));
+        if (DApplication::isDXcbPlatform())
+            rect = rect.marginsRemoved(QMargins(delta, (DArrowRectangle::FloatWidget == floatMode) ? 0 : delta,
+                                                delta, (DArrowRectangle::FloatWidget == floatMode) ? delta -q->margin() : delta));
+        else
+            rect = rect.marginsRemoved(QMargins(delta, 0, delta, (DArrowRectangle::FloatWidget == floatMode) ? delta - q->margin() : delta * 2));
     }
 
     QPoint cornerPoint(rect.x() + (m_arrowX > 0 ? m_arrowX : rect.width() / 2), rect.y());
@@ -1041,7 +1052,10 @@ QPainterPath DArrowRectanglePrivate::getBottomCornerPath()
     if (!m_handle) {
         qreal delta = q->shadowBlurRadius() + m_shadowDistance;
 
-        rect = rect.marginsRemoved(QMargins(delta, delta, delta, (DArrowRectangle::FloatWidget == floatMode) ? 0 : delta));
+        if (DApplication::isDXcbPlatform())
+            rect = rect.marginsRemoved(QMargins(delta, (DArrowRectangle::FloatWidget == floatMode) ? delta -q->margin() : delta, delta, (DArrowRectangle::FloatWidget == floatMode) ? 0 : delta));
+        else
+            rect = rect.marginsRemoved(QMargins(delta, (DArrowRectangle::FloatWidget == floatMode) ? delta - q->margin() : delta *2, delta, 0));
     }
 
     QPoint cornerPoint(rect.x() + (m_arrowX > 0 ? m_arrowX : qRound(double(rect.width()) / 2)), rect.y() + rect.height());
@@ -1287,22 +1301,35 @@ void DArrowRectanglePrivate::setContent(QWidget *content)
     m_content->setParent(q);
     m_content->show();
 
-    qreal delta = (m_handle ? 0 : q->shadowBlurRadius() + m_shadowDistance) + q->margin();
+    qreal delta = (m_handle ? 0 : q->shadowBlurRadius() + m_shadowDistance);
+    qreal deltaMargin = (m_handle ? 0 : q->shadowBlurRadius() + m_shadowDistance) + q->margin();
 
     q->resizeWithContent();
 
     switch (m_arrowDirection) {
     case DArrowRectangle::ArrowLeft:
-        m_content->move(m_arrowHeight + ((DArrowRectangle::FloatWidget == floatMode) ? 0 : delta), delta);
+        if (DApplication::isDXcbPlatform())
+            m_content->move(m_arrowHeight + ((DArrowRectangle::FloatWidget == floatMode) ? q->margin() : deltaMargin), deltaMargin);
+        else
+            m_content->move(m_arrowHeight + q->margin(), deltaMargin);
         break;
     case DArrowRectangle::ArrowRight:
-        m_content->move(delta, delta);
+        if (DApplication::isDXcbPlatform())
+            m_content->move((DArrowRectangle::FloatWidget == floatMode) ? deltaMargin - q->margin() : deltaMargin, deltaMargin);
+        else
+            m_content->move((DArrowRectangle::FloatWidget == floatMode) ? delta : delta *2 + q->margin(), deltaMargin);
         break;
     case DArrowRectangle::ArrowTop:
-        m_content->move(delta, ((DArrowRectangle::FloatWidget == floatMode) ? 0 : delta) + m_arrowHeight);
+        if (DApplication::isDXcbPlatform())
+            m_content->move(deltaMargin, ((DArrowRectangle::FloatWidget == floatMode) ? q->margin() : deltaMargin) + m_arrowHeight);
+        else
+            m_content->move(deltaMargin, m_arrowHeight + deltaMargin - delta);
         break;
     case DArrowRectangle::ArrowBottom:
-        m_content->move(delta, delta);
+        if (DApplication::isDXcbPlatform())
+            m_content->move(deltaMargin, ((DArrowRectangle::FloatWidget == floatMode) ? deltaMargin -q->margin() : deltaMargin));
+        else
+            m_content->move(deltaMargin, (DArrowRectangle::FloatWidget == floatMode) ? delta : deltaMargin + delta);
         break;
     }
 
