@@ -415,6 +415,7 @@ void DPrintPreviewWidget::updateView()
     if (d->currentPageNumber < 0 || d->currentPageNumber > d->pages.count() || d->pages.empty())
         return;
     d->pages.at(d->currentPageNumber - 1)->update();
+    d->graphicsView->resetScale(false);
 }
 
 void DPrintPreviewWidget::refreshBegin()
