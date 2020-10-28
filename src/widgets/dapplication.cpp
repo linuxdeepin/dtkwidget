@@ -420,6 +420,27 @@ bool DApplicationPrivate::isUserManualExists()
  * \~chinese \param argc 作用同 QApplication::QApplication 参数 argc。
  * \~chinese \param argv 作用同 QApplication::QApplication 参数 argv。
  */
+
+/*!
+ * \~chinese \brief DApplication::globalApplication 返回一个DApplicatioin实例
+ * \~chinese 如果在执行此函数之前DApplication已经被创建则返回已存在的实例，否则直接创建一个
+ * \~chinese 新的DApplication实例并返回。主要用于与deepin-trubo服务相配合，用于共享
+ * \~chinese deepin-turbo dtkwidget booster中已经创建的DApplication对象，以此节省初始化时间。
+ * \~chinese \param argc 传递给DApplication的构造函数
+ * \~chinese \param argv 传递给DApplication的构造函数
+ * \~chinese \return 返回一个DApplication对象
+ * \~chinese \warning 不保证获取的DApplication对象一定有效，如果实例已存在，则直接使
+ * \~chinese 用static_case将其转换为DApplication对象
+ */
+DApplication *DApplication::globalApplication(int argc, char **argv)
+{
+    if (instance()) {
+        return qApp;
+    }
+
+    return new DApplication(argc, argv);
+}
+
 DApplication::DApplication(int &argc, char **argv) :
     QApplication(argc, argv),
     DObject(*new DApplicationPrivate(this))
