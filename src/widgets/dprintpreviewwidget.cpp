@@ -380,6 +380,8 @@ void DPrintPreviewWidget::setColorMode(const QPrinter::ColorMode &colorMode)
     int page = d->index2page(d->currentPageNumber - 1);
     if (page > 0)
         d->pages.at(page - 1)->update();
+
+    d->graphicsView->resetScale(false);
 }
 
 void DPrintPreviewWidget::setOrientation(const QPrinter::Orientation &pageOrientation)
