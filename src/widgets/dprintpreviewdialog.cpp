@@ -608,7 +608,6 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(colorModeCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_ColorModeChange(int)));
     QObject::connect(orientationgroup, SIGNAL(buttonClicked(int)), q, SLOT(_q_orientationChanged(int)));
     QObject::connect(pageRangeEdit, &DLineEdit::editingFinished, [=] {
-        isChangePageRange = false;
         _q_customPagesFinished();
     });
     QObject::connect(pageRangeEdit, &DLineEdit::focusChanged, q, [this](bool onFocus) {
@@ -625,9 +624,6 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(pview, &DPrintPreviewWidget::totalPages, [this](int pages) {
         jumpPageEdit->setRange(1, pages);
         totalPageLabel->setText(QString::number(pages));
-        if (totalPages != pages) {
-            isChangePageRange = true;
-        }
         totalPages = pages;
         jumpPageEdit->setMaximum(totalPages);
         setTurnPageBtnStatus();
@@ -656,7 +652,7 @@ void DPrintPreviewDialogPrivate::initconnections()
             printer->setPageSize(QPrinter::A4);
             return ;
         }
-        if (printDeviceCombo->currentIndex() != printDeviceCombo->count() - 1) {
+        if (printDeviceCombo->currentIndex() != printDeviceCombo->count() - 1 && printDeviceCombo->currentIndex() != printDeviceCombo->count() - 2) {
             printer->setPageSize(prInfo.supportedPageSizes().at(paperSizeCombo->currentIndex()));
         } else {
             switch (paperSizeCombo->currentIndex()) {
@@ -688,11 +684,9 @@ void DPrintPreviewDialogPrivate::initconnections()
         if (isInited) {
             this->marginsUpdate(false);
         }
-        if (pview->pageRangeMode() == DPrintPreviewWidget::SelectPage) {
-            _q_customPagesFinished();
-        } else {
-            isChangePageRange = false;
-        }
+        if (pview->pageRangeMode() == DPrintPreviewWidget::SelectPage)
+            pageRangeCombo->setCurrentIndex(PAGERANGE_ALL);
+
     });
 
     QObject::connect(scaleRateEdit->lineEdit(), &QLineEdit::editingFinished, q, [=] {
@@ -946,10 +940,6 @@ void DPrintPreviewDialogPrivate::themeTypeChange(DGuiApplicationHelper::ColorTyp
  */
 void DPrintPreviewDialogPrivate::setPageIsLegal(bool islegal)
 {
-    if (isChangePageRange && !islegal) {
-        pageRangeCombo->setCurrentIndex(PAGERANGE_ALL);
-        return;
-    }
     printBtn->setEnabled(islegal);
     pageRangeEdit->setAlert(!islegal);
 }
@@ -1110,11 +1100,8 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
         }
     }
     marginsUpdate(true);
-    if (pview->pageRangeMode() == DPrintPreviewWidget::SelectPage) {
-        _q_customPagesFinished();
-    } else {
-        isChangePageRange = false;
-    }
+    if (pview->pageRangeMode() == DPrintPreviewWidget::SelectPage)
+        pageRangeCombo->setCurrentIndex(PAGERANGE_ALL);
     paperSizeCombo->blockSignals(false);
 }
 
@@ -1128,7 +1115,6 @@ void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
     setEnable(index, pageRangeCombo);
     pageRangeEdit->lineEdit()->setPlaceholderText("");
     pageRangeEdit->setText("");
-    isChangePageRange = false;
     if (index == DPrintPreviewWidget::AllPage || index == DPrintPreviewWidget::CurrentPage) {
         pview->setPageRangeMode((DPrintPreviewWidget::PageRange)index);
         setPageIsLegal(true);
@@ -1200,11 +1186,8 @@ void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
         pview->updatePreview();
     }
 
-    if (pview->pageRangeMode() == DPrintPreviewWidget::SelectPage) {
-        _q_customPagesFinished();
-    } else {
-        isChangePageRange = false;
-    }
+    if (pview->pageRangeMode() == DPrintPreviewWidget::SelectPage)
+        pageRangeCombo->setCurrentIndex(PAGERANGE_ALL);
 
     if (marginOldValue.length() > 4)
         marginOldValue.clear();
@@ -1253,11 +1236,8 @@ void DPrintPreviewDialogPrivate::_q_orientationChanged(int index)
         pview->setOrientation(DPrinter::Landscape);
         pview->reviewChange(true);
     }
-    if (pview->pageRangeMode() == DPrintPreviewWidget::SelectPage) {
-        _q_customPagesFinished();
-    } else {
-        isChangePageRange = false;
-    }
+    if (pview->pageRangeMode() == DPrintPreviewWidget::SelectPage)
+        pageRangeCombo->setCurrentIndex(PAGERANGE_ALL);
 }
 
 /*!
@@ -1362,11 +1342,8 @@ void DPrintPreviewDialogPrivate::adjustMargins()
     marginOldValue << topMarginF << leftMarginF << rightMarginF << bottomMarginF;
     this->printer->setPageMargins(QMarginsF(leftMarginF, topMarginF, rightMarginF, bottomMarginF), QPageLayout::Millimeter);
     this->pview->updatePreview();
-    if (pview->pageRangeMode() == DPrintPreviewWidget::SelectPage) {
-        _q_customPagesFinished();
-    } else {
-        isChangePageRange = false;
-    }
+    if (pview->pageRangeMode() == DPrintPreviewWidget::SelectPage)
+        pageRangeCombo->setCurrentIndex(PAGERANGE_ALL);
 }
 
 /*!
@@ -1582,7 +1559,6 @@ bool DPrintPreviewDialog::eventFilter(QObject *watched, QEvent *event)
                 d->setMininumMargins();
                 d->adjustMargins();
             } else if (watched == d->pageRangeEdit){
-                d->isChangePageRange = false;
                 d->_q_customPagesFinished();
                 d->isOnFocus = true;
                 return true;
