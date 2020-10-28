@@ -47,9 +47,6 @@
 #define SixteenK_Weight 195
 #define SixteenK_Height 270
 
-#define MARGIN_SIZE_LESS 90
-#define MARGIN_SIZE_MORE 169
-
 #define PAGERANGE_ALL 0
 #define PAGERANGE_CURRENT 1
 #define PAGERANGE_SELECT 2
@@ -247,11 +244,9 @@ void DPrintPreviewDialogPrivate::initbasicui()
     QHBoxLayout *printerlayout = new QHBoxLayout(printerFrame);
     printerlayout->setContentsMargins(10, 0, 10, 0);
     DLabel *printerlabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Printer"), printerFrame);
-    printerlabel->setFixedWidth(123);
     printDeviceCombo = new DComboBox(basicsettingwdg);
-    printDeviceCombo->setMinimumSize(275, 36);
-    printerlayout->addWidget(printerlabel);
-    printerlayout->addWidget(printDeviceCombo);
+    printerlayout->addWidget(printerlabel, 4);
+    printerlayout->addWidget(printDeviceCombo, 9);
     printerlayout->setAlignment(printDeviceCombo, Qt::AlignVCenter);
 
     //打印份数
@@ -263,13 +258,11 @@ void DPrintPreviewDialogPrivate::initbasicui()
     QHBoxLayout *copycountlayout = new QHBoxLayout(copycountFrame);
     copycountlayout->setContentsMargins(10, 0, 10, 0);
     DLabel *copycountlabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Copies"), copycountFrame);
-    copycountlabel->setFixedWidth(123);
     copycountspinbox = new DSpinBox(copycountFrame);
     copycountspinbox->setEnabledEmbedStyle(true);
     copycountspinbox->setRange(1, 999);
-    copycountspinbox->setMinimumSize(275, 36);
-    copycountlayout->addWidget(copycountlabel);
-    copycountlayout->addWidget(copycountspinbox);
+    copycountlayout->addWidget(copycountlabel, 4);
+    copycountlayout->addWidget(copycountspinbox, 9);
 
     QRegExp re("^[1-9][0-9][0-9]$");
     QRegExpValidator *va = new QRegExpValidator(re);
@@ -284,15 +277,13 @@ void DPrintPreviewDialogPrivate::initbasicui()
     QVBoxLayout *pagelayout = new QVBoxLayout(pageFrame);
     pagelayout->setContentsMargins(10, 5, 10, 5);
     DLabel *pagerangelabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Page range"), pageFrame);
-    pagerangelabel->setFixedWidth(123);
     pageRangeCombo = new DComboBox(pageFrame);
-    pageRangeCombo->setMinimumSize(275, 36);
     pageRangeCombo->addItem(qApp->translate("DPrintPreviewDialogPrivate", "All"));
     pageRangeCombo->addItem(qApp->translate("DPrintPreviewDialogPrivate", "Current page"));
     pageRangeCombo->addItem(qApp->translate("DPrintPreviewDialogPrivate", "Select pages"));
     QHBoxLayout *hrangebox = new QHBoxLayout();
-    hrangebox->addWidget(pagerangelabel);
-    hrangebox->addWidget(pageRangeCombo);
+    hrangebox->addWidget(pagerangelabel, 4);
+    hrangebox->addWidget(pageRangeCombo, 9);
 
     pageRangeEdit = new DLineEdit;
     pagelayout->addLayout(hrangebox);
@@ -376,11 +367,10 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     colorframe->setFixedHeight(48);
     QHBoxLayout *colorlayout = new QHBoxLayout(colorframe);
     DLabel *colorlabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Color mode"));
-    colorlabel->setFixedWidth(123);
     colorModeCombo = new DComboBox;
     colorModeCombo->addItems(QStringList() << qApp->translate("DPrintPreviewDialogPrivate", "Color") << qApp->translate("DPrintPreviewDialogPrivate", "Grayscale"));
-    colorlayout->addWidget(colorlabel);
-    colorlayout->addWidget(colorModeCombo);
+    colorlayout->addWidget(colorlabel, 4);
+    colorlayout->addWidget(colorModeCombo, 9);
     colorlayout->setContentsMargins(10, 4, 10, 4);
 
     DFrame *marginsframe = new DFrame;
@@ -390,11 +380,10 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     marginslayout->setContentsMargins(10, 5, 10, 5);
     QHBoxLayout *marginscombolayout = new QHBoxLayout;
     DLabel *marginlabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Margins"));
-    marginlabel->setFixedSize(123, 36);
     marginsCombo = new DComboBox;
     marginsCombo->addItems(QStringList() << qApp->translate("DPrintPreviewDialogPrivate", "Narrow(mm)") << qApp->translate("DPrintPreviewDialogPrivate", "Normal(mm)") << qApp->translate("DPrintPreviewDialogPrivate", "Moderate(mm)") << qApp->translate("DPrintPreviewDialogPrivate", "Customize(mm)"));
-    marginscombolayout->addWidget(marginlabel);
-    marginscombolayout->addWidget(marginsCombo);
+    marginscombolayout->addWidget(marginlabel, 4);
+    marginscombolayout->addWidget(marginsCombo, 9);
 
     QHBoxLayout *marginsspinlayout = new QHBoxLayout;
     marginsspinlayout->setContentsMargins(0, 0, 0, 0);
@@ -416,15 +405,18 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     QVBoxLayout *marginsspinboxlayout1 = new QVBoxLayout;
     marginsspinboxlayout1->addWidget(marginTopSpin);
     marginsspinboxlayout1->addWidget(marginLeftSpin);
+    marginsspinboxlayout1->setContentsMargins(0, 0, 10, 0);
     QVBoxLayout *marginslabellayout2 = new QVBoxLayout;
     marginslabellayout2->addWidget(bottomlabel);
     marginslabellayout2->addWidget(rightlabel);
     QVBoxLayout *marginsspinboxlayout2 = new QVBoxLayout;
     marginsspinboxlayout2->addWidget(marginBottomSpin);
     marginsspinboxlayout2->addWidget(marginRightSpin);
-    marginsspinlayout->addStretch();
+    spacer = new QSpacerItem(130, 72);
+    marginsspinlayout->addSpacerItem(spacer);
     marginsLayout(true);
 
+    marginsspinlayout->setContentsMargins(20, 0, 0, 0);
     marginsspinlayout->addLayout(marginslabellayout1);
     marginsspinlayout->addLayout(marginsspinboxlayout1);
     marginsspinlayout->addLayout(marginslabellayout2);
@@ -513,11 +505,10 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     paperframe->setFixedHeight(48);
     QHBoxLayout *paperframelayout = new QHBoxLayout(paperframe);
     DLabel *papersizelabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Paper size"));
-    papersizelabel->setFixedWidth(123);
     paperSizeCombo = new DComboBox;
     paperSizeCombo->setFixedHeight(36);
-    paperframelayout->addWidget(papersizelabel);
-    paperframelayout->addWidget(paperSizeCombo);
+    paperframelayout->addWidget(papersizelabel, 4);
+    paperframelayout->addWidget(paperSizeCombo, 9);
     paperframelayout->setContentsMargins(10, 4, 10, 4);
     paperlayout->addLayout(papertitlelayout);
     paperlayout->addWidget(paperframe);
@@ -538,11 +529,10 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     QHBoxLayout *duplexlayout = new QHBoxLayout(duplexframe);
     duplexCombo = new DComboBox;
     duplexCheckBox = new DCheckBox(qApp->translate("DPrintPreviewDialogPrivate", "Duplex"));
-    duplexCheckBox->setFixedWidth(123);
     duplexCombo->setFixedHeight(36);
     duplexlayout->setContentsMargins(14, 4, 10, 4);
-    duplexlayout->addWidget(duplexCheckBox);
-    duplexlayout->addWidget(duplexCombo);
+    duplexlayout->addWidget(duplexCheckBox, 4);
+    duplexlayout->addWidget(duplexCombo, 9);
 
     drawinglayout->addLayout(drawingtitlelayout);
     drawinglayout->addWidget(duplexframe);
@@ -556,15 +546,9 @@ void DPrintPreviewDialogPrivate::initadvanceui()
 void DPrintPreviewDialogPrivate::marginsLayout(bool adapted)
 {
     if (adapted) {
-        marginTopSpin->setMaximumWidth(MARGIN_SIZE_LESS);
-        marginLeftSpin->setMaximumWidth(MARGIN_SIZE_LESS);
-        marginRightSpin->setMaximumWidth(MARGIN_SIZE_LESS);
-        marginBottomSpin->setMaximumWidth(MARGIN_SIZE_LESS);
+        spacer->changeSize(130, 72);
     } else {
-        marginTopSpin->setMaximumWidth(MARGIN_SIZE_MORE);
-        marginLeftSpin->setMaximumWidth(MARGIN_SIZE_MORE);
-        marginRightSpin->setMaximumWidth(MARGIN_SIZE_MORE);
-        marginBottomSpin->setMaximumWidth(MARGIN_SIZE_MORE);
+        spacer->changeSize(0, 72);
     }
 }
 
@@ -1629,12 +1613,10 @@ void DPrintPreviewDialog::resizeEvent(QResizeEvent *event)
         this->findChild<DWidget *>("rightWidget")->setMaximumWidth(452 * 1.2);
         this->findChild<DWidget *>("leftWidget")->setMaximumWidth(this->width() - 20 - 10 - 452 * 1.2);
         this->findChild<DBackgroundGroup *>("backGround")->setItemSpacing(10);
-        d->marginsLayout(false);
     } else {
         this->findChild<DWidget *>("rightWidget")->setMaximumWidth(452 * per);
         this->findChild<DWidget *>("leftWidget")->setMaximumWidth(this->width() - 20 - 2 - 452 * per);
         this->findChild<DBackgroundGroup *>("backGround")->setItemSpacing(2);
-        d->marginsLayout(true);
     }
 }
 DWIDGET_END_NAMESPACE
