@@ -148,17 +148,19 @@ void DPrintPreviewDialogPrivate::initleft(QVBoxLayout *layout)
     nextPageBtn = new DIconButton(DStyle::SP_ArrowRight);
     lastBtn = new DIconButton(DStyle::SP_ArrowNext);
     lastBtn->setIcon(QIcon::fromTheme("printer_final"));
+    pbottomlayout->addStretch();
     pbottomlayout->addWidget(firstBtn);
     pbottomlayout->addSpacing(10);
     pbottomlayout->addWidget(prevPageBtn);
-    pbottomlayout->addStretch();
+    pbottomlayout->addSpacing(55);
     pbottomlayout->addWidget(jumpPageEdit);
     pbottomlayout->addWidget(spaceLabel);
     pbottomlayout->addWidget(totalPageLabel);
-    pbottomlayout->addStretch();
+    pbottomlayout->addSpacing(55);
     pbottomlayout->addWidget(nextPageBtn);
     pbottomlayout->addSpacing(10);
     pbottomlayout->addWidget(lastBtn);
+    pbottomlayout->addStretch();
 
     QRegExp reg("^([1-9][0-9]*)");
     QRegExpValidator *val = new QRegExpValidator(reg);
