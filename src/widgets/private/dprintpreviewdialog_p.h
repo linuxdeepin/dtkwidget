@@ -145,6 +145,7 @@ public:
     DLineEdit *waterTextEdit;
     QVector<qreal> marginOldValue; // 记录margin自定义时的旧值  如果旧值和新值一致，就不需要刷新，top left right bottom
     QList<qreal> minnumMargins;
+    QSpacerItem *spacer;
     Q_DECLARE_PUBLIC(DPrintPreviewDialog)
 };
 
