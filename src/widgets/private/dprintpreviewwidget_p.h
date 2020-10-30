@@ -102,6 +102,87 @@ private:
     QRectF brect;
 };
 
+class WaterMark : public QGraphicsItem
+{
+public:
+    enum Type {
+        None,
+        Text,
+        Image
+    };
+    enum Layout {
+        Center,
+        Tiled
+    };
+    WaterMark(QGraphicsItem *parent = nullptr)
+        : QGraphicsItem(parent)
+        , type(None)
+        , layout(Center)
+    {
+    }
+    inline void setType(Type t)
+    {
+        type = t;
+    }
+    inline void setLayoutType(Layout l)
+    {
+        layout = l;
+    }
+    inline void setImage(const QImage &img)
+    {
+        type = Image;
+        sourceImage = img;
+    }
+    inline void setImageScale(qreal scale)
+    {
+        imageScale = scale;
+    }
+    inline void setText(const QString str)
+    {
+        type = Text;
+        brectPolygon = mapToScene(brect);
+        text = str;
+    }
+    inline void setFont(const QFont &f)
+    {
+        font = f;
+    }
+    inline void setColor(const QColor &c)
+    {
+        color = c;
+    }
+    inline void setBoundingRect(const QRectF &rect)
+    {
+        setRotation(0);
+        brect = rect;
+        brectPolygon = mapToScene(brect);
+        qreal width = brect.width();
+        qreal height = brect.height();
+        twoPolygon = mapToScene(QRectF(brect.x() - width / 2, brect.y() - height / 2, width * 2, height * 2));
+        setTransformOriginPoint(brect.center());
+    }
+    QRectF boundingRect() const override
+    {
+        return brect;
+    }
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) override;
+
+private:
+    Type type;
+    Layout layout;
+    QImage sourceImage;
+    QImage targetImage;
+    QRectF brect;
+    qreal imageScale = 1.0;
+    QGraphicsTextItem textItem;
+    QString text;
+    QFont font;
+    QColor color;
+
+    QPolygonF brectPolygon;
+    QPolygonF twoPolygon;
+};
+
 class PageItem : public QGraphicsItem
 {
 public:
@@ -167,6 +248,8 @@ public:
     QList<QPicture> targetPictures;
     QList<const QPicture *> pictures;
     QList<QGraphicsItem *> pages;
+    QGraphicsRectItem *background;
+    WaterMark *waterMark;
     QVector<int> pageRange;
     int currentPageNumber = 0;
     DPrinter::ColorMode colorMode;

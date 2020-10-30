@@ -98,6 +98,17 @@ public:
     void updateView();
     void refreshBegin();
     void refreshEnd();
+    void setWaterMarkType(int type);
+    void setWaterMargImage(const QImage &image);
+    void setWaterMarkRotate(qreal rotate);
+    void setWaterMarkScale(qreal scale);
+    void setWaterMarkOpacity(qreal opacity);
+    void setConfidentialWaterMark();
+    void setDraftWaterMark();
+    void setSampleWaterMark();
+    void setCustomWaterMark(const QString &text);
+    void setWaterMarkFont(const QFont &font);
+    void setWaterMarkColor(const QColor &color);
     void setImposition(Imposition im);
     void setOrder(Order order);
 

@@ -35,6 +35,13 @@ void DPrintPreviewWidgetPrivate::init()
     q->themeTypeChanged(DGuiApplicationHelper::instance()->themeType());
     graphicsView->setScene(scene);
 
+    background = new QGraphicsRectItem();
+    background->setZValue(-1);
+    scene->addItem(background);
+    waterMark = new WaterMark();
+    scene->addItem(waterMark);
+    waterMark->setZValue(0);
+
     QVBoxLayout *layout = new QVBoxLayout(q);
     layout->setContentsMargins(10, 10, 10, 10);
     layout->addWidget(graphicsView);
@@ -47,6 +54,10 @@ void DPrintPreviewWidgetPrivate::populateScene()
     QSize paperSize = previewPrinter->pageLayout().fullRectPixels(previewPrinter->resolution()).size();
     QRect pageRect = previewPrinter->pageLayout().paintRectPixels(previewPrinter->resolution());
 
+    QRectF rect(pageRect);
+    background->setRect(rect);
+    background->setBrush(Qt::white);
+
     int page = 1;
     //todo 多页显示接口添加
     for (int i = 0; i < pictures.size(); i++) {
@@ -55,6 +66,7 @@ void DPrintPreviewWidgetPrivate::populateScene()
         scene->addItem(item);
         pages.append(item);
     }
+
     if (!pages.isEmpty()) {
         if (currentPageNumber == 0)
             currentPageNumber = FIRST_PAGE;
@@ -435,6 +447,83 @@ void DPrintPreviewWidget::refreshEnd()
     updatePreview();
 }
 
+void DPrintPreviewWidget::setWaterMarkType(int type)
+{
+    Q_D(DPrintPreviewWidget);
+
+    d->waterMark->setType(static_cast<WaterMark::Type>(type));
+}
+
+void DPrintPreviewWidget::setWaterMargImage(const QImage &image)
+{
+    Q_D(DPrintPreviewWidget);
+
+    d->waterMark->setImage(image);
+}
+
+void DPrintPreviewWidget::setWaterMarkRotate(qreal rotate)
+{
+    Q_D(DPrintPreviewWidget);
+
+    d->waterMark->setRotation(rotate);
+}
+
+void DPrintPreviewWidget::setWaterMarkScale(qreal scale)
+{
+    Q_D(DPrintPreviewWidget);
+
+    d->waterMark->setImageScale(scale);
+}
+
+void DPrintPreviewWidget::setWaterMarkOpacity(qreal opacity)
+{
+    Q_D(DPrintPreviewWidget);
+
+    d->waterMark->setOpacity(opacity);
+}
+
+void DPrintPreviewWidget::setConfidentialWaterMark()
+{
+    Q_D(DPrintPreviewWidget);
+
+    d->waterMark->setText(qApp->translate("DPrintPreviewWidget", "Confidential"));
+}
+
+void DPrintPreviewWidget::setDraftWaterMark()
+{
+    Q_D(DPrintPreviewWidget);
+
+    d->waterMark->setText(qApp->translate("DPrintPreviewWidget", "Draft"));
+}
+
+void DPrintPreviewWidget::setSampleWaterMark()
+{
+    Q_D(DPrintPreviewWidget);
+
+    d->waterMark->setText(qApp->translate("DPrintPreviewWidget", "Sample"));
+}
+
+void DPrintPreviewWidget::setCustomWaterMark(const QString &text)
+{
+    Q_D(DPrintPreviewWidget);
+
+    d->waterMark->setText(text);
+}
+
+void DPrintPreviewWidget::setWaterMarkFont(const QFont &font)
+{
+    Q_D(DPrintPreviewWidget);
+
+    d->waterMark->setFont(font);
+}
+
+void DPrintPreviewWidget::setWaterMarkColor(const QColor &color)
+{
+    Q_D(DPrintPreviewWidget);
+
+    d->waterMark->setColor(color);
+}
+
 void DPrintPreviewWidget::setImposition(Imposition im)
 {
     Q_D(DPrintPreviewWidget);
@@ -531,7 +620,7 @@ void PageItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     QRectF paperRect(0, 0, paperSize.width(), paperSize.height());
 
     painter->setClipRect(paperRect & option->exposedRect);
-    painter->fillRect(paperRect, Qt::white);
+    //painter->fillRect(paperRect, Qt::white);
 
     if (!pagePicture)
         return;
@@ -603,6 +692,53 @@ QImage ContentItem::imageGrayscale(const QImage *origin)
     }
 
     return iGray;
+}
+
+void WaterMark::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
+{
+    Q_UNUSED(item);
+    Q_UNUSED(widget);
+    switch (type) {
+    case Type::None:
+        return;
+    case Type::Text: {
+    }
+        return;
+    case Type::Image: {
+        QPolygonF brectPol = mapFromScene(brectPolygon);
+        QPolygonF twopol = mapFromScene(twoPolygon);
+        QPainterPath path;
+        path.addPolygon(twopol);
+        path.addPolygon(brectPol);
+        path.addPolygon(twopol);
+        painter->setClipPath(path, Qt::IntersectClip);
+        QImage img = sourceImage.scaledToWidth(sourceImage.width() * imageScale);
+        QSize size = img.size() / img.devicePixelRatio();
+        int imgWidth = size.width();
+        int imgHeight = size.height();
+        int space = qMin(imgWidth, imgHeight);
+        if (layout == Center) {
+            QPointF leftTop(brect.center().x() - imgWidth / 2.0, brect.center().y() - imgHeight / 2.0);
+            painter->drawImage(leftTop, img);
+            return;
+        }
+
+        // targetRectf,需要绘制水印的范围，取高宽两倍于brect
+        QRectF targetRectf = QRectF(brect.x() - brect.width() / 2, brect.y() - brect.height() / 2, brect.width() * 2, brect.height() * 2);
+        QPointF leftTop = targetRectf.topLeft();
+        qreal colStart = leftTop.x();
+        for (int row = 0; targetRectf.contains(leftTop);) {
+            leftTop += QPointF(row % 2 * space, 0);
+            for (int col = 0; targetRectf.contains(leftTop); col++) {
+                painter->drawImage(leftTop, img);
+                leftTop += QPointF(imgWidth + space, 0);
+            }
+            row++;
+            leftTop += QPointF(0, space + imgHeight);
+            leftTop.setX(colStart);
+        }
+    }
+    }
 }
 
 GraphicsView::GraphicsView(QWidget *parent)
