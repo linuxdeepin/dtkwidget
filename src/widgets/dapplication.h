@@ -49,7 +49,7 @@ class LIBDTKWIDGETSHARED_EXPORT DApplication : public QApplication, public DTK_C
     Q_PROPERTY(bool autoActivateWindows READ autoActivateWindows WRITE setAutoActivateWindows)
 
 public:
-    static DApplication *globalApplication(int argc, char **argv);
+    static DApplication *globalApplication(int &argc, char **argv);
 
     DApplication(int &argc, char **argv);
 

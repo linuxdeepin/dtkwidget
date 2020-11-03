@@ -38,6 +38,8 @@
 #include <QtConcurrent/QtConcurrent>
 
 #include <qpa/qplatformintegrationfactory_p.h>
+#include <private/qapplication_p.h>
+#include <private/qcoreapplication_p.h>
 #include <private/qwidget_p.h>
 
 #include <DStandardPaths>
@@ -432,9 +434,57 @@ bool DApplicationPrivate::isUserManualExists()
  * \~chinese \warning 不保证获取的DApplication对象一定有效，如果实例已存在，则直接使
  * \~chinese 用static_case将其转换为DApplication对象
  */
-DApplication *DApplication::globalApplication(int argc, char **argv)
+DApplication *DApplication::globalApplication(int &argc, char **argv)
 {
     if (instance()) {
+        auto dp = static_cast<QCoreApplicationPrivate*>(qApp->QCoreApplication::d_ptr.data());
+        Q_ASSERT(dp);
+
+        // 清理QGuiApplication库的命令行参数
+        int j = argc ? 1 : 0;
+        const QByteArrayList qt_command = {
+            "-platformpluginpath",
+            "-platform",
+            "-platformtheme",
+            "-qwindowgeometry",
+            "-geometry",
+            "-qwindowtitle",
+            "-title",
+            "-qwindowicon",
+            "-icon",
+            "-plugin",
+            "-reverse",
+            "-session",
+            "-style"
+        };
+        for (int i = 1; i < argc; i++) {
+            if (!argv[i])
+                continue;
+            if (*argv[i] != '-') {
+                argv[j++] = argv[i];
+                continue;
+            }
+            const char *arg = argv[i];
+            if (arg[1] == '-') // startsWith("--")
+                ++arg;
+            if (qt_command.indexOf(arg) >= 0) {
+                // 跳过这个参数的值
+                ++i;
+            } else if (strcmp(arg, "-testability") != 0
+                       && strncmp(arg, "-style=", 7) != 0) {
+                argv[j++] = argv[i];
+            }
+        }
+
+        if (j < argc) {
+            argv[j] = nullptr;
+            argc = j;
+        }
+
+        dp->argc = argc;
+        dp->argv = argv;
+        dp->processCommandLineArguments();
+        static_cast<QApplicationPrivate*>(dp)->process_cmdline();
         return qApp;
     }
 
