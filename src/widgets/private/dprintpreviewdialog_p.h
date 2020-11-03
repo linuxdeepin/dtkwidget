@@ -95,6 +95,8 @@ public:
     void _q_marginEditFinished();
     void _q_currentPageSpinChanged(int value);
     void _q_checkStateChanged(int state);
+    void _q_textWaterMarkModeChanged(int index);
+    void _q_customTextWatermarkFinished();
 
     //printer
     DPrinter *printer;
@@ -106,6 +108,7 @@ public:
     bool isInited = false;
     int strLengths = 0;
     bool isOnFocus = false;
+    QString lastCusWatermarkText = "";
 
     //control
     DPrintPreviewWidget *pview;

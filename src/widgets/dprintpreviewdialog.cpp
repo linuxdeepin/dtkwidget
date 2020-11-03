@@ -777,6 +777,8 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(printBtn, SIGNAL(clicked(bool)), q, SLOT(_q_startPrint(bool)));
     QObject::connect(colorModeCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_ColorModeChange(int)));
     QObject::connect(orientationgroup, SIGNAL(buttonClicked(int)), q, SLOT(_q_orientationChanged(int)));
+    QObject::connect(waterTextCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_textWaterMarkModeChanged(int)));
+    QObject::connect(waterTextEdit, SIGNAL(editingFinished()), q, SLOT(_q_customTextWatermarkFinished()));
     QObject::connect(waterSizeSlider, &DSlider::valueChanged, q, [=](int value) {
         sizeBox->setValue(value);
     });
@@ -1222,11 +1224,13 @@ void DPrintPreviewDialogPrivate::watermarkTypeChoosed(int index)
         fontCombo->setEnabled(true);
         waterColorBtn->setEnabled(true);
         picPathEdit->setEnabled(false);
+        _q_textWaterMarkModeChanged(waterTextCombo->currentIndex());
     } else if (index == 1) {
         waterTypeGroup->button(1)->setChecked(true);
         waterTextCombo->setEnabled(false);
         fontCombo->setEnabled(false);
         waterColorBtn->setEnabled(false);
+        waterTextEdit->setEnabled(false);
         picPathEdit->setEnabled(true);
     } else {
         waterTypeGroup->button(0)->setChecked(false);
@@ -1628,6 +1632,35 @@ void DPrintPreviewDialogPrivate::_q_checkStateChanged(int state)
 }
 
 /*!
+ * \~chinese \brief DPrintPreviewDialogPrivate::_q_textWaterMarkModeChanged 文本水印的内容选择
+ * \~chinese \param state 判断文本水印内容选择
+ */
+void DPrintPreviewDialogPrivate::_q_textWaterMarkModeChanged(int index)
+{
+    if (index != waterTextCombo->count() - 1) {
+        waterTextEdit->setEnabled(false);
+        pview->setTextWaterMark(waterTextCombo->currentText());
+        if (!waterTextEdit->text().isEmpty())
+            waterTextEdit->clear();
+    } else {
+        waterTextEdit->setEnabled(true);
+        if (!lastCusWatermarkText.isEmpty())
+            waterTextEdit->setText(lastCusWatermarkText);
+    }
+}
+
+/*!
+ * \~chinese \brief DPrintPreviewDialogPrivate::_q_customTextWatermarkFinished 文本水印的自定义输入
+ * \~chinese \param state 判断文本水印自定义
+ */
+void DPrintPreviewDialogPrivate::_q_customTextWatermarkFinished()
+{
+    QString cusText = waterTextEdit->text();
+    pview->setTextWaterMark(cusText);
+    lastCusWatermarkText = cusText;
+}
+
+/*!
  * \~chinese \brief DPrintPreviewDialogPrivate::_q_startPrint 点击开始打印，设置属性
  * \~chinese \param clicked 判断按钮点击状态
  */
@@ -1779,6 +1812,9 @@ bool DPrintPreviewDialog::eventFilter(QObject *watched, QEvent *event)
                 return true;
             } else if (watched == d->scaleRateEdit){
                 Q_EMIT d->scaleRateEdit->lineEdit()->editingFinished();
+                return true;
+            } else if (watched == d->waterTextEdit) {
+                d->_q_customTextWatermarkFinished();
                 return true;
             }
          }
