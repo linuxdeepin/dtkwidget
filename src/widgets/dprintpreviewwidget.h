@@ -78,6 +78,7 @@ public:
     };
 
     explicit DPrintPreviewWidget(DPrinter *printer, QWidget *parent = nullptr);
+    ~DPrintPreviewWidget() override;
 
     void setVisible(bool visible) override;
     void setPageRange(const QVector<int> &rangePages);

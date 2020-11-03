@@ -114,10 +114,11 @@ public:
         Center,
         Tiled
     };
-    WaterMark(QGraphicsItem *parent = nullptr)
+    WaterMark(QPicture *waterMarkPicture, QGraphicsItem *parent = nullptr)
         : QGraphicsItem(parent)
         , type(None)
         , layout(Center)
+        , mWaterMarkPic(waterMarkPicture)
     {
     }
     inline void setType(Type t)
@@ -181,6 +182,7 @@ private:
 
     QPolygonF brectPolygon;
     QPolygonF twoPolygon;
+    QPicture *mWaterMarkPic;
 };
 
 class PageItem : public QGraphicsItem
@@ -241,6 +243,7 @@ public:
     int index2page(int index);
     int page2index(int page);
     void impositionPages();
+    QImage generateWaterMarkImage(QPicture *originPic);
 
     GraphicsView *graphicsView;
     QGraphicsScene *scene;
@@ -248,6 +251,7 @@ public:
     QList<QPicture> targetPictures;
     QList<const QPicture *> pictures;
     QList<QGraphicsItem *> pages;
+    QPicture *waterMarkPicture;
     QGraphicsRectItem *background;
     WaterMark *waterMark;
     QVector<int> pageRange;
