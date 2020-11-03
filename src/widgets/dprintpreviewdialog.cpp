@@ -779,6 +779,7 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(orientationgroup, SIGNAL(buttonClicked(int)), q, SLOT(_q_orientationChanged(int)));
     QObject::connect(waterTextCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_textWaterMarkModeChanged(int)));
     QObject::connect(waterTextEdit, SIGNAL(editingFinished()), q, SLOT(_q_customTextWatermarkFinished()));
+    QObject::connect(picPathEdit, &DFileChooserEdit::fileChoosed, q, [=](const QString &filename) { customPictureWatermarkChoosed(filename); });
     QObject::connect(waterSizeSlider, &DSlider::valueChanged, q, [=](int value) {
         sizeBox->setValue(value);
     });
@@ -1658,6 +1659,17 @@ void DPrintPreviewDialogPrivate::_q_customTextWatermarkFinished()
     QString cusText = waterTextEdit->text();
     pview->setTextWaterMark(cusText);
     lastCusWatermarkText = cusText;
+}
+
+/*!
+ * \~chinese \brief DPrintPreviewDialogPrivate::customPictureWatermarkChoosed 图片水印
+ * \~chinese \param state 图片水印路径
+ */
+void DPrintPreviewDialogPrivate::customPictureWatermarkChoosed(const QString &filename)
+{
+    QImage image(filename);
+    if (!image.isNull())
+        pview->setWaterMargImage(image);
 }
 
 /*!

@@ -83,6 +83,7 @@ public:
     void setEnable(const int &value, DComboBox *combox); //控件可用
     void setTurnPageBtnStatus();
     void watermarkTypeChoosed(int index);
+    void customPictureWatermarkChoosed(const QString &filename);
 
     void _q_printerChanged(int index);
     void _q_pageRangeChanged(int index);
