@@ -698,20 +698,64 @@ void WaterMark::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, Q
 {
     Q_UNUSED(item);
     Q_UNUSED(widget);
+
+    QPolygonF brectPol = mapFromScene(brectPolygon);
+    QPolygonF twopol = mapFromScene(twoPolygon);
+    QPainterPath path;
+    path.addPolygon(twopol);
+    path.addPolygon(brectPol);
+    path.addPolygon(twopol);
+    painter->setClipPath(path, Qt::IntersectClip);
+
     switch (type) {
     case Type::None:
         return;
     case Type::Text: {
+        if (!(font.styleStrategy() & QFont::PreferAntialias))
+            font.setStyleStrategy(QFont::PreferAntialias);
+
+        if (layout == Center) {
+            painter->save();
+            painter->setRenderHint(QPainter::TextAntialiasing);
+            painter->setFont(font);
+            painter->setPen(color);
+
+            // 取矩形的最大高度或者宽度 将文字画入这个宽度的正方形内 使旋转时按最大距离计算文本位置
+            qreal maxDis = qMax(brect.width(), brect.height());
+            painter->drawText(QRectF(brect.x() - (maxDis - brect.width()) / 2, brect.y() - (maxDis - brect.height()) / 2, maxDis, maxDis), Qt::AlignCenter, text);
+            painter->restore();
+            return;
+        }
+
+        QFontMetrics fm(font);
+        QSize textSize = fm.size(Qt::TextSingleLine, text);
+        int space = qMin(textSize.width(), textSize.height());
+        // 间距是文本宽度和高度的最小值 高度本身会带一部分间距  这里用descent表示
+        QSize spaceSize = QSize(space + fm.descent(), space);
+        QImage textImage(textSize + spaceSize, QImage::Format_ARGB32);
+        textImage.fill(Qt::transparent);
+        QPainter tp;
+        tp.begin(&textImage);
+
+        tp.setFont(font);
+        tp.setPen(color);
+        tp.setBrush(Qt::NoBrush);
+        tp.setRenderHint(QPainter::TextAntialiasing);
+        tp.drawText(textImage.rect(), Qt::AlignBottom | Qt::AlignRight, text);
+        tp.end();
+
+        painter->save();
+        painter->setRenderHint(QPainter::SmoothPixmapTransform);
+        painter->setRenderHint(QPainter::Antialiasing);
+        painter->setPen(Qt::NoPen);
+        QBrush b;
+        b.setTextureImage(textImage);
+        painter->setBrush(b);
+        painter->drawPath(path);
+        painter->restore();
     }
         return;
     case Type::Image: {
-        QPolygonF brectPol = mapFromScene(brectPolygon);
-        QPolygonF twopol = mapFromScene(twoPolygon);
-        QPainterPath path;
-        path.addPolygon(twopol);
-        path.addPolygon(brectPol);
-        path.addPolygon(twopol);
-        painter->setClipPath(path, Qt::IntersectClip);
         QImage img = sourceImage.scaledToWidth(sourceImage.width() * imageScale);
         QSize size = img.size() / img.devicePixelRatio();
         int imgWidth = size.width();
