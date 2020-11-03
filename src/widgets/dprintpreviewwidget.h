@@ -107,6 +107,7 @@ public:
     void setDraftWaterMark();
     void setSampleWaterMark();
     void setCustomWaterMark(const QString &text);
+    void setTextWaterMark(const QString &text);
     void setWaterMarkFont(const QFont &font);
     void setWaterMarkColor(const QColor &color);
     void setImposition(Imposition im);

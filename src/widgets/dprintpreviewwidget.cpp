@@ -510,6 +510,13 @@ void DPrintPreviewWidget::setCustomWaterMark(const QString &text)
     d->waterMark->setText(text);
 }
 
+void DPrintPreviewWidget::setTextWaterMark(const QString &text)
+{
+    Q_D(DPrintPreviewWidget);
+
+    d->waterMark->setText(text);
+}
+
 void DPrintPreviewWidget::setWaterMarkFont(const QFont &font)
 {
     Q_D(DPrintPreviewWidget);

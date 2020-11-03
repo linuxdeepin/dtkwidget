@@ -50,6 +50,8 @@ private:
     D_PRIVATE_SLOT(void _q_marginEditFinished())
     D_PRIVATE_SLOT(void _q_currentPageSpinChanged(int))
     D_PRIVATE_SLOT(void _q_checkStateChanged(int))
+    D_PRIVATE_SLOT(void _q_textWaterMarkModeChanged(int))
+    D_PRIVATE_SLOT(void _q_customTextWatermarkFinished())
 
 public:
     virtual bool event(QEvent *event) override;
