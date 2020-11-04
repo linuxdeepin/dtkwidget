@@ -74,6 +74,8 @@ void DPrintPreviewWidgetPrivate::populateScene()
             currentPageNumber = FIRST_PAGE;
         setCurrentPage(currentPageNumber);
     }
+
+    scene->setSceneRect(QRect(QPoint(0, 0), paperSize));
 }
 
 void DPrintPreviewWidgetPrivate::generatePreview()
@@ -94,7 +96,6 @@ void DPrintPreviewWidgetPrivate::generatePreview()
     setPageRangeAll();
     populateScene();
     impositionPages();
-    scene->setSceneRect(scene->itemsBoundingRect());
     fitView();
 }
 
@@ -743,6 +744,7 @@ void WaterMark::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, Q
     path.addPolygon(brectPol);
     path.addPolygon(twopol);
     painter->setClipPath(path, Qt::IntersectClip);
+    DPrintPreviewWidget *pwidget = qobject_cast<DPrintPreviewWidget *>(scene()->parent()->parent());
     QPainter wp;
     wp.begin(mWaterMarkPic);
 
@@ -796,6 +798,9 @@ void WaterMark::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, Q
         break;
     case Type::Image: {
         QImage img = sourceImage.scaledToWidth(sourceImage.width() * imageScale);
+        if (pwidget->getColorMode() == QPrinter::GrayScale) {
+            img = img.convertToFormat(QImage::Format_Grayscale8);
+        }
         QSize size = img.size() / img.devicePixelRatio();
         int imgWidth = size.width();
         int imgHeight = size.height();
@@ -848,10 +853,8 @@ GraphicsView::GraphicsView(QWidget *parent)
 
 void GraphicsView::resetScale(bool autoReset)
 {
-    if (!autoReset) {
-        this->scale(1.0 / scaleRatio,
-                    1.0 / scaleRatio);
-    }
+    if (!autoReset)
+        this->fitInView(scene()->sceneRect(), Qt::KeepAspectRatio);
 
     scaleRatio = 1.0;
     scaleResetButton->setVisible(false);
@@ -859,7 +862,7 @@ void GraphicsView::resetScale(bool autoReset)
 
 void GraphicsView::mousePressEvent(QMouseEvent *e)
 {
-    if (e->button() & Qt::LeftButton)
+    if ((e->button() & Qt::LeftButton) && scaleRatio * 100 > 100)
         this->setDragMode(QGraphicsView::ScrollHandDrag);
 
     QGraphicsView::mousePressEvent(e);
@@ -889,8 +892,10 @@ void GraphicsView::wheelEvent(QWheelEvent *e)
         }
     }
 
-    if (qFuzzyCompare(scaleRatio, 1))
+    if (qFuzzyCompare(scaleRatio, 1)) {
         scaleResetButton->setVisible(false);
+        resetScale(false);
+    }
 }
 
 void GraphicsView::resizeEvent(QResizeEvent *e)
@@ -898,8 +903,8 @@ void GraphicsView::resizeEvent(QResizeEvent *e)
     QGraphicsView::resizeEvent(e);
     scaleResetButton->move(this->width() - scaleResetButton->width() - PREVIEW_SCALEBUTTON_MARGIN,
                            PREVIEW_SCALEBUTTON_MARGIN);
-    this->fitInView(scene()->sceneRect(), Qt::KeepAspectRatio);
-    this->resetScale();
+
+    this->resetScale(false);
     Q_EMIT resized();
 }
 
