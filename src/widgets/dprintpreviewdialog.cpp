@@ -29,6 +29,7 @@
 #include <QPrinter>
 #include <QDebug>
 #include <QTime>
+#include <QFontDatabase>
 #include <QDesktopServices>
 #include <QRegExp>
 #include <QRegExpValidator>
@@ -616,6 +617,9 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
 
     QHBoxLayout *hlayout3 = new QHBoxLayout;
     fontCombo = new DComboBox;
+    QFontDatabase fdb;
+    QStringList fontList = fdb.families(QFontDatabase::Any);
+    fontCombo->addItems(fontList);
     waterColorBtn = new DIconButton(textWatermarkWdg);
     waterColorBtn->setFixedSize(36, 36);
     hlayout3->addWidget(new DLabel, 18);
@@ -780,6 +784,10 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(waterTextCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_textWaterMarkModeChanged(int)));
     QObject::connect(waterTextEdit, SIGNAL(editingFinished()), q, SLOT(_q_customTextWatermarkFinished()));
     QObject::connect(picPathEdit, &DFileChooserEdit::fileChoosed, q, [=](const QString &filename) { customPictureWatermarkChoosed(filename); });
+    QObject::connect(fontCombo, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), q, [=] {
+        QFont font(fontCombo->currentText());
+        pview->setWaterMarkFont(font);
+    });
     QObject::connect(waterSizeSlider, &DSlider::valueChanged, q, [=](int value) {
         sizeBox->setValue(value);
     });
