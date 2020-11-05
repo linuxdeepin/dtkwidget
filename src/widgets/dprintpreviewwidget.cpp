@@ -736,16 +736,16 @@ void WaterMark::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, Q
 {
     Q_UNUSED(item);
     Q_UNUSED(widget);
+    QPainterPath path = itemClipPath();
 
-    QPolygonF brectPol = mapFromScene(brectPolygon);
-    QPolygonF twopol = mapFromScene(twoPolygon);
-    QPainterPath path;
-    path.addPolygon(twopol);
-    path.addPolygon(brectPol);
-    path.addPolygon(twopol);
     painter->setClipPath(path, Qt::IntersectClip);
-    DPrintPreviewWidget *pwidget = qobject_cast<DPrintPreviewWidget *>(scene()->parent()->parent());
+    painter->drawPicture(0, 0, *mWaterMarkPic);
+}
+
+void WaterMark::updatePicture()
+{
     QPainter wp;
+    DPrintPreviewWidget *pwidget = qobject_cast<DPrintPreviewWidget *>(scene()->parent()->parent());
     wp.begin(mWaterMarkPic);
 
     switch (type) {
@@ -769,6 +769,7 @@ void WaterMark::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, Q
         }
 
         QFontMetrics fm(font);
+        QPainterPath path = itemClipPath();
         QSize textSize = fm.size(Qt::TextSingleLine, text);
         int space = qMin(textSize.width(), textSize.height());
         // 间距是文本宽度和高度的最小值 高度本身会带一部分间距  这里用descent表示
@@ -830,7 +831,18 @@ void WaterMark::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, Q
     }
 
     wp.end();
-    painter->drawPicture(0, 0, *mWaterMarkPic);
+}
+
+QPainterPath WaterMark::itemClipPath() const
+{
+    QPolygonF brectPol = mapFromScene(brectPolygon);
+    QPolygonF twopol = mapFromScene(twoPolygon);
+    QPainterPath path;
+    path.addPolygon(twopol);
+    path.addPolygon(brectPol);
+    path.addPolygon(twopol);
+
+    return path;
 }
 
 GraphicsView::GraphicsView(QWidget *parent)

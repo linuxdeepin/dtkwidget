@@ -124,33 +124,40 @@ public:
     inline void setType(Type t)
     {
         type = t;
+        updatePicture();
     }
     inline void setLayoutType(Layout l)
     {
         layout = l;
+        updatePicture();
     }
     inline void setImage(const QImage &img)
     {
         type = Image;
         sourceImage = img;
+        updatePicture();
     }
     inline void setImageScale(qreal scale)
     {
         imageScale = scale;
+        updatePicture();
     }
     inline void setText(const QString str)
     {
         type = Text;
         brectPolygon = mapToScene(brect);
         text = str;
+        updatePicture();
     }
     inline void setFont(const QFont &f)
     {
         font = f;
+        updatePicture();
     }
     inline void setColor(const QColor &c)
     {
         color = c;
+        updatePicture();
     }
     inline void setBoundingRect(const QRectF &rect)
     {
@@ -167,6 +174,10 @@ public:
         return brect;
     }
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) override;
+
+protected:
+    void updatePicture();
+    QPainterPath itemClipPath() const;
 
 private:
     Type type;
