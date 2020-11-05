@@ -121,6 +121,7 @@ public:
         , mWaterMarkPic(waterMarkPicture)
     {
     }
+
     inline void setType(Type t)
     {
         type = t;
@@ -145,7 +146,6 @@ public:
     inline void setText(const QString str)
     {
         type = Text;
-        brectPolygon = mapToScene(brect);
         text = str;
         updatePicture();
     }
@@ -161,6 +161,7 @@ public:
     }
     inline void setBoundingRect(const QRectF &rect)
     {
+        qreal rotate = rotation();
         setRotation(0);
         brect = rect;
         brectPolygon = mapToScene(brect);
@@ -168,6 +169,7 @@ public:
         qreal height = brect.height();
         twoPolygon = mapToScene(QRectF(brect.x() - width / 2, brect.y() - height / 2, width * 2, height * 2));
         setTransformOriginPoint(brect.center());
+        setRotation(rotate);
     }
     QRectF boundingRect() const override
     {
