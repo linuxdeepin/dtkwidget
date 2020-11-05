@@ -34,5 +34,7 @@
         <file>light/icons/search_action_36px.svg</file>
         <file>dark/icons/print_previewscale_18px.svg</file>
         <file>light/icons/print_previewscale_18px.svg</file>
+        <file>dark/icons/dorpper_normal_32px.svg</file>
+        <file>light/icons/dorpper_normal_32px.svg</file>
     </qresource>
 </RCC>

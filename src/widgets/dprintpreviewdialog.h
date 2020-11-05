@@ -52,6 +52,8 @@ private:
     D_PRIVATE_SLOT(void _q_checkStateChanged(int))
     D_PRIVATE_SLOT(void _q_textWaterMarkModeChanged(int))
     D_PRIVATE_SLOT(void _q_customTextWatermarkFinished())
+    D_PRIVATE_SLOT(void _q_colorButtonCliked(bool))
+    D_PRIVATE_SLOT(void _q_selectColorButton(QColor))
 
 public:
     virtual bool event(QEvent *event) override;

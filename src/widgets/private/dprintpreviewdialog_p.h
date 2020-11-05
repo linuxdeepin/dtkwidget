@@ -24,6 +24,8 @@
 
 #include "dprintpreviewdialog.h"
 #include "ddialog_p.h"
+#include "dprintpickcolorwidget.h"
+#include "dlabel.h"
 
 #include <DWidget>
 #include <DPushButton>
@@ -47,6 +49,7 @@ class DCommandLinkButton;
 class DSuggestButton;
 class DDoubleSpinBox;
 class DSlider;
+class DBackgroundGroup;
 class DPrintPreviewDialogPrivate : public DDialogPrivate
 {
 public:
@@ -98,6 +101,8 @@ public:
     void _q_checkStateChanged(int state);
     void _q_textWaterMarkModeChanged(int index);
     void _q_customTextWatermarkFinished();
+    void _q_colorButtonCliked(bool cliked);
+    void _q_selectColorButton(QColor color);
 
     //printer
     DPrinter *printer;
@@ -110,12 +115,18 @@ public:
     int strLengths = 0;
     bool isOnFocus = false;
     QString lastCusWatermarkText = "";
+    bool isChecked = false;
+    bool isEventHide = false;
+    QColor waterColor;
 
     //control
     DPrintPreviewWidget *pview;
+    DBackgroundGroup *back;
     DWidget *basicsettingwdg;
     DWidget *advancesettingwdg;
     DWidget *watermarksettingwdg;
+    DWidget *textWatermarkWdg;
+    DWidget *picWatermarkWdg;
     DIconButton *firstBtn;
     DIconButton *prevPageBtn;
     DSpinBox *jumpPageEdit;
@@ -166,6 +177,8 @@ public:
     QList<qreal> minnumMargins;
     QSpacerItem *spacer;
     QSpacerItem *wmSpacer;
+    DFloatingWidget *colorWidget;
+    DPrintPickColorWidget *pickColorWidget;
     Q_DECLARE_PUBLIC(DPrintPreviewDialog)
 };
 

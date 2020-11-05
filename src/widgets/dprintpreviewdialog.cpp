@@ -17,6 +17,7 @@
 #include "dapplication.h"
 #include "dfilechooseredit.h"
 #include "dslider.h"
+#include "diconbutton.h"
 
 #include <DScrollArea>
 #include <DScrollBar>
@@ -65,6 +66,13 @@
 #define ACTUAL_SIZE 1
 #define SCALE 2
 
+#define PICKCOLOR_RADIUS 8
+#define PICKCOLOR_WIDTH 314
+#define PICKCOLOR_HEIGNT 375
+
+#define WATERLAYOUT_CENTER 0
+#define WATERLAYOUT_TILED 1
+
 DWIDGET_BEGIN_NAMESPACE
 
 void setwidgetfont(QWidget *widget, DFontSizeManager::SizeType type = DFontSizeManager::T5)
@@ -86,6 +94,8 @@ void DPrintPreviewDialogPrivate::startup()
 
     this->printer = new DPrinter;
 
+    if (qApp)
+        qApp->installEventFilter(q);
     initui();
     initdata();
     initconnections();
@@ -124,12 +134,17 @@ void DPrintPreviewDialogPrivate::initui()
     mainlayout->addWidget(rightWidget);
     leftWidget->setLayout(pleftlayout);
     rightWidget->setLayout(prightlayout);
-    DBackgroundGroup *back = new DBackgroundGroup(mainlayout);
+    back = new DBackgroundGroup(mainlayout);
     back->setObjectName("backGround");
     back->setItemSpacing(2);
-
     q->addSpacing(5);
     q->addContent(back);
+
+    colorWidget = new DFloatingWidget(q);
+    colorWidget->setFixedSize(PICKCOLOR_WIDTH, PICKCOLOR_HEIGNT);
+    pickColorWidget = new DPrintPickColorWidget(colorWidget);
+    colorWidget->setWidget(pickColorWidget);
+    colorWidget->hide();
 }
 
 void DPrintPreviewDialogPrivate::initleft(QVBoxLayout *layout)
@@ -593,8 +608,8 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     vContentLayout->setContentsMargins(0, 5, 0, 5);
     vContentLayout->setSpacing(10);
     QVBoxLayout *vWatertypeLayout = new QVBoxLayout;
-    DWidget *textWatermarkWdg = new DWidget;
-    DWidget *picWatermarkWdg = new DWidget;
+    textWatermarkWdg = new DWidget;
+    picWatermarkWdg = new DWidget;
     vWatertypeLayout->addWidget(textWatermarkWdg);
     vWatertypeLayout->addWidget(picWatermarkWdg);
 
@@ -622,6 +637,8 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     fontCombo->addItems(fontList);
     waterColorBtn = new DIconButton(textWatermarkWdg);
     waterColorBtn->setFixedSize(36, 36);
+    waterColor = QColor("#6f6f6f");
+    _q_selectColorButton(waterColor);
     hlayout3->addWidget(new DLabel, 18);
     hlayout3->addWidget(fontCombo, 35);
     hlayout3->addWidget(waterColorBtn, 1);
@@ -657,6 +674,7 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     DLabel *poslabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Layout"));
     waterPosCombox = new DComboBox;
     waterPosCombox->addItems(QStringList() << qApp->translate("DPrintPreviewDialogPrivate", "Tile") << qApp->translate("DPrintPreviewDialogPrivate", "Center"));
+    waterPosCombox->setCurrentIndex(waterPosCombox->count() - 1);
     waterPosCombox->setFixedHeight(36);
     posframelayout->addWidget(poslabel, 4);
     posframelayout->addWidget(waterPosCombox, 9);
@@ -779,6 +797,7 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(pageRangeCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_pageRangeChanged(int)));
     QObject::connect(marginsCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_pageMarginChanged(int)));
     QObject::connect(printBtn, SIGNAL(clicked(bool)), q, SLOT(_q_startPrint(bool)));
+    QObject::connect(waterColorBtn, SIGNAL(clicked(bool)), q, SLOT(_q_colorButtonCliked(bool)));
     QObject::connect(colorModeCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_ColorModeChange(int)));
     QObject::connect(orientationgroup, SIGNAL(buttonClicked(int)), q, SLOT(_q_orientationChanged(int)));
     QObject::connect(waterTextCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_textWaterMarkModeChanged(int)));
@@ -788,6 +807,7 @@ void DPrintPreviewDialogPrivate::initconnections()
         QFont font(fontCombo->currentText());
         pview->setWaterMarkFont(font);
     });
+    QObject::connect(pickColorWidget, SIGNAL(selectColorButton(QColor)), q, SLOT(_q_selectColorButton(QColor)));
     QObject::connect(waterSizeSlider, &DSlider::valueChanged, q, [=](int value) {
         sizeBox->setValue(value);
     });
@@ -1676,8 +1696,62 @@ void DPrintPreviewDialogPrivate::_q_customTextWatermarkFinished()
 void DPrintPreviewDialogPrivate::customPictureWatermarkChoosed(const QString &filename)
 {
     QImage image(filename);
-    if (!image.isNull())
+    if (!image.isNull()) {
         pview->setWaterMargImage(image);
+    }
+}
+
+/*!
+ * \~chinese \brief DPrintPreviewDialogPrivate::_q_colorButtonCliked 点击取色按钮显示取色窗口位置
+ */
+void DPrintPreviewDialogPrivate::_q_colorButtonCliked(bool cliked)
+{
+    Q_Q(DPrintPreviewDialog);
+    Q_UNUSED(cliked)
+    if (colorWidget->isHidden()) {
+        isChecked = false;
+    } else {
+        isChecked = true;
+    }
+    if (!isChecked) {
+        QPoint colorWidgetPoint;
+        QPoint globalBtnPos = textWatermarkWdg->mapToGlobal(QPoint(0, 0));
+        QPoint globalDialogPos = q->mapToGlobal(QPoint(0, 0));
+        int waterBtnX = globalBtnPos.x() - globalDialogPos.x() + waterColorBtn->pos().x() - 28 - colorWidget->width();
+        int waterBtnY = globalBtnPos.y() - globalDialogPos.y() + waterColorBtn->pos().y() + waterColorBtn->height() / 2;
+        if (waterBtnY < colorWidget->height() / 2) {
+            colorWidgetPoint = QPoint(waterBtnX, waterBtnY);
+        } else if (waterBtnY > colorWidget->height() && q->height() - waterBtnY < colorWidget->height() / 2) {
+            colorWidgetPoint = QPoint(waterBtnX, waterBtnY - colorWidget->height());
+        } else {
+            colorWidgetPoint = QPoint(waterBtnX, waterBtnY - colorWidget->height() / 2);
+        }
+        colorWidget->setGeometry(colorWidgetPoint.x(), colorWidgetPoint.y(), 314, 357);
+        colorWidget->show();
+    } else {
+        colorWidget->hide();
+    }
+    isChecked = !isChecked;
+}
+
+/*!
+ * \~chinese \brief DPrintPreviewDialogPrivate::_q_selectColorButton 获取水印取色框获取到的颜色
+ * \~chinese \param color 水印的颜色
+ */
+void DPrintPreviewDialogPrivate::_q_selectColorButton(QColor color)
+{
+    QPixmap pic(QSize(32, 32));
+    pic.fill(Qt::transparent);
+    QPainter painter(&pic);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setPen(Qt::NoPen);
+    QBrush brush(color);
+    painter.setBrush(brush);
+    painter.drawRoundedRect(pic.rect(), PICKCOLOR_RADIUS, PICKCOLOR_RADIUS);
+    waterColorBtn->setIcon(QIcon(pic));
+    waterColorBtn->setIconSize(QSize(24, 24));
+    waterColor = color;
+    pview->setWaterMarkColor(color);
 }
 
 /*!
@@ -1863,7 +1937,20 @@ bool DPrintPreviewDialog::eventFilter(QObject *watched, QEvent *event)
 
         return false;
     }
-
+    //手动实现窗体popup属性
+    if (event->type() == QEvent::MouseButtonPress) {
+        QRect rect = QRect(d->colorWidget->x(), d->colorWidget->y(), d->colorWidget->width(), d->colorWidget->height());
+        QMouseEvent *e = dynamic_cast<QMouseEvent *>(event);
+        QPoint pos = mapFromGlobal(QCursor::pos());
+        QPoint globalBtnPos = d->textWatermarkWdg->mapToGlobal(QPoint(0, 0));
+        QPoint globalDialogPos = mapToGlobal(QPoint(0, 0));
+        int waterBtnX = globalBtnPos.x() - globalDialogPos.x() + d->waterColorBtn->pos().x();
+        int waterBtnY = globalBtnPos.y() - globalDialogPos.y() + d->waterColorBtn->pos().y();
+        QRect btnRect = QRect(waterBtnX, waterBtnY, d->waterColorBtn->width(), d->waterColorBtn->height());
+        if (e && !rect.contains(pos) && !btnRect.contains(pos)) {
+            d->colorWidget->hide();
+        }
+    }
     return DDialog::eventFilter(watched, event);
 }
 
@@ -1904,5 +1991,6 @@ void DPrintPreviewDialog::resizeEvent(QResizeEvent *event)
         this->findChild<DBackgroundGroup *>("backGround")->setItemSpacing(2);
     }
 }
+
 DWIDGET_END_NAMESPACE
 #include "moc_dprintpreviewdialog.cpp"
