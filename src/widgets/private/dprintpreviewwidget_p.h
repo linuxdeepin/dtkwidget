@@ -30,6 +30,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QWheelEvent>
+#include <QPicture>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -92,6 +93,7 @@ public:
     }
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) override;
+    void updateGrayContent();
 
 protected:
     QPicture grayscalePaint(const QPicture &picture);
@@ -100,6 +102,7 @@ private:
     const QPicture *pagePicture;
     QRect pageRect;
     QRectF brect;
+    QPicture grayPicture;
 };
 
 class WaterMark : public QGraphicsItem
@@ -225,6 +228,8 @@ public:
     }
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) override;
+
+    void setVisible(bool isVisible);
 
 private:
     int pageNum;

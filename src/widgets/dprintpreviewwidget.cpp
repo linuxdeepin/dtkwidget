@@ -214,7 +214,10 @@ void DPrintPreviewWidgetPrivate::setCurrentPage(int page)
     currentPageNumber = page;
     if (pageNumber > pages.size())
         return;
-    pages.at(pageNumber - 1)->setVisible(true);
+
+    if (PageItem *currentPage = dynamic_cast<PageItem *>(pages.at(pageNumber - 1))) {
+        currentPage->setVisible(true);
+    }
 
     Q_Q(DPrintPreviewWidget);
     Q_EMIT q->currentPageChanged(page);
@@ -851,6 +854,15 @@ void PageItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     content->update();
 }
 
+void PageItem::setVisible(bool isVisible)
+{
+    if (isVisible) {
+        content->updateGrayContent();
+    }
+
+    QGraphicsItem::setVisible(isVisible);
+}
+
 void ContentItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
 {
     Q_UNUSED(widget);
@@ -870,10 +882,15 @@ void ContentItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *item,
 
     if (pwidget && (pwidget->getColorMode() == QPrinter::GrayScale)) {
         // 图像灰度处理
-        painter->drawPicture(leftTopPoint, grayscalePaint(*pagePicture));
+        painter->drawPicture(leftTopPoint, grayPicture);
     } else if (pwidget && (pwidget->getColorMode() == QPrinter::Color)) {
         painter->drawPicture(leftTopPoint, *pagePicture);
     }
+}
+
+void ContentItem::updateGrayContent()
+{
+    grayPicture = grayscalePaint(*pagePicture);
 }
 
 QPicture ContentItem::grayscalePaint(const QPicture &picture)
