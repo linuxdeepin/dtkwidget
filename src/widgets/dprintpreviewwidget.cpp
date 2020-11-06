@@ -7,6 +7,8 @@
 
 #define FIRST_PAGE 1
 #define FIRST_INDEX 0
+#define WATER_DEFAULTFONTSIZE 65
+#define WATER_TEXTSPACE WATER_DEFAULTFONTSIZE
 
 DWIDGET_BEGIN_NAMESPACE
 DPrintPreviewWidgetPrivate::DPrintPreviewWidgetPrivate(DPrintPreviewWidget *qq)
@@ -608,7 +610,14 @@ void DPrintPreviewWidget::setWaterMarkScale(qreal scale)
 {
     Q_D(DPrintPreviewWidget);
 
-    d->waterMark->setImageScale(scale);
+    if (d->waterMark->getType() == WaterMark::Image) {
+        d->waterMark->setImageScale(scale);
+    } else if (d->waterMark->getType() == WaterMark::Text) {
+        QFont font = d->waterMark->getFont();
+        font.setPointSize(qRound(WATER_DEFAULTFONTSIZE * scale));
+        d->waterMark->setFont(font);
+    }
+
     d->waterMark->update();
 }
 
@@ -958,6 +967,9 @@ void WaterMark::updatePicture()
         if (!(font.styleStrategy() & QFont::PreferAntialias))
             font.setStyleStrategy(QFont::PreferAntialias);
 
+        if (pwidget->getColorMode() == QPrinter::GrayScale)
+            color = Qt::gray;
+
         if (layout == Center) {
             wp.save();
             wp.setRenderHint(QPainter::TextAntialiasing);
@@ -975,8 +987,7 @@ void WaterMark::updatePicture()
         QPainterPath path = itemClipPath();
         QSize textSize = fm.size(Qt::TextSingleLine, text);
         int space = qMin(textSize.width(), textSize.height());
-        // 间距是文本宽度和高度的最小值 高度本身会带一部分间距  这里用descent表示
-        QSize spaceSize = QSize(space + fm.descent(), space);
+        QSize spaceSize = QSize(WATER_TEXTSPACE, space);
         QImage textImage(textSize + spaceSize, QImage::Format_ARGB32);
         textImage.fill(Qt::transparent);
         QPainter tp;
@@ -996,7 +1007,8 @@ void WaterMark::updatePicture()
         QBrush b;
         b.setTextureImage(textImage);
         wp.setBrush(b);
-        wp.drawPath(path);
+        QRectF targetRectf = QRectF(brect.x() - brect.width() / 2, brect.y() - brect.height() / 2, brect.width() * 2, brect.height() * 2);
+        wp.drawRect(targetRectf);
         wp.restore();
     }
         break;

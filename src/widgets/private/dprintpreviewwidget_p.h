@@ -130,6 +130,10 @@ public:
         type = t;
         updatePicture();
     }
+    inline Type getType() const
+    {
+        return type;
+    }
     inline void setLayoutType(Layout l)
     {
         layout = l;
@@ -156,6 +160,10 @@ public:
     {
         font = f;
         updatePicture();
+    }
+    inline QFont getFont() const
+    {
+        return font;
     }
     inline void setColor(const QColor &c)
     {
