@@ -635,7 +635,7 @@ void DTabBarPrivate::autoScrollTabs(const QPoint &mouse)
 
     QTabBarPrivate *d = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
     bool vertical = verticalTabs(d->shape);
-    const QSize &size_hint = this->sizeHint();
+    const QSize &size_hint = this->size();
     int scroll_distance = qMin(50, vertical ? rect.height() / 3 : rect.width() / 3);
 
     int start = 0;
