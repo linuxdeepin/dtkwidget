@@ -97,6 +97,7 @@ public:
     void setScale(qreal scale);
     qreal getScale() const;
     void updateView();
+    void updateWaterMark();
     void refreshBegin();
     void refreshEnd();
     void setWaterMarkType(int type);

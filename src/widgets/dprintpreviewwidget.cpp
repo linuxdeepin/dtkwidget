@@ -491,6 +491,7 @@ void DPrintPreviewWidget::setColorMode(const QPrinter::ColorMode &colorMode)
         d->pages.at(page - 1)->update();
         d->graphicsView->resetScale(false);
     }
+    updateWaterMark();
 }
 
 /*!
@@ -548,6 +549,22 @@ void DPrintPreviewWidget::updateView()
     d->graphicsView->resetScale(false);
 }
 
+/*!
+ * \~chinese \brief 强制刷新水印效果
+ */
+void DPrintPreviewWidget::updateWaterMark()
+{
+    Q_D(DPrintPreviewWidget);
+
+    if (d->refreshMode == DPrintPreviewWidgetPrivate::RefreshImmediately) {
+        d->waterMark->updatePicture();
+        d->waterMark->update();
+    }
+}
+
+/*!
+ * \~chinese \brief 水印刷新开始，主要用于同时多次调用水印属性改变的接口时，只刷新一次
+ */
 void DPrintPreviewWidget::refreshBegin()
 {
     Q_D(DPrintPreviewWidget);
@@ -555,12 +572,15 @@ void DPrintPreviewWidget::refreshBegin()
     d->refreshMode = DPrintPreviewWidgetPrivate::RefreshDelay;
 }
 
+/*!
+ * \~chinese \brief 水印刷新结束，刷新水印效果
+ */
 void DPrintPreviewWidget::refreshEnd()
 {
     Q_D(DPrintPreviewWidget);
 
     d->refreshMode = DPrintPreviewWidgetPrivate::RefreshImmediately;
-    updatePreview();
+    updateWaterMark();
 }
 
 /*!
@@ -573,7 +593,7 @@ void DPrintPreviewWidget::setWaterMarkType(int type)
     Q_D(DPrintPreviewWidget);
 
     d->waterMark->setType(static_cast<WaterMark::Type>(type));
-    d->waterMark->update();
+    updateWaterMark();
 }
 
 /*!
@@ -586,7 +606,7 @@ void DPrintPreviewWidget::setWaterMargImage(const QImage &image)
     Q_D(DPrintPreviewWidget);
 
     d->waterMark->setImage(image);
-    d->waterMark->update();
+    updateWaterMark();
 }
 
 /*!
@@ -618,7 +638,7 @@ void DPrintPreviewWidget::setWaterMarkScale(qreal scale)
         d->waterMark->setFont(font);
     }
 
-    d->waterMark->update();
+    updateWaterMark();
 }
 
 /*!
@@ -641,7 +661,7 @@ void DPrintPreviewWidget::setConfidentialWaterMark()
     Q_D(DPrintPreviewWidget);
 
     d->waterMark->setText(qApp->translate("DPrintPreviewWidget", "Confidential"));
-    d->waterMark->update();
+    updateWaterMark();
 }
 
 /*!
@@ -652,7 +672,7 @@ void DPrintPreviewWidget::setDraftWaterMark()
     Q_D(DPrintPreviewWidget);
 
     d->waterMark->setText(qApp->translate("DPrintPreviewWidget", "Draft"));
-    d->waterMark->update();
+    updateWaterMark();
 }
 
 /*!
@@ -663,7 +683,7 @@ void DPrintPreviewWidget::setSampleWaterMark()
     Q_D(DPrintPreviewWidget);
 
     d->waterMark->setText(qApp->translate("DPrintPreviewWidget", "Sample"));
-    d->waterMark->update();
+    updateWaterMark();
 }
 
 /*!
@@ -676,7 +696,7 @@ void DPrintPreviewWidget::setCustomWaterMark(const QString &text)
     Q_D(DPrintPreviewWidget);
 
     d->waterMark->setText(text);
-    d->waterMark->update();
+    updateWaterMark();
 }
 
 /*!
@@ -689,7 +709,7 @@ void DPrintPreviewWidget::setTextWaterMark(const QString &text)
     Q_D(DPrintPreviewWidget);
 
     d->waterMark->setText(text);
-    d->waterMark->update();
+    updateWaterMark();
 }
 
 /*!
@@ -702,7 +722,7 @@ void DPrintPreviewWidget::setWaterMarkFont(const QFont &font)
     Q_D(DPrintPreviewWidget);
 
     d->waterMark->setFont(font);
-    d->waterMark->update();
+    updateWaterMark();
 }
 
 /*!
@@ -715,7 +735,7 @@ void DPrintPreviewWidget::setWaterMarkColor(const QColor &color)
     Q_D(DPrintPreviewWidget);
 
     d->waterMark->setColor(color);
-    d->waterMark->update();
+    updateWaterMark();
 }
 
 /*!
@@ -727,7 +747,7 @@ void DPrintPreviewWidget::setWaterMarkLayout(int layout)
 {
     Q_D(DPrintPreviewWidget);
     d->waterMark->setLayoutType(static_cast<WaterMark::Layout>(layout));
-    d->waterMark->update();
+    updateWaterMark();
 }
 
 /*!

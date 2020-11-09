@@ -128,7 +128,6 @@ public:
     inline void setType(Type t)
     {
         type = t;
-        updatePicture();
     }
     inline Type getType() const
     {
@@ -137,29 +136,24 @@ public:
     inline void setLayoutType(Layout l)
     {
         layout = l;
-        updatePicture();
     }
     inline void setImage(const QImage &img)
     {
         type = Image;
         sourceImage = img;
-        updatePicture();
     }
     inline void setImageScale(qreal scale)
     {
         imageScale = scale;
-        updatePicture();
     }
     inline void setText(const QString str)
     {
         type = Text;
         text = str;
-        updatePicture();
     }
     inline void setFont(const QFont &f)
     {
         font = f;
-        updatePicture();
     }
     inline QFont getFont() const
     {
@@ -168,7 +162,6 @@ public:
     inline void setColor(const QColor &c)
     {
         color = c;
-        updatePicture();
     }
     inline void setBoundingRect(const QRectF &rect)
     {
@@ -187,9 +180,9 @@ public:
         return brect;
     }
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) override;
+    void updatePicture();
 
 protected:
-    void updatePicture();
     QPainterPath itemClipPath() const;
 
 private:
@@ -251,7 +244,7 @@ private:
 class DPrintPreviewWidgetPrivate : public DFramePrivate
 {
 public:
-// 预览刷新机制，包括立刻刷新和延时刷新
+    // 水印刷新机制，包括立刻刷新和延时刷新
     enum RefreshMode { RefreshImmediately,
                        RefreshDelay };
     explicit DPrintPreviewWidgetPrivate(DPrintPreviewWidget *qq);
