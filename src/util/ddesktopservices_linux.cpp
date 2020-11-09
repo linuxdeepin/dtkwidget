@@ -55,14 +55,6 @@ static QDBusInterface *fileManager1DBusInterface()
     return &interface;
 }
 
-static QDBusInterface *soundEffectDBusInterface()
-{
-    static QDBusInterface interface(QStringLiteral("com.deepin.daemon.SoundEffect"),
-                                        QStringLiteral("/com/deepin/daemon/SoundEffect"),
-                                        QStringLiteral("com.deepin.daemon.SoundEffect"));
-    return &interface;
-}
-
 static QStringList urls2uris(const QList<QUrl> &urls)
 {
     QStringList list;
@@ -236,8 +228,10 @@ bool DDesktopServices::previewSystemSoundEffect(const QString &name)
     }
 
     // 使用后端 dbus 接口播放系统音频，音频存放目录： /usr/share/sounds/deepin/stereo/
-    QDBusInterface *interface = soundEffectDBusInterface();
-    return interface && interface->call("PlaySound", name).type() != QDBusMessage::ErrorMessage;
+    QDBusInterface interface(QStringLiteral("com.deepin.daemon.SoundEffect"),
+                                            QStringLiteral("/com/deepin/daemon/SoundEffect"),
+                                            QStringLiteral("com.deepin.daemon.SoundEffect"));
+    return interface.isValid() && interface.call("PlaySound", name).type() != QDBusMessage::ErrorMessage;
 }
 
 QString DDesktopServices::getNameByEffectType(const DDesktopServices::SystemSoundEffect &effect)
