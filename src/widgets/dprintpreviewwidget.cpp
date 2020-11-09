@@ -571,6 +571,7 @@ void DPrintPreviewWidget::setWaterMarkType(int type)
     Q_D(DPrintPreviewWidget);
 
     d->waterMark->setType(static_cast<WaterMark::Type>(type));
+    d->waterMark->update();
 }
 
 /*!
