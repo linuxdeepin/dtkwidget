@@ -219,6 +219,7 @@ void DPrintPreviewWidgetPrivate::setCurrentPage(int page)
         currentPage->setVisible(true);
     }
 
+    graphicsView->resetScale(false);
     Q_Q(DPrintPreviewWidget);
     Q_EMIT q->currentPageChanged(page);
 }
