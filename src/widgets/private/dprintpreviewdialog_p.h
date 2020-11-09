@@ -67,6 +67,7 @@ public:
     void initbasicui();
     void initadvanceui();
     void initWaterMarkui();
+    void initWaterSettings();
     void marginsLayout(bool adapted);
     void initdata();
     void initconnections();

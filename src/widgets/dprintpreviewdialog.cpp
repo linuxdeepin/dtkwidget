@@ -72,6 +72,10 @@
 
 #define WATERLAYOUT_CENTER 0
 #define WATERLAYOUT_TILED 1
+#define WATERTYPE_NONE 0
+#define WATERTYPE_TEXT 1
+#define WATERTYPE_IMAGE 2
+#define WATERFONT_SIZE 65
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -748,6 +752,23 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     watermarksettingwdg->setLayout(vContentLayout);
 }
 
+/*!
+ * \~chinese DPrintPreviewDialogPrivate::initWaterSettings 初始化水印属性设置
+ */
+void DPrintPreviewDialogPrivate::initWaterSettings()
+{
+    pview->refreshBegin();
+    Q_EMIT waterPosCombox->currentIndexChanged(waterPosCombox->currentIndex());
+    Q_EMIT inclinatBox->valueChanged(inclinatBox->value());
+    Q_EMIT waterSizeSlider->valueChanged(waterSizeSlider->value());
+    Q_EMIT wmOpaSlider->valueChanged(wmOpaSlider->value());
+    if (waterTypeGroup->button(0)->isChecked()) {
+        Q_EMIT fontCombo->currentIndexChanged(fontCombo->currentIndex());
+        pview->setWaterMarkColor(waterColor);
+    }
+    pview->refreshEnd();
+}
+
 void DPrintPreviewDialogPrivate::marginsLayout(bool adapted)
 {
     if (adapted) {
@@ -805,14 +826,29 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(picPathEdit, &DFileChooserEdit::fileChoosed, q, [=](const QString &filename) { customPictureWatermarkChoosed(filename); });
     QObject::connect(fontCombo, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), q, [=] {
         QFont font(fontCombo->currentText());
+        font.setPointSize(WATERFONT_SIZE);
         pview->setWaterMarkFont(font);
     });
     QObject::connect(pickColorWidget, SIGNAL(selectColorButton(QColor)), q, SLOT(_q_selectColorButton(QColor)));
+    QObject::connect(waterPosCombox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), q, [=](int index) {
+        if (index == waterPosCombox->count() - 1) {
+            pview->setWaterMarkLayout(WATERLAYOUT_CENTER);
+        } else {
+            pview->setWaterMarkLayout(WATERLAYOUT_TILED);
+        }
+    });
+    QObject::connect(inclinatBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), q, [=](int value) {
+        pview->setWaterMarkRotate(value);
+    });
     QObject::connect(waterSizeSlider, &DSlider::valueChanged, q, [=](int value) {
         sizeBox->setValue(value);
+        qreal m_value = static_cast<qreal>(value) / 100.00;
+        pview->setWaterMarkScale(m_value);
     });
     QObject::connect(wmOpaSlider, &DSlider::valueChanged, q, [=](int value) {
         opaBox->setValue(value);
+        qreal m_value = static_cast<qreal>(value) / 100.00;
+        pview->setWaterMarkOpacity(m_value);
     });
     QObject::connect(waterMarkBtn, &DSwitchButton::clicked, q, [=](bool isClicked) {
         if (isClicked) {
@@ -1254,6 +1290,8 @@ void DPrintPreviewDialogPrivate::watermarkTypeChoosed(int index)
         waterColorBtn->setEnabled(true);
         picPathEdit->setEnabled(false);
         _q_textWaterMarkModeChanged(waterTextCombo->currentIndex());
+        initWaterSettings();
+        pview->setWaterMarkType(WATERTYPE_TEXT);
     } else if (index == 1) {
         waterTypeGroup->button(1)->setChecked(true);
         waterTextCombo->setEnabled(false);
@@ -1261,6 +1299,7 @@ void DPrintPreviewDialogPrivate::watermarkTypeChoosed(int index)
         waterColorBtn->setEnabled(false);
         waterTextEdit->setEnabled(false);
         picPathEdit->setEnabled(true);
+        pview->setWaterMarkType(WATERTYPE_IMAGE);
     } else {
         waterTypeGroup->button(0)->setChecked(false);
         waterTypeGroup->button(1)->setChecked(false);
@@ -1269,6 +1308,7 @@ void DPrintPreviewDialogPrivate::watermarkTypeChoosed(int index)
         fontCombo->setEnabled(false);
         waterColorBtn->setEnabled(false);
         picPathEdit->setEnabled(false);
+        pview->setWaterMarkType(WATERTYPE_NONE);
     }
 }
 
@@ -1465,6 +1505,7 @@ void DPrintPreviewDialogPrivate::_q_ColorModeChange(int index)
         pview->setColorMode(DPrinter::GrayScale);
         supportedColorMode = false;
     }
+    pview->setWaterMarkColor(waterColor);
 }
 
 /*!
@@ -1697,6 +1738,7 @@ void DPrintPreviewDialogPrivate::customPictureWatermarkChoosed(const QString &fi
 {
     QImage image(filename);
     if (!image.isNull()) {
+        initWaterSettings();
         pview->setWaterMargImage(image);
     }
 }
