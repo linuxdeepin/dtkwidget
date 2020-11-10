@@ -709,12 +709,13 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     sizeBox = new DSpinBox;
     sizeBox->lineEdit()->setReadOnly(true);
     sizeBox->setFixedWidth(65);
-    sizeBox->setRange(0, 200);
+    sizeBox->setRange(10, 200);
     sizeBox->setValue(100);
     sizeBox->setSuffix("%");
     sizeBox->setButtonSymbols(QAbstractSpinBox::ButtonSymbols::NoButtons);
     waterSizeSlider->setValue(100);
     waterSizeSlider->setMaximum(200);
+    waterSizeSlider->setMinimum(10);
     sizeframelayout->addWidget(sizelabel, 4);
     sizeframelayout->addWidget(waterSizeSlider, 7);
     sizeframelayout->addWidget(sizeBox, 2);
