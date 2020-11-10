@@ -491,7 +491,6 @@ void DPrintPreviewWidget::setColorMode(const QPrinter::ColorMode &colorMode)
         d->pages.at(page - 1)->update();
         d->graphicsView->resetScale(false);
     }
-    updateWaterMark();
 }
 
 /*!

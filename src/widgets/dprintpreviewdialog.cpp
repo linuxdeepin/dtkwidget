@@ -1291,8 +1291,9 @@ void DPrintPreviewDialogPrivate::watermarkTypeChoosed(int index)
         waterTypeGroup->button(0)->setChecked(true);
         waterTextCombo->setEnabled(true);
         fontCombo->setEnabled(true);
-        waterColorBtn->setEnabled(true);
         picPathEdit->setEnabled(false);
+        if (colorModeCombo->count() == 2 && colorModeCombo->currentIndex() == colorModeCombo->count() - 2)
+            waterColorBtn->setEnabled(true);
         _q_textWaterMarkModeChanged(waterTextCombo->currentIndex());
         initWaterSettings();
         pview->setWaterMarkType(WATERTYPE_TEXT);
@@ -1337,6 +1338,7 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
         duplexCheckBox->setEnabled(false);
         duplexCombo->clear();
         duplexCombo->setEnabled(false);
+        waterColorBtn->setEnabled(true);
         if (colorModeCombo->count() == 1)
             colorModeCombo->insertItem(0, qApp->translate("DPrintPreviewDialogPrivate", "Color"));
         colorModeCombo->blockSignals(false);
@@ -1379,6 +1381,10 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
             colorModeCombo->blockSignals(false);
             colorModeCombo->addItem(qApp->translate("DPrintPreviewDialogPrivate", "Grayscale"));
             supportedColorMode = false;
+            waterColorBtn->setEnabled(false);
+            waterColor = QColor("#6f6f6f");
+            _q_selectColorButton(waterColor);
+            pickColorWidget->convertColor(waterColor);
         } else {
             colorModeCombo->addItems(QStringList() << qApp->translate("DPrintPreviewDialogPrivate", "Color") << qApp->translate("DPrintPreviewDialogPrivate", "Grayscale"));
             colorModeCombo->blockSignals(false);
@@ -1388,6 +1394,9 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
             } else {
                 colorModeCombo->setCurrentIndex(1);
                 supportedColorMode = false;
+            }
+            if (colorModeCombo->currentIndex() == colorModeCombo->count() - 2) {
+                waterColorBtn->setEnabled(true);
             }
         }
     }
@@ -1503,13 +1512,17 @@ void DPrintPreviewDialogPrivate::_q_ColorModeChange(int index)
     if (index == 0) {
         // color
         pview->setColorMode(DPrinter::Color);
+        waterColorBtn->setEnabled(true);
         supportedColorMode = true;
     } else {
         // gray
         pview->setColorMode(DPrinter::GrayScale);
+        waterColorBtn->setEnabled(false);
         supportedColorMode = false;
+        waterColor = QColor("#6f6f6f");
     }
-    pview->setWaterMarkColor(waterColor);
+    _q_selectColorButton(waterColor);
+    pickColorWidget->convertColor(waterColor);
 }
 
 /*!
