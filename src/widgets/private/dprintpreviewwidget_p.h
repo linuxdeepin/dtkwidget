@@ -177,7 +177,7 @@ public:
     }
     QRectF boundingRect() const override
     {
-        return brect;
+        return mapToScene(brect.toRect()).boundingRect();
     }
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) override;
     void updatePicture();
