@@ -639,6 +639,9 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     QFontDatabase fdb;
     QStringList fontList = fdb.families(QFontDatabase::Any);
     fontCombo->addItems(fontList);
+    QFont font;
+    if (fontList.contains(font.family()))
+        fontCombo->setCurrentText(font.defaultFamily());
     waterColorBtn = new DIconButton(textWatermarkWdg);
     waterColorBtn->setFixedSize(36, 36);
     waterColor = QColor("#6f6f6f");
