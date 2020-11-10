@@ -1879,6 +1879,9 @@ void DPrintPreviewDialogPrivate::_q_startPrint(bool clicked)
                                                    qApp->translate("DPrintPreviewDialogPrivate", "Images"),
                                                    nullptr, QFileDialog::ShowDirsOnly);
 
+        if (str.isEmpty())
+            return;
+
         QDir savedDir(str);
         if (!savedDir.exists() && !savedDir.mkpath(str))
             return;
@@ -1887,9 +1890,6 @@ void DPrintPreviewDialogPrivate::_q_startPrint(bool clicked)
         imageSuffix = !imageSuffix.compare("jpeg", Qt::CaseInsensitive) ? "jpeg" : "png";
         QString imageName = QFileInfo(str).fileName();
         str.append("/").append(imageName).append(".").append(imageSuffix);
-
-        if (str.isEmpty())
-            return;
         printer->setOutputFileName(str);
     }
 
