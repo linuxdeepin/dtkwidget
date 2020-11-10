@@ -167,7 +167,7 @@ void DPrintPreviewWidgetPrivate::print(bool printAsPicture)
         if (printAsPicture) {
             // write image
             QString stres = outPutFileName.right(suffix.length() + 1);
-            QString tmpString = QString(outPutFileName).remove(stres) + QString("(%1)").arg(QString::number(i + 1)) + stres;
+            QString tmpString = outPutFileName.left(outPutFileName.length() - suffix.length() - 1) + QString("(%1)").arg(QString::number(i + 1)) + stres;
 
             savedImages.save(tmpString, isJpegImage ? "JPEG" : "PNG");
             savedImages.fill(Qt::white);
