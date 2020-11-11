@@ -546,7 +546,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     QVBoxLayout *drawinglayout = new QVBoxLayout;
     drawinglayout->setSpacing(10);
     drawinglayout->setContentsMargins(10, 0, 10, 0);
-    DLabel *drawingLabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Layout"), advancesettingwdg);
+    DLabel *drawingLabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Print Layout"), advancesettingwdg);
     setwidgetfont(drawingLabel, DFontSizeManager::T5);
     QHBoxLayout *drawingtitlelayout = new QHBoxLayout;
     drawingtitlelayout->setContentsMargins(10, 20, 0, 0);
