@@ -716,8 +716,8 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     sizeBox->setValue(100);
     sizeBox->setSuffix("%");
     sizeBox->setButtonSymbols(QAbstractSpinBox::ButtonSymbols::NoButtons);
-    waterSizeSlider->setValue(100);
     waterSizeSlider->setMaximum(200);
+    waterSizeSlider->setValue(100);
     waterSizeSlider->setMinimum(10);
     sizeframelayout->addWidget(sizelabel, 4);
     sizeframelayout->addWidget(waterSizeSlider, 7);
@@ -828,6 +828,12 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(waterTextCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_textWaterMarkModeChanged(int)));
     QObject::connect(waterTextEdit, SIGNAL(editingFinished()), q, SLOT(_q_customTextWatermarkFinished()));
     QObject::connect(picPathEdit, &DFileChooserEdit::fileChoosed, q, [=](const QString &filename) { customPictureWatermarkChoosed(filename); });
+    QObject::connect(sizeBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), q, [=](int value) {
+        waterSizeSlider->setValue(value);
+    });
+    QObject::connect(opaBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), q, [=](int value) {
+        wmOpaSlider->setValue(value);
+    });
     QObject::connect(fontCombo, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), q, [=] {
         QFont font(fontCombo->currentText());
         font.setPointSize(WATERFONT_SIZE);
