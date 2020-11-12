@@ -158,7 +158,10 @@ void DPrintPreviewWidgetPrivate::print(bool printAsPicture)
 
         painter.save();
         // 绘制水印
+        painter.save();
+        painter.resetTransform();
         painter.drawImage(0, 0, generateWaterMarkImage(waterMarkPicture));
+        painter.restore();
         //todo scale,black and white,watermarking,……
         // 绘制原始数据
         painter.drawPicture(leftTopPoint, *(pictures[pageVector.at(i) - 1]));
@@ -305,17 +308,17 @@ void DPrintPreviewWidgetPrivate::impositionPages()
 
 QImage DPrintPreviewWidgetPrivate::generateWaterMarkImage(QPicture *originPic)
 {
-    QSize paperSize = previewPrinter->pageLayout().fullRectPixels(previewPrinter->resolution()).size();
-    QImage tmp(paperSize, QImage::Format_ARGB32);
+    QSize pageSize = previewPrinter->pageLayout().paintRectPixels(previewPrinter->resolution()).size();
+    QImage tmp(pageSize, QImage::Format_ARGB32);
     tmp.fill(Qt::white);
 
     QPainter tp;
     tp.begin(&tmp);
-    tp.translate(paperSize.width() / 2, paperSize.height() / 2);
+    tp.translate(pageSize.width() / 2, pageSize.height() / 2);
     tp.rotate(waterMark->rotation());
     tp.setOpacity(waterMark->opacity());
     // 由于translate改变了绘图原点  因此此处为了仍能够在原点绘图 将左移一定的单位
-    tp.drawPicture(-paperSize.width() / 2, -paperSize.height() / 2, *originPic);
+    tp.drawPicture(-pageSize.width() / 2, -pageSize.height() / 2, *originPic);
     tp.end();
 
     return tmp;
@@ -986,18 +989,13 @@ void WaterMark::updatePicture()
         if (!(font.styleStrategy() & QFont::PreferAntialias))
             font.setStyleStrategy(QFont::PreferAntialias);
 
-        if (pwidget->getColorMode() == QPrinter::GrayScale)
-            color = Qt::gray;
-
         if (layout == Center) {
             wp.save();
             wp.setRenderHint(QPainter::TextAntialiasing);
             wp.setFont(font);
             wp.setPen(color);
 
-            // 取矩形的最大高度或者宽度 将文字画入这个宽度的正方形内 使旋转时按最大距离计算文本位置
-            qreal maxDis = qMax(brect.width(), brect.height());
-            wp.drawText(QRectF(brect.x() - (maxDis - brect.width()) / 2, brect.y() - (maxDis - brect.height()) / 2, maxDis, maxDis), Qt::AlignCenter, text);
+            wp.drawText(twoPolygon.boundingRect(), Qt::AlignCenter, text);
             wp.restore();
             break;
         }
@@ -1026,8 +1024,7 @@ void WaterMark::updatePicture()
         QBrush b;
         b.setTextureImage(textImage);
         wp.setBrush(b);
-        QRectF targetRectf = QRectF(brect.x() - brect.width() / 2, brect.y() - brect.height() / 2, brect.width() * 2, brect.height() * 2);
-        wp.drawRect(targetRectf);
+        wp.drawRect(twoPolygon.boundingRect());
         wp.restore();
     }
         break;
@@ -1048,8 +1045,7 @@ void WaterMark::updatePicture()
             break;
         }
 
-        // targetRectf,需要绘制水印的范围，取高宽两倍于brect
-        QRectF targetRectf = QRectF(brect.x() - brect.width() / 2, brect.y() - brect.height() / 2, brect.width() * 2, brect.height() * 2);
+        QRectF targetRectf = twoPolygon.boundingRect();
         QPointF leftTop = targetRectf.topLeft();
         qreal colStart = leftTop.x();
         for (int row = 0; targetRectf.contains(leftTop);) {

@@ -31,6 +31,7 @@
 #include <QGraphicsView>
 #include <QWheelEvent>
 #include <QPicture>
+#include <qmath.h>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -171,7 +172,9 @@ public:
         brectPolygon = mapToScene(brect);
         qreal width = brect.width();
         qreal height = brect.height();
-        twoPolygon = mapToScene(QRectF(brect.x() - width / 2, brect.y() - height / 2, width * 2, height * 2));
+        // 取斜边为宽度的矩形 使旋转时始终保持页面在水印内部
+        qreal maxDis = qSqrt(qPow(width, 2) + qPow(height, 2));
+        twoPolygon = mapToScene(QRectF(QPointF(brect.center().x() - maxDis / 2, brect.center().y() - maxDis / 2), QSizeF(maxDis, maxDis)));
         setTransformOriginPoint(brect.center());
         setRotation(rotate);
     }
