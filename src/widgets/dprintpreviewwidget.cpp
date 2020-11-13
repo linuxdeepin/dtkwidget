@@ -11,6 +11,43 @@
 #define WATER_TEXTSPACE WATER_DEFAULTFONTSIZE
 
 DWIDGET_BEGIN_NAMESPACE
+// 取自Qt源码qpixmapfilter.cpp 945行
+static void grayscale(const QImage &image, QImage &dest, const QRect &rect = QRect())
+{
+    QRect destRect = rect;
+    QRect srcRect = rect;
+    if (rect.isNull()) {
+        srcRect = dest.rect();
+        destRect = dest.rect();
+    }
+    if (&image != &dest) {
+        destRect.moveTo(QPoint(0, 0));
+    }
+
+    const unsigned int *data = reinterpret_cast<const unsigned int *>(image.bits());
+    unsigned int *outData = reinterpret_cast<unsigned int *>(dest.bits());
+
+    if (dest.size() == image.size() && image.rect() == srcRect) {
+        // a bit faster loop for grayscaling everything
+        int pixels = dest.width() * dest.height();
+        for (int i = 0; i < pixels; ++i) {
+            int val = qGray(data[i]);
+            outData[i] = qRgba(val, val, val, qAlpha(data[i]));
+        }
+    } else {
+        int yd = destRect.top();
+        for (int y = srcRect.top(); y <= srcRect.bottom() && y < image.height(); y++) {
+            data = reinterpret_cast<const unsigned int *>(image.scanLine(y));
+            outData = reinterpret_cast<unsigned int *>(dest.scanLine(yd++));
+            int xd = destRect.left();
+            for (int x = srcRect.left(); x <= srcRect.right() && x < image.width(); x++) {
+                int val = qGray(data[x]);
+                outData[xd++] = qRgba(val, val, val, qAlpha(data[x]));
+            }
+        }
+    }
+}
+
 DPrintPreviewWidgetPrivate::DPrintPreviewWidgetPrivate(DPrintPreviewWidget *qq)
     : DFramePrivate(qq)
     , imposition(DPrintPreviewWidget::One)
@@ -40,8 +77,7 @@ void DPrintPreviewWidgetPrivate::init()
     background->setZValue(-1);
     scene->addItem(background);
 
-    waterMarkPicture = new QPicture;
-    waterMark = new WaterMark(waterMarkPicture);
+    waterMark = new WaterMark;
     scene->addItem(waterMark);
     waterMark->setZValue(0);
 
@@ -119,6 +155,7 @@ void DPrintPreviewWidgetPrivate::print(bool printAsPicture)
     QString outPutFileName = previewPrinter->outputFileName();
     QString suffix = QFileInfo(outPutFileName).suffix();
     bool isJpegImage = !suffix.compare(QLatin1String("jpeg"), Qt::CaseInsensitive);
+    const QImage &waterMarkImage = generateWaterMarkImage();
     QPainter painter;
 
     if (printAsPicture) {
@@ -160,7 +197,9 @@ void DPrintPreviewWidgetPrivate::print(bool printAsPicture)
         // 绘制水印
         painter.save();
         painter.resetTransform();
-        painter.drawImage(0, 0, generateWaterMarkImage(waterMarkPicture));
+        painter.translate(paperSize.width() / 2, paperSize.height() / 2);
+        painter.rotate(waterMark->rotation());
+        painter.drawImage(-waterMarkImage.width() / 2, -waterMarkImage.height() / 2, waterMarkImage);
         painter.restore();
         //todo scale,black and white,watermarking,……
         // 绘制原始数据
@@ -306,22 +345,21 @@ void DPrintPreviewWidgetPrivate::impositionPages()
     }
 }
 
-QImage DPrintPreviewWidgetPrivate::generateWaterMarkImage(QPicture *originPic)
+QImage DPrintPreviewWidgetPrivate::generateWaterMarkImage() const
 {
-    QSize pageSize = previewPrinter->pageLayout().paintRectPixels(previewPrinter->resolution()).size();
-    QImage tmp(pageSize, QImage::Format_ARGB32);
-    tmp.fill(Qt::white);
+    QRectF itemMaxRect = waterMark->itemMaxPolygon().boundingRect();
+    QImage originImage(itemMaxRect.size().toSize(), QImage::Format_ARGB32);
+    originImage.fill(Qt::white);
 
-    QPainter tp;
-    tp.begin(&tmp);
-    tp.translate(pageSize.width() / 2, pageSize.height() / 2);
-    tp.rotate(waterMark->rotation());
-    tp.setOpacity(waterMark->opacity());
-    // 由于translate改变了绘图原点  因此此处为了仍能够在原点绘图 将左移一定的单位
-    tp.drawPicture(-pageSize.width() / 2, -pageSize.height() / 2, *originPic);
-    tp.end();
+    QPainter picPainter;
+    picPainter.begin(&originImage);
+    picPainter.setOpacity(waterMark->opacity());
+    // 由于painter绘制此image中的位置是从0,0点开始的 但预览图的位置左移（上移）过 因此此处的绘图原点和预览图保持一致
+    picPainter.translate(-itemMaxRect.topLeft());
+    waterMark->updatePicture(&picPainter);
+    picPainter.end();
 
-    return tmp;
+    return originImage;
 }
 
 /*!
@@ -336,16 +374,6 @@ DPrintPreviewWidget::DPrintPreviewWidget(DPrinter *printer, QWidget *parent)
     Q_D(DPrintPreviewWidget);
     d->previewPrinter = printer;
     d->init();
-}
-
-/*!
- * \~chinese \brief DPrintPreviewWidget类析构函数。
- */
-DPrintPreviewWidget::~DPrintPreviewWidget()
-{
-    Q_D(DPrintPreviewWidget);
-
-    delete d->waterMarkPicture;
 }
 
 /*!
@@ -559,7 +587,6 @@ void DPrintPreviewWidget::updateWaterMark()
     Q_D(DPrintPreviewWidget);
 
     if (d->refreshMode == DPrintPreviewWidgetPrivate::RefreshImmediately) {
-        d->waterMark->updatePicture();
         d->waterMark->update();
     }
 }
@@ -959,6 +986,14 @@ QImage ContentItem::imageGrayscale(const QImage *origin)
     return iGray;
 }
 
+void WaterMark::setImage(const QImage &img)
+{
+    type = Image;
+    sourceImage = img;
+    graySourceImage = img;
+    grayscale(img, graySourceImage, img.rect());
+}
+
 void WaterMark::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
 {
     Q_UNUSED(item);
@@ -966,15 +1001,12 @@ void WaterMark::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, Q
     QPainterPath path = itemClipPath();
 
     painter->setClipPath(path, Qt::IntersectClip);
-    painter->drawPicture(0, 0, *mWaterMarkPic);
+    updatePicture(painter);
 }
 
-void WaterMark::updatePicture()
+void WaterMark::updatePicture(QPainter *painter)
 {
-    QPainter wp;
     DPrintPreviewWidget *pwidget = qobject_cast<DPrintPreviewWidget *>(scene()->parent()->parent());
-    wp.begin(mWaterMarkPic);
-
     switch (type) {
     case Type::None:
         break;
@@ -985,18 +1017,17 @@ void WaterMark::updatePicture()
         font.setPointSize(qRound(WATER_DEFAULTFONTSIZE * mScaleFactor));
 
         if (layout == Center) {
-            wp.save();
-            wp.setRenderHint(QPainter::TextAntialiasing);
-            wp.setFont(font);
-            wp.setPen(color);
+            painter->save();
+            painter->setRenderHint(QPainter::TextAntialiasing);
+            painter->setFont(font);
+            painter->setPen(color);
 
-            wp.drawText(twoPolygon.boundingRect(), Qt::AlignCenter, text);
-            wp.restore();
+            painter->drawText(twoPolygon.boundingRect(), Qt::AlignCenter, text);
+            painter->restore();
             break;
         }
 
         QFontMetrics fm(font);
-        QPainterPath path = itemClipPath();
         QSize textSize = fm.size(Qt::TextSingleLine, text);
         int space = qMin(textSize.width(), textSize.height());
         QSize spaceSize = QSize(WATER_TEXTSPACE, space);
@@ -1012,31 +1043,34 @@ void WaterMark::updatePicture()
         tp.drawText(textImage.rect(), Qt::AlignBottom | Qt::AlignRight, text);
         tp.end();
 
-        wp.save();
-        wp.setRenderHint(QPainter::SmoothPixmapTransform);
-        wp.setRenderHint(QPainter::Antialiasing);
-        wp.setPen(Qt::NoPen);
+        painter->save();
+        painter->setRenderHint(QPainter::SmoothPixmapTransform);
+        painter->setRenderHint(QPainter::Antialiasing);
+        painter->setPen(Qt::NoPen);
         QBrush b;
         b.setTextureImage(textImage);
-        wp.setBrush(b);
-        wp.drawRect(twoPolygon.boundingRect());
-        wp.restore();
+        painter->setBrush(b);
+        painter->drawRect(twoPolygon.boundingRect());
+        painter->restore();
     }
         break;
     case Type::Image: {
-        if (sourceImage.isNull() || mScaleFactor == 0)
+        if (sourceImage.isNull() || graySourceImage.isNull() || qFuzzyCompare(mScaleFactor, 0))
             return;
-        QImage img = sourceImage.scaledToWidth(sourceImage.width() * mScaleFactor);
+
+        QImage img = sourceImage;
         if (pwidget->getColorMode() == QPrinter::GrayScale) {
-            img = img.convertToFormat(QImage::Format_Grayscale8);
+            img = graySourceImage;
         }
+
+        img = img.scaledToWidth(qRound(img.width() * mScaleFactor));
         QSize size = img.size() / img.devicePixelRatio();
         int imgWidth = size.width();
         int imgHeight = size.height();
         int space = qMin(imgWidth, imgHeight);
         if (layout == Center) {
             QPointF leftTop(brect.center().x() - imgWidth / 2.0, brect.center().y() - imgHeight / 2.0);
-            wp.drawImage(leftTop, img);
+            painter->drawImage(leftTop, img);
             break;
         }
 
@@ -1046,7 +1080,7 @@ void WaterMark::updatePicture()
         for (int row = 0; targetRectf.contains(leftTop);) {
             leftTop += QPointF(row % 2 * space, 0);
             for (int col = 0; targetRectf.contains(leftTop); col++) {
-                wp.drawImage(leftTop, img);
+                painter->drawImage(leftTop, img);
                 leftTop += QPointF(imgWidth + space, 0);
             }
             row++;
@@ -1056,8 +1090,6 @@ void WaterMark::updatePicture()
     }
         break;
     }
-
-    wp.end();
 }
 
 QPainterPath WaterMark::itemClipPath() const

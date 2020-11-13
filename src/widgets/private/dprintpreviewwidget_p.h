@@ -1,4 +1,4 @@
-/*
+﻿/*
 * Copyright (C) 2019 ~ 2020 Uniontech Software Technology Co.,Ltd.
 *
 * Author:     chengyulong <chengyulong@uniontech.com>
@@ -118,11 +118,10 @@ public:
         Center,
         Tiled
     };
-    WaterMark(QPicture *waterMarkPicture, QGraphicsItem *parent = nullptr)
+    WaterMark(QGraphicsItem *parent = nullptr)
         : QGraphicsItem(parent)
         , type(None)
         , layout(Center)
-        , mWaterMarkPic(waterMarkPicture)
     {
     }
 
@@ -138,15 +137,11 @@ public:
     {
         layout = l;
     }
-    inline void setImage(const QImage &img)
-    {
-        type = Image;
-        sourceImage = img;
-    }
     inline void setScaleFactor(qreal scale)
     {
         mScaleFactor = scale;
     }
+    void setImage(const QImage &img);
     inline void setText(const QString str)
     {
         type = Text;
@@ -182,8 +177,12 @@ public:
     {
         return mapToScene(brect.toRect()).boundingRect();
     }
+    inline QPolygonF itemMaxPolygon() const
+    {
+        return twoPolygon;
+    }
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) override;
-    void updatePicture();
+    void updatePicture(QPainter *painter);
 
 protected:
     QPainterPath itemClipPath() const;
@@ -192,6 +191,7 @@ private:
     Type type;
     Layout layout;
     QImage sourceImage;
+    QImage graySourceImage;
     QImage targetImage;
     QRectF brect;
     qreal mScaleFactor = 1.0;
@@ -202,7 +202,6 @@ private:
 
     QPolygonF brectPolygon;
     QPolygonF twoPolygon;
-    QPicture *mWaterMarkPic;
 };
 
 class PageItem : public QGraphicsItem
@@ -265,7 +264,7 @@ public:
     int index2page(int index);
     int page2index(int page);
     void impositionPages();
-    QImage generateWaterMarkImage(QPicture *originPic);
+    QImage generateWaterMarkImage() const;
 
     GraphicsView *graphicsView;
     QGraphicsScene *scene;
@@ -273,7 +272,6 @@ public:
     QList<QPicture> targetPictures;
     QList<const QPicture *> pictures;
     QList<QGraphicsItem *> pages;
-    QPicture *waterMarkPicture;
     QGraphicsRectItem *background;
     WaterMark *waterMark;
     QVector<int> pageRange;
