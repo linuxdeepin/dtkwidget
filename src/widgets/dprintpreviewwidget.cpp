@@ -632,14 +632,7 @@ void DPrintPreviewWidget::setWaterMarkScale(qreal scale)
 {
     Q_D(DPrintPreviewWidget);
 
-    if (d->waterMark->getType() == WaterMark::Image) {
-        d->waterMark->setImageScale(scale);
-    } else if (d->waterMark->getType() == WaterMark::Text) {
-        QFont font = d->waterMark->getFont();
-        font.setPointSize(qRound(WATER_DEFAULTFONTSIZE * scale));
-        d->waterMark->setFont(font);
-    }
-
+    d->waterMark->setScaleFactor(scale);
     updateWaterMark();
 }
 
@@ -989,6 +982,8 @@ void WaterMark::updatePicture()
         if (!(font.styleStrategy() & QFont::PreferAntialias))
             font.setStyleStrategy(QFont::PreferAntialias);
 
+        font.setPointSize(qRound(WATER_DEFAULTFONTSIZE * mScaleFactor));
+
         if (layout == Center) {
             wp.save();
             wp.setRenderHint(QPainter::TextAntialiasing);
@@ -1029,9 +1024,9 @@ void WaterMark::updatePicture()
     }
         break;
     case Type::Image: {
-        if (sourceImage.isNull() || imageScale == 0)
+        if (sourceImage.isNull() || mScaleFactor == 0)
             return;
-        QImage img = sourceImage.scaledToWidth(sourceImage.width() * imageScale);
+        QImage img = sourceImage.scaledToWidth(sourceImage.width() * mScaleFactor);
         if (pwidget->getColorMode() == QPrinter::GrayScale) {
             img = img.convertToFormat(QImage::Format_Grayscale8);
         }

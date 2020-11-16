@@ -143,9 +143,9 @@ public:
         type = Image;
         sourceImage = img;
     }
-    inline void setImageScale(qreal scale)
+    inline void setScaleFactor(qreal scale)
     {
-        imageScale = scale;
+        mScaleFactor = scale;
     }
     inline void setText(const QString str)
     {
@@ -194,7 +194,7 @@ private:
     QImage sourceImage;
     QImage targetImage;
     QRectF brect;
-    qreal imageScale = 1.0;
+    qreal mScaleFactor = 1.0;
     QGraphicsTextItem textItem;
     QString text;
     QFont font;
