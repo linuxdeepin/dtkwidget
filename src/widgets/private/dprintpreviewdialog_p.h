@@ -59,6 +59,12 @@ public:
         CommaTip,
         FormatTip
     };
+    enum WaterMarkType {
+        Type_None,
+        Type_Text,
+        Type_Image
+    };
+
     explicit DPrintPreviewDialogPrivate(DPrintPreviewDialog *qq);
     void startup();
     void initui();
@@ -88,6 +94,7 @@ public:
     void setTurnPageBtnStatus();
     void watermarkTypeChoosed(int index);
     void customPictureWatermarkChoosed(const QString &filename);
+    void waterMarkBtnClicked(bool isClicked);
 
     void _q_printerChanged(int index);
     void _q_pageRangeChanged(int index);
@@ -119,6 +126,7 @@ public:
     bool isChecked = false;
     bool isEventHide = false;
     QColor waterColor;
+    int typeChoice = 0;
 
     //control
     DPrintPreviewWidget *pview;

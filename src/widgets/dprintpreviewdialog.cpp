@@ -56,8 +56,6 @@
 #define SPACER_HEIGHT_HIDE 0
 #define SPACER_HEIGHT_SHOW 370
 
-#define WATERMARK_NOT_SELECT 2
-
 #define PAGERANGE_ALL 0
 #define PAGERANGE_CURRENT 1
 #define PAGERANGE_SELECT 2
@@ -72,9 +70,6 @@
 
 #define WATERLAYOUT_CENTER 0
 #define WATERLAYOUT_TILED 1
-#define WATERTYPE_NONE 0
-#define WATERTYPE_TEXT 1
-#define WATERTYPE_IMAGE 2
 #define WATERFONT_SIZE 65
 
 DWIDGET_BEGIN_NAMESPACE
@@ -680,6 +675,7 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     waterTypeGroup = new QButtonGroup(q);
     waterTypeGroup->addButton(textBtn, 0);
     waterTypeGroup->addButton(picBtn, 1);
+    textBtn->setChecked(true);
 
     DBackgroundGroup *back = new DBackgroundGroup(vWatertypeLayout);
     back->setItemSpacing(2);
@@ -810,7 +806,6 @@ void DPrintPreviewDialogPrivate::initdata()
     _q_pageRangeChanged(0);
     _q_pageMarginChanged(0);
     _q_printerChanged(printDeviceCombo->currentIndex());
-    watermarkTypeChoosed(WATERMARK_NOT_SELECT);
     scaleGroup->button(1)->setChecked(true);
     orientationgroup->button(0)->setChecked(true);
     scaleRateEdit->setValue(100);
@@ -870,15 +865,7 @@ void DPrintPreviewDialogPrivate::initconnections()
         qreal m_value = static_cast<qreal>(value) / 100.00;
         pview->setWaterMarkOpacity(m_value);
     });
-    QObject::connect(waterMarkBtn, &DSwitchButton::clicked, q, [=](bool isClicked) {
-        if (isClicked) {
-            wmSpacer->changeSize(WIDTH_NORMAL, SPACER_HEIGHT_HIDE);
-            watermarksettingwdg->show();
-        } else {
-            wmSpacer->changeSize(WIDTH_NORMAL, SPACER_HEIGHT_SHOW);
-            watermarksettingwdg->hide();
-        }
-    });
+    QObject::connect(waterMarkBtn, &DSwitchButton::clicked, q, [=](bool isClicked) { this->waterMarkBtnClicked(isClicked); });
     QObject::connect(waterTypeGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), q, [=](int index) { this->watermarkTypeChoosed(index); });
     QObject::connect(pageRangeEdit, &DLineEdit::editingFinished, [=] {
         _q_customPagesFinished();
@@ -1304,7 +1291,6 @@ void DPrintPreviewDialogPrivate::setTurnPageBtnStatus()
 void DPrintPreviewDialogPrivate::watermarkTypeChoosed(int index)
 {
     if (index == 0) {
-        waterTypeGroup->button(0)->setChecked(true);
         waterTextCombo->setEnabled(true);
         fontCombo->setEnabled(true);
         picPathEdit->setEnabled(false);
@@ -1312,25 +1298,16 @@ void DPrintPreviewDialogPrivate::watermarkTypeChoosed(int index)
             waterColorBtn->setEnabled(true);
         _q_textWaterMarkModeChanged(waterTextCombo->currentIndex());
         initWaterSettings();
-        pview->setWaterMarkType(WATERTYPE_TEXT);
+        pview->setWaterMarkType(Type_Text);
     } else if (index == 1) {
-        waterTypeGroup->button(1)->setChecked(true);
         waterTextCombo->setEnabled(false);
         fontCombo->setEnabled(false);
         waterColorBtn->setEnabled(false);
         waterTextEdit->setEnabled(false);
         picPathEdit->setEnabled(true);
-        pview->setWaterMarkType(WATERTYPE_IMAGE);
-    } else {
-        waterTypeGroup->button(0)->setChecked(false);
-        waterTypeGroup->button(1)->setChecked(false);
-        waterTextCombo->setEnabled(false);
-        waterTextEdit->setEnabled(false);
-        fontCombo->setEnabled(false);
-        waterColorBtn->setEnabled(false);
-        picPathEdit->setEnabled(false);
-        pview->setWaterMarkType(WATERTYPE_NONE);
+        pview->setWaterMarkType(Type_Image);
     }
+    typeChoice = index;
 }
 
 /*!
@@ -1747,8 +1724,10 @@ void DPrintPreviewDialogPrivate::_q_textWaterMarkModeChanged(int index)
             waterTextEdit->clear();
     } else {
         waterTextEdit->setEnabled(true);
-        if (!lastCusWatermarkText.isEmpty())
+        if (!lastCusWatermarkText.isEmpty()) {
             waterTextEdit->setText(lastCusWatermarkText);
+            pview->setTextWaterMark(lastCusWatermarkText);
+        }
     }
 }
 
@@ -1773,6 +1752,25 @@ void DPrintPreviewDialogPrivate::customPictureWatermarkChoosed(const QString &fi
     if (!image.isNull()) {
         initWaterSettings();
         pview->setWaterMargImage(image);
+    }
+}
+
+/*!
+ * \~chinese \brief DPrintPreviewDialogPrivate::waterMarkBtnClicked 是否开启水印
+ * \~chinese \param state 水印开启
+ */
+void DPrintPreviewDialogPrivate::waterMarkBtnClicked(bool isClicked)
+{
+    if (isClicked) {
+        wmSpacer->changeSize(WIDTH_NORMAL, SPACER_HEIGHT_HIDE);
+        watermarksettingwdg->show();
+        watermarkTypeChoosed(typeChoice);
+        if (typeChoice == Type_Image - 1 && !picPathEdit->text().isEmpty())
+            customPictureWatermarkChoosed(picPathEdit->text());
+    } else {
+        wmSpacer->changeSize(WIDTH_NORMAL, SPACER_HEIGHT_SHOW);
+        watermarksettingwdg->hide();
+        pview->setWaterMarkType(Type_None);
     }
 }
 
