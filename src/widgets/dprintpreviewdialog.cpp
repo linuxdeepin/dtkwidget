@@ -637,11 +637,21 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     QHBoxLayout *hlayout3 = new QHBoxLayout;
     fontCombo = new DComboBox;
     QFontDatabase fdb;
+    //获取可支持的所有字体
     QStringList fontList = fdb.families(QFontDatabase::Any);
     fontCombo->addItems(fontList);
-    QFont font;
-    if (fontList.contains(font.family()))
-        fontCombo->setCurrentText(font.defaultFamily());
+    //当前系统的字体,中文字体的情况下,获取到的是英文
+    QString FontName = qApp->font().defaultFamily();
+    //通过字体信息,当中文字体的情况下将英文转换为中文
+    QFontInfo fontName(FontName);
+    QString defaultFontName = fontName.family();
+    //默认初始化水印字体是系统当前字体
+    for (QString itemName : fontList) {
+        if (itemName == defaultFontName) {
+            fontCombo->setCurrentText(itemName);
+        }
+    }
+
     waterColorBtn = new DIconButton(textWatermarkWdg);
     waterColorBtn->setFixedSize(36, 36);
     waterColor = QColor("#6f6f6f");
