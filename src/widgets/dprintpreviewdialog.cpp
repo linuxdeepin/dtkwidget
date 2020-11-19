@@ -631,25 +631,11 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
 
     QHBoxLayout *hlayout3 = new QHBoxLayout;
     fontCombo = new DComboBox;
-    QFontDatabase fdb;
-    //获取可支持的所有字体
-    QStringList fontList = fdb.families(QFontDatabase::Any);
-    fontCombo->addItems(fontList);
-    //当前系统的字体,中文字体的情况下,获取到的是英文
-    QString FontName = qApp->font().defaultFamily();
-    //通过字体信息,当中文字体的情况下将英文转换为中文
-    QFontInfo fontName(FontName);
-    QString defaultFontName = fontName.family();
-    //默认初始化水印字体是系统当前字体
-    for (QString itemName : fontList) {
-        if (itemName == defaultFontName) {
-            fontCombo->setCurrentText(itemName);
-        }
-    }
 
     waterColorBtn = new DIconButton(textWatermarkWdg);
     waterColorBtn->setFixedSize(36, 36);
     waterColor = QColor("#6f6f6f");
+    pview->refreshBegin();
     _q_selectColorButton(waterColor);
     hlayout3->addWidget(new DLabel, 18);
     hlayout3->addWidget(fontCombo, 35);
@@ -767,7 +753,6 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
  */
 void DPrintPreviewDialogPrivate::initWaterSettings()
 {
-    pview->refreshBegin();
     Q_EMIT waterPosCombox->currentIndexChanged(waterPosCombox->currentIndex());
     Q_EMIT inclinatBox->valueChanged(inclinatBox->value());
     Q_EMIT waterSizeSlider->valueChanged(waterSizeSlider->value());
@@ -776,7 +761,6 @@ void DPrintPreviewDialogPrivate::initWaterSettings()
         Q_EMIT fontCombo->currentIndexChanged(fontCombo->currentIndex());
         pview->setWaterMarkColor(waterColor);
     }
-    pview->refreshEnd();
 }
 
 void DPrintPreviewDialogPrivate::marginsLayout(bool adapted)
@@ -1291,6 +1275,7 @@ void DPrintPreviewDialogPrivate::setTurnPageBtnStatus()
 void DPrintPreviewDialogPrivate::watermarkTypeChoosed(int index)
 {
     if (index == 0) {
+        pview->refreshBegin();
         waterTextCombo->setEnabled(true);
         fontCombo->setEnabled(true);
         picPathEdit->setEnabled(false);
@@ -1298,7 +1283,22 @@ void DPrintPreviewDialogPrivate::watermarkTypeChoosed(int index)
             waterColorBtn->setEnabled(true);
         _q_textWaterMarkModeChanged(waterTextCombo->currentIndex());
         initWaterSettings();
+        QFontDatabase fdb;
+        QFont font;
+        //获取可支持的所有字体
+        QStringList fontList = fdb.families(QFontDatabase::Any);
+        fontCombo->addItems(fontList);
+        //通过字体信息,当中文字体的情况下将英文转换为中文
+        QFontInfo fontName(font);
+        QString defaultFontName = fontName.family();
+        //默认初始化水印字体是系统当前字体
+        for (QString itemName : fontList) {
+            if (itemName == defaultFontName) {
+                fontCombo->setCurrentText(itemName);
+            }
+        }
         pview->setWaterMarkType(Type_Text);
+        pview->refreshEnd();
     } else if (index == 1) {
         waterTextCombo->setEnabled(false);
         fontCombo->setEnabled(false);
@@ -1750,7 +1750,9 @@ void DPrintPreviewDialogPrivate::customPictureWatermarkChoosed(const QString &fi
 {
     QImage image(filename);
     if (!image.isNull()) {
+        pview->refreshBegin();
         initWaterSettings();
+        pview->refreshEnd();
         pview->setWaterMargImage(image);
     }
 }
@@ -1953,6 +1955,9 @@ bool DPrintPreviewDialog::event(QEvent *event)
 {
     Q_D(DPrintPreviewDialog);
     if (event->type() == QEvent::ApplicationFontChange || d->fontSizeMore == true) {
+        if (d->waterTypeGroup->button(0)->isChecked()) {
+            d->watermarkTypeChoosed(0);
+        }
         if (DFontSizeManager::fontPixelSize(qGuiApp->font()) <= 15)
             d->marginsLayout(true);
         else {
