@@ -4,6 +4,7 @@
 #include <private/qprinter_p.h>
 #include <QPicture>
 #include <QFileInfo>
+#include <QtConcurrent>
 
 #define FIRST_PAGE 1
 #define FIRST_INDEX 0
@@ -211,7 +212,11 @@ void DPrintPreviewWidgetPrivate::print(bool printAsPicture)
             QString stres = outPutFileName.right(suffix.length() + 1);
             QString tmpString = outPutFileName.left(outPutFileName.length() - suffix.length() - 1) + QString("(%1)").arg(QString::number(i + 1)) + stres;
 
-            savedImages.save(tmpString, isJpegImage ? "JPEG" : "PNG");
+            // 多线程保存文件修复大文件卡顿问题
+            QtConcurrent::run(QThreadPool::globalInstance(), [savedImages, tmpString, isJpegImage] {
+                savedImages.save(tmpString, isJpegImage ? "JPEG" : "PNG");
+            });
+
             savedImages.fill(Qt::white);
         }
     }
