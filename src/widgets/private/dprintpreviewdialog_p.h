@@ -125,6 +125,7 @@ public:
     QString lastCusWatermarkText = "";
     bool isChecked = false;
     bool isEventHide = false;
+    bool isInitBtnColor = false;
     QColor waterColor;
     int typeChoice = 0;
 

@@ -635,8 +635,8 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     waterColorBtn = new DIconButton(textWatermarkWdg);
     waterColorBtn->setFixedSize(36, 36);
     waterColor = QColor("#6f6f6f");
-    pview->refreshBegin();
     _q_selectColorButton(waterColor);
+    isInitBtnColor = true;
     hlayout3->addWidget(new DLabel, 18);
     hlayout3->addWidget(fontCombo, 35);
     hlayout3->addWidget(waterColorBtn, 1);
@@ -661,7 +661,6 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     waterTypeGroup = new QButtonGroup(q);
     waterTypeGroup->addButton(textBtn, 0);
     waterTypeGroup->addButton(picBtn, 1);
-    textBtn->setChecked(true);
 
     DBackgroundGroup *back = new DBackgroundGroup(vWatertypeLayout);
     back->setItemSpacing(2);
@@ -1766,6 +1765,7 @@ void DPrintPreviewDialogPrivate::waterMarkBtnClicked(bool isClicked)
     if (isClicked) {
         wmSpacer->changeSize(WIDTH_NORMAL, SPACER_HEIGHT_HIDE);
         watermarksettingwdg->show();
+        waterTypeGroup->button(0)->setChecked(true);
         watermarkTypeChoosed(typeChoice);
         if (typeChoice == Type_Image - 1 && !picPathEdit->text().isEmpty())
             customPictureWatermarkChoosed(picPathEdit->text());
@@ -1826,7 +1826,8 @@ void DPrintPreviewDialogPrivate::_q_selectColorButton(QColor color)
     waterColorBtn->setIcon(QIcon(pic));
     waterColorBtn->setIconSize(QSize(24, 24));
     waterColor = color;
-    pview->setWaterMarkColor(color);
+    if (isInitBtnColor)
+        pview->setWaterMarkColor(color);
 }
 
 /*!
