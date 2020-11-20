@@ -112,7 +112,12 @@ DApplicationPrivate::DApplicationPrivate(DApplication *q) :
                      q, cancelNotification);
 #endif
 
-    QApplication::setStyle("chameleon");
+    // If not in dde and not use deepin platform theme, force set style to chameleon.
+    if (!DGuiApplicationHelper::testAttribute(DGuiApplicationHelper::Attribute::IsDeepinPlatformTheme) &&
+        !DGuiApplicationHelper::testAttribute(DGuiApplicationHelper::Attribute::IsDeepinEnvironment)) {
+        DApplication::setStyle("chameleon");
+        q->setPalette(DGuiApplicationHelper::instance()->applicationPalette());
+    }
 }
 
 DApplicationPrivate::~DApplicationPrivate()
