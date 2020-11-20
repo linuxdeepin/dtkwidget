@@ -32,8 +32,6 @@ endif
 #	dh_makeshlibs -V -- -c0
 #endif
 
-#ifeq ($(DEB_BUILD_ARCH), mips64el)
-#override_dh_makeshlibs:
-#	dh_makeshlibs -V -- -c0
-#endif
+override_dh_makeshlibs:
+	dh_makeshlibs  -V "libdtkwidget5 (>= $(shell echo $(VERSION) | cut -d '.' -f 1,2))"
 
