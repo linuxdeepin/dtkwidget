@@ -34,34 +34,29 @@ int main(int argc, char *argv[])
 #if defined(DTK_STATIC_LIB)
     DWIDGET_INIT_RESOURCE();
 #endif
-    DApplication a(argc, argv);
-    qDebug() <<  a.arguments();
+    DApplication *a = DApplication::globalApplication(argc, argv);
+    qDebug() << a->arguments();
     DApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
     Dtk::Core::DLogManager::registerConsoleAppender();
 
-    a.loadTranslator();
+    a->loadTranslator();
 #ifdef Q_OS_UNIX
-    a.setOOMScoreAdj(500);
+    a->setOOMScoreAdj(500);
 #endif
 
     if (!DGuiApplicationHelper::setSingleInstance("deepin-tool-kit-examples")) {
         qDebug() << "another instance is running!!";
     }
 
-    a.setApplicationName("dtk-example");
-    a.setOrganizationName("deepin");
+    a->setApplicationName("dtk-example");
+    a->setOrganizationName("deepin");
     DApplicationSettings as;
     Q_UNUSED(as)
 
     MainWindow w;
-//    DIconButton *button = new DIconButton(&w);
-//    button->setIconSize(QSize(30, 30));
-//    button->setFlat(true);
-//    button->setIcon(QIcon::fromTheme("button_edit-clear"));
-//    w.setCentralWidget(button);
     w.show();
 
     Dtk::Widget::moveToCenter(&w);
 
-    return a.exec();
+    return a->exec();
 }
