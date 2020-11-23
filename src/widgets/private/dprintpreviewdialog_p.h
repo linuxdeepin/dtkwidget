@@ -95,6 +95,7 @@ public:
     void watermarkTypeChoosed(int index);
     void customPictureWatermarkChoosed(const QString &filename);
     void waterMarkBtnClicked(bool isClicked);
+    void disablePrintSettings();
 
     void _q_printerChanged(int index);
     void _q_pageRangeChanged(int index);

@@ -243,6 +243,7 @@ private:
     ContentItem *content;
 };
 
+typedef QList<QPair<QByteArray, QByteArray>> PrintOptions;
 class DPrintPreviewWidgetPrivate : public DFramePrivate
 {
 public:
@@ -265,6 +266,8 @@ public:
     int page2index(int page);
     void impositionPages();
     QImage generateWaterMarkImage() const;
+    PrintOptions printerOptions();
+    void printByCups();
 
     GraphicsView *graphicsView;
     QGraphicsScene *scene;
@@ -285,6 +288,9 @@ public:
 
     DPrinter *previewPrinter;
     RefreshMode refreshMode;
+
+    QString printFromPath;
+    DPrintPreviewWidget::PrintMode printMode;
 
     Q_DECLARE_PUBLIC(DPrintPreviewWidget)
 };

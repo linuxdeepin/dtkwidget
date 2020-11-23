@@ -362,6 +362,7 @@ void DPrintPreviewDialogPrivate::initbasicui()
     orientationlayout->addWidget(portraitwdg);
     orientationlayout->addWidget(landscapewdg);
     DBackgroundGroup *back = new DBackgroundGroup(orientationlayout);
+    back->setObjectName("OrientationBackgroundGroup");
     back->setItemSpacing(2);
     DPalette pa = DApplicationHelper::instance()->palette(back);
     pa.setBrush(DPalette::Base, pa.itemBackground());
@@ -508,6 +509,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     scalingcontentlayout->addWidget(customscalewdg);
 
     DBackgroundGroup *back = new DBackgroundGroup(scalingcontentlayout);
+    back->setObjectName("ScalingContentBackgroundGroup");
     back->setItemSpacing(1);
     DPalette pa = DApplicationHelper::instance()->palette(back);
     pa.setBrush(DPalette::Base, pa.itemBackground());
@@ -571,6 +573,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     setwidgetfont(watermarkLabel, DFontSizeManager::T5);
 
     DFrame *watermarkframe = new DFrame;
+    watermarkframe->setObjectName("WaterMarkFrame");
     setfrmaeback(watermarkframe);
     QHBoxLayout *texttypelayout = new QHBoxLayout;
     texttypelayout->setContentsMargins(10, 10, 10, 10);
@@ -1777,6 +1780,22 @@ void DPrintPreviewDialogPrivate::waterMarkBtnClicked(bool isClicked)
 }
 
 /*!
+ * \~chinese \brief DPrintPreviewDialogPrivate::disablePrintSettings 如果按照路径打印文件，则禁用部分不能使用的功能
+ */
+void DPrintPreviewDialogPrivate::disablePrintSettings()
+{
+    Q_Q(DPrintPreviewDialog);
+
+    if (pview->printFromPath().isEmpty())
+        return;
+
+    q->findChild<DBackgroundGroup *>("OrientationBackgroundGroup")->setEnabled(false);
+    q->findChild<DFrame *>("marginsFrame")->setEnabled(false);
+    q->findChild<DBackgroundGroup *>("ScalingContentBackgroundGroup")->setEnabled(false);
+    q->findChild<DFrame *>("WaterMarkFrame")->setEnabled(false);
+}
+
+/*!
  * \~chinese \brief DPrintPreviewDialogPrivate::_q_colorButtonCliked 点击取色按钮显示取色窗口位置
  */
 void DPrintPreviewDialogPrivate::_q_colorButtonCliked(bool cliked)
@@ -1874,6 +1893,7 @@ void DPrintPreviewDialogPrivate::_q_startPrint(bool clicked)
         if (str.isEmpty())
             return;
         printer->setOutputFileName(str);
+        pview->setPrintMode(DPrintPreviewWidget::PrintToPdf);
     } else if (isSavePicture) {
         if (printer == nullptr) {
             return;
@@ -1924,9 +1944,12 @@ void DPrintPreviewDialogPrivate::_q_startPrint(bool clicked)
         QString imageName = QFileInfo(str).fileName();
         str.append("/").append(imageName).append(".").append(imageSuffix);
         printer->setOutputFileName(str);
+        pview->setPrintMode(DPrintPreviewWidget::PrintToImage);
+    } else {
+        pview->setPrintMode(DPrintPreviewWidget::PrintToPrinter);
     }
 
-    pview->print(isSavePicture);
+    pview->print();
 
     q->done(0);
 }
@@ -2051,6 +2074,34 @@ QString DPrintPreviewDialog::docName() const
 {
     D_DC(DPrintPreviewDialog);
     return d->printer->docName();
+}
+
+/*!
+ * \~chinese \brief DPrintPreviewDialog::setPrintFromPath 根据路径的文件进行打印
+ * \~chinese \param path 文件路径
+ */
+bool DPrintPreviewDialog::setPrintFromPath(const QString &path)
+{
+    if (path.isEmpty() || !QFileInfo(path).isFile() || !QFileInfo(path).isReadable())
+        return false;
+
+    Q_D(DPrintPreviewDialog);
+
+    d->pview->setPrintFromPath(path);
+    d->disablePrintSettings();
+
+    return true;
+}
+
+/*!
+ * \~chinese \brief DPrintPreviewDialog::docName 路径文件的路径名
+ * \~chinese \return  路径文件路径名
+ */
+QString DPrintPreviewDialog::printFromPath() const
+{
+    D_DC(DPrintPreviewDialog);
+
+    return d->pview->printFromPath();
 }
 
 void DPrintPreviewDialog::resizeEvent(QResizeEvent *event)

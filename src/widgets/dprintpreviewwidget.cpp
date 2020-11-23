@@ -6,6 +6,8 @@
 #include <QFileInfo>
 #include <QtConcurrent>
 
+#include <cups/cups.h>
+
 #define FIRST_PAGE 1
 #define FIRST_INDEX 0
 #define WATER_DEFAULTFONTSIZE 65
@@ -54,6 +56,7 @@ DPrintPreviewWidgetPrivate::DPrintPreviewWidgetPrivate(DPrintPreviewWidget *qq)
     , imposition(DPrintPreviewWidget::One)
     , order(DPrintPreviewWidget::L2R_T2B)
     , refreshMode(DPrintPreviewWidgetPrivate::RefreshImmediately)
+    , printMode(DPrintPreviewWidget::PrintToPrinter)
 {
 }
 
@@ -365,6 +368,96 @@ QImage DPrintPreviewWidgetPrivate::generateWaterMarkImage() const
     picPainter.end();
 
     return originImage;
+}
+
+PrintOptions DPrintPreviewWidgetPrivate::printerOptions()
+{
+    PrintOptions options;
+
+    options.append(QPair<QByteArray, QByteArray>(QStringLiteral("media").toLocal8Bit(), QPageSize(QPageSize::PageSizeId(previewPrinter->pageSize())).key().toLocal8Bit()));
+    options.append(QPair<QByteArray, QByteArray>(QStringLiteral("copies").toLocal8Bit(), QString::number(previewPrinter->numCopies()).toLocal8Bit()));
+    options.append(QPair<QByteArray, QByteArray>(QStringLiteral("fit-to-page").toLocal8Bit(), QStringLiteral("true").toLocal8Bit()));
+
+    QString pageRangeString;
+    if (pageRangeMode == DPrintPreviewWidget::CurrentPage) {
+        pageRangeString = QString::number(pageRange.at(currentPageNumber - 1));
+    } else {
+        Q_FOREACH (int pageRangeCount, pageRange) {
+            pageRangeString.append(QString::number(pageRangeCount).append(","));
+        }
+
+        pageRangeString.resize(pageRangeString.length() - 1);
+    }
+
+    options.append(QPair<QByteArray, QByteArray>(QStringLiteral("page-ranges").toLocal8Bit(), pageRangeString.toLocal8Bit()));
+
+    switch (previewPrinter->duplex()) {
+    case QPrinter::DuplexNone:
+        options.append(QPair<QByteArray, QByteArray>(QStringLiteral("sides").toLocal8Bit(), QStringLiteral("one-sided").toLocal8Bit()));
+        break;
+    case QPrinter::DuplexAuto:
+        if (previewPrinter->orientation() == QPrinter::Portrait) {
+            options.append(QPair<QByteArray, QByteArray>(QStringLiteral("sides").toLocal8Bit(), QStringLiteral("two-sided-long-edge").toLocal8Bit()));
+        } else {
+            options.append(QPair<QByteArray, QByteArray>(QStringLiteral("sides").toLocal8Bit(), QStringLiteral("two-sided-short-edge").toLocal8Bit()));
+        }
+
+        break;
+    case QPrinter::DuplexLongSide:
+        options.append(QPair<QByteArray, QByteArray>(QStringLiteral("sides").toLocal8Bit(), QStringLiteral("two-sided-long-edge").toLocal8Bit()));
+        break;
+    case QPrinter::DuplexShortSide:
+        options.append(QPair<QByteArray, QByteArray>(QStringLiteral("sides").toLocal8Bit(), QStringLiteral("two-sided-short-edge").toLocal8Bit()));
+        break;
+    }
+
+    if (previewPrinter->colorMode() == QPrinter::GrayScale) {
+        options.append(QPair<QByteArray, QByteArray>(QStringLiteral("ColorModel").toLocal8Bit(), QStringLiteral("Gray").toLocal8Bit()));
+    } else {
+        options.append(QPair<QByteArray, QByteArray>(QStringLiteral("ColorModel").toLocal8Bit(), QStringLiteral("RGB").toLocal8Bit()));
+    }
+
+    return options;
+}
+
+void DPrintPreviewWidgetPrivate::printByCups()
+{
+    //  libcups2-dev libcups2
+    QLibrary cupsLibrary("cups", "2");
+    if (!cupsLibrary.isLoaded()) {
+        if (!cupsLibrary.load()) {
+            qWarning() << "Cups not found";
+            return;
+        }
+    }
+
+    int (*cupsPrintFile)(const char *name, const char *filename,
+                         const char *title, int num_options,
+                         cups_option_t *options) = nullptr;
+    cupsPrintFile = reinterpret_cast<decltype(cupsPrintFile)>(cupsLibrary.resolve("cupsPrintFile"));
+    if (!cupsPrintFile) {
+        qWarning() << "cupsPrintFile function load failed";
+        return;
+    }
+
+    PrintOptions options = printerOptions();
+    const int numOptions = options.size();
+
+    QVector<cups_option_t> cupsOptStruct;
+    cupsOptStruct.reserve(numOptions);
+
+    for (int c = 0; c < numOptions; ++c) {
+        cups_option_t opt;
+        opt.name = options[c].first.data();
+        opt.value = options[c].second.data();
+        cupsOptStruct.append(opt);
+    }
+
+    QString printerName = previewPrinter->printerName();
+    cups_option_t *optPtr = cupsOptStruct.size() ? &cupsOptStruct.first() : nullptr;
+
+    cupsPrintFile(printerName.toLocal8Bit().constData(), printFromPath.toLocal8Bit().constData(),
+                  previewPrinter->docName().toLocal8Bit().constData(), numOptions, optPtr);
 }
 
 /*!
@@ -801,6 +894,27 @@ void DPrintPreviewWidget::setOrder(Order order)
     d->impositionPages();
 }
 
+void DPrintPreviewWidget::setPrintFromPath(const QString &path)
+{
+    Q_D(DPrintPreviewWidget);
+
+    d->printFromPath = path;
+}
+
+QString DPrintPreviewWidget::printFromPath() const
+{
+    D_DC(DPrintPreviewWidget);
+
+    return d->printFromPath;
+}
+
+void DPrintPreviewWidget::setPrintMode(DPrintPreviewWidget::PrintMode pt)
+{
+    Q_D(DPrintPreviewWidget);
+
+    d->printMode = pt;
+}
+
 /*!
  * \~chinese \brief 刷新预览。
  */
@@ -870,7 +984,26 @@ void DPrintPreviewWidget::setCurrentPage(int page)
 void DPrintPreviewWidget::print(bool isSavedPicture)
 {
     Q_D(DPrintPreviewWidget);
-    d->print(isSavedPicture);
+    Q_UNUSED(isSavedPicture);
+
+    switch (d->printMode) {
+    case PrintToPrinter:
+        if (d->printFromPath.isEmpty()) {
+            // 通过QPrinter打印
+            d->print(false);
+        } else {
+            // 通过cups打印
+            d->printByCups();
+        }
+
+        break;
+    case PrintToImage:
+        d->print(true);
+        break;
+    case PrintToPdf:
+        d->print(false);
+        break;
+    }
 }
 
 void DPrintPreviewWidget::themeTypeChanged(DGuiApplicationHelper::ColorType themeType)

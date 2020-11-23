@@ -61,6 +61,9 @@ public:
     void setDocName(const QString &);
     QString docName() const;
 
+    bool setPrintFromPath(const QString &path = QString());
+    QString printFromPath() const;
+
     // QWidget interface
 protected:
     virtual void resizeEvent(QResizeEvent *event) override;

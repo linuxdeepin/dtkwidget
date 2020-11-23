@@ -77,6 +77,12 @@ public:
         Copy // 重复
     };
 
+    enum PrintMode { // 打印模式
+        PrintToPrinter, // 打印到打印机
+        PrintToPdf, // 打印到pdf
+        PrintToImage // 另存为图片
+    };
+
     explicit DPrintPreviewWidget(DPrinter *printer, QWidget *parent = nullptr);
 
     void setVisible(bool visible) override;
@@ -114,6 +120,9 @@ public:
     void setWaterMarkLayout(int layout);
     void setImposition(Imposition im);
     void setOrder(Order order);
+    void setPrintFromPath(const QString &path);
+    QString printFromPath() const;
+    void setPrintMode(PrintMode pt);
 
 public Q_SLOTS:
     void updatePreview();
