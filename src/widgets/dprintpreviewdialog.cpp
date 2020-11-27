@@ -805,7 +805,8 @@ void DPrintPreviewDialogPrivate::initconnections()
 {
     Q_Q(DPrintPreviewDialog);
 
-    QObject::connect(pview, &DPrintPreviewWidget::paintRequested, q, &DPrintPreviewDialog::paintRequested);
+    QObject::connect(pview, QOverload<DPrinter *>::of(&DPrintPreviewWidget::paintRequested), q, QOverload<DPrinter *>::of(&DPrintPreviewDialog::paintRequested));
+    QObject::connect(pview, QOverload<DPrinter *, const QVector<int> &>::of(&DPrintPreviewWidget::paintRequested), q, QOverload<DPrinter *, const QVector<int> &>::of(&DPrintPreviewDialog::paintRequested));
 
     QObject::connect(advanceBtn, &QPushButton::clicked, q, [this] { this->showadvancesetting(); });
     QObject::connect(printDeviceCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_printerChanged(int)));
@@ -1621,7 +1622,6 @@ void DPrintPreviewDialogPrivate::_q_customPagesFinished()
         isOnFocus = false;
         return;
     }
-    jumpPageEdit->setValue(1);
     QVector<int> page = checkDuplication(pagesrange);
     pview->setPageRange(page);
 }
@@ -2102,6 +2102,24 @@ QString DPrintPreviewDialog::printFromPath() const
     D_DC(DPrintPreviewDialog);
 
     return d->pview->printFromPath();
+}
+
+bool DPrintPreviewDialog::setAsynPreview(int totalPage)
+{
+    Q_D(DPrintPreviewDialog);
+
+    if (totalPage < 0)
+        return false;
+
+    d->pview->setAsynPreview(totalPage);
+    return true;
+}
+
+bool DPrintPreviewDialog::isAsynPreview() const
+{
+    D_DC(DPrintPreviewDialog);
+
+    return d->pview->isAsynPreview();
 }
 
 void DPrintPreviewDialog::resizeEvent(QResizeEvent *event)

@@ -123,6 +123,8 @@ public:
     void setPrintFromPath(const QString &path);
     QString printFromPath() const;
     void setPrintMode(PrintMode pt);
+    void setAsynPreview(int totalPage);
+    bool isAsynPreview() const;
 
 public Q_SLOTS:
     void updatePreview();
@@ -136,6 +138,7 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     void paintRequested(DPrinter *printer);
+    void paintRequested(DPrinter *printer, const QVector<int> &pageRange);
     void previewChanged();
     void currentPageChanged(int page);
     void totalPages(int);

@@ -268,6 +268,7 @@ public:
     QImage generateWaterMarkImage() const;
     PrintOptions printerOptions();
     void printByCups();
+    void generatePreviewPicture();
 
     GraphicsView *graphicsView;
     QGraphicsScene *scene;
@@ -291,6 +292,10 @@ public:
 
     QString printFromPath;
     DPrintPreviewWidget::PrintMode printMode;
+    bool isAsynPreview;
+    QVector<int> previewPages;
+    bool asynPreviewNeedUpdate;
+    int asynPreviewTotalPage;
 
     Q_DECLARE_PUBLIC(DPrintPreviewWidget)
 };

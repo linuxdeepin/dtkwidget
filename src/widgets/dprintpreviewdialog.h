@@ -36,6 +36,7 @@ public:
 
 Q_SIGNALS:
     void paintRequested(DPrinter *printer);
+    void paintRequested(DPrinter *printer, const QVector<int> &pageRange);
 
 private:
     D_DECLARE_PRIVATE(DPrintPreviewDialog)
@@ -63,6 +64,9 @@ public:
 
     bool setPrintFromPath(const QString &path = QString());
     QString printFromPath() const;
+
+    bool setAsynPreview(int totalPage);
+    bool isAsynPreview() const;
 
     // QWidget interface
 protected:

@@ -57,6 +57,8 @@ DPrintPreviewWidgetPrivate::DPrintPreviewWidgetPrivate(DPrintPreviewWidget *qq)
     , order(DPrintPreviewWidget::L2R_T2B)
     , refreshMode(DPrintPreviewWidgetPrivate::RefreshImmediately)
     , printMode(DPrintPreviewWidget::PrintToPrinter)
+    , isAsynPreview(false)
+    , asynPreviewNeedUpdate(false)
 {
 }
 
@@ -127,16 +129,10 @@ void DPrintPreviewWidgetPrivate::generatePreview()
     if (refreshMode == RefreshDelay)
         return;
 
-    for (auto *page : qAsConst(pages))
-        scene->removeItem(page);
-    qDeleteAll(pages);
-    pages.clear();
+    if (isAsynPreview)
+        previewPages = {currentPageNumber == 0 ? FIRST_PAGE : index2page(currentPageNumber - 1)};
 
-    Q_Q(DPrintPreviewWidget);
-    previewPrinter->setPreviewMode(true);
-    Q_EMIT q->paintRequested(previewPrinter);
-    previewPrinter->setPreviewMode(false);
-    pictures = previewPrinter->getPrinterPages();
+    generatePreviewPicture();
     setPageRangeAll();
     populateScene();
     impositionPages();
@@ -161,6 +157,18 @@ void DPrintPreviewWidgetPrivate::print(bool printAsPicture)
     bool isJpegImage = !suffix.compare(QLatin1String("jpeg"), Qt::CaseInsensitive);
     const QImage &waterMarkImage = generateWaterMarkImage();
     QPainter painter;
+
+    QVector<int> pageVector;
+    if (pageRangeMode == DPrintPreviewWidget::CurrentPage)
+        pageVector.append(pageRange.at(currentPageNumber - 1));
+    else {
+        pageVector = pageRange;
+    }
+
+    if (isAsynPreview) {
+        previewPages = pageVector;
+        generatePreviewPicture();
+    }
 
     if (printAsPicture) {
         painter.begin(&savedImages);
@@ -187,12 +195,6 @@ void DPrintPreviewWidgetPrivate::print(bool printAsPicture)
     leftTopPoint.setX(lt_x);
     leftTopPoint.setY(lt_y);
 
-    QVector<int> pageVector;
-    if (pageRangeMode == DPrintPreviewWidget::CurrentPage)
-        pageVector.append(pageRange.at(currentPageNumber - 1));
-    else {
-        pageVector = pageRange;
-    }
     for (int i = 0; i < pageVector.size(); i++) {
         if (0 != i && !printAsPicture)
             previewPrinter->newPage();
@@ -207,7 +209,7 @@ void DPrintPreviewWidgetPrivate::print(bool printAsPicture)
         painter.restore();
         //todo scale,black and white,watermarking,……
         // 绘制原始数据
-        painter.drawPicture(leftTopPoint, *(pictures[pageVector.at(i) - 1]));
+        painter.drawPicture(leftTopPoint, *(isAsynPreview ? pictures[i] : pictures[pageVector.at(i) - 1]));
         painter.restore();
 
         if (printAsPicture) {
@@ -229,14 +231,39 @@ void DPrintPreviewWidgetPrivate::print(bool printAsPicture)
 
 void DPrintPreviewWidgetPrivate::setPageRangeAll()
 {
-    int size = pictures.count();
-    size = targetPage(size);
-    pageRange.clear();
-    for (int i = FIRST_PAGE; i <= size; i++) {
-        pageRange.append(i);
-    }
     Q_Q(DPrintPreviewWidget);
-    Q_EMIT q->totalPages(size);
+    if (isAsynPreview) {
+        int size;
+
+        if ((pageRangeMode == DPrintPreviewWidget::AllPage) || (pageRangeMode == DPrintPreviewWidget::CurrentPage)) {
+            size = asynPreviewTotalPage;
+        } else {
+            size = pageRange.count();
+        }
+
+        if (currentPageNumber == 0) {
+            pageRange.clear();
+            for (int i = FIRST_PAGE; i <= size; i++) {
+                pageRange.append(i);
+            }
+        }
+
+        if (pageRangeMode == DPrintPreviewWidget::SelectPage) {
+            Q_EMIT q->pagesCountChanged(size);
+        } else {
+            Q_EMIT q->totalPages(size);
+        }
+
+    } else {
+        int size = pictures.count();
+        size = targetPage(size);
+        pageRange.clear();
+        for (int i = FIRST_PAGE; i <= size; i++) {
+            pageRange.append(i);
+        }
+
+        Q_EMIT q->totalPages(size);
+    }
 
     reviewChanged = false;
 }
@@ -253,22 +280,38 @@ void DPrintPreviewWidgetPrivate::setCurrentPage(int page)
         return;
     if (page > pageCount)
         page = pageCount;
-    int pageNumber = index2page(page - 1);
-    if (pageNumber < 0)
-        return;
-    int lastPage = index2page(currentPageNumber - 1);
-    if (lastPage > -1) {
-        if (lastPage > pages.size())
-            pages.back()->setVisible(false);
-        else
-            pages.at(lastPage - 1)->setVisible(false);
-    }
-    currentPageNumber = page;
-    if (pageNumber > pages.size())
-        return;
 
-    if (PageItem *currentPage = dynamic_cast<PageItem *>(pages.at(pageNumber - 1))) {
-        currentPage->setVisible(true);
+    if (isAsynPreview) {
+        currentPageNumber = page;
+
+        // 如果单独使用这个函数 在异步预览下需要重绘一次 否则无法更新预览页面
+        if (asynPreviewNeedUpdate) {
+            asynPreviewNeedUpdate = false;
+            generatePreview();
+            return;
+        } else {
+            if (PageItem *currentPage = dynamic_cast<PageItem *>(pages.first())) {
+                currentPage->setVisible(true);
+            }
+        }
+    } else {
+        int pageNumber = index2page(page - 1);
+        if (pageNumber < 0)
+            return;
+        int lastPage = index2page(currentPageNumber - 1);
+        if (lastPage > -1) {
+            if (lastPage > pages.size())
+                pages.back()->setVisible(false);
+            else
+                pages.at(lastPage - 1)->setVisible(false);
+        }
+        currentPageNumber = page;
+        if (pageNumber > pages.size())
+            return;
+
+        if (PageItem *currentPage = dynamic_cast<PageItem *>(pages.at(pageNumber - 1))) {
+            currentPage->setVisible(true);
+        }
     }
 
     graphicsView->resetScale(false);
@@ -319,6 +362,8 @@ int DPrintPreviewWidgetPrivate::page2index(int page)
 
 void DPrintPreviewWidgetPrivate::impositionPages()
 {
+    // 快速切换会导致异常崩溃
+    return;
     QSize paperSize = previewPrinter->pageLayout().fullRectPixels(previewPrinter->resolution()).size();
     QRect pageRect = previewPrinter->pageLayout().paintRectPixels(previewPrinter->resolution());
 
@@ -460,6 +505,24 @@ void DPrintPreviewWidgetPrivate::printByCups()
                   previewPrinter->docName().toLocal8Bit().constData(), numOptions, optPtr);
 }
 
+void DPrintPreviewWidgetPrivate::generatePreviewPicture()
+{
+    for (auto *page : qAsConst(pages))
+        scene->removeItem(page);
+    qDeleteAll(pages);
+    pages.clear();
+
+    Q_Q(DPrintPreviewWidget);
+    previewPrinter->setPreviewMode(true);
+    if (isAsynPreview) {
+        Q_EMIT q->paintRequested(previewPrinter, previewPages);
+    } else {
+        Q_EMIT q->paintRequested(previewPrinter);
+    }
+    previewPrinter->setPreviewMode(false);
+    pictures = previewPrinter->getPrinterPages();
+}
+
 /*!
  * \~chinese \brief 构造一个 DPrintPreviewWidget。
  *
@@ -546,13 +609,19 @@ void DPrintPreviewWidget::reviewChange(bool generate)
 void DPrintPreviewWidget::setPageRange(const QVector<int> &rangePages)
 {
     Q_D(DPrintPreviewWidget);
-    int currentPage = d->index2page(d->currentPageNumber - 1);
-    if (currentPage > 0) {
-        d->pages.at(currentPage - 1)->setVisible(false);
+
+    if (rangePages == d->pageRange)
+        return;
+
+    if (!d->isAsynPreview) {
+        int currentPage = d->index2page(d->currentPageNumber - 1);
+        if (currentPage > 0) {
+            d->pages.at(currentPage - 1)->setVisible(false);
+        }
     }
     d->pageRange = rangePages;
     Q_EMIT pagesCountChanged(d->pagesCount());
-    d->setCurrentPage(d->currentPageNumber);
+    setCurrentPage(d->currentPageNumber);
 }
 
 /*!
@@ -563,18 +632,14 @@ void DPrintPreviewWidget::setPageRange(const QVector<int> &rangePages)
  */
 void DPrintPreviewWidget::setPageRange(int from, int to)
 {
-    Q_D(DPrintPreviewWidget);
     if (from > to)
         return;
-    int currentPage = d->index2page(d->currentPageNumber - 1);
-    if (currentPage > 0) {
-        d->pages.at(currentPage - 1)->setVisible(false);
-    }
-    d->pageRange.clear();
+
+    QVector<int> rangePages;
     for (int i = from; i <= to; i++)
-        d->pageRange.append(i);
-    Q_EMIT pagesCountChanged(d->pagesCount());
-    d->setCurrentPage(d->currentPageNumber);
+        rangePages.append(i);
+
+    setPageRange(rangePages);
 }
 
 /*!
@@ -617,7 +682,12 @@ void DPrintPreviewWidget::setColorMode(const QPrinter::ColorMode &colorMode)
     d->previewPrinter->setColorMode(colorMode);
     int page = d->index2page(d->currentPageNumber - 1);
     if (page > 0) {
-        d->pages.at(page - 1)->update();
+        if (isAsynPreview()) {
+            d->pages.first()->update();
+        } else {
+            d->pages.at(page - 1)->update();
+        }
+
         d->graphicsView->resetScale(false);
     }
 }
@@ -673,7 +743,13 @@ void DPrintPreviewWidget::updateView()
     Q_D(DPrintPreviewWidget);
     if (d->currentPageNumber < 0 || d->currentPageNumber > d->pages.count() || d->pages.empty())
         return;
-    d->pages.at(d->currentPageNumber - 1)->update();
+
+    if (d->isAsynPreview) {
+        d->pages.first()->update();
+    } else {
+        d->pages.at(d->currentPageNumber - 1)->update();
+    }
+
     d->graphicsView->resetScale(false);
 }
 
@@ -915,6 +991,21 @@ void DPrintPreviewWidget::setPrintMode(DPrintPreviewWidget::PrintMode pt)
     d->printMode = pt;
 }
 
+void DPrintPreviewWidget::setAsynPreview(int totalPage)
+{
+    Q_D(DPrintPreviewWidget);
+
+    d->isAsynPreview = true;
+    d->asynPreviewTotalPage = totalPage;
+}
+
+bool DPrintPreviewWidget::isAsynPreview() const
+{
+    D_DC(DPrintPreviewWidget);
+
+    return d->isAsynPreview;
+}
+
 /*!
  * \~chinese \brief 刷新预览。
  */
@@ -978,6 +1069,10 @@ void DPrintPreviewWidget::turnEnd()
 void DPrintPreviewWidget::setCurrentPage(int page)
 {
     Q_D(DPrintPreviewWidget);
+
+    if (d->isAsynPreview)
+        d->asynPreviewNeedUpdate = true;
+
     d->setCurrentPage(page);
 }
 
