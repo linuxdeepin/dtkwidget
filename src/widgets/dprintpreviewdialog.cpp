@@ -406,7 +406,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     QHBoxLayout *marginscombolayout = new QHBoxLayout;
     DLabel *marginlabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Margins"));
     marginsCombo = new DComboBox;
-    marginsCombo->addItems(QStringList() << qApp->translate("DPrintPreviewDialogPrivate", "Narrow(mm)") << qApp->translate("DPrintPreviewDialogPrivate", "Normal(mm)") << qApp->translate("DPrintPreviewDialogPrivate", "Moderate(mm)") << qApp->translate("DPrintPreviewDialogPrivate", "Customize(mm)"));
+    marginsCombo->addItems(QStringList() << qApp->translate("DPrintPreviewDialogPrivate", "Narrow (mm)") << qApp->translate("DPrintPreviewDialogPrivate", "Normal (mm)") << qApp->translate("DPrintPreviewDialogPrivate", "Moderate (mm)") << qApp->translate("DPrintPreviewDialogPrivate", "Customize (mm)"));
     marginscombolayout->addWidget(marginlabel, 4);
     marginscombolayout->addWidget(marginsCombo, 9);
 
