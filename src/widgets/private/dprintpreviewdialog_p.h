@@ -50,6 +50,7 @@ class DSuggestButton;
 class DDoubleSpinBox;
 class DSlider;
 class DBackgroundGroup;
+class DToolButton;
 class DPrintPreviewDialogPrivate : public DDialogPrivate
 {
 public:
@@ -96,6 +97,7 @@ public:
     void customPictureWatermarkChoosed(const QString &filename);
     void waterMarkBtnClicked(bool isClicked);
     void disablePrintSettings();
+    void setPageLayoutEnable(const bool &checked);
 
     void _q_printerChanged(int index);
     void _q_pageRangeChanged(int index);
@@ -112,6 +114,7 @@ public:
     void _q_customTextWatermarkFinished();
     void _q_colorButtonCliked(bool cliked);
     void _q_selectColorButton(QColor color);
+    void _q_pagePersheetComboIndexChanged(int index);
 
     //printer
     DPrinter *printer;
@@ -165,10 +168,8 @@ public:
     DCheckBox *duplexCheckBox;
     DComboBox *paperSizeCombo;
     DComboBox *pagePerSheetCombo;
-    DIconButton *lrtbBtn; //左右上下
-    DIconButton *rltbBtn; //右左上下
-    DIconButton *tblrBtn; //上下左右
-    DIconButton *tbrlBtn; //上下右左
+    DCheckBox *sidebysideCheckBox;
+    QButtonGroup *directGroup;
     QButtonGroup *printOrderGroup; //打印顺序
     DComboBox *inorderCombo;
     DComboBox *waterTextCombo; //添加水印类型

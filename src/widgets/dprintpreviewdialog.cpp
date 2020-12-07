@@ -17,7 +17,7 @@
 #include "dapplication.h"
 #include "dfilechooseredit.h"
 #include "dslider.h"
-#include "diconbutton.h"
+#include "dtoolbutton.h"
 
 #include <DScrollArea>
 #include <DScrollBar>
@@ -556,12 +556,69 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     duplexCombo = new DComboBox;
     duplexCheckBox = new DCheckBox(qApp->translate("DPrintPreviewDialogPrivate", "Duplex"));
     duplexCombo->setFixedHeight(36);
-    duplexlayout->setContentsMargins(14, 4, 10, 4);
+    duplexlayout->setContentsMargins(5, 5, 10, 5);
     duplexlayout->addWidget(duplexCheckBox, 4);
     duplexlayout->addWidget(duplexCombo, 9);
 
+    //并列打印
+    DFrame *sidebysideframe = new DFrame;
+    sidebysideframe->setObjectName("btnframe");
+    setfrmaeback(sidebysideframe);
+    QVBoxLayout *sidebysideframelayout = new QVBoxLayout(sidebysideframe);
+    sidebysideframelayout->setContentsMargins(0, 0, 0, 0);
+    QHBoxLayout *pagepersheetlayout = new QHBoxLayout;
+    sidebysideCheckBox = new DCheckBox(qApp->translate("DPrintPreviewDialogPrivate", "N-up printing"));
+    pagePerSheetCombo = new DComboBox;
+    pagePerSheetCombo->addItems(QStringList() << qApp->translate("DPrintPreviewDialogPrivate", "2 pages/sheet, 1×2") << qApp->translate("DPrintPreviewDialogPrivate", "4 pages/sheet, 2×2") << qApp->translate("DPrintPreviewDialogPrivate", "6 pages/sheet, 2×3") << qApp->translate("DPrintPreviewDialogPrivate", "9 pages/sheet, 3×3") << qApp->translate("DPrintPreviewDialogPrivate", "16 pages/sheet, 4×4"));
+    pagePerSheetCombo->setFixedHeight(36);
+    pagepersheetlayout->setContentsMargins(5, 5, 10, 5);
+    pagepersheetlayout->addWidget(sidebysideCheckBox, 4);
+    pagepersheetlayout->addWidget(pagePerSheetCombo, 9);
+    sidebysideframelayout->addLayout(pagepersheetlayout);
+
+    QHBoxLayout *printdirectlayout = new QHBoxLayout;
+    printdirectlayout->setContentsMargins(0, 0, 10, 5);
+    DLabel *directlabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Layout direction"));
+    DToolButton *lrtbBtn = new DToolButton;
+    DToolButton *rltbBtn = new DToolButton;
+    DToolButton *tblrBtn = new DToolButton;
+    DToolButton *tbrlBtn = new DToolButton;
+    DToolButton *repeatBtn = new DToolButton;
+    lrtbBtn->setIcon(QIcon::fromTheme("printer_lrtb_1"));
+    rltbBtn->setIcon(QIcon::fromTheme("printer_lrtb_2"));
+    tblrBtn->setIcon(QIcon::fromTheme("printer_lrtb_3"));
+    tbrlBtn->setIcon(QIcon::fromTheme("printer_lrtb_4"));
+    repeatBtn->setIcon(QIcon::fromTheme("printer_lrtb_5"));
+    DWidget *btnWidget = new DWidget;
+    directGroup = new QButtonGroup(q);
+    QHBoxLayout *btnLayout = new QHBoxLayout(btnWidget);
+    btnLayout->setContentsMargins(0, 0, 0, 0);
+    printdirectlayout->addSpacing(30);
+    btnLayout->addWidget(lrtbBtn);
+    btnLayout->addStretch();
+    btnLayout->addWidget(rltbBtn);
+    btnLayout->addStretch();
+    btnLayout->addWidget(tblrBtn);
+    btnLayout->addStretch();
+    btnLayout->addWidget(tbrlBtn);
+    btnLayout->addStretch();
+    btnLayout->addWidget(repeatBtn);
+    printdirectlayout->addWidget(directlabel, 2);
+    printdirectlayout->addWidget(btnWidget, 5);
+    sidebysideframelayout->addLayout(printdirectlayout);
+    QList<DToolButton *> listBtn = btnWidget->findChildren<DToolButton *>();
+    for (DToolButton *btn : listBtn) {
+        btn->setIconSize(QSize(18, 18));
+        btn->setFixedSize(QSize(36, 36));
+        btn->setCheckable(true);
+        btn->setEnabled(false);
+        static int i = 0;
+        directGroup->addButton(btn, i);
+        i++;
+    }
     drawinglayout->addLayout(drawingtitlelayout);
     drawinglayout->addWidget(duplexframe);
+    drawinglayout->addWidget(sidebysideframe);
 
     //水印
     QVBoxLayout *watermarklayout = new QVBoxLayout;
@@ -797,6 +854,8 @@ void DPrintPreviewDialogPrivate::initdata()
     scaleRateEdit->setValue(100);
     scaleRateEdit->setEnabled(false);
     duplexCombo->setEnabled(false);
+    pagePerSheetCombo->setEnabled(false);
+    directGroup->button(0)->setChecked(true);
     isInited = true;
     fontSizeMore = true;
 }
@@ -819,6 +878,7 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(orientationgroup, SIGNAL(buttonClicked(int)), q, SLOT(_q_orientationChanged(int)));
     QObject::connect(waterTextCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_textWaterMarkModeChanged(int)));
     QObject::connect(waterTextEdit, SIGNAL(editingFinished()), q, SLOT(_q_customTextWatermarkFinished()));
+    QObject::connect(pagePerSheetCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_pagePersheetComboIndexChanged(int)));
     QObject::connect(picPathEdit, &DFileChooserEdit::fileChoosed, q, [=](const QString &filename) { customPictureWatermarkChoosed(filename); });
     QObject::connect(sizeBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), q, [=](int value) {
         waterSizeSlider->setValue(value);
@@ -838,6 +898,9 @@ void DPrintPreviewDialogPrivate::initconnections()
         } else {
             pview->setWaterMarkLayout(WATERLAYOUT_TILED);
         }
+    });
+    QObject::connect(directGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), q, [=](int index) {
+        directGroup->button(index)->setChecked(true);
     });
     QObject::connect(inclinatBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), q, [=](int value) {
         pview->setWaterMarkRotate(value);
@@ -861,6 +924,13 @@ void DPrintPreviewDialogPrivate::initconnections()
         isOnFocus = true;
         if (pageRangeEdit->text().right(1) == "-" && !onFocus) {
             this->_q_customPagesFinished();
+        }
+    });
+    QObject::connect(sidebysideCheckBox, &DCheckBox::stateChanged, q, [=](int status) {
+        if (status == 0) {
+            setPageLayoutEnable(false);
+        } else {
+            setPageLayoutEnable(true);
         }
     });
     QObject::connect(jumpPageEdit->lineEdit(), &QLineEdit::textChanged, q, [ = ](QString str) {
@@ -1796,6 +1866,19 @@ void DPrintPreviewDialogPrivate::disablePrintSettings()
 }
 
 /*!
+ * \~chinese \brief DPrintPreviewDialogPrivate::setPageLayoutEnable 并列打印控件是否可用
+ * \~chinese \param checked 并列打印功能是否选中
+ */
+void DPrintPreviewDialogPrivate::setPageLayoutEnable(const bool &checked)
+{
+    QList<DToolButton *> btnList = advancesettingwdg->findChild<DFrame *>("btnframe")->findChildren<DToolButton *>();
+    for (DToolButton *button : btnList) {
+        button->setEnabled(checked);
+    }
+    pagePerSheetCombo->setEnabled(checked);
+}
+
+/*!
  * \~chinese \brief DPrintPreviewDialogPrivate::_q_colorButtonCliked 点击取色按钮显示取色窗口位置
  */
 void DPrintPreviewDialogPrivate::_q_colorButtonCliked(bool cliked)
@@ -1847,6 +1930,14 @@ void DPrintPreviewDialogPrivate::_q_selectColorButton(QColor color)
     waterColor = color;
     if (isInitBtnColor)
         pview->setWaterMarkColor(color);
+}
+
+/*!
+ * \~chinese \brief DPrintPreviewDialogPrivate::_q_pagePersheetComboIndexChanged 并列打印选择
+ * \~chinese \param index 并列打印选择
+ */
+void DPrintPreviewDialogPrivate::_q_pagePersheetComboIndexChanged(int index)
+{
 }
 
 /*!
