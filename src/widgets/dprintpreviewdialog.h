@@ -56,6 +56,7 @@ private:
     D_PRIVATE_SLOT(void _q_colorButtonCliked(bool))
     D_PRIVATE_SLOT(void _q_selectColorButton(QColor))
     D_PRIVATE_SLOT(void _q_pagePersheetComboIndexChanged(int))
+    D_PRIVATE_SLOT(void _q_printOrderComboIndexChanged(int))
 
 public:
     virtual bool event(QEvent *event) override;

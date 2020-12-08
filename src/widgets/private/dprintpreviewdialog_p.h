@@ -115,6 +115,7 @@ public:
     void _q_colorButtonCliked(bool cliked);
     void _q_selectColorButton(QColor color);
     void _q_pagePersheetComboIndexChanged(int index);
+    void _q_printOrderComboIndexChanged(int index);
 
     //printer
     DPrinter *printer;

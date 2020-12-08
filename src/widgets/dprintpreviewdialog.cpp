@@ -620,6 +620,47 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     drawinglayout->addWidget(duplexframe);
     drawinglayout->addWidget(sidebysideframe);
 
+    //打印顺序
+    QVBoxLayout *orderlayout = new QVBoxLayout;
+    orderlayout->setContentsMargins(10, 0, 10, 0);
+    DLabel *orderLabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Page Order"), advancesettingwdg);
+    setwidgetfont(orderLabel, DFontSizeManager::T5);
+    QHBoxLayout *ordertitlelayout = new QHBoxLayout;
+    ordertitlelayout->setContentsMargins(0, 20, 0, 0);
+    ordertitlelayout->addWidget(orderLabel, Qt::AlignLeft | Qt::AlignBottom);
+
+    QVBoxLayout *ordercontentlayout = new QVBoxLayout;
+    ordercontentlayout->setContentsMargins(0, 0, 0, 0);
+    DWidget *collatewdg = new DWidget;
+    QHBoxLayout *collatelayout = new QHBoxLayout(collatewdg);
+    DRadioButton *printCollateRadio = new DRadioButton(qApp->translate("DPrintPreviewDialogPrivate", "Collate pages")); //逐份打印
+    collatelayout->addWidget(printCollateRadio);
+    printCollateRadio->setChecked(true);
+
+    DWidget *inorderwdg = new DWidget;
+    QHBoxLayout *inorderlayout = new QHBoxLayout(inorderwdg);
+    DRadioButton *printInOrderRadio = new DRadioButton(qApp->translate("DPrintPreviewDialogPrivate", "Print pages in order")); //按顺序打印
+    inorderCombo = new DComboBox;
+    inorderCombo->addItems(QStringList() << qApp->translate("DPrintPreviewDialogPrivate", "Front to back") << qApp->translate("DPrintPreviewDialogPrivate", "Back to front"));
+    inorderlayout->addWidget(printInOrderRadio, 4);
+    inorderlayout->addWidget(inorderCombo, 9);
+
+    ordercontentlayout->addWidget(collatewdg);
+    ordercontentlayout->addWidget(inorderwdg);
+
+    printOrderGroup = new QButtonGroup(q);
+    printOrderGroup->addButton(printCollateRadio, 0);
+    printOrderGroup->addButton(printInOrderRadio, 1);
+
+    DBackgroundGroup *backorder = new DBackgroundGroup(ordercontentlayout);
+    backorder->setItemSpacing(1);
+    pa = DApplicationHelper::instance()->palette(backorder);
+    pa.setBrush(DPalette::Base, pa.itemBackground());
+    DApplicationHelper::instance()->setPalette(backorder, pa);
+
+    orderlayout->addLayout(ordertitlelayout);
+    orderlayout->addWidget(backorder);
+
     //水印
     QVBoxLayout *watermarklayout = new QVBoxLayout;
     watermarklayout->setContentsMargins(10, 0, 10, 0);
@@ -654,6 +695,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
 
     layout->addLayout(paperlayout);
     layout->addLayout(drawinglayout);
+    layout->addLayout(orderlayout);
     layout->addLayout(pagelayout);
     layout->addLayout(scalinglayout);
     layout->addLayout(watermarklayout);
@@ -877,6 +919,7 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(colorModeCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_ColorModeChange(int)));
     QObject::connect(orientationgroup, SIGNAL(buttonClicked(int)), q, SLOT(_q_orientationChanged(int)));
     QObject::connect(waterTextCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_textWaterMarkModeChanged(int)));
+    QObject::connect(inorderCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_printOrderComboIndexChanged(int)));
     QObject::connect(waterTextEdit, SIGNAL(editingFinished()), q, SLOT(_q_customTextWatermarkFinished()));
     QObject::connect(pagePerSheetCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_pagePersheetComboIndexChanged(int)));
     QObject::connect(picPathEdit, &DFileChooserEdit::fileChoosed, q, [=](const QString &filename) { customPictureWatermarkChoosed(filename); });
@@ -915,6 +958,7 @@ void DPrintPreviewDialogPrivate::initconnections()
         qreal m_value = static_cast<qreal>(value) / 100.00;
         pview->setWaterMarkOpacity(m_value);
     });
+    QObject::connect(printOrderGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), q, [=](int index) {});
     QObject::connect(waterMarkBtn, &DSwitchButton::clicked, q, [=](bool isClicked) { this->waterMarkBtnClicked(isClicked); });
     QObject::connect(waterTypeGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), q, [=](int index) { this->watermarkTypeChoosed(index); });
     QObject::connect(pageRangeEdit, &DLineEdit::editingFinished, [=] {
@@ -1930,6 +1974,14 @@ void DPrintPreviewDialogPrivate::_q_selectColorButton(QColor color)
     waterColor = color;
     if (isInitBtnColor)
         pview->setWaterMarkColor(color);
+}
+
+/*!
+ * \~chinese \brief DPrintPreviewDialogPrivate::_q_printOrderComboIndexChanged 打印顺序
+ * \~chinese \param index 打印顺序选择
+ */
+void DPrintPreviewDialogPrivate::_q_printOrderComboIndexChanged(int index)
+{
 }
 
 /*!
