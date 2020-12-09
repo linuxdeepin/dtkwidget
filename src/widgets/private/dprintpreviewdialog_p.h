@@ -133,6 +133,7 @@ public:
     bool isInitBtnColor = false;
     QColor waterColor;
     int typeChoice = 0;
+    int directChoice = 0;
 
     //control
     DPrintPreviewWidget *pview;

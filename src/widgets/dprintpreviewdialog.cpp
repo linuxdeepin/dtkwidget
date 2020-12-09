@@ -607,14 +607,14 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     printdirectlayout->addWidget(btnWidget, 5);
     sidebysideframelayout->addLayout(printdirectlayout);
     QList<DToolButton *> listBtn = btnWidget->findChildren<DToolButton *>();
+    int num = 0;
     for (DToolButton *btn : listBtn) {
         btn->setIconSize(QSize(18, 18));
         btn->setFixedSize(QSize(36, 36));
         btn->setCheckable(true);
         btn->setEnabled(false);
-        static int i = 0;
-        directGroup->addButton(btn, i);
-        i++;
+        directGroup->addButton(btn, num);
+        num++;
     }
     drawinglayout->addLayout(drawingtitlelayout);
     drawinglayout->addWidget(duplexframe);
@@ -897,7 +897,6 @@ void DPrintPreviewDialogPrivate::initdata()
     scaleRateEdit->setEnabled(false);
     duplexCombo->setEnabled(false);
     pagePerSheetCombo->setEnabled(false);
-    directGroup->button(0)->setChecked(true);
     isInited = true;
     fontSizeMore = true;
 }
@@ -944,6 +943,7 @@ void DPrintPreviewDialogPrivate::initconnections()
     });
     QObject::connect(directGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), q, [=](int index) {
         directGroup->button(index)->setChecked(true);
+        directChoice = index;
     });
     QObject::connect(inclinatBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), q, [=](int value) {
         pview->setWaterMarkRotate(value);
@@ -975,6 +975,7 @@ void DPrintPreviewDialogPrivate::initconnections()
             setPageLayoutEnable(false);
         } else {
             setPageLayoutEnable(true);
+            directGroup->button(directChoice)->setChecked(true);
         }
     });
     QObject::connect(jumpPageEdit->lineEdit(), &QLineEdit::textChanged, q, [ = ](QString str) {
