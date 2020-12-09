@@ -85,7 +85,7 @@ void DPrintPreviewWidgetPrivate::init()
 
     waterMark = new WaterMark;
     scene->addItem(waterMark);
-    waterMark->setZValue(0);
+    waterMark->setZValue(1);
 
     QVBoxLayout *layout = new QVBoxLayout(q);
     layout->setContentsMargins(10, 10, 10, 10);
