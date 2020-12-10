@@ -199,17 +199,15 @@ void DPrintPreviewWidgetPrivate::print(bool printAsPicture)
         if (0 != i && !printAsPicture)
             previewPrinter->newPage();
 
-        painter.save();
+        //todo scale,black and white,watermarking,……
+        // 绘制原始数据
+        painter.drawPicture(leftTopPoint, *(isAsynPreview ? pictures[i] : pictures[pageVector.at(i) - 1]));
         // 绘制水印
         painter.save();
         painter.resetTransform();
         painter.translate(paperSize.width() / 2, paperSize.height() / 2);
         painter.rotate(waterMark->rotation());
         painter.drawImage(-waterMarkImage.width() / 2, -waterMarkImage.height() / 2, waterMarkImage);
-        painter.restore();
-        //todo scale,black and white,watermarking,……
-        // 绘制原始数据
-        painter.drawPicture(leftTopPoint, *(isAsynPreview ? pictures[i] : pictures[pageVector.at(i) - 1]));
         painter.restore();
 
         if (printAsPicture) {
@@ -402,7 +400,7 @@ QImage DPrintPreviewWidgetPrivate::generateWaterMarkImage() const
 {
     QRectF itemMaxRect = waterMark->itemMaxPolygon().boundingRect();
     QImage originImage(itemMaxRect.size().toSize(), QImage::Format_ARGB32);
-    originImage.fill(Qt::white);
+    originImage.fill(Qt::transparent);
 
     QPainter picPainter;
     picPainter.begin(&originImage);
