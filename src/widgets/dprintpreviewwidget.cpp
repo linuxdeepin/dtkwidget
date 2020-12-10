@@ -5,6 +5,7 @@
 #include <QPicture>
 #include <QFileInfo>
 #include <QtConcurrent>
+#include <QtAlgorithms>
 
 #include <cups/cups.h>
 
@@ -164,10 +165,45 @@ void DPrintPreviewWidgetPrivate::print(bool printAsPicture)
     else {
         pageVector = pageRange;
     }
-
     if (isAsynPreview) {
         previewPages = pageVector;
         generatePreviewPicture();
+    }
+    //逐页打印情况下，手动设置页码和图片处理
+    //当拷贝份数不为1时，需要手动插入图片页码
+    if (pageCopyCount != 0) {
+        if (pageCopyCount != 1) {
+            QVector<int> vector = pageVector;
+            //异步传输图片，插入拷贝份数的图片使其与页码对齐
+            QList<const QPicture *> pic = pictures;
+            if (isAsynPreview) {
+                for (int i = 0; i <= pic.count() - 1; i++) {
+                    for (int j = 1; j < pageCopyCount; j++) {
+                        pictures.insert(pictures.indexOf(pic.at(i)), pic.at(i));
+                    }
+                }
+            }
+            //插入拷贝份数需要打印的页码
+            for (int i = 0; i <= vector.count() - 1; i++) {
+                for (int j = 1; j < pageCopyCount; j++) {
+                    pageVector.insert(pageVector.indexOf(vector.at(i)), vector.at(i));
+                }
+            }
+        }
+        //逐页打印时，判断当前是否是由后向前打印
+        if (!isFirstPage) {
+            //异步传输时，使图片的顺序改为逆序
+            if (isAsynPreview) {
+                QList<const QPicture *> reservepic;
+                QList<const QPicture *>::iterator i;
+                for (i = pictures.end(); i != pictures.begin(); --i) {
+                    reservepic.append(*(i - 1));
+                }
+                pictures = reservepic;
+            }
+            //将页码数值按从大到小排序
+            qSort(pageVector.begin(), pageVector.end(), qGreater<int>());
+        }
     }
 
     if (printAsPicture) {
@@ -971,7 +1007,6 @@ void DPrintPreviewWidget::setOrder(Order order)
 void DPrintPreviewWidget::setPrintFromPath(const QString &path)
 {
     Q_D(DPrintPreviewWidget);
-
     d->printFromPath = path;
 }
 
@@ -1002,6 +1037,13 @@ bool DPrintPreviewWidget::isAsynPreview() const
     D_DC(DPrintPreviewWidget);
 
     return d->isAsynPreview;
+}
+
+void DPrintPreviewWidget::isPageByPage(int pageCopy,bool isFirst)
+{
+    Q_D(DPrintPreviewWidget);
+    d->pageCopyCount = pageCopy;
+    d->isFirstPage = isFirst;
 }
 
 /*!

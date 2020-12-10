@@ -636,12 +636,12 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     DRadioButton *printCollateRadio = new DRadioButton(qApp->translate("DPrintPreviewDialogPrivate", "Collate pages")); //逐份打印
     collatelayout->addWidget(printCollateRadio);
     printCollateRadio->setChecked(true);
-
-    DWidget *inorderwdg = new DWidget;
+    inorderwdg = new DWidget;
     QHBoxLayout *inorderlayout = new QHBoxLayout(inorderwdg);
-    DRadioButton *printInOrderRadio = new DRadioButton(qApp->translate("DPrintPreviewDialogPrivate", "Print pages in order")); //按顺序打印
+    printInOrderRadio = new DRadioButton(qApp->translate("DPrintPreviewDialogPrivate", "Print pages in order")); //按顺序打印
     inorderCombo = new DComboBox;
     inorderCombo->addItems(QStringList() << qApp->translate("DPrintPreviewDialogPrivate", "Front to back") << qApp->translate("DPrintPreviewDialogPrivate", "Back to front"));
+    inorderCombo->setEnabled(false);
     inorderlayout->addWidget(printInOrderRadio, 4);
     inorderlayout->addWidget(inorderCombo, 9);
 
@@ -958,7 +958,13 @@ void DPrintPreviewDialogPrivate::initconnections()
         qreal m_value = static_cast<qreal>(value) / 100.00;
         pview->setWaterMarkOpacity(m_value);
     });
-    QObject::connect(printOrderGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), q, [=](int index) {});
+    QObject::connect(printOrderGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), q, [=](int index) {
+        if(index==0){
+            inorderCombo->setEnabled(false);
+        }else {
+            inorderCombo->setEnabled(true);
+        }
+    });
     QObject::connect(waterMarkBtn, &DSwitchButton::clicked, q, [=](bool isClicked) { this->waterMarkBtnClicked(isClicked); });
     QObject::connect(waterTypeGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), q, [=](int index) { this->watermarkTypeChoosed(index); });
     QObject::connect(pageRangeEdit, &DLineEdit::editingFinished, [=] {
@@ -972,8 +978,12 @@ void DPrintPreviewDialogPrivate::initconnections()
     });
     QObject::connect(sidebysideCheckBox, &DCheckBox::stateChanged, q, [=](int status) {
         if (status == 0) {
+            printInOrderRadio->setEnabled(true);
             setPageLayoutEnable(false);
         } else {
+            printInOrderRadio->setEnabled(false);
+            inorderCombo->setEnabled(false);
+            printOrderGroup->button(0)->setChecked(true);
             setPageLayoutEnable(true);
             directGroup->button(directChoice)->setChecked(true);
         }
@@ -1181,6 +1191,17 @@ void DPrintPreviewDialogPrivate::setupPrinter()
     }
     //设置纸张打印边距
     printer->setPageMargins(QMarginsF(marginLeftSpin->value(), marginTopSpin->value(), marginRightSpin->value(), marginBottomSpin->value()), QPageLayout::Millimeter);
+    //设置打印逐份打印和逐页打印的控制标志
+    if(printOrderGroup->checkedId()==1){
+        //判断若是逐页打印，是否为第一页在前
+        bool isFirst=true;
+        if(inorderCombo->currentIndex()==1){
+            isFirst=false;
+        }
+        pview->isPageByPage(printer->copyCount(),isFirst);
+    //由于手动设置逐页打印，这种情况下，输出打印机的打印份数为1
+     printer->setNumCopies(1);
+    }
 }
 
 void DPrintPreviewDialogPrivate::judgeSupportedAttributes(const QString &lastPaperSize)

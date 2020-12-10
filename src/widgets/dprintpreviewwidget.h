@@ -125,6 +125,7 @@ public:
     void setPrintMode(PrintMode pt);
     void setAsynPreview(int totalPage);
     bool isAsynPreview() const;
+    void isPageByPage(int pageCopy,bool isFirst);
 
 public Q_SLOTS:
     void updatePreview();

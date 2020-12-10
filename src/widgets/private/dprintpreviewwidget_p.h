@@ -296,6 +296,8 @@ public:
     QVector<int> previewPages;
     bool asynPreviewNeedUpdate;
     int asynPreviewTotalPage;
+    int pageCopyCount=0;
+    bool isFirstPage;
 
     Q_DECLARE_PUBLIC(DPrintPreviewWidget)
 };

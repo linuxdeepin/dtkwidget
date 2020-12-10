@@ -192,6 +192,8 @@ public:
     QSpacerItem *spacer;
     QSpacerItem *wmSpacer;
     DFloatingWidget *colorWidget;
+    DRadioButton *printInOrderRadio;
+    DWidget *inorderwdg;
     DPrintPickColorWidget *pickColorWidget;
     Q_DECLARE_PUBLIC(DPrintPreviewDialog)
 };
