@@ -31,6 +31,7 @@
 #include "private/settings/content.h"
 #include "private/settings/navigation.h"
 
+#include "dapplication.h"
 #include "dspinbox.h"
 #include "dwindowclosebutton.h"
 
@@ -118,8 +119,11 @@ DSettingsDialog::DSettingsDialog(QWidget *parent) :
         d->leftFrame->blockSignals(false);
     });
 
-    connect(this, &DSettingsDialog::windowIconChanged, d->frameBar, &DTitlebar::setIcon);
-    connect(this, &DSettingsDialog::windowTitleChanged, d->frameBar, &DTitlebar::setTitle);
+    // 修复 wayland 下使用 setwindowicon 程序出现死循环
+    if (DApplication::isDXcbPlatform()) {
+        connect(this, &DSettingsDialog::windowIconChanged, d->frameBar, &DTitlebar::setIcon);
+        connect(this, &DSettingsDialog::windowTitleChanged, d->frameBar, &DTitlebar::setTitle);
+    }
 }
 
 DSettingsDialog::~DSettingsDialog()
