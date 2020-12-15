@@ -1964,7 +1964,7 @@ int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QW
         return 16; // 解决 select_indicator 缩放 1.25 后截断的问题，大小改成16x16
     case PM_ExclusiveIndicatorHeight:
     case PM_ExclusiveIndicatorWidth:
-        return 14;
+        return 16; // fix-56991 解决radiobutton 内圈偏了， 外圈16, 内圈14
     case PM_ScrollBarSliderMin:
         return 36;
     case PM_SliderLength:
