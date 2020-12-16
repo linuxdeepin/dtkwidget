@@ -39,6 +39,11 @@ DWIDGET_BEGIN_NAMESPACE
 #define PREVIEW_ENLARGE_RATIO 1.25
 #define PREVIEW_NARROW_RATIO 0.8
 #define PREVIEW_SCALEBUTTON_MARGIN 10
+#define PREVIEW_WATER_COUNT_WIDTH 28
+#define PREVIEW_WATER_COUNT_HEIGHT 20
+#define PREVIEW_WATER_COUNT_SPACE 10
+#define NUMBERUP_SCALE_RATIO 1.05
+#define NUMBERUP_SPACE_SCALE_RATIO 0.05
 
 class GraphicsView : public QGraphicsView
 {
@@ -68,7 +73,6 @@ private:
     double scaleRatio;
 };
 
-
 class ContentItem : public QGraphicsItem
 {
 public:
@@ -95,10 +99,12 @@ public:
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) override;
     void updateGrayContent();
+    void drawNumberUpPictures(QPainter *painter);
 
 protected:
     QPicture grayscalePaint(const QPicture &picture);
     QImage imageGrayscale(const QImage *origin);
+
 private:
     const QPicture *pagePicture;
     QRect pageRect;
@@ -182,7 +188,9 @@ public:
         return twoPolygon;
     }
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) override;
-    void updatePicture(QPainter *painter);
+    void updatePicture(QPainter *painter, bool isPreview);
+
+    void setNumberUpScale(const qreal &value);
 
 protected:
     QPainterPath itemClipPath() const;
@@ -199,9 +207,11 @@ private:
     QString text;
     QFont font;
     QColor color;
+    qreal numberUpScale = 1;
 
     QPolygonF brectPolygon;
     QPolygonF twoPolygon;
+    friend class DPrintPreviewWidgetPrivate;
 };
 
 class PageItem : public QGraphicsItem
@@ -269,6 +279,12 @@ public:
     PrintOptions printerOptions();
     void printByCups();
     void generatePreviewPicture();
+    void calculateNumberUpPage();
+    void calculateNumberPageScale();
+    void calculateNumberPagePosition();
+    void calculateCurrentNumberPage();
+    void displayWaterMarkItem();
+    void updateNumberUpContent();
 
     GraphicsView *graphicsView;
     QGraphicsScene *scene;
@@ -299,9 +315,253 @@ public:
     int pageCopyCount=0;
     bool isFirstPage;
 
+    struct NumberUpData;
+    NumberUpData *numberUpPrintData;
     Q_DECLARE_PUBLIC(DPrintPreviewWidget)
 };
 
-DWIDGET_END_NAMESPACE
+struct DPrintPreviewWidgetPrivate::NumberUpData {
+    class NumberItem : public QGraphicsItem
+    {
+    public:
+        NumberItem(QVector<int> _pageNumberVector, QVector<QPointF> _numberPointVector, QRect _pageRect)
+            : numberVector(_pageNumberVector)
+            , numberPointVector(_numberPointVector)
+        {
+            brect = QRectF(QPointF(0, 0), QSizeF(_pageRect.size()));
+            setCacheMode(DeviceCoordinateCache);
+            setPos(_pageRect.topLeft());
+        }
 
+        inline void setPageNumbers(const QVector<int> &pageNumber)
+        {
+            numberVector = pageNumber;
+        }
+
+        inline void setNumberPositon(const QVector<QPointF> &numberPos)
+        {
+            numberPointVector = numberPos;
+        }
+
+        QRectF boundingRect() const override
+        {
+            return brect;
+        }
+
+        void setRect(const QRectF &rect)
+        {
+            setPos(rect.topLeft());
+            brect = QRectF(QPointF(0, 0), QSizeF(rect.size()));
+        }
+
+        void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget) override;
+
+    private:
+        QRectF brect;
+        QVector<int> numberVector; // 页码
+        QVector<QPointF> numberPointVector; // 坐标
+    };
+
+    struct WaterMarkProperty {
+        WaterMark::Layout layout;
+        WaterMark::Type type;
+        qreal rotation;
+        qreal scale;
+        qreal opacity;
+        QColor color;
+        QString text;
+        QImage sourceImage;
+        QImage grayImage;
+        QFont font;
+    };
+
+    QVector<QPair<int, const QPicture *>> previewPictures; // 并打当前页面属性列表（页码，图片）
+    QVector<QPointF> paintPoints; // 并打单页位置属性列表
+    qreal scaleRatio; // 并打页面缩放因子
+    int rowCount; // 并打页面行数
+    int columnCount; // 并打页面列数
+    QPointF pageStartPoint; // 并打单页起始位置
+    QList<WaterMark *> waterList; // 并打时水印
+    WaterMarkProperty *waterProperty;
+    NumberItem *numberItem;
+    QGraphicsRectItem *waterParentItem;
+    bool needRecreateWater; // 重绘时不管当前页面水印数量和内容数量一致 都要重新生成页面 因为页面大小发生了变化
+    DPrintPreviewWidgetPrivate *parent;
+
+    void resetData()
+    {
+        scaleRatio = 1;
+        rowCount = 0;
+        columnCount = 0;
+        pageStartPoint = QPointF(0, 0);
+    }
+
+    QVector<QPointF> updatePositions(const qreal &scale)
+    {
+        QRectF pageRect = parent->previewPrinter->pageRect();
+        QVector<QPointF> posList;
+        QPointF startP(0, 0);
+
+        QPointF topLeft;
+        if (scale >= 1.0) {
+            topLeft = QPointF(0, 0);
+            if ((parent->imposition == DPrintPreviewWidget::OneRowTwoCol) || (parent->imposition == DPrintPreviewWidget::TwoRowThreeCol)) {
+                topLeft.setY(pageStartPoint.y() * (scale - 1.0));
+            }
+        } else {
+            topLeft.setX(pageRect.width() * (1.0 - scale) / 2.0);
+            topLeft.setY((NUMBERUP_SCALE_RATIO * rowCount - NUMBERUP_SPACE_SCALE_RATIO) * pageRect.height() * scaleRatio * (1.0 - scale) / 2.0);
+        }
+
+        switch (parent->order) {
+        case DPrintPreviewWidget::Copy:
+        case DPrintPreviewWidget::L2R_T2B: {
+            startP = pageStartPoint + topLeft;
+            for (int i = 0; i < rowCount; ++i) {
+                for (int j = 0; j < columnCount; ++j) {
+                    posList.append(startP + QPointF(NUMBERUP_SCALE_RATIO * j * pageRect.width(), NUMBERUP_SCALE_RATIO * i * pageRect.height()) * scaleRatio * scale);
+                }
+            }
+        } break;
+        // R2L 从右往左扩大 应为从0,0开始扩大 需增加一个expanding使其从左往右扩张
+        case DPrintPreviewWidget::R2L_T2B: {
+            qreal expanding = scale > 1 ? pageRect.width() * (scale - 1) : 0;
+            startP = pageStartPoint - QPointF(topLeft.x() - expanding - pageRect.width(), -topLeft.y());
+            for (int i = 0; i < rowCount; ++i) {
+                for (int j = 0; j < columnCount; ++j) {
+                    posList.append(startP - QPointF((NUMBERUP_SCALE_RATIO * j + 1) * pageRect.width(), -(NUMBERUP_SCALE_RATIO * i) * pageRect.height()) * scaleRatio * scale);
+                }
+            }
+        } break;
+        case DPrintPreviewWidget::T2B_L2R: {
+            startP = pageStartPoint + topLeft;
+            for (int i = 0; i < columnCount; ++i) {
+                for (int j = 0; j < rowCount; ++j) {
+                    posList.append(startP + QPointF(NUMBERUP_SCALE_RATIO * i * pageRect.width(), NUMBERUP_SCALE_RATIO * j * pageRect.height()) * scaleRatio * scale);
+                }
+            }
+        } break;
+        case DPrintPreviewWidget::T2B_R2L: {
+            qreal expanding = scale > 1 ? pageRect.width() * (scale - 1) : 0;
+            startP = pageStartPoint - QPointF(topLeft.x() - expanding - pageRect.width(), -topLeft.y());
+            for (int i = 0; i < columnCount; ++i) {
+                for (int j = 0; j < rowCount; ++j) {
+                    posList.append(startP - QPointF((NUMBERUP_SCALE_RATIO * i + 1) * pageRect.width(), -(NUMBERUP_SCALE_RATIO * j) * pageRect.height()) * scaleRatio * scale);
+                }
+            }
+        } break;
+        }
+
+        return posList;
+    }
+
+    void setWaterMarksScale(qreal scale)
+    {
+        if (waterList.isEmpty())
+            return;
+
+        QRectF pageRect = parent->previewPrinter->pageRect();
+        QMargins pageMargins = parent->previewPrinter->pageLayout().marginsPixels(parent->previewPrinter->resolution());
+        const QVector<QPointF> &posList = updatePositions(scale);
+
+        for (int c = 0; c < waterList.count(); ++c) {
+            WaterMark *item = waterList.at(c);
+            item->setBoundingRect(QRectF(QPointF(pageMargins.left(), pageMargins.top()) + posList.at(c), pageRect.size() * scaleRatio * scale));
+            item->update();
+        }
+
+        if (numberItem)
+            numberItem->update();
+    }
+
+    void setWaterMarkOriginProperties(WaterMark *wm)
+    {
+        if (!wm || !waterProperty)
+            return;
+
+        wm->type = waterProperty->type;
+        wm->layout = waterProperty->layout;
+        wm->mScaleFactor = waterProperty->scale;
+        wm->color = waterProperty->color;
+        wm->text = waterProperty->text;
+        wm->sourceImage = waterProperty->sourceImage;
+        wm->graySourceImage = waterProperty->grayImage;
+        wm->font = waterProperty->font;
+        wm->setRotation(waterProperty->rotation);
+        wm->setOpacity(waterProperty->opacity);
+    }
+
+    void copyWaterMarkProperties()
+    {
+        // 当并打属性发生变化的时候 需要删除当前页面中的水印层
+        // 因此需要保存当前层的水印效果以便创建时直接添加
+        if (!parent->waterMark && waterList.isEmpty())
+            return;
+
+        WaterMark *wm;
+        if (waterList.isEmpty()) {
+            wm = parent->waterMark;
+        } else {
+            wm = waterList.first();
+        }
+
+        if (!waterProperty)
+            waterProperty = new WaterMarkProperty;
+
+        waterProperty->type = wm->type;
+        waterProperty->layout = wm->layout;
+        waterProperty->rotation = wm->rotation();
+        waterProperty->scale = wm->mScaleFactor;
+        waterProperty->opacity = wm->opacity();
+        waterProperty->color = wm->color;
+        waterProperty->text = wm->text;
+        waterProperty->sourceImage = wm->sourceImage;
+        waterProperty->grayImage = wm->graySourceImage;
+        waterProperty->font = wm->font;
+    }
+
+    void updateWaterMarks()
+    {
+        if (waterList.isEmpty())
+            return;
+
+        for (auto *item : qAsConst(waterList))
+            item->update();
+    }
+
+    template<typename T>
+    void setWaterMarkProperty(T outFunction)
+    {
+        if (waterList.isEmpty())
+            return;
+
+        for (auto *item : qAsConst(waterList))
+            outFunction(item);
+    }
+
+    NumberUpData(DPrintPreviewWidgetPrivate *parent)
+        : previewPictures(0)
+        , paintPoints(0)
+        , scaleRatio(1)
+        , rowCount(0)
+        , columnCount(0)
+        , pageStartPoint(0, 0)
+        , waterProperty(nullptr)
+        , numberItem(nullptr)
+        , waterParentItem(nullptr)
+        , needRecreateWater(false)
+        , parent(parent)
+    {
+    }
+
+    ~NumberUpData()
+    {
+        delete waterProperty;
+        delete numberItem;
+        delete waterParentItem;
+    }
+};
+
+DWIDGET_END_NAMESPACE
+Q_DECLARE_TYPEINFO(DTK_WIDGET_NAMESPACE::DPrintPreviewWidgetPrivate::NumberUpData::WaterMarkProperty, Q_PRIMITIVE_TYPE);
 #endif // DPRINTPREVIEWWIDGET_P_H

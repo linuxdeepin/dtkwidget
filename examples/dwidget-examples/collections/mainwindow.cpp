@@ -155,16 +155,13 @@ void MainWindow::menuItemInvoked(QAction *action)
         DPrintPreviewDialog dialog(this);
         //测试保存PDF文件名称接口
         dialog.setDocName("test");
-        dialog.setAsynPreview(5);
-        connect(&dialog, QOverload<DPrinter *, const QVector<int> &>::of(&DPrintPreviewDialog::paintRequested),
-                this, [=](DPrinter *_printer, const QVector<int> &v) {
+        connect(&dialog, QOverload<DPrinter *>::of(&DPrintPreviewDialog::paintRequested),
+                this, [=](DPrinter *_printer) {
                     // 此函数内代码为调试打印内容代码，调整较随意！
-                    _printer->setFromTo(1, 8000);
+                    _printer->setFromTo(1, 31);
                     QPainter painter(_printer);
                     bool firstPage = true;
                     for (int page = _printer->fromPage(); page <= _printer->toPage(); ++page) {
-                        if (!v.contains(page))
-                            continue;
 
                         painter.resetTransform();
                         if (!firstPage)

@@ -84,6 +84,7 @@ public:
     };
 
     explicit DPrintPreviewWidget(DPrinter *printer, QWidget *parent = nullptr);
+    ~DPrintPreviewWidget() override;
 
     void setVisible(bool visible) override;
     void setPageRange(const QVector<int> &rangePages);
@@ -119,6 +120,7 @@ public:
     void setWaterMarkColor(const QColor &color);
     void setWaterMarkLayout(int layout);
     void setImposition(Imposition im);
+    Imposition imposition() const;
     void setOrder(Order order);
     void setPrintFromPath(const QString &path);
     QString printFromPath() const;
@@ -149,6 +151,7 @@ private:
     void setCurrentTargetPage(int page);
 
     D_DECLARE_PRIVATE(DPrintPreviewWidget)
+    friend class ContentItem;
 };
 
 DWIDGET_END_NAMESPACE

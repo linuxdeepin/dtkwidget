@@ -944,6 +944,7 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(directGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), q, [=](int index) {
         directGroup->button(index)->setChecked(true);
         directChoice = index;
+        pview->setOrder(DPrintPreviewWidget::Order(index));
     });
     QObject::connect(inclinatBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), q, [=](int value) {
         pview->setWaterMarkRotate(value);
@@ -980,12 +981,14 @@ void DPrintPreviewDialogPrivate::initconnections()
         if (status == 0) {
             printInOrderRadio->setEnabled(true);
             setPageLayoutEnable(false);
+            pview->setImposition(DPrintPreviewWidget::One);
         } else {
             printInOrderRadio->setEnabled(false);
             inorderCombo->setEnabled(false);
             printOrderGroup->button(0)->setChecked(true);
             setPageLayoutEnable(true);
             directGroup->button(directChoice)->setChecked(true);
+            _q_pagePersheetComboIndexChanged(pagePerSheetCombo->currentIndex());
         }
     });
     QObject::connect(jumpPageEdit->lineEdit(), &QLineEdit::textChanged, q, [ = ](QString str) {
@@ -2012,6 +2015,7 @@ void DPrintPreviewDialogPrivate::_q_printOrderComboIndexChanged(int index)
  */
 void DPrintPreviewDialogPrivate::_q_pagePersheetComboIndexChanged(int index)
 {
+    pview->setImposition(DPrintPreviewWidget::Imposition(index + 1));
 }
 
 /*!
