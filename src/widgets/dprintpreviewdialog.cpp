@@ -594,9 +594,9 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     QHBoxLayout *btnLayout = new QHBoxLayout(btnWidget);
     btnLayout->setContentsMargins(0, 0, 0, 0);
     printdirectlayout->addSpacing(30);
-    btnLayout->addWidget(lrtbBtn);
-    btnLayout->addStretch();
     btnLayout->addWidget(rltbBtn);
+    btnLayout->addStretch();
+    btnLayout->addWidget(lrtbBtn);
     btnLayout->addStretch();
     btnLayout->addWidget(tblrBtn);
     btnLayout->addStretch();
