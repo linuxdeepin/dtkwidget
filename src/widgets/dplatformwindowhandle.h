@@ -19,6 +19,7 @@
 #define DPLATFORMWINDOWHANDLE_H
 
 #include <dtkwidget_global.h>
+#include <dtkgui_global.h>
 #include <DPlatformHandle>
 
 QT_BEGIN_NAMESPACE
@@ -40,9 +41,10 @@ public:
 
     static bool setWindowBlurAreaByWM(QWidget *widget, const QVector<WMBlurArea> &area);
     static bool setWindowBlurAreaByWM(QWidget *widget, const QList<QPainterPath> &paths);
-
+    static bool setWindowWallpaperParaByWM(QWidget *widget, const QRect &area, WallpaperScaleMode sMode, WallpaperFillMode fMode);
 
     using DPlatformHandle::setWindowBlurAreaByWM;
+    using DPlatformHandle::setWindowWallpaperParaByWM;
 };
 
 DWIDGET_END_NAMESPACE

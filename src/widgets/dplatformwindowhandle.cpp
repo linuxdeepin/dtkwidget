@@ -188,4 +188,46 @@ bool DPlatformWindowHandle::setWindowBlurAreaByWM(QWidget *widget, const QList<Q
     return widget->windowHandle() && DPlatformHandle::setWindowBlurAreaByWM(widget->windowHandle(), paths);
 }
 
+/*!
+ * \~chinese \brief DPlatformWindowHandle::setWindowWallpaperParaByWM
+ * \~chinese 这只是一个重载函数，如果 widget 的 QWidget::windowHandle 为 nullptr 则返回 false，
+ * \~chinese 否则返回 setWindowWallpaperParaByWM(wiget->windowHandle(), area) 的值。示例：
+ * \~chinese \code
+ * DMainWindow w;.000000
+ * QRect area;
+ * DPlatformWindowHandle::WallpaperScaleMode sMode
+ * DPlatformWindowHandle::WallpaperFillMode fMode
+ *
+ * area.x = 50;
+ * area.y = 50;
+ * area.width = 200;
+ * area.height = 200;
+ * area.xRadius = 10;
+ * area.yRaduis = 10;
+ *
+ * sMode = WallpaperScaleFlag::FollowWindow;
+ * fMode = WallpaperFillFlag::PreserveAspectCrop;
+ *
+ * DPlatformWindowHandle::setWindowWallpaperParaByWM(&w, area, sMode, fMode);
+ *
+ * w.resize(300, 300);
+ * w.setAttribute(Qt::WA_TranslucentBackground);
+ * w.show();
+ *
+ * \endcode
+ * \~chinese \param widget
+ * \~chinese \param area
+ * \~chinese \param sMode
+ * \~chinese \param fMode
+ * \~chinese \return
+ * \~chinese \note 需要对 \a widget 添加 Qt::WA_TranslucentBackground 使其背景透明
+ * \~chinese \sa QWidget::setAttribute
+ */
+bool DPlatformWindowHandle::setWindowWallpaperParaByWM(QWidget *widget, const QRect &area, WallpaperScaleMode sMode, WallpaperFillMode fMode)
+{
+    Q_ASSERT(widget);
+
+    return DPlatformHandle::setWindowWallpaperParaByWM(ensureWindowHandle(widget), area, sMode, fMode);
+}
+
 DWIDGET_END_NAMESPACE
