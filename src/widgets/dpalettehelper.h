@@ -1,9 +1,5 @@
 /*
- * Copyright (C) 2019 ~ 2019 Deepin Technology Co., Ltd.
- *
- * Author:     zccrs <zccrs@live.com>
- *
- * Maintainer: zccrs <zhangjide@deepin.com>
+ * Copyright (C) 2020 ~ 2020 Deepin Technology Co., Ltd.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,37 +14,40 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef DAPPLICATIONHELPER_H
-#define DAPPLICATIONHELPER_H
+
+#ifndef DPALETTEHELPER_H
+#define DPALETTEHELPER_H
 
 #include <dtkwidget_global.h>
-#include <DGuiApplicationHelper>
 #include <DPalette>
+#include <DObject>
 
 DGUI_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
-class D_DECL_DEPRECATED_X("Use DPaletteHelper") DApplicationHelper : public DGuiApplicationHelper
+class DPaletteHelperPrivate;
+class DPaletteHelper : public QObject
+    , public DCORE_NAMESPACE::DObject
 {
     Q_OBJECT
 
 public:
-    static DApplicationHelper *instance();
+    static DPaletteHelper *instance();
 
     DPalette palette(const QWidget *widget, const QPalette &base = QPalette()) const;
     void setPalette(QWidget *widget, const DPalette &palette);
     void resetPalette(QWidget *widget);
 
 private:
-    DApplicationHelper();
-    ~DApplicationHelper();
+    DPaletteHelper(QObject *parent = nullptr);
+    ~DPaletteHelper() override;
 
     bool eventFilter(QObject *watched, QEvent *event) override;
     bool event(QEvent *event) override;
 
-    friend class _DApplicationHelper;
+    D_DECLARE_PRIVATE(DPaletteHelper)
 };
 
 DWIDGET_END_NAMESPACE
 
-#endif // DAPPLICATIONHELPER_H
+#endif // DPALETTEHELPER_H

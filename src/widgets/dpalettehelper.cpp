@@ -1,9 +1,5 @@
 /*
- * Copyright (C) 2019 ~ 2019 Deepin Technology Co., Ltd.
- *
- * Author:     zccrs <zccrs@live.com>
- *
- * Maintainer: zccrs <zhangjide@deepin.com>
+ * Copyright (C) 2020 ~ 2020 Deepin Technology Co., Ltd.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,63 +14,60 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "dapplicationhelper.h"
-#include "dstyleoption.h"
 
-#include <QWidget>
-#include <QApplication>
+#include <DObjectPrivate>
+#include <DGuiApplicationHelper>
+
+#include "dpalettehelper.h"
+#include "dstyleoption.h"
+#include "private/dpalettehelper_p.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
-class _DApplicationHelper {
-public:
-    static DGuiApplicationHelper *createHelper()
-    {
-        return new DApplicationHelper();
-    }
-};
+static DPaletteHelper *g_instance = nullptr;
 
-__attribute__((constructor)) // 在库被加载时就执行此函数
-static void init_createHelper ()
+DPaletteHelperPrivate::DPaletteHelperPrivate(DPaletteHelper *qq)
+    : DTK_CORE_NAMESPACE::DObjectPrivate(qq)
 {
-    if (!QApplication::instance() || qobject_cast<QApplication *>(QApplication::instance())) {
-        DApplicationHelper::registerInstanceCreator(_DApplicationHelper::createHelper);
+}
+
+DPaletteHelper::DPaletteHelper(QObject *parent)
+    : QObject(parent)
+    , DTK_CORE_NAMESPACE::DObject(*new DPaletteHelperPrivate(this))
+{
+}
+
+DPaletteHelper::~DPaletteHelper()
+{
+    if (g_instance) {
+        g_instance->deleteLater();
+        g_instance = nullptr;
     }
 }
 
-class DApplicationHelperPrivate
+DPaletteHelper *DPaletteHelper::instance()
 {
-public:
-    QHash<const QWidget*, DPalette> paletteCache;
-};
+    if (!g_instance) {
+        g_instance = new DPaletteHelper;
+    }
 
-static DApplicationHelperPrivate *d = nullptr;
-
-/*!
- * \~chinese \class DApplicationHelper
- * \~chinese \brief DApplicationHelper提供了一个修改的 DGuiApplicationHelper 类
- */
-
-/*!
- * \~chinese \brief DApplicationHelper::instance返回 DApplicationHelper 对象
- */
-DApplicationHelper *DApplicationHelper::instance()
-{
-    return qobject_cast<DApplicationHelper*>(DGuiApplicationHelper::instance());
+    return g_instance;
 }
 
 /*!
- * \~chinese \brief DApplicationHelper::palette返回调色板
+ * \~chinese \brief DPaletteHelper::palette返回调色板
  * \~chinese \param widget控件
  * \~chinese \param base调色板
  * \~chinese \return 调色板
  */
-DPalette DApplicationHelper::palette(const QWidget *widget, const QPalette &base) const
+DPalette DPaletteHelper::palette(const QWidget *widget, const QPalette &base) const
 {
+    D_DC(DPaletteHelper);
+
     DPalette palette;
 
     if (!widget) {
-        return applicationPalette();
+        return DGuiApplicationHelper::instance()->applicationPalette();
     }
 
     do {
@@ -87,7 +80,7 @@ DPalette DApplicationHelper::palette(const QWidget *widget, const QPalette &base
         if (QWidget *parent = widget->parentWidget()) {
             palette = this->palette(parent, base);
         } else {
-            palette = applicationPalette();
+            palette = DGuiApplicationHelper::instance()->applicationPalette();
         }
 
         // 判断widget对象有没有被设置过palette
@@ -96,67 +89,59 @@ DPalette DApplicationHelper::palette(const QWidget *widget, const QPalette &base
             const QPalette &wp = widget->palette();
 
             // 判断控件自己的palette色调是否和要继承调色板色调一致
-            if (toColorType(palette) != toColorType(wp)) {
+            if (DGuiApplicationHelper::instance()->toColorType(palette) != DGuiApplicationHelper::instance()->toColorType(wp)) {
                 // 不一致时则fallback到标准的palette
-                palette = standardPalette(toColorType(wp));
+                palette = DGuiApplicationHelper::instance()->standardPalette(DGuiApplicationHelper::instance()->toColorType(wp));
             }
         }
 
         // 缓存数据
-        d->paletteCache.insert(widget, palette);
+        const_cast<DPaletteHelperPrivate *>(d)->paletteCache.insert(widget, palette);
         // 关注控件palette改变的事件
-        const_cast<QWidget*>(widget)->installEventFilter(const_cast<DApplicationHelper*>(this));
+        const_cast<QWidget *>(widget)->installEventFilter(const_cast<DPaletteHelper *>(this));
     } while (false);
 
-    palette.QPalette::operator =(base.resolve() ? base : widget->palette());
+    palette.QPalette::operator=(base.resolve() ? base : widget->palette());
 
     return palette;
 }
 
 /*!
- * \~chinese \brief DApplicationHelper::setPalette将调色板设置到控件
+ * \~chinese \brief DPaletteHelper::setPalette将调色板设置到控件
  * \~chinese \param widget控件
  * \~chinese \param palette调色板
  */
-void DApplicationHelper::setPalette(QWidget *widget, const DPalette &palette)
+void DPaletteHelper::setPalette(QWidget *widget, const DPalette &palette)
 {
+    D_D(DPaletteHelper);
+
     d->paletteCache.insert(widget, palette);
-    widget->installEventFilter(const_cast<DApplicationHelper *>(this));
+    widget->installEventFilter(const_cast<DPaletteHelper *>(this));
     // 记录此控件被设置过palette
     widget->setProperty("_d_set_palette", true);
     widget->setPalette(palette);
 }
 
 /*!
- * \~chinese \brief DApplicationHelper::resetPalette重置控件的调色板属性
+ * \~chinese \brief DPaletteHelper::resetPalette重置控件的调色板属性
  * \~chinese \param widget控件
  */
-void DApplicationHelper::resetPalette(QWidget *widget)
+void DPaletteHelper::resetPalette(QWidget *widget)
 {
+    D_D(DPaletteHelper);
+
     // 清理数据
     d->paletteCache.remove(widget);
     widget->setProperty("_d_set_palette", QVariant());
     widget->setAttribute(Qt::WA_SetPalette, false);
 }
 
-DApplicationHelper::DApplicationHelper()
+bool DPaletteHelper::eventFilter(QObject *watched, QEvent *event)
 {
-    if (!d)
-        d = new DApplicationHelperPrivate();
-}
+    D_D(DPaletteHelper);
 
-DApplicationHelper::~DApplicationHelper()
-{
-    if (d) {
-        delete d;
-        d = nullptr;
-    }
-}
-
-bool DApplicationHelper::eventFilter(QObject *watched, QEvent *event)
-{
     if (Q_UNLIKELY(event->type() == QEvent::PaletteChange)) {
-        if (QWidget *widget = qobject_cast<QWidget*>(watched)) {
+        if (QWidget *widget = qobject_cast<QWidget *>(watched)) {
             if (!widget->property("_d_set_palette").toBool()) {
                 // 清理缓存
                 d->paletteCache.remove(widget);
@@ -171,16 +156,16 @@ bool DApplicationHelper::eventFilter(QObject *watched, QEvent *event)
         }
     }
 
-    return DGuiApplicationHelper::eventFilter(watched, event);
+    return QObject::eventFilter(watched, event);
 }
 
-bool DApplicationHelper::event(QEvent *event)
+bool DPaletteHelper::event(QEvent *event)
 {
     if (event->type() == QEvent::ApplicationFontChange) {
-        DFontSizeManager::instance()->setFontGenericPixelSize(DFontSizeManager::fontPixelSize(qGuiApp->font()));
+        DFontSizeManager::instance()->setFontGenericPixelSize(static_cast<quint16>(DFontSizeManager::fontPixelSize(qGuiApp->font())));
     }
 
-    return DGuiApplicationHelper::event(event);
+    return QObject::event(event);
 }
 
 DWIDGET_END_NAMESPACE
