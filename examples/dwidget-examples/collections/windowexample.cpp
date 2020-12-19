@@ -28,6 +28,7 @@
 #include <DMainWindow>
 #include <DStyle>
 #include <DApplicationHelper>
+#include <DPaletteHelper>
 #include <QPen>
 #include <DStatusBar>
 #include <DTabBar>
@@ -51,7 +52,7 @@ private:
    {
        DTitlebar::paintEvent(e);
        QPainter p(this);
-       const DPalette &dp = DApplicationHelper::instance()->palette(this);
+       const DPalette &dp = DPaletteHelper::instance()->palette(this);
 
        p.save();
        p.setPen(QPen(dp.frameBorder(), 2));
@@ -81,7 +82,7 @@ private:
    {
        DMainWindow::paintEvent(e);
        QPainter p(this);
-       const DPalette &dp = DApplicationHelper::instance()->palette(this);
+       const DPalette &dp = DPaletteHelper::instance()->palette(this);
 
        p.save();
        p.setPen(QPen(dp.frameBorder(), 2));
@@ -117,7 +118,7 @@ private:
    void paintEvent(QPaintEvent *e) override
    {
        QPainter p(this);
-       const DPalette &dp = DApplicationHelper::instance()->palette(this);
+       const DPalette &dp = DPaletteHelper::instance()->palette(this);
 
        p.setPen(QPen(dp.frameBorder(), 2));
        DDrawUtils::drawRoundedRect(&p, rect().adjusted(0 , 0, -1 , -1), 16, 16,

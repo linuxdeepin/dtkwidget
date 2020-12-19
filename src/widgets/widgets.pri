@@ -113,7 +113,8 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dalertcontrol.h \
     $$PWD/dtoolbutton.h \
     $$PWD/dsearchcombobox.h \
-    $$PWD/dprintpreviewwidget.h
+    $$PWD/dprintpreviewwidget.h \
+    $$PWD/dpalettehelper.h
 
 SOURCES += $$PWD/dslider.cpp \
     $$PWD/dbackgroundgroup.cpp \
@@ -197,7 +198,8 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dalertcontrol.cpp \
     $$PWD/dtoolbutton.cpp \
     $$PWD/dsearchcombobox.cpp \
-    $$PWD/dprintpreviewwidget.cpp
+    $$PWD/dprintpreviewwidget.cpp \
+    $$PWD/dpalettehelper.cpp
 
 RESOURCES += \
     $$PWD/icons.qrc \
@@ -360,4 +362,5 @@ includes.files += \
     $$PWD/DAlertControl \
     $$PWD/DSearchComboBox \
     $$PWD/DPrintPreviewDialog \
-    $$PWD/DFileChooserEdit
+    $$PWD/DFileChooserEdit \
+    $$PWD/DPaletteHelper
