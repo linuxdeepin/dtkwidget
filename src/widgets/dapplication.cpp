@@ -649,6 +649,14 @@ bool DApplication::setSingleInstance(const QString &key, SingleScope singleScope
 /*!
  * \~english \brief DApplication::loadTranslator loads translate file form
  * \~english system or application data path;
+ * \~english You must name the file correctly; if the program is dde-dock，
+ * \~english then the qm file for English locale would be dde-dock_en.qm.
+ * \~english Translation files must be placed in correct directories as well.
+ * \~english The lookup order is as follows:
+ * \~english 1. ~/.local/share/APPNAME/translations;
+ * \~english 2. /usr/local/share/APPNAME/translations;
+ * \~english 3. /usr/share/APPNAME/translations;
+ * \~english APPNAME is the name of program executable.
  * \~english \param localeFallback, a list of fallback locale you want load.
  * \~english \return load success
  *
@@ -659,6 +667,7 @@ bool DApplication::setSingleInstance(const QString &key, SingleScope singleScope
  * \~chinese 1. ~/.local/share/APPNAME/translations;
  * \~chinese 2. /usr/local/share/APPNAME/translations;
  * \~chinese 3. /usr/share/APPNAME/translations;
+ * \~chinese APPNAME即可执行文件的名称。
  *
  * \~chinese \param localeFallback 指定了回退的locale列表，默认只有系统locale。
  * \~chinese \return 加载成功返回 true，否则返回 false。
