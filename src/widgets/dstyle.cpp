@@ -1829,13 +1829,19 @@ QPixmap DStyle::generatedIconPixmap(QIcon::Mode iconMode, const QPixmap &pixmap,
         return QPixmap::fromImage(image);
     } else if (iconMode == QIcon::Disabled) {
         QImage image = pixmap.toImage();
+
+        // TODO: fix wayland parent window alpha changed
+        // 暂时再此处规避一下, 后续如果是qt的bug移除此段代码
+        if (!image.hasAlphaChannel()) {
+            image = image.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+        }
         QPainter pa(&image);
 
         if (!pa.isActive())
             return QCommonStyle::generatedIconPixmap(iconMode, pixmap, opt);
 
         pa.setCompositionMode(QPainter::CompositionMode_DestinationIn);
-        pa.fillRect(image.rect(), QColor(0, 0, 0, 255 * 0.4));
+        pa.fillRect(image.rect(), QColor(0, 0, 0, int(255 * 0.4)));
 
         return QPixmap::fromImage(image);
     }
