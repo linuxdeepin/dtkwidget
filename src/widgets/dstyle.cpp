@@ -1776,7 +1776,7 @@ int DStyle::styleHint(QStyle::StyleHint sh, const QStyleOption *opt, const QWidg
     case SH_ToolTipLabel_Opacity:
         return 255;
     case SH_RequestSoftwareInputPanel:
-        return RSIP_OnMouseClickAndAlreadyFocused;
+        return RSIP_OnMouseClick;
     case SH_ItemView_ScrollMode:
         return QAbstractItemView::ScrollPerPixel;
     case SH_Widget_Animation_Duration:

@@ -123,6 +123,11 @@ public:
     bool autoActivateWindows() const;
     void setAutoActivateWindows(bool autoActivateWindows);
 
+    // 使窗口内的输入框自动适应虚拟键盘
+    void acclimatizeVirtualKeyboard(QWidget *window);
+    void ignoreVirtualKeyboard(QWidget *window);
+    bool isAcclimatizedVirtualKeyboard(QWidget *window) const;
+
 #ifdef VERSION
     static inline QString buildVersion(const QString &fallbackVersion)
     {
@@ -160,6 +165,8 @@ private:
     friend class DMainWindowPrivate;
 
     D_PRIVATE_SLOT(void _q_onNewInstanceStarted())
+    D_PRIVATE_SLOT(void _q_panWindowContentsForVirtualKeyboard())
+    D_PRIVATE_SLOT(void _q_resizeWindowContentsForVirtualKeyboard())
 };
 
 class DtkBuildVersion {

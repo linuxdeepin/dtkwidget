@@ -68,9 +68,12 @@ void DMainWindowPrivate::init()
     // 默认开启标题栏阴影
     q->setTitlebarShadowEnabled(true);
 
-    const DApplication *dapp = qobject_cast<DApplication *>(qApp);
+    DApplication *dapp = qobject_cast<DApplication *>(qApp);
     if (dapp) {
         q->setWindowTitle(dapp->productName());
+        q->setAttribute(Qt::WA_LayoutOnEntireRect, false);
+        q->setAttribute(Qt::WA_ContentsMarginsRespectsSafeArea, false);
+        dapp->acclimatizeVirtualKeyboard(q);
     } else {
         q->setWindowTitle(qApp->applicationDisplayName());
     }
@@ -123,7 +126,7 @@ void DMainWindowPrivate::updateTitleShadowGeometry()
     if (!titleShadow)
         return;
 
-    QRect rect(0, titlebar->rect().bottom() + 1, q->width(), titleShadow->sizeHint().height());
+    QRect rect(0, titlebar->geometry().bottom() + 1, q->width(), titleShadow->sizeHint().height());
     titleShadow->setGeometry(rect);
     // 全凭时会隐藏窗口标题栏，因此不应该显示标题栏的阴影
     titleShadow->setVisible(!q->isFullScreen());

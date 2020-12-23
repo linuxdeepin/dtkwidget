@@ -38,6 +38,7 @@
 #include <QtConcurrent/QtConcurrent>
 
 #include <qpa/qplatformintegrationfactory_p.h>
+#include <qpa/qplatforminputcontext.h>
 #include <private/qapplication_p.h>
 #include <private/qcoreapplication_p.h>
 #include <private/qwidget_p.h>
@@ -337,6 +338,118 @@ void DApplicationPrivate::_q_onNewInstanceStarted()
             break; // 只激活找到的第一个窗口
         }
     }
+}
+
+void DApplicationPrivate::doAcclimatizeVirtualKeyboard(QWidget *window, QWidget *widget, bool allowResizeContentsMargins)
+{
+    // 如果新激活的输入窗口跟已经在处理中的窗口不一致，则恢复旧窗口的状态
+    if (activeInputWindow && activeInputWindow != window) {
+        activeInputWindow->setContentsMargins(activeInputWindowContentsMargins);
+        activeInputWindow = nullptr;
+    }
+
+    auto platform_context = QGuiApplicationPrivate::platformIntegration()->inputContext();
+    auto input_method = QGuiApplication::inputMethod();
+    // 先检查输入面板的状态
+    if (!platform_context->inputMethodAccepted() || !input_method->isVisible()) {
+        if (activeInputWindow) {
+            activeInputWindow->setContentsMargins(activeInputWindowContentsMargins);
+            activeInputWindow = nullptr;
+        }
+
+        return;
+    }
+
+    // 如果输入控件的主窗口处于未激活状态则忽略
+    if (!window->isActiveWindow())
+        return;
+
+    // 虚拟键盘相对于当前窗口的geometry
+    const QRectF &kRect = input_method->keyboardRectangle().translated(-window->mapToGlobal(QPoint(0, 0)));
+    if (kRect.isEmpty() || !kRect.isValid())
+        return;
+
+    // 记录待处理窗口的数据
+    if (!activeInputWindow) {
+        activeInputWindow = window;
+        activeInputWindowContentsMargins = window->contentsMargins();
+        lastContentsMargins = qMakePair(0, 0);
+    }
+
+    // 可以被压缩的高度
+    int resizeableHeight = lastContentsMargins.first;
+    // 将要平移的距离
+    int panValue = 0;
+
+    const QRectF &cRect = input_method->cursorRectangle();
+    const QRectF &iRect = input_method->inputItemClipRectangle();
+    const QRectF &wRect = window->rect().marginsRemoved(activeInputWindowContentsMargins);
+
+    if (allowResizeContentsMargins) {
+        // 判断输入控件是否处于一个可滚动区域中
+        QWidget *scrollWidget = widget;
+        while (scrollWidget && !qobject_cast<QAbstractScrollArea*>(scrollWidget)) {
+            scrollWidget = scrollWidget->parentWidget();
+        }
+
+        if (QAbstractScrollArea *scrollArea = qobject_cast<QAbstractScrollArea*>(scrollWidget)) {
+            resizeableHeight = scrollArea->maximumViewportSize().height()
+                    // 至少要保证可滚动区域的最小高度，以及光标的可显示区域
+                    - qMax(scrollArea->minimumHeight(), qRound(cRect.height()));
+            resizeableHeight = qMax(0, resizeableHeight);
+        }
+    }
+
+    // 优先保证输入框下面的内容都能正常显示
+    int shadowHeight = wRect.bottom() - kRect.top();
+    if (shadowHeight > cRect.y()) {
+        // 如果窗口底部的内容必须要被遮挡，则优先保证能完整显示整个输入区域，且最低限度是要显示输入光标
+        shadowHeight = qMin(cRect.y(), iRect.bottom() - kRect.top());
+    }
+    // 如果输入区域没有被盖住则忽略
+    if (shadowHeight <= 0)
+        return;
+
+    // 更新需要平移的区域
+    int resizeHeight = qMin(resizeableHeight, shadowHeight);
+    panValue = shadowHeight - resizeHeight;
+
+    if (lastContentsMargins.first == resizeableHeight
+            && lastContentsMargins.second == panValue) {
+        return;
+    }
+
+    // 记录本次的计算结果
+    lastContentsMargins.first = resizeableHeight;
+    lastContentsMargins.second = panValue;
+
+    // 更新窗口内容显示区域以确保虚拟键盘能正常显示
+    window->setContentsMargins(0, -panValue, 0, resizeHeight + panValue);
+}
+
+void DApplicationPrivate::acclimatizeVirtualKeyboardForFocusWidget(bool allowResizeContentsMargins)
+{
+    auto focus = QApplication::focusWidget();
+    if (!focus)
+        return;
+
+    for (auto window : acclimatizeVirtualKeyboardWindows) {
+        if (window->isAncestorOf(focus)) {
+            return doAcclimatizeVirtualKeyboard(window ,focus, allowResizeContentsMargins);
+        }
+    }
+}
+
+void DApplicationPrivate::_q_panWindowContentsForVirtualKeyboard()
+{
+    acclimatizeVirtualKeyboardForFocusWidget(false);
+}
+
+void DApplicationPrivate::_q_resizeWindowContentsForVirtualKeyboard()
+{
+    // TODO(zccrs): 暂时不支持压缩窗口高度适应虚拟键盘的模式
+    // 需要做到ScrollArea中的输入控件能在改变窗口高度之后还处于可见状态
+    acclimatizeVirtualKeyboardForFocusWidget(false);
 }
 
 bool DApplicationPrivate::isUserManualExists()
@@ -1115,6 +1228,105 @@ void DApplication::setAutoActivateWindows(bool autoActivateWindows)
         disconnect(DGuiApplicationHelper::instance(), SIGNAL(newProcessInstance(qint64, const QStringList &)),
                 this, SLOT(_q_onNewInstanceStarted()));
     }
+}
+
+/**
+ * \~chinese @brief DApplication::acclimatizeVirtualKeyboard
+ *
+ * \~chinese 为窗口的可输入控件添加自动适应虚拟键盘输入法的功能。开启此功能后，当
+ * \~chinese 监听到 \a QInputMethod::keyboardRectangleChanged 后，会判断当
+ * \~chinese 前的可输入（不仅仅是处于焦点状态）控件是否为此 \a window 的子控件，
+ * \~chinese 如果是，则将通过 \a QWidget::setContentsMargins 更新 \a window
+ * \~chinese 的布局区域，以此确保可输入控件处于可见区域。如果可输入控件处于一个
+ * \~chinese \a QAbstractScrollArea 中，将会压缩 \a window 的布局空间，促使
+ * \~chinese 可滚动区域缩小，再使用 \a QAbstraceScrollArea::scrollContentsBy
+ * \~chinese 将可输入控件滚动到合适的区域，否则将直接把 \a 的内容向上移动为虚拟键盘
+ * \~chinese 腾出空间。
+ * \~chinese \note 在使用之前要确保窗口的 \a Qt::WA_LayoutOnEntireRect
+ * \~chinese \a 和 Qt::WA_ContentsMarginsRespectsSafeArea 都为 false
+ * \~chinese \param window 需是一个顶层窗口
+ * \~chinese \sa QWidget::isTopLevel
+ * \~chinese \sa QWidget::setContentsMargins
+ * \~chinese \sa QInputMethod::cursorRectangle
+ * \~chinese \sa QInputMethod::inputItemClipRectangle
+ * \~chinese \sa QInputMethod::keyboardRectangle
+ * \~chinese \sa QAbstractScrollArea
+ */
+void DApplication::acclimatizeVirtualKeyboard(QWidget *window)
+{
+    Q_ASSERT(window->isTopLevel()
+             && !window->testAttribute(Qt::WA_LayoutOnEntireRect)
+             && !window->testAttribute(Qt::WA_ContentsMarginsRespectsSafeArea));
+
+    D_D(DApplication);
+    if (d->acclimatizeVirtualKeyboardWindows.contains(window))
+        return;
+
+    if (d->acclimatizeVirtualKeyboardWindows.isEmpty()) {
+        connect(this, SIGNAL(focusChanged(QWidget *, QWidget *)),
+                this, SLOT(_q_resizeWindowContentsForVirtualKeyboard()),
+                Qt::ConnectionType(Qt::QueuedConnection | Qt::UniqueConnection));
+        connect(inputMethod(), SIGNAL(keyboardRectangleChanged()),
+                this, SLOT(_q_resizeWindowContentsForVirtualKeyboard()),
+                Qt::ConnectionType(Qt::QueuedConnection | Qt::UniqueConnection));
+        connect(inputMethod(), SIGNAL(visibleChanged()),
+                this, SLOT(_q_resizeWindowContentsForVirtualKeyboard()),
+                Qt::ConnectionType(Qt::QueuedConnection | Qt::UniqueConnection));
+        connect(inputMethod(), SIGNAL(cursorRectangleChanged()),
+                this, SLOT(_q_panWindowContentsForVirtualKeyboard()),
+                Qt::ConnectionType(Qt::QueuedConnection | Qt::UniqueConnection));
+        connect(inputMethod(), SIGNAL(inputItemClipRectangleChanged()),
+                this, SLOT(_q_panWindowContentsForVirtualKeyboard()),
+                Qt::ConnectionType(Qt::QueuedConnection | Qt::UniqueConnection));
+    }
+
+    d->acclimatizeVirtualKeyboardWindows << window;
+
+    connect(window, &QWidget::destroyed, this, [this, window] {
+        this->ignoreVirtualKeyboard(window);
+    });
+
+    if (window->isAncestorOf(focusWidget())) {
+        d->doAcclimatizeVirtualKeyboard(window, focusWidget(), true);
+    }
+}
+
+/**
+ * \~chinese @brief DApplication::ignoreVirtualKeyboard
+ * \~chinese 恢复到默认状态，将不会为虚拟键盘的环境做任何自适应操作
+ * \~chinese \note 此操作不会恢复对 \a QWidget::contentsMargins 的修改
+ * \~chinese \param window 需是一个调用过 \a acclimatizeVirtualKeyboard 的窗口
+ */
+void DApplication::ignoreVirtualKeyboard(QWidget *window)
+{
+    D_D(DApplication);
+
+    if (!d->acclimatizeVirtualKeyboardWindows.removeOne(window))
+        return;
+
+    if (d->acclimatizeVirtualKeyboardWindows.isEmpty()) {
+        disconnect(this, SIGNAL(focusChanged(QWidget *, QWidget *)),
+                   this, SLOT(_q_resizeWindowContentsForVirtualKeyboard()));
+        disconnect(inputMethod(), SIGNAL(keyboardRectangleChanged()),
+                   this, SLOT(_q_resizeWindowContentsForVirtualKeyboard()));
+        disconnect(inputMethod(), SIGNAL(visibleChanged()),
+                   this, SLOT(_q_resizeWindowContentsForVirtualKeyboard()));
+        disconnect(inputMethod(), SIGNAL(cursorRectangleChanged()),
+                   this, SLOT(_q_panWindowContentsForVirtualKeyboard()));
+        disconnect(inputMethod(), SIGNAL(inputItemClipRectangleChanged()),
+                   this, SLOT(_q_panWindowContentsForVirtualKeyboard()));
+    }
+}
+
+/**
+ * \~chinese @brief DApplication::isAcclimatizedVirtualKeyboard
+ * \~chinese 如果 \a window 会自适应虚拟键盘返回 true,否则返回 false
+ * \~chinese \param window
+ */
+bool DApplication::isAcclimatizedVirtualKeyboard(QWidget *window) const
+{
+    D_DC(DApplication);
+    return d->acclimatizeVirtualKeyboardWindows.contains(window);
 }
 
 /**
