@@ -24,6 +24,7 @@
 #include "dpathbuf.h"
 
 #include <QIcon>
+#include <QPointer>
 
 class QLocalServer;
 class QTranslator;
@@ -53,6 +54,12 @@ public:
     bool loadTranslator(QList<DPathBuf> translateDirs, const QString &name, QList<QLocale> localeFallback);
     void _q_onNewInstanceStarted();
 
+    // 为控件适应当前虚拟键盘的位置
+    void doAcclimatizeVirtualKeyboard(QWidget *window, QWidget *widget, bool allowResizeContentsMargins);
+    void acclimatizeVirtualKeyboardForFocusWidget(bool allowResizeContentsMargins);
+    void _q_panWindowContentsForVirtualKeyboard();
+    void _q_resizeWindowContentsForVirtualKeyboard();
+
     static bool isUserManualExists();
 public:
 // int m_pidLockFD = 0;
@@ -75,6 +82,13 @@ public:
     bool autoActivateWindows       = false;
 
     DAboutDialog *aboutDialog = Q_NULLPTR;
+
+    // 需要自适应虚拟键盘环境的窗口
+    QPointer<QWidget> activeInputWindow;
+    // 上一次为适配虚拟键盘所设置的值
+    QPair<int, int> lastContentsMargins;
+    QMargins activeInputWindowContentsMargins;
+    QList<QWidget*> acclimatizeVirtualKeyboardWindows;
 };
 
 DWIDGET_END_NAMESPACE
