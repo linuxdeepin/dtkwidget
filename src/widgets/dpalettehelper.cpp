@@ -35,6 +35,9 @@ DPaletteHelper::DPaletteHelper(QObject *parent)
     : QObject(parent)
     , DTK_CORE_NAMESPACE::DObject(*new DPaletteHelperPrivate(this))
 {
+    connect(qGuiApp, &QGuiApplication::fontChanged, this, [](const QFont &font) {
+        DFontSizeManager::instance()->setFontGenericPixelSize(static_cast<quint16>(DFontSizeManager::fontPixelSize(font)));
+    });
 }
 
 DPaletteHelper::~DPaletteHelper()
@@ -157,15 +160,6 @@ bool DPaletteHelper::eventFilter(QObject *watched, QEvent *event)
     }
 
     return QObject::eventFilter(watched, event);
-}
-
-bool DPaletteHelper::event(QEvent *event)
-{
-    if (event->type() == QEvent::ApplicationFontChange) {
-        DFontSizeManager::instance()->setFontGenericPixelSize(static_cast<quint16>(DFontSizeManager::fontPixelSize(qGuiApp->font())));
-    }
-
-    return QObject::event(event);
 }
 
 DWIDGET_END_NAMESPACE

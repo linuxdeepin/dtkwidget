@@ -27,7 +27,7 @@
 
 #include "dlineedit.h"
 #include "private/dlineedit_p.h"
-#include "dapplicationhelper.h"
+#include "dpalettehelper.h"
 
 #include <QGuiApplication>
 #include <qmath.h>
@@ -136,7 +136,7 @@ void DStyleOption::init(QWidget *widget)
 
 void DStyleOption::init(const QWidget *widget)
 {
-    dpalette = DApplicationHelper::instance()->palette(widget);
+    dpalette = DPaletteHelper::instance()->palette(widget);
 }
 
 /*!

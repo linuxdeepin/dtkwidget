@@ -1,5 +1,5 @@
 #include "dwarningbutton.h"
-#include "dapplicationhelper.h"
+#include "dpalettehelper.h"
 #include "dstyleoption.h"
 
 #include <QStyleOptionButton>
@@ -29,7 +29,7 @@ DWarningButton::DWarningButton(QWidget *parent): DPushButton(parent)
 void DWarningButton::initStyleOption(QStyleOptionButton *option) const
 {
     DPushButton::initStyleOption(option);
-    DPalette pa = DApplicationHelper::instance()->palette(this);
+    DPalette pa = DPaletteHelper::instance()->palette(this);
     option->palette.setBrush(QPalette::ButtonText, pa.textWarning());
     option->features |= QStyleOptionButton::ButtonFeature(DStyleOptionButton::WarningButton);
 }

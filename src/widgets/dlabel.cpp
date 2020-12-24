@@ -21,7 +21,7 @@
 #include "dlabel.h"
 #include "private/dlabel_p.h"
 
-#include <DApplicationHelper>
+#include <DPaletteHelper>
 
 #include <private/qlabel_p.h>
 
@@ -127,7 +127,7 @@ void DLabel::initPainter(QPainter *painter) const
     D_DC(DLabel);
     QLabel::initPainter(painter);
     if (d->color != DPalette::NoType) {
-        QBrush color = DApplicationHelper::instance()->palette(this).brush(d->color);
+        QBrush color = DPaletteHelper::instance()->palette(this).brush(d->color);
         painter->setPen(QPen(color.color()));
     }
 }
@@ -179,7 +179,7 @@ void DLabel::paintEvent(QPaintEvent *event)
             context.palette = opt.palette;
 
             if (d_func()->color != DPalette::NoType) {
-                context.palette.setBrush(QPalette::Text, DApplicationHelper::instance()->palette(this).brush(d_func()->color));
+                context.palette.setBrush(QPalette::Text, DPaletteHelper::instance()->palette(this).brush(d_func()->color));
             } else if (foregroundRole() != QPalette::Text && isEnabled()) {
                 context.palette.setColor(QPalette::Text, context.palette.color(foregroundRole()));
             }
@@ -202,7 +202,7 @@ void DLabel::paintEvent(QPaintEvent *event)
             QPalette palette = opt.palette;
 
             if (d_func()->color != DPalette::NoType) {
-                palette.setBrush(foregroundRole(), DApplicationHelper::instance()->palette(this).brush(d_func()->color));
+                palette.setBrush(foregroundRole(), DPaletteHelper::instance()->palette(this).brush(d_func()->color));
             }
 
             QString text = d->text;

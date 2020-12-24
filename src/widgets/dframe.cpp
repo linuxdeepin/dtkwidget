@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "dframe.h"
-#include "dapplicationhelper.h"
+#include "dpalettehelper.h"
 #include "private/dframe_p.h"
 
 #include <DObjectPrivate>
@@ -98,7 +98,7 @@ void DFrame::paintEvent(QPaintEvent *event)
         opt.features |= QStyleOptionFrame::Rounded;
     }
 
-    const DPalette &dp = DApplicationHelper::instance()->palette(this);
+    const DPalette &dp = DPaletteHelper::instance()->palette(this);
 
     if (d->backType != DPalette::NoType) {
         p.setBackground(dp.brush(d->backType));
