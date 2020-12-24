@@ -23,7 +23,7 @@
 #define DPRINTPREVIEWWIDGET_H
 
 #include <dtkwidget_global.h>
-#include <DApplicationHelper>
+#include <DGuiApplicationHelper>
 #include <DFrame>
 
 #include <QWidget>
@@ -34,6 +34,8 @@
 #define private protected
 #include <QPrinter>
 #undef private
+
+DGUI_USE_NAMESPACE
 
 DWIDGET_BEGIN_NAMESPACE
 

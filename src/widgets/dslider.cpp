@@ -28,7 +28,7 @@
 #include <QDebug>
 #include <DStyle>
 
-#include <DApplicationHelper>
+#include <DPaletteHelper>
 #include <DFontSizeManager>
 
 DWIDGET_BEGIN_NAMESPACE
@@ -718,7 +718,7 @@ void SliderStrip::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event)
     QPainter pa(this);
-    auto dpa = DApplicationHelper::instance()->palette(this);
+    auto dpa = DPaletteHelper::instance()->palette(this);
     QPen penLine = QPen(dpa.color(DPalette::ObviousBackground), 1);
     QPen penNumber = QPen(dpa.textTips(), 1);
 

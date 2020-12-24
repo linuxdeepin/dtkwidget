@@ -26,7 +26,7 @@
 #include <DSettings>
 #include <DSettingsGroup>
 #include <DListView>
-#include <DApplicationHelper>
+#include <DPaletteHelper>
 
 #include "navigationdelegate.h"
 
@@ -72,9 +72,9 @@ Navigation::Navigation(QWidget *parent) :
     d->navbar->setContentsMargins(0, 0, 0, 0);
     d->navbar->setAutoFillBackground(true);
     d->navbar->setViewportMargins(10, 0, 10, 0);
-    DPalette pa = DApplicationHelper::instance()->palette(d->navbar);
+    DPalette pa = DPaletteHelper::instance()->palette(d->navbar);
     pa.setBrush(DPalette::ItemBackground, Qt::transparent);
-    DApplicationHelper::instance()->setPalette(d->navbar, pa);
+    DPaletteHelper::instance()->setPalette(d->navbar, pa);
 
     d->navbar->setSelectionMode(QListView::SingleSelection);
     d->navbar->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

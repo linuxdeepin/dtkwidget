@@ -43,7 +43,6 @@ private:
     ~DPaletteHelper() override;
 
     bool eventFilter(QObject *watched, QEvent *event) override;
-    bool event(QEvent *event) override;
 
     D_DECLARE_PRIVATE(DPaletteHelper)
 };

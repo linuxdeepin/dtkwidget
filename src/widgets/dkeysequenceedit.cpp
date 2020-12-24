@@ -10,7 +10,7 @@
 #include <DFrame>
 #include <DTipLabel>
 #include <DGuiApplicationHelper>
-#include <DApplicationHelper>
+#include <DPaletteHelper>
 #include <DStyle>
 
 #include <QVBoxLayout>
@@ -42,7 +42,7 @@ public:
 
         opt.features |= QStyleOptionFrame::Rounded;
 
-        const DPalette &dp = DApplicationHelper::instance()->palette(this);
+        const DPalette &dp = DPaletteHelper::instance()->palette(this);
 
         if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::LightType) {
             p.setBackground(QColor(255, 255, 255));

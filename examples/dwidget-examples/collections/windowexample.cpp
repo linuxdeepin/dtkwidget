@@ -27,7 +27,6 @@
 #include <DFrame>
 #include <DMainWindow>
 #include <DStyle>
-#include <DApplicationHelper>
 #include <DPaletteHelper>
 #include <QPen>
 #include <DStatusBar>

@@ -21,7 +21,7 @@
 #include "dstyleditemdelegate.h"
 #include "dobject_p.h"
 #include "dstyleoption.h"
-#include "dapplicationhelper.h"
+#include "dpalettehelper.h"
 #include "dstyle.h"
 
 #include "dlistview.h"
@@ -263,7 +263,7 @@ public:
             pa->setPen(option.palette.color(cg, QPalette::HighlightedText));
         } else {
             if (action->textColorType() > 0) {
-                pa->setPen(QPen(DApplicationHelper::instance()->palette(option.widget).brush(cg, action->textColorType()), 1));
+                pa->setPen(QPen(DPaletteHelper::instance()->palette(option.widget).brush(cg, action->textColorType()), 1));
             } else {
                 QPalette::ColorRole role = action->textColorRole() > 0 ? action->textColorRole() : QPalette::Text;
                 pa->setPen(QPen(option.palette.brush(cg, role), 1));
@@ -827,7 +827,7 @@ void DStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
                 if (opt.state & QStyle::State_Selected) {
                     painter->setPen(opt.palette.color(cg, QPalette::HighlightedText));
                 } else if (action->textColorType() >= 0) {
-                    painter->setPen(DApplicationHelper::instance()->palette(widget).color(cg, action->textColorType()));
+                    painter->setPen(DPaletteHelper::instance()->palette(widget).color(cg, action->textColorType()));
                 } else if (action->textColorRole() >= 0) {
                     painter->setPen(opt.palette.color(cg, action->textColorRole()));
                 } else {
@@ -1101,7 +1101,7 @@ void DStyledItemDelegate::initStyleOption(QStyleOptionViewItem *option, const QM
     DPalette::ColorType type = getViewItemColorType(index, Dtk::ViewItemForegroundRole);
 
     if (type != DPalette::NoType) {
-        option->palette.setBrush(QPalette::Text, DApplicationHelper::instance()->palette(option->widget).brush(type));
+        option->palette.setBrush(QPalette::Text, DPaletteHelper::instance()->palette(option->widget).brush(type));
     } else {
         QPalette::ColorRole role = getViewItemColorRole(index, Dtk::ViewItemForegroundRole);
 
@@ -1113,7 +1113,7 @@ void DStyledItemDelegate::initStyleOption(QStyleOptionViewItem *option, const QM
     type = getViewItemColorType(index, Dtk::ViewItemBackgroundRole);
 
     if (type != DPalette::NoType) {
-        option->backgroundBrush = DApplicationHelper::instance()->palette(option->widget).brush(type);
+        option->backgroundBrush = DPaletteHelper::instance()->palette(option->widget).brush(type);
     } else {
         QPalette::ColorRole role = getViewItemColorRole(index, Dtk::ViewItemBackgroundRole);
 
