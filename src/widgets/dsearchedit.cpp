@@ -237,7 +237,7 @@ void DSearchEdit::clearEdit()
     d->_q_toEditMode(false);
 
     if (lineEdit()->hasFocus()) {
-        setFocus();
+        lineEdit()->clearFocus();
     }
 }
 
