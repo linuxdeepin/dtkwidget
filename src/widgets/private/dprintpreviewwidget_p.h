@@ -274,17 +274,28 @@ public:
     int targetPage(int page);
     int index2page(int index);
     int page2index(int page);
-    void impositionPages();
+    D_DECL_DEPRECATED void impositionPages(); // 拼版
+    int impositionPages(DPrintPreviewWidget::Imposition im); // 每页版数
     QImage generateWaterMarkImage() const;
     PrintOptions printerOptions();
     void printByCups();
-    void generatePreviewPicture();
-    void calculateNumberUpPage();
-    void calculateNumberPageScale();
-    void calculateNumberPagePosition();
-    void calculateCurrentNumberPage();
-    void displayWaterMarkItem();
+
+    void generatePreviewPicture();// 发送requestPaint信号，重新获取原文档数据
+    void calculateNumberUpPage();// 重绘页面，当拼版数改变、纸张大小等操作时必须调用，
+    void calculateNumberPagePosition();// 计算每小页面的显示位置
+
     void updateNumberUpContent();
+    QVector<int> requestPages(int page);// 取处理后page页的小页面
+    void releaseImpositionData();// 并打切换单页时需要释放水印、页面拼版数据
+
+    void displayWaterMarkItem();// 添加或更新水印效果，
+    void calculateNumberPageScale();// 计算缩放比，拼版数发生改变需要调用
+    void calculateCurrentNumberPage();// page是相对于原文档,添加page页需要显示的小页面到Vector
+
+    inline void setCurrentPageNumber(int page)
+    {
+        currentPageNumber = page;
+    }
 
     GraphicsView *graphicsView;
     QGraphicsScene *scene;
@@ -294,14 +305,14 @@ public:
     QList<QGraphicsItem *> pages;
     QGraphicsRectItem *background;
     WaterMark *waterMark;
-    QVector<int> pageRange;
-    int currentPageNumber = 0;
+    QVector<int> pageRange; // 选择的页码
+    int currentPageNumber = 0; // 处理以后当前页，值一定是连续的，比如处理共10页，那么取值就是1到10
     DPrinter::ColorMode colorMode;
     DPrintPreviewWidget::Imposition imposition;
     DPrintPreviewWidget::Order order;
     qreal scale = 1.0;
     DPrintPreviewWidget::PageRange pageRangeMode = DPrintPreviewWidget::AllPage;
-    bool reviewChanged = true;
+    D_DECL_DEPRECATED bool reviewChanged = true; // 预览页面是否发生改变
 
     DPrinter *previewPrinter;
     RefreshMode refreshMode;

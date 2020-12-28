@@ -920,6 +920,14 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(waterTextCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_textWaterMarkModeChanged(int)));
     QObject::connect(inorderCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_printOrderComboIndexChanged(int)));
     QObject::connect(waterTextEdit, SIGNAL(editingFinished()), q, SLOT(_q_customTextWatermarkFinished()));
+    QObject::connect(sidebysideCheckBox, &DCheckBox::stateChanged, q, [=](int state) {
+        Q_UNUSED(state)
+        if (!sidebysideCheckBox->isChecked()) {
+            pview->setImposition(DPrintPreviewWidget::One);
+            return;
+        }
+        _q_pagePersheetComboIndexChanged(pagePerSheetCombo->currentIndex());
+    });
     QObject::connect(pagePerSheetCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_pagePersheetComboIndexChanged(int)));
     QObject::connect(picPathEdit, &DFileChooserEdit::fileChoosed, q, [=](const QString &filename) { customPictureWatermarkChoosed(filename); });
     QObject::connect(sizeBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), q, [=](int value) {
@@ -997,14 +1005,15 @@ void DPrintPreviewDialogPrivate::initconnections()
     });
 
     QObject::connect(pview, &DPrintPreviewWidget::totalPages, [this](int pages) {
-        jumpPageEdit->setRange(1, pages);
-        totalPageLabel->setText(QString::number(pages));
+        int targetPage = pview->targetPageCount(pages);
+        jumpPageEdit->setRange(FIRST_PAGE, targetPage);
+        totalPageLabel->setText(QString::number(targetPage));
         totalPages = pages;
-        jumpPageEdit->setMaximum(totalPages);
+        jumpPageEdit->setMaximum(targetPage);
         setTurnPageBtnStatus();
     });
     QObject::connect(pview, &DPrintPreviewWidget::pagesCountChanged, [this](int pages) {
-        totalPageLabel->setNum(pages);
+        totalPageLabel->setNum(pview->targetPageCount(pages));
         setTurnPageBtnStatus();
     });
     QObject::connect(firstBtn, &DIconButton::clicked, pview, &DPrintPreviewWidget::turnBegin);
@@ -1555,9 +1564,10 @@ void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
         pview->setPageRangeMode((DPrintPreviewWidget::PageRange)index);
         setPageIsLegal(true);
         if (totalPages != 0) {
-            totalPageLabel->setNum(totalPages);
-            if (isInited)
-                pview->setPageRange(FIRST_PAGE, totalPages);
+            totalPageLabel->setNum(pview->targetPageCount(totalPages));
+            if (isInited) {
+                pview->setPageRange(FIRST_PAGE, pview->originPageCount());
+            }
             if (index == DPrintPreviewWidget::AllPage)
                 pview->setCurrentPage(FIRST_PAGE);
         }
@@ -1670,12 +1680,10 @@ void DPrintPreviewDialogPrivate::_q_orientationChanged(int index)
         // 纵向按钮
         if (isInited) {
             pview->setOrientation(DPrinter::Portrait);
-            pview->reviewChange(true);
         }
     } else {
         // 横向按钮
         pview->setOrientation(DPrinter::Landscape);
-        pview->reviewChange(true);
     }
     if (pview->pageRangeMode() == DPrintPreviewWidget::SelectPage)
         pageRangeCombo->setCurrentIndex(PAGERANGE_ALL);
@@ -2015,6 +2023,10 @@ void DPrintPreviewDialogPrivate::_q_printOrderComboIndexChanged(int index)
  */
 void DPrintPreviewDialogPrivate::_q_pagePersheetComboIndexChanged(int index)
 {
+    if (!sidebysideCheckBox->isChecked()) {
+        pview->setImposition(DPrintPreviewWidget::One);
+        return;
+    }
     pview->setImposition(DPrintPreviewWidget::Imposition(index + 1));
 }
 

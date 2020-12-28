@@ -122,12 +122,15 @@ public:
     void setImposition(Imposition im);
     Imposition imposition() const;
     void setOrder(Order order);
+    DPrintPreviewWidget::Order order() const;
     void setPrintFromPath(const QString &path);
     QString printFromPath() const;
     void setPrintMode(PrintMode pt);
     void setAsynPreview(int totalPage);
     bool isAsynPreview() const;
     void isPageByPage(int pageCopy,bool isFirst);
+    int targetPageCount(int pageCount);
+    int originPageCount();
 
 public Q_SLOTS:
     void updatePreview();
