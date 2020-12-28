@@ -60,6 +60,18 @@ static void grayscale(const QImage &image, QImage &dest, const QRect &rect = QRe
     }
 }
 
+static void saveImageToFile(int index, const QString &outPutFileName, const QString &suffix, bool isJpegImage, const QImage &srcImage)
+{
+    // write image
+    QString stres = outPutFileName.right(suffix.length() + 1);
+    QString tmpString = outPutFileName.left(outPutFileName.length() - suffix.length() - 1) + QString("(%1)").arg(QString::number(index + 1)) + stres;
+
+    // 多线程保存文件修复大文件卡顿问题
+    QtConcurrent::run(QThreadPool::globalInstance(), [srcImage, tmpString, isJpegImage] {
+        srcImage.save(tmpString, isJpegImage ? "JPEG" : "PNG");
+    });
+}
+
 DPrintPreviewWidgetPrivate::DPrintPreviewWidgetPrivate(DPrintPreviewWidget *qq)
     : DFramePrivate(qq)
     , imposition(DPrintPreviewWidget::One)
@@ -205,29 +217,248 @@ void DPrintPreviewWidgetPrivate::fitView()
     graphicsView->resetScale();
 }
 
-void DPrintPreviewWidgetPrivate::print(bool printAsPicture)
+void DPrintPreviewWidgetPrivate::asynPrint(const QPointF &leftTop, const QRect &pageRect, const QSize &paperSize, const QVector<int> &pageVector)
 {
-    QRect pageRect = previewPrinter->pageRect();
-    QSize paperSize = previewPrinter->pageLayout().fullRectPixels(previewPrinter->resolution()).size();
+    QPainter painter(previewPrinter);
+
+    painter.setClipRect(0, 0, pageRect.width(), pageRect.height());
+    painter.scale(scale, scale);
+
+    if (imposition == DPrintPreviewWidget::One) {
+        const QImage &waterMarkImage = generateWaterMarkImage();
+        for (int i = 0; i < pageVector.size(); ++i) {
+            if (0 != i)
+                previewPrinter->newPage();
+
+            printSinglePageDrawUtil(&painter, paperSize, leftTop, waterMarkImage, pictures.at(i));
+        }
+    } else {
+        QImage waterMarkImage;
+        int curPageCount = numberUpPrintData->rowCount * numberUpPrintData->columnCount;
+        for (int i = 0; i < q_func()->targetPageCount(pageVector.size()); ++i) {
+            if (0 != i)
+                previewPrinter->newPage();
+
+            // 异步下pictures只有需要打印的数据 需要按照pageVector当前的值进行迭代
+            numberUpPrintData->previewPictures.clear();
+            if (order != DPrintPreviewWidget::Copy) {
+                for (int c = 0; c < curPageCount; ++c) {
+                    int index = i * curPageCount + c;
+                    if (index + 1 > pictures.length())
+                        break;
+
+                    numberUpPrintData->previewPictures.append(qMakePair(index, pictures.at(index)));
+                }
+            } else {
+                numberUpPrintData->previewPictures = {curPageCount, qMakePair(i, pictures.at(i))};
+            }
+
+            // 并打时 水印需要在第一次或者当前页数与总页面数量不一致时重新生成
+            if ((0 == i) || (numberUpPrintData->previewPictures.count() != numberUpPrintData->paintPoints.count()))
+                waterMarkImage = generateWaterMarkImage();
+
+            printMultiPageDrawUtil(&painter, leftTop, waterMarkImage);
+        }
+    }
+}
+
+void DPrintPreviewWidgetPrivate::syncPrint(const QPointF &leftTop, const QRect &pageRect, const QSize &paperSize, const QVector<int> &pageVector)
+{
+    QPainter painter(previewPrinter);
+
+    painter.setClipRect(0, 0, pageRect.width(), pageRect.height());
+    painter.scale(scale, scale);
+
+    if (imposition == DPrintPreviewWidget::One) {
+        const QImage &waterMarkImage = generateWaterMarkImage();
+        for (int i = 0; i < pageVector.size(); ++i) {
+            if (0 != i)
+                previewPrinter->newPage();
+
+            printSinglePageDrawUtil(&painter, paperSize, leftTop, waterMarkImage, pictures[pageVector.at(i) - 1]);
+        }
+    } else {
+        QImage waterMarkImage;
+        for (int i = 0; i < q_func()->targetPageCount(pageVector.size()); ++i) {
+            if (0 != i)
+                previewPrinter->newPage();
+
+            // 调整当前页码 更新当前页数据
+            currentPageNumber = i + 1;
+            // 同步模式下pictures有所有数据，因此可以直接计算
+            calculateCurrentNumberPage();
+
+            // 并打时 水印需要在第一次或者当前页数与总页面数量不一致时重新生成
+            if ((0 == i) || (numberUpPrintData->previewPictures.count() != numberUpPrintData->paintPoints.count()))
+                waterMarkImage = generateWaterMarkImage();
+
+            printMultiPageDrawUtil(&painter, leftTop, waterMarkImage);
+        }
+    }
+}
+
+void DPrintPreviewWidgetPrivate::printAsImage(const QSize &paperSize, QVector<int> &pageVector)
+{
     QMargins pageMargins = previewPrinter->pageLayout().marginsPixels(previewPrinter->resolution());
     QImage savedImages(paperSize, QImage::Format_ARGB32);
     QString outPutFileName = previewPrinter->outputFileName();
     QString suffix = QFileInfo(outPutFileName).suffix();
     bool isJpegImage = !suffix.compare(QLatin1String("jpeg"), Qt::CaseInsensitive);
-    // 多页拼版水印需要计算当前页面之后生成!
     QImage waterMarkImage = (imposition == DPrintPreviewWidget::One) ? generateWaterMarkImage() : QImage();
-    QPainter painter;
 
+    savedImages.fill(Qt::white);
+
+    QPainter painter(&savedImages);
+    painter.setClipRect(0, 0, paperSize.width(), paperSize.height());
+    painter.scale(scale, scale);
+
+    QPointF leftTopPoint;
+    if (scale >= 1.0) {
+        leftTopPoint = QPointF(pageMargins.left(), pageMargins.top());
+    } else {
+        leftTopPoint = {paperSize.width() * (1.0 - scale) / (2.0 * scale) + pageMargins.left(), paperSize.height() * (1.0 - scale) / (2.0 * scale) + pageMargins.top()};
+    }
+
+    if (isAsynPreview) {
+        // 异步先获取需要打印的数据
+        previewPages = pageVector;
+        generatePreviewPicture();
+        // 更新逐页打印页码和页面数据
+        updatePageByPagePrintVector(pageVector, pictures);
+        if (imposition == DPrintPreviewWidget::One) {
+            // 异步+非并打
+            // 异步模式下pictures可以直接按顺序拿取
+            for (int i = 0; i < pageVector.size(); ++i) {
+                printSinglePageDrawUtil(&painter, paperSize, leftTopPoint, waterMarkImage, pictures.at(i));
+                saveImageToFile(i, outPutFileName, suffix, isJpegImage, savedImages);
+                savedImages.fill(Qt::white);
+            }
+        } else {
+            // 异步+并打
+            int curPageCount = numberUpPrintData->rowCount * numberUpPrintData->columnCount;
+            for (int i = 0; i < q_func()->targetPageCount(pageVector.size()); ++i) {
+                // 异步下pictures只有需要打印的数据 需要按照pageVector当前的值进行迭代
+                numberUpPrintData->previewPictures.clear();
+                if (order != DPrintPreviewWidget::Copy) {
+                    for (int c = 0; c < curPageCount; ++c) {
+                        int index = i * curPageCount + c;
+                        if (index + 1 > pictures.length())
+                            break;
+
+                        numberUpPrintData->previewPictures.append(qMakePair(index, pictures.at(index)));
+                    }
+                } else {
+                    numberUpPrintData->previewPictures = {curPageCount, qMakePair(i, pictures.at(i))};
+                }
+
+                if ((0 == i) || (numberUpPrintData->previewPictures.count() != numberUpPrintData->paintPoints.count()))
+                    waterMarkImage = generateWaterMarkImage();
+
+                printMultiPageDrawUtil(&painter, leftTopPoint, waterMarkImage);
+                saveImageToFile(i, outPutFileName, suffix, isJpegImage, savedImages);
+                savedImages.fill(Qt::white);
+            }
+        }
+    } else {
+        if (imposition == DPrintPreviewWidget::One) {
+            // 更新逐页打印页码和页面数据
+            updatePageByPagePrintVector(pageVector, pictures);
+            // 同步+非并打
+            // 同步模式下需要按照位置拿取
+            for (int i = 0; i < pageVector.size(); ++i) {
+                printSinglePageDrawUtil(&painter, paperSize, leftTopPoint, waterMarkImage, pictures[pageVector.at(i) - 1]);
+                saveImageToFile(i, outPutFileName, suffix, isJpegImage, savedImages);
+                savedImages.fill(Qt::white);
+            }
+        } else {
+            // 同步+并打
+            for (int i = 0; i < q_func()->targetPageCount(pageVector.size()); ++i) {
+                // 调整当前页码 更新当前页数据
+                currentPageNumber = i + 1;
+                // 同步模式下pictures有所有数据，因此可以直接计算
+                calculateCurrentNumberPage();
+                // 如果当前页面水印数量和内容数量不一致 需要更新水印使其保持一致
+                if ((0 == i) || (numberUpPrintData->previewPictures.count() != numberUpPrintData->paintPoints.count()))
+                    waterMarkImage = generateWaterMarkImage();
+
+                printMultiPageDrawUtil(&painter, leftTopPoint, waterMarkImage);
+                saveImageToFile(i, outPutFileName, suffix, isJpegImage, savedImages);
+                savedImages.fill(Qt::white);
+            }
+        }
+    }
+}
+
+void DPrintPreviewWidgetPrivate::printSinglePageDrawUtil(QPainter *painter, const QSize &paperSize, const QPointF &leftTop, const QImage &waterImage, const QPicture *picture)
+{
+    // 绘制原始数据
+    painter->save();
+    painter->drawPicture(leftTop, *picture);
+    // 绘制水印
+    if (!waterImage.isNull()) {
+        painter->resetTransform();
+        painter->translate(paperSize.width() / 2, paperSize.height() / 2);
+        painter->rotate(waterMark->rotation());
+        painter->drawImage(-waterImage.width() / 2, -waterImage.height() / 2, waterImage);
+    }
+
+    painter->restore();
+}
+
+void DPrintPreviewWidgetPrivate::printMultiPageDrawUtil(QPainter *painter, const QPointF &leftTop, const QImage &waterImage)
+{
+    painter->save();
+    painter->scale(numberUpPrintData->scaleRatio, numberUpPrintData->scaleRatio);
+    for (int c = 0; c < numberUpPrintData->previewPictures.count(); ++c) {
+        QPointF paintPoint = numberUpPrintData->paintPoints.at(c) / numberUpPrintData->scaleRatio;
+        const QPicture *pic = numberUpPrintData->previewPictures.at(c).second;
+        painter->drawPicture(leftTop / numberUpPrintData->scaleRatio + paintPoint, *pic);
+    }
+    painter->restore();
+
+    // 绘制并打水印 此时不能再设置缩放比
+    if (!waterImage.isNull())
+        painter->drawImage(leftTop, waterImage);
+}
+
+void DPrintPreviewWidgetPrivate::print(bool printAsPicture)
+{
     QVector<int> pageVector;
     if (pageRangeMode == DPrintPreviewWidget::CurrentPage)
         pageVector.append(pageRange.at(currentPageNumber - 1));
     else {
         pageVector = pageRange;
     }
-    if (isAsynPreview) {
-        previewPages = pageVector;
-        generatePreviewPicture();
+
+    QSize paperSize = previewPrinter->pageLayout().fullRectPixels(previewPrinter->resolution()).size();
+    if (printAsPicture) {
+        printAsImage(paperSize, pageVector);
+    } else {
+        QRect pageRect = previewPrinter->pageRect();
+        QPointF leftTopPoint;
+        if (scale >= 1.0) {
+            leftTopPoint = {0, 0};
+        } else {
+            leftTopPoint = {pageRect.width() * (1.0 - scale) / (2.0 * scale), pageRect.height() * (1.0 - scale) / (2.0 * scale)};
+        }
+
+        if (isAsynPreview) {
+            // 异步先获取需要打印的数据
+            previewPages = pageVector;
+            generatePreviewPicture();
+            // 更新逐页打印页码和页面数据
+            updatePageByPagePrintVector(pageVector, pictures);
+            asynPrint(leftTopPoint, pageRect, paperSize, pageVector);
+        } else {
+            // 更新逐页打印页码和页面数据
+            updatePageByPagePrintVector(pageVector, pictures);
+            syncPrint(leftTopPoint, pageRect, paperSize, pageVector);
+        }
     }
+}
+
+void DPrintPreviewWidgetPrivate::updatePageByPagePrintVector(QVector<int> &pageVector, QList<const QPicture *> &pictures) const
+{
     //逐页打印情况下，手动设置页码和图片处理
     //当拷贝份数不为1时，需要手动插入图片页码
     if (pageCopyCount != 0) {
@@ -264,98 +495,6 @@ void DPrintPreviewWidgetPrivate::print(bool printAsPicture)
             qSort(pageVector.begin(), pageVector.end(), qGreater<int>());
         }
     }
-
-    if (printAsPicture) {
-        painter.begin(&savedImages);
-        painter.setClipRect(0, 0, paperSize.width(), paperSize.height());
-    } else {
-        painter.begin(previewPrinter);
-        painter.setClipRect(0, 0, pageRect.width(), pageRect.height());
-    }
-
-    savedImages.fill(Qt::white);
-    painter.scale(scale, scale);
-    QPointF leftTopPoint;
-    double lt_x, lt_y;
-    if (scale >= 1.0) {
-        lt_x = printAsPicture ? pageMargins.left() : 0.0;
-        lt_y = printAsPicture ? pageMargins.top() : 0.0;
-    } else {
-        lt_x = printAsPicture ? (paperSize.width() * (1.0 - scale) / (2.0 * scale) + pageMargins.left())
-               : (pageRect.width() * (1.0 - scale) / (2.0 * scale));
-        lt_y = printAsPicture ? (paperSize.height() * (1.0 - scale) / (2.0 * scale) + pageMargins.top())
-               : (pageRect.height() * (1.0 - scale) / (2.0 * scale));
-    }
-
-    leftTopPoint.setX(lt_x);
-    leftTopPoint.setY(lt_y);
-
-    for (int i = 0; i < targetPage(pageVector.size()); i++) {
-        if (0 != i && !printAsPicture)
-            previewPrinter->newPage();
-
-        //todo scale,black and white,watermarking,……
-        painter.save();
-        if (imposition == DPrintPreviewWidget::One) {
-            // 绘制原始数据
-            painter.drawPicture(leftTopPoint, *(isAsynPreview ? pictures[i] : pictures[pageVector.at(i) - 1]));
-            // 绘制水印
-            painter.resetTransform();
-            painter.translate(paperSize.width() / 2, paperSize.height() / 2);
-            painter.rotate(waterMark->rotation());
-            painter.drawImage(-waterMarkImage.width() / 2, -waterMarkImage.height() / 2, waterMarkImage);
-        } else {
-            // 绘制并打原始数据
-            calculateNumberPagePosition();
-            if (isAsynPreview) {
-                int curPageCount = numberUpPrintData->rowCount * numberUpPrintData->columnCount;
-                // 异步下pictures只有需要打印的数据 需要按照pageVector当前的值进行迭代
-                numberUpPrintData->previewPictures.clear();
-                for (int c = 0; c < curPageCount; ++c) {
-                    int index = i * curPageCount + c;
-                    if (index + 1 > pictures.length())
-                        break;
-
-                    numberUpPrintData->previewPictures.append(qMakePair(index, pictures.at(index)));
-                }
-            } else {
-                // 调整当前页码 更新当前页数据
-                setCurrentPageNumber(i + 1);
-                // 同步模式下pictures有所有数据，因此可以直接计算
-                calculateCurrentNumberPage();
-            }
-
-            // 如果当前页面水印数量和内容数量不一致 需要更新水印使其保持一致
-            if ((0 == i) || (numberUpPrintData->previewPictures.count() != numberUpPrintData->paintPoints.count()))
-                waterMarkImage = generateWaterMarkImage();
-            painter.save();
-            painter.scale(numberUpPrintData->scaleRatio, numberUpPrintData->scaleRatio);
-            for (int c = 0; c < numberUpPrintData->previewPictures.count(); ++c) {
-                QPointF paintPoint = numberUpPrintData->paintPoints.at(c) / numberUpPrintData->scaleRatio;
-                const QPicture *pic = numberUpPrintData->previewPictures.at(c).second;
-                painter.drawPicture(leftTopPoint / numberUpPrintData->scaleRatio + paintPoint, *pic);
-            }
-            painter.restore();
-            // 绘制并打水印
-            painter.drawImage(leftTopPoint, waterMarkImage);
-        }
-        painter.restore();
-
-        if (printAsPicture) {
-            // write image
-            QString stres = outPutFileName.right(suffix.length() + 1);
-            QString tmpString = outPutFileName.left(outPutFileName.length() - suffix.length() - 1) + QString("(%1)").arg(QString::number(i + 1)) + stres;
-
-            // 多线程保存文件修复大文件卡顿问题
-            QtConcurrent::run(QThreadPool::globalInstance(), [savedImages, tmpString, isJpegImage] {
-                savedImages.save(tmpString, isJpegImage ? "JPEG" : "PNG");
-            });
-
-            savedImages.fill(Qt::white);
-        }
-    }
-
-    painter.end();
 }
 
 void DPrintPreviewWidgetPrivate::setPageRangeAll()
@@ -532,6 +671,7 @@ QImage DPrintPreviewWidgetPrivate::generateWaterMarkImage() const
 
         QPainter tp;
         tp.begin(&totalWaterImage);
+        tp.setRenderHint(QPainter::SmoothPixmapTransform);
         tp.scale(numberUpPrintData->scaleRatio, numberUpPrintData->scaleRatio);
 
         for (int c = 0; c < numberUpPrintData->previewPictures.count(); ++c) {
@@ -1776,7 +1916,12 @@ void ContentItem::drawNumberUpPictures(QPainter *painter)
     DPrintPreviewWidget::Imposition imposition = pwidget->imposition();
 
     if (imposition == DPrintPreviewWidget::One) {
-        painter->drawPicture(0, 0, *pagePicture);
+        if (pwidget->d_func()->isAsynPreview) {
+            painter->drawPicture(0, 0, *pwidget->d_func()->pictures.first());
+        } else {
+            painter->drawPicture(0, 0, *pagePicture);
+        }
+
         return;
     }
 

@@ -267,6 +267,12 @@ public:
     void generatePreview();
     void fitView();
     void print(bool printAsPicture = false);
+    void updatePageByPagePrintVector(QVector<int> &pageVector, QList<const QPicture *> &pictures) const;
+    void asynPrint(const QPointF &leftTop, const QRect &pageRect, const QSize &paperSize, const QVector<int> &pageVector);
+    void syncPrint(const QPointF &leftTop, const QRect &pageRect, const QSize &paperSize, const QVector<int> &pageVector);
+    void printAsImage(const QSize &paperSize, QVector<int> &pageVector);
+    void printSinglePageDrawUtil(QPainter *painter, const QSize &paperSize, const QPointF &leftTop, const QImage &waterImage, const QPicture *picture);
+    void printMultiPageDrawUtil(QPainter *painter, const QPointF &leftTop, const QImage &waterImage);
 
     void setPageRangeAll();
     void setCurrentPage(int page);
