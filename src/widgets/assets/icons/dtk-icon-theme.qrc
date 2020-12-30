@@ -36,5 +36,7 @@
         <file>light/icons/print_previewscale_18px.svg</file>
         <file>dark/icons/dorpper_normal_32px.svg</file>
         <file>light/icons/dorpper_normal_32px.svg</file>
+        <file>dark/icons/titlebar_more_50px.svg</file>
+        <file>light/icons/titlebar_more_50px.svg</file>
     </qresource>
 </RCC>

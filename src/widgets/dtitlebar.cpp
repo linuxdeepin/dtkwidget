@@ -32,6 +32,7 @@
 #include "dwindowmaxbutton.h"
 #include "dwindowminbutton.h"
 #include "dwindowoptionbutton.h"
+#include "dtabletwindowoptionbutton.h"
 #include "dwindowquitfullbutton.h"
 #include "dplatformwindowhandle.h"
 #include "daboutdialog.h"
@@ -98,7 +99,7 @@ private:
     DWindowMinButton    *minButton;
     DWindowMaxButton    *maxButton;
     DWindowCloseButton  *closeButton;
-    DWindowOptionButton *optionButton;
+    DIconButton         *optionButton;
     DWindowQuitFullButton *quitFullButton;
     DLabel              *titleLabel;
     QWidget             *customWidget = nullptr;
@@ -152,7 +153,13 @@ void DTitlebarPrivate::init()
     minButton       = new DWindowMinButton;
     maxButton       = new DWindowMaxButton;
     closeButton     = new DWindowCloseButton;
-    optionButton    = new DWindowOptionButton;
+
+    if (DGuiApplicationHelper::isTabletEnvironment()) {
+        optionButton = new DTabletWindowOptionButton;
+    } else {
+        optionButton = new DWindowOptionButton;
+    }
+
     quitFullButton  = new DWindowQuitFullButton;
     separatorTop    = new DHorizontalLine(q);
     separator       = new DHorizontalLine(q);
@@ -253,7 +260,7 @@ void DTitlebarPrivate::init()
             targetWindow()->showFullScreen();
         }
     });
-    q->connect(optionButton, &DWindowOptionButton::clicked, q, &DTitlebar::optionClicked);
+    q->connect(optionButton, &DIconButton::clicked, q, &DTitlebar::optionClicked);
     q->connect(DWindowManagerHelper::instance(), SIGNAL(windowMotifWMHintsChanged(quint32)),
                q, SLOT(_q_onTopWindowMotifHintsChanged(quint32)));
     q->connect(DGuiApplicationHelper::instance()->systemTheme(), &DPlatformTheme::iconThemeNameChanged, q, [ = ]() {
@@ -342,7 +349,7 @@ void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
     forceShow = false;
 #endif
 
-    bool showTitle = (type.testFlag(Qt::WindowTitleHint) || forceShow) && !embedMode;
+    bool showTitle = (type.testFlag(Qt::WindowTitleHint) || forceShow) && !embedMode && !DGuiApplicationHelper::isTabletEnvironment();
     if (titleLabel) {
         if (showTitle) {
             titleLabel->setText(q->property("_dtk_title").toString());
@@ -356,8 +363,6 @@ void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
     bool forceHide = (!useDXcb) || embedMode || isFullscreen;
 
     bool showMin = (type.testFlag(Qt::WindowMinimizeButtonHint) || forceShow) && !forceHide;
-    minButton->setVisible(showMin);
-
 
     bool allowResize = true;
 
@@ -374,9 +379,18 @@ void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
 //             << "useDXcb" << useDXcb
 //             << "forceHide" << forceHide
 //             << "type.testFlag(Qt::WindowMaximizeButtonHint)" << type.testFlag(Qt::WindowMaximizeButtonHint);
-    maxButton->setVisible(showMax);
-    closeButton->setVisible(showClose);
-    quitFullButton->setVisible(showQuit);
+
+    if (DGuiApplicationHelper::isTabletEnvironment()) {
+        maxButton->setVisible(false);
+        closeButton->setVisible(false);
+        quitFullButton->setVisible(false);
+        minButton->setVisible(false);
+    } else {
+        maxButton->setVisible(showMax);
+        closeButton->setVisible(showClose);
+        quitFullButton->setVisible(showQuit);
+        minButton->setVisible(showMin);
+    }
 }
 
 void DTitlebarPrivate::updateButtonsFunc()

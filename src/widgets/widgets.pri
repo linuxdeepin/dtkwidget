@@ -50,6 +50,7 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dwindowminbutton.h \
     $$PWD/dwindowclosebutton.h \
     $$PWD/dwindowoptionbutton.h \
+    $$PWD/dtabletwindowoptionbutton.h \
     $$PWD/dwindowquitfullbutton.h \
     $$PWD/dshortcutedit.h \
     $$PWD/dsimplelistview.h \
@@ -137,6 +138,7 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dwindowminbutton.cpp \
     $$PWD/dwindowclosebutton.cpp \
     $$PWD/dwindowoptionbutton.cpp \
+    $$PWD/dtabletwindowoptionbutton.cpp \
     $$PWD/dwindowquitfullbutton.cpp \
     $$PWD/dshortcutedit.cpp \
     $$PWD/dsimplelistview.cpp \
@@ -343,6 +345,7 @@ includes.files += \
     $$PWD/DWindowMaxButton \
     $$PWD/DWindowMinButton \
     $$PWD/DWindowOptionButton \
+    $$PWD/DTabletWindowOptionButton \
     $$PWD/DWindowQuitFullButton \
     $$PWD/DApplicationHelper \
     $$PWD/DFloatingWidget \

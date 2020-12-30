@@ -215,6 +215,7 @@ public:
         SP_DeleteButton,                            //删除按钮
         SP_AddButton,                               //新增按钮
         SP_TitleQuitFullButton,                     //标题栏(「」)
+        SP_TitleMoreButton,                         //标题栏 "更多" 按钮
         SP_CustomBase = QStyle::SP_CustomBase + 0xf00000
     };
 
