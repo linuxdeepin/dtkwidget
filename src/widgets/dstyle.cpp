@@ -1726,6 +1726,8 @@ case SP_##Value: { \
         return QIcon::fromTheme("password_hide");
     case SP_IndicatorSearch:
         return QIcon::fromTheme("search_indicator");
+    case SP_TitleMoreButton:
+        return QIcon::fromTheme("titlebar_more");
     default:
         break;
     }

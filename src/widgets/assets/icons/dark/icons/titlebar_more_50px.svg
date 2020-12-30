@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="50px" height="50px" viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>more_dark</title>
+    <g id="more_dark" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="编组-28备份" transform="translate(15.000000, 15.000000)" stroke="#C5CFE0">
+            <circle id="椭圆形" stroke-width="1.25" cx="10" cy="10" r="9.375"></circle>
+            <g id="Group" transform="translate(5.000000, 7.000000)" fill="#C5CFE0" stroke-width="0.2">
+                <path d="M1,2 C1.55228475,2 2,2.44771525 2,3 C2,3.55228475 1.55228475,4 1,4 C0.44771525,4 0,3.55228475 0,3 C0,2.44771525 0.44771525,2 1,2 Z M5,2 C5.55228475,2 6,2.44771525 6,3 C6,3.55228475 5.55228475,4 5,4 C4.44771525,4 4,3.55228475 4,3 C4,2.44771525 4.44771525,2 5,2 Z M9,2 C9.55228475,2 10,2.44771525 10,3 C10,3.55228475 9.55228475,4 9,4 C8.44771525,4 8,3.55228475 8,3 C8,2.44771525 8.44771525,2 9,2 Z" id="形状结合"></path>
+            </g>
+        </g>
+    </g>
+</svg>
