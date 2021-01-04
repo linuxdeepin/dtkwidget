@@ -1940,6 +1940,7 @@ void DPrintPreviewDialogPrivate::disablePrintSettings()
     q->findChild<DFrame *>("marginsFrame")->setEnabled(false);
     q->findChild<DBackgroundGroup *>("ScalingContentBackgroundGroup")->setEnabled(false);
     q->findChild<DFrame *>("WaterMarkFrame")->setEnabled(false);
+    q->findChild<DFrame *>("btnframe")->setEnabled(false);
 }
 
 /*!
