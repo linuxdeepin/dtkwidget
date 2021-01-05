@@ -22,6 +22,7 @@
 #include "diconbutton.h"
 
 #include <DSysInfo>
+#include <DGuiApplicationHelper>
 #undef ENABLE_AI
 
 #ifdef ENABLE_AI
@@ -189,6 +190,11 @@ DSearchEdit::DSearchEdit(QWidget *parent)
 
     d->init();
     setSpeechToTextEnabled(false);
+
+    //平板模式下屏蔽搜索框右键菜单
+    if (DGuiApplicationHelper::isTabletEnvironment()) {
+        d->lineEdit->setContextMenuPolicy(Qt::NoContextMenu);
+    }
 }
 
 DSearchEdit::~DSearchEdit()
