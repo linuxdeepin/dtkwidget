@@ -284,7 +284,11 @@ void DPrintPreviewWidgetPrivate::syncPrint(const QPointF &leftTop, const QRect &
                 previewPrinter->newPage();
 
             // 调整当前页码 更新当前页数据
-            currentPageNumber = i + 1;
+            if (pageRangeMode == DPrintPreviewWidget::CurrentPage) {
+                currentPageNumber = pageVector.at(i);
+            } else {
+                currentPageNumber = i + 1;
+            }
             // 同步模式下pictures有所有数据，因此可以直接计算
             calculateCurrentNumberPage();
 
@@ -374,7 +378,12 @@ void DPrintPreviewWidgetPrivate::printAsImage(const QSize &paperSize, QVector<in
             // 同步+并打
             for (int i = 0; i < q_func()->targetPageCount(pageVector.size()); ++i) {
                 // 调整当前页码 更新当前页数据
-                currentPageNumber = i + 1;
+                if (pageRangeMode == DPrintPreviewWidget::CurrentPage) {
+                    currentPageNumber = pageVector.at(i);
+                } else {
+                    currentPageNumber = i + 1;
+                }
+
                 // 同步模式下pictures有所有数据，因此可以直接计算
                 calculateCurrentNumberPage();
                 // 如果当前页面水印数量和内容数量不一致 需要更新水印使其保持一致
