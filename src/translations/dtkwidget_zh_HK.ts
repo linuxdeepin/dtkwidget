@@ -20,87 +20,87 @@
 <context>
     <name>DCrumbEdit</name>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="890"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="896"/>
         <source>Black</source>
         <translation>黑色</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="893"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="899"/>
         <source>White</source>
         <translation>白色</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="896"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="902"/>
         <source>Dark Gray</source>
         <translation>深灰色</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="899"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="905"/>
         <source>Gray</source>
         <translation>灰色</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="902"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="908"/>
         <source>Light Gray</source>
         <translation>淺灰色</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="905"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="911"/>
         <source>Red</source>
         <translation>紅色</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="908"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="914"/>
         <source>Green</source>
         <translation>綠色</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="911"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="917"/>
         <source>Blue</source>
         <translation>藍色</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="914"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="920"/>
         <source>Cyan</source>
         <translation>青色</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="917"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="923"/>
         <source>Magenta</source>
         <translation>洋紅色</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="920"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="926"/>
         <source>Yellow</source>
         <translation>黃色</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="923"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="929"/>
         <source>Dark Red</source>
         <translation>深紅色</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="926"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="932"/>
         <source>Dark Green</source>
         <translation>深綠色</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="929"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="935"/>
         <source>Dark Blue</source>
         <translation>深藍色</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="932"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="938"/>
         <source>Dark Cyan</source>
         <translation>深青色</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="935"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="941"/>
         <source>Dark Magenta</source>
         <translation>深紫紅色</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="938"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="944"/>
         <source>Dark Yellow</source>
         <translation>深黃色</translation>
     </message>
@@ -121,7 +121,7 @@
 <context>
     <name>DKeySequenceEdit</name>
     <message>
-        <location filename="../widgets/dkeysequenceedit.cpp" line="41"/>
+        <location filename="../widgets/dkeysequenceedit.cpp" line="42"/>
         <source>Enter a new shortcut</source>
         <translation>請輸入新的快捷鍵</translation>
     </message>
@@ -129,22 +129,22 @@
 <context>
     <name>DLineEdit</name>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="460"/>
+        <location filename="../widgets/dlineedit.cpp" line="471"/>
         <source>Stop reading</source>
         <translation>停止朗讀</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="462"/>
+        <location filename="../widgets/dlineedit.cpp" line="473"/>
         <source>Text to Speech</source>
         <translation>語音朗讀</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="485"/>
+        <location filename="../widgets/dlineedit.cpp" line="496"/>
         <source>Translate</source>
         <translation>翻譯</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="507"/>
+        <location filename="../widgets/dlineedit.cpp" line="518"/>
         <source>Speech To Text</source>
         <translation>語音聽寫</translation>
     </message>
@@ -152,217 +152,414 @@
 <context>
     <name>DPrintPreviewDialogPrivate</name>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="189"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="215"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1117"/>
         <source>Advanced</source>
         <translation>進階</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="211"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="238"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="212"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="992"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="239"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1508"/>
         <source>Print</source>
         <translation>列印</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="228"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="255"/>
         <source>Basic</source>
         <translation>基本</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="243"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="270"/>
         <source>Printer</source>
         <translation>印表機</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="258"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="284"/>
         <source>Copies</source>
         <translation>份數</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="278"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="303"/>
         <source>Page range</source>
         <translation>列印範圍</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="281"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="305"/>
         <source>All</source>
         <translation>所有</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="282"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="306"/>
         <source>Current page</source>
         <translation>目前頁面</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="283"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="307"/>
         <source>Select pages</source>
         <translation>選擇頁面</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="297"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="322"/>
         <source>Orientation</source>
         <translation>方向</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="321"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="346"/>
         <source>Portrait</source>
         <translation>直向</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="331"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="356"/>
         <source>Landscape</source>
         <translation>橫向</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="358"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="384"/>
         <source>Pages</source>
         <translation>頁面</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="368"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="394"/>
         <source>Color mode</source>
         <translation>彩色模式</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="371"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="962"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1004"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="396"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1478"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1524"/>
         <source>Color</source>
         <translation>彩色</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="371"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1001"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1004"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="396"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1517"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1524"/>
         <source>Grayscale</source>
         <translation>灰階</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="382"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="407"/>
         <source>Margins</source>
         <translation>邊界</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="385"/>
-        <source>Normal(mm)</source>
-        <translation>標準 (mm)</translation>
-    </message>
-    <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="385"/>
-        <source>Narrow(mm)</source>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="409"/>
+        <source>Narrow (mm)</source>
         <translation>窄 (mm)</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="385"/>
-        <source>Moderate(mm)</source>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="409"/>
+        <source>Normal (mm)</source>
+        <translation>標準 (mm)</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="409"/>
+        <source>Moderate (mm)</source>
         <translation>中等 (mm)</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="385"/>
-        <source>Customize(mm)</source>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="409"/>
+        <source>Customize (mm)</source>
         <translation>自訂 (mm)</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="391"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="415"/>
         <source>Top</source>
         <translation>上</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="394"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="418"/>
         <source>Left</source>
         <translation>左</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="397"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="421"/>
         <source>Bottom</source>
         <translation>下</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="400"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="424"/>
         <source>Right</source>
         <translation>右</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="443"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="469"/>
         <source>Scaling</source>
         <translation>縮放</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="457"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="483"/>
         <source>Actual size</source>
         <translation>實際大小</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="466"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="492"/>
         <source>Scale</source>
         <translation>比例</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="496"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="523"/>
         <source>Paper</source>
         <translation>紙張</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="506"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="533"/>
         <source>Paper size</source>
         <translation>紙張大小</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="520"/>
-        <source>Layout</source>
-        <translation>版面</translation>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="546"/>
+        <source>Print Layout</source>
+        <translation>打印方式</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="531"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="557"/>
         <source>Duplex</source>
         <translation>雙面</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="566"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="570"/>
+        <source>N-up printing</source>
+        <translation>並列打印</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
+        <source>2 pages/sheet, 1×2</source>
+        <translation>每頁2版 1×2</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
+        <source>4 pages/sheet, 2×2</source>
+        <translation>每頁4版 2×2</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
+        <source>6 pages/sheet, 2×3</source>
+        <translation>每頁6版 2×3</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
+        <source>9 pages/sheet, 3×3</source>
+        <translation>每頁9版 3×3</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
+        <source>16 pages/sheet, 4×4</source>
+        <translation>每頁16版 4×4</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="581"/>
+        <source>Layout direction</source>
+        <translation>並打順序</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="626"/>
+        <source>Page Order</source>
+        <translation>打印順序</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="636"/>
+        <source>Collate pages</source>
+        <translation>逐份打印</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="641"/>
+        <source>Print pages in order</source>
+        <translation>按順序打印</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="643"/>
+        <source>Front to back</source>
+        <translation>由前向後</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="643"/>
+        <source>Back to front</source>
+        <translation>由後向前</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="667"/>
+        <source>Watermark</source>
+        <translation>水印</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="678"/>
+        <source>Add watermark</source>
+        <translation>添加水印</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="720"/>
+        <source>Text watermark</source>
+        <translation>文字水印</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="722"/>
+        <source>Confidential</source>
+        <translation>絕密</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="722"/>
+        <source>Draft</source>
+        <translation>草稿</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="722"/>
+        <source>Sample</source>
+        <translation>樣本</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="722"/>
+        <source>Custom</source>
+        <translation>自定義</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="730"/>
+        <source>Input your text</source>
+        <translation>請輸入自定義水印</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="753"/>
+        <source>Picture watermark</source>
+        <translation>圖片水印</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="774"/>
+        <source>Layout</source>
+        <translation>打印方式</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="776"/>
+        <source>Tile</source>
+        <translation>平鋪</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="776"/>
+        <source>Center</source>
+        <translation>居中</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="787"/>
+        <source>Angle</source>
+        <translation>傾度</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="803"/>
+        <source>Size</source>
+        <translation>大小</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="824"/>
+        <source>Transparency</source>
+        <translation>透明度</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="881"/>
         <source>Print to PDF</source>
         <translation>列印至 PDF</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="831"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="838"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="882"/>
+        <source>Save as Image</source>
+        <translation>另存為圖片</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1113"/>
+        <source>Collapse</source>
+        <translation>收起</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1234"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1241"/>
         <source>Flip on short edge</source>
         <translation>從短邊翻頁</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="834"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="837"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1237"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1240"/>
         <source>Flip on long edge</source>
         <translation>從長邊翻頁</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="967"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1337"/>
+        <source>Input page numbers please</source>
+        <translation>請輸入打印頁碼</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1340"/>
+        <source>Maximum page number reached</source>
+        <translation>超出打印範圍</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1343"/>
+        <source>Input English comma please</source>
+        <translation>請輸入英文逗號</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1346"/>
+        <source>Input page numbers like this: 1,3,5-7,11-15,18,21</source>
+        <translation>請輸入正確格式，例：1,3,5-7,11-15,18,21</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1483"/>
         <source>Save</source>
         <translation>儲存</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1046"/>
-        <source>1-%1. For example, 1,3,5-7,11-15,18,21</source>
-        <translation>1-%1，例如 1,3,5-7,11-15,18,21</translation>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1575"/>
+        <source>For example, 1,3,5-7,11-15,18,21</source>
+        <translation>可輸入格式：1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1346"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2061"/>
         <source>Save as PDF</source>
         <translation>儲存為 PDF</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1346"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2061"/>
         <source>PDF file</source>
         <translation>PDF 檔案</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2099"/>
+        <source>Save as image</source>
+        <translation>保存為圖片</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2101"/>
+        <source>Images</source>
+        <translation>圖片文件</translation>
+    </message>
+</context>
+<context>
+    <name>DPrintPreviewWidget</name>
+    <message>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1250"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1253"/>
+        <source>Confidential</source>
+        <translation>絕密</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1268"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1271"/>
+        <source>Draft</source>
+        <translation>草稿</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1286"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1289"/>
+        <source>Sample</source>
+        <translation>樣本</translation>
     </message>
 </context>
 <context>
     <name>DSearchEdit</name>
     <message>
-        <location filename="../widgets/dsearchedit.cpp" line="284"/>
+        <location filename="../widgets/dsearchedit.cpp" line="285"/>
         <source>Search</source>
         <translation>搜索</translation>
     </message>
@@ -422,9 +619,24 @@
     </message>
 </context>
 <context>
+    <name>PickColorWidget</name>
+    <message>
+        <location filename="../widgets/dprintpickcolorwidget.cpp" line="89"/>
+        <source>Color</source>
+        <translation>顏色</translation>
+    </message>
+</context>
+<context>
+    <name>PrintPreviewDialog</name>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>QLineEdit</name>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="443"/>
+        <location filename="../widgets/dlineedit.cpp" line="454"/>
         <source>Select All</source>
         <translation>全選</translation>
     </message>
@@ -437,7 +649,7 @@
         <translation>無搜索結果</translation>
     </message>
     <message>
-        <location filename="../widgets/private/settings/content.cpp" line="318"/>
+        <location filename="../widgets/private/settings/content.cpp" line="330"/>
         <source>Restore Defaults</source>
         <translation>恢復默認</translation>
     </message>
@@ -461,37 +673,37 @@
 <context>
     <name>TitleBarMenu</name>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="510"/>
+        <location filename="../widgets/dtitlebar.cpp" line="526"/>
         <source>Theme</source>
         <translation>主題</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="511"/>
+        <location filename="../widgets/dtitlebar.cpp" line="528"/>
         <source>Light Theme</source>
         <translation>淺色主題</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="512"/>
+        <location filename="../widgets/dtitlebar.cpp" line="529"/>
         <source>Dark Theme</source>
         <translation>深色主題</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="513"/>
+        <location filename="../widgets/dtitlebar.cpp" line="530"/>
         <source>System Theme</source>
         <translation>系統主題</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="537"/>
+        <location filename="../widgets/dtitlebar.cpp" line="554"/>
         <source>Help</source>
         <translation>幫助</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="544"/>
+        <location filename="../widgets/dtitlebar.cpp" line="561"/>
         <source>About</source>
         <translation>關於</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="551"/>
+        <location filename="../widgets/dtitlebar.cpp" line="568"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>

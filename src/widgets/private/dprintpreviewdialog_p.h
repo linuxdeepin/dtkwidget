@@ -24,6 +24,8 @@
 
 #include "dprintpreviewdialog.h"
 #include "ddialog_p.h"
+#include "dprintpickcolorwidget.h"
+#include "dlabel.h"
 
 #include <DWidget>
 #include <DPushButton>
@@ -39,15 +41,31 @@ DWIDGET_BEGIN_NAMESPACE
 class DFrame;
 class DIconButton;
 class DLineEdit;
+class DFileChooserEdit;
 class DLabel;
 class DSpinBox;
 class DSwitchButton;
 class DCommandLinkButton;
 class DSuggestButton;
 class DDoubleSpinBox;
+class DSlider;
+class DBackgroundGroup;
+class DToolButton;
 class DPrintPreviewDialogPrivate : public DDialogPrivate
 {
 public:
+    enum TipsNum {
+        NullTip,
+        MaxTip,
+        CommaTip,
+        FormatTip
+    };
+    enum WaterMarkType {
+        Type_None,
+        Type_Text,
+        Type_Image
+    };
+
     explicit DPrintPreviewDialogPrivate(DPrintPreviewDialog *qq);
     void startup();
     void initui();
@@ -55,6 +73,8 @@ public:
     void initright(QVBoxLayout *layout);
     void initbasicui();
     void initadvanceui();
+    void initWaterMarkui();
+    void initWaterSettings();
     void marginsLayout(bool adapted);
     void initdata();
     void initconnections();
@@ -64,12 +84,20 @@ public:
     void setScaling(int index);
     void judgeSupportedAttributes(const QString &lastPaperSize);
     void setMininumMargins();
+    void marginsUpdate(bool isPrinterChanged);
+    void adjustMargins();
     void themeTypeChange(DGuiApplicationHelper::ColorType themeType);
     void setPageIsLegal(bool islegal);
+    void tipSelected(TipsNum tipNum);
     QVector<int> checkDuplication(QVector<int> data);
 
     void setEnable(const int &value, DComboBox *combox); //控件可用
     void setTurnPageBtnStatus();
+    void watermarkTypeChoosed(int index);
+    void customPictureWatermarkChoosed(const QString &filename);
+    void waterMarkBtnClicked(bool isClicked);
+    void disablePrintSettings();
+    void setPageLayoutEnable(const bool &checked);
 
     void _q_printerChanged(int index);
     void _q_pageRangeChanged(int index);
@@ -78,11 +106,16 @@ public:
     void _q_startPrint(bool clicked);
     void _q_orientationChanged(int index);
     void _q_customPagesFinished();
-    void _q_marginTimerOut();
     void _q_marginspinChanged(double);
     void _q_marginEditFinished();
     void _q_currentPageSpinChanged(int value);
     void _q_checkStateChanged(int state);
+    void _q_textWaterMarkModeChanged(int index);
+    void _q_customTextWatermarkFinished();
+    void _q_colorButtonCliked(bool cliked);
+    void _q_selectColorButton(QColor color);
+    void _q_pagePersheetComboIndexChanged(int index);
+    void _q_printOrderComboIndexChanged(int index);
 
     //printer
     DPrinter *printer;
@@ -92,12 +125,24 @@ public:
     bool supportedDuplexFlag = false;
     bool supportedColorMode = false;
     bool isInited = false;
-    bool marginsControl = false;
+    int strLengths = 0;
+    bool isOnFocus = false;
+    QString lastCusWatermarkText = "";
+    bool isChecked = false;
+    bool isEventHide = false;
+    bool isInitBtnColor = false;
+    QColor waterColor;
+    int typeChoice = 0;
+    int directChoice = 0;
 
     //control
     DPrintPreviewWidget *pview;
+    DBackgroundGroup *back;
     DWidget *basicsettingwdg;
     DWidget *advancesettingwdg;
+    DWidget *watermarksettingwdg;
+    DWidget *textWatermarkWdg;
+    DWidget *picWatermarkWdg;
     DIconButton *firstBtn;
     DIconButton *prevPageBtn;
     DSpinBox *jumpPageEdit;
@@ -125,16 +170,31 @@ public:
     DCheckBox *duplexCheckBox;
     DComboBox *paperSizeCombo;
     DComboBox *pagePerSheetCombo;
-    DIconButton *lrtbBtn; //左右上下
-    DIconButton *rltbBtn; //右左上下
-    DIconButton *tblrBtn; //上下左右
-    DIconButton *tbrlBtn; //上下右左
+    DCheckBox *sidebysideCheckBox;
+    QButtonGroup *directGroup;
     QButtonGroup *printOrderGroup; //打印顺序
     DComboBox *inorderCombo;
-    DComboBox *waterTypeCombo; //添加水印类型
+    DComboBox *waterTextCombo; //添加水印类型
     DIconButton *waterColorBtn;
-    DLineEdit *waterTextEdit;
+    DLineEdit *waterTextEdit; //文字水印内容
+    DComboBox *fontCombo;
+    DSwitchButton *waterMarkBtn;
+    DFileChooserEdit *picPathEdit; //图片水印路径
+    QButtonGroup *waterTypeGroup;
+    DComboBox *waterPosCombox; //水印位置
+    DSpinBox *inclinatBox; //倾度
+    DSlider *waterSizeSlider;
+    DSpinBox *sizeBox;
+    DSlider *wmOpaSlider; //水印透明度
+    DSpinBox *opaBox;
     QVector<qreal> marginOldValue; // 记录margin自定义时的旧值  如果旧值和新值一致，就不需要刷新，top left right bottom
+    QList<qreal> minnumMargins;
+    QSpacerItem *spacer;
+    QSpacerItem *wmSpacer;
+    DFloatingWidget *colorWidget;
+    DRadioButton *printInOrderRadio;
+    DWidget *inorderwdg;
+    DPrintPickColorWidget *pickColorWidget;
     Q_DECLARE_PUBLIC(DPrintPreviewDialog)
 };
 
