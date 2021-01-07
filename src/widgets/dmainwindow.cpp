@@ -154,6 +154,11 @@ DMainWindow::DMainWindow(QWidget *parent)
     , DObject(*new DMainWindowPrivate(this))
 {
     d_func()->init();
+
+    //平板模式下DMainWindow屏蔽掉最大，最小,以及关闭按钮
+    if (DGuiApplicationHelper::isTabletEnvironment()) {
+        setWindowFlags(windowFlags() & ~(Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint));
+    }
 }
 
 /*!

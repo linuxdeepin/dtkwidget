@@ -363,6 +363,7 @@ void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
     bool forceHide = (!useDXcb) || embedMode || isFullscreen;
 
     bool showMin = (type.testFlag(Qt::WindowMinimizeButtonHint) || forceShow) && !forceHide;
+    minButton->setVisible(showMin);
 
     bool allowResize = true;
 
@@ -374,23 +375,14 @@ void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
     bool showMax = (type.testFlag(Qt::WindowMaximizeButtonHint) || forceShow) && !forceHide && allowResize;
     bool showClose = type.testFlag(Qt::WindowCloseButtonHint) && useDXcb;
     bool showQuit = isFullscreen && useDXcb && fullScreenButtonVisible;
-//    qDebug() << "max:"
-//             << "allowResize" << allowResize
-//             << "useDXcb" << useDXcb
-//             << "forceHide" << forceHide
-//             << "type.testFlag(Qt::WindowMaximizeButtonHint)" << type.testFlag(Qt::WindowMaximizeButtonHint);
-
-    if (DGuiApplicationHelper::isTabletEnvironment()) {
-        maxButton->setVisible(false);
-        closeButton->setVisible(false);
-        quitFullButton->setVisible(false);
-        minButton->setVisible(false);
-    } else {
-        maxButton->setVisible(showMax);
-        closeButton->setVisible(showClose);
-        quitFullButton->setVisible(showQuit);
-        minButton->setVisible(showMin);
-    }
+    maxButton->setVisible(showMax);
+    closeButton->setVisible(showClose);
+    quitFullButton->setVisible(showQuit);
+    //    qDebug() << "max:"
+    //             << "allowResize" << allowResize
+    //             << "useDXcb" << useDXcb
+    //             << "forceHide" << forceHide
+    //             << "type.testFlag(Qt::WindowMaximizeButtonHint)" << type.testFlag(Qt::WindowMaximizeButtonHint);
 }
 
 void DTitlebarPrivate::updateButtonsFunc()
