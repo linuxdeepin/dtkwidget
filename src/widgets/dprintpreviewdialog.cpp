@@ -166,6 +166,8 @@ void DPrintPreviewDialogPrivate::initleft(QVBoxLayout *layout)
     jumpPageEdit->setButtonSymbols(QAbstractSpinBox::ButtonSymbols::NoButtons);
     DLabel *spaceLabel = new DLabel("/");
     totalPageLabel = new DLabel;
+    originTotalPageLabel = new DLabel;
+    originTotalPageLabel->setEnabled(false);
     nextPageBtn = new DIconButton(DStyle::SP_ArrowRight);
     lastBtn = new DIconButton(DStyle::SP_ArrowNext);
     lastBtn->setIcon(QIcon::fromTheme("printer_final"));
@@ -177,6 +179,7 @@ void DPrintPreviewDialogPrivate::initleft(QVBoxLayout *layout)
     pbottomlayout->addWidget(jumpPageEdit);
     pbottomlayout->addWidget(spaceLabel);
     pbottomlayout->addWidget(totalPageLabel);
+    pbottomlayout->addWidget(originTotalPageLabel);
     pbottomlayout->addSpacing(55);
     pbottomlayout->addWidget(nextPageBtn);
     pbottomlayout->addSpacing(10);
@@ -990,6 +993,7 @@ void DPrintPreviewDialogPrivate::initconnections()
             printInOrderRadio->setEnabled(true);
             setPageLayoutEnable(false);
             pview->setImposition(DPrintPreviewWidget::One);
+            originTotalPageLabel->setVisible(false);
         } else {
             printInOrderRadio->setEnabled(false);
             inorderCombo->setEnabled(false);
@@ -997,6 +1001,7 @@ void DPrintPreviewDialogPrivate::initconnections()
             setPageLayoutEnable(true);
             directGroup->button(directChoice)->setChecked(true);
             _q_pagePersheetComboIndexChanged(pagePerSheetCombo->currentIndex());
+            originTotalPageLabel->setVisible(true);
         }
     });
     QObject::connect(jumpPageEdit->lineEdit(), &QLineEdit::textChanged, q, [ = ](QString str) {
@@ -1009,6 +1014,11 @@ void DPrintPreviewDialogPrivate::initconnections()
         jumpPageEdit->setRange(FIRST_PAGE, targetPage);
         totalPageLabel->setText(QString::number(targetPage));
         totalPages = pages;
+        originTotalPageLabel->setText(QString("(%1)").arg(pages));
+        if (sidebysideCheckBox->isChecked())
+            originTotalPageLabel->setVisible(true);
+        else
+            originTotalPageLabel->setVisible(false);
         jumpPageEdit->setMaximum(targetPage);
         setTurnPageBtnStatus();
     });

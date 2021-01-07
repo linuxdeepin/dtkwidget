@@ -147,6 +147,7 @@ public:
     DIconButton *prevPageBtn;
     DSpinBox *jumpPageEdit;
     DLabel *totalPageLabel;
+    DLabel *originTotalPageLabel;
     DIconButton *nextPageBtn;
     DIconButton *lastBtn;
     DPushButton *cancelBtn;
