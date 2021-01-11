@@ -31,6 +31,8 @@ class LIBDTKWIDGETSHARED_EXPORT DToolButton : public QToolButton
     Q_OBJECT
 public:
     DToolButton(QWidget *parent = nullptr);
+    void setAlignment(Qt::Alignment flag);
+    Qt::Alignment alignment() const;
 
 protected:
     void paintEvent(QPaintEvent *event) override;
