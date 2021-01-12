@@ -1483,6 +1483,7 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
     paperSizeCombo->clear();
     paperSizeCombo->blockSignals(true);
     colorModeCombo->blockSignals(true);
+    printInOrderRadio->setEnabled(true);
     if (index == printDeviceCombo->count() - 1
         || index == printDeviceCombo->count() - 2) {
         //pdf
@@ -1517,6 +1518,11 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
             paperSizeCombo->setCurrentIndex(1);
         }
         printer->setPrinterName("");
+
+        // pictures
+        if (index == printDeviceCombo->count() - 1) {
+            printInOrderRadio->setEnabled(false);
+        }
     } else {
         //actual printer
         if (printer) {
