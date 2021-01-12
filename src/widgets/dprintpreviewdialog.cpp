@@ -500,7 +500,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     scaleRateEdit->lineEdit()->setValidator(scaleVal);
     scaleRateEdit->setEnabledEmbedStyle(true);
     scaleRateEdit->setRange(1, 200);
-    scaleRateEdit->setFixedWidth(78);
+    scaleRateEdit->setFixedWidth(80);
     scaleRateEdit->installEventFilter(q);
     DLabel *scaleLabel = new DLabel("%");
     customlayout->addWidget(customSizeRadio);
@@ -807,7 +807,7 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     waterSizeSlider = new DSlider;
     sizeBox = new DSpinBox;
     sizeBox->lineEdit()->setReadOnly(true);
-    sizeBox->setFixedWidth(65);
+    sizeBox->setFixedWidth(78);
     sizeBox->setRange(10, 200);
     sizeBox->setValue(100);
     sizeBox->setSuffix("%");
@@ -828,7 +828,7 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     wmOpaSlider = new DSlider;
     opaBox = new DSpinBox;
     opaBox->lineEdit()->setReadOnly(true);
-    opaBox->setFixedWidth(65);
+    opaBox->setFixedWidth(78);
     opaBox->setRange(0, 100);
     opaBox->setValue(30);
     opaBox->setSuffix("%");
