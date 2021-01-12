@@ -1,13 +1,12 @@
 Name:           dtkwidget
-Version:        5.2.2.16
+Version:        5.4.3
 Release:        1%{?dist}
 Summary:        Deepin tool kit widget modules
 License:        LGPLv3+
-%if 0%{?fedora}
 URL:            https://github.com/linuxdeepin/dtkwidget
+%if 0%{?fedora}
 Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
 %else
-URL:            https://github.com/linuxdeepin/dtkwidget
 Source0:        %{name}_%{version}.orig.tar.xz
 %endif
 
@@ -36,6 +35,7 @@ BuildRequires:  pkgconfig(xext)
 BuildRequires:  pkgconfig(xcb-util)
 BuildRequires:  pkgconfig(xkbcommon)
 BuildRequires:  pkgconfig(xrender)
+BuildRequires:  cups-devel
 
 # libQt5Gui.so.5(Qt_5.10.1_PRIVATE_API)(64bit) needed by dtkwidget-2.0.6.1-1.fc29.x86_64
 BuildRequires:  qt5-qtbase-private-devel
