@@ -257,6 +257,15 @@ void DIconButton::keyPressEvent(QKeyEvent *event)
     }
 }
 
+/*!
+ * \~chinese \brief DIconButton::setNewNotification 设置是否显示小红点
+ * \~chinese \param set_new true有红点　false无红点
+ */
+void DIconButton::setNewNotification(const bool set_new)
+{
+    this->setProperty("_d_dtk_newNotification", set_new);
+}
+
 void DIconButton::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event)

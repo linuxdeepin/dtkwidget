@@ -1228,6 +1228,19 @@ void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const Q
                 dstyle.drawPrimitive(PE_IconButtonIcon, &new_opt, p, w);
             }
 
+            // 有新信息时添加小红点
+            if (w && w->property("_d_dtk_newNotification").toBool()){
+                DPalette pa = DGuiApplicationHelper::instance()->standardPalette(DGuiApplicationHelper::LightType);
+                // 按图标大小50x50时，小红点大小6x6，距离右边和上面8个像素的比例绘制
+                const int redPointRadius = 3;
+                int redPointPadding = (8 * w->size().width() / 50) + redPointRadius;
+                p->setPen(pa.color(DPalette::TextWarning));
+                p->setBrush(pa.color(DPalette::TextWarning));
+                p->setRenderHint(QPainter::Antialiasing);
+                p->drawEllipse(QPointF(w->size().width()-redPointPadding, redPointPadding),
+                               redPointRadius, redPointRadius);
+            }
+
             if (btn->state & State_HasFocus) {
                 if (btn->features & DStyleOptionButton::FloatingButton) {
                     int border_width = dstyle.pixelMetric(PM_FocusBorderWidth, opt, w);

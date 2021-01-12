@@ -56,6 +56,7 @@ public:
 
     void setEnabledCircle(bool status);
     bool enabledCircle() const;
+    void setNewNotification(const bool set_new);
 
 public Q_SLOTS:
     void setFlat(bool flat);
