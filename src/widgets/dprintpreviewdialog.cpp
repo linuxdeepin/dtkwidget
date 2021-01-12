@@ -317,8 +317,8 @@ void DPrintPreviewDialogPrivate::initbasicui()
     pagelayout->addWidget(pageRangeEdit);
     pageRangeEdit->installEventFilter(q);
 
-    QRegExp reg("^(([1-9][0-9]*)+(\\,)?|([1-9][0-9]*-[1-9][0-9]*)+(\\,)?)*");
-    QRegExpValidator *val = new QRegExpValidator(reg);
+    QRegularExpression reg(R"(^([1-9][0-9]*?(-[1-9][0-9]*?)?,)*?([1-9][0-9]*?|[1-9][0-9]*?-[1-9][0-9]*?)$)");
+    QRegularExpressionValidator *val = new QRegularExpressionValidator(reg);
     pageRangeEdit->lineEdit()->setValidator(val);
 
     //打印方向
