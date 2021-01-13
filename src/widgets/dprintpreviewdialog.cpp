@@ -1148,7 +1148,7 @@ void DPrintPreviewDialogPrivate::setupPrinter()
 {
     //基础设置
     //设置打印份数
-    printer->setNumCopies(copycountspinbox->value());
+    printer->setCopyCount(copycountspinbox->value());
     //设置打印方向
     if (orientationgroup->checkedId() == 0)
         printer->setOrientation(QPrinter::Portrait);
@@ -1225,7 +1225,7 @@ void DPrintPreviewDialogPrivate::setupPrinter()
         }
         pview->isPageByPage(printer->copyCount(),isFirst);
     //由于手动设置逐页打印，这种情况下，输出打印机的打印份数为1
-     printer->setNumCopies(1);
+        printer->setCopyCount(1);
     }
 }
 

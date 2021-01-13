@@ -697,7 +697,7 @@ PrintOptions DPrintPreviewWidgetPrivate::printerOptions()
     PrintOptions options;
 
     options.append(QPair<QByteArray, QByteArray>(QStringLiteral("media").toLocal8Bit(), QPageSize(QPageSize::PageSizeId(previewPrinter->pageSize())).key().toLocal8Bit()));
-    options.append(QPair<QByteArray, QByteArray>(QStringLiteral("copies").toLocal8Bit(), QString::number(previewPrinter->numCopies()).toLocal8Bit()));
+    options.append(QPair<QByteArray, QByteArray>(QStringLiteral("copies").toLocal8Bit(), QString::number(previewPrinter->copyCount()).toLocal8Bit()));
     options.append(QPair<QByteArray, QByteArray>(QStringLiteral("fit-to-page").toLocal8Bit(), QStringLiteral("true").toLocal8Bit()));
 
     QString pageRangeString;
