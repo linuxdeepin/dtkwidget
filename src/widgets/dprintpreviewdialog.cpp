@@ -971,10 +971,13 @@ void DPrintPreviewDialogPrivate::initconnections()
         pview->setWaterMarkOpacity(m_value);
     });
     QObject::connect(printOrderGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), q, [=](int index) {
-        if(index==0){
+        Q_Q(DPrintPreviewDialog);
+        if (index == 0) {
             inorderCombo->setEnabled(false);
-        }else {
+            q->findChild<DFrame *>("btnframe")->setEnabled(true);
+        } else {
             inorderCombo->setEnabled(true);
+            q->findChild<DFrame *>("btnframe")->setEnabled(false);
         }
     });
     QObject::connect(waterMarkBtn, &DSwitchButton::clicked, q, [=](bool isClicked) { this->waterMarkBtnClicked(isClicked); });
