@@ -640,6 +640,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     collatelayout->addWidget(printCollateRadio);
     printCollateRadio->setChecked(true);
     inorderwdg = new DWidget;
+    inorderwdg->setObjectName("InorderWidget");
     QHBoxLayout *inorderlayout = new QHBoxLayout(inorderwdg);
     printInOrderRadio = new DRadioButton(qApp->translate("DPrintPreviewDialogPrivate", "Print pages in order")); //按顺序打印
     inorderCombo = new DComboBox;
@@ -1960,6 +1961,7 @@ void DPrintPreviewDialogPrivate::disablePrintSettings()
     q->findChild<DBackgroundGroup *>("ScalingContentBackgroundGroup")->setEnabled(false);
     q->findChild<DFrame *>("WaterMarkFrame")->setEnabled(false);
     q->findChild<DFrame *>("btnframe")->setEnabled(false);
+    q->findChild<DWidget *>("InorderWidget")->setEnabled(false);
 }
 
 /*!
