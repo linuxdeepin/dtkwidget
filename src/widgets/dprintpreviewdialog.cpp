@@ -1488,8 +1488,7 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
     paperSizeCombo->blockSignals(true);
     colorModeCombo->blockSignals(true);
     printInOrderRadio->setEnabled(true);
-    if (index == printDeviceCombo->count() - 1
-        || index == printDeviceCombo->count() - 2) {
+    if (index >= printDeviceCombo->count() - 2) {
         //pdf
         copycountspinbox->setDisabled(true);
         copycountspinbox->setValue(1);
@@ -1522,11 +1521,7 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
             paperSizeCombo->setCurrentIndex(1);
         }
         printer->setPrinterName("");
-
-        // pictures
-        if (index == printDeviceCombo->count() - 1) {
-            printInOrderRadio->setEnabled(false);
-        }
+        printInOrderRadio->setEnabled(false);
     } else {
         //actual printer
         if (printer) {
