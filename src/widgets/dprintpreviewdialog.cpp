@@ -990,6 +990,8 @@ void DPrintPreviewDialogPrivate::initconnections()
         isOnFocus = true;
         if (pageRangeEdit->text().right(1) == "-" && !onFocus) {
             this->_q_customPagesFinished();
+        } else if (pageRangeEdit->text().isEmpty() && !onFocus) {
+            pageRangeError(NullTip);
         }
     });
     QObject::connect(sidebysideCheckBox, &DCheckBox::stateChanged, q, [=](int status) {
