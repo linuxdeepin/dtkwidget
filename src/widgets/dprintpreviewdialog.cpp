@@ -162,7 +162,7 @@ void DPrintPreviewDialogPrivate::initleft(QVBoxLayout *layout)
     firstBtn->setEnabled(false);
     prevPageBtn->setEnabled(false);
     jumpPageEdit = new DSpinBox;
-    jumpPageEdit->setMaximumWidth(50);
+    jumpPageEdit->setMaximumWidth(105);
     jumpPageEdit->setButtonSymbols(QAbstractSpinBox::ButtonSymbols::NoButtons);
     DLabel *spaceLabel = new DLabel("/");
     totalPageLabel = new DLabel;
