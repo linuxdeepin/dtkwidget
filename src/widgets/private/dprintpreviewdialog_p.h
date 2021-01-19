@@ -117,6 +117,8 @@ public:
     void _q_pagePersheetComboIndexChanged(int index);
     void _q_printOrderComboIndexChanged(int index);
 
+    void pageRangeError(TipsNum tipNum);
+
     //printer
     DPrinter *printer;
     int totalPages = 0;

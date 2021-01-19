@@ -1726,19 +1726,22 @@ void DPrintPreviewDialogPrivate::_q_customPagesFinished()
                 //输入的页码中，含“-”，对前后数值进行判断以及处理
                 if (list.at(i).contains("-")) {
                     QStringList list1 = list.at(i).split("-");
-                    if (list1.at(0).toInt() <= list1.at(1).toInt()) {
+                    bool convertFirst = false;
+                    bool convertSercond = false;
+                    if (list1.at(0).toInt(&convertFirst) <= list1.at(1).toInt(&convertSercond) && convertFirst && convertSercond) {
                         for (int page = list1.at(0).toInt(); page <= list1.at(1).toInt(); page++) {
                             if (page != 0 && page <= totalPages) {
                                 pagesrange.append(page);
                             } else {
-                                setPageIsLegal(false);
-                                if (isOnFocus)
-                                    tipSelected(MaxTip);
-                                isOnFocus = false;
+                                pageRangeError(MaxTip);
                                 return;
                             }
                         }
                     } else { //“-”后值大于前值，则回车自动格式化
+                        if (convertFirst || convertSercond) {
+                            pageRangeError(MaxTip);
+                            return;
+                        }
                         QString temp = "";
                         temp = list1.at(0);
                         list1.replace(0, list1.at(1));
@@ -1747,10 +1750,7 @@ void DPrintPreviewDialogPrivate::_q_customPagesFinished()
                         list.replace(i, str);
                         pageRangeEdit->setText(list.join(","));
                         if (list1.at(0).toInt() > totalPages || list1.at(1).toInt() > totalPages) {
-                            setPageIsLegal(false);
-                            if (isOnFocus)
-                                tipSelected(MaxTip);
-                            isOnFocus = false;
+                            pageRangeError(MaxTip);
                             return;
                         } else {
                             for (int page = list1.at(0).toInt(); page <= list1.at(1).toInt(); page++) {
@@ -1762,26 +1762,17 @@ void DPrintPreviewDialogPrivate::_q_customPagesFinished()
                     if (list.at(i).toInt() != 0 && list.at(i).toInt() <= totalPages) {
                         pagesrange.append(list.at(i).toInt());
                     } else {
-                        setPageIsLegal(false);
-                        if (isOnFocus)
-                            tipSelected(MaxTip);
-                        isOnFocus = false;
+                        pageRangeError(MaxTip);
                         return;
                     }
                 }
             }
         } else {
-            setPageIsLegal(false);
-            if (isOnFocus)
-                tipSelected(FormatTip);
-            isOnFocus = false;
+            pageRangeError(FormatTip);
             return;
         }
     } else {
-        setPageIsLegal(false);
-        if (isOnFocus)
-            tipSelected(NullTip);
-        isOnFocus = false;
+        pageRangeError(NullTip);
         return;
     }
     QVector<int> page = checkDuplication(pagesrange);
@@ -2150,6 +2141,14 @@ void DPrintPreviewDialogPrivate::_q_startPrint(bool clicked)
     pview->print();
 
     q->done(0);
+}
+
+void DPrintPreviewDialogPrivate::pageRangeError(TipsNum tipNum)
+{
+    setPageIsLegal(false);
+    if (isOnFocus)
+        tipSelected(tipNum);
+    isOnFocus = false;
 }
 
 DPrintPreviewDialog::DPrintPreviewDialog(QWidget *parent)
