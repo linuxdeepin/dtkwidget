@@ -122,7 +122,7 @@ void DPrintPreviewWidgetPrivate::populateScene()
     QRect pageRect = previewPrinter->pageLayout().paintRectPixels(previewPrinter->resolution());
 
     QRectF rect(pageRect);
-    background->setRect(rect);
+    background->setRect(QRect(QPoint(0, 0), paperSize));
     background->setBrush(Qt::white);
     background->setPen(Qt::NoPen);
 
