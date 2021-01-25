@@ -313,12 +313,12 @@ void DPrintPreviewWidgetPrivate::printAsImage(const QSize &paperSize, QVector<in
     savedImages.fill(Qt::white);
 
     QPainter painter(&savedImages);
-    painter.setClipRect(0, 0, paperSize.width(), paperSize.height());
+    painter.setClipRect(previewPrinter->pageRect());
     painter.scale(scale, scale);
 
     QPointF leftTopPoint;
     if (scale >= 1.0) {
-        leftTopPoint = QPointF(pageMargins.left(), pageMargins.top());
+        leftTopPoint = QPointF(pageMargins.left() / scale, pageMargins.top() / scale);
     } else {
         leftTopPoint = {paperSize.width() * (1.0 - scale) / (2.0 * scale) + pageMargins.left(), paperSize.height() * (1.0 - scale) / (2.0 * scale) + pageMargins.top()};
     }
@@ -402,7 +402,13 @@ void DPrintPreviewWidgetPrivate::printSinglePageDrawUtil(QPainter *painter, cons
 {
     // 绘制原始数据
     painter->save();
-    painter->drawPicture(leftTop, *picture);
+    // Bug-61709: Qt原因右下页边距在缩放大于100后出现失效问题，这里先用一个临时的解决办法处理
+    QImage tmpImage(previewPrinter->pageRect().size(), QImage::Format_ARGB32);
+    tmpImage.fill(Qt::white);
+    QPainter tmpPainter(&tmpImage);
+    tmpPainter.drawPicture(0, 0, *picture);
+
+    painter->drawImage(leftTop, tmpImage);
     // 绘制水印
     if (!waterImage.isNull()) {
         painter->resetTransform();
@@ -417,12 +423,19 @@ void DPrintPreviewWidgetPrivate::printSinglePageDrawUtil(QPainter *painter, cons
 void DPrintPreviewWidgetPrivate::printMultiPageDrawUtil(QPainter *painter, const QPointF &leftTop, const QImage &waterImage)
 {
     painter->save();
-    painter->scale(numberUpPrintData->scaleRatio, numberUpPrintData->scaleRatio);
+    // Bug-61709: Qt原因右下页边距在缩放大于100后出现失效问题，这里先用一个临时的解决办法处理
+    QImage tmpImage(previewPrinter->pageRect().size(), QImage::Format_ARGB32);
+    tmpImage.fill(Qt::white);
+    QPainter tmpPainter(&tmpImage);
+
+    tmpPainter.scale(numberUpPrintData->scaleRatio, numberUpPrintData->scaleRatio);
     for (int c = 0; c < numberUpPrintData->previewPictures.count(); ++c) {
         QPointF paintPoint = numberUpPrintData->paintPoints.at(c) / numberUpPrintData->scaleRatio;
         const QPicture *pic = numberUpPrintData->previewPictures.at(c).second;
-        painter->drawPicture(leftTop / numberUpPrintData->scaleRatio + paintPoint, *pic);
+        tmpPainter.drawPicture(paintPoint, *pic);
     }
+
+    painter->drawImage(leftTop / numberUpPrintData->scaleRatio, tmpImage);
     painter->restore();
 
     // 绘制并打水印 此时不能再设置缩放比
