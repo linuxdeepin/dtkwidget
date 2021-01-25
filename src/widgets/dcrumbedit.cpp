@@ -1053,15 +1053,19 @@ void DCrumbEdit::paintEvent(QPaintEvent *event)
 /*!\reimp */
 void DCrumbEdit::keyPressEvent(QKeyEvent *event)
 {
-    if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) {
-        D_D(DCrumbEdit);
+    D_D(DCrumbEdit);
 
+    if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) {
         bool result = d->makeCrumb();
         if (!result)
             event->ignore();
 
     } else if (event->key() == Qt::Key_Escape) {
         event->ignore();
+    } else if (event == QKeySequence::SelectAll) {
+        // 当文本正在编辑并之前已存在颜色文本时，复制的文字会出现异常，这里按下全选时将正在编辑的文本转化为颜色文本
+        d->makeCrumb();
+        QTextEdit::keyPressEvent(event);
     } else {
         QTextEdit::keyPressEvent(event);
     }
@@ -1107,13 +1111,13 @@ QMimeData *DCrumbEdit::createMimeDataFromSelection() const
     QString text;
     QList<DCrumbTextFormat> format_list;
 
-    for (const QChar &ch : plain_text) {
+    for (QString::const_iterator ch_it = plain_text.begin(); ch_it != plain_text.end(); ++ch_it) {
         ++pos;
 
         if (pos >= cursor.selectionEnd())
             break;
 
-        if (ch == QChar::ObjectReplacementCharacter) {
+        if (*ch_it == QChar::ObjectReplacementCharacter) {
             if (pos < cursor.selectionStart()) {
                 ++current_format;
                 continue;
@@ -1132,8 +1136,17 @@ QMimeData *DCrumbEdit::createMimeDataFromSelection() const
                 text.append(f.text());
 
             format_list << f;
-        } else if (pos < cursor.selectionStart()) {
-            text.append(ch);
+        } else {
+            // 有可编辑文本时 如果鼠标有选中状态需要添加可编辑文本
+            if (pos < cursor.selectionStart())
+                continue;
+
+            if (!text.isEmpty() && ((ch_it - 1) >= plain_text.begin()) && (*(ch_it - 1) == QChar::ObjectReplacementCharacter)) {
+                // 上一个字符不是第一个字符 且 上一个字符为标识字符
+                text.append(" ").append(*ch_it);
+            } else {
+                text.append(*ch_it);
+            }
         }
     }
 
