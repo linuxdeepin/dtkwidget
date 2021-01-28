@@ -217,7 +217,7 @@ void DPrintPreviewWidgetPrivate::fitView()
     graphicsView->resetScale();
 }
 
-void DPrintPreviewWidgetPrivate::asynPrint(const QPointF &leftTop, const QRect &pageRect, const QSize &paperSize, const QVector<int> &pageVector)
+void DPrintPreviewWidgetPrivate::asynPrint(const QPointF &leftTop, const QRect &pageRect, const QVector<int> &pageVector)
 {
     QPainter painter(previewPrinter);
 
@@ -230,7 +230,7 @@ void DPrintPreviewWidgetPrivate::asynPrint(const QPointF &leftTop, const QRect &
             if (0 != i)
                 previewPrinter->newPage();
 
-            printSinglePageDrawUtil(&painter, paperSize, leftTop, waterMarkImage, pictures.at(i));
+            printSinglePageDrawUtil(&painter, pageRect.size(), leftTop, waterMarkImage, pictures.at(i));
         }
     } else {
         QImage waterMarkImage;
@@ -262,7 +262,7 @@ void DPrintPreviewWidgetPrivate::asynPrint(const QPointF &leftTop, const QRect &
     }
 }
 
-void DPrintPreviewWidgetPrivate::syncPrint(const QPointF &leftTop, const QRect &pageRect, const QSize &paperSize, const QVector<int> &pageVector)
+void DPrintPreviewWidgetPrivate::syncPrint(const QPointF &leftTop, const QRect &pageRect, const QVector<int> &pageVector)
 {
     QPainter painter(previewPrinter);
 
@@ -275,7 +275,7 @@ void DPrintPreviewWidgetPrivate::syncPrint(const QPointF &leftTop, const QRect &
             if (0 != i)
                 previewPrinter->newPage();
 
-            printSinglePageDrawUtil(&painter, paperSize, leftTop, waterMarkImage, pictures[pageVector.at(i) - 1]);
+            printSinglePageDrawUtil(&painter, pageRect.size(), leftTop, waterMarkImage, pictures[pageVector.at(i) - 1]);
         }
     } else {
         QImage waterMarkImage;
@@ -323,6 +323,9 @@ void DPrintPreviewWidgetPrivate::printAsImage(const QSize &paperSize, QVector<in
         leftTopPoint = {paperSize.width() * (1.0 - scale) / (2.0 * scale) + pageMargins.left(), paperSize.height() * (1.0 - scale) / (2.0 * scale) + pageMargins.top()};
     }
 
+    // 水印需要调整的位置大小  跟随页面内容位置变化
+    QSize translateSize = paperSize + QSize(pageMargins.left() - pageMargins.right(), pageMargins.top() - pageMargins.bottom());
+
     if (isAsynPreview) {
         // 异步先获取需要打印的数据
         previewPages = pageVector;
@@ -333,7 +336,7 @@ void DPrintPreviewWidgetPrivate::printAsImage(const QSize &paperSize, QVector<in
             // 异步+非并打
             // 异步模式下pictures可以直接按顺序拿取
             for (int i = 0; i < pageVector.size(); ++i) {
-                printSinglePageDrawUtil(&painter, paperSize, leftTopPoint, waterMarkImage, pictures.at(i));
+                printSinglePageDrawUtil(&painter, translateSize, leftTopPoint, waterMarkImage, pictures.at(i));
                 saveImageToFile(i, outPutFileName, suffix, isJpegImage, savedImages);
                 savedImages.fill(Qt::white);
             }
@@ -370,7 +373,7 @@ void DPrintPreviewWidgetPrivate::printAsImage(const QSize &paperSize, QVector<in
             // 同步+非并打
             // 同步模式下需要按照位置拿取
             for (int i = 0; i < pageVector.size(); ++i) {
-                printSinglePageDrawUtil(&painter, paperSize, leftTopPoint, waterMarkImage, pictures[pageVector.at(i) - 1]);
+                printSinglePageDrawUtil(&painter, translateSize, leftTopPoint, waterMarkImage, pictures[pageVector.at(i) - 1]);
                 saveImageToFile(i, outPutFileName, suffix, isJpegImage, savedImages);
                 savedImages.fill(Qt::white);
             }
@@ -398,22 +401,32 @@ void DPrintPreviewWidgetPrivate::printAsImage(const QSize &paperSize, QVector<in
     }
 }
 
-void DPrintPreviewWidgetPrivate::printSinglePageDrawUtil(QPainter *painter, const QSize &paperSize, const QPointF &leftTop, const QImage &waterImage, const QPicture *picture)
+void DPrintPreviewWidgetPrivate::printSinglePageDrawUtil(QPainter *painter, const QSize &translateSize, const QPointF &leftTop, const QImage &waterImage, const QPicture *picture)
 {
     // 绘制原始数据
     painter->save();
-    // Bug-61709: Qt原因右下页边距在缩放大于100后出现失效问题，这里先用一个临时的解决办法处理
-    QImage tmpImage(previewPrinter->pageRect().size(), QImage::Format_ARGB32);
-    tmpImage.fill(Qt::white);
-    QPainter tmpPainter(&tmpImage);
-    tmpPainter.drawPicture(0, 0, *picture);
+    if (scale > 1) {
+        // Bug-61709: Qt原因右下页边距在缩放大于100后出现失效问题，这里先用一个临时的解决办法处理
+        QImage tmpImage(previewPrinter->pageRect().size() * scale, QImage::Format_ARGB32);
+        tmpImage.fill(Qt::white);
+        QPainter tmpPainter(&tmpImage);
+        tmpPainter.scale(scale, scale);
+        tmpPainter.drawPicture(0, 0, *picture);
 
-    painter->drawImage(leftTop, tmpImage);
+        painter->setRenderHint(QPainter::SmoothPixmapTransform);
+        // 将缩放系数设置为1
+        painter->resetTransform();
+        // 由小到大缩放的时候  图片数据容易失真  这里直接将原始数据绘制到放大后的图片中 然后再进行绘图 数据失真程度较低
+        painter->drawImage(leftTop, tmpImage);
+    } else {
+        painter->drawPicture(leftTop, *picture);
+    }
     // 绘制水印
     if (!waterImage.isNull()) {
         painter->resetTransform();
-        painter->translate(paperSize.width() / 2, paperSize.height() / 2);
+        painter->translate(translateSize.width() / 2, translateSize.height() / 2);
         painter->rotate(waterMark->rotation());
+
         painter->drawImage(-waterImage.width() / 2, -waterImage.height() / 2, waterImage);
     }
 
@@ -422,20 +435,31 @@ void DPrintPreviewWidgetPrivate::printSinglePageDrawUtil(QPainter *painter, cons
 
 void DPrintPreviewWidgetPrivate::printMultiPageDrawUtil(QPainter *painter, const QPointF &leftTop, const QImage &waterImage)
 {
+    painter->setRenderHint(QPainter::SmoothPixmapTransform);
+
     painter->save();
-    // Bug-61709: Qt原因右下页边距在缩放大于100后出现失效问题，这里先用一个临时的解决办法处理
-    QImage tmpImage(previewPrinter->pageRect().size(), QImage::Format_ARGB32);
-    tmpImage.fill(Qt::white);
-    QPainter tmpPainter(&tmpImage);
+    painter->scale(numberUpPrintData->scaleRatio, numberUpPrintData->scaleRatio);
+    if (scale > 1) {
+        // Bug-61709: Qt原因右下页边距在缩放大于100后出现失效问题，这里先用一个临时的解决办法处理
+        QImage tmpImage(previewPrinter->pageRect().size() / numberUpPrintData->scaleRatio, QImage::Format_ARGB32);
+        tmpImage.fill(Qt::white);
+        QPainter tmpPainter(&tmpImage);
 
-    tmpPainter.scale(numberUpPrintData->scaleRatio, numberUpPrintData->scaleRatio);
-    for (int c = 0; c < numberUpPrintData->previewPictures.count(); ++c) {
-        QPointF paintPoint = numberUpPrintData->paintPoints.at(c) / numberUpPrintData->scaleRatio;
-        const QPicture *pic = numberUpPrintData->previewPictures.at(c).second;
-        tmpPainter.drawPicture(paintPoint, *pic);
+        // 为了保证并打缩放的清晰度 防止先缩放小再缩放大导致图像不清晰的问题 这里直接将并打内容放大 然后在统一缩小到并打大小
+        for (int c = 0; c < numberUpPrintData->previewPictures.count(); ++c) {
+            QPointF paintPoint = numberUpPrintData->paintPoints.at(c) / numberUpPrintData->scaleRatio;
+            const QPicture *pic = numberUpPrintData->previewPictures.at(c).second;
+            tmpPainter.drawPicture(paintPoint, *pic);
+        }
+
+        painter->drawImage(leftTop / numberUpPrintData->scaleRatio, tmpImage);
+    } else {
+        for (int c = 0; c < numberUpPrintData->previewPictures.count(); ++c) {
+            QPointF paintPoint = numberUpPrintData->paintPoints.at(c) / numberUpPrintData->scaleRatio;
+            const QPicture *pic = numberUpPrintData->previewPictures.at(c).second;
+            painter->drawPicture(leftTop / numberUpPrintData->scaleRatio + paintPoint, *pic);
+        }
     }
-
-    painter->drawImage(leftTop / numberUpPrintData->scaleRatio, tmpImage);
     painter->restore();
 
     // 绘制并打水印 此时不能再设置缩放比
@@ -470,11 +494,11 @@ void DPrintPreviewWidgetPrivate::print(bool printAsPicture)
             generatePreviewPicture();
             // 更新逐页打印页码和页面数据
             updatePageByPagePrintVector(pageVector, pictures);
-            asynPrint(leftTopPoint, pageRect, paperSize, pageVector);
+            asynPrint(leftTopPoint, pageRect, pageVector);
         } else {
             // 更新逐页打印页码和页面数据
             updatePageByPagePrintVector(pageVector, pictures);
-            syncPrint(leftTopPoint, pageRect, paperSize, pageVector);
+            syncPrint(leftTopPoint, pageRect, pageVector);
         }
     }
 }
