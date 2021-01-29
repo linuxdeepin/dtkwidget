@@ -1740,7 +1740,7 @@ void DPrintPreviewDialogPrivate::_q_customPagesFinished()
                             }
                         }
                     } else { //“-”后值大于前值，则回车自动格式化
-                        if (convertFirst || convertSercond) {
+                        if (!convertFirst || !convertSercond) {
                             pageRangeError(MaxTip);
                             return;
                         }
