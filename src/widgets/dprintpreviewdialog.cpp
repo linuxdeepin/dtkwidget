@@ -82,6 +82,15 @@ void setwidgetfont(QWidget *widget, DFontSizeManager::SizeType type = DFontSizeM
     DFontSizeManager::instance()->bind(widget, type);
 }
 
+static void _d_setSpinboxDefaultValue(QHash<QWidget *, QString> valueCaches, DSpinBox *spinBox)
+{
+    if (valueCaches.contains(spinBox->lineEdit()) && valueCaches.value(spinBox->lineEdit()).isEmpty()) {
+        QVariant defaultVariant = spinBox->property("_d_printPreview_spinboxDefalutValue");
+        if (defaultVariant.isValid())
+            spinBox->setValue(defaultVariant.toInt());
+    }
+}
+
 DPrintPreviewDialogPrivate::DPrintPreviewDialogPrivate(DPrintPreviewDialog *qq)
     : DDialogPrivate(qq)
 {
@@ -148,6 +157,7 @@ void DPrintPreviewDialogPrivate::initui()
 
 void DPrintPreviewDialogPrivate::initleft(QVBoxLayout *layout)
 {
+    Q_Q(DPrintPreviewDialog);
     pview = new DPrintPreviewWidget(this->printer);
     pview->setLineWidth(0);
     layout->setContentsMargins(10, 10, 10, 10);
@@ -164,6 +174,7 @@ void DPrintPreviewDialogPrivate::initleft(QVBoxLayout *layout)
     jumpPageEdit = new DSpinBox;
     jumpPageEdit->setMaximumWidth(105);
     jumpPageEdit->setButtonSymbols(QAbstractSpinBox::ButtonSymbols::NoButtons);
+    jumpPageEdit->installEventFilter(q);
     DLabel *spaceLabel = new DLabel("/");
     totalPageLabel = new DLabel;
     originTotalPageLabel = new DLabel;
@@ -197,7 +208,6 @@ void DPrintPreviewDialogPrivate::initleft(QVBoxLayout *layout)
 
 void DPrintPreviewDialogPrivate::initright(QVBoxLayout *layout)
 {
-    Q_Q(DPrintPreviewDialog);
     //top
     QVBoxLayout *ptoplayout = new QVBoxLayout;
     ptoplayout->setContentsMargins(0, 0, 0, 0);
@@ -288,6 +298,7 @@ void DPrintPreviewDialogPrivate::initbasicui()
     copycountspinbox = new DSpinBox(copycountFrame);
     copycountspinbox->setEnabledEmbedStyle(true);
     copycountspinbox->setRange(1, 999);
+    copycountspinbox->installEventFilter(q);
     copycountlayout->addWidget(copycountlabel, 4);
     copycountlayout->addWidget(copycountspinbox, 9);
 
@@ -1043,6 +1054,7 @@ void DPrintPreviewDialogPrivate::initconnections()
         setTurnPageBtnStatus();
     });
     QObject::connect(jumpPageEdit->lineEdit(), &QLineEdit::editingFinished, [this]() {
+        _d_setSpinboxDefaultValue(spinboxTextCaches, jumpPageEdit);
         pview->setCurrentPage(jumpPageEdit->value());
         setTurnPageBtnStatus();
     });
@@ -1091,6 +1103,7 @@ void DPrintPreviewDialogPrivate::initconnections()
 
     QObject::connect(scaleRateEdit->lineEdit(), &QLineEdit::editingFinished, q, [=] {
         if (scaleGroup->checkedId() == SCALE) {
+            _d_setSpinboxDefaultValue(spinboxTextCaches, scaleRateEdit);
             if (scaleRateEdit->value() < 10)
                 scaleRateEdit->setValue(10);
             qreal scale = scaleRateEdit->value() / 100.0;
@@ -1110,6 +1123,10 @@ void DPrintPreviewDialogPrivate::initconnections()
         pview->updateView();
     });
 
+    QObject::connect(copycountspinbox, &QSpinBox::editingFinished, q, [this]() {
+        _d_setSpinboxDefaultValue(spinboxTextCaches, copycountspinbox);
+    });
+
     QObject::connect(marginTopSpin, SIGNAL(valueChanged(double)), q, SLOT(_q_marginspinChanged(double)));
     QObject::connect(marginRightSpin, SIGNAL(valueChanged(double)), q, SLOT(_q_marginspinChanged(double)));
     QObject::connect(marginLeftSpin, SIGNAL(valueChanged(double)), q, SLOT(_q_marginspinChanged(double)));
@@ -1121,6 +1138,13 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(marginLeftSpin, SIGNAL(editingFinished()), q, SLOT(_q_marginEditFinished()));
     QObject::connect(marginBottomSpin, SIGNAL(editingFinished()), q, SLOT(_q_marginEditFinished()));
     QObject::connect(DApplicationHelper::instance(), &DApplicationHelper::themeTypeChanged, q, [this](DGuiApplicationHelper::ColorType themeType) { this->themeTypeChange(themeType); });
+    QObject::connect(marginTopSpin->lineEdit(), SIGNAL(textEdited(const QString &)), q, SLOT(_q_spinboxValueEmptyChecked(const QString &)));
+    QObject::connect(marginRightSpin->lineEdit(), SIGNAL(textEdited(const QString &)), q, SLOT(_q_spinboxValueEmptyChecked(const QString &)));
+    QObject::connect(marginLeftSpin->lineEdit(), SIGNAL(textEdited(const QString &)), q, SLOT(_q_spinboxValueEmptyChecked(const QString &)));
+    QObject::connect(marginBottomSpin->lineEdit(), SIGNAL(textEdited(const QString &)), q, SLOT(_q_spinboxValueEmptyChecked(const QString &)));
+    QObject::connect(jumpPageEdit->lineEdit(), SIGNAL(textEdited(const QString &)), q, SLOT(_q_spinboxValueEmptyChecked(const QString &)));
+    QObject::connect(copycountspinbox->lineEdit(), SIGNAL(textEdited(const QString &)), q, SLOT(_q_spinboxValueEmptyChecked(const QString &)));
+    QObject::connect(scaleRateEdit->lineEdit(), SIGNAL(textEdited(const QString &)), q, SLOT(_q_spinboxValueEmptyChecked(const QString &)));
 }
 
 void DPrintPreviewDialogPrivate::setfrmaeback(DFrame *frame)
@@ -1820,9 +1844,19 @@ void DPrintPreviewDialogPrivate::_q_marginspinChanged(double marginValue)
 void DPrintPreviewDialogPrivate::_q_marginEditFinished()
 {
     Q_Q(DPrintPreviewDialog);
+    if (DDoubleSpinBox *spinbox = qobject_cast<DDoubleSpinBox *>(q->sender())) {
+        if (spinboxTextCaches.contains(spinbox->lineEdit()) && spinboxTextCaches.value(spinbox->lineEdit()).isEmpty()) {
+            QVariant defalutVariant = spinbox->property("_d_printPreview_spinboxDefalutValue");
+            if (defalutVariant.isValid()) {
+                spinbox->setValue(defalutVariant.toDouble());
+            }
+        }
+    }
+
     if (q->focusWidget() == marginTopSpin || q->focusWidget() == marginLeftSpin
             || q->focusWidget() == marginBottomSpin || q->focusWidget() == marginRightSpin)
         return;
+
     adjustMargins();
 }
 
@@ -2025,6 +2059,14 @@ void DPrintPreviewDialogPrivate::_q_selectColorButton(QColor color)
  */
 void DPrintPreviewDialogPrivate::_q_printOrderComboIndexChanged(int index)
 {
+}
+
+void DPrintPreviewDialogPrivate::_q_spinboxValueEmptyChecked(const QString &text)
+{
+    Q_Q(DPrintPreviewDialog);
+
+    if (QLineEdit *lineEdit = qobject_cast<QLineEdit *>(q->sender()))
+        spinboxTextCaches.insert(lineEdit, text);
 }
 
 /*!
@@ -2250,6 +2292,18 @@ bool DPrintPreviewDialog::eventFilter(QObject *watched, QEvent *event)
         QRect btnRect = QRect(waterBtnX, waterBtnY, d->waterColorBtn->width(), d->waterColorBtn->height());
         if (e && !rect.contains(pos) && !btnRect.contains(pos)) {
             d->colorWidget->hide();
+        }
+    }
+
+    if (event->type() == QEvent::FocusIn) {
+        if (watched->inherits("QSpinBox")) {
+            if (QSpinBox *spinbox = qobject_cast<QSpinBox *>(watched)) {
+                spinbox->setProperty("_d_printPreview_spinboxDefalutValue", spinbox->value());
+            }
+        } else if (watched->inherits("QDoubleSpinBox")) {
+            if (QDoubleSpinBox *spinbox = qobject_cast<QDoubleSpinBox *>(watched)) {
+                spinbox->setProperty("_d_printPreview_spinboxDefalutValue", spinbox->value());
+            }
         }
     }
     return DDialog::eventFilter(watched, event);

@@ -57,7 +57,7 @@ private:
     D_PRIVATE_SLOT(void _q_selectColorButton(QColor))
     D_PRIVATE_SLOT(void _q_pagePersheetComboIndexChanged(int))
     D_PRIVATE_SLOT(void _q_printOrderComboIndexChanged(int))
-
+    D_PRIVATE_SLOT(void _q_spinboxValueEmptyChecked(const QString &))
 public:
     virtual bool event(QEvent *event) override;
     bool eventFilter(QObject *watched, QEvent *event) override;

@@ -116,6 +116,7 @@ public:
     void _q_selectColorButton(QColor color);
     void _q_pagePersheetComboIndexChanged(int index);
     void _q_printOrderComboIndexChanged(int index);
+    void _q_spinboxValueEmptyChecked(const QString &);
 
     void pageRangeError(TipsNum tipNum);
 
@@ -198,6 +199,7 @@ public:
     DRadioButton *printInOrderRadio;
     DWidget *inorderwdg;
     DPrintPickColorWidget *pickColorWidget;
+    QHash<QWidget *, QString> spinboxTextCaches;
     Q_DECLARE_PUBLIC(DPrintPreviewDialog)
 };
 
