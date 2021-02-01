@@ -935,14 +935,6 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(waterTextCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_textWaterMarkModeChanged(int)));
     QObject::connect(inorderCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_printOrderComboIndexChanged(int)));
     QObject::connect(waterTextEdit, SIGNAL(editingFinished()), q, SLOT(_q_customTextWatermarkFinished()));
-    QObject::connect(sidebysideCheckBox, &DCheckBox::stateChanged, q, [=](int state) {
-        Q_UNUSED(state)
-        if (!sidebysideCheckBox->isChecked()) {
-            pview->setImposition(DPrintPreviewWidget::One);
-            return;
-        }
-        _q_pagePersheetComboIndexChanged(pagePerSheetCombo->currentIndex());
-    });
     QObject::connect(pagePerSheetCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_pagePersheetComboIndexChanged(int)));
     QObject::connect(picPathEdit, &DFileChooserEdit::fileChoosed, q, [=](const QString &filename) { customPictureWatermarkChoosed(filename); });
     QObject::connect(sizeBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), q, [=](int value) {
@@ -1007,7 +999,8 @@ void DPrintPreviewDialogPrivate::initconnections()
     });
     QObject::connect(sidebysideCheckBox, &DCheckBox::stateChanged, q, [=](int status) {
         if (status == 0) {
-            printInOrderRadio->setEnabled(true);
+            if (printDeviceCombo->currentIndex() < printDeviceCombo->count() - 2)
+                printInOrderRadio->setEnabled(true);
             setPageLayoutEnable(false);
             pview->setImposition(DPrintPreviewWidget::One);
             originTotalPageLabel->setVisible(false);
@@ -2075,10 +2068,6 @@ void DPrintPreviewDialogPrivate::_q_spinboxValueEmptyChecked(const QString &text
  */
 void DPrintPreviewDialogPrivate::_q_pagePersheetComboIndexChanged(int index)
 {
-    if (!sidebysideCheckBox->isChecked()) {
-        pview->setImposition(DPrintPreviewWidget::One);
-        return;
-    }
     pview->setImposition(DPrintPreviewWidget::Imposition(index + 1));
 }
 
