@@ -84,7 +84,7 @@ void setwidgetfont(QWidget *widget, DFontSizeManager::SizeType type = DFontSizeM
 
 static void _d_setSpinboxDefaultValue(QHash<QWidget *, QString> valueCaches, DSpinBox *spinBox)
 {
-    if (valueCaches.contains(spinBox->lineEdit()) && valueCaches.value(spinBox->lineEdit()).isEmpty()) {
+    if (valueCaches.contains(spinBox->lineEdit()) && (valueCaches.value(spinBox->lineEdit()).isEmpty() || valueCaches.value(spinBox->lineEdit()) == "°")) {
         QVariant defaultVariant = spinBox->property("_d_printPreview_spinboxDefalutValue");
         if (defaultVariant.isValid())
             spinBox->setValue(defaultVariant.toInt());
@@ -870,9 +870,9 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
 void DPrintPreviewDialogPrivate::initWaterSettings()
 {
     Q_EMIT waterPosCombox->currentIndexChanged(waterPosCombox->currentIndex());
-    Q_EMIT inclinatBox->valueChanged(inclinatBox->value());
     Q_EMIT waterSizeSlider->valueChanged(waterSizeSlider->value());
     Q_EMIT wmOpaSlider->valueChanged(wmOpaSlider->value());
+    Q_EMIT inclinatBox->editingFinished();
     if (waterTypeGroup->button(0)->isChecked()) {
         Q_EMIT fontCombo->currentIndexChanged(fontCombo->currentIndex());
         pview->setWaterMarkColor(waterColor);
@@ -961,8 +961,9 @@ void DPrintPreviewDialogPrivate::initconnections()
         directChoice = index;
         pview->setOrder(DPrintPreviewWidget::Order(index));
     });
-    QObject::connect(inclinatBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), q, [=](int value) {
-        pview->setWaterMarkRotate(value);
+    QObject::connect(inclinatBox, &QSpinBox::editingFinished, q, [=]() {
+        _d_setSpinboxDefaultValue(spinboxTextCaches, inclinatBox);
+        pview->setWaterMarkRotate(inclinatBox->value());
     });
     QObject::connect(waterSizeSlider, &DSlider::valueChanged, q, [=](int value) {
         sizeBox->setValue(value);
@@ -1138,6 +1139,7 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(jumpPageEdit->lineEdit(), SIGNAL(textEdited(const QString &)), q, SLOT(_q_spinboxValueEmptyChecked(const QString &)));
     QObject::connect(copycountspinbox->lineEdit(), SIGNAL(textEdited(const QString &)), q, SLOT(_q_spinboxValueEmptyChecked(const QString &)));
     QObject::connect(scaleRateEdit->lineEdit(), SIGNAL(textEdited(const QString &)), q, SLOT(_q_spinboxValueEmptyChecked(const QString &)));
+    QObject::connect(inclinatBox->lineEdit(), SIGNAL(textEdited(const QString &)), q, SLOT(_q_spinboxValueEmptyChecked(const QString &)));
 }
 
 void DPrintPreviewDialogPrivate::setfrmaeback(DFrame *frame)
