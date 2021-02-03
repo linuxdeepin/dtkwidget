@@ -131,6 +131,7 @@ public:
     void isPageByPage(int pageCopy,bool isFirst);
     int targetPageCount(int pageCount);
     int originPageCount();
+    QByteArray printerColorModel() const;
 
 public Q_SLOTS:
     void updatePreview();

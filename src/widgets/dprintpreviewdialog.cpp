@@ -1234,9 +1234,10 @@ void DPrintPreviewDialogPrivate::setupPrinter()
         printer->setDuplex(QPrinter::DuplexNone);
     }
     //设置色彩打印
-    if (supportedColorMode)
-        QCUPSSupport::setCupsOption(printer, "ColorModel", "RGB");
-    else {
+    if (supportedColorMode) {
+        QByteArray currentColorModel = pview->printerColorModel().isEmpty() ? QByteArrayLiteral("RGB") : pview->printerColorModel();
+        QCUPSSupport::setCupsOption(printer, "ColorModel", currentColorModel);
+    } else {
         QCUPSSupport::setCupsOption(printer, "ColorModel", "Gray");
     }
     //设置纸张打印边距

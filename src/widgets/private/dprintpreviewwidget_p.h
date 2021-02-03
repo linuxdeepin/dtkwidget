@@ -297,6 +297,7 @@ public:
     void displayWaterMarkItem();// 添加或更新水印效果，
     void calculateNumberPageScale();// 计算缩放比，拼版数发生改变需要调用
     void calculateCurrentNumberPage();// page是相对于原文档,添加page页需要显示的小页面到Vector
+    QByteArray foundColorModelByCups() const;
 
     inline void setCurrentPageNumber(int page)
     {

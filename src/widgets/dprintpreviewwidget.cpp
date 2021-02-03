@@ -8,6 +8,7 @@
 #include <QtAlgorithms>
 
 #include <cups/cups.h>
+#include <cups/ppd.h>
 
 #define FIRST_PAGE 1
 #define FIRST_INDEX 0
@@ -775,7 +776,9 @@ PrintOptions DPrintPreviewWidgetPrivate::printerOptions()
     if (previewPrinter->colorMode() == QPrinter::GrayScale) {
         options.append(QPair<QByteArray, QByteArray>(QStringLiteral("ColorModel").toLocal8Bit(), QStringLiteral("Gray").toLocal8Bit()));
     } else {
-        options.append(QPair<QByteArray, QByteArray>(QStringLiteral("ColorModel").toLocal8Bit(), QStringLiteral("RGB").toLocal8Bit()));
+        Q_Q(DPrintPreviewWidget);
+        QByteArray colorModel = q->printerColorModel();
+        options.append(QPair<QByteArray, QByteArray>(QStringLiteral("ColorModel").toLocal8Bit(), colorModel.isEmpty() ? QByteArrayLiteral("RGB") : colorModel));
     }
 
     return options;
@@ -946,6 +949,116 @@ void DPrintPreviewWidgetPrivate::calculateCurrentNumberPage()
         QPair<int, const QPicture *> picPair(pageIndex.first, pictures.at(pageIndex.second));
         numberUpPrintData->previewPictures.append(picPair);
     }
+}
+
+QByteArray DPrintPreviewWidgetPrivate::foundColorModelByCups() const
+{
+    const auto parts = previewPrinter->printerName().split(QLatin1Char('/'));
+    const auto printerOriginalName = parts.at(0);
+
+    QByteArray m_cupsInstance;
+    if (parts.size() > 1)
+        m_cupsInstance = parts.at(1).toUtf8();
+
+    QLibrary cupsLibrary("cups", "2");
+    if (!cupsLibrary.isLoaded()) {
+        if (!cupsLibrary.load()) {
+            qWarning() << "Cups not found";
+            return {};
+        }
+    }
+
+    cups_dest_t *(*cupsGetNamedDest)(http_t * http, const char *name, const char *instance) = nullptr;
+    cupsGetNamedDest = reinterpret_cast<decltype(cupsGetNamedDest)>(cupsLibrary.resolve("cupsGetNamedDest"));
+
+    if (!cupsGetNamedDest) {
+        qWarning() << "cupsGetNamedDest Function load failed.";
+        return {};
+    }
+
+    void (*cupsFreeDests)(int num_dests, cups_dest_t *dests) = nullptr;
+    cupsFreeDests = reinterpret_cast<decltype(cupsFreeDests)>(cupsLibrary.resolve("cupsFreeDests"));
+
+    if (!cupsFreeDests) {
+        qWarning() << "cupsFreeDests Function load failed.";
+        return {};
+    }
+
+    // 根据打印机名称获取cup实例 用于读取ppd文件
+    cups_dest_t *m_cupsDest = cupsGetNamedDest(CUPS_HTTP_DEFAULT, printerOriginalName.toLocal8Bit(), m_cupsInstance.isNull() ? nullptr : m_cupsInstance.constData());
+
+    if (m_cupsDest) {
+        ppd_file_t *m_ppd = nullptr;
+        const char *(*cupsGetPPD)(const char *name) = nullptr;
+        cupsGetPPD = reinterpret_cast<decltype(cupsGetPPD)>(cupsLibrary.resolve("cupsGetPPD"));
+
+        if (!cupsGetPPD) {
+            qWarning() << "cupsGetPPD Function load failed.";
+            cupsFreeDests(1, m_cupsDest);
+            return {};
+        }
+
+        // 获取对应打印机的ppd文件指针
+        const char *ppdFile = cupsGetPPD(printerOriginalName.toLocal8Bit());
+
+        if (ppdFile) {
+            ppd_file_t *(*ppdOpenFile)(const char *filename) = nullptr;
+            ppdOpenFile = reinterpret_cast<decltype(ppdOpenFile)>(cupsLibrary.resolve("ppdOpenFile"));
+
+            if (!ppdOpenFile) {
+                qWarning() << "ppdOpenFile Function load failed.";
+                return {};
+            }
+
+            // 打开ppd文件
+            m_ppd = ppdOpenFile(ppdFile);
+            unlink(ppdFile);
+        }
+
+        if (m_ppd) {
+            void (*ppdMarkDefaults)(ppd_file_t * ppd) = nullptr;
+            int (*cupsMarkOptions)(ppd_file_t * ppd, int num_options, cups_option_t *options) = nullptr;
+            int (*ppdLocalize)(ppd_file_t * ppd) = nullptr;
+            ppd_option_t *(*ppdFindOption)(ppd_file_t * ppd, const char *keyword) = nullptr;
+            ppdMarkDefaults = reinterpret_cast<decltype(ppdMarkDefaults)>(cupsLibrary.resolve("ppdMarkDefaults"));
+            cupsMarkOptions = reinterpret_cast<decltype(cupsMarkOptions)>(cupsLibrary.resolve("cupsMarkOptions"));
+            ppdLocalize = reinterpret_cast<decltype(ppdLocalize)>(cupsLibrary.resolve("ppdLocalize"));
+            ppdFindOption = reinterpret_cast<decltype(ppdFindOption)>(cupsLibrary.resolve("ppdFindOption"));
+
+            if (!ppdMarkDefaults || !cupsMarkOptions || !ppdLocalize || !ppdFindOption) {
+                qWarning() << "ppdMarkDefaults, cupsMarkOptions, ppdLocalize, ppdFindOption function load failed.";
+                return {};
+            }
+
+            ppdMarkDefaults(m_ppd);
+            cupsMarkOptions(m_ppd, m_cupsDest->num_options, m_cupsDest->options);
+            ppdLocalize(m_ppd);
+
+            // 从ppd文件中找到对应属性
+            ppd_option_t *colorModel = ppdFindOption(m_ppd, "ColorModel");
+
+            if (colorModel) {
+                for (int i = 0; i < colorModel->num_choices; ++i) {
+                    ppd_choice_t *choice = colorModel->choices + i;
+
+                    if (QString(choice->choice).startsWith("gray", Qt::CaseInsensitive)) {
+                        continue;
+                    } else {
+                        // 寻找ColorModel属性 获取到时返回支持的颜色
+                        QByteArray colorModel(choice->choice);
+                        cupsFreeDests(1, m_cupsDest);
+                        return colorModel;
+                    }
+                }
+            }
+        } else {
+            cupsFreeDests(1, m_cupsDest);
+            m_cupsDest = nullptr;
+            m_ppd = nullptr;
+        }
+    }
+
+    return {};
 }
 
 void DPrintPreviewWidgetPrivate::displayWaterMarkItem()
@@ -1767,6 +1880,13 @@ int DPrintPreviewWidget::originPageCount()
         return d->asynPreviewTotalPage;
 
     return d->pictures.count();
+}
+
+QByteArray DPrintPreviewWidget::printerColorModel() const
+{
+    D_DC(DPrintPreviewWidget);
+
+    return d->foundColorModelByCups();
 }
 
 /*!
