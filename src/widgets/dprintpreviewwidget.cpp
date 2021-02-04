@@ -737,18 +737,20 @@ PrintOptions DPrintPreviewWidgetPrivate::printerOptions()
     options.append(QPair<QByteArray, QByteArray>(QStringLiteral("copies").toLocal8Bit(), QString::number(previewPrinter->copyCount()).toLocal8Bit()));
     options.append(QPair<QByteArray, QByteArray>(QStringLiteral("fit-to-page").toLocal8Bit(), QStringLiteral("true").toLocal8Bit()));
 
-    QString pageRangeString;
-    if (pageRangeMode == DPrintPreviewWidget::CurrentPage) {
-        pageRangeString = QString::number(pageRange.at(currentPageNumber - 1));
-    } else {
-        Q_FOREACH (int pageRangeCount, pageRange) {
-            pageRangeString.append(QString::number(pageRangeCount).append(","));
+    if (pageRangeMode != DPrintPreviewWidget::AllPage) {
+        QString pageRangeString;
+        if (pageRangeMode == DPrintPreviewWidget::CurrentPage) {
+            pageRangeString = QString::number(pageRange.at(currentPageNumber - 1));
+        } else {
+            Q_FOREACH (int pageRangeCount, pageRange) {
+                pageRangeString.append(QString::number(pageRangeCount).append(","));
+            }
+
+            pageRangeString.resize(pageRangeString.length() - 1);
         }
 
-        pageRangeString.resize(pageRangeString.length() - 1);
+        options.append(QPair<QByteArray, QByteArray>(QStringLiteral("page-ranges").toLocal8Bit(), pageRangeString.toLocal8Bit()));
     }
-
-    options.append(QPair<QByteArray, QByteArray>(QStringLiteral("page-ranges").toLocal8Bit(), pageRangeString.toLocal8Bit()));
 
     switch (previewPrinter->duplex()) {
     case QPrinter::DuplexNone:

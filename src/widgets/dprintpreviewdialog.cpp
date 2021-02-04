@@ -979,7 +979,9 @@ void DPrintPreviewDialogPrivate::initconnections()
         Q_Q(DPrintPreviewDialog);
         if (index == 0) {
             inorderCombo->setEnabled(false);
-            q->findChild<DFrame *>("btnframe")->setEnabled(true);
+            // 此时不是按照文件路径打印 将并打选项开启
+            if (q->printFromPath().isEmpty())
+                q->findChild<DFrame *>("btnframe")->setEnabled(true);
         } else {
             inorderCombo->setEnabled(true);
             q->findChild<DFrame *>("btnframe")->setEnabled(false);
@@ -1001,12 +1003,12 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(sidebysideCheckBox, &DCheckBox::stateChanged, q, [=](int status) {
         if (status == 0) {
             if (printDeviceCombo->currentIndex() < printDeviceCombo->count() - 2)
-                printInOrderRadio->setEnabled(true);
+                inorderwdg->setEnabled(true);
             setPageLayoutEnable(false);
             pview->setImposition(DPrintPreviewWidget::One);
             originTotalPageLabel->setVisible(false);
         } else {
-            printInOrderRadio->setEnabled(false);
+            inorderwdg->setEnabled(false);
             inorderCombo->setEnabled(false);
             printOrderGroup->button(0)->setChecked(true);
             setPageLayoutEnable(true);
@@ -1239,14 +1241,15 @@ void DPrintPreviewDialogPrivate::setupPrinter()
     //设置纸张打印边距
     printer->setPageMargins(QMarginsF(marginLeftSpin->value(), marginTopSpin->value(), marginRightSpin->value(), marginBottomSpin->value()), QPageLayout::Millimeter);
     //设置打印逐份打印和逐页打印的控制标志
-    if(printOrderGroup->checkedId()==1){
+    if (printOrderGroup->checkedId() == 1) {
         //判断若是逐页打印，是否为第一页在前
-        bool isFirst=true;
-        if(inorderCombo->currentIndex()==1){
-            isFirst=false;
+        bool isFirst = true;
+        if (inorderCombo->currentIndex() == 1) {
+            isFirst = false;
         }
-        pview->isPageByPage(printer->copyCount(),isFirst);
-    //由于手动设置逐页打印，这种情况下，输出打印机的打印份数为1
+
+        pview->isPageByPage(printer->copyCount(), isFirst);
+        //由于手动设置逐页打印，这种情况下，输出打印机的打印份数为1
         printer->setCopyCount(1);
     }
 }
@@ -1508,7 +1511,6 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
     paperSizeCombo->clear();
     paperSizeCombo->blockSignals(true);
     colorModeCombo->blockSignals(true);
-    printInOrderRadio->setEnabled(true);
     if (index >= printDeviceCombo->count() - 2) {
         //pdf
         copycountspinbox->setDisabled(true);
@@ -1542,10 +1544,16 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
             paperSizeCombo->setCurrentIndex(1);
         }
         printer->setPrinterName("");
-        printInOrderRadio->setEnabled(false);
+        printOrderGroup->button(0)->setChecked(true);
+        inorderwdg->setEnabled(false);
     } else {
         //actual printer
         if (printer) {
+            if (q->printFromPath().isEmpty() && !sidebysideCheckBox->isChecked()) {
+                inorderwdg->setEnabled(true);
+            } else {
+                inorderwdg->setEnabled(false);
+            }
             copycountspinbox->setDisabled(false);
             paperSizeCombo->setEnabled(true);
             colorModeCombo->setEnabled(true);

@@ -329,7 +329,7 @@ public:
     QVector<int> previewPages;
     bool asynPreviewNeedUpdate;
     int asynPreviewTotalPage;
-    int pageCopyCount=0;
+    int pageCopyCount = 0;
     bool isFirstPage;
 
     struct NumberUpData;
