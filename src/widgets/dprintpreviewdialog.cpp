@@ -646,6 +646,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     QVBoxLayout *ordercontentlayout = new QVBoxLayout;
     ordercontentlayout->setContentsMargins(0, 0, 0, 0);
     DWidget *collatewdg = new DWidget;
+    collatewdg->setObjectName("CollateWidget");
     QHBoxLayout *collatelayout = new QHBoxLayout(collatewdg);
     DRadioButton *printCollateRadio = new DRadioButton(qApp->translate("DPrintPreviewDialogPrivate", "Collate pages")); //逐份打印
     collatelayout->addWidget(printCollateRadio);
@@ -1987,6 +1988,7 @@ void DPrintPreviewDialogPrivate::disablePrintSettings()
     q->findChild<DFrame *>("WaterMarkFrame")->setEnabled(false);
     q->findChild<DFrame *>("btnframe")->setEnabled(false);
     q->findChild<DWidget *>("InorderWidget")->setEnabled(false);
+    q->findChild<DWidget *>("CollateWidget")->setEnabled(false);
 }
 
 /*!
