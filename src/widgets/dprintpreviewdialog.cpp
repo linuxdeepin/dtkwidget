@@ -2113,9 +2113,14 @@ void DPrintPreviewDialogPrivate::_q_startPrint(bool clicked)
             desktopPath = path;
         }
 
-        QString str = DFileDialog::getSaveFileName(q, qApp->translate("DPrintPreviewDialogPrivate", "Save as PDF"), desktopPath, qApp->translate("DPrintPreviewDialogPrivate", "PDF file"));
+        desktopPath = desktopPath.remove(desktopPath.right(4));
+        QString str = DFileDialog::getSaveFileName(q, qApp->translate("DPrintPreviewDialogPrivate", "Save as PDF"), desktopPath, qApp->translate("DPrintPreviewDialogPrivate", "PDF file (*.pdf)"));
         if (str.isEmpty())
             return;
+
+        if (QFileInfo(str).suffix().compare("pdf", Qt::CaseInsensitive))
+            str += ".pdf";
+
         printer->setOutputFileName(str);
         pview->setPrintMode(DPrintPreviewWidget::PrintToPdf);
     } else if (isSavePicture) {
@@ -2153,8 +2158,7 @@ void DPrintPreviewDialogPrivate::_q_startPrint(bool clicked)
         desktopPath = path;
         QString str = DFileDialog::getSaveFileName(q, qApp->translate("DPrintPreviewDialogPrivate", "Save as image"),
                                                    desktopPath.left(desktopPath.length() - 1),
-                                                   qApp->translate("DPrintPreviewDialogPrivate", "Images"),
-                                                   nullptr, QFileDialog::ShowDirsOnly);
+                                                   qApp->translate("DPrintPreviewDialogPrivate", "Images"));
 
         if (str.isEmpty())
             return;
