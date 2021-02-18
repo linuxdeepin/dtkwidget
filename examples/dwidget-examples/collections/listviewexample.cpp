@@ -150,10 +150,13 @@ DListViewExample::DListViewExample(QWidget *parent)
     DStandardItem *fingerPrintItem3 = new DStandardItem("添加指纹");
 
     DStandardItem *browserItem1 = new DStandardItem(QIcon("://images/example/DListViewBrowser_1.svg"), "谷歌浏览器");
-    auto action = new DViewItemAction(Qt::AlignVCenter, QSize(), QSize(), true);
-    auto icon = qobject_cast<DStyle *>(style())->standardIcon(DStyle::SP_IndicatorChecked);
-    action->setIcon(icon);
-    browserItem1->setActionList(Qt::Edge::RightEdge, {action});
+
+    // 设置其他style时，转换指针为空
+    if (DStyle *ds = qobject_cast<DStyle *>(style())) {
+        auto action = new DViewItemAction(Qt::AlignVCenter, QSize(), QSize(), true);
+        action->setIcon(ds->standardIcon(DStyle::SP_IndicatorChecked));
+        browserItem1->setActionList(Qt::Edge::RightEdge, {action});
+    }
 
     DStandardItem *browserItem2 = new DStandardItem(QIcon("://images/example/DListViewBrowser_2.svg"), "火狐浏览器");
     DStandardItem *browserItem3 = new DStandardItem(QIcon("://images/example/DListViewBrowser_3.svg"), "遨游浏览器");
