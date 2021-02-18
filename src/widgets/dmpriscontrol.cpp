@@ -301,6 +301,14 @@ void DMPRISControlPrivate::_q_loadMPRISPath(const QString &path)
 {
     D_Q(DMPRISControl);
 
+    DBusMPRIS *newMpris = new DBusMPRIS(path, "/org/mpris/MediaPlayer2", QDBusConnection::sessionBus(), q);
+
+    // 此属性判断是否支持使用MPRIS控制 真表示能控制 假则忽略这个dbus接口
+    if (!newMpris->canShowInUI()) {
+        newMpris->deleteLater();
+        return;
+    }
+
     const bool hasOld = m_mprisInter;
     m_lastPath = path;
 
@@ -311,7 +319,7 @@ void DMPRISControlPrivate::_q_loadMPRISPath(const QString &path)
     if (m_mprisInter)
         m_mprisInter->deleteLater();
 
-    m_mprisInter = new DBusMPRIS(path, "/org/mpris/MediaPlayer2", QDBusConnection::sessionBus(), q);
+    m_mprisInter = newMpris;
 
     m_controlWidget->setVisible(m_mprisInter->canControl());
 
