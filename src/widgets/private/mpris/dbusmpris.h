@@ -67,6 +67,14 @@ public:
     inline bool canControl() const
     { return qvariant_cast< bool >(property("CanControl")); }
 
+    Q_PROPERTY(bool CanShowInUI READ canShowInUI NOTIFY CanShowInUIChanged)
+    inline bool canShowInUI() const
+    {
+        QVariant showInUI = property("CanShowInUI");
+        // 属性有效且为假表示不能控制  无效或为真表示可以控制
+        return showInUI.isValid() ? showInUI.toBool() : true;
+    }
+
     Q_PROPERTY(bool CanGoNext READ canGoNext NOTIFY CanGoNextChanged)
     inline bool canGoNext() const
     { return qvariant_cast< bool >(property("CanGoNext")); }
@@ -193,6 +201,7 @@ Q_SIGNALS: // SIGNALS
     void Seeked(qlonglong Position);
 // begin property changed signals
 void CanControlChanged(bool  value);
+void CanShowInUIChanged(bool value);
 void CanGoNextChanged(bool  value);
 void CanGoPreviousChanged(bool  value);
 void CanPauseChanged(bool  value);
