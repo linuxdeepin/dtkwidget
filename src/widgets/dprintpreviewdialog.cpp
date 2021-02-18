@@ -1574,7 +1574,15 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
             waterColor = QColor("#6f6f6f");
             _q_selectColorButton(waterColor);
             pickColorWidget->convertColor(waterColor);
+            pickColorWidget->setRgbEdit(waterColor);
         } else {
+            if (!isInited) {
+                waterColor = QColor("#6f6f6f");
+                _q_selectColorButton(waterColor);
+                pickColorWidget->convertColor(waterColor);
+                pickColorWidget->setRgbEdit(waterColor);
+            }
+
             colorModeCombo->addItems(QStringList() << qApp->translate("DPrintPreviewDialogPrivate", "Color") << qApp->translate("DPrintPreviewDialogPrivate", "Grayscale"));
             colorModeCombo->blockSignals(false);
             if (colorModeCombo->currentText() == lastColormode) {
