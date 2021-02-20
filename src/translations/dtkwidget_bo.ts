@@ -250,22 +250,22 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="409"/>
         <source>Narrow (mm)</source>
-        <translation type="unfinished"/>
+        <translation>ཆུང་བ།(mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="409"/>
         <source>Normal (mm)</source>
-        <translation type="unfinished"/>
+        <translation>དཀྱུས་མ།(mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="409"/>
         <source>Moderate (mm)</source>
-        <translation type="unfinished"/>
+        <translation>འོས་འཚམ།(mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="409"/>
         <source>Customize (mm)</source>
-        <translation type="unfinished"/>
+        <translation>རང་སྒྲུབ།(mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="415"/>
@@ -315,7 +315,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="546"/>
         <source>Print Layout</source>
-        <translation type="unfinished"/>
+        <translation>པར་འདེབས་བྱེད་ཐབས།</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="557"/>
@@ -325,107 +325,107 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="570"/>
         <source>N-up printing</source>
-        <translation type="unfinished"/>
+        <translation>འདྲ་གཤིབ་པར་འདེབས།</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
         <source>2 pages/sheet, 1×2</source>
-        <translation type="unfinished"/>
+        <translation>ཤོག་ལྷེ་རེར་པར་ངོས་2  1×2</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
         <source>4 pages/sheet, 2×2</source>
-        <translation type="unfinished"/>
+        <translation>ཤོག་ལྷེ་རེར་པར་ངོས་4  2×2</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
         <source>6 pages/sheet, 2×3</source>
-        <translation type="unfinished"/>
+        <translation>ཤོག་ལྷེ་རེར་པར་ངོས་6  2×3</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
         <source>9 pages/sheet, 3×3</source>
-        <translation type="unfinished"/>
+        <translation>ཤོག་ལྷེ་རེར་པར་ངོས་9  3×3</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
         <source>16 pages/sheet, 4×4</source>
-        <translation type="unfinished"/>
+        <translation>ཤོག་ལྷེ་རེར་པར་ངོས་16  4×4</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="581"/>
         <source>Layout direction</source>
-        <translation type="unfinished"/>
+        <translation>མཉམ་འདེབས་ཀྱི་གོ་རིམ།</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="626"/>
         <source>Page Order</source>
-        <translation type="unfinished"/>
+        <translation>པར་འདེབས་གོ་རིམ།</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="636"/>
         <source>Collate pages</source>
-        <translation type="unfinished"/>
+        <translation>རེ་རེ་བཞིན་པར་འདེབས།</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="641"/>
         <source>Print pages in order</source>
-        <translation type="unfinished"/>
+        <translation>གོ་རིམ་ལྟར་པར་འདེབས་པ།</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="643"/>
         <source>Front to back</source>
-        <translation type="unfinished"/>
+        <translation>མདུན་ནས་རྒྱབ།</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="643"/>
         <source>Back to front</source>
-        <translation type="unfinished"/>
+        <translation>རྒྱབ་ནས་མདུན།</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="667"/>
         <source>Watermark</source>
-        <translation type="unfinished"/>
+        <translation>ཆུ་ཚོན་པར་རྒྱག</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="678"/>
         <source>Add watermark</source>
-        <translation type="unfinished"/>
+        <translation>ཆུ་ཚོན་པར་རྒྱག་སྣོན་པ།</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="720"/>
         <source>Text watermark</source>
-        <translation type="unfinished"/>
+        <translation>ཡི་གེ་ཆུ་ཚོན་པར་རྒྱག</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="722"/>
         <source>Confidential</source>
-        <translation type="unfinished"/>
+        <translation>གསང་ཆེན།</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="722"/>
         <source>Draft</source>
-        <translation type="unfinished"/>
+        <translation>ཟིན་བྲིས།</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="722"/>
         <source>Sample</source>
-        <translation type="unfinished"/>
+        <translation>མ་དཔེ།</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="722"/>
         <source>Custom</source>
-        <translation type="unfinished"/>
+        <translation>རང་སྒྲུབ།</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="730"/>
         <source>Input your text</source>
-        <translation type="unfinished"/>
+        <translation>རང་སྒྲུབ་ཆུ་ཚོན་པར་རྒྱག་ནང་འཇུག་བྱེད་པ།</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="753"/>
         <source>Picture watermark</source>
-        <translation type="unfinished"/>
+        <translation>པར་རིས་ཆུ་ཚོན་པར་རྒྱག</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="774"/>
@@ -435,27 +435,27 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="776"/>
         <source>Tile</source>
-        <translation type="unfinished"/>
+        <translation>སྙོམས་འདིང་།</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="776"/>
         <source>Center</source>
-        <translation type="unfinished"/>
+        <translation>དཀྱིལ་སྒྲིག</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="787"/>
         <source>Angle</source>
-        <translation type="unfinished"/>
+        <translation>ཀྱོག་ཚད།</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="803"/>
         <source>Size</source>
-        <translation type="unfinished"/>
+        <translation>ཆེ་ཆུང་།</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="824"/>
         <source>Transparency</source>
-        <translation type="unfinished"/>
+        <translation>གསལ་ཚད།</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="881"/>
@@ -465,12 +465,12 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="882"/>
         <source>Save as Image</source>
-        <translation type="unfinished"/>
+        <translation>པར་རིས་གཞན་ཉར།</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1113"/>
         <source>Collapse</source>
-        <translation type="unfinished"/>
+        <translation>བསྡུ་བ།</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1234"/>
@@ -487,22 +487,22 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1337"/>
         <source>Input page numbers please</source>
-        <translation type="unfinished"/>
+        <translation>པར་འདེབས་པའི་ཤོག་གྲངས་ནང་འཇུག་བྱེད།</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1340"/>
         <source>Maximum page number reached</source>
-        <translation type="unfinished"/>
+        <translation>པར་འདེབས་ཀྱི་ཁྱབ་ཁོངས་ལས་བརྒལ་བ།</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1343"/>
         <source>Input English comma please</source>
-        <translation type="unfinished"/>
+        <translation>དབྱིན་ཡིག་གི་ཚེག་འབྲིང་བྲིས།</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1346"/>
         <source>Input page numbers like this: 1,3,5-7,11-15,18,21</source>
-        <translation type="unfinished"/>
+        <translation>ཡང་དག་པའི་རྣམ་གཞག་ནང་འཇུག་བྱེད། དཔེར་ན། 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1483"/>
@@ -512,7 +512,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1575"/>
         <source>For example, 1,3,5-7,11-15,18,21</source>
-        <translation type="unfinished"/>
+        <translation>རྣམ་གཞག་ནང་འཇུག་བྱོས། 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2061"/>
@@ -527,12 +527,12 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2099"/>
         <source>Save as image</source>
-        <translation type="unfinished"/>
+        <translation>པར་རིས་ལ་ཉར་བ།</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2101"/>
         <source>Images</source>
-        <translation type="unfinished"/>
+        <translation>པར་རིས་ཡིག་ཆ།</translation>
     </message>
 </context>
 <context>
@@ -541,19 +541,19 @@
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1250"/>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1253"/>
         <source>Confidential</source>
-        <translation type="unfinished"/>
+        <translation>གསང་ཆེན།</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1268"/>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1271"/>
         <source>Draft</source>
-        <translation type="unfinished"/>
+        <translation>ཟིན་བྲིས།</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1286"/>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1289"/>
         <source>Sample</source>
-        <translation type="unfinished"/>
+        <translation>མ་དཔེ།</translation>
     </message>
 </context>
 <context>

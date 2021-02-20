@@ -250,22 +250,22 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="409"/>
         <source>Narrow (mm)</source>
-        <translation type="unfinished"/>
+        <translation>تار (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="409"/>
         <source>Normal (mm)</source>
-        <translation type="unfinished"/>
+        <translation>نورمال (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="409"/>
         <source>Moderate (mm)</source>
-        <translation type="unfinished"/>
+        <translation>مۇۋاپىق (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="409"/>
         <source>Customize (mm)</source>
-        <translation type="unfinished"/>
+        <translation>بەلگىلەش (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="415"/>
@@ -315,7 +315,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="546"/>
         <source>Print Layout</source>
-        <translation type="unfinished"/>
+        <translation>بېسىش ئۇسۇلى</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="557"/>
@@ -325,107 +325,107 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="570"/>
         <source>N-up printing</source>
-        <translation type="unfinished"/>
+        <translation>قاتار بېسىش</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
         <source>2 pages/sheet, 1×2</source>
-        <translation type="unfinished"/>
+        <translation>بىر بەتكە 2 بەت 1×2</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
         <source>4 pages/sheet, 2×2</source>
-        <translation type="unfinished"/>
+        <translation>بىر بەتكە 4 بەت 2×2</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
         <source>6 pages/sheet, 2×3</source>
-        <translation type="unfinished"/>
+        <translation>بىر بەتكە 6 بەت 3×2</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
         <source>9 pages/sheet, 3×3</source>
-        <translation type="unfinished"/>
+        <translation>بىر بەتكە 9 بەت 3×3</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
         <source>16 pages/sheet, 4×4</source>
-        <translation type="unfinished"/>
+        <translation>بىر بەتكە 16 بەت 4×4</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="581"/>
         <source>Layout direction</source>
-        <translation type="unfinished"/>
+        <translation>تەرتىپ بويىچە بېسىش</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="626"/>
         <source>Page Order</source>
-        <translation type="unfinished"/>
+        <translation>بېسىش تەرتىپى</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="636"/>
         <source>Collate pages</source>
-        <translation type="unfinished"/>
+        <translation>بىرمۇبىر بېسىش</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="641"/>
         <source>Print pages in order</source>
-        <translation type="unfinished"/>
+        <translation>تەرتىپ بويىچە بېسىش</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="643"/>
         <source>Front to back</source>
-        <translation type="unfinished"/>
+        <translation>ئالدىدىن ئارقىغا</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="643"/>
         <source>Back to front</source>
-        <translation type="unfinished"/>
+        <translation>ئارقىدىن ئالدىغا</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="667"/>
         <source>Watermark</source>
-        <translation type="unfinished"/>
+        <translation>تامغا</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="678"/>
         <source>Add watermark</source>
-        <translation type="unfinished"/>
+        <translation>تامغا قوشۇش</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="720"/>
         <source>Text watermark</source>
-        <translation type="unfinished"/>
+        <translation>خەتلىك تامغا</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="722"/>
         <source>Confidential</source>
-        <translation type="unfinished"/>
+        <translation>مۇتلەق مەخپىي</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="722"/>
         <source>Draft</source>
-        <translation type="unfinished"/>
+        <translation>كۇپىيە</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="722"/>
         <source>Sample</source>
-        <translation type="unfinished"/>
+        <translation>نۇسخا</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="722"/>
         <source>Custom</source>
-        <translation type="unfinished"/>
+        <translation>بەلگىلەش</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="730"/>
         <source>Input your text</source>
-        <translation type="unfinished"/>
+        <translation>تامغا كىرگۈزۈڭ</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="753"/>
         <source>Picture watermark</source>
-        <translation type="unfinished"/>
+        <translation>رەسىم تامغا</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="774"/>
@@ -435,27 +435,27 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="776"/>
         <source>Tile</source>
-        <translation type="unfinished"/>
+        <translation>يېيىش</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="776"/>
         <source>Center</source>
-        <translation type="unfinished"/>
+        <translation>ئوتتورىغا</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="787"/>
         <source>Angle</source>
-        <translation type="unfinished"/>
+        <translation>يانتۇلۇقى</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="803"/>
         <source>Size</source>
-        <translation type="unfinished"/>
+        <translation>سىغىمى</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="824"/>
         <source>Transparency</source>
-        <translation type="unfinished"/>
+        <translation>سۈزۈكلۈكى</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="881"/>
@@ -465,12 +465,12 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="882"/>
         <source>Save as Image</source>
-        <translation type="unfinished"/>
+        <translation>رەسىم شەكلىدە ساقلاش</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1113"/>
         <source>Collapse</source>
-        <translation type="unfinished"/>
+        <translation>يىغىش</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1234"/>
@@ -487,22 +487,22 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1337"/>
         <source>Input page numbers please</source>
-        <translation type="unfinished"/>
+        <translation>باسىدىغان بەت نومۇرىنى كىرگۈزۈڭ</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1340"/>
         <source>Maximum page number reached</source>
-        <translation type="unfinished"/>
+        <translation>بېسىش دائىرىسىدىن ئېشىپ كەتتى</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1343"/>
         <source>Input English comma please</source>
-        <translation type="unfinished"/>
+        <translation>ئىنگلىزچە پەش كىرگۈزۈڭ</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1346"/>
         <source>Input page numbers like this: 1,3,5-7,11-15,18,21</source>
-        <translation type="unfinished"/>
+        <translation>توغرا فورماتتا كىرگۈزۈڭ، مەسىلەن: 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1483"/>
@@ -512,7 +512,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1575"/>
         <source>For example, 1,3,5-7,11-15,18,21</source>
-        <translation type="unfinished"/>
+        <translation>كىرگۈزگىلى بولىدىغان فورمات: 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2061"/>
@@ -527,12 +527,12 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2099"/>
         <source>Save as image</source>
-        <translation type="unfinished"/>
+        <translation>رەسىم شەكلىدە ساقلاش</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2101"/>
         <source>Images</source>
-        <translation type="unfinished"/>
+        <translation>رەسىم</translation>
     </message>
 </context>
 <context>
@@ -541,19 +541,19 @@
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1250"/>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1253"/>
         <source>Confidential</source>
-        <translation type="unfinished"/>
+        <translation>مۇتلەق مەخپىي</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1268"/>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1271"/>
         <source>Draft</source>
-        <translation type="unfinished"/>
+        <translation>كۇپىيە</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1286"/>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1289"/>
         <source>Sample</source>
-        <translation type="unfinished"/>
+        <translation>نۇسخا</translation>
     </message>
 </context>
 <context>

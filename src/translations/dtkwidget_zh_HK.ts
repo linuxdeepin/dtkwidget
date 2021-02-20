@@ -166,7 +166,7 @@
         <location filename="../widgets/dprintpreviewdialog.cpp" line="239"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1508"/>
         <source>Print</source>
-        <translation>列印</translation>
+        <translation>打印</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="255"/>
@@ -460,7 +460,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="881"/>
         <source>Print to PDF</source>
-        <translation>列印至 PDF</translation>
+        <translation>打印至 PDF</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="882"/>

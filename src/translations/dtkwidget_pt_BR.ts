@@ -497,7 +497,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1343"/>
         <source>Input English comma please</source>
-        <translation>Por favor, insira vírgula inglesa</translation>
+        <translation>Insira uma vírgula</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1346"/>

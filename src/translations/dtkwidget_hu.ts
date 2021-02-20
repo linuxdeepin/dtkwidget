@@ -171,7 +171,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="255"/>
         <source>Basic</source>
-        <translation>Alap</translation>
+        <translation>Alapvető</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="270"/>

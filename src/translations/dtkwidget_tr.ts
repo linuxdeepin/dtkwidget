@@ -325,7 +325,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="570"/>
         <source>N-up printing</source>
-        <translation type="unfinished"/>
+        <translation>N-yukarı baskı</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
@@ -355,7 +355,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="581"/>
         <source>Layout direction</source>
-        <translation type="unfinished"/>
+        <translation>Düzen yönü</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="626"/>
@@ -365,37 +365,37 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="636"/>
         <source>Collate pages</source>
-        <translation type="unfinished"/>
+        <translation>Sayfaları harmanla</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="641"/>
         <source>Print pages in order</source>
-        <translation type="unfinished"/>
+        <translation>Sayfaları sırayla yazdır</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="643"/>
         <source>Front to back</source>
-        <translation type="unfinished"/>
+        <translation>Önden arkaya</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="643"/>
         <source>Back to front</source>
-        <translation type="unfinished"/>
+        <translation>Öne arkaya</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="667"/>
         <source>Watermark</source>
-        <translation type="unfinished"/>
+        <translation>Filigran</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="678"/>
         <source>Add watermark</source>
-        <translation type="unfinished"/>
+        <translation>Filigran ekle</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="720"/>
         <source>Text watermark</source>
-        <translation type="unfinished"/>
+        <translation>Metin filigranı</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="722"/>
@@ -415,17 +415,17 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="722"/>
         <source>Custom</source>
-        <translation type="unfinished"/>
+        <translation>Özel</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="730"/>
         <source>Input your text</source>
-        <translation type="unfinished"/>
+        <translation>Metninizi girin</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="753"/>
         <source>Picture watermark</source>
-        <translation type="unfinished"/>
+        <translation>Resim filigranı</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="774"/>
@@ -435,7 +435,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="776"/>
         <source>Tile</source>
-        <translation type="unfinished"/>
+        <translation>Karo</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="776"/>
@@ -470,7 +470,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1113"/>
         <source>Collapse</source>
-        <translation type="unfinished"/>
+        <translation>Çöküş</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1234"/>
@@ -487,7 +487,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1337"/>
         <source>Input page numbers please</source>
-        <translation type="unfinished"/>
+        <translation>Lütfen sayfa numaralarını girin</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1340"/>
@@ -497,12 +497,12 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1343"/>
         <source>Input English comma please</source>
-        <translation type="unfinished"/>
+        <translation>İngilizce virgül girin lütfen</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1346"/>
         <source>Input page numbers like this: 1,3,5-7,11-15,18,21</source>
-        <translation type="unfinished"/>
+        <translation>Bunun gibi sayfa numaralarını girin: 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1483"/>
@@ -532,7 +532,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2101"/>
         <source>Images</source>
-        <translation type="unfinished"/>
+        <translation>Resimler</translation>
     </message>
 </context>
 <context>

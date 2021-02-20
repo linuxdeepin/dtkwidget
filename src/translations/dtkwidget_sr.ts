@@ -250,17 +250,17 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="409"/>
         <source>Narrow (mm)</source>
-        <translation>Уско (мм)</translation>
+        <translation>Уско (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="409"/>
         <source>Normal (mm)</source>
-        <translation>Нормално (мм)</translation>
+        <translation>Нормално (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="409"/>
         <source>Moderate (mm)</source>
-        <translation>Умерено (мм)</translation>
+        <translation>Умерено (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="409"/>
@@ -315,7 +315,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="546"/>
         <source>Print Layout</source>
-        <translation type="unfinished"/>
+        <translation>Приказ пре штампања</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="557"/>
@@ -325,52 +325,52 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="570"/>
         <source>N-up printing</source>
-        <translation type="unfinished"/>
+        <translation>Страница по листу</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
         <source>2 pages/sheet, 1×2</source>
-        <translation type="unfinished"/>
+        <translation>2 странице/лист, 1×2</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
         <source>4 pages/sheet, 2×2</source>
-        <translation type="unfinished"/>
+        <translation>4 странице/лист, 2×2</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
         <source>6 pages/sheet, 2×3</source>
-        <translation type="unfinished"/>
+        <translation>6 страница/лист, 2×3</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
         <source>9 pages/sheet, 3×3</source>
-        <translation type="unfinished"/>
+        <translation>9 страница/лист, 3×3</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
         <source>16 pages/sheet, 4×4</source>
-        <translation type="unfinished"/>
+        <translation>16 страница/лист, 4×4</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="581"/>
         <source>Layout direction</source>
-        <translation type="unfinished"/>
+        <translation>Усмерење распореда</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="626"/>
         <source>Page Order</source>
-        <translation type="unfinished"/>
+        <translation>Редослед страница</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="636"/>
         <source>Collate pages</source>
-        <translation type="unfinished"/>
+        <translation>Поређај странице</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="641"/>
         <source>Print pages in order</source>
-        <translation type="unfinished"/>
+        <translation>Штампај странице по реду</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="643"/>
@@ -390,12 +390,12 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="678"/>
         <source>Add watermark</source>
-        <translation type="unfinished"/>
+        <translation>Додај водени жиг</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="720"/>
         <source>Text watermark</source>
-        <translation type="unfinished"/>
+        <translation>Текстуални водени жиг</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="722"/>
@@ -405,7 +405,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="722"/>
         <source>Draft</source>
-        <translation type="unfinished"/>
+        <translation>Нацрт</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="722"/>
@@ -415,17 +415,17 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="722"/>
         <source>Custom</source>
-        <translation type="unfinished"/>
+        <translation>Прилагођено</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="730"/>
         <source>Input your text</source>
-        <translation type="unfinished"/>
+        <translation>Унесите текст</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="753"/>
         <source>Picture watermark</source>
-        <translation type="unfinished"/>
+        <translation>Сликовни водени жиг</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="774"/>
@@ -435,27 +435,27 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="776"/>
         <source>Tile</source>
-        <translation type="unfinished"/>
+        <translation>Поплочано</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="776"/>
         <source>Center</source>
-        <translation type="unfinished"/>
+        <translation>Центрирано</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="787"/>
         <source>Angle</source>
-        <translation type="unfinished"/>
+        <translation>Угао</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="803"/>
         <source>Size</source>
-        <translation type="unfinished"/>
+        <translation>Величина</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="824"/>
         <source>Transparency</source>
-        <translation type="unfinished"/>
+        <translation>Провидност</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="881"/>
@@ -465,12 +465,12 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="882"/>
         <source>Save as Image</source>
-        <translation type="unfinished"/>
+        <translation>Сачувај као слику</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1113"/>
         <source>Collapse</source>
-        <translation type="unfinished"/>
+        <translation>Скупи</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1234"/>
@@ -487,22 +487,22 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1337"/>
         <source>Input page numbers please</source>
-        <translation type="unfinished"/>
+        <translation>Унесите бројеве страница</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1340"/>
         <source>Maximum page number reached</source>
-        <translation type="unfinished"/>
+        <translation>Достигнут је максималан број страница</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1343"/>
         <source>Input English comma please</source>
-        <translation type="unfinished"/>
+        <translation>Молимо унесите енглеску запету</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1346"/>
         <source>Input page numbers like this: 1,3,5-7,11-15,18,21</source>
-        <translation type="unfinished"/>
+        <translation>Унеси бројеве страница овако: 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1483"/>
@@ -512,7 +512,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1575"/>
         <source>For example, 1,3,5-7,11-15,18,21</source>
-        <translation type="unfinished"/>
+        <translation>На пример, 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2061"/>
@@ -527,12 +527,12 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2099"/>
         <source>Save as image</source>
-        <translation type="unfinished"/>
+        <translation>Сачувај као слику</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2101"/>
         <source>Images</source>
-        <translation type="unfinished"/>
+        <translation>Слике</translation>
     </message>
 </context>
 <context>
@@ -547,7 +547,7 @@
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1268"/>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1271"/>
         <source>Draft</source>
-        <translation type="unfinished"/>
+        <translation>Нацрт</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1286"/>

@@ -250,22 +250,22 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="409"/>
         <source>Narrow (mm)</source>
-        <translation type="unfinished"/>
+        <translation>Estret (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="409"/>
         <source>Normal (mm)</source>
-        <translation type="unfinished"/>
+        <translation>Normal (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="409"/>
         <source>Moderate (mm)</source>
-        <translation type="unfinished"/>
+        <translation>Moderat (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="409"/>
         <source>Customize (mm)</source>
-        <translation type="unfinished"/>
+        <translation>Personalitzat (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="415"/>
@@ -315,7 +315,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="546"/>
         <source>Print Layout</source>
-        <translation type="unfinished"/>
+        <translation>Disposició de la impressió</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="557"/>
@@ -325,107 +325,107 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="570"/>
         <source>N-up printing</source>
-        <translation type="unfinished"/>
+        <translation>Impressió N-amunt</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
         <source>2 pages/sheet, 1×2</source>
-        <translation type="unfinished"/>
+        <translation>2 pàgines per full, 1×2</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
         <source>4 pages/sheet, 2×2</source>
-        <translation type="unfinished"/>
+        <translation>4 pàgines per full, 2×2</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
         <source>6 pages/sheet, 2×3</source>
-        <translation type="unfinished"/>
+        <translation>6 pàgines per full, 2×3</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
         <source>9 pages/sheet, 3×3</source>
-        <translation type="unfinished"/>
+        <translation>9 pàgines per full, 3×3</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
         <source>16 pages/sheet, 4×4</source>
-        <translation type="unfinished"/>
+        <translation>16 pàgines per full, 4×4</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="581"/>
         <source>Layout direction</source>
-        <translation type="unfinished"/>
+        <translation>Direcció de la disposició</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="626"/>
         <source>Page Order</source>
-        <translation type="unfinished"/>
+        <translation>Ordre de la pàgina</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="636"/>
         <source>Collate pages</source>
-        <translation type="unfinished"/>
+        <translation>Enganxa les pàgines</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="641"/>
         <source>Print pages in order</source>
-        <translation type="unfinished"/>
+        <translation>Ordre de les pàgines</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="643"/>
         <source>Front to back</source>
-        <translation type="unfinished"/>
+        <translation>De la primera a l&apos;última</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="643"/>
         <source>Back to front</source>
-        <translation type="unfinished"/>
+        <translation>De l&apos;última a la primera</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="667"/>
         <source>Watermark</source>
-        <translation type="unfinished"/>
+        <translation>Marca d&apos;aigua</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="678"/>
         <source>Add watermark</source>
-        <translation type="unfinished"/>
+        <translation>Afegeix la marca d&apos;aigua</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="720"/>
         <source>Text watermark</source>
-        <translation type="unfinished"/>
+        <translation>Text de la marca</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="722"/>
         <source>Confidential</source>
-        <translation type="unfinished"/>
+        <translation>Confidencial</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="722"/>
         <source>Draft</source>
-        <translation type="unfinished"/>
+        <translation>Esborrany</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="722"/>
         <source>Sample</source>
-        <translation type="unfinished"/>
+        <translation>Exemple</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="722"/>
         <source>Custom</source>
-        <translation type="unfinished"/>
+        <translation>Personalitzat</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="730"/>
         <source>Input your text</source>
-        <translation type="unfinished"/>
+        <translation>Escriviu el text</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="753"/>
         <source>Picture watermark</source>
-        <translation type="unfinished"/>
+        <translation>Marca d&apos;imatge</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="774"/>
@@ -435,27 +435,27 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="776"/>
         <source>Tile</source>
-        <translation type="unfinished"/>
+        <translation>Títol</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="776"/>
         <source>Center</source>
-        <translation type="unfinished"/>
+        <translation>Centrada</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="787"/>
         <source>Angle</source>
-        <translation type="unfinished"/>
+        <translation>Angle</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="803"/>
         <source>Size</source>
-        <translation type="unfinished"/>
+        <translation>Mida</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="824"/>
         <source>Transparency</source>
-        <translation type="unfinished"/>
+        <translation>Transparència</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="881"/>
@@ -465,12 +465,12 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="882"/>
         <source>Save as Image</source>
-        <translation type="unfinished"/>
+        <translation>Desa-ho com a imatge</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1113"/>
         <source>Collapse</source>
-        <translation type="unfinished"/>
+        <translation>Replega</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1234"/>
@@ -487,22 +487,22 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1337"/>
         <source>Input page numbers please</source>
-        <translation type="unfinished"/>
+        <translation>Indiqueu els números de les pàgines.</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1340"/>
         <source>Maximum page number reached</source>
-        <translation type="unfinished"/>
+        <translation>S&apos;ha arribat al nombre màxim de pàgines.</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1343"/>
         <source>Input English comma please</source>
-        <translation type="unfinished"/>
+        <translation>Useu una coma, si us plau.</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1346"/>
         <source>Input page numbers like this: 1,3,5-7,11-15,18,21</source>
-        <translation type="unfinished"/>
+        <translation>Escriviu els números de pàgina així: 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1483"/>
@@ -512,7 +512,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1575"/>
         <source>For example, 1,3,5-7,11-15,18,21</source>
-        <translation type="unfinished"/>
+        <translation>Per exemple: 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2061"/>
@@ -527,12 +527,12 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2099"/>
         <source>Save as image</source>
-        <translation type="unfinished"/>
+        <translation>Desa-ho com a imatge</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2101"/>
         <source>Images</source>
-        <translation type="unfinished"/>
+        <translation>Imatges</translation>
     </message>
 </context>
 <context>
@@ -541,19 +541,19 @@
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1250"/>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1253"/>
         <source>Confidential</source>
-        <translation type="unfinished"/>
+        <translation>Confidencial</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1268"/>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1271"/>
         <source>Draft</source>
-        <translation type="unfinished"/>
+        <translation>Esborrany</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1286"/>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1289"/>
         <source>Sample</source>
-        <translation type="unfinished"/>
+        <translation>Exemple</translation>
     </message>
 </context>
 <context>
