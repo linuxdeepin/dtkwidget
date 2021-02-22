@@ -1403,8 +1403,10 @@ void DApplication::handleAboutAction()
     aboutDialog->setAttribute(Qt::WA_DeleteOnClose);
 
     //目前的关于对话框是非模态的,这里的处理是防止关于对话框可以打开多个的情况
+    // 不能使用aboutToClose信号 应用能够打开多个的情况下 打开关于后直接关闭程序
+    // 此时aboutToColose信号不会触发 再次打开程序并打开关于会出现访问野指针 程序崩溃的情况
     d->aboutDialog = aboutDialog;
-    connect(d->aboutDialog, &DAboutDialog::aboutToClose, this, [=] {
+    connect(d->aboutDialog, &DAboutDialog::destroyed, this, [=] {
         d->aboutDialog = nullptr;
     });
 }
