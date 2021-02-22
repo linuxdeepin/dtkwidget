@@ -147,7 +147,7 @@ void DPrintPreviewWidgetPrivate::populateScene()
                 pi->setVisible(true);
         }
     } else {
-        if (currentPageNumber == 0) {
+        if (currentPageNumber == 0 && pages.count() > 0) {
             if (PageItem *pi = dynamic_cast<PageItem *>(pages.first())) {
                 pi->setVisible(true);
                 setCurrentPageNumber(FIRST_PAGE);
