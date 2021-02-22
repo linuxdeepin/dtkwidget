@@ -231,7 +231,7 @@ bool DDesktopServices::previewSystemSoundEffect(const QString &name)
     QDBusInterface interface(QStringLiteral("com.deepin.daemon.SoundEffect"),
                                             QStringLiteral("/com/deepin/daemon/SoundEffect"),
                                             QStringLiteral("com.deepin.daemon.SoundEffect"));
-    return interface.isValid() && interface.call("PlaySound", name).type() != QDBusMessage::ErrorMessage;
+    return interface.call("PlaySound", name).type() != QDBusMessage::ErrorMessage;
 }
 
 QString DDesktopServices::getNameByEffectType(const DDesktopServices::SystemSoundEffect &effect)
