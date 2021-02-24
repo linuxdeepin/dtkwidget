@@ -526,7 +526,7 @@ void DTitlebarPrivate::_q_addDefaultMenuItems()
     }
 
     // add switch theme sub menu
-    if (!switchThemeMenu) {
+    if (!switchThemeMenu && DGuiApplicationHelper::testAttribute(DGuiApplicationHelper::Attribute::IsDeepinPlatformTheme)) {
         bool disableDtkSwitchThemeMenu = qEnvironmentVariableIsSet("KLU_DISABLE_MENU_THEME");
         if (!disableDtkSwitchThemeMenu) {
             switchThemeMenu = new QMenu(qApp->translate("TitleBarMenu", "Theme"), menu);
