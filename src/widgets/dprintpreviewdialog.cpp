@@ -1548,6 +1548,12 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
         printer->setPrinterName("");
         printOrderGroup->button(0)->setChecked(true);
         inorderwdg->setEnabled(false);
+        if (!isInited) {
+            waterColor = QColor("#6f6f6f");
+            _q_selectColorButton(waterColor);
+            pickColorWidget->convertColor(waterColor);
+            pickColorWidget->setRgbEdit(waterColor);
+        }
     } else {
         //actual printer
         if (printer) {

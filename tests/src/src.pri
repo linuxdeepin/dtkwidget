@@ -1,2 +1,2 @@
 include($$PWD/widgets/widgets.pri)
-include($$PWD/printpreview/printpreview.pri)
+!contains(DEFINES, DTK_NO_PRINTPREVIEWTEST): include($$PWD/printpreview/printpreview.pri)
