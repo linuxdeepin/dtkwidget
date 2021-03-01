@@ -1050,7 +1050,7 @@ void DPrintPreviewDialogPrivate::initconnections()
         jumpPageEdit->setValue(page);
         setTurnPageBtnStatus();
     });
-    QObject::connect(jumpPageEdit->lineEdit(), &QLineEdit::editingFinished, [this]() {
+    QObject::connect(jumpPageEdit->lineEdit(), &QLineEdit::editingFinished, q, [this]() {
         _d_setSpinboxDefaultValue(spinboxTextCaches, jumpPageEdit);
         pview->setCurrentPage(jumpPageEdit->value());
         setTurnPageBtnStatus();
@@ -1451,6 +1451,11 @@ void DPrintPreviewDialogPrivate::setTurnPageBtnStatus()
         prevPageBtn->setEnabled(false);
         nextPageBtn->setEnabled(true);
         lastBtn->setEnabled(true);
+    } else if (totalPage == 0) {
+        firstBtn->setEnabled(false);
+        prevPageBtn->setEnabled(false);
+        nextPageBtn->setEnabled(false);
+        lastBtn->setEnabled(false);
     } else if (currentPage == totalPage) {
         firstBtn->setEnabled(true);
         prevPageBtn->setEnabled(true);
