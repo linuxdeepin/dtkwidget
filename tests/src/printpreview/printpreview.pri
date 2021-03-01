@@ -20,3 +20,6 @@ SOURCES += \
     $$PWD/../../../src/widgets/dprintpreviewdialog.cpp \
     $$PWD/../../../src/widgets/dprintpreviewwidget.cpp \
     $$PWD/../../../src/widgets/dprintpickcolorwidget.cpp
+
+RESOURCES += \
+    $$PWD/res.qrc
