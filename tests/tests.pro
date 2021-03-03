@@ -15,7 +15,8 @@ QMAKE_LFLAGS += -fno-access-control
 # 指定moc文件生成目录和src一样
 MOC_DIR=$$OUT_PWD/../src
 
-include($$PWD/src/src.pri)
+include($$PWD/src.pri)
+include($$PWD/testcases/testcases.pri)
 
 SOURCES += \
     $$PWD/main.cpp

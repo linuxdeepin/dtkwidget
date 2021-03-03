@@ -23,8 +23,8 @@
 
 #ifndef emit
 #define emit Q_EMIT
-#include <private/qcombobox_p.h>
 #endif
+#include <private/qcombobox_p.h>
 
 #include <QLayout>
 

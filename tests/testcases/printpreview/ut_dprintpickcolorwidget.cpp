@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <QTest>
 #include <DLineEdit>
+#include <DIconButton>
 #include <QSignalSpy>
 
 #include "dprintpickcolorwidget.h"
@@ -63,6 +64,19 @@ TEST_F(ut_DPrintColorPickWidget, testFunction)
     ASSERT_TRUE(std::all_of(btnList.begin(), btnList.end(), [](ColorButton *btn) { return !btn->isChecked(); }));
     pickWidget->slotEditColor(QStringLiteral("ff5d00"));
     ASSERT_FALSE(std::all_of(btnList.begin(), btnList.end(), [](ColorButton *btn) { return !btn->isChecked(); }));
+
+    QSignalSpy pickedColorSpy(pickWidget->colorLabel, SIGNAL(pickedColor(QColor)));
+    Q_EMIT pickWidget->colorLabel->pickedColor(Qt::gray);
+    ASSERT_EQ(pickedColorSpy.count(), 1);
+
+    ColorButton *colorBtn = pickWidget->btnlist.first();
+    QSignalSpy selectButtonSpy(colorBtn, SIGNAL(selectColorButton(QColor)));
+    Q_EMIT colorBtn->selectColorButton(Qt::blue);
+    ASSERT_EQ(selectButtonSpy.count(), 1);
+
+    QSignalSpy valueChangedSpy(pickWidget->colorSlider, SIGNAL(valueChanged(int)));
+    Q_EMIT pickWidget->colorSlider->valueChanged(10);
+    ASSERT_EQ(selectButtonSpy.count(), 1);
 }
 
 TEST_F(ut_DPrintColorPickWidget, testWidgetFunction)
@@ -119,7 +133,7 @@ TEST_F(ut_DPrintColorPickWidget, testWidgetFunction)
 
     qApp->sendEvent(label, new QEvent(QEvent::Leave));
     qApp->sendEvent(label, new QMouseEvent(QMouseEvent::MouseButtonPress, {20, 20}, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier));
-    qApp->sendEvent(label, new QMouseEvent(QMouseEvent::MouseMove, {20, 20}, Qt::NoButton, Qt::NoButton, Qt::NoModifier));
+    qApp->sendEvent(label, new QMouseEvent(QMouseEvent::MouseMove, {20, 20}, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier));
     qApp->sendEvent(label, new QMouseEvent(QMouseEvent::MouseButtonRelease, {20, 20}, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier));
 
     ColorSlider *slider = pickWidget->colorSlider;
