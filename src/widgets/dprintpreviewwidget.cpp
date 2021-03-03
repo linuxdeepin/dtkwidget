@@ -179,12 +179,10 @@ void DPrintPreviewWidgetPrivate::generatePreview()
     }
     generatePreviewPicture();
     populateScene();
-    if (isAsynPreview) {
-        totalPages = pageRange.count();
-    } else {
-        setPageRangeAll();
-        totalPages = pageRange.count();
-    }
+
+    // 异步需要跟随页面内容大小更新总页码
+    setPageRangeAll();
+    totalPages = pageRange.count();
 
     // 触发重绘水印必须重新生成！
     if (numberUpPrintData)
