@@ -121,6 +121,7 @@ bool DMessageManager::eventFilter(QObject *watched, QEvent *event)
             // 限制通知消息的最大宽度
             for (DFloatingMessage *message : content->findChildren<DFloatingMessage*>()) {
                 message->setMaximumWidth(par->rect().marginsRemoved(content->contentsMargins()).width());
+                message->setMinimumHeight(message->sizeHint().height());
             }
 
             QRect geometry(QPoint(0, 0), content->sizeHint());
