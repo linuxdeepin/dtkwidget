@@ -492,7 +492,7 @@ TEST_F(ut_DPrintPreviewDialog, colorModeCombo)
 
 TEST_F(ut_DPrintPreviewDialog, orientationgroup)
 {
-    foreach(QAbstractButton *button, this->test_dialog_d->orientationgroup->buttons()) {
+    Q_FOREACH (QAbstractButton *button, this->test_dialog_d->orientationgroup->buttons()) {
         ASSERT_TRUE(button->isEnabled());
     }
     ASSERT_EQ(this->test_dialog_d->orientationgroup->checkedId(), 0);
@@ -863,8 +863,7 @@ TEST_F(ut_DPrintPreviewDialog, directGroup)
 
     ASSERT_FALSE(this->test_dialog_d->advancesettingwdg->isHidden());
 
-
-    foreach(QAbstractButton *button, this->test_dialog_d->directGroup->buttons()) {
+    Q_FOREACH (QAbstractButton *button, this->test_dialog_d->directGroup->buttons()) {
         ASSERT_FALSE(button->isEnabled());
     }
     ASSERT_TRUE(this->test_dialog_d->sidebysideCheckBox->isEnabled());
@@ -876,7 +875,7 @@ TEST_F(ut_DPrintPreviewDialog, directGroup)
 
     ASSERT_TRUE(this->test_dialog_d->sidebysideCheckBox->isChecked());
     ASSERT_EQ(this->test_dialog_d->directGroup->buttons().count(), 5);
-    foreach(QAbstractButton *button, this->test_dialog_d->directGroup->buttons()) {
+    Q_FOREACH (QAbstractButton *button, this->test_dialog_d->directGroup->buttons()) {
         ASSERT_TRUE(button->isEnabled());
     }
     // TODO: directGroup button
@@ -1048,7 +1047,7 @@ TEST_F(ut_DPrintPreviewDialog, sidebysideCheckBox)
     ASSERT_TRUE(this->test_dialog_d->sidebysideCheckBox->isEnabled());
 
     ASSERT_FALSE(this->test_dialog_d->pagePerSheetCombo->isEnabled());
-    foreach(QAbstractButton *button, this->test_dialog_d->directGroup->buttons()) {
+    Q_FOREACH (QAbstractButton *button, this->test_dialog_d->directGroup->buttons()) {
         ASSERT_FALSE(button->isEnabled());
     }
 
@@ -1060,7 +1059,7 @@ TEST_F(ut_DPrintPreviewDialog, sidebysideCheckBox)
     ASSERT_TRUE(this->test_dialog_d->sidebysideCheckBox->isChecked());
 
     ASSERT_TRUE(this->test_dialog_d->pagePerSheetCombo->isEnabled());
-    foreach(QAbstractButton *button, this->test_dialog_d->directGroup->buttons()) {
+    Q_FOREACH (QAbstractButton *button, this->test_dialog_d->directGroup->buttons()) {
         ASSERT_TRUE(button->isEnabled());
     }
 }

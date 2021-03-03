@@ -145,7 +145,7 @@ TEST_F(ut_DPrintPreviewWidget, testForSetFunc)
     ASSERT_EQ(pview_d->previewPrinter->orientation(), DPrinter::Landscape);
 
     previewWidget->setScale(1.25);
-    ASSERT_EQ(pview_d->scale, 1.25);
+    ASSERT_EQ(previewWidget->getScale(), 1.25);
 
     previewWidget->setWaterMarkType(1);
     ASSERT_EQ(pview_d->waterMark->getType(), 1);
@@ -528,6 +528,7 @@ TEST_F(ut_DPrintPreviewWidgetPrivate, testPrivateFuncUpdate)
     // 测试调用函数的稳定性
     pview_d->fitView();
     pview_d->generatePreview();
+
     // 构造一个并打的场景 测试重绘的稳定性
     pview_d->imposition = DPrintPreviewWidget::TwoRowTwoCol;
     pview_d->generatePreview();
@@ -536,6 +537,11 @@ TEST_F(ut_DPrintPreviewWidgetPrivate, testPrivateFuncUpdate)
     pview_d->isAsynPreview = true;
     pview_d->populateScene();
     pview_d->fitView();
+    pview_d->generatePreview();
+
+    // 构造异步自定义页码场景
+    pview_d->pageRange = {1, 2};
+    pview_d->pageRangeMode = DPrintPreviewWidget::SelectPage;
     pview_d->generatePreview();
 }
 
