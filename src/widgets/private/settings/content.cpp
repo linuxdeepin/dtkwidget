@@ -290,8 +290,12 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
                     QHBoxLayout *hLay = new QHBoxLayout(frame);
                     QMargins margins = hLay->contentsMargins();
                     hLay->setContentsMargins(15, margins.top(), margins.right(), margins.bottom());
-                    hLay->addWidget(widget.first, 2);
-                    hLay->addWidget(widget.second, 3);
+                    if (widget.first) {
+                        hLay->addWidget(widget.first, 2);
+                    }
+                    if (widget.second) {
+                        hLay->addWidget(widget.second, 3);
+                    }
                     d->contentLayout->addRow(frame);
                     frame->setAccessibleName(QString("ContentItemFrameAtRow").append(QString::number(d->contentLayout->count())));
 
