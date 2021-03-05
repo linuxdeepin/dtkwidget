@@ -1,10 +1,13 @@
 #include <gtest/gtest.h>
 #include <QTest>
+#include <QSignalSpy>
 
 #include "dprintpreviewwidget.h"
 #include "dprintpreviewdialog.h"
 #include "dprintpreviewwidget_p.h"
 #include "dprintpreviewdialog_p.h"
+
+#define DELAY_TIME 100
 
 DWIDGET_USE_NAMESPACE
 
@@ -114,10 +117,16 @@ TEST_F(ut_DPrintPreviewWidget, testForInitFunc)
     ASSERT_EQ(previewWidget->targetPageCount(4), 4);
     ASSERT_EQ(previewWidget->originPageCount(), 4);
 
+    previewWidget->themeTypeChanged(DGuiApplicationHelper::DarkType);
+    ASSERT_EQ(previewWidget->d_func()->scene->backgroundBrush().color(), QColor(0, 0, 0, 3));
+
     if (previewWidget->d_func()->previewPrinter->outputFormat() != DPrinter::NativeFormat) {
         ASSERT_TRUE(previewWidget->printerColorModel().isEmpty());
     }
 }
+
+#define TESTCASE_TEXT(COUNT) \
+    QStringLiteral("测试 %1").arg(COUNT)
 
 TEST_F(ut_DPrintPreviewWidget, testForSetFunc)
 {
@@ -127,7 +136,11 @@ TEST_F(ut_DPrintPreviewWidget, testForSetFunc)
 
     previewWidget->setPageRange({1, 2});
     ASSERT_EQ(pview_d->pageRange, QVector<int>() << 1 << 2);
+    previewWidget->setPageRange({1, 2});
+    ASSERT_EQ(pview_d->pageRange, QVector<int>() << 1 << 2);
     previewWidget->setPageRange(2, 3);
+    ASSERT_EQ(pview_d->pageRange, QVector<int>() << 2 << 3);
+    previewWidget->setPageRange(3, 2);
     ASSERT_EQ(pview_d->pageRange, QVector<int>() << 2 << 3);
 
     previewWidget->setPageRangeALL();
@@ -178,11 +191,11 @@ TEST_F(ut_DPrintPreviewWidget, testForSetFunc)
     previewWidget->setSampleWaterMark();
     ASSERT_STREQ(pview_d->waterMark->text.toLocal8Bit(), qApp->translate("DPrintPreviewWidget", "Sample").toLocal8Bit());
 
-    previewWidget->setCustomWaterMark("测试1");
-    ASSERT_STREQ(pview_d->waterMark->text.toLocal8Bit(), "测试1");
+    previewWidget->setCustomWaterMark(TESTCASE_TEXT(1));
+    ASSERT_STREQ(pview_d->waterMark->text.toLocal8Bit(), TESTCASE_TEXT(1).toLocal8Bit());
 
-    previewWidget->setTextWaterMark("测试2");
-    ASSERT_STREQ(pview_d->waterMark->text.toLocal8Bit(), "测试2");
+    previewWidget->setTextWaterMark(TESTCASE_TEXT(2));
+    ASSERT_STREQ(pview_d->waterMark->text.toLocal8Bit(), TESTCASE_TEXT(2).toLocal8Bit());
 
     previewWidget->setWaterMarkColor(Qt::cyan);
     ASSERT_EQ(pview_d->waterMark->color, QColor(Qt::cyan));
@@ -192,6 +205,46 @@ TEST_F(ut_DPrintPreviewWidget, testForSetFunc)
 
     previewWidget->setImposition(DPrintPreviewWidget::OneRowTwoCol);
     ASSERT_EQ(pview_d->imposition, DPrintPreviewWidget::OneRowTwoCol);
+
+    previewWidget->setWaterMarkType(1);
+    ASSERT_EQ(pview_d->numberUpPrintData->waterList.first()->type, WaterMark::Text);
+
+    previewWidget->setWaterMargImage(testImage);
+    ASSERT_EQ(pview_d->numberUpPrintData->waterList.first()->sourceImage, testImage);
+
+    previewWidget->setWaterMarkRotate(270);
+    ASSERT_EQ(pview_d->numberUpPrintData->waterList.first()->rotation(), 270);
+
+    previewWidget->setWaterMarkScale(1.25);
+    ASSERT_EQ(pview_d->numberUpPrintData->waterList.first()->mScaleFactor, 1.25);
+
+    previewWidget->setWaterMarkOpacity(0.78);
+    ASSERT_EQ(pview_d->numberUpPrintData->waterList.first()->opacity(), 0.78);
+
+    previewWidget->setConfidentialWaterMark();
+    ASSERT_STREQ(pview_d->numberUpPrintData->waterList.first()->text.toLocal8Bit(), qApp->translate("DPrintPreviewWidget", "Confidential").toLocal8Bit());
+
+    previewWidget->setDraftWaterMark();
+    ASSERT_STREQ(pview_d->numberUpPrintData->waterList.first()->text.toLocal8Bit(), qApp->translate("DPrintPreviewWidget", "Draft").toLocal8Bit());
+
+    previewWidget->setSampleWaterMark();
+    ASSERT_STREQ(pview_d->numberUpPrintData->waterList.first()->text.toLocal8Bit(), qApp->translate("DPrintPreviewWidget", "Sample").toLocal8Bit());
+
+    previewWidget->setCustomWaterMark(TESTCASE_TEXT(1));
+    ASSERT_STREQ(pview_d->numberUpPrintData->waterList.first()->text.toLocal8Bit(), TESTCASE_TEXT(1).toLocal8Bit());
+
+    previewWidget->setTextWaterMark(TESTCASE_TEXT(2));
+    ASSERT_STREQ(pview_d->numberUpPrintData->waterList.first()->text.toLocal8Bit(), TESTCASE_TEXT(2).toLocal8Bit());
+
+    font.setPointSize(18);
+    previewWidget->setWaterMarkFont(font);
+    ASSERT_EQ(pview_d->numberUpPrintData->waterList.first()->font.pointSize(), 18);
+
+    previewWidget->setWaterMarkColor(Qt::cyan);
+    ASSERT_EQ(pview_d->numberUpPrintData->waterList.first()->color, QColor(Qt::cyan));
+
+    previewWidget->setWaterMarkLayout(1);
+    ASSERT_EQ(pview_d->numberUpPrintData->waterList.first()->layout, 1);
 
     previewWidget->setOrder(DPrintPreviewWidget::R2L_T2B);
     ASSERT_EQ(pview_d->order, DPrintPreviewWidget::R2L_T2B);
@@ -205,7 +258,39 @@ TEST_F(ut_DPrintPreviewWidget, testForSetFunc)
     ASSERT_EQ(pview_d->currentPageNumber, 2);
 
     previewWidget->setAsynPreview(4);
+    previewWidget->updatePreview();
     ASSERT_EQ(pview_d->isAsynPreview, true);
+    previewWidget->setColorMode(DPrinter::Color);
+
+    previewWidget->refreshBegin();
+    ASSERT_EQ(pview_d->refreshMode, DPrintPreviewWidgetPrivate::RefreshDelay);
+    previewWidget->refreshEnd();
+    ASSERT_EQ(pview_d->refreshMode, DPrintPreviewWidgetPrivate::RefreshImmediately);
+
+    ASSERT_EQ(previewWidget->originPageCount(), 4);
+}
+
+TEST_F(ut_DPrintPreviewWidget, testPrint)
+{
+    previewWidget->d_func()->previewPrinter->setOutputFileName("widget_test.pdf");
+    previewWidget->setPrintMode(DPrintPreviewWidget::PrintToPrinter);
+    previewWidget->setPrintFromPath("test_pdf");
+
+    if (previewWidget->d_func()->previewPrinter->outputFormat() == DPrinter::NativeFormat) {
+        previewWidget->print();
+
+        previewWidget->setPrintFromPath("");
+        previewWidget->print();
+    }
+
+    previewWidget->setPrintMode(DPrintPreviewWidget::PrintToPdf);
+    previewWidget->print();
+    ASSERT_TRUE(QFileInfo("widget_test.pdf").exists());
+
+    previewWidget->d_func()->previewPrinter->setOutputFileName("widget_test.png");
+    previewWidget->setPrintMode(DPrintPreviewWidget::PrintToImage);
+    previewWidget->print();
+    ASSERT_TRUE(QFileInfo("widget_test(1).png").exists());
 }
 
 class ut_DPrintPreviewWidgetTestParam : public testing::TestWithParam<int>
@@ -288,6 +373,9 @@ TEST_P(ut_DPrintPreviewWidgetTestParam, testTurnBack)
     }
 
     ASSERT_EQ(previewWidget->currentPage(), currentPage + 1);
+    previewWidget->setCurrentPage(6);
+    ASSERT_EQ(previewWidget->currentPage(), previewWidget->pagesCount());
+
     printDialog->close();
 }
 
@@ -351,6 +439,7 @@ TEST_P(ut_DPrintPreviewWidgetTestParam, testSyncNumberUp)
         ASSERT_EQ(previewWidget->currentPage(), i);
     }
 
+    previewWidget->setImposition(DPrintPreviewWidget::One);
     printDialog->close();
 }
 
@@ -360,9 +449,10 @@ TEST_P(ut_DPrintPreviewWidgetTestParam, testAsynNumberUp)
     printDialog->show();
     QVERIFY(QTest::qWaitForWindowExposed(printDialog));
 
+    int param = GetParam();
     // 测试异步并打
-    previewWidget->setImposition(DPrintPreviewWidget::Imposition(GetParam() + 1));
-    previewWidget->setOrder(DPrintPreviewWidget::Order(GetParam()));
+    previewWidget->setImposition(DPrintPreviewWidget::Imposition(param + 1));
+    previewWidget->setOrder(DPrintPreviewWidget::Order(param));
 
     // 测试并打模式下 总页码是否正常
     switch (previewWidget->imposition()) {
@@ -397,6 +487,12 @@ TEST_P(ut_DPrintPreviewWidgetTestParam, testAsynNumberUp)
         ASSERT_EQ(previewWidget->currentPage(), i);
     }
 
+    if (previewWidget->order() == DPrintPreviewWidget::Copy) {
+        QSignalSpy orderSpy(previewWidget, SIGNAL(currentPageChanged(int)));
+        previewWidget->setOrder(DPrintPreviewWidget::Order(param % 4));
+        ASSERT_EQ(orderSpy.count(), 1);
+    }
+
     printDialog->close();
 }
 
@@ -416,7 +512,7 @@ TEST_P(ut_DPrintPreviewWidgetTestParam, testSyncNumberUpWithWaterMark)
         previewWidget->setWaterMarkScale(1.25);
         previewWidget->setWaterMarkRotate(270);
         previewWidget->setWaterMarkOpacity(0.74);
-        previewWidget->setTextWaterMark("TEST 1");
+        previewWidget->setTextWaterMark(TESTCASE_TEXT(1));
     } else {
         QImage testImage(QSize(30, 30), QImage::Format_ARGB32);
         testImage.fill(Qt::darkYellow);
@@ -424,7 +520,7 @@ TEST_P(ut_DPrintPreviewWidgetTestParam, testSyncNumberUpWithWaterMark)
         QPainter painter;
         painter.begin(&testImage);
         painter.setPen(Qt::white);
-        painter.drawText(QRect({0, 0}, testImage.size()), Qt::AlignCenter, QStringLiteral("TEST %1").arg(GetParam()));
+        painter.drawText(QRect({0, 0}, testImage.size()), Qt::AlignCenter, TESTCASE_TEXT(GetParam()));
         painter.end();
 
         previewWidget->setWaterMarkType(2);
@@ -461,7 +557,7 @@ TEST_P(ut_DPrintPreviewWidgetTestParam, testAsynNumberUpWithWaterMark)
         previewWidget->setWaterMarkScale(1.25);
         previewWidget->setWaterMarkRotate(270);
         previewWidget->setWaterMarkOpacity(0.74);
-        previewWidget->setTextWaterMark("TEST 1");
+        previewWidget->setTextWaterMark(TESTCASE_TEXT(1));
     } else {
         QImage testImage(QSize(30, 30), QImage::Format_ARGB32);
         testImage.fill(Qt::darkYellow);
@@ -469,7 +565,7 @@ TEST_P(ut_DPrintPreviewWidgetTestParam, testAsynNumberUpWithWaterMark)
         QPainter painter;
         painter.begin(&testImage);
         painter.setPen(Qt::white);
-        painter.drawText(QRect({0, 0}, testImage.size()), Qt::AlignCenter, QStringLiteral("TEST %1").arg(GetParam()));
+        painter.drawText(QRect({0, 0}, testImage.size()), Qt::AlignCenter, TESTCASE_TEXT(GetParam()));
         painter.end();
 
         previewWidget->setWaterMarkType(2);
@@ -560,6 +656,8 @@ TEST_F(ut_DPrintPreviewWidgetPrivate, testPrivateFuncPages)
     // 异步模式下测试页码范围
     pview_d->setCurrentPage(1);
     ASSERT_EQ(pview_d->currentPageNumber, 1);
+    pview_d->setCurrentPage(5);
+    ASSERT_EQ(pview_d->currentPageNumber, 4);
     pview_d->isAsynPreview = true;
     pview_d->asynPreviewTotalPage = 5;
     pview_d->pageRange = {2, 3};
@@ -674,7 +772,7 @@ TEST_F(ut_DPrintPreviewWidgetPrivate, testPrivateSyncPrint)
     pview_d->syncPrint({0, 0}, pview_d->previewPrinter->pageRect(), pview_d->pageRange);
     ASSERT_TRUE(QFileInfo("test_sync_no_water.pdf").exists());
 
-    pview_d->waterMark->setText("测试");
+    pview_d->waterMark->setText(TESTCASE_TEXT(""));
     pview_d->waterMark->setType(WaterMark::Text);
     pview_d->waterMark->setLayoutType(WaterMark::Center);
     pview_d->waterMark->setColor(Qt::gray);
@@ -693,6 +791,17 @@ TEST_F(ut_DPrintPreviewWidgetPrivate, testPrivateSyncPrint)
     pview_d->previewPrinter->setOutputFileName("test_sync_2x2_with_water.pdf");
     pview_d->syncPrint({0, 0}, pview_d->previewPrinter->pageRect(), pview_d->pageRange);
     ASSERT_TRUE(QFileInfo("test_sync_2x2_with_water.pdf").exists());
+
+    // 2x3 并打 当前页 函数功能和文件是否正常生成
+    pview_d->imposition = DPrintPreviewWidget::TwoRowThreeCol;
+    pview_d->calculateNumberUpPage();
+    pview_d->calculateCurrentNumberPage();
+    pview_d->displayWaterMarkItem();
+    pview_d->pageRangeMode = DPrintPreviewWidget::CurrentPage;
+    ASSERT_FALSE(pview_d->generateWaterMarkImage().isNull());
+    pview_d->previewPrinter->setOutputFileName("test_sync_2x2_currentpage_with_water.pdf");
+    pview_d->syncPrint({0, 0}, pview_d->previewPrinter->pageRect(), pview_d->pageRange);
+    ASSERT_TRUE(QFileInfo("test_sync_2x2_currentpage_with_water.pdf").exists());
 
     // 2x3 并打 拷贝模式测试
     pview_d->imposition = DPrintPreviewWidget::TwoRowThreeCol;
@@ -767,7 +876,7 @@ TEST_F(ut_DPrintPreviewWidgetPrivate, testPrivateSyncPrintToImage)
     pview_d->previewPrinter->setOutputFileName("test_images_sync_no_water.png");
     pview_d->printAsImage(pview_d->previewPrinter->pageLayout().fullRectPixels(pview_d->previewPrinter->resolution()).size(), pview_d->pageRange);
     // 另存为图片为异步方式 需要等待图片生成成功再测试
-    QTest::qWait(100);
+    QTest::qWait(DELAY_TIME);
     ASSERT_TRUE(QFileInfo("test_images_sync_no_water(1).png").exists());
     ASSERT_TRUE(QFileInfo("test_images_sync_no_water(2).png").exists());
     ASSERT_TRUE(QFileInfo("test_images_sync_no_water(3).png").exists());
@@ -782,7 +891,7 @@ TEST_F(ut_DPrintPreviewWidgetPrivate, testPrivateSyncPrintToImage)
     pview_d->previewPrinter->setOutputFileName("test_images_sync_with_water.png");
     pview_d->printAsImage(pview_d->previewPrinter->pageLayout().fullRectPixels(pview_d->previewPrinter->resolution()).size(), pview_d->pageRange);
     // 另存为图片为异步方式 需要等待图片生成成功再测试
-    QTest::qWait(100);
+    QTest::qWait(DELAY_TIME);
     ASSERT_TRUE(QFileInfo("test_images_sync_with_water(1).png").exists());
     ASSERT_TRUE(QFileInfo("test_images_sync_with_water(2).png").exists());
     ASSERT_TRUE(QFileInfo("test_images_sync_with_water(3).png").exists());
@@ -796,20 +905,22 @@ TEST_F(ut_DPrintPreviewWidgetPrivate, testPrivateSyncPrintToImage)
     ASSERT_FALSE(pview_d->generateWaterMarkImage().isNull());
     pview_d->previewPrinter->setOutputFileName("test_images_sync_2x2_with_water.png");
     pview_d->printAsImage(pview_d->previewPrinter->pageLayout().fullRectPixels(pview_d->previewPrinter->resolution()).size(), pview_d->pageRange);
-    QTest::qWait(100);
+    QTest::qWait(DELAY_TIME);
     // 并打时 图片仅剩余一张
     ASSERT_TRUE(QFileInfo("test_images_sync_2x2_with_water(1).png").exists());
 
     // 2x3 并打 拷贝模式测试
     pview_d->imposition = DPrintPreviewWidget::TwoRowThreeCol;
     pview_d->order = DPrintPreviewWidget::Copy;
+    pview_d->scale = 0.85;
+    pview_d->pageRangeMode = DPrintPreviewWidget::CurrentPage;
     pview_d->calculateNumberUpPage();
     pview_d->calculateCurrentNumberPage();
     pview_d->displayWaterMarkItem();
     ASSERT_FALSE(pview_d->generateWaterMarkImage().isNull());
     pview_d->previewPrinter->setOutputFileName("test_images_sync_2x3_with_water.png");
     pview_d->printAsImage(pview_d->previewPrinter->pageLayout().fullRectPixels(pview_d->previewPrinter->resolution()).size(), pview_d->pageRange);
-    QTest::qWait(100);
+    QTest::qWait(DELAY_TIME);
     ASSERT_TRUE(QFileInfo("test_images_sync_2x3_with_water(1).png").exists());
     ASSERT_TRUE(QFileInfo("test_images_sync_2x3_with_water(2).png").exists());
     ASSERT_TRUE(QFileInfo("test_images_sync_2x3_with_water(3).png").exists());
@@ -832,7 +943,7 @@ TEST_F(ut_DPrintPreviewWidgetPrivate, testPrivateAsynPrintToImage)
     pview_d->previewPrinter->setOutputFileName("test_images_asyn_no_water.png");
     pview_d->printAsImage(pview_d->previewPrinter->pageLayout().fullRectPixels(pview_d->previewPrinter->resolution()).size(), pview_d->pageRange);
     // 另存为图片为异步方式 需要等待图片生成成功再测试
-    QTest::qWait(100);
+    QTest::qWait(DELAY_TIME);
     ASSERT_TRUE(QFileInfo("test_images_asyn_no_water(1).png").exists());
     ASSERT_TRUE(QFileInfo("test_images_asyn_no_water(2).png").exists());
     ASSERT_TRUE(QFileInfo("test_images_asyn_no_water(3).png").exists());
@@ -847,7 +958,7 @@ TEST_F(ut_DPrintPreviewWidgetPrivate, testPrivateAsynPrintToImage)
     pview_d->previewPrinter->setOutputFileName("test_images_asyn_with_water.png");
     pview_d->printAsImage(pview_d->previewPrinter->pageLayout().fullRectPixels(pview_d->previewPrinter->resolution()).size(), pview_d->pageRange);
     // 另存为图片为异步方式 需要等待图片生成成功再测试
-    QTest::qWait(100);
+    QTest::qWait(DELAY_TIME);
     ASSERT_TRUE(QFileInfo("test_images_asyn_with_water(1).png").exists());
     ASSERT_TRUE(QFileInfo("test_images_asyn_with_water(2).png").exists());
     ASSERT_TRUE(QFileInfo("test_images_asyn_with_water(3).png").exists());
@@ -861,7 +972,7 @@ TEST_F(ut_DPrintPreviewWidgetPrivate, testPrivateAsynPrintToImage)
     ASSERT_FALSE(pview_d->generateWaterMarkImage().isNull());
     pview_d->previewPrinter->setOutputFileName("test_images_asyn_2x2_with_water.png");
     pview_d->printAsImage(pview_d->previewPrinter->pageLayout().fullRectPixels(pview_d->previewPrinter->resolution()).size(), pview_d->pageRange);
-    QTest::qWait(100);
+    QTest::qWait(DELAY_TIME);
     // 并打时 图片仅剩余一张
     ASSERT_TRUE(QFileInfo("test_images_asyn_2x2_with_water(1).png").exists());
 
@@ -874,7 +985,7 @@ TEST_F(ut_DPrintPreviewWidgetPrivate, testPrivateAsynPrintToImage)
     ASSERT_FALSE(pview_d->generateWaterMarkImage().isNull());
     pview_d->previewPrinter->setOutputFileName("test_images_asyn_2x3_with_water.png");
     pview_d->printAsImage(pview_d->previewPrinter->pageLayout().fullRectPixels(pview_d->previewPrinter->resolution()).size(), pview_d->pageRange);
-    QTest::qWait(100);
+    QTest::qWait(DELAY_TIME);
     ASSERT_TRUE(QFileInfo("test_images_asyn_2x3_with_water(1).png").exists());
     ASSERT_TRUE(QFileInfo("test_images_asyn_2x3_with_water(2).png").exists());
     ASSERT_TRUE(QFileInfo("test_images_asyn_2x3_with_water(3).png").exists());
@@ -892,6 +1003,13 @@ TEST_F(ut_DPrintPreviewWidgetPrivate, testPrivatePrint)
     pview_d->print();
     ASSERT_TRUE(QFileInfo("test_sync_print.pdf").exists());
 
+    // 同步 + 当前页 + 缩放 直接调用打印函数
+    pview_d->previewPrinter->setOutputFileName("test_currentpage_scale_sync_print.pdf");
+    pview_d->pageRangeMode = DPrintPreviewWidget::CurrentPage;
+    pview_d->scale = 0.5;
+    pview_d->print();
+    ASSERT_TRUE(QFileInfo("test_currentpage_scale_sync_print.pdf").exists());
+
     pview_d->isAsynPreview = true;
     pview_d->asynPreviewTotalPage = 4;
     pview_d->previewPrinter->setOutputFileName("test_asyn_print.pdf");
@@ -901,10 +1019,12 @@ TEST_F(ut_DPrintPreviewWidgetPrivate, testPrivatePrint)
     ASSERT_TRUE(QFileInfo("test_asyn_print.pdf").exists());
 
     // 异步另存为图片
+    pview_d->pageRangeMode = DPrintPreviewWidget::AllPage;
+    pview_d->scale = 1;
     pview_d->previewPrinter->setOutputFileName("test_asyn_print.png");
 
     pview_d->print(true);
-    QTest::qWait(100);
+    QTest::qWait(DELAY_TIME);
     ASSERT_TRUE(QFileInfo("test_asyn_print(1).png").exists());
     ASSERT_TRUE(QFileInfo("test_asyn_print(2).png").exists());
     ASSERT_TRUE(QFileInfo("test_asyn_print(3).png").exists());
@@ -916,7 +1036,7 @@ TEST_F(ut_DPrintPreviewWidgetPrivate, testPrivatePrint)
 
     // 同步另存为图片
     pview_d->print(true);
-    QTest::qWait(100);
+    QTest::qWait(DELAY_TIME);
     ASSERT_TRUE(QFileInfo("test_sync_print(1).png").exists());
     ASSERT_TRUE(QFileInfo("test_sync_print(2).png").exists());
     ASSERT_TRUE(QFileInfo("test_sync_print(3).png").exists());
@@ -1018,6 +1138,17 @@ TEST_F(ut_DPrintPreviewWidgetPrivate, testPrivatePrintDrawUtil)
     pview_d->pageRangeMode = DPrintPreviewWidget::SelectPage;
     pview_d->pageRange = {1, 2};
     ASSERT_FALSE(pview_d->printerOptions().isEmpty());
+    pview_d->previewPrinter->setDuplex(DPrinter::DuplexAuto);
+    pview_d->previewPrinter->setColorMode(DPrinter::GrayScale);
+    ASSERT_FALSE(pview_d->printerOptions().isEmpty());
+    pview_d->previewPrinter->setDuplex(DPrinter::DuplexLongSide);
+    ASSERT_FALSE(pview_d->printerOptions().isEmpty());
+    pview_d->previewPrinter->setDuplex(DPrinter::DuplexShortSide);
+    ASSERT_FALSE(pview_d->printerOptions().isEmpty());
+    pview_d->previewPrinter->setDuplex(DPrinter::DuplexNone);
+    pview_d->previewPrinter->setColorMode(DPrinter::Color);
+    ASSERT_FALSE(pview_d->printerOptions().isEmpty());
+
     if (pview_d->previewPrinter->outputFormat() == DPrinter::NativeFormat) {
         // 测试正常打印机能否正常输出打印
         pview_d->printByCups();
@@ -1068,6 +1199,7 @@ TEST_F(ut_DPrintPreviewWidgetPrivate, testWaterItem)
     // 测试平铺文字 并打属性是否正常
     pview_d->waterMark->setLayoutType(WaterMark::Tiled);
     pview_d->q_func()->setImposition(DPrintPreviewWidget::TwoRowTwoCol);
+    pview_d->q_func()->setScale(0.5);
     pview_d->numberUpPrintData->waterList.first()->setScaleFactor(pview_d->numberUpPrintData->scaleRatio);
     ASSERT_EQ(pview_d->numberUpPrintData->waterList.length(), 4);
     ASSERT_EQ(pview_d->numberUpPrintData->waterList.first()->mScaleFactor, pview_d->numberUpPrintData->scaleRatio);
@@ -1161,6 +1293,35 @@ TEST_F(ut_DPrintPreviewWidgetPrivate, testPageItem)
     origin.fill(Qt::yellow);
 
     ASSERT_TRUE(content->imageGrayscale(&origin).isGrayscale());
+}
+
+TEST_F(ut_DPrintPreviewWidgetPrivate, graphicsViewEvent)
+{
+    // 测试GraphicsView类中的鼠标事件是否正常
+    GraphicsView *graphicsView = pview_d->graphicsView;
+    QWheelEvent wheUpEvent({0, 0}, 15, Qt::NoButton, Qt::NoModifier);
+
+    graphicsView->wheelEvent(&wheUpEvent);
+    ASSERT_EQ(graphicsView->scaleRatio, 1 * PREVIEW_ENLARGE_RATIO);
+
+    QMouseEvent pressEvent(QMouseEvent::MouseButtonPress, {10, 10}, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    graphicsView->mousePressEvent(&pressEvent);
+    ASSERT_EQ(graphicsView->dragMode(), GraphicsView::ScrollHandDrag);
+
+    QMouseEvent releaseEvent(QMouseEvent::MouseButtonRelease, {20, 20}, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    graphicsView->mouseReleaseEvent(&releaseEvent);
+    ASSERT_EQ(graphicsView->dragMode(), GraphicsView::NoDrag);
+    graphicsView->resetScale(false);
+    ASSERT_EQ(graphicsView->scaleRatio, 1);
+
+    QWheelEvent wheDownEvent({0, 0}, -15, Qt::NoButton, Qt::NoModifier);
+
+    graphicsView->wheelEvent(&wheDownEvent);
+    ASSERT_EQ(graphicsView->scaleRatio, 1 * PREVIEW_NARROW_RATIO);
+
+    QTest::mouseClick(graphicsView->scaleResetButton, Qt::LeftButton, Qt::NoModifier);
+    QTest::qWait(DELAY_TIME);
+    ASSERT_EQ(graphicsView->scaleRatio, 1);
 }
 
 class ut_DPrintPreviewWidgetPrivateParam : public testing::TestWithParam<int>
