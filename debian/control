@@ -1,4 +1,4 @@
-Source: dtkwidget
+Source: dtkwidget5.5
 Section: libdevel
 Priority: optional
 Maintainer: Deepin Packages Builder <packages@deepin.com>
@@ -7,36 +7,36 @@ Build-Depends: debhelper (>= 9), pkg-config, libudev-dev,
  x11proto-xext-dev, libxcb-util0-dev, libstartup-notification0-dev,
  libmtdev-dev, qtbase5-private-dev, libegl1-mesa-dev, libudev-dev,
  libfontconfig1-dev, libfreetype6-dev, libglib2.0-dev, libxrender-dev,
- libdtkcore-dev, libgsettings-qt-dev, libqt5svg5-dev, libxi-dev,
- libdtkgui-dev, libcups2-dev, libgtest-dev
+ libdtkcore5.5-dev, libgsettings-qt-dev, libqt5svg5-dev, libxi-dev,
+ libdtkgui5.5-dev, libcups2-dev, libgtest-dev
 Standards-Version: 3.9.8
 
-Package: libdtkwidget5
+Package: libdtkwidget5.5
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, libdtkcommon
 Multi-Arch: same
 Description: Deepin graphical user interface library
  DtkWidget is Deepin graphical user interface for deepin desktop development.
  .
  This package contains the shared libraries.
 
-Package: libdtkwidget5-bin
+Package: libdtkwidget5.5-bin
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends},
- libdtkwidget5( =${binary:Version}),
- libqt5x11extras5-dev, libdtkcore-dev, libqt5svg5-dev
+ libdtkwidget5.5( =${binary:Version}),
+ libqt5x11extras5-dev, libdtkcore5.5-dev, libqt5svg5-dev
 Description: Deepin graphical user interface library utilities
  DtkWidget is Deepin graphical user interface for deepin desktop development.
  .
  This package contains the utilities which are
  needed for developing Deepin applications.
 
-Package: libdtkwidget-dev
+Package: libdtkwidget5.5-dev
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends},
- libdtkwidget5( =${binary:Version}),
- libqt5x11extras5-dev, libdtkcore-dev, libqt5svg5-dev,
- libdtkgui-dev, libcups2-dev
+ libdtkwidget5.5( =${binary:Version}),
+ libqt5x11extras5-dev, libdtkcore5.5-dev, libqt5svg5-dev,
+ libdtkgui5.5-dev, libcups2-dev
 Description: Deepin graphical user interface library
  DtkWidget is Deepin graphical user interface for deepin desktop development.
  .

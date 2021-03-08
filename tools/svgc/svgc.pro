@@ -1,5 +1,5 @@
 QT += gui svg
-QT += dtkcore dtkgui
+QT += dtkcore5.5 dtkgui5.5
 
 TARGET = dtk-svgc
 CONFIG += c++11
@@ -24,7 +24,7 @@ DEFINES += QT_MESSAGELOGCONTEXT
 
 SOURCES += main.cpp
 
-DTK_MODULE_NAME=dtkwidget
+DTK_MODULE_NAME=dtkwidget5.5
 load(dtk_build_config)
 target.path = $$TOOL_INSTALL_DIR
 

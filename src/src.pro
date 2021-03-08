@@ -1,6 +1,6 @@
-TARGET = dtkwidget
+TARGET = dtkwidget5.5
 TEMPLATE = lib
-QT += dtkcore
+QT += dtkcore5.5
 
 CONFIG += internal_module
 CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT
@@ -8,7 +8,7 @@ CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT
 # 龙芯架构上没有默认添加PT_GNU_STACK-section,所以此处手动指定一下
 contains(QMAKE_HOST.arch, mips.*): QMAKE_LFLAGS_SHLIB += "-Wl,-z,noexecstack"
 
-QT += network concurrent dtkgui printsupport printsupport-private
+QT += network concurrent dtkgui5.5 printsupport printsupport-private
 greaterThan(QT_MAJOR_VERSION, 4) {
   QT += widgets widgets-private
   # Qt >= 5.8
@@ -19,7 +19,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 linux* {
     QT += x11extras dbus
     #LIBS += -lcups
-    ###(zccrs): use load(dtk_qmake), dtkcore > 2.0.9
+    ###(zccrs): use load(dtk_qmake), dtkcore5.5 > 2.0.9
     ARCH = $$QMAKE_HOST.arch
     isEqual(ARCH, sw_64) | isEqual(ARCH, mips64) | isEqual(ARCH, mips32) {
         DEFINES += FORCE_RASTER_WIDGETS
