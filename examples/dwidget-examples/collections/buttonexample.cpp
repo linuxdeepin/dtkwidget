@@ -941,7 +941,7 @@ DSearchComboBoxExample::DSearchComboBoxExample(QWidget *parent)
     pHBoxLayout_1->setMargin(0);
     pHBoxLayout_1->setSpacing(0);
 
-    DSearchComboBox *pComboBox_1 = new DSearchComboBox;
+    DSearchComboBox *pComboBox_1 = new DSearchComboBox(this);
     pComboBox_1->setEditable(true);
     pComboBox_1->addItem("手动选择驱动方案");
     pComboBox_1->addItem("手动选择驱动方案");

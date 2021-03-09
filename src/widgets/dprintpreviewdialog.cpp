@@ -198,7 +198,7 @@ void DPrintPreviewDialogPrivate::initleft(QVBoxLayout *layout)
     pbottomlayout->addStretch();
 
     QRegExp reg("^([1-9][0-9]*)");
-    QRegExpValidator *val = new QRegExpValidator(reg);
+    QRegExpValidator *val = new QRegExpValidator(reg, jumpPageEdit);
     jumpPageEdit->lineEdit()->setValidator(val);
 
     DPalette m_pa = DPaletteHelper::instance()->palette(pview);
@@ -303,7 +303,7 @@ void DPrintPreviewDialogPrivate::initbasicui()
     copycountlayout->addWidget(copycountspinbox, 9);
 
     QRegExp re("^[1-9][0-9][0-9]$");
-    QRegExpValidator *va = new QRegExpValidator(re);
+    QRegExpValidator *va = new QRegExpValidator(re, copycountspinbox);
     copycountspinbox->lineEdit()->setValidator(va);
 
     //页码范围
@@ -329,7 +329,7 @@ void DPrintPreviewDialogPrivate::initbasicui()
     pageRangeEdit->installEventFilter(q);
 
     QRegularExpression reg(R"(^([1-9][0-9]*?(-[1-9][0-9]*?)?,)*?([1-9][0-9]*?|[1-9][0-9]*?-[1-9][0-9]*?)$)");
-    QRegularExpressionValidator *val = new QRegularExpressionValidator(reg);
+    QRegularExpressionValidator *val = new QRegularExpressionValidator(reg, pageRangeEdit);
     pageRangeEdit->lineEdit()->setValidator(val);
 
     //打印方向
@@ -464,7 +464,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     marginslayout->addLayout(marginsspinlayout);
 
     QRegExp reg("^([5-5][0-4]|[1-4][0-9]|[0-9])(\\.[0-9][0-9])|55(\\.[8-8][0-8])|55(\\.[0-7][0-9])");
-    QRegExpValidator *val = new QRegExpValidator(reg);
+    QRegExpValidator *val = new QRegExpValidator(reg, marginsframe);
     QList<DDoubleSpinBox *> list = marginsframe->findChildren<DDoubleSpinBox *>();
     for (int i = 0; i < list.size(); i++) {
         list.at(i)->setEnabledEmbedStyle(true);
@@ -507,7 +507,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     scaleGroup->addButton(customSizeRadio, SCALE);
     scaleRateEdit = new DSpinBox;
     QRegExp scaleReg("^([1-9][0-9]?|[1][0-9]{2}|200)$");
-    QRegExpValidator *scaleVal = new QRegExpValidator(scaleReg);
+    QRegExpValidator *scaleVal = new QRegExpValidator(scaleReg, scaleRateEdit);
     scaleRateEdit->lineEdit()->setValidator(scaleVal);
     scaleRateEdit->setEnabledEmbedStyle(true);
     scaleRateEdit->setRange(1, 200);
@@ -2237,7 +2237,7 @@ DPrintPreviewDialog::DPrintPreviewDialog(QWidget *parent)
 DPrintPreviewDialog::~DPrintPreviewDialog()
 {
     Q_D(DPrintPreviewDialog);
-    if (nullptr == d->printer)
+    if (nullptr != d->printer)
         delete d->printer;
 }
 
