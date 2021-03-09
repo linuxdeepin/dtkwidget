@@ -206,7 +206,7 @@ void MainWindow::menuItemInvoked(QAction *action)
     if (action->text() == "dfm-settings") {
         QTemporaryFile tmpFile;
         tmpFile.open();
-        auto backend = new Dtk::Core::QSettingBackend(tmpFile.fileName());
+        auto backend = new Dtk::Core::QSettingBackend(tmpFile.fileName(), this);
 
         auto settings = Dtk::Core::DSettings::fromJsonFile(":/resources/data/dfm-settings.json");
         settings->setBackend(backend);
@@ -220,7 +220,7 @@ void MainWindow::menuItemInvoked(QAction *action)
     if (action->text() == "dt-settings") {
         QTemporaryFile tmpFile;
         tmpFile.open();
-        auto backend = new Dtk::Core::QSettingBackend(tmpFile.fileName());
+        auto backend = new Dtk::Core::QSettingBackend(tmpFile.fileName(), this);
 
         auto settings = Dtk::Core::DSettings::fromJsonFile(":/resources/data/dt-settings.json");
         settings->setBackend(backend);

@@ -52,7 +52,7 @@ void DSearchComboBox::setEditable(bool editable)
     Q_D(DSearchComboBox);
     DComboBox::setEditable(editable);
     if (editable && !d->completer) {
-        d->completer = new QCompleter;
+        d->completer = new QCompleter(lineEdit());
         d->completer->setModel(model());
         lineEdit()->setCompleter(d->completer);
     }
