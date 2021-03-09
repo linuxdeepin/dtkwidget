@@ -60,12 +60,13 @@ void ut_DPrintPreviewDialog::SetUp()
 {
     printDialog = new DPrintPreviewDialog;
     testPrintDialog = new TestPrintPreviewDialog;
-//    dialog_d = new DPrintPreviewDialogPrivate(testPrintDialog);
     printDialog->show();
     testPrintDialog->show();
     ASSERT_TRUE(QTest::qWaitForWindowExposed(printDialog));
     dialog_d = printDialog->d_func();
     test_dialog_d = testPrintDialog->d_func();
+    dialog_d->printer->setOutputFormat(DPrinter::PdfFormat);
+    test_dialog_d->printer->setOutputFormat(DPrinter::PdfFormat);
     ASSERT_TRUE(dialog_d);
 }
 
@@ -403,6 +404,22 @@ TEST_F(ut_DPrintPreviewDialog, pageRangeCombo)
 
     ASSERT_STREQ(this->test_dialog_d->totalPageLabel->text().toLocal8Bit(), "2");
 
+    QTest::mouseClick(this->test_dialog_d->pageRangeCombo, Qt::LeftButton, Qt::NoModifier);
+    QTest::keyClick(this->test_dialog_d->pageRangeCombo, Qt::Key_Up, Qt::NoModifier);
+    QTest::keyClick(this->test_dialog_d->pageRangeCombo, Qt::Key_Enter, Qt::NoModifier);
+
+    QTest::qWait(DELAY_TIME);
+
+    QTest::mouseClick(this->test_dialog_d->pageRangeCombo, Qt::LeftButton, Qt::NoModifier);
+    QTest::keyClick(this->test_dialog_d->pageRangeCombo, Qt::Key_Down, Qt::NoModifier);
+    QTest::keyClick(this->test_dialog_d->pageRangeCombo, Qt::Key_Enter, Qt::NoModifier);
+
+    QTest::qWait(DELAY_TIME);
+
+    ASSERT_STREQ(this->test_dialog_d->pageRangeEdit->lineEdit()->text().toLocal8Bit(), "2-3");
+
+    ASSERT_STREQ(this->test_dialog_d->totalPageLabel->text().toLocal8Bit(), "2");
+
     // 清除焦点，防止TearDown调用槽函数
     this->test_dialog_d->pageRangeEdit->lineEdit()->clearFocus();
 }
@@ -449,6 +466,8 @@ TEST_F(ut_DPrintPreviewDialog, printBtn)
 {
     ASSERT_TRUE(this->test_dialog_d->printBtn->isEnabled());
 //    QTest::mouseClick(this->dialog_d->printBtn, Qt::LeftButton, Qt::NoModifier);
+
+//    QTest::qWait(DELAY_TIME);
 }
 
 TEST_F(ut_DPrintPreviewDialog, waterColorBtn)
@@ -624,6 +643,9 @@ TEST_F(ut_DPrintPreviewDialog, waterTextEdit)
 
     ASSERT_STREQ(this->test_dialog_d->waterTextEdit->lineEdit()->text().toLocal8Bit(), "Test");
     // TODO: waterTextEdit
+
+    // 清除焦点，防止TearDown调用槽函数
+    this->test_dialog_d->pageRangeEdit->lineEdit()->clearFocus();
 }
 
 TEST_F(ut_DPrintPreviewDialog, pagePerSheetCombo)
@@ -1200,7 +1222,27 @@ TEST_F(ut_DPrintPreviewDialog, paperSizeCombo)
     ASSERT_EQ(this->test_dialog_d->paperSizeCombo->currentIndex(), 1);
     ASSERT_STREQ(this->test_dialog_d->paperSizeCombo->currentText().toLocal8Bit(), "A4");
 
+    this->test_dialog_d->paperSizeCombo->setCurrentIndex(0);
+
+    QTest::qWait(DELAY_TIME);
+
+    ASSERT_EQ(this->test_dialog_d->paperSizeCombo->currentIndex(), 0);
+    ASSERT_STREQ(this->test_dialog_d->paperSizeCombo->currentText().toLocal8Bit(), "A3");
+    // TODO: paperSizeCombo A3
+    ASSERT_EQ(this->test_dialog_d->printer->pageSize(), QPrinter::A3);
+
     // 选中 pageRangeCombo
+    QTest::mouseClick(this->test_dialog_d->paperSizeCombo, Qt::LeftButton, Qt::NoModifier);
+    QTest::keyClick(this->test_dialog_d->paperSizeCombo, Qt::Key_Down, Qt::NoModifier);
+    QTest::keyClick(this->test_dialog_d->paperSizeCombo, Qt::Key_Enter, Qt::NoModifier);
+
+    QTest::qWait(DELAY_TIME);
+
+    ASSERT_EQ(this->test_dialog_d->paperSizeCombo->currentIndex(), 1);
+    ASSERT_STREQ(this->test_dialog_d->paperSizeCombo->currentText().toLocal8Bit(), "A4");
+    // TODO: paperSizeCombo A4
+    ASSERT_EQ(this->test_dialog_d->printer->pageSize(), QPrinter::A4);
+
     QTest::mouseClick(this->test_dialog_d->paperSizeCombo, Qt::LeftButton, Qt::NoModifier);
     QTest::keyClick(this->test_dialog_d->paperSizeCombo, Qt::Key_Down, Qt::NoModifier);
     QTest::keyClick(this->test_dialog_d->paperSizeCombo, Qt::Key_Enter, Qt::NoModifier);
@@ -1209,7 +1251,52 @@ TEST_F(ut_DPrintPreviewDialog, paperSizeCombo)
 
     ASSERT_EQ(this->test_dialog_d->paperSizeCombo->currentIndex(), 2);
     ASSERT_STREQ(this->test_dialog_d->paperSizeCombo->currentText().toLocal8Bit(), "A5");
-    // TODO: paperSizeCombo
+    // TODO: paperSizeCombo A5
+    ASSERT_EQ(this->test_dialog_d->printer->pageSize(), QPrinter::A5);
+
+    QTest::mouseClick(this->test_dialog_d->paperSizeCombo, Qt::LeftButton, Qt::NoModifier);
+    QTest::keyClick(this->test_dialog_d->paperSizeCombo, Qt::Key_Down, Qt::NoModifier);
+    QTest::keyClick(this->test_dialog_d->paperSizeCombo, Qt::Key_Enter, Qt::NoModifier);
+
+    QTest::qWait(DELAY_TIME);
+
+    ASSERT_EQ(this->test_dialog_d->paperSizeCombo->currentIndex(), 3);
+    ASSERT_STREQ(this->test_dialog_d->paperSizeCombo->currentText().toLocal8Bit(), "B4");
+    // TODO: paperSizeCombo B4
+    ASSERT_EQ(this->test_dialog_d->printer->pageSize(), QPrinter::B4);
+
+    QTest::mouseClick(this->test_dialog_d->paperSizeCombo, Qt::LeftButton, Qt::NoModifier);
+    QTest::keyClick(this->test_dialog_d->paperSizeCombo, Qt::Key_Down, Qt::NoModifier);
+    QTest::keyClick(this->test_dialog_d->paperSizeCombo, Qt::Key_Enter, Qt::NoModifier);
+
+    QTest::qWait(DELAY_TIME);
+
+    ASSERT_EQ(this->test_dialog_d->paperSizeCombo->currentIndex(), 4);
+    ASSERT_STREQ(this->test_dialog_d->paperSizeCombo->currentText().toLocal8Bit(), "B5");
+    // TODO: paperSizeCombo B5
+    ASSERT_EQ(this->test_dialog_d->printer->pageSize(), QPrinter::B5);
+
+    QTest::mouseClick(this->test_dialog_d->paperSizeCombo, Qt::LeftButton, Qt::NoModifier);
+    QTest::keyClick(this->test_dialog_d->paperSizeCombo, Qt::Key_Down, Qt::NoModifier);
+    QTest::keyClick(this->test_dialog_d->paperSizeCombo, Qt::Key_Enter, Qt::NoModifier);
+
+    QTest::qWait(DELAY_TIME);
+
+    ASSERT_EQ(this->test_dialog_d->paperSizeCombo->currentIndex(), 5);
+    ASSERT_STREQ(this->test_dialog_d->paperSizeCombo->currentText().toLocal8Bit(), "8K");
+    // TODO: paperSizeCombo 8K
+    ASSERT_EQ(this->test_dialog_d->printer->pageSize(), QPrinter::Custom);
+
+    QTest::mouseClick(this->test_dialog_d->paperSizeCombo, Qt::LeftButton, Qt::NoModifier);
+    QTest::keyClick(this->test_dialog_d->paperSizeCombo, Qt::Key_Down, Qt::NoModifier);
+    QTest::keyClick(this->test_dialog_d->paperSizeCombo, Qt::Key_Enter, Qt::NoModifier);
+
+    QTest::qWait(DELAY_TIME);
+
+    ASSERT_EQ(this->test_dialog_d->paperSizeCombo->currentIndex(), 6);
+    ASSERT_STREQ(this->test_dialog_d->paperSizeCombo->currentText().toLocal8Bit(), "16K");
+    // TODO: paperSizeCombo 16K
+    ASSERT_EQ(this->test_dialog_d->printer->pageSize(), QPrinter::Custom);
 }
 
 TEST_F(ut_DPrintPreviewDialog, scaleRateEdit_lineEdit)
@@ -1235,6 +1322,9 @@ TEST_F(ut_DPrintPreviewDialog, scaleRateEdit_lineEdit)
 
     QTest::keyClick(this->test_dialog_d->scaleRateEdit->lineEdit(), Qt::Key_Enter, Qt::NoModifier);
     // TODO: scaleRateEdit->lineEdit()
+
+    // 清除焦点，防止TearDown调用槽函数
+    this->test_dialog_d->scaleRateEdit->lineEdit()->clearFocus();
 }
 
 TEST_F(ut_DPrintPreviewDialog, scaleGroup)
@@ -1257,6 +1347,9 @@ TEST_F(ut_DPrintPreviewDialog, scaleGroup)
     ASSERT_EQ(this->test_dialog_d->scaleGroup->checkedId(), 2);
     // TODO: scaleGroup Scale
     ASSERT_TRUE(this->test_dialog_d->scaleRateEdit->lineEdit()->isEnabled());
+
+    // 清除焦点，防止TearDown调用槽函数
+    this->test_dialog_d->scaleRateEdit->lineEdit()->clearFocus();
 }
 
 TEST_F(ut_DPrintPreviewDialog, copycountspinbox)
@@ -1272,6 +1365,9 @@ TEST_F(ut_DPrintPreviewDialog, copycountspinbox)
     ASSERT_EQ(this->test_dialog_d->copycountspinbox->value(), 2);
 
     // TODO: copycountspinbox
+
+    // 清除焦点，防止TearDown调用槽函数
+    this->test_dialog_d->copycountspinbox->lineEdit()->clearFocus();
 }
 
 TEST_F(ut_DPrintPreviewDialog, marginTopSpin)
@@ -1370,6 +1466,9 @@ TEST_F(ut_DPrintPreviewDialog, marginTopSpin_lineEdit)
 
     ASSERT_EQ(this->test_dialog_d->marginTopSpin->value(), 2);
     // TODO: marginTopSpin->lineEdit()
+
+    // 清除焦点，防止TearDown调用槽函数
+    this->test_dialog_d->marginTopSpin->lineEdit()->clearFocus();
 }
 
 TEST_F(ut_DPrintPreviewDialog, marginRightSpin_lineEdit)
@@ -1389,6 +1488,9 @@ TEST_F(ut_DPrintPreviewDialog, marginRightSpin_lineEdit)
 
     ASSERT_EQ(this->test_dialog_d->marginRightSpin->value(), 2);
     // TODO: marginRightSpin->lineEdit()
+
+    // 清除焦点，防止TearDown调用槽函数
+    this->test_dialog_d->marginRightSpin->lineEdit()->clearFocus();
 }
 
 TEST_F(ut_DPrintPreviewDialog, marginLeftSpin_lineEdit)
@@ -1408,6 +1510,9 @@ TEST_F(ut_DPrintPreviewDialog, marginLeftSpin_lineEdit)
 
     ASSERT_EQ(this->test_dialog_d->marginLeftSpin->value(), 2);
     // TODO: marginLeftSpin->lineEdit()
+
+    // 清除焦点，防止TearDown调用槽函数
+    this->test_dialog_d->marginLeftSpin->lineEdit()->clearFocus();
 }
 
 TEST_F(ut_DPrintPreviewDialog, marginBottomSpin_lineEdit)
@@ -1427,6 +1532,9 @@ TEST_F(ut_DPrintPreviewDialog, marginBottomSpin_lineEdit)
 
     ASSERT_EQ(this->test_dialog_d->marginBottomSpin->value(), 2);
     // TODO: marginBottomSpin->lineEdit()
+
+    // 清除焦点，防止TearDown调用槽函数
+    this->test_dialog_d->marginBottomSpin->lineEdit()->clearFocus();
 }
 
 TEST_F(ut_DPrintPreviewDialog, copycountspinbox_lineEdit)
@@ -1442,6 +1550,9 @@ TEST_F(ut_DPrintPreviewDialog, copycountspinbox_lineEdit)
     ASSERT_EQ(this->test_dialog_d->copycountspinbox->value(), 2);
 
     // TODO: copycountspinbox
+
+    // 清除焦点，防止TearDown调用槽函数
+    this->test_dialog_d->copycountspinbox->lineEdit()->clearFocus();
 }
 
 TEST_F(ut_DPrintPreviewDialog, inclinatBox_lineEdit)
@@ -1476,4 +1587,7 @@ TEST_F(ut_DPrintPreviewDialog, inclinatBox_lineEdit)
     ASSERT_EQ(this->test_dialog_d->inclinatBox->value(), 123);
     ASSERT_STREQ(this->test_dialog_d->inclinatBox->text().toLocal8Bit(), "123°");
     // TODO: inclinatBox
+
+    // 清除焦点，防止TearDown调用槽函数
+    this->test_dialog_d->inclinatBox->lineEdit()->clearFocus();
 }
