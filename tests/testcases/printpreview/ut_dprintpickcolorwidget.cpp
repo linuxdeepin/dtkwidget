@@ -123,17 +123,23 @@ TEST_F(ut_DPrintColorPickWidget, testWidgetFunction)
     ASSERT_FALSE(cursor.pixmap().isNull());
 
     // 测试函数正常执行且能成功渲染
-    qApp->sendEvent(label, new QPaintEvent(label->rect()));
+    QPaintEvent labelPaint(label->rect());
+    qApp->sendEvent(label, &labelPaint);
     QPixmap pixmap(50, 50);
 
     QPainter p(&pixmap);
     label->render(&p);
     ASSERT_FALSE(pixmap.isNull());
 
-    qApp->sendEvent(label, new QEvent(QEvent::Leave));
-    qApp->sendEvent(label, new QMouseEvent(QMouseEvent::MouseButtonPress, {20, 20}, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier));
-    qApp->sendEvent(label, new QMouseEvent(QMouseEvent::MouseMove, {20, 20}, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier));
-    qApp->sendEvent(label, new QMouseEvent(QMouseEvent::MouseButtonRelease, {20, 20}, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier));
+    QEvent labelLeave(QEvent::Leave);
+    QMouseEvent labelMousePress(QMouseEvent::MouseButtonPress, {20, 20}, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    QMouseEvent labelMouseMove(QMouseEvent::MouseMove, {20, 20}, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    QMouseEvent labelMouseRelease(QMouseEvent::MouseButtonRelease, {20, 20}, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+
+    qApp->sendEvent(label, &labelLeave);
+    qApp->sendEvent(label, &labelMousePress);
+    qApp->sendEvent(label, &labelMouseMove);
+    qApp->sendEvent(label, &labelMouseRelease);
 
     ColorSlider *slider = pickWidget->colorSlider;
     ASSERT_FALSE(slider->m_backgroundImage.isNull());
@@ -163,7 +169,8 @@ TEST_F(ut_DPrintColorPickWidget, testWidgetFunction)
     ASSERT_TRUE(color.isValid());
 
     pixmap.fill(Qt::transparent);
-    qApp->sendEvent(slider, new QPaintEvent(slider->rect()));
+    QPaintEvent sliderPaint(slider->rect());
+    qApp->sendEvent(slider, &sliderPaint);
     slider->render(&p);
     ASSERT_FALSE(pixmap.isNull());
 
@@ -174,7 +181,8 @@ TEST_F(ut_DPrintColorPickWidget, testWidgetFunction)
     ASSERT_EQ(selectSpy.takeFirst().at(0), cButton->m_color);
 
     pixmap.fill(Qt::transparent);
-    qApp->sendEvent(cButton, new QPaintEvent(cButton->rect()));
+    QPaintEvent cbtnPaint(cButton->rect());
+    qApp->sendEvent(cButton, &cbtnPaint);
     cButton->render(&p);
     ASSERT_FALSE(pixmap.isNull());
 }
