@@ -631,6 +631,7 @@ TEST_F(ut_DPrintPreviewWidgetPrivate, testPrivateFuncUpdate)
 
     // 构造异步场景 测试函数的稳定性
     pview_d->isAsynPreview = true;
+    pview_d->asynPreviewTotalPage = 5;
     pview_d->populateScene();
     pview_d->fitView();
     pview_d->generatePreview();

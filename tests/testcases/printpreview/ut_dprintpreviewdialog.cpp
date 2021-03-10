@@ -63,6 +63,7 @@ void ut_DPrintPreviewDialog::SetUp()
     printDialog->show();
     testPrintDialog->show();
     ASSERT_TRUE(QTest::qWaitForWindowExposed(printDialog));
+    ASSERT_TRUE(QTest::qWaitForWindowExposed(testPrintDialog));
     dialog_d = printDialog->d_func();
     test_dialog_d = testPrintDialog->d_func();
     dialog_d->printer->setOutputFormat(DPrinter::PdfFormat);
@@ -1054,7 +1055,10 @@ TEST_F(ut_DPrintPreviewDialog, pageRangeEdit)
 
     // TODO: pageRangeEdit
     QTest::mouseClick(this->test_dialog_d->waterTextEdit->lineEdit(), Qt::LeftButton, Qt::NoModifier);
-    QTest::keyClicks(this->test_dialog_d->waterTextEdit->lineEdit(), "1");
+    this->test_dialog_d->waterTextEdit->setText("1");
+    QTest::keyClick(this->test_dialog_d->waterTextEdit->lineEdit(), Qt::Key_Enter, Qt::NoModifier);
+
+    ASSERT_STREQ(this->test_dialog_d->lastCusWatermarkText.toLocal8Bit(), "1");
 
     // 清除焦点，防止TearDown调用槽函数
     this->test_dialog_d->waterTextEdit->lineEdit()->clearFocus();
@@ -1119,10 +1123,10 @@ TEST_F(ut_DPrintPreviewDialog, jumpPageEdit_lineEdit)
     } else {
         ASSERT_EQ(this->test_dialog_d->jumpPageEdit->value(), 12);
     }
+    // TODO: jumpPageEdit->lineEdit()
 
     // 清除焦点，防止TearDown调用槽函数
     this->test_dialog_d->jumpPageEdit->lineEdit()->clearFocus();
-//     TODO: jumpPageEdit->lineEdit()
 }
 
 TEST_F(ut_DPrintPreviewDialog, pview)
