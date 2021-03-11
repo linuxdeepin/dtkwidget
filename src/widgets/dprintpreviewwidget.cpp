@@ -1005,6 +1005,7 @@ QByteArray DPrintPreviewWidgetPrivate::foundColorModelByCups() const
 
             if (!ppdOpenFile) {
                 qWarning() << "ppdOpenFile Function load failed.";
+                cupsFreeDests(1, m_cupsDest);
                 return {};
             }
 
@@ -1025,6 +1026,7 @@ QByteArray DPrintPreviewWidgetPrivate::foundColorModelByCups() const
 
             if (!ppdMarkDefaults || !cupsMarkOptions || !ppdLocalize || !ppdFindOption) {
                 qWarning() << "ppdMarkDefaults, cupsMarkOptions, ppdLocalize, ppdFindOption function load failed.";
+                cupsFreeDests(1, m_cupsDest);
                 return {};
             }
 
