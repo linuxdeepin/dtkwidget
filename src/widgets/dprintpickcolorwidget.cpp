@@ -90,7 +90,6 @@ void DPrintPickColorWidget::initUI()
     valueLineEdit = new DLineEdit;
     valueLineEdit->setClearButtonEnabled(false);
     valueLineEdit->lineEdit()->setValidator(new QRegExpValidator(QRegExp("[0-9A-Fa-f]{6,8}"), this));
-    expandButton = new DPushButton;
     valueLayout->setContentsMargins(0, 0, 0, 0);
     valueLayout->addWidget(valueLabel);
     valueLayout->addSpacing(5);

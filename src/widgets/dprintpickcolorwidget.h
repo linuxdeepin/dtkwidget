@@ -124,12 +124,8 @@ private:
     QList<ColorButton *> btnlist;
     QList<QColor> colorList;
     QButtonGroup *btnGroup;
-    DSlider *alphaSlider;
-    DLabel *alphaLabel;
     DLineEdit *valueLineEdit;
-    DPushButton *expandButton;
     DIconButton *pickColorBtn;
-    DWidget *expandWidget;
     QDBusInterface *pinterface;
     DLineEdit *rEdit;
     DLineEdit *gEdit;
