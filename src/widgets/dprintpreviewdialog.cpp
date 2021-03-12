@@ -2143,13 +2143,9 @@ void DPrintPreviewDialogPrivate::_q_startPrint(bool clicked)
             desktopPath = path;
         }
 
-        desktopPath = desktopPath.remove(desktopPath.right(4));
-        QString str = DFileDialog::getSaveFileName(q, qApp->translate("DPrintPreviewDialogPrivate", "Save as PDF"), desktopPath, qApp->translate("DPrintPreviewDialogPrivate", "PDF file (*.pdf)"));
+        QString str = DFileDialog::getSaveFileName(q, qApp->translate("DPrintPreviewDialogPrivate", "Save as PDF"), desktopPath, qApp->translate("DPrintPreviewDialogPrivate", "*.pdf"));
         if (str.isEmpty())
             return;
-
-        if (QFileInfo(str).suffix().compare("pdf", Qt::CaseInsensitive))
-            str += ".pdf";
 
         printer->setOutputFileName(str);
         pview->setPrintMode(DPrintPreviewWidget::PrintToPdf);
