@@ -15,11 +15,13 @@
 #include <QRegExp>
 #include <QRegExpValidator>
 #include <QKeyEvent>
+#include <DWindowManagerHelper>
 
 #define PICKCOLOR_RADIUS 8
 const int IMAGE_HEIGHT = 10;
 
 DWIDGET_BEGIN_NAMESPACE
+DGUI_USE_NAMESPACE
 /*!
  * \~chinese \brief ColorButton::ColorButton 取色框颜色选择按钮
  */
@@ -61,10 +63,14 @@ void ColorButton::paintEvent(QPaintEvent *)
 
 DPrintPickColorWidget::DPrintPickColorWidget(QWidget *parent)
     : DWidget(parent)
+    , pinterface(nullptr)
 {
-    //连接deepin-picker的dbus
-    pinterface = new QDBusInterface("com.deepin.Picker", "/com/deepin/Picker",
-                                    "com.deepin.Picker", QDBusConnection::sessionBus());
+    if (DWindowManagerHelper::instance()->hasComposite()) {
+        //连接deepin-picker的dbus
+        pinterface = new QDBusInterface("com.deepin.Picker", "/com/deepin/Picker",
+                                        "com.deepin.Picker", QDBusConnection::sessionBus());
+    }
+
     initUI();
     initConnection();
 }
@@ -109,6 +115,7 @@ void DPrintPickColorWidget::initUI()
     pickColorBtn->setFixedSize(55, 36);
     pickColorBtn->setIcon(QIcon::fromTheme("dorpper_normal"));
     pickColorBtn->setIconSize(QSize(32, 32));
+    pickColorBtn->setEnabled(DWindowManagerHelper::instance()->hasComposite());
     rgbPickColorLayout->addWidget(rgbLabel);
     rgbPickColorLayout->addWidget(rEdit);
     rgbPickColorLayout->addWidget(gEdit);
@@ -141,16 +148,26 @@ void DPrintPickColorWidget::initConnection()
     });
 
     connect(pickColorBtn, &DPushButton::clicked, this, [=] {
-        pinterface->call("StartPick", QString("%1").arg(qApp->applicationPid()));
+        if (pinterface)
+            pinterface->call("StartPick", QString("%1").arg(qApp->applicationPid()));
     });
 
     connect(colorLabel, &ColorLabel::pickedColor, this, [=](QColor color) {
         this->setRgbEdit(color);
     });
 
-    connect(pinterface, SIGNAL(colorPicked(QString, QString)), this, SLOT(slotColorPick(QString, QString)));
-
     connect(valueLineEdit, SIGNAL(textChanged(QString)), this, SLOT(slotEditColor(QString)));
+
+    if (pinterface)
+        connect(pinterface, SIGNAL(colorPicked(QString, QString)), this, SLOT(slotColorPick(QString, QString)));
+
+    connect(DWindowManagerHelper::instance(), &DWindowManagerHelper::hasCompositeChanged, this, [this]() {
+        this->pickColorBtn->setEnabled(DWindowManagerHelper::instance()->hasComposite());
+        if (!pinterface) {
+            pinterface = new QDBusInterface("com.deepin.Picker", "/com/deepin/Picker", "com.deepin.Picker", QDBusConnection::sessionBus());
+            connect(pinterface, SIGNAL(colorPicked(QString, QString)), this, SLOT(slotColorPick(QString, QString)));
+        }
+    });
 }
 
 /*!
