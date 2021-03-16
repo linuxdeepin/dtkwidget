@@ -590,6 +590,7 @@ void DLineEditPrivate::init()
     hLayout = new QHBoxLayout(q);
     lineEdit = new QLineEdit(q);
     q->setFocusProxy(lineEdit); // fix DlineEdit setFocut but lineEdit can not edit(without focus rect)
+    q->setFocusPolicy(lineEdit->focusPolicy());
 
     control = new DAlertControl(lineEdit, q);
     q->connect(control, &DAlertControl::alertChanged, q, &DLineEdit::alertChanged);
