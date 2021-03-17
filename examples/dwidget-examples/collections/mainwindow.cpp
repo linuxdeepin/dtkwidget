@@ -149,24 +149,36 @@ MainWindow::MainWindow(QWidget *parent)
     m_pListView->setCurrentIndex(m_pListViewModel->index(0, 0));
 }
 
+#if 1
+#define AsynPreview
+#endif
+
 void MainWindow::menuItemInvoked(QAction *action)
 {
     if (action->text() == "testPrinter") {
         DPrintPreviewDialog dialog(this);
         //测试保存PDF文件名称接口
         dialog.setDocName("test");
-        //        dialog.setAsynPreview(31);
-        //        connect(&dialog, QOverload<DPrinter *, const QVector<int> &>::of(&DPrintPreviewDialog::paintRequested),
+#ifdef AsynPreview
+        dialog.setAsynPreview(31);
+        connect(&dialog, QOverload<DPrinter *, const QVector<int> &>::of(&DPrintPreviewDialog::paintRequested),
+#else
         connect(&dialog, QOverload<DPrinter *>::of(&DPrintPreviewDialog::paintRequested),
+#endif
+#ifdef AsynPreview
+                this, [=](DPrinter *_printer, const QVector<int> &pageRange) {
+#else
                 this, [=](DPrinter *_printer) {
-                    //                this, [=](DPrinter *_printer, const QVector<int> &pageRange) {
+#endif
                     // 此函数内代码为调试打印内容代码，调整较随意！
                     _printer->setFromTo(1, 31);
                     QPainter painter(_printer);
                     bool firstPage = true;
                     for (int page = _printer->fromPage(); page <= _printer->toPage(); ++page) {
-                        //                        if (!pageRange.contains(page))
-                        //                            continue;
+#ifdef AsynPreview
+                        if (!pageRange.contains(page))
+                            continue;
+#endif
 
                         painter.resetTransform();
                         if (!firstPage)

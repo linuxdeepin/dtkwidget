@@ -180,8 +180,10 @@ void DPrintPreviewWidgetPrivate::generatePreview()
     generatePreviewPicture();
     populateScene();
 
-    // 异步需要跟随页面内容大小更新总页码
-    setPageRangeAll();
+    // 同步或者异步（全部，当前）页码时 更新总页码
+    if (!isAsynPreview || (isAsynPreview && pageRangeMode != DPrintPreviewWidget::SelectPage))
+        setPageRangeAll();
+
     totalPages = pageRange.count();
 
     // 触发重绘水印必须重新生成！
@@ -327,7 +329,11 @@ void DPrintPreviewWidgetPrivate::printAsImage(const QSize &paperSize, QVector<in
 
     if (isAsynPreview) {
         // 异步先获取需要打印的数据
-        previewPages = pageVector;
+        if (pageRangeMode == DPrintPreviewWidget::CurrentPage) {
+            previewPages = requestPages(pageVector.first());
+        } else {
+            previewPages = pageVector;
+        }
         generatePreviewPicture();
         // 更新逐页打印页码和页面数据
         updatePageByPagePrintVector(pageVector, pictures);
@@ -489,7 +495,12 @@ void DPrintPreviewWidgetPrivate::print(bool printAsPicture)
 
         if (isAsynPreview) {
             // 异步先获取需要打印的数据
-            previewPages = pageVector;
+            if (pageRangeMode == DPrintPreviewWidget::CurrentPage) {
+                previewPages = requestPages(pageVector.first());
+            } else {
+                previewPages = pageVector;
+            }
+
             generatePreviewPicture();
             // 更新逐页打印页码和页面数据
             updatePageByPagePrintVector(pageVector, pictures);
