@@ -1038,6 +1038,13 @@ void DPrintPreviewDialogPrivate::initconnections()
     });
     QObject::connect(pview, &DPrintPreviewWidget::pagesCountChanged, [this](int pages) {
         totalPageLabel->setNum(pview->targetPageCount(pages));
+        if (pview->isAsynPreview()) {
+            originTotalPageLabel->setText(QString("(%1)").arg(pview->originPageCount()));
+            if (sidebysideCheckBox->isChecked())
+                originTotalPageLabel->setVisible(true);
+            else
+                originTotalPageLabel->setVisible(false);
+        }
         setTurnPageBtnStatus();
     });
     QObject::connect(firstBtn, &DIconButton::clicked, pview, &DPrintPreviewWidget::turnBegin);
