@@ -33,7 +33,7 @@
 #include <DSuggestButton>
 #include <DPushButton>
 #include <DFontSizeManager>
-#include <DFrame>
+#include <DBackgroundGroup>
 
 #include "dsettingswidgetfactory.h"
 
@@ -270,11 +270,21 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
                 d->titles.insert(subgroup->key(), wid);
             }
 
+            QVBoxLayout *bgGpLayout = new QVBoxLayout;
+            DBackgroundGroup *bgGroup = new DBackgroundGroup(bgGpLayout);
+            bgGroup->setItemSpacing(1);
+            bgGroup->setItemMargins(QMargins(0, 0, 0, 0));
+            bgGroup->setBackgroundRole(QPalette::Window);
+            d->contentLayout->addRow(bgGroup);
+
             for (auto option : subgroup->childOptions()) {
                 if (option->isHidden()) {
                     continue;
                 }
 
+                QWidget *wrapperWidget = new QWidget();
+                QHBoxLayout *hLay = new QHBoxLayout(wrapperWidget);
+                hLay->setContentsMargins(10, 6, 10, 6);
                 auto widget = d->widgetFactory->createItem(translateContext, option);
 
                 // 先尝试创建item
@@ -284,20 +294,13 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
                             label->setBuddy(widget.second);
                     }
 
-                    DFrame *frame = new DFrame();
-                    frame->setLineWidth(0);
-                    frame->setBackgroundRole(DPalette::ItemBackground);
-                    QHBoxLayout *hLay = new QHBoxLayout(frame);
-                    QMargins margins = hLay->contentsMargins();
-                    hLay->setContentsMargins(15, margins.top(), margins.right(), margins.bottom());
                     if (widget.first) {
                         hLay->addWidget(widget.first, 2);
                     }
                     if (widget.second) {
                         hLay->addWidget(widget.second, 3);
                     }
-                    d->contentLayout->addRow(frame);
-                    frame->setAccessibleName(QString("ContentItemFrameAtRow").append(QString::number(d->contentLayout->count())));
+                    wrapperWidget->setAccessibleName(QString("ContentItemCustomWidgetAtRow").append(QString::number(d->contentLayout->count())));
 
                     if (widget.first) {
                         widget.first->setProperty("_d_dtk_group_key", current_subGroupKey);
@@ -311,17 +314,11 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
 
                     if (widget) {
                         widget->setProperty("_d_dtk_group_key", current_subGroupKey);
-                        DFrame *frame = new DFrame();
-                        frame->setLineWidth(0);
-                        frame->setBackgroundRole(DPalette::ItemBackground);
-                        QHBoxLayout *hLay = new QHBoxLayout(frame);
-                        QMargins margins = hLay->contentsMargins();
-                        hLay->setContentsMargins(15, margins.top(), margins.right(), margins.bottom());
                         hLay->addWidget(widget);
-                        d->contentLayout->addRow(frame);
-                        frame->setAccessibleName(QString("ContentItemWidgetAtRow").append(QString::number(d->contentLayout->count())));
+                        wrapperWidget->setAccessibleName(QString("ContentItemDefaultWidgetAtRow").append(QString::number(d->contentLayout->count())));
                     }
                 }
+                bgGpLayout->addWidget(wrapperWidget);
             }
         }
         QSpacerItem *spaceItem = new QSpacerItem(0, 20,QSizePolicy::Minimum,QSizePolicy::Expanding);
