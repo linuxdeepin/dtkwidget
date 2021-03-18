@@ -2010,6 +2010,11 @@ int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QW
     case PM_ListViewIconSize:
     case PM_LargeIconSize:
         return 24;
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+    case PM_LineEditIconSize:
+        return widget ? (widget->height() < 34 ? 16 : 32) : 24;
+#endif
+
     case PM_IconViewIconSize:
         return 32;
     case PM_ScrollView_ScrollBarOverlap:
