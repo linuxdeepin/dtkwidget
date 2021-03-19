@@ -2550,7 +2550,7 @@ void DStyle::viewItemLayout(const QStyle *style, const QStyleOptionViewItem *opt
                     pixmapRect->moveLeft(qMax(opt->rect.left(), pixmapRect->left() - textRect->width() + residue_width));
                 }
 
-                display.setLeft(pixmapRect->right() + spacing);
+                display.setLeft(pixmapRect->right() + (hasPixmap ? spacing : 0));
             } else {
                 int residue_width = opt->rect.right() - pixmapRect->left();
 
