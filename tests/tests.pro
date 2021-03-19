@@ -1,6 +1,6 @@
 TEMPLATE = app
 CONFIG -= app_bundle
-QT += widgets dtkcore dtkgui testlib
+QT += widgets dtkcore5.5 dtkgui5.5 testlib
 
 CONFIG += testcase no_testcase_installs
 
