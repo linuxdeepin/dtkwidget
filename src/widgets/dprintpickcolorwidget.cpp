@@ -65,12 +65,6 @@ DPrintPickColorWidget::DPrintPickColorWidget(QWidget *parent)
     : DWidget(parent)
     , pinterface(nullptr)
 {
-    if (DWindowManagerHelper::instance()->hasComposite()) {
-        //连接deepin-picker的dbus
-        pinterface = new QDBusInterface("com.deepin.Picker", "/com/deepin/Picker",
-                                        "com.deepin.Picker", QDBusConnection::sessionBus());
-    }
-
     initUI();
     initConnection();
 }
@@ -148,8 +142,12 @@ void DPrintPickColorWidget::initConnection()
     });
 
     connect(pickColorBtn, &DPushButton::clicked, this, [=] {
-        if (pinterface)
-            pinterface->call("StartPick", QString("%1").arg(qApp->applicationPid()));
+        if (!pinterface) {
+            pinterface = new QDBusInterface("com.deepin.Picker", "/com/deepin/Picker", "com.deepin.Picker", QDBusConnection::sessionBus());
+            connect(pinterface, SIGNAL(colorPicked(QString, QString)), this, SLOT(slotColorPick(QString, QString)));
+        }
+
+        pinterface->call("StartPick", QString("%1").arg(qApp->applicationPid()));
     });
 
     connect(colorLabel, &ColorLabel::pickedColor, this, [=](QColor color) {
@@ -157,16 +155,8 @@ void DPrintPickColorWidget::initConnection()
     });
 
     connect(valueLineEdit, SIGNAL(textChanged(QString)), this, SLOT(slotEditColor(QString)));
-
-    if (pinterface)
-        connect(pinterface, SIGNAL(colorPicked(QString, QString)), this, SLOT(slotColorPick(QString, QString)));
-
     connect(DWindowManagerHelper::instance(), &DWindowManagerHelper::hasCompositeChanged, this, [this]() {
         this->pickColorBtn->setEnabled(DWindowManagerHelper::instance()->hasComposite());
-        if (!pinterface) {
-            pinterface = new QDBusInterface("com.deepin.Picker", "/com/deepin/Picker", "com.deepin.Picker", QDBusConnection::sessionBus());
-            connect(pinterface, SIGNAL(colorPicked(QString, QString)), this, SLOT(slotColorPick(QString, QString)));
-        }
     });
 }
 

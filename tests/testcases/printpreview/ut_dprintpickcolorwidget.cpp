@@ -37,7 +37,6 @@ TEST_F(ut_DPrintColorPickWidget, testForInit)
     ASSERT_TRUE(pickWidget->btnGroup);
     ASSERT_TRUE(pickWidget->valueLineEdit);
     ASSERT_TRUE(pickWidget->pickColorBtn);
-    ASSERT_TRUE(pickWidget->pinterface);
     ASSERT_TRUE(pickWidget->rEdit);
     ASSERT_TRUE(pickWidget->gEdit);
     ASSERT_TRUE(pickWidget->bEdit);
