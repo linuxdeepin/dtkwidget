@@ -52,14 +52,7 @@ void DToolButton::initStyleOption(QStyleOptionToolButton *option) const
 
 QSize DToolButton::sizeHint() const
 {
-    QSize size = QToolButton::sizeHint();
-    //计算图标文字同时存在时的宽度
-    if (!icon().isNull() && !text().isEmpty()) {
-        QFontMetrics fm = fontMetrics();
-        int textWidth = fm.size(Qt::TextShowMnemonic, text()).width();
-        size.setWidth(size.width() + textWidth);
-    }
-    return size;
+    return QToolButton::sizeHint();
 }
 
 /*!
