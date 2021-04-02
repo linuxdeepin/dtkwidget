@@ -25,6 +25,9 @@ public:
 
     void setLayout(QLayout *layout);
 
+    void setBackgroundRole(QPalette::ColorRole role);
+    QPalette::ColorRole backgroundRole() const;
+
 public Q_SLOTS:
     void setItemMargins(QMargins itemMargins);
     void setItemSpacing(int spacing);

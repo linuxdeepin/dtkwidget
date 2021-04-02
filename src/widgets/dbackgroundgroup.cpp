@@ -74,7 +74,7 @@ public:
     QMargins itemMargins;
     int itemSpacing = -1;
     bool useWidgetBackground = true;
-
+    QPalette::ColorRole role = QPalette::Base;
     D_DECLARE_PUBLIC(DBackgroundGroup)
 };
 
@@ -152,6 +152,18 @@ void DBackgroundGroup::setLayout(QLayout *layout)
 
     // 从布局中同步margins数据
     setItemMargins(layout->contentsMargins());
+}
+
+void DBackgroundGroup::setBackgroundRole(QPalette::ColorRole role)
+{
+    D_D(DBackgroundGroup);
+    d->role = role;
+}
+
+QPalette::ColorRole DBackgroundGroup::backgroundRole() const
+{
+    D_DC(DBackgroundGroup);
+    return d->role;
 }
 
 /*!
