@@ -1486,19 +1486,30 @@ void DPrintPreviewDialogPrivate::watermarkTypeChoosed(int index)
             waterColorBtn->setEnabled(true);
         _q_textWaterMarkModeChanged(waterTextCombo->currentIndex());
         initWaterSettings();
-        QFontDatabase fdb;
-        QFont font;
         //获取可支持的所有字体
+        QFontDatabase fdb;
         QStringList fontList = fdb.families(QFontDatabase::Any);
-        fontCombo->addItems(fontList);
-        //通过字体信息,当中文字体的情况下将英文转换为中文
-        QFontInfo fontName(font);
-        QString defaultFontName = fontName.family();
-        //默认初始化水印字体是系统当前字体
-        for (QString itemName : fontList) {
-            if (itemName == defaultFontName) {
-                fontCombo->setCurrentText(itemName);
+        Q_FOREACH (const QString &font, fontList) {
+            if (fontCombo->findText(font) != -1)
+                continue;
+
+            fontCombo->addItem(font);
+        }
+
+        static bool watermarkIsInited = false;
+        if (!watermarkIsInited) {
+            // 初始化才使用系统默认字体 下次切换时保留上一次字体
+            //通过字体信息,当中文字体的情况下将英文转换为中文
+            QFont font;
+            QFontInfo fontName(font);
+            QString defaultFontName = fontName.family();
+            //默认初始化水印字体是系统当前字体
+            for (QString itemName : fontList) {
+                if (itemName == defaultFontName) {
+                    fontCombo->setCurrentText(itemName);
+                }
             }
+            watermarkIsInited = true;
         }
         pview->setWaterMarkType(Type_Text);
         pview->refreshEnd();
