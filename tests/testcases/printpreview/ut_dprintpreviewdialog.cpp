@@ -820,7 +820,7 @@ TEST_F(ut_DPrintPreviewDialog, testFontCombo)
     else if (test_dialog_d->fontCombo->currentIndex() > 0)
         test_dialog_d->fontCombo->setCurrentIndex(test_dialog_d->fontCombo->currentIndex() - 1);
 
-    if (test_dialog_d->fontCombo->count() <= 1) {
+    if (test_dialog_d->fontCombo->count() > 1) {
         ASSERT_STRNE(fontComboCurrentText.toLocal8Bit(), test_dialog_d->fontCombo->currentText().toLocal8Bit());
         ASSERT_STREQ(test_dialog_d->fontCombo->currentText().toLocal8Bit(), pview_d->waterMark->font.toString().split(",")[0].toLocal8Bit());
     }
