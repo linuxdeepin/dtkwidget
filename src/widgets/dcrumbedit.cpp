@@ -257,7 +257,11 @@ DCrumbTextFormat::DCrumbTextFormat(int objectType)
 
     setBackground(getGradientBrush(static_cast<Background>(qrand() % 12)));
     setTextColor(Qt::white);
+#if QT_VERSION < QT_VERSION_CHECK(5, 12, 0)
     setVerticalAlignment(QTextCharFormat::AlignBaseline);
+#else
+    setVerticalAlignment(QTextCharFormat::AlignBottom);
+#endif
 }
 
 DCrumbTextFormat::DCrumbTextFormat(const QTextFormat &fmt)
