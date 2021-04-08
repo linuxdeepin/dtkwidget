@@ -217,7 +217,11 @@ void DPrintPreviewDialogPrivate::initright(QVBoxLayout *layout)
 
     basicsettingwdg = new DWidget;
     advancesettingwdg = new DWidget;
-    basicsettingwdg->setFixedHeight(415);
+    if (Q_LIKELY(QLocale::system().language() != QLocale::Tibetan)) {
+        basicsettingwdg->setFixedHeight(415);
+    } else {
+        basicsettingwdg->setFixedHeight(445);
+    }
     scrollarea = new DScrollArea;
     scrollarea->setWidget(ptopwidget);
     scrollarea->setWidgetResizable(true);
