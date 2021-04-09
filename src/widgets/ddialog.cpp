@@ -1127,7 +1127,7 @@ bool DDialog::eventFilter(QObject *watched, QEvent *event)
             if (label && !label->text().isEmpty() && label->wordWrap()) {
                 QSize sz = style()->itemTextRect(label->fontMetrics(), label->rect(), Qt::TextWordWrap, false, label->text()).size();
 
-                label->setMinimumHeight(qMax(sz.height(), label->height()));
+                label->setMinimumHeight(qMax(sz.height(), label->sizeHint().height()));
             }
         }
 
