@@ -201,6 +201,9 @@ public:
             w->setFont(manager->get(type, w->font()));
         }
     }
+
+    // 防止bind()函数多次调用检查
+    QMap<QWidget *, bool> bindExist;
 };
 
 /*!
@@ -266,9 +269,13 @@ void DFontSizeManager::bind(QWidget *widget, DFontSizeManager::SizeType type, in
     d->binderMap[type].append(widget);
     widget->setFont(get(type, weight, widget->font()));
 
-    QObject::connect(widget, &QWidget::destroyed, [this, widget] {
-        unbind(widget);
-    });
+    if (!d->bindExist.contains(widget)){
+        QObject::connect(widget, &QWidget::destroyed, [this, widget] {
+            unbind(widget);
+            d->bindExist.remove(widget);
+        });
+        d->bindExist.insert(widget, true);
+    }
 }
 
 /*!
