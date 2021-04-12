@@ -63,6 +63,7 @@
 #include <QDBusInterface>
 #include <QDBusPendingCall>
 #include <QDBusConnection>
+#include <QDBusConnectionInterface>
 #endif
 
 #ifdef Q_OS_LINUX
@@ -80,6 +81,82 @@
 DCORE_USE_NAMESPACE
 
 DWIDGET_BEGIN_NAMESPACE
+
+class LoadManualServiceWorker : public QThread
+{
+public:
+    explicit LoadManualServiceWorker(QObject *parent = nullptr);
+    ~LoadManualServiceWorker() override;
+    void checkManualServiceWakeUp();
+    void stop();
+
+protected:
+    void run() override;
+
+private:
+    QWaitCondition condition;
+    QMutex mutex;
+    bool abort;
+    bool isWorking;
+};
+
+LoadManualServiceWorker::LoadManualServiceWorker(QObject *parent)
+    : QThread(parent)
+    , abort(false)
+    , isWorking(false)
+{
+    if (!parent)
+        connect(qApp, &QApplication::aboutToQuit, this, &LoadManualServiceWorker::stop);
+}
+
+LoadManualServiceWorker::~LoadManualServiceWorker()
+{
+    stop();
+}
+
+void LoadManualServiceWorker::run()
+{
+    Q_FOREVER
+    {
+        mutex.lock();
+        if (abort) {
+            mutex.unlock();
+            return;
+        }
+        isWorking = true;
+        QDBusInterface("com.deepin.Manual.Search",
+                       "/com/deepin/Manual/Search",
+                       "com.deepin.Manual.Search");
+        isWorking = false;
+        condition.wait(&mutex);
+        mutex.unlock();
+    }
+}
+
+void LoadManualServiceWorker::checkManualServiceWakeUp()
+{
+    if (!this->isRunning()) {
+        start();
+        return;
+    }
+
+    if (isWorking)
+        return;
+
+    condition.wakeOne();
+}
+
+void LoadManualServiceWorker::stop()
+{
+    mutex.lock();
+    abort = true;
+    mutex.unlock();
+
+    while (isRunning())
+        condition.wakeOne();
+
+    wait();
+}
 
 DApplicationPrivate::DApplicationPrivate(DApplication *q) :
     DObjectPrivate(q)
@@ -342,18 +419,30 @@ void DApplicationPrivate::_q_onNewInstanceStarted()
 bool DApplicationPrivate::isUserManualExists()
 {
 #ifdef Q_OS_LINUX
-    QDBusInterface manualSearch("com.deepin.Manual.Search",
-                                "/com/deepin/Manual/Search",
-                                "com.deepin.Manual.Search");
-    if (manualSearch.isValid()) {
-        QDBusReply<bool> reply = manualSearch.call("ManualExists", qApp->applicationName());
-        return reply.value();
-    } else {
+    auto loadManualFromLocalFile = [=]() -> bool {
         const QString appName = qApp->applicationName();
         bool dmanAppExists = QFile::exists("/usr/bin/dman");
         bool dmanDataExists = QFile::exists("/usr/share/deepin-manual/manual/" + appName) ||
                               QFile::exists("/app/share/deepin-manual/manual/" + appName);
         return  dmanAppExists && dmanDataExists;
+    };
+
+    QDBusConnection conn = QDBusConnection::sessionBus();
+    if (conn.interface()->isServiceRegistered("com.deepin.Manual.Search")) {
+        QDBusInterface manualSearch("com.deepin.Manual.Search",
+                                    "/com/deepin/Manual/Search",
+                                    "com.deepin.Manual.Search");
+        if (manualSearch.isValid()) {
+            QDBusReply<bool> reply = manualSearch.call("ManualExists", qApp->applicationName());
+            return reply.value();
+        } else {
+            return loadManualFromLocalFile();
+        }
+    } else {
+        static LoadManualServiceWorker *manualWorker = new LoadManualServiceWorker;
+        manualWorker->checkManualServiceWakeUp();
+
+        return loadManualFromLocalFile();
     }
 #else
     return false;
