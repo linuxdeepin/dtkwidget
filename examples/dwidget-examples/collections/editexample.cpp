@@ -236,7 +236,7 @@ DSpinBoxExample::DSpinBoxExample(QWidget *parent)
     DSpinBox *plusMinus = new DSpinBox(this);
     plusMinus->setFixedWidth(340);
     plusMinus->setButtonSymbols(QAbstractSpinBox::PlusMinus);
-    QHBoxLayout *upDownLayout = new QHBoxLayout(this);
+    QHBoxLayout *upDownLayout = new QHBoxLayout();
     DSpinBox *upDown = new DSpinBox(this);
     upDown->setFixedWidth(248);
     upDown->setButtonSymbols(QAbstractSpinBox::UpDownArrows);
@@ -358,10 +358,10 @@ int DCrumbTextFormatExample::getFixedHeight() const
 DKeySequenceEditExample::DKeySequenceEditExample(QWidget *parent)
     : ExampleWindowInterface(parent)
 {
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
-    QHBoxLayout *keyHLayout = new QHBoxLayout(this);
-    QHBoxLayout *closeHLayout1 = new QHBoxLayout(this);
-    QHBoxLayout *closeHLayout2 = new QHBoxLayout(this);
+    QVBoxLayout *mainLayout = new QVBoxLayout();
+    QHBoxLayout *keyHLayout = new QHBoxLayout();
+    QHBoxLayout *closeHLayout1 = new QHBoxLayout();
+    QHBoxLayout *closeHLayout2 = new QHBoxLayout();
     setLayout(mainLayout);
     mainLayout->addLayout(keyHLayout);
     mainLayout->addLayout(closeHLayout1);
