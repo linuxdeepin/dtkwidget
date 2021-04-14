@@ -89,74 +89,35 @@ public:
     explicit LoadManualServiceWorker(QObject *parent = nullptr);
     ~LoadManualServiceWorker() override;
     void checkManualServiceWakeUp();
-    void stop();
 
 protected:
     void run() override;
-
-private:
-    QWaitCondition condition;
-    QMutex mutex;
-    bool abort;
-    bool isWorking;
 };
 
 LoadManualServiceWorker::LoadManualServiceWorker(QObject *parent)
     : QThread(parent)
-    , abort(false)
-    , isWorking(false)
 {
     if (!parent)
-        connect(qApp, &QApplication::aboutToQuit, this, &LoadManualServiceWorker::stop);
+        connect(qApp, &QApplication::aboutToQuit, this, std::bind(&LoadManualServiceWorker::exit, this, 0));
 }
 
 LoadManualServiceWorker::~LoadManualServiceWorker()
 {
-    stop();
 }
 
 void LoadManualServiceWorker::run()
 {
-    Q_FOREVER
-    {
-        mutex.lock();
-        if (abort) {
-            mutex.unlock();
-            return;
-        }
-        isWorking = true;
-        QDBusInterface("com.deepin.Manual.Search",
-                       "/com/deepin/Manual/Search",
-                       "com.deepin.Manual.Search");
-        isWorking = false;
-        condition.wait(&mutex);
-        mutex.unlock();
-    }
+    QDBusInterface("com.deepin.Manual.Search",
+                   "/com/deepin/Manual/Search",
+                   "com.deepin.Manual.Search");
 }
 
 void LoadManualServiceWorker::checkManualServiceWakeUp()
 {
-    if (!this->isRunning()) {
-        start();
-        return;
-    }
-
-    if (isWorking)
+    if (this->isRunning())
         return;
 
-    condition.wakeOne();
-}
-
-void LoadManualServiceWorker::stop()
-{
-    mutex.lock();
-    abort = true;
-    mutex.unlock();
-
-    while (isRunning())
-        condition.wakeOne();
-
-    wait();
+    start();
 }
 
 DApplicationPrivate::DApplicationPrivate(DApplication *q) :
