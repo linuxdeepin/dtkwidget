@@ -50,7 +50,7 @@ public:
     void setWidget(QWidget *w);
     void setDuration(int msec);
 
-    QSize sizeHint() const;
+    virtual QSize sizeHint() const override;
 
 Q_SIGNALS:
     void closeButtonClicked();

@@ -41,7 +41,7 @@ class DFloatingWidget : public QWidget, public DTK_CORE_NAMESPACE::DObject
 public:
     explicit DFloatingWidget(QWidget *parent = nullptr);
 
-    QSize sizeHint() const override;
+    virtual QSize sizeHint() const override;
     void setWidget(QWidget *widget);
     void setFramRadius(int radius);
 

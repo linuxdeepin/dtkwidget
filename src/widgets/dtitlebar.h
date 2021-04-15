@@ -54,7 +54,7 @@ public:
     bool autoHideOnFullscreen() const;
     void setAutoHideOnFullscreen(bool autohide);
 
-    void setVisible(bool visible) Q_DECL_OVERRIDE;
+    virtual void setVisible(bool visible) Q_DECL_OVERRIDE;
     void setEmbedMode(bool embed);
 
     bool menuIsVisible() const;
@@ -73,8 +73,8 @@ public:
     void setDisableFlags(Qt::WindowFlags flags);
     Qt::WindowFlags disableFlags() const;
 
-    QSize sizeHint() const;
-    QSize minimumSizeHint() const;
+    virtual QSize sizeHint() const override;
+    virtual QSize minimumSizeHint() const override;
 
     bool blurBackground() const;
     void setFullScreenButtonVisible(bool enabled);
