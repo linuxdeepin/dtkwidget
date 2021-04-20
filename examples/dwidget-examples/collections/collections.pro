@@ -82,7 +82,7 @@ win32* {
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../../src/release -ldtkwidget
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../../src/debug -ldtkwidgetd
-else:unix: LIBS += -L$$OUT_PWD/../../../src -ldtkwidget
+else:unix: LIBS += -L$$OUT_PWD/../../../src -ldtkwidget5.5
 
 INCLUDEPATH += $$PWD/../../../src
 INCLUDEPATH += $$PWD/../../../src/widgets

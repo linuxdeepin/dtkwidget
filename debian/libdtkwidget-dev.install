@@ -1,4 +1,4 @@
-usr/lib/*/libdtkwidget.so
+usr/lib/*/*.so
 usr/include
 usr/lib/*/pkgconfig/*.pc
 usr/lib/*/cmake/*/*.cmake

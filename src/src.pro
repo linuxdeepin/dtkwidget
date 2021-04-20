@@ -1,4 +1,4 @@
-TARGET = dtkwidget
+TARGET = dtkwidget5.5
 TEMPLATE = lib
 QT += dtkcore5.5
 

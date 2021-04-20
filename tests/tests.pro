@@ -5,7 +5,7 @@ QT += widgets dtkcore5.5 dtkgui5.5 testlib
 CONFIG += testcase no_testcase_installs
 
 unix:QMAKE_RPATHDIR += $$OUT_PWD/../src
-unix:LIBS += -L$$OUT_PWD/../src -ldtkwidget -lgtest
+unix:LIBS += -L$$OUT_PWD/../src -ldtkwidget5.5 -lgtest
 
 QMAKE_CXXFLAGS += -fno-access-control
 QMAKE_LFLAGS += -fno-access-control
