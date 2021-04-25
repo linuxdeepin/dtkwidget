@@ -117,9 +117,6 @@ MainWindow::MainWindow(QWidget *parent)
         });
         connect(titlebar->menu(), &QMenu::triggered, this, &MainWindow::menuItemInvoked);
 
-        titlebar->setDisableFlags(Qt::WindowMinimizeButtonHint
-                                  | Qt::WindowMaximizeButtonHint
-                                  | Qt::WindowSystemMenuHint);
         titlebar->setAutoHideOnFullscreen(true);
     }
 

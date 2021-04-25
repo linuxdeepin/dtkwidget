@@ -383,6 +383,9 @@ void DTitlebarPrivate::updateButtonsFunc()
 {
     // TASK-18145 (bug-17474) do not setMotifFunctions on wayland
     if (!targetWindowHandle || !qgetenv("WAYLAND_DISPLAY").isEmpty()) {
+        if (!targetWindowHandle) {
+            qWarning() << "Warning: setdisableflags cannot be called when window construction is incomplete!";
+        }
         return;
     }
 
