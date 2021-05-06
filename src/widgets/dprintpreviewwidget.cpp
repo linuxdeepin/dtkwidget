@@ -219,7 +219,7 @@ int DPrintPreviewWidgetPrivate::page2index(int page)
 }
 
 DPrintPreviewWidget::DPrintPreviewWidget(DPrinter *printer, QWidget *parent)
-    : DFrame(*new DPrintPreviewWidgetPrivate(this))
+    : DFrame(*new DPrintPreviewWidgetPrivate(this), parent)
 {
     Q_D(DPrintPreviewWidget);
     d->previewPrinter = printer;

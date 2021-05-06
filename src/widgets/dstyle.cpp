@@ -1674,7 +1674,7 @@ QIcon DStyle::standardIcon(const QStyle *style, DStyle::StandardPixmap st, const
     Q_UNUSED(widget)
 
 #define CASE_ICON(Value) \
-case SP_##Value: { \
+case static_cast<uint32_t>(SP_##Value): { \
         DStyledIconEngine *icon_engine = new DStyledIconEngine(DDrawUtils::draw##Value, QStringLiteral(#Value)); \
         return QIcon(icon_engine);}
 
@@ -2057,7 +2057,7 @@ QSize DStyle::sizeFromContents(QStyle::ContentsType ct, const QStyleOption *opt,
  */
 QIcon DStyle::standardIcon(QStyle::StandardPixmap st, const QStyleOption *opt, const QWidget *widget) const
 {
-    switch (st) {
+    switch (static_cast<uint32_t>(st)) {
         CASE_ICON(TitleBarMenuButton)
         CASE_ICON(TitleBarMinButton)
         CASE_ICON(TitleBarMaxButton)
@@ -2066,7 +2066,6 @@ QIcon DStyle::standardIcon(QStyle::StandardPixmap st, const QStyleOption *opt, c
         CASE_ICON(TitleQuitFullButton)
     case SP_LineEditClearButton:
         return QIcon::fromTheme("button_edit-clear");
-        break;
     default:
         break;
     }

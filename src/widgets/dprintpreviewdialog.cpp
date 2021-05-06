@@ -625,7 +625,7 @@ void DPrintPreviewDialogPrivate::initconnections()
         pview->setCurrentPage(jumpPageEdit->value());
         setTurnPageBtnStatus();
     });
-    QObject::connect(paperSizeCombo, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), q, [this](int index) {
+    QObject::connect(paperSizeCombo, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), q, [this](int) {
         QPrinterInfo prInfo(*printer);
         if (paperSizeCombo->count() == 0) {
             printer->setPageSize(QPrinter::A4);
