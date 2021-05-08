@@ -202,8 +202,6 @@ public:
         }
     }
 
-    // 防止bind()函数多次调用检查
-    QMap<QWidget *, bool> bindExist;
 };
 
 /*!
@@ -269,12 +267,11 @@ void DFontSizeManager::bind(QWidget *widget, DFontSizeManager::SizeType type, in
     d->binderMap[type].append(widget);
     widget->setFont(get(type, weight, widget->font()));
 
-    if (!d->bindExist.contains(widget)){
+    if (!widget->property("_d_dtk_fontSizeBind").toBool()){
         QObject::connect(widget, &QWidget::destroyed, [this, widget] {
             unbind(widget);
-            d->bindExist.remove(widget);
         });
-        d->bindExist.insert(widget, true);
+        widget->setProperty("_d_dtk_fontSizeBind", true);
     }
 }
 
