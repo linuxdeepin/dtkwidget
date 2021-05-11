@@ -1,11 +1,62 @@
 #include "dmessagemanager.h"
-#include <QDebug>
+#include <DFloatingMessage>
+#include <QVBoxLayout>
 #include <QEvent>
 
 #define D_MESSAGE_MANAGER_CONTENT "_d_message_manager_content"
 
 Q_DECLARE_METATYPE(QMargins)
 
+// 仅仅为了接口兼容， 符号不会减少， 如果使用了这个接口，实际调用走的有namespace的
+class Q_DECL_EXPORT DMessageManager: public QObject
+{
+    Q_OBJECT
+private:
+    DMessageManager();
+
+public:
+    static DMessageManager *instance();
+
+    void sendMessage(QWidget *par, DTK_WIDGET_NAMESPACE::DFloatingMessage *floMsg);
+    void sendMessage(QWidget *par, const QIcon &icon, const QString &message);
+    bool setContentMargens(QWidget *par, const QMargins &margins);
+
+protected:
+    bool eventFilter(QObject *watched, QEvent *event) override;
+};
+
+DMessageManager::DMessageManager()
+{
+}
+
+DMessageManager *DMessageManager::instance()
+{
+    return reinterpret_cast<DMessageManager *>(DTK_WIDGET_NAMESPACE::DMessageManager::instance());
+}
+
+void DMessageManager::sendMessage(QWidget *par, DTK_WIDGET_NAMESPACE::DFloatingMessage *floMsg)
+{
+    DTK_WIDGET_NAMESPACE::DMessageManager::instance()->sendMessage(par, floMsg);
+}
+
+void DMessageManager::sendMessage(QWidget *par, const QIcon &icon, const QString &message)
+{
+    DTK_WIDGET_NAMESPACE::DMessageManager::instance()->sendMessage(par, icon, message);
+}
+
+bool DMessageManager::setContentMargens(QWidget *par, const QMargins &margins)
+{
+    return DTK_WIDGET_NAMESPACE::DMessageManager::instance()->setContentMargens(par, margins);
+}
+
+bool DMessageManager::eventFilter(QObject *watched, QEvent *event)
+{
+    Q_UNUSED(watched);
+    Q_UNUSED(event);
+    return false;
+}
+
+DWIDGET_BEGIN_NAMESPACE
 DMessageManager::DMessageManager()               //私有静态构造函数
 {
 }
@@ -142,3 +193,7 @@ bool DMessageManager::eventFilter(QObject *watched, QEvent *event)
 
     return QObject::eventFilter(watched, event);
 }
+
+DWIDGET_END_NAMESPACE
+
+#include "dmessagemanager.moc"
