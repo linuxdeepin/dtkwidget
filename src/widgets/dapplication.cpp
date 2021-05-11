@@ -1215,6 +1215,8 @@ void DApplication::handleAboutAction()
 
     if (d->aboutDialog) {
         d->aboutDialog->show();
+        d->aboutDialog->activateWindow();
+        d->aboutDialog->raise();
         return;
     }
 
