@@ -33,6 +33,7 @@ DAlertControlPrivate::DAlertControlPrivate(DAlertControl *q)
  : DObjectPrivate(q)
 {
     alertColor = q->defaultAlertColor();
+    timer.setSingleShot(true);
     QObject::connect(&timer, &QTimer::timeout, q, &DAlertControl::hideAlertMessage);
 }
 
@@ -232,8 +233,10 @@ void DAlertControl::showAlertMessage(const QString &text, QWidget *follower, int
         d->frame->adjustSize();
         d->frame->raise();
     }
-    if (duration < 0)
+    if (duration < 0) {
+        d->timer.stop();
         return;
+    }
 
     d->timer.start(duration);
 }
