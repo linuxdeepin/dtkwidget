@@ -553,10 +553,11 @@ void DTitlebarPrivate::_q_addDefaultMenuItems()
     }
 
     // add help menu item.
-    if (!helpAction && DApplicationPrivate::isUserManualExists()) {
+    if (!helpAction) {
         helpAction = new QAction(qApp->translate("TitleBarMenu", "Help"), menu);
         QObject::connect(helpAction, SIGNAL(triggered(bool)), q, SLOT(_q_helpActionTriggered()));
         menu->addAction(helpAction);
+        helpAction->setVisible(false);
     }
 
     // add about menu item.
@@ -778,6 +779,13 @@ void DTitlebar::showMenu()
 {
     D_D(DTitlebar);
 
+#ifndef QT_NO_MENU
+    // 默认菜单应该是showmenu之前添加, 而非showevent
+    d->_q_addDefaultMenuItems();
+#endif
+     if (d->helpAction)
+         d->helpAction->setVisible(DApplicationPrivate::isUserManualExists());
+
     if (d->menu) {
         // 更新主题选中的项
         if (d->switchThemeMenu) {
@@ -812,10 +820,6 @@ void DTitlebar::showEvent(QShowEvent *event)
     d->separatorTop->move(0, 0);
     d->separator->setFixedWidth(width());
     d->separator->move(0, height() - d->separator->height());
-
-#ifndef QT_NO_MENU
-    d->_q_addDefaultMenuItems();
-#endif
 
     QWidget::showEvent(event);
 

@@ -104,12 +104,12 @@ void DMainWindowPrivate::init()
         }
     }
 
-    if (!help && DApplicationPrivate::isUserManualExists()) {
+    if (!help) {
         help = new QShortcut(QKeySequence(Qt::Key_F1), q);
         QObject::connect(help, &QShortcut::activated,
         q, [ = ]() {
             DApplication *dapp = qobject_cast<DApplication *>(qApp);
-            if (dapp) {
+            if (dapp && DApplicationPrivate::isUserManualExists()) {
                 dapp->handleHelpAction();
             }
         });
