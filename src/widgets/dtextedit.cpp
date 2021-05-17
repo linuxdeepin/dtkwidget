@@ -89,6 +89,22 @@ bool DTextEdit::event(QEvent *e)
         d->widgetButtom->setFixedHeight(frame_radius);
         d->widgetLeft->setFixedWidth(frame_radius);
         d->widgetRight->setFixedWidth(frame_radius);
+    } else if (e->type() == QEvent::InputMethodQuery && testAttribute(Qt::WA_InputMethodEnabled)) {
+        QInputMethodQueryEvent *query = static_cast<QInputMethodQueryEvent *>(e);
+        Qt::InputMethodQueries queries = query->queries();
+        for (uint i = 0; i < 32; ++i) {
+            Qt::InputMethodQuery property = (Qt::InputMethodQuery(int(queries & (1<<i))));
+            if (property == Qt::ImCursorRectangle) {
+                QRect rc = cursorRect();
+                DStyleHelper dstyle(style());
+                int frame_radius = dstyle.pixelMetric(DStyle::PM_FrameRadius, nullptr, this);
+                // FIX bug-79676 setViewportMargins 会导致光标位置异常，此处调整回来吧
+                rc.adjust(frame_radius, 0, frame_radius, 0);
+                query->setValue(property, rc);
+                query->accept();
+                return true;
+            }
+        }
     }
 
     return QTextEdit::event(e);
