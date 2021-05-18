@@ -260,6 +260,8 @@ void DTitlebarPrivate::init()
         iconLabel->update();
     });
 
+    // 默认需要构造一个空的选项菜单
+    q->setMenu(new QMenu(q));
     q->setFrameShape(QFrame::NoFrame);
     q->setBackgroundRole(QPalette::Base);
     q->setAutoFillBackground(true);
@@ -517,10 +519,6 @@ void DTitlebarPrivate::_q_onTopWindowMotifHintsChanged(quint32 winId)
 void DTitlebarPrivate::_q_addDefaultMenuItems()
 {
     D_Q(DTitlebar);
-
-    if (!menu) {
-        q->setMenu(new QMenu(q));
-    }
 
     // add switch theme sub menu
     if (!switchThemeMenu) {
