@@ -2010,17 +2010,22 @@ int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QW
     case PM_ListViewIconSize:
     case PM_LargeIconSize:
         return 24;
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
-    case PM_LineEditIconSize:
-        return widget ? (widget->height() < 34 ? 16 : 32) : 24;
-#endif
-
     case PM_IconViewIconSize:
         return 32;
     case PM_ScrollView_ScrollBarOverlap:
         return true;
     default:
         break;
+    }
+
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 2, 0))
+    #define LineEditIconSize PM_LineEditIconSize
+#else
+    #define LineEditIconSize 96
+#endif
+
+    if (Q_UNLIKELY(LineEditIconSize == m)) {
+        return widget ? (widget->height() < 34 ? 16 : 32) : 24;
     }
 
     if (Q_UNLIKELY(m < QStyle::PM_CustomBase)) {
