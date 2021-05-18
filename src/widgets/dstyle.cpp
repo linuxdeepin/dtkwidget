@@ -2018,6 +2018,16 @@ int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QW
         break;
     }
 
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 2, 0))
+    #define LineEditIconSize PM_LineEditIconSize
+#else
+    #define LineEditIconSize 96
+#endif
+
+    if (Q_UNLIKELY(LineEditIconSize == m)) {
+        return widget ? (widget->height() < 34 ? 16 : 32) : 24;
+    }
+
     if (Q_UNLIKELY(m < QStyle::PM_CustomBase)) {
         return QCommonStyle::pixelMetric(m, opt, widget);
     }
