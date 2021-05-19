@@ -300,7 +300,7 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
                     if (widget.second) {
                         hLay->addWidget(widget.second, 3);
                     }
-                    wrapperWidget->setAccessibleName(QString("ContentItemCustomWidgetAtRow").append(QString::number(d->contentLayout->count())));
+                    wrapperWidget->setAccessibleName(QString("CustomWidgetAtContentRow%1BackgroundRow%2").arg(d->contentLayout->count()).arg(bgGpLayout->count()));
 
                     if (widget.first) {
                         widget.first->setProperty("_d_dtk_group_key", current_subGroupKey);
@@ -315,7 +315,7 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
                     if (widget) {
                         widget->setProperty("_d_dtk_group_key", current_subGroupKey);
                         hLay->addWidget(widget);
-                        wrapperWidget->setAccessibleName(QString("ContentItemDefaultWidgetAtRow").append(QString::number(d->contentLayout->count())));
+                        wrapperWidget->setAccessibleName(QString("DefaultWidgetAtContentRow%1BackgroundRow%2").arg(d->contentLayout->count()).arg(bgGpLayout->count()));
                     }
                 }
                 bgGpLayout->addWidget(wrapperWidget);
