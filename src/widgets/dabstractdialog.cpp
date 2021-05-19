@@ -53,6 +53,7 @@ void DAbstractDialogPrivate::init(bool blurIfPossible)
         handle->setEnableSystemResize(false);
 
         bgBlurWidget = new DBlurEffectWidget(q);
+        bgBlurWidget->setAccessibleName("DAbstractDialogBlurEffectWidget");
         bgBlurWidget->lower();
         bgBlurWidget->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
         bgBlurWidget->setFull(true);
