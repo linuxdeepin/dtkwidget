@@ -41,6 +41,33 @@
 #include "dwarningbutton.h"
 #include "dsuggestbutton.h"
 
+// 字符串为2个字符的非拉丁字符串，中间加上空格
+static bool buttonTextOrigin2Echo(QString &text)
+{
+    if (text.count() == 2 && text.indexOf(QChar::Nbsp) == -1) {
+        for (const QChar &ch : text) {
+            switch (ch.script()) {
+            case QChar::Script_Han:
+            case QChar::Script_Katakana:
+            case QChar::Script_Hiragana:
+            case QChar::Script_Hangul:
+                text.insert(1, QChar::Nbsp);
+                return true;
+            default:
+                break;
+            }
+        }
+    }
+    return false;
+}
+
+static QString buttonTextOrigin2Echo(const QString &text)
+{
+    QString tmp = text;
+    buttonTextOrigin2Echo(tmp);
+    return tmp;
+}
+
 DWIDGET_BEGIN_NAMESPACE
 
 DDialogPrivate::DDialogPrivate(DDialog *qq) :
@@ -596,23 +623,10 @@ void DDialog::insertButton(int index, QAbstractButton *button, bool isDefault)
         setDefaultButton(button);
     }
 
-    const QString &text = button->text();
-
-    if (text.count() == 2) {
-        for (const QChar &ch : text) {
-            switch (ch.script()) {
-            case QChar::Script_Han:
-            case QChar::Script_Katakana:
-            case QChar::Script_Hiragana:
-            case QChar::Script_Hangul:
-                break;
-            default:
-                return;
-            }
-        }
-
-        button->setText(QString().append(text.at(0)).append(QChar::Nbsp).append(text.at(1)));
-    }
+    // TODO 添加text显示规则处理
+    auto text = button->text();
+    if (buttonTextOrigin2Echo(text))
+        button->setText(text);
 }
 
 /*!
@@ -886,7 +900,8 @@ void DDialog::setButtonText(int index, const QString &text)
 {
     QAbstractButton *button = getButton(index);
 
-    button->setText(text);
+    // TODO 添加text显示规则处理
+    button->setText(buttonTextOrigin2Echo(text));
 }
 
 /*!
