@@ -263,11 +263,13 @@ void DDialogPrivate::_q_onButtonClicked()
     QAbstractButton *button = qobject_cast<QAbstractButton *>(q->sender());
 
     if (button) {
-        clickedButtonIndex = buttonList.indexOf(button);
-        q->buttonClicked(clickedButtonIndex, button->text());
+        int index = buttonList.indexOf(button);
+        q->buttonClicked(index, button->text());
 
-        if (onButtonClickedClose)
+        if (onButtonClickedClose) {
+            clickedButtonIndex = index;
             q->done(clickedButtonIndex);
+        }
     }
 }
 
