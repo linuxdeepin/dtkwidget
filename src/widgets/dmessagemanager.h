@@ -3,10 +3,12 @@
 
 #include <QObject>
 #include <QWidget>
-#include <dtkwidget_global.h>
+#include <QHBoxLayout>
 
-DWIDGET_BEGIN_NAMESPACE
-class DFloatingMessage;
+#include "dfloatingmessage.h"
+
+DWIDGET_USE_NAMESPACE
+
 class DMessageManager: public QObject
 {
     Q_OBJECT
@@ -24,7 +26,5 @@ public:
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
 };
-
-DWIDGET_END_NAMESPACE
 
 #endif // DMESSAGEMANAGER_H
