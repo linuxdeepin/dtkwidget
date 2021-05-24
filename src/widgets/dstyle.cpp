@@ -1825,43 +1825,48 @@ QPalette DStyle::standardPalette() const
 QPixmap DStyle::generatedIconPixmap(QIcon::Mode iconMode, const QPixmap &pixmap, const QStyleOption *opt) const
 {
     Q_UNUSED(opt)
+    switch (iconMode) {
+        case QIcon::Active: {
+            QImage image = pixmap.toImage();
+            QPainter pa(&image);
 
-    if (iconMode == QIcon::Active) {
-        QImage image = pixmap.toImage();
-        QPainter pa(&image);
+            if (!pa.isActive())
+                return QCommonStyle::generatedIconPixmap(iconMode, pixmap, opt);
 
-        if (!pa.isActive())
-            return QCommonStyle::generatedIconPixmap(iconMode, pixmap, opt);
+            pa.setCompositionMode(QPainter::CompositionMode_SourceAtop);
 
-        pa.setCompositionMode(QPainter::CompositionMode_SourceAtop);
+            if (DGuiApplicationHelper::toColorType(opt->palette) == DGuiApplicationHelper::DarkType) {
+                pa.fillRect(image.rect(), QColor(255, 255, 255, 0.1 * 255));
+            } else {
+                pa.fillRect(image.rect(), QColor(0, 0, 0, 0.1 * 255));
+            }
 
-        if (DGuiApplicationHelper::toColorType(opt->palette) == DGuiApplicationHelper::DarkType) {
-            pa.fillRect(image.rect(), QColor(255, 255, 255, 0.1 * 255));
-        } else {
-            pa.fillRect(image.rect(), QColor(0, 0, 0, 0.1 * 255));
+            return QPixmap::fromImage(image);
         }
+        case QIcon::Disabled: {
+            QImage image = pixmap.toImage();
 
-        return QPixmap::fromImage(image);
-    } else if (iconMode == QIcon::Disabled) {
-        QImage image = pixmap.toImage();
+            // TODO: fix wayland parent window alpha changed
+            // 暂时再此处规避一下, 后续如果是qt的bug移除此段代码
+            if (!image.hasAlphaChannel()) {
+                image = image.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+            }
+            QPainter pa(&image);
 
-        // TODO: fix wayland parent window alpha changed
-        // 暂时再此处规避一下, 后续如果是qt的bug移除此段代码
-        if (!image.hasAlphaChannel()) {
-            image = image.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+            if (!pa.isActive())
+                return QCommonStyle::generatedIconPixmap(iconMode, pixmap, opt);
+
+            pa.setCompositionMode(QPainter::CompositionMode_DestinationIn);
+            pa.fillRect(image.rect(), QColor(0, 0, 0, int(255 * 0.4)));
+
+            return QPixmap::fromImage(image);
         }
-        QPainter pa(&image);
-
-        if (!pa.isActive())
+        case QIcon::Selected: {
+            return pixmap;
+        }
+        default:
             return QCommonStyle::generatedIconPixmap(iconMode, pixmap, opt);
-
-        pa.setCompositionMode(QPainter::CompositionMode_DestinationIn);
-        pa.fillRect(image.rect(), QColor(0, 0, 0, int(255 * 0.4)));
-
-        return QPixmap::fromImage(image);
     }
-
-    return QCommonStyle::generatedIconPixmap(iconMode, pixmap, opt);
 }
 
 DStyle::StyleState DStyle::getState(const QStyleOption *option)
