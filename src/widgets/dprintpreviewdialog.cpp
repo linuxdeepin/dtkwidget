@@ -252,8 +252,8 @@ void DPrintPreviewDialogPrivate::initright(QVBoxLayout *layout)
     //bottom
     QHBoxLayout *pbottomlayout = new QHBoxLayout;
     pbottomlayout->setContentsMargins(0, 10, 0, 10);
-    cancelBtn = new DPushButton(qApp->translate("DPrintPreviewDialogPrivate", "Cancel"));
-    printBtn = new DSuggestButton(qApp->translate("DPrintPreviewDialogPrivate", "Print"));
+    cancelBtn = new DPushButton(qApp->translate("DPrintPreviewDialogPrivate", "Cancel", "button"));
+    printBtn = new DSuggestButton(qApp->translate("DPrintPreviewDialogPrivate", "Print", "button"));
 
     cancelBtn->setFixedSize(170, 36);
     printBtn->setFixedSize(170, 36);
@@ -1555,7 +1555,7 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
         colorModeCombo->setCurrentIndex(0);
         colorModeCombo->setEnabled(false);
         supportedColorMode = true;
-        printBtn->setText(qApp->translate("DPrintPreviewDialogPrivate", "Save"));
+        printBtn->setText(qApp->translate("DPrintPreviewDialogPrivate", "Save", "button"));
         paperSizeCombo->setCurrentIndex(1);
         QStringList pdfPaperSize = QStringList() << "A3"
                                                  << "A4"
@@ -1593,7 +1593,7 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
             paperSizeCombo->setEnabled(true);
             colorModeCombo->setEnabled(true);
             printer->setPrinterName(printDeviceCombo->itemText(index));
-            printBtn->setText(qApp->translate("DPrintPreviewDialogPrivate", "Print"));
+            printBtn->setText(qApp->translate("DPrintPreviewDialogPrivate", "Print", "button"));
             judgeSupportedAttributes(lastPaperSize);
         }
         //判断当前打印机是否支持彩色打印，不支持彩色打印删除彩色打印选择选项，pdf不做判断
