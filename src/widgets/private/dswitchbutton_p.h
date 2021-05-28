@@ -39,8 +39,8 @@ public:
     QColor disabledBackground = qRgba(207, 214, 230, 255);
     QColor checkedBackground =  qRgba(44, 167, 248, 255);
 
-    double animationStartValue;
-    double animationEndValue;
+    double animationStartValue = 0.0;
+    double animationEndValue = 0.0;
 
 public:
     D_DECLARE_PUBLIC(DSwitchButton)

@@ -30,7 +30,7 @@ public:
     MessageLabel *labMessage = nullptr;
     QWidget *content = nullptr;
     DIconButton *closeButton = nullptr;
-    DFloatingMessage::MessageType notifyType;
+    DFloatingMessage::MessageType notifyType = DFloatingMessage::MessageType::TransientType;
 
     D_DECLARE_PUBLIC(DFloatingMessage)
 };

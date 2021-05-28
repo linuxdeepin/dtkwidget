@@ -28,7 +28,7 @@ DWIDGET_BEGIN_NAMESPACE
 
 class DAbstractStackWidgetTransitionPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 {
-    DAbstractStackWidgetTransitionPrivate(DAbstractStackWidgetTransition *qq);
+    explicit DAbstractStackWidgetTransitionPrivate(DAbstractStackWidgetTransition *qq);
     ~DAbstractStackWidgetTransitionPrivate();
 
     QVariantAnimation *animation;
@@ -41,14 +41,14 @@ class DAbstractStackWidgetTransitionPrivate : public DTK_CORE_NAMESPACE::DObject
 
 class DStackWidgetPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 {
-    DStackWidgetPrivate(DStackWidget *qq);
+    explicit DStackWidgetPrivate(DStackWidget *qq);
     ~DStackWidgetPrivate();
 
-    int currentIndex;
-    QWidget *currentWidget;
-    QList<QWidget*> widgetList;
-    QList<QWidget*> trashWidgetList;
-    DAbstractStackWidgetTransition* transition;
+    int currentIndex = 0;
+    QWidget *currentWidget = nullptr;
+    QList<QWidget*> widgetList = {};
+    QList<QWidget*> trashWidgetList = {};
+    DAbstractStackWidgetTransition *transition = nullptr;
 
     void init();
     void setCurrentIndex(int index);

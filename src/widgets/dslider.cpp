@@ -619,6 +619,7 @@ DSliderPrivate::DSliderPrivate(DSlider *q)
     , tipvalue(nullptr)
     , label(nullptr)
     , mouseWheelEnabled(false)
+    , layout(nullptr)
 {
 
 }

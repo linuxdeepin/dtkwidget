@@ -121,7 +121,7 @@ public:
     void pageRangeError(TipsNum tipNum);
 
     //printer
-    DPrinter *printer;
+    DPrinter *printer = nullptr;
     int totalPages = 0;
     bool fontSizeMore = false;
     QString lastPageRange = "";
@@ -139,66 +139,66 @@ public:
     int directChoice = 0;
 
     //control
-    DPrintPreviewWidget *pview;
-    DBackgroundGroup *back;
-    DWidget *basicsettingwdg;
-    DWidget *advancesettingwdg;
-    DWidget *watermarksettingwdg;
-    DWidget *textWatermarkWdg;
-    DWidget *picWatermarkWdg;
-    DIconButton *firstBtn;
-    DIconButton *prevPageBtn;
-    DSpinBox *jumpPageEdit;
-    DLabel *totalPageLabel;
-    DLabel *originTotalPageLabel;
-    DIconButton *nextPageBtn;
-    DIconButton *lastBtn;
-    DPushButton *cancelBtn;
-    DSuggestButton *printBtn;
-    DPushButton *advanceBtn;
-    DScrollArea *scrollarea;
-    DComboBox *printDeviceCombo;
-    DSpinBox *copycountspinbox;
-    DComboBox *pageRangeCombo;
-    DLineEdit *pageRangeEdit;
-    QButtonGroup *orientationgroup;
-    DComboBox *colorModeCombo;
-    DComboBox *marginsCombo;
-    DDoubleSpinBox *marginTopSpin;
-    DDoubleSpinBox *marginBottomSpin;
-    DDoubleSpinBox *marginLeftSpin;
-    DDoubleSpinBox *marginRightSpin;
-    QButtonGroup *scaleGroup;
-    DSpinBox *scaleRateEdit;
-    DComboBox *duplexCombo;
-    DCheckBox *duplexCheckBox;
-    DComboBox *paperSizeCombo;
-    DComboBox *pagePerSheetCombo;
-    DCheckBox *sidebysideCheckBox;
-    QButtonGroup *directGroup;
-    QButtonGroup *printOrderGroup; //打印顺序
-    DComboBox *inorderCombo;
-    DComboBox *waterTextCombo; //添加水印类型
-    DIconButton *waterColorBtn;
-    DLineEdit *waterTextEdit; //文字水印内容
-    DComboBox *fontCombo;
-    DSwitchButton *waterMarkBtn;
-    DFileChooserEdit *picPathEdit; //图片水印路径
-    QButtonGroup *waterTypeGroup;
-    DComboBox *waterPosCombox; //水印位置
-    DSpinBox *inclinatBox; //倾度
-    DSlider *waterSizeSlider;
-    DSpinBox *sizeBox;
-    DSlider *wmOpaSlider; //水印透明度
-    DSpinBox *opaBox;
+    DPrintPreviewWidget *pview = nullptr;
+    DBackgroundGroup *back = nullptr;
+    DWidget *basicsettingwdg = nullptr;
+    DWidget *advancesettingwdg = nullptr;
+    DWidget *watermarksettingwdg = nullptr;
+    DWidget *textWatermarkWdg = nullptr;
+    DWidget *picWatermarkWdg = nullptr;
+    DIconButton *firstBtn = nullptr;
+    DIconButton *prevPageBtn = nullptr;
+    DSpinBox *jumpPageEdit = nullptr;
+    DLabel *totalPageLabel = nullptr;
+    DLabel *originTotalPageLabel = nullptr;
+    DIconButton *nextPageBtn = nullptr;
+    DIconButton *lastBtn = nullptr;
+    DPushButton *cancelBtn = nullptr;
+    DSuggestButton *printBtn = nullptr;
+    DPushButton *advanceBtn = nullptr;
+    DScrollArea *scrollarea = nullptr;
+    DComboBox *printDeviceCombo = nullptr;
+    DSpinBox *copycountspinbox = nullptr;
+    DComboBox *pageRangeCombo = nullptr;
+    DLineEdit *pageRangeEdit = nullptr;
+    QButtonGroup *orientationgroup = nullptr;
+    DComboBox *colorModeCombo = nullptr;
+    DComboBox *marginsCombo = nullptr;
+    DDoubleSpinBox *marginTopSpin = nullptr;
+    DDoubleSpinBox *marginBottomSpin = nullptr;
+    DDoubleSpinBox *marginLeftSpin = nullptr;
+    DDoubleSpinBox *marginRightSpin = nullptr;
+    QButtonGroup *scaleGroup = nullptr;
+    DSpinBox *scaleRateEdit = nullptr;
+    DComboBox *duplexCombo = nullptr;
+    DCheckBox *duplexCheckBox = nullptr;
+    DComboBox *paperSizeCombo = nullptr;
+    DComboBox *pagePerSheetCombo = nullptr;
+    DCheckBox *sidebysideCheckBox = nullptr;
+    QButtonGroup *directGroup = nullptr;
+    QButtonGroup *printOrderGroup = nullptr; //打印顺序
+    DComboBox *inorderCombo = nullptr;
+    DComboBox *waterTextCombo = nullptr; //添加水印类型
+    DIconButton *waterColorBtn = nullptr;
+    DLineEdit *waterTextEdit = nullptr; //文字水印内容
+    DComboBox *fontCombo = nullptr;
+    DSwitchButton *waterMarkBtn = nullptr;
+    DFileChooserEdit *picPathEdit = nullptr; //图片水印路径
+    QButtonGroup *waterTypeGroup = nullptr;
+    DComboBox *waterPosCombox = nullptr; //水印位置
+    DSpinBox *inclinatBox = nullptr; //倾度
+    DSlider *waterSizeSlider = nullptr;
+    DSpinBox *sizeBox = nullptr;
+    DSlider *wmOpaSlider = nullptr; //水印透明度
+    DSpinBox *opaBox = nullptr;
     QVector<qreal> marginOldValue; // 记录margin自定义时的旧值  如果旧值和新值一致，就不需要刷新，top left right bottom
     QList<qreal> minnumMargins;
-    QSpacerItem *spacer;
-    QSpacerItem *wmSpacer;
-    DFloatingWidget *colorWidget;
-    DRadioButton *printInOrderRadio;
-    DWidget *inorderwdg;
-    DPrintPickColorWidget *pickColorWidget;
+    QSpacerItem *spacer = nullptr;
+    QSpacerItem *wmSpacer = nullptr;
+    DFloatingWidget *colorWidget = nullptr;
+    DRadioButton *printInOrderRadio = nullptr;
+    DWidget *inorderwdg = nullptr;
+    DPrintPickColorWidget *pickColorWidget = nullptr;
     QHash<QWidget *, QString> spinboxTextCaches;
     Q_DECLARE_PUBLIC(DPrintPreviewDialog)
 };

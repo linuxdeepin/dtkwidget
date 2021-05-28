@@ -93,7 +93,7 @@ bool DTextEdit::event(QEvent *e)
         QInputMethodQueryEvent *query = static_cast<QInputMethodQueryEvent *>(e);
         Qt::InputMethodQueries queries = query->queries();
         for (uint i = 0; i < 32; ++i) {
-            Qt::InputMethodQuery property = (Qt::InputMethodQuery(int(queries & (1<<i))));
+            Qt::InputMethodQuery property = (Qt::InputMethodQuery(uint(queries & (1<<i))));
             if (property == Qt::ImCursorRectangle) {
                 QRect rc = cursorRect();
                 DStyleHelper dstyle(style());

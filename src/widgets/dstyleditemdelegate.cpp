@@ -54,7 +54,7 @@ public:
     QSize iconSize;
     QSize maxSize;
     QMargins clickMargins;
-    bool clickable;
+    bool clickable = false;
     QWidget *widget = nullptr;
 
     qint8 colorType = -1;
