@@ -43,8 +43,14 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-DDialogPrivate::DDialogPrivate(DDialog *qq) :
-    DAbstractDialogPrivate(qq)
+DDialogPrivate::DDialogPrivate(DDialog *qq)
+    : DAbstractDialogPrivate(qq)
+    , messageLabel(nullptr)
+    , titleLabel(nullptr)
+    , iconLayout(nullptr)
+    , contentLayout(nullptr)
+    , buttonLayout(nullptr)
+    , clickedButtonIndex(0)
 {
 
 }

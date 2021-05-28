@@ -41,56 +41,56 @@ DWIDGET_BEGIN_NAMESPACE
 class DSimpleListViewPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 {
 public:
-    DSimpleListViewPrivate(DSimpleListView *parent) : DObjectPrivate(parent)
-        {
-
-        }
+    DSimpleListViewPrivate(DSimpleListView *parent)
+        : DObjectPrivate(parent)
+    {
+    }
 
     QList<DSimpleListItem*> getSearchItems(QList<DSimpleListItem*> items);
     int getItemsTotalHeight();
     int getTopRenderOffset();
     void sortItemsByColumn(int column, bool descendingSort);
 
-    QPointer<DSimpleListItem> lastHoverItem;
-    QPointer<DSimpleListItem> lastSelectItem;
-    QPointer<DSimpleListItem> drawHoverItem;
-    QPointer<DSimpleListItem> mouseHoverItem;
-    QList<DSimpleListItem*> *listItems;
-    QList<DSimpleListItem*> *renderItems;
-    QList<DSimpleListItem*> *selectionItems;
-    QList<QString> columnTitles;
-    QList<SortAlgorithm> *sortingAlgorithms;
-    QList<bool> *sortingOrderes;
-    QList<int> columnWidths;
-    QString searchContent;
-    QTimer *hideScrollbarTimer;
-    SearchAlgorithm searchAlgorithm;
-    bool defaultSortingOrder;
-    bool mouseAtScrollArea;
-    bool mouseDragScrollbar;
-    bool drawFrame;
+    QPointer<DSimpleListItem> lastHoverItem = nullptr;
+    QPointer<DSimpleListItem> lastSelectItem = nullptr;
+    QPointer<DSimpleListItem> drawHoverItem = nullptr;
+    QPointer<DSimpleListItem> mouseHoverItem = nullptr;
+    QList<DSimpleListItem*> *listItems = nullptr;
+    QList<DSimpleListItem*> *renderItems = nullptr;
+    QList<DSimpleListItem*> *selectionItems = nullptr;
+    QList<QString> columnTitles = {};
+    QList<SortAlgorithm> *sortingAlgorithms = nullptr;
+    QList<bool> *sortingOrderes = nullptr;
+    QList<int> columnWidths = {};
+    QString searchContent = "";
+    QTimer *hideScrollbarTimer = nullptr;
+    SearchAlgorithm searchAlgorithm = nullptr;
+    bool defaultSortingOrder = false;
+    bool mouseAtScrollArea = false;
+    bool mouseDragScrollbar =false;
+    bool drawFrame = false;
     bool isKeepSelectWhenClickBlank;
-    bool isSingleSelect;
-    int alwaysVisibleColumn;
-    int clipRadius;
-    int defaultSortingColumn;
-    int hideScrollbarDuration;
-    int lastHoverColumnIndex;
-    int oldRenderOffset;
-    int renderOffset;
-    int rowHeight;
-    int scrollDistance;
-    int scrollStartY;
-    int scrollUnit;
-    int scrollbarDefaultWidth;
-    int scrollbarDragWidth;
-    int scrollbarMinHeight;
-    int scrollbarPadding;
-    int titleArrowPadding;
-    int titleHeight;
-    int titleHoverColumn;
-    int titlePadding;
-    int titlePressColumn;
+    bool isSingleSelect = false;
+    int alwaysVisibleColumn = 0;
+    int clipRadius = 0;
+    int defaultSortingColumn = 0;
+    int hideScrollbarDuration = 0;
+    int lastHoverColumnIndex = 0;
+    int oldRenderOffset = 0;
+    int renderOffset = 0;
+    int rowHeight = 0;
+    int scrollDistance = 0;
+    int scrollStartY = 0;
+    int scrollUnit = 0;
+    int scrollbarDefaultWidth = 0;
+    int scrollbarDragWidth = 0;
+    int scrollbarMinHeight = 0;
+    int scrollbarPadding = 0;
+    int titleArrowPadding = 0;
+    int titleHeight = 0;
+    int titleHoverColumn = 0;
+    int titlePadding = 0;
+    int titlePressColumn = 0;
 
     D_DECLARE_PUBLIC(DSimpleListView)
 };

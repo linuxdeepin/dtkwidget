@@ -23,9 +23,10 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-DAbstractStackWidgetTransitionPrivate::DAbstractStackWidgetTransitionPrivate(DAbstractStackWidgetTransition *qq):
-    DObjectPrivate(qq),
-    animation(new QVariantAnimation(qq))
+DAbstractStackWidgetTransitionPrivate::DAbstractStackWidgetTransitionPrivate(DAbstractStackWidgetTransition *qq)
+    : DObjectPrivate(qq)
+    , animation(new QVariantAnimation(qq))
+    , info({})
 {
 
 }

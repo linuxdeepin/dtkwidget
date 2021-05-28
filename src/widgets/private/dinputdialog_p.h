@@ -40,7 +40,7 @@ class DInputDialogPrivate : public DDialogPrivate
     DDoubleSpinBox *doubleSpinBox = nullptr;
     QComboBox *comboBox = nullptr;
 
-    DInputDialog::InputMode inputMode;
+    DInputDialog::InputMode inputMode = DInputDialog::InputMode::TextInput;
 
     void init();
 
