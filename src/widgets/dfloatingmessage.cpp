@@ -56,7 +56,6 @@ void DFloatingMessagePrivate::init()
     timer = nullptr;
     content = nullptr;
     closeButton = nullptr;
-    notifyType = notifyType;
     widget = new QWidget();
     q->DFloatingWidget::setWidget(widget);
     hBoxLayout = new QHBoxLayout(widget);

@@ -34,7 +34,7 @@ class DSpinBoxPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 
     void init();
 
-    DLineEdit *lineEdit;
+    DLineEdit *lineEdit = nullptr;
     D_DECLARE_PUBLIC(DSpinBox)
 };
 
@@ -44,7 +44,7 @@ class DDoubleSpinBoxPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 
     void init();
 
-    DLineEdit *lineEdit;
+    DLineEdit *lineEdit = nullptr;
     D_DECLARE_PUBLIC(DDoubleSpinBox)
 };
 

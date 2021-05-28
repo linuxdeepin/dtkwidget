@@ -38,14 +38,14 @@ public:
     static const QString websiteLinkTemplate;
 
     QPixmap windowIcon;
-    QLabel *logoLabel;
-    QLabel *productNameLabel;
-    QLabel *versionLabel;
-    QLabel *descriptionLabel;
-    QLabel *licenseLabel;
-    QLabel *companyLogoLabel;
-    QLabel *websiteLabel;
-    QLabel *acknowledgementLabel;
+    QLabel *logoLabel = nullptr;
+    QLabel *productNameLabel = nullptr;
+    QLabel *versionLabel = nullptr;
+    QLabel *descriptionLabel = nullptr;
+    QLabel *licenseLabel = nullptr;
+    QLabel *companyLogoLabel = nullptr;
+    QLabel *websiteLabel = nullptr;
+    QLabel *acknowledgementLabel = nullptr;
 
     QString logoPath;
     QString websiteName;

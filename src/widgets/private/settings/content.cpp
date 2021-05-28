@@ -44,20 +44,20 @@ DWIDGET_BEGIN_NAMESPACE
 class ContentPrivate
 {
 public:
-    ContentPrivate(Content *parent) : q_ptr(parent)
+    ContentPrivate(Content *parent)
+        : q_ptr(parent)
     {
         widgetFactory = new DSettingsWidgetFactory(parent);
     }
 
+    QScrollArea *contentArea = nullptr;
+    QWidget *contentFrame = nullptr;
+    QFormLayout *contentLayout = nullptr;
 
-    QScrollArea         *contentArea;
-    QWidget             *contentFrame;
-    QFormLayout         *contentLayout;
+    QMap<QString, QWidget *> titles = {};
+    QList<QWidget *> sortTitles = {};
 
-    QMap<QString, QWidget *> titles;
-    QList<QWidget *> sortTitles;
-
-    DSettingsWidgetFactory       *widgetFactory;
+    DSettingsWidgetFactory *widgetFactory = nullptr;
 
     Content *q_ptr;
     Q_DECLARE_PUBLIC(Content)

@@ -40,8 +40,8 @@ struct Pop {
     double size;
     double xSpeed;
     double ySpeed;
-    double xOffset;
-    double yOffset;
+    double xOffset = 0.0;
+    double yOffset = 0.0;
 };
 
 class DWaterProgressPrivate: public DTK_CORE_NAMESPACE::DObjectPrivate
@@ -62,16 +62,16 @@ public:
     QImage waterFrontImage;
     QImage waterBackImage;
     QString progressText;
-    QTimer *timer               = Q_NULLPTR;
+    QTimer *timer = Q_NULLPTR;
     QList<Pop> pops;
 
-    int     interval            = 33;
-    int     value;
+    int     interval = 33;
+    int     value = 0;
 
-    double  frontXOffset        = 0;
-    double  backXOffset         = 0;
+    double  frontXOffset = 0;
+    double  backXOffset = 0;
 
-    bool    textVisible         = true;
+    bool    textVisible = true;
 
     D_DECLARE_PUBLIC(DWaterProgress)
 };
