@@ -502,7 +502,6 @@ bool DApplicationPrivate::isUserManualExists()
         const QString appName = qApp->applicationName();
         bool dmanAppExists = QFile::exists("/usr/bin/dman");
         bool dmanDataExists = false;
-        bool hasDDE = false; // dde-control-center,dde-dock,dde-launcher 等没有appname目录, 都在dde目录下。。。
         // search all subdirectories
         QString strManualPath = "/usr/share/deepin-manual";
         QDirIterator it(strManualPath, QDirIterator::Subdirectories);
@@ -512,14 +511,11 @@ bool DApplicationPrivate::isUserManualExists()
                 dmanDataExists = true;
                 break;
             }
-            if (!hasDDE && file.isDir() && file.fileName() == "dde")
-                hasDDE = true;
 
             if (file.isDir())
                 continue;
         }
-        bool isDDEApp = hasDDE && appName.startsWith("dde-");
-        return  dmanAppExists && (dmanDataExists || isDDEApp);
+        return  dmanAppExists && dmanDataExists;
     };
 
     QDBusConnection conn = QDBusConnection::sessionBus();
