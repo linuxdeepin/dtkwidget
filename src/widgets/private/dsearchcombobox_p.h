@@ -21,7 +21,8 @@
 #ifndef DSEARCHCOMBOBOX_P_H
 #define DSEARCHCOMBOBOX_P_H
 
-#include <DSearchComboBox>
+#include "dsearchcombobox.h"
+#include "private/dcombobox_p.h"
 #include <DObjectPrivate>
 #include <DSearchEdit>
 #include <QSortFilterProxyModel>
@@ -30,11 +31,11 @@
 DWIDGET_BEGIN_NAMESPACE
 
 class DSearchComboBox;
-class DSearchComboBoxPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
+class DSearchComboBoxPrivate : public DComboBoxPrivate
 {
     Q_DECLARE_PUBLIC(DSearchComboBox)
 public:
-    DSearchComboBoxPrivate(DSearchComboBox *q);
+    explicit DSearchComboBoxPrivate(DSearchComboBox *q);
 
 private:
     DSearchEdit *searchEdit;

@@ -23,6 +23,10 @@
 
 #ifndef emit
 #define emit Q_EMIT
+#include <private/qcombobox_p.h>
+#undef emit
+#else
+#include <private/qcombobox_p.h>
 #endif
 #include <private/qcombobox_p.h>
 
@@ -45,8 +49,7 @@ enum layoutMargin
   \image DSearchComboBox.png
  */
 DSearchComboBox::DSearchComboBox(QWidget *parent)
-    : DComboBox(parent)
-    , DObject(*new DSearchComboBoxPrivate(this))
+    : DComboBox(*new DSearchComboBoxPrivate(this), parent)
 {
 }
 
@@ -107,7 +110,7 @@ void DSearchComboBox::showPopup()
 }
 
 DSearchComboBoxPrivate::DSearchComboBoxPrivate(DSearchComboBox *q)
-    : DObjectPrivate(q)
+    : DComboBoxPrivate (q)
     , searchEdit(nullptr)
     , completer(nullptr)
     , proxyModel(nullptr)

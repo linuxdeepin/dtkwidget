@@ -811,10 +811,24 @@ DComboBoxExample::DComboBoxExample(QWidget *parent)
 
     DComboBox *pComboBox_1 = new DComboBox;
     pComboBox_1->setFixedSize(240, 36);
-    pComboBox_1->addItem("ComboBox button 1");
-    pComboBox_1->addItem("ComboBox button 2");
-    pComboBox_1->addItem("ComboBox button 3");
+    for (int i = 0; i < 30; i++) {
+        pComboBox_1->addItem(QString("ComboBox button - %1").arg(i));
+    }
     pHBoxLayout_1->addWidget(pComboBox_1);
+
+    QComboBox *pComboBox_1_count = new QComboBox();
+    pComboBox_1_count->setFixedSize(100, 36);
+    pComboBox_1_count->addItem(QString::number(10));
+    pComboBox_1_count->addItem(QString::number(20));
+    pComboBox_1_count->addItem(QString::number(30));
+    pComboBox_1_count->setCurrentIndex(pComboBox_1_count->count() - 1);
+    connect(pComboBox_1_count, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [pComboBox_1, pComboBox_1_count](int index){
+        pComboBox_1->clear();
+        for (int i = 0; i < pComboBox_1_count->itemText(index).toInt(); i++) {
+            pComboBox_1->addItem(QString("ComboBox button - %1").arg(i));
+        }
+    });
+    pHBoxLayout_1->addWidget(pComboBox_1_count);
 
     QHBoxLayout *pHBoxLayout_2 = new QHBoxLayout;
     pHBoxLayout_2->setMargin(0);
@@ -891,6 +905,9 @@ DFontComboBoxExample::DFontComboBoxExample(QWidget *parent)
 
     DFontComboBox *pComboBox_1 = new DFontComboBox;
     pComboBox_1->setFixedSize(240, 36);
+    connect(pComboBox_1, &DFontComboBox::currentFontChanged, [](const QFont &f){
+        qDebug() << "selected font:" << f;
+    });
     pHBoxLayout_1->addWidget(pComboBox_1);
 
     pVBoxLayout->addSpacing(30);

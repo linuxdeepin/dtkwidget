@@ -87,8 +87,6 @@ typedef QStackedWidget DStackedWidget;
 typedef QWidget DWidget;
 typedef QMDIArea DMDIArea;
 typedef QDockWidget DDockWidget;
-typedef QComboBox DComboBox;
-typedef QFontComboBox DFontComboBox;
 typedef QPlainTextEdit DPlainTextEdit;
 typedef QTimeEdit DTimeEdit;
 typedef QDateEdit DDateEdit;
