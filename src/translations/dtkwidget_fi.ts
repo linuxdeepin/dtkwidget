@@ -7,12 +7,12 @@
         <translation>Kiitokset</translation>
     </message>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1094"/>
+        <location filename="../widgets/dapplication.cpp" line="1238"/>
         <source>Version: %1</source>
         <translation>Versio: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1098"/>
+        <location filename="../widgets/dapplication.cpp" line="1242"/>
         <source>%1 is released under %2</source>
         <translation>%1 on julkaistu %2 -lisenssin alla</translation>
     </message>
@@ -20,87 +20,87 @@
 <context>
     <name>DCrumbEdit</name>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="896"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="900"/>
         <source>Black</source>
         <translation>Musta</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="899"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="903"/>
         <source>White</source>
         <translation>Valkoinen</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="902"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="906"/>
         <source>Dark Gray</source>
         <translation>Tummanharmaa</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="905"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="909"/>
         <source>Gray</source>
         <translation>Harmaa</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="908"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="912"/>
         <source>Light Gray</source>
         <translation>Vaaleanharmaa</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="911"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="915"/>
         <source>Red</source>
         <translation>Punainen</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="914"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="918"/>
         <source>Green</source>
         <translation>Vihreä</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="917"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="921"/>
         <source>Blue</source>
         <translation>Sininen</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="920"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="924"/>
         <source>Cyan</source>
         <translation>Syaani</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="923"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="927"/>
         <source>Magenta</source>
         <translation>Purppura</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="926"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="930"/>
         <source>Yellow</source>
         <translation>Keltainen</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="929"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="933"/>
         <source>Dark Red</source>
         <translation>Tummanpunainen</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="932"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="936"/>
         <source>Dark Green</source>
         <translation>Tummanvihreä</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="935"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="939"/>
         <source>Dark Blue</source>
         <translation>Tummansininen</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="938"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="942"/>
         <source>Dark Cyan</source>
         <translation>Tumma syaani</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="941"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="945"/>
         <source>Dark Magenta</source>
         <translation>Tumma purppura</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="944"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="948"/>
         <source>Dark Yellow</source>
         <translation>Tummankeltainen</translation>
     </message>
@@ -121,7 +121,7 @@
 <context>
     <name>DKeySequenceEdit</name>
     <message>
-        <location filename="../widgets/dkeysequenceedit.cpp" line="42"/>
+        <location filename="../widgets/dkeysequenceedit.cpp" line="85"/>
         <source>Enter a new shortcut</source>
         <translation>Tee pikakuvake</translation>
     </message>
@@ -152,385 +152,388 @@
 <context>
     <name>DPrintPreviewDialogPrivate</name>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="215"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1117"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="232"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1175"/>
         <source>Advanced</source>
         <translation>Lisäasetukset</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="238"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="255"/>
         <source>Cancel</source>
+        <comment>button</comment>
         <translation>Peruuta</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="239"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1508"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="256"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1596"/>
         <source>Print</source>
+        <comment>button</comment>
         <translation>Tulosta</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="255"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="272"/>
         <source>Basic</source>
         <translation>Oletus</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="270"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="287"/>
         <source>Printer</source>
         <translation>Tulostin</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="284"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="301"/>
         <source>Copies</source>
         <translation>Kopiot</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="303"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="321"/>
         <source>Page range</source>
         <translation>Sivualue</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="305"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="323"/>
         <source>All</source>
         <translation>Kaikki</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="306"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="324"/>
         <source>Current page</source>
         <translation>Nykyinen sivu</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="307"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="325"/>
         <source>Select pages</source>
         <translation>Valitse sivut</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="322"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="340"/>
         <source>Orientation</source>
         <translation>Suunta</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="346"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="364"/>
         <source>Portrait</source>
         <translation>Pysty</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="356"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="374"/>
         <source>Landscape</source>
         <translation>Vaaka</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="384"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="402"/>
         <source>Pages</source>
         <translation>Sivut</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="394"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="412"/>
         <source>Color mode</source>
         <translation>Väritila</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="396"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1478"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1524"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="414"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1553"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1620"/>
         <source>Color</source>
         <translation>Väri</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="396"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1517"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1524"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="414"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1605"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1620"/>
         <source>Grayscale</source>
         <translation>Harmaasävy</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="407"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="425"/>
         <source>Margins</source>
         <translation>Marginaalit</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="409"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="427"/>
         <source>Narrow (mm)</source>
         <translation>Kapea (mm)</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="409"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="427"/>
         <source>Normal (mm)</source>
         <translation>Normaali (mm)</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="409"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="427"/>
         <source>Moderate (mm)</source>
         <translation>Kohtalainen (mm)</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="409"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="427"/>
         <source>Customize (mm)</source>
         <translation>Mukauta (mm)</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="415"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="433"/>
         <source>Top</source>
         <translation>Ylös</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="418"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="436"/>
         <source>Left</source>
         <translation>Vasen</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="421"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="439"/>
         <source>Bottom</source>
         <translation>Alas</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="424"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="442"/>
         <source>Right</source>
         <translation>Oikea</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="469"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="487"/>
         <source>Scaling</source>
         <translation>Skaalaus</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="483"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="501"/>
         <source>Actual size</source>
         <translation>Todellinen koko</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="492"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="510"/>
         <source>Scale</source>
         <translation>Skaalaa</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="523"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="541"/>
         <source>Paper</source>
         <translation>Paperi</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="533"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="551"/>
         <source>Paper size</source>
         <translation>Paperin koko</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="546"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="564"/>
         <source>Print Layout</source>
         <translation>Tulosteen asettelu</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="557"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="575"/>
         <source>Duplex</source>
         <translation>Kääntöyksikkö</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="570"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="588"/>
         <source>N-up printing</source>
         <translation>Sivuja sivulle</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="590"/>
         <source>2 pages/sheet, 1×2</source>
         <translation>2 sivua/arkki, 1×2</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="590"/>
         <source>4 pages/sheet, 2×2</source>
         <translation>4 sivua/arkki, 2×2</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="590"/>
         <source>6 pages/sheet, 2×3</source>
         <translation>6 sivua/arkki, 2×3</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="590"/>
         <source>9 pages/sheet, 3×3</source>
         <translation>9 sivua/arkki, 3×3</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="590"/>
         <source>16 pages/sheet, 4×4</source>
         <translation>16 sivua/arkki, 4×4</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="581"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="599"/>
         <source>Layout direction</source>
         <translation>Asettelun suunta</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="626"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="644"/>
         <source>Page Order</source>
         <translation>Sivujärjestys</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="636"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="655"/>
         <source>Collate pages</source>
         <translation>Lajittele sivut</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="641"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="661"/>
         <source>Print pages in order</source>
         <translation>Sivujen tulostusjärjestys</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="643"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="663"/>
         <source>Front to back</source>
         <translation>Edestä taakse</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="643"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="663"/>
         <source>Back to front</source>
         <translation>Takaa eteen</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="667"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="687"/>
         <source>Watermark</source>
         <translation>Vesileima</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="678"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="698"/>
         <source>Add watermark</source>
         <translation>Lisää vesileima</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="720"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="740"/>
         <source>Text watermark</source>
         <translation>Vesileiman teksti</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="722"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="742"/>
         <source>Confidential</source>
         <translation>Salassapito</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="722"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="742"/>
         <source>Draft</source>
         <translation>Vedos</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="722"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="742"/>
         <source>Sample</source>
         <translation>Näyte</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="722"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="742"/>
         <source>Custom</source>
         <translation>Mukautettu</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="730"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="750"/>
         <source>Input your text</source>
         <translation>Syötä teksti</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="753"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="773"/>
         <source>Picture watermark</source>
         <translation>Vesileima kuvana</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="774"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="794"/>
         <source>Layout</source>
         <translation>Asettelu</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="776"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="796"/>
         <source>Tile</source>
         <translation>Ruutu</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="776"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="796"/>
         <source>Center</source>
         <translation>Keskitetty</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="787"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="807"/>
         <source>Angle</source>
         <translation>Kulma</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="803"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="823"/>
         <source>Size</source>
         <translation>Koko</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="824"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="844"/>
         <source>Transparency</source>
         <translation>Läpikuultava</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="881"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="901"/>
         <source>Print to PDF</source>
         <translation>Tulosta PDF</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="882"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="902"/>
         <source>Save as Image</source>
         <translation>Tallenna kuvana</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1113"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1171"/>
         <source>Collapse</source>
         <translation>Taita</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1234"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1241"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1294"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1301"/>
         <source>Flip on short edge</source>
         <translation>Käännä lyhyellä reunalla</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1237"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1240"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1297"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1300"/>
         <source>Flip on long edge</source>
         <translation>Käännä pitkällä reunalla</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1337"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1397"/>
         <source>Input page numbers please</source>
         <translation>Syötä sivunumerot</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1340"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1400"/>
         <source>Maximum page number reached</source>
         <translation>Sivunumeron enimmäismäärä saavutettu</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1343"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1403"/>
         <source>Input English comma please</source>
         <translation>Anna englantilainen pilkku</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1346"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1406"/>
         <source>Input page numbers like this: 1,3,5-7,11-15,18,21</source>
         <translation>Syötä sivunumerot näin: 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1483"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1558"/>
         <source>Save</source>
+        <comment>button</comment>
         <translation>Tallenna</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1575"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2168"/>
+        <source>*.pdf</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1672"/>
         <source>For example, 1,3,5-7,11-15,18,21</source>
         <translation>Esimerkki, 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2061"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2168"/>
         <source>Save as PDF</source>
         <translation>Tallenna PDF</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2061"/>
-        <source>PDF file</source>
-        <translation>PDF tiedosto</translation>
-    </message>
-    <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2099"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2207"/>
         <source>Save as image</source>
         <translation>Tallenna kuvana</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2101"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2209"/>
         <source>Images</source>
         <translation>Kuvat</translation>
     </message>
@@ -538,20 +541,20 @@
 <context>
     <name>DPrintPreviewWidget</name>
     <message>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1250"/>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1253"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1590"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1593"/>
         <source>Confidential</source>
         <translation>Salassapito</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1268"/>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1271"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1608"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1611"/>
         <source>Draft</source>
         <translation>Vedos</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1286"/>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1289"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1626"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1629"/>
         <source>Sample</source>
         <translation>Näyte</translation>
     </message>
@@ -559,7 +562,7 @@
 <context>
     <name>DSearchEdit</name>
     <message>
-        <location filename="../widgets/dsearchedit.cpp" line="285"/>
+        <location filename="../widgets/dsearchedit.cpp" line="291"/>
         <source>Search</source>
         <translation>Etsi</translation>
     </message>
@@ -598,22 +601,22 @@
 <context>
     <name>DTextEdit</name>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="155"/>
+        <location filename="../widgets/dtextedit.cpp" line="171"/>
         <source>Stop reading</source>
         <translation>Lopeta lukeminen</translation>
     </message>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="157"/>
+        <location filename="../widgets/dtextedit.cpp" line="173"/>
         <source>Text to Speech</source>
         <translation>Teksti puheeksi</translation>
     </message>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="180"/>
+        <location filename="../widgets/dtextedit.cpp" line="196"/>
         <source>Translate</source>
         <translation>Käännös</translation>
     </message>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="202"/>
+        <location filename="../widgets/dtextedit.cpp" line="218"/>
         <source>Speech To Text</source>
         <translation>Puhe tekstiksi</translation>
     </message>
@@ -621,16 +624,9 @@
 <context>
     <name>PickColorWidget</name>
     <message>
-        <location filename="../widgets/dprintpickcolorwidget.cpp" line="89"/>
+        <location filename="../widgets/dprintpickcolorwidget.cpp" line="109"/>
         <source>Color</source>
         <translation>Väri</translation>
-    </message>
-</context>
-<context>
-    <name>PrintPreviewDialog</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -649,7 +645,7 @@
         <translation>Ei hakutuloksia</translation>
     </message>
     <message>
-        <location filename="../widgets/private/settings/content.cpp" line="330"/>
+        <location filename="../widgets/private/settings/content.cpp" line="331"/>
         <source>Restore Defaults</source>
         <translation>Palauta oletukset</translation>
     </message>
@@ -657,7 +653,7 @@
 <context>
     <name>QWidgetTextControl</name>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="147"/>
+        <location filename="../widgets/dtextedit.cpp" line="163"/>
         <source>Select All</source>
         <translation>Valitse kaikki</translation>
     </message>
@@ -673,37 +669,37 @@
 <context>
     <name>TitleBarMenu</name>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="526"/>
+        <location filename="../widgets/dtitlebar.cpp" line="527"/>
         <source>Theme</source>
         <translation>Teema</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="528"/>
+        <location filename="../widgets/dtitlebar.cpp" line="529"/>
         <source>Light Theme</source>
         <translation>Vaalea</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="529"/>
+        <location filename="../widgets/dtitlebar.cpp" line="530"/>
         <source>Dark Theme</source>
         <translation>Tumma</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="530"/>
+        <location filename="../widgets/dtitlebar.cpp" line="531"/>
         <source>System Theme</source>
         <translation>Järjestelmän</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="554"/>
+        <location filename="../widgets/dtitlebar.cpp" line="555"/>
         <source>Help</source>
         <translation>Apua</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="561"/>
+        <location filename="../widgets/dtitlebar.cpp" line="563"/>
         <source>About</source>
         <translation>Tietoja</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="568"/>
+        <location filename="../widgets/dtitlebar.cpp" line="570"/>
         <source>Exit</source>
         <translation>Poistu</translation>
     </message>
