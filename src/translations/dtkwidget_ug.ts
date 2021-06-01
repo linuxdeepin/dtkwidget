@@ -7,12 +7,12 @@
         <translation>مۇقىملاشتۇرۇش </translation>
     </message>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1094"/>
+        <location filename="../widgets/dapplication.cpp" line="1238"/>
         <source>Version: %1</source>
         <translation>نەشرى : %1</translation>
     </message>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1098"/>
+        <location filename="../widgets/dapplication.cpp" line="1242"/>
         <source>%1 is released under %2</source>
         <translation>%1 قۇيۇپ بېرىش ئاستىداi %2</translation>
     </message>
@@ -20,87 +20,87 @@
 <context>
     <name>DCrumbEdit</name>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="896"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="900"/>
         <source>Black</source>
         <translation>قارا رەڭ</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="899"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="903"/>
         <source>White</source>
         <translation>ئاق رەڭ</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="902"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="906"/>
         <source>Dark Gray</source>
         <translation>قېنىق كۈلرەڭ </translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="905"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="909"/>
         <source>Gray</source>
         <translation>كۈلرەڭ</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="908"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="912"/>
         <source>Light Gray</source>
         <translation> سۇس كۈلرەڭ </translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="911"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="915"/>
         <source>Red</source>
         <translation> قىزىل رەڭ </translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="914"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="918"/>
         <source>Green</source>
         <translation> يېشىل رەڭ </translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="917"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="921"/>
         <source>Blue</source>
         <translation> كۆك رەڭ </translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="920"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="924"/>
         <source>Cyan</source>
         <translation> كۆك يېشىل رەڭ </translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="923"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="927"/>
         <source>Magenta</source>
         <translation>ماگېن </translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="926"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="930"/>
         <source>Yellow</source>
         <translation> سېرىق رەڭ </translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="929"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="933"/>
         <source>Dark Red</source>
         <translation> قېنىق قىزىل رەڭ </translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="932"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="936"/>
         <source>Dark Green</source>
         <translation> قېنىق يېشىل رەڭ </translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="935"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="939"/>
         <source>Dark Blue</source>
         <translation> قېنىق كۆك رەڭ </translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="938"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="942"/>
         <source>Dark Cyan</source>
         <translation> قېنىق كۆك يېشىل رەڭ </translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="941"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="945"/>
         <source>Dark Magenta</source>
         <translation>قېنىق ماگېن </translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="944"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="948"/>
         <source>Dark Yellow</source>
         <translation> قېنىق سېرىق رەڭ </translation>
     </message>
@@ -121,7 +121,7 @@
 <context>
     <name>DKeySequenceEdit</name>
     <message>
-        <location filename="../widgets/dkeysequenceedit.cpp" line="42"/>
+        <location filename="../widgets/dkeysequenceedit.cpp" line="85"/>
         <source>Enter a new shortcut</source>
         <translation>يېڭى تېزلەتمە كىرگۈزۈڭ</translation>
     </message>
@@ -152,385 +152,388 @@
 <context>
     <name>DPrintPreviewDialogPrivate</name>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="215"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1117"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="232"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1175"/>
         <source>Advanced</source>
         <translation>ئالىي تەڭشەك</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="238"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="255"/>
         <source>Cancel</source>
+        <comment>button</comment>
         <translation> ئەمەلدىن قالدۇرۇش </translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="239"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1508"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="256"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1596"/>
         <source>Print</source>
+        <comment>button</comment>
         <translation>بېسىش</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="255"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="272"/>
         <source>Basic</source>
         <translation>ئاساسىي تەڭشەك</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="270"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="287"/>
         <source>Printer</source>
         <translation>پىرىنتېر</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="284"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="301"/>
         <source>Copies</source>
         <translation>نۇسخا سانى</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="303"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="321"/>
         <source>Page range</source>
         <translation>بەت دائىرىسى</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="305"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="323"/>
         <source>All</source>
         <translation>ھەممىنى</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="306"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="324"/>
         <source>Current page</source>
         <translation>مۇشۇ بەتنى</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="307"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="325"/>
         <source>Select pages</source>
         <translation>بەلگىلىگەن بەتنى</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="322"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="340"/>
         <source>Orientation</source>
         <translation>بسېىس يۆنىلىشى</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="346"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="364"/>
         <source>Portrait</source>
         <translation>ۋېرتىكال</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="356"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="374"/>
         <source>Landscape</source>
         <translation>توغرىسىغا</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="384"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="402"/>
         <source>Pages</source>
         <translation>بەت تەڭشىكى</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="394"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="412"/>
         <source>Color mode</source>
         <translation>رەڭ</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="396"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1478"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1524"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="414"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1553"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1620"/>
         <source>Color</source>
         <translation>رەڭلىك</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="396"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1517"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1524"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="414"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1605"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1620"/>
         <source>Grayscale</source>
         <translation>رەڭسىز</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="407"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="425"/>
         <source>Margins</source>
         <translation>بەت يېنى ئارىلىقى</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="409"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="427"/>
         <source>Narrow (mm)</source>
         <translation>تار (mm)</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="409"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="427"/>
         <source>Normal (mm)</source>
         <translation>نورمال (mm)</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="409"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="427"/>
         <source>Moderate (mm)</source>
         <translation>مۇۋاپىق (mm)</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="409"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="427"/>
         <source>Customize (mm)</source>
         <translation>بەلگىلەش (mm)</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="415"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="433"/>
         <source>Top</source>
         <translation>ئۈستى</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="418"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="436"/>
         <source>Left</source>
         <translation>سول</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="421"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="439"/>
         <source>Bottom</source>
         <translation>ئاستى</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="424"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="442"/>
         <source>Right</source>
         <translation>ئوڭ</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="469"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="487"/>
         <source>Scaling</source>
         <translation>كۆرۈنۈشى</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="483"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="501"/>
         <source>Actual size</source>
         <translation>ئەمەلىي چوڭلۇقى</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="492"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="510"/>
         <source>Scale</source>
         <translation>بەلگىلىگەن نىسبەتتە</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="523"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="541"/>
         <source>Paper</source>
         <translation>قەغەز</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="533"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="551"/>
         <source>Paper size</source>
         <translation>قەغەز چوڭلۇقى</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="546"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="564"/>
         <source>Print Layout</source>
         <translation>بېسىش ئۇسۇلى</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="557"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="575"/>
         <source>Duplex</source>
         <translation>قوش بەتلىك</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="570"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="588"/>
         <source>N-up printing</source>
         <translation>قاتار بېسىش</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="590"/>
         <source>2 pages/sheet, 1×2</source>
         <translation>بىر بەتكە 2 بەت 1×2</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="590"/>
         <source>4 pages/sheet, 2×2</source>
         <translation>بىر بەتكە 4 بەت 2×2</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="590"/>
         <source>6 pages/sheet, 2×3</source>
         <translation>بىر بەتكە 6 بەت 3×2</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="590"/>
         <source>9 pages/sheet, 3×3</source>
         <translation>بىر بەتكە 9 بەت 3×3</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="572"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="590"/>
         <source>16 pages/sheet, 4×4</source>
         <translation>بىر بەتكە 16 بەت 4×4</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="581"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="599"/>
         <source>Layout direction</source>
         <translation>تەرتىپ بويىچە بېسىش</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="626"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="644"/>
         <source>Page Order</source>
         <translation>بېسىش تەرتىپى</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="636"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="655"/>
         <source>Collate pages</source>
         <translation>بىرمۇبىر بېسىش</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="641"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="661"/>
         <source>Print pages in order</source>
         <translation>تەرتىپ بويىچە بېسىش</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="643"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="663"/>
         <source>Front to back</source>
         <translation>ئالدىدىن ئارقىغا</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="643"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="663"/>
         <source>Back to front</source>
         <translation>ئارقىدىن ئالدىغا</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="667"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="687"/>
         <source>Watermark</source>
         <translation>تامغا</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="678"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="698"/>
         <source>Add watermark</source>
         <translation>تامغا قوشۇش</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="720"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="740"/>
         <source>Text watermark</source>
         <translation>خەتلىك تامغا</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="722"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="742"/>
         <source>Confidential</source>
         <translation>مۇتلەق مەخپىي</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="722"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="742"/>
         <source>Draft</source>
         <translation>كۇپىيە</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="722"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="742"/>
         <source>Sample</source>
         <translation>نۇسخا</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="722"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="742"/>
         <source>Custom</source>
         <translation>بەلگىلەش</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="730"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="750"/>
         <source>Input your text</source>
         <translation>تامغا كىرگۈزۈڭ</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="753"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="773"/>
         <source>Picture watermark</source>
         <translation>رەسىم تامغا</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="774"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="794"/>
         <source>Layout</source>
         <translation>بېسىش ئۇسۇلى</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="776"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="796"/>
         <source>Tile</source>
         <translation>يېيىش</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="776"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="796"/>
         <source>Center</source>
         <translation>ئوتتورىغا</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="787"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="807"/>
         <source>Angle</source>
         <translation>يانتۇلۇقى</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="803"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="823"/>
         <source>Size</source>
         <translation>سىغىمى</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="824"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="844"/>
         <source>Transparency</source>
         <translation>سۈزۈكلۈكى</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="881"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="901"/>
         <source>Print to PDF</source>
         <translation>PDF شەكلىدە باشقا ساقلاش</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="882"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="902"/>
         <source>Save as Image</source>
         <translation>رەسىم شەكلىدە ساقلاش</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1113"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1171"/>
         <source>Collapse</source>
         <translation>يىغىش</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1234"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1241"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1294"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1301"/>
         <source>Flip on short edge</source>
         <translation>قىسقا ياندىن ئۆرۈش</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1237"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1240"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1297"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1300"/>
         <source>Flip on long edge</source>
         <translation>ئۇزۇن ياندىن ئۆرۈش</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1337"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1397"/>
         <source>Input page numbers please</source>
         <translation>باسىدىغان بەت نومۇرىنى كىرگۈزۈڭ</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1340"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1400"/>
         <source>Maximum page number reached</source>
         <translation>بېسىش دائىرىسىدىن ئېشىپ كەتتى</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1343"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1403"/>
         <source>Input English comma please</source>
         <translation>ئىنگلىزچە پەش كىرگۈزۈڭ</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1346"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1406"/>
         <source>Input page numbers like this: 1,3,5-7,11-15,18,21</source>
         <translation>توغرا فورماتتا كىرگۈزۈڭ، مەسىلەن: 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1483"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1558"/>
         <source>Save</source>
+        <comment>button</comment>
         <translation>ساقلاش</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1575"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2168"/>
+        <source>*.pdf</source>
+        <translation>*.pdf</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1672"/>
         <source>For example, 1,3,5-7,11-15,18,21</source>
         <translation>كىرگۈزگىلى بولىدىغان فورمات: 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2061"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2168"/>
         <source>Save as PDF</source>
         <translation>PDF شەكلىدە ساقلاش</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2061"/>
-        <source>PDF file</source>
-        <translation>PDF ھۆججىتى فورماتى</translation>
-    </message>
-    <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2099"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2207"/>
         <source>Save as image</source>
         <translation>رەسىم شەكلىدە ساقلاش</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2101"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2209"/>
         <source>Images</source>
         <translation>رەسىم</translation>
     </message>
@@ -538,20 +541,20 @@
 <context>
     <name>DPrintPreviewWidget</name>
     <message>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1250"/>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1253"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1590"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1593"/>
         <source>Confidential</source>
         <translation>مۇتلەق مەخپىي</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1268"/>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1271"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1608"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1611"/>
         <source>Draft</source>
         <translation>كۇپىيە</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1286"/>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1289"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1626"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1629"/>
         <source>Sample</source>
         <translation>نۇسخا</translation>
     </message>
@@ -559,7 +562,7 @@
 <context>
     <name>DSearchEdit</name>
     <message>
-        <location filename="../widgets/dsearchedit.cpp" line="285"/>
+        <location filename="../widgets/dsearchedit.cpp" line="291"/>
         <source>Search</source>
         <translation> ئىزدەش </translation>
     </message>
@@ -598,22 +601,22 @@
 <context>
     <name>DTextEdit</name>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="155"/>
+        <location filename="../widgets/dtextedit.cpp" line="171"/>
         <source>Stop reading</source>
         <translation>ئوقۇشنى توختىتىش</translation>
     </message>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="157"/>
+        <location filename="../widgets/dtextedit.cpp" line="173"/>
         <source>Text to Speech</source>
         <translation>تېكىستنى ئاۋازغا ئايلاندۇرۇش</translation>
     </message>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="180"/>
+        <location filename="../widgets/dtextedit.cpp" line="196"/>
         <source>Translate</source>
         <translation>تەرجىمە</translation>
     </message>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="202"/>
+        <location filename="../widgets/dtextedit.cpp" line="218"/>
         <source>Speech To Text</source>
         <translation>ئاۋازنى تېكىستكە ئايلاندۇرۇش</translation>
     </message>
@@ -621,16 +624,9 @@
 <context>
     <name>PickColorWidget</name>
     <message>
-        <location filename="../widgets/dprintpickcolorwidget.cpp" line="89"/>
+        <location filename="../widgets/dprintpickcolorwidget.cpp" line="109"/>
         <source>Color</source>
         <translation>رەڭلىك</translation>
-    </message>
-</context>
-<context>
-    <name>PrintPreviewDialog</name>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -649,7 +645,7 @@
         <translation>ئىزدەش نەتىجىسى يوق</translation>
     </message>
     <message>
-        <location filename="../widgets/private/settings/content.cpp" line="330"/>
+        <location filename="../widgets/private/settings/content.cpp" line="331"/>
         <source>Restore Defaults</source>
         <translation>ئەسلىدىكى تەڭشەك ھالىتىگە قايتۇرۇش</translation>
     </message>
@@ -657,7 +653,7 @@
 <context>
     <name>QWidgetTextControl</name>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="147"/>
+        <location filename="../widgets/dtextedit.cpp" line="163"/>
         <source>Select All</source>
         <translation>ھەممە</translation>
     </message>
@@ -673,37 +669,37 @@
 <context>
     <name>TitleBarMenu</name>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="526"/>
+        <location filename="../widgets/dtitlebar.cpp" line="527"/>
         <source>Theme</source>
         <translation>ئۇسلۇب</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="528"/>
+        <location filename="../widgets/dtitlebar.cpp" line="529"/>
         <source>Light Theme</source>
         <translation>يورۇق ئۇسلۇب</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="529"/>
+        <location filename="../widgets/dtitlebar.cpp" line="530"/>
         <source>Dark Theme</source>
         <translation>قارا ئۇسلۇب</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="530"/>
+        <location filename="../widgets/dtitlebar.cpp" line="531"/>
         <source>System Theme</source>
         <translation>سېستىما ئۇسلۇبى</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="554"/>
+        <location filename="../widgets/dtitlebar.cpp" line="555"/>
         <source>Help</source>
         <translation>ياردەم</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="561"/>
+        <location filename="../widgets/dtitlebar.cpp" line="563"/>
         <source>About</source>
         <translation>ھەققىدە</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="568"/>
+        <location filename="../widgets/dtitlebar.cpp" line="570"/>
         <source>Exit</source>
         <translation>چېكىنىش</translation>
     </message>
