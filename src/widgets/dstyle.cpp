@@ -2546,6 +2546,11 @@ void DStyle::viewItemLayout(const QStyle *style, const QStyleOptionViewItem *opt
                 }
 
                 display.setLeft(pixmapRect->right() + spacing);
+
+                // 居中时不需要增加spacing距离
+                if (opt->displayAlignment & Qt::AlignHCenter) {
+                    display.setLeft(pixmapRect->right());
+                }
             } else {
                 int residue_width = opt->rect.right() - pixmapRect->left();
 
