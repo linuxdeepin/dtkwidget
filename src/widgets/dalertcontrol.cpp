@@ -39,7 +39,8 @@ DAlertControlPrivate::DAlertControlPrivate(DAlertControl *q)
 
 void DAlertControlPrivate::updateTooltipPos()
 {
-    if (!target || !target->parentWidget()) {
+    if (!target || !target->parentWidget() || !frame || !frame->parentWidget()) {
+        qWarning("target or frame is nullptr.");
         return;
     }
     QWidget *p = target->parentWidget();
@@ -47,7 +48,7 @@ void DAlertControlPrivate::updateTooltipPos()
     int w = DStyle::pixelMetric(p->style(), DStyle::PM_FloatingWidgetShadowMargins) / 2;
     QPoint point = QPoint(target->x() - w, target->y() + target->height() - w);
     frame->move(p->mapTo(qobject_cast<QWidget *>(frame->parentWidget()), point));
-    int tipWidth= frame->parentWidget()->width() - 40;
+    int tipWidth= frame->parentWidget()->width() - 20;
     tooltip->setMaximumWidth(tipWidth);
     frame->setMinimumHeight(tooltip->heightForWidth(tipWidth) + frame->layout()->spacing() *2);
     frame->adjustSize();
@@ -55,19 +56,32 @@ void DAlertControlPrivate::updateTooltipPos()
     int tw = target->width();
     int fw = frame->width();
     int leftPending = tw - fw;
+    QPoint objPoint;
     switch (alignment) {
+    case Qt::AlignLeft:
+        objPoint = p->mapTo(qobject_cast<QWidget *>(frame->parentWidget()), point);
+        if (objPoint.x() + frame->width() > (frame->parentWidget()->width())) {
+            int shift = (objPoint.x() + frame->width()) - frame->parentWidget()->width();
+            objPoint.setX(objPoint.x() - shift);
+        }
+        break;
     case Qt::AlignRight:
         point += QPoint(leftPending, 0);
+        objPoint = p->mapTo(qobject_cast<QWidget *>(frame->parentWidget()), point);
+        if (objPoint.x() < 0) {
+            objPoint.setX(0);
+        }
         break;
     case Qt::AlignHCenter:
     case Qt::AlignCenter:
         point += QPoint(leftPending/2, 0);
+        objPoint = p->mapTo(qobject_cast<QWidget *>(frame->parentWidget()), point);
         break;
     default:
         return;
     }
 
-    frame->move(p->mapTo(qobject_cast<QWidget *>(frame->parentWidget()), point));
+    frame->move(objPoint);
 }
 
 DAlertControl::DAlertControl(QWidget *target, QObject *parent)
