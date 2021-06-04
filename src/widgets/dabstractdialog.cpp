@@ -34,6 +34,9 @@
 #include "dapplication.h"
 #include "dblureffectwidget.h"
 
+#include <DGuiApplicationHelper>
+#include <DWindowManagerHelper>
+
 DWIDGET_BEGIN_NAMESPACE
 
 DAbstractDialogPrivate::DAbstractDialogPrivate(DAbstractDialog *qq):
@@ -59,6 +62,12 @@ void DAbstractDialogPrivate::init(bool blurIfPossible)
         bgBlurWidget->setFull(true);
         bgBlurWidget->setMaskColor(DBlurEffectWidget::AutoColor);
         bgBlurWidget->setMaskAlpha(204); // 80%
+
+        if (!DWindowManagerHelper::instance()->hasBlurWindow()
+                && DGuiApplicationHelper::instance()->isTabletEnvironment()) {
+            blurIfPossible = false;
+        }
+
         bgBlurWidget->setBlurEnabled(blurIfPossible);
         q->setAttribute(Qt::WA_TranslucentBackground, blurIfPossible);
     } else {
