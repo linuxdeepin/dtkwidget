@@ -33,6 +33,7 @@ DWIDGET_BEGIN_NAMESPACE
 class DApplication;
 class DApplicationPrivate;
 class DAboutDialog;
+class DAppHandler;
 
 #if defined(qApp)
 #undef qApp
@@ -152,6 +153,10 @@ Q_SIGNALS:
     //###(zccrs): Emit form the Qt platform theme plugin(from the package: dde-qt5integration)
     void screenDevicePixelRatioChanged(QScreen *screen);
 
+public:
+    void setCustomHandler(DAppHandler *handler);
+    DAppHandler *customHandler();
+
 protected:
     virtual void handleHelpAction();
     virtual void handleAboutAction();
@@ -167,6 +172,15 @@ private:
     D_PRIVATE_SLOT(void _q_onNewInstanceStarted())
     D_PRIVATE_SLOT(void _q_panWindowContentsForVirtualKeyboard())
     D_PRIVATE_SLOT(void _q_resizeWindowContentsForVirtualKeyboard())
+};
+
+class LIBDTKWIDGETSHARED_EXPORT DAppHandler {
+public:
+    inline virtual ~DAppHandler() = default;
+
+    virtual void handleHelpAction() = 0;
+    virtual void handleAboutAction() = 0;
+    virtual void handleQuitAction() = 0;
 };
 
 class DtkBuildVersion {
