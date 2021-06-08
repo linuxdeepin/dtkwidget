@@ -1243,6 +1243,11 @@ void DArrowRectanglePrivate::init(DArrowRectangle::FloatMode mode)
         q->setAttribute(Qt::WA_TranslucentBackground);
     }
 
+    if (!DWindowManagerHelper::instance()->hasBlurWindow()
+                    && DGuiApplicationHelper::instance()->isTabletEnvironment()) {
+        q->setAttribute(Qt::WA_TranslucentBackground, false);
+    }
+
     if (DApplication::isDXcbPlatform() && (DArrowRectangle::FloatWindow == floatMode)) {
         m_handle = new DPlatformWindowHandle(q, q);
         m_handle->setTranslucentBackground(true);
