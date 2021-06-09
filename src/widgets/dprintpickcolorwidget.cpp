@@ -98,6 +98,7 @@ void DPrintPickColorWidget::initUI()
         << QColor("#FFFFFF") << QColor("#e3e3e3") << QColor("#c9c9c9") << QColor("#adadad") << QColor("#6f6f6f") << QColor("#404040") << QColor("#1b1b1b") << QColor("#000000");
     btnGroup = new QButtonGroup(this);
     for (int i = 0; i <= colorList.count() - 1; i++) {
+        // cppcheck-suppress arrayIndexOutOfBounds
         ColorButton *bn = new ColorButton(colorList[i]);
         bn->setFocusPolicy(Qt::NoFocus);
         btnlist.append(bn);
