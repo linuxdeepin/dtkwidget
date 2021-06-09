@@ -525,6 +525,7 @@ void DPrintPreviewWidgetPrivate::updatePageByPagePrintVector(QVector<int> &pageV
             if (isAsynPreview) {
                 for (int i = 0; i <= pic.count() - 1; i++) {
                     for (int j = 1; j < pageCopyCount; j++) {
+                        // cppcheck-suppress arrayIndexOutOfBounds
                         pictures.insert(pictures.indexOf(pic.at(i)), pic.at(i));
                     }
                 }
@@ -532,6 +533,7 @@ void DPrintPreviewWidgetPrivate::updatePageByPagePrintVector(QVector<int> &pageV
             //插入拷贝份数需要打印的页码
             for (int i = 0; i <= vector.count() - 1; i++) {
                 for (int j = 1; j < pageCopyCount; j++) {
+                    // cppcheck-suppress arrayIndexOutOfBounds
                     pageVector.insert(pageVector.indexOf(vector.at(i)), vector.at(i));
                 }
             }
