@@ -569,10 +569,12 @@ void DTitlebarPrivate::_q_addDefaultMenuItems()
     }
 
     // add quit menu item.
-    if (!quitAction && !DGuiApplicationHelper::isTabletEnvironment()) {
+    if (!quitAction) {
         quitAction = new QAction(qApp->translate("TitleBarMenu", "Exit"), menu);
         QObject::connect(quitAction, SIGNAL(triggered(bool)), q, SLOT(_q_quitActionTriggered()));
-        menu->addAction(quitAction);
+        if (!DGuiApplicationHelper::isTabletEnvironment()) {
+            menu->addAction(quitAction);
+        }
     }
 }
 
