@@ -92,3 +92,8 @@ DEPENDPATH += $$PWD/../../../src
 CONFIG(debug, debug|release) {
     unix:QMAKE_RPATHDIR += $$OUT_PWD/../../../src
 }
+
+target.path = $$QT.dtkcore5.5.libs/examples
+
+INSTALLS += target
+
