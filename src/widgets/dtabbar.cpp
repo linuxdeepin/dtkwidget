@@ -31,6 +31,7 @@
 #include <QDragMoveEvent>
 #include <QTimer>
 #include <QToolTip>
+#include <DApplicationHelper>
 
 #include <private/qtabbar_p.h>
 #define private public
@@ -52,6 +53,48 @@ inline static bool verticalTabs(QTabBar::Shape shape)
            || shape == QTabBar::RoundedEast
            || shape == QTabBar::TriangularWest
            || shape == QTabBar::TriangularEast;
+}
+
+// QBoxLayout::Direction与QTabBar::Shape之间的映射
+inline static QBoxLayout::Direction shapeToDirection (const QTabBar::Shape shape)
+{
+    if (verticalTabs(shape)) {
+        return QBoxLayout::TopToBottom;
+    } else {
+        return QBoxLayout::LeftToRight;
+    }
+}
+
+// 判断是否为横向布局
+static inline bool horz(QBoxLayout::Direction dir)
+{
+    return dir == QBoxLayout::RightToLeft || dir == QBoxLayout::LeftToRight;
+}
+
+// TODO 提取到DStyle
+static inline QColor getColor(const QStyleOption *option, DPalette::ColorType type, const QWidget *w)
+{
+    if (auto s = qobject_cast<DStyle*>(w->style())) {
+        const DPalette &pa = DApplicationHelper::instance()->palette(w, option->palette);
+        return s->generatedBrush(option, pa.brush(type), pa.currentColorGroup(), type).color();
+    }
+    return QColor();
+}
+
+// 获得边框线颜色，与chameleonstyle保持一致，TODO 提取到DStyle
+static inline QColor getTabbarBorderColor(const QStyleOption *opt, const QWidget *w)
+{
+    if (DGuiApplicationHelper::instance()->paletteType() == DGuiApplicationHelper::LightType
+            || (DGuiApplicationHelper::instance()->paletteType() == DGuiApplicationHelper::UnknownType
+                && DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::LightType)) {
+        return getColor(opt, DPalette::FrameBorder, w);
+    } else if (DGuiApplicationHelper::instance()->paletteType() == DGuiApplicationHelper::DarkType
+               || (DGuiApplicationHelper::instance()->paletteType() == DGuiApplicationHelper::UnknownType
+                   && DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::DarkType)){
+        return QColor(0, 0, 0, static_cast<int>(0.05 * 255));
+    } else {
+        return getColor(opt, DPalette::FrameBorder, w);
+    }
 }
 
 class DMovableTabWidget : public QWidget
@@ -139,21 +182,24 @@ public:
         d->rightB->setFixedSize(0, 0);
         d->rightB->installEventFilter(this);
 
+        qq->installEventFilter(this);
+
         connect(leftScrollButton, &DIconButton::clicked, d->leftB, &QToolButton::click);
         connect(rightScrollButton, &DIconButton::clicked, d->rightB, &QToolButton::click);
 
-        layout = new QHBoxLayout(qq);
+        layout = new QBoxLayout(shapeToDirection(d->shape), qq);
         layout->setMargin(0);
         layout->setSpacing(0);
-        stretch = new QSpacerItem(1, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
-        leftBtnR = new QSpacerItem(0, 0);
+        layout->setContentsMargins(0, 0, 0, 0);
+
         leftBtnL = new QSpacerItem(0, 0);
+        leftBtnR = new QSpacerItem(0, 0);
         rightBtnL = new QSpacerItem(0, 0);
-        addBtnL = new QSpacerItem(DStyle::pixelMetric(style(), DStyle::PM_ContentsSpacing), 0);
-        addBtnR = new QSpacerItem(DStyle::pixelMetric(style(), DStyle::PM_ContentsSpacing), 0);
+        addBtnL = new QSpacerItem(0, 0);
+        addBtnR = new QSpacerItem(0, 0);
+        stretch = new QSpacerItem(1, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         layout->addSpacerItem(leftBtnL);
-        layout->setContentsMargins(0, 0, 0, 0);
         layout->addWidget(leftScrollButton);
 
         layout->addSpacerItem(leftBtnR);
@@ -162,13 +208,15 @@ public:
 
         layout->addWidget(rightScrollButton);
         layout->addSpacerItem(addBtnL);
-        layout->addWidget(addButton, Qt::AlignCenter);
+        layout->addWidget(addButton);
 
         layout->addSpacerItem(addBtnR);
         layout->addSpacerItem(stretch);
         d->expanding = false;
 
         qq->setTabLabelAlignment(Qt::AlignCenter);
+        updateTabAlignment();
+
         qq->setFocusProxy(this);
 
         connect(this, &DTabBarPrivate::currentChanged, this, &DTabBarPrivate::onCurrentChanged);
@@ -178,11 +226,60 @@ public:
         connect(this, &DTabBarPrivate::tabBarDoubleClicked, qq, &DTabBar::tabBarDoubleClicked);
     }
 
+    // 刷新占位符弹簧的方向及大小,(当前布局方向、是否为直角风格、滑块是否显示、添加按钮是否显示)
+    void refreshSpacers(bool visible = true)
+    {
+        D_Q(DTabBar);
+        const int TabSpacing = DStyle::pixelMetric(style(), DStyle::PM_ContentsSpacing, nullptr) / 2;
+        bool isRectType = q->property("_d_dtk_tabbartab_type").toBool();
+        int ll = 0;
+        int lr = 0;
+        int rl = 0;
+        int al = 0;
+        if (visible) {
+            ll = isRectType ? 6 : TabSpacing;
+            lr = isRectType ? 6 : TabSpacing;
+            rl = isRectType ? 6 : TabSpacing;
+            if (visibleAddButton) {
+                al = isRectType ? 12 : TabSpacing * 2;
+            }
+        } else {
+            if (visibleAddButton) {
+                al = isRectType ? 6 : TabSpacing;
+            }
+        }
+
+        // 根据布局方向设置不同弹簧策略
+        if (horz(shapeToDirection(shape()))) {
+            leftBtnL->changeSize(ll, 0);
+            leftBtnR->changeSize(lr, 0);
+            rightBtnL->changeSize(rl, 0);
+            addBtnL->changeSize(al, 0);
+        } else {
+            leftBtnL->changeSize(0, ll);
+            leftBtnR->changeSize(0, lr);
+            rightBtnL->changeSize(0, rl);
+            addBtnL->changeSize(0, al);
+        }
+    }
+
     ~DTabBarPrivate() override
     {
         if (stretchIsRemove && stretch) {
             delete stretch;
         }
+    }
+
+    // 更新布局内的控件的对齐方式
+    void updateTabAlignment()
+    {
+        Qt::Alignment tabAlignment = Qt::AlignCenter;
+
+        for (int i = 0; i < layout->count(); i++) {
+            QLayoutItem *item = layout->itemAt(i);
+            item->setAlignment(tabAlignment);
+        }
+        layout->invalidate();
     }
 
     void moveTabOffset(int index, int offset)
@@ -194,6 +291,38 @@ public:
         d->tabList[index].dragOffset = offset;
         layoutTab(index); // Make buttons follow tab
         update();
+    }
+
+    // 直角Tabbar，绘制边框延长线。
+    /*
+        ----      ----
+            xxxxxx
+        ----      ----
+     */
+    void drawDTabbarExtendLine()
+    {
+        D_Q(DTabBar);
+
+        if (!q->property("_d_dtk_tabbartab_type").toBool()) {
+            return;
+        }
+
+        QStyleOptionTabBarBase optTabBase;
+        QTabBarPrivate::initStyleBaseOption(&optTabBase, this, q->size());
+
+        QStylePainter p(q);
+        QStyleOption* opt = &optTabBase;
+        p.setPen(getTabbarBorderColor(opt, this));
+
+        const QRect dtabbarRect = q->rect();
+        const QRect qtabbarRect = this->rect();
+
+        // 不用区分是否竖直，线坐标一致，
+        p.drawLine(dtabbarRect.topLeft(), mapTo(q, qtabbarRect.topLeft()));
+        p.drawLine(dtabbarRect.bottomLeft(), mapTo(q, qtabbarRect.bottomLeft()));
+
+        p.drawLine(mapTo(q, qtabbarRect.topRight()), dtabbarRect.topRight());
+        p.drawLine(mapTo(q, qtabbarRect.bottomRight()), dtabbarRect.bottomRight());
     }
 
     struct TabBarAnimation : public QVariantAnimation {
@@ -295,7 +424,7 @@ public:
 
     DIconButton *leftScrollButton;
     DIconButton *rightScrollButton;
-    QHBoxLayout *layout;
+    QBoxLayout *layout;
     QSpacerItem *stretch;
     QSpacerItem *leftBtnL;
     QSpacerItem *leftBtnR;
@@ -359,7 +488,10 @@ void DTabBarPrivate::setupMovableTab()
 
     int taboverlap = style()->pixelMetric(QStyle::PM_TabBarTabOverlap, 0, this);
     QRect grabRect = tabRect(d->pressedIndex);
-    grabRect.adjust(-taboverlap, 0, taboverlap, 0);
+    if (verticalTabs(shape()))
+        grabRect.adjust(0, -taboverlap, 0, taboverlap);
+    else
+        grabRect.adjust(-taboverlap, 0, taboverlap, 0);
 
     QPixmap grabImage(grabRect.size() * devicePixelRatioF());
     grabImage.setDevicePixelRatio(devicePixelRatioF());
@@ -369,10 +501,15 @@ void DTabBarPrivate::setupMovableTab()
 
     QStyleOptionTab tab;
     initStyleOption(&tab, d->pressedIndex);
-    tab.rect.moveTopLeft(QPoint(taboverlap, 0));
+    tab.position = QStyleOptionTab::OnlyOneTab;
+    if (verticalTabs(shape()))
+        tab.rect.moveTopLeft(QPoint(0, taboverlap));
+    else
+        tab.rect.moveTopLeft(QPoint(taboverlap, 0));
     // 强制让文本居中
     tab.rightButtonSize = QSize();
     q_func()->paintTab(&p, d->pressedIndex, tab);
+    p.end();
 
     reinterpret_cast<DMovableTabWidget*>(d->movingTab)->setPixmap(grabImage);
     d->movingTab->setGeometry(grabRect);
@@ -938,30 +1075,17 @@ static QIcon getArrowIcon(const QStyle *style, Qt::ArrowType type)
 
 bool DTabBarPrivate::eventFilter(QObject *watched, QEvent *event)
 {
-    D_Q(DTabBar);
     QTabBarPrivate *d = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
-    bool enabled = q->property("_d_dtk_tabbartab_type").toBool();
+    D_Q(DTabBar);
 
     if (watched == d->leftB) {
         switch (event->type()) {
         case QEvent::Show:
-            if (enabled) {
-                leftBtnL->changeSize(10, 0);
-                leftBtnR->changeSize(10, 0);
-                rightBtnL->changeSize(10, 0);
-                if (!q->visibleAddButton())
-                    addBtnL->changeSize(10, 0);
-            }
+            refreshSpacers();
             leftScrollButton->show();
             break;
         case QEvent::Hide:
-            if (enabled) {
-                leftBtnR->changeSize(0, 0);
-                leftBtnL->changeSize(0, 0);
-                rightBtnL->changeSize(0, 0);
-                if (!q->visibleAddButton())
-                    addBtnL->changeSize(0, 0);
-            }
+            refreshSpacers(false);
             leftScrollButton->hide();
             break;
         case QEvent::EnabledChange:
@@ -995,6 +1119,8 @@ bool DTabBarPrivate::eventFilter(QObject *watched, QEvent *event)
         default:
             break;
         }
+    } else if(watched == q) {
+        drawDTabbarExtendLine();
     }
 
     return QTabBar::eventFilter(watched, event);
@@ -1042,13 +1168,15 @@ void DTabBarPrivate::paintEvent(QPaintEvent *e)
 
     QStylePainter p(this);
     int selected = -1;
-//    int cut = -1;
-//    bool rtl = optTabBase.direction == Qt::RightToLeft;
+    int cutLeft = -1;
+    int cutRight = -1;
     bool vertical = verticalTabs(d->shape);
-//    QStyleOptionTab cutTab;
+    QStyleOptionTab cutTabLeft;
+    QStyleOptionTab cutTabRight;
     selected = d->currentIndex;
     if (d->dragInProgress)
         selected = d->pressedIndex;
+    const QRect scrollRect = d->normalizedScrollRect();
 
     for (int i = 0; i < d->tabList.count(); ++i)
          optTabBase.tabBarRect |= tabRect(i);
@@ -1073,13 +1201,20 @@ void DTabBarPrivate::paintEvent(QPaintEvent *e)
         if (!(tab.state & QStyle::State_Enabled)) {
             tab.palette.setCurrentColorGroup(QPalette::Disabled);
         }
+
         // If this tab is partially obscured, make a note of it so that we can pass the information
         // along when we draw the tear.
-//        if (((!vertical && (!rtl && tab.rect.left() < 0)) || (rtl && tab.rect.right() > width()))
-//            || (vertical && tab.rect.top() < 0)) {
-//            cut = i;
-//            cutTab = tab;
-//        }
+        QRect tabRect = d->tabList[i].rect;
+        int tabStart = vertical ? tabRect.top() : tabRect.left();
+        int tabEnd = vertical ? tabRect.bottom() : tabRect.right();
+        if (tabStart < scrollRect.left() + d->scrollOffset) {
+            cutLeft = i;
+            cutTabLeft = tab;
+        } else if (tabEnd > scrollRect.right() + d->scrollOffset) {
+            cutRight = i;
+            cutTabRight = tab;
+        }
+
         // Don't bother drawing a tab if the entire tab is outside of the visible tab bar.
         if ((!vertical && (tab.rect.right() < 0 || tab.rect.left() > width()))
             || (vertical && (tab.rect.bottom() < 0 || tab.rect.top() > height())))
@@ -1090,6 +1225,7 @@ void DTabBarPrivate::paintEvent(QPaintEvent *e)
             continue;
 
         q->paintTab(&p, i, tab);
+//        p.drawControl(QStyle::CE_TabBarTab, tab); // Qt源码写法
 
         if (i == flashTabIndex) {
             p.setOpacity(opacityOnFlash);
@@ -1113,6 +1249,7 @@ void DTabBarPrivate::paintEvent(QPaintEvent *e)
         }
         if (!d->dragInProgress) {
             q->paintTab(&p, selected, tab);
+//            p.drawControl(QStyle::CE_TabBarTab, tab); // Qt源码写法
 
             if (selected == flashTabIndex) {
                 p.setOpacity(opacityOnFlash);
@@ -1121,16 +1258,25 @@ void DTabBarPrivate::paintEvent(QPaintEvent *e)
             }
         } else {
             int taboverlap = style()->pixelMetric(QStyle::PM_TabBarTabOverlap, 0, this);
-            d->movingTab->setGeometry(tab.rect.adjusted(-taboverlap, 0, taboverlap, 0));
+            if (verticalTabs(d->shape))
+                d->movingTab->setGeometry(tab.rect.adjusted(-taboverlap, 0, taboverlap, 0));
+            else
+                d->movingTab->setGeometry(tab.rect.adjusted(-taboverlap, 0, taboverlap, 0));
         }
     }
 
     // Only draw the tear indicator if necessary. Most of the time we don't need too.
-//    if (d->leftB->isVisible() && cut >= 0) {
-//        cutTab.rect = rect();
-//        cutTab.rect = style()->subElementRect(QStyle::SE_TabBarTearIndicator, &cutTab, this);
-//        p.drawPrimitive(QStyle::PE_IndicatorTabTear, cutTab);
-//    }
+    if (d->leftB->isVisible() && cutLeft >= 0) {
+        cutTabLeft.rect = rect();
+        cutTabLeft.rect = style()->subElementRect(QStyle::SE_TabBarTearIndicatorLeft, &cutTabLeft, this);
+        p.drawPrimitive(QStyle::PE_IndicatorTabTearLeft, cutTabLeft);
+    }
+
+    if (d->rightB->isVisible() && cutRight >= 0) {
+        cutTabRight.rect = rect();
+        cutTabRight.rect = style()->subElementRect(QStyle::SE_TabBarTearIndicatorRight, &cutTabRight, this);
+        p.drawPrimitive(QStyle::PE_IndicatorTabTearRight, cutTabRight);
+    }
 }
 
 void DTabBarPrivate::mouseMoveEvent(QMouseEvent *event)
@@ -1454,34 +1600,18 @@ void DTabBar::setShape(QTabBar::Shape shape)
     d->setShape(shape);
 
     if (old_vertical != new_vertical) {
-        if (QBoxLayout *layout = qobject_cast<QBoxLayout*>(this->layout())) {
-            if (new_vertical)
-                layout->setDirection(QBoxLayout::TopToBottom);
-            else
-                layout->setDirection(QBoxLayout::LeftToRight);
-        }
-
+        // 设置对应shape上的策略
         if (new_vertical) {
             d->leftScrollButton->setIcon(getArrowIcon(style(), Qt::UpArrow));
             d->rightScrollButton->setIcon(getArrowIcon(style(), Qt::DownArrow));
-            d->leftScrollButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-            d->rightScrollButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-            d->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
-            d->addButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-            d->addButton->setFixedHeight(48);
-            d->addButton->setMinimumWidth(0);
-            d->addButton->setMaximumWidth(9999);
+            d->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
         } else {
             d->leftScrollButton->setIcon(getArrowIcon(style(), Qt::LeftArrow));
             d->rightScrollButton->setIcon(getArrowIcon(style(), Qt::RightArrow));
-            d->leftScrollButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
-            d->rightScrollButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
-            d->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
-            d->addButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
-            d->addButton->setFixedWidth(48);
-            d->addButton->setMinimumHeight(0);
-            d->addButton->setMaximumHeight(9999);
+            d->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
         }
+        // 重新设置Direction
+        d->layout->setDirection(shapeToDirection(shape));
     }
 }
 
@@ -1754,8 +1884,7 @@ void DTabBar::setSelectionBehaviorOnRemove(QTabBar::SelectionBehavior behavior)
 
 bool DTabBar::expanding() const
 {
-    QTabBarPrivate *dd = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_func()->d_ptr));
-    return dd->expanding;
+    return d_func()->expanding();
 }
 
 void DTabBar::setExpanding(bool enabled)
@@ -1766,7 +1895,7 @@ void DTabBar::setExpanding(bool enabled)
         return;
     QTabBarPrivate *dd = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d->d_ptr));
     dd->expanding = enabled;
-    QHBoxLayout *auto_layout = d->layout;
+    auto auto_layout = d->layout;
 
     if (enabled) {
         auto_layout->removeItem(d->stretch);
@@ -1863,21 +1992,21 @@ void DTabBar::setEnabledEmbedStyle(bool enable)
 {
     D_D(DTabBar);
 
-    int radius;
     setProperty("_d_dtk_tabbartab_type", enable);
+    d->refreshSpacers();
 
+    int radius;
+    QSize size;
     if (enable) {
         radius = DStyle::pixelMetric(style(), DStyle::PM_FloatingWidgetRadius);
-        d->addButton->setMaximumSize(QSize(24, 24));
-        d->rightScrollButton->setMaximumSize(QSize(24, 24));
-        d->leftScrollButton->setMaximumSize(QSize(24, 24));
+        size = QSize(24, 24);
     } else {
         radius = DStyle::pixelMetric(style(), DStyle::PM_FrameRadius);
-        QSize size = d->addButton->sizeHint();
-        d->addButton->setMaximumSize(size);
-        d->rightScrollButton->setMaximumSize(size);
-        d->leftScrollButton->setMaximumSize(size);
+        size = d->addButton->sizeHint();
     }
+    d->addButton->setMaximumSize(size);
+    d->rightScrollButton->setMaximumSize(size);
+    d->leftScrollButton->setMaximumSize(size);
 
     DStyle::setFrameRadius(d->rightScrollButton, radius);
     DStyle::setFrameRadius(d->leftScrollButton, radius);
@@ -1910,14 +2039,7 @@ void DTabBar::setVisibleAddButton(bool visibleAddButton)
 
     d->visibleAddButton = visibleAddButton;
     d->addButton->setVisible(visibleAddButton);
-
-    if (visibleAddButton) {
-        d->addBtnL->changeSize(10, 0);
-        d->addBtnR->changeSize(10, 0);
-    } else {
-        d->addBtnL->changeSize(0, 0);
-        d->addBtnR->changeSize(0, 0);
-    }
+    d->refreshSpacers();
 }
 
 /*!
@@ -2189,7 +2311,7 @@ QSize DTabBar::tabSizeHint(int index) const
     bool is_vertical = verticalTabs(dd->shape);
 
     if (is_vertical) {
-        size.setWidth(qMax(size.width(), d->width()));
+        size.setWidth(qMax(size.width(), dd->leftB->width()));
     } else {
         size.setHeight(qMax(size.height(), dd->leftB->height()));
     }
