@@ -282,6 +282,63 @@ int DStatusBarExample::getFixedHeight() const
    return 572;
 }
 
+// 构造指定类型的Tabbar
+template<class T>
+T* generateTabBar(const QTabBar::Shape shape, QWidget* parent = nullptr)
+{
+    auto tabbar = new T(parent);
+
+    tabbar->addTab("");
+    tabbar->setTabIcon(0, QIcon(":/images/logo_icon.svg"));
+    tabbar->addTab("标签二");
+    tabbar->addTab("标签三");
+    tabbar->addTab("标签四");
+    tabbar->addTab("标签五");
+    tabbar->addTab("标签六");
+    tabbar->addTab("标签七");
+
+    tabbar->setShape(shape);
+    tabbar->setTabsClosable(true);
+
+    return tabbar;
+}
+
+// 测试DTabBar::setShape接口
+inline static QWidget* createTabBarSetShape(const QList<QTabBar::Shape>& shapes, QWidget* parent)
+{
+    auto view = new QWidget(parent);
+
+    auto layout = new QHBoxLayout(view);
+    layout->setSpacing(40);
+
+    for (auto shape : shapes) {
+        auto *tabbar1 = generateTabBar<DTabBar>(shape);
+        tabbar1->setEnabledEmbedStyle(false);
+        layout->addWidget(tabbar1, 0);
+        {
+            auto border = new QFrame();
+            border->setFrameShape(QFrame::VLine);
+            border->setFrameShadow(QFrame::Sunken);
+            layout->addWidget(border);
+        }
+        auto *tabbar2 = generateTabBar<DTabBar>(shape);
+        tabbar2->setEnabledEmbedStyle(true);
+        layout->addWidget(tabbar2, 0);
+        {
+            auto border = new QFrame();
+            border->setFrameShape(QFrame::VLine);
+            border->setFrameShadow(QFrame::Sunken);
+            layout->addWidget(border);
+        }
+
+        QObject::connect(tabbar1, &DTabBar::tabAddRequested, [tabbar1, tabbar2](){
+            tabbar1->addTab(QString("Add Tab %1").arg(tabbar1->count()));
+            tabbar2->addTab(QString("Add Tab %1").arg(tabbar2->count()));
+        });
+    }
+    return view;
+}
+
 DTabBarExample::DTabBarExample(QWidget *parent)
    : ExampleWindowInterface(parent)
 {
@@ -319,6 +376,10 @@ DTabBarExample::DTabBarExample(QWidget *parent)
    layout->addWidget(tabbar1, 0, Qt::AlignCenter);
    layout->addSpacing(40);
    layout->addWidget(window, 0, Qt::AlignCenter);
+   layout->addSpacing(40);
+   layout->addWidget(createTabBarSetShape({QTabBar::RoundedWest, QTabBar::RoundedEast}, this), 0, Qt::AlignCenter);
+   layout->addSpacing(40);
+   layout->addWidget(createTabBarSetShape({QTabBar::TriangularWest, QTabBar::TriangularEast}, this), 0, Qt::AlignCenter);
    layout->addSpacing(70);
    layout->addWidget(label1, 0, Qt::AlignCenter);
    layout->addWidget(label2, 0, Qt::AlignCenter);
@@ -348,7 +409,7 @@ QString DTabBarExample::getDescriptionInfo() const
 
 int DTabBarExample::getFixedHeight() const
 {
-   return 1080;
+   return 1880;
 }
 
 DSizegripExample::DSizegripExample(QWidget *parent)
