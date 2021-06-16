@@ -549,7 +549,8 @@ void DTitlebarPrivate::_q_addDefaultMenuItems()
             themeSeparator = menu->addSeparator();
 
             switchThemeMenu->menuAction()->setVisible(canSwitchTheme);
-            themeSeparator->setVisible(canSwitchTheme);
+
+            themeSeparator->setVisible(DGuiApplicationHelper::isTabletEnvironment() ? false : canSwitchTheme);
         }
     }
 
