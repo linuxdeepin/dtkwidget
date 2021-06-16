@@ -48,6 +48,25 @@ public:
         return QModelIndex();
     }
 
+    // 返回所有符合条件的key集合, e.g: key: abc, 可返回{abc.dc, abc}, 过滤掉{abcd}
+    QList<QModelIndex> indexesOfGroup(const QString &key) const
+    {
+        static const QChar SplitChar = '.'; // group之间的key以'.'分割连接组成实际的key值
+        QList<QModelIndex> res;
+        for (int i = 0; i < navbarModel->rowCount(); ++i) {
+            auto index = navbarModel->index(i, 0);
+            const auto& navKey = index.data(NavigationDelegate::NavKeyRole).toString();
+            if (navKey.startsWith(key)) {
+                const auto& remainderKey = navKey.mid(key.size());
+                if (remainderKey.isEmpty() || remainderKey.at(0) == SplitChar) {
+                    res.append(index);
+                }
+            }
+        }
+
+        return res;
+    }
+
     DListView           *navbar         = nullptr;
     QStandardItemModel  *navbarModel    = nullptr;
 
@@ -114,9 +133,7 @@ void Navigation::setGroupVisible(const QString &key, bool visible)
 {
     Q_D(Navigation);
 
-    const QModelIndex &index = d->indexOfGroup(key);
-
-    if (index.isValid()) {
+    for (const auto& index : d->indexesOfGroup(key)) {
         d->navbar->setRowHidden(index.row(), !visible);
     }
 }

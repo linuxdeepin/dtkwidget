@@ -52,7 +52,7 @@ public:
 
     QScrollArea *contentArea = nullptr;
     QWidget *contentFrame = nullptr;
-    QFormLayout *contentLayout = nullptr;
+    QVBoxLayout *contentLayout = nullptr;
 
     QMap<QString, QWidget *> titles = {};
     QList<QWidget *> sortTitles = {};
@@ -94,10 +94,8 @@ Content::Content(QWidget *parent)
     d->contentFrame = new QWidget(this);
     d->contentFrame->setObjectName("SettingsContent");
     d->contentFrame->setAccessibleName("ContentSettingsFrame");
-    d->contentLayout = new QFormLayout(d->contentFrame);
-    d->contentLayout->setRowWrapPolicy(QFormLayout::DontWrapRows);
-    d->contentLayout->setLabelAlignment(Qt::AlignLeft);
-    d->contentLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
+    d->contentLayout = new QVBoxLayout(d->contentFrame);
+    d->contentLayout->setAlignment(Qt::AlignLeft);
     d->contentLayout->setContentsMargins(0, 0, 10, 0);
     layout->addWidget(d->contentArea);
 
@@ -106,16 +104,27 @@ Content::Content(QWidget *parent)
     connect(d->contentArea->verticalScrollBar(), &QScrollBar::valueChanged,
     this, [ = ](int value) {
         Q_D(Content);
+
+        // 当前显示的Title才参与滚动条的计算
+        QList<QWidget *> visableSortTitles;
+        for (auto idx = 0; idx < d->sortTitles.length(); ++idx) {
+            auto title = d->sortTitles[idx];
+            if (title->isVisible())
+                visableSortTitles.push_back(title);
+        }
+        if (visableSortTitles.empty())
+            return;
+
+        auto currentTitle = visableSortTitles.first();
         auto viewHeight = d->contentArea->height();
-        auto currentTitle = d->sortTitles.first();
 
         QList<QWidget *> visableTitleList;
 
-        for (auto idx = 0; idx < d->sortTitles.length(); ++idx) {
-            auto title = d->sortTitles[idx];
+        for (auto idx = 0; idx < visableSortTitles.length(); ++idx) {
+            auto title = visableSortTitles[idx];
             if (title->y() <= value) {
-                if (idx < d->sortTitles.length() - 1) {
-                    auto nextTitle = d->sortTitles[idx + 1];
+                if (idx < visableSortTitles.length() - 1) {
+                    auto nextTitle = visableSortTitles[idx + 1];
                     if (nextTitle->y() >= value) {
                         visableTitleList.push_back(title);
                     }
@@ -126,7 +135,7 @@ Content::Content(QWidget *parent)
         }
 
         if (!visableTitleList.isEmpty()) {
-            auto lastTitle = d->sortTitles.last();
+            auto lastTitle = visableSortTitles.last();
             if (value + viewHeight - 180 >= lastTitle->y()) {
                 currentTitle = visableTitleList.last();
             } else {
@@ -134,10 +143,10 @@ Content::Content(QWidget *parent)
             }
         }
 
-        if (value >= d->sortTitles.last()->y())
-            currentTitle = d->sortTitles.last();
-        if (value <= d->sortTitles.first()->y())
-            currentTitle = d->sortTitles.first();
+        if (value >= visableSortTitles.last()->y())
+            currentTitle = visableSortTitles.last();
+        if (value <= visableSortTitles.first()->y())
+            currentTitle = visableSortTitles.first();
 
         if (currentTitle) {
             Q_EMIT scrollToGroup(currentTitle->property("key").toString());
@@ -169,23 +178,17 @@ void Content::setGroupVisible(const QString &key, bool visible)
 {
     Q_D(Content);
 
-    if (!d->titles.contains(key))
-        return;
-
-    auto title = d->titles.value(key);
-    title->setVisible(visible);
-
+    QSet<QString> keys = {key}; // 需要改变visible的key集合
     for (QObject *obj : d->contentFrame->children()) {
-        if (obj->property("_d_dtk_group_key").toString() == key) {
-            if (ContentTitle *title = qobject_cast<ContentTitle *>(obj)) {
-                const QString &key = title->property("key").toString();
+        auto parentKey = obj->property("_d_dtk_group_key").toString();
+        auto currKey = obj->property("key").toString();
 
-                if (d->titles.contains(key)) {
-                    setGroupVisible(key, visible);
-                    continue;
-                }
-            }
+        // 若父组或者当前组为需要改变visible,则加入到keys集合中
+        if (parentKey == key || currKey == key) {
+            keys << currKey;
+        }
 
+        if (keys.contains(currKey)) {
             if (QWidget *w = qobject_cast<QWidget *>(obj)) {
                 if (!visible || w->parentWidget()) // 无父控件时禁止其显示
                     w->setVisible(visible);
@@ -235,7 +238,7 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
         widTile->setAccessibleName(QString("ContentWidTileFor").append(groupKey));
         QHBoxLayout *hLayTile = new QHBoxLayout(widTile);
         hLayTile->addWidget(title);
-        d->contentLayout->setWidget(d->contentLayout->rowCount(), QFormLayout::SpanningRole, widTile);
+        d->contentLayout->addWidget(widTile);
 
         d->sortTitles.push_back(widTile);
         d->titles.insert(groupKey, widTile);
@@ -264,7 +267,7 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
                 hLay->setContentsMargins(10, 0, 0, 0);
                 hLay->addWidget(title);
 
-                d->contentLayout->setWidget(d->contentLayout->rowCount(), QFormLayout::LabelRole, wid);
+                d->contentLayout->addWidget(wid);
 
                 d->sortTitles.push_back(wid);
                 d->titles.insert(subgroup->key(), wid);
@@ -272,10 +275,12 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
 
             QVBoxLayout *bgGpLayout = new QVBoxLayout;
             DBackgroundGroup *bgGroup = new DBackgroundGroup(bgGpLayout);
+            bgGroup->setProperty("key", subgroup->key());
+            bgGroup->setProperty("_d_dtk_group_key", current_groupKey);
             bgGroup->setItemSpacing(1);
             bgGroup->setItemMargins(QMargins(0, 0, 0, 0));
             bgGroup->setBackgroundRole(QPalette::Window);
-            d->contentLayout->addRow(bgGroup);
+            d->contentLayout->addWidget(bgGroup);
 
             for (auto option : subgroup->childOptions()) {
                 if (option->isHidden()) {
@@ -322,7 +327,7 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
             }
         }
         QSpacerItem *spaceItem = new QSpacerItem(0, 20,QSizePolicy::Minimum,QSizePolicy::Expanding);
-        d->contentLayout->setItem(d->contentLayout->rowCount(), QFormLayout::LabelRole, spaceItem);
+        d->contentLayout->addItem(spaceItem);
     }
 
     QWidget *box = new QWidget();
@@ -337,7 +342,7 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
     box->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     box->setAccessibleName("ContentBottomWidget");
 
-    d->contentLayout->setWidget(d->contentLayout->rowCount(), QFormLayout::SpanningRole, box);
+    d->contentLayout->addWidget(box);
 
     connect(resetBt, &QPushButton::released,
     this, [ = ]() {
