@@ -25,6 +25,7 @@
 #include <QHBoxLayout>
 #include <QTextCodec>
 #include <QDebug>
+#include <QComboBox>
 
 #include <DStandardItem>
 #include <DTitlebar>
@@ -259,6 +260,27 @@ void MainWindow::menuItemInvoked(QAction *action)
 
             return nullptr;
         });
+
+        // 测试DSettingsDialog::setGroupVisible接口
+        auto hLayout = dsd.layout();
+        auto test = new QWidget;
+        auto layout = new QHBoxLayout(test);
+        auto testBtn = new QPushButton();
+        testBtn->setText("test setGroupVisible");
+        auto combobox = new QComboBox();
+        combobox->addItem("base");
+        combobox->addItem("base.custom-widgets");
+        combobox->addItem("base.theme");
+        combobox->addItem("shortcuts");
+        combobox->addItem("advance");
+        layout->addWidget(combobox);
+        layout->addWidget(testBtn);
+        hLayout->addWidget(test);
+        connect(testBtn, &QPushButton::clicked, [&dsd, combobox](){
+            auto key = combobox->currentText();
+            dsd.setGroupVisible(key, !dsd.groupIsVisible(key));
+        });
+
         dsd.updateSettings(settings);
         dsd.exec();
         return;
