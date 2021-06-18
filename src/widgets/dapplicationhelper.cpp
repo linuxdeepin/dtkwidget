@@ -19,9 +19,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "dapplicationhelper.h"
-#include "dstyleoption.h"
+#include "dpalettehelper.h"
 
-#include <QWidget>
 #include <QApplication>
 
 DWIDGET_BEGIN_NAMESPACE
@@ -45,7 +44,7 @@ static void init_createHelper ()
 class DApplicationHelperPrivate
 {
 public:
-    QHash<const QWidget*, DPalette> paletteCache;
+    DPaletteHelper *paletteHelper = DPaletteHelper::instance();
 };
 
 static DApplicationHelperPrivate *d = nullptr;
@@ -71,46 +70,7 @@ DApplicationHelper *DApplicationHelper::instance()
  */
 DPalette DApplicationHelper::palette(const QWidget *widget, const QPalette &base) const
 {
-    DPalette palette;
-
-    if (!widget) {
-        return applicationPalette();
-    }
-
-    do {
-        // 先从缓存中取数据
-        if (d->paletteCache.contains(widget)) {
-            palette = d->paletteCache.value(widget);
-            break;
-        }
-
-        if (QWidget *parent = widget->parentWidget()) {
-            palette = this->palette(parent, base);
-        } else {
-            palette = applicationPalette();
-        }
-
-        // 判断widget对象有没有被设置过palette
-        if (widget->testAttribute(Qt::WA_SetPalette)) {
-            // 存在自定义palette时应该根据其自定义的palette获取对应色调的DPalette
-            const QPalette &wp = widget->palette();
-
-            // 判断控件自己的palette色调是否和要继承调色板色调一致
-            if (toColorType(palette) != toColorType(wp)) {
-                // 不一致时则fallback到标准的palette
-                palette = standardPalette(toColorType(wp));
-            }
-        }
-
-        // 缓存数据
-        d->paletteCache.insert(widget, palette);
-        // 关注控件palette改变的事件
-        const_cast<QWidget*>(widget)->installEventFilter(const_cast<DApplicationHelper*>(this));
-    } while (false);
-
-    palette.QPalette::operator =(base.resolve() ? base : widget->palette());
-
-    return palette;
+    return d->paletteHelper->palette(widget, base);
 }
 
 /*!
@@ -120,11 +80,7 @@ DPalette DApplicationHelper::palette(const QWidget *widget, const QPalette &base
  */
 void DApplicationHelper::setPalette(QWidget *widget, const DPalette &palette)
 {
-    d->paletteCache.insert(widget, palette);
-    widget->installEventFilter(const_cast<DApplicationHelper *>(this));
-    // 记录此控件被设置过palette
-    widget->setProperty("_d_set_palette", true);
-    widget->setPalette(palette);
+    d->paletteHelper->setPalette(widget, palette);
 }
 
 /*!
@@ -133,10 +89,7 @@ void DApplicationHelper::setPalette(QWidget *widget, const DPalette &palette)
  */
 void DApplicationHelper::resetPalette(QWidget *widget)
 {
-    // 清理数据
-    d->paletteCache.remove(widget);
-    widget->setProperty("_d_set_palette", QVariant());
-    widget->setAttribute(Qt::WA_SetPalette, false);
+    d->paletteHelper->resetPalette(widget);
 }
 
 DApplicationHelper::DApplicationHelper()
@@ -155,31 +108,13 @@ DApplicationHelper::~DApplicationHelper()
 
 bool DApplicationHelper::eventFilter(QObject *watched, QEvent *event)
 {
-    if (Q_UNLIKELY(event->type() == QEvent::PaletteChange)) {
-        if (QWidget *widget = qobject_cast<QWidget*>(watched)) {
-            if (!widget->property("_d_set_palette").toBool()) {
-                // 清理缓存
-                d->paletteCache.remove(widget);
-            }
-        }
-    } else if (Q_UNLIKELY(event->type() == QEvent::Destroy)) {
-        if (QWidget *widget = qobject_cast<QWidget *>(watched)) {
-            if (d->paletteCache.contains(widget)) {
-                // 清理缓存
-                d->paletteCache.remove(widget);
-            }
-        }
-    }
+    Q_ASSERT_X(false, Q_FUNC_INFO, "This function should not be called.");
 
     return DGuiApplicationHelper::eventFilter(watched, event);
 }
 
 bool DApplicationHelper::event(QEvent *event)
 {
-    if (event->type() == QEvent::ApplicationFontChange) {
-        DFontSizeManager::instance()->setFontGenericPixelSize(DFontSizeManager::fontPixelSize(qGuiApp->font()));
-    }
-
     return DGuiApplicationHelper::event(event);
 }
 
