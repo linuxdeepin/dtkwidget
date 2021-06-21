@@ -351,7 +351,7 @@ void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
     forceShow = false;
 #endif
 
-    bool showTitle = (type.testFlag(Qt::WindowTitleHint) || forceShow) && !embedMode && !DGuiApplicationHelper::isTabletEnvironment();
+    bool showTitle = (type.testFlag(Qt::WindowTitleHint) || forceShow) && !embedMode;
     if (titleLabel) {
         if (showTitle) {
             titleLabel->setText(q->property("_dtk_title").toString());
