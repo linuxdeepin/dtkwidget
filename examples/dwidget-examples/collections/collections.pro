@@ -1,6 +1,6 @@
 QT += core gui svg
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-QT += dtkcore5.5 dtkgui5.5 printsupport-private
+QT += dtkcore dtkgui printsupport-private
 linux* {
     CONFIG += link_pkgconfig
 }
@@ -93,7 +93,7 @@ CONFIG(debug, debug|release) {
     unix:QMAKE_RPATHDIR += $$OUT_PWD/../../../src
 }
 
-target.path = $$QT.dtkcore5.5.libs/examples
+target.path = $$QT.dtkcore.libs/examples
 
 INSTALLS += target
 

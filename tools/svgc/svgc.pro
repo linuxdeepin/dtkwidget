@@ -1,5 +1,5 @@
 QT += gui svg
-QT += dtkcore5.5 dtkgui5.5
+QT += dtkcore dtkgui
 
 TARGET = dtk-svgc
 CONFIG += c++11
