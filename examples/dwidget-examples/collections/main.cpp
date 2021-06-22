@@ -46,6 +46,7 @@ int main(int argc, char *argv[])
 
     if (!DGuiApplicationHelper::setSingleInstance("deepin-tool-kit-examples")) {
         qDebug() << "another instance is running!!";
+        return 0;
     }
 
     a->setApplicationName("dtk-example");
