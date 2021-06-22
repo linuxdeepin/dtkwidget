@@ -1339,7 +1339,7 @@ void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const Q
             DStyleHelper dstyle(style);
             const QColor &background = dstyle.getColor(opt, checked ? QPalette::Highlight : QPalette::Button);
             p->setBrush(background);
-            p->setPen(QPen(dstyle.getColor(btn, DPalette::FrameBorder), 1));
+            p->setPen(Qt::NoPen);
             int radius = dstyle.pixelMetric(PM_FrameRadius, opt, w);
             int margins = dstyle.pixelMetric(PM_FrameMargins, opt, w);
             DStyleOptionButtonBoxButton::ButtonPosition pos = btn->position;
