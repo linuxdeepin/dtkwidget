@@ -133,7 +133,9 @@ private:
     Q_DECLARE_PUBLIC(DTitlebar)
 };
 
-DTitlebarPrivate::DTitlebarPrivate(DTitlebar *qq): DObjectPrivate(qq)
+DTitlebarPrivate::DTitlebarPrivate(DTitlebar *qq)
+    : DObjectPrivate(qq)
+    , quitFullButton(nullptr)
 {
 }
 
@@ -160,7 +162,6 @@ void DTitlebarPrivate::init()
         optionButton = new DWindowOptionButton;
     }
 
-    quitFullButton  = new DWindowQuitFullButton;
     separatorTop    = new DHorizontalLine(q);
     separator       = new DHorizontalLine(q);
     titleLabel      = centerArea;
@@ -170,7 +171,6 @@ void DTitlebarPrivate::init()
     maxButton->installEventFilter(q);
     closeButton->installEventFilter(q);
     optionButton->installEventFilter(q);
-    quitFullButton->installEventFilter(q);
 
     optionButton->setObjectName("DTitlebarDWindowOptionButton");
     optionButton->setIconSize(QSize(DefaultTitlebarHeight, DefaultTitlebarHeight));
@@ -184,10 +184,7 @@ void DTitlebarPrivate::init()
     closeButton->setObjectName("DTitlebarDWindowCloseButton");
     closeButton->setAccessibleName("DTitlebarDWindowCloseButton");
     closeButton->setIconSize(QSize(DefaultTitlebarHeight, DefaultTitlebarHeight));
-    quitFullButton->setObjectName("DTitlebarDWindowQuitFullscreenButton");
-    quitFullButton->setAccessibleName("DTitlebarDWindowQuitFullscreenButton");
-    quitFullButton->setIconSize(QSize(DefaultTitlebarHeight, DefaultTitlebarHeight));
-    quitFullButton->hide();
+
 
     iconLabel->setIconSize(QSize(DefaultIconWidth, DefaultIconHeight));
     iconLabel->setWindowFlags(Qt::WindowTransparentForInput);
@@ -220,7 +217,15 @@ void DTitlebarPrivate::init()
     buttonLayout->addWidget(optionButton);
     buttonLayout->addWidget(minButton);
     buttonLayout->addWidget(maxButton);
-    buttonLayout->addWidget(quitFullButton);
+    if (!DGuiApplicationHelper::isTabletEnvironment()) {
+        quitFullButton  = new DWindowQuitFullButton;
+        quitFullButton->installEventFilter(q);
+        quitFullButton->setObjectName("DTitlebarDWindowQuitFullscreenButton");
+        quitFullButton->setAccessibleName("DTitlebarDWindowQuitFullscreenButton");
+        quitFullButton->setIconSize(QSize(DefaultTitlebarHeight, DefaultTitlebarHeight));
+        quitFullButton->hide();
+        buttonLayout->addWidget(quitFullButton);
+    }
     buttonLayout->addWidget(closeButton);
 
     rightArea->setWindowFlag(Qt::WindowTransparentForInput);
@@ -252,14 +257,16 @@ void DTitlebarPrivate::init()
     q->setFixedHeight(DefaultTitlebarHeight);
     q->setMinimumHeight(DefaultTitlebarHeight);
 
-    q->connect(quitFullButton, &DWindowQuitFullButton::clicked, q, [ = ]() {
-        bool isFullscreen = targetWindow()->windowState().testFlag(Qt::WindowFullScreen);
-        if (isFullscreen) {
-            targetWindow()->showNormal();
-        } else {
-            targetWindow()->showFullScreen();
-        }
-    });
+    if (!DGuiApplicationHelper::isTabletEnvironment()) {
+        q->connect(quitFullButton, &DWindowQuitFullButton::clicked, q, [ = ]() {
+            bool isFullscreen = targetWindow()->windowState().testFlag(Qt::WindowFullScreen);
+            if (isFullscreen) {
+                targetWindow()->showNormal();
+            } else {
+                targetWindow()->showFullScreen();
+            }
+        });
+    }
     q->connect(optionButton, &DIconButton::clicked, q, &DTitlebar::optionClicked);
     q->connect(DWindowManagerHelper::instance(), SIGNAL(windowMotifWMHintsChanged(quint32)),
                q, SLOT(_q_onTopWindowMotifHintsChanged(quint32)));
@@ -322,12 +329,14 @@ void DTitlebarPrivate::updateFullscreen()
     bool isFullscreen = targetWindow()->windowState().testFlag(Qt::WindowFullScreen);
     auto mainWindow = qobject_cast<DMainWindow *>(targetWindow());
     if (!isFullscreen) {
-        quitFullButton->hide();
+        if (!DGuiApplicationHelper::isTabletEnvironment())
+            quitFullButton->hide();
         mainWindow->setMenuWidget(q);
         showOnFullscreen();
     } else {
         // must set to empty
-        quitFullButton->show();
+        if (!DGuiApplicationHelper::isTabletEnvironment())
+            quitFullButton->show();
         if (mainWindow->menuWidget()) {
             mainWindow->menuWidget()->setParent(nullptr);
             mainWindow->setMenuWidget(Q_NULLPTR);
@@ -379,7 +388,9 @@ void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
     bool showQuit = isFullscreen && useDXcb && fullScreenButtonVisible;
     maxButton->setVisible(showMax);
     closeButton->setVisible(showClose);
-    quitFullButton->setVisible(showQuit);
+
+    if (!DGuiApplicationHelper::isTabletEnvironment())
+        quitFullButton->setVisible(showQuit);
     //    qDebug() << "max:"
     //             << "allowResize" << allowResize
     //             << "useDXcb" << useDXcb
