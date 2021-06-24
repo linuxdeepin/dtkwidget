@@ -12,6 +12,8 @@
 #include <QClipboard>
 #include <QKeySequence>
 
+#include <private/qtextedit_p.h>
+
 #include <DStyle>
 #include <DObjectPrivate>
 
@@ -101,6 +103,17 @@ bool DTextEdit::event(QEvent *e)
                 // FIX bug-79676 setViewportMargins 会导致光标位置异常，此处调整回来吧
                 rc.adjust(frame_radius, 0, frame_radius, 0);
                 query->setValue(property, rc);
+                query->accept();
+                return true;
+            } else if (property == Qt::ImAnchorRectangle) {
+                QTextEditPrivate *d = reinterpret_cast<QTextEditPrivate *>(qGetPtrHelper(d_ptr));
+                QRect anchorRect = d->control->inputMethodQuery(Qt::ImAnchorRectangle, true).toRect();
+
+                DStyleHelper dstyle(style());
+                int frame_radius = dstyle.pixelMetric(DStyle::PM_FrameRadius, nullptr, this);
+
+                anchorRect.adjust(frame_radius, 0, frame_radius, 0);
+                query->setValue(Qt::ImAnchorRectangle, anchorRect);
                 query->accept();
                 return true;
             }
