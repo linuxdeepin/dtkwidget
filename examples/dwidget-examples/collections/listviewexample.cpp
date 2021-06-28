@@ -127,9 +127,9 @@ DListViewExample::DListViewExample(QWidget *parent)
     DListView *fingerPrintLV = new DListView(listViewWidget);
     DListView *browserLV = new DListView(listViewWidget);
     DListView *screenLV = new DListView(listViewWidget);
-    QStandardItemModel *fingerPrintModel = new QStandardItemModel;
-    QStandardItemModel *browserModel = new QStandardItemModel;
-    QStandardItemModel *screenModel = new QStandardItemModel;
+    QStandardItemModel *fingerPrintModel = new QStandardItemModel(fingerPrintLV);
+    QStandardItemModel *browserModel = new QStandardItemModel(browserLV);
+    QStandardItemModel *screenModel = new QStandardItemModel(screenLV);
     QLabel *picLabel1 = new QLabel(listviewPicWidget);
     QLabel *picLabel2 = new QLabel(listviewPicWidget);
     QLabel *picLabel3 = new QLabel(listviewPicWidget);
@@ -155,6 +155,7 @@ DListViewExample::DListViewExample(QWidget *parent)
     if (DStyle *ds = qobject_cast<DStyle *>(style())) {
         auto action = new DViewItemAction(Qt::AlignVCenter, QSize(), QSize(), true);
         action->setIcon(ds->standardIcon(DStyle::SP_IndicatorChecked));
+        action->setParent(this);
         browserItem1->setActionList(Qt::Edge::RightEdge, {action});
     }
 
@@ -168,6 +169,7 @@ DListViewExample::DListViewExample(QWidget *parent)
     screenItemAction1->setText("把您的一个屏幕的内容复制到另外一个或多个屏幕");
     screenItemAction1->setFontSize(DFontSizeManager::T8);
     screenItemAction1->setTextColorRole(DPalette::TextTips);
+    screenItemAction1->setParent(this);
     screenItem1->setTextActionList({screenItemAction1});
 
     DStandardItem *screenItem2 = new DStandardItem(QIcon(":/images/example/DListViewScreen_2.svg"), "拓展");
@@ -176,6 +178,7 @@ DListViewExample::DListViewExample(QWidget *parent)
     screenItemAction2->setText("将您的屏幕内容扩展，在不同屏幕上显示不同内容");
     screenItemAction2->setFontSize(DFontSizeManager::T8);
     screenItemAction2->setTextColorRole(DPalette::TextTips);
+    screenItemAction2->setParent(this);
     screenItem2->setTextActionList({screenItemAction2});
 
     DStandardItem *screenItem3 = new DStandardItem(QIcon(":/images/example/DListViewScreen_3.svg"), "只在 VGA1显示");
@@ -184,6 +187,7 @@ DListViewExample::DListViewExample(QWidget *parent)
     screenItemAction3->setText("只在 VGA1上显示屏幕内容，其他屏幕不显示");
     screenItemAction3->setFontSize(DFontSizeManager::T8);
     screenItemAction3->setTextColorRole(DPalette::TextTips);
+    screenItemAction3->setParent(this);
     screenItem3->setTextActionList({screenItemAction3});
 
     DStandardItem *screenItem4 = new DStandardItem(QIcon(":/images/example/DListViewScreen_4.svg"), "只在 LVDS1显示");
@@ -192,6 +196,7 @@ DListViewExample::DListViewExample(QWidget *parent)
     screenItemAction4->setText("只在 LVDS1上显示屏幕内容，其他屏幕不显示");
     screenItemAction4->setFontSize(DFontSizeManager::T8);
     screenItemAction4->setTextColorRole(DPalette::TextTips);
+    screenItemAction4->setParent(this);
     screenItem4->setTextActionList({screenItemAction4});
 
     fingerPrintItem3->setFontSize(DFontSizeManager::T8);
@@ -413,9 +418,9 @@ DHeaderViewExample::DHeaderViewExample(QWidget *parent)
     QVBoxLayout *hvpicLayout = new QVBoxLayout(hvPicWidget);
     DListView *tv = new DListView;
     QLabel *picLabel = new QLabel;
-    QStandardItemModel *model = new QStandardItemModel;
+    QStandardItemModel *model = new QStandardItemModel(this);
     DHeaderView *headerview = new DHeaderView(Qt::Horizontal);
-    QStandardItemModel *hmodel = new QStandardItemModel;
+    QStandardItemModel *hmodel = new QStandardItemModel(this);
 
     headerview->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     headerview->setModel(hmodel);
@@ -477,7 +482,7 @@ DColumnViewExample::DColumnViewExample(QWidget *parent)
     QHBoxLayout *frameLayout = new QHBoxLayout(frame);
 
     DColumnView *cv = new DColumnView;
-    QStandardItemModel *model = new QStandardItemModel;
+    QStandardItemModel *model = new QStandardItemModel(this);
     QStyledItemDelegate *itemDelegate = new QStyledItemDelegate(cv);
 
     auto insertItem = [](const QString &name, const QIcon &icon, int height, QStandardItemModel *model = nullptr, DStandardItem *parentItem = nullptr)

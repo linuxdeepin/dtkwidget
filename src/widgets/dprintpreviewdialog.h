@@ -36,6 +36,7 @@ public:
 
 Q_SIGNALS:
     void paintRequested(DPrinter *printer);
+    void paintRequested(DPrinter *printer, const QVector<int> &pageRange);
 
 private:
     D_DECLARE_PRIVATE(DPrintPreviewDialog)
@@ -46,15 +47,28 @@ private:
     D_PRIVATE_SLOT(void _q_startPrint(bool))
     D_PRIVATE_SLOT(void _q_orientationChanged(int))
     D_PRIVATE_SLOT(void _q_customPagesFinished())
-    D_PRIVATE_SLOT(void _q_marginTimerOut())
     D_PRIVATE_SLOT(void _q_marginspinChanged(double))
     D_PRIVATE_SLOT(void _q_marginEditFinished())
     D_PRIVATE_SLOT(void _q_currentPageSpinChanged(int))
     D_PRIVATE_SLOT(void _q_checkStateChanged(int))
-
+    D_PRIVATE_SLOT(void _q_textWaterMarkModeChanged(int))
+    D_PRIVATE_SLOT(void _q_customTextWatermarkFinished())
+    D_PRIVATE_SLOT(void _q_colorButtonCliked(bool))
+    D_PRIVATE_SLOT(void _q_selectColorButton(QColor))
+    D_PRIVATE_SLOT(void _q_pagePersheetComboIndexChanged(int))
+    D_PRIVATE_SLOT(void _q_printOrderComboIndexChanged(int))
+    D_PRIVATE_SLOT(void _q_spinboxValueEmptyChecked(const QString &))
 public:
     virtual bool event(QEvent *event) override;
     bool eventFilter(QObject *watched, QEvent *event) override;
+    void setDocName(const QString &);
+    QString docName() const;
+
+    bool setPrintFromPath(const QString &path = QString());
+    QString printFromPath() const;
+
+    bool setAsynPreview(int totalPage);
+    bool isAsynPreview() const;
 
     // QWidget interface
 protected:

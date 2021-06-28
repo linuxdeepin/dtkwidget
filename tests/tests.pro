@@ -1,21 +1,24 @@
 TEMPLATE = app
 CONFIG -= app_bundle
+
+# 如果不需要编译打印预览的单元测试 可以打开这个宏
+#DEFINES += DTK_NO_PRINTPREVIEWTEST
+
 QT += widgets dtkcore5.5 dtkgui5.5 testlib
 
-CONFIG += testcase no_testcase_installs
-
 unix:QMAKE_RPATHDIR += $$OUT_PWD/../src
-unix:LIBS += -L$$OUT_PWD/../src -ldtkwidget5.5 -lgtest
+unix:LIBS += -L$$OUT_PWD/../src -ldtkwidget5.5 -lgtest -lglib-2.0
 
 QMAKE_CXXFLAGS += -fno-access-control
 QMAKE_LFLAGS += -fno-access-control
 
-CONFIG(debug, debug|release) {
-    QMAKE_CXXFLAGS += -g -Wall  -fprofile-arcs -ftest-coverage -O0
-    QMAKE_LFLAGS += -g -Wall -fprofile-arcs -ftest-coverage  -O0
-}
+# 指定moc文件生成目录和src一样
+MOC_DIR=$$OUT_PWD/../src
 
-include($$PWD/src/src.pri)
+include($$PWD/src.pri)
+include($$PWD/testcases/testcases.pri)
 
 SOURCES += \
     $$PWD/main.cpp
+
+load(dtk_testcase)

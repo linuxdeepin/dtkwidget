@@ -115,6 +115,7 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dtoolbutton.h \
     $$PWD/dsearchcombobox.h \
     $$PWD/dprintpreviewwidget.h \
+    $$PWD/dprintpickcolorwidget.h \
     $$PWD/dpalettehelper.h
 
 SOURCES += $$PWD/dslider.cpp \
@@ -201,6 +202,7 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dtoolbutton.cpp \
     $$PWD/dsearchcombobox.cpp \
     $$PWD/dprintpreviewwidget.cpp \
+    $$PWD/dprintpickcolorwidget.cpp \
     $$PWD/dpalettehelper.cpp
 
 RESOURCES += \

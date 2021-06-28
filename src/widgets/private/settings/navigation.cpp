@@ -161,12 +161,7 @@ void Navigation::updateSettings(const QByteArray &translateContext, QPointer<DTK
         auto item = new QStandardItem;
         auto trName = translateContext.isEmpty() ? QObject::tr(group->name().toStdString().c_str())
                                                  : qApp->translate(translateContext.constData(), group->name().toStdString().c_str());
-//        qDebug() << settings->group(groupKey)->name() << trName;
-//        QFont font(item->data(Qt::FontRole).value<QFont>());
-//        QFontMetrics fm(font);
-//        int width = fm.width(trName);
-//        qDebug() << ">>>>>>>>>>> " << font << trName << width;
-
+        item->setToolTip(trName);
         item->setData(trName, Qt::DisplayRole);
         item->setData(NavigationDelegate::Level1, NavigationDelegate::NavLevelRole);
         item->setData(groupKey, NavigationDelegate::NavKeyRole);
@@ -184,11 +179,7 @@ void Navigation::updateSettings(const QByteArray &translateContext, QPointer<DTK
             auto item = new QStandardItem;
             auto trName = translateContext.isEmpty() ? QObject::tr(subgroup->name().toStdString().c_str())
                                                      : qApp->translate(translateContext.constData(), subgroup->name().toStdString().c_str());
-//            qDebug() << subgroup->name() << trName;
-//            QFont font(item->data(Qt::FontRole).value<QFont>());
-//            QFontMetrics fm(font);
-//            int width = fm.width(trName);
-//            qDebug() << "<<<<<<<<<<<< " << font << trName << width;
+            item->setToolTip(trName);
             item->setData(trName, Qt::DisplayRole);
             item->setData(NavigationDelegate::Level2, NavigationDelegate::NavLevelRole);
             item->setData(subgroup->key(), NavigationDelegate::NavKeyRole);

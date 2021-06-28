@@ -101,8 +101,8 @@ void DDialogPrivate::init()
     QVBoxLayout *textLayout = new QVBoxLayout;
     textLayout->setContentsMargins(0, 0, 0, 0);
     textLayout->setSpacing(5);
-    textLayout->addWidget(titleLabel);
-    textLayout->addWidget(messageLabel, 0, Qt::AlignTop);
+    textLayout->addWidget(titleLabel, 0);
+    textLayout->addWidget(messageLabel, 1, Qt::AlignTop);
 
     // TopLayout--ContentLayout
     contentLayout = new QVBoxLayout;
@@ -1135,7 +1135,7 @@ bool DDialog::eventFilter(QObject *watched, QEvent *event)
             if (label && !label->text().isEmpty() && label->wordWrap()) {
                 QSize sz = style()->itemTextRect(label->fontMetrics(), label->rect(), Qt::TextWordWrap, false, label->text()).size();
 
-                label->setMinimumHeight(qMax(sz.height(), label->height()));
+                label->setMinimumHeight(qMax(sz.height(), label->sizeHint().height()));
             }
         }
 

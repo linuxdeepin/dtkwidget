@@ -24,7 +24,7 @@ DEFINES += QT_MESSAGELOGCONTEXT
 
 SOURCES += main.cpp
 
-DTK_MODULE_NAME=dtkwidget
+DTK_MODULE_NAME=dtkwidget5.5
 load(dtk_build_config)
 target.path = $$TOOL_INSTALL_DIR
 

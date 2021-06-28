@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="hu">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="hu" version="2.1">
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -9,12 +7,12 @@
         <translation>Köszönetnyilvánítás</translation>
     </message>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1094"/>
+        <location filename="../widgets/dapplication.cpp" line="1238"/>
         <source>Version: %1</source>
-        <translation>%1 verzió</translation>
+        <translation>Verzió: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1098"/>
+        <location filename="../widgets/dapplication.cpp" line="1242"/>
         <source>%1 is released under %2</source>
         <translation>A %1 a %2 alatti kiadás</translation>
     </message>
@@ -22,87 +20,87 @@
 <context>
     <name>DCrumbEdit</name>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="890"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="900"/>
         <source>Black</source>
         <translation>Fekete</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="893"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="903"/>
         <source>White</source>
         <translation>Fehér</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="896"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="906"/>
         <source>Dark Gray</source>
-        <translation>Sötétszürke</translation>
+        <translation>Sötét szürke</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="899"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="909"/>
         <source>Gray</source>
         <translation>Szürke</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="902"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="912"/>
         <source>Light Gray</source>
-        <translation>Világosszürke</translation>
+        <translation>Világos szürke</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="905"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="915"/>
         <source>Red</source>
         <translation>Piros</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="908"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="918"/>
         <source>Green</source>
         <translation>Zöld</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="911"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="921"/>
         <source>Blue</source>
         <translation>Kék</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="914"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="924"/>
         <source>Cyan</source>
         <translation>Cián</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="917"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="927"/>
         <source>Magenta</source>
         <translation>Magenta</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="920"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="930"/>
         <source>Yellow</source>
         <translation>Sárga</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="923"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="933"/>
         <source>Dark Red</source>
         <translation>Vörös</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="926"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="936"/>
         <source>Dark Green</source>
-        <translation>Sötétzöld</translation>
+        <translation>Sötét zöld</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="929"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="939"/>
         <source>Dark Blue</source>
-        <translation>Sötétkék</translation>
+        <translation>Sötét kék</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="932"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="942"/>
         <source>Dark Cyan</source>
         <translation>Sötét cián</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="935"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="945"/>
         <source>Dark Magenta</source>
         <translation>Sötét bíbor</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="938"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="948"/>
         <source>Dark Yellow</source>
         <translation>Sötét sárga</translation>
     </message>
@@ -123,30 +121,30 @@
 <context>
     <name>DKeySequenceEdit</name>
     <message>
-        <location filename="../widgets/dkeysequenceedit.cpp" line="41"/>
+        <location filename="../widgets/dkeysequenceedit.cpp" line="85"/>
         <source>Enter a new shortcut</source>
-        <translation>Adjon meg egy új billentyűkombinációt</translation>
+        <translation>Adjon meg egy új gyorsbillentyűt</translation>
     </message>
 </context>
 <context>
     <name>DLineEdit</name>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="460"/>
+        <location filename="../widgets/dlineedit.cpp" line="471"/>
         <source>Stop reading</source>
         <translation>Olvasás leállítása</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="462"/>
+        <location filename="../widgets/dlineedit.cpp" line="473"/>
         <source>Text to Speech</source>
         <translation>Szöveg felolvasása</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="485"/>
+        <location filename="../widgets/dlineedit.cpp" line="496"/>
         <source>Translate</source>
         <translation>Fordítás</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="507"/>
+        <location filename="../widgets/dlineedit.cpp" line="518"/>
         <source>Speech To Text</source>
         <translation>Beszéd szöveggé alakítása</translation>
     </message>
@@ -154,217 +152,417 @@
 <context>
     <name>DPrintPreviewDialogPrivate</name>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="189"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="232"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1175"/>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Haladó</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="211"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="255"/>
         <source>Cancel</source>
-        <translation type="unfinished">Mégsem</translation>
+        <comment>button</comment>
+        <translation>Mégsem</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="212"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="992"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="256"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1596"/>
         <source>Print</source>
-        <translation type="unfinished"></translation>
+        <comment>button</comment>
+        <translation>Nyomtatás</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="228"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="272"/>
         <source>Basic</source>
-        <translation type="unfinished"></translation>
+        <translation>Alapvető</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="243"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="287"/>
         <source>Printer</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyomtató</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="258"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="301"/>
         <source>Copies</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="278"/>
-        <source>Page range</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="281"/>
-        <source>All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="282"/>
-        <source>Current page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="283"/>
-        <source>Select pages</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="297"/>
-        <source>Orientation</source>
-        <translation type="unfinished"></translation>
+        <translation>Másolatok</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="321"/>
+        <source>Page range</source>
+        <translation>Oldal arány</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="323"/>
+        <source>All</source>
+        <translation>Összes</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="324"/>
+        <source>Current page</source>
+        <translation>Jelenlegi oldal</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="325"/>
+        <source>Select pages</source>
+        <translation>Oldalak kiválasztása</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="340"/>
+        <source>Orientation</source>
+        <translation>Tájolás</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="364"/>
         <source>Portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>Álló</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="331"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="374"/>
         <source>Landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>Fekvő</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="358"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="402"/>
         <source>Pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Oldalak</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="368"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="412"/>
         <source>Color mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Színes mód</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="371"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="962"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1004"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="414"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1553"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1620"/>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Szín</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="371"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1001"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1004"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="414"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1605"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1620"/>
         <source>Grayscale</source>
-        <translation type="unfinished"></translation>
+        <translation>Szürkeárnyalatos</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="382"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="425"/>
         <source>Margins</source>
-        <translation type="unfinished"></translation>
+        <translation>Margók</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="385"/>
-        <source>Normal(mm)</source>
-        <translation type="unfinished"></translation>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="427"/>
+        <source>Narrow (mm)</source>
+        <translation>Keskeny (mm)</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="385"/>
-        <source>Narrow(mm)</source>
-        <translation type="unfinished"></translation>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="427"/>
+        <source>Normal (mm)</source>
+        <translation>Normál (mm)</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="385"/>
-        <source>Moderate(mm)</source>
-        <translation type="unfinished"></translation>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="427"/>
+        <source>Moderate (mm)</source>
+        <translation>Mérsékelt (mm)</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="385"/>
-        <source>Customize(mm)</source>
-        <translation type="unfinished"></translation>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="427"/>
+        <source>Customize (mm)</source>
+        <translation>Testreszabott (mm)</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="391"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="433"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Fent</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="394"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="436"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Balra</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="397"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="439"/>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Lent</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="400"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="442"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Jobbra</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="443"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="487"/>
         <source>Scaling</source>
-        <translation type="unfinished"></translation>
+        <translation>Méretezés</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="457"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="501"/>
         <source>Actual size</source>
-        <translation type="unfinished"></translation>
+        <translation>Eredeti méret</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="466"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="510"/>
         <source>Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Méretezés</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="496"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="541"/>
         <source>Paper</source>
-        <translation type="unfinished"></translation>
+        <translation>Papír</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="506"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="551"/>
         <source>Paper size</source>
-        <translation type="unfinished"></translation>
+        <translation>Papír méret</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="520"/>
-        <source>Layout</source>
-        <translation type="unfinished"></translation>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="564"/>
+        <source>Print Layout</source>
+        <translation>Nyomtatási elrendezés</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="531"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="575"/>
         <source>Duplex</source>
-        <translation type="unfinished"></translation>
+        <translation>Kétoldalas</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="566"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="588"/>
+        <source>N-up printing</source>
+        <translation>N-up nyomtatás</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="590"/>
+        <source>2 pages/sheet, 1×2</source>
+        <translation>2 oldal / lap, 1×2</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="590"/>
+        <source>4 pages/sheet, 2×2</source>
+        <translation>4 oldal / lap, 2×2</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="590"/>
+        <source>6 pages/sheet, 2×3</source>
+        <translation>6 oldal / lap, 2×3</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="590"/>
+        <source>9 pages/sheet, 3×3</source>
+        <translation>9 oldal / lap, 3×3</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="590"/>
+        <source>16 pages/sheet, 4×4</source>
+        <translation>16 oldal / lap, 4×4</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="599"/>
+        <source>Layout direction</source>
+        <translation>Elrendezés iránya</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="644"/>
+        <source>Page Order</source>
+        <translation>Oldalsorrend</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="655"/>
+        <source>Collate pages</source>
+        <translation>Oldalak leválogatása</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="661"/>
+        <source>Print pages in order</source>
+        <translation>Oldalak nyomtatása sorrendben</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="663"/>
+        <source>Front to back</source>
+        <translation>Elölről hátra</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="663"/>
+        <source>Back to front</source>
+        <translation>Hátulról előre</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="687"/>
+        <source>Watermark</source>
+        <translation>Vízjel</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="698"/>
+        <source>Add watermark</source>
+        <translation>Vízjel hozzáadása</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="740"/>
+        <source>Text watermark</source>
+        <translation>Szöveges vízjel</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="742"/>
+        <source>Confidential</source>
+        <translation>Bizalmas</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="742"/>
+        <source>Draft</source>
+        <translation>Piszkozat</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="742"/>
+        <source>Sample</source>
+        <translation>Minta</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="742"/>
+        <source>Custom</source>
+        <translation>Egyedi</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="750"/>
+        <source>Input your text</source>
+        <translation>Írja be a szövegét</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="773"/>
+        <source>Picture watermark</source>
+        <translation>Képes vízjel</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="794"/>
+        <source>Layout</source>
+        <translation>Elrendezés</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="796"/>
+        <source>Tile</source>
+        <translation>Csempe</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="796"/>
+        <source>Center</source>
+        <translation>Közép</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="807"/>
+        <source>Angle</source>
+        <translation>Szög</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="823"/>
+        <source>Size</source>
+        <translation>Méret</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="844"/>
+        <source>Transparency</source>
+        <translation>Áttetszőség</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="901"/>
         <source>Print to PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyomtatás PDF fájlba</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="831"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="838"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="902"/>
+        <source>Save as Image</source>
+        <translation>Mentés kép fájlként</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1171"/>
+        <source>Collapse</source>
+        <translation>Összeomlás</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1294"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1301"/>
         <source>Flip on short edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Fordítás a rövidebbik él mentén</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="834"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="837"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1297"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1300"/>
         <source>Flip on long edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Fordítás a hosszabbik él mentén</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="967"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1397"/>
+        <source>Input page numbers please</source>
+        <translation>Adja meg az oldalszámokat</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1400"/>
+        <source>Maximum page number reached</source>
+        <translation>Elérte a maximális oldalszámot</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1403"/>
+        <source>Input English comma please</source>
+        <translation>Kérjük írja be az angol vesszőt</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1406"/>
+        <source>Input page numbers like this: 1,3,5-7,11-15,18,21</source>
+        <translation>Adja meg az oldalszámokat, mint például: 1,3,5-7,11-15,18,21</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1558"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <comment>button</comment>
+        <translation>Mentés</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1046"/>
-        <source>1-%1. For example, 1,3,5-7,11-15,18,21</source>
-        <translation type="unfinished"></translation>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2168"/>
+        <source>*.pdf</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1346"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1672"/>
+        <source>For example, 1,3,5-7,11-15,18,21</source>
+        <translation>Például: 1,3,5-7,11-15,18,21</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2168"/>
         <source>Save as PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>Mentés PDF fájlként</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1346"/>
-        <source>PDF file</source>
-        <translation type="unfinished"></translation>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2207"/>
+        <source>Save as image</source>
+        <translation>Mentés képként</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2209"/>
+        <source>Images</source>
+        <translation>Képek</translation>
+    </message>
+</context>
+<context>
+    <name>DPrintPreviewWidget</name>
+    <message>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1590"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1593"/>
+        <source>Confidential</source>
+        <translation>Bizalmas</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1608"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1611"/>
+        <source>Draft</source>
+        <translation>Piszkozat</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1626"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1629"/>
+        <source>Sample</source>
+        <translation>Minta</translation>
     </message>
 </context>
 <context>
     <name>DSearchEdit</name>
     <message>
-        <location filename="../widgets/dsearchedit.cpp" line="284"/>
+        <location filename="../widgets/dsearchedit.cpp" line="291"/>
         <source>Search</source>
         <translation>Keresés</translation>
     </message>
@@ -384,7 +582,7 @@
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="81"/>
         <source>This shortcut conflicts with %1, click on Add to make this shortcut effective immediately</source>
-        <translation>Ez a billentyűkombináció ütközik %1-el, kattintson a Hozzáadás gombra ennek használatához</translation>
+        <translation>Ez a gyorsbillentyű ütközik %1-el, kattintson a Hozzáadás gombra ennek használatához</translation>
     </message>
 </context>
 <context>
@@ -392,7 +590,7 @@
     <message>
         <location filename="../widgets/dshortcutedit.cpp" line="31"/>
         <source>Please input a new shortcut</source>
-        <translation>Kérjük, adjon meg egy új parancsikont</translation>
+        <translation>Kérjük adjon meg egy új gyorsbillentyűt</translation>
     </message>
     <message>
         <location filename="../widgets/dshortcutedit.cpp" line="102"/>
@@ -403,32 +601,40 @@
 <context>
     <name>DTextEdit</name>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="155"/>
+        <location filename="../widgets/dtextedit.cpp" line="171"/>
         <source>Stop reading</source>
         <translation>Olvasás leállítása</translation>
     </message>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="157"/>
+        <location filename="../widgets/dtextedit.cpp" line="173"/>
         <source>Text to Speech</source>
         <translation>Szöveg felolvasása</translation>
     </message>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="180"/>
+        <location filename="../widgets/dtextedit.cpp" line="196"/>
         <source>Translate</source>
         <translation>Fordítás</translation>
     </message>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="202"/>
+        <location filename="../widgets/dtextedit.cpp" line="218"/>
         <source>Speech To Text</source>
         <translation>Beszéd szöveggé alakítása</translation>
     </message>
 </context>
 <context>
+    <name>PickColorWidget</name>
+    <message>
+        <location filename="../widgets/dprintpickcolorwidget.cpp" line="109"/>
+        <source>Color</source>
+        <translation>Szín</translation>
+    </message>
+</context>
+<context>
     <name>QLineEdit</name>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="443"/>
+        <location filename="../widgets/dlineedit.cpp" line="454"/>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Összes kijelölése</translation>
     </message>
 </context>
 <context>
@@ -439,17 +645,17 @@
         <translation>Nincs keresési eredmény</translation>
     </message>
     <message>
-        <location filename="../widgets/private/settings/content.cpp" line="318"/>
+        <location filename="../widgets/private/settings/content.cpp" line="331"/>
         <source>Restore Defaults</source>
-        <translation>Visszaállítás alaphelyzetbe</translation>
+        <translation>Alapértelmezések visszaállítása</translation>
     </message>
 </context>
 <context>
     <name>QWidgetTextControl</name>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="147"/>
+        <location filename="../widgets/dtextedit.cpp" line="163"/>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Összes kijelölése</translation>
     </message>
 </context>
 <context>
@@ -457,43 +663,43 @@
     <message>
         <location filename="../widgets/private/settings/shortcutedit.cpp" line="117"/>
         <source>Please enter a new shortcut</source>
-        <translation>Hozzon létre egy új parancsikont</translation>
+        <translation>Kérjük hozzon létre egy új parancsikont</translation>
     </message>
 </context>
 <context>
     <name>TitleBarMenu</name>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="510"/>
+        <location filename="../widgets/dtitlebar.cpp" line="527"/>
         <source>Theme</source>
         <translation>Téma</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="511"/>
+        <location filename="../widgets/dtitlebar.cpp" line="529"/>
         <source>Light Theme</source>
         <translation>Világos mód</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="512"/>
+        <location filename="../widgets/dtitlebar.cpp" line="530"/>
         <source>Dark Theme</source>
         <translation>Sötét mód</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="513"/>
+        <location filename="../widgets/dtitlebar.cpp" line="531"/>
         <source>System Theme</source>
         <translation>Rendszer téma</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="537"/>
+        <location filename="../widgets/dtitlebar.cpp" line="555"/>
         <source>Help</source>
         <translation>Segítség</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="544"/>
+        <location filename="../widgets/dtitlebar.cpp" line="563"/>
         <source>About</source>
         <translation>Az alkalmazásról</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="551"/>
+        <location filename="../widgets/dtitlebar.cpp" line="570"/>
         <source>Exit</source>
         <translation>Kilépés</translation>
     </message>

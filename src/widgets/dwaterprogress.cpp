@@ -332,12 +332,21 @@ void DWaterProgressPrivate::paint(QPainter *p)
         auto font = waterPinter.font();
 
         QRect rectValue;
+        QSize fontTextSize;
+        int actual_width;
+        int actual_height;
         if (progressText == "100") {
             font.setPixelSize(sz.height() * 35 / 100);
             waterPinter.setFont(font);
 
-            rectValue.setWidth(sz.width() * 60 / 100);
-            rectValue.setHeight(sz.height() * 35 / 100);
+            fontTextSize = QFontMetrics(font).size(Qt::TextSingleLine | Qt::AlignCenter, progressText);
+            int design_width = sz.width() * 60 / 100;
+            int design_height = sz.height() * 35 / 100;
+            actual_width = qMax(fontTextSize.width(), design_width);
+            actual_height = qMax(fontTextSize.height(), design_height);
+
+            rectValue.setWidth(actual_width);
+            rectValue.setHeight(actual_height);
             rectValue.moveCenter(rect.center().toPoint());
             waterPinter.setPen(Qt::white);
             waterPinter.drawText(rectValue, Qt::AlignCenter, progressText);
@@ -346,8 +355,15 @@ void DWaterProgressPrivate::paint(QPainter *p)
             font.setPixelSize(sz.height() * 40 / 100);
             waterPinter.setFont(font);
 
-            rectValue.setWidth(sz.width() * 45 / 100);
-            rectValue.setHeight(sz.height() * 40 / 100);
+            QFontMetrics numberFontMetrics(font);
+            fontTextSize = numberFontMetrics.size(Qt::TextSingleLine | Qt::AlignCenter, progressText);
+            int design_width = sz.width() * 45 / 100;
+            int design_height = sz.height() * 40 / 100;
+            actual_width = qMax(fontTextSize.width(), design_width);
+            actual_height = qMax(fontTextSize.height(), design_height);
+
+            rectValue.setWidth(actual_width);
+            rectValue.setHeight(actual_height);
             rectValue.moveCenter(rect.center().toPoint());
             rectValue.moveLeft(rect.left() + rect.width() * 0.45 * 0.5);
 
@@ -355,8 +371,14 @@ void DWaterProgressPrivate::paint(QPainter *p)
             waterPinter.drawText(rectValue, Qt::AlignCenter, progressText);
             font.setPixelSize(font.pixelSize() / 2);
             waterPinter.setFont(font);
-            QRect rectPerent(QPoint(rectValue.right(), rectValue.bottom()  - rect.height() * 20 / 100),
-                             QPoint(rectValue.right() + rect.width() * 20 / 100, rectValue.bottom()));
+
+            QFontMetrics ratioFontMetrics(font);
+            design_height = rect.height() * 20 / 100;
+            actual_height = qMax(ratioFontMetrics.height(), design_height);
+            int descent_diff = numberFontMetrics.descent() - ratioFontMetrics.descent();
+
+            QRect rectPerent(QPoint(rectValue.right(), rectValue.bottom() - descent_diff - actual_height),
+                             QPoint(rectValue.right() + rect.width() * 20 / 100, rectValue.bottom() - descent_diff));
 
             waterPinter.drawText(rectPerent, Qt::AlignCenter, "%");
         }
