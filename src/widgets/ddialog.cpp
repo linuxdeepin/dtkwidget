@@ -29,6 +29,7 @@
 #include <QAction>
 #include <QRegularExpression>
 #include <DFontSizeManager>
+#include <DApplication>
 
 #include "private/ddialog_p.h"
 
@@ -110,6 +111,13 @@ void DDialogPrivate::init()
     contentLayout->setSpacing(0);
     contentLayout->addLayout(textLayout);
 
+    contentWidget = new QWidget;
+    contentWidget->setLayout(contentLayout);
+    contentWidget->setAttribute(Qt::WA_LayoutOnEntireRect, false);
+    contentWidget->setAttribute(Qt::WA_ContentsMarginsRespectsSafeArea, false);
+    contentWidget->setProperty("_dtk_NoTopLevelEnabled", true);
+    qApp->acclimatizeVirtualKeyboard(contentWidget);
+
     titleBar = new DTitlebar();
     titleBar->setAccessibleName("DDialogTitleBar");
     titleBar->setIcon(icon); //设置标题icon
@@ -124,7 +132,7 @@ void DDialogPrivate::init()
 
     // MainLayout--TopLayout
     mainLayout->addWidget(titleBar, 0, Qt::AlignTop);
-    mainLayout->addLayout(contentLayout);
+    mainLayout->addWidget(contentWidget);
     mainLayout->setContentsMargins(QMargins(0, 0, 0, 0));
 
     // MainLayout--ButtonLayout

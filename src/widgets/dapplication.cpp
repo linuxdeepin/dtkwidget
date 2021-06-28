@@ -477,7 +477,9 @@ void DApplicationPrivate::acclimatizeVirtualKeyboardForFocusWidget(bool allowRes
         return;
 
     for (auto window : acclimatizeVirtualKeyboardWindows) {
-        if (window->isAncestorOf(focus)) {
+        if (window->isAncestorOf(focus)
+                || (window->property("_dtk_NoTopLevelEnabled").toBool() // 非顶级窗口恢复虚拟键盘挤占空间
+                && !qApp->inputMethod()->isVisible())) {
             return doAcclimatizeVirtualKeyboard(window ,focus, allowResizeContentsMargins);
         }
     }
@@ -1321,7 +1323,7 @@ void DApplication::setAutoActivateWindows(bool autoActivateWindows)
  */
 void DApplication::acclimatizeVirtualKeyboard(QWidget *window)
 {
-    Q_ASSERT(window->isTopLevel()
+    Q_ASSERT(!window->property("_dtk_NoTopLevelEnabled").toBool() ? window->isTopLevel() : true
              && !window->testAttribute(Qt::WA_LayoutOnEntireRect)
              && !window->testAttribute(Qt::WA_ContentsMarginsRespectsSafeArea));
 

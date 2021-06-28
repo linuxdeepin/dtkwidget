@@ -55,6 +55,7 @@ private:
     DTitlebar   *titleBar = nullptr;
     QHBoxLayout *iconLayout;
     QVBoxLayout *contentLayout;
+    QWidget *contentWidget = nullptr;
     QHBoxLayout *buttonLayout;
     const QScreen *targetScreen = nullptr;
     QSpacerItem *spacer = nullptr;
