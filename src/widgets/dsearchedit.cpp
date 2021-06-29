@@ -312,8 +312,6 @@ void DSearchEditPrivate::init()
     label->setText(placeHolder);
     label->setAccessibleName("DSearchEditPlaceHolderLabel");
 
-    q->setFocusPolicy(Qt::ClickFocus);
-
     q->connect(q, SIGNAL(focusChanged(bool)), q, SLOT(_q_toEditMode(bool)));
     q->connect(q, &DLineEdit::textChanged, q, [ = ](QString text) {
         if (!text.isEmpty())

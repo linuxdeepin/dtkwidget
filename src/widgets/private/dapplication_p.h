@@ -81,6 +81,7 @@ public:
     bool visibleMenuIcon           = false;
     bool autoActivateWindows       = false;
 
+    DAppHandler *appHandler = Q_NULLPTR;
     DAboutDialog *aboutDialog = Q_NULLPTR;
 
     // 需要自适应虚拟键盘环境的窗口

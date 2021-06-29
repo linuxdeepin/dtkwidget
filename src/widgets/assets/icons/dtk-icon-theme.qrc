@@ -32,6 +32,10 @@
         <file>dark/icons/printer_original_12px.svg</file>
         <file>dark/icons/search_action_36px.svg</file>
         <file>light/icons/search_action_36px.svg</file>
+        <file>dark/icons/print_previewscale_18px.svg</file>
+        <file>light/icons/print_previewscale_18px.svg</file>
+        <file>dark/icons/dorpper_normal_32px.svg</file>
+        <file>light/icons/dorpper_normal_32px.svg</file>
         <file>dark/icons/titlebar_more_50px.svg</file>
         <file>light/icons/titlebar_more_50px.svg</file>
     </qresource>

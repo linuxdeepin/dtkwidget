@@ -150,21 +150,41 @@ MainWindow::MainWindow(QWidget *parent)
     m_pListView->setCurrentIndex(m_pListViewModel->index(0, 0));
 }
 
+#if 1
+#define AsynPreview
+#endif
+
 void MainWindow::menuItemInvoked(QAction *action)
 {
     if (action->text() == "testPrinter") {
         DPrintPreviewDialog dialog(this);
-        connect(&dialog, &DPrintPreviewDialog::paintRequested,
+        //测试保存PDF文件名称接口
+        dialog.setDocName("test");
+#ifdef AsynPreview
+        dialog.setAsynPreview(31);
+        connect(&dialog, QOverload<DPrinter *, const QVector<int> &>::of(&DPrintPreviewDialog::paintRequested),
+#else
+        connect(&dialog, QOverload<DPrinter *>::of(&DPrintPreviewDialog::paintRequested),
+#endif
+#ifdef AsynPreview
+                this, [=](DPrinter *_printer, const QVector<int> &pageRange) {
+#else
                 this, [=](DPrinter *_printer) {
+#endif
                     // 此函数内代码为调试打印内容代码，调整较随意！
-                    _printer->setFromTo(1, 10);
+                    _printer->setFromTo(1, 31);
                     QPainter painter(_printer);
                     bool firstPage = true;
                     for (int page = _printer->fromPage(); page <= _printer->toPage(); ++page) {
+#ifdef AsynPreview
+                        if (!pageRange.contains(page))
+                            continue;
+#endif
+
                         painter.resetTransform();
                         if (!firstPage)
                             _printer->newPage();
-                        qApp->processEvents();
+                        // qApp->processEvents();
 
                         // 给出调用方widget界面作为打印内容
                         double xscale = _printer->pageRect().width() / double(this->width());
@@ -199,7 +219,7 @@ void MainWindow::menuItemInvoked(QAction *action)
     if (action->text() == "dfm-settings") {
         QTemporaryFile tmpFile;
         tmpFile.open();
-        auto backend = new Dtk::Core::QSettingBackend(tmpFile.fileName());
+        auto backend = new Dtk::Core::QSettingBackend(tmpFile.fileName(), this);
 
         auto settings = Dtk::Core::DSettings::fromJsonFile(":/resources/data/dfm-settings.json");
         settings->setBackend(backend);
@@ -213,7 +233,7 @@ void MainWindow::menuItemInvoked(QAction *action)
     if (action->text() == "dt-settings") {
         QTemporaryFile tmpFile;
         tmpFile.open();
-        auto backend = new Dtk::Core::QSettingBackend(tmpFile.fileName());
+        auto backend = new Dtk::Core::QSettingBackend(tmpFile.fileName(), this);
 
         auto settings = Dtk::Core::DSettings::fromJsonFile(":/resources/data/dt-settings.json");
         settings->setBackend(backend);

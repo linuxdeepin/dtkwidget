@@ -1398,6 +1398,26 @@ bool DApplication::isAcclimatizedVirtualKeyboard(QWidget *window) const
     return d->acclimatizeVirtualKeyboardWindows.contains(window);
 }
 
+/*!
+   \fn DApplication::customHandler(DAppHandler *handler)
+   \brief 设置 app 的处理程序，如果要设置，必须对 help、about、quit 都进行处理。handler 需要继承实现。
+*/
+void DApplication::setCustomHandler(DAppHandler *handler)
+{
+    D_D(DApplication);
+    d->appHandler = handler;
+}
+
+/*!
+  \fn DApplication::customHandler()
+  \brief 获取设置的 app 定制化处理程序
+*/
+DAppHandler *DApplication::customHandler()
+{
+    D_D(DApplication);
+    return d->appHandler;
+}
+
 /**
  * \~english @brief DApplication::handleHelpAction
  *
@@ -1410,6 +1430,12 @@ bool DApplication::isAcclimatizedVirtualKeyboard(QWidget *window) const
  */
 void DApplication::handleHelpAction()
 {
+    D_D(DApplication);
+    if (customHandler()) {
+        d->appHandler->handleHelpAction();
+        return;
+    }
+
 #ifdef Q_OS_LINUX
     QString appid = applicationName();
 
@@ -1443,6 +1469,10 @@ void DApplication::handleHelpAction()
 void DApplication::handleAboutAction()
 {
     D_D(DApplication);
+    if (customHandler()) {
+        d->appHandler->handleAboutAction();
+        return;
+    }
 
     if (d->aboutDialog) {
         d->aboutDialog->show();
@@ -1490,6 +1520,12 @@ void DApplication::handleAboutAction()
  */
 void DApplication::handleQuitAction()
 {
+    D_D(DApplication);
+    if (customHandler()) {
+        d->appHandler->handleQuitAction();
+        return;
+    }
+
     quit();
 }
 

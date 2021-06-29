@@ -80,8 +80,8 @@ win32* {
     CONFIG += no_lflags_merge
 }
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../../src/release -ldtkwidget
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../../src/debug -ldtkwidgetd
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../../src/release -ldtkwidget5.5
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../../src/debug -ldtkwidget5.5d
 else:unix: LIBS += -L$$OUT_PWD/../../../src -ldtkwidget5.5
 
 INCLUDEPATH += $$PWD/../../../src

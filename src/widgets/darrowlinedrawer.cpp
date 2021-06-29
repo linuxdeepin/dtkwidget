@@ -41,6 +41,7 @@ namespace HeaderLine {
     protected:
         void mousePressEvent(QMouseEvent *) override;
         void mouseMoveEvent(QMouseEvent *event) override;
+        void changeEvent(QEvent *e) override;
 
     private:
         void reverseArrowDirection();
@@ -79,6 +80,14 @@ namespace HeaderLine {
     {
         //屏蔽掉鼠标移动事件
         event->accept();
+    }
+
+    void ArrowHeaderLine::changeEvent(QEvent *e)
+    {
+        if (e->type() == QEvent::FontChange)
+            setFixedHeight(qMax(EXPAND_HEADER_HEIGHT, this->fontMetrics().height()));
+
+        return DHeaderLine::changeEvent(e);
     }
 
     void ArrowHeaderLine::reverseArrowDirection()
