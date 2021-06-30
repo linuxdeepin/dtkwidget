@@ -457,14 +457,18 @@ void DApplicationPrivate::doAcclimatizeVirtualKeyboard(QWidget *window, QWidget 
     int resizeHeight = qMin(resizeableHeight, shadowHeight);
     panValue = shadowHeight - resizeHeight;
 
-    if (lastContentsMargins.first == resizeableHeight
-            && lastContentsMargins.second == panValue) {
-        return;
-    }
-
     // 记录本次的计算结果
     lastContentsMargins.first = resizeableHeight;
     lastContentsMargins.second = panValue;
+
+    QRectF cursor = input_method->anchorRectangle();
+    QPointF cursorPoint = cursor.topLeft();
+
+    if (cursorPoint.y() < kRect.y()) {
+        if (window->contentsMargins() != QMargins())
+            window->setContentsMargins(QMargins());
+        return;
+    }
 
     // 更新窗口内容显示区域以确保虚拟键盘能正常显示
     window->setContentsMargins(0, -panValue, 0, resizeHeight + panValue);
@@ -477,9 +481,7 @@ void DApplicationPrivate::acclimatizeVirtualKeyboardForFocusWidget(bool allowRes
         return;
 
     for (auto window : acclimatizeVirtualKeyboardWindows) {
-        if (window->isAncestorOf(focus)
-                || (window->property("_dtk_NoTopLevelEnabled").toBool() // 非顶级窗口恢复虚拟键盘挤占空间
-                && !qApp->inputMethod()->isVisible())) {
+        if (window->isAncestorOf(focus)) {
             return doAcclimatizeVirtualKeyboard(window ,focus, allowResizeContentsMargins);
         }
     }
