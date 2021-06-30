@@ -119,10 +119,13 @@ DSettingsDialog::DSettingsDialog(QWidget *parent) :
         d->leftFrame->blockSignals(false);
     });
 
-    d->content->setAttribute(Qt::WA_ContentsMarginsRespectsSafeArea, false);
-    d->content->setProperty("_dtk_NoTopLevelEnabled", true);
-    qApp->acclimatizeVirtualKeyboard(d->content);
+    DApplication *dapp = qobject_cast<DApplication*>(qApp);
 
+    if (dapp) {
+        d->content->setAttribute(Qt::WA_ContentsMarginsRespectsSafeArea, false);
+        d->content->setProperty("_dtk_NoTopLevelEnabled", true);
+        qApp->acclimatizeVirtualKeyboard(d->content);
+    }
     // 修复 wayland 下使用 setwindowicon 程序出现死循环
     if (DApplication::isDXcbPlatform()) {
         connect(this, &DSettingsDialog::windowIconChanged, d->frameBar, &DTitlebar::setIcon);

@@ -113,10 +113,14 @@ void DDialogPrivate::init()
 
     contentWidget = new QWidget;
     contentWidget->setLayout(contentLayout);
-    contentWidget->setAttribute(Qt::WA_LayoutOnEntireRect, false);
-    contentWidget->setAttribute(Qt::WA_ContentsMarginsRespectsSafeArea, false);
-    contentWidget->setProperty("_dtk_NoTopLevelEnabled", true);
-    qApp->acclimatizeVirtualKeyboard(contentWidget);
+    DApplication *dapp = qobject_cast<DApplication*>(qApp);
+
+    if (dapp) {
+        contentWidget->setAttribute(Qt::WA_LayoutOnEntireRect, false);
+        contentWidget->setAttribute(Qt::WA_ContentsMarginsRespectsSafeArea, false);
+        contentWidget->setProperty("_dtk_NoTopLevelEnabled", true);
+        qApp->acclimatizeVirtualKeyboard(contentWidget);
+    }
 
     titleBar = new DTitlebar();
     titleBar->setAccessibleName("DDialogTitleBar");
