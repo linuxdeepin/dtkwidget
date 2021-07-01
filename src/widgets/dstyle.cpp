@@ -2754,16 +2754,17 @@ void DStyledIconEngine::paint(QPainter *painter, const QPalette &palette, const 
  */
 void DStyledIconEngine::paint(QPainter *painter, const QRect &rect, QIcon::Mode mode, QIcon::State state)
 {
-    Q_UNUSED(mode)
     Q_UNUSED(state)
 
     if (m_painterRole != QPalette::NoRole) {
+        QPalette::ColorGroup cg = (mode == QIcon::Disabled) ? QPalette::Disabled : QPalette::Current;
+
         if (m_widget) {
-            painter->setPen(m_widget->palette().brush(m_painterRole).color());
-            painter->setBrush(m_widget->palette().brush(m_painterRole));
+            painter->setPen(m_widget->palette().brush(cg, m_painterRole).color());
+            painter->setBrush(m_widget->palette().brush(cg, m_painterRole));
         } else {
-            painter->setPen(qApp->palette().brush(m_painterRole).color());
-            painter->setBrush(qApp->palette().brush(m_painterRole));
+            painter->setPen(qApp->palette().brush(cg, m_painterRole).color());
+            painter->setBrush(qApp->palette().brush(cg, m_painterRole));
         }
     }
 
