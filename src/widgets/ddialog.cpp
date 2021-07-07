@@ -1048,19 +1048,29 @@ void DDialog::setOnButtonClickedClose(bool onButtonClickedClose)
 /*!
  * \~chinese \brief 以模态框形式显示当前对话框
  *
- * \~chinese 以 \l{QDialog#Modal Dialogs}{模态框} 形式显示当前对话框，将会阻塞直到用户关闭对话框，并返回 \DialogCode 结果。
+ * \~chinese 以 \l{QDialog#Modal Dialogs}{模态框} 形式显示当前对话框，将会阻塞直到用户关闭对话框。
  *
- * \sa open(), show(), result(), setWindowModality()
+ * \~chinese onButtonClickedClose()为 true 时返回当前点击按钮的Index，否则返回 \DialogCode 结果。
+ *
  */
 int DDialog::exec()
 {
     D_D(DDialog);
 
     d->clickedButtonIndex = -1;
+    int clickedIndex = d->clickedButtonIndex;
+
+    if (d->onButtonClickedClose) {
+        // 如果设置了WA_DeleteOnClose属性，那么在exec()中将直接delete this
+        // d->clickedButtonIndex中记录的数据失效，这里通过信号槽更新正确的数据
+        connect(this, &DDialog::buttonClicked, this, [ &clickedIndex ] (int index, const QString &) {
+                clickedIndex = index;
+        });
+    }
 
     int code = DAbstractDialog::exec();
 
-    return d->clickedButtonIndex >= 0 ? d->clickedButtonIndex : code;
+    return clickedIndex >= 0 ? clickedIndex : code;
 }
 
 void DDialog::setCloseButtonVisible(bool closeButtonVisible)
