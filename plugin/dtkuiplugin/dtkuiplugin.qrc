@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/qt-project.org/dframe">
+        <file>images/dframe.png</file>
+    </qresource>
+</RCC>
+

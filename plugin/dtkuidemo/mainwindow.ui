@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>901</width>
+    <height>738</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="Dtk::Widget::DArrowLineDrawer" name="Dtk::Widget::DArrowLineDrawer">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>530</y>
+      <width>561</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QProgressBar" name="Dtk::Widget::DProgressBar">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>60</y>
+      <width>201</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="Dtk::Widget::DLineEdit" name="Dtk::Widget::DLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>110</y>
+      <width>201</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="Dtk::Widget::DFileChooserEdit" name="Dtk::Widget::DFileChooserEdit">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>150</y>
+      <width>201</width>
+      <height>50</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>551</width>
+      <height>271</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QStackedWidget" name="stackedWidget">
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <widget class="QWidget" name="page"/>
+       <widget class="QWidget" name="page_2"/>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="Dtk::Widget::DPageIndicator" name="Dtk::Widget::DPageIndicator">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>280</y>
+      <width>111</width>
+      <height>50</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="Dtk::Widget::DFloatingButton" name="Dtk::Widget::DFloatingButton">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>470</y>
+      <width>40</width>
+      <height>40</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="Dtk::Widget::DColoredProgressBar" name="Dtk::Widget::DColoredProgressBar">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>10</y>
+      <width>200</width>
+      <height>30</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="Dtk::Widget::DButtonBox" name="Dtk::Widget::DButtonBox">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>520</y>
+      <width>110</width>
+      <height>35</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="Dtk::Widget::DLabel" name="Dtk::Widget::DLabel">
+    <property name="geometry">
+     <rect>
+      <x>660</x>
+      <y>430</y>
+      <width>211</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>This is DLabel...</string>
+    </property>
+   </widget>
+   <widget class="Dtk::Widget::DCrumbEdit" name="Dtk::Widget::DCrumbEdit">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>330</y>
+      <width>200</width>
+      <height>92</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="Dtk::Widget::DIpv4LineEdit" name="Dtk::Widget::DIpv4LineEdit">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>280</y>
+      <width>210</width>
+      <height>36</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>255.255.255.255</string>
+    </property>
+   </widget>
+   <widget class="Dtk::Widget::DKeySequenceEdit" name="Dtk::Widget::DKeySequenceEdit">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>220</y>
+      <width>200</width>
+      <height>40</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="Dtk::Widget::DWaterProgress" name="Dtk::Widget::DWaterProgress">
+    <property name="geometry">
+     <rect>
+      <x>480</x>
+      <y>320</y>
+      <width>100</width>
+      <height>100</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="Dtk::Widget::DTabBar" name="Dtk::Widget::DTabBar">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>430</y>
+      <width>56</width>
+      <height>40</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="Dtk::Widget::DSearchComboBox" name="Dtk::Widget::DSearchComboBox">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>330</y>
+      <width>200</width>
+      <height>40</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="Dtk::Widget::DPasswordEdit" name="Dtk::Widget::DPasswordEdit">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>380</y>
+      <width>200</width>
+      <height>40</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="Dtk::Widget::DSpinner" name="Dtk::Widget::DSpinner">
+    <property name="geometry">
+     <rect>
+      <x>650</x>
+      <y>470</y>
+      <width>40</width>
+      <height>40</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="Dtk::Widget::DSpinBox" name="Dtk::Widget::DSpinBox">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>480</y>
+      <width>200</width>
+      <height>40</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="Dtk::Widget::DDoubleSpinBox" name="Dtk::Widget::DDoubleSpinBox">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>430</y>
+      <width>200</width>
+      <height>40</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="Dtk::Widget::DToolButton" name="Dtk::Widget::DToolButton_2">
+    <property name="geometry">
+     <rect>
+      <x>730</x>
+      <y>470</y>
+      <width>40</width>
+      <height>40</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="Dtk::Widget::DSwitchButton" name="Dtk::Widget::DSwitchButton">
+    <property name="geometry">
+     <rect>
+      <x>770</x>
+      <y>470</y>
+      <width>75</width>
+      <height>32</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="Dtk::Widget::DTextEdit">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>330</y>
+      <width>200</width>
+      <height>92</height>
+     </rect>
+    </property>
+    <property name="text" stdset="0">
+     <string>这是一个富文本编辑框</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Dtk::Widget::DWarningButton">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>480</y>
+      <width>100</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>warning</string>
+    </property>
+   </widget>
+   <widget class="Dtk::Widget::DSuggestButton" name="Dtk::Widget::DSuggestButton">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>430</y>
+      <width>100</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>suggest</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>Dtk::Widget::DFrame</class>
+   <extends>QFrame</extends>
+   <header>DFrame</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Dtk::Widget::DArrowLineDrawer</class>
+   <extends>Dtk::Widget::DFrame</extends>
+   <header>DArrowLineDrawer</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Dtk::Widget::DButtonBox</class>
+   <extends>QWidget</extends>
+   <header>DButtonBox</header>
+  </customwidget>
+  <customwidget>
+   <class>Dtk::Widget::DColoredProgressBar</class>
+   <extends>QProgressBar</extends>
+   <header>DColoredProgressBar</header>
+  </customwidget>
+  <customwidget>
+   <class>Dtk::Widget::DCrumbEdit</class>
+   <extends>QTextEdit</extends>
+   <header>DCrumbEdit</header>
+  </customwidget>
+  <customwidget>
+   <class>Dtk::Widget::DDoubleSpinBox</class>
+   <extends>QDoubleSpinBox</extends>
+   <header>DDoubleSpinBox</header>
+  </customwidget>
+  <customwidget>
+   <class>Dtk::Widget::DFileChooserEdit</class>
+   <extends>Dtk::Widget::DLineEdit</extends>
+   <header>DFileChooserEdit</header>
+  </customwidget>
+  <customwidget>
+   <class>Dtk::Widget::DFloatingButton</class>
+   <extends>QWidget</extends>
+   <header>DFloatingButton</header>
+  </customwidget>
+  <customwidget>
+   <class>Dtk::Widget::DIpv4LineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>DIpv4LineEdit</header>
+  </customwidget>
+  <customwidget>
+   <class>Dtk::Widget::DKeySequenceEdit</class>
+   <extends>QLineEdit</extends>
+   <header>DKeySequenceEdit</header>
+  </customwidget>
+  <customwidget>
+   <class>Dtk::Widget::DLabel</class>
+   <extends>QLabel</extends>
+   <header>DLabel</header>
+  </customwidget>
+  <customwidget>
+   <class>Dtk::Widget::DLineEdit</class>
+   <extends>QWidget</extends>
+   <header>DLineEdit</header>
+  </customwidget>
+  <customwidget>
+   <class>Dtk::Widget::DPageIndicator</class>
+   <extends>QWidget</extends>
+   <header>DPageIndicator</header>
+  </customwidget>
+  <customwidget>
+   <class>Dtk::Widget::DPasswordEdit</class>
+   <extends>Dtk::Widget::DLineEdit</extends>
+   <header>DPasswordEdit</header>
+  </customwidget>
+  <customwidget>
+   <class>Dtk::Widget::DTabBar</class>
+   <extends>QWidget</extends>
+   <header>DTabBar</header>
+  </customwidget>
+  <customwidget>
+   <class>Dtk::Widget::DWaterProgress</class>
+   <extends>QWidget</extends>
+   <header>DWaterProgress</header>
+  </customwidget>
+  <customwidget>
+   <class>Dtk::Widget::DSearchComboBox</class>
+   <extends>QComboBox</extends>
+   <header>DSearchComboBox</header>
+  </customwidget>
+  <customwidget>
+   <class>Dtk::Widget::DSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>DSpinBox</header>
+  </customwidget>
+  <customwidget>
+   <class>Dtk::Widget::DSpinner</class>
+   <extends>QWidget</extends>
+   <header>DSpinner</header>
+  </customwidget>
+  <customwidget>
+   <class>Dtk::Widget::DToolButton</class>
+   <extends>QToolButton</extends>
+   <header>DToolButton</header>
+  </customwidget>
+  <customwidget>
+   <class>Dtk::Widget::DSuggestButton</class>
+   <extends>QPushButton</extends>
+   <header>DSuggestButton</header>
+  </customwidget>
+  <customwidget>
+   <class>Dtk::Widget::DSwitchButton</class>
+   <extends>QWidget</extends>
+   <header>DSwitchButton</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
