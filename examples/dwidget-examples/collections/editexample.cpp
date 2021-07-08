@@ -371,12 +371,12 @@ DKeySequenceEditExample::DKeySequenceEditExample(QWidget *parent)
     keyLabel->setFixedSize(108, 19);
     keyLabel->setAlignment(Qt::AlignLeft);
     DKeySequenceEdit *keyEdit = new DKeySequenceEdit(this);
-    keyEdit->setKeySequence(QKeySequence(Qt::CTRL, Qt::SHIFT));
+    keyEdit->setKeySequence(QKeySequence(Qt::CTRL + Qt::SHIFT));
     QLabel *closeLabel1 = new QLabel("关闭窗口", this);
     closeLabel1->setFixedSize(72, 19);
     closeLabel1->setAlignment(Qt::AlignLeft);
     DKeySequenceEdit *closeEdit1 = new DKeySequenceEdit(this);
-    closeEdit1->setKeySequence(QKeySequence(Qt::ALT, Qt::Key_F4));
+    closeEdit1->setKeySequence(QKeySequence(Qt::ALT + Qt::Key_F4));
     QLabel *closeLabel2 = new QLabel("关闭窗口", this);
     closeLabel2->setFixedSize(72, 19);
     closeLabel2->setAlignment(Qt::AlignLeft);
