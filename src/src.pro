@@ -1,6 +1,8 @@
-TARGET = dtkwidget
+include(d_version.pri)
+
+TARGET = dtkwidget$$D_VERION
 TEMPLATE = lib
-QT += dtkcore
+QT += dtkcore$$D_VERION
 
 CONFIG += internal_module
 CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT
@@ -8,7 +10,7 @@ CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT
 # 龙芯架构上没有默认添加PT_GNU_STACK-section,所以此处手动指定一下
 contains(QMAKE_HOST.arch, mips.*): QMAKE_LFLAGS_SHLIB += "-Wl,-z,noexecstack"
 
-QT += network concurrent dtkgui printsupport printsupport-private
+QT += network concurrent dtkgui$$D_VERION printsupport printsupport-private
 greaterThan(QT_MAJOR_VERSION, 4) {
   QT += widgets widgets-private
   # Qt >= 5.8

@@ -1,6 +1,8 @@
+include(../../../src/d_version.pri)
+
 QT += core gui svg
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-QT += dtkcore dtkgui printsupport-private
+QT += dtkcore$$D_VERION dtkgui$$D_VERION printsupport-private
 linux* {
     CONFIG += link_pkgconfig
 }
@@ -82,7 +84,7 @@ win32* {
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../../../src/release -ldtkwidget
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../../../src/debug -ldtkwidgetd
-else:unix: LIBS += -L$$OUT_PWD/../../../src -ldtkwidget
+else:unix: LIBS += -L$$OUT_PWD/../../../src -ldtkwidget$$D_VERION
 
 INCLUDEPATH += $$PWD/../../../src
 INCLUDEPATH += $$PWD/../../../src/widgets
