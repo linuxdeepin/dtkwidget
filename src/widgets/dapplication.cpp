@@ -399,7 +399,7 @@ void DApplicationPrivate::doAcclimatizeVirtualKeyboard(QWidget *window, QWidget 
             activeInputWindow->setContentsMargins(activeInputWindowContentsMargins);
             activeInputWindow = nullptr;
         }
-
+        widget->setProperty("_dtk_selectHandleMargins", 0);
         return;
     }
 
@@ -472,6 +472,7 @@ void DApplicationPrivate::doAcclimatizeVirtualKeyboard(QWidget *window, QWidget 
 
     // 更新窗口内容显示区域以确保虚拟键盘能正常显示
     window->setContentsMargins(0, -panValue, 0, resizeHeight + panValue);
+    widget->setProperty("_dtk_selectHandleMargins", panValue);
 }
 
 void DApplicationPrivate::acclimatizeVirtualKeyboardForFocusWidget(bool allowResizeContentsMargins)
