@@ -52,7 +52,6 @@
 #include <DSuggestButton>
 #include <DSwitchButton>
 #include <DWarningButton>
-
 // not added
 // #include <DSearchEdit>
 // #include <DHorizontalLine>
@@ -99,7 +98,7 @@ public:                                                                         
     }                                                                                                       \
                                                                                                             \
     QIcon icon() const override {                                                                           \
-        return QIcon(QStringLiteral(":/qt-project.org/dframe/images/dframe.png"));                          \
+        return QIcon(QStringLiteral(":/images/" # UPPER_NAME) + ".png");                                    \
     }                                                                                                       \
                                                                                                             \
     bool isContainer() const override {                                                                     \
@@ -120,7 +119,7 @@ public:                                                                         
         }                                                                                                   \
         if (IS_SAME(UPPER_NAME, DFloatingButton)) {                                                         \
             DFloatingButton *w = new DFloatingButton(parent);                                               \
-            w->setIcon(QIcon("/usr/share/icons/bloom/actions/24/lock.svg"));                                \
+            w->setIcon(QIcon::fromTheme("lock"));                                                           \
             w->setFixedSize(WIDTH, HEIGHT);                                                                 \
             return reinterpret_cast<UPPER_NAME *>(w);                                                       \
         }                                                                                                   \
@@ -149,7 +148,7 @@ public:                                                                         
         }                                                                                                   \
         if (IS_SAME(UPPER_NAME, DToolButton)) {                                                             \
             DToolButton *w = new DToolButton(parent);                                                       \
-            w->setIcon(QIcon("/usr/share/icons/bloom/actions/24/unlock.svg"));                              \
+            w->setIcon(QIcon::fromTheme("unlock"));                                                         \
             return reinterpret_cast<UPPER_NAME *>(w);                                                       \
         }                                                                                                   \
         if (IS_SAME(UPPER_NAME, DSpinner)) {                                                                \
@@ -250,7 +249,7 @@ GENERATE_CUSTOMER_WIDGET(DColoredProgressBar,   200, 30);
 
 GENERATE_CUSTOMER_WIDGET(DPasswordEdit,         200, 40);
 GENERATE_CUSTOMER_WIDGET(DTabBar,               40,  40);
-GENERATE_CUSTOMER_WIDGET(DWaterProgress,        60,  60);       //  TODO: 大小被写死了： 100*100
+GENERATE_CUSTOMER_WIDGET(DWaterProgress,       100, 100);       //  TODO: 大小被写死了： 100*100
 GENERATE_CUSTOMER_WIDGET(DSearchComboBox,       200, 40);
 GENERATE_CUSTOMER_WIDGET(DSpinner,              40,  40);
 GENERATE_CUSTOMER_WIDGET(DToolButton,           40,  40);

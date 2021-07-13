@@ -1,6 +1,35 @@
 <RCC>
-    <qresource prefix="/qt-project.org/dframe">
-        <file>images/dframe.png</file>
+    <qresource prefix="/">
+        <file>images/DArrowLineDrawer.png</file>
+        <file>images/DBlurEffectWidget.png</file>
+        <file>images/DButtonBox.png</file>
+        <file>images/DColoredProgressBar.png</file>
+        <file>images/DCrumbEdit.png</file>
+        <file>images/DDoubleSpinBox.png</file>
+        <file>images/DFileChooserEdit.png</file>
+        <file>images/DFloatingButton.png</file>
+        <file>images/DFloatingWidget.png</file>
+        <file>images/DFrame.png</file>
+        <file>images/DIconButton.png</file>
+        <file>images/DIpv4LineEdit.png</file>
+        <file>images/DKeySequenceEdit.png</file>
+        <file>images/DLineEdit.png</file>
+        <file>images/DListView.png</file>
+        <file>images/DPageIndicator.png</file>
+        <file>images/DPasswordEdit.png</file>
+        <file>images/DProgressBar.png</file>
+        <file>images/DSearchComboBox.png</file>
+        <file>images/DSearchEdit.png</file>
+        <file>images/DSpinBox.png</file>
+        <file>images/DSpinner.png</file>
+        <file>images/DSuggestButton.png</file>
+        <file>images/DSwitchButton.png</file>
+        <file>images/DTabBar.png</file>
+        <file>images/DTitlebar.png</file>
+        <file>images/DToolButton.png</file>
+        <file>images/DWarningButton.png</file>
+        <file>images/DWaterProgress.png</file>
+        <file>images/DLabel.png</file>
+        <file>images/DTextEdit.png</file>
     </qresource>
 </RCC>
-
