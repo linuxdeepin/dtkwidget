@@ -202,7 +202,7 @@ public:                                                                         
             property = R"(<property name="text"><string>warning</string></property>)";                      \
         }                                                                                                   \
         return QStringLiteral("                                                                             \
-            <ui language=\"c++\">                                                                           \
+            <ui language=\"c++\" displayname=\"" # UPPER_NAME "\">                                          \
                 <widget class=\"Dtk::Widget::" # UPPER_NAME "\" name=\"Dtk::Widget::" # UPPER_NAME "\">     \
                     <property name=\"geometry\">                                                            \
                         <rect>                                                                              \
