@@ -48,6 +48,7 @@ DCustomWidgets::DCustomWidgets(QObject *parent)
     widgets.append(new DSuggestButtonPlugin(this));
     widgets.append(new DSwitchButtonPlugin(this));
     widgets.append(new DWarningButtonPlugin(this));
+    widgets.append(new DSearchEditPlugin(this));
 }
 
 QList<QDesignerCustomWidgetInterface*> DCustomWidgets::customWidgets() const

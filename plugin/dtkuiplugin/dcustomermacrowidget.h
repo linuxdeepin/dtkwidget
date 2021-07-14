@@ -52,11 +52,11 @@
 #include <DSuggestButton>
 #include <DSwitchButton>
 #include <DWarningButton>
+#include <DSearchEdit>
+
 // not added
-// #include <DSearchEdit>
 // #include <DHorizontalLine>
 // #include <DVerticalLine>
-
 
 // TODO: setText problem, add in v5.6
 #include <DIconButton>
@@ -249,13 +249,14 @@ GENERATE_CUSTOMER_WIDGET(DColoredProgressBar,   200, 30);
 
 GENERATE_CUSTOMER_WIDGET(DPasswordEdit,         200, 40);
 GENERATE_CUSTOMER_WIDGET(DTabBar,               40,  40);
-GENERATE_CUSTOMER_WIDGET(DWaterProgress,       100, 100);       //  TODO: 大小被写死了： 100*100
+GENERATE_CUSTOMER_WIDGET(DWaterProgress,        100, 100);       //  TODO: 大小被写死了： 100*100
 GENERATE_CUSTOMER_WIDGET(DSearchComboBox,       200, 40);
 GENERATE_CUSTOMER_WIDGET(DSpinner,              40,  40);
 GENERATE_CUSTOMER_WIDGET(DToolButton,           40,  40);
 GENERATE_CUSTOMER_WIDGET(DSuggestButton,        100, 40);
 GENERATE_CUSTOMER_WIDGET(DWarningButton,        100, 40);
 GENERATE_CUSTOMER_WIDGET(DSwitchButton,         75,  32);
+GENERATE_CUSTOMER_WIDGET(DSearchEdit,           200, 40);
 
 //GENERATE_CUSTOMER_WIDGET(DShadowLine,           200, 40);     // 看不到效果
 //GENERATE_CUSTOMER_WIDGET(DSegmentedControl,     200, 40);
