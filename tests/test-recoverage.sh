@@ -3,7 +3,7 @@
 BUILD_DIR=build
 REPORT_DIR=report
 
-#cd ../
+cd ../
 #rm -rf $BUILD_DIR
 #mkdir $BUILD_DIR
 #cd $BUILD_DIR
