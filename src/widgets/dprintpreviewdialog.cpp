@@ -1481,6 +1481,8 @@ void DPrintPreviewDialogPrivate::setTurnPageBtnStatus()
  */
 void DPrintPreviewDialogPrivate::watermarkTypeChoosed(int index)
 {
+    D_Q(DPrintPreviewDialog);
+
     if (index == 0) {
         pview->refreshBegin();
         waterTextCombo->setEnabled(true);
@@ -1500,8 +1502,7 @@ void DPrintPreviewDialogPrivate::watermarkTypeChoosed(int index)
             fontCombo->addItem(font);
         }
 
-        static bool watermarkIsInited = false;
-        if (!watermarkIsInited) {
+        if (!q->property("_d_print_waterIsInit").toBool()) {
             // 初始化才使用系统默认字体 下次切换时保留上一次字体
             //通过字体信息,当中文字体的情况下将英文转换为中文
             QFont font;
@@ -1513,7 +1514,7 @@ void DPrintPreviewDialogPrivate::watermarkTypeChoosed(int index)
                     fontCombo->setCurrentText(itemName);
                 }
             }
-            watermarkIsInited = true;
+            q->setProperty("_d_print_waterIsInit", true);
         }
         pview->setWaterMarkType(Type_Text);
         pview->refreshEnd();
