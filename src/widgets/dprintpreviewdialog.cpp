@@ -2003,7 +2003,7 @@ void DPrintPreviewDialogPrivate::waterMarkBtnClicked(bool isClicked)
     if (isClicked) {
         wmSpacer->changeSize(WIDTH_NORMAL, SPACER_HEIGHT_HIDE);
         watermarksettingwdg->show();
-        waterTypeGroup->button(0)->setChecked(true);
+        waterTypeGroup->button(typeChoice)->setChecked(true);
         watermarkTypeChoosed(typeChoice);
         if (typeChoice == Type_Image - 1 && !picPathEdit->text().isEmpty())
             customPictureWatermarkChoosed(picPathEdit->text());
