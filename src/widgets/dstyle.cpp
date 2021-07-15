@@ -1876,19 +1876,18 @@ DStyle::StyleState DStyle::getState(const QStyleOption *option)
     if (!option->state.testFlag(DStyle::State_Enabled)) {
         return DStyle::SS_NormalState;
     }
+    // 设置setAttribute(Qt::WA_Hover, false)后
+    // 按钮按下时依旧会存在State_MouseOver状态
+    // 错误的获取了SS_HoverState后的调色板
+    QWidget *widget = qobject_cast<QWidget *>(option->styleObject);
+    if (option->state & State_MouseOver && widget
+            && !widget->testAttribute(Qt::WA_Hover)) {
+        return DStyle::SS_NormalState;
+    }
 
     if (option->state.testFlag(DStyle::State_Sunken)) {
         state = DStyle::SS_PressState;
     } else if (option->state.testFlag(DStyle::State_MouseOver)) {
-        // 设置setAttribute(Qt::WA_Hover, false)后
-        // 按钮按下时依旧会存在State_MouseOver状态
-        // 错误的获取了SS_HoverState后的调色板
-        QWidget *widget = qobject_cast<QWidget *>(option->styleObject);
-        if (option->state & State_MouseOver && widget
-                && !widget->testAttribute(Qt::WA_Hover)) {
-            return DStyle::SS_NormalState;
-        }
-
         state = DStyle::SS_HoverState;
     }
 
