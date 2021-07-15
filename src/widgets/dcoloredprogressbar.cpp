@@ -127,10 +127,6 @@ void DColoredProgressBar::paintEvent(QPaintEvent *)
     painter.setPen(Qt::NoPen);
     painter.drawRect(styopt.rect);
 
-    painter.drawControl(QStyle::ControlElement::CE_ProgressBarGroove, styopt);
-    painter.drawControl(QStyle::ControlElement::CE_ProgressBarContents, styopt);
+    painter.drawControl(QStyle::ControlElement::CE_ProgressBar, styopt);
 
-    if (styopt.textVisible && styopt.orientation == Qt::Horizontal) {
-        painter.drawControl(QStyle::ControlElement::CE_ProgressBarLabel, styopt);
-    }
 }
