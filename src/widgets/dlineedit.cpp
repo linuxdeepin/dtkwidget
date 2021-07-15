@@ -27,6 +27,7 @@
 
 #include <DToolTip>
 #include <DPalette>
+#include <DGuiApplicationHelper>
 
 #define private public
 #ifndef slots
@@ -404,6 +405,8 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
     D_D(DLineEdit);
 
     if (event->type() == QEvent::FocusIn) {
+        if (DGuiApplicationHelper::IsTableEnvironment && QGuiApplication::inputMethod())
+            QGuiApplication::inputMethod()->show();
         Q_EMIT focusChanged(true);
     } else if (event->type() == QEvent::FocusOut) {
         Q_EMIT focusChanged(false);
