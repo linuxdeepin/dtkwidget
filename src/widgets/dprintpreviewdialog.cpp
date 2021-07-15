@@ -467,7 +467,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     marginslayout->addLayout(marginscombolayout);
     marginslayout->addLayout(marginsspinlayout);
 
-    QRegExp reg("^([5-5][0-4]|[1-4][0-9]|[0-9])(\\.[0-9][0-9])|55(\\.[8-8][0-8])|55(\\.[0-7][0-9])");
+    QRegExp reg("^([5-5][0-4]|[1-4][0-9]|[0-9])?(\\.[0-9][0-9])|55(\\.[8-8][0-8])|55(\\.[0-7][0-9])");
     QRegExpValidator *val = new QRegExpValidator(reg, marginsframe);
     QList<DDoubleSpinBox *> list = marginsframe->findChildren<DDoubleSpinBox *>();
     for (int i = 0; i < list.size(); i++) {
