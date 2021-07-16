@@ -23,4 +23,5 @@ lcov --extract coverage_all.info $EXTRACT_ARGS --output-file coverage.info
 lcov --remove coverage_all.info "*/tests/*" "*/usr/include*" "*build/src*" --output-file coverage.info
 genhtml -o ../../tests/$REPORT_DIR coverage.info
 
-test -e ./build/asan.log* && mv ./build/asan.log* ./build/asan_dtkwidget.log || echo "Not detected any memory leak."
+cd ..
+test -e ./build/asan.log* && mv ./build/asan.log* ./build/asan_dtkwidget.log || touch ./build/asan.log
