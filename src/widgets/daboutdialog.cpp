@@ -238,12 +238,13 @@ QPixmap DAboutDialogPrivate::loadPixmap(const QString &file)
 }
 
 /*!
- * \~chinese \class DAboutDialog
- * \~chinese \brief DAboutDialog 类提供了应用程序的关于对话框，规范所有 deepin 应用关于窗口设计规范，符合 Deepin 风格。
- *
- * \~chinese 使用 DMainWindow 创建的窗口都可以在菜单点关于弹出关于窗口，一般不需要手动创建。
- *
- * \~chinese 为了提供简便操作，可通过 DApplication 来设置关于对话框展示内容。
+  \class Dtk::Widget::DAboutDialog
+  \inmodule dtkwidget
+  \brief DAboutDialog 类提供了应用程序的关于对话框，规范所有 deepin 应用关于窗口设计规范，符合 Deepin 风格.
+  
+  使用 DMainWindow 创建的窗口都可以在菜单点关于弹出关于窗口，一般不需要手动创建。
+  
+  为了提供简便操作，可通过 DApplication 来设置关于对话框展示内容。
  */
 
 DAboutDialog::DAboutDialog(QWidget *parent)
@@ -255,15 +256,10 @@ DAboutDialog::DAboutDialog(QWidget *parent)
 }
 
 /*!
- * \~english \property DAboutDialog::windowTitle
- *
- * \~english \brief the title of the dialog.
- */
-
-/*!
- * \~chinese \property DAboutDialog::windowTitle
- *
- * \~chinese \brief 返回关于对话框窗口的标题
+  \property DAboutDialog::windowTitle
+  
+  \brief the title of the dialog.
+  \brief 返回关于对话框窗口的标题
  */
 QString DAboutDialog::windowTitle() const
 {
@@ -271,15 +267,10 @@ QString DAboutDialog::windowTitle() const
 }
 
 /*!
- * \~english \property DAboutDialog::productName
- *
- * \~english \brief the product name to be shown on the dialog.
- */
-
-/*!
- * \~chinese \property DAboutDialog::productName
- *
- * \~chinese \brief 返回对话框显示的应用名称
+  \property DAboutDialog::productName
+  
+  \brief the product name to be shown on the dialog.
+  \brief 返回对话框显示的应用名称
  */
 QString DAboutDialog::productName() const
 {
@@ -289,15 +280,10 @@ QString DAboutDialog::productName() const
 }
 
 /*!
- * \~english \property DAboutDialog::version
- *
- * \~english \brief the version number to be shown on the dialog.
- */
-
-/*!
- * \~chinese \property DAboutDialog::version
- *
- * \~chinese \brief 返回关于对话框显示的版本
+  \property DAboutDialog::version
+  
+  \brief the version number to be shown on the dialog.
+  \brief 返回关于对话框显示的版本
  */
 QString DAboutDialog::version() const
 {
@@ -307,13 +293,10 @@ QString DAboutDialog::version() const
 }
 
 /*!
- * \~english \property DAboutDialog::description
- * \~english \brief the description to be show on the dialog.
- */
+  \property DAboutDialog::description
 
-/*!
- * \~chinese \property DAboutDialog::description
- * \~chinese \brief 返回关于对话框显示的描述
+  \brief the description to be show on the dialog.
+  \brief 返回关于对话框显示的描述
  */
 QString DAboutDialog::description() const
 {
@@ -323,13 +306,8 @@ QString DAboutDialog::description() const
 }
 
 /*!
- * \~english \property DAboutDialog::companyLogo
- * \~english \brief the vendor logo to be shown on the dialog.
- */
-
-/*!
- * \~chinese \property DAboutDialog::companyLogo
- * \~chinese \brief 返回对话框中的公司/组织 logo 图片
+  \brief the vendor logo to be shown on the dialog.
+  \return 返回对话框中的公司/组织 logo 图片
  */
 const QPixmap *DAboutDialog::companyLogo() const
 {
@@ -339,17 +317,12 @@ const QPixmap *DAboutDialog::companyLogo() const
 }
 
 /*!
- * \~english \property DAboutDialog::websiteName
- * \~english \brief the vendor website name to be shown on the dialog.
- *
- * \~english Usually be in form like www.deepin.org.
- */
-
-/*!
- * \~chinese \property DAboutDialog::websiteName
- * \~chinese \brief 返回对话框中显示的公司/组织网站名称
- *
- * \~chinese 通常采用 www.deepin.org 等形式。
+  \property DAboutDialog::websiteName
+  \brief the vendor website name to be shown on the dialog.
+  \brief 返回对话框中显示的公司/组织网站名称
+  
+  Usually be in form like www.deepin.org.
+  通常采用 www.deepin.org 等形式。
  */
 QString DAboutDialog::websiteName() const
 {
@@ -359,18 +332,13 @@ QString DAboutDialog::websiteName() const
 }
 
 /*!
- * \~english \property DAboutDialog::websiteLink
- * \~english \brief the corresponding web address of websiteName()
- *
- * \~english The website link will be open in the browser if the user clicks on
- * \~english the website text shown on the dialog.
- */
-
-/*!
- * \~chinese \property DAboutDialog::websiteLink
- * \~chinese \brief 返回 websiteName() 相应的网址
- *
- * \~chinese 如果用户点击对话框中显示的网址，则会打开相应的链接。
+  \property DAboutDialog::websiteLink
+  \brief the corresponding web address of websiteName()
+  \brief 返回 websiteName() 相应的网址
+  
+  The website link will be open in the browser if the user clicks on
+  the website text shown on the dialog.
+  如果用户点击对话框中显示的网址，则会打开相应的链接。
  */
 QString DAboutDialog::websiteLink() const
 {
@@ -380,14 +348,11 @@ QString DAboutDialog::websiteLink() const
 }
 
 /*!
- * \~english \property DAboutDialog::acknowledgementLink
- * \~english \brief the web address to be open open when user clicks on the "Acknowlegement"
- * \~english text show on the dialog.
- */
+  \property DAboutDialog::acknowledgementLink
 
-/*!
- * \~chinese \property DAboutDialog::acknowledgementLink
- * \~chinese \brief 返回鸣谢链接地址
+  \brief the web address to be open open when user clicks on the "Acknowlegement"
+  text show on the dialog.
+  \brief 返回鸣谢链接地址
  */
 QString DAboutDialog::acknowledgementLink() const
 {
@@ -397,13 +362,10 @@ QString DAboutDialog::acknowledgementLink() const
 }
 
 /*!
- * \~english \property DAboutDialog::license
- * \~english \brief the license to be shown on the dialog.
- */
+  \property DAboutDialog::license
 
-/*!
- * \~chinese \property DAboutDialog::license
- * \~chinese \brief 对话框显示的许可证
+  \brief the license to be shown on the dialog.
+  \brief 对话框显示的许可证
  */
 QString DAboutDialog::license() const
 {
@@ -413,8 +375,7 @@ QString DAboutDialog::license() const
 }
 
 /*!
- * \~chinese \property DAboutDialog::setWindowTitle
- * \~chinese \brief 设置对话框窗口标题
+  \brief 设置对话框窗口标题
  */
 void DAboutDialog::setWindowTitle(const QString &windowTitle)
 {
@@ -422,10 +383,9 @@ void DAboutDialog::setWindowTitle(const QString &windowTitle)
 }
 
 /*!
- * \~chinese \property DAboutDialog::setProductIcon
- * \~chinese \brief 设置展示的图标
- *
- * \~chinese 在关于对话框展示的图标
+  \brief 设置展示的图标
+  
+  在关于对话框展示的图标
  */
 void DAboutDialog::setProductIcon(const QIcon &icon)
 {
@@ -435,8 +395,7 @@ void DAboutDialog::setProductIcon(const QIcon &icon)
 }
 
 /*!
- * \~chinese \property DAboutDialog::setProductName
- * \~chinese \brief 设置应用名称
+  \brief 设置应用名称
  */
 void DAboutDialog::setProductName(const QString &productName)
 {
@@ -446,8 +405,7 @@ void DAboutDialog::setProductName(const QString &productName)
 }
 
 /*!
- * \~chinese \property DAboutDialog::setVersion
- * \~chinese \brief 设置版本
+  \brief 设置版本
  */
 void DAboutDialog::setVersion(const QString &version)
 {
@@ -457,8 +415,7 @@ void DAboutDialog::setVersion(const QString &version)
 }
 
 /*!
- * \~chinese \property DAboutDialog::setDescription
- * \~chinese \brief 设置描述信息
+  \brief 设置描述信息
  */
 void DAboutDialog::setDescription(const QString &description)
 {
@@ -468,8 +425,7 @@ void DAboutDialog::setDescription(const QString &description)
 }
 
 /*!
- * \~chinese \property DAboutDialog::setCompanyLogo
- * \~chinese \brief 设置组织标志
+  \brief 设置组织标志
  */
 void DAboutDialog::setCompanyLogo(const QPixmap &companyLogo)
 {
@@ -479,8 +435,7 @@ void DAboutDialog::setCompanyLogo(const QPixmap &companyLogo)
 }
 
 /*!
- * \~chinese \property DAboutDialog::setWebsiteName
- * \~chinese \brief 设置网站名称
+  \brief 设置网站名称
  */
 void DAboutDialog::setWebsiteName(const QString &websiteName)
 {
@@ -495,8 +450,7 @@ void DAboutDialog::setWebsiteName(const QString &websiteName)
 }
 
 /*!
- * \~chinese \property DAboutDialog::setWebsiteLink
- * \~chinese \brief 设置网站链接
+  \brief 设置网站链接
  */
 void DAboutDialog::setWebsiteLink(const QString &websiteLink)
 {
@@ -511,8 +465,7 @@ void DAboutDialog::setWebsiteLink(const QString &websiteLink)
 }
 
 /*!
- * \~chinese \property DAboutDialog::setAcknowledgementLink
- * \~chinese \brief 设置鸣谢链接
+  \brief 设置鸣谢链接
  */
 void DAboutDialog::setAcknowledgementLink(const QString &acknowledgementLink)
 {
@@ -523,8 +476,7 @@ void DAboutDialog::setAcknowledgementLink(const QString &acknowledgementLink)
 }
 
 /*!
- * \~chinese \property DAboutDialog::setAcknowledgementVisible
- * \~chinese \brief 设置鸣谢链接是否显示
+  \brief 设置鸣谢链接是否显示
  */
 void DAboutDialog::setAcknowledgementVisible(bool visible)
 {
@@ -534,8 +486,7 @@ void DAboutDialog::setAcknowledgementVisible(bool visible)
 }
 
 /*!
- * \~chinese \property DAboutDialog::setLicense
- * \~chinese \brief 设置许可证
+  \brief 设置许可证
  */
 void DAboutDialog::setLicense(const QString &license)
 {

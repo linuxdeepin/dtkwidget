@@ -49,8 +49,8 @@ DWIDGET_BEGIN_NAMESPACE
 static Qt::TextFormat textFormat = Qt::TextFormat::AutoText;
 
 /*!
- * \~chinese \brief DStyle::adjustColor调整颜色
- * \~chinese \sa DGuiApplicationHelper::adjustColor()
+  \brief DStyle::adjustColor调整颜色
+  \sa Dtk::Gui::DGuiApplicationHelper::adjustColor()
  */
 QColor DStyle::adjustColor(const QColor &base,
                            qint8 hueFloat, qint8 saturationFloat, qint8 lightnessFloat,
@@ -60,8 +60,8 @@ QColor DStyle::adjustColor(const QColor &base,
 }
 
 /*!
- * \~chinese \brief DStyle::blendColor混合颜色
- * \~chinese \sa DGuiApplicationHelper::blendColor()
+  \brief DStyle::blendColor混合颜色
+  \sa Dtk::Gui::DGuiApplicationHelper::blendColor()
  */
 QColor DStyle::blendColor(const QColor &substrate, const QColor &superstratum)
 {
@@ -69,8 +69,8 @@ QColor DStyle::blendColor(const QColor &substrate, const QColor &superstratum)
 }
 
 /*!
- * \~chinese \brief DStyle::toIconModeState 根据option中的QStyle::State返回图标应有
- * \~chinese 的模式和状态
+  \brief DStyle::toIconModeState 根据option中的QStyle::State返回图标应有
+  的模式和状态
  */
 QPair<QIcon::Mode, QIcon::State> DStyle::toIconModeState(const QStyleOption *option)
 {
@@ -91,16 +91,16 @@ QPair<QIcon::Mode, QIcon::State> DStyle::toIconModeState(const QStyleOption *opt
 }
 
 /*!
- * \~chinese \brief DStyle::setTooltipTextFormat 设置 tooltip 文本格式
- * \~chinese \sa Qt::TextFormat
+  \brief DStyle::setTooltipTextFormat 设置 tooltip 文本格式
+  \sa Qt::TextFormat
  */
 void DStyle::setTooltipTextFormat(Qt::TextFormat format)
 {
     textFormat = format;
 }
 /*!
- * \~chinese \brief DStyle::tooltipTextFormat 获取 tooltip 文本格式
- * \~chinese \sa Qt::TextFormat
+  \brief DStyle::tooltipTextFormat 获取 tooltip 文本格式
+  \sa Qt::TextFormat
  */
 Qt::TextFormat DStyle::tooltipTextFormat()
 {
@@ -775,192 +775,204 @@ void drawArrowElement(Qt::ArrowType arrow, QPainter *pa, const QRectF &rect)
 }
 
 /*!
- * \~chinese \class DStyle
- * \~chinese \brief DStyle提供了一个修改风格的类
- * \~chinese \sa QCommonStyle()
+  \class Dtk::Widget::DStyle
+  \inmodule dtkwidget
+  \brief DStyle提供了一个修改风格的类.
+  \sa QCommonStyle()
  */
 
 /*!
- * \~chinese \enum DStyle::PrimitiveElement
- * \~chinese \sa DStyle::PrimitiveElement QStyle::PrimitiveElement
- *
- * \~chinese \var DStyle::PrimitiveElement DStyle::PE_ItemBackground
- * \~chinese item背景颜色
- *
- * \~chinese \var DStyle::PrimitiveElement DStyle::PE_IconButtonPanel
- * \~chinese DIconButton 面板
- *
- * \~chinese \var DStyle::PrimitiveElement DStyle::PE_IconButtonIcon
- * \~chinese DIconButton 不同状态下的背景颜色
- *
- * \~chinese \var DStyle::PrimitiveElement DStyle::PE_Icon
- * \~chinese DIconButton
- *
- * \~chinese \var DStyle::PrimitiveElement DStyle::PE_SwitchButtonGroove
- * \~chinese DSwitchButton 面板
- *
- * \~chinese \var DStyle::PrimitiveElement DStyle::PE_SwitchButtonHandle
- * \~chinese DSwitchButton 滑块面板
- *
- * \~chinese \var DStyle::PrimitiveElement DStyle::PE_FloatingWidget
- * \~chinese DFloatingWidget 面板
+  \enum Dtk::Widget::DStyle::PrimitiveElement
+  \sa DStyle::PrimitiveElement QStyle::PrimitiveElement
+  
+  \value PE_ItemBackground
+  item背景颜色
+  
+  \value PE_IconButtonPanel
+  DIconButton 面板
+  
+  \value PE_IconButtonIcon
+  DIconButton 不同状态下的背景颜色
+  
+  \value PE_Icon
+  DIconButton
+  
+  \value PE_SwitchButtonGroove
+  DSwitchButton 面板
+  
+  \value PE_SwitchButtonHandle
+  DSwitchButton 滑块面板
+  
+  \value PE_FloatingWidget
+  DFloatingWidget 面板
+
+  \omitvalue PE_CustomBase
 */
 
 /*!
- * \~chinese \enum DStyle::StyleState
- * \~chinese \sa DStyle::StyleState 记录控件状态的值
- *
- * \~chinese \var DStyle::StyleState DStyle::SS_NormalState
- * \~chinese 正常状态
- *
- * \~chinese \var DStyle::StyleState DStyle::SS_HoverState
- * \~chinese 悬停状态
- *
- * \~chinese \var DStyle::StyleState DStyle::SS_PressState
- * \~chinese 按下状态
- *
- *\~chinese \var DStyle::StyleState DStyle::SS_StateCustomBase
- * \~chinese 自定义子元素的基值
- *
- * \~chinese \var DStyle::StyleState DStyle::StyleState_Mask
- * \~chinese 状态掩码
- *
- * \~chinese \var DStyle::StyleState DStyle::SS_CheckedFlag
- * \~chinese 选定标志
- *
- * \~chinese \var DStyle::StyleState DStyle::SS_SelectedFlag
- * \~chinese 选中状态
- *
- *  * \~chinese \var DStyle::StyleState DStyle::SS_FocusFlag
- * \~chinese 焦点状态
- *
- * \~chinese \var DStyle::StyleState DStyle::SS_FlagCustomBase
- * \~chinese 自定义子元素的基值
+  \enum Dtk::Widget::DStyle::StyleState
+  记录控件状态的值
+  
+  \value SS_NormalState
+  正常状态
+  
+  \value SS_HoverState
+  悬停状态
+  
+  \value SS_PressState
+  按下状态
+  
+  \value SS_StateCustomBase
+  自定义子元素的基值
+  
+  \value StyleState_Mask
+  状态掩码
+  
+  \value SS_CheckedFlag
+  选定标志
+  
+  \value SS_SelectedFlag
+  选中状态
+  
+  \value SS_FocusFlag
+  焦点状态
+  
+  \value SS_FlagCustomBase
+  自定义子元素的基值
 */
 
 /*!
- * \~chinese \enum DStyle::PixelMetric
- * \~chinese \sa DStyle::PixelMetric QStyle::PixelMetric
- *
- * \~chinese \var DStyle::PixelMetric DStyle::PM_FocusBorderWidth
- * \~chinese 控件焦点状态的边框宽度
- *
- * \~chinese \var DStyle::PixelMetric DStyle::PM_FocusBorderSpacing
- * \~chinese 控件内容和border之间的间隔
- *
- * \~chinese \var DStyle::PixelMetric DStyle::PM_FrameRadius
- * \~chinese 控件的圆角大小
- *
- * \~chinese \var DStyle::PixelMetric DStyle::PM_ShadowRadius
- * \~chinese 控件阴影效果的半径
- *
- * \~chinese \var DStyle::PixelMetric DStyle::PM_ShadowHOffset
- * \~chinese 阴影在水平方向的偏移
- *
- * \~chinese \var DStyle::PixelMetric DStyle::PM_ShadowVOffset
- * \~chinese 阴影在竖直方向的偏移
- *
- * \~chinese \var DStyle::PixelMetric DStyle::PM_FrameMargins
- * \~chinese 控件的margins区域，控件内容 = 控件大小 - FrameMargins
- *
- * \~chinese \var DStyle::PixelMetric DStyle::PM_IconButtonIconSize
- * \~chinese 控件大小
- *
- * \~chinese \var DStyle::PixelMetric DStyle::PM_TopLevelWindowRadius
- * \~chinese 窗口的圆角大小
- *
- * \~chinese \var DStyle::PixelMetric DStyle::PM_SwitchButtonHandleWidth
- * \~chinese 控件开关的宽度
- *
- * \~chinese \var DStyle::PixelMetric DStyle::PM_SwithcButtonHandleHeight
- * \~chinese 控件开关的高度
- *
- * \~chinese \var DStyle::PixelMetric DStyle::PM_FloatingWidgetRadius
- * \~chinese (基类)的圆角半径:控件内容-Radius < 控件内容 < 控件显示大小
- *
- * \~chinese \var DStyle::PixelMetric DStyle::PM_FloatingWidgetShadowRadius
- * \~chinese (基类)的阴影Radius区域:控件内容 < 控件内容+阴影margins < 控件内容+阴影margins+阴影Radius = 控件显示大小
- *
- * \~chinese \var DStyle::PixelMetric DStyle::PM_FloatingWidgetShadowMargins
- * \~chinese (基类)阴影的宽度 = 控件显示大小 - 阴影Radius - 控件内容
- *
- * \~chinese \var DStyle::PixelMetric DStyle::PM_FloatingWidgetShadowHOffset
- * \~chinese (基类)的阴影水平偏移
- *
- * \~chinese \var DStyle::PixelMetric DStyle::PM_ContentsMargins
- * \~chinese (基类)内容的边距（一般只用于左右边距）
- *
- * \~chinese \var DStyle::PixelMetric DStyle::PM_ContentsSpacing
- * \~chinese 内容的间距（可用于列表项中每一项的距离）
- *
- * \~chinese \var DStyle::PixelMetric DStyle::PM_ButtonMinimizedSize
- * \~chinese 按钮控件的最小大小
+  \enum Dtk::Widget::DStyle::PixelMetric
+  \sa DStyle::PixelMetric QStyle::PixelMetric
+  
+  \value PM_FocusBorderWidth
+  控件焦点状态的边框宽度
+  
+  \value PM_FocusBorderSpacing
+  控件内容和border之间的间隔
+  
+  \value PM_FrameRadius
+  控件的圆角大小
+  
+  \value PM_ShadowRadius
+  控件阴影效果的半径
+  
+  \value PM_ShadowHOffset
+  阴影在水平方向的偏移
+  
+  \value PM_ShadowVOffset
+  阴影在竖直方向的偏移
+  
+  \value PM_FrameMargins
+  控件的margins区域，控件内容 = 控件大小 - FrameMargins
+  
+  \value PM_IconButtonIconSize
+  控件大小
+  
+  \value PM_TopLevelWindowRadius
+  窗口的圆角大小
+  
+  \value PM_SwitchButtonHandleWidth
+  控件开关的宽度
+  
+  \value PM_SwithcButtonHandleHeight
+  控件开关的高度
+  
+  \value PM_FloatingWidgetRadius
+  (基类)的圆角半径:控件内容-Radius < 控件内容 < 控件显示大小
+  
+  \value PM_FloatingWidgetShadowRadius
+  (基类)的阴影Radius区域:控件内容 < 控件内容+阴影margins < 控件内容+阴影margins+阴影Radius = 控件显示大小
+  
+  \value PM_FloatingWidgetShadowMargins
+  (基类)阴影的宽度 = 控件显示大小 - 阴影Radius - 控件内容
+  
+  \value PM_FloatingWidgetShadowHOffset
+  (基类)的阴影水平偏移
+  
+  \value PM_ContentsMargins
+  (基类)内容的边距（一般只用于左右边距）
+  
+  \value PM_ContentsSpacing
+  内容的间距（可用于列表项中每一项的距离）
+  
+  \value PM_ButtonMinimizedSize
+  按钮控件的最小大小
+
+  \omitvalue PM_CustomBase
+  \omitvalue PM_FloatingWidgetShadowVOffset
 */
 
 /*!
- * \~chinese \enum DStyle::StandardPixmap
- * \~chinese \sa DStyle::StandardPixmap QStyle::StandardPixmap
- *
- * \~chinese \var DStyle::StandardPixmap DStyle::P_DecreaseElement
- * \~chinese 减少（-）
- * \~chinese \var DStyle::StandardPixmap DStyle::SP_IncreaseElement
- * \~chinese 增加（+）
- * \~chinese \var DStyle::StandardPixmap DStyle::SP_MarkElement
- * \~chinese 对勾
- * \~chinese \var DStyle::StandardPixmap DStyle::SP_SelectElement
- * \~chinese 选择（...）
- * \~chinese \var DStyle::StandardPixmap DStyle::SP_EditElement
- * \~chinese 编辑
- * \~chinese \var DStyle::StandardPixmap DStyle::SP_ExpandElement
- * \~chinese 展开
- * \~chinese \var DStyle::StandardPixmap DStyle::SP_ReduceElement
- * \~chinese 收缩
- * \~chinese \var DStyle::StandardPixmap DStyle::SP_LockElement
- * \~chinese 锁定
- * \~chinese \var DStyle::StandardPixmap DStyle::SP_UnlockElement
- * \~chinese 解锁
- * \~chinese \var DStyle::StandardPixmap DStyle::SP_MediaVolumeLowElement
- * \~chinese 音量
- * \~chinese \var DStyle::StandardPixmap DStyle::SP_MediaVolumeHighElement
- * \~chinese 满音量
- * \~chinese \var DStyle::StandardPixmap DStyle::SP_MediaVolumeMutedElement
- * \~chinese 静音
- * \~chinese \var DStyle::StandardPixmap DStyle::SP_MediaVolumeLeftElement
- * \~chinese 左声道
- * \~chinese \var DStyle::StandardPixmap DStyle::SP_MediaVolumeRightElement
- * \~chinese 右声道
- * \~chinese \var DStyle::StandardPixmap DStyle::SP_ArrowEnter
- * \~chinese 进入
- * \~chinese \var DStyle::StandardPixmap DStyle::SP_ArrowLeave
- * \~chinese 离开
- * \~chinese \var DStyle::StandardPixmap DStyle::SP_ArrowNext
- * \~chinese 下一页
- * \~chinese \var DStyle::StandardPixmap DStyle::SP_ArrowPrev
- * \~chinese 上一页
- * \~chinese \var DStyle::StandardPixmap DStyle::SP_ShowPassword
- * \~chinese 显示密码
- * \~chinese \var DStyle::StandardPixmap DStyle::SP_HidePassword
- * \~chinese 隐藏密码
- * \~chinese \var DStyle::StandardPixmap DStyle::SP_CloseButton
- * \~chinese 关闭按钮（X）
- * \~chinese \var DStyle::StandardPixmap DStyle::SP_IndicatorMajuscule
- * \~chinese 大写标识
- * \~chinese \var DStyle::StandardPixmap DStyle::SP_IndicatorSearch
- * \~chinese 搜索标识（放大镜）
- * \~chinese \var DStyle::StandardPixmap DStyle::SP_IndicatorUnchecked
- * \~chinese 搜索标识（对应对勾的选中状态）
- * \~chinese \var DStyle::StandardPixmap DStyle::SP_IndicatorChecked
- * \~chinese 搜索标识（对勾）
- *
- * \~chinese \var DStyle::StandardPixmap DStyle::SP_DeleteButton
- * \~chinese 删除按钮
- *
- * \~chinese \var DStyle::StandardPixmap DStyle::SP_AddButton
- * \~chinese 新增按钮
+  \enum Dtk::Widget::DStyle::StandardPixmap
+  \sa DStyle::StandardPixmap QStyle::StandardPixmap
+  
+  \value SP_DecreaseElement
+  减少（-）
+  \value SP_IncreaseElement
+  增加（+）
+  \value SP_MarkElement
+  对勾
+  \value SP_SelectElement
+  选择（...）
+  \value SP_EditElement
+  编辑
+  \value SP_ExpandElement
+  展开
+  \value SP_ReduceElement
+  收缩
+  \value SP_LockElement
+  锁定
+  \value SP_UnlockElement
+  解锁
+  \value SP_MediaVolumeLowElement
+  音量
+  \value SP_MediaVolumeHighElement
+  满音量
+  \value SP_MediaVolumeMutedElement
+  静音
+  \value SP_MediaVolumeLeftElement
+  左声道
+  \value SP_MediaVolumeRightElement
+  右声道
+  \value SP_ArrowEnter
+  进入
+  \value SP_ArrowLeave
+  离开
+  \value SP_ArrowNext
+  下一页
+  \value SP_ArrowPrev
+  上一页
+  \value SP_ShowPassword
+  显示密码
+  \value SP_HidePassword
+  隐藏密码
+  \value SP_CloseButton
+  关闭按钮（X）
+  \value SP_IndicatorMajuscule
+  大写标识
+  \value SP_IndicatorSearch
+  搜索标识（放大镜）
+  \value SP_IndicatorUnchecked
+  搜索标识（对应对勾的选中状态）
+  \value SP_IndicatorChecked
+  搜索标识（对勾）
+  
+  \value SP_DeleteButton
+  删除按钮
+  
+  \value SP_AddButton
+  新增按钮
+
+  \omitvalue SP_ForkElement
+  \omitvalue SP_DecreaseElement
+  \omitvalue SP_TitleMoreButton
+  \omitvalue SP_CustomBase
+  \omitvalue SP_TitleQuitFullButton
 */
 
 /*!
- * \~chinese \brief DStyle::DStyle
+  \brief DStyle::DStyle
  */
 DStyle::DStyle()
 {
@@ -968,8 +980,8 @@ DStyle::DStyle()
 }
 
 /*!
- * \~chinese \brief DStyle::drawPrimitive
- * \~chinese QStyle::drawPrimitive()
+  \brief DStyle::drawPrimitive
+  QStyle::drawPrimitive()
  */
 void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, const QStyleOption *opt, QPainter *p, const QWidget *w)
 {
@@ -1200,8 +1212,8 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
 }
 
 /*!
- * \~chinese \brief DStyle::drawControl
- * \~chinese \sa QStyle::drawControl()
+  \brief DStyle::drawControl
+  \sa QStyle::drawControl()
  */
 void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const QStyleOption *opt, QPainter *p, const QWidget *w)
 {
@@ -1435,8 +1447,8 @@ void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const Q
 }
 
 /*!
- * \~chinese \brief DStyle::pixelMetric
- * \~chinese \sa QStyle::pixelMetric()
+  \brief DStyle::pixelMetric
+  \sa QStyle::pixelMetric()
  */
 int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyleOption *opt, const QWidget *widget)
 {
@@ -1517,8 +1529,9 @@ int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyle
 }
 
 /*!
- * \~chinese \brief DStyle::subElementRect
- * \~chinese \sa QStyle::subElementRect()
+  \brief DStyle::subElementRect.
+
+  \sa QStyle::subElementRect()
  */
 QRect DStyle::subElementRect(const QStyle *style, DStyle::SubElement r, const QStyleOption *opt, const QWidget *widget)
 {
@@ -1585,8 +1598,9 @@ QRect DStyle::subElementRect(const QStyle *style, DStyle::SubElement r, const QS
 }
 
 /*!
- * \~chinese \brief DStyle::sizeFromContents
- * \~chinese \sa QStyle::sizeFromContents()
+  \brief DStyle::sizeFromContents.
+
+  \sa QStyle::sizeFromContents()
  */
 QSize DStyle::sizeFromContents(const QStyle *style, DStyle::ContentsType ct, const QStyleOption *opt, const QSize &contentsSize, const QWidget *widget)
 {
@@ -1664,8 +1678,8 @@ QSize DStyle::sizeFromContents(const QStyle *style, DStyle::ContentsType ct, con
 }
 
 /*!
- * \~chinese \brief DStyle::standardIcon
- * \~chinese \sa QStyle::standardIcon()
+  \brief DStyle::standardIcon
+  \sa QStyle::standardIcon()
  */
 QIcon DStyle::standardIcon(const QStyle *style, DStyle::StandardPixmap st, const QStyleOption *opt, const QWidget *widget)
 {
@@ -1749,8 +1763,8 @@ case static_cast<uint32_t>(SP_##Value): { \
 }
 
 /*!
- * \~chinese \brief DStyle::styleHint
- * \~chinese \sa QStyle::styleHint()
+  \brief DStyle::styleHint
+  \sa QStyle::styleHint()
  */
 int DStyle::styleHint(QStyle::StyleHint sh, const QStyleOption *opt, const QWidget *w, QStyleHintReturn *shret) const
 {
@@ -1810,8 +1824,8 @@ int DStyle::styleHint(QStyle::StyleHint sh, const QStyleOption *opt, const QWidg
 }
 
 /*!
- * \~chinese \brief DStyle::standardPalette 获取标准调色板
- * \~chinese \return 调色板
+  \brief DStyle::standardPalette 获取标准调色板
+  \return 调色板
  */
 QPalette DStyle::standardPalette() const
 {
@@ -1914,8 +1928,8 @@ static DStyle::StateFlags getFlags(const QStyleOption *option)
 }
 
 /*!
- * \~chinese \brief DStyle::drawPrimitive
- * \~chinese \sa QStyle::drawPrimitive()
+  \brief DStyle::drawPrimitive
+  \sa QStyle::drawPrimitive()
  */
 void DStyle::drawPrimitive(QStyle::PrimitiveElement pe, const QStyleOption *opt, QPainter *p, const QWidget *w) const
 {
@@ -1955,8 +1969,8 @@ void DStyle::drawPrimitive(QStyle::PrimitiveElement pe, const QStyleOption *opt,
 }
 
 /*!
- * \~chinese \brief DStyle::drawControl
- * \~chinese \sa QStyle::drawControl()
+  \brief DStyle::drawControl
+  \sa QStyle::drawControl()
  */
 void DStyle::drawControl(QStyle::ControlElement ce, const QStyleOption *opt, QPainter *p, const QWidget *w) const
 {
@@ -1968,8 +1982,8 @@ void DStyle::drawControl(QStyle::ControlElement ce, const QStyleOption *opt, QPa
 }
 
 /*!
- * \~chinese \brief DStyle::pixelMetric
- * \~chinese \sa QStyle::pixelMetric()
+  \brief DStyle::pixelMetric
+  \sa QStyle::pixelMetric()
  */
 int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QWidget *widget) const
 {
@@ -2049,8 +2063,8 @@ int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QW
 }
 
 /*!
- * \~chinese \brief DStyle::subElementRect
- * \~chinese \sa QStyle::subElementRect()
+  \brief DStyle::subElementRect
+  \sa QStyle::subElementRect()
  */
 QRect DStyle::subElementRect(QStyle::SubElement r, const QStyleOption *opt, const QWidget *widget) const
 {
@@ -2062,8 +2076,8 @@ QRect DStyle::subElementRect(QStyle::SubElement r, const QStyleOption *opt, cons
 }
 
 /*!
- * \~chinese \brief DStyle::sizeFromContents
- * \~chinese \sa QStyle::sizeFromContents()
+  \brief DStyle::sizeFromContents
+  \sa QStyle::sizeFromContents()
  */
 QSize DStyle::sizeFromContents(QStyle::ContentsType ct, const QStyleOption *opt, const QSize &contentsSize, const QWidget *widget) const
 {
@@ -2075,8 +2089,8 @@ QSize DStyle::sizeFromContents(QStyle::ContentsType ct, const QStyleOption *opt,
 }
 
 /*!
- * \~chinese \brief DStyle::standardIcon
- * \~chinese \param \sa QStyle::standardIcon()
+  \brief DStyle::standardIcon
+  \sa QStyle::standardIcon()
  */
 QIcon DStyle::standardIcon(QStyle::StandardPixmap st, const QStyleOption *opt, const QWidget *widget) const
 {
@@ -2101,12 +2115,12 @@ QIcon DStyle::standardIcon(QStyle::StandardPixmap st, const QStyleOption *opt, c
 }
 
 /*!
- * \~chinese \brief DStyle::generatedBrush获取一个加工后的画刷
- * \~chinese \param \sa option QStyleOption
- * \~chinese \param base 画刷
- * \~chinese \param \sa cg QPalette::ColorGroup
- * \~chinese \param \sa role QPalette::ColorRole
- * \~chinese \return 加工后的画刷
+  \brief DStyle::generatedBrush获取一个加工后的画刷
+  \sa QStyleOption
+  \a base 画刷
+  \sa QPalette::ColorGroup
+  \sa QPalette::ColorRole
+  \return 加工后的画刷
 */
 QBrush DStyle::generatedBrush(const QStyleOption *option, const QBrush &base, QPalette::ColorGroup cg, QPalette::ColorRole role) const
 {
@@ -2114,13 +2128,13 @@ QBrush DStyle::generatedBrush(const QStyleOption *option, const QBrush &base, QP
 }
 
 /*!
- * \~chinese \brief DStyle::generatedBrush获取一个加工后的画刷
- * \~chinese \param \sa state DStyle::StyleState
- * \~chinese \param \sa option QStyleOption
- * \~chinese \param base 画刷
- * \~chinese \param \sa cg QPalette::ColorGroup
- * \~chinese \param \sa role QPalette::ColorRole
- * \~chinese \return 加工后的画刷
+  \brief DStyle::generatedBrush获取一个加工后的画刷
+  \sa DStyle::StyleState
+  \sa QStyleOption
+  \a base 画刷
+  \sa QPalette::ColorGroup
+  \sa QPalette::ColorRole
+  \return 加工后的画刷
  */
 QBrush DStyle::generatedBrush(DStyle::StyleState state, const QStyleOption *option, const QBrush &base, QPalette::ColorGroup cg, QPalette::ColorRole role) const
 {
@@ -2132,13 +2146,13 @@ QBrush DStyle::generatedBrush(DStyle::StyleState state, const QStyleOption *opti
 }
 
 /*!
- * \~chinese \brief DStyle::generatedBrush获取一个加工后的画刷
- * \~chinese \param \sa flags DStyle::StateFlags
- * \~chinese \param base 画刷
- * \~chinese \param \sa cg QPalette::ColorGroup
- * \~chinese \param \sa role QPalette::ColorRole
- * \~chinese \param \sa option QStyleOption
- * \~chinese \return 加工后的画刷
+  \brief DStyle::generatedBrush获取一个加工后的画刷
+  \sa DStyle::StateFlags
+  \a base 画刷
+  \sa QPalette::ColorGroup
+  \sa QPalette::ColorRole
+  \sa QStyleOption
+  \return 加工后的画刷
  */
 QBrush DStyle::generatedBrush(StateFlags flags, const QBrush &base, QPalette::ColorGroup cg, QPalette::ColorRole role, const QStyleOption *option) const
 {
@@ -2207,12 +2221,16 @@ QBrush DStyle::generatedBrush(StateFlags flags, const QBrush &base, QPalette::Co
 }
 
 /*!
- * \~chinese \brief DStyle::generatedBrush获取一个加工后的画刷
- * \~chinese \param \sa option QStyleOption
- * \~chinese \param base 画刷
- * \~chinese \param \sa cg QPalette::ColorGroup
- * \~chinese \param \sa type DPalette::ColorType
- * \~chinese \return 加工后的画刷
+  \brief DStyle::generatedBrush获取一个加工后的画刷.
+
+  \a option
+  \a base 画刷
+  \a cg
+  \a type
+  \sa QStyleOption
+  \sa Dtk::Gui::DPalette::ColorType
+  \sa  QPalette::ColorGroup
+  \return 加工后的画刷
  */
 QBrush DStyle::generatedBrush(const QStyleOption *option, const QBrush &base, QPalette::ColorGroup cg, DPalette::ColorType type) const
 {
@@ -2220,13 +2238,14 @@ QBrush DStyle::generatedBrush(const QStyleOption *option, const QBrush &base, QP
 }
 
 /*!
- * \~chinese \brief DStyle::generatedBrush获取一个加工后的画刷
- * \~chinese \param \sa state DStyle::StyleState
- * \~chinese \param \sa option QStyleOption
- * \~chinese \param base 画刷
- * \~chinese \param \sa cg QPalette::ColorGroup
- * \~chinese \param \sa type DPalette::ColorType
- * \~chinese \return 加工后的画刷
+  \brief DStyle::generatedBrush获取一个加工后的画刷.
+
+  \a state DStyle::StyleState
+  \a option QStyleOption
+  \a base 画刷
+  \a cg QPalette::ColorGroup
+  \a type DPalette::ColorType
+  \return 加工后的画刷
  */
 QBrush DStyle::generatedBrush(DStyle::StyleState state, const QStyleOption *option, const QBrush &base, QPalette::ColorGroup cg, DPalette::ColorType type) const
 {
@@ -2238,13 +2257,13 @@ QBrush DStyle::generatedBrush(DStyle::StyleState state, const QStyleOption *opti
 }
 
 /*!
- * \~chinese \brief DStyle::generatedBrush获取一个加工后的画刷
- * \~chinese \param \sa flags DStyle::StateFlags
- * \~chinese \param base画刷
- * \~chinese \param \sa cg QPalette::ColorGroup
- * \~chinese \param \sa type DPalette::ColorType
- * \~chinese \param \sa option QStyleOption()
- * \~chinese \return 加工后的画刷
+  \brief DStyle::generatedBrush获取一个加工后的画刷
+  \a flags DStyle::StateFlags
+  \a base 画刷
+  \a cg QPalette::ColorGroup
+  \a type DPalette::ColorType
+  \a option QStyleOption()
+  \return 加工后的画刷
  */
 QBrush DStyle::generatedBrush(StateFlags flags, const QBrush &base, QPalette::ColorGroup cg, DPalette::ColorType type, const QStyleOption *option) const
 {
@@ -2316,10 +2335,10 @@ QBrush DStyle::generatedBrush(StateFlags flags, const QBrush &base, QPalette::Co
 
 #if QT_CONFIG(itemviews)
 /*!
- * \~chinese \brief DStyle::viewItemTextLayout视图项文本布局
- * \~chinese \param textLayout文本布局
- * \~chinese \param lineWidth 宽度
- * \~chinese \return 文本内容所占大小
+  \brief DStyle::viewItemTextLayout视图项文本布局
+  \a textLayout 文本布局
+  \a lineWidth 宽度
+  \return 文本内容所占大小
  */
 QSizeF DStyle::viewItemTextLayout(QTextLayout &textLayout, int lineWidth)
 {
@@ -2340,11 +2359,14 @@ QSizeF DStyle::viewItemTextLayout(QTextLayout &textLayout, int lineWidth)
 }
 
 /*!
- * \~chinese \brief DStyle::viewItemSize 视图项大小
- * \~chinese \param\sa style QStyle()
- * \~chinese \param\sa option QStyleOptionViewItem()
- * \~chinese \param \sa role Qt::ItemDataRole
- * \~chinese \return 文本内容所占大小
+  \brief DStyle::viewItemSize 视图项大小.
+
+  \a style
+  \a option
+  \a role
+  \sa QStyleOptionViewItem QStyle
+  \sa Qt::ItemDataRole
+  \return 文本内容所占大小
  */
 QSize DStyle::viewItemSize(const QStyle *style, const QStyleOptionViewItem *option, int role)
 {
@@ -2408,13 +2430,13 @@ QSize DStyle::viewItemSize(const QStyle *style, const QStyleOptionViewItem *opti
 }
 
 /*!
- * \~chinese \brief DStyle::viewItemLayout视图项组合(文字 + 图标 + 点击区域)
- * \~chinese \param \sa style QStyle()
- * \~chinese \param \sa opt QStyleOptionViewItem()
- * \~chinese \param pixmapRect 图标位置大小
- * \~chinese \param textRect 文字区域位置大小
- * \~chinese \param checkRect 点击区域位置大小
- * \~chinese \param sizehint 是否开启
+  \brief DStyle::viewItemLayout视图项组合(文字 + 图标 + 点击区域)
+  \sa QStyle()
+  \sa QStyleOptionViewItem
+  \a pixmapRect 图标位置大小
+  \a textRect 文字区域位置大小
+  \a checkRect 点击区域位置大小
+  \a sizehint 是否开启
  */
 void DStyle::viewItemLayout(const QStyle *style, const QStyleOptionViewItem *opt,  QRect *pixmapRect, QRect *textRect, QRect *checkRect, bool sizehint)
 {
@@ -2601,8 +2623,8 @@ void DStyle::viewItemLayout(const QStyle *style, const QStyleOptionViewItem *opt
 }
 
 /*!
- * \~chinese \brief DStyle::viewItemLayout
- * \~chinese \sa DStyle::viewItemLayout()
+  \brief DStyle::viewItemLayout
+  \sa DStyle::viewItemLayout()
  */
 void DStyle::viewItemLayout(const QStyleOptionViewItem *opt, QRect *pixmapRect, QRect *textRect, QRect *checkRect, bool sizehint) const
 {
@@ -2610,12 +2632,12 @@ void DStyle::viewItemLayout(const QStyleOptionViewItem *opt, QRect *pixmapRect, 
 }
 
 /*!
- * \~chinese \brief DStyle::viewItemDrawText视图项文字
- * \~chinese \param \sa style QStyle()
- * \~chinese \param p 画家
- * \~chinese \param \sa option QStyleOptionViewItem()
- * \~chinese \param rect 文字大小
- * \~chinese \return 布局大小
+  \brief DStyle::viewItemDrawText视图项文字
+  \sa QStyle()
+  \a p 画家
+  \sa QStyleOptionViewItem
+  \a rect 文字大小
+  \return 布局大小
  */
 QRect DStyle::viewItemDrawText(const QStyle *style, QPainter *p, const QStyleOptionViewItem *option, const QRect &rect)
 {
@@ -2686,8 +2708,8 @@ QRect DStyle::viewItemDrawText(const QStyle *style, QPainter *p, const QStyleOpt
 }
 
 /*!
- * \~chinese \brief DStyle::viewItemDrawText
- * \~chinese \sa DStyle::viewItemDrawText()
+  \brief DStyle::viewItemDrawText
+  \sa DStyle::viewItemDrawText()
  */
 QRect DStyle::viewItemDrawText(QPainter *p, const QStyleOptionViewItem *option, const QRect &rect) const
 {
@@ -2695,10 +2717,10 @@ QRect DStyle::viewItemDrawText(QPainter *p, const QStyleOptionViewItem *option, 
 }
 #endif
 
-
 /*!
- * \~chinese \class DStyledIconEngine
- * \~chinese \brief DStyledIconEngine一个修改的 QIconEngine 类
+  \class Dtk::Widget::DStyledIconEngine
+  \inmodule dtkwidget
+  \brief DStyledIconEngine一个修改的 QIconEngine 类.
 */
 
 void DStyledIconEngine::drawIcon(const QIcon &icon, QPainter *pa, const QRectF &rect)
@@ -2707,9 +2729,9 @@ void DStyledIconEngine::drawIcon(const QIcon &icon, QPainter *pa, const QRectF &
 }
 
 /*!
- * \~chinese \brief DStyledIconEngine::DStyledIconEngine
- * \~chinese \param drawFun
- * \~chinese \param iconName
+  \brief DStyledIconEngine::DStyledIconEngine
+  \a drawFun
+  \a iconName
  */
 DStyledIconEngine::DStyledIconEngine(DrawFun drawFun, const QString &iconName)
     : QIconEngine()
@@ -2721,8 +2743,8 @@ DStyledIconEngine::DStyledIconEngine(DrawFun drawFun, const QString &iconName)
 }
 
 /*!
- * \~chinese \brief DStyledIconEngine::bindDrawFun活页夹
- * \~chinese \param drawFun
+  \brief DStyledIconEngine::bindDrawFun活页夹
+  \a drawFun
  */
 void DStyledIconEngine::bindDrawFun(DrawFun drawFun)
 {
@@ -2730,8 +2752,8 @@ void DStyledIconEngine::bindDrawFun(DrawFun drawFun)
 }
 
 /*!
- * \~chinese \brief DStyledIconEngine::setIconName设置icon名称
- * \~chinese \param name 名称
+  \brief DStyledIconEngine::setIconName设置icon名称
+  \a name 名称
  */
 void DStyledIconEngine::setIconName(const QString &name)
 {
@@ -2739,8 +2761,8 @@ void DStyledIconEngine::setIconName(const QString &name)
 }
 
 /*!
- * \~chinese \brief DStyledIconEngine::pixmap
- * \~chinese \sa QIconEngine::pixmap()
+  \brief DStyledIconEngine::pixmap
+  \sa QIconEngine::pixmap()
  */
 QPixmap DStyledIconEngine::pixmap(const QSize &size, QIcon::Mode mode, QIcon::State state)
 {
@@ -2754,10 +2776,10 @@ QPixmap DStyledIconEngine::pixmap(const QSize &size, QIcon::Mode mode, QIcon::St
 }
 
 /*!
- * \~chinese \brief DStyledIconEngine::paint 重载paint
- * \~chinese \param painter画家
- * \~chinese \param palette调色板
- * \~chinese \param \sa rect QIconEngine::paint()
+  \brief DStyledIconEngine::paint 重载paint
+  \a painter 画家
+  \a palette 调色板
+  \sa QIconEngine::paint()
  */
 void DStyledIconEngine::paint(QPainter *painter, const QPalette &palette, const QRectF &rect)
 {
@@ -2771,8 +2793,8 @@ void DStyledIconEngine::paint(QPainter *painter, const QPalette &palette, const 
 }
 
 /*!
- * \~chinese \brief DStyledIconEngine::paint
- * \~chinese \sa QIconEngine::paint()
+  \brief DStyledIconEngine::paint
+  \sa QIconEngine::paint()
  */
 void DStyledIconEngine::paint(QPainter *painter, const QRect &rect, QIcon::Mode mode, QIcon::State state)
 {
@@ -2794,8 +2816,8 @@ void DStyledIconEngine::paint(QPainter *painter, const QRect &rect, QIcon::Mode 
 }
 
 /*!
- * \~chinese \brief DStyledIconEngine::clone
- * \~chinese \sa QIconEngine::clone()
+  \brief DStyledIconEngine::clone
+  \sa QIconEngine::clone()
  */
 QIconEngine *DStyledIconEngine::clone() const
 {

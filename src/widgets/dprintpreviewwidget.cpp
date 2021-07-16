@@ -1207,10 +1207,10 @@ QVector<int> DPrintPreviewWidgetPrivate::requestPages(int page)
 }
 
 /*!
- * \~chinese \brief 构造一个 DPrintPreviewWidget。
- *
- * \~chinese \param printer 打印机
- * \~chinese \param parent 父控件
+  \brief 构造一个 DPrintPreviewWidget。
+  
+  \a printer 打印机
+  \a parent 父控件
  */
 DPrintPreviewWidget::DPrintPreviewWidget(DPrinter *printer, QWidget *parent)
     : DFrame(*new DPrintPreviewWidgetPrivate(this))
@@ -1228,9 +1228,9 @@ DPrintPreviewWidget::~DPrintPreviewWidget()
 }
 
 /*!
- * \~chinese \brief 设置打印预览widget是否可见。
- *
- * \~chinese \param visible 是否可见
+  \brief 设置打印预览widget是否可见。
+  
+  \a visible 是否可见
  */
 void DPrintPreviewWidget::setVisible(bool visible)
 {
@@ -1241,7 +1241,7 @@ void DPrintPreviewWidget::setVisible(bool visible)
 }
 
 /*!
- * \~chinese \brief 设置打印预览页面范围为所有页。
+  \brief 设置打印预览页面范围为所有页。
  */
 void DPrintPreviewWidget::setPageRangeALL()
 {
@@ -1252,9 +1252,9 @@ void DPrintPreviewWidget::setPageRangeALL()
 }
 
 /*!
- * \~chinese \brief 设置是否需要重新生成页面内容。
- *
- * \~chinese \param generate 是否需要重新生成页面内容
+  \brief 设置是否需要重新生成页面内容。
+  
+  \a generate 是否需要重新生成页面内容
  */
 void DPrintPreviewWidget::setReGenerate(bool generate)
 {
@@ -1262,9 +1262,9 @@ void DPrintPreviewWidget::setReGenerate(bool generate)
 }
 
 /*!
- * \~chinese \brief 设置页面选择范围模式。
- *
- * \~chinese \param mode 页面选择范围模式，AllPage所有页，CurrentPage当前页，SelectPage选择页
+  \brief 设置页面选择范围模式。
+  
+  \a mode 页面选择范围模式，AllPage所有页，CurrentPage当前页，SelectPage选择页
  */
 void DPrintPreviewWidget::setPageRangeMode(PageRange mode)
 {
@@ -1273,7 +1273,7 @@ void DPrintPreviewWidget::setPageRangeMode(PageRange mode)
 }
 
 /*!
- * \~chinese \brief 获取页面选择范围模式。
+  \brief 获取页面选择范围模式。
  */
 DPrintPreviewWidget::PageRange DPrintPreviewWidget::pageRangeMode()
 {
@@ -1282,7 +1282,7 @@ DPrintPreviewWidget::PageRange DPrintPreviewWidget::pageRangeMode()
 }
 
 /*!
- * \~chinese \brief 预览是否改变，当预览改变时需要调用。
+  \brief 预览是否改变，当预览改变时需要调用。
  */
 void DPrintPreviewWidget::reviewChange(bool generate)
 {
@@ -1291,9 +1291,9 @@ void DPrintPreviewWidget::reviewChange(bool generate)
 }
 
 /*!
- * \~chinese \brief 设置预览页面范围。
- *
- * \~chinese \param rangePages 页码Vector
+  \brief 设置预览页面范围。
+  
+  \a rangePages 页码Vector
  */
 void DPrintPreviewWidget::setPageRange(const QVector<int> &rangePages)
 {
@@ -1316,10 +1316,10 @@ void DPrintPreviewWidget::setPageRange(const QVector<int> &rangePages)
 }
 
 /*!
- * \~chinese \brief 设置预览页面范围。
- *
- * \~chinese \param from 起始页码
- * \~chinese \param to 终止页码
+  \brief 设置预览页面范围。
+  
+  \a from 起始页码
+  \a to 终止页码
  */
 void DPrintPreviewWidget::setPageRange(int from, int to)
 {
@@ -1334,7 +1334,7 @@ void DPrintPreviewWidget::setPageRange(int from, int to)
 }
 
 /*!
- * \~chinese \brief 获取预览总页数。
+  \brief 获取预览总页数。
  */
 int DPrintPreviewWidget::pagesCount()
 {
@@ -1343,7 +1343,7 @@ int DPrintPreviewWidget::pagesCount()
 }
 
 /*!
- * \~chinese \brief 获取当前页的页码。
+  \brief 获取当前页的页码。
  */
 int DPrintPreviewWidget::currentPage()
 {
@@ -1352,7 +1352,7 @@ int DPrintPreviewWidget::currentPage()
 }
 
 /*!
- * \~chinese \brief 获取是否可翻页。
+  \brief 获取是否可翻页。
  */
 bool DPrintPreviewWidget::turnPageAble()
 {
@@ -1361,9 +1361,9 @@ bool DPrintPreviewWidget::turnPageAble()
 }
 
 /*!
- * \~chinese \brief 设置色彩模式。
- *
- * \~chinese \param colorMode 色彩模式
+  \brief 设置色彩模式。
+  
+  \a colorMode 色彩模式
  */
 void DPrintPreviewWidget::setColorMode(const QPrinter::ColorMode &colorMode)
 {
@@ -1384,9 +1384,9 @@ void DPrintPreviewWidget::setColorMode(const QPrinter::ColorMode &colorMode)
 }
 
 /*!
- * \~chinese \brief 设置页面方向。
- *
- * \~chinese \param pageOrientation 页面方向
+  \brief 设置页面方向。
+  
+  \a pageOrientation 页面方向
  */
 void DPrintPreviewWidget::setOrientation(const QPrinter::Orientation &pageOrientation)
 {
@@ -1397,7 +1397,7 @@ void DPrintPreviewWidget::setOrientation(const QPrinter::Orientation &pageOrient
 }
 
 /*!
- * \~chinese \brief 获取色彩模式。
+  \brief 获取色彩模式。
  */
 DPrinter::ColorMode DPrintPreviewWidget::getColorMode()
 {
@@ -1406,9 +1406,9 @@ DPrinter::ColorMode DPrintPreviewWidget::getColorMode()
 }
 
 /*!
- * \~chinese \brief 设置页面缩放。
- *
- * \~chinese \param scale 缩放大小
+  \brief 设置页面缩放。
+  
+  \a scale 缩放大小
  */
 void DPrintPreviewWidget::setScale(qreal scale)
 {
@@ -1420,7 +1420,7 @@ void DPrintPreviewWidget::setScale(qreal scale)
 }
 
 /*!
- * \~chinese \brief 获取缩放大小。
+  \brief 获取缩放大小。
  */
 qreal DPrintPreviewWidget::getScale() const
 {
@@ -1429,7 +1429,7 @@ qreal DPrintPreviewWidget::getScale() const
 }
 
 /*!
- * \~chinese \brief 刷新预览页面。
+  \brief 刷新预览页面。
  */
 void DPrintPreviewWidget::updateView()
 {
@@ -1449,7 +1449,7 @@ void DPrintPreviewWidget::updateView()
 }
 
 /*!
- * \~chinese \brief 强制刷新水印效果
+  \brief 强制刷新水印效果
  */
 void DPrintPreviewWidget::updateWaterMark()
 {
@@ -1465,7 +1465,7 @@ void DPrintPreviewWidget::updateWaterMark()
 }
 
 /*!
- * \~chinese \brief 水印刷新开始，主要用于同时多次调用水印属性改变的接口时，只刷新一次
+  \brief 水印刷新开始，主要用于同时多次调用水印属性改变的接口时，只刷新一次
  */
 void DPrintPreviewWidget::refreshBegin()
 {
@@ -1475,7 +1475,7 @@ void DPrintPreviewWidget::refreshBegin()
 }
 
 /*!
- * \~chinese \brief 水印刷新结束，刷新水印效果
+  \brief 水印刷新结束，刷新水印效果
  */
 void DPrintPreviewWidget::refreshEnd()
 {
@@ -1486,9 +1486,9 @@ void DPrintPreviewWidget::refreshEnd()
 }
 
 /*!
- * \~chinese \brief 设置水印类型。
- *
- * \~chinese \param type 水印类型
+  \brief 设置水印类型。
+  
+  \a type 水印类型
  */
 void DPrintPreviewWidget::setWaterMarkType(int type)
 {
@@ -1506,9 +1506,9 @@ void DPrintPreviewWidget::setWaterMarkType(int type)
 }
 
 /*!
- * \~chinese \brief 设置水印图片。
- *
- * \~chinese \param image 水印图片
+  \brief 设置水印图片。
+  
+  \a image 水印图片
  */
 void DPrintPreviewWidget::setWaterMargImage(const QImage &image)
 {
@@ -1526,9 +1526,9 @@ void DPrintPreviewWidget::setWaterMargImage(const QImage &image)
 }
 
 /*!
- * \~chinese \brief 设置水印旋转角度。
- *
- * \~chinese \param rotate 水印旋转角度
+  \brief 设置水印旋转角度。
+  
+  \a rotate 水印旋转角度
  */
 void DPrintPreviewWidget::setWaterMarkRotate(qreal rotate)
 {
@@ -1544,9 +1544,9 @@ void DPrintPreviewWidget::setWaterMarkRotate(qreal rotate)
 }
 
 /*!
- * \~chinese \brief 设置水印缩放大小。
- *
- * \~chinese \param rotate 水印缩放大小
+  \brief 设置水印缩放大小。
+  
+  \a rotate 水印缩放大小
  */
 void DPrintPreviewWidget::setWaterMarkScale(qreal scale)
 {
@@ -1564,9 +1564,9 @@ void DPrintPreviewWidget::setWaterMarkScale(qreal scale)
 }
 
 /*!
- * \~chinese \brief 设置水印透明度。
- *
- * \~chinese \param rotate 水印透明度
+  \brief 设置水印透明度。
+  
+  \a rotate 水印透明度
  */
 void DPrintPreviewWidget::setWaterMarkOpacity(qreal opacity)
 {
@@ -1582,7 +1582,7 @@ void DPrintPreviewWidget::setWaterMarkOpacity(qreal opacity)
 }
 
 /*!
- * \~chinese \brief 设置“绝密”文字水印。
+  \brief 设置“绝密”文字水印。
  */
 void DPrintPreviewWidget::setConfidentialWaterMark()
 {
@@ -1600,7 +1600,7 @@ void DPrintPreviewWidget::setConfidentialWaterMark()
 }
 
 /*!
- * \~chinese \brief 设置“草稿”文字水印。
+  \brief 设置“草稿”文字水印。
  */
 void DPrintPreviewWidget::setDraftWaterMark()
 {
@@ -1618,7 +1618,7 @@ void DPrintPreviewWidget::setDraftWaterMark()
 }
 
 /*!
- * \~chinese \brief 设置“样本”文字水印。
+  \brief 设置“样本”文字水印。
  */
 void DPrintPreviewWidget::setSampleWaterMark()
 {
@@ -1636,9 +1636,9 @@ void DPrintPreviewWidget::setSampleWaterMark()
 }
 
 /*!
- * \~chinese \brief 设置自定义文字水印。
- *
- * \~chinese \param text 自定义文字
+  \brief 设置自定义文字水印。
+  
+  \a text 自定义文字
  */
 void DPrintPreviewWidget::setCustomWaterMark(const QString &text)
 {
@@ -1656,9 +1656,9 @@ void DPrintPreviewWidget::setCustomWaterMark(const QString &text)
 }
 
 /*!
- * \~chinese \brief 设置文字水印的文字内容。
- *
- * \~chinese \param text 文字水印的文字内容
+  \brief 设置文字水印的文字内容。
+  
+  \a text 文字水印的文字内容
  */
 void DPrintPreviewWidget::setTextWaterMark(const QString &text)
 {
@@ -1676,9 +1676,9 @@ void DPrintPreviewWidget::setTextWaterMark(const QString &text)
 }
 
 /*!
- * \~chinese \brief 设置文字水印的字体。
- *
- * \~chinese \param font 文字水印的字体
+  \brief 设置文字水印的字体。
+  
+  \a font 文字水印的字体
  */
 void DPrintPreviewWidget::setWaterMarkFont(const QFont &font)
 {
@@ -1696,9 +1696,9 @@ void DPrintPreviewWidget::setWaterMarkFont(const QFont &font)
 }
 
 /*!
- * \~chinese \brief 设置文字水印的颜色。
- *
- * \~chinese \param color 文字水印的颜色
+  \brief 设置文字水印的颜色。
+  
+  \a color 文字水印的颜色
  */
 void DPrintPreviewWidget::setWaterMarkColor(const QColor &color)
 {
@@ -1716,9 +1716,9 @@ void DPrintPreviewWidget::setWaterMarkColor(const QColor &color)
 }
 
 /*!
- * \~chinese \brief 设置水印的布局。
- *
- * \~chinese \param layout 水印的布局，Center居中，Tiled平铺
+  \brief 设置水印的布局。
+  
+  \a layout 水印的布局，Center居中，Tiled平铺
  */
 void DPrintPreviewWidget::setWaterMarkLayout(int layout)
 {
@@ -1736,9 +1736,9 @@ void DPrintPreviewWidget::setWaterMarkLayout(int layout)
 }
 
 /*!
- * \~chinese \brief 设置并打的模式。
- *
- * \~chinese \param im 并打的模式
+  \brief 设置并打的模式。
+  
+  \a im 并打的模式
  */
 void DPrintPreviewWidget::setImposition(Imposition im)
 {
@@ -1787,9 +1787,9 @@ DPrintPreviewWidget::Imposition DPrintPreviewWidget::imposition() const
 }
 
 /*!
- * \~chinese \brief 设置页面内并打的顺序。
- *
- * \~chinese \param order 页面内并打的顺序
+  \brief 设置页面内并打的顺序。
+  
+  \a order 页面内并打的顺序
  */
 void DPrintPreviewWidget::setOrder(Order order)
 {
@@ -1903,7 +1903,7 @@ QByteArray DPrintPreviewWidget::printerColorModel() const
 }
 
 /*!
- * \~chinese \brief 刷新预览。
+  \brief 刷新预览。
  */
 void DPrintPreviewWidget::updatePreview()
 {
@@ -1913,7 +1913,7 @@ void DPrintPreviewWidget::updatePreview()
 }
 
 /*!
- * \~chinese \brief 前翻一页。
+  \brief 前翻一页。
  */
 void DPrintPreviewWidget::turnFront()
 {
@@ -1924,7 +1924,7 @@ void DPrintPreviewWidget::turnFront()
 }
 
 /*!
- * \~chinese \brief 后翻一页。
+  \brief 后翻一页。
  */
 void DPrintPreviewWidget::turnBack()
 {
@@ -1935,7 +1935,7 @@ void DPrintPreviewWidget::turnBack()
 }
 
 /*!
- * \~chinese \brief 第一页。
+  \brief 第一页。
  */
 void DPrintPreviewWidget::turnBegin()
 {
@@ -1946,7 +1946,7 @@ void DPrintPreviewWidget::turnBegin()
 }
 
 /*!
- * \~chinese \brief 最后一页。
+  \brief 最后一页。
  */
 void DPrintPreviewWidget::turnEnd()
 {
@@ -1957,9 +1957,9 @@ void DPrintPreviewWidget::turnEnd()
 }
 
 /*!
- * \~chinese \brief 设置当前页。
- *
- * \~chinese \param page 当前页
+  \brief 设置当前页。
+  
+  \a page 当前页
  */
 void DPrintPreviewWidget::setCurrentPage(int page)
 {

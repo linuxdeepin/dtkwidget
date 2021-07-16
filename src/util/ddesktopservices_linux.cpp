@@ -82,16 +82,16 @@ static QList<QUrl> path2urls(const QList<QString> &paths)
 }
 
 /*!
- * \brief Converts \p name from 'key-name' notation
- *        to camel case 'keyName' or 'KeyName'.
- * This function converts GSettings key names to names
- * suitable for Qt getters and setters.
- *
- * Well fsck this.
- *
- * \param name key name
- * \return key name converted to camel case
- * \internal
+  \brief Converts \a name from 'key-name' notation
+         to camel case 'keyName' or 'KeyName'.
+  This function converts GSettings key names to names
+  suitable for Qt getters and setters.
+  
+  Well fsck this.
+  
+  \a name key name
+  \return key name converted to camel case
+  \internal
  */
 static QString GSettingsKeyToCamelCase(const QString name)
 {

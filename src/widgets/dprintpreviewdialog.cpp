@@ -872,7 +872,7 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
 }
 
 /*!
- * \~chinese DPrintPreviewDialogPrivate::initWaterSettings 初始化水印属性设置
+  DPrintPreviewDialogPrivate::initWaterSettings 初始化水印属性设置
  */
 void DPrintPreviewDialogPrivate::initWaterSettings()
 {
@@ -1182,7 +1182,7 @@ void DPrintPreviewDialogPrivate::showadvancesetting()
 }
 
 /*!
- * \~chinese DPrintPreviewDialogPrivate::setupPrinter 设置打印的相关基础属性和高级属性
+  DPrintPreviewDialogPrivate::setupPrinter 设置打印的相关基础属性和高级属性
  */
 void DPrintPreviewDialogPrivate::setupPrinter()
 {
@@ -1313,7 +1313,7 @@ void DPrintPreviewDialogPrivate::judgeSupportedAttributes(const QString &lastPap
 }
 
 /*!
- * \~chinese DPrintPreviewDialogPrivate::setMininumMargins 如果边距小于最小边距,设置成最小边距
+  DPrintPreviewDialogPrivate::setMininumMargins 如果边距小于最小边距,设置成最小边距
  */
 void DPrintPreviewDialogPrivate::setMininumMargins()
 {
@@ -1328,8 +1328,8 @@ void DPrintPreviewDialogPrivate::setMininumMargins()
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialogPrivate::marginsUpdate 切换打印机和纸张切换对于边距的刷新和预览页面的刷新
- * \~chinese \param isPrinterchanged 判断是打印机切换或者是纸张切换
+  \brief DPrintPreviewDialogPrivate::marginsUpdate 切换打印机和纸张切换对于边距的刷新和预览页面的刷新
+  \a isPrinterchanged 判断是打印机切换或者是纸张切换
  */
 void DPrintPreviewDialogPrivate::marginsUpdate(bool isPrinterChanged)
 {
@@ -1386,7 +1386,7 @@ void DPrintPreviewDialogPrivate::themeTypeChange(DGuiApplicationHelper::ColorTyp
 }
 
 /*!
- * \~chinese DPrintPreviewDialogPrivate::setPageIsLegal 检查自定义页码是否合法,不合法的话设置警告颜色,打印保存按钮置灰
+  DPrintPreviewDialogPrivate::setPageIsLegal 检查自定义页码是否合法,不合法的话设置警告颜色,打印保存按钮置灰
  */
 void DPrintPreviewDialogPrivate::setPageIsLegal(bool islegal)
 {
@@ -1429,9 +1429,9 @@ QVector<int> DPrintPreviewDialogPrivate::checkDuplication(QVector<int> data)
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialogPrivate::setEnable 设置纸张范围自定义可输入状态
- * \~chinese \param value 判断选择的范围类型
- * \~chinese \param combox 选择的具体的combox
+  \brief DPrintPreviewDialogPrivate::setEnable 设置纸张范围自定义可输入状态
+  \a value 判断选择的范围类型
+  \a combox 选择的具体的combox
  */
 void DPrintPreviewDialogPrivate::setEnable(const int &value, DComboBox *combox)
 {
@@ -1445,7 +1445,7 @@ void DPrintPreviewDialogPrivate::setEnable(const int &value, DComboBox *combox)
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialogPrivate::setEnable 设置翻页按钮状态
+  \brief DPrintPreviewDialogPrivate::setEnable 设置翻页按钮状态
  */
 void DPrintPreviewDialogPrivate::setTurnPageBtnStatus()
 {
@@ -1480,8 +1480,8 @@ void DPrintPreviewDialogPrivate::setTurnPageBtnStatus()
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialogPrivate::watermarkTypeChoosed 选取水印类型
- * \~chinese \param index 判断选取的水印类型
+  \brief DPrintPreviewDialogPrivate::watermarkTypeChoosed 选取水印类型
+  \a index 判断选取的水印类型
  */
 void DPrintPreviewDialogPrivate::watermarkTypeChoosed(int index)
 {
@@ -1534,8 +1534,8 @@ void DPrintPreviewDialogPrivate::watermarkTypeChoosed(int index)
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialogPrivate::_q_printerChanged 根据选取不同的打印设备刷新界面和属性
- * \~chinese \param index 判断选取的打印设备
+  \brief DPrintPreviewDialogPrivate::_q_printerChanged 根据选取不同的打印设备刷新界面和属性
+  \a index 判断选取的打印设备
  */
 void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
 {
@@ -1643,8 +1643,8 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialogPrivate::slotPageRangeCombox 根据选取的不同纸张范围类型设置纸张范围
- * \~chinese \param index 判断不同的范围类型
+  \brief DPrintPreviewDialogPrivate::slotPageRangeCombox 根据选取的不同纸张范围类型设置纸张范围
+  \a index 判断不同的范围类型
  */
 void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
 {
@@ -1681,8 +1681,8 @@ void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialogPrivate::_q_pageMarginChanged 根据选择不同的设置边距类型设置边距
- * \~chinese \param index 判断选取的不同的设置边距的类型
+  \brief DPrintPreviewDialogPrivate::_q_pageMarginChanged 根据选择不同的设置边距类型设置边距
+  \a index 判断选取的不同的设置边距的类型
  */
 void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
 {
@@ -1734,8 +1734,8 @@ void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialogPrivate::_q_ColorModeChange 根据色彩选项，调整预览图中的色彩为黑白或者彩色
- * \~chinese \param index 当前选择彩色预览还是黑白预览
+  \brief DPrintPreviewDialogPrivate::_q_ColorModeChange 根据色彩选项，调整预览图中的色彩为黑白或者彩色
+  \a index 当前选择彩色预览还是黑白预览
  */
 void DPrintPreviewDialogPrivate::_q_ColorModeChange(int index)
 {
@@ -1763,8 +1763,8 @@ void DPrintPreviewDialogPrivate::_q_ColorModeChange(int index)
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialogPrivate::_q_orientationChanged 根据按钮索引切换打印方向为横向或者纵向
- * \~chinese \param index 当前按钮是横向按钮还是纵向按钮
+  \brief DPrintPreviewDialogPrivate::_q_orientationChanged 根据按钮索引切换打印方向为横向或者纵向
+  \a index 当前按钮是横向按钮还是纵向按钮
  */
 void DPrintPreviewDialogPrivate::_q_orientationChanged(int index)
 {
@@ -1782,8 +1782,8 @@ void DPrintPreviewDialogPrivate::_q_orientationChanged(int index)
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialogPrivate::_q_customPagesFinished 自定义页面时，页码处理
- * \~chinese \param index
+  \brief DPrintPreviewDialogPrivate::_q_customPagesFinished 自定义页面时，页码处理
+  \a index
  */
 void DPrintPreviewDialogPrivate::_q_customPagesFinished()
 {
@@ -1857,7 +1857,7 @@ void DPrintPreviewDialogPrivate::_q_customPagesFinished()
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialogPrivate::adjustMargins 根据输入的边距数据调整边距
+  \brief DPrintPreviewDialogPrivate::adjustMargins 根据输入的边距数据调整边距
  */
 void DPrintPreviewDialogPrivate::adjustMargins()
 {
@@ -1878,8 +1878,8 @@ void DPrintPreviewDialogPrivate::adjustMargins()
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialogPrivate::_q_marginspinChanged 自定义页边距spinbox值改变
- * \~chinese \param marginValue 改变的值的大小
+  \brief DPrintPreviewDialogPrivate::_q_marginspinChanged 自定义页边距spinbox值改变
+  \a marginValue 改变的值的大小
  */
 void DPrintPreviewDialogPrivate::_q_marginspinChanged(double marginValue)
 {
@@ -1890,7 +1890,7 @@ void DPrintPreviewDialogPrivate::_q_marginspinChanged(double marginValue)
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialogPrivate::_q_marginspinChanged 自定义页边距spinbox焦点改变输入结束
+  \brief DPrintPreviewDialogPrivate::_q_marginspinChanged 自定义页边距spinbox焦点改变输入结束
  */
 void DPrintPreviewDialogPrivate::_q_marginEditFinished()
 {
@@ -1912,8 +1912,8 @@ void DPrintPreviewDialogPrivate::_q_marginEditFinished()
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialogPrivate::_q_currentPageSpinChanged 根据当前页的页码的变化,变化翻页按钮的状态
- * \~chinese \param value 当前页码
+  \brief DPrintPreviewDialogPrivate::_q_currentPageSpinChanged 根据当前页的页码的变化,变化翻页按钮的状态
+  \a value 当前页码
  */
 void DPrintPreviewDialogPrivate::_q_currentPageSpinChanged(int value)
 {
@@ -1941,8 +1941,8 @@ void DPrintPreviewDialogPrivate::_q_currentPageSpinChanged(int value)
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialogPrivate::_q_checkStateChanged 点击双面打印按钮
- * \~chinese \param state 判断是否选中双面打印按钮
+  \brief DPrintPreviewDialogPrivate::_q_checkStateChanged 点击双面打印按钮
+  \a state 判断是否选中双面打印按钮
  */
 void DPrintPreviewDialogPrivate::_q_checkStateChanged(int state)
 {
@@ -1954,8 +1954,8 @@ void DPrintPreviewDialogPrivate::_q_checkStateChanged(int state)
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialogPrivate::_q_textWaterMarkModeChanged 文本水印的内容选择
- * \~chinese \param state 判断文本水印内容选择
+  \brief DPrintPreviewDialogPrivate::_q_textWaterMarkModeChanged 文本水印的内容选择
+  \a state 判断文本水印内容选择
  */
 void DPrintPreviewDialogPrivate::_q_textWaterMarkModeChanged(int index)
 {
@@ -1974,8 +1974,8 @@ void DPrintPreviewDialogPrivate::_q_textWaterMarkModeChanged(int index)
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialogPrivate::_q_customTextWatermarkFinished 文本水印的自定义输入
- * \~chinese \param state 判断文本水印自定义
+  \brief DPrintPreviewDialogPrivate::_q_customTextWatermarkFinished 文本水印的自定义输入
+  \a state 判断文本水印自定义
  */
 void DPrintPreviewDialogPrivate::_q_customTextWatermarkFinished()
 {
@@ -1985,8 +1985,8 @@ void DPrintPreviewDialogPrivate::_q_customTextWatermarkFinished()
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialogPrivate::customPictureWatermarkChoosed 图片水印
- * \~chinese \param state 图片水印路径
+  \brief DPrintPreviewDialogPrivate::customPictureWatermarkChoosed 图片水印
+  \a state 图片水印路径
  */
 void DPrintPreviewDialogPrivate::customPictureWatermarkChoosed(const QString &filename)
 {
@@ -2004,8 +2004,8 @@ void DPrintPreviewDialogPrivate::customPictureWatermarkChoosed(const QString &fi
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialogPrivate::waterMarkBtnClicked 是否开启水印
- * \~chinese \param state 水印开启
+  \brief DPrintPreviewDialogPrivate::waterMarkBtnClicked 是否开启水印
+  \a state 水印开启
  */
 void DPrintPreviewDialogPrivate::waterMarkBtnClicked(bool isClicked)
 {
@@ -2024,7 +2024,7 @@ void DPrintPreviewDialogPrivate::waterMarkBtnClicked(bool isClicked)
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialogPrivate::disablePrintSettings 如果按照路径打印文件，则禁用部分不能使用的功能
+  \brief DPrintPreviewDialogPrivate::disablePrintSettings 如果按照路径打印文件，则禁用部分不能使用的功能
  */
 void DPrintPreviewDialogPrivate::disablePrintSettings()
 {
@@ -2043,8 +2043,8 @@ void DPrintPreviewDialogPrivate::disablePrintSettings()
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialogPrivate::setPageLayoutEnable 并列打印控件是否可用
- * \~chinese \param checked 并列打印功能是否选中
+  \brief DPrintPreviewDialogPrivate::setPageLayoutEnable 并列打印控件是否可用
+  \a checked 并列打印功能是否选中
  */
 void DPrintPreviewDialogPrivate::setPageLayoutEnable(const bool &checked)
 {
@@ -2056,7 +2056,7 @@ void DPrintPreviewDialogPrivate::setPageLayoutEnable(const bool &checked)
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialogPrivate::_q_colorButtonCliked 点击取色按钮显示取色窗口位置
+  \brief DPrintPreviewDialogPrivate::_q_colorButtonCliked 点击取色按钮显示取色窗口位置
  */
 void DPrintPreviewDialogPrivate::_q_colorButtonCliked(bool cliked)
 {
@@ -2089,8 +2089,8 @@ void DPrintPreviewDialogPrivate::_q_colorButtonCliked(bool cliked)
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialogPrivate::_q_selectColorButton 获取水印取色框获取到的颜色
- * \~chinese \param color 水印的颜色
+  \brief DPrintPreviewDialogPrivate::_q_selectColorButton 获取水印取色框获取到的颜色
+  \a color 水印的颜色
  */
 void DPrintPreviewDialogPrivate::_q_selectColorButton(QColor color)
 {
@@ -2110,8 +2110,8 @@ void DPrintPreviewDialogPrivate::_q_selectColorButton(QColor color)
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialogPrivate::_q_printOrderComboIndexChanged 打印顺序
- * \~chinese \param index 打印顺序选择
+  \brief DPrintPreviewDialogPrivate::_q_printOrderComboIndexChanged 打印顺序
+  \a index 打印顺序选择
  */
 void DPrintPreviewDialogPrivate::_q_printOrderComboIndexChanged(int index)
 {
@@ -2126,8 +2126,8 @@ void DPrintPreviewDialogPrivate::_q_spinboxValueEmptyChecked(const QString &text
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialogPrivate::_q_pagePersheetComboIndexChanged 并列打印选择
- * \~chinese \param index 并列打印选择
+  \brief DPrintPreviewDialogPrivate::_q_pagePersheetComboIndexChanged 并列打印选择
+  \a index 并列打印选择
  */
 void DPrintPreviewDialogPrivate::_q_pagePersheetComboIndexChanged(int index)
 {
@@ -2135,8 +2135,8 @@ void DPrintPreviewDialogPrivate::_q_pagePersheetComboIndexChanged(int index)
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialogPrivate::_q_startPrint 点击开始打印，设置属性
- * \~chinese \param clicked 判断按钮点击状态
+  \brief DPrintPreviewDialogPrivate::_q_startPrint 点击开始打印，设置属性
+  \a clicked 判断按钮点击状态
  */
 void DPrintPreviewDialogPrivate::_q_startPrint(bool clicked)
 {
@@ -2362,8 +2362,8 @@ bool DPrintPreviewDialog::eventFilter(QObject *watched, QEvent *event)
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialog::setDocName 设置保存PDF的文件名称
- * \~chinese \param str 文件名称
+  \brief DPrintPreviewDialog::setDocName 设置保存PDF的文件名称
+  \a str 文件名称
  */
 void DPrintPreviewDialog::setDocName(const QString &str)
 {
@@ -2372,8 +2372,8 @@ void DPrintPreviewDialog::setDocName(const QString &str)
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialog::docName 保存PDF的文件名称
- * \~chinese \return  文件名称
+  \brief DPrintPreviewDialog::docName 保存PDF的文件名称
+  \return  文件名称
  */
 QString DPrintPreviewDialog::docName() const
 {
@@ -2382,8 +2382,8 @@ QString DPrintPreviewDialog::docName() const
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialog::setPrintFromPath 根据路径的文件进行打印
- * \~chinese \param path 文件路径
+  \brief DPrintPreviewDialog::setPrintFromPath 根据路径的文件进行打印
+  \a path 文件路径
  */
 bool DPrintPreviewDialog::setPrintFromPath(const QString &path)
 {
@@ -2399,8 +2399,8 @@ bool DPrintPreviewDialog::setPrintFromPath(const QString &path)
 }
 
 /*!
- * \~chinese \brief DPrintPreviewDialog::docName 路径文件的路径名
- * \~chinese \return  路径文件路径名
+  \brief DPrintPreviewDialog::docName 路径文件的路径名
+  \return  路径文件路径名
  */
 QString DPrintPreviewDialog::printFromPath() const
 {

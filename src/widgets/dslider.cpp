@@ -62,31 +62,44 @@ private:
 };
 
 /*!
- * \~chinese \class DSlider
- * \~chinese \brief DSlider一个聚合 QSlider 的滑块
- * \~chinese \row \li DSlider提供了在滑块两侧设置图标函数
- * \~chinese \row \li DSlider提供了滑块的刻度及刻度标识
+  \class Dtk::Widget::DSlider
+  \inmodule dtkwidget
+  \brief DSlider一个聚合 QSlider 的滑块.
+
+  DSlider提供了在滑块两侧设置图标函数
+  DSlider提供了滑块的刻度及刻度标识
  */
 
 /*!
- * \~chinese \fn DSlider::valueChanged
- * \~chinese \brief 信号会在 slider value 属性的值改变时被发送
- * \~chinese \fn DSlider::sliderMoved
- * \~chinese \brief 信号会在 slider 拖动时被发送
- * \~chinese \fn DSlider::sliderReleased
- * \~chinese \brief 信号会在 slider被松开时被发送
- * \~chinese \fn DSlider::rangeChanged
- * \~chinese \brief 信号会在 range 属性的值改变时被发送
- * \~chinese \fn DSlider::actionTriggered
- * \~chinese \brief 信号会在 slider actoin 触发时被发送
- * \~chinese \fn DSlider::iconClicked
- * \~chinese \brief 信号会在左右 iconbutton 被点击时被发送
+  \fn void DSlider::valueChanged(int value)
+  \brief 信号会在 slider \a value 属性的值改变时被发送
+ */
+/*!
+  \fn void DSlider::sliderMoved(int position)
+  \brief 信号会在 slider 拖动时被发送
+ */
+/*!
+  \fn void DSlider::sliderReleased()
+  \brief 信号会在 slider被松开时被发送
+ */
+/*!
+  \fn void DSlider::rangeChanged(int min, int max)
+  \brief 信号会在 range 属性的值改变时被发送
+ */
+/*!
+  \fn void DSlider::actionTriggered(int action)
+  \brief 信号会在 slider actoin 触发时被发送
+ */
+/*!
+  \fn void DSlider::iconClicked(SliderIcons icon, bool checked)
+  \brief 信号会在左右 iconbutton 被点击时被发送
  */
 
 /*!
- * \~chinese \brief DSlider的构造函数
- * \~chinese \param \sa orientation Qt::Orientation
- * \~chinese \param parent参数被发送到 QWidget 构造函数。
+  \brief DSlider的构造函数
+  \a parent 参数被发送到 QWidget 构造函数。
+
+  \sa Qt::Orientation
  */
 DSlider::DSlider(Qt::Orientation orientation, QWidget *parent)
     : QWidget(parent)
@@ -114,8 +127,8 @@ bool DSlider::event(QEvent *e)
 }
 
 /*!
- * \~chinese \brief DSlider::eventFilter
- * \~chinese \row 此函数处理了鼠标滚轮事件
+  \brief DSlider::eventFilter
+  此函数处理了鼠标滚轮事件
  */
 bool DSlider::eventFilter(QObject *watched, QEvent *e)
 {
@@ -128,8 +141,8 @@ bool DSlider::eventFilter(QObject *watched, QEvent *e)
 }
 
 /*!
- * \~chinese \brief DSlider::orientation
- * \~chinese \sa QSlider::orientation()
+  \brief DSlider::orientation
+  \sa QSlider::orientation()
  */
 Qt::Orientation DSlider::orientation() const
 {
@@ -137,9 +150,9 @@ Qt::Orientation DSlider::orientation() const
     return d->slider->orientation();
 }
 /*!
- * \~chinese \brief DSlider::slider返回 QSlider 对象
- * \~chinese \row 若 DSlider 不满足输入框的使用需求，请用此函数抛出的对象
- * \~chinese \return
+  \brief DSlider::slider返回 QSlider 对象
+  若 DSlider 不满足输入框的使用需求，请用此函数抛出的对象
+  \return
  */
 QSlider *DSlider::slider()
 {
@@ -148,8 +161,8 @@ QSlider *DSlider::slider()
 }
 
 /*!
- * \~chinese \brief DSlider::setLeftIcon设置滑块左侧图标
- * \~chinese \param left图标
+  \brief DSlider::setLeftIcon设置滑块左侧图标
+  \a left 图标
  */
 void DSlider::setLeftIcon(const QIcon &left)
 {
@@ -176,8 +189,8 @@ void DSlider::setLeftIcon(const QIcon &left)
 }
 
 /*!
- * \~chinese \brief DSlider::setRightIcon设置滑块右图标
- * \~chinese \param right图标
+  \brief DSlider::setRightIcon设置滑块右图标
+  \a right 图标
  */
 void DSlider::setRightIcon(const QIcon &right)
 {
@@ -203,8 +216,8 @@ void DSlider::setRightIcon(const QIcon &right)
 }
 
 /*!
- * \~chinese \brief DSlider::setIconSize设置滑块图标大小
- * \~chinese \param size图标大小
+  \brief DSlider::setIconSize设置滑块图标大小
+  \a size 图标大小
  */
 void DSlider::setIconSize(const QSize &size)
 {
@@ -222,8 +235,8 @@ void DSlider::setIconSize(const QSize &size)
 }
 
 /*!
- * \~chinese \brief DSlider::setMinimum
- * \~chinese \sa QSlider::setMinimum()
+  \brief DSlider::setMinimum
+  \sa QSlider::setMinimum()
  */
 void DSlider::setMinimum(int min)
 {
@@ -232,8 +245,8 @@ void DSlider::setMinimum(int min)
 }
 
 /*!
- * \~chinese \brief DSlider::minimum
- * \~chinese \sa QSlider::minimum()
+  \brief DSlider::minimum
+  \sa QSlider::minimum()
  */
 int DSlider::minimum() const
 {
@@ -242,8 +255,8 @@ int DSlider::minimum() const
 }
 
 /*!
- * \~chinese \brief DSlider::setValue
- * \~chinese \sa QSlider::setValue()
+  \brief DSlider::setValue
+  \sa QSlider::setValue()
  */
 void DSlider::setValue(int value)
 {
@@ -252,8 +265,8 @@ void DSlider::setValue(int value)
 }
 
 /*!
- * \~chinese \brief DSlider::value
- * \~chinese \sa QSlider::value()
+  \brief DSlider::value
+  \sa QSlider::value()
  */
 int DSlider::value() const
 {
@@ -262,8 +275,8 @@ int DSlider::value() const
 }
 
 /*!
- * \~chinese \brief DSlider::setPageStep
- * \~chinese \sa QSlider::setPageStep()
+  \brief DSlider::setPageStep
+  \sa QSlider::setPageStep()
  */
 void DSlider::setPageStep(int pageStep)
 {
@@ -272,8 +285,8 @@ void DSlider::setPageStep(int pageStep)
 }
 
 /*!
- * \~chinese \brief DSlider::pageStep
- * \~chinese \sa QSlider::pageStep()
+  \brief DSlider::pageStep
+  \sa QSlider::pageStep()
  */
 int DSlider::pageStep() const
 {
@@ -282,8 +295,8 @@ int DSlider::pageStep() const
 }
 
 /*!
- * \~chinese \brief DSlider::setMaximum
- * \~chinese \sa QSlider::setMaximum()
+  \brief DSlider::setMaximum
+  \sa QSlider::setMaximum()
  */
 void DSlider::setMaximum(int max)
 {
@@ -292,8 +305,8 @@ void DSlider::setMaximum(int max)
 }
 
 /*!
- * \~chinese \brief DSlider::maximum
- * \~chinese \sa QSlider::maximum
+  \brief DSlider::maximum
+  \sa QSlider::maximum
  */
 int DSlider::maximum() const
 {
@@ -302,11 +315,11 @@ int DSlider::maximum() const
 }
 
 /*!
- * \~chinese \brief DSlider::setLeftTicks设置刻度在滑块左侧
- * \~chinese \row 根据 QStringList 数量，绘制刻度的个数，绘制刻度标识
- * \~chinese \row \li 滑块为水平,刻度在滑块上方
- * \~chinese \row \li 滑块为垂直,刻度在滑块左侧
- * \~chinese \param info刻度标识
+  \brief DSlider::setLeftTicks设置刻度在滑块左侧
+  根据 QStringList 数量，绘制刻度的个数，绘制刻度标识
+  滑块为水平,刻度在滑块上方
+  滑块为垂直,刻度在滑块左侧
+  \a info 刻度标识
  */
 void DSlider::setLeftTicks(const QStringList &info)
 {
@@ -337,11 +350,11 @@ void DSlider::setLeftTicks(const QStringList &info)
 }
 
 /*!
- * \~chinese \brief DSlider::setRightTicks设置刻度在滑块右侧
- * \~chinese \row 根据 QStringList 数量，绘制刻度的个数，绘制刻度标识
- * \~chinese \row \li 滑块为水平,刻度在滑块下方
- * \~chinese \row \li 滑块为垂直,刻度在滑块右侧
- * \~chinese \param info刻度标识
+  \brief DSlider::setRightTicks设置刻度在滑块右侧
+  根据 QStringList 数量，绘制刻度的个数，绘制刻度标识
+  滑块为水平,刻度在滑块下方
+  滑块为垂直,刻度在滑块右侧
+  \a info 刻度标识
  */
 void DSlider::setRightTicks(const QStringList &info)
 {
@@ -372,8 +385,8 @@ void DSlider::setRightTicks(const QStringList &info)
 }
 
 /*!
- * \~chinese \brief DSlider::setAboveTicks设置刻度在滑块上方
- * \~chinese \sa DSlider::setLeftTicks()
+  \brief DSlider::setAboveTicks设置刻度在滑块上方
+  \sa DSlider::setLeftTicks()
  */
 void DSlider::setAboveTicks(const QStringList &info)
 {
@@ -381,8 +394,8 @@ void DSlider::setAboveTicks(const QStringList &info)
 }
 
 /*!
- * \~chinese \brief DSlider::setBelowTicks设置刻度在滑块下方
- * \~chinese \sa DSlider::setRightTicks()
+  \brief DSlider::setBelowTicks设置刻度在滑块下方
+  \sa DSlider::setRightTicks()
  */
 void DSlider::setBelowTicks(const QStringList &info)
 {
@@ -390,25 +403,25 @@ void DSlider::setBelowTicks(const QStringList &info)
 }
 
 /*!
- * \~chinese \brief DSlider::setMarkPositions 设置显示双边的刻度线（不显示刻度值）
- * \~chinese \li 举例用途：比如调节音量的 DSlider，需要在 value = 100 的地方标记一个刻度，而不需要显示其他的刻度值（并且实际音量值是可以超过 100 的）
- * \~chinese \li 其他：设置指定数值的刻度线(setMarkPositions)和设置刻度线+刻度值(setBelowTicks)是两个相互独立的，且互不干扰，若是同时使用，也会同时绘画各自的线；
- * \~chinese         另外两个的先后顺序也并没有关系
- *
- * \~chinese \code 示例代码
- * \~chinese \row DSlider* slider = new DSlider(Qt::Horizontal, wTemp);
- * \~chinese \row QStringList list1;
- * \~chinese \row list1<<"0"<<"25"<<"50"<<"75"<<"100";
- * \~chinese \row slider->setBelowTicks(list1);
- * \~chinese \row QStringList list2;
- * \~chinese \row list2<<"0"<<"25"<<"50"<<"75"<<"100"";
- * \~chinese \row slider->setAboveTicks(list2);
- * \~chinese \row QList<int> list3;
- * \~chinese \row list3<<0<<30<<80;
- * \~chinese \row slider->setMarkPositions(list3);
- * \~chinese \row slider->setMinimum(0);
- * \~chinese \row slider->setMaximum(100);
- * \~chinese \endcode
+  \brief DSlider::setMarkPositions 设置显示双边的刻度线（不显示刻度值）
+  举例用途：比如调节音量的 DSlider，需要在 value = 100 的地方标记一个刻度，而不需要显示其他的刻度值（并且实际音量值是可以超过 100 的）
+  其他：设置指定数值的刻度线(setMarkPositions)和设置刻度线+刻度值(setBelowTicks)是两个相互独立的，且互不干扰，若是同时使用，也会同时绘画各自的线；
+  另外两个的先后顺序也并没有关系
+  
+  \code 示例代码
+  DSlider* slider = new DSlider(Qt::Horizontal, wTemp);
+  QStringList list1;
+  list1<<"0"<<"25"<<"50"<<"75"<<"100";
+  slider->setBelowTicks(list1);
+  QStringList list2;
+  list2<<"0"<<"25"<<"50"<<"75"<<"100"";
+  slider->setAboveTicks(list2);
+  QList<int> list3;
+  list3<<0<<30<<80;
+  slider->setMarkPositions(list3);
+  slider->setMinimum(0);
+  slider->setMaximum(100);
+  \endcode
  */
 void DSlider::setMarkPositions(QList<int> list)
 {
@@ -457,8 +470,8 @@ void DSlider::setMarkPositions(QList<int> list)
 }
 
 /*!
- * \~chinese \brief DSlider::setMouseWheelEnabled设置鼠标滚轮是否开启
- * \~chinese \param enabled是否开启鼠标滚轮
+  \brief DSlider::setMouseWheelEnabled设置鼠标滚轮是否开启
+  \a enabled 是否开启鼠标滚轮
  */
 void DSlider::setMouseWheelEnabled(bool enabled)
 {
@@ -505,8 +518,8 @@ void DSliderPrivate::updtateTool(int value)
 }
 
 /*!
- * \~chinese \brief DSlider::setTipValue 此函数会创建气泡，气泡将跟随滑块移动
- * \~chinese \param open value非空开启气泡 value空关闭气泡(销毁)
+  \brief DSlider::setTipValue 此函数会创建气泡，气泡将跟随滑块移动
+  \a open value 非空开启气泡 value 空关闭气泡(销毁)
  */
 void DSlider::setTipValue(const QString &value)
 {
@@ -536,10 +549,10 @@ void DSlider::setTipValue(const QString &value)
 }
 
 /*!
- * \~chinese \brief DSlider::tickPosition返回滑块的记号位置
- * \~chinese \row 获取滑块刻度当前朝向
- * \~chinese \row \sa QSlider::TickPosition
- * \~chinese \return
+  \brief DSlider::tickPosition返回滑块的记号位置
+  获取滑块刻度当前朝向
+  \sa QSlider::TickPosition
+  \return
  */
 QSlider::TickPosition DSlider::tickPosition() const
 {
@@ -561,8 +574,8 @@ QSlider::TickPosition DSlider::tickPosition() const
 }
 
 /*!
- * \~chinese \brief DSlider::sizeHint
- * \~chinese \sa  QSlider::sizeHint
+  \brief DSlider::sizeHint
+  \sa  QSlider::sizeHint
  */
 QSize DSlider::sizeHint() const
 {
@@ -574,8 +587,8 @@ QSize DSlider::sizeHint() const
 }
 
 /*!
- * \~chinese \brief DSlider::setHandleVisible 设置滑块时候显示
- * \~chinese \param b 显示滑块的 bool 值
+  \brief DSlider::setHandleVisible 设置滑块时候显示
+  \a b 显示滑块的 bool 值
  */
 void DSlider::setHandleVisible(bool b)
 {
@@ -589,8 +602,8 @@ void DSlider::setHandleVisible(bool b)
 }
 
 /*!
- * \~chinese \brief DSlider::handleVisible 获取滑块是否显示的状态
- * \~chinese \return 返回滑块是否显示的状态
+  \brief DSlider::handleVisible 获取滑块是否显示的状态
+  \return 返回滑块是否显示的状态
  */
 bool DSlider::handleVisible() const
 {
@@ -599,9 +612,9 @@ bool DSlider::handleVisible() const
 }
 
 /*!
- * \~chinese \brief DSlider::setEnabledAcrossStyle 滑槽是否禁用活动色填充已经滑过的滑槽
- * \~chinese 默认普通 DSlider 滑过的滑槽是活动色填充， 调用过 setXXXTicks 的 DSlider 则默认禁用活动色填充
- * \~chinese \param enabled true 无活动色，可用于音量平衡等不需要显示滑过的，false 滑过的位置(如左侧)是高亮色显示，如调节亮度等(默认)
+  \brief DSlider::setEnabledAcrossStyle 滑槽是否禁用活动色填充已经滑过的滑槽
+  默认普通 DSlider 滑过的滑槽是活动色填充， 调用过 setXXXTicks 的 DSlider 则默认禁用活动色填充
+  \a enabled true 无活动色，可用于音量平衡等不需要显示滑过的，false 滑过的位置(如左侧)是高亮色显示，如调节亮度等(默认)
  */
 void DSlider::setEnabledAcrossStyle(bool enabled)
 {
@@ -672,9 +685,10 @@ QSize SliderStrip::sizeHint() const
 }
 
 /*!
- * \~chines \brief SliderStrip::setScaleInfo 设置显示刻度线和刻度值
- * \~chines \param scaleInfo 显示的刻度值
- * \~chines \param tickPosition 显示的方向枚举值
+  \internal
+  \brief SliderStrip::setScaleInfo 设置显示刻度线和刻度值
+  \a scaleInfo 显示的刻度值
+  \a tickPosition 显示的方向枚举值
  */
 void SliderStrip::setScaleInfo(QStringList scaleInfo, QSlider::TickPosition tickPosition)
 {
@@ -683,9 +697,10 @@ void SliderStrip::setScaleInfo(QStringList scaleInfo, QSlider::TickPosition tick
 }
 
 /*!
- * \~chines \brief SliderStrip::setMarkList 设置显示刻度线（不显示刻度值）
- * \~chines \param list 显示的刻度线的list
- * \~chines \param tickPosition 显示的方向枚举值
+  \internal
+  \brief SliderStrip::setMarkList 设置显示刻度线（不显示刻度值）
+  \a list 显示的刻度线的list
+  \a tickPosition 显示的方向枚举值
  */
 void SliderStrip::setMarkList(QList<int> list, QSlider::TickPosition tickPosition)
 {
@@ -694,8 +709,9 @@ void SliderStrip::setMarkList(QList<int> list, QSlider::TickPosition tickPositio
 }
 
 /*!
- * \~chines \brief SliderStrip::getList 返回刻度线的 list
- * \~chines \return 刻度线的 list
+  \internal
+  \brief SliderStrip::getList 返回刻度线的 list
+  \return 刻度线的 list
  */
 QList<int> SliderStrip::getList()
 {
@@ -703,8 +719,9 @@ QList<int> SliderStrip::getList()
 }
 
 /*!
- * \~chines \brief SliderStrip::getScaleInfo 返回刻度值的 list
- * \~chines \return 度值的 list
+  \internal
+  \brief SliderStrip::getScaleInfo 返回刻度值的 list
+  \return 度值的 list
  */
 QStringList SliderStrip::getScaleInfo()
 {
@@ -712,8 +729,9 @@ QStringList SliderStrip::getScaleInfo()
 }
 
 /*!
- * \~chines \brief SliderStrip::paintEvent
- * \~chines \sa QWidget::paintEvent()
+  \internal
+  \brief SliderStrip::paintEvent
+  \sa QWidget::paintEvent()
  */
 void SliderStrip::paintEvent(QPaintEvent *event)
 {
@@ -836,8 +854,9 @@ void SliderStrip::paintEvent(QPaintEvent *event)
 }
 
 /*!
- * \~chines \brief SliderStrip::event
- * \~chines \sa QWidget::event()
+  \internal
+  \brief SliderStrip::event
+  \sa QWidget::event()
  */
 bool SliderStrip::event(QEvent *e)
 {

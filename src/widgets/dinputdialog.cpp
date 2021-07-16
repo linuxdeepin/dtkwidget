@@ -93,69 +93,54 @@ void DInputDialogPrivate::init()
     });
 }
 
-
-
-
-
-
-
-
-
 /*!
- * \~chinese \class DInputDialog
- * \~chinese \brief 快速创建一个获取可输入数据的对话框
- *
- * \~chinese DInputDialog 一般直接调用其静态函数 DInputDialog::getText DInputDialog::getItem DInputDialog::getInt DInputDialog::getDouble 来直接获取文字，选项，整数，浮点数
- */
-
-
-
-
-
-/*!
- * \~chinese \fn DInputDialog::textValueSelected
- * \~chinese \brief 确认按钮被点击时调用此信号
- *
- * \~chinese 如果InputMode是 DInputDialog::TextInput 或者 DInputDialog::ComboBox ，则确认按钮被点击时调用此信号发送当前文本输入框或多选框中当前的值
- *
- * \~chinese \param value 要发送的值
+  \class Dtk::Widget::DInputDialog
+  \inmodule dtkwidget
+  \brief 快速创建一个获取可输入数据的对话框.
+  
+  DInputDialog 一般直接调用其静态函数 DInputDialog::getText DInputDialog::getItem DInputDialog::getInt DInputDialog::getDouble 来直接获取文字，选项，整数，浮点数
  */
 
 /*!
- * \~chinese \fn DInputDialog::intValueSelected
- * \~chinese \brief 确认按钮被点击时调用此信号
- *
- * \~chinese 如果InputMode是 DInputDialog::IntInput ，则确认按钮被点击时调用此信号发送当前的整数值
- *
- * \~chinese \param value 要发送的值
+  \fn void DInputDialog::textValueSelected(const QString &text)
+  \brief 确认按钮被点击时调用此信号.
+  
+  如果InputMode是 DInputDialog::TextInput 或者 DInputDialog::ComboBox ，则确认按钮被点击时调用此信号发送当前文本输入框或多选框中当前的值
+  
+  \a value 要发送的值
  */
 
 /*!
- * \~chinese \fn DInputDialog::doubleValueSelected
- * \~chinese \brief 确认按钮被点击时调用此信号
- *
- * \~chinese 如果InputMode是 DInputDialog::DoubleInput ，则确认按钮被点击时调用此信号发送当前的浮点数值
- *
- * \~chinese \param value 要发送的值
+  \fn void DInputDialog::intValueSelected(int value)
+  \brief 确认按钮被点击时调用此信号
+  
+  如果InputMode是 DInputDialog::IntInput ，则确认按钮被点击时调用此信号发送当前的整数值
+  
+  \a value 要发送的值
  */
 
 /*!
- * \~chinese \fn DInputDialog::cancelButtonClicked
- * \~chinese \brief 取消按钮被点击时调用此信号
+  \fn DInputDialog::doubleValueSelected(double value)
+  \brief 确认按钮被点击时调用此信号
+  
+  如果InputMode是 DInputDialog::DoubleInput ，则确认按钮被点击时调用此信号发送当前的浮点数值
+  
+  \a value 要发送的值
  */
 
 /*!
- * \~chinese \fn DInputDialog::okButtonClicked
- * \~chinese \brief 确认按钮被点击时调用此信号
+  \fn void DInputDialog::cancelButtonClicked()
+  \brief 取消按钮被点击时调用此信号
  */
 
-
-
-
+/*!
+  \fn void DInputDialog::okButtonClicked()
+  \brief 确认按钮被点击时调用此信号
+ */
 
 /*!
- * \~chinese \brief 获取 DInputDialog::DInputDialog 实例
- * \~chinese \param parent 作为 DInputDialog::DInputDialog 实例的父控件
+  \brief 获取 DInputDialog::DInputDialog 实例
+  \a parent 作为 DInputDialog::DInputDialog 实例的父控件
  */
 DInputDialog::DInputDialog(QWidget *parent) :
     DDialog(*new DInputDialogPrivate(this), parent)
@@ -164,7 +149,7 @@ DInputDialog::DInputDialog(QWidget *parent) :
 }
 
 /*!
- * \~chinese \sa DInputDialog::inputMode
+  \sa DInputDialog::inputMode
  */
 void DInputDialog::setInputMode(DInputDialog::InputMode mode)
 {
@@ -203,13 +188,13 @@ void DInputDialog::setInputMode(DInputDialog::InputMode mode)
 }
 
 /*!
- * \~chinese \property DInputDialog::inputMode
- * \~chinese \brief 这个属性保存对话框当前的输入模式
- *
- * \~chinese 查看 DInputDialog::InputMode 以了解对话框支持的多种输入模式
- *
- * \~chinese Getter: DInputDialog::inputMode , Setter: DInputDialog::setInputMode
- * \~chinese \sa DInputDialog::InputMode
+  \property DInputDialog::inputMode
+  \brief 这个属性保存对话框当前的输入模式
+  
+  查看 DInputDialog::InputMode 以了解对话框支持的多种输入模式
+  
+  Getter: DInputDialog::inputMode , Setter: DInputDialog::setInputMode
+  \sa DInputDialog::InputMode
  */
 DInputDialog::InputMode DInputDialog::inputMode() const
 {
@@ -219,7 +204,7 @@ DInputDialog::InputMode DInputDialog::inputMode() const
 }
 
 /*!
- * \~chinese \sa DInputDialog::textValue
+  \sa DInputDialog::textValue
  */
 void DInputDialog::setTextValue(const QString &text)
 {
@@ -232,20 +217,20 @@ void DInputDialog::setTextValue(const QString &text)
 }
 
 /*!
- * \~chinese \fn DInputDialog::textValueChanged
- * \~chinese \brief 当属性 DInputDialog::textValue 发生变化时调用此信号
- * \~chinese \sa DInputDialog::textValue
+  \fn DInputDialog::textValueChanged(const QString &text)
+  \brief 当属性 DInputDialog::textValue 发生变化时调用此信号
+  \sa DInputDialog::textValue
  */
 
 /*!
- * \~chinese \property DInputDialog::textValue
- * \~chinese \brief 这个属性保存对话框当前的输入文本
- *
- * \~chinese 如果当前的输入模式是 DInputDialog::ComboBox 则返回当前已选择的ComboBox选项，否则返回输入框的内容
- *
- * \~chinese Getter: DInputDialog::textValue , Setter: DInputDialog::setTextValue , Signal: DInputDialog::textValueChanged
- *
- * \~chinese \sa DInputDialog::InputMode
+  \property DInputDialog::textValue
+  \brief 这个属性保存对话框当前的输入文本
+  
+  如果当前的输入模式是 DInputDialog::ComboBox 则返回当前已选择的ComboBox选项，否则返回输入框的内容
+  
+  Getter: DInputDialog::textValue , Setter: DInputDialog::setTextValue , Signal: DInputDialog::textValueChanged
+  
+  \sa DInputDialog::InputMode
  */
 QString DInputDialog::textValue() const
 {
@@ -255,7 +240,7 @@ QString DInputDialog::textValue() const
 }
 
 /*!
- * \~chinese \sa DInputDialog::textEchoMode
+  \sa DInputDialog::textEchoMode
  */
 void DInputDialog::setTextEchoMode(QLineEdit::EchoMode mode)
 {
@@ -289,12 +274,12 @@ void DInputDialog::setTextEchoMode(QLineEdit::EchoMode mode)
 }
 
 /*!
- * \~chinese \property DInputDialog::textEchoMode
- * \~chinese \brief 这个属性保存对话框中的输入框文字显示模式
- *
- * \~chinese Getter: DInputDialog::textEchoMode , Setter: DInputDialog::setTextEchoMode
- *
- * \~chinese \sa QLineEdit::EchoMode
+  \property DInputDialog::textEchoMode
+  \brief 这个属性保存对话框中的输入框文字显示模式
+  
+  Getter: DInputDialog::textEchoMode , Setter: DInputDialog::setTextEchoMode
+  
+  \sa QLineEdit::EchoMode
  */
 QLineEdit::EchoMode DInputDialog::textEchoMode() const
 {
@@ -304,7 +289,7 @@ QLineEdit::EchoMode DInputDialog::textEchoMode() const
 }
 
 /*!
- * \sa DInputDialog::comboBoxEditable
+  \sa DInputDialog::comboBoxEditable
  */
 void DInputDialog::setComboBoxEditable(bool editable)
 {
@@ -317,14 +302,14 @@ void DInputDialog::setComboBoxEditable(bool editable)
 }
 
 /*!
- * \~chinese \property DInputDialog::comboBoxEditable
- * \~chinese \brief 这个属性表示对话框中的多选框是否可以编辑
- *
- * \~chinese Getter: DInputDialog::isComboBoxEditable , Setter: DInputDialog::setComboBoxEditable
+  \property DInputDialog::comboBoxEditable
+  \brief 这个属性表示对话框中的多选框是否可以编辑
+  
+  Getter: DInputDialog::isComboBoxEditable , Setter: DInputDialog::setComboBoxEditable
  */
 
 /*!
- * \sa DInputDialog::comboBoxEditable
+  \sa DInputDialog::comboBoxEditable
  */
 bool DInputDialog::isComboBoxEditable() const
 {
@@ -334,7 +319,7 @@ bool DInputDialog::isComboBoxEditable() const
 }
 
 /*!
- * \sa DInputDialog::comboBoxEditable
+  \sa DInputDialog::comboBoxEditable
  */
 void DInputDialog::setComboBoxItems(const QStringList &items)
 {
@@ -345,14 +330,14 @@ void DInputDialog::setComboBoxItems(const QStringList &items)
 }
 
 /*!
- * \~chinese \property DInputDialog::comboBoxItems
- * \~chinese \brief 这个属性保存对话框中多选框的所有可选值
- *
- * \~chinese Getter: DInputDialog::comboBoxItems , Setter: DInputDialog::setComboBoxItems
+  \property DInputDialog::comboBoxItems
+  \brief 这个属性保存对话框中多选框的所有可选值
+  
+  Getter: DInputDialog::comboBoxItems , Setter: DInputDialog::setComboBoxItems
  */
 
 /*!
- * \~chinese \sa DInputDialog::comboBoxItems
+  \sa DInputDialog::comboBoxItems
  */
 QStringList DInputDialog::comboBoxItems() const
 {
@@ -368,16 +353,16 @@ QStringList DInputDialog::comboBoxItems() const
 }
 
 /*!
- * \~chinese \fn DInputDialog::comboBoxCurrentIndexChanged
- * \~chinese \brief 当属性 DInputDialog::comboBoxCurrentIndex 发生变化时调用此信号
- * \~chinese \sa DInputDialog::comboBoxCurrentIndex
+  \fn void DInputDialog::comboBoxCurrentIndexChanged(int comboBoxCurrentIndex)
+  \brief 当属性 DInputDialog::comboBoxCurrentIndex 发生变化时调用此信号
+  \sa DInputDialog::comboBoxCurrentIndex
  */
 
 /*!
- * \~chinese \property DInputDialog::comboBoxCurrentIndex
- * \~chinese \brief 这个属性保存对话框中多选框当前的索引
- *
- * \~chinese Getter: DInputDialog::comboBoxCurrentIndex , Setter: DInputDialog::setComboBoxCurrentIndex , Signal: DInputDialog::comboBoxCurrentIndexChanged
+  \property DInputDialog::comboBoxCurrentIndex
+  \brief 这个属性保存对话框中多选框当前的索引
+  
+  Getter: DInputDialog::comboBoxCurrentIndex , Setter: DInputDialog::setComboBoxCurrentIndex , Signal: DInputDialog::comboBoxCurrentIndexChanged
  */
 int DInputDialog::comboBoxCurrentIndex() const
 {
@@ -387,7 +372,7 @@ int DInputDialog::comboBoxCurrentIndex() const
 }
 
 /*!
- * \~chinese \sa DInputDialog::comboBoxCurrentIndex
+  \sa DInputDialog::comboBoxCurrentIndex
  */
 void DInputDialog::setComboBoxCurrentIndex(int comboBoxCurrentIndex)
 {
@@ -397,7 +382,7 @@ void DInputDialog::setComboBoxCurrentIndex(int comboBoxCurrentIndex)
 }
 
 /*!
- * \sa DInputDialog::intValue
+  \sa DInputDialog::intValue
  */
 void DInputDialog::setIntValue(int value)
 {
@@ -407,16 +392,16 @@ void DInputDialog::setIntValue(int value)
 }
 
 /*!
- * \~chinese \fn DInputDialog::intValueChanged
- * \~chinese \brief 当属性 DInputDialog::intValue 发生变化时调用此信号
- * \~chinese \sa DInputDialog::intValue
+  \fn void DInputDialog::intValueChanged(int value)
+  \brief 当属性 DInputDialog::intValue 发生变化时调用此信号
+  \sa DInputDialog::intValue
  */
 
 /*!
- * \~chinese \property DInputDialog::intValue
- * \~chinese \brief 这个属性保存对话框当前的整型值
- *
- * \~chinese Getter: DInputDialog::intValue , Setter: DInputDialog::setIntValue , Signal: DInputDialog::intValueChanged
+  \property DInputDialog::intValue
+  \brief 这个属性保存对话框当前的整型值
+  
+  Getter: DInputDialog::intValue , Setter: DInputDialog::setIntValue , Signal: DInputDialog::intValueChanged
  */
 int DInputDialog::intValue() const
 {
@@ -426,7 +411,7 @@ int DInputDialog::intValue() const
 }
 
 /*!
- * \~chinese \sa DInputDialog::intMinimum
+  \sa DInputDialog::intMinimum
  */
 void DInputDialog::setIntMinimum(int min)
 {
@@ -436,12 +421,12 @@ void DInputDialog::setIntMinimum(int min)
 }
 
 /*!
- * \~chinese \property DInputDialog::intMinimum
- * \~chinese \brief 这个属性保存对话框中的整形可选输入框SpinBox的最小值
- *
- * \~chinese Getter: DInputDialog::intMinimum , Setter: DInputDialog::setIntMinimum
- *
- * \~chinese \sa DInputDialog::intMaximum
+  \property DInputDialog::intMinimum
+  \brief 这个属性保存对话框中的整形可选输入框SpinBox的最小值
+  
+  Getter: DInputDialog::intMinimum , Setter: DInputDialog::setIntMinimum
+  
+  \sa DInputDialog::intMaximum
  */
 int DInputDialog::intMinimum() const
 {
@@ -451,7 +436,7 @@ int DInputDialog::intMinimum() const
 }
 
 /*!
- * \~chinese \sa DInputDialog::intMaximum
+  \sa DInputDialog::intMaximum
  */
 void DInputDialog::setIntMaximum(int max)
 {
@@ -461,12 +446,12 @@ void DInputDialog::setIntMaximum(int max)
 }
 
 /*!
- * \~chinese \property DInputDialog::intMaximum
- * \~chinese \brief 这个属性保存对话框中的整形可选输入框SpinBox的最大值
- *
- * \~chinese Getter: DInputDialog::intMaximum , Setter: DInputDialog::setIntMaximum
- *
- * \~chinese \sa DInputDialog::intMinimum
+  \property DInputDialog::intMaximum
+  \brief 这个属性保存对话框中的整形可选输入框SpinBox的最大值
+  
+  Getter: DInputDialog::intMaximum , Setter: DInputDialog::setIntMaximum
+  
+  \sa DInputDialog::intMinimum
  */
 int DInputDialog::intMaximum() const
 {
@@ -476,9 +461,9 @@ int DInputDialog::intMaximum() const
 }
 
 /*!
- * \~chinese \brief 设置对话框中的整形可选输入框SpinBox的可选范围（最小值和最大值）
- *
- * \~chinese \sa DInputDialog::intMinimum DInputDialog::intMaximum
+  \brief 设置对话框中的整形可选输入框SpinBox的可选范围（最小值和最大值）
+  
+  \sa DInputDialog::intMinimum DInputDialog::intMaximum
  */
 void DInputDialog::setIntRange(int min, int max)
 {
@@ -488,7 +473,7 @@ void DInputDialog::setIntRange(int min, int max)
 }
 
 /*!
- * \~chinese \sa DInputDialog::intStep
+  \sa DInputDialog::intStep
  */
 void DInputDialog::setIntStep(int step)
 {
@@ -498,12 +483,12 @@ void DInputDialog::setIntStep(int step)
 }
 
 /*!
- * \~chinese \property DInputDialog::intStep
- * \~chinese \brief 这个属性保存对话框中的可选输入框点击调增按钮时的步进值
- *
- * \~chinese \brief 步进值即点击一次增大或减小多少
- *
- * \~chinese Getter: DInputDialog::intStep , Setter: DInputDialog::setIntStep
+  \property DInputDialog::intStep
+  \brief 这个属性保存对话框中的可选输入框点击调增按钮时的步进值
+  
+  \brief 步进值即点击一次增大或减小多少
+  
+  Getter: DInputDialog::intStep , Setter: DInputDialog::setIntStep
  */
 int DInputDialog::intStep() const
 {
@@ -513,7 +498,7 @@ int DInputDialog::intStep() const
 }
 
 /*!
- * \~chinese \sa DInputDialog::doubleValue
+  \sa DInputDialog::doubleValue
  */
 void DInputDialog::setDoubleValue(double value)
 {
@@ -523,16 +508,16 @@ void DInputDialog::setDoubleValue(double value)
 }
 
 /*!
- * \~chinese \fn DInputDialog::doubleValueChanged
- * \~chinese \brief 当属性 DInputDialog::doubleValue 发生变化时调用此信号
- * \~chinese \sa DInputDialog::doubleValue
+  \fn void DInputDialog::doubleValueChanged(int value)
+  \brief 当属性 DInputDialog::doubleValue 发生变化时调用此信号
+  \sa DInputDialog::doubleValue
  */
 
 /*!
- * \~chinese \property DInputDialog::doubleValue
- * \~chinese \brief 这个属性保存对话框当前的浮点数值
- *
- * \~chinese Getter: DInputDialog::doubleValue , Setter: DInputDialog::setDoubleValue , Signal: DInputDialog::doubleValueChanged
+  \property DInputDialog::doubleValue
+  \brief 这个属性保存对话框当前的浮点数值
+  
+  Getter: DInputDialog::doubleValue , Setter: DInputDialog::setDoubleValue , Signal: DInputDialog::doubleValueChanged
  */
 double DInputDialog::doubleValue() const
 {
@@ -542,7 +527,7 @@ double DInputDialog::doubleValue() const
 }
 
 /*!
- * \~chinese \sa DInputDialog::doubleMinimum
+  \sa DInputDialog::doubleMinimum
  */
 void DInputDialog::setDoubleMinimum(double min)
 {
@@ -552,12 +537,12 @@ void DInputDialog::setDoubleMinimum(double min)
 }
 
 /*!
- * \~chinese \property DInputDialog::doubleMinimum
- * \~chinese \brief 这个属性保存对话框中的浮点型可选输入框SpinBox的最小值
- *
- * \~chinese Getter: DInputDialog::doubleMinimum , Setter: DInputDialog::setDoubleMinimum
- *
- * \~chinese \sa DInputDialog::doubleMaximum
+  \property DInputDialog::doubleMinimum
+  \brief 这个属性保存对话框中的浮点型可选输入框SpinBox的最小值
+  
+  Getter: DInputDialog::doubleMinimum , Setter: DInputDialog::setDoubleMinimum
+  
+  \sa DInputDialog::doubleMaximum
  */
 double DInputDialog::doubleMinimum() const
 {
@@ -567,7 +552,7 @@ double DInputDialog::doubleMinimum() const
 }
 
 /*!
- * \~chinese \sa DInputDialog::doubleMaximum
+  \sa DInputDialog::doubleMaximum
  */
 void DInputDialog::setDoubleMaximum(double max)
 {
@@ -577,12 +562,12 @@ void DInputDialog::setDoubleMaximum(double max)
 }
 
 /*!
- * \~chinese \property DInputDialog::doubleMaximum
- * \~chinese \brief 这个属性保存对话框中的浮点型可选输入框SpinBox的最大值
- *
- * \~chinese Getter: DInputDialog::doubleMaximum , Setter: DInputDialog::setDoubleMaximum
- *
- * \~chinese \sa DInputDialog::doubleMinimum
+  \property DInputDialog::doubleMaximum
+  \brief 这个属性保存对话框中的浮点型可选输入框SpinBox的最大值
+  
+  Getter: DInputDialog::doubleMaximum , Setter: DInputDialog::setDoubleMaximum
+  
+  \sa DInputDialog::doubleMinimum
  */
 double DInputDialog::doubleMaximum() const
 {
@@ -592,9 +577,9 @@ double DInputDialog::doubleMaximum() const
 }
 
 /*!
- * \~chinese \brief 设置对话框中的浮点型可选输入框SpinBox的可选范围（最小值和最大值）
- *
- * \~chinese \sa DInputDialog::doubleMinimum DInputDialog::doubleMaximum
+  \brief 设置对话框中的浮点型可选输入框SpinBox的可选范围（最小值和最大值）
+  
+  \sa DInputDialog::doubleMinimum DInputDialog::doubleMaximum
  */
 void DInputDialog::setDoubleRange(double min, double max)
 {
@@ -604,7 +589,7 @@ void DInputDialog::setDoubleRange(double min, double max)
 }
 
 /*!
- * \~chinese \sa DInputDialog::doubleDecimals
+  \sa DInputDialog::doubleDecimals
  */
 void DInputDialog::setDoubleDecimals(int decimals)
 {
@@ -614,12 +599,12 @@ void DInputDialog::setDoubleDecimals(int decimals)
 }
 
 /*!
- * \~chinese \property DInputDialog::doubleDecimals
- * \~chinese \brief 这个属性保存对话框中的浮点型可选输入框SpinBox的精度
- *
- * \~chinese 精度即处理多少位小数
- *
- * \~chinese Getter: DInputDialog::doubleDecimals , Setter: DInputDialog::setDoubleDecimals
+  \property DInputDialog::doubleDecimals
+  \brief 这个属性保存对话框中的浮点型可选输入框SpinBox的精度
+  
+  精度即处理多少位小数
+  
+  Getter: DInputDialog::doubleDecimals , Setter: DInputDialog::setDoubleDecimals
  */
 int DInputDialog::doubleDecimals() const
 {
@@ -629,7 +614,7 @@ int DInputDialog::doubleDecimals() const
 }
 
 /*!
- * \~chinese \sa DInputDialog::okButtonText
+  \sa DInputDialog::okButtonText
  */
 void DInputDialog::setOkButtonText(const QString &text)
 {
@@ -639,10 +624,10 @@ void DInputDialog::setOkButtonText(const QString &text)
 }
 
 /*!
- * \~chinese \property DInputDialog::okButtonText
- * \~chinese \brief 这个属性保存对话框的确认按钮文字
- *
- * \~chinese Getter: DInputDialog::okButtonText , Setter: DInputDialog::setOkButtonText
+  \property DInputDialog::okButtonText
+  \brief 这个属性保存对话框的确认按钮文字
+  
+  Getter: DInputDialog::okButtonText , Setter: DInputDialog::setOkButtonText
  */
 QString DInputDialog::okButtonText() const
 {
@@ -652,8 +637,8 @@ QString DInputDialog::okButtonText() const
 }
 
 /*!
- * \~chinese \brief 设置确认按钮是否可以点击
- * \~chinese \param enable 为 true 即为可以点击，反之则反
+  \brief 设置确认按钮是否可以点击
+  \a enable 为 true 即为可以点击，反之则反
  */
 void DInputDialog::setOkButtonEnabled(const bool enable)
 {
@@ -663,8 +648,8 @@ void DInputDialog::setOkButtonEnabled(const bool enable)
 }
 
 /*!
- * \~chinese \brief 获取确认按钮是否可以点击
- * \~chinese \return true 即为可以点击，反之则反
+  \brief 获取确认按钮是否可以点击
+  \return true 即为可以点击，反之则反
  */
 bool DInputDialog::okButtonIsEnabled() const
 {
@@ -674,7 +659,7 @@ bool DInputDialog::okButtonIsEnabled() const
 }
 
 /*!
- * \~chinese \sa DInputDialog::cancelButtonText
+  \sa DInputDialog::cancelButtonText
  */
 void DInputDialog::setCancelButtonText(const QString &text)
 {
@@ -684,10 +669,10 @@ void DInputDialog::setCancelButtonText(const QString &text)
 }
 
 /*!
- * \~chinese \property DInputDialog::cancelButtonText
- * \~chinese \brief 这个属性保存对话框的取消按钮文字
- *
- * \~chinese Getter: DInputDialog::cancelButtonText , Setter: DInputDialog::setCancelButtonText
+  \property DInputDialog::cancelButtonText
+  \brief 这个属性保存对话框的取消按钮文字
+  
+  Getter: DInputDialog::cancelButtonText , Setter: DInputDialog::setCancelButtonText
  */
 QString DInputDialog::cancelButtonText() const
 {
@@ -697,7 +682,7 @@ QString DInputDialog::cancelButtonText() const
 }
 
 /*!
- * \~chinese \sa DInputDialog::textAlert
+  \sa DInputDialog::textAlert
  */
 void DInputDialog::setTextAlert(bool textAlert)
 {
@@ -707,22 +692,22 @@ void DInputDialog::setTextAlert(bool textAlert)
 }
 
 /*!
- * \~chinese \fn DInputDialog::textAlertChanged
- * \~chinese \brief 当属性 DInputDialog::textAlert 发生变化时调用此信号
- * \~chinese \sa DInputDialog::textAlert
+  \fn DInputDialog::textAlertChanged(bool textAlert)
+  \brief 当属性 DInputDialog::textAlert 发生变化时调用此信号
+  \sa DInputDialog::textAlert
  */
 
 /*!
- * \~chinese \property DInputDialog::textAlert
- * \~chinese \brief 这个属性保存对话框是否处于警告状态
- *
- * \~chinese 当对话框处于警告状态时，输入框的边框将会显示不同的颜色，一般警告告诉用户当前输入框的内容不合法
- *
- * \~chinese Getter: DInputDialog::textAlert , Setter: DInputDialog::setTextAlert , Signal: DInputDialog::textAlertChanged
+  \property DInputDialog::textAlert
+  \brief 这个属性保存对话框是否处于警告状态
+  
+  当对话框处于警告状态时，输入框的边框将会显示不同的颜色，一般警告告诉用户当前输入框的内容不合法
+  
+  Getter: DInputDialog::textAlert , Setter: DInputDialog::setTextAlert , Signal: DInputDialog::textAlertChanged
  */
 
 /*!
- * \~chinese \sa DInputDialog::textAlert
+  \sa DInputDialog::textAlert
  */
 bool DInputDialog::isTextAlert() const
 {
@@ -732,16 +717,16 @@ bool DInputDialog::isTextAlert() const
 }
 
 /*!
- * \brief 快速创建一个可以输入文字的对话框
- * \param parent 作为对话框的父控件
- * \param title 作为对话框的标题
- * \param message 作为对话框提示信息
- * \param echo 设置文本输入框文字的显示模式
- * \param text 设置文本输入框文字默认的内容
- * \param ok 用于获取对话框是否点击了确认的指针
- * \param flags 设置对话框的窗口属性，一般无需设置
- * \param inputMethodHints 设置输入法相关属性，一般无需设置
- * \return 返回输入的字符串
+  \brief 快速创建一个可以输入文字的对话框
+  \a parent 作为对话框的父控件
+  \a title 作为对话框的标题
+  \a message 作为对话框提示信息
+  \a echo 设置文本输入框文字的显示模式
+  \a text 设置文本输入框文字默认的内容
+  \a ok 用于获取对话框是否点击了确认的指针
+  \a flags 设置对话框的窗口属性，一般无需设置
+  \a inputMethodHints 设置输入法相关属性，一般无需设置
+  \return 返回输入的字符串
  */
 QString DInputDialog::getText(QWidget *parent, const QString &title, const QString &message,
                               QLineEdit::EchoMode echo, const QString &text, bool *ok,
@@ -763,17 +748,17 @@ QString DInputDialog::getText(QWidget *parent, const QString &title, const QStri
 }
 
 /*!
- * \brief 快速创建一个多选框的对话框
- * \param parent 作为对话框的父控件
- * \param title 作为对话框的标题
- * \param message 作为对话框提示信息
- * \param items 设置所有可选项
- * \param current 设置当前的可选项
- * \param editable 设置多选框是否可编辑
- * \param ok 用于获取对话框是否点击了确认的指针
- * \param flags 设置对话框的窗口属性，一般无需设置
- * \param inputMethodHints 设置输入法相关属性，一般无需设置
- * \return 返回选中的项
+  \brief 快速创建一个多选框的对话框
+  \a parent 作为对话框的父控件
+  \a title 作为对话框的标题
+  \a message 作为对话框提示信息
+  \a items 设置所有可选项
+  \a current 设置当前的可选项
+  \a editable 设置多选框是否可编辑
+  \a ok 用于获取对话框是否点击了确认的指针
+  \a flags 设置对话框的窗口属性，一般无需设置
+  \a inputMethodHints 设置输入法相关属性，一般无需设置
+  \return 返回选中的项
  */
 QString DInputDialog::getItem(QWidget *parent, const QString &title, const QString &message,
                               const QStringList &items, int current, bool editable, bool *ok,
@@ -796,17 +781,17 @@ QString DInputDialog::getItem(QWidget *parent, const QString &title, const QStri
 }
 
 /*!
- * \brief 快速创建一个获取整数的对话框
- * \param parent 作为对话框的父控件
- * \param title 作为对话框的标题
- * \param message 作为对话框提示信息
- * \param value 设置默认的值
- * \param minValue 设置最小值
- * \param maxValue 设置最大值
- * \param step 设置步进值
- * \param ok 用于获取对话框是否点击了确认的指针
- * \param flags 设置对话框的窗口属性，一般无需设置
- * \return 返回整数值
+  \brief 快速创建一个获取整数的对话框
+  \a parent 作为对话框的父控件
+  \a title 作为对话框的标题
+  \a message 作为对话框提示信息
+  \a value 设置默认的值
+  \a minValue 设置最小值
+  \a maxValue 设置最大值
+  \a step 设置步进值
+  \a ok 用于获取对话框是否点击了确认的指针
+  \a flags 设置对话框的窗口属性，一般无需设置
+  \return 返回整数值
  */
 int DInputDialog::getInt(QWidget *parent, const QString &title, const QString &message,
                          int value, int minValue, int maxValue, int step, bool *ok,
@@ -828,17 +813,17 @@ int DInputDialog::getInt(QWidget *parent, const QString &title, const QString &m
 }
 
 /*!
- * \brief 快速创建一个获取浮点数的对话框
- * \param parent 作为对话框的父控件
- * \param title 作为对话框的标题
- * \param message 作为对话框提示信息
- * \param value 设置默认的值
- * \param minValue 设置最小值
- * \param maxValue 设置最大值
- * \param decimals 设置精度
- * \param ok 用于获取对话框是否点击了确认的指针
- * \param flags 设置对话框的窗口属性，一般无需设置
- * \return 返回整数值
+  \brief 快速创建一个获取浮点数的对话框
+  \a parent 作为对话框的父控件
+  \a title 作为对话框的标题
+  \a message 作为对话框提示信息
+  \a value 设置默认的值
+  \a minValue 设置最小值
+  \a maxValue 设置最大值
+  \a decimals 设置精度
+  \a ok 用于获取对话框是否点击了确认的指针
+  \a flags 设置对话框的窗口属性，一般无需设置
+  \return 返回整数值
  */
 double DInputDialog::getDouble(QWidget *parent, const QString &title, const QString &message,
                                double value, double minValue, double maxValue, int decimals,

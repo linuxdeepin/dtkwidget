@@ -21,20 +21,19 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
- * \~english \class DTabletWindowOptionButton
- * \~english \brief The DTabletWindowOptionButton class is used as the unified tablet window option button.
- *
- * \~english It's actually a special DImageButton which has the appearance of option button.
- *
- * \~chinese \class DTabletWindowOptionButton
- * \~chinese \brief DTabletWindowOptionButton 类是 DTK 平板窗口统一的菜单按钮控件。
- * \~chinese 点击按钮后，默认会显示程序主菜单，包含“关于”、“帮助”等项。
+  \class Dtk::Widget::DTabletWindowOptionButton
+  \inmodule dtkwidget
+  \brief The DTabletWindowOptionButton class is used as the unified tablet window option button.
+  \brief DTabletWindowOptionButton 类是 DTK 平板窗口统一的菜单按钮控件。
+  
+  It's actually a special DImageButton which has the appearance of option button.
+  点击按钮后，默认会显示程序主菜单，包含“关于”、“帮助”等项。
  */
 
 /*!
- * \~chinese \brief DTabletWindowOptionButton::DTabletWindowOptionButton 是 DTabletWindowOptionButton 的构造
- * \~chinese 函数，返回 DTabletWindowOptionButton 对象，普通程序一般无需使用。
- * \~chinese \param parent 为创建对象的父控件。
+  \brief DTabletWindowOptionButton::DTabletWindowOptionButton 是 DTabletWindowOptionButton 的构造
+  函数，返回 DTabletWindowOptionButton 对象，普通程序一般无需使用。
+  \a parent 为创建对象的父控件。
  */
 DTabletWindowOptionButton::DTabletWindowOptionButton(QWidget *parent)
     : DIconButton(DStyle::SP_TitleMoreButton, parent)

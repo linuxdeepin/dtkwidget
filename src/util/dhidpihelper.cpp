@@ -8,14 +8,15 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
- * \class DHiDPIHelper
- * \brief The DHiDPIHelper class provides helper to help applications support hiDPI.
+  \class Dtk::Widget::DHiDPIHelper
+  \inmodule dtkwidget
+  \brief The DHiDPIHelper class provides helper to help applications support hiDPI.
  */
 
 /*!
- * \brief DHiDPIHelper::loadNxPixmap loads the suitable @Nx image.
- * \param fileName is the original resource file name.
- * \return the hiDPI ready QPixmap.
+  \brief DHiDPIHelper::loadNxPixmap loads the suitable @Nx image.
+  \a fileName is the original resource file name.
+  \return the hiDPI ready QPixmap.
  */
 QPixmap DHiDPIHelper::loadNxPixmap(const QString &fileName)
 {

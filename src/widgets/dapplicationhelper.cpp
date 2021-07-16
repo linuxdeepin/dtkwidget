@@ -50,12 +50,13 @@ public:
 static DApplicationHelperPrivate *d = nullptr;
 
 /*!
- * \~chinese \class DApplicationHelper
- * \~chinese \brief DApplicationHelper提供了一个修改的 DGuiApplicationHelper 类
+  \class Dtk::Widget::DApplicationHelper
+  \inmodule dtkwidget
+  \brief DApplicationHelper提供了一个修改的 DGuiApplicationHelper 类.
  */
 
 /*!
- * \~chinese \brief DApplicationHelper::instance返回 DApplicationHelper 对象
+  \brief DApplicationHelper::instance返回 DApplicationHelper 对象
  */
 DApplicationHelper *DApplicationHelper::instance()
 {
@@ -63,10 +64,10 @@ DApplicationHelper *DApplicationHelper::instance()
 }
 
 /*!
- * \~chinese \brief DApplicationHelper::palette返回调色板
- * \~chinese \param widget控件
- * \~chinese \param base调色板
- * \~chinese \return 调色板
+  \brief DApplicationHelper::palette返回调色板
+  \a widget 控件
+  \a base 调色板
+  \return 调色板
  */
 DPalette DApplicationHelper::palette(const QWidget *widget, const QPalette &base) const
 {
@@ -74,9 +75,9 @@ DPalette DApplicationHelper::palette(const QWidget *widget, const QPalette &base
 }
 
 /*!
- * \~chinese \brief DApplicationHelper::setPalette将调色板设置到控件
- * \~chinese \param widget控件
- * \~chinese \param palette调色板
+  \brief DApplicationHelper::setPalette将调色板设置到控件
+  \a widget 控件
+  \a palette 调色板
  */
 void DApplicationHelper::setPalette(QWidget *widget, const DPalette &palette)
 {
@@ -84,8 +85,8 @@ void DApplicationHelper::setPalette(QWidget *widget, const DPalette &palette)
 }
 
 /*!
- * \~chinese \brief DApplicationHelper::resetPalette重置控件的调色板属性
- * \~chinese \param widget控件
+  \brief DApplicationHelper::resetPalette重置控件的调色板属性
+  \a widget 控件
  */
 void DApplicationHelper::resetPalette(QWidget *widget)
 {

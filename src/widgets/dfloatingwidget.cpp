@@ -67,8 +67,8 @@ void DFloatingWidgetPrivate::adjustPalette()
 }
 
 /*!
- * \~chinese \brief 设置 widget 对象, 若是之前此处已经有对象, 会先清理旧的对象, 再将此处的新对象放到此处
- * \~chinese \param[in] widget 将 widget 添加到 DFloatingWidget 的布局里面
+  \brief 设置 widget 对象, 若是之前此处已经有对象, 会先清理旧的对象, 再将此处的新对象放到此处
+  \param[in] widget 将 widget 添加到 DFloatingWidget 的布局里面
  */
 void DFloatingWidget::setWidget(QWidget *widget)
 {
@@ -88,8 +88,8 @@ void DFloatingWidget::setWidget(QWidget *widget)
 }
 
 /*!
- * \~chinese \brief DFloatingWidget::setFramRadius 设置边框的圆角大小
- * \~chinese \param radius 圆角大小
+  \brief DFloatingWidget::setFramRadius 设置边框的圆角大小
+  \a radius 圆角大小
  */
 void DFloatingWidget::setFramRadius(int radius)
 {
@@ -101,9 +101,9 @@ void DFloatingWidget::setFramRadius(int radius)
 }
 
 /*!
- * \~chinese \brief 构造函数
- * \~chinese \param[in] dd 是 DFloatingWidgetPrivate 的对象引用
- * \~chinese \param[in] parent 其父对象
+  \brief 构造函数
+  \param[in] dd 是 DFloatingWidgetPrivate 的对象引用
+  \param[in] parent 其父对象
  */
 DFloatingWidget::DFloatingWidget(DFloatingWidgetPrivate &dd, QWidget *parent)
     : QWidget(parent)
@@ -115,8 +115,8 @@ DFloatingWidget::DFloatingWidget(DFloatingWidgetPrivate &dd, QWidget *parent)
 }
 
 /*!
- * \~chinese \brief 构造函数
- * \~chinese \param[in] parent 是本类的父控件
+  \brief 构造函数
+  \param[in] parent 是本类的父控件
  */
 DFloatingWidget::DFloatingWidget(QWidget *parent)
     : DFloatingWidget(*new DFloatingWidgetPrivate(this), parent)
@@ -155,9 +155,9 @@ void DFloatingWidget::paintEvent(QPaintEvent *e)
 }
 
 /*!
- * \~chinese \brief 主事件处理程序, 用来处理感兴趣的事件
- * \~chinese \param[in] event`父控件或者外设传入进来的 event 事件消息
- * \~chinese \return 事件消息是否被处理的结果
+  \brief 主事件处理程序, 用来处理感兴趣的事件
+  \param[in] event`父控件或者外设传入进来的 event 事件消息
+  \return 事件消息是否被处理的结果
  */
 bool DFloatingWidget::event(QEvent *event)
 {
@@ -198,8 +198,8 @@ bool DFloatingWidget::event(QEvent *event)
 }
 
 /*!
- * \~chinese \brief 初始化风格属性
- * \~chinese \param[in] option 自带一些风格属性传入, 其上面增加和删除一些其他属性
+  \brief 初始化风格属性
+  \param[in] option 自带一些风格属性传入, 其上面增加和删除一些其他属性
  */
 void DFloatingWidget::initStyleOption(DStyleOptionFloatingWidget *option) const
 {
@@ -210,8 +210,8 @@ void DFloatingWidget::initStyleOption(DStyleOptionFloatingWidget *option) const
 }
 
 /*!
- * \~chinese \brief 获取背景模糊状态
- * \~chinese \return 返回背景模糊状态
+  \brief 获取背景模糊状态
+  \return 返回背景模糊状态
  */
 bool DFloatingWidget::blurBackgroundIsEnabled() const
 {
@@ -221,8 +221,8 @@ bool DFloatingWidget::blurBackgroundIsEnabled() const
 }
 
 /*!
- * \~chinese \brief 获取模糊背景功能的对象
- * \~chinese \return 返回模糊背景功能的对象
+  \brief 获取模糊背景功能的对象
+  \return 返回模糊背景功能的对象
  */
 DBlurEffectWidget *DFloatingWidget::blurBackground() const
 {
@@ -232,8 +232,8 @@ DBlurEffectWidget *DFloatingWidget::blurBackground() const
 }
 
 /*!
- * \~chinese \brief 设置模糊背景启动
- * \~chinese \param[in] blurBackgroundEnabled 是否启动模糊背景效果
+  \brief 设置模糊背景启动
+  \param[in] blurBackgroundEnabled 是否启动模糊背景效果
  */
 void DFloatingWidget::setBlurBackgroundEnabled(bool blurBackgroundEnabled)
 {

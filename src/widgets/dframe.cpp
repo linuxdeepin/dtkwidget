@@ -39,8 +39,8 @@ DFramePrivate::DFramePrivate(DFrame *qq)
 }
 
 /*!
- * \~chinese \brief DFrame::DFrame 用于其他需要边框的widget的基类
- * \~chinese \param parent
+  \brief DFrame::DFrame 用于其他需要边框的widget的基类
+  \a parent
  */
 DFrame::DFrame(QWidget *parent)
     : DFrame(*new DFramePrivate(this), parent)
@@ -49,8 +49,8 @@ DFrame::DFrame(QWidget *parent)
 }
 
 /*!
- * \~chinese \brief DFrame::setFrameRounded设置边框圆角是否开启
- * \~chinese \param on true开启　false关闭
+  \brief DFrame::setFrameRounded设置边框圆角是否开启
+  \a on true开启　false关闭
  */
 void DFrame::setFrameRounded(bool on)
 {
@@ -64,10 +64,10 @@ void DFrame::setFrameRounded(bool on)
 }
 
 /*!
- * \~chinese \brief DFrame::setBackgroundRole　设置边框背景画刷的角色类型
- * \~chinese \param type 背景画刷的角色类型
+  \brief DFrame::setBackgroundRole　设置边框背景画刷的角色类型
+  \a type 背景画刷的角色类型
  */
-void DFrame::setBackgroundRole(DPalette::ColorType type)
+void DFrame::setBackgroundRole(DGUI_NAMESPACE::DPalette::ColorType type)
 {
     D_D(DFrame);
 

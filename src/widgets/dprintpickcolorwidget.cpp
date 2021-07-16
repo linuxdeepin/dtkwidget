@@ -43,7 +43,7 @@ const int IMAGE_HEIGHT = 10;
 DWIDGET_BEGIN_NAMESPACE
 DGUI_USE_NAMESPACE
 /*!
- * \~chinese \brief ColorButton::ColorButton 取色框颜色选择按钮
+  \brief ColorButton::ColorButton 取色框颜色选择按钮
  */
 ColorButton::ColorButton(QColor color, QWidget *parent)
     : DPushButton(parent)
@@ -182,8 +182,8 @@ void DPrintPickColorWidget::initConnection()
 }
 
 /*!
- * \~chinese \brief PickColorWidget::setRgbEdit 将QColor转化为RGB形式显示
- * \~chinese \param color 颜色 btnColor 判断是否为按钮的颜色
+  \brief PickColorWidget::setRgbEdit 将QColor转化为RGB形式显示
+  \a color 颜色 btnColor 判断是否为按钮的颜色
  */
 void DPrintPickColorWidget::setRgbEdit(QColor color, bool btnColor)
 {
@@ -194,8 +194,8 @@ void DPrintPickColorWidget::setRgbEdit(QColor color, bool btnColor)
 }
 
 /*!
- * \~chinese \brief PickColorWidget::convertColor 将QColor转化为详细颜色
- * \~chinese \param color 颜色 btnColor 判断是否为按钮的颜色
+  \brief PickColorWidget::convertColor 将QColor转化为详细颜色
+  \a color 颜色 btnColor 判断是否为按钮的颜色
  */
 void DPrintPickColorWidget::convertColor(QColor color, bool btnColor)
 {
@@ -223,8 +223,8 @@ void DPrintPickColorWidget::convertColor(QColor color, bool btnColor)
 }
 
 /*!
- * \~chinese \brief PickColorWidget::slotColorPick 调起deepin-picer取色窗口
- * \~chinese \param  uuid 当前进程号  colorName 颜色名称
+  \brief PickColorWidget::slotColorPick 调起deepin-picer取色窗口
+  \a  uuid 当前进程号  colorName 颜色名称
  */
 void DPrintPickColorWidget::slotColorPick(QString uuid, QString colorName)
 {
@@ -234,8 +234,8 @@ void DPrintPickColorWidget::slotColorPick(QString uuid, QString colorName)
 }
 
 /*!
- * \~chinese \brief PickColorWidget::slotEditColor 颜色输入框变化判断是否是按钮的颜色
- * \~chinese \param  str 颜色色号
+  \brief PickColorWidget::slotEditColor 颜色输入框变化判断是否是按钮的颜色
+  \a  str 颜色色号
  */
 void DPrintPickColorWidget::slotEditColor(QString str)
 {
@@ -265,7 +265,7 @@ DPrintPickColorWidget::~DPrintPickColorWidget()
 }
 
 /*!
- * \~chinese \brief ColorLabel::ColorLabel 提供取色的Label
+  \brief ColorLabel::ColorLabel 提供取色的Label
  */
 ColorLabel::ColorLabel(DWidget *parent)
     : DLabel(parent)
@@ -279,9 +279,9 @@ ColorLabel::ColorLabel(DWidget *parent)
 }
 
 /*!
- * \~chinese \brief ColorLabel::getColor 获取Label上取到的颜色
- * \~chinese \param  qreal h, qreal s, qreal v 位置
- * \~chinese \return  QColor 取到的颜色
+  \brief ColorLabel::getColor 获取Label上取到的颜色
+  \a  qreal h, qreal s, qreal v 位置
+  \return  QColor 取到的颜色
  */
 QColor ColorLabel::getColor(qreal h, qreal s, qreal v)
 {
@@ -308,7 +308,7 @@ QColor ColorLabel::getColor(qreal h, qreal s, qreal v)
 }
 
 /*!
- * \~chinese \brief ColorLabel::setHue 设置取色Label的基础颜色
+  \brief ColorLabel::setHue 设置取色Label的基础颜色
  */
 void ColorLabel::setHue(int hue)
 {
@@ -317,8 +317,8 @@ void ColorLabel::setHue(int hue)
 }
 
 /*!
- * \~chinese \brief ColorLabel::pickColor 选择要水印的颜色
- * \~chinese \param  pos 选取颜色的位置
+  \brief ColorLabel::pickColor 选择要水印的颜色
+  \a  pos 选取颜色的位置
  */
 void ColorLabel::pickColor(QPoint pos)
 {
@@ -340,7 +340,7 @@ void ColorLabel::pickColor(QPoint pos)
 }
 
 /*!
- * \~chinese \brief ColorLabel::pickColorCursor 绘制点击时的鼠标光标样式
+  \brief ColorLabel::pickColorCursor 绘制点击时的鼠标光标样式
  */
 QCursor ColorLabel::pickColorCursor()
 {
@@ -434,7 +434,7 @@ ColorLabel::~ColorLabel()
 }
 
 /*!
- * \~chinese \brief ColorSlider::ColorSlider 选取取色Label的基础颜色
+  \brief ColorSlider::ColorSlider 选取取色Label的基础颜色
  */
 ColorSlider::ColorSlider(QWidget *parent)
     : QSlider(parent)
@@ -462,7 +462,7 @@ ColorSlider::~ColorSlider()
 }
 
 /*!
- * \~chinese \brief ColorSlider::getColor 获取基础颜色
+  \brief ColorSlider::getColor 获取基础颜色
  */
 QColor ColorSlider::getColor(qreal h, qreal s, qreal v)
 {

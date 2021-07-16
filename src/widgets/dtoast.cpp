@@ -53,11 +53,13 @@ private:
     D_DECLARE_PUBLIC(DToast)
 };
 
-/**
- * \~chinese \class DToast
- * \~chinese \brief 提供应用内通知的 Tooltip，类似安卓的 Toast。
- * \~chinese \image html DToast.gif
- * \~chinese \param parent
+/*!
+  \class Dtk::Widget::DToast
+  \inmodule dtkwidget
+  \brief 提供应用内通知的 Tooltip，类似安卓的 Toast.
+
+  \image DToast.gif
+  \a parent
  */
 
 DToast::DToast(QWidget *parent) :
@@ -73,7 +75,7 @@ DToast::~DToast()
 }
 
 /*!
- * \~chinese \brief 显示的内容
+  \brief 显示的内容
  */
 QString DToast::text() const
 {
@@ -82,7 +84,7 @@ QString DToast::text() const
 }
 
 /*!
- * \~chinese \brief 显示的图标
+  \brief 显示的图标
  */
 QIcon DToast::icon() const
 {
@@ -91,7 +93,7 @@ QIcon DToast::icon() const
 }
 
 /*!
- * \~chinese \brief 显示时长
+  \brief 显示时长
  */
 int DToast::duration() const
 {
@@ -100,7 +102,7 @@ int DToast::duration() const
 }
 
 /*!
- * \~chinese \brief 不透明度
+  \brief 不透明度
  */
 qreal DToast::opacity() const
 {
@@ -109,7 +111,7 @@ qreal DToast::opacity() const
 }
 
 /*!
- * \~chinese \brief 设置文本内容
+  \brief 设置文本内容
  */
 void DToast::setText(QString text)
 {
@@ -119,8 +121,8 @@ void DToast::setText(QString text)
 }
 
 /*!
- * \~chinese \brief 设置图标
- * \~chinese \param iconfile 从资源中加载图标
+  \brief 设置图标
+  \a iconfile 从资源中加载图标
  */
 void DToast::setIcon(QString iconfile)
 {
@@ -131,9 +133,9 @@ void DToast::setIcon(QString iconfile)
 }
 
 /*!
- * \~chinese \brief 设置图标
- * \~chinese \param icon QIcon 对象导入图标
- * \~chinese \param defaultSize 设置图标大小
+  \brief 设置图标
+  \a icon QIcon 对象导入图标
+  \a defaultSize 设置图标大小
  */
 void DToast::setIcon(QIcon icon, QSize defaultSize)
 {
@@ -144,8 +146,8 @@ void DToast::setIcon(QIcon icon, QSize defaultSize)
 }
 
 /*!
- * \~chinese \brief 设置显示时长
- * \~chinese \param duration
+  \brief 设置显示时长
+  \a duration
  */
 void DToast::setDuration(int duration)
 {
@@ -154,8 +156,8 @@ void DToast::setDuration(int duration)
 }
 
 /*!
- * \~chinese \brief 设置不透明度
- * \~chinese \param opacity
+  \brief 设置不透明度
+  \a opacity
  */
 void DToast::setOpacity(qreal opacity)
 {
@@ -165,7 +167,7 @@ void DToast::setOpacity(qreal opacity)
 }
 
 /*!
- * \~chinese \brief 弹出
+  \brief 弹出
  */
 void DToast::pop()
 {
@@ -196,7 +198,7 @@ void DToast::pop()
 }
 
 /*!
- * \~chinese \brief 隐藏并销毁
+  \brief 隐藏并销毁
  */
 void DToast::pack()
 {

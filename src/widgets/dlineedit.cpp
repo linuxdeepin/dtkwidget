@@ -39,16 +39,20 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
- * \~chinese \class DLineEdit
- * \~chinese \brief DLineEdit一个聚合 QLineEdit 的输入框
- * \~chinese \li DLineEdit提供了向输入框左右两端插入控件的函数
- * \~chinese \li DLineEdit提供了带警告颜色的输入框
- * \~chinese \li DLineEdit提供了带文本警告消息的输入框
+  \class Dtk::Widget::DLineEdit
+  \inmodule dtkwidget
+  \brief DLineEdit一个聚合 QLineEdit 的输入框.
+
+  \list
+  \li DLineEdit提供了向输入框左右两端插入控件的函数
+  \li DLineEdit提供了带警告颜色的输入框
+  \li DLineEdit提供了带文本警告消息的输入框
+  \endlist
  */
 
 /*!
- * \~chinese \brief DLineEdit的构造函数
- * \~chinese \param parent参数被发送到 QWidget 构造函数。
+  \brief DLineEdit的构造函数
+  \a parent 参数被发送到 QWidget 构造函数。
  */
 DLineEdit::DLineEdit(QWidget *parent)
     : QWidget(parent)
@@ -64,9 +68,9 @@ DLineEdit::~DLineEdit()
 }
 
 /*!
- * \~chinese \brief DLineEdit::lineEdit返回 QLineEdit 对象
- * \~chinese \row 若 DLineEdit 不满足输入框的使用需求，请用此函数抛出的对象
- * \~chinese \return
+  \brief DLineEdit::lineEdit返回 QLineEdit 对象
+  若 DLineEdit 不满足输入框的使用需求，请用此函数抛出的对象
+  \return
  */
 QLineEdit *DLineEdit::lineEdit() const
 {
@@ -82,9 +86,9 @@ DLineEdit::DLineEdit(DLineEditPrivate &q, QWidget *parent)
 }
 
 /*!
- * \~chinese \brief DLineEdit::setAlert设置是否开启警告模式
- * \~chinese \row 警告模式，开启警告模式，输入框内将显示警告颜色
- * \~chinese \param isAlert是否开启警告模式
+  \brief DLineEdit::setAlert设置是否开启警告模式
+  警告模式，开启警告模式，输入框内将显示警告颜色
+  \a isAlert 是否开启警告模式
  */
 void DLineEdit::setAlert(bool isAlert)
 {
@@ -94,7 +98,7 @@ void DLineEdit::setAlert(bool isAlert)
 }
 
 /*!
- * \~chinese \brief DLineEdit::alert返回当前是否处于警告模式
+  \brief DLineEdit::alert返回当前是否处于警告模式
  */
 bool DLineEdit::isAlert() const
 {
@@ -108,12 +112,12 @@ void DLineEdit::showAlertMessage(const QString &text, int duration)
 }
 
 /*!
- * \~chinese \brief DLineEdit::showAlertMessage显示警告消息
- * \~chinese \row 显示指定的文本消息，超过指定时间后警告消息消失.
- * \~chinese \row \note 时间参数为-1时，警告消息将一直存在
- * \~chinese \param text警告的文本
- * \~chinese \param duration显示的时间长度，单位毫秒
- * \~chinese \param parent tooltip跟随
+  \brief DLineEdit::showAlertMessage显示警告消息
+  显示指定的文本消息，超过指定时间后警告消息消失.
+  \note 时间参数为-1时，警告消息将一直存在
+  \a text 警告的文本
+  \a duration 显示的时间长度，单位毫秒
+  \a parent tooltip跟随
  */
 void DLineEdit::showAlertMessage(const QString &text, QWidget *follower, int duration)
 {
@@ -122,10 +126,10 @@ void DLineEdit::showAlertMessage(const QString &text, QWidget *follower, int dur
 }
 
 /*!
- * \~chinese \brief DLineEdit::setAlertMessageAlignment 指定对齐方式
- * \~chinese \row 现只支持(下)左，(下)右，(下水平)居中， 默认左对齐.
- * \~chinese \row \note 参数为其他时，默认左对齐
- * \~chinese \param alignment 消息对齐方式
+  \brief DLineEdit::setAlertMessageAlignment 指定对齐方式
+  现只支持(下)左，(下)右，(下水平)居中， 默认左对齐.
+  \note 参数为其他时，默认左对齐
+  \a alignment 消息对齐方式
  */
 void DLineEdit::setAlertMessageAlignment(Qt::Alignment alignment)
 {
@@ -140,7 +144,7 @@ Qt::Alignment DLineEdit::alertMessageAlignment() const
 }
 
 /*!
- * \~chinese \brief DLineEdit:: hideAlertMessage隐藏警告消息框
+  \brief DLineEdit:: hideAlertMessage隐藏警告消息框
  */
 
 void DLineEdit:: hideAlertMessage()
@@ -159,10 +163,10 @@ void DLineEdit:: hideAlertMessage()
 }
 
 /*!
- * \~chinese \brief DLineEdit::setLeftWidgets向输入框左侧添加控件
- * \~chinese \row 将 QList 里的控件插入到输入框的左侧
- * \~chinese \row \note 多次调用，只有最后一次调用生效
- * \~chinese \param list存储控件的列表
+  \brief DLineEdit::setLeftWidgets向输入框左侧添加控件
+  将 QList 里的控件插入到输入框的左侧
+  \note 多次调用，只有最后一次调用生效
+  \a list存储控件的列表
  */
 
 void DLineEdit::setLeftWidgets(const QList<QWidget *> &list)
@@ -193,10 +197,10 @@ void DLineEdit::setLeftWidgets(const QList<QWidget *> &list)
 }
 
 /*!
- * \~chinese \brief DLineEdit::setRightWidgets向输入框右侧添加控件
- * \~chinese \row 将 QList 里的控件插入到输入框的右侧
- * \~chinese \row \note 多次调用，只有最后一次调用生效
- * \~chinese \param list存储控件的列表
+  \brief DLineEdit::setRightWidgets向输入框右侧添加控件
+  将 QList 里的控件插入到输入框的右侧
+  \note 多次调用，只有最后一次调用生效
+  \a list存储控件的列表
  */
 
 void DLineEdit::setRightWidgets(const QList<QWidget *> &list)
@@ -227,17 +231,17 @@ void DLineEdit::setRightWidgets(const QList<QWidget *> &list)
 }
 
 /*!
- * \~chinese \brief DLineEdit::setLeftWidgetsVisible是否隐藏输入框左侧控件
- * \~chinese \param visible是否隐藏
+  \brief DLineEdit::setLeftWidgetsVisible是否隐藏输入框左侧控件
+  \a visible是否隐藏
  */
 void DLineEdit::setLeftWidgetsVisible(bool visible)
 {
     Q_D(DLineEdit);
     d->leftWidget->setVisible(visible);
 }
-/**
- * \~chinese \brief DLineEdit::setRightWidgetsVisible是否隐藏输入框右侧控件
- * \~chinese \param visible是否隐藏
+/*!
+  \brief DLineEdit::setRightWidgetsVisible是否隐藏输入框右侧控件
+  \a visible是否隐藏
  */
 void DLineEdit::setRightWidgetsVisible(bool visible)
 {
@@ -246,8 +250,8 @@ void DLineEdit::setRightWidgetsVisible(bool visible)
 }
 
 /*!
- * \~chinese \brief DLineEdit::setClearButtonEnabled 设置清除按钮是否可见
- * \~chinese \param enable true 按钮可见 false 按钮不可见
+  \brief DLineEdit::setClearButtonEnabled 设置清除按钮是否可见
+  \a enable true 按钮可见 false 按钮不可见
  */
 void DLineEdit::setClearButtonEnabled(bool enable)
 {
@@ -260,8 +264,8 @@ void DLineEdit::setClearButtonEnabled(bool enable)
 }
 
 /*!
- * \~chinese \brief DLineEdit::isClearButtonEnabled
- * \~chinese \return true 清除按钮可见 false 清除按钮不可见
+  \brief DLineEdit::isClearButtonEnabled
+  \return true 清除按钮可见 false 清除按钮不可见
  */
 bool DLineEdit::isClearButtonEnabled() const
 {
@@ -270,8 +274,8 @@ bool DLineEdit::isClearButtonEnabled() const
 }
 
 /*!
- * \~chinese \brief DLineEdit::setText 设置显示的文本
- * \~chinese \param text 显示的文本
+  \brief DLineEdit::setText 设置显示的文本
+  \a text 显示的文本
  */
 void DLineEdit::setText(const QString &text)
 {
@@ -280,8 +284,8 @@ void DLineEdit::setText(const QString &text)
 }
 
 /*!
- * \~chinese \brief DLineEdit::text
- * \~chinese \return 返回显示的文本
+  \brief DLineEdit::text
+  \return 返回显示的文本
  */
 QString DLineEdit::text()
 {
@@ -290,7 +294,7 @@ QString DLineEdit::text()
 }
 
 /*!
- * \~chinese \brief DLineEdit::clear 清空编辑的内容
+  \brief DLineEdit::clear 清空编辑的内容
  */
 void DLineEdit::clear()
 {
@@ -299,8 +303,8 @@ void DLineEdit::clear()
 }
 
 /*!
- * \~chinese \brief DLineEdit::echoMode
- * \~chinese \return 返回回显的模式
+  \brief DLineEdit::echoMode
+  \return 返回回显的模式
  */
 QLineEdit::EchoMode DLineEdit::echoMode() const
 {
@@ -309,8 +313,8 @@ QLineEdit::EchoMode DLineEdit::echoMode() const
 }
 
 /*!
- * \~chinese \brief DLineEdit::setEchoMode 设置回显的模式
- * \~chinese \param mode 回显的模式
+  \brief DLineEdit::setEchoMode 设置回显的模式
+  \a mode 回显的模式
  */
 void DLineEdit::setEchoMode(QLineEdit::EchoMode mode)
 {
@@ -319,10 +323,10 @@ void DLineEdit::setEchoMode(QLineEdit::EchoMode mode)
 }
 
 /*!
- * \~chinese \brief DLineEdit::setContextMenuPolicy
- * \~chinese \param policy 显示右键菜单的方式
- * \~chinese \row 转发实际变量 QLineEdit 的 ContextMenuEvent 消息
- * \~chinese \see QLineEdit::setContextMenuPolicy
+  \brief DLineEdit::setContextMenuPolicy
+  \a policy 显示右键菜单的方式
+  转发实际变量 QLineEdit 的 ContextMenuEvent 消息
+  \sa QLineEdit::setContextMenuPolicy
  */
 void DLineEdit::setContextMenuPolicy(Qt::ContextMenuPolicy policy)
 {
@@ -331,8 +335,8 @@ void DLineEdit::setContextMenuPolicy(Qt::ContextMenuPolicy policy)
 }
 
 /*!
- * \~chinese \brief DLineEdit::speechToTextIsEnabled
- * \~chinese \return true 显示语音听写菜单项 false不显示
+  \brief DLineEdit::speechToTextIsEnabled
+  \return true 显示语音听写菜单项 false不显示
  */
 bool DLineEdit::speechToTextIsEnabled() const
 {
@@ -347,8 +351,8 @@ void DLineEdit::setPlaceholderText(const QString& placeholderText)
 }
 
 /*!
- * \~chinese \brief DLineEdit::setSpeechToTextEnabled 设置是否显示语音听写菜单项
- * \~chinese \param enable true显示 flase不显示
+  \brief DLineEdit::setSpeechToTextEnabled 设置是否显示语音听写菜单项
+  \a enable true显示 flase不显示
  */
 void DLineEdit::setSpeechToTextEnabled(bool enable)
 {
@@ -356,10 +360,9 @@ void DLineEdit::setSpeechToTextEnabled(bool enable)
     d->bSpeechToText = enable;
 }
 
-
 /*!
- * \~chinese \brief DLineEdit::textToSpeechIsEnabled
- * \~chinese \return true 显示语音朗读菜单项 false不显示
+  \brief DLineEdit::textToSpeechIsEnabled
+  \return true 显示语音朗读菜单项 false不显示
  */
 bool DLineEdit::textToSpeechIsEnabled() const
 {
@@ -368,8 +371,8 @@ bool DLineEdit::textToSpeechIsEnabled() const
 }
 
 /*!
- * \~chinese \brief DLineEdit::setTextToSpeechEnabled 设置是否显示语音朗读菜单项
- * \~chinese \param enable true显示 flase不显示
+  \brief DLineEdit::setTextToSpeechEnabled 设置是否显示语音朗读菜单项
+  \a enable true显示 flase不显示
  */
 void DLineEdit::setTextToSpeechEnabled(bool enable)
 {
@@ -378,8 +381,8 @@ void DLineEdit::setTextToSpeechEnabled(bool enable)
 }
 
 /*!
- * \~chinese \brief DLineEdit::textToTranslateIsEnabled
- * \~chinese \return true 显示文本翻译菜单项 false不显示
+  \brief DLineEdit::textToTranslateIsEnabled
+  \return true 显示文本翻译菜单项 false不显示
  */
 bool DLineEdit::textToTranslateIsEnabled() const
 {
@@ -388,8 +391,8 @@ bool DLineEdit::textToTranslateIsEnabled() const
 }
 
 /*!
- * \~chinese \brief DLineEdit::setTextToTranslateEnabled 设置是否显示文本翻译菜单项
- * \~chinese \param enable true显示 flase不显示
+  \brief DLineEdit::setTextToTranslateEnabled 设置是否显示文本翻译菜单项
+  \a enable true显示 flase不显示
  */
 void DLineEdit::setTextToTranslateEnabled(bool enable)
 {
@@ -397,8 +400,8 @@ void DLineEdit::setTextToTranslateEnabled(bool enable)
     d->bTextToTranslate = enable;
 }
 /*!
- * \~chinese \brief DLineEdit::eventFilter
- * \~chinese \row 该过滤器不做任何过滤动作，但会监控输入框的焦点状态，并发送信号 focusChanged()。
+  \brief DLineEdit::eventFilter
+  该过滤器不做任何过滤动作，但会监控输入框的焦点状态，并发送信号 focusChanged()。
  */
 bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
 {

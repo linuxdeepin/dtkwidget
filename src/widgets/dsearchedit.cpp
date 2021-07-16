@@ -169,19 +169,20 @@ private:
 #endif
 
 /*!
- * \~chinese \class DSearchEdit
- * \~chinese \brief DSearchEdit 类提供了专门用来进行搜索的输入框控件。
- * \~chinese
- * \~chinese 相比于一般的输入框控件，DSearchEdit 提供了搜索按钮指示，用户使用起来会更加自然。
- * \~chinese 如图示：
- * \~chinese \image html searchedit.png
- * \~chinese
- * \~chinese \warning DSearchEdit 与 QLineEdit、DLineEdit 没有继承关系，功能不兼容。
+  \class Dtk::Widget::DSearchEdit
+  \inmodule dtkwidget
+  \brief DSearchEdit 类提供了专门用来进行搜索的输入框控件.
+  
+  相比于一般的输入框控件，DSearchEdit 提供了搜索按钮指示，用户使用起来会更加自然。
+  如图示：
+  \image searchedit.png
+  
+  \warning DSearchEdit 与 QLineEdit、DLineEdit 没有继承关系，功能不兼容。
  */
 
 /*!
- * \~chinese \brief DSearchEdit::DSearchEdit 是 DSearchEdit 类的构造函数。
- * \~chinese \param parent 指定了控件的父控件。
+  \brief DSearchEdit::DSearchEdit 是 DSearchEdit 类的构造函数.
+  \a parent 指定了控件的父控件。
  */
 DSearchEdit::DSearchEdit(QWidget *parent)
     : DLineEdit(*new DSearchEditPrivate(this), parent)
@@ -203,8 +204,8 @@ DSearchEdit::~DSearchEdit()
 }
 
 /*!
- * \~chinese \brief DSearchEdit::setPlaceHolder 设置灰色的占位符文本
- * \~chinese \param placeHolder 占位符文本内容
+  \brief DSearchEdit::setPlaceHolder 设置灰色的占位符文本
+  \a placeHolder 占位符文本内容
  */
 void DSearchEdit::setPlaceHolder(QString placeHolder)
 {
@@ -216,8 +217,8 @@ void DSearchEdit::setPlaceHolder(QString placeHolder)
 }
 
 /*!
- * \~chinese \brief DSearchEdit::placeHolder
- * \~chinese \return 返回占位符文本内容
+  \brief DSearchEdit::placeHolder
+  \return 返回占位符文本内容
  */
 QString DSearchEdit::placeHolder() const
 {
@@ -231,9 +232,8 @@ void DSearchEdit::clear()
     lineEdit()->clear();
 }
 
-
 /*!
- * \~chinese \brief DSearchEdit::clearEdit 清除内容，退出编辑状态
+  \brief DSearchEdit::clearEdit 清除内容，退出编辑状态
  */
 void DSearchEdit::clearEdit()
 {

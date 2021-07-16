@@ -40,8 +40,8 @@ public:
 };
 
 /*!
- * \~chinese \brief DTextEdit::DTextEdit 实现一个用于编辑和显示纯文本和富文本的控件
- * \~chinese \param parent
+  \brief DTextEdit::DTextEdit 实现一个用于编辑和显示纯文本和富文本的控件
+  \a parent
  */
 DTextEdit::DTextEdit(QWidget *parent)
     : QTextEdit(parent)
@@ -258,10 +258,9 @@ void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
     menu->popup(e->globalPos());
 }
 
-
 /*!
- * \~chinese \brief DLineEdit::speechToTextIsEnabled
- * \~chinese \return true 显示语音听写菜单项 false不显示
+  \brief DLineEdit::speechToTextIsEnabled
+  \return true 显示语音听写菜单项 false不显示
  */
 bool DTextEdit::speechToTextIsEnabled() const
 {
@@ -270,8 +269,8 @@ bool DTextEdit::speechToTextIsEnabled() const
 }
 
 /*!
- * \~chinese \brief DLineEdit::setSpeechToTextEnabled 设置是否显示语音听写菜单项
- * \~chinese \param enable true显示 flase不显示
+  \brief DLineEdit::setSpeechToTextEnabled 设置是否显示语音听写菜单项
+  \a enable true显示 flase不显示
  */
 void DTextEdit::setSpeechToTextEnabled(bool enable)
 {
@@ -280,8 +279,8 @@ void DTextEdit::setSpeechToTextEnabled(bool enable)
 }
 
 /*!
- * \~chinese \brief DTextEdit::textToSpeechIsEnabled
- * \~chinese \return true 显示语音朗读菜单项 false不显示
+  \brief DTextEdit::textToSpeechIsEnabled
+  \return true 显示语音朗读菜单项 false不显示
  */
 bool DTextEdit::textToSpeechIsEnabled() const
 {
@@ -290,8 +289,8 @@ bool DTextEdit::textToSpeechIsEnabled() const
 }
 
 /*!
- * \~chinese \brief DTextEdit::setTextToSpeechEnabled 设置是否显示语音朗读菜单项
- * \~chinese \param enable true显示 flase不显示
+  \brief DTextEdit::setTextToSpeechEnabled 设置是否显示语音朗读菜单项
+  \a enable true显示 flase不显示
  */
 void DTextEdit::setTextToSpeechEnabled(bool enable)
 {
@@ -300,8 +299,8 @@ void DTextEdit::setTextToSpeechEnabled(bool enable)
 }
 
 /*!
- * \~chinese \brief DTextEdit::textToTranslateIsEnabled
- * \~chinese \return true 显示文本翻译菜单项 false不显示
+  \brief DTextEdit::textToTranslateIsEnabled
+  \return true 显示文本翻译菜单项 false不显示
  */
 bool DTextEdit::textToTranslateIsEnabled() const
 {
@@ -310,8 +309,8 @@ bool DTextEdit::textToTranslateIsEnabled() const
 }
 
 /*!
- * \~chinese \brief DTextEdit::setTextToTranslateEnabled 设置是否显示文本翻译菜单项
- * \~chinese \param enable true显示 flase不显示
+  \brief DTextEdit::setTextToTranslateEnabled 设置是否显示文本翻译菜单项
+  \a enable true显示 flase不显示
  */
 void DTextEdit::setTextToTranslateEnabled(bool enable)
 {

@@ -38,96 +38,71 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
- * \~english \class DStyleOption
- * \brief DStyleOption is the base class of deepin style option, use for dxcb plugins
- * \param widget
+  \class Dtk::Widget::DStyleOption
+  \inmodule dtkwidget
+
+  \brief dcxb插件通过DStyleOption来控制控件的样式
+  \brief DStyleOption is the base class of deepin style option, use for dxcb plugins
+
+  \a widget
  */
 
 /*!
- * \~chinese \class DStyleOption
- * \brief dcxb插件通过DStyleOption来控制控件的样式
- * \param widget
- */
+  \class Dtk::Widget::DStyleOptionSuggestButton
+  \inmodule dtkwidget
 
-
-/*!
- * \~english \class DStyleOptionSuggestButton
- * \brief DStyleOptionSuggestButton handle the style option of Dtk::Widget::DSuggestButton
- * \param widget
- */
-/*!
- * \~english \enum DStyleOptionSuggestButton::ButtonFeature
- * \brief This enum extend types of features a Dtk::Widget::DSuggestButton can have
- */
-/*!
- * \~english \var DStyleOptionSuggestButton::SuggestButton
- * \brief Default Button
+  \brief DStyleOptionSuggestButton handle the style option of Dtk::Widget::DSuggestButton
+  \brief Dtk::Widget::DSuggestButton使用的样式配置
+  \a widget
  */
 
 /*!
- * \~chinese \class DStyleOptionSuggestButton
- * \brief Dtk::Widget::DSuggestButton使用的样式配置
- * \param widget
- */
-/*!
- * \~chinese \enum DStyleOptionSuggestButton::ButtonFeature
- * \brief Dtk::Widget::DSuggestButton扩展的样式
- */
-/*!
- * \~chinese \var DStyleOptionSuggestButton::SuggestButton
- * \brief 默认样式
+  \enum Dtk::Widget::DStyleOptionSuggestButton::ButtonFeature
+  \brief This enum extend types of features a Dtk::Widget::DSuggestButton can have
+  \brief Dtk::Widget::DSuggestButton扩展的样式
+
+  \value SuggestButton
+  \brief Default Button
+  \brief 默认样式
+
+  \omitvalue WarningButton
+  \omitvalue FloatingButton
+  \omitvalue TitleBarButton
+  \omitvalue CircleButton
  */
 
+/*!
+  \class Dtk::Widget::DStyleOptionLineEdit
+  \inmodule dtkwidget
+
+  \brief Dtk::Widget::DLineEdit使用的样式配置.
+  \brief DStyleOptionLineEdit handle the style option of Dtk::Widget::DLineEdit.
+
+  \a widget
+ */
 
 /*!
- * \~english \class DStyleOptionLineEdit
- * \brief DStyleOptionLineEdit handle the style option of Dtk::Widget::DLineEdit
- * \param widget
- */
-/*!
- * \~english \var DStyleOptionLineEdit::None
- * \brief Default none style
- */
-/*!
- * \~english \var DStyleOptionLineEdit::Alert
- * \brief Alert style
- */
-/*!
- * \~english \var DStyleOptionLineEdit::IconButton
- * \brief Edit with an icon
+  \enum Dtk::Widget::DStyleOptionLineEdit::LineEditFeature
+  \brief Dtk::Widget::DSuggestButton扩展的样式
+
+  \value DStyleOptionLineEdit::None
+  \brief 不使用自定义样式，保持Qt默认样式。
+  \brief Default none style.
+
+  \value DStyleOptionLineEdit::Alert
+  \brief 警告状态样式
+  \brief Alert style
+
+  \value DStyleOptionLineEdit::IconButton
+  \brief 包含图标按钮的编辑框样式
+  \brief Edit with an icon
  */
 
+/*!
+  \brief Init style with widget.
+  \brief 控件初始化样式时调用，可以用于重写控件样式.
 
-/*!
- * \~chinese \class DStyleOptionLineEdit
- * \brief Dtk::Widget::DLineEdit使用的样式配置
- * \param widget
- */
-/*!
- * \~chinese \enum DStyleOptionLineEdit::LineEditFeature
- * \brief Dtk::Widget::DSuggestButton扩展的样式
- */
-/*!
- * \~chinese \var DStyleOptionLineEdit::None
- * \brief 不使用自定义样式，保持Qt默认样式。
- */
-/*!
- * \~chinese \var DStyleOptionLineEdit::Alert
- * \brief 警告状态样式
- */
-/*!
- * \~chinese \var DStyleOptionLineEdit::IconButton
- * \brief 包含图标按钮的编辑框样式
- */
-
-
-/*!
- * \~english \brief Init style with widget.
- * \param widget
- */
-/*!
- * \~chinese \brief 控件初始化样式时调用，可以用于重写控件样式。
- * \param widget
+  \a widget
  */
 void DStyleOption::init(QWidget *widget)
 {
@@ -140,14 +115,11 @@ void DStyleOption::init(const QWidget *widget)
 }
 
 /*!
- * \~english \brief DStyleOptionSuggestButton::init set style option for Dtk::Widget::DSuggestButton
- * \param widget
- * \sa Dtk::Widget::DSuggestButton
- */
-/*!
- * \~chinese \brief 初始化Dtk::Widget::DSuggestButton样式，设置为 DStyleOptionSuggestButton::SuggestButton 。
- * \param widget
- * \sa Dtk::Widget::DSuggestButton
+  \brief DStyleOptionSuggestButton::init set style option for Dtk::Widget::DSuggestButton
+  \brief 初始化Dtk::Widget::DSuggestButton样式，设置为 DStyleOptionSuggestButton::SuggestButton.
+
+  \a widget
+  \sa Dtk::Widget::DSuggestButton
  */
 void DStyleOptionButton::init(const QWidget *widget)
 {
@@ -155,14 +127,11 @@ void DStyleOptionButton::init(const QWidget *widget)
 }
 
 /*!
- * \~english \brief DStyleOptionSuggestButton::init set style option for Dtk::Widget::DLineEdit
- * \param widget
- * \sa Dtk::Widget::DLineEdit
- */
-/*!
- * \~chinese \brief 根据Dtk::Widget::DLineEdit控件状态初始化样式
- * \param widget
- * \sa Dtk::Widget::DLineEdit
+  \brief DStyleOptionSuggestButton::init set style option for Dtk::Widget::DLineEdit
+  \brief 根据Dtk::Widget::DLineEdit控件状态初始化样式.
+
+  \a widget
+  \sa Dtk::Widget::DLineEdit
  */
 void DStyleOptionLineEdit::init(const QWidget *widget)
 {
@@ -205,14 +174,16 @@ public:
 };
 
 /*!
- * \~chinese \class DFontSizeManager
- * \~chinese \brief 字体大小设置的一个类,系统默认只设置T6
- * \chiinese \image html font.png
+  \class Dtk::Widget::DFontSizeManager
+  \inmodule dtkwidget
+  \brief 字体大小设置的一个类,系统默认只设置T6.
+
+  \image font.png
  */
 
 /*!
- * \~chinese \brief 创建一个字体管理的实例
- * \~chinese \return 返回一个创建的 static DFontSizeManager 实例
+  \brief 创建一个字体管理的实例
+  \return 返回一个创建的 static DFontSizeManager 实例
  */
 DFontSizeManager *DFontSizeManager::instance()
 {
@@ -227,38 +198,38 @@ void DFontSizeManager::bind(QWidget *widget, DFontSizeManager::SizeType type)
 }
 
 /*!
- * \~chinese \enum DFontSizeManager::SizeType
- * \~chinese DFontSizeManager::SizeType 定义了 DFontSizeManager 的系统字体的定义的大小; 而系统只会设置 T6 为系统默认的字体
- * \~chinese \var DFontSizeManager:SizeType DFontSizeManager::T1
- * \~chinese 系统级别为 T1 的字体大小, 默认是40 px
- * \~chinese \var DFontSizeManager:SizeType DFontSizeManager::T2
- * \~chinese 系统级别为 T2 的字体大小, 默认是30 px
- * \~chinese \var DFontSizeManager:SizeType DFontSizeManager::T3
- * \~chinese 系统级别为 T3 的字体大小, 默认是24 px
- * \~chinese \var DFontSizeManager:SizeType DFontSizeManager::T4
- * \~chinese 系统级别为 T4 的字体大小, 默认是20 px
- * \~chinese \var DFontSizeManager:SizeType DFontSizeManager::T5
- * \~chinese 系统级别为 T5 的字体大小, 默认是17 px
- * \~chinese \var DFontSizeManager:SizeType DFontSizeManager::T6
- * \~chinese 系统级别为 T6 的字体大小, 默认是14 px
- * \~chinese \var DFontSizeManager:SizeType DFontSizeManager::T7
- * \~chinese 系统级别为 T7 的字体大小, 默认是13 px
- * \~chinese \var DFontSizeManager:SizeType DFontSizeManager::T8
- * \~chinese 系统级别为 T8 的字体大小, 默认是12 px
- * \~chinese \var DFontSizeManager:SizeType DFontSizeManager::T9
- * \~chinese 系统级别为 T9 的字体大小, 默认是11 px
- * \~chinese \var DFontSizeManager:SizeType DFontSizeManager::T10
- * \~chinese 系统级别为 T10 的字体大小, 默认是10 px
+  \enum Dtk::Widget::DFontSizeManager::SizeType
+  DFontSizeManager::SizeType 定义了 DFontSizeManager 的系统字体的定义的大小; 而系统只会设置 T6 为系统默认的字体
+  \value T1
+  系统级别为 T1 的字体大小, 默认是40 px
+  \value T2
+  系统级别为 T2 的字体大小, 默认是30 px
+  \value T3
+  系统级别为 T3 的字体大小, 默认是24 px
+  \value T4
+  系统级别为 T4 的字体大小, 默认是20 px
+  \value T5
+  系统级别为 T5 的字体大小, 默认是17 px
+  \value T6
+  系统级别为 T6 的字体大小, 默认是14 px
+  \value T7
+  系统级别为 T7 的字体大小, 默认是13 px
+  \value T8
+  系统级别为 T8 的字体大小, 默认是12 px
+  \value T9
+  系统级别为 T9 的字体大小, 默认是11 px
+  \value T10
+  系统级别为 T10 的字体大小, 默认是10 px
  */
 
 /*!
- * \~chinese \brief 将字体的大小枚举 SizeType 和控件 widget 进行绑定, 其控件的字体大小(随绑定的枚举的)对应值的改变而改变;
- * \~chinese        系统自定义的绑定枚举值 T6, 若 T6 = 14px,  则其他枚举 T1 - T10 的数值,依次为:40, 30, 24, 20, 17, 14(T6), 13, 12, 11, 10;
- * \~chinese        系统自定义的绑定枚举值 T6 改为 T6 = 20px, 则其他枚举 T1 - T10 的数值,依次为:46, 36, 30, 26, 23, 20(T6), 19, 18, 17, 16;
- * \~chinese        即: 其对应的无论 T6 为何值, 其两个相邻的 T 值的差是定值: T(n) - T(n-1) == 定值
- * \~chinese        而系统是只设置 T6 这以枚举, 作为基准
- * \~chinese \param[in] widget 将要绑定字体大小枚举数值的控件
- * \~chinese \param[int] type 字体的枚举类型, 每一个枚举数值对应着一个字体像素大小
+  \brief 将字体的大小枚举 SizeType 和控件 widget 进行绑定, 其控件的字体大小(随绑定的枚举的)对应值的改变而改变;
+         系统自定义的绑定枚举值 T6, 若 T6 = 14px,  则其他枚举 T1 - T10 的数值,依次为:40, 30, 24, 20, 17, 14(T6), 13, 12, 11, 10;
+         系统自定义的绑定枚举值 T6 改为 T6 = 20px, 则其他枚举 T1 - T10 的数值,依次为:46, 36, 30, 26, 23, 20(T6), 19, 18, 17, 16;
+         即: 其对应的无论 T6 为何值, 其两个相邻的 T 值的差是定值: T(n) - T(n-1) == 定值
+         而系统是只设置 T6 这以枚举, 作为基准
+  \a widget 将要绑定字体大小枚举数值的控件
+  \a type 字体的枚举类型, 每一个枚举数值对应着一个字体像素大小
  */
 void DFontSizeManager::bind(QWidget *widget, DFontSizeManager::SizeType type, int weight)
 {
@@ -276,8 +247,8 @@ void DFontSizeManager::bind(QWidget *widget, DFontSizeManager::SizeType type, in
 }
 
 /*!
- * \~chinese \brief 将字体大小枚举值和 widget 的绑定解除, 不跟随 "枚举对应的像素值" 而改变本控件的字体大小
- * \~chinese \param[in] widget 与 "字体枚举所对应的像素值" 的 (解除绑定的控件) 对象
+  \brief 将字体大小枚举值和 widget 的绑定解除, 不跟随 "枚举对应的像素值" 而改变本控件的字体大小
+  \a widget 与 "字体枚举所对应的像素值" 的 (解除绑定的控件) 对象
  */
 void DFontSizeManager::unbind(QWidget *widget)
 {
@@ -287,9 +258,9 @@ void DFontSizeManager::unbind(QWidget *widget)
 }
 
 /*!
- * \~chinese \brief 获取字体像素的大小
- * \~chinese \param[in] type 字体枚举类型
- * \~chinese \return 返回字体像素的大小
+  \brief 获取字体像素的大小
+  \a type 字体枚举类型
+  \return 返回字体像素的大小
  */
 quint16 DFontSizeManager::fontPixelSize(DFontSizeManager::SizeType type) const
 {
@@ -301,9 +272,9 @@ quint16 DFontSizeManager::fontPixelSize(DFontSizeManager::SizeType type) const
 }
 
 /*!
- * \~chinese \brief 设置字体像素大小
- * \~chinese \param[in] type 字体枚举类型
- * \~chinese \param[in] size 字体大小
+  \brief 设置字体像素大小
+  \a type 字体枚举类型
+  \a size 字体大小
  */
 void DFontSizeManager::setFontPixelSize(DFontSizeManager::SizeType type, quint16 size)
 {
@@ -320,8 +291,8 @@ void DFontSizeManager::setFontPixelSize(DFontSizeManager::SizeType type, quint16
 }
 
 /*!
- * \~chinese \brief 设置字体的通用像素大小
- * \~chinese \param[in] size 预设计的字体像素的大小
+  \brief 设置字体的通用像素大小
+  \a size 预设计的字体像素的大小
  */
 void DFontSizeManager::setFontGenericPixelSize(quint16 size)
 {
@@ -343,10 +314,10 @@ const QFont DFontSizeManager::get(DFontSizeManager::SizeType type, const QFont &
 }
 
 /*!
- * \~chinese \brief 获取字体
- * \~chinese \param[in] type 字体的大小枚举
- * \~chinese \param[in] base 将改变大小的字体
- * \~chinese \return 返回设置字体大小后的字体
+  \brief 获取字体
+  \a type 字体的大小枚举
+  \a base 将改变大小的字体
+  \return 返回设置字体大小后的字体
  */
 const QFont DFontSizeManager::get(DFontSizeManager::SizeType type, int weight, const QFont &base) const
 {
@@ -370,7 +341,7 @@ int DFontSizeManager::fontPixelSize(const QFont &font)
 }
 
 /*!
- * \~chinese \brief 构造函数
+  \brief 构造函数
  */
 DFontSizeManager::DFontSizeManager()
     : d(new DFontSizeManagerPrivate())

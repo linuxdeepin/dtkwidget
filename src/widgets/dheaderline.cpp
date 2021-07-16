@@ -21,33 +21,22 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
-    \~chinese \class DHeaderLine
-    \~chinese \brief 可以使用 DHeaderLine 类快速创建标题行控件。
+    \class Dtk::Widget::DHeaderLine
+    \inmodule dtkwidget
 
-    \~chinese DHeaderLine 提供一个固定高度的控件可供显示标题或相关内容，其行内提供左对齐的文字和可选的位于右侧的控件。
+    \brief 可以使用 DHeaderLine 类快速创建标题行控件.
+    \brief Use DHeaderLine to create a widget for display header title.
 
-    \~chinese \image html DHeaderLine.png
+    DHeaderLine 提供一个固定高度的控件可供显示标题或相关内容，其行内提供左对齐的文字和可选的位于右侧的控件。
 
-    \~chinese 我们可以利用可选的内容控件为用户提供交互方式的提示，状态提示或其他类似的目的。上图中的例子，我们使用 DHeaderLine
+
+    我们可以利用可选的内容控件为用户提供交互方式的提示，状态提示或其他类似的目的。上图中的例子，我们使用 DHeaderLine
     并结合 DArrowButton 作为内容控件，构成了一个外观近似可折叠标题的标题行控件。
-
-    \~chinese \sa DBaseLine
-*/
-
-/*!
-    \~english \class DHeaderLine
-    \~english \brief Use DHeaderLine to create a widget for display header title.
-
-    \~english DHeaderLine provide a fixed height header line to display header title or related stuff.
+    DHeaderLine provide a fixed height header line to display header title or related stuff.
     Title are aligned left and you can also set an optional right aligned QWidget.
 
-    \~english \image html DHeaderLine.png
-
-    \~english We can use the optional content widget to provide interaction hint, status state hint or other
-    propuse. The image above shows an use case which use DHeaderLine and combine DArrowButton as content widget
-    to construct a foldable-like header line widget (you need implement the foldable logic by yourself).
-
-    \~english \sa DBaseLine
+    \image DHeaderLine.png
+    \sa DBaseLine
 */
 
 DHeaderLine::DHeaderLine(QWidget *parent) : DBaseLine(parent)
@@ -60,10 +49,10 @@ DHeaderLine::DHeaderLine(QWidget *parent) : DBaseLine(parent)
 }
 
 /*!
- * \~english \brief Set the title of the header line.
- * \~chinese \brief 设置标题。
- *
- * \sa title()
+  \brief Set the \a title of the header line.
+  \brief 设置标题。
+  
+  \sa title()
  */
 void DHeaderLine::setTitle(const QString &title)
 {
@@ -71,11 +60,11 @@ void DHeaderLine::setTitle(const QString &title)
 }
 
 /*!
- * \~english \brief Set the content widget of the header line.
- * \~chinese \brief 设置内容控件。
- *
- * \~english Content widget aligned right and the height is limited because of the fixed height.
- * \~chinese 内容控件将右对齐，且高度受限于 DHeaderLine 本身的固定高度。
+  \brief Set the content widget of the header line.
+  \brief 设置内容控件。
+  
+  Content widget aligned right and the height is limited because of the fixed height.
+  内容控件将右对齐，且高度受限于 DHeaderLine 本身的固定高度。
  */
 void DHeaderLine::setContent(QWidget *content)
 {
@@ -84,10 +73,10 @@ void DHeaderLine::setContent(QWidget *content)
 }
 
 /*!
- * \~english \brief Title of the header line.
- * \~chinese \brief 获取标题。
- *
- * \sa title()
+  \brief Title of the header line.
+  \brief 获取标题。
+  
+  \sa title()
  */
 QString DHeaderLine::title() const
 {

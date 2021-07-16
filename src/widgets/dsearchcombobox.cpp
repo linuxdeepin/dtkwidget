@@ -36,10 +36,13 @@ enum layoutMargin
 };
 
 /*!
- * \~chinese \class DSearchComboBox
- * \~chinese \brief DSearchComboBox一个聚合 QComboBox 搜索控件
- * \~chinese \li DSearchComboBox提供了在下拉列表中搜索功能
- * \~chinese \li DSearchComboBox该控件适用于在大段列表中快速查找
+  \class Dtk::Widget::DSearchComboBox
+  \inmodule dtkwidget
+  \brief DSearchComboBox一个聚合 QComboBox 搜索控件.
+
+  DSearchComboBox提供了在下拉列表中搜索功能
+  DSearchComboBox该控件适用于在大段列表中快速查找
+  \image DSearchComboBox.png
  */
 DSearchComboBox::DSearchComboBox(QWidget *parent)
     : DComboBox(parent)

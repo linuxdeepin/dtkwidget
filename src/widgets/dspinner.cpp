@@ -35,30 +35,25 @@ DSpinnerPrivate::DSpinnerPrivate(DSpinner *qq)
 }
 
 /*!
-    \~chinese \class DSpinner
-    \~chinese \brief 可以使用 DSpinner 类快速创建用于指示加载中状态的旋转等待图标动画控件。
+    \class Dtk::Widget::DSpinner
+    \inmodule dtkwidget
 
-    \~chinese \image html DSpinner.gif
+    \brief 可以使用 DSpinner 类快速创建用于指示加载中状态的旋转等待图标动画控件.
 
-    \~chinese DSpinner 提供了一个用于指示加载中状态的旋转等待图标动画控件。在创建图标后，使用 start() 即可开始图标旋转的动画。
-*/
-
-/*!
-    \~english \class DSpinner
-    \~english \brief Use DSpinner to create a widget with spinning animation for display a waiting state.
-
-    \~english \image html DSpinner.gif
-
-    \~english DSpinner provide a spinning animation widget to indicate a waiting state. Call start() to start
+    DSpinner 提供了一个用于指示加载中状态的旋转等待图标动画控件。在创建图标后，使用 start() 即可开始图标旋转的动画。
+    \brief Use DSpinner to create a widget with spinning animation for display a waiting state.
+    DSpinner provide a spinning animation widget to indicate a waiting state. Call start() to start
     the spinning animation.
+
+    \image DSpinner.gif
 */
 
 /*!
- * \~english \brief Create a DSpinner widget
- * \~chinese \brief 创建一个 DSpinner 控件
- *
- * \~english \param parent Parent widget.
- * \~chinese \param parent 父控件
+  \brief Create a DSpinner widget
+  \brief 创建一个 DSpinner 控件
+  
+  \a parent Parent widget.
+  \a parent 父控件
  */
 DSpinner::DSpinner(QWidget *parent) :
     QWidget(parent), DObject(*new DSpinnerPrivate(this))
@@ -81,8 +76,8 @@ DSpinner::~DSpinner()
 }
 
 /*!
- * \~english \brief Is the DSpinner spinning or not
- * \~chinese \brief DSpinner 是否正在播放旋转动画
+  \brief Is the DSpinner spinning or not
+  \brief DSpinner 是否正在播放旋转动画
  */
 bool DSpinner::isPlaying() const
 {
@@ -91,8 +86,8 @@ bool DSpinner::isPlaying() const
 }
 
 /*!
- * \~english \brief Start spinning
- * \~chinese \brief 开始旋转动画
+  \brief Start spinning
+  \brief 开始旋转动画
  */
 void DSpinner::start()
 {
@@ -101,8 +96,8 @@ void DSpinner::start()
 }
 
 /*!
- * \~english \brief Stop spinning
- * \~chinese \brief 停止旋转动画
+  \brief Stop spinning
+  \brief 停止旋转动画
  */
 void DSpinner::stop()
 {
@@ -111,8 +106,8 @@ void DSpinner::stop()
 }
 
 /*!
- * \~english \brief Set background color
- * \~chinese \brief 设置背景颜色
+  \brief Set background \a color
+  \brief 设置背景颜色
  */
 void DSpinner::setBackgroundColor(QColor color)
 {

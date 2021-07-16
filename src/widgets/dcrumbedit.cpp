@@ -126,33 +126,26 @@ public:
 };
 
 /*!
-    \~english \class DCrumbTextFormat
-    \~english \brief Text format for Tags/Crumbs inside DCrumbEdit
+    \class Dtk::Widget::DCrumbTextFormat
+    \inmodule dtkwidget
 
-    \~english DCrumbTextFormat comes with properties to indicate the look of a tag/crumb inside a DCrumbEdit.
+    \brief 表示标签输入控件所含标签的文字样式.
+    \brief Text format for Tags/Crumbs inside DCrumbEdit.
 
-    \~english The text property is the main property which indicate the tag itself. Other properties include
+    DCrumbTextFormat comes with properties to indicate the look of a tag/crumb inside a DCrumbEdit.
+
+    The text property is the main property which indicate the tag itself. Other properties include
     tag color, background color and background radius are also available to use.
 
-    \~english Using DCrumbEdit::makeTextFormat() to create a DCrumbTextFormat object is always recommended,
+    Using DCrumbEdit::makeTextFormat() to create a DCrumbTextFormat object is always recommended,
     if you are going to craft your own DCrumbTextFormat object, don't forget to call the
     DCrumbTextFormat::setObjectType function(normally value should be `QTextFormat::UserObject + 1`).
-
-    \~english \sa DCrumbEdit
-*/
-
-/*!
-    \~chinese \class DCrumbTextFormat
-    \~chinese \brief 表示标签输入控件所含标签的文字样式
-
-    \~chinese DCrumbTextFormat 包含了表示标签输入控件 DCrumbEdit 内所包含的标签的各种样式属性。
-
-    \~chinese 文字属性为标识一个标签的唯一重要属性，其他可用的属性包含标签背景颜色，标签文字颜色以及标签圆角程度等可供使用。
-
-    \~chinese 总是建议通过 DCrumbEdit::makeTextFormat() 来构造一个可供使用的 DCrumbTextFormat 对象，若希望自行构造，
+    DCrumbTextFormat 包含了表示标签输入控件 DCrumbEdit 内所包含的标签的各种样式属性。
+    文字属性为标识一个标签的唯一重要属性，其他可用的属性包含标签背景颜色，标签文字颜色以及标签圆角程度等可供使用。
+    总是建议通过 DCrumbEdit::makeTextFormat() 来构造一个可供使用的 DCrumbTextFormat 对象，若希望自行构造，
     请留意使用 DCrumbTextFormat::setObjectType 来设置必要的对象类型 (通常应为 `QTextFormat::UserObject + 1`).
 
-    \~chinese \sa DCrumbEdit
+    \sa DCrumbEdit
 */
 
 DCrumbTextFormat::DCrumbTextFormat()
@@ -162,8 +155,8 @@ DCrumbTextFormat::DCrumbTextFormat()
 }
 
 /*!
- * \~chinese \brief DCrumbTextFormat::tagColor
- * \~chinese \return 返回标签的颜色
+  \brief DCrumbTextFormat::tagColor
+  \return 返回标签的颜色
  */
 QColor DCrumbTextFormat::tagColor() const
 {
@@ -171,8 +164,8 @@ QColor DCrumbTextFormat::tagColor() const
 }
 
 /*!
- * \~chinese \brief DCrumbTextFormat::setTagColor 设置标签颜色
- * \~chinese \param color 标签的颜色
+  \brief DCrumbTextFormat::setTagColor 设置标签颜色
+  \a color 标签的颜色
  */
 void DCrumbTextFormat::setTagColor(const QColor &color)
 {
@@ -180,8 +173,8 @@ void DCrumbTextFormat::setTagColor(const QColor &color)
 }
 
 /*!
- * \~chinese \brief DCrumbTextFormat::text
- * \~chinese \return 返回标签的文本内容
+  \brief DCrumbTextFormat::text
+  \return 返回标签的文本内容
  */
 QString DCrumbTextFormat::text() const
 {
@@ -189,8 +182,8 @@ QString DCrumbTextFormat::text() const
 }
 
 /*!
- * \~chinese \brief DCrumbTextFormat::setText 设置文本内容（标签名称）
- * \~chinese \param text 文本内容
+  \brief DCrumbTextFormat::setText 设置文本内容（标签名称）
+  \a text 文本内容
  */
 void DCrumbTextFormat::setText(const QString &text)
 {
@@ -198,8 +191,8 @@ void DCrumbTextFormat::setText(const QString &text)
 }
 
 /*!
- * \~chinese \brief DCrumbTextFormat::textColor
- * \~chinese \return 返回文本的颜色
+  \brief DCrumbTextFormat::textColor
+  \return 返回文本的颜色
  */
 QColor DCrumbTextFormat::textColor() const
 {
@@ -207,8 +200,8 @@ QColor DCrumbTextFormat::textColor() const
 }
 
 /*!
- * \~chinese \brief DCrumbTextFormat::setTextColor 设置文本颜色
- * \~chinese \param color 文本的颜色
+  \brief DCrumbTextFormat::setTextColor 设置文本颜色
+  \a color 文本的颜色
  */
 void DCrumbTextFormat::setTextColor(const QColor &color)
 {
@@ -216,8 +209,8 @@ void DCrumbTextFormat::setTextColor(const QColor &color)
 }
 
 /*!
- * \~chinese \brief DCrumbTextFormat::background
- * \~chinese \return 返回背景画刷
+  \brief DCrumbTextFormat::background
+  \return 返回背景画刷
  */
 QBrush DCrumbTextFormat::background() const
 {
@@ -225,8 +218,8 @@ QBrush DCrumbTextFormat::background() const
 }
 
 /*!
- * \~chinese \brief DCrumbTextFormat::setBackground 设置背景
- * \~chinese \param background 背景画刷
+  \brief DCrumbTextFormat::setBackground 设置背景
+  \a background 背景画刷
  */
 void DCrumbTextFormat::setBackground(const QBrush &background)
 {
@@ -234,8 +227,8 @@ void DCrumbTextFormat::setBackground(const QBrush &background)
 }
 
 /*!
- * \~chinese \brief DCrumbTextFormat::backgroundRadius
- * \~chinese \return 返回背景的圆角
+  \brief DCrumbTextFormat::backgroundRadius
+  \return 返回背景的圆角
  */
 int DCrumbTextFormat::backgroundRadius() const
 {
@@ -243,8 +236,8 @@ int DCrumbTextFormat::backgroundRadius() const
 }
 
 /*!
- * \~chinese \brief DCrumbTextFormat::setBackgroundRadius 设置背景圆角程度
- * \~chinese \param radius 圆角的大小
+  \brief DCrumbTextFormat::setBackgroundRadius 设置背景圆角程度
+  \a radius 圆角的大小
  */
 void DCrumbTextFormat::setBackgroundRadius(int radius)
 {
@@ -589,38 +582,30 @@ QBrush CrumbObjectInterface::backgroundBrush(const QRect &rect, const QBrush &br
 }
 
 /*!
-    \~english \class DCrumbEdit
-    \~english \brief Tag Edit Widget
+    \class Dtk::Widget::DCrumbEdit
+    \class Dtk::Widget::DCrumbEdit
 
-    \~english \image html DCrumbEdit.png
+    \brief 标签输入控件.
+    \brief Tag Edit Widget.
 
-    \~english DCrumbEdit provide a edit widget as a container for user entered Tags (or say, Crumbs), and allow user edit
+    DCrumbEdit provide a edit widget as a container for user entered Tags (or say, Crumbs), and allow user edit
     the existed tags inside this widget. Tags comes with different text, each of the tags inside the same DCrumbEdit should
     have different text.
 
-    \~english The tag, or say crumb, use its text as an identifier, and it comes with other properties like tag color and etc.
+    The tag, or say crumb, use its text as an identifier, and it comes with other properties like tag color and etc.
 
-    \~english DCrumbEdit allowed user add a tag by providing a simple QString or provide a custom DCrumbTextFormat object.
+    DCrumbEdit allowed user add a tag by providing a simple QString or provide a custom DCrumbTextFormat object.
     Refer to appendCrumb() and insertCrumb() to see the usage. To get a list of tags/crumbs, see crumbList()
 
-    \~english \sa DCrumbTextFormat
-*/
-
-/*!
-    \~chinese \class DCrumbEdit
-    \~chinese \brief 标签输入控件。
-
-    \~chinese \image html DCrumbEdit.png
-
-    \~chinese DCrumbEdit 提供了一个编辑框，编辑框内可包含若干个标签，并允许通过用户输入来编辑这些标签。编辑框所包含的标签可通过标签的文字
+    DCrumbEdit 提供了一个编辑框，编辑框内可包含若干个标签，并允许通过用户输入来编辑这些标签。编辑框所包含的标签可通过标签的文字
     内容确定唯一的标签，即编辑框所包含的标签内容（字符串值）均不重复。
 
-    \~chinese 编辑框中包含的标签的主体为字符串，除文字外，每个标签可以对应其不同的颜色等样式，对于可供使用的样式请参见 DCrumbTextFormat 。
-
-    \~chinese DCrumbEdit 允许通过给定字符串的形式便捷的向其中添加一个默认样式的标签，也可以通过自行构建标签文字样式。请参见 insertCrumb()
+    编辑框中包含的标签的主体为字符串，除文字外，每个标签可以对应其不同的颜色等样式，对于可供使用的样式请参见 DCrumbTextFormat 。
+    DCrumbEdit 允许通过给定字符串的形式便捷的向其中添加一个默认样式的标签，也可以通过自行构建标签文字样式。请参见 insertCrumb()
     和 appendCrumb() 的不同重载。可以通过 crumbList() 获得当前标签输入控件中包含的标签列表。
 
-    \~chinese \sa DCrumbTextFormat
+    \image DCrumbEdit.png
+    \sa DCrumbTextFormat
 */
 
 DCrumbEdit::DCrumbEdit(QWidget *parent)
@@ -656,31 +641,23 @@ DCrumbEdit::DCrumbEdit(QWidget *parent)
 }
 
 /*!
- * \~english \brief Insert new tag/crumb to the crumb edit widget at the given position.
- *
- * \~english \param format a DCrumbTextFormat.
- * \~english \param pos position to be inserted.
- *
- * \~english Insert new tag/crumb with the provided DCrumbTextFormat at the given position. To create a ready-to-use
- * DCrumbTextFormat object, call makeTextFormat().
- *
- * \~english \return true if we appended a new tag into the crumb edit widget.
- *
- * \~english \sa makeTextFormat(), insertCrumb()
- */
-
-/*!
- * \~chinese \brief 像标签编辑控件中插入新的标签
- *
- * \~chinese \param format 一个 DCrumbTextFormat 对象.
- * \~chinese \param pos 待插入的位置.
- *
- * \~chinese 通过给定的 DCrumbTextFormat 对象所描述的属性创建新的标签并追加到标签编辑控件中。若要创建一个直接可供使用的 DCrumbTextFormat
- * 对象，可以考虑使用 makeTextFormat() 。
- *
- * \~chinese \return 插入标签成功时返回 true，否则返回 false.
- *
- * \~chinese \sa makeTextFormat(), insertCrumb()
+  \brief 像标签编辑控件中插入新的标签
+  \brief Insert new tag/crumb to the crumb edit widget at the given position.
+  
+  \a format 一个 DCrumbTextFormat 对象.
+  \a format a DCrumbTextFormat.
+  \a pos 待插入的位置.
+  \a pos position to be inserted.
+  
+  通过给定的 DCrumbTextFormat 对象所描述的属性创建新的标签并追加到标签编辑控件中。若要创建一个直接可供使用的 DCrumbTextFormat
+  对象，可以考虑使用 makeTextFormat() 。
+  Insert new tag/crumb with the provided DCrumbTextFormat at the given position. To create a ready-to-use
+  DCrumbTextFormat object, call makeTextFormat().
+  
+  \return 插入标签成功时返回 true，否则返回 false.
+  \return true if we appended a new tag into the crumb edit widget.
+  
+  \sa makeTextFormat(), insertCrumb()
  */
 bool DCrumbEdit::insertCrumb(const DCrumbTextFormat &format, int pos)
 {
@@ -703,29 +680,21 @@ bool DCrumbEdit::insertCrumb(const DCrumbTextFormat &format, int pos)
 }
 
 /*!
- * \~english \brief Append new tag/crumb to the crumb edit widget.
- *
- * \~english \param format a DCrumbTextFormat.
- *
- * \~english Append new tag/crumb with the provided DCrumbTextFormat. To create a ready-to-use DCrumbTextFormat object,
- * call makeTextFormat().
- *
- * \~english \return true if we appended a new tag into the crumb edit widget.
- *
- * \~english \sa makeTextFormat(), insertCrumb()
- */
-
-/*!
- * \~chinese \brief 像标签编辑控件中追加新的标签
- *
- * \~chinese \param format 一个 DCrumbTextFormat 对象.
- *
- * \~chinese 通过给定的 DCrumbTextFormat 对象所描述的属性创建新的标签并追加到标签编辑控件中。若要创建一个直接可供使用的 DCrumbTextFormat
- * 对象，可以考虑使用 makeTextFormat() 。
- *
- * \~chinese \return 插入标签成功时返回 true，否则返回 false.
- *
- * \~chinese \sa makeTextFormat(), insertCrumb()
+  \brief 像标签编辑控件中追加新的标签
+  \brief Append new tag/crumb to the crumb edit widget.
+  
+  \a format 一个 DCrumbTextFormat 对象.
+  \a format a DCrumbTextFormat.
+  
+  通过给定的 DCrumbTextFormat 对象所描述的属性创建新的标签并追加到标签编辑控件中。若要创建一个直接可供使用的 DCrumbTextFormat
+  对象，可以考虑使用 makeTextFormat() 。
+  Append new tag/crumb with the provided DCrumbTextFormat. To create a ready-to-use DCrumbTextFormat object,
+  call makeTextFormat().
+  
+  \return 插入标签成功时返回 true，否则返回 false.
+  \return true if we appended a new tag into the crumb edit widget.
+  
+  \sa makeTextFormat(), insertCrumb()
  */
 bool DCrumbEdit::appendCrumb(const DCrumbTextFormat &format)
 {
@@ -746,29 +715,21 @@ bool DCrumbEdit::appendCrumb(const DCrumbTextFormat &format)
 }
 
 /*!
- * \~english \brief Insert new tag/crumb to the crumb edit widget.
- *
- * \~english \param text of the tag/crumb.
- * \~english \param pos position to be inserted.
- *
- * \~english Insert new tag/crumb with the provided text to the given position.
- *
- * \~english \return true if we appended a new tag into the crumb edit widget.
- *
- * \~english \sa appendCrumb()
- */
-
-/*!
- * \~chinese \brief 像标签编辑控件中插入新的标签
- *
- * \~chinese \param text 标签的文字内容.
- * \~chinese \param pos 待插入的位置.
- *
- * \~chinese 通过给定的文字创建新的标签并插入到标签编辑控件中的指定位置。
- *
- * \~chinese \return 插入标签成功时返回 true，否则返回 false.
- *
- * \~chinese \sa appendCrumb()
+  \brief 像标签编辑控件中插入新的标签
+  \brief Insert new tag/crumb to the crumb edit widget.
+  
+  \a text 标签的文字内容.
+  \a text of the tag/crumb.
+  \a pos 待插入的位置.
+  \a pos position to be inserted.
+  
+  通过给定的文字创建新的标签并插入到标签编辑控件中的指定位置。
+  Insert new tag/crumb with the provided text to the given position.
+  
+  \return 插入标签成功时返回 true，否则返回 false.
+  \return true if we appended a new tag into the crumb edit widget.
+  
+  \sa appendCrumb()
  */
 bool DCrumbEdit::insertCrumb(const QString &text, int pos)
 {
@@ -780,27 +741,19 @@ bool DCrumbEdit::insertCrumb(const QString &text, int pos)
 }
 
 /*!
- * \~english \brief Append new tag/crumb to the crumb edit widget.
- *
- * \~english \param text of the tag/crumb.
- *
- * \~english Append new tag/crumb with the provided text.
- *
- * \~english \return true if we appended a new tag into the crumb edit widget.
- *
- * \~english \sa insertCrumb()
- */
-
-/*!
- * \~chinese \brief 像标签编辑控件中追加新的标签
- *
- * \~chinese \param text 标签的文字内容.
- *
- * \~chinese 通过给定的文字创建新的标签并追加到标签编辑控件中。
- *
- * \~chinese \return 插入标签成功时返回 true，否则返回 false.
- *
- * \~chinese \sa insertCrumb()
+  \brief 像标签编辑控件中追加新的标签
+  \brief Append new tag/crumb to the crumb edit widget.
+  
+  \a text 标签的文字内容.
+  \a text of the tag/crumb.
+  
+  通过给定的文字创建新的标签并追加到标签编辑控件中。
+  Append new tag/crumb with the provided text.
+  
+  \return 插入标签成功时返回 true，否则返回 false.
+  \return true if we appended a new tag into the crumb edit widget.
+  
+  \sa insertCrumb()
  */
 bool DCrumbEdit::appendCrumb(const QString &text)
 {
@@ -812,9 +765,9 @@ bool DCrumbEdit::appendCrumb(const QString &text)
 }
 
 /*!
- * \~chinese \brief 检查当前控件是否已经包含了 \a text 标签
- * \~chinese \param text 待检查的标签文字名称
- * \~chinese \return 如果包含，返回 true
+  \brief 检查当前控件是否已经包含了 \a text 标签
+  \a text 待检查的标签文字名称
+  \return 如果包含，返回 true
  */
 bool DCrumbEdit::containCrumb(const QString &text) const
 {
@@ -824,11 +777,8 @@ bool DCrumbEdit::containCrumb(const QString &text) const
 }
 
 /*!
- * \~english \brief Get a list of crumb/tags inside the crumb edit widget.
- */
-
-/*!
- * \~chinese \brief 取得标签输入控件内已包含的标签列表
+  \brief Get a list of crumb/tags inside the crumb edit widget.
+  \brief 取得标签输入控件内已包含的标签列表
  */
 QStringList DCrumbEdit::crumbList() const
 {
@@ -838,11 +788,8 @@ QStringList DCrumbEdit::crumbList() const
 }
 
 /*!
- * \~english \brief Get the DCrumbTextFormat matched the given tag \a text name.
- */
-
-/*!
- * \~chinese \brief 根据标签名称取得对应的标签样式属性 DCrumbTextFormat 对象
+  \brief Get the DCrumbTextFormat matched the given tag \a text name.
+  \brief 根据标签名称取得对应的标签样式属性 DCrumbTextFormat 对象
  */
 DCrumbTextFormat DCrumbEdit::crumbTextFormat(const QString &text) const
 {
@@ -852,13 +799,11 @@ DCrumbTextFormat DCrumbEdit::crumbTextFormat(const QString &text) const
 }
 
 /*!
- * \~english \brief create a ready-to-use DCrumbTextFormat object.
- * \~english \return the created DCrumbTextFormat object
- */
+  \brief 创建一个直接可用的 DCrumbTextFormat 对象.
+  \brief create a ready-to-use DCrumbTextFormat object.
 
-/*!
- * \~chinese \brief 创建一个直接可用的 DCrumbTextFormat 对象.
- * \~chinese \return 创建的 DCrumbTextFormat 对象
+  \return 创建的 DCrumbTextFormat 对象
+  \return the created DCrumbTextFormat object
  */
 DCrumbTextFormat DCrumbEdit::makeTextFormat() const
 {
@@ -873,20 +818,15 @@ DCrumbTextFormat DCrumbEdit::makeTextFormat() const
 }
 
 /*!
- * \~english \brief create a ready-to-use DCrumbTextFormat object with the given color.
- *
- * \~english Create a ready-to-use DCrumbTextFormat object with the given color, and set its text
- * as the color name.
- *
- * \~english \return the created DCrumbTextFormat object
- */
-
-/*!
- * \~chinese \brief 根据所给的标签类型（颜色）创建一个直接可用的 DCrumbTextFormat 对象.
- *
- * 将根据所给的（颜色）类型创建一个新的 DCrumbTextFormat 对象，并将其内文字属性设为颜色的名称。
- *
- * \~chinese \return 创建的 DCrumbTextFormat 对象
+  \brief 根据所给的标签类型（颜色）创建一个直接可用的 DCrumbTextFormat 对象.
+  \brief create a ready-to-use DCrumbTextFormat object with the given color.
+  
+  将根据所给的（颜色）类型创建一个新的 DCrumbTextFormat 对象，并将其内文字属性设为颜色的名称。
+  Create a ready-to-use DCrumbTextFormat object with the given color, and set its text
+  as the color name.
+  
+  \return 创建的 DCrumbTextFormat 对象
+  \return the created DCrumbTextFormat object
  */
 DCrumbTextFormat DCrumbEdit::makeTextFormat(DCrumbEdit::CrumbType type) const
 {
@@ -986,7 +926,7 @@ QString DCrumbEdit::splitter() const
 }
 
 /*!
- * \~chinese \brief 设置或取消设置标签编辑控件的只读状态
+  \brief 设置或取消设置标签编辑控件的只读状态
  */
 void DCrumbEdit::setCrumbReadOnly(bool crumbReadOnly)
 {
@@ -996,7 +936,7 @@ void DCrumbEdit::setCrumbReadOnly(bool crumbReadOnly)
 }
 
 /*!
- * \~chinese \brief 设置控件圆角角度
+  \brief 设置控件圆角角度
  */
 void DCrumbEdit::setCrumbRadius(int crumbRadius)
 {
@@ -1006,9 +946,9 @@ void DCrumbEdit::setCrumbRadius(int crumbRadius)
 }
 
 /*!
- * \~chinese \brief 设置分割符
- *
- * \~chinese 设置表示划分标签边界的分割字符，可用于一次性输入多个以给定分隔符分割的标签
+  \brief 设置分割符
+  
+  设置表示划分标签边界的分割字符，可用于一次性输入多个以给定分隔符分割的标签
  */
 void DCrumbEdit::setSplitter(const QString &splitter)
 {

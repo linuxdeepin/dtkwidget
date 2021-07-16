@@ -3,8 +3,8 @@
 
 DWIDGET_BEGIN_NAMESPACE
 /*!
- * \~chinese \brief DRegionMonitor::DRegionMonitor 这个类已经废弃不用,请使用libdtkgui
- * \~chinese \param parent
+  \brief DRegionMonitor::DRegionMonitor 这个类已经废弃不用,请使用libdtkgui
+  \a parent
  */
 DRegionMonitor::DRegionMonitor(QObject *parent)
     : QObject(parent)

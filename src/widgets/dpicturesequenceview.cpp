@@ -113,33 +113,25 @@ void DPictureSequenceViewPrivate::_q_refreshPicture()
 }
 
 /*!
- * \~english \class DPictureSequenceView
- * \brief DPictureSequenceView draw a serial of picture as movie. It trigger picture update by an timer.
+  \class Dtk::Widget::DPictureSequenceView
+  \inmodule dtkwidget
+
+  \brief DPictureSequenceView draw a serial of picture as movie. It trigger picture update by an timer.
+  \brief 将图片序列绘制为动画，通过定时器刷新来实现动画效果.
  */
 
 /*!
- * \~english \property DPictureSequenceView::singleShot
- * \brief Animation is just refresh one time.
+  \property DPictureSequenceView::singleShot
+
+  \brief 控制动画是否只播放一次。
+  \brief Animation is just refresh one time.
  */
 
 /*!
- * \~english \property DPictureSequenceView::speed
- * \brief Update interval of refresh timer by ms.
- */
+  \property DPictureSequenceView::speed
 
-/*!
- * \~chinese \class DPictureSequenceView
- * \brief 将图片序列绘制为动画，通过定时器刷新来实现动画效果。
- */
-
-/*!
- * \~chinese \property DPictureSequenceView::singleShot
- * \brief 控制动画是否只播放一次。
- */
-
-/*!
- * \~chinese \property DPictureSequenceView::speed
- * \brief 动画更新时间间隔，单位为毫秒(ms)。
+  \brief 动画更新时间间隔，单位为毫秒(ms)。
+  \brief Update interval of refresh timer by ms.
  */
 
 DPictureSequenceView::DPictureSequenceView(QWidget *parent) :
@@ -152,18 +144,17 @@ DPictureSequenceView::DPictureSequenceView(QWidget *parent) :
 }
 
 /*!
- * \~english \brief Set picture source list by a uri template an range.
- * \param srcFormat is the source uri template, just like ":/images/Spinner/Spinner%1.png".
- * \param range for build source uris, it make an sequence of number.
- * \param fieldWidth string width when convert number to string, fill "0" if needed.
- * \param autoScale auto resize source image to widget size, default to false.
- */
-/*!
- * \~chinese \brief 通过一个URI模板来设置图片序列
- * \param srcFormat 图片源模板，例如":/images/Spinner/Spinner%1.png"。
- * \param range 图片的序号范围，需要为一系列整数。
- * \param fieldWidth 图片的序号转化为字符串时的宽度，通过‘0’来填充.
- * \param autoScale 是否自动缩放图片，默认不缩放。
+  \brief 通过一个URI模板来设置图片序列.
+  \brief Set picture source list by a uri template an range.
+
+  \a srcFormat 图片源模板，例如":/images/Spinner/Spinner%1.png"。
+  \a srcFormat is the source uri template, just like ":/images/Spinner/Spinner%1.png".
+  \a range 图片的序号范围，需要为一系列整数。
+  \a range for build source uris, it make an sequence of number.
+  \a fieldWidth 图片的序号转化为字符串时的宽度，通过‘0’来填充.
+  \a fieldWidth string width when convert number to string, fill "0" if needed.
+  \a autoScale auto resize source image to widget size, default to false.
+  \a autoScale 是否自动缩放图片，默认不缩放。
  */
 void DPictureSequenceView::setPictureSequence(const QString &srcFormat, const QPair<int, int> &range, const int fieldWidth, const bool autoScale)
 {
@@ -176,14 +167,13 @@ void DPictureSequenceView::setPictureSequence(const QString &srcFormat, const QP
 }
 
 /*!
- * \~english \brief Set picture source list by a QStringList.
- * \param sequence url list
- * \param autoScale auto resize source image to widget size, default to false.
- */
-/*!
- * \~chinese \brief 通过URI列表来设置图片序列。
- * \param sequence 图片源路径。
- * \param autoScale 是否自动缩放图片，默认不缩放。
+  \brief 通过URI列表来设置图片序列。
+  \brief Set picture source list by a QStringList.
+
+  \a sequence 图片源路径。
+  \a sequence url list
+  \a autoScale 是否自动缩放图片，默认不缩放。
+  \a autoScale auto resize source image to widget size, default to false.
  */
 void DPictureSequenceView::setPictureSequence(const QStringList &sequence, const bool autoScale)
 {
@@ -198,14 +188,13 @@ void DPictureSequenceView::setPictureSequence(const QStringList &sequence, const
 }
 
 /*!
- * \~english \brief Set picture source with pixmap array
- * \param sequence image data list.
- * \param autoScale auto resize source image to widget size, default to false.
- */
-/*!
- * \~chinese \brief 通过位图数据序列来初始化图片序列。
- * \param sequence 位图数据序列。
- * \param autoScale 是否自动缩放图片，默认不缩放。
+  \brief 通过位图数据序列来初始化图片序列.
+  \brief Set picture source with pixmap array.
+
+  \a sequence 位图数据序列。
+  \a sequence image data list.
+  \a autoScale 是否自动缩放图片，默认不缩放。
+  \a autoScale auto resize source image to widget size, default to false.
  */
 void DPictureSequenceView::setPictureSequence(const QList<QPixmap> &sequence, const bool autoScale)
 {
@@ -232,10 +221,8 @@ void DPictureSequenceView::setPictureSequence(const QList<QPixmap> &sequence, co
 }
 
 /*!
- * \~english \brief Start/resume update timer and show animation.
- */
-/*!
- * \~chinese \brief 开始/恢复播放。
+  \brief 开始/恢复播放.
+  \brief Start/resume update timer and show animation.
  */
 void DPictureSequenceView::play()
 {
@@ -245,10 +232,8 @@ void DPictureSequenceView::play()
 }
 
 /*!
- * \~english \brief Pause animation and stay on current picture.
- */
-/*!
- * \~chinese \brief 暂停播放并停止在当前图片上。
+  \brief 暂停播放并停止在当前图片上.
+  \brief Pause animation and stay on current picture.
  */
 void DPictureSequenceView::pause()
 {
@@ -258,10 +243,8 @@ void DPictureSequenceView::pause()
 }
 
 /*!
- * \~english \brief Stop animation and rest to first picture.
- */
-/*!
- * \~chinese \brief 暂停播放并停止在初始图片上。
+  \brief 暂停播放并停止在初始图片上.
+  \brief Stop animation and rest to first picture.
  */
 void DPictureSequenceView::stop()
 {

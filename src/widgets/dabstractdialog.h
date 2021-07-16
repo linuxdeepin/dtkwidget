@@ -74,8 +74,8 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     /**
-     * @brief sizeChanged is emitted when the size of this dialog changed.
-     * @param size is the target size.
+     * \brief sizeChanged is emitted when the size of this dialog changed.
+     * \a size is the target size.
      */
     void sizeChanged(QSize size);
 

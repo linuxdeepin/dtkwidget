@@ -111,25 +111,26 @@ DBaseExpandPrivate::~DBaseExpandPrivate()
 }
 
 /*!
- * \~chinese \class DBaseExpand
- * \~chinese \brief 一个美观的可展开的控件
- *
- * \~chinese 使用 DBaseExpand 类可以创建一个可展开的带有展开动画效果的控件，这个控件包含上下两部分，上面的控件为标题控件，这个控件会始终显示，下面的控件为内容控件，默认为不会显示，调用 DBaseExpand::setExpand 设置内容控件的可见性。使用 DBaseExpand::setHeader 和 DBaseExpand::setContent 设置分别设置标题控件和内容控件。
- *
- * \~chinese \sa DHeaderLine
- *
- * \~chinese \image html DBaseExpand.gif
- */
-
-/**
- * \~chinese \fn DBaseExpand::expandChange
- * \~chinese \brief 内容控件可见性发生改变的信号
- * \~chinese \param e 为 true 表示内容控件变为了可见，反之则反
+  \class Dtk::Widget::DBaseExpand
+  \inmodule dtkwidget
+  \brief 一个美观的可展开的控件.
+  
+  使用 DBaseExpand 类可以创建一个可展开的带有展开动画效果的控件，这个控件包含上下两部分，上面的控件为标题控件，这个控件会始终显示，下面的控件为内容控件，默认为不会显示，调用 DBaseExpand::setExpand 设置内容控件的可见性。使用 DBaseExpand::setHeader 和 DBaseExpand::setContent 设置分别设置标题控件和内容控件。
+  
+  \sa DHeaderLine
+  
+  \image DBaseExpand.gif
  */
 
 /*!
- * \~chinese \brief 获取 DBaseExpand::DBaseExpand 实例
- * \~chinese \param parent 作为实例的父控件
+  \fn void DBaseExpand::expandChange(bool e)
+  \brief 内容控件可见性发生改变的信号
+  \a e 为 true 表示内容控件变为了可见，反之则反
+ */
+
+/*!
+  \brief 获取 DBaseExpand::DBaseExpand 实例
+  \a parent 作为实例的父控件
  */
 DBaseExpand::DBaseExpand(QWidget *parent)
     : QWidget(parent)
@@ -143,10 +144,10 @@ DBaseExpand::~DBaseExpand()
 
 }
 
-/**
- * \~chinese \brief 设置标题控件
- * \~chinese 标题控件会始终显示在布局里
- * \~chinese \param header 标题控件
+/*!
+  \brief 设置标题控件
+  标题控件会始终显示在布局里
+  \a header 标题控件
  */
 void DBaseExpand::setHeader(QWidget *header)
 {
@@ -164,17 +165,11 @@ void DBaseExpand::setHeader(QWidget *header)
     d->m_header = header;
 }
 
-/**
- * \~chinese \property DBaseExpand::getContent
- * \~chinese \brief 获取内容控件对象
- * \~chinese \return 内容控件对象
- */
-
-/**
- * \~chinese \brief 设置内容控件
- * \~chinese 内容控件默认是隐藏的，调用 DBaseExpand::setExpand 设置其可见性
- * \~chinese \param content 内容控件
- * \~chinese \param alignment 内容控件在布局中的对齐方式
+/*!
+  \brief 设置内容控件
+  内容控件默认是隐藏的，调用 DBaseExpand::setExpand 设置其可见性
+  \a content 内容控件
+  \a alignment 内容控件在布局中的对齐方式
  */
 void DBaseExpand::setContent(QWidget *content, Qt::Alignment alignment)
 {
@@ -194,6 +189,11 @@ void DBaseExpand::setContent(QWidget *content, Qt::Alignment alignment)
     d->m_content = content;
 }
 
+/*!
+  \brief 获取内容控件对象
+  \return 内容控件对象
+ */
+
 QWidget *DBaseExpand::getContent() const
 {
     Q_D(const DBaseExpand);
@@ -201,10 +201,10 @@ QWidget *DBaseExpand::getContent() const
     return d->m_content;
 }
 
-/**
- * \~chinese \brief 设置标题控件的高度
- * \~chinese
- * \~chinese \param height 指定的高度
+/*!
+  \brief 设置标题控件的高度
+  
+  \a height 指定的高度
  */
 void DBaseExpand::setHeaderHeight(int height)
 {
@@ -215,10 +215,10 @@ void DBaseExpand::setHeaderHeight(int height)
     }
 }
 
-/**
- * \~chinese \brief 设置内容控件的可见性
- * \~chinese
- * \~chinese \param value 为 true 则内容控件可见，反之则反
+/*!
+  \brief 设置内容控件的可见性
+  
+  \a value 为 true 则内容控件可见，反之则反
  */
 void DBaseExpand::setExpand(bool value)
 {
@@ -243,10 +243,10 @@ void DBaseExpand::setExpand(bool value)
     d->m_animation->start();
 }
 
-/**
- * \~chinese \brief 获取当前内容控件的可见性
- * \~chinese
- * \~chinese \return 当前内容控件的可见性
+/*!
+  \brief 获取当前内容控件的可见性
+  
+  \return 当前内容控件的可见性
  */
 bool DBaseExpand::expand() const
 {
@@ -254,10 +254,10 @@ bool DBaseExpand::expand() const
     return d->m_expand;
 }
 
-/**
- * \~chinese \brief 设置内容控件的可见性改变时动画的时间
- * \~chinese
- * \~chinese \param duration 指定动画时间
+/*!
+  \brief 设置内容控件的可见性改变时动画的时间
+  
+  \a duration 指定动画时间
  */
 void DBaseExpand::setAnimationDuration(int duration)
 {
@@ -265,10 +265,10 @@ void DBaseExpand::setAnimationDuration(int duration)
     d->m_animation->setDuration(duration);
 }
 
-/**
- * \~chinese \brief 设置内容控件的可见性改变时动画的样式
- * \~chinese
- * \~chinese \param curve 指定动画样式
+/*!
+  \brief 设置内容控件的可见性改变时动画的样式
+  
+  \a curve 指定动画样式
  */
 void DBaseExpand::setAnimationEasingCurve(QEasingCurve curve)
 {
@@ -276,10 +276,10 @@ void DBaseExpand::setAnimationEasingCurve(QEasingCurve curve)
     d->m_animation->setEasingCurve(curve);
 }
 
-/**
- * \~chinese \brief 设置是否允许标题控件与内容控件之间的分割线
- * \~chinese
- * \~chinese \param arg 为 ture 则显示分割线，反之则反
+/*!
+  \brief 设置是否允许标题控件与内容控件之间的分割线
+  
+  \a arg 为 ture 则显示分割线，反之则反
  */
 void DBaseExpand::setSeparatorVisible(bool arg)
 {
@@ -287,10 +287,10 @@ void DBaseExpand::setSeparatorVisible(bool arg)
     d->m_hSeparator->setVisible(arg);
 }
 
-/**
- * \~chinese \brief 设置是否允许内容控件下的分割线
- * \~chinese
- * \~chinese \param arg 为 ture 则显示分割线，反之则反
+/*!
+  \brief 设置是否允许内容控件下的分割线
+  
+  \a arg 为 ture 则显示分割线，反之则反
  */
 void DBaseExpand::setExpandedSeparatorVisible(bool arg)
 {

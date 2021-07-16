@@ -158,27 +158,26 @@ void DStackWidgetPrivate::setCurrentIndex(int index)
 }
 
 /*!
- * \~chinese \class DStackWidget
- * \~chinese \brief 一个可定制切换动画的容器控件
- *
- * \~chinese DStackWidget 在内容展示方面类似于一个使用了 QStackedLayout 布局的控件, 即在同一个位置展示不同的内容, 但 DStackWidget 提供了
- * \~chinese 切换内容时的动画效果, 并且可进行自定义动画, 另外 DStackWidget 采用了栈的先入后出理念(不过也并没有完全遵守), 使用 DStackWidget::pushWidget 方法入栈新的内容,
- * \~chinese 使用 DStackWidget::popWidget 出栈当前内容并显示下层内容(如果有的话), 还有 DStackWidget::insertWidget 可以指定插入的位置.
- *
- * \~chinese 如果要自定义动画则需要继承 DAbstractStackWidgetTransition, 具体实现可参考 DSlideStackWidgetTransition 类, DSlideStackWidgetTransition 类是 DStackWidget 使用的默认动画即滑动.
- * \~chinese \image html DStackWidget.gif
+  \class Dtk::Widget::DStackWidget
+  \inmodule dtkwidget
+  \brief 一个可定制切换动画的容器控件.
+  
+  DStackWidget 在内容展示方面类似于一个使用了 QStackedLayout 布局的控件, 即在同一个位置展示不同的内容, 但 DStackWidget 提供了
+  切换内容时的动画效果, 并且可进行自定义动画, 另外 DStackWidget 采用了栈的先入后出理念(不过也并没有完全遵守), 使用 DStackWidget::pushWidget 方法入栈新的内容,
+  使用 DStackWidget::popWidget 出栈当前内容并显示下层内容(如果有的话), 还有 DStackWidget::insertWidget 可以指定插入的位置.
+  
+  如果要自定义动画则需要继承 DAbstractStackWidgetTransition, 具体实现可参考 DSlideStackWidgetTransition 类, DSlideStackWidgetTransition 类是 DStackWidget 使用的默认动画即滑动.
+  \image DStackWidget.gif
  */
-
-
-/**
- * \~chinese \fn DStackWidget::switchWidgetFinished
- * \~chinese \brief 当切换一次显示的内容后被调用(动画结束后)
- */
-
 
 /*!
- * \~chinese \brief 构造一个 DStackWidget 实例
- * \~chinese \param parent 为 DStackWidget 实例的父控件
+  \fn void DStackWidget::switchWidgetFinished()
+  \brief 当切换一次显示的内容后被调用(动画结束后)
+ */
+
+/*!
+  \brief 构造一个 DStackWidget 实例
+  \a parent 为 DStackWidget 实例的父控件
  */
 DStackWidget::DStackWidget(QWidget *parent) :
     QWidget(parent),
@@ -187,15 +186,15 @@ DStackWidget::DStackWidget(QWidget *parent) :
     d_func()->init();
 }
 
-/**
- * \~chinese \fn DStackWidget::busyChanged
- * \~chinese \sa DStackWidget::busy
+/*!
+  \fn void DStackWidget::busyChanged(bool busy)
+  \sa DStackWidget::busy
  */
 
-/**
- * \~chinese \property DStackWidget::busy
- * \~chinese \brief 表示当前是否处于过渡动画过程中
- * \~chinese Getter: DStackWidget::busy , Signal: DStackWidget::busyChanged
+/*!
+  \property DStackWidget::busy
+  \brief 表示当前是否处于过渡动画过程中
+  Getter: DStackWidget::busy , Signal: DStackWidget::busyChanged
  */
 bool DStackWidget::busy() const
 {
@@ -204,15 +203,15 @@ bool DStackWidget::busy() const
     return d->transition->animation()->state() != QVariantAnimation::Stopped;
 }
 
-/**
- * \~chinese \fn DStackWidget::depthChanged
- * \~chinese \sa DStackWidget::depth
+/*!
+  \fn void DStackWidget::depthChanged(int depth)
+  \sa DStackWidget::depth
  */
 
-/**
- * \~chinese \property DStackWidget::depth
- * \~chinese \brief 表示正在管理有多少层内容(从 1 开始计数)
- * \~chinese Getter: DStackWidget::depth , Signal: DStackWidget::depthChanged
+/*!
+  \property DStackWidget::depth
+  \brief 表示正在管理有多少层内容(从 1 开始计数)
+  Getter: DStackWidget::depth , Signal: DStackWidget::depthChanged
  */
 int DStackWidget::depth() const
 {
@@ -221,15 +220,15 @@ int DStackWidget::depth() const
     return d->widgetList.count();
 }
 
-/**
- * \~chinese \fn DStackWidget::currentIndexChanged
- * \~chinese \sa DStackWidget::currentIndex
+/*!
+  \fn void DStackWidget::currentIndexChanged(int currentIndex)
+  \sa DStackWidget::currentIndex
  */
 
-/**
- * \~chinese \property DStackWidget::currentIndex
- * \~chinese \brief 表示当前内容在栈中的索引位置(从 0 开始计数)
- * \~chinese Getter: DStackWidget::currentIndex , Signal: DStackWidget::currentIndexChanged
+/*!
+  \property DStackWidget::currentIndex
+  \brief 表示当前内容在栈中的索引位置(从 0 开始计数)
+  Getter: DStackWidget::currentIndex , Signal: DStackWidget::currentIndexChanged
  */
 int DStackWidget::currentIndex() const
 {
@@ -238,15 +237,15 @@ int DStackWidget::currentIndex() const
     return d->currentIndex;
 }
 
-/**
- * \~chinese \fn DStackWidget::currentWidgetChanged
- * \~chinese \sa DStackWidget::currentWidget
+/*!
+  \fn DStackWidget::currentWidgetChanged(QWidget* currentWidget)
+  \sa DStackWidget::currentWidget
  */
 
-/**
- * \~chinese \property DStackWidget::currentWidget
- * \~chinese \brief 表示当前内容的对象
- * \~chinese Getter: DStackWidget::currentWidget , Signal: DStackWidget::currentWidgetChanged
+/*!
+  \property DStackWidget::currentWidget
+  \brief 表示当前内容的对象
+  Getter: DStackWidget::currentWidget , Signal: DStackWidget::currentWidgetChanged
  */
 QWidget *DStackWidget::currentWidget() const
 {
@@ -255,12 +254,12 @@ QWidget *DStackWidget::currentWidget() const
     return d->currentWidget;
 }
 
-/**
- * \~chinese \property DStackWidget::transition
- * \~chinese \brief 当前使用的动画对象
- *
- * \~chinese如果没有调用过这个属性的 setter 方法, 那么将会返回默认使用的动画对象即 DSlideStackWidgetTransition 的一个实例
- * \~chinese Getter: DStackWidget::transition , Setter: DStackWidget::setTransition
+/*!
+  \property DStackWidget::transition
+  \brief 当前使用的动画对象
+  
+  如果没有调用过这个属性的 setter 方法, 那么将会返回默认使用的动画对象即 DSlideStackWidgetTransition 的一个实例
+  Getter: DStackWidget::transition , Setter: DStackWidget::setTransition
  */
 DAbstractStackWidgetTransition *DStackWidget::transition() const
 {
@@ -269,11 +268,11 @@ DAbstractStackWidgetTransition *DStackWidget::transition() const
     return d->transition;
 }
 
-/**
- * \~chinese \property DStackWidget::animationDuration
- * \~chinese \brief 这个属性表示当前动画播放一次所需要的时间
- *
- * \~chinese Getter: DStackWidget::animationDuration , Setter: DStackWidget::setAnimationDuration
+/*!
+  \property DStackWidget::animationDuration
+  \brief 这个属性表示当前动画播放一次所需要的时间
+  
+  Getter: DStackWidget::animationDuration , Setter: DStackWidget::setAnimationDuration
  */
 int DStackWidget::animationDuration() const
 {
@@ -282,12 +281,12 @@ int DStackWidget::animationDuration() const
     return d->transition->animation()->duration();
 }
 
-/**
- * \~chinese \property DStackWidget::animationType
- * \~chinese \brief 这个属性表示当前动画的类型
- *
- * \~chinese Getter: DStackWidget::animationType , Setter: DStackWidget::setAnimationType
- * \~chinese \sa QEasingCurve::Type
+/*!
+  \property DStackWidget::animationType
+  \brief 这个属性表示当前动画的类型
+  
+  Getter: DStackWidget::animationType , Setter: DStackWidget::setAnimationType
+  \sa QEasingCurve::Type
  */
 QEasingCurve::Type DStackWidget::animationType() const
 {
@@ -296,12 +295,12 @@ QEasingCurve::Type DStackWidget::animationType() const
     return d->transition->animation()->easingCurve().type();
 }
 
-/**
- * \~chinese @brief DStackWidget::pushWidget 入栈一个新的内容控件
- * \~chinese @param widget 新的内容控件对象
- * \~chinese @param enableTransition 是否使用动画
- * \~chinese @return 此对象在栈中的索引(从 0 开始计数)
- * \~chinese @sa DStackWidget::insertWidget
+/*!
+  \brief DStackWidget::pushWidget 入栈一个新的内容控件
+  \a widget 新的内容控件对象
+  \a enableTransition 是否使用动画
+  \return 此对象在栈中的索引(从 0 开始计数)
+  \sa DStackWidget::insertWidget
  */
 int DStackWidget::pushWidget(QWidget *widget, bool enableTransition)
 {
@@ -310,15 +309,15 @@ int DStackWidget::pushWidget(QWidget *widget, bool enableTransition)
     return depth() - 1;
 }
 
-/**
- * \~chinese \brief DStackWidget::insertWidget 在指定的位置插入一个新的内容控件
- *
- * \~chinese 需要注意的是如果第一个参数 index 不是栈的最后一个位置将不会显示动画
- *
- * \~chinese \param index 要插入的索引
- * \~chinese \param widget 要插入的控件
- * \~chinese \param enableTransition 是否使用动画
- * \~chinese @sa DStackWidget::pushWidget
+/*!
+  \brief DStackWidget::insertWidget 在指定的位置插入一个新的内容控件
+  
+  需要注意的是如果第一个参数 index 不是栈的最后一个位置将不会显示动画
+  
+  \a index 要插入的索引
+  \a widget 要插入的控件
+  \a enableTransition 是否使用动画
+  \sa DStackWidget::pushWidget
  */
 void DStackWidget::insertWidget(int index, QWidget *widget, bool enableTransition)
 {
@@ -333,16 +332,16 @@ void DStackWidget::insertWidget(int index, QWidget *widget, bool enableTransitio
         d->setCurrentIndex(indexOf(currentWidget()));
 }
 
-/**
- * \~chinese @brief DStackWidget::popWidget 出栈指定的内容控件
- *
- * \~chinese 如果所有参数都没有指定, 那么将只移除当前的内容控件, 一般是栈顶的控件.
- * \~chinese 如果指定了参数 widget 那么计数将从控件 widget 在栈中的索引开始往栈顶方向计算移除 count 个内容控件
- *
- * \~chinese @param widget 指定要移除的控件
- * \~chinese @param isDelete 是否删除控件对象
- * \~chinese @param count 指定要移除的控件的数量
- * \~chinese @param enableTransition 是否使用动画
+/*!
+  \brief DStackWidget::popWidget 出栈指定的内容控件
+  
+  如果所有参数都没有指定, 那么将只移除当前的内容控件, 一般是栈顶的控件.
+  如果指定了参数 widget 那么计数将从控件 widget 在栈中的索引开始往栈顶方向计算移除 count 个内容控件
+  
+  \a widget 指定要移除的控件
+  \a isDelete 是否删除控件对象
+  \a count 指定要移除的控件的数量
+  \a enableTransition 是否使用动画
  */
 void DStackWidget::popWidget(QWidget *widget, bool isDelete, int count, bool enableTransition)
 {
@@ -379,8 +378,8 @@ void DStackWidget::popWidget(QWidget *widget, bool isDelete, int count, bool ena
     setCurrentIndex(depth() - 1, DAbstractStackWidgetTransition::Pop, enableTransition && current_widget_deleted);
 }
 
-/**
- * \~chinese @brief DStackWidget::clear 移除所有控件(无动画)
+/*!
+  \brief DStackWidget::clear 移除所有控件(无动画)
  */
 void DStackWidget::clear()
 {
@@ -391,10 +390,10 @@ void DStackWidget::clear()
     d->setCurrentIndex(-1);
 }
 
-/**
- * \chinese @brief DStackWidget::indexOf 获取指定控件的索引
- * \chinese @param widget 指定的控件
- * \chinese @return 通过控件找到的索引
+/*!
+  \brief DStackWidget::indexOf 获取指定控件的索引
+  \a widget 指定的控件
+  \return 通过控件找到的索引
  */
 int DStackWidget::indexOf(QWidget *widget) const
 {
@@ -403,10 +402,10 @@ int DStackWidget::indexOf(QWidget *widget) const
     return d->widgetList.indexOf(widget);
 }
 
-/**
- * \~chinese @brief DStackWidget::getWidgetByIndex 通过索引获取控件
- * \~chinese @param index 指定索引
- * \~chinese @return 通过索引找到的控件
+/*!
+  \brief DStackWidget::getWidgetByIndex 通过索引获取控件
+  \a index 指定索引
+  \return 通过索引找到的控件
  */
 QWidget *DStackWidget::getWidgetByIndex(int index) const
 {
@@ -415,9 +414,9 @@ QWidget *DStackWidget::getWidgetByIndex(int index) const
     return d->widgetList[index];
 }
 
-/**
- * \~chinese \@brief DStackWidget::setTransition
- * \~chinese \sa DStackWidget::transition
+/*!
+  \brief DStackWidget::setTransition
+  \sa DStackWidget::transition
  */
 void DStackWidget::setTransition(DAbstractStackWidgetTransition *transition)
 {
@@ -444,9 +443,9 @@ void DStackWidget::setTransition(DAbstractStackWidgetTransition *transition)
     });
 }
 
-/**
- * \~chinese \@brief DStackWidget::setAnimationDuration
- * \~chinese \sa DStackWidget::animationDuration
+/*!
+  \brief DStackWidget::setAnimationDuration
+  \sa DStackWidget::animationDuration
  */
 void DStackWidget::setAnimationDuration(int animationDuration)
 {
@@ -455,9 +454,9 @@ void DStackWidget::setAnimationDuration(int animationDuration)
     d->transition->animation()->setDuration(animationDuration);
 }
 
-/**
- * \~chinese \@brief DStackWidget::setAnimationType
- * \~chinese \sa DStackWidget::animationType
+/*!
+  \brief DStackWidget::setAnimationType
+  \sa DStackWidget::animationType
  */
 void DStackWidget::setAnimationType(QEasingCurve::Type animationType)
 {

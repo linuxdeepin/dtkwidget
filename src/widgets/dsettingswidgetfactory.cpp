@@ -114,16 +114,18 @@ private:
 };
 
 /*!
- * \~chinese \class DSettingsWidgetFactory
- * \~chinese \brief DSettingsWidgetFactory是一个用于构造Deepin风格的设置对话框的控件。\n
- * \~chinese 对于每种控件，均由一个id和对应的构造函数来组成，DSettingsWidgetFactory内置了许多基础的控件，包括：\n
- * \~chinese checkbox/lineedit/combobox/spinbutton/buttongroup/radiogroup/slider等。
- * \~chinese
+  \class Dtk::Widget::DSettingsWidgetFactory
+  \inmodule dtkwidget
+  \brief DSettingsWidgetFactory是一个用于构造Deepin风格的设置对话框的控件.
+
+  对于每种控件，均由一个id和对应的构造函数来组成，DSettingsWidgetFactory内置了许多基础的控件，包括：
+  checkbox/lineedit/combobox/spinbutton/buttongroup/radiogroup/slider等。
+  
  */
 
 /*!
- * \~chinese \typedef DSettingsWidgetFactory::WidgetCreateHandler
- * \~chinese \brief 自定义的控件构建函数,一般接受一个 Dtk::Core::DSettingsOption 作为参数。\n
+  \typedef DSettingsWidgetFactory::WidgetCreateHandler
+  \brief 自定义的控件构建函数,一般接受一个 Dtk::Core::DSettingsOption 作为参数.
  */
 
 #define PRIVATE_PROPERTY_translateContext "_d_DSettingsWidgetFactory_translateContext"
@@ -138,12 +140,13 @@ static inline QString tr(const QByteArray &translateContext, const char *sourceT
 }
 
 /*!
- * \~chinese \brief DSettingsWidgetFactory::createTwoColumWidget 返回一个水平布局的控件，
- * \~chinese 左边为option的名称标签，右边为设置的自定义控件rightWidget
- * \~chinese \param option 设置项，包含改配置的名称
- * \~chinese \param rightWidget 自定义控件
- * \~chinese \return 生成的水平布局配置项控件
- * \~chinese \sa Dtk::Widget::DSettingsWidgetFactory::createTwoColumWidget(const QByteArray &translateContext, Dtk::Core::DSettingsOption *option, QWidget *rightWidget)
+  \brief DSettingsWidgetFactory::createTwoColumWidget 返回一个水平布局的控件，
+  左边为option的名称标签，右边为设置的自定义控件rightWidget.
+
+  \a option 设置项，包含改配置的名称
+  \a rightWidget 自定义控件
+  \return 生成的水平布局配置项控件
+  \sa Dtk::Widget::DSettingsWidgetFactory::createTwoColumWidget(const QByteArray &translateContext, Dtk::Core::DSettingsOption *option, QWidget *rightWidget)
  */
 QWidget *DSettingsWidgetFactory::createTwoColumWidget(DTK_CORE_NAMESPACE::DSettingsOption *option, QWidget *rightWidget)
 {
@@ -151,13 +154,14 @@ QWidget *DSettingsWidgetFactory::createTwoColumWidget(DTK_CORE_NAMESPACE::DSetti
 }
 
 /*!
- * \~chinese \brief DSettingsWidgetFactory::createTwoColumWidget 返回一个水平布局的控件，
- * \~chinese 左边为option的名称标签，右边为设置的自定义控件rightWidget, 可以通过translateContext设置翻译上下文。
- * \~chinese \param translateContext 自定义的翻译上下文，参考 QCoreApplication::translate();
- * \~chinese \param option 设置项，包含改配置的名称
- * \~chinese \param rightWidget 自定义控件
- * \~chinese \return 生成的水平布局配置项控件
- * \~chinese \sa Dtk::Widget::DSettingsWidgetFactory::createTwoColumWidget(Dtk::Core::DSettingsOption *option, QWidget *rightWidget)
+  \brief DSettingsWidgetFactory::createTwoColumWidget 返回一个水平布局的控件，
+  左边为option的名称标签，右边为设置的自定义控件rightWidget, 可以通过translateContext设置翻译上下文.
+
+  \a translateContext 自定义的翻译上下文，参考 QCoreApplication::translate();
+  \a option 设置项，包含改配置的名称
+  \a rightWidget 自定义控件
+  \return 生成的水平布局配置项控件
+  \sa Dtk::Widget::DSettingsWidgetFactory::createTwoColumWidget(Dtk::Core::DSettingsOption *option, QWidget *rightWidget)
  */
 QWidget *DSettingsWidgetFactory::createTwoColumWidget(const QByteArray &translateContext, DTK_CORE_NAMESPACE::DSettingsOption *option, QWidget *rightWidget)
 {
@@ -644,9 +648,10 @@ DSettingsWidgetFactory::~DSettingsWidgetFactory()
 }
 
 /*!
- * \~chinese \brief DSettingsWidgetFactory::registerWidget 向Factory注册一种类型viewType。注册该类型后，可以通过在DSettings的DOption中，设置type为对应的viewType，这样Factory在构建viewType对应的控件时，会调用handler所指定的方法来构建。
- * \~chinese \param viewType 控件类型，建议为全局唯一的字符串，且不要和内部类型重复，参考 Dtk::Widget::DSettingsWidgetFactory
- * \~chinese \param handler 自定义的控件构建函数， 参考 Dtk::Widget::DSettingsWidgetFactory::WidgetCreateHandler
+  \brief DSettingsWidgetFactory::registerWidget 向Factory注册一种类型viewType。注册该类型后，可以通过在DSettings的DOption中，设置type为对应的viewType，这样Factory在构建viewType对应的控件时，会调用handler所指定的方法来构建.
+
+  \a viewType 控件类型，建议为全局唯一的字符串，且不要和内部类型重复，参考 Dtk::Widget::DSettingsWidgetFactory
+  \a handler 自定义的控件构建函数， 参考 Dtk::Widget::DSettingsWidgetFactory::WidgetCreateHandler
  */
 void DSettingsWidgetFactory::registerWidget(const QString &viewType, std::function<WidgetCreateHandler> handler)
 {
@@ -661,21 +666,23 @@ void DSettingsWidgetFactory::registerWidget(const QString &viewType, std::functi
 }
 
 /*!
- * \~chinese \brief DSettingsWidgetFactory::createWidget 创建一个option对应的配置控件，一般是需要自定义控件时使用，可以通过translateContext设置翻译上下文。
- * \~chinese \param option 需要构建的配置项
- * \~chinese \return 根据option的type属性创建的配置控件
- * \~chinese \sa Dtk::Widget::DSettingsWidgetFactory::createWidget(const QByteArray &translateContext, QPointer<Dtk::Core::DSettingsOption> option)
+  \brief DSettingsWidgetFactory::createWidget 创建一个option对应的配置控件，一般是需要自定义控件时使用，可以通过translateContext设置翻译上下文.
+
+  \a option 需要构建的配置项
+  \return 根据option的type属性创建的配置控件
+  \sa Dtk::Widget::DSettingsWidgetFactory::createWidget(const QByteArray &translateContext, QPointer<Dtk::Core::DSettingsOption> option)
  */
 QWidget *DSettingsWidgetFactory::createWidget(QPointer<DTK_CORE_NAMESPACE::DSettingsOption> option)
 {
     return createWidget(QByteArray(), option);
 }
 /*!
- * \~chinese \brief DSettingsWidgetFactory::createWidget 创建一个option对应的配置控件，一般是需要自定义控件时使用,
- * \~chinese \param translateContext 自定义的翻译上下文，参考 QCoreApplication::translate();
- * \~chinese \param option 需要构建的配置项
- * \~chinese \return 根据option的type属性创建的配置控件
- * \~chinese \sa Dtk::Widget::DSettingsWidgetFactory::createWidget(QPointer<Dtk::Core::DSettingsOption> option)
+  \brief DSettingsWidgetFactory::createWidget 创建一个option对应的配置控件，一般是需要自定义控件时使用.
+
+  \a translateContext 自定义的翻译上下文，参考 QCoreApplication::translate();
+  \a option 需要构建的配置项
+  \return 根据option的type属性创建的配置控件
+  \sa Dtk::Widget::DSettingsWidgetFactory::createWidget(QPointer<Dtk::Core::DSettingsOption> option)
  */
 QWidget *DSettingsWidgetFactory::createWidget(const QByteArray &translateContext, QPointer<DTK_CORE_NAMESPACE::DSettingsOption> option)
 {

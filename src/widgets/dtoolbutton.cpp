@@ -56,8 +56,8 @@ QSize DToolButton::sizeHint() const
 }
 
 /*!
- * \~chinese \brief DToolButton::setAlignment 设置DToolButton的对齐方式
- * \~chinese \param flag Qt::AlignCenter居中对齐　Qt::AlignLeft左对齐　Qt::AlignRight右对齐
+  \brief DToolButton::setAlignment 设置DToolButton的对齐方式
+  \a flag Qt::AlignCenter居中对齐　Qt::AlignLeft左对齐　Qt::AlignRight右对齐
  */
 void DToolButton::setAlignment(Qt::Alignment flag)
 {
@@ -65,8 +65,8 @@ void DToolButton::setAlignment(Qt::Alignment flag)
 }
 
 /*!
- * \~chinese \brief DToolButton::alignment 返回DToolButton当前的对齐方式
- * \~chinese \return 如果setAlignment设置成功则返回当前对齐方式，否则返回Qt::AlignLeft
+  \brief DToolButton::alignment 返回DToolButton当前的对齐方式
+  \return 如果setAlignment设置成功则返回当前对齐方式，否则返回Qt::AlignLeft
  */
 Qt::Alignment DToolButton::alignment() const
 {

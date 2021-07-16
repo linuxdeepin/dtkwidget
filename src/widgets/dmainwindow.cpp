@@ -134,20 +134,21 @@ void DMainWindowPrivate::updateTitleShadowGeometry()
 }
 
 /*!
- * \class DMainWindow
- * \brief The DMainWindow class provides a main application window.
- *
- * A main window provides a framework for building an application's user
- * interface. DMainWindow has its own layout compared to QMainWindow,
- * it has only title bar and content area, simpler and cleaner.
- *
- * Developers can provide customized title bar and content to make the
- * application rich functional.
+  \class Dtk::Widget::DMainWindow
+  \inmodule dtkwidget
+  \brief The DMainWindow class provides a main application window.
+  
+  A main window provides a framework for building an application's user
+  interface. DMainWindow has its own layout compared to QMainWindow,
+  it has only title bar and content area, simpler and cleaner.
+  
+  Developers can provide customized title bar and content to make the
+  application rich functional.
  */
 
 /*!
- * \brief DMainWindow::DMainWindow constructs an instance of DMainWindow
- * \param parent is passed to QMainWindow construtor.
+  \brief DMainWindow::DMainWindow constructs an instance of DMainWindow
+  \a parent is passed to QMainWindow construtor.
  */
 DMainWindow::DMainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -162,8 +163,8 @@ DMainWindow::DMainWindow(QWidget *parent)
 }
 
 /*!
- * \brief DMainWindow::titlebar
- * \return a DTitlebar instance used by the main window.
+  \brief DMainWindow::titlebar
+  \return a DTitlebar instance used by the main window.
  */
 DTitlebar *DMainWindow::titlebar() const
 {
@@ -173,11 +174,11 @@ DTitlebar *DMainWindow::titlebar() const
 }
 
 /*!
- * \brief DMainWindow::isDXcbWindow
- * \return Whether this window is dxcb backended.
- *
- * Many features like blurred background and window clipping are supported
- * only if the window is using the dxcb Qt platform plugin.
+  \brief DMainWindow::isDXcbWindow
+  \return Whether this window is dxcb backended.
+  
+  Many features like blurred background and window clipping are supported
+  only if the window is using the dxcb Qt platform plugin.
  */
 bool DMainWindow::isDXcbWindow() const
 {
@@ -187,8 +188,8 @@ bool DMainWindow::isDXcbWindow() const
 }
 
 /*!
- * \property DMainWindow::windowRadius
- * \brief This property holds the radius of the main window.
+  \property DMainWindow::windowRadius
+  \brief This property holds the radius of the main window.
  */
 int DMainWindow::windowRadius() const
 {
@@ -202,8 +203,8 @@ int DMainWindow::windowRadius() const
 }
 
 /*!
- * \property DMainWindow::borderWidth
- * \brief This property holds the width of the main window's border.
+  \property DMainWindow::borderWidth
+  \brief This property holds the width of the main window's border.
  */
 int DMainWindow::borderWidth() const
 {
@@ -217,8 +218,8 @@ int DMainWindow::borderWidth() const
 }
 
 /*!
- * \property DMainWindow::borderColor
- * \brief This property holds the color of the main window's border.
+  \property DMainWindow::borderColor
+  \brief This property holds the color of the main window's border.
  */
 QColor DMainWindow::borderColor() const
 {
@@ -232,8 +233,8 @@ QColor DMainWindow::borderColor() const
 }
 
 /*!
- * \property DMainWindow::shadowRadius
- * \brief This property holds the shadow radius of the main widnow.
+  \property DMainWindow::shadowRadius
+  \brief This property holds the shadow radius of the main widnow.
  */
 int DMainWindow::shadowRadius() const
 {
@@ -247,8 +248,8 @@ int DMainWindow::shadowRadius() const
 }
 
 /*!
- * \property DMainWindow::shadowOffset
- * \brief This property holds the offset applied on the window shadow.
+  \property DMainWindow::shadowOffset
+  \brief This property holds the offset applied on the window shadow.
  */
 QPoint DMainWindow::shadowOffset() const
 {
@@ -262,8 +263,8 @@ QPoint DMainWindow::shadowOffset() const
 }
 
 /*!
- * \property DMainWindow::shadowColor
- * \brief This property holds the color of the window shadow.
+  \property DMainWindow::shadowColor
+  \brief This property holds the color of the window shadow.
  */
 QColor DMainWindow::shadowColor() const
 {
@@ -277,13 +278,13 @@ QColor DMainWindow::shadowColor() const
 }
 
 /*!
- * \property DMainWindow::clipPath
- * \brief This property holds the custom QPainterPath to be used to clip the window.
- *
- * By default DMainWindow is clipped as a corner-rounded rectangle, but you can
- * supply a custom QPainterPath to do custom shaped window.
- *
- * \see DMainWindow::frameMask
+  \property DMainWindow::clipPath
+  \brief This property holds the custom QPainterPath to be used to clip the window.
+  
+  By default DMainWindow is clipped as a corner-rounded rectangle, but you can
+  supply a custom QPainterPath to do custom shaped window.
+  
+  \sa DMainWindow::frameMask
  */
 QPainterPath DMainWindow::clipPath() const
 {
@@ -297,11 +298,11 @@ QPainterPath DMainWindow::clipPath() const
 }
 
 /*!
- * \property DMainWindow::frameMask
- * \brief This property holds the mask to be applied on the window.
- *
- * For better clip quality, for example antialiasing, use property
- * DMainWindow::clipPath instead.
+  \property DMainWindow::frameMask
+  \brief This property holds the mask to be applied on the window.
+  
+  For better clip quality, for example antialiasing, use property
+  DMainWindow::clipPath instead.
  */
 QRegion DMainWindow::frameMask() const
 {
@@ -326,8 +327,8 @@ QMargins DMainWindow::frameMargins() const
 }
 
 /*!
- * \property DMainWindow::translucentBackground
- * \brief This property holds whether the window has translucent background.
+  \property DMainWindow::translucentBackground
+  \brief This property holds whether the window has translucent background.
  */
 bool DMainWindow::translucentBackground() const
 {
@@ -341,13 +342,13 @@ bool DMainWindow::translucentBackground() const
 }
 
 /*!
- * \brief DMainWindow::enableSystemResize
- * \return This property holds whether the window can be resized by the user.
- *
- * The default value of this property is true.
- *
- * You can set this property to false and implement the resize polizy of this
- * window by you self.
+  \brief DMainWindow::enableSystemResize
+  \return This property holds whether the window can be resized by the user.
+  
+  The default value of this property is true.
+  
+  You can set this property to false and implement the resize polizy of this
+  window by you self.
  */
 bool DMainWindow::enableSystemResize() const
 {
@@ -361,12 +362,12 @@ bool DMainWindow::enableSystemResize() const
 }
 
 /*!
- * \property DMainWindow::enableSystemMove
- * \brief This property holds whether the window can be moved by the user.
- *
- * The default value of this property is true.
- *
- * You can set this property to false and choose the effective area to drag and move.
+  \property DMainWindow::enableSystemMove
+  \brief This property holds whether the window can be moved by the user.
+  
+  The default value of this property is true.
+  
+  You can set this property to false and choose the effective area to drag and move.
  */
 bool DMainWindow::enableSystemMove() const
 {
@@ -380,8 +381,8 @@ bool DMainWindow::enableSystemMove() const
 }
 
 /*!
- * \property DMainWindow::enableBlurWindow
- * \brief This property holds whether the window background is blurred.
+  \property DMainWindow::enableBlurWindow
+  \brief This property holds whether the window background is blurred.
  */
 bool DMainWindow::enableBlurWindow() const
 {
@@ -395,13 +396,13 @@ bool DMainWindow::enableBlurWindow() const
 }
 
 /*!
- * \property DMainWindow::autoInputMaskByClipPath
- * \brief This property holds whether the user input is masked by the clip path.
- *
- * Sometimes you may want to handle events happening in the areas that are
- * visually clipped by the setting DMainWindow::clipPath.
- *
- * The default value of this property is true.
+  \property DMainWindow::autoInputMaskByClipPath
+  \brief This property holds whether the user input is masked by the clip path.
+  
+  Sometimes you may want to handle events happening in the areas that are
+  visually clipped by the setting DMainWindow::clipPath.
+  
+  The default value of this property is true.
  */
 bool DMainWindow::autoInputMaskByClipPath() const
 {
@@ -415,8 +416,8 @@ bool DMainWindow::autoInputMaskByClipPath() const
 }
 
 /*!
- * \~chinese \brief DMainWindow::titlebarShadowIsEnabled
- * \~chinese \return true　titleBar阴影开启　false 阴影关闭
+  \brief DMainWindow::titlebarShadowIsEnabled
+  \return true　titleBar阴影开启　false 阴影关闭
  */
 bool DMainWindow::titlebarShadowIsEnabled() const
 {
@@ -426,8 +427,8 @@ bool DMainWindow::titlebarShadowIsEnabled() const
 }
 
 /*!
- * \~chinese \brief DMainWindow::setWindowRadius　设定窗口的圆角
- * \~chinese \param windowRadius　窗口的圆角值
+  \brief DMainWindow::setWindowRadius　设定窗口的圆角
+  \a windowRadius　窗口的圆角值
  */
 void DMainWindow::setWindowRadius(int windowRadius)
 {
@@ -441,8 +442,8 @@ void DMainWindow::setWindowRadius(int windowRadius)
 }
 
 /*!
- * \~chinese \brief DMainWindow::setBorderWidth 设定边框的宽度
- * \~chinese \param borderWidth　边框的宽度
+  \brief DMainWindow::setBorderWidth 设定边框的宽度
+  \a borderWidth　边框的宽度
  */
 void DMainWindow::setBorderWidth(int borderWidth)
 {
@@ -456,8 +457,8 @@ void DMainWindow::setBorderWidth(int borderWidth)
 }
 
 /*!
- * \~chinese \brief DMainWindow::setBorderColor 设定边框的颜色
- * \~chinese \param borderColor　边框的颜色
+  \brief DMainWindow::setBorderColor 设定边框的颜色
+  \a borderColor　边框的颜色
  */
 void DMainWindow::setBorderColor(const QColor &borderColor)
 {
@@ -471,8 +472,8 @@ void DMainWindow::setBorderColor(const QColor &borderColor)
 }
 
 /*!
- * \~chinese \brief DMainWindow::setShadowRadius 设定阴影区域的圆角
- * \~chinese \param shadowRadius　阴影区域圆角大小
+  \brief DMainWindow::setShadowRadius 设定阴影区域的圆角
+  \a shadowRadius　阴影区域圆角大小
  */
 void DMainWindow::setShadowRadius(int shadowRadius)
 {
@@ -486,8 +487,8 @@ void DMainWindow::setShadowRadius(int shadowRadius)
 }
 
 /*!
- * \~chinese \brief DMainWindow::setShadowOffset 设定阴影区域的偏移距离
- * \~chinese \param shadowOffset　阴影区域的偏移距离
+  \brief DMainWindow::setShadowOffset 设定阴影区域的偏移距离
+  \a shadowOffset　阴影区域的偏移距离
  */
 void DMainWindow::setShadowOffset(const QPoint &shadowOffset)
 {
@@ -501,8 +502,8 @@ void DMainWindow::setShadowOffset(const QPoint &shadowOffset)
 }
 
 /*!
- * \~chinese \brief DMainWindow::setShadowColor 设定阴影的颜色
- * \~chinese \param shadowColor　阴影的颜色
+  \brief DMainWindow::setShadowColor 设定阴影的颜色
+  \a shadowColor　阴影的颜色
  */
 void DMainWindow::setShadowColor(const QColor &shadowColor)
 {
@@ -516,8 +517,8 @@ void DMainWindow::setShadowColor(const QColor &shadowColor)
 }
 
 /*!
- * \~chinese \brief DMainWindow::setClipPath 设定裁剪路径
- * \~chinese \param clipPath　裁剪的路径
+  \brief DMainWindow::setClipPath 设定裁剪路径
+  \a clipPath　裁剪的路径
  */
 void DMainWindow::setClipPath(const QPainterPath &clipPath)
 {
@@ -531,8 +532,8 @@ void DMainWindow::setClipPath(const QPainterPath &clipPath)
 }
 
 /*!
- * \~chinese \brief DMainWindow::setFrameMask 设定边框的mask区域
- * \~chinese \param frameMask mask区域
+  \brief DMainWindow::setFrameMask 设定边框的mask区域
+  \a frameMask mask区域
  */
 void DMainWindow::setFrameMask(const QRegion &frameMask)
 {
@@ -546,8 +547,8 @@ void DMainWindow::setFrameMask(const QRegion &frameMask)
 }
 
 /*!
- * \~chinese \brief DMainWindow::setTranslucentBackground 设定时候擦除背景
- * \~chinese \param translucentBackground true擦除背景　false不擦除背景
+  \brief DMainWindow::setTranslucentBackground 设定时候擦除背景
+  \a translucentBackground true擦除背景　false不擦除背景
  */
 void DMainWindow::setTranslucentBackground(bool translucentBackground)
 {
@@ -561,8 +562,8 @@ void DMainWindow::setTranslucentBackground(bool translucentBackground)
 }
 
 /*!
- * \~chinese \brief DMainWindow::setEnableSystemResize　设定是否允许系统调整窗口大小
- * \~chinese \param enableSystemResize　true允许系统调整　false不允许系统调整
+  \brief DMainWindow::setEnableSystemResize　设定是否允许系统调整窗口大小
+  \a enableSystemResize　true允许系统调整　false不允许系统调整
  */
 void DMainWindow::setEnableSystemResize(bool enableSystemResize)
 {
@@ -576,8 +577,8 @@ void DMainWindow::setEnableSystemResize(bool enableSystemResize)
 }
 
 /*!
- * \~chinese \brief DMainWindow::setEnableSystemMove 设定时候允许系统移动窗口
- * \~chinese \param enableSystemMove　true允许移动　false不允许移动
+  \brief DMainWindow::setEnableSystemMove 设定时候允许系统移动窗口
+  \a enableSystemMove　true允许移动　false不允许移动
  */
 void DMainWindow::setEnableSystemMove(bool enableSystemMove)
 {
@@ -591,9 +592,9 @@ void DMainWindow::setEnableSystemMove(bool enableSystemMove)
 }
 
 /*!
- * \~chinese \brief DMainWindow::setEnableBlurWindow　设置窗口模糊效果
- * \~shinese 开启此功能请设置setAttribute(Qt::WA_TranslucentBackground)
- * \~chinese \param enableBlurWindow true开启模糊效果　false关闭模糊效果
+  \brief DMainWindow::setEnableBlurWindow　设置窗口模糊效果
+  \~shinese 开启此功能请设置setAttribute(Qt::WA_TranslucentBackground)
+  \a enableBlurWindow true开启模糊效果　false关闭模糊效果
  */
 void DMainWindow::setEnableBlurWindow(bool enableBlurWindow)
 {
@@ -607,8 +608,8 @@ void DMainWindow::setEnableBlurWindow(bool enableBlurWindow)
 }
 
 /*!
- * \~chinese \brief DMainWindow::setAutoInputMaskByClipPath 通过裁剪区域自动设定mask
- * \~chinese \param autoInputMaskByClipPath true自动设定　false不自动设定
+  \brief DMainWindow::setAutoInputMaskByClipPath 通过裁剪区域自动设定mask
+  \a autoInputMaskByClipPath true自动设定　false不自动设定
  */
 void DMainWindow::setAutoInputMaskByClipPath(bool autoInputMaskByClipPath)
 {
@@ -622,9 +623,9 @@ void DMainWindow::setAutoInputMaskByClipPath(bool autoInputMaskByClipPath)
 }
 
 /*!
- * \~chinese \brief DMainWindow::sendMessage 发送消息
- * \~chinese \param icon 消息展示图标
- * \~chinese \param message　消息内容
+  \brief DMainWindow::sendMessage 发送消息
+  \a icon 消息展示图标
+  \a message　消息内容
  */
 void DMainWindow::sendMessage(const QIcon &icon, const QString &message)
 {
@@ -632,8 +633,8 @@ void DMainWindow::sendMessage(const QIcon &icon, const QString &message)
 }
 
 /*!
- * \~chinese \brief DMainWindow::sendMessage 发送消息
- * \~chinese \param message　DFloatingMessage消息
+  \brief DMainWindow::sendMessage 发送消息
+  \a message　DFloatingMessage消息
  */
 void DMainWindow::sendMessage(DFloatingMessage *message)
 {
@@ -641,8 +642,8 @@ void DMainWindow::sendMessage(DFloatingMessage *message)
 }
 
 /*!
- * \~chinese \brief DMainWindow::setTitlebarShadowEnabled设定titleBar是否有阴影区域
- * \~chinese \param titlebarShadowEnabled true titleBar有阴影　false无阴影
+  \brief DMainWindow::setTitlebarShadowEnabled设定titleBar是否有阴影区域
+  \a titlebarShadowEnabled true titleBar有阴影　false无阴影
  */
 void DMainWindow::setTitlebarShadowEnabled(bool titlebarShadowEnabled)
 {

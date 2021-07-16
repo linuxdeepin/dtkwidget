@@ -38,92 +38,89 @@ class DThemeManagerStaticPrivate : public DThemeManager
 
 Q_GLOBAL_STATIC(DThemeManagerStaticPrivate, DThemeManagerStatic)
 
-
 /*!
- * \~english \class DThemeManager
- * \~english \brief The DThemeManager class provides helper to manage theme files of widgets.
- *
- * \~english The DThemeManager is singleton class, DThemeManager::instance is used to
- * \~english get an instance of DThemeManager.
- *
- * \~english DThemeManager can be used to get the current application theme, find the
- * \~english corresponding theme file of a widget.
- *
- *
- * \~chinese \class DThemeManager
- * \~chinese \brief DThemeManager 类提供了管理控件主题文件的工具函数。
- * \~chinese
- * \~chinese 在 DTK 中，目前只有 light 和 dark 两种风格的主题，主题文件是为单个控件所创建
- * \~chinese 的 QSS 文件，并且以 .theme 结尾，每个控件都应该有对应的 light 和 dark 两套主题文件。
- * \~chinese
- * \~chinese 主题在应用范围上分为程序级别的主题和控件级别的主题，程序中的控件默认使用程序级别的
- * \~chinese 主题 theme()， 控件也可以使用 setTheme(QWidget *widget, const QString theme)单独设置不同的主题风格，
- * \~chinese 这种情况下控件的子控件都会继承其父控件设置的主题，而不再使用程序级别的主题。
- * \~chinese
- * \~chinese \note DThemeManager 是单实例的，也就是说通常情况下使用者无法创建 DThemeManager 对象，
- * \~chinese 而是通过 DThemeManager::instance 方法来获取到全局的 DThemeManager 实例。
- * \~chinese
- * \~chinese \warning 只有使用 DThemeManager::registerWidget 进行注册的控件才会纳入 DThemeManager
- * \~chinese 的正常管理流程。
- */
+  \class Dtk::Widget::DThemeManager
+  \inmodule dtkwidget
 
-/*!
- *
- * \~chinese \enum DThemeManager::ThemeType
- * \~chinese DThemeManager::ThemeType 主题的类型，分为“浅色”、“深色”两种类型。默认情况下，DApplication
- * \~chinese 会根据应用程序调色板中的窗口背景色自动设置应用程序的主题类型。
- *
- * \~chinese \var DThemeManager::UnknownType DThemeManager::UnknownType
- * \~chinese 未知的主题类型
- *
- * \~chinese \var DThemeManager::LightType DThemeManager::LightType
- * \~chinese 浅色主题
- *
- * \~chinese \var DApplication::SingleScope DApplication::SystemScope
- * \~chinese 深色主题
- *
- * \~chinese \sa DApplication
- * \~chinese \sa QPalette
- * \~chinese \sa QApplication::palette
- */
-
-/**
- * \~chinese \property DThemeManager::themeType
- * \~chinese \brief themeType 属性表示应用程序主题的类型
+  \brief DThemeManager 类提供了管理控件主题文件的工具函数.
+  \brief The DThemeManager class provides helper to manage theme files of widgets.
+  
+  The DThemeManager is singleton class, DThemeManager::instance is used to
+  get an instance of DThemeManager.
+  
+  DThemeManager can be used to get the current application theme, find the
+  corresponding theme file of a widget.
+  
+  在 DTK 中，目前只有 light 和 dark 两种风格的主题，主题文件是为单个控件所创建
+  的 QSS 文件，并且以 .theme 结尾，每个控件都应该有对应的 light 和 dark 两套主题文件。
+  
+  主题在应用范围上分为程序级别的主题和控件级别的主题，程序中的控件默认使用程序级别的
+  主题 theme()， 控件也可以使用 setTheme(QWidget *widget, const QString theme)单独设置不同的主题风格，
+  这种情况下控件的子控件都会继承其父控件设置的主题，而不再使用程序级别的主题。
+  
+  \note DThemeManager 是单实例的，也就是说通常情况下使用者无法创建 DThemeManager 对象，
+  而是通过 DThemeManager::instance 方法来获取到全局的 DThemeManager 实例。
+  
+  \warning 只有使用 DThemeManager::registerWidget 进行注册的控件才会纳入 DThemeManager
+  的正常管理流程。
  */
 
 /*!
- * \~chinese \fn DThemeManager::themeChanged
- * \~chinese \brief themeChanged 信号在程序主题发生改变时触发。
- */
-/*!
- * \~chinese \fn DThemeManager::widgetThemeChanged
- * \~chinese \brief widgetThemeChanged 信号在特定控件主题发生改变时触发。
- */
-/*!
- * \~chinese \fn DThemeManager::themeTypeChanged
- * \~chinese \param themeType 新的主题类型
- * \~chinese \brief themeTypeChanged 信号在应用程序主题发生变化时触发。默认情况下，DApplication
- * \~chinese 会在处理 QEvent::ApplicationPaletteChange 事件时自动更新应用程序的主题类型，此操作可能
- * \~chinese 会导致此信号的触发。
- *
- * \~chinese \sa DThemeManager::setThemeType
- */
-/*!
- * \~chinese \fn DThemeManager::windowThemeTypeChanged
- * \~chinese \param window 主题类型发生变化的顶级窗口
- * \~chinese \param themeType 新的主题类型
- * \~chinese \brief windowThemeTypeChanged 信号在窗口的主题类型发现变化时触发。默认情况下，DApplication
- * \~chinese 会在处理 QEvent::PaletteChange 事件时自动更新顶级窗口的主题类型，此操作可能会导致此信号的触发。
- * \~chinese 另外，如果窗口未自定义过 QPalette 并且未指定主题类型，窗口的主题类型会跟随应用程序改变而改变。
- *
- * \~chinese \sa QWidget::setPalette
- * \~chinese \sa DThemeManager::setThemeType(QWidget*, DThemeManager::ThemeType)
+  \enum Dtk::Widget::DThemeManager::ThemeType
+  DThemeManager::ThemeType 主题的类型，分为“浅色”、“深色”两种类型。默认情况下，DApplication
+  会根据应用程序调色板中的窗口背景色自动设置应用程序的主题类型。
+  
+  \value UnknownType
+  未知的主题类型
+  
+  \value LightType
+  浅色主题
+  
+  \value SystemScope
+  深色主题
+  
+  \sa DApplication
+  \sa QPalette
+  \sa QApplication::palette
  */
 
 /*!
- * \~chinese \brief DThemeManager::instance 用于获取 DThemeManager 的全局实例。
- * \~chinese \return DThemeManager 全局实例。
+  \property DThemeManager::themeType
+  \brief themeType 属性表示应用程序主题的类型
+ */
+
+/*!
+  \fn void DThemeManager::themeChanged(QString theme)
+  \brief themeChanged 信号在程序主题发生改变时触发。
+ */
+/*!
+  \fn void DThemeManager::widgetThemeChanged(QWidget *widget, QString theme)
+  \brief widgetThemeChanged 信号在特定控件主题发生改变时触发。
+ */
+/*!
+  \fn DThemeManager::themeTypeChanged
+  \a themeType 新的主题类型
+  \brief themeTypeChanged 信号在应用程序主题发生变化时触发。默认情况下，DApplication
+  会在处理 QEvent::ApplicationPaletteChange 事件时自动更新应用程序的主题类型，此操作可能
+  会导致此信号的触发。
+  
+  \sa DThemeManager::setThemeType
+ */
+/*!
+  \fn DThemeManager::windowThemeTypeChanged
+  \a window 主题类型发生变化的顶级窗口
+  \a themeType 新的主题类型
+  \brief windowThemeTypeChanged 信号在窗口的主题类型发现变化时触发。默认情况下，DApplication
+  会在处理 QEvent::PaletteChange 事件时自动更新顶级窗口的主题类型，此操作可能会导致此信号的触发。
+  另外，如果窗口未自定义过 QPalette 并且未指定主题类型，窗口的主题类型会跟随应用程序改变而改变。
+  
+  \sa QWidget::setPalette
+  \sa DThemeManager::setThemeType(QWidget*, DThemeManager::ThemeType)
+ */
+
+/*!
+  \brief DThemeManager::instance 用于获取 DThemeManager 的全局实例。
+  \return DThemeManager 全局实例。
  */
 DThemeManager *DThemeManager::instance()
 {
@@ -461,13 +458,13 @@ public:
 };
 
 /*!
- * \~english \brief DThemeManager::theme
- * \~english \return the theme name currently be used by this application, the possible
- * \~english value are "light" and "dark".
- *
- *
- * \~chinese \brief DThemeManager::theme 用于获取当前程序使用的主题名称。
- * \~chinese \return 程序使用的主题名称。
+  \brief DThemeManager::theme
+  
+  \brief DThemeManager::theme 用于获取当前程序使用的主题名称。
+  value are "light" and "dark".
+  
+  \return 程序使用的主题名称。
+  \return the theme name currently be used by this application, the possible
  */
 QString DThemeManager::theme() const
 {
@@ -476,11 +473,12 @@ QString DThemeManager::theme() const
 }
 
 /*!
- * \~chinese \brief DThemeManager::theme 用于找到 widget 距离最近、并且设置了主题的上级控件，
- * \~chinese 并返回这个主题的名称。如果上级控件都没有设置主题，则返回程序级别的主题名称。
- * \~chinese \param widget 目标控件。
- * \~chinese \param baseWidget 待返回的上级控件。
- * \~chinese \return 指定控件应该使用的主题名称。
+  \brief DThemeManager::theme 用于找到 widget 距离最近、并且设置了主题的上级控件，
+  并返回这个主题的名称。如果上级控件都没有设置主题，则返回程序级别的主题名称。
+
+  \a widget 目标控件。
+  \a baseWidget 待返回的上级控件。
+  \return 指定控件应该使用的主题名称。
  */
 QString DThemeManager::theme(const QWidget *widget, QWidget **baseWidget) const
 {
@@ -489,12 +487,12 @@ QString DThemeManager::theme(const QWidget *widget, QWidget **baseWidget) const
 }
 
 /*!
- * \~english \brief DThemeManager::setTheme sets the application theme.
- * \~english \param theme is the theme name to be set.
- *
- *
- * \~chinese \brief DThemeManager::setTheme 用于设置当前程序的主题。
- * \~chinese \param theme 为指定的主题名称。
+  \brief DThemeManager::setTheme sets the application theme.
+  \a theme is the theme name to be set.
+  
+  
+  \brief DThemeManager::setTheme 用于设置当前程序的主题。
+  \a theme 为指定的主题名称。
  */
 void DThemeManager::setTheme(const QString theme)
 {
@@ -503,15 +501,15 @@ void DThemeManager::setTheme(const QString theme)
 }
 
 /*!
- * \~english \brief DThemeManager::setTheme sets theme on a widget.
- * \~english \param widget is the target widget.
- * \~english \param theme is the name of theme to be set.
- *
- *
- * \~chinese \brief DThemeManager::setTheme 用于给特定的控件设置主题。
- * \~chinese \note 控件的子控件也会继承设置的主题风格。
- * \~chinese \param widget 为需要设置主题的控件。
- * \~chinese \param theme 为指定的主题名称。
+  \brief DThemeManager::setTheme sets theme on a widget.
+  \a widget is the target widget.
+  \a theme is the name of theme to be set.
+  
+  
+  \brief DThemeManager::setTheme 用于给特定的控件设置主题。
+  \note 控件的子控件也会继承设置的主题风格。
+  \a widget 为需要设置主题的控件。
+  \a theme 为指定的主题名称。
  */
 void DThemeManager::setTheme(QWidget *widget, const QString theme)
 {
@@ -520,18 +518,18 @@ void DThemeManager::setTheme(QWidget *widget, const QString theme)
 }
 
 /*!
- * \~english \brief DThemeManager::getQssForWidget searches for the theme file of one class in a specific theme.
- * \~english \param className is the name of the class.
- * \~english \param theme is the name of the theme to be applied.
- * \~english \return The content of the theme file.
- *
- * \~english \note The class name should have no namespace prefixes.
- *
- *
- * \~chinese \brief DThemeManager::getQssForWidget 用于获取特定类在特定主题下的样式内容。
- * \~chinese \param className 为指定的类名称，className 需要跟控件对应的主题文件名对应。
- * \~chinese \param theme 为指定的主题名称。
- * \~chinese \return 主题文件的内容。
+  \brief DThemeManager::getQssForWidget searches for the theme file of one class in a specific theme.
+  \a className is the name of the class.
+  \a theme is the name of the theme to be applied.
+  \return The content of the theme file.
+  
+  \note The class name should have no namespace prefixes.
+  
+  
+  \brief DThemeManager::getQssForWidget 用于获取特定类在特定主题下的样式内容。
+  \a className 为指定的类名称，className 需要跟控件对应的主题文件名对应。
+  \a theme 为指定的主题名称。
+  \return 主题文件的内容。
  */
 QString DThemeManager::getQssForWidget(const QString className, const QString &theme) const
 {
@@ -544,14 +542,14 @@ QString DThemeManager::getQssForWidget(const QString className, const QString &t
 }
 
 /*!
- * \~english \brief DThemeManager::getQssForWidget This function is overloaded.
- * \~english \param widget is the target widget.
- * \~english \return The content of the theme file to be applied on the widget.
- *
- *
- * \~chinese \brief DThemeManager::getQssForWidget 控件的主题样式内容。
- * \~chinese \param widget 为指定的控件。
- * \~chinese \return 主题文件的内容。
+  \brief DThemeManager::getQssForWidget This function is overloaded.
+  \a widget is the target widget.
+  \return The content of the theme file to be applied on the widget.
+  
+  
+  \brief DThemeManager::getQssForWidget 控件的主题样式内容。
+  \a widget 为指定的控件。
+  \return 主题文件的内容。
  */
 QString DThemeManager::getQssForWidget(const QWidget *widget) const
 {
@@ -559,12 +557,12 @@ QString DThemeManager::getQssForWidget(const QWidget *widget) const
 }
 
 /*!
- * \~chinese \brief DThemeManager::registerWidget 用于将控件注册到 DThemeManager 的管理范围内。
- * \~chinese 只有通过 registerWidget() 注册的控件才会受到 DThemeManager 的自动管理，
- * \~chinese 通常注册的动作都会在实例的构造过程中完成。\ref properties 参数用来注册属性，
- * \~chinese 注册的属性发生变化时 DThemeManager 会自动刷新控件的样式。
- * \~chinese \param widget 需要注册的控件。
- * \~chinese \param properties 需要注册的控件属性。
+  \brief DThemeManager::registerWidget 用于将控件注册到 DThemeManager 的管理范围内。
+  只有通过 registerWidget() 注册的控件才会受到 DThemeManager 的自动管理，
+  通常注册的动作都会在实例的构造过程中完成。properties 参数用来注册属性，
+  注册的属性发生变化时 DThemeManager 会自动刷新控件的样式。
+  \a widget 需要注册的控件。
+  \a properties 需要注册的控件属性。
  */
 void DThemeManager::registerWidget(QWidget *widget, QStringList properties)
 {
@@ -574,13 +572,13 @@ void DThemeManager::registerWidget(QWidget *widget, QStringList properties)
 }
 
 /*!
- * \~chinese \brief DThemeManager::registerWidget 用于将控件注册到 DThemeManager 的管理范围内。
- * \~chinese \param widget 需要注册的控件。
- * \~chinese \param filename 需要注册的控件所对应的主题文件名。
- * \~chinese \param properties 需要注册的控件属性。
- *
- *
- * \sa registerWidget(QWidget *widget, QStringList properties)
+  \brief DThemeManager::registerWidget 用于将控件注册到 DThemeManager 的管理范围内。
+  \a widget 需要注册的控件。
+  \a filename 需要注册的控件所对应的主题文件名。
+  \a properties 需要注册的控件属性。
+  
+  
+  \sa registerWidget(QWidget *widget, QStringList properties)
  */
 void DThemeManager::registerWidget(QWidget *widget, const QString &filename, const QStringList &properties)
 {
@@ -589,15 +587,15 @@ void DThemeManager::registerWidget(QWidget *widget, const QString &filename, con
 }
 
 /*!
- * \~english \brief DThemeManager::updateQss This slot repolishes the theme applied on
- * \~english the sender widget.
- *
- * \~english This slot is triggered when the property of a registered widget changes,
- * \~english it's useful because Qt has no support of repolishing the style if some
- * \~english custom properties used in the QSS file has changed.
- *
- *
- * \~chinese \brief DThemeManager::updateQss 槽函数会刷新信号发送者的样式。
+  \brief DThemeManager::updateQss This slot repolishes the theme applied on
+  the sender widget.
+  
+  This slot is triggered when the property of a registered widget changes,
+  it's useful because Qt has no support of repolishing the style if some
+  custom properties used in the QSS file has changed.
+  
+  
+  \brief DThemeManager::updateQss 槽函数会刷新信号发送者的样式。
  */
 void DThemeManager::updateQss()
 {
@@ -644,9 +642,9 @@ bool DThemeManager::eventFilter(QObject *watched, QEvent *event)
 }
 
 /*!
- * \~chinese \brief DThemeManager::updateThemeOnParentChanged 槽函数用于在控件的
- * \~chinese 父控件发生改变时更新控件的主题样式。
- * \~chinese \param widget 为待刷新样式的控件。
+  \brief DThemeManager::updateThemeOnParentChanged 槽函数用于在控件的
+  父控件发生改变时更新控件的主题样式。
+  \a widget 为待刷新样式的控件。
  */
 void DThemeManager::updateThemeOnParentChanged(QWidget *widget)
 {

@@ -350,124 +350,129 @@ public:
 };
 
 /*!
- * \~chinese \class DViewItemAction
- * \~chinese \brief 是一个 action 活动, 其默认是不能被点击的.
- *
- * \~chinese //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- *
- * \~chinese setActionList(Qt::BottomEdge, *list)　的　BottomEdge　为水平方向的枚举值时候: LeftEdge, RightEdge,　其对应　alignment　枚举数值只有如下的有效：
- *
- * \~chinese 其参数 alignment 为如下值时候(才有效):
- * \~chinese \li AlignTop
- * \~chinese \li AlignVCenter
- * \~chinese \li AlignBottom
- *
- * \~chinese 此处举一个小例子, 可以自行修改相关参数, 查看结果, 理解参数:
- * \code
- * QMainWindow *wid = new QMainWindow();
- * wid->resize(800, 600);
- *
- * //视图和模型
- * DListView *view = new DListView(wid);
- * QStandardItemModel *model = new QStandardItemModel(view);
- * view->setModel(model);
- *
- * //标准DStandardItem item
- * DStandardItem *item = new DStandardItem();
- * item->setText("@1:这是同一个item 的text\n@2:这是同一个item 的text\n@3:这是同一个item 的text\n@4:这是同一个item 的text\n@5:这是同一个item 的text\n@6:这是同一个item 的text");
- *
- * //DViewItemAction() 的形参: 其参数 alignment = AlignLeft 或 AlignHCenter 或  AlignRight; 设置为 AlignTop, AlignVCenter, AlignBottom 也是无效的
- * DViewItemAction *act1 = new DViewItemAction(Qt::AlignBottom, QSize(15, 15), QSize(50, 50));
- * act1->setText("act1");
- * act1->setIcon(QIcon("/home/yuanyi/Desktop/dog.jpg"));
- * DViewItemAction *act2 = new DViewItemAction(Qt::AlignVCenter, QSize(15, 15), QSize());
- * act2->setText("act2");
- * act2->setIcon(QIcon("/home/yuanyi/Desktop/dog.jpg"));
- * DViewItemAction *act3 = new DViewItemAction(Qt::AlignTop, QSize(15, 15), QSize(100, 50));
- * act3->setText("act3");
- * act3->setIcon(QIcon("/home/yuanyi/Desktop/dog.jpg"));
- * DViewItemAction *act4 = new DViewItemAction(Qt::AlignBottom, QSize(15, 15), QSize(100, 50));
- * act4->setText("act4");
- * act4->setIcon(QIcon("/home/yuanyi/Desktop/dog.jpg"));
- *
- * DViewItemActionList *list = new DViewItemActionList();
- * list->append(act1);
- * list->append(act2);
- * list->append(act3);
- * list->append(act4);
- *
- * //edge实参: TopEdg, BottomEdge (主要设置前面两个参数), LeftEdge, RightEdge
- * item->setActionList(Qt::LeftEdge, *list);
- * model->appendRow(item);
- *
- * wid->setCentralWidget(view);
- * wid->show();
- * \endcode
- * \~chinese 上代码示例 code 效果图如下:
- * \~chinese \image html DViewItemAction2.png
- *
- * \~chinese //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- *
- * \~chinese setActionList(Qt::BottomEdge, *list)　的　BottomEdge　为竖直方向的枚举值时候: TopEdge, BottomEdge,　其对应　alignment　枚举数值只有如下的有效：
- *
- * \~chinese 其参数 alignment 为如下值时候(才有效):
- * \~chinese \li AlignLeft
- * \~chinese \li AlignHCenter
- * \~chinese \li AlignRight
- *
- * 此处举一个小例子, 可以自行修改相关参数, 查看结果, 理解参数:
- * \code
- * QMainWindow *wid = new QMainWindow();
- * wid->resize(800, 600);
- *
- * //视图和模型
- * DListView *view = new DListView(wid);
- * QStandardItemModel *model = new QStandardItemModel(view);
- * view->setModel(model);
- *
- * //标准DStandardItem item
- * DStandardItem *item = new DStandardItem();
- * item->setText("这是一个item 的text");
- *
- * //DViewItemAction() 的形参: 其参数 alignment = AlignLeft 或 AlignHCenter 或  AlignRight; 设置为 AlignTop, AlignVCenter, AlignBottom 也是无效的
- * DViewItemAction *act1 = new DViewItemAction(Qt::AlignLeft, QSize(15, 15), QSize(50, 50));
- * act1->setText("act1");
- * act1->setIcon(QIcon("/home/yuanyi/Desktop/dog.jpg"));
- * DViewItemAction *act2 = new DViewItemAction(Qt::AlignRight, QSize(15, 15), QSize());
- * act2->setText("act2");
- * act2->setIcon(QIcon("/home/yuanyi/Desktop/dog.jpg"));
- * DViewItemAction *act3 = new DViewItemAction(Qt::AlignHCenter, QSize(15, 15), QSize(100, 50));
- * act3->setText("act3");
- * act3->setIcon(QIcon("/home/yuanyi/Desktop/dog.jpg"));
- * DViewItemAction *act4 = new DViewItemAction(Qt::AlignLeft, QSize(15, 15), QSize(100, 50));
- * act4->setText("act4");
- * act4->setIcon(QIcon("/home/yuanyi/Desktop/dog.jpg"));
- *
- * DViewItemActionList *list = new DViewItemActionList();
- * list->append(act1);
- * list->append(act2);
- * list->append(act3);
- * list->append(act4);
- *
- * //edge实参: TopEdg, BottomEdge (主要设置前面两个参数), LeftEdge, RightEdge
- * item->setActionList(Qt::BottomEdge, *list);
- * model->appendRow(item);
- *
- * wid->setCentralWidget(view);
- * wid->show();
- * \endcode
- * \~chinese 上代码示例 code 效果图如下:
- * \~chinese \image html DViewItemAction.png
- * \~chinese \param[in] alignment 设置本控件对象(在父控件的)方向位置: 居左, 居中, 居右 (其他枚举值此处无效)
- * \~chinese \param[out] iconSize 本控件的图标 icon 的大小
+  \class Dtk::Widget::DViewItemAction
+  \inmodule dtkwidget
+  \brief 是一个 action 活动, 其默认是不能被点击的.
+  
+  //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  
+  setActionList(Qt::BottomEdge, *list)　的　BottomEdge　为水平方向的枚举值时候: LeftEdge, RightEdge,　其对应　alignment　枚举数值只有如下的有效：
+  
+  其参数 alignment 为如下值时候(才有效):
+  \list
+  \li AlignTop
+  \li AlignVCenter
+  \li AlignBottom
+  \endlist
+
+  此处举一个小例子, 可以自行修改相关参数, 查看结果, 理解参数:
+  \code
+  QMainWindow *wid = new QMainWindow();
+  wid->resize(800, 600);
+  
+  //视图和模型
+  DListView *view = new DListView(wid);
+  QStandardItemModel *model = new QStandardItemModel(view);
+  view->setModel(model);
+  
+  //标准DStandardItem item
+  DStandardItem *item = new DStandardItem();
+  item->setText("@1:这是同一个item 的text\n@2:这是同一个item 的text\n@3:这是同一个item 的text\n@4:这是同一个item 的text\n@5:这是同一个item 的text\n@6:这是同一个item 的text");
+  
+  //DViewItemAction() 的形参: 其参数 alignment = AlignLeft 或 AlignHCenter 或  AlignRight; 设置为 AlignTop, AlignVCenter, AlignBottom 也是无效的
+  DViewItemAction *act1 = new DViewItemAction(Qt::AlignBottom, QSize(15, 15), QSize(50, 50));
+  act1->setText("act1");
+  act1->setIcon(QIcon("/home/yuanyi/Desktop/dog.jpg"));
+  DViewItemAction *act2 = new DViewItemAction(Qt::AlignVCenter, QSize(15, 15), QSize());
+  act2->setText("act2");
+  act2->setIcon(QIcon("/home/yuanyi/Desktop/dog.jpg"));
+  DViewItemAction *act3 = new DViewItemAction(Qt::AlignTop, QSize(15, 15), QSize(100, 50));
+  act3->setText("act3");
+  act3->setIcon(QIcon("/home/yuanyi/Desktop/dog.jpg"));
+  DViewItemAction *act4 = new DViewItemAction(Qt::AlignBottom, QSize(15, 15), QSize(100, 50));
+  act4->setText("act4");
+  act4->setIcon(QIcon("/home/yuanyi/Desktop/dog.jpg"));
+  
+  DViewItemActionList *list = new DViewItemActionList();
+  list->append(act1);
+  list->append(act2);
+  list->append(act3);
+  list->append(act4);
+  
+  //edge实参: TopEdg, BottomEdge (主要设置前面两个参数), LeftEdge, RightEdge
+  item->setActionList(Qt::LeftEdge, *list);
+  model->appendRow(item);
+  
+  wid->setCentralWidget(view);
+  wid->show();
+  \endcode
+  上代码示例 code 效果图如下:
+  \image DViewItemAction2.png
+  
+  //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  
+  setActionList(Qt::BottomEdge, *list)　的　BottomEdge　为竖直方向的枚举值时候: TopEdge, BottomEdge,　其对应　alignment　枚举数值只有如下的有效：
+  
+  其参数 alignment 为如下值时候(才有效):
+  \list
+  \li AlignLeft
+  \li AlignHCenter
+  \li AlignRight
+  \endlist
+
+  此处举一个小例子, 可以自行修改相关参数, 查看结果, 理解参数:
+  \code
+  QMainWindow *wid = new QMainWindow();
+  wid->resize(800, 600);
+  
+  //视图和模型
+  DListView *view = new DListView(wid);
+  QStandardItemModel *model = new QStandardItemModel(view);
+  view->setModel(model);
+  
+  //标准DStandardItem item
+  DStandardItem *item = new DStandardItem();
+  item->setText("这是一个item 的text");
+  
+  //DViewItemAction() 的形参: 其参数 alignment = AlignLeft 或 AlignHCenter 或  AlignRight; 设置为 AlignTop, AlignVCenter, AlignBottom 也是无效的
+  DViewItemAction *act1 = new DViewItemAction(Qt::AlignLeft, QSize(15, 15), QSize(50, 50));
+  act1->setText("act1");
+  act1->setIcon(QIcon("/home/yuanyi/Desktop/dog.jpg"));
+  DViewItemAction *act2 = new DViewItemAction(Qt::AlignRight, QSize(15, 15), QSize());
+  act2->setText("act2");
+  act2->setIcon(QIcon("/home/yuanyi/Desktop/dog.jpg"));
+  DViewItemAction *act3 = new DViewItemAction(Qt::AlignHCenter, QSize(15, 15), QSize(100, 50));
+  act3->setText("act3");
+  act3->setIcon(QIcon("/home/yuanyi/Desktop/dog.jpg"));
+  DViewItemAction *act4 = new DViewItemAction(Qt::AlignLeft, QSize(15, 15), QSize(100, 50));
+  act4->setText("act4");
+  act4->setIcon(QIcon("/home/yuanyi/Desktop/dog.jpg"));
+  
+  DViewItemActionList *list = new DViewItemActionList();
+  list->append(act1);
+  list->append(act2);
+  list->append(act3);
+  list->append(act4);
+  
+  //edge实参: TopEdg, BottomEdge (主要设置前面两个参数), LeftEdge, RightEdge
+  item->setActionList(Qt::BottomEdge, *list);
+  model->appendRow(item);
+  
+  wid->setCentralWidget(view);
+  wid->show();
+  \endcode
+  上代码示例 code 效果图如下:
+  \image DViewItemAction.png
+  \a alignment 设置本控件对象(在父控件的)方向位置: 居左, 居中, 居右 (其他枚举值此处无效)
+  \a iconSize 本控件的图标 icon 的大小
  */
 
 /*!
- * \~chinese \brief 构造函数
- * \~chinese \param[in] Alignment 设置放置的方位
- * \~chinese \param[in] iconSize 设置图标 icon 的大小
- * \~chinese \param[in] maxSize 控件矩形最大的大小
- * \~chinese \param[in] clickable 是否允许点击动作的标识
+  \brief 构造函数
+  \a alignment 设置放置的方位
+  \a iconSize 设置图标 icon 的大小
+  \a maxSize 控件矩形最大的大小
+  \a clickable 是否允许点击动作的标识
  */
 DViewItemAction::DViewItemAction(Qt::Alignment alignment, const QSize &iconSize, const QSize &maxSize, bool clickable)
     : QAction(nullptr)
@@ -491,8 +496,8 @@ DViewItemAction::DViewItemAction(Qt::Alignment alignment, const QSize &iconSize,
 }
 
 /*!
- * \~chinese \brief 获取 DViewItemAction 放置的(水平)位置
- * \~chinese \return 返回 DViewItemAction 放置的(水平)位置
+  \brief 获取 DViewItemAction 放置的(水平)位置
+  \return 返回 DViewItemAction 放置的(水平)位置
  */
 Qt::Alignment DViewItemAction::alignment() const
 {
@@ -502,8 +507,8 @@ Qt::Alignment DViewItemAction::alignment() const
 }
 
 /*!
- * \~chinese \brief 获取图标 icon 的矩形大小
- * \~chinese \return 返回图标 icon 的矩形大小
+  \brief 获取图标 icon 的矩形大小
+  \return 返回图标 icon 的矩形大小
  */
 QSize DViewItemAction::iconSize() const
 {
@@ -513,8 +518,8 @@ QSize DViewItemAction::iconSize() const
 }
 
 /*!
- * \~chinese \brief 获取最大的矩形大小
- * \~chinese \return 返回最大的矩形大小
+  \brief 获取最大的矩形大小
+  \return 返回最大的矩形大小
  */
 QSize DViewItemAction::maximumSize() const
 {
@@ -524,8 +529,8 @@ QSize DViewItemAction::maximumSize() const
 }
 
 /*!
- * \~chinese \brief 获取点击区域范围
- * \~chinese \return 返回点击区域范围
+  \brief 获取点击区域范围
+  \return 返回点击区域范围
  */
 QMargins DViewItemAction::clickAreaMargins() const
 {
@@ -535,8 +540,8 @@ QMargins DViewItemAction::clickAreaMargins() const
 }
 
 /*!
- * \~chinese \brief 设置点击区域范围(eg: 只有图标　icon　时候，会点击区域比较小， 不方便点击， 可以将点击范围设置大一点，便于点击)
- * \~chinese \param[in] margins 将被设置的点击区域间隔数值
+  \brief 设置点击区域范围(eg: 只有图标　icon　时候，会点击区域比较小， 不方便点击， 可以将点击范围设置大一点，便于点击)
+  \a margins 将被设置的点击区域间隔数值
  */
 void DViewItemAction::setClickAreaMargins(const QMargins &margins)
 {
@@ -546,8 +551,8 @@ void DViewItemAction::setClickAreaMargins(const QMargins &margins)
 }
 
 /*!
- * \~chinese \brief 设置文本颜色的角色枚举数值 (DPalette)
- * \~chinese \param[in] role 文本颜色的枚举值
+  \brief 设置文本颜色的角色枚举数值 (DPalette)
+  \a role 文本颜色的枚举值
  */
 void DViewItemAction::setTextColorRole(DPalette::ColorType role)
 {
@@ -558,8 +563,8 @@ void DViewItemAction::setTextColorRole(DPalette::ColorType role)
 }
 
 /*!
- * \~chinese \brief 设置文本颜色的角色枚举数值 (QPalette)
- * \~chinese \param[in] role 文本颜色的枚举值
+  \brief 设置文本颜色的角色枚举数值 (QPalette)
+  \a role 文本颜色的枚举值
  */
 void DViewItemAction::setTextColorRole(QPalette::ColorRole role)
 {
@@ -570,8 +575,8 @@ void DViewItemAction::setTextColorRole(QPalette::ColorRole role)
 }
 
 /*!
- * \~chinese \brief 获取文本颜色类型
- * \~chinese \return 返回文本颜色的类型
+  \brief 获取文本颜色类型
+  \return 返回文本颜色的类型
  */
 DPalette::ColorType DViewItemAction::textColorType() const
 {
@@ -581,8 +586,8 @@ DPalette::ColorType DViewItemAction::textColorType() const
 }
 
 /*!
- * \~chinese \brief 获取文本颜色角色
- * \~chinese \return 返回文本颜色角色
+  \brief 获取文本颜色角色
+  \return 返回文本颜色角色
  */
 DPalette::ColorRole DViewItemAction::textColorRole() const
 {
@@ -592,8 +597,8 @@ DPalette::ColorRole DViewItemAction::textColorRole() const
 }
 
 /*!
- * \~chinese \brief 设置字体大小
- * \~chinese \param[in] size 将要设置的字体大小值
+  \brief 设置字体大小
+  \a size 将要设置的字体大小值
  */
 void DViewItemAction::setFontSize(DFontSizeManager::SizeType size)
 {
@@ -603,8 +608,8 @@ void DViewItemAction::setFontSize(DFontSizeManager::SizeType size)
 }
 
 /*!
- * \~chinese \brief 获取字体
- * \~chinese \return 返回字体
+  \brief 获取字体
+  \return 返回字体
  */
 QFont DViewItemAction::font() const
 {
@@ -618,8 +623,8 @@ QFont DViewItemAction::font() const
 }
 
 /*!
- * \~chinese \brief 获取是否允许被点击的状态(即：如果可以被点击返回true，否则返回false)
- * \~chinese \return 返回是否允许被点击的状态
+  \brief 获取是否允许被点击的状态(即：如果可以被点击返回true，否则返回false)
+  \return 返回是否允许被点击的状态
  */
 bool DViewItemAction::isClickable() const
 {
@@ -629,8 +634,8 @@ bool DViewItemAction::isClickable() const
 }
 
 /*!
- * \~chinese \brief 设置 QWidget
- * \~chinese \param[in] widget 被添加进来的 QWidget
+  \brief 设置 QWidget
+  \a widget 被添加进来的 QWidget
  */
 void DViewItemAction::setWidget(QWidget *widget)
 {
@@ -641,8 +646,8 @@ void DViewItemAction::setWidget(QWidget *widget)
 }
 
 /*!
- * \~chinese \brief 获取 QWidget 控件对象
- * \~chinese \return 返回 QWidget 控件对象
+  \brief 获取 QWidget 控件对象
+  \return 返回 QWidget 控件对象
  */
 QWidget *DViewItemAction::widget() const
 {
@@ -1201,13 +1206,15 @@ static void clearActions(const DViewItemActionList &list)
 }
 
 /*!
- * \~chinese \class DStandardItem
- * \~chinese \brief 提供标准项 item, 通常用于模型/视图,或模型-代理-视图里面,用以提供标准的 item 控件
- * \~chinese \see QStandardItem, 和 DViewItemAction (有代码片示例，可重点参考)
+  \class Dtk::Widget::DStandardItem
+  \inmodule dtkwidget
+  \brief 提供标准项 item,通常用于模型/视图,或模型-代理-视图里面,用以提供标准的 item 控件.
+
+  \sa QStandardItem DViewItemAction
  */
 
 /*!
- * \~chinese \brief 析构函数
+  \brief 析构函数
  */
 DStandardItem::~DStandardItem()
 {
@@ -1219,10 +1226,10 @@ DStandardItem::~DStandardItem()
 }
 
 /*!
- * \~chinese \brief 设置 actionList
- * \~chinese \param[in] edge 选用数值方向的枚举值, 表示设置 list 是在本对象 DStandardItem 的哪一个区域；
- * \~chinese                 edge是相对于 item 的内容区域的，内容区域指的是 item 自身的图标和文字所在区域，也就是通过 setIcon和setText设置的内容的显示区域。
- * \~chinese \param[in] list 许多 actiontem 的集合的 list 列表
+  \brief 设置 actionList
+  \a edge 选用数值方向的枚举值, 表示设置 list 是在本对象 DStandardItem 的哪一个区域；
+                  edge是相对于 item 的内容区域的，内容区域指的是 item 自身的图标和文字所在区域，也就是通过 setIcon和setText设置的内容的显示区域。
+  \a list 许多 actiontem 的集合的 list 列表
  */
 void DStandardItem::setActionList(Qt::Edge edge, const DViewItemActionList &list)
 {
@@ -1238,9 +1245,9 @@ void DStandardItem::setActionList(Qt::Edge edge, const DViewItemActionList &list
 }
 
 /*!
- * \~chinese \brief 获取项 item 的集合列表 list
- * \~chinese \param[in] edge edge是相对于 item 的内容区域的，内容区域指的是 item 自身的图标和文字所在区域，也就是通过 setIcon和setText设置的内容的显示区域。
- * \~chinese \return 返回项 item 的集合列表 list
+  \brief 获取项 item 的集合列表 list
+  \a edge edge是相对于 item 的内容区域的，内容区域指的是 item 自身的图标和文字所在区域，也就是通过 setIcon和setText设置的内容的显示区域。
+  \return 返回项 item 的集合列表 list
  */
 DViewItemActionList DStandardItem::actionList(Qt::Edge edge) const
 {
@@ -1248,52 +1255,52 @@ DViewItemActionList DStandardItem::actionList(Qt::Edge edge) const
 }
 
 /*!
- * \~chinese \brief 设置项 item 的集合列表 list, 只显示有 text 的 DViewItemActionList 集合
- * \~chinese \param[in] 项 item 的集合列表 list, 只显示文字的 item 的集合
- * \~chinese \li 一个参考代码片段，使用 setTextActionList():
- *
- * \code
- * QMainWindow *wid = new QMainWindow();
- * wid->resize(800, 600);
- *
- * //视图和模型
- * DListView *view = new DListView(wid);
- * QStandardItemModel *model = new QStandardItemModel(view);
- * view->setModel(model);
- *
- * //标准DStandardItem item
- * DStandardItem *item = new DStandardItem();
- * item->setText("@1:这是同一个item 的text\n@2:这是同一个item 的text\n@3:这是同一个item 的text\n@4:这是同一个item 的text\n@5:这是同一个item 的text\n@6:这是同一个item 的text");
- *
- * //DViewItemAction() 的形参: 其参数 alignment = AlignLeft 或 AlignHCenter 或  AlignRight; 设置为 AlignTop, AlignVCenter, AlignBottom 也是无效的
- * DViewItemAction *act1 = new DViewItemAction(Qt::AlignBottom, QSize(15, 15), QSize(50, 50));
- * act1->setText("act1");
- * act1->setIcon(QIcon("/home/yuanyi/Desktop/dog.jpg"));
- * DViewItemAction *act2 = new DViewItemAction(Qt::AlignVCenter, QSize(15, 15), QSize());
- * act2->setText("act2");
- * act2->setIcon(QIcon("/home/yuanyi/Desktop/dog.jpg"));
- * DViewItemAction *act3 = new DViewItemAction(Qt::AlignTop, QSize(15, 15), QSize(100, 50));
- * act3->setText("act3");
- * act3->setIcon(QIcon("/home/yuanyi/Desktop/dog.jpg"));
- * DViewItemAction *act4 = new DViewItemAction(Qt::AlignBottom, QSize(15, 15), QSize(100, 50));
- * act4->setText("act4");
- * act4->setIcon(QIcon("/home/yuanyi/Desktop/dog.jpg"));
- *
- * DViewItemActionList *list = new DViewItemActionList();
- * list->append(act1);
- * list->append(act2);
- * list->append(act3);
- * list->append(act4);
- *
- * item->setTextActionList(*list);
- * model->appendRow(item);
- *
- * wid->setCentralWidget(view);
- * wid->show();
- * \endcode
- * \~chinese \li 代码片运行效果图：
- *
- * \~chinese \image html DStandardItem.png
+  \brief 设置项 item 的集合列表 \a list, 只显示有 text 的 DViewItemActionList 集合
+   项 item 的集合列表 \a list, 只显示文字的 item 的集合
+  \b 一个参考代码片段，使用 setTextActionList():
+  
+  \code
+  QMainWindow *wid = new QMainWindow();
+  wid->resize(800, 600);
+  
+  //视图和模型
+  DListView *view = new DListView(wid);
+  QStandardItemModel *model = new QStandardItemModel(view);
+  view->setModel(model);
+  
+  //标准DStandardItem item
+  DStandardItem *item = new DStandardItem();
+  item->setText("@1:这是同一个item 的text\n@2:这是同一个item 的text\n@3:这是同一个item 的text\n@4:这是同一个item 的text\n@5:这是同一个item 的text\n@6:这是同一个item 的text");
+  
+  //DViewItemAction() 的形参: 其参数 alignment = AlignLeft 或 AlignHCenter 或  AlignRight; 设置为 AlignTop, AlignVCenter, AlignBottom 也是无效的
+  DViewItemAction *act1 = new DViewItemAction(Qt::AlignBottom, QSize(15, 15), QSize(50, 50));
+  act1->setText("act1");
+  act1->setIcon(QIcon("/home/yuanyi/Desktop/dog.jpg"));
+  DViewItemAction *act2 = new DViewItemAction(Qt::AlignVCenter, QSize(15, 15), QSize());
+  act2->setText("act2");
+  act2->setIcon(QIcon("/home/yuanyi/Desktop/dog.jpg"));
+  DViewItemAction *act3 = new DViewItemAction(Qt::AlignTop, QSize(15, 15), QSize(100, 50));
+  act3->setText("act3");
+  act3->setIcon(QIcon("/home/yuanyi/Desktop/dog.jpg"));
+  DViewItemAction *act4 = new DViewItemAction(Qt::AlignBottom, QSize(15, 15), QSize(100, 50));
+  act4->setText("act4");
+  act4->setIcon(QIcon("/home/yuanyi/Desktop/dog.jpg"));
+  
+  DViewItemActionList *list = new DViewItemActionList();
+  list->append(act1);
+  list->append(act2);
+  list->append(act3);
+  list->append(act4);
+  
+  item->setTextActionList(*list);
+  model->appendRow(item);
+  
+  wid->setCentralWidget(view);
+  wid->show();
+  \endcode
+  \b 代码片运行效果图：
+  
+  \image DStandardItem.png
  */
 void DStandardItem::setTextActionList(const DViewItemActionList &list)
 {
@@ -1308,7 +1315,7 @@ void DStandardItem::setTextActionList(const DViewItemActionList &list)
 }
 
 /*!
- * \~chinese \brief 返回 "扩充的文本内容列表" 数据
+  \brief 返回 "扩充的文本内容列表" 数据
  */
 DViewItemActionList DStandardItem::textActionList() const
 {

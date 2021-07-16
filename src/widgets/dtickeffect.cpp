@@ -27,31 +27,40 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
- * \~chinese \class DTickEffect
- * \~chinese \brief 这个类提供了跑马灯效果，可以让控件的内容滚动起来
- *
- * 注意: 该类目前只支持滚动可视区域，如果需要滚动完整的界面，需要使用QScrollarea封装一下
- *
- * \~chinese \enum DTickEffect::Direction 滚动方向的枚举值
- * \~chinese \var DTickEffect::Direction DTickEffect::LeftToRight
- * \~chinese \brief 从左往右滚动
- * \~chinese \var DTickEffect::Direction DTickEffect::RightToLeft
- * \~chinese \brief  从右往左滚动
- * \~chinese \var DTickEffect::Direction DTickEffect::TopToBottom
- * \~chinese \brief  从上往下滚动
- * \~chinese \var DTickEffect::Direction DTickEffect::BottomToTop
- * \~chinese \brief  从下往上滚动
- *
- * \~chinese \fn DTickEffect::finished 调用stop方法以后会发出该信号
- * \~chinese \fn DTickEffect::stateChanged 当方向发生改变时会发出该信号
+  \class Dtk::Widget::DTickEffect
+  \inmodule dtkwidget
+  \brief 这个类提供了跑马灯效果，可以让控件的内容滚动起来.
+  
+  \note 注意: 该类目前只支持滚动可视区域，如果需要滚动完整的界面，需要使用QScrollarea封装一下
  */
 
+/*!
+  \enum Dtk::Widget::DTickEffect::Direction 滚动方向的枚举值.
+
+  \value LeftToRight
+  \brief 从左往右滚动
+  \value RightToLeft
+  \brief  从右往左滚动
+  \value TopToBottom
+  \brief  从上往下滚动
+  \value BottomToTop
+  \brief  从下往上滚动
+ */
 
 /*!
- * \~chinese \brief DTickEffect的构造函数
- *
- * @param widget 设置动画绑定的对象
- * @param parent
+  \fn void DTickEffect::finished()
+  调用stop方法以后会发出该信号
+ */
+/*!
+  \fn void DTickEffect::stateChanged()
+  当方向发生改变时会发出该信号
+ */
+
+/*!
+  \brief DTickEffect的构造函数
+  
+  \a widget 设置动画绑定的对象
+  \a parent
  */
 DTickEffect::DTickEffect(QWidget *widget, QWidget *parent)
     : QGraphicsEffect(parent)
@@ -119,8 +128,8 @@ bool DTickEffect::eventFilter(QObject *watched, QEvent *event)
 }
 
 /*!
- * \~chinese \brief 开始播放
- *
+  \brief 开始播放
+  
  */
 void DTickEffect::play()
 {
@@ -132,8 +141,8 @@ void DTickEffect::play()
 }
 
 /*!
- * \~chinese \brief 停止播放
- *
+  \brief 停止播放
+  
  */
 void DTickEffect::stop()
 {
@@ -145,8 +154,8 @@ void DTickEffect::stop()
 }
 
 /*!
- * \~chinese \brief 暂停播放
- *
+  \brief 暂停播放
+  
  */
 void DTickEffect::pause()
 {
@@ -158,8 +167,8 @@ void DTickEffect::pause()
 }
 
 /*!
- * \~chinese \brief 恢复播放
- *
+  \brief 恢复播放
+  
  */
 void DTickEffect::resume()
 {
@@ -171,9 +180,9 @@ void DTickEffect::resume()
 }
 
 /*!
- * \~chinese \brief 设置滚动的方向
- *
- * @param direction
+  \brief 设置滚动的方向
+  
+  \a direction
  */
 void DTickEffect::setDirection(DTickEffect::Direction direction)
 {

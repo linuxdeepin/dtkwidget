@@ -45,20 +45,24 @@ public:
 };
 
 /*!
- * \~chinese \class DButtonBoxButton
- * \~chinese \brief DButtonBoxButton 提供了修改了样式的按钮
- * \~chinese \li DButtonBoxButton 提供了设置图标的按钮的函数
- *
- * \~chinese \note\row 代码示例
- * \~chinese \note\row DButtonBoxButton *btn1 = new DButtonBoxButton("btn1");
- * \~chinese \note\row btn1->setIcon(QStyle::StandardPixmap::SP_ArrowUp);
- * \~chinese \image html DButtonBoxButton.png
+  \class Dtk::Widget::DButtonBoxButton
+  \inmodule dtkwidget
+  \brief DButtonBoxButton 提供了修改了样式的按钮.
+
+  DButtonBoxButton 提供了设置图标的按钮的函数
+  
+  \note 代码示例
+  \note DButtonBoxButton *btn1 = new DButtonBoxButton("btn1");
+  \note btn1->setIcon(QStyle::StandardPixmap::SP_ArrowUp);
+  \image DButtonBoxButton.png
+  \sa Dtk::Widget::DButtonBox
  */
 
 /*!
- * \chinese \brief DButtonBoxButton 构造函数
- * \chinese \param text 按钮名称
- * \chinese \param parent参数被发送到 QAbstractButton 构造函数
+  \brief DButtonBoxButton 构造函数.
+
+  \a text 按钮名称
+  \a parent 参数被发送到 QAbstractButton 构造函数
  */
 DButtonBoxButton::DButtonBoxButton(const QString &text, QWidget *parent)
     : QAbstractButton(parent)
@@ -68,10 +72,11 @@ DButtonBoxButton::DButtonBoxButton(const QString &text, QWidget *parent)
 }
 
 /*!
- * \chinese \brief DButtonBoxButton构造函数
- * \chinese \param icon图标
- * \chinese \param text参数被发送到 DButtonBoxButton 构造函数
- * \chinese \param parent参数被发送到 DButtonBoxButton 构造函数
+  \brief DButtonBoxButton构造函数.
+
+  \a icon 图标
+  \a text 参数被发送到 DButtonBoxButton 构造函数
+  \a parent 参数被发送到 DButtonBoxButton 构造函数
  */
 DButtonBoxButton::DButtonBoxButton(const QIcon &icon, const QString &text, QWidget *parent)
     : DButtonBoxButton(text, parent)
@@ -80,10 +85,11 @@ DButtonBoxButton::DButtonBoxButton(const QIcon &icon, const QString &text, QWidg
 }
 
 /*!
- * \chinese \brief DButtonBoxButton 构造函数
- * \chinese \param iconType Qt标准图标
- * \chinese \param text 参数被发送到 DButtonBoxButton 构造函数
- * \chinese \param parent 参数被发送到 DButtonBoxButton 构造函数
+  \brief DButtonBoxButton 构造函数.
+
+  \a iconType Qt标准图标
+  \a text 参数被发送到 DButtonBoxButton 构造函数
+  \a parent 参数被发送到 DButtonBoxButton 构造函数
  */
 DButtonBoxButton::DButtonBoxButton(QStyle::StandardPixmap iconType, const QString &text, QWidget *parent)
     : DButtonBoxButton(static_cast<DStyle::StandardPixmap>(iconType), text, parent)
@@ -92,10 +98,11 @@ DButtonBoxButton::DButtonBoxButton(QStyle::StandardPixmap iconType, const QStrin
 }
 
 /*!
- * \chinese \brief DButtonBoxButton 构造函数
- * \chinese \param iconType 标准图标
- * \chinese \param text 参数被发送到 DButtonBoxButton 构造函数
- * \chinese \param parent 参数被发送到 DButtonBoxButton 构造函数
+  \brief DButtonBoxButton 构造函数.
+
+  \a iconType 标准图标
+  \a text 参数被发送到 DButtonBoxButton 构造函数
+  \a parent 参数被发送到 DButtonBoxButton 构造函数
  */
 DButtonBoxButton::DButtonBoxButton(DStyle::StandardPixmap iconType, const QString &text, QWidget *parent)
     : DButtonBoxButton(text, parent)
@@ -104,8 +111,8 @@ DButtonBoxButton::DButtonBoxButton(DStyle::StandardPixmap iconType, const QStrin
 }
 
 /*!
- * \chinese \brief DButtonBoxButton::setIcon 设置图标
- * \chinese \param icon图标
+  \brief DButtonBoxButton::setIcon 设置图标
+  \a icon图标
  */
 void DButtonBoxButton::setIcon(const QIcon &icon)
 {
@@ -116,8 +123,8 @@ void DButtonBoxButton::setIcon(const QIcon &icon)
 }
 
 /*!
- * \chinese \brief DButtonBoxButton::setIcon 设置图标
- * \chinese \param iconType Qt标准图标
+  \brief DButtonBoxButton::setIcon 设置图标
+  \a iconType Qt标准图标
  */
 void DButtonBoxButton::setIcon(QStyle::StandardPixmap iconType)
 {
@@ -128,8 +135,8 @@ void DButtonBoxButton::setIcon(QStyle::StandardPixmap iconType)
 }
 
 /*!
- * \chinese \brief DButtonBoxButton::setIcon 设置图标
- * \chinese \param iconType 标准图标
+  \brief DButtonBoxButton::setIcon 设置图标
+  \a iconType 标准图标
  */
 void DButtonBoxButton::setIcon(DStyle::StandardPixmap iconType)
 {
@@ -140,7 +147,7 @@ void DButtonBoxButton::setIcon(DStyle::StandardPixmap iconType)
 }
 
 /*!
- * \chinese \brief DButtonBoxButton::iconSize 返回图标大小
+  \brief DButtonBoxButton::iconSize 返回图标大小
  */
 QSize DButtonBoxButton::iconSize() const
 {
@@ -163,8 +170,8 @@ QSize DButtonBoxButton::iconSize() const
 }
 
 /*!
- * \chinese \brief DButtonBoxButton::sizeHint
- * \chinese \row \sa QAbstractButton::sizeHint()
+  \brief DButtonBoxButton::sizeHint
+  \sa QAbstractButton::sizeHint()
  */
 QSize DButtonBoxButton::sizeHint() const
 {
@@ -207,8 +214,8 @@ QSize DButtonBoxButton::sizeHint() const
 }
 
 /*!
- * \~chinese \brief DButtonBoxButton::minimumSizeHint
- * \~chinese \row \sa QAbstractButton::minimumSizeHint()
+  \brief DButtonBoxButton::minimumSizeHint
+  \sa QAbstractButton::minimumSizeHint()
  */
 QSize DButtonBoxButton::minimumSizeHint() const
 {
@@ -346,23 +353,28 @@ DStyleOptionButtonBoxButton::ButtonPosition DButtonBoxPrivate::getButtonPosition
 }
 
 /*!
- * \~chinese \class DButtonBox
- * \~chinese \brief DButtonBox 类似于 QButtonGroup 的类
- * \~chinese \li DButtonBox 提供了对按钮的布局方向
- *
- * \~chinese \code 示例代码
- * \~chinese \row DButtonBox box;
- * \~chinese \row DButtonBoxButton *btn1 = new DButtonBoxButton("btn1");
- * \~chinese \row DButtonBoxButton *btn2 = new DButtonBoxButton("btn2");
- * \~chinese \row btn1->setIcon(QStyle::StandardPixmap::SP_ArrowUp);
- * \~chinese \row box.setButtonList({btn1, btn2}, true);
- * \~chinese \endcode
- * \~chinese \image html DButtonBox.png
+  \class Dtk::Widget::DButtonBox
+  \inmodule dtkwidget
+  \brief DButtonBox 类似于 QButtonGroup 的类.
+
+  DButtonBox 提供了对按钮的布局方向
+  
+  \code 示例代码
+  DButtonBox box;
+  DButtonBoxButton *btn1 = new DButtonBoxButton("btn1");
+  DButtonBoxButton *btn2 = new DButtonBoxButton("btn2");
+  btn1->setIcon(QStyle::StandardPixmap::SP_ArrowUp);
+  box.setButtonList({btn1, btn2}, true);
+  \endcode
+  \image DButtonBox.png
+
+  \sa Dtk::Widget::DButtonBoxButton
  */
 
 /*!
- * \~chinese \brief DButtonBox::DButtonBox 构造函数
- * \~chinese \param parent 参数被发送到 QWidget 构造函数
+  \brief DButtonBox::DButtonBox 构造函数.
+
+  \a parent 参数被发送到 QWidget 构造函数
  */
 DButtonBox::DButtonBox(QWidget *parent)
     : QWidget(parent)
@@ -372,8 +384,9 @@ DButtonBox::DButtonBox(QWidget *parent)
 }
 
 /*!
- * \~chinese \brief DButtonBox::orientation 返回布局方向
- * \~chinese \row \sa Qt::Orientation
+  \brief DButtonBox::orientation 返回布局方向.
+
+  \sa Qt::Orientation
  */
 Qt::Orientation DButtonBox::orientation() const
 {
@@ -389,8 +402,9 @@ Qt::Orientation DButtonBox::orientation() const
 }
 
 /*!
- * \~chinese \brief DButtonBox::setOrientation 设置布局方向
- * \~chinese \param \sa orientationQt::Orientation
+  \brief DButtonBox::setOrientation 设置布局方向.
+
+  \a orientation \sa Qt::Orientation
  */
 void DButtonBox::setOrientation(Qt::Orientation orientation)
 {
@@ -401,9 +415,10 @@ void DButtonBox::setOrientation(Qt::Orientation orientation)
 }
 
 /*!
- * \~chinese \brief DButtonBox::setButtonList将按钮进添加到组中
- * \~chinese \param list存储按钮的 QList 列表
- * \~chinese \param checkable按钮是否可选中
+  \brief DButtonBox::setButtonList将按钮进添加到组中.
+
+  \a list 存储按钮的 QList 列表
+  \a checkable 按钮是否可选中
  */
 void DButtonBox::setButtonList(const QList<DButtonBoxButton *> &list, bool checkable)
 {
@@ -426,8 +441,8 @@ void DButtonBox::setButtonList(const QList<DButtonBoxButton *> &list, bool check
 }
 
 /*!
- * \~chinese \brief DButtonBox::buttonList
- * \~chinese \row \sa QButtonGroup::buttons()
+  \brief DButtonBox::buttonList
+  \sa QButtonGroup::buttons()
  */
 QList<QAbstractButton *> DButtonBox::buttonList() const
 {
@@ -437,8 +452,8 @@ QList<QAbstractButton *> DButtonBox::buttonList() const
 }
 
 /*!
- * \~chinese \brief DButtonBox::checkedButton
- * \~chinese \row \sa QButtonGroup::checkedButton()
+  \brief DButtonBox::checkedButton
+  \sa QButtonGroup::checkedButton()
  */
 QAbstractButton *DButtonBox::checkedButton() const
 {
@@ -448,8 +463,8 @@ QAbstractButton *DButtonBox::checkedButton() const
 }
 
 /*!
- * \~chinese \brief DButtonBox::button
- * \~chinese \row \sa QButtonGroup::button()
+  \brief DButtonBox::button
+  \sa QButtonGroup::button()
  */
 QAbstractButton *DButtonBox::button(int id) const
 {
@@ -459,8 +474,8 @@ QAbstractButton *DButtonBox::button(int id) const
 }
 
 /*!
- * \~chinese \brief DButtonBox::setId
- * \~chinese \row \sa QButtonGroup::setId()
+  \brief DButtonBox::setId
+  \sa QButtonGroup::setId()
  */
 void DButtonBox::setId(QAbstractButton *button, int id)
 {
@@ -470,8 +485,8 @@ void DButtonBox::setId(QAbstractButton *button, int id)
 }
 
 /*!
- * \~chinese \brief DButtonBox::id
- * \~chinese \row \sa QButtonGroup::id()
+  \brief DButtonBox::id
+  \sa QButtonGroup::id()
  */
 int DButtonBox::id(QAbstractButton *button) const
 {
@@ -480,8 +495,8 @@ int DButtonBox::id(QAbstractButton *button) const
     return d->group->id(button);
 }
 /*!
- * \~chinese \brief DButtonBox::checkedId
- * \~chinese \row \sa QButtonGroup::
+  \brief DButtonBox::checkedId
+  \sa QButtonGroup
  */
 int DButtonBox::checkedId() const
 {

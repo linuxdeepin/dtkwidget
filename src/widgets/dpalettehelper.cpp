@@ -58,10 +58,10 @@ DPaletteHelper *DPaletteHelper::instance()
 }
 
 /*!
- * \~chinese \brief DPaletteHelper::palette返回调色板
- * \~chinese \param widget控件
- * \~chinese \param base调色板
- * \~chinese \return 调色板
+  \brief DPaletteHelper::palette返回调色板
+  \a widget 控件
+  \a base 调色板
+  \return 调色板
  */
 DPalette DPaletteHelper::palette(const QWidget *widget, const QPalette &base) const
 {
@@ -110,9 +110,9 @@ DPalette DPaletteHelper::palette(const QWidget *widget, const QPalette &base) co
 }
 
 /*!
- * \~chinese \brief DPaletteHelper::setPalette将调色板设置到控件
- * \~chinese \param widget控件
- * \~chinese \param palette调色板
+  \brief DPaletteHelper::setPalette将调色板设置到控件
+  \a widget 控件
+  \a palette 调色板
  */
 void DPaletteHelper::setPalette(QWidget *widget, const DPalette &palette)
 {
@@ -126,8 +126,8 @@ void DPaletteHelper::setPalette(QWidget *widget, const DPalette &palette)
 }
 
 /*!
- * \~chinese \brief DPaletteHelper::resetPalette重置控件的调色板属性
- * \~chinese \param widget控件
+  \brief DPaletteHelper::resetPalette重置控件的调色板属性
+  \a widget 控件
  */
 void DPaletteHelper::resetPalette(QWidget *widget)
 {

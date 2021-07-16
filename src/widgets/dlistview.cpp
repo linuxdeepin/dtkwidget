@@ -159,41 +159,42 @@ void DListViewPrivate::onOrientationChanged()
 }
 
 // ====================Signals begin====================
-/**
- * \~chinese \fn DListView::currentChanged
- * \~chinese \brief 这个信号当当前item发生改变时被调用
- *
- * \~chinese listview会有一个始终表示当前item索引的 QModelIndex 对象，
- * \~chinese 当这个 QModelIndex 对象表示的位置发生改变时这个信号才会被调用，而不是当前item的内容发生改变时。
- * \~chinese 当鼠标单机某一个item或者使用键盘切换item时，
- *
- * \~chinese \param previous 为之前的item的索引对象
- *
- * \~chinese \sa QModelIndex QListView::currentChanged
+/*!
+  \fn void DListView::currentChanged(const QModelIndex &previous)
+  \brief 这个信号当当前item发生改变时被调用
+  
+  listview会有一个始终表示当前item索引的 QModelIndex 对象，
+  当这个 QModelIndex 对象表示的位置发生改变时这个信号才会被调用，而不是当前item的内容发生改变时。
+  当鼠标单机某一个item或者使用键盘切换item时，
+  
+  \a previous 为之前的item的索引对象
+  
+  \sa QModelIndex QListView::currentChanged
  */
 
-/**
- * \~chinese \fn DListView::triggerEdit
- * \~chinese \brief 这个信号当有新的item被编辑时被调用
- *
- * \~chinese \param index 为正在编辑的item的索引对象
- *
- * \~chinese \sa QModelIndex QAbstractItemView::EditTrigger
+/*!
+  \fn void DListView::triggerEdit(const QModelIndex &index)
+  \brief 这个信号当有新的item被编辑时被调用
+  
+  \a index 为正在编辑的item的索引对象
+  
+  \sa QModelIndex QAbstractItemView::EditTrigger
  */
 // ====================Signals end====================
 
-/**
- * \~chinese \class DListView
- * \~chinese \brief 一个用于展示一列数据的控件
- *
- * \~chinese DListView 类似与 QListView 属于 Qt's model/view framework 的一个类，常被用来展示一列数据，当数据较多时可以滚动控件以显示跟多内容。
- * \~chinese 但与 QListView 也有不同之处，DListView 提供了顶部控件和底部控件，它们始终显示在listview中，不会因为滚动而不可见，另外还提供了方便编辑
- * \~chinese 数据的方法，如：addItem , addItems , insertItem , takeItem , removeItem , 以及一些开发中常用的信号。
+/*!
+  \class Dtk::Widget::DListView
+  \inmodule dtkwidget
+  \brief 一个用于展示一列数据的控件.
+  
+  DListView 类似与 QListView 属于 Qt's model/view framework 的一个类，常被用来展示一列数据，当数据较多时可以滚动控件以显示跟多内容。
+  但与 QListView 也有不同之处，DListView 提供了顶部控件和底部控件，它们始终显示在listview中，不会因为滚动而不可见，另外还提供了方便编辑
+  数据的方法，如：addItem , addItems , insertItem , takeItem , removeItem , 以及一些开发中常用的信号。
  */
 
-/**
- * \~chinese \brief 获取一个 DListView 实例
- * \~chinese \param parent 被用来作为 DListView 实例的父控件
+/*!
+  \brief 获取一个 DListView 实例
+  \a parent 被用来作为 DListView 实例的父控件
  */
 DListView::DListView(QWidget *parent) :
     QListView(parent),
@@ -202,14 +203,14 @@ DListView::DListView(QWidget *parent) :
     d_func()->init();
 }
 
-/**
- * \~chinese \brief 获取控件当前的状态
- *
- * \~chinese 控件可以有正在被拖拽，正在被编辑，正在播放动画等状态，详细可以查阅：QAbstractItemView::State
- *
- * \~chinese \return 控件当前的状态
- *
- * \~chinese \sa QAbstractItemView::State
+/*!
+  \brief 获取控件当前的状态
+  
+  控件可以有正在被拖拽，正在被编辑，正在播放动画等状态，详细可以查阅：QAbstractItemView::State
+  
+  \return 控件当前的状态
+  
+  \sa QAbstractItemView::State
  */
 QAbstractItemView::State DListView::state() const
 {
@@ -261,18 +262,18 @@ QSize DListView::minimumSizeHint() const
 }
 
 /*!
- * \~chinese \brief 获取一个顶部控件
- *
- * \~chinese 顶部控件与item一样都会在listview中被显示出来，而且顶部控件会始终在所有item之上，
- * \~chinese 也就是说顶部控件与item不同的地方在于顶部控件始终显示在布局中，而不会因为鼠标滚动不可见。
- * \~chinese 另外顶部控件可以有多个，它们的布局方式(方向)与item的布局方向相同
- *
- * \~chinese \param index 指定要获取的顶部控件的索引
- * \~chinese \return 返回在指定索引处的顶部控件对象
- *
- * \~chinese \note 注意顶部控件并不是像 GridLayout 的表头，表头是始终在水平方向上布局的
- *
- * \~chinese \sa DListView::getFooterWidget DListView::addHeaderWidget DListView::removeHeaderWidget DListView::takeHeaderWidget
+  \brief 获取一个顶部控件
+  
+  顶部控件与item一样都会在listview中被显示出来，而且顶部控件会始终在所有item之上，
+  也就是说顶部控件与item不同的地方在于顶部控件始终显示在布局中，而不会因为鼠标滚动不可见。
+  另外顶部控件可以有多个，它们的布局方式(方向)与item的布局方向相同
+  
+  \a index 指定要获取的顶部控件的索引
+  \return 返回在指定索引处的顶部控件对象
+  
+  \note 注意顶部控件并不是像 GridLayout 的表头，表头是始终在水平方向上布局的
+  
+  \sa DListView::getFooterWidget DListView::addHeaderWidget DListView::removeHeaderWidget DListView::takeHeaderWidget
  */
 QWidget *DListView::getHeaderWidget(int index) const
 {
@@ -280,10 +281,10 @@ QWidget *DListView::getHeaderWidget(int index) const
 }
 
 /*!
- * \~chinese \brief 获取一个底部控件
- * \~chinese \param index 指定要获取的底部控件的索引
- * \~chinese \return 返回在指定索引处的底部控件对象
- * \~chinese \sa DListView::getHeaderWidget
+  \brief 获取一个底部控件
+  \a index 指定要获取的底部控件的索引
+  \return 返回在指定索引处的底部控件对象
+  \sa DListView::getHeaderWidget
  */
 QWidget *DListView::getFooterWidget(int index) const
 {
@@ -291,13 +292,13 @@ QWidget *DListView::getFooterWidget(int index) const
 }
 
 /*!
- * \~chinese \brief 判断给定的 QRect 是否与 listview 的item可显示区域有重叠
- *
- * \~chinese listview 的item可显示区域即为 listview 的 viewport ， items只能在 viewport 显示，超出这一区域的 item 将不可见。
- *
- * \~chinese \param rect 要对比的 QRect
- * \~chinese \return 返回两个矩形是否有重叠区域
- * \~chinese \sa DListView::isVisualRect
+  \brief 判断给定的 QRect 是否与 listview 的item可显示区域有重叠
+  
+  listview 的item可显示区域即为 listview 的 viewport ， items只能在 viewport 显示，超出这一区域的 item 将不可见。
+  
+  \a rect 要对比的 QRect
+  \return 返回两个矩形是否有重叠区域
+  \sa DListView::isVisualRect
  */
 bool DListView::isActiveRect(const QRect &rect) const
 {
@@ -309,8 +310,8 @@ bool DListView::isActiveRect(const QRect &rect) const
 }
 
 /*!
- * \~chinese \brief 与 DListView::isVisualRect 相同
- * \~chinese \sa DListView::isVisualRect
+  \brief 与 DListView::isVisualRect 相同
+  \sa DListView::isVisualRect
  */
 bool DListView::isVisualRect(const QRect &rect) const
 {
@@ -319,34 +320,34 @@ bool DListView::isVisualRect(const QRect &rect) const
     return area.intersects(rect);
 }
 
-/**
- * \~chinese \fn DListView::rowCountChanged
- * \~chinese \sa DListView::count
+/*!
+  \fn void DListView::rowCountChanged()
+  \sa DListView::count
  */
 
-/**
- * \~chinese \property DListView::count
- * \~chinese \brief 这个属性保存共有多少行数据
- *
- * \~chinese Getter: DListView::count , Signal: DListView::rowCountChanged
+/*!
+  \property DListView::count
+  \brief 这个属性保存共有多少行数据
+  
+  Getter: DListView::count , Signal: DListView::rowCountChanged
  */
 int DListView::count() const
 {
     return model()->rowCount(rootIndex());
 }
 
-/**
- * \~chinese \fn DListView::orientationChanged
- * \~chinese \sa DListView::orientation
+/*!
+  \fn void DListView::orientationChanged(Qt::Orientation orientation)
+  \sa DListView::orientation
  */
 
-/**
- * \~chinese \property DListView::orientation
- * \~chinese \brief 这个属性保存listview中item的布局方式
- *
- * \~chinese Getter: DListView::orientation , Setter: DListView::setOrientation , Signal: DListView::orientationChanged
- *
- * \~chinese \sa Qt::Orientation
+/*!
+  \property DListView::orientation
+  \brief 这个属性保存listview中item的布局方式
+  
+  Getter: DListView::orientation , Setter: DListView::setOrientation , Signal: DListView::orientationChanged
+  
+  \sa Qt::Orientation
  */
 Qt::Orientation DListView::orientation() const
 {
@@ -358,12 +359,12 @@ Qt::Orientation DListView::orientation() const
 }
 
 /*!
- * \~chinese \brief 设置 DListView 要使用的模型
- *
- * \~chinese 模型用来为 listview 提供数据，以实现数据层与界面层分离的结构, 详细请查阅 Qt's model/view framework
- *
- * \~chinese \param model 模型对象
- * \~chinese \sa QListView::setModel
+  \brief 设置 DListView 要使用的模型
+  
+  模型用来为 listview 提供数据，以实现数据层与界面层分离的结构, 详细请查阅 Qt's model/view framework
+  
+  \a model 模型对象
+  \sa QListView::setModel
  */
 void DListView::setModel(QAbstractItemModel *model)
 {
@@ -412,9 +413,9 @@ QSize DListView::itemSize() const
 }
 
 /*!
- * \~chinese \brief 在列表底部新增一个item
- * \~chinese \param data 要新增的数据
- * \~chinese \return 返回是否新增成功
+  \brief 在列表底部新增一个item
+  \a data 要新增的数据
+  \return 返回是否新增成功
  */
 bool DListView::addItem(const QVariant &data)
 {
@@ -422,9 +423,9 @@ bool DListView::addItem(const QVariant &data)
 }
 
 /*!
- * \~chinese \brief 一次性在列表底部新增多个item
- * \~chinese \param datas 要新增的数据组成的列表
- * \~chinese \return 是否新增成功
+  \brief 一次性在列表底部新增多个item
+  \a datas 要新增的数据组成的列表
+  \return 是否新增成功
  */
 bool DListView::addItems(const QVariantList &datas)
 {
@@ -432,10 +433,10 @@ bool DListView::addItems(const QVariantList &datas)
 }
 
 /*!
- * \~chinese \brief 在指定行处新增一个item
- * \~chinese \param index 要增加item的行号
- * \~chinese \param data 要增加的item的数据
- * \~chinese \return 是否新增成功
+  \brief 在指定行处新增一个item
+  \a index 要增加item的行号
+  \a data 要增加的item的数据
+  \return 是否新增成功
  */
 bool DListView::insertItem(int index, const QVariant &data)
 {
@@ -446,10 +447,10 @@ bool DListView::insertItem(int index, const QVariant &data)
 }
 
 /*!
- * \~chinese \brief 在指定行处新增多个item
- * \~chinese \param index 要增加item的行号
- * \~chinese \param datas 要增加的items的数据组成的列表
- * \~chinese \return 是否新增成功
+  \brief 在指定行处新增多个item
+  \a index 要增加item的行号
+  \a datas 要增加的items的数据组成的列表
+  \return 是否新增成功
  */
 bool DListView::insertItems(int index, const QVariantList &datas)
 {
@@ -463,9 +464,9 @@ bool DListView::insertItems(int index, const QVariantList &datas)
 }
 
 /*!
- * \~chinese \brief 移除指定位置的item
- * \~chinese \param index 要移除的item的行号
- * \~chinese \return 是否移除成功
+  \brief 移除指定位置的item
+  \a index 要移除的item的行号
+  \return 是否移除成功
  */
 bool DListView::removeItem(int index)
 {
@@ -473,10 +474,10 @@ bool DListView::removeItem(int index)
 }
 
 /*!
- * \~chinese \brief 一次移除多个item
- * \~chinese \param index 开始移除item的行号
- * \~chinese \param count 移除从 index 指定的行号开始，移除 count 个item
- * \~chinese \return 返回是否移除成功
+  \brief 一次移除多个item
+  \a index 开始移除item的行号
+  \a count 移除从 index 指定的行号开始，移除 count 个item
+  \return 返回是否移除成功
  */
 bool DListView::removeItems(int index, int count)
 {
@@ -484,7 +485,7 @@ bool DListView::removeItems(int index, int count)
 }
 
 /*!
- * \~chinese \sa DListView::getHeaderWidget
+  \sa DListView::getHeaderWidget
  */
 int DListView::addHeaderWidget(QWidget *widget)
 {
@@ -531,7 +532,7 @@ int DListView::addHeaderWidget(QWidget *widget)
 }
 
 /*!
- * \~chinese \sa DListView::getHeaderWidget
+  \sa DListView::getHeaderWidget
  */
 void DListView::removeHeaderWidget(int index)
 {
@@ -542,8 +543,8 @@ void DListView::removeHeaderWidget(int index)
 }
 
 /*!
- * \~chinese \brief 与 DListView::getHeaderWidget 类似，但返回要移除的顶部控件的对象
- * \~chinese \sa DListView::getHeaderWidget
+  \brief 与 DListView::getHeaderWidget 类似，但返回要移除的顶部控件的对象
+  \sa DListView::getHeaderWidget
  */
 QWidget *DListView::takeHeaderWidget(int index)
 {
@@ -562,7 +563,7 @@ QWidget *DListView::takeHeaderWidget(int index)
 }
 
 /*!
- * \~chinese \sa DListView::getFooterWidget
+  \sa DListView::getFooterWidget
  */
 int DListView::addFooterWidget(QWidget *widget)
 {
@@ -614,7 +615,7 @@ int DListView::addFooterWidget(QWidget *widget)
 }
 
 /*!
- * \~chinese \sa DListView::getFooterWidget
+  \sa DListView::getFooterWidget
  */
 void DListView::removeFooterWidget(int index)
 {
@@ -625,7 +626,7 @@ void DListView::removeFooterWidget(int index)
 }
 
 /*!
- * \~chinese \sa DListView::getFooterWidget DListView::takeHeaderWidget
+  \sa DListView::getFooterWidget DListView::takeHeaderWidget
  */
 QWidget *DListView::takeFooterWidget(int index)
 {
@@ -643,8 +644,8 @@ QWidget *DListView::takeFooterWidget(int index)
     return widget;
 }
 
-/**
- * \~chinese \sa DListView::orientation
+/*!
+  \sa DListView::orientation
  */
 void DListView::setOrientation(QListView::Flow flow, bool wrapping)
 {
@@ -683,8 +684,8 @@ void DListView::setOrientation(QListView::Flow flow, bool wrapping)
 }
 
 /*!
- * \~chinese \brief 开始编辑一个item
- * \~chinese \param index 指定要编辑的item的位置
+  \brief 开始编辑一个item
+  \a index 指定要编辑的item的位置
  */
 void DListView::edit(const QModelIndex &index)
 {
@@ -692,8 +693,8 @@ void DListView::edit(const QModelIndex &index)
 }
 
 /*!
- * \~chinese \brief DListView::setBackgroundType 设定item的背景色类型
- * \~chinese \param backgroundType 背景色类型
+  \brief DListView::setBackgroundType 设定item的背景色类型
+  \a backgroundType 背景色类型
  */
 void DListView::setBackgroundType(DStyledItemDelegate::BackgroundType backgroundType)
 {
@@ -711,8 +712,8 @@ void DListView::setBackgroundType(DStyledItemDelegate::BackgroundType background
 }
 
 /*!
- * \~chinese \brief DListView::setItemMargins 设定item的内容margin
- * \~chinese \param itemMargins margin值
+  \brief DListView::setItemMargins 设定item的内容margin
+  \a itemMargins margin值
  */
 void DListView::setItemMargins(const QMargins &itemMargins)
 {
@@ -722,8 +723,8 @@ void DListView::setItemMargins(const QMargins &itemMargins)
 }
 
 /*!
- * \~chinese \brief DListView::setItemSize设定item的尺寸
- * \~chinese \param itemSize 尺寸的大小
+  \brief DListView::setItemSize设定item的尺寸
+  \a itemSize 尺寸的大小
  */
 void DListView::setItemSize(QSize itemSize)
 {
@@ -733,8 +734,8 @@ void DListView::setItemSize(QSize itemSize)
 }
 
 /*!
- * \~chinese \brief DListView::setItemSpacing　设定item的间距大小
- * \~chinese \param spacing　间距大小值
+  \brief DListView::setItemSpacing　设定item的间距大小
+  \a spacing　间距大小值
  */
 void DListView::setItemSpacing(int spacing)
 {
@@ -744,8 +745,8 @@ void DListView::setItemSpacing(int spacing)
 }
 
 /*!
- * \~chinese \brief DListView::setItemRadius 设定item的圆角大小
- * \~chinese \param radius 圆角大小值
+  \brief DListView::setItemRadius 设定item的圆角大小
+  \a radius 圆角大小值
  */
 void DListView::setItemRadius(int radius)
 {

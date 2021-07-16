@@ -28,23 +28,24 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
- * \~chinese \class DMPRISControl
- * \~chinese \brief DMPRISControl 封装了MPRIS协议，提供了上一曲、下一曲、暂停播放、恢复播放和显示歌曲名和封面的功能。
+  \class Dtk::Widget::DMPRISControl
+  \inmodule dtkwidget
+  \brief DMPRISControl 封装了MPRIS协议，提供了上一曲、下一曲、暂停播放、恢复播放和显示歌曲名和封面的功能.
  */
 
 /*!
- * \fn DMPRISControl::mprisAcquired
- * \~chinese \brief 当第一次注册MPRIS接口时会发出该信号
- * \fn DMPRISControl::mprisChanged
- * \~chinese \brief 当MPRIS接口列表发生变化时会发出该信号
- * \fn DMPRISControl::mprisLosted
- * \~chinese \brief 当MPRIS接口中有退出的服务时会发出该信号
+  \fn void DMPRISControl::mprisAcquired() const
+  \brief 当第一次注册MPRIS接口时会发出该信号
+  \fn void DMPRISControl::mprisChanged() const
+  \brief 当MPRIS接口列表发生变化时会发出该信号
+  \fn void DMPRISControl::mprisLosted() const
+  \brief 当MPRIS接口中有退出的服务时会发出该信号
  */
 
 /*!
- * \~chinese \brief DMPRISControl::DMPRISControl 的构造函数
- *
- * @param parent 初始化QFrame的构造函数
+  \brief DMPRISControl::DMPRISControl 的构造函数
+  
+  \a parent 初始化QFrame的构造函数
  */
 DMPRISControl::DMPRISControl(QWidget *parent)
     : QFrame(parent),
@@ -56,10 +57,10 @@ DMPRISControl::DMPRISControl(QWidget *parent)
 }
 
 /*!
- * \~chinese \brief 返回当前是否在工作状态
- *
- * @return true
- * @return false
+  \brief 返回当前是否在工作状态
+  
+  \return true
+  \return false
  */
 bool DMPRISControl::isWorking() const
 {
@@ -69,9 +70,9 @@ bool DMPRISControl::isWorking() const
 }
 
 /*!
- * \~chinese \brief 设置是否显示封面
- *
- * @param visible
+  \brief 设置是否显示封面
+  
+  \a visible
  */
 void DMPRISControl::setPictureVisible(bool visible)
 {
@@ -82,9 +83,9 @@ void DMPRISControl::setPictureVisible(bool visible)
 }
 
 /*!
- * \~chinese \brief 设置封面大小
- *
- * @param size
+  \brief 设置封面大小
+  
+  \a size
  */
 void DMPRISControl::setPictureSize(const QSize &size)
 {

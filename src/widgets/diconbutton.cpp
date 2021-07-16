@@ -35,8 +35,8 @@ DIconButtonPrivate::DIconButtonPrivate(DIconButton *qq)
 }
 
 /*!
- * \~chinese \brief DIconButton::DIconButton 实现一个方便定义图标的button
- * \~chinese \param parent
+  \brief DIconButton::DIconButton 实现一个方便定义图标的button
+  \a parent
  */
 DIconButton::DIconButton(QWidget *parent)
     : DIconButton(*new DIconButtonPrivate(this), parent)
@@ -63,8 +63,8 @@ DIconButton::~DIconButton()
 }
 
 /*!
- * \~chinese \brief DIconButton::setIcon　设置button的图标
- * \~chinese \param icon　button的图标
+  \brief DIconButton::setIcon　设置button的图标
+  \a icon　button的图标
  */
 void DIconButton::setIcon(const QIcon &icon)
 {
@@ -75,8 +75,8 @@ void DIconButton::setIcon(const QIcon &icon)
 }
 
 /*!
- * \~chinese \brief DIconButton::setIcon 设置button图标的类型,传入QT预定义枚举值
- * \~chinese \param iconType icon类型
+  \brief DIconButton::setIcon 设置button图标的类型,传入QT预定义枚举值
+  \a iconType icon类型
  */
 void DIconButton::setIcon(QStyle::StandardPixmap iconType)
 {
@@ -87,8 +87,8 @@ void DIconButton::setIcon(QStyle::StandardPixmap iconType)
 }
 
 /*!
- * \~chinese \brief DIconButton::setIcon 设置button图标的类型,传入DTK预定义枚举值
- * \~chinese \param iconType icon类型
+  \brief DIconButton::setIcon 设置button图标的类型,传入DTK预定义枚举值
+  \a iconType icon类型
  */
 void DIconButton::setIcon(DStyle::StandardPixmap iconType)
 {
@@ -124,8 +124,8 @@ QSize DIconButton::minimumSizeHint() const
 }
 
 /*!
- * \~chinese \brief DIconButton::iconSize
- * \~chinese \return 返回ICON的尺寸
+  \brief DIconButton::iconSize
+  \return 返回ICON的尺寸
  */
 QSize DIconButton::iconSize() const
 {
@@ -147,8 +147,8 @@ QSize DIconButton::iconSize() const
 }
 
 /*!
- * \~chinese \brief DIconButton::isFlat
- * \~chinese \return true无边框　false有边框
+  \brief DIconButton::isFlat
+  \return true无边框　false有边框
  */
 bool DIconButton::isFlat() const
 {
@@ -176,8 +176,8 @@ bool DIconButton::enabledCircle() const
 }
 
 /*!
- * \~chinese \brief DIconButton::setFlat 设置是否保留边框
- * \~chinese \param flat true无边框　false有边框
+  \brief DIconButton::setFlat 设置是否保留边框
+  \a flat true无边框　false有边框
  */
 void DIconButton::setFlat(bool flat)
 {
@@ -258,8 +258,8 @@ void DIconButton::keyPressEvent(QKeyEvent *event)
 }
 
 /*!
- * \~chinese \brief DIconButton::setNewNotification 设置是否显示小红点
- * \~chinese \param set_new true有红点　false无红点
+  \brief DIconButton::setNewNotification 设置是否显示小红点
+  \a set_new true有红点　false无红点
  */
 void DIconButton::setNewNotification(const bool set_new)
 {

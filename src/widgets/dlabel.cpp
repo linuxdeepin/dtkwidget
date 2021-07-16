@@ -28,16 +28,18 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
- * \~chinese \class DLabel
- * \~chinese \brief DLabel一个重新实现的 QLabel
- * \~chinese \li DLabel提供了将 DLabel 显示在指定位置的函数
- * \~chinese \li DLabel提供了改变字体颜色的函数
+  \class Dtk::Widget::DLabel
+  \inmodule dtkwidget
+  \brief DLabel一个重新实现的 QLabel.
+
+  DLabel提供了将 DLabel 显示在指定位置的函数
+  DLabel提供了改变字体颜色的函数
  */
 
 /*!
- * \~chinese \brief DLabel的构造函数
- * \~chinese \param text文本信息
- * \~chinese \param parent参数被发送到 QLabel 构造函数。
+  \brief DLabel的构造函数.
+  \a text 文本信息
+  \a parent 参数被发送到 QLabel 构造函数。
  */
 DLabel::DLabel(QWidget *parent, Qt::WindowFlags f)
     : QLabel(parent, f)
@@ -61,8 +63,8 @@ DLabel::~DLabel()
 }
 
 /*!
- * \~chinese \brief DLabel::setForegroundRole 显示的字体颜色
- * \~chinese \param role 字体颜色（QPalette::ColorRole）
+  \brief DLabel::setForegroundRole 显示的字体颜色
+  \a role 字体颜色（QPalette::ColorRole）
  */
 void DLabel::setForegroundRole(QPalette::ColorRole role)
 {
@@ -73,8 +75,8 @@ void DLabel::setForegroundRole(QPalette::ColorRole role)
 }
 
 /*!
- * \brief DLabel::setForegroundRole显示的字体颜色
- * \param color字体颜色
+  \brief DLabel::setForegroundRole显示的字体颜色
+  \a color 字体颜色
  */
 void DLabel::setForegroundRole(DPalette::ColorType color)
 {
@@ -83,8 +85,8 @@ void DLabel::setForegroundRole(DPalette::ColorType color)
 }
 
 /*!
- * \~chinese \brief DLabel::setElideMode 设置省略号显示的模式
- * \~chinese \param elideMode 省略模式枚举
+  \brief DLabel::setElideMode 设置省略号显示的模式
+  \a elideMode 省略模式枚举
  */
 void DLabel::setElideMode(Qt::TextElideMode elideMode)
 {
@@ -97,8 +99,8 @@ void DLabel::setElideMode(Qt::TextElideMode elideMode)
 }
 
 /*!
- * \~chinese \brief DLabel::elideMode 获取省略号的模式
- * \~chinese \return 返回省略号的模式
+  \brief DLabel::elideMode 获取省略号的模式
+  \return 返回省略号的模式
  */
 Qt::TextElideMode DLabel::elideMode() const
 {
@@ -107,9 +109,9 @@ Qt::TextElideMode DLabel::elideMode() const
 }
 
 /*!
- * \~chinese \brief DLabel::DLabel 构造函数
- * \~chinese \param dd 私有类成员变量
- * \~chinese \param parent 父控件
+  \brief DLabel::DLabel 构造函数
+  \a dd 私有类成员变量
+  \a parent 父控件
  */
 DLabel::DLabel(DLabelPrivate &dd, QWidget *parent)
     : QLabel(parent)
@@ -119,8 +121,8 @@ DLabel::DLabel(DLabelPrivate &dd, QWidget *parent)
 }
 
 /*!
- * \~chinese \brief DLabel::initPainter 初始化 painter
- * \~chinese \param painter painter 形参
+  \brief DLabel::initPainter 初始化 painter
+  \a painter painter 形参
  */
 void DLabel::initPainter(QPainter *painter) const
 {
@@ -133,9 +135,9 @@ void DLabel::initPainter(QPainter *painter) const
 }
 
 /*!
- * \~chinese \brief DLabel::paintEvent
- * \~chinese \param event 消息事件
- * \~chinese \see 参考 QLabel::paintEvent()
+  \brief DLabel::paintEvent
+  \a event 消息事件
+  \sa QLabel::paintEvent()
  */
 void DLabel::paintEvent(QPaintEvent *event)
 {

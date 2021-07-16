@@ -41,18 +41,15 @@ DWIDGET_BEGIN_NAMESPACE
 const int DefaultTitlebarHeight = 40;
 
 /*!
- * \~english \class DSettingsDialog
- * \brief DSettingsDialog provide an common setting ui for deepin style application.
- * It's depend Dtk::Widget::DSettingsWidgetFactory to auot build ui compent from json file.
- * \sa Dtk::Widget::DSettingsWidgetFactory
- * \sa Dtk::Core::DSettings
- */
+  \class Dtk::Widget::DSettingsDialog
+  \inmodule dtkwidget
 
-/*!
- * \~chinese \class DSettingsDialog
- * \brief 为使用DSettings的Dtk程序提供一个通用的设置对话框，这个对话框可以通过json配置文件来自动生成。
- * \sa Dtk::Widget::DSettingsWidgetFactory
- * \sa Dtk::Core::DSettings
+  \brief 为使用DSettings的Dtk程序提供一个通用的设置对话框，这个对话框可以通过json配置文件来自动生成.
+  \brief DSettingsDialog provide an common setting ui for deepin style application.
+  It's depend Dtk::Widget::DSettingsWidgetFactory to auot build ui compent from json file.
+
+  \sa Dtk::Widget::DSettingsWidgetFactory
+  \sa Dtk::Core::DSettings
  */
 
 class DSettingsDialogPrivate
@@ -139,14 +136,13 @@ DSettingsDialog::~DSettingsDialog()
 }
 
 /*!
- * \~english \brief Return the widget build factory of this dialog.
- * Every instance of DSettingDialog has it own widgetfactory.
- * \return
- */
-/*!
- * \~chinese \brief 获取当前对话框使用的控件构造工厂。
- * 每一个设置对话框都有自己的构造工厂实例，这些实例并不会共享数据。
- * \return
+  \brief 获取当前对话框使用的控件构造工厂。
+  \brief Return the widget build factory of this dialog.
+
+  每一个设置对话框都有自己的构造工厂实例，这些实例并不会共享数据。
+  Every instance of DSettingDialog has it own widgetfactory.
+
+  \return
  */
 DSettingsWidgetFactory *DSettingsDialog::widgetFactory() const
 {
@@ -161,9 +157,9 @@ bool DSettingsDialog::groupIsVisible(const QString &groupKey) const
 }
 
 /*!
- * /~chinese \brief DSettingsDialog::setResetVisible 设置恢复默认设置按钮是否显示
- * /~chinese \param visible true显示 false隐藏
- * /~chinese \note 请在 updateSettings() 后调用
+  \brief DSettingsDialog::setResetVisible 设置恢复默认设置按钮是否显示
+  \a visible true显示 false隐藏
+  \note 请在 updateSettings() 后调用
  */
 void DSettingsDialog::setResetVisible(bool visible)
 {
@@ -176,9 +172,9 @@ void DSettingsDialog::setResetVisible(bool visible)
 }
 
 /*!
- * /~chinese \brief DSettingsDialog::scrollToGroup 使对话框跳转到指定的 group 项目
- * /~chinese \param groupKey DSettings中 groupKeys 以及其子项 childGroups
- * /~chinese \note 请在对话框 show 以后调用
+  \brief DSettingsDialog::scrollToGroup 使对话框跳转到指定的 group 项目
+  \a groupKey DSettings中 groupKeys 以及其子项 childGroups
+  \note 请在对话框 show 以后调用
  */
 void DSettingsDialog::scrollToGroup(const QString &groupKey)
 {
@@ -189,8 +185,8 @@ void DSettingsDialog::scrollToGroup(const QString &groupKey)
 }
 
 /*!
- * \brief DSettingsDialog::setIcon 设置标题栏的图标 QIcon
- * \param icon 设置的 Icon
+  \brief DSettingsDialog::setIcon 设置标题栏的图标 QIcon
+  \a icon 设置的 Icon
  */
 void DSettingsDialog::setIcon(const QIcon &icon)
 {
@@ -200,13 +196,12 @@ void DSettingsDialog::setIcon(const QIcon &icon)
 }
 
 /*!
- * \~english \brief Create all widget for settings options.
- * Warnning that you can only call the once.
- * \param settings Dtk::Core::DSettings object from json
- */
-/*!
- * \~chinese \brief 根据settings数据来创建控件，该方法只能调用一次。
- * \param settings 配置文件实例。
+  \brief Create all widget for settings options.
+  \brief 根据settings数据来创建控件，该方法只能调用一次。
+  Warnning that you can only call the once.
+
+  \a settings 配置文件实例。
+  \a settings Dtk::Core::DSettings object from json
  */
 void DSettingsDialog::updateSettings(Dtk::Core::DSettings *settings)
 {
@@ -215,16 +210,15 @@ void DSettingsDialog::updateSettings(Dtk::Core::DSettings *settings)
 }
 
 /*!
- * \~english \brief Create all widget for settings options with translate context
- * \param translateContext custom translate data for i18n.
- * \param settings Dtk::Core::DSettings object from json
- * \sa void DSettingsDialog::updateSettings(Dtk::Core::DSettings *settings)
- */
-/*!
- * \~chinese \brief 根据settings数据来创建控件，并使用translateContext来进行国际化，该方法只能调用一次。
- * \param translateContext 国际化使用的上下文。
- * \param settings 配置文件实例。
- * \sa void DSettingsDialog::updateSettings(Dtk::Core::DSettings *settings)
+  \brief 根据settings数据来创建控件，并使用translateContext来进行国际化，该方法只能调用一次.
+  \brief Create all widget for settings options with translate context.
+
+  \a translateContext 国际化使用的上下文。
+  \a translateContext custom translate data for i18n.
+  \a settings 配置文件实例。
+  \a settings Dtk::Core::DSettings object from json
+
+  \sa DSettingsDialog::updateSettings(Dtk::Core::DSettings *settings)
  */
 void DSettingsDialog::updateSettings(const QByteArray &translateContext, Core::DSettings *settings)
 {

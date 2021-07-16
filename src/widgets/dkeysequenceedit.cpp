@@ -150,8 +150,8 @@ protected:
 };
 
 /*!
- * \~chinese \brief DKeySequenceEdit::DKeySequenceEdit 一个快捷键编辑展示的控件
- * \~chinese \param parent
+  \brief DKeySequenceEdit::DKeySequenceEdit 一个快捷键编辑展示的控件
+  \a parent
  */
 DKeySequenceEdit::DKeySequenceEdit(QWidget *parent)
     : QLineEdit(parent)
@@ -163,7 +163,7 @@ DKeySequenceEdit::DKeySequenceEdit(QWidget *parent)
 }
 
 /*!
- * \~chinese \brief DKeySequenceEdit::clear 清空内容
+  \brief DKeySequenceEdit::clear 清空内容
  */
 void DKeySequenceEdit::clear()
 {
@@ -175,9 +175,9 @@ void DKeySequenceEdit::clear()
 }
 
 /*!
- * \~chinese \brief DKeySequenceEdit::setKeySequence 设定快捷键
- * \~chinese \param keySequence 快捷键
- * \~chinese \return true设定成功　false设定失败
+  \brief DKeySequenceEdit::setKeySequence 设定快捷键
+  \a keySequence 快捷键
+  \return true设定成功　false设定失败
  */
 bool DKeySequenceEdit::setKeySequence(const QKeySequence &keySequence)
 {
@@ -205,8 +205,8 @@ bool DKeySequenceEdit::setKeySequence(const QKeySequence &keySequence)
 }
 
 /*!
- * \~chinese \brief DKeySequenceEdit::keySequence 返回设定的快捷键
- * \~chinese \return
+  \brief DKeySequenceEdit::keySequence 返回设定的快捷键
+  \return
  */
 QKeySequence DKeySequenceEdit::keySequence()
 {
@@ -215,8 +215,8 @@ QKeySequence DKeySequenceEdit::keySequence()
 }
 
 /*!
- * \~chinese \brief DKeySequenceEdit::ShortcutDirection　快捷键文本展示方向
- * \~chinese \param alig 设定方向的枚举值
+  \brief DKeySequenceEdit::ShortcutDirection　快捷键文本展示方向
+  \a alig 设定方向的枚举值
  */
 void DKeySequenceEdit::ShortcutDirection(Qt::AlignmentFlag alig)
 {
@@ -227,8 +227,8 @@ void DKeySequenceEdit::ShortcutDirection(Qt::AlignmentFlag alig)
 }
 
 /*!
- * \~chinese \brief DKeySequenceEdit::getKeySequence 将Qt快捷键文案转换为Dtk文案
- * \~chinese \return Dtk文案
+  \brief DKeySequenceEdit::getKeySequence 将Qt快捷键文案转换为Dtk文案
+  \return Dtk文案
  */
 QString DKeySequenceEdit::getKeySequence(QKeySequence sequence)
 {

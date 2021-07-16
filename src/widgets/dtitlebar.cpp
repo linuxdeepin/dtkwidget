@@ -681,29 +681,26 @@ void DTitlebarPrivate::updateTabOrder()
 #endif
 
 /*!
- * \~english \class DTitlebar
- * \brief The DTitlebar class is an universal title bar on the top of windows.
- * \param parent is the parent widget to be attached on.
- *
- * Usually you don't need to construct a DTitlebar instance by your self, you
- * can get an DTitlebar instance by DMainWindow::titlebar .
- */
-/*!
- * \~chinese \class DTitlebar
- * \brief Dtitlebar是Dtk程序通用的标题栏组件，用于实现标题栏的高度定制化。
- * \param 父组件，一般为标题栏所在的窗口
- *
- * 一般情况下，请使用Dtk::Widget::DMainWindow::titlebar()来获取已经自动初始化的标题栏，
- * 不要自己来创建这个标题栏。
+  \class Dtk::Widget::DTitlebar
+  \inmodule dtkwidget
+
+  \brief The DTitlebar class is an universal title bar on the top of windows.
+  \brief Dtitlebar是Dtk程序通用的标题栏组件，用于实现标题栏的高度定制化.
+
+  \a parent is the parent widget to be attached on.
+  \a 父组件，一般为标题栏所在的窗口
+  
+  Usually you don't need to construct a DTitlebar instance by your self, you
+  can get an DTitlebar instance by DMainWindow::titlebar .
+  一般情况下，请使用Dtk::Widget::DMainWindow::titlebar()来获取已经自动初始化的标题栏，
+  不要自己来创建这个标题栏。
  */
 
+/*!
+  \brief DTitlebar::DTitlebar create an default widget with icon/title/and buttons
+  \brief 创建一个DTitlebar对象，包含默认的窗口按钮.
 
-/*!
- *  \~english @brief DTitlebar::DTitlebar create an default widget with icon/title/and buttons
- * @param parent
- */
-/*!
- *  \~chinese @brief 创建一个DTitlebar对象，包含默认的窗口按钮。
+  \a parent
  */
 DTitlebar::DTitlebar(QWidget *parent) :
     QFrame(parent),
@@ -724,13 +721,12 @@ DTitlebar::DTitlebar(QWidget *parent) :
 
 #ifndef QT_NO_MENU
 /*!
- * \~english @brief DTitlebar::menu holds the QMenu object attached to this title bar.
- * @return the QMenu object it holds, returns null if there's no one set.
- */
-/*!
- * \~chinese @brief 获取和标题栏关联的应用查询菜单。
- * @return 如该标题栏没有设置菜单，这里会返回空，但是如该使用 Dtk::Widget::DApplication ,
- * 那么这里一般会自动创建一个程序菜单。
+  \brief DTitlebar::menu holds the QMenu object attached to this title bar.
+  \brief 获取和标题栏关联的应用查询菜单.
+
+  \return 如该标题栏没有设置菜单，这里会返回空，但是如该使用 Dtk::Widget::DApplication ,
+  那么这里一般会自动创建一个程序菜单。
+  \return the QMenu object it holds, returns null if there's no one set.
  */
 QMenu *DTitlebar::menu() const
 {
@@ -740,12 +736,11 @@ QMenu *DTitlebar::menu() const
 }
 
 /*!
- * \~english @brief DTitlebar::setMenu attaches a QMenu object to the title bar.
- * @param menu is the target menu.
- */
-/*!
- * \~chinese @brief 设置自定义的程序菜单
- * @param 需要被设置的菜单
+  \brief DTitlebar::setMenu attaches a QMenu object to the title bar.
+  \brief 设置自定义的程序菜单.
+
+  \a menu is the target menu.
+  \a menu 需要被设置的菜单
  */
 void DTitlebar::setMenu(QMenu *menu)
 {
@@ -771,19 +766,16 @@ void DTitlebar::setMenu(QMenu *menu)
 #endif
 
 /*!
- * \~english @brief DTitlebar::customWidget
- * @return the customized widget used in this title bar.
- *
- * One can set customized widget to show some extra widgets on the title bar.
- * \see Dtk::Widget::DTitlebar::setCustomWidget()
- */
-/*!
- * \~chinese @brief 标题栏绑定的自定义控件
- * @return 自定义控件
- *
- * 可以通过自定义控件来在标题栏上显示复杂的组合控件
- *
- * \see Dtk::Widget::DTitlebar::setCustomWidget()
+  \brief DTitlebar::customWidget
+  \brief 标题栏绑定的自定义控件
+  
+  \return the customized widget used in this title bar.
+  \return 自定义控件
+  
+  One can set customized widget to show some extra widgets on the title bar.
+  可以通过自定义控件来在标题栏上显示复杂的组合控件
+  
+  \sa Dtk::Widget::DTitlebar::setCustomWidget()
  */
 QWidget *DTitlebar::customWidget() const
 {
@@ -794,12 +786,9 @@ QWidget *DTitlebar::customWidget() const
 
 #ifndef QT_NO_MENU
 /*!
- * \~english \brief DTitlebar::showMenu pop the menu of application on titlebar.
+  \brief DTitlebar::showMenu pop the menu of application on titlebar.
+  \brief 弹出应用程序菜单
  */
-/*!
- * \~chineses \brief 弹出应用程序菜单
- */
-
 void DTitlebar::showMenu()
 {
     D_D(DTitlebar);
@@ -957,16 +946,16 @@ void DTitlebar::resizeEvent(QResizeEvent *event)
 }
 
 /*!
- * \~english @brief DTitlebar::setCustomWidget is an overloaded function.
- * @param w is the widget to be used as the customize widget shown in the title
- * bar.
- * @param fixCenterPos indicates whether it should automatically move the
- * customize widget to the horizontal center of the title bar or not.
- */
-/*!
- * \~chinese @brief 设置标题栏上的自定义控件
- * @param w 需要显示的控件。
- * @param fixCenterPos 是否需要自动修正控件位置，用于保持控件居中显示。
+  \brief DTitlebar::setCustomWidget is an overloaded function.
+  \brief 设置标题栏上的自定义控件.
+
+  \a w is the widget to be used as the customize widget shown in the title
+  bar.
+  \a fixCenterPos indicates whether it should automatically move the
+  customize widget to the horizontal center of the title bar or not.
+
+  \a w 需要显示的控件。
+  \a fixCenterPos 是否需要自动修正控件位置，用于保持控件居中显示。
  */
 void DTitlebar::setCustomWidget(QWidget *w, bool fixCenterPos)
 {
@@ -1045,13 +1034,12 @@ void DTitlebar::removeWidget(QWidget *w)
 }
 
 /*!
- * \~english @brief DTitlebar::setFixedHeight change the height of the title bar to
- * another value.
- * @param h is the target height.
- */
-/*!
- * \~chinese @brief 设置标题栏的高度，默认高度为 50。
- * @param h 需要设置的高度
+  \brief DTitlebar::setFixedHeight change the height of the title bar to
+  another value.
+  \brief 设置标题栏的高度，默认高度为 50。
+
+  \a h 需要设置的高度
+  \a h is the target height.
  */
 void DTitlebar::setFixedHeight(int h)
 {
@@ -1059,12 +1047,11 @@ void DTitlebar::setFixedHeight(int h)
 }
 
 /*!
- * \~english @brief DTitlebar::setBackgroundTransparent set the title background transparent
- * @param transparent is the targeting value.
- */
-/*!
- * \~chinese @brief 设置标题栏背景是否透明，当为透明时标题栏直接叠加在下层控件上。
- * @param transparent 是否透明
+  \brief DTitlebar::setBackgroundTransparent set the title background transparent
+  \brief 设置标题栏背景是否透明，当为透明时标题栏直接叠加在下层控件上.
+
+  \a transparent is the targeting value.
+  \a transparent 是否透明
  */
 void DTitlebar::setBackgroundTransparent(bool transparent)
 {
@@ -1077,13 +1064,12 @@ void DTitlebar::setBackgroundTransparent(bool transparent)
 }
 
 /*!
- * \~english @brief DTitlebar::setSeparatorVisible sets the bottom separator of the title
- * bar and the window contents to be visible or not.
- * @param visible is the targeting value.
- */
-/*!
- * \~chinese @brief 设置菜单下面的分隔线是否可见，默认是可见的。
- * @param 是否可见
+  \brief DTitlebar::setSeparatorVisible sets the bottom separator of the title
+  bar and the window contents to be visible or not.
+  \brief 设置菜单下面的分隔线是否可见，默认是可见的。
+
+  \a visible 是否可见
+  \a visible is the targeting value.
  */
 void DTitlebar::setSeparatorVisible(bool visible)
 {
@@ -1097,12 +1083,11 @@ void DTitlebar::setSeparatorVisible(bool visible)
 }
 
 /*!
- * \~english @brief DTitlebar::setTitle sets the title to be shown on the title bar.
- * @param title is the text to be used as the window title.
- */
-/*!
- * \~chinese @brief 设置标题栏文本。
- * @param 待设置内容
+  \brief DTitlebar::setTitle sets the title to be shown on the title bar.
+  \brief 设置标题栏文本。
+
+  \a title is the text to be used as the window title.
+  \a title 待设置内容
  */
 void DTitlebar::setTitle(const QString &title)
 {
@@ -1116,12 +1101,11 @@ void DTitlebar::setTitle(const QString &title)
 }
 
 /*!
- * \~english @brief DTitlebar::setIcon sets the icon to be shown on the title bar.
- * @param icon is to be used as the window icon.
- */
-/*!
- * \~chinese @brief 设置标题栏图标
- * @param 待设置的图标
+  \brief DTitlebar::setIcon sets the icon to be shown on the title bar.
+  \brief 设置标题栏图标
+
+  \a icon is to be used as the window icon.
+  \a icon 待设置的图标
  */
 void DTitlebar::setIcon(const QIcon &icon)
 {
@@ -1166,11 +1150,9 @@ void DTitlebar::setBlurBackground(bool blurBackground)
 }
 
 /*!
- * \~english @brief DTitlebar::buttonAreaWidth returns the width of the area that all the
- * window buttons occupies.
- */
-/*!
- * \~chinese @brief 按钮区域大小，用于手动定位自定义控件时使用。
+  \brief DTitlebar::buttonAreaWidth returns the width of the area that all the
+  window buttons occupies.
+  \brief 按钮区域大小，用于手动定位自定义控件时使用.
  */
 int DTitlebar::buttonAreaWidth() const
 {
@@ -1179,11 +1161,9 @@ int DTitlebar::buttonAreaWidth() const
 }
 
 /*!
- * \~english @brief DTitlebar::separatorVisible returns the visibility of the bottom
- * separator of the titlebar.
- */
-/*!
- * \~chinese @brief 分隔线是否可见。
+  \brief DTitlebar::separatorVisible returns the visibility of the bottom
+  separator of the titlebar.
+  \brief 分隔线是否可见.
  */
 bool DTitlebar::separatorVisible() const
 {
@@ -1192,11 +1172,9 @@ bool DTitlebar::separatorVisible() const
 }
 
 /*!
- * \~english @brief DTitlebar::autoHideOnFullscreen returns if titlebar show on fullscreen mode.
- * separator of the titlebar.
- */
-/*!
- * \~chinese @brief 全屏模式下标题栏是否自动隐藏
+  \brief DTitlebar::autoHideOnFullscreen returns if titlebar show on fullscreen mode.
+  separator of the titlebar.
+  \brief 全屏模式下标题栏是否自动隐藏.
  */
 bool DTitlebar::autoHideOnFullscreen() const
 {
@@ -1205,12 +1183,9 @@ bool DTitlebar::autoHideOnFullscreen() const
 }
 
 /*!
- * \~english \brief DTitlebar::setAutoHideOnFullscreen set if titlebar show when window is fullscreen state.
- * \param autohide
- */
-/*!
- * \~chinese \brief 设置全屏模式下是否需要自动隐藏标题栏
- * \param 是否自动隐藏
+  \brief DTitlebar::setAutoHideOnFullscreen set if titlebar show when window is fullscreen state.
+  \brief 设置全屏模式下是否需要自动隐藏标题栏
+  \a autohide 是否自动隐藏
  */
 void DTitlebar::setAutoHideOnFullscreen(bool autohide)
 {
@@ -1248,12 +1223,9 @@ void DTitlebar::setVisible(bool visible)
     }
 }
 
-
 /*!
- * \~english @brief DTitlebar::setEmbedMode set a titlebar is in parent;
- */
-/*!
- * \~chinese @brief 设置为嵌入模式，而不是替换系统标题栏，用于不支持dxcb的平台
+  \brief DTitlebar::setEmbedMode set a titlebar is in parent;
+  \brief 设置为嵌入模式，而不是替换系统标题栏，用于不支持dxcb的平台
  */
 void DTitlebar::setEmbedMode(bool visible)
 {
@@ -1264,8 +1236,8 @@ void DTitlebar::setEmbedMode(bool visible)
 }
 
 /*!
- * \~chinese \brief DTitlebar::menuIsVisible
- * \~chinese \return true 菜单可见 false菜单不可见
+  \brief DTitlebar::menuIsVisible
+  \return true 菜单可见 false菜单不可见
  */
 bool DTitlebar::menuIsVisible() const
 {
@@ -1274,8 +1246,8 @@ bool DTitlebar::menuIsVisible() const
 }
 
 /*!
- * \~chinese \brief DTitlebar::setMenuVisible 设置菜单是否可见
- * \~chinese \param visible true 菜单可见 false菜单不可见
+  \brief DTitlebar::setMenuVisible 设置菜单是否可见
+  \a visible true 菜单可见 false菜单不可见
  */
 void DTitlebar::setMenuVisible(bool visible)
 {
@@ -1284,8 +1256,8 @@ void DTitlebar::setMenuVisible(bool visible)
 }
 
 /*!
- * \~chinese \brief DTitlebar::menuIsDisabled
- * \~chinese \return true 菜单被禁用 false 菜单没有被禁用
+  \brief DTitlebar::menuIsDisabled
+  \return true 菜单被禁用 false 菜单没有被禁用
  */
 bool DTitlebar::menuIsDisabled() const
 {
@@ -1294,8 +1266,8 @@ bool DTitlebar::menuIsDisabled() const
 }
 
 /*!
- * \~chinese \brief DTitlebar::setMenuDisabled 设置菜单是否被禁用
- * \~chinese \param disabled true 菜单被禁用 false菜单没有被禁用
+  \brief DTitlebar::setMenuDisabled 设置菜单是否被禁用
+  \a disabled true 菜单被禁用 false菜单没有被禁用
  */
 void DTitlebar::setMenuDisabled(bool disabled)
 {
@@ -1304,8 +1276,8 @@ void DTitlebar::setMenuDisabled(bool disabled)
 }
 
 /*!
- * \~chinese \brief DTitlebar::quitMenuIsDisabled
- * \~chinese \return true 退出菜单被禁用 false退出菜单没有被禁用
+  \brief DTitlebar::quitMenuIsDisabled
+  \return true 退出菜单被禁用 false退出菜单没有被禁用
  */
 bool DTitlebar::quitMenuIsDisabled() const
 {
@@ -1315,8 +1287,8 @@ bool DTitlebar::quitMenuIsDisabled() const
 }
 
 /*!
- * \~chinese \brief DTitlebar::setQuitMenuDisabled 设置退出菜单是否被禁用
- * \~chinese \param disabled true 退出菜单被禁用 false退出菜单没有被禁用
+  \brief DTitlebar::setQuitMenuDisabled 设置退出菜单是否被禁用
+  \a disabled true 退出菜单被禁用 false退出菜单没有被禁用
  */
 void DTitlebar::setQuitMenuDisabled(bool disabled)
 {
@@ -1330,8 +1302,8 @@ void DTitlebar::setQuitMenuDisabled(bool disabled)
 }
 
 /*!
- * \~chinese \brief DTitlebar::setQuitMenuVisible 设置退出菜单是否被可见
- * \~chinese \param visible true 退出菜单可见 false退出菜单不可见
+  \brief DTitlebar::setQuitMenuVisible 设置退出菜单是否被可见
+  \a visible true 退出菜单可见 false退出菜单不可见
  */
 void DTitlebar::setQuitMenuVisible(bool visible)
 {
@@ -1345,8 +1317,8 @@ void DTitlebar::setQuitMenuVisible(bool visible)
 }
 
 /*!
- * \~chinese \brief DTitlebar::switchThemeMenuIsVisible
- * \~chinese \return true 切换主题菜单可见 false切换主题菜单不可见
+  \brief DTitlebar::switchThemeMenuIsVisible
+  \return true 切换主题菜单可见 false切换主题菜单不可见
  */
 bool DTitlebar::switchThemeMenuIsVisible() const
 {
@@ -1356,8 +1328,8 @@ bool DTitlebar::switchThemeMenuIsVisible() const
 }
 
 /*!
- * \~chinese \brief DTitlebar::setSwitchThemeMenuVisible 设置切换主题菜单是否可见
- * \~chinese \param visible true 切换主题菜单可见 false切换主题菜单不可见
+  \brief DTitlebar::setSwitchThemeMenuVisible 设置切换主题菜单是否可见
+  \a visible true 切换主题菜单可见 false切换主题菜单不可见
  */
 void DTitlebar::setSwitchThemeMenuVisible(bool visible)
 {
@@ -1376,12 +1348,10 @@ void DTitlebar::setSwitchThemeMenuVisible(bool visible)
 }
 
 /*!
- * \~english \brief DTitlebar::setDisableFlags will disable button match flags.
- * \param flags
- */
-/*!
- * \~chinese \brief 设置需要被禁用的按钮，仅仅是在界面上禁用按钮，还是可以通过事件等机制来调用对应接口。
- * \param flags 需要被禁用的按钮标志位
+  \brief DTitlebar::setDisableFlags will disable button match flags.
+  \brief 设置需要被禁用的按钮，仅仅是在界面上禁用按钮，还是可以通过事件等机制来调用对应接口.
+
+  \a flags 需要被禁用的按钮标志位
  */
 void DTitlebar::setDisableFlags(Qt::WindowFlags flags)
 {
@@ -1391,10 +1361,8 @@ void DTitlebar::setDisableFlags(Qt::WindowFlags flags)
 }
 
 /*!
- * \~english \brief DTitlebar::disableFlags return which button is disabled.
- */
-/*!
- * \~chinese \brief 当前被禁用的按钮标志位。
+  \brief DTitlebar::disableFlags return which button is disabled.
+  \brief 当前被禁用的按钮标志位.
  */
 Qt::WindowFlags DTitlebar::disableFlags() const
 {

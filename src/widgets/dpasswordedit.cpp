@@ -31,24 +31,18 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
- * \~english \class DPasswordEdit
- * \~english \brief The DPasswordEdit class provides a widget to let user input password.
+  \class Dtk::Widget::DPasswordEdit
+  \inmodule dtkwidget
+
+  \brief DPasswordEdit提供了一个让用户输入的密码框.
+  \brief The DPasswordEdit class provides a widget to let user input password.
  */
 
 /*!
- * \~english \brief DPasswordEdit::DPasswordEdit constructs an instance of DPasswordEdit.
- * \~english \param parent is passed to DLineEdit constructor.
- */
-
-/*!
- * \~chinese \class DPasswordEdit
- * \~chinese \brief DPasswordEdit提供了一个让用户输入的密码框
- */
-
-/*!
- * \~chinese \brief DPasswordEdit的构造函数
- *
- * @param parent
+  \brief DPasswordEdit的构造函数.
+  \brief DPasswordEdit::DPasswordEdit constructs an instance of DPasswordEdit.
+  
+  \a parent is passed to DLineEdit constructor.
  */
 DPasswordEdit::DPasswordEdit(QWidget *parent)
     : DLineEdit(*new DPasswordEditPrivate(this), parent)
@@ -59,18 +53,13 @@ DPasswordEdit::DPasswordEdit(QWidget *parent)
 }
 
 /*!
- * \~english \property DPasswordEdit::isEchoMode
- * \~english \brief This property holds whether the user input should be displayed directly
- * or show as dots.
- *
- * \~chinese \see QLineEdit::EchoMode
- */
+  \property DPasswordEdit::isEchoMode
 
-/*!
- * \~chinese \property DPasswordEdit::isEchoMode
- * \~chinese \brief 该属性会控制用户输入是否可见
- *
- * \~chinese \see QLineEdit::EchoMode
+  \brief 该属性会控制用户输入是否可见.
+  \brief This property holds whether the user input should be displayed directly
+  or show as dots.
+  
+  \sa QLineEdit::EchoMode
  */
 bool DPasswordEdit::isEchoMode() const
 {
@@ -78,9 +67,9 @@ bool DPasswordEdit::isEchoMode() const
 }
 
 /*!
- * \~chinese \brief 设置显示模式
- * \~chinese \see QLineEdit::EchoMode
- * @param mode
+  \brief 设置显示模式
+  \sa QLineEdit::EchoMode
+  \a mode
  */
 void DPasswordEdit::setEchoMode(QLineEdit::EchoMode mode)
 {
@@ -102,8 +91,8 @@ void DPasswordEdit::setEchoMode(QLineEdit::EchoMode mode)
 }
 
 /*!
- * \~chinese \brief DPasswordEdit::setEchoButtonIsVisible 设置输入密码是否可见
- * \~chinese \param visible　true输入密码可见　false不可见
+  \brief DPasswordEdit::setEchoButtonIsVisible 设置输入密码是否可见
+  \a visible　true输入密码可见　false不可见
  */
 void DPasswordEdit::setEchoButtonIsVisible(bool visible)
 {
@@ -114,8 +103,8 @@ void DPasswordEdit::setEchoButtonIsVisible(bool visible)
 }
 
 /*!
- * \~chinese \brief DPasswordEdit::echoButtonIsVisible
- * \~chinese \return true输入密码可见　false不可见
+  \brief DPasswordEdit::echoButtonIsVisible
+  \return true输入密码可见　false不可见
  */
 bool DPasswordEdit::echoButtonIsVisible() const
 {

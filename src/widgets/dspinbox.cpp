@@ -41,47 +41,43 @@ void DSpinBoxPrivate::init()
 }
 
 /*!
- * \~english \class DSpinBox
- * \~english \brief The DSpinBox class provides deepin style QSpinBox.
- *
- * \~english Like DLineEdit, this widget can be set on alert to warn the user that the
- * \~english input is not correct. In addition, there's a DSpinBox::defaultValue property
- * \~english can be used to set a default value on the widget.
- */
+  \class Dtk::Widget::DSpinBox
+  \inmodule dtkwidget
 
-/*!
- * \~chinese \class DSpinBox
- * \~chinese \brief Deepin风格的QSpinBox。
- *
- * \~chinese 类似 DLineEdit ，这个控件也提供了警告功能，用于提醒用户当前输入的数据不正确，另外，还可以设置一个默认的值，并在默认值发生改变时发出信号。
- *
- * \~chinese 如下图上面的是正常状态的控件, 下面的是处于警告状态的控件:
- *
- * \~chinese \image html DSpinBox.png
+  \brief Deepin风格的QSpinBox.
+  \brief The DSpinBox class provides deepin style QSpinBox.
+  
+  类似 DLineEdit ，这个控件也提供了警告功能，用于提醒用户当前输入的数据不正确，另外，还可以设置一个默认的值，并在默认值发生改变时发出信号。
+  如下图上面的是正常状态的控件, 下面的是处于警告状态的控件:
+  Like DLineEdit, this widget can be set on alert to warn the user that the
+  input is not correct. In addition, there's a DSpinBox::defaultValue property
+  can be used to set a default value on the widget.
+
+  \image DSpinBox.png
  */
 
 // ========================SIGNAL START========================
-/**
- * \~chinese \fn DSpinBox::alertChanged
- * \~chinese \brief 警告状态发生了变化。
- * \~chinese \param alert 当前的警告状态。
+/*!
+  \fn void DSpinBox::alertChanged(bool alert)
+  \brief 警告状态发生了变化.
+
+  \a alert 当前的警告状态。
  */
 
-/**
- * \~chinese \fn DSpinBox::defaultValueChanged
- * \~chinese \brief 默认值发生了变化。
- * \~chinese \param defaultValue 控件的默认值。
+/*!
+  \fn void DSpinBox::defaultValueChanged(int defaultValue)
+  \brief 默认值发生了变化.
+
+  \a defaultValue 控件的默认值。
  */
 // ========================SIGNAL END========================
 
 /*!
- * \~english \brief DSpinBox::DSpinBox constructs an instance of DSpinBox
- * \~english \param parent is passed to QSpinBox constructor
- */
+  \brief 构造一个 DSpinBox 实例。
+  \brief DSpinBox::DSpinBox constructs an instance of DSpinBox
 
-/*!
- * \~chinese \brief 构造一个 DSpinBox 实例。
- * \~chinese \param parent 作为该实例的父控件。
+  \a parent 作为该实例的父控件。
+  \a parent is passed to QSpinBox constructor
  */
 DSpinBox::DSpinBox(QWidget *parent) :
     QSpinBox(parent),
@@ -91,13 +87,10 @@ DSpinBox::DSpinBox(QWidget *parent) :
 }
 
 /*!
- * \~english \brief DSpinBox::lineEdit
- * \~english \return the QLineEdit used by this spin box.
- */
+  \brief 获取输入框控件。
 
-/*!
- * \~chinese \brief 获取输入框控件。
- * \~chinese \return 返回正在使用的输入库控件对象。
+  \return 返回正在使用的输入库控件对象。
+  \return the QLineEdit used by this spin box.
  */
 QLineEdit *DSpinBox::lineEdit() const
 {
@@ -105,15 +98,15 @@ QLineEdit *DSpinBox::lineEdit() const
 }
 
 /*!
- * \~english \property DSpinBox::alert
- * \~english \brief This property holds whether the widget on alert mode.
+  \property DSpinBox::alert
+
+  \brief This property holds whether the widget on alert mode.
  */
 
 /*!
- * \~chinese \property DSpinBox::alert
- * \~chinese \brief 表示当前控件是否处于警告状态的属性。
- *
- * \~chinese 使用 DSpinBox::isAlert 获取属性当前状态，使用 DSpinBox::setAlert 设置属性的状态。
+  \brief 表示当前控件是否处于警告状态的属性。
+  
+  使用 DSpinBox::isAlert 获取属性当前状态，使用 DSpinBox::setAlert 设置属性的状态。
  */
 bool DSpinBox::isAlert() const
 {
@@ -123,15 +116,14 @@ bool DSpinBox::isAlert() const
 }
 
 /*!
- * \~english \property DSpinBox::defaultValue
- * \~english \brief This property holds the default value of this spin box.
+  \property DSpinBox::defaultValue
+  \brief This property holds the default value of this spin box.
  */
 
 /*!
- * \~chinese \property DSpinBox::defaultValue
- * \~chinese \brief 这个属性的值是控件的默认值。
- *
- * \~chinese 使用 DSpinBox::defaultValue 获取默认值，使用 DSpinBox::setDefaultValue 设置默认值, 点击控件上的 reset 按钮会设置为此值。
+  \brief 这个属性的值是控件的默认值。
+  
+  使用 DSpinBox::defaultValue 获取默认值，使用 DSpinBox::setDefaultValue 设置默认值, 点击控件上的 reset 按钮会设置为此值。
  */
 int DSpinBox::defaultValue() const
 {
@@ -172,8 +164,10 @@ void DDoubleSpinBoxPrivate::init()
 }
 
 /*!
- * \~chinese \class DDoubleSpinBox
- * \~chinese \brief 类似 DDoubleSpinBox 。
+  \class Dtk::Widget::DDoubleSpinBox
+  \inmodule dtkwidget
+
+  \brief 类似 DDoubleSpinBox.
  */
 
 DDoubleSpinBox::DDoubleSpinBox(QWidget *parent) :

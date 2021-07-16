@@ -59,18 +59,19 @@ void ArrowHeaderLine::reverseArrowDirection()
     setExpand(!m_isExpanded);
 }
 
-/**
- * \~chinese \class DArrowLineExpand
- * \~chinese \brief 一个美观的可展开的控件
- * \~chinese
- * \~chinese DArrowLineExpand 继承自 DBaseExpand 并提供了了 ArrowHeaderLine (一个带有箭头标示的按钮)作为其固定的标题控件，也就是说跟 DBaseExpand 相比省去了提供标题控件的步骤，只需要提供内容控件即可，如果需要自定义标题控件应该使用 DBaseExpand 类。
- * \~chinese \sa  DBaseExpand
+/*!
+  \class Dtk::Widget::DArrowLineExpand
+  \inmodule dtkwidget
+  \brief 一个美观的可展开的控件.
+  
+  DArrowLineExpand 继承自 DBaseExpand 并提供了了 ArrowHeaderLine (一个带有箭头标示的按钮)作为其固定的标题控件，也就是说跟 DBaseExpand 相比省去了提供标题控件的步骤，只需要提供内容控件即可，如果需要自定义标题控件应该使用 DBaseExpand 类。
+  \sa  DBaseExpand
  */
 
-/**
- * \~chinese \brief 构造一个 DArrowLineExpand 实例
- * \~chinese
- * \~chinese \param parent 为实例的父控件
+/*!
+  \brief 构造一个 DArrowLineExpand 实例
+  
+  \a parent 为实例的父控件
  */
 DArrowLineExpand::DArrowLineExpand(QWidget *parent) : DBaseExpand(parent)
 {
@@ -82,20 +83,20 @@ DArrowLineExpand::DArrowLineExpand(QWidget *parent) : DBaseExpand(parent)
     setHeader(m_headerLine);
 }
 
-/**
- * \~chinese \brief 设置标题要显示的文字
- * \~chinese
- * \~chinese \param title 标题内容
+/*!
+  \brief 设置标题要显示的文字
+  
+  \a title 标题内容
  */
 void DArrowLineExpand::setTitle(const QString &title)
 {
     m_headerLine->setTitle(title);
 }
 
-/**
- * \~chinese \brief 设置是否展开以显示内容控件
- * \~chinese
- * \~chinese \param value 为 true 即为显示，反之则反
+/*!
+  \brief 设置是否展开以显示内容控件
+  
+  \a value 为 true 即为显示，反之则反
  */
 void DArrowLineExpand::setExpand(bool value)
 {
@@ -104,10 +105,10 @@ void DArrowLineExpand::setExpand(bool value)
     DBaseExpand::setExpand(value);
 }
 
-/**
- * \~chinese \brief 获取标题控件
- * \~chinese \return 标题控件
- * \~chinese \sa ArrowHeaderLine DHeaderLine DBaseLine
+/*!
+  \brief 获取标题控件
+  \return 标题控件
+  \sa DHeaderLine DBaseLine
  */
 DBaseLine *DArrowLineExpand::headerLine()
 {

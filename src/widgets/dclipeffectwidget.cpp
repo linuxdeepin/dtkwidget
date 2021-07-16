@@ -53,60 +53,60 @@ DClipEffectWidgetPrivate::DClipEffectWidgetPrivate(DClipEffectWidget *qq)
 }
 
 /*!
- * \~chinese \class DClipEffectWidget
- * \~chinese \brief 用于裁剪窗口的绘制内容
- *
- * \~chinese 支持使用 QPainterPath 设置一个区域，位于区域外的窗口内容将被裁剪。被裁剪的对象
- * \~chinese 是此控件的父控件, 且 DClipEffectWidget 会自动填充整个父控件，另外可以通过设置
- * \~chinese \ref margins 控制有效的裁剪区域。如下图所示：
- * \htmlonly
- * <pre style="font-family: FreeMono, Consolas, Menlo, 'Noto Mono', 'Courier New', Courier, monospace;line-height: 100%;">
- * ┏━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━┓
- * ┃              │              ┃
- * ┃              │              ┃
- * ┃     A        m              ┃
- * ┃              │              ┃
- * ┃              │              ┃
- * ┃       ┏┅┅┅┅┅┅┷┅┅┅┅┅┅┓       ┃
- * ┃       ┋B ╭───────╮  ┋       ┃
- * ┃       ┋  │       │  ┋       ┃
- * ┃── m ──┋  │   C   │  ┋── m ──┃
- * ┃       ┋  │       │  ┋       ┃
- * ┃       ┋  ╰───────╯  ┋       ┃
- * ┃       ┗┅┅┅┅┅┅┯┅┅┅┅┅┅┛       ┃
- * ┃              │              ┃
- * ┃              │              ┃
- * ┃              m              ┃
- * ┃              │              ┃
- * ┃              │              ┃
- * ┗━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━┛
- * </pre>
- * \endhtmlonly
- * \~chinese A为父控件区域， DClipEffectWidget 控件区域和父控件相同，B为有效的被裁剪区域，C
- * \~chinese 为 \ref clipPath 区域，m为 \ref margins ，则被裁剪掉的区域为： B - C，裁掉的部分将显示
- * \~chinese 下层控件内容，如果下层没有其它控件，将显示主窗口背景。
- *
- * \~chinese 此控件不接收任何输入事件，且不接受焦点
- * \sa Qt::WA_TransparentForMouseEvents Qt::WidgetAttribute::NoFocus
- * \sa DGraphicsClipEffect
+  \class Dtk::Widget::DClipEffectWidget
+  \inmodule dtkwidget
+  \brief 用于裁剪窗口的绘制内容.
+  
+  支持使用 QPainterPath 设置一个区域，位于区域外的窗口内容将被裁剪。被裁剪的对象
+  是此控件的父控件, 且 DClipEffectWidget 会自动填充整个父控件，另外可以通过设置
+  margins 控制有效的裁剪区域。如下图所示：
+  \raw HTML
+  <pre style="font-family: FreeMono, Consolas, Menlo, 'Noto Mono', 'Courier New', Courier, monospace;line-height: 100%;">
+  ┏━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━┓
+  ┃              │              ┃
+  ┃              │              ┃
+  ┃     A        m              ┃
+  ┃              │              ┃
+  ┃              │              ┃
+  ┃       ┏┅┅┅┅┅┅┷┅┅┅┅┅┅┓       ┃
+  ┃       ┋B ╭───────╮  ┋       ┃
+  ┃       ┋  │       │  ┋       ┃
+  ┃── m ──┋  │   C   │  ┋── m ──┃
+  ┃       ┋  │       │  ┋       ┃
+  ┃       ┋  ╰───────╯  ┋       ┃
+  ┃       ┗┅┅┅┅┅┅┯┅┅┅┅┅┅┛       ┃
+  ┃              │              ┃
+  ┃              │              ┃
+  ┃              m              ┃
+  ┃              │              ┃
+  ┃              │              ┃
+  ┗━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━┛
+  </pre>
+  \endraw
+  A为父控件区域， DClipEffectWidget 控件区域和父控件相同，B为有效的被裁剪区域，C
+  为 clipPath 区域，m为 margins ，则被裁剪掉的区域为： B - C，裁掉的部分将显示
+  下层控件内容，如果下层没有其它控件，将显示主窗口背景。
+  
+  此控件不接收任何输入事件，且不接受焦点
+  \sa Qt::WA_TransparentForMouseEvents Qt::NoFocus
+  \sa DGraphicsClipEffect
  */
 
 /*!
-  * \fn void DClipEffectWidget::marginsChanged(QMargins margins)
-  * \~chinese 这个信号在 \ref margins 改变时被发送
+  \fn void DClipEffectWidget::marginsChanged(QMargins margins)
+  这个信号在 \a margins 改变时被发送
   */
 
 /*!
-  * \fn void DClipEffectWidget::clipPathChanged(QPainterPath clipPath)
-  * \~chinese 这个信号在 \ref clipPath 改变时被发送
+  \fn void DClipEffectWidget::clipPathChanged(QPainterPath clipPath)
+  这个信号在 \a clipPath 改变时被发送
   */
 
-
 /*!
- * \brief 构造 DClipEffectWidget 对象，和普通 QWidget 一样，可以传入一个 QWidget 对象
- * \~chinese 指针作为其父对象
- * \~chinese \param 父对象
-* \~chinese \warning 必须要传入一个有效的父对象，将此控件作为顶级窗口没有任何意义
+  \brief 构造 DClipEffectWidget 对象，和普通 QWidget 一样，可以传入一个 QWidget 对象
+  指针作为其父对象
+  \a parent 父对象
+  \warning 必须要传入一个有效的父对象，将此控件作为顶级窗口没有任何意义
  */
 DClipEffectWidget::DClipEffectWidget(QWidget *parent)
     : QWidget(parent)
@@ -119,8 +119,8 @@ DClipEffectWidget::DClipEffectWidget(QWidget *parent)
 }
 
 /*!
- * \property DClipEffectWidget::margins
- * \~chinese \brief 用于调整控件的被裁剪区域，可以和 \ref clipPath 组合更加灵活的裁剪控件
+  \property DClipEffectWidget::margins
+  \brief 用于调整控件的被裁剪区域，可以和 clipPath 组合更加灵活的裁剪控件
  */
 QMargins DClipEffectWidget::margins() const
 {
@@ -130,10 +130,10 @@ QMargins DClipEffectWidget::margins() const
 }
 
 /*!
- * \property DClipEffectWidget::clipPath
- * \~chinese \brief 被裁剪的区域，控件真实裁剪区域 = \ref clipPath & (\ref rect() - \ref margins)
- * \~chinese \warning clipPath 必须是一个封闭的环状路径
- * \sa QPainterPath::closeSubpath
+  \property DClipEffectWidget::clipPath
+  \brief 被裁剪的区域，控件真实裁剪区域 = clipPath & (rect() - margins)
+  \warning clipPath 必须是一个封闭的环状路径
+  \sa QPainterPath::closeSubpath
  */
 QPainterPath DClipEffectWidget::clipPath() const
 {
@@ -143,7 +143,7 @@ QPainterPath DClipEffectWidget::clipPath() const
 }
 
 /*!
- * \~chinese \param margins
+  \a margins
  */
 void DClipEffectWidget::setMargins(QMargins margins)
 {
@@ -159,7 +159,7 @@ void DClipEffectWidget::setMargins(QMargins margins)
 }
 
 /*!
- * \~chinese \param path
+  \a path
  */
 void DClipEffectWidget::setClipPath(const QPainterPath &path)
 {

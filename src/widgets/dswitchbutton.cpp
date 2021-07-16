@@ -26,8 +26,8 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
- * \~chinese \brief DSwitchButton::DSwitchButton　实现一个开关按钮
- * \~chinese \param parent
+  \brief DSwitchButton::DSwitchButton　实现一个开关按钮
+  \a parent
  */
 DSwitchButton::DSwitchButton(QWidget *parent)
     : QAbstractButton(parent)
@@ -39,8 +39,8 @@ DSwitchButton::DSwitchButton(QWidget *parent)
 }
 
 /*!
- * \~chinese \brief DSwitchButton::sizeHint 初始化控件矩形大小（在绘画之前）
- * \~chinese \return 控件举行大小
+  \brief DSwitchButton::sizeHint 初始化控件矩形大小（在绘画之前）
+  \return 控件举行大小
  */
 QSize DSwitchButton::sizeHint() const
 {
@@ -52,9 +52,9 @@ QSize DSwitchButton::sizeHint() const
 }
 
 /*!
- * \~chinese \brief DSwitchButton::paintEvent 绘画处理
- * \~chinese \param e 绘画事件
- * \~chinese \see QWidget::paintEvent()
+  \brief DSwitchButton::paintEvent 绘画处理
+  \a e 绘画事件
+  \sa QWidget::paintEvent()
  */
 void DSwitchButton::paintEvent(QPaintEvent *e)
 {
@@ -67,8 +67,8 @@ void DSwitchButton::paintEvent(QPaintEvent *e)
 }
 
 /*!
- * \~chinese \brief DSwitchButton::initStyleOption 初始化(用于继承的)抽象按钮对象,后面用于 DStylePainter 绘画 DStyle::CE_SwitchButton 枚举
- * \~chinese \param option 初始化了的的抽象风格按钮对象
+  \brief DSwitchButton::initStyleOption 初始化(用于继承的)抽象按钮对象,后面用于 DStylePainter 绘画 DStyle::CE_SwitchButton 枚举
+  \a option 初始化了的的抽象风格按钮对象
  */
 void DSwitchButton::initStyleOption(DStyleOptionButton *option) const
 {

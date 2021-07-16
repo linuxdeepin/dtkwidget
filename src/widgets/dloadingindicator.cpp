@@ -67,58 +67,53 @@ void DLoadingIndicatorPrivate::setLoadingItem(QGraphicsItem *item)
 }
 
 /*!
- * \~english \class DLoadingIndicator
- * \~english \brief The DLoadingIndicator class provides a widget that showing loading animation.
- * \~english
- * \~english DLoadingIndicator renders and rotates the source set by
- * \~english DLoadingIndicator::setWidgetSource or DLoadingIndicator::setImageSource,
- * \~english the rotation animation is runing in a given duration and at a given easing curve,
- * \~english those two properties can be accessed by DLoadingIndicator::aniDuration and
- * \~english DLoadingIndicator::aniEasingType .
- *
- *
- * \~chinese \class DLoadingIndicator
- * \~chinese \brief DLoadingIndicator 类提供了一种用来显示“加载中”动画的控件。
- * \~chinese
- * \~chinese 使用者通过设置 DLoadingIndicator::imageSource 属性或者
- * \~chinese DLoadingIndicator::widgetSource 属性来提供进行旋转动画的图像源，
- * \~chinese 通过 start 和 stop 来开始和停止动画。动画开始后图像源被不停进行旋转，
- * \~chinese 旋转的动画的周期和曲线可以通过
- * \~chinese DLoadingIndicator::aniDuration 和 DLoadingIndicator::aniEasingType
- * \~chinese 两个属性进行分别控制。
- * \~chinese
- * \~chinese \note DLoadingIndicator 基于 Qt Graphics View Framework 工作。
+  \class Dtk::Widget::DLoadingIndicator
+  \inmodule dtkwidget
+  \brief The DLoadingIndicator class provides a widget that showing loading animation.
+  \~english
+  DLoadingIndicator renders and rotates the source set by
+  DLoadingIndicator::setWidgetSource or DLoadingIndicator::setImageSource,
+  the rotation animation is runing in a given duration and at a given easing curve,
+  those two properties can be accessed by DLoadingIndicator::aniDuration and
+  DLoadingIndicator::aniEasingType .
+  
+  
+  \class Dtk::Widget::DLoadingIndicator
+  \inmodule dtkwidget
+  \brief DLoadingIndicator 类提供了一种用来显示“加载中”动画的控件。
+  
+  使用者通过设置 DLoadingIndicator::imageSource 属性或者
+  DLoadingIndicator::widgetSource 属性来提供进行旋转动画的图像源，
+  通过 start 和 stop 来开始和停止动画。动画开始后图像源被不停进行旋转，
+  旋转的动画的周期和曲线可以通过
+  DLoadingIndicator::aniDuration 和 DLoadingIndicator::aniEasingType
+  两个属性进行分别控制。
+  
+  \note DLoadingIndicator 基于 Qt Graphics View Framework 工作。
  */
 
-
 /*!
- * \~english \enum DLoadingIndicator::RotationDirection
- * \~english \brief The RotationDirection enum contains the possible rotation
- * \~english directions of the DLoadingIndicator widget
- * \~english \var DLoadingIndicator::RotationDirection DLoadingIndicator::Clockwise
- * \~english the animation will rotate clockwise.
- * \~english \var DLoadingIndicator::RotationDirection DLoadingIndicator::Counterclockwise
- * \~english the animation will rotate counterclockwise.
- *
- *
- * \~chinese \enum DLoadingIndicator::RotationDirection
- * \~chinese \brief DLoadingIndicator::RotationDirection 枚举类型包含“加载中”动画旋转的可选方向
- * \~chinese \var DLoadingIndicator::RotationDirection DLoadingIndicator::Clockwise
- * \~chinese 顺时针旋转
- * \~chinese \var DLoadingIndicator::RotationDirection DLoadingIndicator::Counterclockwise
- * \~chinese 逆时针旋转
+  \enum Dtk::Widget::DLoadingIndicator::RotationDirection
+  \brief The RotationDirection enum contains the possible rotation
+  directions of the DLoadingIndicator widget.
+  \brief 枚举类型包含“加载中”动画旋转的可选方向.
+
+  \value Clockwise
+  the animation will rotate clockwise.
+  顺时针旋转
+  \value Counterclockwise
+  the animation will rotate counterclockwise.
+  逆时针旋转
  */
 
-
-
 /*!
- * \~english \brief DLoadingIndicator::DLoadingIndicator constructs an instance of DLoadingIndicator.
- * \~english \param parent is passed to QGraphicsView constructor.
- *
- *
- * \~chinese \brief DLoadingIndicator::DLoadingIndicator 函数是 DLoadingIndicator
- * \~chinese 的构造函数。
- * \~chinese \param parent 指定了控件的父控件。
+  \brief DLoadingIndicator::DLoadingIndicator constructs an instance of DLoadingIndicator.
+  \a parent is passed to QGraphicsView constructor.
+  
+  
+  \brief DLoadingIndicator::DLoadingIndicator 函数是 DLoadingIndicator
+  的构造函数。
+  \a parent 指定了控件的父控件。
  */
 DLoadingIndicator::DLoadingIndicator(QWidget *parent) :
     QGraphicsView(parent),
@@ -136,13 +131,13 @@ DLoadingIndicator::~DLoadingIndicator()
 }
 
 /*!
- * \~english \property DLoadingIndicator::backgroundColor
- * \~english \brief This property holds the background color of this widget.
- *
- *
- * \~chinese \property DLoadingIndicator::backgroundColor
- * \~chinese \brief DLoadingIndicator::backgroundColor 属性用来控制 DLoadingIndicator
- * \~chinese 控件的背景色。
+  \property DLoadingIndicator::backgroundColor
+  \brief This property holds the background color of this widget.
+  
+  
+  \property DLoadingIndicator::backgroundColor
+  \brief DLoadingIndicator::backgroundColor 属性用来控制 DLoadingIndicator
+  控件的背景色。
  */
 QColor DLoadingIndicator::backgroundColor() const
 {
@@ -265,21 +260,21 @@ void DLoadingIndicator::setAniDuration(int msecs)
 }
 
 /*!
- * \~english \brief DLoadingIndicator::setAniEasingCurve sets an easing curve on the loading animation.
- * \~english \param easing
- *
- * \~english This property defines the easing curve of the animation.
- * \~english By default, a linear easing curve is used, resulting in linear interpolation.
- * \~english Other curves are provided, for instance, QEasingCurve::InCirc,
- * \~english which provides a circular entry curve.
- * \~english Another example is QEasingCurve::InOutElastic,
- * \~english which provides an elastic effect on the values of the interpolated variant.
- *
- *
- * \~chinese \brief DLoadingIndicator::setAniEasingCurve 是对
- * \~chinese DLoadingIndicator::setAniEasingType 的补充，使用者除了使用
- * \~chinese QEasingCurve::Type 中提供的几种预设的动画曲线，可以自定义 QEasingCurve 来
- * \~chinese 实现更为灵巧的动画。
+  \brief DLoadingIndicator::setAniEasingCurve sets an easing curve on the loading animation.
+  \a easing
+  
+  This property defines the easing curve of the animation.
+  By default, a linear easing curve is used, resulting in linear interpolation.
+  Other curves are provided, for instance, QEasingCurve::InCirc,
+  which provides a circular entry curve.
+  Another example is QEasingCurve::InOutElastic,
+  which provides an elastic effect on the values of the interpolated variant.
+  
+  
+  \brief DLoadingIndicator::setAniEasingCurve 是对
+  DLoadingIndicator::setAniEasingType 的补充，使用者除了使用
+  QEasingCurve::Type 中提供的几种预设的动画曲线，可以自定义 QEasingCurve 来
+  实现更为灵巧的动画。
  */
 void DLoadingIndicator::setAniEasingCurve(const QEasingCurve & easing)
 {
@@ -294,20 +289,20 @@ void DLoadingIndicator::setBackgroundColor(const QColor &color)
 }
 
 /*!
- * \~english \property DLoadingIndicator::loading
- * \~english \brief This property holds the animation state.
- *
- * \~english It returns true if the animation is running, false otherwise, you can also
- * \~english set value on this property to run or stop the animation.
- *
- *
- * \~chinese \property DLoadingIndicator::loading
- * \~chinese \brief DLoadingIndicator::loading 属性用来控制动画是否开启。
- * \~chinese
- * \~chinese 设置为 true 开始动画， false 停止动画。
- *
- *
- * \sa start(), stop()
+  \property DLoadingIndicator::loading
+  \brief This property holds the animation state.
+  
+  It returns true if the animation is running, false otherwise, you can also
+  set value on this property to run or stop the animation.
+  
+  
+  \property DLoadingIndicator::loading
+  \brief DLoadingIndicator::loading 属性用来控制动画是否开启。
+  
+  设置为 true 开始动画， false 停止动画。
+  
+  
+  \sa start(), stop()
  */
 bool DLoadingIndicator::loading() const
 {
@@ -317,15 +312,15 @@ bool DLoadingIndicator::loading() const
 }
 
 /*!
- * \~english \property DLoadingIndicator::widgetSource
- * \~english \brief This property holds the widget to be rendered as the content of the
- * \~english loading indicator.
- *
- *
- * \~chinese \property DLoadingIndicator::widgetSource
- * \~chinese \brief DLoadingIndicator::widgetSource 属性用来生成旋转动画中使用的图像。
- *
- * \sa imageSource
+  \property DLoadingIndicator::widgetSource
+  \brief This property holds the widget to be rendered as the content of the
+  loading indicator.
+  
+  
+  \property DLoadingIndicator::widgetSource
+  \brief DLoadingIndicator::widgetSource 属性用来生成旋转动画中使用的图像。
+  
+  \sa imageSource
  */
 QWidget *DLoadingIndicator::widgetSource() const
 {
@@ -335,15 +330,15 @@ QWidget *DLoadingIndicator::widgetSource() const
 }
 
 /*!
- * \~english \property DLoadingIndicator::imageSource
- * \~english \brief This property holds the image to be rendered as the content of the
- * \~english loading indicator.
- *
- *
- * \~chinese \property DLoadingIndicator::imageSource
- * \~chinese \brief DLoadingIndicator::imageSource 属性用来生成旋转动画中使用的图像。
- *
- * \sa widgetSource
+  \property DLoadingIndicator::imageSource
+  \brief This property holds the image to be rendered as the content of the
+  loading indicator.
+  
+  
+  \property DLoadingIndicator::imageSource
+  \brief DLoadingIndicator::imageSource 属性用来生成旋转动画中使用的图像。
+  
+  \sa widgetSource
  */
 QPixmap DLoadingIndicator::imageSource() const
 {
@@ -356,12 +351,12 @@ QPixmap DLoadingIndicator::imageSource() const
 }
 
 /*!
- * \~english \property DLoadingIndicator::aniDuration
- * \~english \brief This property holds the duration of the loading animation.
- *
- *
- * \~chinese \property DLoadingIndicator::aniDuration
- * \~chinese \brief DLoadingIndicator::aniDuration 属性用来控制旋转动画的周期。
+  \property DLoadingIndicator::aniDuration
+  \brief This property holds the duration of the loading animation.
+  
+  
+  \property DLoadingIndicator::aniDuration
+  \brief DLoadingIndicator::aniDuration 属性用来控制旋转动画的周期。
  */
 int DLoadingIndicator::aniDuration() const
 {
@@ -371,15 +366,15 @@ int DLoadingIndicator::aniDuration() const
 }
 
 /*!
- * \~english \property DLoadingIndicator::aniEasingType
- * \~english \brief This property holds the easing type of the easing curve used by the
- * \~english loading animation.
- *
- *
- * \~chinese \property DLoadingIndicator::aniEasingType
- * \~chinese \brief DLoadingIndicator::aniEasingType 属性用来控制旋转动画的动画曲线。
- *
- * \sa setAniEasingCurve
+  \property DLoadingIndicator::aniEasingType
+  \brief This property holds the easing type of the easing curve used by the
+  loading animation.
+  
+  
+  \property DLoadingIndicator::aniEasingType
+  \brief DLoadingIndicator::aniEasingType 属性用来控制旋转动画的动画曲线。
+  
+  \sa setAniEasingCurve
  */
 QEasingCurve::Type DLoadingIndicator::aniEasingType() const
 {
@@ -394,19 +389,19 @@ QSize DLoadingIndicator::sizeHint() const
 }
 
 /*!
- * \~english \property DLoadingIndicator::smooth
- * \~english \brief This property holds whether the rendered content are antialiased or
- * \~english smoothly filtered.
- *
- * \~english Smooth filtering gives better visual quality, but it may be slower on
- * \~english some hardware.
- *
- *
- * \~chinese \property DLoadingIndicator::smooth
- * \~chinese \brief DLoadingIndicator::smooth 属性代表是否要对控件启用平滑处理。
- * \~chinese
- * \~chinese 平滑处理后，控件会被进行反锯齿或者进行遮罩以达到更好的显示效果，但是在性能较差
- * \~chinese 的机器上会比较慢。
+  \property DLoadingIndicator::smooth
+  \brief This property holds whether the rendered content are antialiased or
+  smoothly filtered.
+  
+  Smooth filtering gives better visual quality, but it may be slower on
+  some hardware.
+  
+  
+  \property DLoadingIndicator::smooth
+  \brief DLoadingIndicator::smooth 属性代表是否要对控件启用平滑处理。
+  
+  平滑处理后，控件会被进行反锯齿或者进行遮罩以达到更好的显示效果，但是在性能较差
+  的机器上会比较慢。
  */
 bool DLoadingIndicator::smooth() const
 {
@@ -416,21 +411,21 @@ bool DLoadingIndicator::smooth() const
 }
 
 /*!
- * \~english \property DLoadingIndicator::direction
- * \~english \brief This property holds the direction used while doing the rotation animation.
- *
- *
- * \~chinese \property DLoadingIndicator::direction
- * \~chinese \brief DLoadingIndicator::direction 用来控制旋转动画的旋转方向。
- * \~chinese
- * \~chinese 默认为顺时针方向。
- * \~chinese
- *
- * \sa DLoadingIndicator::RotationDirection
+  \property DLoadingIndicator::direction
+  \brief This property holds the direction used while doing the rotation animation.
+  
+  
+  \property DLoadingIndicator::direction
+  \brief DLoadingIndicator::direction 用来控制旋转动画的旋转方向。
+  
+  默认为顺时针方向。
+  
+  
+  \sa DLoadingIndicator::RotationDirection
  */
 
 /*!
- * \~chinese \copydoc DLoadingIndicator::direction
+  DLoadingIndicator::direction
  */
 DLoadingIndicator::RotationDirection DLoadingIndicator::direction() const
 {
@@ -440,18 +435,18 @@ DLoadingIndicator::RotationDirection DLoadingIndicator::direction() const
 }
 
 /*!
- * \~english \property DLoadingIndicator::rotate
- * \~english \brief This property holds the current rotation of the content.
- *
- * \~english This property is usually used to correct the rotation of the content after
- * \~english calling DLoadingIndicator::stop to stop the animation.
- *
- *
- * \~chinese \property DLoadingIndicator::rotate
- * \~chinese \brief DLoadingIndicator::rotate 属性用来控制当前控件内容旋转的角度。
- *
- *
- * \~chinese \sa QGraphicsItem::rotation
+  \property DLoadingIndicator::rotate
+  \brief This property holds the current rotation of the content.
+  
+  This property is usually used to correct the rotation of the content after
+  calling DLoadingIndicator::stop to stop the animation.
+  
+  
+  \property DLoadingIndicator::rotate
+  \brief DLoadingIndicator::rotate 属性用来控制当前控件内容旋转的角度。
+  
+  
+  \sa QGraphicsItem::rotation
  */
 qreal DLoadingIndicator::rotate() const
 {
@@ -462,10 +457,10 @@ qreal DLoadingIndicator::rotate() const
 }
 
 /*!
- * \~english \brief DLoadingIndicator::start starts the loading animation.
- *
- *
- * \~chinese \brief DLoadingIndicator::start 启动旋转动画。
+  \brief DLoadingIndicator::start starts the loading animation.
+  
+  
+  \brief DLoadingIndicator::start 启动旋转动画。
  */
 void DLoadingIndicator::start()
 {
@@ -475,10 +470,10 @@ void DLoadingIndicator::start()
 }
 
 /*!
- * \~english \brief DLoadingIndicator::stop stops the loading animation.
- *
- *
- * \~chinese \brief DLoadingIndicator::stop 停止旋转动画。
+  \brief DLoadingIndicator::stop stops the loading animation.
+  
+  
+  \brief DLoadingIndicator::stop 停止旋转动画。
  */
 void DLoadingIndicator::stop()
 {
