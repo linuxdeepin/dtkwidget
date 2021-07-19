@@ -77,11 +77,23 @@ void DAbstractDialogPrivate::init(bool blurIfPossible)
 
     q->resize(DIALOG::DEFAULT_WIDTH, DIALOG::DEFAULT_HEIGHT);
     q->setAttribute(Qt::WA_Resized, false);
+
+    if (DGuiApplicationHelper::isTabletEnvironment()) {
+        if (QScreen *screen = QGuiApplication::primaryScreen()) {
+            q->connect(screen, &QScreen::primaryOrientationChanged, q, [ = ] {
+                q->moveToCenter();
+            });
+        }
+    }
 }
 
 QRect DAbstractDialogPrivate::getParentGeometry() const
 {
     D_QC(DAbstractDialog);
+
+    if (DGuiApplicationHelper::isTabletEnvironment()) {
+        return qApp->primaryScreen()->geometry();
+    }
 
     if (q->parentWidget()) {
         return q->parentWidget()->window()->geometry();
