@@ -17,4 +17,20 @@ SOURCES += \
     $$PWD/ut_dswitchbutton.cpp \
     $$PWD/ut_dwarningbutton.cpp \
     $$PWD/ut_dsimplelistview.cpp \
-    $$PWD/ut_dkeysequenceedit.cpp
+    $$PWD/ut_dkeysequenceedit.cpp \
+    $$PWD/ut_dslider.cpp \
+    $$PWD/ut_dwindowmaxbutton.cpp \
+    $$PWD/ut_dipv4lineedit.cpp \
+    $$PWD/ut_darrowlinedrawer.cpp \
+    $$PWD/ut_darrowlineexpand.cpp \
+    $$PWD/ut_dspinner.cpp \
+    $$PWD/ut_dshaowline.cpp \
+    $$PWD/ut_dwindowclosebutton.cpp \
+    $$PWD/ut_dwindowminbutton.cpp \
+    $$PWD/ut_dwindowoptionbutton.cpp \
+    $$PWD/ut_dwindowquitfullbutton.cpp \
+    $$PWD/ut_dtextedit.cpp \
+    $$PWD/ut_dpushbutton.cpp \
+    $$PWD/ut_dtitlebar.cpp \
+    $$PWD/ut_dpageindicator.cpp \
+    $$PWD/ut_dtiplabel.cpp
