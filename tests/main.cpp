@@ -21,6 +21,11 @@
 #include <QApplication>
 #include <gtest/gtest.h>
 
+
+#ifdef QT_DEBUG
+#include <sanitizer/asan_interface.h>
+#endif
+
 int main(int argc, char *argv[])
 {
     // gerrit编译时没有显示器，需要指定环境变量
@@ -28,5 +33,11 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
     ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
+    int ret = RUN_ALL_TESTS();
+
+#ifdef QT_DEBUG
+    __sanitizer_set_report_path("asan.log");
+#endif
+
+    return ret;
 }

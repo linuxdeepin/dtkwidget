@@ -4,9 +4,17 @@ BUILD_DIR=build
 REPORT_DIR=report
 
 cd ../
+#rm -rf $BUILD_DIR
+#mkdir $BUILD_DIR
+#cd $BUILD_DIR
+#qmake .. CONFIG+=debug
+#make -j$(nproc)
+#cd ../tests/
+
 rm -rf $BUILD_DIR
 mkdir $BUILD_DIR
 cd $BUILD_DIR
+
 qmake .. CONFIG+=debug && make qmake_all
 #make -j$(nproc)
 cd ../tests/

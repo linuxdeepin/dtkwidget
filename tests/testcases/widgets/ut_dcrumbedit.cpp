@@ -78,8 +78,10 @@ TEST_F(ut_DCrumbedit, createMimeDataFromSelection)
     ASSERT_TRUE(edit->textCursor().hasSelection());
     ASSERT_FALSE(edit->textCursor().selectedText().isEmpty());
     edit->copy();
-    ASSERT_EQ(edit->createMimeDataFromSelection()->text(), "测试1");
+    QMimeData *data = edit->createMimeDataFromSelection();
+    ASSERT_EQ(data->text(), "测试1");
     ASSERT_EQ(qApp->clipboard()->text(), "测试1");
+    delete data;
 
     // 模拟鼠标中选中操作 选中字符为： 测试1 人物
     QTest::keyClick(edit, Qt::Key_Right, Qt::ShiftModifier);
@@ -87,8 +89,10 @@ TEST_F(ut_DCrumbedit, createMimeDataFromSelection)
     ASSERT_TRUE(edit->textCursor().hasSelection());
     ASSERT_FALSE(edit->textCursor().selectedText().isEmpty());
     edit->copy();
-    ASSERT_EQ(edit->createMimeDataFromSelection()->text(), "测试1 人物");
+    data = edit->createMimeDataFromSelection();
+    ASSERT_EQ(data->text(), "测试1 人物");
     ASSERT_EQ(qApp->clipboard()->text(), "测试1 人物");
+    delete data;
 
     edit->moveCursor(QTextCursor::Start);
     edit->moveCursor(QTextCursor::Right);
@@ -101,14 +105,18 @@ TEST_F(ut_DCrumbedit, createMimeDataFromSelection)
     QTest::keyClick(edit, Qt::Key_Right, Qt::ShiftModifier);
     // 此时位置 测试1 人物 测试|2 儿童 测试3 照片 测试代码调试添加GTest
     edit->copy();
-    ASSERT_EQ(edit->createMimeDataFromSelection()->text(), "人物 测试");
+    data = edit->createMimeDataFromSelection();
+    ASSERT_EQ(data->text(), "人物 测试");
     ASSERT_EQ(qApp->clipboard()->text(), "人物 测试");
+    delete data;
 
     edit->moveCursor(QTextCursor::Start);
 
     // 选中所有字符
     QTest::keyClick(edit, Qt::Key_End, Qt::ShiftModifier);
     edit->copy();
-    ASSERT_EQ(edit->createMimeDataFromSelection()->text(), "测试1 人物 测试2 儿童 测试3 照片 测试代码调试添加GTest");
+    data = edit->createMimeDataFromSelection();
+    ASSERT_EQ(data->text(), "测试1 人物 测试2 儿童 测试3 照片 测试代码调试添加GTest");
     ASSERT_EQ(qApp->clipboard()->text(), "测试1 人物 测试2 儿童 测试3 照片 测试代码调试添加GTest");
+    delete data;
 }
