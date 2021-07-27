@@ -943,7 +943,9 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(inorderCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_printOrderComboIndexChanged(int)));
     QObject::connect(waterTextEdit, SIGNAL(editingFinished()), q, SLOT(_q_customTextWatermarkFinished()));
     QObject::connect(pagePerSheetCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_pagePersheetComboIndexChanged(int)));
-    QObject::connect(picPathEdit, &DFileChooserEdit::fileChoosed, q, [=](const QString &filename) { customPictureWatermarkChoosed(filename); });
+    QObject::connect(picPathEdit->lineEdit(), &QLineEdit::textEdited, q, [this] { this->customPictureWatermarkChoosed(picPathEdit->text()); });
+    QObject::connect(picPathEdit, &DFileChooserEdit::fileChoosed, q, [this](const QString &filePath) { this->customPictureWatermarkChoosed(filePath); });
+
     QObject::connect(sizeBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), q, [=](int value) {
         waterSizeSlider->setValue(value);
     });
@@ -1988,13 +1990,17 @@ void DPrintPreviewDialogPrivate::_q_customTextWatermarkFinished()
  */
 void DPrintPreviewDialogPrivate::customPictureWatermarkChoosed(const QString &filename)
 {
-    QImage image(filename);
+    QImage image;
+    if (QFileInfo(filename).isFile())
+        image.load(filename);
+
     if (!image.isNull()) {
         pview->refreshBegin();
         initWaterSettings();
         pview->refreshEnd();
-        pview->setWaterMargImage(image);
     }
+
+    pview->setWaterMargImage(image);
 }
 
 /*!

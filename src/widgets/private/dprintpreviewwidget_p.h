@@ -553,8 +553,25 @@ struct DPrintPreviewWidgetPrivate::NumberUpData {
         if (waterList.isEmpty())
             return;
 
-        for (auto *item : qAsConst(waterList))
-            outFunction(item);
+        auto *firstWm = waterList.first();
+        outFunction(firstWm);
+
+        for (auto *item : qAsConst(waterList)) {
+            if (item == firstWm)
+                continue;
+
+            // TODO: remove it in dtkwidget 5.6.
+            item->type = firstWm->type;
+            item->layout = firstWm->layout;
+            item->mScaleFactor = firstWm->mScaleFactor;
+            item->color = firstWm->color;
+            item->text = firstWm->text;
+            item->sourceImage = firstWm->sourceImage;
+            item->graySourceImage = firstWm->graySourceImage;
+            item->font = firstWm->font;
+            item->setRotation(firstWm->rotation());
+            item->setOpacity(firstWm->opacity());
+        }
     }
 
     NumberUpData(DPrintPreviewWidgetPrivate *parent)
