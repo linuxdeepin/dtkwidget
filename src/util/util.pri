@@ -7,14 +7,16 @@ HEADERS += \
     $$PWD/ddesktopservices.h \
     $$PWD/dtrashmanager.h \
     $$PWD/dhidpihelper.h \
-    $$PWD/dapplicationsettings.h
+    $$PWD/dapplicationsettings.h \
+    $$PWD/daccessibilitychecker.h
 
 SOURCES += \
     $$PWD/dfileiconprovider.cpp \
     $$PWD/dthumbnailprovider.cpp \
     $$PWD/dwidgetutil.cpp \
     $$PWD/dhidpihelper.cpp \
-    $$PWD/dapplicationsettings.cpp
+    $$PWD/dapplicationsettings.cpp \
+    $$PWD/daccessibilitychecker.cpp
 
 linux* {
 CONFIG += link_pkgconfig

@@ -368,4 +368,5 @@ includes.files += \
     $$PWD/DSearchComboBox \
     $$PWD/DPrintPreviewDialog \
     $$PWD/DFileChooserEdit \
-    $$PWD/DPaletteHelper
+    $$PWD/DPaletteHelper \
+    $$PWD/DAccessibilityChecker
