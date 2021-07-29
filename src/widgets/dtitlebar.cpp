@@ -27,6 +27,7 @@
 #include <DWindowManagerHelper>
 #include <DObjectPrivate>
 #include <DPlatformTheme>
+#include <QScreen>
 
 #include "dwindowclosebutton.h"
 #include "dwindowmaxbutton.h"
@@ -755,6 +756,15 @@ void DTitlebar::setMenu(QMenu *menu)
         d->menu->setAccessibleName("DTitlebarMainMenu");
         disconnect(this, &DTitlebar::optionClicked, 0, 0);
         connect(this, &DTitlebar::optionClicked, this, &DTitlebar::showMenu);
+
+        if (DGuiApplicationHelper::isTabletEnvironment()) {
+            if (QScreen *screen = QGuiApplication::primaryScreen()) {
+                disconnect(screen, &QScreen::primaryOrientationChanged, this, 0);
+                connect(screen, &QScreen::primaryOrientationChanged, this, [ = ] {
+                    d->menu->move(d->optionButton->mapToGlobal(d->optionButton->rect().bottomLeft()));
+                });
+            }
+        }
     }
 }
 
