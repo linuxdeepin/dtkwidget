@@ -1075,6 +1075,19 @@ void DStyledItemDelegate::initStyleOption(QStyleOptionViewItem *option, const QM
 {
     QStyledItemDelegate::initStyleOption(option, index);
 
+    if (option->viewItemPosition == QStyleOptionViewItem::ViewItemPosition::Invalid) {
+        const int rowCount =  index.model()->rowCount();
+        if (rowCount == 1) {
+            option->viewItemPosition = QStyleOptionViewItem::ViewItemPosition::OnlyOne;
+        } else if (index.row() == 0) {
+            option->viewItemPosition = QStyleOptionViewItem::ViewItemPosition::Beginning;
+        } else if (index.row() == rowCount - 1) {
+            option->viewItemPosition = QStyleOptionViewItem::ViewItemPosition::End;
+        } else {
+            option->viewItemPosition = QStyleOptionViewItem::ViewItemPosition::Middle;
+        }
+    }
+
     if (index.data(Dtk::TextActionListRole).isValid()) {
         option->features |= QStyleOptionViewItem::HasDisplay;
     }
