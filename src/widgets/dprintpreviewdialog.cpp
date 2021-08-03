@@ -18,6 +18,7 @@
 #include "dfilechooseredit.h"
 #include "dslider.h"
 #include "dtoolbutton.h"
+#include "dtitlebar.h"
 
 #include <DScrollArea>
 #include <DScrollBar>
@@ -112,18 +113,19 @@ void DPrintPreviewDialogPrivate::startup()
 void DPrintPreviewDialogPrivate::initui()
 {
     Q_Q(DPrintPreviewDialog);
+
     DWidget *mainWidget = new DWidget(q);
     mainWidget->setObjectName("mainwidget");
-
-    DWidget *titleWidget = new DWidget(q);
-    titleWidget->setObjectName("titlewidget");
-
     mainWidget->setAutoFillBackground(true);
+    mainWidget->lower();
 
-    DPalette pa = DPaletteHelper::instance()->palette(titleWidget);
+    DTitlebar *titlebar = q->findChild<DTitlebar *>();
+    Q_ASSERT(titlebar);
+    titlebar->setAutoFillBackground(true);
+
+    DPalette pa = DPaletteHelper::instance()->palette(titlebar);
     pa.setBrush(DPalette::Background, pa.base());
-    DPaletteHelper::instance()->setPalette(titleWidget, pa);
-    titleWidget->setAutoFillBackground(true);
+    DPaletteHelper::instance()->setPalette(titlebar, pa);
 
     QHBoxLayout *mainlayout = new QHBoxLayout();
     mainlayout->setContentsMargins(QMargins(0, 0, 0, 0));
@@ -2423,17 +2425,17 @@ void DPrintPreviewDialog::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event);
     Q_D(DPrintPreviewDialog);
-    this->findChild<DWidget *>("titlewidget")->setGeometry(0, 0, this->width(), 50);
+
     this->findChild<DWidget *>("mainwidget")->setGeometry(0, 0, this->width(), this->height());
     double per = static_cast<double>(this->width()) / static_cast<double>(851);
     if (per >= 1.2) {
         this->findChild<DWidget *>("rightWidget")->setMaximumWidth(452 * 1.2);
         this->findChild<DWidget *>("leftWidget")->setMaximumWidth(this->width() - 20 - 10 - 452 * 1.2);
-        this->findChild<DBackgroundGroup *>("backGround")->setItemSpacing(10);
+        d->back->setItemSpacing(10);
     } else {
         this->findChild<DWidget *>("rightWidget")->setMaximumWidth(452 * per);
         this->findChild<DWidget *>("leftWidget")->setMaximumWidth(this->width() - 20 - 2 - 452 * per);
-        this->findChild<DBackgroundGroup *>("backGround")->setItemSpacing(2);
+        d->back->setItemSpacing(2);
     }
 }
 
