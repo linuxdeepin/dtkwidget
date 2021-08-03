@@ -921,7 +921,7 @@ QString DFontComboBoxExample::getTitleName() const
 QString DFontComboBoxExample::getDescriptionInfo() const
 {
     return "和DComboBox其实是一个控件,但这\n"
-           "里仅用于自体的选择.";
+           "里仅用于字体的选择.";
 }
 
 int DFontComboBoxExample::getFixedHeight() const
