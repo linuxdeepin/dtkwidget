@@ -2015,9 +2015,9 @@ void DPrintPreviewWidget::themeTypeChanged(DGuiApplicationHelper::ColorType them
 {
     Q_D(DPrintPreviewWidget);
     if (DGuiApplicationHelper::DarkType == themeType)
-        d->scene->setBackgroundBrush(QColor(0, 0, 0, 3));
+        d->graphicsView->setBackgroundBrush(QColor(0, 0, 0, 42));
     else
-        d->scene->setBackgroundBrush(QColor(255, 255, 255, 5));
+        d->graphicsView->setBackgroundBrush(QColor(255, 255, 255, 120));
 }
 
 DPrinter::DPrinter(QPrinter::PrinterMode mode)
