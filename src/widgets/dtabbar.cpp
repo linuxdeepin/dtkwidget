@@ -1121,7 +1121,9 @@ bool DTabBarPrivate::eventFilter(QObject *watched, QEvent *event)
             break;
         }
     } else if(watched == q) {
-        drawDTabbarExtendLine();
+        if (QEvent::Paint == event->type()) {
+            drawDTabbarExtendLine();
+        }
     }
 
     return QTabBar::eventFilter(watched, event);
