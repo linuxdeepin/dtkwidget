@@ -13,7 +13,8 @@ Standards-Version: 3.9.8
 
 Package: libdtkwidget5
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, libdtkcommon
+Depends: ${shlibs:Depends}, ${misc:Depends}, libdtkcommon,
+  libqt5widgets5(>= 5.11.3.33) | libqt5widgets5(<= 5.11.3.28)
 Multi-Arch: same
 Description: Deepin graphical user interface library
  DtkWidget is Deepin graphical user interface for deepin desktop development.
