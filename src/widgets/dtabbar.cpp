@@ -273,7 +273,8 @@ public:
     // 更新布局内的控件的对齐方式
     void updateTabAlignment()
     {
-        Qt::Alignment tabAlignment = Qt::AlignCenter;
+        Qt::Alignment tabAlignment = verticalTabs(shape()) ?
+                    Qt::AlignHCenter : Qt::AlignVCenter;
 
         for (int i = 0; i < layout->count(); i++) {
             QLayoutItem *item = layout->itemAt(i);
@@ -1637,6 +1638,7 @@ void DTabBar::setShape(QTabBar::Shape shape)
         }
         // 重新设置Direction
         d->layout->setDirection(shapeToDirection(shape));
+        d->updateTabAlignment();
     }
 }
 
