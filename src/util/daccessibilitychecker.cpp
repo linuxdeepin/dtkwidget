@@ -55,6 +55,7 @@ private:
     QString viewItemOutputLog(int rowIndex, int columnIndex, const QAbstractItemView *absView, const QString &itemText = QString()) const;
 
     void formatCheckResult();
+    void printSummaryResults();
     void printRoleWarningOutput(const QString &roleString, const QStringList &roleList);
     void _q_checkTimeout();
 
@@ -64,6 +65,7 @@ private:
     QStringList itemWariningList;
     DAccessibilityChecker::OutputFormat outputFormat;
     QTimer *checkTimer;
+    int widgetIgnoredCount;
 };
 
 /*! \internal */
@@ -74,6 +76,7 @@ DAccessibilityCheckerPrivate::DAccessibilityCheckerPrivate(DAccessibilityChecker
     , itemWariningList()
     , outputFormat(DAccessibilityChecker::AssertFormat)
     , checkTimer(nullptr)
+    , widgetIgnoredCount(0)
 {
 }
 
@@ -88,16 +91,14 @@ bool DAccessibilityCheckerPrivate::check()
     checkWidgetName();
     checkViewItemName();
 
-    if (outputFormat == DAccessibilityChecker::FullFormat) {
+    if (outputFormat == DAccessibilityChecker::FullFormat)
         formatCheckResult();
 
-        if (widgetsWarningList.isEmpty() && itemWariningList.isEmpty())
-            return true;
+    printSummaryResults();
+    if (widgetsWarningList.isEmpty() && itemWariningList.isEmpty())
+        return true;
 
-        return false;
-    }
-
-    return true;
+    return false;
 }
 
 /*! \internal */
@@ -105,13 +106,15 @@ void DAccessibilityCheckerPrivate::checkWidgetName()
 {
     D_Q(DAccessibilityChecker);
 
-    QWidgetList childrenList;
+    QWidgetList childrenList(topLevelWidgets);
     for (const QWidget *topLevelWidget : topLevelWidgets)
         childrenList.append(topLevelWidget->findChildren<QWidget *>());
 
     for (auto child : qAsConst(childrenList)) {
-        if (q->isIgnore(DAccessibilityChecker::Widget, child))
+        if (q->isIgnore(DAccessibilityChecker::Widget, child)) {
+            widgetIgnoredCount++;
             continue;
+        }
 
         const QAccessibleInterface *interface = QAccessible::queryAccessibleInterface(child);
         bool hasNoText;
@@ -318,12 +321,17 @@ QString DAccessibilityCheckerPrivate::widgetInfoString(const QWidget *w) const
 
     QString classPathString(QStringLiteral(" ——► ") + w->metaObject()->className());
     QWidget *parentWidget = w->parentWidget();
-    while (parentWidget->parentWidget()) {
-        classPathString.prepend(parentWidget->metaObject()->className()).prepend(QStringLiteral(" ——► "));
-        parentWidget = parentWidget->parentWidget();
+    if (!parentWidget) {
+        classPathString = w->metaObject()->className();
+    } else {
+        while (parentWidget->parentWidget()) {
+            classPathString.prepend(parentWidget->metaObject()->className()).prepend(QStringLiteral(" ——► "));
+            parentWidget = parentWidget->parentWidget();
+        }
+
+        classPathString.prepend(parentWidget->metaObject()->className());
     }
 
-    classPathString.prepend(parentWidget->metaObject()->className());
     splices = splices.arg(classDetailString).arg(classPathString);
     return splices;
 }
@@ -350,6 +358,18 @@ void DAccessibilityCheckerPrivate::formatCheckResult()
     printRoleWarningOutput(QStringLiteral("View Items"), itemWariningList);
 }
 
+/*!
+    \internal
+    \brief 用于输出统计结果，汇总标记内容.
+ */
+void DAccessibilityCheckerPrivate::printSummaryResults()
+{
+    int totalWidgetsCount = std::accumulate(this->topLevelWidgets.begin(), this->topLevelWidgets.end(), 0, [](int before, const QWidget *after) -> int { return before + after->findChildren<QWidget *>().count(); }) + this->topLevelWidgets.count();
+
+    QString summary("[=============]Result Summary: Total Widgets Number: %1    Succeeded: %2    Failed: %3    Ignored: %4");
+    qWarning().noquote() << summary.arg(totalWidgetsCount).arg(totalWidgetsCount - this->widgetsWarningList.count() - this->widgetIgnoredCount).arg(this->widgetsWarningList.count()).arg(this->widgetIgnoredCount);
+}
+
 /*! \internal */
 void DAccessibilityCheckerPrivate::printRoleWarningOutput(const QString &roleString, const QStringList &roleList)
 {
@@ -365,6 +385,7 @@ void DAccessibilityCheckerPrivate::_q_checkTimeout()
 {
     D_Q(DAccessibilityChecker);
     this->topLevelWidgets = qApp->topLevelWidgets();
+    this->widgetIgnoredCount = 0;
 
     if (!q->check())
         abort();
