@@ -53,7 +53,11 @@ DSliderExample::DSliderExample(QWidget *parent)
     hSlider->setIconSize({16, 16});
     connect(hSlider, &DSlider::iconClicked, this, [hSlider](DSlider::SliderIcons icon, bool checked){
         qDebug() << "........." << icon << checked;
-        hSlider->setValue(hSlider->value() + hSlider->pageStep());
+        if(icon == DSlider::LeftIcon) {
+            hSlider->setValue(hSlider->value() - hSlider->pageStep());
+        } else {
+            hSlider->setValue(hSlider->value() + hSlider->pageStep());
+        }
     });
     DSlider *hCalibration = new DSlider(Qt::Horizontal);
     DLabel *hLabel = new DLabel;
