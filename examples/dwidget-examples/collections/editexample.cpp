@@ -97,6 +97,14 @@ DLineEditExample::DLineEditExample(QWidget *parent)
     edit->setFixedWidth(340);
     edit->lineEdit()->setPlaceholderText("选填");
     edit->lineEdit()->setClearButtonEnabled(true);
+    connect(edit->lineEdit(), &QLineEdit::textChanged, [edit](const QString & text) {
+        if (text.size() < 2) {
+            edit->setAlert(true);
+            edit->showAlertMessage("字符不能少于2个");
+        } else {
+            edit->setAlert(false);
+        }
+    });
     QLabel *label = new QLabel(this);
     label->setPixmap(QPixmap("://images/example/DLineEdit.png"));
     label->setScaledContents(true);

@@ -118,9 +118,31 @@ bool DSpinBox::isAlert() const
 }
 
 /*!
-  \property DSpinBox::defaultValue
-  \brief This property holds the default value of this spin box.
+  \brief 显示指定的文本消息，超过指定时间后警告消息消失.
+
+   \a text text警告的文本
+   \a duration 显示的时间长度，单位毫秒
  */
+void DSpinBox::showAlertMessage(const QString &text, int duration)
+{
+    D_D(DSpinBox);
+
+    d->lineEdit->showAlertMessage(text, duration);
+}
+
+/*!
+  \brief 显示指定的文本消息，超过指定时间后警告消息消失.
+
+  \a text text警告的文本
+  \a follower 指定文本消息跟随的对象
+  \a duration 显示的时间长度，单位毫秒
+ */
+void DSpinBox::showAlertMessage(const QString &text, QWidget *follower, int duration)
+{
+    D_D(DSpinBox);
+
+    d->lineEdit->showAlertMessage(text, follower, duration);
+}
 
 /*!
   \brief 这个属性的值是控件的默认值。
@@ -184,6 +206,33 @@ bool DDoubleSpinBox::isAlert() const
     D_DC(DDoubleSpinBox);
 
     return d->lineEdit->isAlert();
+}
+
+/*!
+  \brief 显示指定的文本消息，超过指定时间后警告消息消失.
+
+   \a text text警告的文本
+   \a duration 显示的时间长度，单位毫秒
+ */
+void DDoubleSpinBox::showAlertMessage(const QString &text, int duration)
+{
+    D_D(DDoubleSpinBox);
+
+    d->lineEdit->showAlertMessage(text, duration);
+}
+
+/*!
+  \brief 显示指定的文本消息，超过指定时间后警告消息消失.
+
+  \a text text警告的文本
+  \a follower 指定文本消息跟随的对象
+  \a duration 显示的时间长度，单位毫秒
+ */
+void DDoubleSpinBox::showAlertMessage(const QString &text, QWidget *follower, int duration)
+{
+    D_D(DDoubleSpinBox);
+
+    d->lineEdit->showAlertMessage(text, follower, duration);
 }
 
 double DDoubleSpinBox::defaultValue() const

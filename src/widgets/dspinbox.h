@@ -39,6 +39,8 @@ public:
     QLineEdit *lineEdit() const;
 
     bool isAlert() const;
+    void showAlertMessage(const QString &text, int duration = 3000);
+    void showAlertMessage(const QString &text, QWidget *follower, int duration = 3000);
     D_DECL_DEPRECATED int defaultValue() const;
 
     void setEnabledEmbedStyle(bool enabled);
@@ -67,6 +69,8 @@ public:
     explicit DDoubleSpinBox(QWidget *parent = nullptr);
 
     bool isAlert() const;
+    void showAlertMessage(const QString &text, int duration = 3000);
+    void showAlertMessage(const QString &text, QWidget *follower, int duration = 3000);
     D_DECL_DEPRECATED double defaultValue() const;
 
     QLineEdit *lineEdit() const;
