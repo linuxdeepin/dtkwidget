@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DTRASHMANAGER_H
-#define DTRASHMANAGER_H
+#ifndef DTKWIDGET_DTRASHMANAGER_H
+#define DTKWIDGET_DTRASHMANAGER_H
 
 #include <DObject>
 
@@ -45,4 +45,4 @@ private:
 
 DWIDGET_END_NAMESPACE
 
-#endif // DTRASHMANAGER_H
+#endif // DTKWIDGET_DTRASHMANAGER_H

@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DFILETHUMBNAILPROVIDER_H
-#define DFILETHUMBNAILPROVIDER_H
+#ifndef DTKWIDGET_DFILETHUMBNAILPROVIDER_H
+#define DTKWIDGET_DFILETHUMBNAILPROVIDER_H
 
 #include <QThread>
 #include <QFileInfo>
@@ -81,4 +81,4 @@ private:
 
 DWIDGET_END_NAMESPACE
 
-#endif // DFILETHUMBNAILPROVIDER_H
+#endif // DTKWIDGET_DFILETHUMBNAILPROVIDER_H
