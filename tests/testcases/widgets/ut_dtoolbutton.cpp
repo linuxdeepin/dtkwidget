@@ -56,24 +56,4 @@ TEST_F(ut_DToolButton, testDToolButton)
     QString btStr("aaaaaaaa");
     button->setText(btStr);
     ASSERT_TRUE(button->text() == btStr);
-
-#if DTK_VERSION > DTK_VERSION_CHECK(5, 5, 0, 0)
-    Qt::Alignment align[] = {
-        Qt::AlignLeft,
-        Qt::AlignRight,
-        Qt::AlignHCenter,
-        Qt::AlignJustify,
-        Qt::AlignAbsolute,
-        Qt::AlignTop,
-        Qt::AlignBottom,
-        Qt::AlignVCenter,
-        Qt::AlignBaseline,
-        Qt::AlignCenter,
-    };
-
-    for (Qt::Alignment al : align) {
-        button->setAlignment(al);
-        ASSERT_TRUE(button->alignment() == al);
-    }
-#endif
 }

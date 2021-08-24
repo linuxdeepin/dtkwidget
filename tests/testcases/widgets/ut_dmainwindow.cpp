@@ -25,7 +25,6 @@
 #include <qglobal.h>
 
 #include "dthememanager.h"
-#include "dmainwindow.h"
 #include "private/dmainwindow_p.h"
 
 DWIDGET_USE_NAMESPACE

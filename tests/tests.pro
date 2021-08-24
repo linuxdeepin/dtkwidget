@@ -9,7 +9,7 @@ CONFIG -= app_bundle
 QT += widgets dtkcore$$D_VERION dtkgui$$D_VERION testlib
 
 unix:QMAKE_RPATHDIR += $$OUT_PWD/../src
-unix:LIBS += -L$$OUT_PWD/../src -ldtkwidget$$D_VERION -lgtest
+unix:LIBS += -lgtest -lglib-2.0
 
 QMAKE_CXXFLAGS += -fno-access-control
 QMAKE_LFLAGS += -fno-access-control
