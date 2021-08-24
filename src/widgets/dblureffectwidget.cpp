@@ -1011,7 +1011,7 @@ void DBlurEffectWidget::moveEvent(QMoveEvent *event)
     }
 
     if (d->blendMode == DBlurEffectWidget::InWindowBlend
-            || d->blendMode == DBlurEffectWidget::InWindowBlend) {
+            || d->blendMode == DBlurEffectWidget::BehindWindowBlend) {
         d->resetSourceImage();
 
         return QWidget::moveEvent(event);
