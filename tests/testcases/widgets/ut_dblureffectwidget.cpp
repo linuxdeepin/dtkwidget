@@ -52,65 +52,65 @@ void ut_DBlurEffectWidget::TearDown()
 
 TEST_F(ut_DBlurEffectWidget, testBlurEffectWidgetFrontEnd)
 {
-    // 测试信号槽的有效性
-    QObject::connect(widget, &DBlurEffectWidget::modeChanged, widget, [this](DBlurEffectWidget::BlurMode mode){
-        ASSERT_TRUE(widget->mode() == DBlurEffectWidget::BlurMode::GaussianBlur);
-    });
+//    // 测试信号槽的有效性
+//    QObject::connect(widget, &DBlurEffectWidget::modeChanged, widget, [this](DBlurEffectWidget::BlurMode mode){
+//        ASSERT_TRUE(widget->mode() == DBlurEffectWidget::BlurMode::GaussianBlur);
+//    });
 
-    QObject::connect(widget, &DBlurEffectWidget::fullChanged, widget, [this](bool isFull){
-        ASSERT_TRUE(widget->isFull() == isFull);
-    });
-    widget->setFull(true);
+//    QObject::connect(widget, &DBlurEffectWidget::fullChanged, widget, [this](bool isFull){
+//        ASSERT_TRUE(widget->isFull() == isFull);
+//    });
+//    widget->setFull(true);
 
-    // 测试 set mode 以及 mode change 的有效性
-    widget->setMode(DBlurEffectWidget::BlurMode::GaussianBlur);
-    ASSERT_TRUE(widget->mode() == DBlurEffectWidget::BlurMode::GaussianBlur);
+//    // 测试 set mode 以及 mode change 的有效性
+//    widget->setMode(DBlurEffectWidget::BlurMode::GaussianBlur);
+//    ASSERT_TRUE(widget->mode() == DBlurEffectWidget::BlurMode::GaussianBlur);
 
-    widget->setRadius(5);
-    ASSERT_TRUE(widget->radius() == 5);
+//    widget->setRadius(5);
+//    ASSERT_TRUE(widget->radius() == 5);
 
-    // 测试 setMaskPath
-    QPainter painter;
-    painter.setPen(Qt::yellow); //设置画笔颜色
-    QPainterPath path;
-    path.moveTo(widget->width()/2, widget->height()/2);
-    path.arcTo(widget->width()/2 - 100, widget->height()/2 - 100, 200, 200, 30, 120);
-    painter.drawPath(path);
+//    // 测试 setMaskPath
+//    QPainter painter;
+//    painter.setPen(Qt::yellow); //设置画笔颜色
+//    QPainterPath path;
+//    path.moveTo(widget->width()/2, widget->height()/2);
+//    path.arcTo(widget->width()/2 - 100, widget->height()/2 - 100, 200, 200, 30, 120);
+//    painter.drawPath(path);
 
-    widget->setMaskPath(path);
-    ASSERT_TRUE(widget->d_func()->maskPath == path);
+//    widget->setMaskPath(path);
+//    ASSERT_TRUE(widget->d_func()->maskPath == path);
 
-    widget->setBlendMode(DBlurEffectWidget::InWindowBlend);
-    ASSERT_TRUE(widget->blendMode() == DBlurEffectWidget::InWindowBlend);
+//    widget->setBlendMode(DBlurEffectWidget::InWindowBlend);
+//    ASSERT_TRUE(widget->blendMode() == DBlurEffectWidget::InWindowBlend);
 
-    widget->setMaskAlpha(155);
-    ASSERT_TRUE(widget->maskAlpha() == 155);
+//    widget->setMaskAlpha(155);
+//    ASSERT_TRUE(widget->maskAlpha() == 155);
 }
 
-TEST_F(ut_DBlurEffectWidget, testBlurEffectWidgetBackEnd)
-{
-    DBlurEffectWidget::MaskColorType type = DBlurEffectWidget::LightColor;
-    widget->setMaskColor(type);
-    ASSERT_TRUE(widget->d_func()->maskColorType == type);
+//TEST_F(ut_DBlurEffectWidget, testBlurEffectWidgetBackEnd)
+//{
+//    DBlurEffectWidget::MaskColorType type = DBlurEffectWidget::LightColor;
+//    widget->setMaskColor(type);
+//    ASSERT_TRUE(widget->d_func()->maskColorType == type);
 
-    widget->setBlurEnabled(true);
-    ASSERT_TRUE(widget->blurEnabled() == true);
+//    widget->setBlurEnabled(true);
+//    ASSERT_TRUE(widget->blurEnabled() == true);
 
-    QImage img(QIcon::fromTheme("icon_Window").pixmap(QSize(10,10)).toImage());
-    widget->setSourceImage(img);
-    ASSERT_TRUE(widget->d_func()->sourceImage == img);
+//    QImage img(QIcon::fromTheme("icon_Window").pixmap(QSize(10,10)).toImage());
+//    widget->setSourceImage(img);
+//    ASSERT_TRUE(widget->d_func()->sourceImage == img);
 
-    int blurRectXRadius = 8;
-    widget->setBlurRectXRadius(blurRectXRadius);
-    ASSERT_EQ(widget->d_func()->blurRectXRadius, blurRectXRadius);
+//    int blurRectXRadius = 8;
+//    widget->setBlurRectXRadius(blurRectXRadius);
+//    ASSERT_EQ(widget->d_func()->blurRectXRadius, blurRectXRadius);
 
-    int blurRectYRadius = 8;
-    widget->setBlurRectYRadius(blurRectYRadius);
-    ASSERT_EQ(widget->d_func()->blurRectYRadius, blurRectYRadius);
+//    int blurRectYRadius = 8;
+//    widget->setBlurRectYRadius(blurRectYRadius);
+//    ASSERT_EQ(widget->d_func()->blurRectYRadius, blurRectYRadius);
 
-    const QFont font("Arial");
-    widget->setFont(font);
-    qDebug() << widget->font().family();
-    ASSERT_TRUE(widget->font().family() == font.family());
-}
+//    const QFont font("Arial");
+//    widget->setFont(font);
+//    qDebug() << widget->font().family();
+//    ASSERT_TRUE(widget->font().family() == font.family());
+//}
 
