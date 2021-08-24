@@ -1648,7 +1648,7 @@ int DTabBar::insertTab(int index, const QString &text)
  */
 int DTabBar::insertTab(int index, const QIcon &icon, const QString &text)
 {
-    return insertTab(index, icon, text);
+    return d_func()->insertTab(index, icon, text);
 }
 
 /*!
