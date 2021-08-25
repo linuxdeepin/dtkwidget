@@ -29,7 +29,7 @@ protected:
     void SetUp() override
     {
         target = new DListView();
-        auto model = new DVariantListModel();
+        auto model = new DVariantListModel(target);
         target->setModel(model);
     }
     void TearDown() override
@@ -152,7 +152,7 @@ TEST_F(ut_DListView, setItemSize)
 
 TEST_F(ut_DListView, setModel)
 {
-    auto model = new DVariantListModel();
+    auto model = new DVariantListModel(target);
     target->setModel(model);
     ASSERT_EQ(target->model(), model);
 };
