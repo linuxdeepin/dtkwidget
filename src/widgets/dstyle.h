@@ -230,6 +230,7 @@ public:
     static DStyle::StyleState getState(const QStyleOption *option);
     static void setFocusRectVisible(QWidget *widget, bool visible);
     static void setFrameRadius(QWidget *widget, int radius);
+    static void setUncheckedItemIndicatorVisible(QWidget *widget, bool visible);
     DStyle();
 
     static void drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, const QStyleOption *opt, QPainter *p, const QWidget *w = nullptr);

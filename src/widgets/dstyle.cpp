@@ -138,6 +138,11 @@ void DStyle::setFrameRadius(QWidget *widget, int radius)
     widget->setProperty("_d_dtk_frameRadius", radius);
 }
 
+void DStyle::setUncheckedItemIndicatorVisible(QWidget *widget, bool visible)
+{
+    widget->setProperty("_d_dtk_UncheckedItemIndicator", visible);
+}
+
 namespace DDrawUtils {
 static QImage dropShadow(const QPixmap &px, qreal radius, const QColor &color)
 {
