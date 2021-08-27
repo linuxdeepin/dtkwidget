@@ -21,6 +21,7 @@
 
 #include <gtest/gtest.h>
 
+#include "private/dmpriscontrol_p.h"
 #include "dmpriscontrol.h"
 DWIDGET_USE_NAMESPACE
 class ut_DMPRISControl : public testing::Test
@@ -42,5 +43,6 @@ protected:
 
 TEST_F(ut_DMPRISControl, isWorking)
 {
-    ASSERT_EQ(target->isWorking(), false);
+    DMPRISControlPrivate* d = target->d_func();
+    ASSERT_EQ(target->isWorking(), d->m_mprisInter != nullptr);
 };
