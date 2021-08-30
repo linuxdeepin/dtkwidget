@@ -21,6 +21,8 @@
 
 #include <gtest/gtest.h>
 
+#include <QWidget>
+
 #include "dgraphicsgloweffect.h"
 DWIDGET_USE_NAMESPACE
 class ut_DGraphicsGlowEffect : public testing::Test
@@ -28,16 +30,19 @@ class ut_DGraphicsGlowEffect : public testing::Test
 protected:
     void SetUp() override
     {
+        widget = new QWidget();
         target = new DGraphicsGlowEffect();
+        widget->setGraphicsEffect(target);
     }
     void TearDown() override
     {
-        if (target) {
-            delete target;
-            target = nullptr;
+        if (widget) {
+            delete widget;
+            widget = nullptr;
         }
     }
     DGraphicsGlowEffect *target = nullptr;
+    QWidget *widget = nullptr;
 };
 
 TEST_F(ut_DGraphicsGlowEffect, setBlurRadius)

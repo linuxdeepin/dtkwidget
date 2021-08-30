@@ -21,6 +21,9 @@
 
 #include <gtest/gtest.h>
 
+#include <QTest>
+#include "private/dabstractdialogprivate_p.h"
+
 #include "dabstractdialog.h"
 DWIDGET_USE_NAMESPACE
 class ut_DAbstractDialog : public testing::Test
@@ -40,11 +43,6 @@ protected:
     DAbstractDialog *widget = nullptr;
 };
 
-TEST_F(ut_DAbstractDialog, displayPosition)
-{
-    widget->displayPosition();
-};
-
 TEST_F(ut_DAbstractDialog, move)
 {
     widget->move(QPoint(10, 10));
@@ -59,7 +57,9 @@ TEST_F(ut_DAbstractDialog, moveToCenter)
 
 TEST_F(ut_DAbstractDialog, moveToCenterByRect)
 {
+    widget->setGeometry(0, 0, 20, 20);
     widget->moveToCenterByRect(QRect(0, 0, 100, 100));
+    ASSERT_EQ(widget->pos(), QPoint(40, 40));
 };
 
 TEST_F(ut_DAbstractDialog, moveToTopRight)
@@ -82,4 +82,20 @@ TEST_F(ut_DAbstractDialog, setGeometry)
 {
     widget->setGeometry(QRect(0, 0, 100, 100));
     ASSERT_EQ(widget->geometry(), QRect(0, 0, 100, 100));
+};
+
+TEST_F(ut_DAbstractDialog, mouseEvent)
+{
+    widget->setGeometry(QRect(0, 0, 100, 100));
+    widget->show();
+    ASSERT_TRUE(QTest::qWaitForWindowExposed(widget, 100));
+    QTest::mousePress(widget, Qt::LeftButton);
+    ASSERT_TRUE(widget->d_func()->mousePressed);
+
+    QTest::mouseRelease(widget, Qt::LeftButton);
+    ASSERT_FALSE(widget->d_func()->mousePressed);
+
+    QTest::mousePress(widget, Qt::LeftButton);
+    QTest::mouseMove(widget);
+    ASSERT_TRUE(widget->d_func()->mouseMoved);
 };

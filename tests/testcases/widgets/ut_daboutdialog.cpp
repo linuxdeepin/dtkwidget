@@ -21,6 +21,8 @@
 
 #include <gtest/gtest.h>
 
+#include <QTest>
+
 #include "daboutdialog.h"
 DWIDGET_USE_NAMESPACE
 class ut_DAboutDialog : public testing::Test
@@ -104,3 +106,20 @@ TEST_F(ut_DAboutDialog, setWindowTitle)
     ASSERT_EQ(widget->windowTitle(), "setWindowTitle");
 };
 
+TEST_F(ut_DAboutDialog, keyPressEvent)
+{
+    widget->show();
+    ASSERT_TRUE(QTest::qWaitForWindowExposed(widget, 100));
+    QTest::keyClick(widget, Qt::Key_Escape);
+    ASSERT_FALSE(widget->isVisible());
+};
+
+TEST_F(ut_DAboutDialog, showEvent)
+{
+    widget->setGeometry(QRect(QPoint(0, 0), QSize(200, 200)));
+    widget->setMinimumSize(QSize(200, 200));
+    widget->setMaximumSize(QSize(200, 200));
+    widget->show();
+    ASSERT_TRUE(QTest::qWaitForWindowExposed(widget, 100));
+    ASSERT_EQ(widget->size(), QSize(200, 200));
+};

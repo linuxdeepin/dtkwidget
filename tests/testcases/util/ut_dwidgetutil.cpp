@@ -21,29 +21,41 @@
 
 #include <gtest/gtest.h>
 
-#include "dmessagemanager.h"
+#include <QIcon>
+
+#include "dwidgetutil.h"
 DWIDGET_USE_NAMESPACE
-class ut_DMessageManager : public testing::Test
+
+class ut_DWidgetUtil : public testing::Test
 {
 protected:
     void SetUp() override
     {
-        target = DMessageManager::instance();
     }
     void TearDown() override
     {
     }
-    DMessageManager *target = nullptr;
 };
 
-TEST_F(ut_DMessageManager, setContentMargens)
+TEST_F(ut_DWidgetUtil, dropShadow)
 {
-    QWidget *par = new QWidget();
-    QWidget *content = new QWidget(par);
-    content->setObjectName("_d_message_manager_content");
-    QMargins margin(1, 1, 1, 1);
-    target->setContentMargens(par, margin);
-    ASSERT_EQ(content->contentsMargins(), margin);
+    QPixmap px(10, 10);
+    px.fill(Qt::black);
+    QImage image = dropShadow(px, 2, Qt::red);
+    ASSERT_NE(image.pixel(4, 4), QColor(Qt::red).rgb());
 
-    par->deleteLater();
+};
+
+TEST_F(ut_DWidgetUtil, getCircleIcon)
+{
+    QPixmap px(10, 10);
+    QIcon icon = getCircleIcon(px, 2);
+    ASSERT_EQ(icon.actualSize(QSize(100, 100)), QSize(2, 2));
+};
+
+TEST_F(ut_DWidgetUtil, getCircleIcon2)
+{
+    QIcon icon = QPixmap(10, 10);
+    QIcon icon2 = getCircleIcon(icon, 2);
+    ASSERT_EQ(icon2.actualSize(QSize(100, 100)), QSize(2, 2));
 };

@@ -21,8 +21,14 @@
 
 #include <gtest/gtest.h>
 
+#include <DGuiApplicationHelper>
+#include <QApplication>
+#include <QDrag>
 #include <QIcon>
+#include <QPaintEvent>
 #include <QSignalSpy>
+#include <QTest>
+#include <QTimer>
 
 #include "dtabbar.h"
 DWIDGET_USE_NAMESPACE
@@ -100,6 +106,7 @@ TEST_F(ut_DTabBar, setChangeCurrentOnDrag)
 
 TEST_F(ut_DTabBar, setCurrentIndex)
 {
+    target->setTabsClosable(true);
     target->insertTab(0, "insertTab1");
     target->insertTab(1, "insertTab2");
     target->setCurrentIndex(1);
@@ -176,6 +183,9 @@ TEST_F(ut_DTabBar, setShape)
 {
     target->setShape(QTabBar::RoundedNorth);
     ASSERT_EQ(target->shape(), QTabBar::RoundedNorth);
+
+    target->setShape(QTabBar::TriangularSouth);
+    ASSERT_EQ(target->shape(), QTabBar::TriangularSouth);
 };
 
 TEST_F(ut_DTabBar, setStartDragDistance)
@@ -269,3 +279,61 @@ TEST_F(ut_DTabBar, setVisibleAddButton)
     target->setVisibleAddButton(true);
     ASSERT_EQ(target->visibleAddButton(), true);
 };
+
+TEST_F(ut_DTabBar, startDrag)
+{
+    // TODO dragActionChanged使用Qt::DropAction, 但startDrag内注册时机较晚
+    qRegisterMetaType<Qt::DropAction>();
+
+    target->insertTab(0, "insertTab1");
+    QSignalSpy spy(target, &DTabBar::dragStarted);
+    QSignalSpy spy2(target, &DTabBar::dragActionChanged);
+
+    target->setDragable(true);
+    target->startDrag(0);
+    // QT_QPA_PLATFORM为onscreen时，startDrag会以队列方式发送dragStarted信号,
+    // 另外阻塞等待用户操作，所以在下个事件循环，取消拖拽.
+    QTimer::singleShot(0, target, [](){
+        QDrag::cancel();
+    });
+    ASSERT_TRUE(QTest::qWaitFor([&spy2]{
+        return spy2.count() > 0;
+    }));
+
+    ASSERT_EQ(spy.count(), 1);
+};
+
+TEST_F(ut_DTabBar, drawDTabbarExtendLine)
+{
+    DGUI_USE_NAMESPACE;
+    target->setEnabledEmbedStyle(true);
+    QList<DGuiApplicationHelper::ColorType> types{
+        DGuiApplicationHelper::LightType,
+        DGuiApplicationHelper::DarkType,
+        DGuiApplicationHelper::UnknownType};
+
+    for (auto type : types) {
+        DGuiApplicationHelper::instance()->setPaletteType(type);
+        QApplication::postEvent(target, new QPaintEvent(target->geometry()));
+    }
+};
+
+TEST_F(ut_DTabBar, resizeEvent)
+{
+    target->resize(10, 10);
+    ASSERT_EQ(target->size(), QSize(10, 10));
+};
+
+TEST_F(ut_DTabBar, startTabFlash)
+{
+    target->insertTab(0, "insertTab1");
+    target->startTabFlash(0);
+};
+
+TEST_F(ut_DTabBar, tabRect)
+{
+    target->insertTab(0, "insertTab1");
+    ASSERT_EQ(target->tabAt(target->tabRect(0).topLeft()), 0);
+};
+
+

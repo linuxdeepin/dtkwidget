@@ -34,7 +34,7 @@ enum selectType {
     selectAll, selectPrev, selectLast, selectFirst, selectSingle
 };
 
-class LIBDTKWIDGETSHARED_EXPORT TestListItem : public DSimpleListItem {
+class TestListItem : public DSimpleListItem {
 public:
     bool isSelectTest = false;
     selectType type = selectSingle;
@@ -122,6 +122,20 @@ protected:
     void TearDown() override;
     DSimpleListView *listView = nullptr;
     QWidget *widget = nullptr;
+
+    void addItems(const selectType& type, const int count = 4)
+    {
+        QList<DSimpleListItem *> itemList;
+        for (int i = 0; i < count; i++) {
+            TestListItem *item = new TestListItem();
+            item->isSelectTest = true;
+            item->type = type;
+            item->idx = i;
+            itemList << item;
+        }
+
+        listView->addItems(itemList);
+    }
 };
 
 void ut_DSimpleListView::SetUp()
@@ -135,88 +149,84 @@ void ut_DSimpleListView::SetUp()
 
 void ut_DSimpleListView::TearDown()
 {
+    listView->clearItems();
     widget->deleteLater();
 }
 
 TEST_F(ut_DSimpleListView, testDSimpleListViewSelectFirst)
 {
-    if (!qgetenv("QT_QPA_PLATFORM").isEmpty()) {
-        return;
-    }
-    int idx = 0;
-    TestListItem item[4];
-    QList<DSimpleListItem *> itemList;
-    for (TestListItem &i : item) {
-        itemList << &i;
-        i.isSelectTest = true;
-        i.type = selectFirst;
-        i.idx = idx++;
-    }
-
-    listView->addItems(itemList);
+    addItems(selectFirst);
     listView->selectFirstItem();
     widget->show();
 }
 
 TEST_F(ut_DSimpleListView, testDSimpleListViewSelectLast)
 {
-    if (!qgetenv("QT_QPA_PLATFORM").isEmpty()) {
-        return;
-    }
-    int idx = 0;
-    TestListItem item[4];
-    QList<DSimpleListItem *> itemList;
-    for (TestListItem &i : item) {
-        itemList << &i;
-        i.isSelectTest = true;
-        i.type = selectLast;
-        i.idx = idx++;
-    }
-
-    listView->addItems(itemList);
+    addItems(selectLast);
     listView->selectLastItem();
     widget->show();
 }
 
 TEST_F(ut_DSimpleListView, testDSimpleListViewSelectAll)
 {
-    if (!qgetenv("QT_QPA_PLATFORM").isEmpty()) {
-        return;
-    }
-    int idx = 0;
-    TestListItem item[4];
-    QList<DSimpleListItem *> itemList;
-
-    for (TestListItem &i : item) {
-        itemList << &i;
-        i.isSelectTest = true;
-        i.type = selectAll;
-        i.idx = idx++;
-    }
-
-    listView->addItems(itemList);
+    addItems(selectAll);
     listView->selectAllItems();
     widget->show();
 }
 
 TEST_F(ut_DSimpleListView, testDSimpleListViewSelectPrev)
 {
-    if (!qgetenv("QT_QPA_PLATFORM").isEmpty()) {
-        return;
-    }
-    int idx = 0;
-    TestListItem item[4];
-    QList<DSimpleListItem *> itemList;
-
-    for (TestListItem &i : item) {
-        itemList << &i;
-        i.isSelectTest = true;
-        i.type = selectPrev;
-        i.idx = idx++;
-    }
-
-    listView->addItems(itemList);
+    addItems(selectPrev);
     listView->selectLastItem();
     listView->selectPrevItem();
     widget->show();
+}
+
+TEST_F(ut_DSimpleListView, mouseEvent)
+{
+    addItems(selectFirst);
+    listView->selectFirstItem();
+    widget->show();
+    ASSERT_TRUE(QTest::qWaitForWindowExposed(widget, 100));
+
+    QTest::mousePress(widget, Qt::LeftButton);
+
+    QTest::mouseRelease(widget, Qt::LeftButton);
+
+    QTest::mousePress(widget, Qt::LeftButton);
+
+    QTest::mouseMove(listView);
+    QPoint outPoint(listView->pos() + QPoint(listView->x(), listView->y() + listView->height()));
+    QTest::mouseMove(listView, outPoint);
+}
+
+TEST_F(ut_DSimpleListView, keyEvent)
+{
+    addItems(selectFirst);
+    listView->selectFirstItem();
+    widget->show();
+    ASSERT_TRUE(QTest::qWaitForWindowExposed(widget, 100));
+
+    QTest::keyClick(widget, Qt::Key_Home);
+    QTest::keyClick(widget, Qt::Key_Home, Qt::ControlModifier);
+    QTest::keyClick(widget, Qt::Key_Home, Qt::ShiftModifier);
+
+    QTest::keyClick(widget, Qt::Key_End);
+    QTest::keyClick(widget, Qt::Key_End, Qt::ControlModifier);
+    QTest::keyClick(widget, Qt::Key_End, Qt::ShiftModifier);
+
+    QTest::keyClick(widget, Qt::Key_Up);
+    QTest::keyClick(widget, Qt::Key_Up, Qt::ShiftModifier);
+
+    QTest::keyClick(widget, Qt::Key_Down);
+    QTest::keyClick(widget, Qt::Key_Down, Qt::ShiftModifier);
+
+
+    QTest::keyClick(widget, Qt::Key_PageUp);
+    QTest::keyClick(widget, Qt::Key_PageUp, Qt::ControlModifier);
+    QTest::keyClick(widget, Qt::Key_PageUp, Qt::ShiftModifier);
+
+    QTest::keyClick(widget, Qt::Key_PageDown);
+    QTest::keyClick(widget, Qt::Key_PageUp, Qt::ControlModifier);
+    QTest::keyClick(widget, Qt::Key_PageUp, Qt::ShiftModifier);
 }

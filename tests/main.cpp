@@ -20,11 +20,26 @@
  */
 #include <QApplication>
 #include <gtest/gtest.h>
+#include <QTimer>
 
 
 #ifdef QT_DEBUG
 #include <sanitizer/asan_interface.h>
 #endif
+
+/**
+  添加Qt事件循环,兼容gtest.
+ */
+int runTest(QCoreApplication &app)
+{
+    int ret = 0;
+    QTimer::singleShot(0, &app, [&app, &ret](){
+        ret = RUN_ALL_TESTS();
+        app.quit();
+    });
+    app.exec();
+    return ret;
+}
 
 int main(int argc, char *argv[])
 {
@@ -33,11 +48,10 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
     ::testing::InitGoogleTest(&argc, argv);
-    int ret = RUN_ALL_TESTS();
 
 #ifdef QT_DEBUG
     __sanitizer_set_report_path("asan.log");
 #endif
 
-    return ret;
+    return runTest(app);
 }

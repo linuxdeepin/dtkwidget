@@ -162,3 +162,11 @@ TEST_F(ut_DArrowRectangle, setWidth)
     target->setWidth(1);
     ASSERT_EQ(target->width(), 1);
 };
+
+TEST_F(ut_DArrowRectangle, event)
+{
+    target->setGeometry(QRect(0, 0, 100, 100));
+    target->resize(QSize(200, 200));
+    target->show(10, 10);
+    ASSERT_EQ(target->size(), QSize(200, 200));
+};

@@ -21,29 +21,29 @@
 
 #include <gtest/gtest.h>
 
-#include "dmessagemanager.h"
+#include "dfileiconprovider.h"
 DWIDGET_USE_NAMESPACE
-class ut_DMessageManager : public testing::Test
+class ut_DFileIconProvider : public testing::Test
 {
 protected:
     void SetUp() override
     {
-        target = DMessageManager::instance();
+        target = DFileIconProvider::globalProvider();
     }
     void TearDown() override
     {
     }
-    DMessageManager *target = nullptr;
+    DFileIconProvider *target = nullptr;
 };
 
-TEST_F(ut_DMessageManager, setContentMargens)
+TEST_F(ut_DFileIconProvider, globalProvider)
 {
-    QWidget *par = new QWidget();
-    QWidget *content = new QWidget(par);
-    content->setObjectName("_d_message_manager_content");
-    QMargins margin(1, 1, 1, 1);
-    target->setContentMargens(par, margin);
-    ASSERT_EQ(content->contentsMargins(), margin);
+    target->globalProvider();
+};
 
-    par->deleteLater();
+TEST_F(ut_DFileIconProvider, icon)
+{
+    QFileInfo file("/noexistent");
+    QIcon icon = target->icon(file, QIcon::fromTheme("preferences-system"));
+    ASSERT_EQ(icon.name(), QIcon::fromTheme("preferences-system").name());
 };

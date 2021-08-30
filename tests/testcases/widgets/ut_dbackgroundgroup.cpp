@@ -31,7 +31,7 @@ protected:
     {
         widget = new QWidget();
         layout = new QHBoxLayout(widget);
-        target = new DBackgroundGroup(layout);
+        target = new DBackgroundGroup(layout, widget);
     }
     void TearDown() override
     {

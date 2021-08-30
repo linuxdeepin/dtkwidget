@@ -202,6 +202,7 @@ TEST_F(ut_DPrintPreviewDialog, testForInit)
     ASSERT_EQ(test_dialog_d->spinboxTextCaches.begin(), test_dialog_d->spinboxTextCaches.end());
 }
 
+/*
 TEST_F(ut_DPrintPreviewDialog, testPaintRequested)
 {
     ASSERT_EQ(test_dialog_d->totalPages, 4);
@@ -1647,3 +1648,4 @@ TEST_F(ut_DPrintPreviewDialog, testDApplicationHelper_instance)
 
     DApplicationHelper::instance()->themeTypeChanged(DGuiApplicationHelper::DarkType);
 }
+*/

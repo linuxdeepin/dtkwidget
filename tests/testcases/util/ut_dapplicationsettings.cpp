@@ -20,30 +20,45 @@
 */
 
 #include <gtest/gtest.h>
+#include <DGuiApplicationHelper>
+#include <QApplication>
 
-#include "dmessagemanager.h"
+#include "dapplicationsettings.h"
 DWIDGET_USE_NAMESPACE
-class ut_DMessageManager : public testing::Test
+class ut_DApplicationSettings : public testing::Test
 {
 protected:
     void SetUp() override
     {
-        target = DMessageManager::instance();
+        const QString &on = qApp->organizationName();
+        if (on.isEmpty())
+            qApp->setOrganizationName("deepin");
+
+        const QString &name = qApp->applicationName();
+        if (name.isEmpty())
+            qApp->setApplicationName("test");
+
+        target = new DApplicationSettings();
     }
     void TearDown() override
     {
+        if (target) {
+            delete target;
+            target = nullptr;
+        }
     }
-    DMessageManager *target = nullptr;
+    DApplicationSettings *target = nullptr;
 };
 
-TEST_F(ut_DMessageManager, setContentMargens)
+TEST_F(ut_DApplicationSettings, DApplicationSettings)
 {
-    QWidget *par = new QWidget();
-    QWidget *content = new QWidget(par);
-    content->setObjectName("_d_message_manager_content");
-    QMargins margin(1, 1, 1, 1);
-    target->setContentMargens(par, margin);
-    ASSERT_EQ(content->contentsMargins(), margin);
+    DGUI_USE_NAMESPACE;
+    auto type = DGuiApplicationHelper::instance()->paletteType();
+    if (type == DGuiApplicationHelper::LightType) {
+        type = DGuiApplicationHelper::DarkType;
+    } else {
+        type = DGuiApplicationHelper::LightType;
+    }
 
-    par->deleteLater();
+    DGuiApplicationHelper::instance()->setPaletteType(type);
 };

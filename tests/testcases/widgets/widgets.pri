@@ -67,7 +67,7 @@ SOURCES += \
     $$PWD/ut_dspinner.cpp \
     $$PWD/ut_dshaowline.cpp \
     $$PWD/ut_dstackwidget.cpp \
-#    $$PWD/ut_dstyle.cpp \
+    $$PWD/ut_dstyle.cpp \
     $$PWD/ut_dstyleditemdelegate.cpp \
     $$PWD/ut_dstyleoption.cpp \
     $$PWD/ut_dsuggestbutton.cpp \

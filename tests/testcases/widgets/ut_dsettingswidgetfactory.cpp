@@ -20,9 +20,13 @@
 */
 
 #include <gtest/gtest.h>
+#include <DFontSizeManager>
+#include <DKeySequenceEdit>
 #include <DSettingsOption>
+#include <DSwitchButton>
 #include <QJsonObject>
 #include <QWidget>
+#include <private/settings/contenttitle.h>
 
 #include "dsettingswidgetfactory.h"
 DWIDGET_USE_NAMESPACE
@@ -65,19 +69,23 @@ TEST_F(ut_DSettingsWidgetFactory, createStandardItem)
     auto result = target->createStandardItem(QByteArray(), registerOption, rightWidget);
     ASSERT_EQ(result.first, nullptr);
     ASSERT_EQ(result.second, rightWidget);
+    result.first->deleteLater();
+    result.second->deleteLater();
 };
 
 TEST_F(ut_DSettingsWidgetFactory, createWidget)
 {
     auto widget = target->createWidget(registerOption);
     ASSERT_EQ(widget, createdWidget);
+    widget->deleteLater();
 };
 
 TEST_F(ut_DSettingsWidgetFactory, createWidget2)
 {
     QByteArray translateContext("translateContext");
-    target->createWidget(translateContext, registerOption);
+    QWidget *result = target->createWidget(translateContext, registerOption);
     ASSERT_EQ(registerOption->property("_d_DSettingsWidgetFactory_translateContext").toByteArray(), translateContext);
+    result->deleteLater();
 };
 
 TEST_F(ut_DSettingsWidgetFactory, registerWidget)
@@ -94,6 +102,8 @@ TEST_F(ut_DSettingsWidgetFactory, registerWidget)
     auto result = target->createWidget(option);
 
     ASSERT_EQ(result->parent(), parent);
+    parent->deleteLater();
+    option->deleteLater();
 };
 
 TEST_F(ut_DSettingsWidgetFactory, registerWidget2)
@@ -111,5 +121,105 @@ TEST_F(ut_DSettingsWidgetFactory, registerWidget2)
     auto result = target->createItem(option);
     ASSERT_EQ(result.first->parent(), parent);
     ASSERT_EQ(result.second->parent(), parent);
-
+    parent->deleteLater();
+    option->deleteLater();
 };
+
+TEST_F(ut_DSettingsWidgetFactory, shortcut)
+{
+    QJsonObject opt;
+    opt["key"] = "register2";
+    opt["type"] = "shortcut";
+    auto option = DTK_CORE_NAMESPACE::DSettingsOption::fromJson("register", opt);
+    auto result = target->createItem(option);
+    ASSERT_EQ(result.first, nullptr);
+    auto rightWidget = qobject_cast<DKeySequenceEdit*>(result.second);
+    ASSERT_EQ(rightWidget->objectName(), "OptionShortcutEdit");
+
+    rightWidget->editingFinished(QKeySequence(QKeySequence::Copy));
+    rightWidget->deleteLater();
+    option->deleteLater();
+};
+
+TEST_F(ut_DSettingsWidgetFactory, checkbox)
+{
+    QJsonObject opt;
+    opt["key"] = "register2";
+    opt["type"] = "checkbox";
+    auto option = DTK_CORE_NAMESPACE::DSettingsOption::fromJson("register", opt);
+    auto result = target->createItem(option);
+    ASSERT_EQ(result.first->objectName(), "OptionCheckbox");
+    ASSERT_EQ(result.second, nullptr);
+    result.first->deleteLater();
+    option->deleteLater();
+};
+
+TEST_F(ut_DSettingsWidgetFactory, switchbutton)
+{
+    QJsonObject opt;
+    opt["key"] = "register2";
+    opt["type"] = "switchbutton";
+    auto option = DTK_CORE_NAMESPACE::DSettingsOption::fromJson("register", opt);
+    auto result = target->createItem(option);
+    ASSERT_EQ(result.first, nullptr);
+    QWidget *content = result.second->findChild<DSwitchButton*>();
+    ASSERT_TRUE(content);
+    ASSERT_EQ(content->objectName(), "OptionDSwitchButton");
+    result.second->deleteLater();
+    option->deleteLater();
+};
+
+TEST_F(ut_DSettingsWidgetFactory, title1)
+{
+    QJsonObject opt;
+    opt["key"] = "register2";
+    opt["type"] = "title1";
+    auto option = DTK_CORE_NAMESPACE::DSettingsOption::fromJson("register", opt);
+    auto result = target->createItem(option);
+    auto firstWidget = qobject_cast<ContentTitle*>(result.first);
+    ASSERT_EQ(firstWidget->font().pixelSize(), DFontSizeManager::instance()->t4().pixelSize());
+    ASSERT_EQ(result.second, nullptr);
+    firstWidget->deleteLater();
+    option->deleteLater();
+};
+
+TEST_F(ut_DSettingsWidgetFactory, title2)
+{
+    QJsonObject opt;
+    opt["key"] = "register2";
+    opt["type"] = "title2";
+    auto option = DTK_CORE_NAMESPACE::DSettingsOption::fromJson("register", opt);
+    auto result = target->createItem(option);
+    auto firstWidget = qobject_cast<ContentTitle*>(result.first);
+    ASSERT_EQ(firstWidget->font().pixelSize(), DFontSizeManager::instance()->t5().pixelSize());
+    ASSERT_EQ(result.second, nullptr);
+    firstWidget->deleteLater();
+    option->deleteLater();
+};
+
+TEST_F(ut_DSettingsWidgetFactory, createUnsupportHandle)
+{
+    QJsonObject opt;
+    opt["key"] = "register2";
+    opt["type"] = "registerWidget2";
+    auto option = DTK_CORE_NAMESPACE::DSettingsOption::fromJson("register", opt);;
+    auto result = target->createWidget(option);
+    ASSERT_EQ(result->objectName(), "OptionUnsupport");
+    result->deleteLater();
+    option->deleteLater();
+};
+
+TEST_F(ut_DSettingsWidgetFactory, lineedit)
+{
+    QJsonObject opt;
+    opt["key"] = "register2";
+    opt["type"] = "lineedit";
+    auto option = DTK_CORE_NAMESPACE::DSettingsOption::fromJson("register", opt);;
+    auto result = target->createItem(option);
+    ASSERT_EQ(result.first, nullptr);
+    ASSERT_EQ(result.second->objectName(), "OptionLineEdit");
+    result.second->deleteLater();
+    option->deleteLater();
+};
+
+

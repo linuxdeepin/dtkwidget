@@ -21,6 +21,9 @@
 
 #include <gtest/gtest.h>
 
+#include <QSignalSpy>
+#include <QTest>
+
 #include "darrowbutton.h"
 DWIDGET_USE_NAMESPACE
 class ut_ArrowButtonIcon : public testing::Test
@@ -79,3 +82,31 @@ TEST_F(ut_DArrowButton, setArrowDirection)
     target->setArrowDirection(DArrowButton::ArrowUp);
     ASSERT_EQ(target->arrowDirection(), DArrowButton::ArrowUp);
 };
+
+TEST_F(ut_DArrowButton, mouseEvent)
+{
+    target->setGeometry(QRect(0, 0, 100, 100));
+    target->show();
+    ASSERT_TRUE(QTest::qWaitForWindowExposed(target, 100));
+
+    QSignalSpy mousePressSpy(target, &DArrowButton::mousePress);
+    QTest::mousePress(target, Qt::LeftButton);
+    ASSERT_EQ(target->buttonState(), DArrowButton::ArrowStatePress);
+    ASSERT_EQ(mousePressSpy.count(), 1);
+
+    QSignalSpy mouseReleaseSpy(target, &DArrowButton::mouseRelease);
+    QTest::mouseRelease(target, Qt::LeftButton);
+    ASSERT_EQ(target->buttonState(), DArrowButton::ArrowStateNormal);
+    ASSERT_EQ(mouseReleaseSpy.count(), 1);
+
+    QSignalSpy mouseEnterSpy(target, &DArrowButton::mouseEnter);
+    QTest::mouseMove(target);
+    ASSERT_EQ(mouseEnterSpy.count(), 1);
+
+    QSignalSpy mouseLeaveSpy(target, &DArrowButton::mouseLeave);
+    QTest::mouseMove(target);
+    QPoint outPoint(target->pos() + QPoint(target->x(), target->y() + target->height()));
+    QTest::mouseMove(target, outPoint);
+    ASSERT_EQ(mouseLeaveSpy.count(), 1);
+};
+

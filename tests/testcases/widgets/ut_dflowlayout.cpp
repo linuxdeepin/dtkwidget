@@ -103,6 +103,7 @@ TEST_F(ut_DFlowLayout, insertWidget)
     QWidget *widget = new QWidget();
     target->insertWidget(0, widget);
     ASSERT_EQ(target->count(), 1);
+    widget->deleteLater();
 };
 
 TEST_F(ut_DFlowLayout, minimumSize)
