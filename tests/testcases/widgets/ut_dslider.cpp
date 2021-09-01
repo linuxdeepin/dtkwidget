@@ -150,3 +150,22 @@ TEST_F(ut_DSlider, testDSliderPositions)
     res = dslider->d_func()->slider->property("_d_dtk_sldier_across").toBool();
     ASSERT_TRUE(res);
 }
+
+TEST_F(ut_DSlider, sizeHint)
+{
+    ASSERT_GE(dslider->sizeHint().height(), dslider->QWidget::sizeHint().height());
+
+    QList <int> list;
+    dslider->setMarkPositions(list);
+    list << 0 << 25 << 50 << 75 << 100;
+    dslider->setMarkPositions(list);
+    ASSERT_EQ(dslider->tickPosition(), QSlider::TicksBothSides);
+}
+
+TEST_F(ut_DSlider, SpecialSlider)
+{
+    SpecialSlider *specialSlider = new SpecialSlider(Qt::Horizontal, dslider);
+    specialSlider->show();
+    specialSlider->resize(100, 10);
+    ASSERT_EQ(specialSlider->orientation(), Qt::Horizontal);
+}

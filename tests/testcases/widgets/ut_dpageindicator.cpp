@@ -81,3 +81,32 @@ TEST_F(ut_DPageIndicator, testDPageIndicatorNextAndPrevious)
     indicator->nextPage();
     ASSERT_EQ(indicator->currentPageIndex(), 6);
 }
+
+TEST_F(ut_DPageIndicator, setPointColor)
+{
+    indicator->setPointColor(Qt::red);
+    ASSERT_EQ(indicator->pointColor(), Qt::red);
+}
+
+TEST_F(ut_DPageIndicator, secondaryPointColor)
+{
+    indicator->setSecondaryPointColor(Qt::red);
+    ASSERT_EQ(indicator->secondaryPointColor(), Qt::red);
+}
+
+TEST_F(ut_DPageIndicator, setSecondaryPointRadius)
+{
+    indicator->setSecondaryPointRadius(1);
+    ASSERT_EQ(indicator->secondaryPointRadius(), 1);
+}
+
+TEST_F(ut_DPageIndicator, pointDistance)
+{
+    indicator->setPointDistance(1);
+    ASSERT_EQ(indicator->pointDistance(), 1);
+}
+
+TEST_F(ut_DPageIndicator, event)
+{
+    indicator->show();
+}

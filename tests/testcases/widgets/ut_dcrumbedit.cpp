@@ -120,3 +120,98 @@ TEST_F(ut_DCrumbedit, createMimeDataFromSelection)
     ASSERT_EQ(qApp->clipboard()->text(), "测试1 人物 测试2 儿童 测试3 照片 测试代码调试添加GTest");
     delete data;
 }
+
+TEST_F(ut_DCrumbedit, setCrumbReadOnly)
+{
+    edit->setCrumbReadOnly(true);
+    ASSERT_EQ(edit->crumbReadOnly(), true);
+}
+
+TEST_F(ut_DCrumbedit, setCrumbRadius)
+{
+    edit->setCrumbRadius(1);
+    ASSERT_EQ(edit->crumbRadius(), 1);
+}
+
+TEST_F(ut_DCrumbedit, setSplitter)
+{
+    edit->setSplitter("|");
+    ASSERT_EQ(edit->splitter(), "|");
+}
+
+TEST_F(ut_DCrumbedit, setDualClickMakeCrumb)
+{
+    edit->setDualClickMakeCrumb(true);
+    ASSERT_EQ(edit->dualClickMakeCrumb(), true);
+}
+
+TEST_F(ut_DCrumbedit, containCrumb)
+{
+    edit->insertCrumb("123");
+    ASSERT_TRUE(edit->containCrumb("123"));
+    ASSERT_EQ(edit->crumbList().size(), 1);
+
+    auto format = edit->crumbTextFormat("123");
+    ASSERT_EQ(format.objectType(), QTextFormat::UserObject + 1);
+}
+
+TEST_F(ut_DCrumbedit, event)
+{
+    edit->show();
+    ASSERT_TRUE(QTest::qWaitForWindowExposed(edit, 100));
+
+    edit->setFocus();
+
+    QTest::keyPress(edit, Qt::Key_Return);
+
+    QTest::mouseDClick(edit, Qt::LeftButton);
+}
+
+class ut_DCrumbTextFormat : public testing::Test
+{
+protected:
+    void SetUp() override;
+    void TearDown() override;
+
+    DCrumbTextFormat *format;
+};
+
+void ut_DCrumbTextFormat::SetUp()
+{
+    format = new DCrumbTextFormat;
+}
+
+void ut_DCrumbTextFormat::TearDown()
+{
+    delete format;
+}
+
+TEST_F(ut_DCrumbTextFormat, setTagColor)
+{
+    format->setTagColor(Qt::red);
+    ASSERT_EQ(format->tagColor(), Qt::red);
+}
+
+TEST_F(ut_DCrumbTextFormat, setText)
+{
+    format->setText("text");
+    ASSERT_EQ(format->text(), "text");
+}
+
+TEST_F(ut_DCrumbTextFormat, setTextColor)
+{
+    format->setTextColor(Qt::red);
+    ASSERT_EQ(format->textColor(), Qt::red);
+}
+
+TEST_F(ut_DCrumbTextFormat, setBackground)
+{
+    format->setBackground(Qt::red);
+    ASSERT_EQ(format->background(), Qt::red);
+}
+
+TEST_F(ut_DCrumbTextFormat, setBackgroundRadius)
+{
+    format->setBackgroundRadius(1);
+    ASSERT_EQ(format->backgroundRadius(), 1);
+}

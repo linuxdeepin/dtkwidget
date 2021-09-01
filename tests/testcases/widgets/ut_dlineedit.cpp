@@ -21,6 +21,8 @@
 
 #include <gtest/gtest.h>
 
+#include <QTest>
+
 #include "dlineedit.h"
 DWIDGET_USE_NAMESPACE
 class ut_DLineEdit : public testing::Test
@@ -110,4 +112,15 @@ TEST_F(ut_DLineEdit, setTextToTranslateEnabled)
 {
     target->setTextToTranslateEnabled(true);
     ASSERT_EQ(target->textToTranslateIsEnabled(), true);
+};
+
+TEST_F(ut_DLineEdit, event)
+{
+    target->setContextMenuPolicy(Qt::DefaultContextMenu);
+    target->setGeometry(0, 0, 100, 100);
+    target->show();
+    ASSERT_TRUE(QTest::qWaitForWindowExposed(target, 100));
+
+    QContextMenuEvent event(QContextMenuEvent::Mouse, target->rect().center());
+    qApp->sendEvent(target, &event);
 };

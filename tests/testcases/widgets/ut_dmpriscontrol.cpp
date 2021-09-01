@@ -21,6 +21,9 @@
 
 #include <gtest/gtest.h>
 
+#include <QSignalSpy>
+#include <QTest>
+
 #include "private/dmpriscontrol_p.h"
 #include "dmpriscontrol.h"
 DWIDGET_USE_NAMESPACE
@@ -45,4 +48,36 @@ TEST_F(ut_DMPRISControl, isWorking)
 {
     DMPRISControlPrivate* d = target->d_func();
     ASSERT_EQ(target->isWorking(), d->m_mprisInter != nullptr);
+};
+
+TEST_F(ut_DMPRISControl, setPictureVisible)
+{
+    target->setPictureVisible(true);
+    ASSERT_EQ(target->d_func()->m_pictureVisible, true);
+};
+
+TEST_F(ut_DMPRISControl, setPictureSize)
+{
+    target->setPictureSize(QSize(10, 10));
+    ASSERT_EQ(target->d_func()->m_picture->size(), QSize(10, 10));
+};
+
+TEST_F(ut_DMPRISControl, event)
+{
+    target->setGeometry(0, 0, 100, 100);
+    target->show();
+    ASSERT_TRUE(QTest::qWaitForWindowExposed(target, 100));
+
+    {
+        DFloatingButton *btn = target->d_func()->m_prevBtn;
+        QSignalSpy spy(btn, &DFloatingButton::clicked);
+        QTest::mouseClick(btn, Qt::LeftButton);
+        ASSERT_EQ(spy.count(), 1);
+    }
+    {
+        DFloatingButton *btn = target->d_func()->m_playBtn;
+        QSignalSpy spy(btn, &DFloatingButton::clicked);
+        QTest::mouseClick(btn, Qt::LeftButton);
+        ASSERT_EQ(spy.count(), 1);
+    }
 };

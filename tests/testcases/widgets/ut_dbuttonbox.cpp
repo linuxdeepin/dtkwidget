@@ -20,6 +20,10 @@
 */
 
 #include <gtest/gtest.h>
+#include <QSignalSpy>
+#include <QTest>
+#include <QButtonGroup>
+#include "private/dbuttonbox_p.h"
 
 #include "dbuttonbox.h"
 DWIDGET_USE_NAMESPACE
@@ -64,6 +68,36 @@ TEST_F(ut_DButtonBox, setOrientation)
 {
     target->setOrientation(Qt::Horizontal);
     ASSERT_EQ(target->orientation(), Qt::Horizontal);
+};
+
+TEST_F(ut_DButtonBox, event)
+{
+    QList<DButtonBoxButton*> buttons;
+    buttons.push_back(new DButtonBoxButton("DButtonBoxButton"));
+    target->setButtonList(buttons, true);
+    target->setGeometry(0, 0, 100, 100);
+    target->show();
+    ASSERT_TRUE(QTest::qWaitForWindowExposed(target, 100));
+
+    qRegisterMetaType<QAbstractButton *>("QAbstractButton *");
+    QButtonGroup *group = target->d_func()->group;
+    {
+        QSignalSpy spy(group, SIGNAL(buttonClicked(QAbstractButton *)));
+        QTest::mouseClick(buttons.first(), Qt::LeftButton);
+        ASSERT_EQ(spy.count(), 1);
+        ASSERT_EQ(target->checkedButton(), buttons.first());
+    }
+    {
+        QSignalSpy spy(group, SIGNAL(buttonPressed(QAbstractButton *)));
+        QTest::mousePress(buttons.first(), Qt::LeftButton);
+        ASSERT_EQ(spy.count(), 1);
+    }
+    {
+        QSignalSpy spy(group, SIGNAL(buttonReleased(QAbstractButton *)));
+        QTest::mouseRelease(buttons.first(), Qt::LeftButton);
+        ASSERT_EQ(spy.count(), 1);
+    }
+    qDeleteAll(buttons);
 };
 
 class ut_DButtonBoxButton : public testing::Test

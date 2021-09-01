@@ -158,3 +158,12 @@ TEST_F(ut_DFlowLayout, takeAt)
     ASSERT_EQ(item, item1);
     delete item1;
 };
+
+TEST_F(ut_DFlowLayout, DFlowLayout)
+{
+    QWidget *widget = new QWidget();
+    DFlowLayout *flow = new DFlowLayout(widget);
+    ASSERT_EQ(flow->parent(), widget);
+    widget->deleteLater();
+};
+

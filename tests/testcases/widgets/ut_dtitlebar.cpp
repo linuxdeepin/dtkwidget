@@ -22,6 +22,7 @@
 #include <gtest/gtest.h>
 #include <QTest>
 #include <QDebug>
+#include <QSignalSpy>
 
 #include "DTitlebar"
 
@@ -69,15 +70,12 @@ TEST_F(ut_DTitlebar, testDTitlebarCustomWidget)
 
 TEST_F(ut_DTitlebar, testDTitlebarAddRemoveWidget)
 {
-    return;
-    QWidget w1, w2, w3;
-    titleBar->addWidget(&w1);
-    titleBar->addWidget(&w2);
-    titleBar->addWidget(&w3);
-    titleBar->removeWidget(&w1);
-    titleBar->removeWidget(&w2);
-    titleBar->removeWidget(&w3);
-    // TODO
+    widget->show();
+    ASSERT_TRUE(QTest::qWaitForWindowExposed(widget, 100));
+
+    QWidget *widget = new QWidget();
+    titleBar->addWidget(widget);
+    titleBar->removeWidget(widget);
 }
 
 TEST_F(ut_DTitlebar, testDTitlebarSetFixedHeight)
@@ -89,20 +87,20 @@ TEST_F(ut_DTitlebar, testDTitlebarSetFixedHeight)
 
 TEST_F(ut_DTitlebar, testDTitlebarBackgroundTransparent)
 {
-    return;
     bool bgTransparent = false;
     titleBar->setBackgroundTransparent(bgTransparent);
-    ASSERT_NE(titleBar->backgroundRole(), QPalette::Base);
+    ASSERT_EQ(titleBar->backgroundRole(), QPalette::Base);
 
     bgTransparent = true;
     titleBar->setBackgroundTransparent(bgTransparent);
-    ASSERT_EQ(titleBar->backgroundRole(), QPalette::NoRole);
+    ASSERT_EQ(titleBar->backgroundRole(), QPalette::Window);
 }
 
 TEST_F(ut_DTitlebar, testDTitlebarsetSeparatorVisible)
 {
     bool separatorVisible = true;
     titleBar->setSeparatorVisible(separatorVisible);
+    ASSERT_EQ(titleBar->separatorVisible(), titleBar->isVisible() && true);
 
     separatorVisible = false;
     titleBar->setSeparatorVisible(separatorVisible);
@@ -127,17 +125,92 @@ TEST_F(ut_DTitlebar, testDTitlebarSetBlurBackground)
 {
     bool blurBackground = true;
     titleBar->setBlurBackground(blurBackground);
+    ASSERT_EQ(titleBar->blurBackground(), true);
     blurBackground = false;
     titleBar->setBlurBackground(blurBackground);
     // TODO
 }
 
-TEST_F(ut_DTitlebar, testDTitlebarButtonAreaWidth)
+TEST_F(ut_DTitlebar, setAutoHideOnFullscreen)
 {
-    return;
-    bool blurBackground = true;
-    titleBar->setBlurBackground(blurBackground);
-    blurBackground = false;
-    titleBar->setBlurBackground(blurBackground);
-    // TODO
+    titleBar->setAutoHideOnFullscreen(true);
+    ASSERT_EQ(titleBar->autoHideOnFullscreen(), true);
 }
+
+TEST_F(ut_DTitlebar, setMenuDisabled)
+{
+    titleBar->setMenuDisabled(true);
+    ASSERT_EQ(titleBar->menuIsDisabled(), true);
+}
+
+TEST_F(ut_DTitlebar, setQuitMenuDisabled)
+{
+    titleBar->setQuitMenuDisabled(true);
+    ASSERT_EQ(titleBar->quitMenuIsDisabled(), true);
+}
+
+TEST_F(ut_DTitlebar, setQuitMenuVisible)
+{
+    titleBar->setQuitMenuVisible(true);
+}
+
+TEST_F(ut_DTitlebar, setSwitchThemeMenuVisible)
+{
+    titleBar->setSwitchThemeMenuVisible(true);
+    ASSERT_EQ(titleBar->switchThemeMenuIsVisible(), titleBar->isVisible() && true);
+}
+
+TEST_F(ut_DTitlebar, setMenuVisible)
+{
+    titleBar->setMenuVisible(true);
+    ASSERT_EQ(titleBar->menuIsVisible(), true);
+}
+
+TEST_F(ut_DTitlebar, setDisableFlags)
+{
+    widget->show();
+    ASSERT_TRUE(QTest::qWaitForWindowExposed(widget, 100));
+
+    titleBar->setDisableFlags(Qt::Window);
+    ASSERT_EQ(titleBar->disableFlags(), Qt::Window);
+}
+
+TEST_F(ut_DTitlebar, minimumSizeHint)
+{
+    ASSERT_EQ(titleBar->minimumSizeHint(), titleBar->sizeHint());
+}
+
+TEST_F(ut_DTitlebar, event)
+{
+    widget->showFullScreen();
+    ASSERT_TRUE(QTest::qWaitForWindowExposed(widget, 100));
+
+    qRegisterMetaType<Qt::MouseButtons>();
+    {
+        QSignalSpy spy(titleBar, &DTitlebar::mousePressed);
+        QTest::mousePress(titleBar, Qt::LeftButton);
+        ASSERT_EQ(spy.count(), 1);
+    }
+    {
+        QTest::mouseRelease(titleBar, Qt::LeftButton);
+    }
+    {
+        QSignalSpy spy(titleBar, &DTitlebar::mouseMoving);
+        QTest::mouseMove(titleBar);
+    }
+    {
+        QSignalSpy spy(titleBar, &DTitlebar::doubleClicked);
+        QTest::mouseDClick(titleBar, Qt::LeftButton);
+        ASSERT_EQ(spy.count(), 1);
+    }
+}
+
+TEST_F(ut_DTitlebar, toggleWindowState)
+{
+    titleBar->toggleWindowState();
+
+    titleBar->buttonAreaWidth();
+
+    titleBar->setFullScreenButtonVisible(true);
+}
+

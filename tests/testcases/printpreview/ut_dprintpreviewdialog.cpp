@@ -186,7 +186,7 @@ TEST_F(ut_DPrintPreviewDialog, testForInit)
     ASSERT_TRUE(test_dialog_d->wmOpaSlider);
     ASSERT_TRUE(test_dialog_d->opaBox);
     ASSERT_EQ(test_dialog_d->marginOldValue.length(), 8);
-    for (QVector<qreal>::iterator iter = test_dialog_d->marginOldValue.begin(); iter < test_dialog_d->marginOldValue.end(); iter++) {
+    for (QVector<qreal>::iterator iter = test_dialog_d->marginOldValue.begin(); iter != test_dialog_d->marginOldValue.end(); iter++) {
         ASSERT_EQ(*iter, 0);
     }
     ASSERT_TRUE(test_dialog_d->spacer);

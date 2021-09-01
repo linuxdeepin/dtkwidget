@@ -21,6 +21,9 @@
 
 #include <gtest/gtest.h>
 
+#include <QLabel>
+#include <QSignalSpy>
+
 #include "danchors.h"
 DWIDGET_USE_NAMESPACE
 
@@ -90,3 +93,73 @@ TEST_F(ut_DAnchorsBase, setVerticalCenterOffset)
     target->setVerticalCenterOffset(1);
     ASSERT_EQ(target->verticalCenterOffset(), 1);
 };
+
+TEST_F(ut_DAnchorsBase, setAnchorInfo)
+{
+    QWidget * pw = new QWidget();
+    {
+        DAnchorsBase rect1(new QLabel("rect1", pw));
+        DAnchorsBase rect2(new QLabel("rect2", pw));
+        QSignalSpy spy(&rect1, &DAnchorsBase::topChanged);
+        ASSERT_TRUE(rect1.setTop(rect2.top()));
+        ASSERT_EQ(spy.count(), 1);
+    }
+    {
+        DAnchorsBase rect1(new QLabel("rect1", pw));
+        DAnchorsBase rect2(new QLabel("rect2", pw));
+        QSignalSpy spy(&rect1, &DAnchorsBase::leftChanged);
+        ASSERT_TRUE(rect1.setLeft(rect2.left()));
+        ASSERT_EQ(spy.count(), 1);
+    }
+    {
+        DAnchorsBase rect1(new QLabel("rect1", pw));
+        DAnchorsBase rect2(new QLabel("rect2", pw));
+        QSignalSpy spy(&rect1, &DAnchorsBase::rightChanged);
+        ASSERT_TRUE(rect1.setRight(rect2.right()));
+        ASSERT_EQ(spy.count(), 1);
+    }
+    {
+        DAnchorsBase rect1(new QLabel("rect1", pw));
+        DAnchorsBase rect2(new QLabel("rect2", pw));
+        QSignalSpy spy(&rect1, &DAnchorsBase::bottomChanged);
+        ASSERT_TRUE(rect1.setBottom(rect2.bottom()));
+        ASSERT_EQ(spy.count(), 1);
+    }
+    {
+        DAnchorsBase rect1(new QLabel("rect1", pw));
+        DAnchorsBase rect2(new QLabel("rect2", pw));
+        QSignalSpy spy(&rect1, &DAnchorsBase::horizontalCenterChanged);
+        ASSERT_TRUE(rect1.setHorizontalCenter(rect2.horizontalCenter()));
+        ASSERT_EQ(spy.count(), 1);
+    }
+    {
+        DAnchorsBase rect1(new QLabel("rect1", pw));
+        DAnchorsBase rect2(new QLabel("rect2", pw));
+        QSignalSpy spy(&rect1, &DAnchorsBase::verticalCenterChanged);
+        ASSERT_TRUE(rect1.setVerticalCenter(rect2.verticalCenter()));
+        ASSERT_EQ(spy.count(), 1);
+        ASSERT_TRUE(rect1.errorString().isEmpty());
+        ASSERT_EQ(rect1.errorCode(), DAnchorsBase::NoError);
+    }
+    pw->deleteLater();
+};
+
+TEST_F(ut_DAnchorsBase, setFill)
+{
+    QWidget * pw = new QWidget();
+    DAnchorsBase rect1(new QLabel("rect1", pw));
+    DAnchorsBase rect2(new QLabel("rect2", pw));
+    rect1.setFill(&rect2);
+    ASSERT_EQ(rect1.fill(), rect2.target());
+    pw->deleteLater();
+}
+
+TEST_F(ut_DAnchorsBase, setCenterIn)
+{
+    QWidget * pw = new QWidget();
+    DAnchorsBase rect1(new QLabel("rect1", pw));
+    DAnchorsBase rect2(new QLabel("rect2", pw));
+    rect1.setCenterIn(&rect2);
+    ASSERT_EQ(rect1.centerIn(), rect2.target());
+    pw->deleteLater();
+}
