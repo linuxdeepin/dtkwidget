@@ -20,8 +20,10 @@
 */
 
 #include <gtest/gtest.h>
-
+#include <QPaintEvent>
+#include "DStyleOptionButton"
 #include "dcommandlinkbutton.h"
+
 DWIDGET_USE_NAMESPACE
 class ut_DCommandLinkButton : public testing::Test
 {
@@ -43,4 +45,9 @@ protected:
 TEST_F(ut_DCommandLinkButton, sizeHint)
 {
     ASSERT_GE(target->sizeHint().width(), target->fontMetrics().size(0, target->text()).width());
+    DStyleOptionButton option;
+    target->initStyleOption(&option);
+
+    QPaintEvent e(target->rect());
+    target->paintEvent(&e);
 };

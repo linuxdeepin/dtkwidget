@@ -40,6 +40,12 @@ filter_files=(
 "*/src/util/dregionmonitor*"
 "*/src/util/dtrashmanager*"
 "*/src/util/dthumbnailprovider*"
+"*/dthememanager*"
+"*/dmainwindow*"
+"*/dapplication*"
+"*/dblureffectwidget*"
+"*/private/startupnotifications*"
+"*/private/keyboardmonitor*"
 )
 lcov --remove coverage_all.info "*/tests/*" "*/usr/include*" "*build/src*" ${filter_files[*]} --output-file coverage.info
 genhtml -o ../../tests/$REPORT_DIR coverage.info

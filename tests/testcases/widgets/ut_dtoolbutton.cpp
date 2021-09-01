@@ -22,6 +22,8 @@
 #include <gtest/gtest.h>
 #include <QTest>
 #include <QDebug>
+#include <QPaintEvent>
+#include <QStyleOptionToolButton>
 
 #include "dtoolbutton.h"
 
@@ -56,4 +58,13 @@ TEST_F(ut_DToolButton, testDToolButton)
     QString btStr("aaaaaaaa");
     button->setText(btStr);
     ASSERT_TRUE(button->text() == btStr);
+
+    QStyleOptionToolButton option;
+    button->initStyleOption(&option);
+
+    QPaintEvent e(button->rect());
+    button->paintEvent(&e);
+
+    QSize size = button->sizeHint();
+    ASSERT_TRUE(size.width() > 0 && size.height() > 0);
 }

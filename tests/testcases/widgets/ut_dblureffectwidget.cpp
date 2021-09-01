@@ -25,6 +25,10 @@
 
 #include <QPen>
 #include <QPainter>
+#include <QMoveEvent>
+#include <QShowEvent>
+#include <QHideEvent>
+#include <QPaintEvent>
 #include <QPainterPath>
 
 #include "dblureffectwidget.h"
@@ -52,65 +56,133 @@ void ut_DBlurEffectWidget::TearDown()
 
 TEST_F(ut_DBlurEffectWidget, testBlurEffectWidgetFrontEnd)
 {
-//    // 测试信号槽的有效性
-//    QObject::connect(widget, &DBlurEffectWidget::modeChanged, widget, [this](DBlurEffectWidget::BlurMode mode){
-//        ASSERT_TRUE(widget->mode() == DBlurEffectWidget::BlurMode::GaussianBlur);
-//    });
+    // 测试信号槽的有效性
+    QObject::connect(widget, &DBlurEffectWidget::modeChanged, widget, [this](DBlurEffectWidget::BlurMode mode){
+        ASSERT_TRUE(widget->mode() == DBlurEffectWidget::BlurMode::GaussianBlur);
+    });
 
-//    QObject::connect(widget, &DBlurEffectWidget::fullChanged, widget, [this](bool isFull){
-//        ASSERT_TRUE(widget->isFull() == isFull);
-//    });
-//    widget->setFull(true);
+    QObject::connect(widget, &DBlurEffectWidget::fullChanged, widget, [this](bool isFull){
+        ASSERT_TRUE(widget->isFull() == isFull);
+    });
+    widget->setFull(true);
 
-//    // 测试 set mode 以及 mode change 的有效性
-//    widget->setMode(DBlurEffectWidget::BlurMode::GaussianBlur);
-//    ASSERT_TRUE(widget->mode() == DBlurEffectWidget::BlurMode::GaussianBlur);
+    // 测试 set mode 以及 mode change 的有效性
+    widget->setMode(DBlurEffectWidget::BlurMode::GaussianBlur);
+    ASSERT_TRUE(widget->mode() == DBlurEffectWidget::BlurMode::GaussianBlur);
 
-//    widget->setRadius(5);
-//    ASSERT_TRUE(widget->radius() == 5);
+    widget->setRadius(5);
+    ASSERT_TRUE(widget->radius() == 5);
 
-//    // 测试 setMaskPath
-//    QPainter painter;
-//    painter.setPen(Qt::yellow); //设置画笔颜色
-//    QPainterPath path;
-//    path.moveTo(widget->width()/2, widget->height()/2);
-//    path.arcTo(widget->width()/2 - 100, widget->height()/2 - 100, 200, 200, 30, 120);
-//    painter.drawPath(path);
+    // 测试 setMaskPath
+    QPainter painter;
+    painter.setPen(Qt::yellow); //设置画笔颜色
+    QPainterPath path;
+    path.moveTo(widget->width()/2, widget->height()/2);
+    path.arcTo(widget->width()/2 - 100, widget->height()/2 - 100, 200, 200, 30, 120);
+    painter.drawPath(path);
 
-//    widget->setMaskPath(path);
-//    ASSERT_TRUE(widget->d_func()->maskPath == path);
+    widget->setMaskPath(path);
+    ASSERT_TRUE(widget->d_func()->maskPath == path);
 
-//    widget->setBlendMode(DBlurEffectWidget::InWindowBlend);
-//    ASSERT_TRUE(widget->blendMode() == DBlurEffectWidget::InWindowBlend);
+    widget->setBlendMode(DBlurEffectWidget::InWindowBlend);
+    ASSERT_TRUE(widget->blendMode() == DBlurEffectWidget::InWindowBlend);
 
-//    widget->setMaskAlpha(155);
-//    ASSERT_TRUE(widget->maskAlpha() == 155);
+    widget->setMaskAlpha(155);
+    ASSERT_TRUE(widget->maskAlpha() == 155);
 }
 
-//TEST_F(ut_DBlurEffectWidget, testBlurEffectWidgetBackEnd)
-//{
-//    DBlurEffectWidget::MaskColorType type = DBlurEffectWidget::LightColor;
-//    widget->setMaskColor(type);
-//    ASSERT_TRUE(widget->d_func()->maskColorType == type);
+TEST_F(ut_DBlurEffectWidget, testBlurEffectWidgetBackEnd)
+{
+    DBlurEffectWidget::MaskColorType type = DBlurEffectWidget::LightColor;
+    widget->setMaskColor(type);
+    ASSERT_TRUE(widget->d_func()->maskColorType == type);
 
-//    widget->setBlurEnabled(true);
-//    ASSERT_TRUE(widget->blurEnabled() == true);
+    widget->setBlurEnabled(true);
+    ASSERT_TRUE(widget->blurEnabled() == true);
 
-//    QImage img(QIcon::fromTheme("icon_Window").pixmap(QSize(10,10)).toImage());
-//    widget->setSourceImage(img);
-//    ASSERT_TRUE(widget->d_func()->sourceImage == img);
+    widget->setBlurEnabled(false);
+    ASSERT_TRUE(widget->blurEnabled() == false);
 
-//    int blurRectXRadius = 8;
-//    widget->setBlurRectXRadius(blurRectXRadius);
-//    ASSERT_EQ(widget->d_func()->blurRectXRadius, blurRectXRadius);
+    QImage img(QIcon::fromTheme("icon_Window").pixmap(QSize(10,10)).toImage());
+    widget->setSourceImage(img);
+    ASSERT_TRUE(widget->d_func()->sourceImage == img);
 
-//    int blurRectYRadius = 8;
-//    widget->setBlurRectYRadius(blurRectYRadius);
-//    ASSERT_EQ(widget->d_func()->blurRectYRadius, blurRectYRadius);
+    int blurRectXRadius = 8;
+    widget->setBlurRectXRadius(blurRectXRadius);
+    ASSERT_EQ(widget->d_func()->blurRectXRadius, blurRectXRadius);
 
-//    const QFont font("Arial");
-//    widget->setFont(font);
-//    qDebug() << widget->font().family();
-//    ASSERT_TRUE(widget->font().family() == font.family());
-//}
+    int blurRectYRadius = 8;
+    widget->setBlurRectYRadius(blurRectYRadius);
+    ASSERT_EQ(widget->d_func()->blurRectYRadius, blurRectYRadius);
 
+    const QFont font("Arial");
+    widget->setFont(font);
+    qDebug() << widget->font().family();
+    ASSERT_TRUE(widget->font().family() == font.family());
+}
+
+TEST_F(ut_DBlurEffectWidget, testBlurEffectWidgetOther)
+{
+    DBlurEffectWidget::MaskColorType colorTypes[] = {
+        DBlurEffectWidget::DarkColor,
+        DBlurEffectWidget::LightColor,
+        DBlurEffectWidget::AutoColor,
+        DBlurEffectWidget::CustomColor,
+    };
+    for (DBlurEffectWidget::MaskColorType colorType : colorTypes) {
+        widget->setMaskColor(colorType);
+        widget->maskColor();
+    }
+
+    // fixed API: updateWindowBlurArea, depends setVisible & setMaskPath
+    widget->setVisible(true);
+    QPainter painter;
+    painter.setPen(Qt::yellow); //设置画笔颜色
+    QPainterPath path;
+    path.moveTo(widget->width()/2, widget->height()/2);
+    path.arcTo(widget->width()/2 - 100, widget->height()/2 - 100, 200, 200, 30, 120);
+    painter.drawPath(path);
+    widget->setMaskPath(path);
+    widget->d_func()->updateWindowBlurArea(widget);
+
+    // test full state
+    widget->setFull(true);
+    widget->d_func()->isFull();
+    widget->setFull(false);
+    widget->d_func()->isFull();
+
+    // fixed event API
+    widget->setBlurEnabled(true);
+    ASSERT_TRUE(widget->blurEnabled() == true);
+    QPaintEvent e(widget->rect());
+    widget->paintEvent(&e);
+
+    QMoveEvent mve(widget->pos(), QPoint(0, 0));
+    widget->moveEvent(&mve);
+
+    QShowEvent sev;
+    widget->showEvent(&sev);
+
+    QHideEvent hev;
+    widget->showEvent(&sev);
+
+    QPixmap px(10, 10);
+    px.fill(Qt::black);
+    widget->setSourceImage(px.toImage());
+
+    QColor baseColor(Qt::red);
+    widget->d_func()->getMaskColor(baseColor);
+}
+
+TEST_F(ut_DBlurEffectWidget, testDBlurEffectGroup)
+{
+    DBlurEffectGroup group;
+    DBlurEffectWidget subWidget;
+    group.addWidget(&subWidget, QPoint(0, 0));
+    group.removeWidget(&subWidget);
+
+    QIcon icon = QIcon::fromTheme("preferences-system");
+    QPixmap pixmap = icon.pixmap(QSize(30,30));
+    QPainter painter(&pixmap);
+    group.paint(&painter, &subWidget);
+}

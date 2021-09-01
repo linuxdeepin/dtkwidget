@@ -14,7 +14,7 @@ SOURCES += \
     $$PWD/ut_dbackgroundgroup.cpp \
     $$PWD/ut_dbaseline.cpp \
     $$PWD/ut_dboxwidget.cpp \
-#    $$PWD/ut_dblureffectwidget.cpp \
+    $$PWD/ut_dblureffectwidget.cpp \
     $$PWD/ut_dbuttonbox.cpp \
     $$PWD/ut_dcircleprogress.cpp \
     $$PWD/ut_dclipeffectwidget.cpp \

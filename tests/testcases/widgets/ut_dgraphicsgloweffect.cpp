@@ -20,7 +20,7 @@
 */
 
 #include <gtest/gtest.h>
-
+#include <QIcon>
 #include <QWidget>
 
 #include "dgraphicsgloweffect.h"
@@ -87,3 +87,11 @@ TEST_F(ut_DGraphicsGlowEffect, setYOffset)
     target->setYOffset(1);
     ASSERT_EQ(target->yOffset(), 1);
 };
+
+TEST_F(ut_DGraphicsGlowEffect, draw)
+{
+    QIcon icon = QIcon::fromTheme("preferences-system");
+    QPixmap pixmap = icon.pixmap(QSize(30,30));
+    QPainter painter(&pixmap);
+    target->draw(&painter);
+}

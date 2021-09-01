@@ -22,7 +22,8 @@
 #include <gtest/gtest.h>
 #include <QTest>
 #include <QDebug>
-
+#include <QPaintEvent>
+#include <QStyleOptionButton>
 #include "dwarningbutton.h"
 
 DWIDGET_USE_NAMESPACE
@@ -64,4 +65,10 @@ TEST_F(ut_DWarningButton, testDWarningButton)
     // 测试 flat 是否设置成功
     button->setFlat(true);
     ASSERT_TRUE(button->isFlat());
+
+    QStyleOptionButton option;
+    button->initStyleOption(&option);
+
+    QPaintEvent e(button->rect());
+    button->paintEvent(&e);
 }

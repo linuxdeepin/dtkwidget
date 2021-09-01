@@ -20,7 +20,7 @@
 */
 
 #include <gtest/gtest.h>
-
+#include <QPaintEvent>
 #include "dcoloredprogressbar.h"
 DWIDGET_USE_NAMESPACE
 class ut_DColoredProgressBar : public testing::Test
@@ -54,4 +54,7 @@ TEST_F(ut_DColoredProgressBar, removeThreshold)
     ASSERT_EQ(thredsholds.size() + 1, target->thresholds().size());
     target->removeThreshold(1);
     ASSERT_EQ(thredsholds.size(), target->thresholds().size());
+
+    QPaintEvent e(target->rect());
+    target->paintEvent(&e);
 };

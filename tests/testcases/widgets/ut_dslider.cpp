@@ -22,6 +22,7 @@
 #include <gtest/gtest.h>
 #include <QTest>
 #include <QDebug>
+#include <QPaintEvent>
 
 #include "dslider.h"
 #include "private/dslider_p.h"
@@ -149,6 +150,9 @@ TEST_F(ut_DSlider, testDSliderPositions)
     dslider->setEnabledAcrossStyle(true);
     res = dslider->d_func()->slider->property("_d_dtk_sldier_across").toBool();
     ASSERT_TRUE(res);
+
+    QPaintEvent e(dslider->rect());
+    dslider->paintEvent(&e);
 }
 
 TEST_F(ut_DSlider, sizeHint)

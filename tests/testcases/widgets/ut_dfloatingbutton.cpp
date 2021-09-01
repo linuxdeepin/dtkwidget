@@ -22,6 +22,8 @@
 #include <gtest/gtest.h>
 
 #include "dfloatingbutton.h"
+#include "DStyleOptionButton"
+
 DWIDGET_USE_NAMESPACE
 class ut_DFloatingButton : public testing::Test
 {
@@ -38,5 +40,10 @@ TEST_F(ut_DFloatingButton, DFloatingButton1)
 {
     DFloatingButton *target = new DFloatingButton(nullptr);
     ASSERT_EQ(target->backgroundRole(), QPalette::Highlight);
+
+    DStyleOptionButton option;
+    target->initStyleOption(&option);
+    target->baseStyleOption();
+
     target->deleteLater();
 };
