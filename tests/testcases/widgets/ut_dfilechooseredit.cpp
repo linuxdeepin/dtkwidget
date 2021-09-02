@@ -20,8 +20,11 @@
 */
 
 #include <gtest/gtest.h>
+#include <QTimer>
 
 #include "dfilechooseredit.h"
+#include "private/dfilechooseredit_p.h"
+
 DWIDGET_USE_NAMESPACE
 class ut_DFileChooserEdit : public testing::Test
 {

@@ -47,7 +47,6 @@ void ut_DBoxWidget::TearDown()
 
 TEST_F(ut_DBoxWidget, createMimeDataFromSelection)
 {
-
     widget->resize(200, 200);
 
     QBoxLayout::Direction direction = QBoxLayout::LeftToRight;
@@ -75,4 +74,9 @@ TEST_F(ut_DBoxWidget, createMimeDataFromSelection)
     });
 
     box.setDirection(QBoxLayout::LeftToRight);
+}
+
+TEST_F(ut_DBoxWidget, hboxWidget)
+{
+    DHBoxWidget hboxWidget;
 }

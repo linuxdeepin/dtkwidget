@@ -25,6 +25,8 @@
 #include <QWidget>
 
 #include "dtickeffect.h"
+#include "private/dtickeffect_p.h"
+
 DWIDGET_USE_NAMESPACE
 class ut_DTickEffect : public testing::Test
 {
@@ -79,3 +81,17 @@ TEST_F(ut_DTickEffect, stop)
     target->stop();
     ASSERT_EQ(spy.count(), 1);
 };
+
+TEST_F(ut_DTickEffect, setDirection)
+{
+    DTickEffect::Direction directions[] = {
+        DTickEffect::LeftToRight,
+        DTickEffect::RightToLeft,
+        DTickEffect::TopToBottom,
+        DTickEffect::BottomToTop
+    };
+    for (DTickEffect::Direction d : directions) {
+        target->setDirection(d);
+        ASSERT_EQ(d, target->d_func()->direction);
+    }
+}

@@ -51,3 +51,8 @@ TEST_F(ut_DBaseLine, setRightMargin)
     target->setRightMargin(1);
     ASSERT_EQ(target->rightMargin(), 1);
 };
+
+TEST_F(ut_DBaseLine, testLayout)
+{
+    target->leftLayout();
+}

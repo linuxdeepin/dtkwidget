@@ -62,6 +62,11 @@ TEST_F(ut_DFontSizeManager, setFontPixelSize)
     target->setFontPixelSize(DFontSizeManager::T1, originSize);
 };
 
+TEST_F(ut_DFontSizeManager, setFontGenericPixelSize)
+{
+    target->setFontGenericPixelSize(10);
+};
+
 TEST_F(ut_DFontSizeManager, t1)
 {
     ASSERT_EQ(target->t1().pixelSize(), target->fontPixelSize(DFontSizeManager::T1));
@@ -163,3 +168,9 @@ TEST_F(ut_DStyleOptionLineEdit, Q_DECLARE_FLAGS)
     ASSERT_TRUE(target->features & DStyleOptionLineEdit::Alert);
     widget->deleteLater();
 };
+
+TEST_F(ut_DStyleOptionLineEdit, testSupplement)
+{
+    QLineEdit edit;
+    target->init(&edit);
+}

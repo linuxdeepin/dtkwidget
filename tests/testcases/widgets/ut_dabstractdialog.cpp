@@ -22,6 +22,10 @@
 #include <gtest/gtest.h>
 
 #include <QTest>
+#include <QEvent>
+#include <QPointF>
+#include <QMouseEvent>
+
 #include "private/dabstractdialogprivate_p.h"
 
 #include "dabstractdialog.h"
@@ -76,6 +80,9 @@ TEST_F(ut_DAbstractDialog, setDisplayPosition)
 {
     widget->setDisplayPosition(DAbstractDialog::Center);
     ASSERT_EQ(widget->displayPosition(), DAbstractDialog::Center);
+
+    widget->setDisplayPosition(DAbstractDialog::TopRight);
+    ASSERT_EQ(widget->displayPosition(), DAbstractDialog::TopRight);
 };
 
 TEST_F(ut_DAbstractDialog, setGeometry)
@@ -99,3 +106,13 @@ TEST_F(ut_DAbstractDialog, mouseEvent)
     QTest::mouseMove(widget);
     ASSERT_TRUE(widget->d_func()->mouseMoved);
 };
+
+TEST_F(ut_DAbstractDialog, supplement)
+{
+    QMouseEvent event(QEvent::MouseButtonPress,
+                      QPointF(10.0, 10.0),
+                      QPointF(20.0, 20.0),
+                      Qt::LeftButton, Qt::LeftButton,
+                      Qt::KeyboardModifier::NoModifier);
+    widget->mouseMoveEvent(&event);
+}

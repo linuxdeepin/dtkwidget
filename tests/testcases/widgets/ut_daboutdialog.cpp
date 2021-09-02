@@ -24,6 +24,8 @@
 #include <QTest>
 
 #include "daboutdialog.h"
+#include "private/daboutdialog_p.h"
+
 DWIDGET_USE_NAMESPACE
 class ut_DAboutDialog : public testing::Test
 {
@@ -123,3 +125,8 @@ TEST_F(ut_DAboutDialog, showEvent)
     ASSERT_TRUE(QTest::qWaitForWindowExposed(widget, 100));
     ASSERT_EQ(widget->size(), QSize(200, 200));
 };
+
+TEST_F(ut_DAboutDialog, envGuard)
+{
+    widget->d_func()->_q_onLinkActivated("testlink");
+}

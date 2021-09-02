@@ -21,6 +21,7 @@
 
 #include <gtest/gtest.h>
 #include <DStyleOptionButton>
+#include <QPaintEvent>
 
 #include "dfloatingwidget.h"
 DWIDGET_USE_NAMESPACE
@@ -61,3 +62,10 @@ TEST_F(ut_DFloatingWidget, setFramRadius)
     target->initStyleOption(&option);
     ASSERT_EQ(option.frameRadius, 1);
 };
+
+TEST_F(ut_DFloatingWidget, supplement)
+{
+    target->blurBackground();
+    // QPaintEvent e(target->rect());
+    // target->paintEvent(&e);
+}

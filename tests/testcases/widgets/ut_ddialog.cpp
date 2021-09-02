@@ -21,8 +21,12 @@
 
 #include <gtest/gtest.h>
 #include <QPushButton>
+#include <QPixmap>
+#include <QDebug>
 
 #include "ddialog.h"
+#include "private/ddialog_p.h"
+
 DWIDGET_USE_NAMESPACE
 class ut_DDialog : public testing::Test
 {
@@ -215,3 +219,42 @@ TEST_F(ut_DDialog, setWordWrapTitle)
 {
     target->setWordWrapTitle(true);
 };
+
+TEST_F(ut_DDialog, supplement)
+{
+    target->d_func()->getContentLayout();
+    ASSERT_TRUE(target->d_func()->getScreen() != nullptr);
+
+    const QString tagContent = "<tag>xxx</tag>yyy";
+    ASSERT_EQ(target->d_func()->trimTag(tagContent), "xxxyyy");
+    // TODO: 返回的值好像不正确
+    ASSERT_EQ(target->d_func()->scanTags(tagContent)[1], "");
+
+    target->d_func()->elideString(tagContent, target->fontMetrics(), target->width());
+    target->d_func()->_q_onButtonClicked();
+    target->d_func()->_q_defaultButtonTriggered();
+
+    // test DDialog param constructor
+    const QString &title = "test";
+    const QString &message = "Test Msg";
+    QWidget *widget = new QWidget;
+
+    DDialog dialog(title, message, widget);
+    dialog.iconPixmap();
+    dialog.insertButton(0, "button0", false, DDialog::ButtonType::ButtonNormal);
+    dialog.insertButton(1, "button1", false, DDialog::ButtonType::ButtonWarning);
+    dialog.insertButton(2, "button2", false, DDialog::ButtonType::ButtonRecommend);
+
+    dialog.setDefaultButton(0);
+    dialog.setSpacing(10);
+    dialog.insertSpacing(2, 20);
+    dialog.clearSpacing();
+
+    QSize expectSize(30,30);
+    dialog.setIcon(QIcon::fromTheme("icon_Window"), expectSize);
+    dialog.setIconPixmap(QIcon::fromTheme("icon_Window").pixmap(expectSize));
+
+    widget->deleteLater();
+}
+
+

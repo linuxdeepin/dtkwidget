@@ -22,6 +22,8 @@
 #include <gtest/gtest.h>
 
 #include "dpasswordedit.h"
+#include "private/dpasswordedit_p.h"
+
 DWIDGET_USE_NAMESPACE
 class ut_DPasswordEdit : public testing::Test
 {
@@ -52,3 +54,9 @@ TEST_F(ut_DPasswordEdit, setEchoMode)
     ASSERT_EQ(target->echoMode(), QLineEdit::Normal);
     ASSERT_EQ(target->isEchoMode(), true);
 };
+
+TEST_F(ut_DPasswordEdit, supplement)
+{
+    target->d_func()->_q_toggleEchoMode();
+    target->d_func()->_q_toggleEchoMode();
+}

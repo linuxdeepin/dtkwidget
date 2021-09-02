@@ -81,9 +81,17 @@ TEST_F(ut_DAlertcontrol, showALertMessage)
     ASSERT_EQ(control->isAlert(), true);
     ASSERT_EQ(QColor(Qt::red) == control->alertColor(), true);
 
-    // 默认左对齐，测试右对齐
+    // 默认左对齐，测试左右对齐
+    control->setMessageAlignment(Qt::AlignLeft);
+    ASSERT_EQ(control->messageAlignment(), Qt::AlignLeft);
     control->setMessageAlignment(Qt::AlignRight);
     ASSERT_EQ(control->messageAlignment(), Qt::AlignRight);
+
+    // 默认左对齐，测试垂直居中、居中对齐
+    control->setMessageAlignment(Qt::AlignHCenter);
+    ASSERT_EQ(control->messageAlignment(), Qt::AlignHCenter);
+    control->setMessageAlignment(Qt::AlignCenter);
+    ASSERT_EQ(control->messageAlignment(), Qt::AlignCenter);
 
     // 测试输入文本后通过信号槽获取内容
     QObject::connect(lineEdit, &DLineEdit::textChanged, widget, [&](const QString &text){

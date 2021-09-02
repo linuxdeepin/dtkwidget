@@ -65,6 +65,7 @@ TEST_F(ut_DToolButton, testDToolButton)
     QPaintEvent e(button->rect());
     button->paintEvent(&e);
 
+    button->setText("test");
     QSize size = button->sizeHint();
     ASSERT_TRUE(size.width() > 0 && size.height() > 0);
 }

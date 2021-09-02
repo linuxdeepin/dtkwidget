@@ -70,6 +70,9 @@ TEST_F(ut_DLoadingIndicator, setDirection)
 {
     target->setDirection(DLoadingIndicator::Clockwise);
     ASSERT_EQ(target->direction(), DLoadingIndicator::Clockwise);
+
+    target->setDirection(DLoadingIndicator::Counterclockwise);
+    ASSERT_EQ(target->direction(), DLoadingIndicator::Counterclockwise);
 };
 
 TEST_F(ut_DLoadingIndicator, setImageSource)
@@ -102,3 +105,21 @@ TEST_F(ut_DLoadingIndicator, setWidgetSource)
     target->setWidgetSource(widget);
     ASSERT_EQ(target->widgetSource(), widget);
 };
+
+TEST_F(ut_DLoadingIndicator, supplement)
+{
+    // test resizeEvent
+    target->resize(50, 50);
+
+    // test setLoading
+    target->setLoading(false);
+    target->setLoading(true);
+
+    // test setAniDuration
+    target->setAniDuration(1000);
+
+    // test smooth
+    target->smooth();
+
+    target->start();
+}

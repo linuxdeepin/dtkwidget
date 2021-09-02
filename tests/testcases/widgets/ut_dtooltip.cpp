@@ -43,4 +43,5 @@ protected:
 TEST_F(ut_DToolTip, sizeHint)
 {
     ASSERT_GE(target->sizeHint().width(), target->fontMetrics().size(Qt::TextSingleLine, target->text()).width());
+    target->show(QPoint(0,0), 10);
 };

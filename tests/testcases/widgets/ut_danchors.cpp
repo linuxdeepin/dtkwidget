@@ -163,3 +163,19 @@ TEST_F(ut_DAnchorsBase, setCenterIn)
     ASSERT_EQ(rect1.centerIn(), rect2.target());
     pw->deleteLater();
 }
+
+TEST_F(ut_DAnchorsBase, supplement)
+{
+    QWidget * pw = new QWidget();
+    DAnchorsBase rect1(new QLabel("rect1", pw));
+    rect1.getAnchorBaseByWidget(pw);
+
+    rect1.setEnabled(false);
+    rect1.setEnabled(true);
+
+    rect1.setTop(10, Qt::AnchorPoint::AnchorTop);
+    rect1.setBottom(10, Qt::AnchorPoint::AnchorBottom);
+    rect1.setLeft(10, Qt::AnchorPoint::AnchorLeft);
+
+    pw->deleteLater();
+}

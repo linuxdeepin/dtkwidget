@@ -58,6 +58,12 @@ TEST_F(ut_DDoubleSpinBox, setEnabledEmbedStyle)
     ASSERT_EQ(target->property("_d_dtk_spinBox").toBool(), true);
 };
 
+TEST_F(ut_DDoubleSpinBox, defaultValue)
+{
+    target->setDefaultValue(10);
+    ASSERT_EQ(target->defaultValue(), 0);
+}
+
 class ut_DSpinBox : public testing::Test
 {
 protected:
@@ -91,3 +97,9 @@ TEST_F(ut_DSpinBox, setEnabledEmbedStyle)
     target->setEnabledEmbedStyle(true);
     ASSERT_EQ(target->property("_d_dtk_spinBox").toBool(), true);
 };
+
+TEST_F(ut_DSpinBox, defaultValue)
+{
+    target->setDefaultValue(10);
+    ASSERT_EQ(target->defaultValue(), 0);
+}
