@@ -22,7 +22,7 @@ cd ../tests/
 rm -rf $BUILD_DIR
 mkdir $BUILD_DIR
 cd $BUILD_DIR
-qmake ../ CONFIG+=debug
+qmake ../ CONFIG+=debug DEFINES+=TEST_RECOVERAGE
 export ASAN_OPTIONS=halt_on_error=0
 TESTARGS="--gtest_output=xml:dde_test_report_dtkwidget.xml" make check -j$(nproc)
 

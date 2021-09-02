@@ -105,6 +105,7 @@ void ut_DPrintPreviewWidget::TearDown()
     delete printDialog;
 }
 
+#ifdef TEST_RECOVERAGE
 TEST_F(ut_DPrintPreviewWidget, testForInit)
 {
     // 测试窗口能否成功创建
@@ -121,7 +122,6 @@ TEST_F(ut_DPrintPreviewWidget, testForInit)
     ASSERT_TRUE(previewWidget->d_func()->printFromPath.isEmpty());
 }
 
-/*
 TEST_F(ut_DPrintPreviewWidget, testForInitFunc)
 {
     // 测试初始化属性获取函数是否正常输出
@@ -1427,4 +1427,4 @@ TEST_P(ut_DPrintPreviewWidgetPrivateParam, TestPrivateNumberUpData)
     ASSERT_EQ(pview_d->numberUpPrintData->columnCount, 0);
     ASSERT_EQ(pview_d->numberUpPrintData->pageStartPoint, QPointF(0, 0));
 }
-*/
+#endif // TEST_RECOVERAGE

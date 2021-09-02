@@ -95,6 +95,7 @@ void ut_DPrintPreviewDialog::TearDown()
     delete testPrintDialog;
 }
 
+#ifdef TEST_RECOVERAGE
 TEST_F(ut_DPrintPreviewDialog, testForInit)
 {
     // 测试保存PDF文件名称接口
@@ -202,7 +203,6 @@ TEST_F(ut_DPrintPreviewDialog, testForInit)
     ASSERT_EQ(test_dialog_d->spinboxTextCaches.begin(), test_dialog_d->spinboxTextCaches.end());
 }
 
-/*
 TEST_F(ut_DPrintPreviewDialog, testPaintRequested)
 {
     ASSERT_EQ(test_dialog_d->totalPages, 4);
@@ -1648,4 +1648,4 @@ TEST_F(ut_DPrintPreviewDialog, testDApplicationHelper_instance)
 
     DApplicationHelper::instance()->themeTypeChanged(DGuiApplicationHelper::DarkType);
 }
-*/
+#endif // TEST_RECOVERAGE
