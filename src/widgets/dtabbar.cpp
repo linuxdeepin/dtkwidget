@@ -146,6 +146,7 @@ public:
         addButton = new DIconButton(DStyle::SP_IncreaseElement, qq);
         addButton->setObjectName("AddButton");
         addButton->setAccessibleName("DTabBarAddButton");
+        addButton->installEventFilter(this);
 
         connect(addButton, &DIconButton::clicked,
                 qq, &DTabBar::tabAddRequested);
@@ -227,7 +228,7 @@ public:
     }
 
     // 刷新占位符弹簧的方向及大小,(当前布局方向、是否为直角风格、滑块是否显示、添加按钮是否显示)
-    void refreshSpacers(bool visible = true)
+    void refreshSpacers()
     {
         D_Q(DTabBar);
         const int TabSpacing = DStyle::pixelMetric(style(), DStyle::PM_ContentsSpacing, nullptr) / 2;
@@ -236,17 +237,19 @@ public:
         int lr = 0;
         int rl = 0;
         int al = 0;
-        if (visible) {
+        int ar = 0;
+        if (leftScrollButton->isVisible()) {
             ll = isRectType ? 6 : TabSpacing;
             lr = isRectType ? 6 : TabSpacing;
+        }
+        if (rightScrollButton->isVisible()) {
             rl = isRectType ? 6 : TabSpacing;
-            if (visibleAddButton) {
-                al = isRectType ? 12 : TabSpacing * 2;
-            }
-        } else {
-            if (visibleAddButton) {
-                al = isRectType ? 6 : TabSpacing;
-            }
+            const int AddButtonLeftMargin = 8;
+            al = AddButtonLeftMargin;
+        }
+        if (addButton->isVisible()) {
+            const int AddButtonRightMargin = 10;
+            ar = AddButtonRightMargin;
         }
 
         // 根据布局方向设置不同弹簧策略
@@ -255,12 +258,16 @@ public:
             leftBtnR->changeSize(lr, 0);
             rightBtnL->changeSize(rl, 0);
             addBtnL->changeSize(al, 0);
+            addBtnR->changeSize(ar, 0);
         } else {
             leftBtnL->changeSize(0, ll);
             leftBtnR->changeSize(0, lr);
             rightBtnL->changeSize(0, rl);
             addBtnL->changeSize(0, al);
+            addBtnR->changeSize(0, al);
+            addBtnR->changeSize(0, ar);
         }
+        layout->invalidate();
     }
 
     ~DTabBarPrivate() override
@@ -1082,11 +1089,9 @@ bool DTabBarPrivate::eventFilter(QObject *watched, QEvent *event)
     if (watched == d->leftB) {
         switch (event->type()) {
         case QEvent::Show:
-            refreshSpacers();
             leftScrollButton->show();
             break;
         case QEvent::Hide:
-            refreshSpacers(false);
             leftScrollButton->hide();
             break;
         case QEvent::EnabledChange:
@@ -1123,6 +1128,11 @@ bool DTabBarPrivate::eventFilter(QObject *watched, QEvent *event)
     } else if(watched == q) {
         if (QEvent::Paint == event->type()) {
             drawDTabbarExtendLine();
+        }
+    }
+    if (event->type() == QEvent::Show || event->type() == QEvent::Hide) {
+        if (watched == d->leftB || watched == d->rightB || watched == addButton) {
+            refreshSpacers();
         }
     }
 
@@ -1997,7 +2007,6 @@ void DTabBar::setEnabledEmbedStyle(bool enable)
     D_D(DTabBar);
 
     setProperty("_d_dtk_tabbartab_type", enable);
-    d->refreshSpacers();
 
     int radius;
     QSize size;
@@ -2015,6 +2024,7 @@ void DTabBar::setEnabledEmbedStyle(bool enable)
     DStyle::setFrameRadius(d->rightScrollButton, radius);
     DStyle::setFrameRadius(d->leftScrollButton, radius);
     DStyle::setFrameRadius(d->addButton, radius);
+    update();
 }
 
 /*!
@@ -2043,7 +2053,6 @@ void DTabBar::setVisibleAddButton(bool visibleAddButton)
 
     d->visibleAddButton = visibleAddButton;
     d->addButton->setVisible(visibleAddButton);
-    d->refreshSpacers();
 }
 
 /*!
