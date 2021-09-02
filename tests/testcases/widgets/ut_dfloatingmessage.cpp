@@ -97,3 +97,15 @@ TEST_F(ut_DFloatingMessage, testDFloatingMessageBackEnd)
     message->setAutoFillBackground(true);
     ASSERT_TRUE(message->autoFillBackground());
 }
+
+TEST_F(ut_DFloatingMessage, supplement)
+{
+    ASSERT_EQ(message->messageType(), DFloatingMessage::TransientType);
+
+    QShowEvent sev;
+    message->showEvent(&sev);
+    message->sizeHint();
+
+    DFloatingMessage *message2 = new DFloatingMessage(DFloatingMessage::ResidentType, widget);
+    message2->deleteLater();
+}

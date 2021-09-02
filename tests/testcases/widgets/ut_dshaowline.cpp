@@ -22,6 +22,7 @@
 #include <gtest/gtest.h>
 #include <QTest>
 #include <QDebug>
+#include <QPaintEvent>
 
 #include "dshadowline.h"
 
@@ -55,4 +56,7 @@ TEST_F(ut_DShadowLine, testDShadowLine)
 {
     QSize size(20, 20);
     ASSERT_EQ(shadowline->sizeHint(), size);
+
+    QPaintEvent e(shadowline->rect());
+    shadowline->paintEvent(&e);
 }
