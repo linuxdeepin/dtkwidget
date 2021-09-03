@@ -187,6 +187,28 @@ TEST_F(ut_DListView, takeHeaderWidget)
     widget2->deleteLater();
 };
 
+TEST_F(ut_DListView, setLayoutAndAddOneItem)
+{
+    DListView *listView = new DListView(target);
+    QStandardItemModel *model = new QStandardItemModel(listView);
+    DStandardItem *item = new DStandardItem("onlyOne");
+    model->appendRow(item);
+    listView->setBackgroundType(DStyledItemDelegate::BackgroundType::ClipCornerBackground);
+}
+
+TEST_F(ut_DListView, setLayoutAndAddMultiItem)
+{
+    DListView *listView = new DListView(target);
+    QStandardItemModel *model = new QStandardItemModel(listView);
+    DStandardItem *item1 = new DStandardItem("item1");
+    DStandardItem *item2 = new DStandardItem("item2");
+    DStandardItem *item3 = new DStandardItem("item3");
+    model->appendRow(item1);
+    model->appendRow(item2);
+    model->appendRow(item3);
+    listView->setBackgroundType(DStyledItemDelegate::BackgroundType::ClipCornerBackground);
+}
+
 class ut_DVariantListModel : public testing::Test
 {
 protected:
@@ -223,3 +245,4 @@ TEST_F(ut_DVariantListModel, setData)
     target->setData(target->index(0, 0), 1, Qt::DisplayRole);
     ASSERT_EQ(target->data(target->index(0, 0)).toInt(), 1);
 };
+

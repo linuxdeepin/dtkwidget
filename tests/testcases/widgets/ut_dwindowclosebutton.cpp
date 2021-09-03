@@ -22,7 +22,7 @@
 #include <gtest/gtest.h>
 #include <QTest>
 #include <QDebug>
-
+#include "DStyleOptionButton"
 #include "dwindowclosebutton.h"
 
 DWIDGET_USE_NAMESPACE
@@ -55,4 +55,11 @@ TEST_F(ut_DWindowCloseButton, testDWindowCloseButton)
 {
     QSize size(12, 12);
     ASSERT_EQ(closeButton->sizeHint(), size);
+}
+
+TEST_F(ut_DWindowCloseButton, supplement)
+{
+    DStyleOptionButton option;
+    closeButton->initStyleOption(&option);
+    closeButton->baseStyleOption();
 }

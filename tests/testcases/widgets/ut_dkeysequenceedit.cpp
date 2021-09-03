@@ -22,8 +22,8 @@
 #include <gtest/gtest.h>
 #include <QTest>
 #include <QDebug>
-
 #include <QLabel>
+#include <QPaintEvent>
 #include <QKeySequence>
 #include "dkeysequenceedit.h"
 
@@ -74,4 +74,13 @@ TEST_F(ut_DKeySequenceEdit, testDKeySequenceEdit)
 
     sequence->ShortcutDirection(Qt::AlignLeft);
     ASSERT_TRUE(sequence->alignment().testFlag(Qt::AlignRight));
+}
+
+TEST_F(ut_DKeySequenceEdit, supplement)
+{
+    QPaintEvent e(sequence->rect());
+    sequence->paintEvent(&e);
+
+    QKeyEvent keyEvent(QEvent::KeyPress, Qt::Key_A, Qt::NoModifier);
+    sequence->keyPressEvent(&keyEvent);
 }

@@ -22,6 +22,7 @@
 #include <gtest/gtest.h>
 #include <QTest>
 #include <QDebug>
+#include <DStyleOptionButton>
 
 #include "dswitchbutton.h"
 
@@ -109,4 +110,13 @@ TEST_F(ut_DSwitchButton, testDSwitchButtonCheckedChanged)
     QObject::disconnect(button, &DSwitchButton::toggled, button, nullptr);
 
     ASSERT_TRUE(count == 2);
+}
+
+TEST_F(ut_DSwitchButton, supplement)
+{
+    DStyleOptionButton option;
+    button->initStyleOption(&option);
+
+    QPaintEvent e(button->rect());
+    button->paintEvent(&e);
 }

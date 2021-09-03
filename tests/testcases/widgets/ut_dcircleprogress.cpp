@@ -20,7 +20,8 @@
 */
 
 #include <gtest/gtest.h>
-
+#include <QPaintEvent>
+#include <QMouseEvent>
 #include "dcircleprogress.h"
 DWIDGET_USE_NAMESPACE
 class ut_DCircleProgress : public testing::Test
@@ -79,3 +80,12 @@ TEST_F(ut_DCircleProgress, topLabel)
 {
     ASSERT_EQ(target->topLabel()->text(), target->text());
 };
+
+TEST_F(ut_DCircleProgress, supplement)
+{
+    QPaintEvent e(target->rect());
+    target->paintEvent(&e);
+    target->mouseReleaseEvent(nullptr);
+    target->enterEvent(nullptr);
+    target->leaveEvent(nullptr);
+}

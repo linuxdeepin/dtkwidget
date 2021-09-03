@@ -19,6 +19,8 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <QIcon>
+
 #include <gtest/gtest.h>
 
 #include "dsettingsdialog.h"
@@ -45,3 +47,12 @@ TEST_F(ut_DSettingsDialog, setGroupVisible)
     target->setGroupVisible("setGroupVisible", true);
     ASSERT_EQ(target->groupIsVisible("setGroupVisible"), target->isVisible() && target->groupIsVisible("setGroupVisible"));
 };
+
+TEST_F(ut_DSettingsDialog, supplement)
+{
+    target->widgetFactory();
+    QString groupKey = "group1";
+    target->setGroupVisible(groupKey, true);
+    target->scrollToGroup(groupKey);
+    target->setIcon(QIcon::fromTheme("preferences-system"));
+}

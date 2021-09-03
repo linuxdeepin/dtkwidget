@@ -22,7 +22,7 @@
 #include <gtest/gtest.h>
 #include <QTest>
 #include <QDebug>
-
+#include <DStyleOptionButton>
 #include "DWindowMaxButton"
 
 DWIDGET_USE_NAMESPACE
@@ -74,4 +74,11 @@ TEST_F(ut_DWindowMaxButton, testDWindowMaxButtonSignal)
 
     maximized = false;
     button->setMaximized(maximized);
+}
+
+TEST_F(ut_DWindowMaxButton, supplement)
+{
+    DStyleOptionButton option;
+    button->initStyleOption(&option);
+    button->baseStyleOption();
 }

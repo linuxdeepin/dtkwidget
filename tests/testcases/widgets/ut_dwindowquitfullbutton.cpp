@@ -22,7 +22,7 @@
 #include <gtest/gtest.h>
 #include <QTest>
 #include <QDebug>
-
+#include <DStyleOptionButton>
 #include "DWindowQuitFullButton"
 
 DWIDGET_USE_NAMESPACE
@@ -69,3 +69,8 @@ TEST_F(ut_DWindowQuitFullButton, testut_DWindowQuitFullButtonSizeHint)
     ASSERT_EQ(button->sizeHint(), sizeHint);
 }
 
+TEST_F(ut_DWindowQuitFullButton, supplement)
+{
+    DStyleOptionButton option;
+    button->initStyleOption(&option);
+}
