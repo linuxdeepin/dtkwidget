@@ -45,3 +45,9 @@ TEST_F(ut_DSearchComboBox, setEditable)
     target->setEditable(true);
     ASSERT_EQ(target->isEditable(), true);
 };
+
+TEST_F(ut_DSearchComboBox, showPopup)
+{
+    target->addItem("test");
+    target->showPopup();
+};

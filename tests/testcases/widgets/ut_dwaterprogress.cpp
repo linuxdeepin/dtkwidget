@@ -61,3 +61,22 @@ TEST_F(ut_DWaterProgress, testDwaterProress)
     }
     progress->stop();
 }
+
+TEST_F(ut_DWaterProgress, testDwaterProressSetValue)
+{
+    progress->setValue(50);
+    ASSERT_TRUE(progress->value() == 50);
+}
+
+TEST_F(ut_DWaterProgress, testDwaterProressPaintEvent)
+{
+    widget->show();
+    ASSERT_TRUE(QTest::qWaitForWindowExposed(widget, 100));
+}
+
+TEST_F(ut_DWaterProgress, testDwaterProressChangeEvent)
+{
+    widget->show();
+    progress->setPalette(QPalette(QColor(255,255,255)));
+    ASSERT_TRUE(QTest::qWaitForWindowExposed(widget, 100));
+}

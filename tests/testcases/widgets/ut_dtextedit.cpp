@@ -83,3 +83,15 @@ TEST_F(ut_DTextEdit, testDTextEditTextToTranslateEnabled)
     edit->setTextToTranslateEnabled(enableState);
     ASSERT_TRUE(edit->textToTranslateIsEnabled());
 }
+
+TEST_F(ut_DTextEdit, testDTextEditKeyPressEvent)
+{
+    QKeyEvent keyEvent(QEvent::KeyPress, Qt::Key_A, Qt::NoModifier);
+    widget->keyPressEvent(&keyEvent);
+}
+
+TEST_F(ut_DTextEdit, testDTextEditContextMenuEvent)
+{
+    QContextMenuEvent menuEvent(QContextMenuEvent::Mouse, QPoint(0,0));
+    widget->contextMenuEvent(&menuEvent);
+}

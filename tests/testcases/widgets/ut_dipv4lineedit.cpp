@@ -24,6 +24,7 @@
 #include <QDebug>
 
 #include "dipv4lineedit.h"
+#include "dipv4lineedit_p.h"
 
 DWIDGET_USE_NAMESPACE
 
@@ -105,4 +106,42 @@ TEST_F(ut_DIpv4LineEdit, testDIpv4LineEditSetFrame)
     hasFrame = true;
     lineEdit->setFrame(hasFrame);
     ASSERT_TRUE(lineEdit->hasFrame());
+}
+
+TEST_F(ut_DIpv4LineEdit, testDIpv4LineEditSetFocus)
+{
+    lineEdit->d_func()->setFocus(true);
+    ASSERT_TRUE(lineEdit->d_func()->focus);
+}
+
+TEST_F(ut_DIpv4LineEdit, testDIpv4LineEditSetIpLineEditText)
+{
+    lineEdit->setText("1.1.1.1");
+    lineEdit->d_func()->_q_setIpLineEditText("1.1.1.1");
+    lineEdit->d_func()->_q_updateLineEditText();
+    ASSERT_EQ("1.1.1.1", lineEdit->displayText());
+}
+
+TEST_F(ut_DIpv4LineEdit, testDIpv4LineEditCursorPosition)
+{
+    lineEdit->setText("1.1.1.1");
+    int position = lineEdit->cursorPosition();
+    ASSERT_EQ(position, 4);
+}
+
+TEST_F(ut_DIpv4LineEdit, testDIpv4LineEditAlignment)
+{
+    ASSERT_EQ(lineEdit->alignment(), Qt::AlignHCenter);
+}
+
+TEST_F(ut_DIpv4LineEdit, testDIpv4LineEditHasAcceptableInput)
+{
+    lineEdit->setText("1.1.1.1");
+    ASSERT_TRUE(lineEdit->hasAcceptableInput());
+}
+
+TEST_F(ut_DIpv4LineEdit, testDIpv4LineEditSetCursorPosition)
+{
+    lineEdit->setCursorPosition(4);
+    ASSERT_TRUE(lineEdit->cursorPosition() == 4);
 }

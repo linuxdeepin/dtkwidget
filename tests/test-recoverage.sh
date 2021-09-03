@@ -49,6 +49,10 @@ filter_files=(
 "*/xutil*"
 "*/private/startupnotifications*"
 "*/private/keyboardmonitor*"
+# dbus
+"*/dbusmpris.*"
+"*/dbusinterface.*"
+"*/ddesktopservices_linux.cpp"
 )
 lcov --remove coverage_all.info "*/tests/*" "*/usr/include*" "*build/src*" ${filter_files[*]} --output-file coverage.info
 genhtml -o ../../tests/$REPORT_DIR coverage.info

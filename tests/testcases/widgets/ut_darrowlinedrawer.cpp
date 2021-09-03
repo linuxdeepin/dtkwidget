@@ -25,6 +25,7 @@
 
 #include "darrowlinedrawer.h"
 #include "ddrawer.h"
+#include "dbaseline.h"
 #include "private/ddrawer_p.h"
 
 #include <QLabel>
@@ -67,4 +68,28 @@ TEST_F(ut_DArrowLineDrawer, testDArrowLineDrawerSetExpand)
     expand = true;
     drawer->setExpand(expand);
     // TODO
+}
+
+TEST_F(ut_DArrowLineDrawer, testHeaderLineAndResizeEvent)
+{
+    DBaseLine *headerLine = drawer->headerLine();
+    ASSERT_TRUE(headerLine);
+
+    QMouseEvent mousePress(QEvent::MouseButtonPress, QPointF(0, 0), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    headerLine->mousePressEvent(&mousePress);
+
+    QMouseEvent mouseMove(QEvent::MouseMove, QPointF(0, 0), Qt::NoButton, Qt::NoButton, Qt::NoModifier);
+    headerLine->mouseMoveEvent(&mouseMove);
+
+    QEvent changeEvent(QEvent::FontChange);
+    headerLine->changeEvent(&changeEvent);
+
+    const int LoopCount = 20;
+    int originWidth = drawer->width();
+
+    for (int count = 0; count <= LoopCount; ++count) {
+        drawer->resize(originWidth + count, drawer->height());
+    }
+
+    ASSERT_TRUE(QTest::qWaitFor([&] { return (drawer->width() == (originWidth + LoopCount)); }));
 }
