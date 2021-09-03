@@ -34,7 +34,7 @@ public:
 };
 
 __attribute__((constructor)) // 在库被加载时就执行此函数
-static void init_createHelper ()
+void init_createHelper ()
 {
     DApplicationHelper::registerInstanceCreator(_DApplicationHelper::createHelper);
 }
