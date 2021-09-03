@@ -28,7 +28,33 @@ TESTARGS="--gtest_output=xml:dde_test_report_dtkwidget.xml" make check -j$(nproc
 
 lcov -d ./ -c -o coverage_all.info
 lcov --extract coverage_all.info $EXTRACT_ARGS --output-file coverage.info
-lcov --remove coverage_all.info "*/tests/*" "*/usr/include*" "*build/src*" --output-file coverage.info
+filter_files=(
+# deprecated
+"*/src/widgets/dimagebutton*"
+"*/src/widgets/dbaseexpand*"
+"*/src/widgets/dexpandgroup*"
+"*/src/widgets/dsegmentedcontrol*"
+"*/src/widgets/dshortcutedit*"
+"*/src/widgets/dtoast*"
+"*/src/widgets/dswitchlineexpand*"
+"*/src/widgets/darrowlineexpand*"
+"*/src/util/dregionmonitor*"
+"*/src/util/dtrashmanager*"
+"*/src/util/dthumbnailprovider*"
+# depends xcb, etc...
+"*/dthememanager*"
+"*/dsimplelistview*"
+"*/dmainwindow*"
+"*/dapplication*"
+"*/xutil*"
+"*/private/startupnotifications*"
+"*/private/keyboardmonitor*"
+# dbus
+"*/dbusmpris.*"
+"*/dbusinterface.*"
+"*/ddesktopservices_linux.cpp"
+)
+lcov --remove coverage_all.info "*/tests/*" "*/usr/include*" "*build/src*" ${filter_files[*]} --output-file coverage.info
 genhtml -o ../../tests/$REPORT_DIR coverage.info
 
 cd ..

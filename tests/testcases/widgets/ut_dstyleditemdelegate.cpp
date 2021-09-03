@@ -146,6 +146,18 @@ TEST_F(ut_DStyledItemDelegate, setMargins)
     ASSERT_EQ(target->margins(), margin);
 };
 
+TEST_F(ut_DStyledItemDelegate, paint)
+{
+    parent->setItemDelegate(target);
+    QStandardItemModel* model = new QStandardItemModel();
+    model->appendRow(new QStandardItem);
+    parent->setModel(model);
+    parent->repaint();
+    parent->show();
+    ASSERT_TRUE(parent->isVisible());
+    model->deleteLater();
+};
+
 class ut_DViewItemAction : public testing::Test
 {
 protected:

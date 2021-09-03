@@ -60,4 +60,12 @@ TEST_F(ut_DProgressBar, testDProgressBar)
     QFont arial("Arial");
     bar->setFont(arial);
     ASSERT_TRUE(bar->font().family() == arial.family());
+
+    // 测试 sizeHint
+    QSize sizeHint = bar->sizeHint();
+    ASSERT_TRUE(sizeHint.width() >= 0 && sizeHint.height() >= 0);
+
+    // 测试 minimumSizeHint
+    QSize minimumSizeHint = bar->minimumSizeHint();
+    ASSERT_TRUE(minimumSizeHint.width() >= 0 && minimumSizeHint.height() >= 0);
 }

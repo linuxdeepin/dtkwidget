@@ -48,10 +48,29 @@ TEST_F(ut_DClipEffectWidget, setClipPath)
     paths.addRect(QRect(0, 0, 10, 10));
     target->setClipPath(paths);
     ASSERT_EQ(target->clipPath(), paths);
-};
+}
 
 TEST_F(ut_DClipEffectWidget, setMargins)
 {
     target->setMargins(QMargins(1, 1, 1, 1));
     ASSERT_EQ(target->margins(), QMargins(1, 1, 1, 1));
-};
+}
+
+TEST_F(ut_DClipEffectWidget, resizeEvent)
+{
+    target->setFixedSize(100, 10);
+    ASSERT_EQ(target->size(), QSize(100, 10));
+}
+
+TEST_F(ut_DClipEffectWidget, showEvent)
+{
+    effectWidget->show();
+    target->show();
+    ASSERT_TRUE(target->isVisible());
+}
+
+TEST_F(ut_DClipEffectWidget, hideEvent)
+{
+    target->hide();
+    ASSERT_TRUE(!target->isVisible());
+}

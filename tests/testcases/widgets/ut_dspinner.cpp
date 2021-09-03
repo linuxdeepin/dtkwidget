@@ -60,3 +60,11 @@ TEST_F(ut_DSpinner, testDSpinnerStart)
     dspinner->stop();
     ASSERT_FALSE(dspinner->isPlaying());
 }
+
+TEST_F(ut_DSpinner, testDSpinnerPaintEvent)
+{
+    dspinner->setBackgroundColor(QColor(255,255,255));
+    dspinner->paintEvent(nullptr);
+    dspinner->start();
+    ASSERT_TRUE(dspinner->isPlaying());
+}
