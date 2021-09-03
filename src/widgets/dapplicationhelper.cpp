@@ -45,7 +45,7 @@ public:
     QHash<const QWidget*, DPalette> paletteCache;
 };
 
-static DApplicationHelperPrivate *d = nullptr;
+Q_GLOBAL_STATIC(DApplicationHelperPrivate, d);
 
 /*!
  * \~chinese \class DApplicationHelper
@@ -57,7 +57,7 @@ static DApplicationHelperPrivate *d = nullptr;
  */
 DApplicationHelper *DApplicationHelper::instance()
 {
-    return qobject_cast<DApplicationHelper*>(DGuiApplicationHelper::instance());
+    return dynamic_cast<DApplicationHelper*>(DGuiApplicationHelper::instance());
 }
 
 /*!
@@ -138,16 +138,12 @@ void DApplicationHelper::resetPalette(QWidget *widget)
 
 DApplicationHelper::DApplicationHelper()
 {
-    if (!d)
-        d = new DApplicationHelperPrivate();
 }
 
 DApplicationHelper::~DApplicationHelper()
 {
-    if (d) {
-        delete d;
-        d = nullptr;
-    }
+    if (d.exists())
+        d->paletteCache.clear();
 }
 
 bool DApplicationHelper::eventFilter(QObject *watched, QEvent *event)
