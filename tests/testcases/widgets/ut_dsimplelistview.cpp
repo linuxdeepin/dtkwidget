@@ -41,13 +41,15 @@ public:
     int idx = 0;
 
     TestListItem() {}
-    virtual ~TestListItem() {}
+    virtual ~TestListItem() override {}
 
     bool sameAs(DSimpleListItem *item) override {
         return type == static_cast<TestListItem *>(item)->type;
     }
 
     void drawBackground(QRect rect, QPainter *painter, int index, bool isSelect, bool isHover) override {
+        Q_UNUSED(index)
+        Q_UNUSED(isHover)
         QPen pen;
         pen.setColor(QColor(Qt::green));
         pen.setWidth(50);
@@ -60,6 +62,9 @@ public:
     }
 
     void drawForeground(QRect rect, QPainter *painter, int column, int index, bool isSelect, bool isHover) override {
+        Q_UNUSED(column)
+        Q_UNUSED(index)
+        Q_UNUSED(isHover)
         QPen pen;
         pen.setColor(QColor(Qt::red));
         pen.setWidth(5);
@@ -109,8 +114,6 @@ public:
             ASSERT_TRUE(count < 2);
         }
             break;
-        default:
-            ASSERT_TRUE(false);
         }
     }
 };

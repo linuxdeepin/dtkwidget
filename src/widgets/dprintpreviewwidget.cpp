@@ -660,6 +660,7 @@ void DPrintPreviewWidgetPrivate::impositionPages()
 
 int DPrintPreviewWidgetPrivate::impositionPages(DPrintPreviewWidget::Imposition im)
 {
+    Q_UNUSED(im)
     switch (imposition) {
     case DPrintPreviewWidget::One:
         return ONE_PAGE;
@@ -674,6 +675,9 @@ int DPrintPreviewWidgetPrivate::impositionPages(DPrintPreviewWidget::Imposition 
     case DPrintPreviewWidget::FourRowFourCol:
         return FOUR_ROW_FOUR_COL_PAGES;
     }
+
+    qWarning() << "DPrintPreviewWidget::Imposition enumeration value is out of range";
+    return -1;
 }
 
 QImage DPrintPreviewWidgetPrivate::generateWaterMarkImage() const

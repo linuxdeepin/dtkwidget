@@ -1072,6 +1072,7 @@ void DPrintPreviewDialogPrivate::initconnections()
         setTurnPageBtnStatus();
     });
     QObject::connect(paperSizeCombo, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), q, [this](int index) {
+        Q_UNUSED(index)
         QPrinterInfo prInfo(*printer);
         if (paperSizeCombo->count() == 0) {
             printer->setPageSize(QPrinter::A4);
@@ -2116,6 +2117,7 @@ void DPrintPreviewDialogPrivate::_q_selectColorButton(QColor color)
  */
 void DPrintPreviewDialogPrivate::_q_printOrderComboIndexChanged(int index)
 {
+    Q_UNUSED(index)
 }
 
 void DPrintPreviewDialogPrivate::_q_spinboxValueEmptyChecked(const QString &text)
