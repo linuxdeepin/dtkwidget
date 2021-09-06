@@ -81,7 +81,7 @@ void DSearchComboBox::showPopup()
             searlayout->addWidget(d->searchEdit);
             layout->insertLayout(0, searlayout);
 
-            d->proxyModel = new QSortFilterProxyModel;
+            d->proxyModel = new QSortFilterProxyModel(this);
             d->proxyModel->setSourceModel(model());
 
             //Qt源码中modle的父对象为this就会delete
