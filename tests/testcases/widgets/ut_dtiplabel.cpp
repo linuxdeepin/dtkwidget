@@ -85,6 +85,7 @@ TEST_F(ut_DTipLabel, testDTipLabelSetForegroundRole)
         DPalette::NColorRoles
     };
 
+    Q_UNUSED(roles)
 //    for (DPalette::ColorRole role : roles) {
 //        tips->setForegroundRole(QColor(role));
 //        ASSERT_EQ(tips->foregroundRole(),QColor(role));
@@ -105,6 +106,7 @@ TEST_F(ut_DTipLabel, testDTipLabelSetForegroundRole)
         DPalette::ObviousBackground,
         DPalette::NColorTypes
     };
+    Q_UNUSED(types)
 //    DLabel *label = static_cast<DLabel*>(tips);
 //    for (DPalette::ColorType type : types) {
 //        tips->setForegroundRole(type);

@@ -629,10 +629,10 @@ DSliderPrivate::DSliderPrivate(DSlider *q)
     , rightIcon(nullptr)
     , left(nullptr)
     , right(nullptr)
+    , layout(nullptr)
     , tipvalue(nullptr)
     , label(nullptr)
     , mouseWheelEnabled(false)
-    , layout(nullptr)
 {
 
 }
