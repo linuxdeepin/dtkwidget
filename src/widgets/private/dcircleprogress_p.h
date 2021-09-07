@@ -18,7 +18,7 @@
 #ifndef DCIRCLEPROGRESS_P_H
 #define DCIRCLEPROGRESS_P_H
 
-#include "dcircleprogress.h"
+#include <dcircleprogress.h>
 
 #include <DObjectPrivate>
 

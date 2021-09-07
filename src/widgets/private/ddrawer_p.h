@@ -21,7 +21,7 @@
 #ifndef DDRAWER_P_H
 #define DDRAWER_P_H
 
-#include "ddrawer.h"
+#include <DDrawer>
 #include "dframe_p.h"
 
 QT_BEGIN_NAMESPACE

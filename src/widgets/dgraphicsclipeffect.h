@@ -18,8 +18,8 @@
 #ifndef DGRAPHICSCLIPEFFECT_H
 #define DGRAPHICSCLIPEFFECT_H
 
-#include "dtkwidget_global.h"
-#include "dobject.h"
+#include <dtkwidget_global.h>
+#include <DObject>
 
 #include <QGraphicsEffect>
 #include <QPainterPath>

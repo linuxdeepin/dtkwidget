@@ -18,7 +18,7 @@
 #ifndef DPASSWORDEDIT_H
 #define DPASSWORDEDIT_H
 
-#include "dlineedit.h"
+#include <DLineEdit>
 
 DWIDGET_BEGIN_NAMESPACE
 

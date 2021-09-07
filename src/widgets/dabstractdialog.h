@@ -23,7 +23,7 @@
 
 #include <DObject>
 
-#include "dtkwidget_global.h"
+#include <dtkwidget_global.h>
 
 class QMouseEvent;
 class QPushButton;

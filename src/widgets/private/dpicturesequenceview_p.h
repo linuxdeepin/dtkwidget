@@ -18,7 +18,7 @@
 #ifndef DPICTURESEQUENCEVIEW_P_H
 #define DPICTURESEQUENCEVIEW_P_H
 
-#include "dpicturesequenceview.h"
+#include <dpicturesequenceview.h>
 
 #include <DObjectPrivate>
 

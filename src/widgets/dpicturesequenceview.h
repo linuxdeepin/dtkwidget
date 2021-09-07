@@ -18,8 +18,8 @@
 #ifndef DPICTURESEQUENCEVIEW_H
 #define DPICTURESEQUENCEVIEW_H
 
-#include "dtkwidget_global.h"
-#include "dobject.h"
+#include <dtkwidget_global.h>
+#include <DObject>
 
 #include <QtGlobal>
 #include <QPair>

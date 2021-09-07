@@ -1,7 +1,7 @@
 #ifndef DFLOATINGMESSAGE_P_H
 #define DFLOATINGMESSAGE_P_H
 
-#include "dfloatingmessage.h"
+#include <DFloatingMessage>
 #include "dfloatingwidget_p.h"
 
 QT_BEGIN_NAMESPACE

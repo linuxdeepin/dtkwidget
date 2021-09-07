@@ -18,7 +18,7 @@
 #ifndef DCONSTANTS_H
 #define DCONSTANTS_H
 
-#include "dtkwidget_global.h"
+#include <dtkwidget_global.h>
 
 DWIDGET_BEGIN_NAMESPACE
 	//basis width and height

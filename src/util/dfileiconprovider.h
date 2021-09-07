@@ -19,7 +19,7 @@
 #define DFILEICONPROVIDER_H
 
 #include <DObject>
-#include "dtkwidget_global.h"
+#include <dtkwidget_global.h>
 
 #include <QFileIconProvider>
 

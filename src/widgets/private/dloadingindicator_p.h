@@ -20,7 +20,7 @@
 
 #include <DObjectPrivate>
 
-#include "dloadingindicator.h"
+#include <dloadingindicator.h>
 
 DWIDGET_BEGIN_NAMESPACE
 

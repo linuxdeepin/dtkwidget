@@ -23,8 +23,8 @@
 #include <QLabel>
 #include <QPixmap>
 
-#include "dtkwidget_global.h"
-#include "dobject.h"
+#include <dtkwidget_global.h>
+#include <DObject>
 
 DWIDGET_BEGIN_NAMESPACE
 class DImageButtonPrivate;

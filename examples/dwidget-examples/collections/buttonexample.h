@@ -24,7 +24,7 @@
 #include <QWidget>
 #include <QLabel>
 
-#include "dtkwidget_global.h"
+#include <dtkwidget_global.h>
 #include "examplewindowinterface.h"
 #include "pagewindowinterface.h"
 

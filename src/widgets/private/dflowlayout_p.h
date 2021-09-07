@@ -18,7 +18,7 @@
 #ifndef DFLOWLAYOUT_P_H
 #define DFLOWLAYOUT_P_H
 
-#include "dflowlayout.h"
+#include <dflowlayout.h>
 
 #include <DObjectPrivate>
 

@@ -18,7 +18,7 @@
 #ifndef DFLOWLAYOUT_H
 #define DFLOWLAYOUT_H
 
-#include "dtkwidget_global.h"
+#include <dtkwidget_global.h>
 
 #include <dobject.h>
 

@@ -18,7 +18,7 @@
 #ifndef DUTILITY_H
 #define DUTILITY_H
 
-#include "dtkwidget_global.h"
+#include <dtkwidget_global.h>
 
 #include <QImage>
 #include <QColor>

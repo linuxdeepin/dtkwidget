@@ -22,8 +22,8 @@
 #ifndef DTIPLABEL_P_H
 #define DTIPLABEL_P_H
 
-#include "dtiplabel.h"
-#include "dstyle.h"
+#include <DTipLabel>
+#include <DStyle>
 #include "dlabel_p.h"
 
 DWIDGET_BEGIN_NAMESPACE

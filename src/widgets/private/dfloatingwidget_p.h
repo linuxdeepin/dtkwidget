@@ -1,7 +1,7 @@
 #ifndef DFLOATINGWIDGET_P_H
 #define DFLOATINGWIDGET_P_H
 
-#include "dfloatingwidget.h"
+#include <DFloatingWidget>
 
 #include <DObjectPrivate>
 

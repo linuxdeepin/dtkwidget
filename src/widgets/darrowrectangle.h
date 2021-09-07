@@ -28,11 +28,11 @@
 #include <QTimer>
 #include <QDebug>
 
-#include "dobject.h"
-#include "dtkwidget_global.h"
-#include "dthememanager.h"
-#include "dgraphicsgloweffect.h"
-#include "dblureffectwidget.h"
+#include <DObject>
+#include <dtkwidget_global.h>
+#include <DThemeManager>
+#include <dgraphicsgloweffect.h>
+#include <DBlurEffectWidget>
 
 DWIDGET_BEGIN_NAMESPACE
 

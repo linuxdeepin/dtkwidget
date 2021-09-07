@@ -18,8 +18,8 @@
 #ifndef DLINEEDIT_P_H
 #define DLINEEDIT_P_H
 
-#include "dlineedit.h"
-#include "dalertcontrol.h"
+#include <DLineEdit>
+#include <DAlertControl>
 
 #include <DObjectPrivate>
 #include <QPointer>

@@ -18,8 +18,8 @@
 #ifndef DCLIPEFFECTWIDGET_H
 #define DCLIPEFFECTWIDGET_H
 
-#include "dtkwidget_global.h"
-#include "dobject.h"
+#include <dtkwidget_global.h>
+#include <DObject>
 
 #include <QWidget>
 #include <QPainterPath>

@@ -18,9 +18,9 @@
 #ifndef DMAINWINDOW_P_H
 #define DMAINWINDOW_P_H
 
-#include "dtkwidget_global.h"
-#include "dmainwindow.h"
-#include "dshadowline.h"
+#include <dtkwidget_global.h>
+#include <DMainWindow>
+#include <DShadowLine>
 
 #include <DObjectPrivate>
 

@@ -27,7 +27,7 @@
 #include <QWidget>
 #include <QDebug>
 
-#include "dtkwidget_global.h"
+#include <dtkwidget_global.h>
 
 DWIDGET_BEGIN_NAMESPACE
 

@@ -18,7 +18,7 @@
 #ifndef DFILECHOOSEREDIT_H
 #define DFILECHOOSEREDIT_H
 
-#include "dlineedit.h"
+#include <DLineEdit>
 #include <QFileDialog>
 
 DWIDGET_BEGIN_NAMESPACE

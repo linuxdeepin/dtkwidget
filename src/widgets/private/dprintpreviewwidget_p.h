@@ -22,7 +22,7 @@
 #ifndef DPRINTPREVIEWWIDGET_P_H
 #define DPRINTPREVIEWWIDGET_P_H
 
-#include "dprintpreviewwidget.h"
+#include <dprintpreviewwidget.h>
 #include "private/dframe_p.h"
 
 #include <DIconButton>

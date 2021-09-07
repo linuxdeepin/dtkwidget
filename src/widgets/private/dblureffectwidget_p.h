@@ -20,7 +20,7 @@
 
 #include <QPainterPath>
 #include <DObjectPrivate>
-#include "dblureffectwidget.h"
+#include <DBlurEffectWidget>
 
 DWIDGET_BEGIN_NAMESPACE
 

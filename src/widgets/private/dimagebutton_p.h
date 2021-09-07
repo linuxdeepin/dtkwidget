@@ -19,7 +19,7 @@
 #ifndef DIMAGEBUTTON_P_H
 #define DIMAGEBUTTON_P_H
 
-#include "dimagebutton.h"
+#include <DImageButton>
 
 #include <DObjectPrivate>
 

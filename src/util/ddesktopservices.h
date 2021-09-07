@@ -18,7 +18,7 @@
 #ifndef DDESKTOPSERVICES_H
 #define DDESKTOPSERVICES_H
 
-#include "dtkwidget_global.h"
+#include <dtkwidget_global.h>
 
 #include <QUrl>
 

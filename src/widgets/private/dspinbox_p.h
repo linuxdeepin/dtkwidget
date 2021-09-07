@@ -18,7 +18,7 @@
 #ifndef DSPINBOX_P_H
 #define DSPINBOX_P_H
 
-#include "dspinbox.h"
+#include <DSpinBox>
 
 #include <DObjectPrivate>
 

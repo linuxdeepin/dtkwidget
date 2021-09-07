@@ -22,7 +22,7 @@
 
 #include <DSettings>
 
-#include "dabstractdialog.h"
+#include <DAbstractDialog>
 
 DWIDGET_BEGIN_NAMESPACE
 

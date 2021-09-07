@@ -22,7 +22,7 @@
 #ifndef EDITEXAMPLE_H
 #define EDITEXAMPLE_H
 
-#include "dtkwidget_global.h"
+#include <dtkwidget_global.h>
 #include "examplewindowinterface.h"
 #include "pagewindowinterface.h"
 

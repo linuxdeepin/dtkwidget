@@ -21,8 +21,8 @@
 #ifndef DBUTTONBOX_P_H
 #define DBUTTONBOX_P_H
 
-#include "dbuttonbox.h"
-#include "dstyleoption.h"
+#include <DButtonBox>
+#include <DStyleOption>
 
 #include <DObjectPrivate>
 

@@ -18,7 +18,7 @@
 #ifndef DBOXWIDGET_P_H
 #define DBOXWIDGET_P_H
 
-#include "dboxwidget.h"
+#include <dboxwidget.h>
 
 #include <DObjectPrivate>
 

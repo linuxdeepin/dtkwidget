@@ -25,8 +25,8 @@
 
 #include <DHorizontalLine>
 
-#include "dtkwidget_global.h"
-#include "dconstants.h"
+#include <dtkwidget_global.h>
+#include <dconstants.h>
 
 DWIDGET_BEGIN_NAMESPACE
 

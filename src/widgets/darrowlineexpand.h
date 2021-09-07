@@ -20,11 +20,11 @@
 
 #include <QWidget>
 
-#include "dtkwidget_global.h"
-#include "dbaseexpand.h"
-#include "diconbutton.h"
-#include "dbaseline.h"
-#include "dheaderline.h"
+#include <dtkwidget_global.h>
+#include <dbaseexpand.h>
+#include <DIconButton>
+#include <dbaseline.h>
+#include <dheaderline.h>
 DWIDGET_BEGIN_NAMESPACE
 
 class D_DECL_DEPRECATED ArrowHeaderLine : public DHeaderLine

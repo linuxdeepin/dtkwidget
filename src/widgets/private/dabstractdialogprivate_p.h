@@ -18,7 +18,7 @@
 #ifndef DABSTRACTDIALOG_P_H
 #define DABSTRACTDIALOG_P_H
 
-#include "dabstractdialog.h"
+#include <DAbstractDialog>
 
 #include <DObjectPrivate>
 

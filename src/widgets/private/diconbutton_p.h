@@ -21,8 +21,8 @@
 #ifndef DICONBUTTON_P_H
 #define DICONBUTTON_P_H
 
-#include "dobject_p.h"
-#include "diconbutton.h"
+#include <dobject_p.h>
+#include <DIconButton>
 
 DWIDGET_BEGIN_NAMESPACE
 

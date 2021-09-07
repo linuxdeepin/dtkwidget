@@ -18,7 +18,7 @@
 #ifndef BUTTON_CONSTANTS_H
 #define BUTTON_CONSTANTS_H
 
-#include "dtkwidget_global.h"
+#include <dtkwidget_global.h>
 
 DWIDGET_BEGIN_NAMESPACE
 
