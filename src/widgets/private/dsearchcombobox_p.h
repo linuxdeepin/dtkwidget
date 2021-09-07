@@ -21,7 +21,7 @@
 #ifndef DSEARCHCOMBOBOX_P_H
 #define DSEARCHCOMBOBOX_P_H
 
-#include "dsearchcombobox.h"
+#include <DSearchComboBox>
 #include <DObjectPrivate>
 #include <DSearchEdit>
 #include <QSortFilterProxyModel>

@@ -23,7 +23,7 @@
 #define DSEARCHEDIT_P_H
 
 #include "dlineedit_p.h"
-#include "dsearchedit.h"
+#include <DSearchEdit>
 
 #include <QLabel>
 

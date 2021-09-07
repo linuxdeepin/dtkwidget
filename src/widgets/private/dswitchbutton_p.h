@@ -19,7 +19,7 @@
 #ifndef DSWITCHBUTTON_P_H
 #define DSWITCHBUTTON_P_H
 
-#include "dswitchbutton.h"
+#include <DSwitchButton>
 
 #include <DObjectPrivate>
 

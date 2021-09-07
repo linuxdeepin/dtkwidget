@@ -18,7 +18,7 @@
 #ifndef DTICKEFFECTPRIVATE_H
 #define DTICKEFFECTPRIVATE_H
 
-#include "dtickeffect.h"
+#include <dtickeffect.h>
 #include <DObjectPrivate>
 #include <QHBoxLayout>
 #include <QVariantAnimation>

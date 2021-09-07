@@ -22,8 +22,8 @@
 #ifndef DPRINTPICKCOLORWIDGET_H
 #define DPRINTPICKCOLORWIDGET_H
 #include "qdbusinterface.h"
-#include "dfloatingwidget.h"
-#include "dlabel.h"
+#include <DFloatingWidget>
+#include <DLabel>
 
 #include <DWidget>
 #include <DPushButton>

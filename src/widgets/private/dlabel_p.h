@@ -22,8 +22,8 @@
 #ifndef DLABEL_P_H
 #define DLABEL_P_H
 
-#include "dlabel.h"
-#include "dstyle.h"
+#include <DLabel>
+#include <DStyle>
 
 #include <DObjectPrivate>
 

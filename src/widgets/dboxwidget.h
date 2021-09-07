@@ -18,7 +18,7 @@
 #ifndef DBOXWIDGET_H
 #define DBOXWIDGET_H
 
-#include "dtkwidget_global.h"
+#include <dtkwidget_global.h>
 
 #include <dobject.h>
 

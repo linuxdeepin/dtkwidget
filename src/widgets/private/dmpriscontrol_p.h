@@ -21,9 +21,9 @@
 #include <DObjectPrivate>
 #include <DFloatingButton>
 
-#include "dimagebutton.h"
-#include "dmpriscontrol.h"
-#include "dtickeffect.h"
+#include <DImageButton>
+#include <dmpriscontrol.h>
+#include <dtickeffect.h>
 #include "private/mpris/dbusmpris.h"
 #include "private/mpris/dmprismonitor.h"
 

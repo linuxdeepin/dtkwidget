@@ -20,7 +20,7 @@
 
 #include <QIcon>
 
-#include "dabstractdialog.h"
+#include <DAbstractDialog>
 
 class QAbstractButton;
 class QButtonGroup;

@@ -1,7 +1,7 @@
 #ifndef DHIDPIHELPER_H
 #define DHIDPIHELPER_H
 
-#include "dtkwidget_global.h"
+#include <dtkwidget_global.h>
 
 DWIDGET_BEGIN_NAMESPACE
 

@@ -23,7 +23,7 @@
 #define DPRINTPREVIEWDIALOG_H
 
 #include <DDialog>
-#include "dprintpreviewwidget.h"
+#include <dprintpreviewwidget.h>
 
 DWIDGET_BEGIN_NAMESPACE
 class DPrintPreviewDialogPrivate;

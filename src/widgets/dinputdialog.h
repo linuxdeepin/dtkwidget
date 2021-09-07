@@ -20,9 +20,9 @@
 
 #include <QInputDialog>
 
-#include "ddialog.h"
-#include "dlineedit.h"
-#include "dobject.h"
+#include <DDialog>
+#include <DLineEdit>
+#include <DObject>
 
 DWIDGET_BEGIN_NAMESPACE
 

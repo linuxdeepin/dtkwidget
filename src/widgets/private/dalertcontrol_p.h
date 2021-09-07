@@ -21,7 +21,7 @@
 
 #ifndef DALERTCONTROL_P_H
 #define DALERTCONTROL_P_H
-#include "dalertcontrol.h"
+#include <DAlertControl>
 #include <DObjectPrivate>
 #include <QPointer>
 #include <QTimer>

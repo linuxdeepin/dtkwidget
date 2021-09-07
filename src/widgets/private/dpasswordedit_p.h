@@ -19,7 +19,7 @@
 #define DPASSWORDEDIT_P_H
 
 #include "dlineedit_p.h"
-#include "dpasswordedit.h"
+#include <DPasswordEdit>
 
 DWIDGET_BEGIN_NAMESPACE
 

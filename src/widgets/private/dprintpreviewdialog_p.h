@@ -22,10 +22,10 @@
 #ifndef DPRINTPREVIEWDIALOG_P_H
 #define DPRINTPREVIEWDIALOG_P_H
 
-#include "dprintpreviewdialog.h"
+#include <DPrintPreviewDialog>
 #include "ddialog_p.h"
-#include "dprintpickcolorwidget.h"
-#include "dlabel.h"
+#include <dprintpickcolorwidget.h>
+#include <DLabel>
 
 #include <DWidget>
 #include <DPushButton>

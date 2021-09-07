@@ -22,7 +22,7 @@
 #ifndef PROGRESSBAREXAMPLE_H
 #define PROGRESSBAREXAMPLE_H
 
-#include "dtkwidget_global.h"
+#include <dtkwidget_global.h>
 #include "examplewindowinterface.h"
 #include "pagewindowinterface.h"
 

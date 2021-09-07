@@ -18,7 +18,7 @@
 #pragma once
 
 #include <qnamespace.h>
-#include "dtkwidget_global.h"
+#include <dtkwidget_global.h>
 
 QT_BEGIN_NAMESPACE
 class QWidget;

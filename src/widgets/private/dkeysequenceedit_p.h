@@ -1,7 +1,7 @@
 #ifndef DKEYSEQUENCEEDIT_P_H
 #define DKEYSEQUENCEEDIT_P_H
 
-#include "dkeysequenceedit.h"
+#include <DKeySequenceEdit>
 
 #include <DObjectPrivate>
 

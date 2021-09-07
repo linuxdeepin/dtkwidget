@@ -25,7 +25,7 @@
 #include <QColor>
 #include <QMap>
 
-#include "dtkwidget_global.h"
+#include <dtkwidget_global.h>
 
 DWIDGET_BEGIN_NAMESPACE
 

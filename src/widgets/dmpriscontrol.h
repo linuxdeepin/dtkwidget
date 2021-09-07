@@ -18,8 +18,8 @@
 #ifndef DMPRISCONTROL_H
 #define DMPRISCONTROL_H
 
-#include "dobject.h"
-#include "dtkwidget_global.h"
+#include <DObject>
+#include <dtkwidget_global.h>
 
 #include <QFrame>
 

@@ -19,8 +19,8 @@
 #define DIPV4LINEEDIT_P_H
 
 #include "dlineedit_p.h"
-#include "dipv4lineedit.h"
-#include "dimagebutton.h"
+#include <DIpv4LineEdit>
+#include <DImageButton>
 
 DWIDGET_BEGIN_NAMESPACE
 

@@ -20,10 +20,10 @@
 
 #include <QWidget>
 
-#include "dtkwidget_global.h"
-#include "dbaseexpand.h"
-#include "dswitchbutton.h"
-#include "dheaderline.h"
+#include <dtkwidget_global.h>
+#include <dbaseexpand.h>
+#include <DSwitchButton>
+#include <dheaderline.h>
 
 DWIDGET_BEGIN_NAMESPACE
 

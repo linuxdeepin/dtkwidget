@@ -5,7 +5,7 @@
 #include <QWidget>
 #include <QHBoxLayout>
 
-#include "dfloatingmessage.h"
+#include <DFloatingMessage>
 
 DWIDGET_USE_NAMESPACE
 

@@ -22,7 +22,7 @@
 #include <QObject>
 #include <QScopedPointer>
 
-#include "dtkwidget_global.h"
+#include <dtkwidget_global.h>
 
 DCORE_BEGIN_NAMESPACE
 class DSettingsOption;

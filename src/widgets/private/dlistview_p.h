@@ -18,7 +18,7 @@
 #ifndef DLISTVIEW_P_H
 #define DLISTVIEW_P_H
 
-#include "dlistview.h"
+#include <DListView>
 
 #include <DObjectPrivate>
 

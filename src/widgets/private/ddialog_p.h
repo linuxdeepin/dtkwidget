@@ -21,7 +21,7 @@
 #include <QPointer>
 #include <QPushButton>
 #include <QSpacerItem>
-#include "ddialog.h"
+#include <DDialog>
 #include "dabstractdialogprivate_p.h"
 
 QT_BEGIN_NAMESPACE

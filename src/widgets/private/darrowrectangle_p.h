@@ -18,7 +18,7 @@
 #ifndef DARROWRECTANGLE_P_H
 #define DARROWRECTANGLE_P_H
 
-#include "darrowrectangle.h"
+#include <DArrowRectangle>
 
 #include <DWindowManagerHelper>
 #include <DObjectPrivate>

@@ -26,7 +26,7 @@
 #include <QFrame>
 #include <QIcon>
 
-#include "dtkwidget_global.h"
+#include <dtkwidget_global.h>
 #include <DObject>
 
 DWIDGET_BEGIN_NAMESPACE

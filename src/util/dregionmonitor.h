@@ -1,8 +1,8 @@
 #ifndef DREGIONMONITOR_H_DWIDGET
 #define DREGIONMONITOR_H_DWIDGET
 
-#include "dobject.h"
-#include "dtkwidget_global.h"
+#include <DObject>
+#include <dtkwidget_global.h>
 
 #include <QObject>
 

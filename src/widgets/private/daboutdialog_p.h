@@ -18,7 +18,7 @@
 #ifndef DABOUTDIALOG_P_H
 #define DABOUTDIALOG_P_H
 
-#include "daboutdialog.h"
+#include <DAboutDialog>
 #include "ddialog_p.h"
 
 DWIDGET_BEGIN_NAMESPACE

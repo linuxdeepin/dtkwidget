@@ -21,8 +21,8 @@
 #include <QWidget>
 #include <QLabel>
 
-#include "dtkwidget_global.h"
-#include "dbaseline.h"
+#include <dtkwidget_global.h>
+#include <dbaseline.h>
 
 DWIDGET_BEGIN_NAMESPACE
 

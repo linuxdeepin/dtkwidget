@@ -19,8 +19,8 @@
 #define DFILECHOOSEREDIT_P_H
 
 #include "dlineedit_p.h"
-#include "dfilechooseredit.h"
-#include "dimagebutton.h"
+#include <DFileChooserEdit>
+#include <DImageButton>
 
 DWIDGET_BEGIN_NAMESPACE
 

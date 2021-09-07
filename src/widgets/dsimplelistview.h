@@ -24,8 +24,8 @@
 #ifndef DSIMPLELISTVIEW_H
 #define DSIMPLELISTVIEW_H
 
-#include "dobject.h"
-#include "dsimplelistitem.h"
+#include <DObject>
+#include <DSimpleListItem>
 #include <dtkwidget_global.h>
 #include <QPixmap>
 #include <QTimer>

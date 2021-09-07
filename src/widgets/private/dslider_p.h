@@ -22,7 +22,7 @@
 #ifndef DSLIDER_P_H
 #define DSLIDER_P_H
 
-#include "dslider.h"
+#include <DSlider>
 
 #include <DObjectPrivate>
 #include <DIconButton>

@@ -20,8 +20,8 @@
 
 #include <DObjectPrivate>
 
-#include "dapplication.h"
-#include "dpathbuf.h"
+#include <DApplication>
+#include <DPathBuf>
 
 #include <QIcon>
 

@@ -22,8 +22,8 @@
 #ifndef DSUGGESTBUTTON_H
 #define DSUGGESTBUTTON_H
 
-#include "dtkwidget_global.h"
-#include "dobject.h"
+#include <dtkwidget_global.h>
+#include <DObject>
 
 #include <QPushButton>
 

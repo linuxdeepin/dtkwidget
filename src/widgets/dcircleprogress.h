@@ -18,9 +18,9 @@
 #ifndef DCIRCLEPROGRESS_H
 #define DCIRCLEPROGRESS_H
 
-#include "dtkwidget_global.h"
-#include "dthememanager.h"
-#include "dobject.h"
+#include <dtkwidget_global.h>
+#include <DThemeManager>
+#include <DObject>
 
 #include <QWidget>
 #include <QLabel>

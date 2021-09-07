@@ -18,8 +18,8 @@
 #ifndef DWATERPROGRESS_H
 #define DWATERPROGRESS_H
 
-#include "dtkwidget_global.h"
-#include "dobject.h"
+#include <dtkwidget_global.h>
+#include <DObject>
 
 #include <QScopedPointer>
 #include <QWidget>

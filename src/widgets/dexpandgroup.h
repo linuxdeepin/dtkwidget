@@ -22,8 +22,8 @@
 #include <QList>
 #include <QMap>
 
-#include "dtkwidget_global.h"
-#include "dbaseexpand.h"
+#include <dtkwidget_global.h>
+#include <dbaseexpand.h>
 
 DWIDGET_BEGIN_NAMESPACE
 

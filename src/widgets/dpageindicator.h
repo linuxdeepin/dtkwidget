@@ -18,8 +18,8 @@
 #ifndef DPAGEINDICATOR_H
 #define DPAGEINDICATOR_H
 
-#include "dtkwidget_global.h"
-#include "dobject.h"
+#include <dtkwidget_global.h>
+#include <DObject>
 
 #include <QWidget>
 

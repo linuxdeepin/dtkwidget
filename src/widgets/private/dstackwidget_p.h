@@ -18,7 +18,7 @@
 #ifndef DSTACKWIDGET_P_H
 #define DSTACKWIDGET_P_H
 
-#include "dstackwidget.h"
+#include <dstackwidget.h>
 
 #include <DObjectPrivate>
 
