@@ -112,6 +112,8 @@ qreal DToast::opacity() const
 
 /*!
   \brief 设置文本内容
+
+  \a text 文本内容.
  */
 void DToast::setText(QString text)
 {

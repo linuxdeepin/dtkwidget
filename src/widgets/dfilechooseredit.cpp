@@ -98,6 +98,10 @@ DFileChooserEdit::DialogDisplayPosition DFileChooserEdit::dialogDisplayPosition(
 }
 
 /*!
+  \brief 设置对话框显示位置.
+
+  \a dialogDisplayPosition 对话框的显示位置.
+
   \sa DFileChooserEdit::dialogDisplayPosition
  */
 void DFileChooserEdit::setDialogDisplayPosition(DFileChooserEdit::DialogDisplayPosition dialogDisplayPosition)

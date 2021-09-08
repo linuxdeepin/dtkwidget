@@ -406,9 +406,7 @@ public:
   wid->setCentralWidget(view);
   wid->show();
   \endcode
-  上代码示例 code 效果图如下:
-  \image DViewItemAction2.png
-  
+
   //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   
   setActionList(Qt::BottomEdge, *list)　的　BottomEdge　为竖直方向的枚举值时候: TopEdge, BottomEdge,　其对应　alignment　枚举数值只有如下的有效：
@@ -461,8 +459,6 @@ public:
   wid->setCentralWidget(view);
   wid->show();
   \endcode
-  上代码示例 code 效果图如下:
-  \image DViewItemAction.png
   \a alignment 设置本控件对象(在父控件的)方向位置: 居左, 居中, 居右 (其他枚举值此处无效)
   \a iconSize 本控件的图标 icon 的大小
  */
@@ -551,7 +547,9 @@ void DViewItemAction::setClickAreaMargins(const QMargins &margins)
 }
 
 /*!
+  \fn void DViewItemAction::setTextColorRole(DPalette::ColorType role)
   \brief 设置文本颜色的角色枚举数值 (DPalette)
+  \overload
   \a role 文本颜色的枚举值
  */
 void DViewItemAction::setTextColorRole(DPalette::ColorType role)
@@ -563,7 +561,9 @@ void DViewItemAction::setTextColorRole(DPalette::ColorType role)
 }
 
 /*!
+  \fn void DViewItemAction::setTextColorRole(QPalette::ColorRole role)
   \brief 设置文本颜色的角色枚举数值 (QPalette)
+  \overload
   \a role 文本颜色的枚举值
  */
 void DViewItemAction::setTextColorRole(QPalette::ColorRole role)
@@ -1298,9 +1298,6 @@ DViewItemActionList DStandardItem::actionList(Qt::Edge edge) const
   wid->setCentralWidget(view);
   wid->show();
   \endcode
-  \b 代码片运行效果图：
-  
-  \image DStandardItem.png
  */
 void DStandardItem::setTextActionList(const DViewItemActionList &list)
 {

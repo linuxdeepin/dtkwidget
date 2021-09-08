@@ -118,8 +118,6 @@ void DDrawerPrivate::init()
   使用 DDrawer 类可以创建一个可展开的带有展开动画效果的控件，这个控件包含上下两部分，上面的控件为标题控件，这个控件会始终显示，下面的控件为内容控件，默认为不会显示，调用 DDrawer::setExpand 设置内容控件的可见性。使用 DDrawer::setHeader 和 DDrawer::setContent 设置分别设置标题控件和内容控件。
   
   \sa DHeaderLine
-  
-  \image DDrawer.gif
  */
 
 /*!

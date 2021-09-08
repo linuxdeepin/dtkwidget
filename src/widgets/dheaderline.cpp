@@ -35,7 +35,6 @@ DWIDGET_BEGIN_NAMESPACE
     DHeaderLine provide a fixed height header line to display header title or related stuff.
     Title are aligned left and you can also set an optional right aligned QWidget.
 
-    \image DHeaderLine.png
     \sa DBaseLine
 */
 
@@ -60,7 +59,7 @@ void DHeaderLine::setTitle(const QString &title)
 }
 
 /*!
-  \brief Set the content widget of the header line.
+  \brief Set the \a content widget of the header line.
   \brief 设置内容控件。
   
   Content widget aligned right and the height is limited because of the fixed height.

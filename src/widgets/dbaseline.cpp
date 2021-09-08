@@ -112,7 +112,7 @@ void DBaseLine::setLeftMargin(int margin)
 
 /*!
   \brief set right margin
-  \brief 设置右侧外补\a margin 边距
+  \brief 设置右侧外补 \a margin 边距
  */
 void DBaseLine::setRightMargin(int margin)
 {
@@ -122,7 +122,7 @@ void DBaseLine::setRightMargin(int margin)
 
 /*!
   \brief get left margin
-  \brief 左侧外补 \a margin 边距
+  \brief 获取左侧外边距
  */
 int DBaseLine::leftMargin() const
 {
@@ -131,7 +131,7 @@ int DBaseLine::leftMargin() const
 
 /*!
   \brief get right margin
-  \brief 右侧外补 \a margin 边距
+  \brief 右侧外侧外边距
  */
 int DBaseLine::rightMargin() const
 {

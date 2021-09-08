@@ -62,7 +62,9 @@ DWindowMaxButton::DWindowMaxButton(QWidget * parent) :
 
 /*!
   \fn void DWindowMaxButton::maximizedChanged(bool isMaximized)
-  \brief isMaximizedChanged 信号在 isMaximized 属性发生变化时触发。
+  \brief isMaximizedChanged 信号在 isMaximized 属性发生变化时触发.
+
+  \a isMaximized 是否时最大化状态.
  */
 
 /*!

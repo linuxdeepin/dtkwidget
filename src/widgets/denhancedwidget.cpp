@@ -37,7 +37,7 @@ class DEnhancedWidgetPrivate
 };
 
 /*!
-  \property DEnhancedWidget::target
+  \property Dtk::Widget::DEnhancedWidget::target
   \brief 要监听的目标控件，每一个 DEnhancedWidget 对象只能关联到一个 QWidget 对象
   当 target 改变后，所有的信号和旧的 target 都不再有任何关系。
   \code
@@ -62,7 +62,7 @@ class DEnhancedWidgetPrivate
  */
 
 /*!
-  \property DEnhancedWidget::enabled
+  \property Dtk::Widget::DEnhancedWidget::enabled
   \brief 值为 true 时过滤 target 控件的事件发送信号。否则卸载事件过滤器，控件属性
   改变时也不会发出信号。
   \note 可读可写
@@ -70,48 +70,64 @@ class DEnhancedWidgetPrivate
 
 /*!
   \fn void DEnhancedWidget::xChanged(int x)
+
+  \a x 改变的 x 轴坐标.
   这个信号在目标控件的 x 坐标改变后被发送
-  */
+ */
 
 /*!
   \fn void DEnhancedWidget::yChanged(int y)
+
+  \a y 改变的 y 轴坐标.
   这个信号在目标控件的 y 坐标改变后被发送
-  */
+ */
 
 /*!
   \fn void DEnhancedWidget::positionChanged(const QPoint &point)
+
+  \a point 改变的位置坐标.
   这个信号在目标控件的坐标改变后被发送
-  */
+ */
 
 /*!
   \fn void DEnhancedWidget::widthChanged(int width)
+
+  \a width 改变的宽度大小.
   这个信号在目标控件的宽度改变后被发送
-  */
+ */
 
 /*!
   \fn void DEnhancedWidget::heightChanged(int height)
+
+  \a height 改变的高度大小.
   这个信号在目标控件的高度改变后被发送
-  */
+ */
 
 /*!
   \fn void DEnhancedWidget::sizeChanged(const QSize &size)
+
+  \a size 改变的大小.
   这个信号在目标控件的大小改变后被发送
-  */
+ */
 
 /*!
   \fn void DEnhancedWidget::targetChanged(QWidget *target)
+
+  \a target 目标控件.
   这个信号在属性 DEnhancedWidget::target 被改变后发送
-  */
+ */
 
 /*!
   \fn void DEnhancedWidget::enabledChanged(bool enabled)
-  这个信号在属性 DEnhancedWidget::enabled 被改变后发送
-  */
+
+  \a enabled 是否可用.
+  这个信号在属性 DEnhancedWidget::enabled \a enabled 被改变后发送
+ */
 
 /*!
   \fn void DEnhancedWidget::showed()
   这个信号在目标控件显示后发送
-  */
+ */
 
 /*!
   \class Dtk::Widget::DEnhancedWidget

@@ -154,7 +154,8 @@ void DArrowRectangle::setContent(QWidget *content)
 }
 
 /*!
-  \brief 获取内容控件
+  \brief 获取内容控件.
+
   \return 正在显示的内容控件
  */
 QWidget *DArrowRectangle::getContent() const
@@ -298,9 +299,6 @@ qreal DArrowRectangle::shadowYOffset() const
     return d->m_shadowYOffset;
 }
 
-/*!
-  \sa DArrowRectangle::shadowYOffset
- */
 void DArrowRectangle::setShadowYOffset(const qreal &shadowYOffset)
 {
     D_D(DArrowRectangle);
@@ -313,7 +311,9 @@ void DArrowRectangle::setShadowYOffset(const qreal &shadowYOffset)
 }
 
 /*!
-  \brief DArrowRectangle::setLeftRightRadius 设置左右箭头时的圆角
+  \brief DArrowRectangle::setLeftRightRadius 设置左右箭头时的圆角.
+
+  \a enable 是否开启.
  */
 void DArrowRectangle::setLeftRightRadius(bool enable)
 {
@@ -322,7 +322,9 @@ void DArrowRectangle::setLeftRightRadius(bool enable)
 }
 
 /*!
-  \brief DArrowRectangle::setArrowStyleEnable 设置圆角箭头样式
+  \brief DArrowRectangle::setArrowStyleEnable 设置圆角箭头样式.
+
+  \a enable 是否开启.
  */
 void DArrowRectangle::setRadiusArrowStyleEnable(bool enable)
 {
@@ -348,9 +350,6 @@ qreal DArrowRectangle::shadowXOffset() const
     return d->m_shadowXOffset;
 }
 
-/*!
-  \sa DArrowRectangle::shadowXOffset
- */
 void DArrowRectangle::setShadowXOffset(const qreal &shadowXOffset)
 {
     D_D(DArrowRectangle);
@@ -369,7 +368,6 @@ void DArrowRectangle::setShadowXOffset(const qreal &shadowXOffset)
   \brief This property holds the blur radius of the widget's shadow.
   
   Getter: DArrowRectangle::shadowBlurRadius Setter: DArrowRectangle::setShadowBlurRadius
-  \sa DArrowRectangle::setShadowBlurRadius
  */
 qreal DArrowRectangle::shadowBlurRadius() const
 {
@@ -378,9 +376,6 @@ qreal DArrowRectangle::shadowBlurRadius() const
     return d->m_shadowBlurRadius;
 }
 
-/*!
-  \sa DArrowRectangle::setShadowBlurRadius
- */
 void DArrowRectangle::setShadowBlurRadius(const qreal &shadowBlurRadius)
 {
     D_D(DArrowRectangle);
@@ -407,9 +402,6 @@ QColor DArrowRectangle::borderColor() const
     return d->m_borderColor;
 }
 
-/*!
-  \sa DArrowRectangle::borderColor
- */
 void DArrowRectangle::setBorderColor(const QColor &borderColor)
 {
     D_D(DArrowRectangle);
@@ -436,9 +428,6 @@ int DArrowRectangle::borderWidth() const
     return d->m_borderWidth;
 }
 
-/*!
-  \sa DArrowRectangle::borderWidth
- */
 void DArrowRectangle::setBorderWidth(int borderWidth)
 {
     D_D(DArrowRectangle);
@@ -480,9 +469,6 @@ DArrowRectangle::ArrowDirection DArrowRectangle::arrowDirection() const
     return d->m_arrowDirection;
 }
 
-/*!
-  \sa DArrowRectangle::backgroundColor
- */
 void DArrowRectangle::setBackgroundColor(const QColor &backgroundColor)
 {
     D_D(DArrowRectangle);
@@ -630,6 +616,10 @@ int DArrowRectangle::margin() const
 }
 
 /*!
+  \brief 该函数用于设置箭头方向.
+
+  \a value 箭头方向.
+
   \sa DArrowRectangle::arrowDirection
  */
 void DArrowRectangle::setArrowDirection(ArrowDirection value)
@@ -640,7 +630,7 @@ void DArrowRectangle::setArrowDirection(ArrowDirection value)
 }
 
 /*!
-  \brief 设置整个控件固定的宽度
+  \brief 该函数用于设置整个控件固定的宽度
   
   \a value 宽度大小
  */
@@ -660,6 +650,10 @@ void DArrowRectangle::setHeight(int value)
 }
 
 /*!
+  \brief 该函数用于设置圆角大小.
+
+  \a value 圆角大小.
+
   \sa DArrowRectangle::radius
  */
 void DArrowRectangle::setRadius(int value)
@@ -670,6 +664,10 @@ void DArrowRectangle::setRadius(int value)
 }
 
 /*!
+  \brief 设置箭头高度.
+
+  \a value 箭头高度.
+
   \sa DArrowRectangle::arrowHeight
  */
 void DArrowRectangle::setArrowHeight(int value)
@@ -680,6 +678,10 @@ void DArrowRectangle::setArrowHeight(int value)
 }
 
 /*!
+  \brief 设置箭头宽度.
+
+  \a value 箭头宽度.
+
   \sa DArrowRectangle::arrowWidth
  */
 void DArrowRectangle::setArrowWidth(int value)
@@ -690,6 +692,10 @@ void DArrowRectangle::setArrowWidth(int value)
 }
 
 /*!
+  \brief 设置箭头 x 坐标的值.
+
+  \a value x 坐标的值.
+
   \sa DArrowRectangle::arrowX
  */
 void DArrowRectangle::setArrowX(int value)
@@ -700,6 +706,10 @@ void DArrowRectangle::setArrowX(int value)
 }
 
 /*!
+  \brief 设置箭头 y 坐标的值.
+
+  \a value y 坐标的值.
+
   \sa DArrowRectangle::arrowY
  */
 void DArrowRectangle::setArrowY(int value)
@@ -710,6 +720,10 @@ void DArrowRectangle::setArrowY(int value)
 }
 
 /*!
+  \brief 设置边距大小.
+
+  \a value 边距大小.
+
   \sa DArrowRectangle::margin
  */
 void DArrowRectangle::setMargin(int value)

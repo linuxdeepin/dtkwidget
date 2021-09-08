@@ -76,8 +76,10 @@ DSpinner::~DSpinner()
 }
 
 /*!
-  \brief Is the DSpinner spinning or not
-  \brief DSpinner 是否正在播放旋转动画
+  \brief Is the DSpinner spinning or not.
+  \brief DSpinner 是否正在播放旋转动画.
+
+  \return 正在播放返回 true，否则返回 false.
  */
 bool DSpinner::isPlaying() const
 {

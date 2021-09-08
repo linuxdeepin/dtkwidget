@@ -69,6 +69,8 @@ int ArrowButtonIcon::buttonState() const
 /*!
   \brief Construct a new DArrowButton with DArrowButton::ArrowDown direction
   \brief 构造一个 DArrowButton 箭头按钮，默认箭头方向向下
+
+  \a parent 父控件指针.
  */
 DArrowButton::DArrowButton(QWidget *parent)
     : QLabel(parent)
@@ -99,8 +101,12 @@ DArrowButton::DArrowButton(QWidget *parent)
 }
 
 /*!
-  \brief Set arrow direction of the button
-  \brief 设置按钮的箭头方向
+  \brief Set arrow direction of the button.
+  \brief 设置按钮的箭头方向.
+
+  \a direction 箭头的方向.
+
+  \sa DArrowButton::ArrowDirection DArrowButton::arrowDirection()
  */
 void DArrowButton::setArrowDirection(ArrowDirection direction)
 {
@@ -110,7 +116,9 @@ void DArrowButton::setArrowDirection(ArrowDirection direction)
 
 /*!
   \brief Get the arrow direction of the button.
-  \brief 获取箭头方向
+  \brief 获取箭头方向.
+
+  \return 返回箭头方向.
  */
 int DArrowButton::arrowDirection() const
 {
@@ -120,6 +128,8 @@ int DArrowButton::arrowDirection() const
 /*!
   \brief Set the button state.
   \brief 设置按钮状态
+
+  \a state 箭头按钮的状态.
  */
 void DArrowButton::setButtonState(ArrowButtonState state)
 {
@@ -130,6 +140,8 @@ void DArrowButton::setButtonState(ArrowButtonState state)
 /*!
   \brief Get the button state
   \brief 获得按钮状态
+
+  \return 返回按钮的状态.
  */
 int DArrowButton::buttonState() const
 {

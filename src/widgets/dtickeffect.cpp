@@ -35,7 +35,8 @@ DWIDGET_BEGIN_NAMESPACE
  */
 
 /*!
-  \enum Dtk::Widget::DTickEffect::Direction 滚动方向的枚举值.
+  \enum Dtk::Widget::DTickEffect::Direction
+  滚动方向的枚举值.
 
   \value LeftToRight
   \brief 从左往右滚动

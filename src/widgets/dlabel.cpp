@@ -38,7 +38,6 @@ DWIDGET_BEGIN_NAMESPACE
 
 /*!
   \brief DLabel的构造函数.
-  \a text 文本信息
   \a parent 参数被发送到 QLabel 构造函数。
  */
 DLabel::DLabel(QWidget *parent, Qt::WindowFlags f)
@@ -49,6 +48,11 @@ DLabel::DLabel(QWidget *parent, Qt::WindowFlags f)
     d->init();
 }
 
+/*!
+  \brief DLabel的构造函数.
+  \a text 文本信息
+  \a parent 参数被发送到 QLabel 构造函数。
+ */
 DLabel::DLabel(const QString &text, QWidget *parent)
     : QLabel(text, parent)
     , DObject(*new DLabelPrivate(this))

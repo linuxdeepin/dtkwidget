@@ -99,7 +99,10 @@ public:
   \class Dtk::Widget::DSimpleListView
   \inmodule dtkwidget
   \brief DSimpleListView 是 deepin 基于 QWidget 从零绘制的列表控件.
-  \brief 开发者只要懂得怎么使用 QPainter 进行图形绘制，开发者就可以在 DSimpleListItem 中绘制任意行内容，包括文本、图片、任意控件甚至每行都可以画一个小电影，而代码的复杂度不会随着绘制行内容而发生变化，所有的行内容都源于怎么使用 QPainter.
+
+  开发者只要懂得怎么使用 QPainter 进行图形绘制，开发者就可以在 DSimpleListItem 中绘制任意行内容，
+  包括文本、图片、任意控件甚至每行都可以画一个小电影，而代码的复杂度不会随着绘制行内容而发生变化，
+  所有的行内容都源于怎么使用 QPainter.
  */
 
 DSimpleListView::DSimpleListView(QWidget *parent) : QWidget(parent), DObject(*new DSimpleListViewPrivate(this))
@@ -190,7 +193,9 @@ DSimpleListView::~DSimpleListView()
 }
 
 /*!
-  \brief 设置行高
+  \brief 设置行高.
+
+  \a height 行高.
  */
 void DSimpleListView::setRowHeight(int height)
 {
@@ -202,6 +207,8 @@ void DSimpleListView::setRowHeight(int height)
 
 /*!
   \brief 设置列标题信息
+
+  \a titles 标题列表， \a widths 宽度列表, \a height 高度.
  */
 void DSimpleListView::setColumnTitleInfo(QList<QString> titles, QList<int> widths, int height)
 {
@@ -251,7 +258,9 @@ void DSimpleListView::setColumnHideFlags(QList<bool> toggleHideFlags, int visibl
 }
 
 /*!
-  \brief 设置列排序算法
+  \brief 设置列排序算法.
+
+  \a algorithms 列排序算法 , \a sortColumn 排序的列项 , \a descendingSort 是否为降序排序.
  */
 void DSimpleListView::setColumnSortingAlgorithms(QList<SortAlgorithm> *algorithms, int sortColumn, bool descendingSort)
 {
@@ -270,7 +279,9 @@ void DSimpleListView::setColumnSortingAlgorithms(QList<SortAlgorithm> *algorithm
 }
 
 /*!
-  \brief 设置搜索算法
+  \brief 设置搜索算法.
+
+  \a algorithm 搜索算法.
  */
 void DSimpleListView::setSearchAlgorithm(SearchAlgorithm algorithm)
 {
@@ -280,7 +291,9 @@ void DSimpleListView::setSearchAlgorithm(SearchAlgorithm algorithm)
 }
 
 /*!
-  \brief 设置圆角半径
+  \brief 设置圆角半径.
+
+  \a radius 圆角大小.
  */
 void DSimpleListView::setClipRadius(int radius)
 {
@@ -290,7 +303,8 @@ void DSimpleListView::setClipRadius(int radius)
 }
 
 /*!
-  \brief 设置边角细节
+  \brief 设置边角细节.
+
   \a enableFrame 是否绘制边角
   \a color 边角颜色
   \a opacity 不透明度
@@ -305,7 +319,9 @@ void DSimpleListView::setFrame(bool enableFrame, QColor color, double opacity)
 }
 
 /*!
-  \brief 添加 DSimpleListItem 列表到视图中
+  \brief 添加 DSimpleListItem 列表到视图中.
+
+  \a items 视图项列表.
  */
 void DSimpleListView::addItems(QList<DSimpleListItem*> items)
 {
@@ -326,7 +342,9 @@ void DSimpleListView::addItems(QList<DSimpleListItem*> items)
 }
 
 /*!
-  \brief 删除一个列表项
+  \brief 删除一个列表项.
+
+  \a item 列表项指针.
  */
 void DSimpleListView::removeItem(DSimpleListItem* item)
 {
@@ -359,6 +377,7 @@ void DSimpleListView::clearItems()
 /*!
   \brief 添加 DSimpleListItem 列表以在视图中选择效果
   \a recordLastSelection 为 true 则清除最后一个选择项
+  \a items 列表项.
  */
 void DSimpleListView::addSelections(QList<DSimpleListItem*> items, bool recordLastSelection)
 {
@@ -374,7 +393,9 @@ void DSimpleListView::addSelections(QList<DSimpleListItem*> items, bool recordLa
 }
 
 /*!
-  \brief 移除所有选择项
+  \brief 移除所有选择项.
+
+  \a clearLastSelection 是否清除最后选中的列表项.
  */
 void DSimpleListView::clearSelections(bool clearLastSelection)
 {
@@ -389,7 +410,9 @@ void DSimpleListView::clearSelections(bool clearLastSelection)
 }
 
 /*!
-  \brief 获取所有选择项
+  \brief 获取所有选择项.
+
+  \return 返回选中的列表项.
  */
 QList<DSimpleListItem*> DSimpleListView::getSelections()
 {
@@ -399,7 +422,9 @@ QList<DSimpleListItem*> DSimpleListView::getSelections()
 }
 
 /*!
-  \brief 刷新所有项
+  \brief 刷新所有项.
+
+  \a items 列表项.
  */
 void DSimpleListView::refreshItems(QList<DSimpleListItem*> items)
 {
@@ -464,7 +489,9 @@ void DSimpleListView::refreshItems(QList<DSimpleListItem*> items)
 }
 
 /*!
-  \brief 搜索
+  \brief 搜索.
+
+  \a content 被搜索内容.
  */
 void DSimpleListView::search(QString content)
 {
@@ -487,7 +514,9 @@ void DSimpleListView::search(QString content)
 }
 
 /*!
-  \brief 设置单一选择
+  \brief 设置单一选择.
+
+  \a singleSelect 是否单一选择.
  */
 void DSimpleListView::setSingleSelect(bool singleSelect)
 {
@@ -497,7 +526,9 @@ void DSimpleListView::setSingleSelect(bool singleSelect)
 }
 
 /*!
-  \brief 单击空白区域时保持选择项
+  \brief 单击空白区域时保持选择项.
+
+  \a keep 是否保持选中项.
  */
 void DSimpleListView::keepSelectWhenClickBlank(bool keep)
 {
@@ -507,7 +538,7 @@ void DSimpleListView::keepSelectWhenClickBlank(bool keep)
 }
 
 /*!
-  \brief 选择所有列表项
+  \brief 选择所有列表项.
  */
 void DSimpleListView::selectAllItems()
 {
@@ -531,7 +562,7 @@ void DSimpleListView::selectAllItems()
 }
 
 /*!
-  \brief 选择第一项
+  \brief 选择第一项.
  */
 void DSimpleListView::selectFirstItem()
 {
@@ -555,7 +586,7 @@ void DSimpleListView::selectFirstItem()
 }
 
 /*!
-  \brief 选择最后一项
+  \brief 选择最后一项.
  */
 void DSimpleListView::selectLastItem()
 {
@@ -579,7 +610,7 @@ void DSimpleListView::selectLastItem()
 }
 
 /*!
-  \brief 移动到上一项
+  \brief 移动到上一项.
  */
 void DSimpleListView::selectPrevItem()
 {
@@ -587,7 +618,7 @@ void DSimpleListView::selectPrevItem()
 }
 
 /*!
-  \brief 移动到下一项
+  \brief 移动到下一项.
  */
 void DSimpleListView::selectNextItem()
 {
@@ -595,7 +626,7 @@ void DSimpleListView::selectNextItem()
 }
 
 /*!
-  \brief 从当前项选择到下一页的项
+  \brief 从当前项选择到下一页的项.
  */
 void DSimpleListView::shiftSelectPageDown()
 {
@@ -607,7 +638,7 @@ void DSimpleListView::shiftSelectPageDown()
 }
 
 /*!
-  \brief 从当前项选择到上一页的项
+  \brief 从当前项选择到上一页的项.
  */
 void DSimpleListView::shiftSelectPageUp()
 {
@@ -619,7 +650,7 @@ void DSimpleListView::shiftSelectPageUp()
 }
 
 /*!
-  \brief 从当前项选择到末尾项
+  \brief 从当前项选择到末尾项.
  */
 void DSimpleListView::shiftSelectToEnd()
 {
@@ -647,7 +678,7 @@ void DSimpleListView::shiftSelectToEnd()
 }
 
 /*!
-  \brief 从当前项选择到起始项
+  \brief 从当前项选择到起始项.
  */
 void DSimpleListView::shiftSelectToHome()
 {
@@ -675,7 +706,7 @@ void DSimpleListView::shiftSelectToHome()
 }
 
 /*!
-  \brief 从当前项选择到下一项
+  \brief 从当前项选择到下一项.
  */
 void DSimpleListView::shiftSelectToNext()
 {
@@ -687,7 +718,7 @@ void DSimpleListView::shiftSelectToNext()
 }
 
 /*!
-  \brief 从当前项选择到上一项
+  \brief 从当前项选择到上一项.
  */
 void DSimpleListView::shiftSelectToPrev()
 {
@@ -699,7 +730,7 @@ void DSimpleListView::shiftSelectToPrev()
 }
 
 /*!
-  \brief 滚动到下一页
+  \brief 滚动到下一页.
  */
 void DSimpleListView::scrollPageDown()
 {
@@ -709,7 +740,7 @@ void DSimpleListView::scrollPageDown()
 }
 
 /*!
-  \brief 滚动到上一页
+  \brief 滚动到上一页.
  */
 void DSimpleListView::scrollPageUp()
 {

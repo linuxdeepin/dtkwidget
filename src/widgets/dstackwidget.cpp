@@ -188,12 +188,15 @@ DStackWidget::DStackWidget(QWidget *parent) :
 
 /*!
   \fn void DStackWidget::busyChanged(bool busy)
+  \a busy 当前状态是否是过渡动画.
+
   \sa DStackWidget::busy
  */
 
 /*!
   \property DStackWidget::busy
-  \brief 表示当前是否处于过渡动画过程中
+  \brief 表示当前是否处于过渡动画过程中.
+
   Getter: DStackWidget::busy , Signal: DStackWidget::busyChanged
  */
 bool DStackWidget::busy() const
@@ -205,12 +208,14 @@ bool DStackWidget::busy() const
 
 /*!
   \fn void DStackWidget::depthChanged(int depth)
+  \a depth 改变的层级大小.
   \sa DStackWidget::depth
  */
 
 /*!
   \property DStackWidget::depth
-  \brief 表示正在管理有多少层内容(从 1 开始计数)
+  \brief 表示正在管理有多少层内容(从 1 开始计数).
+
   Getter: DStackWidget::depth , Signal: DStackWidget::depthChanged
  */
 int DStackWidget::depth() const
@@ -222,12 +227,14 @@ int DStackWidget::depth() const
 
 /*!
   \fn void DStackWidget::currentIndexChanged(int currentIndex)
+  \a currentIndex 当前索引.
   \sa DStackWidget::currentIndex
  */
 
 /*!
   \property DStackWidget::currentIndex
-  \brief 表示当前内容在栈中的索引位置(从 0 开始计数)
+  \brief 表示当前内容在栈中的索引位置(从 0 开始计数).
+
   Getter: DStackWidget::currentIndex , Signal: DStackWidget::currentIndexChanged
  */
 int DStackWidget::currentIndex() const
@@ -239,12 +246,15 @@ int DStackWidget::currentIndex() const
 
 /*!
   \fn DStackWidget::currentWidgetChanged(QWidget* currentWidget)
+
+  \a currentWidget 修改的当前小控件
   \sa DStackWidget::currentWidget
  */
 
 /*!
   \property DStackWidget::currentWidget
-  \brief 表示当前内容的对象
+  \brief 表示当前内容的对象.
+
   Getter: DStackWidget::currentWidget , Signal: DStackWidget::currentWidgetChanged
  */
 QWidget *DStackWidget::currentWidget() const
@@ -270,7 +280,7 @@ DAbstractStackWidgetTransition *DStackWidget::transition() const
 
 /*!
   \property DStackWidget::animationDuration
-  \brief 这个属性表示当前动画播放一次所需要的时间
+  \brief 这个属性表示当前动画播放一次所需要的时间.
   
   Getter: DStackWidget::animationDuration , Setter: DStackWidget::setAnimationDuration
  */
@@ -283,7 +293,7 @@ int DStackWidget::animationDuration() const
 
 /*!
   \property DStackWidget::animationType
-  \brief 这个属性表示当前动画的类型
+  \brief 这个属性表示当前动画的类型.
   
   Getter: DStackWidget::animationType , Setter: DStackWidget::setAnimationType
   \sa QEasingCurve::Type
@@ -296,7 +306,8 @@ QEasingCurve::Type DStackWidget::animationType() const
 }
 
 /*!
-  \brief DStackWidget::pushWidget 入栈一个新的内容控件
+  \brief DStackWidget::pushWidget 入栈一个新的内容控件.
+
   \a widget 新的内容控件对象
   \a enableTransition 是否使用动画
   \return 此对象在栈中的索引(从 0 开始计数)
@@ -310,7 +321,7 @@ int DStackWidget::pushWidget(QWidget *widget, bool enableTransition)
 }
 
 /*!
-  \brief DStackWidget::insertWidget 在指定的位置插入一个新的内容控件
+  \brief 在指定的位置插入一个新的内容控件.
   
   需要注意的是如果第一个参数 index 不是栈的最后一个位置将不会显示动画
   
@@ -333,7 +344,7 @@ void DStackWidget::insertWidget(int index, QWidget *widget, bool enableTransitio
 }
 
 /*!
-  \brief DStackWidget::popWidget 出栈指定的内容控件
+  \brief 出栈指定的内容控件.
   
   如果所有参数都没有指定, 那么将只移除当前的内容控件, 一般是栈顶的控件.
   如果指定了参数 widget 那么计数将从控件 widget 在栈中的索引开始往栈顶方向计算移除 count 个内容控件
@@ -379,7 +390,7 @@ void DStackWidget::popWidget(QWidget *widget, bool isDelete, int count, bool ena
 }
 
 /*!
-  \brief DStackWidget::clear 移除所有控件(无动画)
+  \brief 移除所有控件(无动画).
  */
 void DStackWidget::clear()
 {
@@ -391,7 +402,8 @@ void DStackWidget::clear()
 }
 
 /*!
-  \brief DStackWidget::indexOf 获取指定控件的索引
+  \brief 获取指定控件的索引.
+
   \a widget 指定的控件
   \return 通过控件找到的索引
  */
@@ -403,7 +415,8 @@ int DStackWidget::indexOf(QWidget *widget) const
 }
 
 /*!
-  \brief DStackWidget::getWidgetByIndex 通过索引获取控件
+  \brief 通过索引获取控件.
+
   \a index 指定索引
   \return 通过索引找到的控件
  */
@@ -416,6 +429,7 @@ QWidget *DStackWidget::getWidgetByIndex(int index) const
 
 /*!
   \brief DStackWidget::setTransition
+  \a transition
   \sa DStackWidget::transition
  */
 void DStackWidget::setTransition(DAbstractStackWidgetTransition *transition)
@@ -445,6 +459,7 @@ void DStackWidget::setTransition(DAbstractStackWidgetTransition *transition)
 
 /*!
   \brief DStackWidget::setAnimationDuration
+  \a animationDuration
   \sa DStackWidget::animationDuration
  */
 void DStackWidget::setAnimationDuration(int animationDuration)
@@ -456,6 +471,7 @@ void DStackWidget::setAnimationDuration(int animationDuration)
 
 /*!
   \brief DStackWidget::setAnimationType
+  \a animationType
   \sa DStackWidget::animationType
  */
 void DStackWidget::setAnimationType(QEasingCurve::Type animationType)

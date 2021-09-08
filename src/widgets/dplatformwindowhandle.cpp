@@ -51,12 +51,19 @@ static QWindow *ensureWindowHandle(QWidget *widget)
 }
 
 /*!
-  \brief DPlatformWindowHandle::DPlatformWindowHandle
+    \class Dtk::Widget::DPlatformWindowHandle
+    \inmodule dtkwidget
+ */
+
+/*!
+  \brief DPlatformWindowHandle::DPlatformWindowHandle.
+
   同 DPlatformHandle::DPlatformHandle(QWindow *window, QObject *parent)，
-  这只是针对 QWidget 对象的重载，将 \a widget 对象传递给 enableDXcbForWindow
+  这只是针对 QWidget 对象的重载，将 \a widget 对象传递给 enableDXcbForWindow。
+
   \a widget 要开启DTK风格的主窗口
   \a parent DPlatformWindowHandle 对象的父对象
-  \sa DPlatformHandle::enableDXcbForWindow(QWidget *)
+  \sa Dtk::Gui::DPlatformHandle::enableDXcbForWindow()
  */
 DPlatformWindowHandle::DPlatformWindowHandle(QWidget *widget, QObject *parent)
     : DPlatformHandle(ensureWindowHandle(widget), parent)
@@ -65,9 +72,13 @@ DPlatformWindowHandle::DPlatformWindowHandle(QWidget *widget, QObject *parent)
 }
 
 /*!
-  \brief DPlatformWindowHandle::enableDXcbForWindow
+  \fn void DPlatformWindowHandle::enableDXcbForWindow(QWidget *widget)
+  \brief DPlatformWindowHandle::enableDXcbForWindow.
+  \overload
+
   这是一个针对 QWidget 类型主窗口的重载函数，此函数将设置 QWidget 对象的 Qt::WA_NativeWindow
-  标志，之后将其 QWidget::windowHandle 对象作为参数传递给 enableDXcbForWindow(QWindow *)
+  标志，之后将其 QWidget::windowHandle 对象作为参数传递给 enableDXcbForWindow(QWindow *)。
+
   \a widget
   \sa DPlatformWindowHandle::enableDXcbForWindow(QWindow *window)
  */
@@ -82,7 +93,10 @@ void DPlatformWindowHandle::enableDXcbForWindow(QWidget *widget)
 }
 
 /*!
+  \fn void DPlatformWindowHandle::enableDXcbForWindow(QWidget *widget, bool redirectContent)
   \brief DPlatformWindowHandle::enableDXcbForWindow
+  \overload
+
   这只是一个重载函数
   \a widget
   \a redirectContent
@@ -95,9 +109,11 @@ void DPlatformWindowHandle::enableDXcbForWindow(QWidget *widget, bool redirectCo
 }
 
 /*!
-  \brief DPlatformWindowHandle::isEnabledDXcb
+  \brief DPlatformWindowHandle::isEnabledDXcb.
+
   这只是一个重载函数，如果 widget 的 QWidget::windowHandle 为 nullptr 则返回 false，
-  否则返回 isEnabledDXcb(widget->windowHandle()) 的值
+  否则返回 isEnabledDXcb(widget->windowHandle()) 的值。
+
   \a widget
   \return
  */
@@ -111,7 +127,10 @@ bool DPlatformWindowHandle::isEnabledDXcb(const QWidget *widget)
 }
 
 /*!
-  \brief DPlatformWindowHandle::setWindowBlurAreaByWM
+  \fn bool DPlatformWindowHandle::setWindowBlurAreaByWM(QWidget *widget, const QVector<DPlatformHandle::WMBlurArea> &area)
+  \brief DPlatformWindowHandle::setWindowBlurAreaByWM.
+  \overload
+
   这只是一个重载函数，如果 widget 的 QWidget::windowHandle 为 nullptr 则返回 false，
   否则返回 setWindowBlurAreaByWM(wiget->windowHandle(), area) 的值。示例：
   \code
@@ -134,7 +153,6 @@ bool DPlatformWindowHandle::isEnabledDXcb(const QWidget *widget)
   w.show();
   
   \endcode
-  \image blur_widget_demo1.png
   \a widget
   \a area
   \return
@@ -149,8 +167,11 @@ bool DPlatformWindowHandle::setWindowBlurAreaByWM(QWidget *widget, const QVector
 }
 
 /*!
-  \brief DPlatformWindowHandle::setWindowBlurAreaByWM
-  这只是一个重载函数，如果 widget 的 QWidget::windowHandle 为 nullptr 则返回 false，
+  \fn bool DPlatformWindowHandle::setWindowBlurAreaByWM(QWidget *widget, const QList<QPainterPath> &paths)
+  \brief DPlatformWindowHandle::setWindowBlurAreaByWM.
+  \overload
+
+  这只是一个重载函数，如果 \a widget 的 QWidget::windowHandle 为 nullptr 则返回 false，
   否则返回 setWindowBlurAreaByWM(wiget->windowHandle(), paths) 的值。示例：
   \code
   DMainWindow w;
@@ -174,9 +195,7 @@ bool DPlatformWindowHandle::setWindowBlurAreaByWM(QWidget *widget, const QVector
   w.show();
   
   \endcode
-  \image blur_widget_demo2.png
-  \a widget
-  \a area
+  \a paths
   \return
   \note 需要对 \a widget 添加 Qt::WA_TranslucentBackground 使其背景透明
   \sa QWidget::setAttribute
@@ -189,7 +208,8 @@ bool DPlatformWindowHandle::setWindowBlurAreaByWM(QWidget *widget, const QList<Q
 }
 
 /*!
-  \brief DPlatformWindowHandle::setWindowWallpaperParaByWM
+  \brief DPlatformWindowHandle::setWindowWallpaperParaByWM.
+
   这只是一个重载函数，如果 widget 的 QWidget::windowHandle 为 nullptr 则返回 false，
   否则返回 setWindowWallpaperParaByWM(wiget->windowHandle(), area) 的值。示例：
   \code

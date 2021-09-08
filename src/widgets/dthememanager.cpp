@@ -66,56 +66,22 @@ Q_GLOBAL_STATIC(DThemeManagerStaticPrivate, DThemeManagerStatic)
  */
 
 /*!
-  \enum Dtk::Widget::DThemeManager::ThemeType
-  DThemeManager::ThemeType 主题的类型，分为“浅色”、“深色”两种类型。默认情况下，DApplication
-  会根据应用程序调色板中的窗口背景色自动设置应用程序的主题类型。
-  
-  \value UnknownType
-  未知的主题类型
-  
-  \value LightType
-  浅色主题
-  
-  \value SystemScope
-  深色主题
-  
-  \sa DApplication
-  \sa QPalette
-  \sa QApplication::palette
- */
-
-/*!
-  \property DThemeManager::themeType
-  \brief themeType 属性表示应用程序主题的类型
- */
-
-/*!
   \fn void DThemeManager::themeChanged(QString theme)
-  \brief themeChanged 信号在程序主题发生改变时触发。
+
+  \a theme 新的主题类型
+  \brief themeTypeChanged 信号在应用程序主题发生变化时触发.
+
+  默认情况下，DApplication 会在处理 QEvent::ApplicationPaletteChange
+  事件时自动更新应用程序的主题类型，此操作可能会导致此信号的触发。
+
+  \sa DThemeManager::setTheme
  */
 /*!
   \fn void DThemeManager::widgetThemeChanged(QWidget *widget, QString theme)
-  \brief widgetThemeChanged 信号在特定控件主题发生改变时触发。
- */
-/*!
-  \fn DThemeManager::themeTypeChanged
-  \a themeType 新的主题类型
-  \brief themeTypeChanged 信号在应用程序主题发生变化时触发。默认情况下，DApplication
-  会在处理 QEvent::ApplicationPaletteChange 事件时自动更新应用程序的主题类型，此操作可能
-  会导致此信号的触发。
-  
-  \sa DThemeManager::setThemeType
- */
-/*!
-  \fn DThemeManager::windowThemeTypeChanged
-  \a window 主题类型发生变化的顶级窗口
-  \a themeType 新的主题类型
-  \brief windowThemeTypeChanged 信号在窗口的主题类型发现变化时触发。默认情况下，DApplication
-  会在处理 QEvent::PaletteChange 事件时自动更新顶级窗口的主题类型，此操作可能会导致此信号的触发。
-  另外，如果窗口未自定义过 QPalette 并且未指定主题类型，窗口的主题类型会跟随应用程序改变而改变。
-  
-  \sa QWidget::setPalette
-  \sa DThemeManager::setThemeType(QWidget*, DThemeManager::ThemeType)
+  \brief widgetThemeChanged 信号在特定控件主题发生改变时触发.
+
+  \a widget 对应的控件指针， \a theme 切换的主题类型。
+
  */
 
 /*!

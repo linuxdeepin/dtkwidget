@@ -81,12 +81,12 @@ DGraphicsClipEffectPrivate::DGraphicsClipEffectPrivate(DGraphicsClipEffect *qq)
 
 /*!
   \fn void DGraphicsClipEffect::marginsChanged(QMargins margins)
-  这个信号在 margins 改变时被发送
+  这个信号在 \a margins 改变时被发送
   */
 
 /*!
   \fn void DGraphicsClipEffect::clipPathChanged(QPainterPath clipPath)
-  这个信号在 clipPath 改变时被发送
+  这个信号在 \a clipPath 改变时被发送
   */
 
 /*!

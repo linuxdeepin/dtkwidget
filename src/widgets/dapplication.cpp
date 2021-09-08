@@ -568,27 +568,29 @@ bool DApplicationPrivate::isUserManualExists()
 
 /*!
   \fn DApplication::newInstanceStarted()
-  \brief newInstanceStarted 信号会在程序的一个新实例启动的时候被触发。
+  \brief 该信号会在程序的一个新实例启动的时候被触发.
  */
 
 /*!
   \fn DApplication::iconThemeChanged()
-  \brief iconThemeChanged 信号会在系统图标主题发生改变的时候被触发。
+  \brief 该信号在系统图标主题发生改变的时候被触发.
  */
 
 /*!
   \fn DApplication::screenDevicePixelRatioChanged(QScreen *screen)
-  \brief screenDevicePixelRatioChanged 信号会在对应屏幕的缩放比可能发现变化
-  时触发。
+  \brief 该信号在对应屏幕 \a screen 的缩放比可能发现变化时触发.
 
   依赖于 deepin 平台主题插件（dde-qt5integration 包中提供），实时更改
   屏幕缩放比是通过更改配置文件 ~/.config/deepin/qt-theme.ini 实现，与此相关的
   配置项有三个：
-  - ScreenScaleFactors：多屏幕设置不同缩放比，值格式和环境变量QT_SCREEN_SCALE_FACTORS一致
-  - ScaleFactor: 设置所有屏幕缩放比，值格式和环境变量QT_SCALE_FACTOR一致
-  - ScaleLogcailDpi：指定屏幕逻辑dpi，可影响仅设置了 point size 的 QFont 的绘制大小。
+  \list
+  \li ScreenScaleFactors：多屏幕设置不同缩放比，值格式和环境变量QT_SCREEN_SCALE_FACTORS一致
+  \li ScaleFactor: 设置所有屏幕缩放比，值格式和环境变量QT_SCALE_FACTOR一致
+  \li ScaleLogcailDpi：指定屏幕逻辑dpi，可影响仅设置了 point size 的 QFont 的绘制大小。
+  \endlist
+
   未设置此值时，默认会在 ScreenScaleFactors 值改变后将屏幕逻辑dpi更改为主屏默认值，一般情况下，不需要设置此值。
-   ScreenScaleFactors 和 ScaleFactor 的值改变后，会触发所有屏幕的 QScreen::geometryChanged, 且会根据当前缩放
+  ScreenScaleFactors 和 ScaleFactor 的值改变后，会触发所有屏幕的 QScreen::geometryChanged, 且会根据当前缩放
   更新所有QWindow的geometry（更新时保持窗口的真实大小不变，新窗口大小=窗口真实大小/新的缩放比）。另外，可在构造
   DApplication 对象之前设置 Qt::AA_DisableHighDpiScaling 为 true，或添加环境变量 D_DISABLE_RT_SCREEN_SCALE
   禁用实时缩放的支持。
@@ -597,13 +599,15 @@ bool DApplicationPrivate::isUserManualExists()
  */
 
 /*!
-  \brief DApplication::globalApplication 返回一个DApplicatioin实例.
+  \brief 返回一个DApplicatioin实例.
 
   如果在执行此函数之前DApplication已经被创建则返回已存在的实例，否则直接创建一个
   新的DApplication实例并返回。主要用于与deepin-trubo服务相配合，用于共享
   deepin-turbo dtkwidget booster中已经创建的DApplication对象，以此节省初始化时间。
+
   \a argc 传递给DApplication的构造函数
   \a argv 传递给DApplication的构造函数
+
   \return 返回一个DApplication对象
   \warning 不保证获取的DApplication对象一定有效，如果实例已存在，则直接使
   用static_case将其转换为DApplication对象
@@ -666,19 +670,18 @@ DApplication *DApplication::globalApplication(int &argc, char **argv)
 }
 
 /*!
-  \brief DApplication::DApplication constructs an instance of DApplication.
+  \brief constructs an instance of DApplication.
+  \brief 用于构建 DApplication 实例的构造函数
+
   \a argc is the same as in the main function.
+  \a argc 作用同 QApplication::QApplication 参数 argc。
   \a argv is the same as in the main function.
-
-
-  \brief DApplication::DApplication 用于构建 DApplication 实例的构造函数
+  \a argv 作用同 QApplication::QApplication 参数 argv。
 
   对象构造时会判断环境变量 DTK_FORCE_RASTER_WIDGETS 的值，如果为 TRUE 则开启
   Qt::AA_ForceRasterWidgets，为 FALSE 则不开启，当没有设置此环境变量时，如果
   编译时使用了宏 FORCE_RASTER_WIDGETS（龙芯和申威平台默认使用），则开启
   Qt::AA_ForceRasterWidgets，否则不开启。
-  \a argc 作用同 QApplication::QApplication 参数 argc。
-  \a argv 作用同 QApplication::QApplication 参数 argv。
  */
 DApplication::DApplication(int &argc, char **argv) :
     QApplication(argc, argv),
@@ -741,7 +744,7 @@ DApplication::DApplication(int &argc, char **argv) :
  */
 
 /*!
-  \brief DApplication::theme returns name of the theme that the application is currently using.
+  \brief returns name of the theme that the application is currently using.
   
   theme name can be one of light, dark, semidark or semilight.
   theme 属性表示当前程序使用的主题名称，目前可选的主题名称有 light、dark、semidark 和 semilight。
@@ -756,7 +759,8 @@ QString DApplication::theme() const
 }
 
 /*!
-  \brief DApplication::setTheme for the application to use the theme we provide.
+  \brief set theme for the application to use the theme we provide.
+
   \a theme is the name of the theme we want to set.
  */
 void DApplication::setTheme(const QString &theme)
@@ -768,13 +772,14 @@ void DApplication::setTheme(const QString &theme)
 
 #ifdef Q_OS_UNIX
 /*!
-  \brief DApplication::setOOMScoreAdj set Out-Of-Memory score
+  \brief set Out-Of-Memory score.
+  \brief 用于调整当前进程的 Out-Of-Memory 分数（linux环境下）
+
   \a score vaild range is [-1000, 1000]
-  
-  \brief DApplication::setOOMScoreAdj setOOMScoreAdj 用于调整当前进程的
-  Out-Of-Memory 分数（linux环境下），这个分数影响了内核在系统资源（内存）不足的
-  情况下为了释放内存资源而挑选进程杀掉的算法，分数越高越容易被杀。
   \a score 指定 oom-score，范围为 [-1000, 1000]。
+  
+  这个分数影响了内核在系统资源（内存）不足的情况下
+  为了释放内存资源而挑选进程杀掉的算法，分数越高越容易被杀。
  */
 void DApplication::setOOMScoreAdj(const int score)
 {
@@ -793,8 +798,8 @@ void DApplication::setOOMScoreAdj(const int score)
 #endif
 
 /*!
-  \brief DApplication::setSingleInstance setSingleInstance 用于将程序
-  设置成单实例。
+  \brief 用于将程序设置成单实例.
+
   \a key 是确定程序唯一性的ID，一般使用程序的二进制名称即可。
   
   \note 一般情况下单实例的实现使用 QSystemSemaphore，如果你的程序需要在沙箱
@@ -809,11 +814,13 @@ bool DApplication::setSingleInstance(const QString &key)
 }
 
 /*!
-  \brief DApplication::setSingleInstance 是一个重写函数，增加了控制单实例范围的 \a singleScope 参数。
-         在Linux环境下默认使用DBus的方式实现单例判断，在其它环境或者设置了环境变量 DTK_USE_SEMAPHORE_SINGLEINSTANCE
-         时使用系统信号量的方式实现单例判断
+  \brief 一个重写函数，增加了控制单实例范围的 \a singleScope 参数。
+
+  在Linux环境下默认使用DBus的方式实现单例判断，在其它环境或者设置了环境变量 DTK_USE_SEMAPHORE_SINGLEINSTANCE
+  时使用系统信号量的方式实现单例判断。
+
   \a key 是确定程序唯一性的ID，一般使用程序的二进制名称即可。
-  \a singleScope 用于指定单实例的影响范围，具体见 DApplication::SingleScope。
+  \a singleScope 用于指定单实例的影响范围，具体见 DApplication::SingleScope 。
   \return 设置成功返回 true，否则返回 false。
  */
 bool DApplication::setSingleInstance(const QString &key, SingleScope singleScope)
@@ -828,27 +835,35 @@ bool DApplication::setSingleInstance(const QString &key, SingleScope singleScope
 }
 
 /*!
-  \brief DApplication::loadTranslator loads translate file form
-  system or application data path;
+  \brief loads translate file from system or application data path.
+  \brief 加载程序的翻译文件.
+
   You must name the file correctly; if the program is dde-dock，
   then the qm file for English locale would be dde-dock_en.qm.
   Translation files must be placed in correct directories as well.
   The lookup order is as follows:
-  1. ~/.local/share/APPNAME/translations;
-  2. /usr/local/share/APPNAME/translations;
-  3. /usr/share/APPNAME/translations;
+
+  \list
+  \li ~/.local/share/APPNAME/translations;
+  \li /usr/local/share/APPNAME/translations;
+  \li /usr/share/APPNAME/translations;
+  \endlist
+
   APPNAME is the name of program executable.
   \a localeFallback, a list of fallback locale you want load.
-  \return load success
+  \return load success return true, otherwise, return false.
   
-  \brief DApplication::loadTranslator 加载程序的翻译文件。
   使用这个函数需要保证翻译文件必须正确命名: 例如程序名叫 dde-dock，
   那么翻译文件在中文locale下的名称必须是 dde-dock_zh_CN.qm；翻译文件还需要放置
   在特定的位置，此函数会按照优先级顺序在以下目录中查找翻译文件：
-  1. ~/.local/share/APPNAME/translations;
-  2. /usr/local/share/APPNAME/translations;
-  3. /usr/share/APPNAME/translations;
-  APPNAME即可执行文件的名称。
+
+  \list
+  \li ~/.local/share/APPNAME/translations;
+  \li /usr/local/share/APPNAME/translations;
+  \li /usr/share/APPNAME/translations;
+  \endlist
+
+  APPNAME 即可执行文件的名称。
   
   \a localeFallback 指定了回退的locale列表，默认只有系统locale。
   \return 加载成功返回 true，否则返回 false。
@@ -880,9 +895,11 @@ bool DApplication::loadTranslator(QList<QLocale> localeFallback)
 }
 
 /*!
-  \brief DApplication::loadDXcbPlugin 强制程序使用的平台插件到dxcb。
+  \brief 强制程序使用的平台插件到dxcb.
+
   这个函数的工作原理是通过设置 QT_QPA_PLATFORM 来影响平台插件的加载，所以此函数
   必须在 DApplication 实例创建前进行调用。
+
   \return 设置成功返回 true，否则返回 false。
  */
 bool DApplication::loadDXcbPlugin()
@@ -900,7 +917,8 @@ bool DApplication::loadDXcbPlugin()
 }
 
 /*!
-  \brief DApplication::isDXcbPlatform 检查当前程序是否使用了dxcb平台插件。
+  \brief 检查当前程序是否使用了dxcb平台插件.
+
   \return 正在使用返回 true，否则返回 false。
  */
 bool DApplication::isDXcbPlatform()
@@ -909,7 +927,7 @@ bool DApplication::isDXcbPlatform()
 }
 
 /*!
-  \brief DApplication::buildDtkVersion 返回编译时的dtk版本；
+  \brief 返回编译时的dtk版本.
  */
 int DApplication::buildDtkVersion()
 {
@@ -917,7 +935,7 @@ int DApplication::buildDtkVersion()
 }
 
 /*!
-  \brief DApplication::runtimeDtkVersion 返回运行时的dtk版本；
+  \brief 返回运行时的dtk版本.
  */
 int DApplication::runtimeDtkVersion()
 {
@@ -925,8 +943,8 @@ int DApplication::runtimeDtkVersion()
 }
 
 /*!
-  \brief DApplication::registerDDESession 用于跟 startdde 进行通信，告知
-  startdde 进程已经启动成功。
+  \brief 用于跟 startdde 进行通信，告知 startdde 进程已经启动成功.
+
   \note 只有DDE系统组件需要使用此函数，普通应用无需使用。
  */
 void DApplication::registerDDESession()
@@ -950,11 +968,11 @@ void DApplication::registerDDESession()
 }
 
 /*!
-  \brief DApplication::customQtThemeConfigPathByUserHome
-  根据用户家目录设置Qt主题配置文件的目录。
+  \brief 根据用户家目录设置Qt主题配置文件的目录.
+
   \a home 家目录，不要以 "/" 结尾
   \warning 必须在构造 DApplication 对象之前调用
-  \sa DApplication::customQtThemeConfigPathByUserHome
+  \sa DApplication::customQtThemeConfigPath
  */
 void DApplication::customQtThemeConfigPathByUserHome(const QString &home)
 {
@@ -962,8 +980,7 @@ void DApplication::customQtThemeConfigPathByUserHome(const QString &home)
 }
 
 /*!
-  \brief DApplication::customQtThemeConfigPath
-  自定义Qt主题配置文件的路径。
+  \brief 自定义 Qt 主题配置文件的路径。
   
   默认文件通常为 "~/.config/deepin/qt-theme.ini"
   其中包含应用的图标主题、字体、、屏幕缩放等相关的配置项。可应用于以root用户启动的
@@ -972,6 +989,8 @@ void DApplication::customQtThemeConfigPathByUserHome(const QString &home)
   则配置文件路径为："/tmp/deepin/qt-theme.ini"。
   \a path 不要以 "/" 结尾
   \warning 必须在构造 DApplication 对象之前调用
+
+  \sa DApplication::customizedQtThemeConfigPath
  */
 void DApplication::customQtThemeConfigPath(const QString &path)
 {
@@ -980,7 +999,8 @@ void DApplication::customQtThemeConfigPath(const QString &path)
 }
 
 /*!
-  \brief DApplication::customizedQtThemeConfigPath
+  \brief 自定义 Qt 主题配置文件路径.
+
   \return 返回自定义的 Qt 主题配置文件路径，未设置过此路径时返回为空。
   \sa DApplication::customQtThemeConfigPath
  */
@@ -990,10 +1010,11 @@ QString DApplication::customizedQtThemeConfigPath()
 }
 
 /*!
-  \brief DApplication::productName returns the product name of this application.
+  \brief returns the product name of this application.
+  \brief 程序的产品名称.
+
   It's mainly used to construct an about dialog of the application.
   
-  \brief productName属性是程序的产品名称.
   产品名称不同与 applicationName ，应该是类似如“深度终端”，而不是 deepin-terminal，
   这个名称主要用于在程序的关于对话框中进行展示。
   如果没有手动通过 setProductName 来设置，会尝试使用 QApplication::applicationDisplayName 来充当产品名称。
@@ -1009,7 +1030,8 @@ QString DApplication::productName() const
 }
 
 /*!
-  \brief DApplication::setProductName sets the product name of this application.
+  \brief sets the product name of this application.
+
   \a productName is the product name to be set.
  */
 void DApplication::setProductName(const QString &productName)
@@ -1020,7 +1042,7 @@ void DApplication::setProductName(const QString &productName)
 }
 
 /*!
-  \brief DApplication::productIcon returns the product icon of this application.
+  \brief returns the product icon of this application.
   
   It's mainly used to construct an about dialog of the application.
     
@@ -1038,7 +1060,8 @@ const QIcon &DApplication::productIcon() const
 }
 
 /*!
-  \brief DApplication::setProductIcon sets the product icon of this application.
+  \brief sets the product icon of this application.
+
   \a productIcon is the product icon to be set.
  */
 void DApplication::setProductIcon(const QIcon &productIcon)
@@ -1049,11 +1072,11 @@ void DApplication::setProductIcon(const QIcon &productIcon)
 }
 
 /*!
-  \brief DApplication::applicationLicense returns the license used by this application.
+  \brief returns the license used by this application.
   
   It's mainly used to construct an about dialog of the application.
   
-  \brief applicationLicense 属性是程序所使用的授权协议；
+  applicationLicense 属性是程序所使用的授权协议；
   主要用于在关于对话框中进行展示，默认值为 GPLv3。
 
   \return the license used by this application.
@@ -1066,7 +1089,8 @@ QString DApplication::applicationLicense() const
 }
 
 /*!
-  \brief DApplication::setApplicationLicense sets the license of this application.
+  \brief sets the license of this application.
+
   \a license is the license to be set.
  */
 void DApplication::setApplicationLicense(const QString &license)
@@ -1077,11 +1101,11 @@ void DApplication::setApplicationLicense(const QString &license)
 }
 
 /*!
-  \brief DApplication::applicationDescription returns the long description of the application.
+  \brief returns the long description of the application.
+  \brief 属性记录了程序的描述信息，主要用于关于对话框中的信息展示.
   
   It's mainly used to construct an about dialog of the application.
   
-  \brief applicationDescription 属性记录了程序的描述信息，主要用于关于对话框中的信息展示.
 
   \return the description of the application if set, otherwise empty.
  */
@@ -1093,7 +1117,8 @@ QString DApplication::applicationDescription() const
 }
 
 /*!
-  \brief DApplication::setApplicationDescription sets the description of the application.
+  \brief sets the description of the application.
+
   \a description is description to be set.
  */
 void DApplication::setApplicationDescription(const QString &description)
@@ -1104,8 +1129,10 @@ void DApplication::setApplicationDescription(const QString &description)
 }
 
 /*!
-  \property DApplication::applicationHomePage
-  \brief applicationHomePage 属性记录程序的主页网址，主要用于在关于对话框中进行展示。
+  \brief 程序的主页地址.
+
+  该属性记录程序的主页网址，主要用于在关于对话框中进行展示。
+  默认情况下，该地址为 Uos 或者 Deepin 官方网站地址。
  */
 QString DApplication::applicationHomePage() const
 {
@@ -1122,10 +1149,10 @@ void DApplication::setApplicationHomePage(const QString &link)
 }
 
 /*!
-  \brief DApplication::applicationAcknowledgementPage returns the acknowlegement page of the application.
+  \brief returns the acknowlegement page of the application.
+  \brief 记录程序的鸣谢信息网址，主要用于在关于对话框中进行展示.
   
   It's mainly used to construct an about dialog of the application.  
-  \brief applicationAcknowledgementPage 属性记录程序的鸣谢信息网址，主要用于在关于对话框中进行展示.
 
   \return the acknowlegement page of the application if set, otherwise empty.
  */
@@ -1137,7 +1164,8 @@ QString DApplication::applicationAcknowledgementPage() const
 }
 
 /*!
-  \brief DApplication::setApplicationAcknowledgementPage sets the acknowlegement page of the application.
+  \brief sets the acknowlegement page of the application.
+
   \a link is the acknowlegement page link to be shown in the about dialog.
  */
 void DApplication::setApplicationAcknowledgementPage(const QString &link)
@@ -1148,7 +1176,10 @@ void DApplication::setApplicationAcknowledgementPage(const QString &link)
 }
 
 /*!
-  \brief applicationAcknowledgementVisible 属性控制是否显示关于对话框中的鸣谢地址显示。
+  \brief 是否显示关于对话框中的鸣谢地址显示.
+
+  \return 显示鸣谢地址返回 true，否则返回 false。
+  \sa DApplication::setApplicationAcknowledgementVisible
  */
 bool DApplication::applicationAcknowledgementVisible() const
 {
@@ -1156,6 +1187,12 @@ bool DApplication::applicationAcknowledgementVisible() const
     return d->acknowledgementPageVisible;
 }
 
+/*!
+  \brief 设置是否显示关于对话框中的鸣谢地址显示.
+
+  \a visible 为 true 显示鸣谢地址，为 false 隐藏鸣谢地址。
+  \sa DApplication::applicationAcknowledgementVisible
+ */
 void DApplication::setApplicationAcknowledgementVisible(bool visible)
 {
     D_D(DApplication);
@@ -1163,18 +1200,15 @@ void DApplication::setApplicationAcknowledgementVisible(bool visible)
 }
 
 /*!
-  \brief DApplication::aboutDialog returns the about dialog of this application.
+  \brief returns the about dialog of this application.
+  \brief 返回一个基于当前程序信息的关于对话框.
   
   If the about dialog is not set, it will automatically construct one.
-  
-  \return the about dialog instance.
-  
-  
-  \brief DApplication::aboutDialog 返回一个基于当前程序信息的关于对话框。
   此对话框可以通过 DApplication::setAboutDialog 进行设置，如果没有设置就使用此函数进行获取，
   系统会创建一个新的关于对话框。
   
-  \sa setAboutDialog
+  \return the about dialog instance.
+  \sa DApplication::setAboutDialog
  */
 DAboutDialog *DApplication::aboutDialog()
 {
@@ -1184,17 +1218,13 @@ DAboutDialog *DApplication::aboutDialog()
 }
 
 /*!
-  \brief DApplication::setAboutDialog sets the about dialog of this application.
+  \brief sets the \a aboutDialog of this application.
+  \brief 为当前程序设置一个关于对话框.
   
   It's mainly used to override the auto-constructed about dialog which is not
   a common case, so please do double check before using this method.
   
-  \a aboutDialog
-  
-  
-  \brief DApplication::setAboutDialog 为当前程序设置一个关于对话框。
-  
-  \sa aboutDialog
+  \sa DApplication::aboutDialog
  */
 void DApplication::setAboutDialog(DAboutDialog *aboutDialog)
 {
@@ -1209,7 +1239,11 @@ void DApplication::setAboutDialog(DAboutDialog *aboutDialog)
 
 /*!
   \property DApplication::visibleMenuShortcutText
-  \brief visibleMenuShortcutText 属性代表了程序中菜单项是否显示对应的快捷键。
+
+  \brief 菜单项快捷键文本的可视化属性
+
+  该属性代表了程序中菜单项是否显示对应的快捷键。
+  默认地，该属性为 false.
  */
 bool DApplication::visibleMenuShortcutText() const
 {
@@ -1227,7 +1261,11 @@ void DApplication::setVisibleMenuShortcutText(bool value)
 
 /*!
   \property DApplication::visibleMenuCheckboxWidget
-  \brief visibleMenuCheckboxWidget 属性代表了程序中菜单项是否显示Checkbox控件。
+
+  \brief 菜单项内 CheckBox 控件的可视化属性
+
+  该属性代表了程序中菜单项是否显示Checkbox控件。
+  默认地，该属性为 false.
  */
 bool DApplication::visibleMenuCheckboxWidget() const
 {
@@ -1245,7 +1283,11 @@ void DApplication::setVisibleMenuCheckboxWidget(bool value)
 
 /*!
   \property DApplication::visibleMenuIcon
-  \brief visibleMenuIcon 属性代表了程序中菜单项是否显示图标。
+
+  \brief 菜单按钮的可视化属性.
+
+  visibleMenuIcon 属性代表了程序中菜单项是否显示图标。
+  默认地，该属性为 false.
  */
 bool DApplication::visibleMenuIcon() const
 {
@@ -1284,7 +1326,7 @@ void DApplication::setAutoActivateWindows(bool autoActivateWindows)
 }
 
 /*!
-  \brief DApplication::acclimatizeVirtualKeyboard
+  \brief 用于窗口中可输入控件自适应虚拟键盘.
   
   为窗口的可输入控件添加自动适应虚拟键盘输入法的功能。开启此功能后，当
   监听到 QInputMethod::keyboardRectangleChanged 后，会判断当
@@ -1295,14 +1337,13 @@ void DApplication::setAutoActivateWindows(bool autoActivateWindows)
   可滚动区域缩小，再使用 QAbstraceScrollArea::scrollContentsBy
   将可输入控件滚动到合适的区域，否则将直接把 \a window 的内容向上移动为虚拟键盘
   腾出空间。
+
   \note 在使用之前要确保窗口的 Qt::WA_LayoutOnEntireRect
   和 Qt::WA_ContentsMarginsRespectsSafeArea 都为 false
-  \a window 需是一个顶层窗口
-  \sa QWidget::isTopLevel
-  \sa QWidget::setContentsMargins
-  \sa QInputMethod::cursorRectangle
-  \sa QInputMethod::inputItemClipRectangle
-  \sa QInputMethod::keyboardRectangle
+
+  \a window 必须是一个顶层窗口
+  \sa QWidget::isTopLevel QWidget::setContentsMargins
+  \sa QInputMethod::cursorRectangle QInputMethod::inputItemClipRectangle QInputMethod::keyboardRectangle
   \sa QAbstractScrollArea
  */
 void DApplication::acclimatizeVirtualKeyboard(QWidget *window)
@@ -1345,10 +1386,13 @@ void DApplication::acclimatizeVirtualKeyboard(QWidget *window)
 }
 
 /*!
-  \brief DApplication::ignoreVirtualKeyboard
-  恢复到默认状态，将不会为虚拟键盘的环境做任何自适应操作
+  \brief 恢复虚拟键盘的自适应操作.
+
+  该函数用于恢复虚拟键盘到默认状态，将不会为虚拟键盘的环境做任何自适应操作。
+
   \note 此操作不会恢复对 QWidget::contentsMargins 的修改
   \a window 需是一个调用过 acclimatizeVirtualKeyboard 的窗口
+  \sa DApplication::isAcclimatizedVirtualKeyboard DApplication::acclimatizeVirtualKeyboard
  */
 void DApplication::ignoreVirtualKeyboard(QWidget *window)
 {
@@ -1372,9 +1416,9 @@ void DApplication::ignoreVirtualKeyboard(QWidget *window)
 }
 
 /*!
-  \brief DApplication::isAcclimatizedVirtualKeyboard
-  如果 \a window 会自适应虚拟键盘返回 true,否则返回 false
-  \a window
+  \brief 是否自适应虚拟键盘
+
+  \return 如果 \a window 会自适应虚拟键盘返回 true,否则返回 false
  */
 bool DApplication::isAcclimatizedVirtualKeyboard(QWidget *window) const
 {
@@ -1383,7 +1427,12 @@ bool DApplication::isAcclimatizedVirtualKeyboard(QWidget *window) const
 }
 
 /*!
-   \brief 设置 app 的处理程序，如果要设置，必须对 help、about、quit 都进行处理。\a handler 需要继承实现。
+   \brief 设置 app 的处理程序.
+
+    如果要设置，必须对 help、about、quit 都进行处理。
+    \a handler 用于特定 App 中的自定义处理逻辑，需要继承实现。
+
+    \sa DApplication::customHandler
 */
 void DApplication::setCustomHandler(DAppHandler *handler)
 {
@@ -1407,8 +1456,10 @@ DAppHandler *DApplication::customHandler()
   default action is to open the user manual of this program, override this
   method if you want to change the default action.
   
-  \brief DApplication::handleHelpAction 函数在用户点击窗口标题栏的帮助按钮
-  时触发，默认实现为打开当前程序的帮助手册，子类可以重现实现此函数以覆盖其默认行为。
+  \brief 用于处理菜单中帮助按钮的点击.
+
+  该函数在用户点击窗口标题栏的帮助按钮时触发。
+  默认实现为打开当前程序的帮助手册，子类可以重现实现此函数以覆盖其默认行为。
  */
 void DApplication::handleHelpAction()
 {
@@ -1439,14 +1490,14 @@ void DApplication::handleHelpAction()
 }
 
 /*!
-  \brief DApplication::handleAboutAction
+  \brief 用于处理菜单中关于按钮的点击
   
   Triggered when user clicked the about menu item of this window's titlebar,
   default action is to show the about dialog of this window(if there is one),
   override this method if you want to change the default action.
   
-  \brief DApplication::handleAboutAction 函数在用户点击窗口标题栏的关于按钮
-  时触发，默认实现为打开程序关于对话框，子类可以重现实现此函数以覆盖其默认行为。
+  该函数在用户点击窗口标题栏的关于按钮时触发，默认实现为打开程序关于对话框，
+  子类可以重现实现此函数以覆盖其默认行为。
  */
 void DApplication::handleAboutAction()
 {
@@ -1498,15 +1549,15 @@ void DApplication::handleAboutAction()
 }
 
 /*!
-  \brief DApplication::handleQuitAction
+  \brief 用于处理菜单中退出按钮的点击
   
   Triggered when user clicked the exit menu item of this window's titlebar,
   default action is to quit this program, you can try to save your data before
   the program quitting by connecting to the aboutToQuit signal of this application.
   override this method if you want to change the default action.
   
-  \brief DApplication::handleQuitAction 函数在用户点击窗口标题栏的关闭按钮
-  时触发，默认行为是退出整个程序，子类可以重写此函数以覆盖其行为。
+  该函数在用户点击窗口标题栏的关闭按钮时触发，默认行为是退出整个程序，
+  子类可以重写此函数以覆盖其行为。
  */
 void DApplication::handleQuitAction()
 {

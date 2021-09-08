@@ -583,7 +583,7 @@ QBrush CrumbObjectInterface::backgroundBrush(const QRect &rect, const QBrush &br
 
 /*!
     \class Dtk::Widget::DCrumbEdit
-    \class Dtk::Widget::DCrumbEdit
+    \inmodule dtkwidget
 
     \brief 标签输入控件.
     \brief Tag Edit Widget.
@@ -927,6 +927,8 @@ QString DCrumbEdit::splitter() const
 
 /*!
   \brief 设置或取消设置标签编辑控件的只读状态
+
+  \a crumbReadOnly 是否只读.
  */
 void DCrumbEdit::setCrumbReadOnly(bool crumbReadOnly)
 {
@@ -937,6 +939,8 @@ void DCrumbEdit::setCrumbReadOnly(bool crumbReadOnly)
 
 /*!
   \brief 设置控件圆角角度
+
+  \a crumbRadius 圆角角度.
  */
 void DCrumbEdit::setCrumbRadius(int crumbRadius)
 {
@@ -948,7 +952,9 @@ void DCrumbEdit::setCrumbRadius(int crumbRadius)
 /*!
   \brief 设置分割符
   
-  设置表示划分标签边界的分割字符，可用于一次性输入多个以给定分隔符分割的标签
+  设置表示划分标签边界的分割字符，可用于一次性输入多个以给定分隔符分割的标签。
+
+  \a splitter 分割线字符.
  */
 void DCrumbEdit::setSplitter(const QString &splitter)
 {

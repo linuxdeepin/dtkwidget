@@ -33,7 +33,10 @@ DWIDGET_BEGIN_NAMESPACE
 
 /*!
   \fn virtual bool DSimpleListItem::sameAs(DSimpleListItem *item) = 0
-  \brief 此接口是用来比较两个 item 的函数
+  \brief 此接口是用来比较两个 item 的函数.
+
+  \a item 用于比较的 item 指针.
+  \return 相同返回true，否则返回false。
  */
 
 /*!

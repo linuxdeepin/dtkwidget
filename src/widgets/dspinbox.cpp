@@ -104,9 +104,11 @@ QLineEdit *DSpinBox::lineEdit() const
  */
 
 /*!
-  \brief 表示当前控件是否处于警告状态的属性。
-  
+  \brief 表示当前控件是否处于警告状态的属性.
+
   使用 DSpinBox::isAlert 获取属性当前状态，使用 DSpinBox::setAlert 设置属性的状态。
+  
+  \return 当前状态处于警告状态，返回 true，否则返回 false.
  */
 bool DSpinBox::isAlert() const
 {

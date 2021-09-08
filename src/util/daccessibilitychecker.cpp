@@ -446,16 +446,6 @@ DAccessibilityChecker::DAccessibilityChecker(QObject *parent)
 {
 }
 
-/*!
-   \property DAccessibilityChecker::outputFormat
-   \brief 输出信息格式.
-
-   这个属性描述了当前输出信息格式，每种格式对应不同的输出方式。
-   具体可查看 DAccessibilityChecker::OutputFormat
-
-   \sa DAccessibilityChecker::OutputFormat
- */
-
 void DAccessibilityChecker::setOutputFormat(DAccessibilityChecker::OutputFormat format)
 {
     D_D(DAccessibilityChecker);
@@ -520,6 +510,8 @@ bool DAccessibilityChecker::check()
   \brief 定时检测控件的标记名称.
 
   调用此函数会定时执行自动化标记检测，如果发现某控件的自动化标记存在缺失，则程序退出并提示出控件的相关信息。
+  \a msec 定时开启的时间，默认为3秒.
+
   \sa check()
  */
 void DAccessibilityChecker::start(int msec)

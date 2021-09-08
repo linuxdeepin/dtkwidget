@@ -49,7 +49,14 @@ DWIDGET_BEGIN_NAMESPACE
 static Qt::TextFormat textFormat = Qt::TextFormat::AutoText;
 
 /*!
-  \brief DStyle::adjustColor调整颜色
+  \brief 该函数用于调整给定颜色.
+
+  此函数用于调整给定颜色 \a base 的色彩混合度，通过参数 \a hueFloat , \a saturationFloat
+  \a lightnessFloat , \a redFloat , \a greenFloat , \a blueFloat, 以及 \a alphaFloat
+  来控制。其中 \a hueFloat 表示色调浮动值， \a saturationFloat 表示饱和度浮动值， \a lightnessFloat 表示
+  亮度浮动值， \a redFloat 表示红色色系的浮动值， \a greenFloat 表示绿色色系的浮动值， \a blueFloat 表示蓝色
+  色系的浮动值， \a alphaFloat 表示透明度的浮动值。
+
   \sa Dtk::Gui::DGuiApplicationHelper::adjustColor()
  */
 QColor DStyle::adjustColor(const QColor &base,
@@ -60,7 +67,12 @@ QColor DStyle::adjustColor(const QColor &base,
 }
 
 /*!
-  \brief DStyle::blendColor混合颜色
+  \brief 该函数用于混合两种给定颜色.
+
+  此函数用于混合给定的 \a substrate 以及 \a superstratum 颜色值，并返回 \return 一个
+  以此两种颜色为基础的全新颜色。其中， \a substrate 表示底色,  \a superstratum 表示上层
+  颜色。
+
   \sa Dtk::Gui::DGuiApplicationHelper::blendColor()
  */
 QColor DStyle::blendColor(const QColor &substrate, const QColor &superstratum)
@@ -69,8 +81,10 @@ QColor DStyle::blendColor(const QColor &substrate, const QColor &superstratum)
 }
 
 /*!
-  \brief DStyle::toIconModeState 根据option中的QStyle::State返回图标应有
-  的模式和状态
+  \brief 根据给定选项值返回图标的模式和状态.
+
+  通过参数 \a option 中的 QIcon::State 属性和 QIcon::Mode 属性，
+  返回 \return 当前图标模式对应的状态值。
  */
 QPair<QIcon::Mode, QIcon::State> DStyle::toIconModeState(const QStyleOption *option)
 {
@@ -91,7 +105,11 @@ QPair<QIcon::Mode, QIcon::State> DStyle::toIconModeState(const QStyleOption *opt
 }
 
 /*!
-  \brief DStyle::setTooltipTextFormat 设置 tooltip 文本格式
+  \brief 设置 tooltip 的文本格式.
+
+  通过给定 \a format , 将 DStyle 内部中的 ToolTip
+  文本格式设置为 \a format 指定的样式。
+
   \sa Qt::TextFormat
  */
 void DStyle::setTooltipTextFormat(Qt::TextFormat format)
@@ -99,7 +117,10 @@ void DStyle::setTooltipTextFormat(Qt::TextFormat format)
     textFormat = format;
 }
 /*!
-  \brief DStyle::tooltipTextFormat 获取 tooltip 文本格式
+  \brief 获取 tooltip 文本格式.
+
+  \return 返回 DStyle 内部使用的 ToolTip 文本格式。
+
   \sa Qt::TextFormat
  */
 Qt::TextFormat DStyle::tooltipTextFormat()
@@ -777,8 +798,17 @@ void drawArrowElement(Qt::ArrowType arrow, QPainter *pa, const QRectF &rect)
 /*!
   \class Dtk::Widget::DStyle
   \inmodule dtkwidget
-  \brief DStyle提供了一个修改风格的类.
-  \sa QCommonStyle()
+  \brief DStyle 提供了一个 Dtk 控件的基础类.
+
+  类似于 QCommonStyle 中的实现， DStyle 中只实现了
+  一些基础控件的绘制和一个通用接口的实现，如果想要实现
+  一个自定义的风格主题，可以通过尝试继承该类以实现自己的
+  功能。不过，仅使用 DStyle 并不会将控件的风格保持和 Dtk
+  控件一致，这是由于 Dtk 的实际控件风格在 Chameleon 风格
+  插件中实现。因此如果需要在 Dtk 中继承 Chameleon 风格，并
+  添加自定义风格的绘制，可以尝试使用 QProxyStyle 类。
+
+  \sa QCommonStyle QProxyStyle
  */
 
 /*!
@@ -786,7 +816,7 @@ void drawArrowElement(Qt::ArrowType arrow, QPainter *pa, const QRectF &rect)
   \sa DStyle::PrimitiveElement QStyle::PrimitiveElement
   
   \value PE_ItemBackground
-  item背景颜色
+  item 的背景颜色
   
   \value PE_IconButtonPanel
   DIconButton 面板
@@ -972,7 +1002,7 @@ void drawArrowElement(Qt::ArrowType arrow, QPainter *pa, const QRectF &rect)
 */
 
 /*!
-  \brief DStyle::DStyle
+  \brief DStyle 的默认构造函数.
  */
 DStyle::DStyle()
 {
@@ -980,8 +1010,21 @@ DStyle::DStyle()
 }
 
 /*!
-  \brief DStyle::drawPrimitive
-  QStyle::drawPrimitive()
+  \brief 使用给定的 \a style 风格， \a pe 原始元素， \a opt 风格选项， \a p 画笔，以及 \a w 窗口，
+  绘制风格中的原始元素对象.
+  \overload
+
+  类似于 QStyle::drawPrimitive 函数，这里绘制的是 Dtk 控件中的基本原始元素，与 Qt 的接口不同，这个
+  接口是一个静态函数，通过传递一个 \a style 参数指定的风格实例，将其内部的绘制操作，都通过 style 中的
+  接口实现。\a pe 参数除了包括 QStyle::PrimitiveElement 中的原始元素之外，也包含了 DStyle::PrimitiveElement
+  枚举中的自定义类型。
+
+  \a opt 参数指定绘制时的各种状态值，不同控件经过不同操作，其状态也会不一样；当 \a pe 为 PrimitiveElement::PE_IconButtonPanel 时
+  表示需要绘制一个 IconButton 的面板，因此可以通过传递一个 DStyleOptionButton 的 \a opt 实例，并在该实例中指定绘制状态，如 Button 的
+  features ， state 等等信息。 \a w 参数在绘制某些原始元素时，可以传空，如 PE_ItemBackground 。但大多数情况下，需要指定 \a w 为被绘制
+  的控件实例。
+
+  \sa QStyle::drawPrimitive()
  */
 void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, const QStyleOption *opt, QPainter *p, const QWidget *w)
 {
@@ -1212,8 +1255,14 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
 }
 
 /*!
-  \brief DStyle::drawControl
-  \sa QStyle::drawControl()
+  \brief 使用指定的 \a style 风格主题、 \a opt 风格选项、 \a p 画笔，绘制特定的 \a ce 控制元素.
+
+  控制元素 \a ce 包括 Qt 的控件和 Dtk 自研控件两种，特定的控制元素，需要将 \a opt 转换成特定的风格选项。
+  通常情况下，使用 qstyleoption_cast 进行转换。
+
+  \a w 为需要绘制的控件实例，某些情况下可以传空.
+
+  \sa QStyle::drawControl() DStyle::ControlElement
  */
 void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const QStyleOption *opt, QPainter *p, const QWidget *w)
 {
@@ -1447,7 +1496,13 @@ void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const Q
 }
 
 /*!
-  \brief DStyle::pixelMetric
+  \brief 返回特定的 \a style 风格下， \a m 像素标准的值.
+
+  像素标准 \a m 的值可以时 QStyle::PixelMetric 也可以是 DStyle::PixelMetric 。
+  某些\a m 值下， \a opt 参数和 \a widget 参数可以为空。
+
+  \return 返回 \a m 对应的像素标准。
+
   \sa QStyle::pixelMetric()
  */
 int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyleOption *opt, const QWidget *widget)
@@ -1529,7 +1584,10 @@ int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyle
 }
 
 /*!
-  \brief DStyle::subElementRect.
+  \brief 通过给定的 \a style 风格,  \a opt 风格选项和 \a widget 控件，返回
+  指定的 \a r 子元素区域矩形。
+
+  \return 返回子元素 \a r 对应的屏幕坐标区域矩形。
 
   \sa QStyle::subElementRect()
  */
@@ -1598,7 +1656,11 @@ QRect DStyle::subElementRect(const QStyle *style, DStyle::SubElement r, const QS
 }
 
 /*!
-  \brief DStyle::sizeFromContents.
+  \brief 返回子内容区域的 \a ct 的大小.
+
+  参数 \a style 为指定的风格类型， \a ct 为子元素内容类型，
+  \a opt 为风格选项，不同的控件风格选项不同。 \a contentsSize 提供的原始内容大小 \a widget 参数
+  为控件实例。
 
   \sa QStyle::sizeFromContents()
  */
@@ -1679,6 +1741,9 @@ QSize DStyle::sizeFromContents(const QStyle *style, DStyle::ContentsType ct, con
 
 /*!
   \brief DStyle::standardIcon
+
+  \a style 风格实例 \a st 基本 Pixmap 对象枚举 \a opt 风格选项 \a widget 控件实例
+
   \sa QStyle::standardIcon()
  */
 QIcon DStyle::standardIcon(const QStyle *style, DStyle::StandardPixmap st, const QStyleOption *opt, const QWidget *widget)
@@ -1764,6 +1829,9 @@ case static_cast<uint32_t>(SP_##Value): { \
 
 /*!
   \brief DStyle::styleHint
+
+  \a sh 风格策略枚举 \a opt 风格选项 \a w 控件实例 \a shret 传出参数.
+
   \sa QStyle::styleHint()
  */
 int DStyle::styleHint(QStyle::StyleHint sh, const QStyleOption *opt, const QWidget *w, QStyleHintReturn *shret) const
@@ -1824,7 +1892,7 @@ int DStyle::styleHint(QStyle::StyleHint sh, const QStyleOption *opt, const QWidg
 }
 
 /*!
-  \brief DStyle::standardPalette 获取标准调色板
+  \brief 获取标准调色板
   \return 调色板
  */
 QPalette DStyle::standardPalette() const
@@ -2115,11 +2183,14 @@ QIcon DStyle::standardIcon(QStyle::StandardPixmap st, const QStyleOption *opt, c
 }
 
 /*!
-  \brief DStyle::generatedBrush获取一个加工后的画刷
+  \fn QBrush DStyle::generatedBrush(const QStyleOption *option, const QBrush &base, QPalette::ColorGroup cg, QPalette::ColorRole role) const
+
+  \brief 获取一个加工后的画刷
+
+  \a base 画刷. \a option 原始风格选项. \a cg 调色版中的色组. \a role 调色板中的颜色角色值
+
   \sa QStyleOption
-  \a base 画刷
-  \sa QPalette::ColorGroup
-  \sa QPalette::ColorRole
+  \sa QPalette::ColorGroup QPalette::ColorRole
   \return 加工后的画刷
 */
 QBrush DStyle::generatedBrush(const QStyleOption *option, const QBrush &base, QPalette::ColorGroup cg, QPalette::ColorRole role) const
@@ -2128,12 +2199,15 @@ QBrush DStyle::generatedBrush(const QStyleOption *option, const QBrush &base, QP
 }
 
 /*!
-  \brief DStyle::generatedBrush获取一个加工后的画刷
+  \fn QBrush DStyle::generatedBrush(DStyle::StyleState state, const QStyleOption *option, const QBrush &base, QPalette::ColorGroup cg, QPalette::ColorRole role) const
+
+  \brief 获取一个加工后的画刷
+
+  \a base 画刷. \a state DStyle中的风格状态. \a option 风格选项. \a cg 调色板中的色组. \a role 调色板中颜色角色值.
+
   \sa DStyle::StyleState
   \sa QStyleOption
-  \a base 画刷
-  \sa QPalette::ColorGroup
-  \sa QPalette::ColorRole
+  \sa QPalette::ColorGroup QPalette::ColorRole
   \return 加工后的画刷
  */
 QBrush DStyle::generatedBrush(DStyle::StyleState state, const QStyleOption *option, const QBrush &base, QPalette::ColorGroup cg, QPalette::ColorRole role) const
@@ -2146,12 +2220,14 @@ QBrush DStyle::generatedBrush(DStyle::StyleState state, const QStyleOption *opti
 }
 
 /*!
-  \brief DStyle::generatedBrush获取一个加工后的画刷
+  \fn QBrush DStyle::generatedBrush(StateFlags flags, const QBrush &base, QPalette::ColorGroup cg, QPalette::ColorRole role, const QStyleOption *option) const
+
+  \brief 获取一个加工后的画刷
+
+  \a base 画刷 \a flags DStyle中的风格状态. \a cg 调色板中的色组. \a role 调色板中颜色角色值. \a option 风格选项.
+
   \sa DStyle::StateFlags
-  \a base 画刷
-  \sa QPalette::ColorGroup
-  \sa QPalette::ColorRole
-  \sa QStyleOption
+  \sa QPalette::ColorRole QPalette::ColorGroup QStyleOption
   \return 加工后的画刷
  */
 QBrush DStyle::generatedBrush(StateFlags flags, const QBrush &base, QPalette::ColorGroup cg, QPalette::ColorRole role, const QStyleOption *option) const
@@ -2221,15 +2297,14 @@ QBrush DStyle::generatedBrush(StateFlags flags, const QBrush &base, QPalette::Co
 }
 
 /*!
-  \brief DStyle::generatedBrush获取一个加工后的画刷.
+  \fn QBrush DStyle::generatedBrush(const QStyleOption *option, const QBrush &base, QPalette::ColorGroup cg, DPalette::ColorType type) const
+  \brief 获取一个加工后的画刷.
+  \overload
 
-  \a option
-  \a base 画刷
-  \a cg
-  \a type
-  \sa QStyleOption
+  \a base 画刷 \a type DStyle调色板中的颜色角色值. \a cg Dtk调色板中的色组. \a option 风格选项.
+
   \sa Dtk::Gui::DPalette::ColorType
-  \sa  QPalette::ColorGroup
+  \sa QPalette::ColorGroup  QStyleOption
   \return 加工后的画刷
  */
 QBrush DStyle::generatedBrush(const QStyleOption *option, const QBrush &base, QPalette::ColorGroup cg, DPalette::ColorType type) const
@@ -2238,7 +2313,10 @@ QBrush DStyle::generatedBrush(const QStyleOption *option, const QBrush &base, QP
 }
 
 /*!
-  \brief DStyle::generatedBrush获取一个加工后的画刷.
+  \fn QBrush DStyle::generatedBrush(DStyle::StyleState state, const QStyleOption *option, const QBrush &base, QPalette::ColorGroup cg, DPalette::ColorType type) const
+
+  \brief 获取一个加工后的画刷.
+  \overload
 
   \a state DStyle::StyleState
   \a option QStyleOption
@@ -2257,7 +2335,11 @@ QBrush DStyle::generatedBrush(DStyle::StyleState state, const QStyleOption *opti
 }
 
 /*!
-  \brief DStyle::generatedBrush获取一个加工后的画刷
+  \fn QBrush DStyle::generatedBrush(StateFlags flags, const QBrush &base, QPalette::ColorGroup cg, DPalette::ColorType type, const QStyleOption *option) const
+
+  \brief 获取一个加工后的画刷
+  \overload
+
   \a flags DStyle::StateFlags
   \a base 画刷
   \a cg QPalette::ColorGroup
@@ -2335,7 +2417,7 @@ QBrush DStyle::generatedBrush(StateFlags flags, const QBrush &base, QPalette::Co
 
 #if QT_CONFIG(itemviews)
 /*!
-  \brief DStyle::viewItemTextLayout视图项文本布局
+  \brief 视图项文本布局
   \a textLayout 文本布局
   \a lineWidth 宽度
   \return 文本内容所占大小
@@ -2430,13 +2512,16 @@ QSize DStyle::viewItemSize(const QStyle *style, const QStyleOptionViewItem *opti
 }
 
 /*!
-  \brief DStyle::viewItemLayout视图项组合(文字 + 图标 + 点击区域)
-  \sa QStyle()
-  \sa QStyleOptionViewItem
+  \brief DStyle::viewItemLayout视图项组合(文字 + 图标 + 点击区域).
+
   \a pixmapRect 图标位置大小
   \a textRect 文字区域位置大小
   \a checkRect 点击区域位置大小
   \a sizehint 是否开启
+  \a style 指定的风格实例.
+  \a opt ViewItem相关的风格选项.
+
+  \sa QStyle QStyleOptionViewItem
  */
 void DStyle::viewItemLayout(const QStyle *style, const QStyleOptionViewItem *opt,  QRect *pixmapRect, QRect *textRect, QRect *checkRect, bool sizehint)
 {
@@ -2624,6 +2709,10 @@ void DStyle::viewItemLayout(const QStyle *style, const QStyleOptionViewItem *opt
 
 /*!
   \brief DStyle::viewItemLayout
+
+  \a opt ViewItem的风格选项. \a pixmapRect 传出参数，pixmap的位置矩形. \a textRect 传出参数，文本的位置矩形，\a checkRect 传出参数，选中区域的位置矩形.
+  \a sizehint 是否使用大小策略.
+
   \sa DStyle::viewItemLayout()
  */
 void DStyle::viewItemLayout(const QStyleOptionViewItem *opt, QRect *pixmapRect, QRect *textRect, QRect *checkRect, bool sizehint) const
@@ -2633,10 +2722,10 @@ void DStyle::viewItemLayout(const QStyleOptionViewItem *opt, QRect *pixmapRect, 
 
 /*!
   \brief DStyle::viewItemDrawText视图项文字
-  \sa QStyle()
-  \a p 画家
-  \sa QStyleOptionViewItem
-  \a rect 文字大小
+
+  \a p 画家. \a rect 文字大小. \a style 指定的风格实例. \a option ViewItem的风格选项.
+
+  \sa QStyleOptionViewItem QStyle
   \return 布局大小
  */
 QRect DStyle::viewItemDrawText(const QStyle *style, QPainter *p, const QStyleOptionViewItem *option, const QRect &rect)
@@ -2709,6 +2798,10 @@ QRect DStyle::viewItemDrawText(const QStyle *style, QPainter *p, const QStyleOpt
 
 /*!
   \brief DStyle::viewItemDrawText
+
+  \a p 画笔实例, \a option ViewItem的风格选项，\a rect 原始矩形.
+  \return 返回基于原始矩形的文本绘制矩形.
+
   \sa DStyle::viewItemDrawText()
  */
 QRect DStyle::viewItemDrawText(QPainter *p, const QStyleOptionViewItem *option, const QRect &rect) const
@@ -2762,6 +2855,9 @@ void DStyledIconEngine::setIconName(const QString &name)
 
 /*!
   \brief DStyledIconEngine::pixmap
+
+  \a size pixmap的大小， \a mode 图标模式的类型， \a state 图标的状态.
+
   \sa QIconEngine::pixmap()
  */
 QPixmap DStyledIconEngine::pixmap(const QSize &size, QIcon::Mode mode, QIcon::State state)
@@ -2779,6 +2875,7 @@ QPixmap DStyledIconEngine::pixmap(const QSize &size, QIcon::Mode mode, QIcon::St
   \brief DStyledIconEngine::paint 重载paint
   \a painter 画家
   \a palette 调色板
+  \a rect 绘制的矩形大小.
   \sa QIconEngine::paint()
  */
 void DStyledIconEngine::paint(QPainter *painter, const QPalette &palette, const QRectF &rect)
@@ -2794,6 +2891,9 @@ void DStyledIconEngine::paint(QPainter *painter, const QPalette &palette, const 
 
 /*!
   \brief DStyledIconEngine::paint
+
+  \a painter 画笔实例， \a rect 绘制的位置矩形，\a mode 图标模式，\a state 图标状态.
+
   \sa QIconEngine::paint()
  */
 void DStyledIconEngine::paint(QPainter *painter, const QRect &rect, QIcon::Mode mode, QIcon::State state)
@@ -2817,6 +2917,9 @@ void DStyledIconEngine::paint(QPainter *painter, const QRect &rect, QIcon::Mode 
 
 /*!
   \brief DStyledIconEngine::clone
+
+  \return 返回一个该引擎的克隆.
+
   \sa QIconEngine::clone()
  */
 QIconEngine *DStyledIconEngine::clone() const

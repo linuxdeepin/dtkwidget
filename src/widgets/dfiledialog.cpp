@@ -25,7 +25,7 @@ DWIDGET_BEGIN_NAMESPACE
   你也可以通过 addComboBox() 和 addLineEdit() 来为文件选择框增加额外的输入内容控件，并通过 getComboBoxValue()
   和 getLineEditValue() 来得到用户所输入的值。
 
-  \image dfiledialog.png
+  \image DFileDialog.png
 */
 
 DFileDialog::DFileDialog(QWidget *parent, Qt::WindowFlags f)

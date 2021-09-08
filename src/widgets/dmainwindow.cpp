@@ -415,9 +415,13 @@ bool DMainWindow::autoInputMaskByClipPath() const
     return d->handle->autoInputMaskByClipPath();
 }
 
+
 /*!
-  \brief DMainWindow::titlebarShadowIsEnabled
-  \return true　titleBar阴影开启　false 阴影关闭
+    \property DMainWindow::titlebarShadowEnabled
+    \brief titleBar阴影属性.
+
+    用于设置或者判断是否设置titleBar阴影属性.
+
  */
 bool DMainWindow::titlebarShadowIsEnabled() const
 {
@@ -608,7 +612,8 @@ void DMainWindow::setEnableBlurWindow(bool enableBlurWindow)
 }
 
 /*!
-  \brief DMainWindow::setAutoInputMaskByClipPath 通过裁剪区域自动设定mask
+  \brief 通过裁剪区域自动设定mask.
+
   \a autoInputMaskByClipPath true自动设定　false不自动设定
  */
 void DMainWindow::setAutoInputMaskByClipPath(bool autoInputMaskByClipPath)
@@ -623,7 +628,8 @@ void DMainWindow::setAutoInputMaskByClipPath(bool autoInputMaskByClipPath)
 }
 
 /*!
-  \brief DMainWindow::sendMessage 发送消息
+  \brief 发送浮动消息.
+
   \a icon 消息展示图标
   \a message　消息内容
  */
@@ -633,7 +639,8 @@ void DMainWindow::sendMessage(const QIcon &icon, const QString &message)
 }
 
 /*!
-  \brief DMainWindow::sendMessage 发送消息
+  \brief 发送浮动消息.
+
   \a message　DFloatingMessage消息
  */
 void DMainWindow::sendMessage(DFloatingMessage *message)
@@ -641,10 +648,6 @@ void DMainWindow::sendMessage(DFloatingMessage *message)
     DMessageManager::instance()->sendMessage(this, message);
 }
 
-/*!
-  \brief DMainWindow::setTitlebarShadowEnabled设定titleBar是否有阴影区域
-  \a titlebarShadowEnabled true titleBar有阴影　false无阴影
- */
 void DMainWindow::setTitlebarShadowEnabled(bool titlebarShadowEnabled)
 {
     D_D(DMainWindow);

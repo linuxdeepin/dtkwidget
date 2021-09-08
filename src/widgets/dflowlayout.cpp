@@ -196,8 +196,8 @@ DFlowLayout::~DFlowLayout()
 }
 
 /*!
-  \brief 向布局中插入一个 QLayoutItem
-  \brief Insert item to layout
+  \brief 向布局中插入一个 QLayoutItem.
+  \brief Insert item to layout.
   
   \a index 插入到的位置
   \a item 待插入的 QLayoutItem
@@ -215,8 +215,8 @@ void DFlowLayout::insertItem(int index, QLayoutItem *item)
 }
 
 /*!
-  \brief 向布局中插入一个 QWidget
-  \brief Insert widget to layout
+  \brief 向布局中插入一个 QWidget.
+  \brief Insert widget to layout.
   
   \a index 插入到的位置
   \a widget 待插入的 QWidget
@@ -231,8 +231,8 @@ void DFlowLayout::insertWidget(int index, QWidget *widget)
 }
 
 /*!
-  \brief 向布局中插入一个 QLayout 子布局
-  \brief Insert a sub-layout to layout
+  \brief 向布局中插入一个 QLayout 子布局.
+  \brief Insert a sub-layout to layout.
   
   \a index 插入到的位置
   \a layout 待插入的 QLayout
@@ -247,8 +247,8 @@ void DFlowLayout::insertLayout(int index, QLayout *layout)
 }
 
 /*!
-  \brief 向布局中插入一个指定大小的占位符（QSpacerItem）
-  \brief Insert a fixed \a size QSpacerItem to layout
+  \brief 向布局中插入一个指定大小的占位符（QSpacerItem）.
+  \brief Insert a fixed \a size QSpacerItem to layout.
   
   \a index 插入到的位置
   \a size 待插入的 QSpacerItem 的大小
@@ -266,8 +266,8 @@ void DFlowLayout::insertSpacing(int index, int size)
 }
 
 /*!
-  \brief 向布局中插入一个扩充大小的占位符（QSpacerItem）
-  \brief Insert a expanding QSpacerItem to layout
+  \brief 向布局中插入一个扩充大小的占位符（QSpacerItem）.
+  \brief Insert a expanding QSpacerItem to layout.
   
   \a index 插入到的位置
   \a stretch 没有作用的参数
@@ -287,8 +287,8 @@ void DFlowLayout::insertStretch(int index, int stretch)
 }
 
 /*!
-  \brief 向布局中插入一个占位符（QSpacerItem）
-  \brief Insert a fixed \a size QSpacer to layout
+  \brief 向布局中插入一个占位符（QSpacerItem）.
+  \brief Insert a fixed size QSpacer to layout.
   
   \a index 插入到的位置
   \a spacerItem 待插入的 QSpacerItem
@@ -304,8 +304,8 @@ void DFlowLayout::insertSpacerItem(int index, QSpacerItem *spacerItem)
 }
 
 /*!
-  \brief 向布局中追加一个固定大小的占位符（QSpacerItem）
-  \brief Insert a fixed \a size QSpacerItem to layout
+  \brief 向布局中追加一个固定大小的占位符（QSpacerItem）.
+  \brief Insert a fixed \a size QSpacerItem to layout.
   
   \a size 占位符大小
   \a size of the QSpacerItem to be insert
@@ -318,8 +318,8 @@ void DFlowLayout::addSpacing(int size)
 }
 
 /*!
-  \brief 向布局中追加一个扩充大小的占位符（QSpacerItem）
-  \brief Insert a expanding QSpacerItem to layout
+  \brief 向布局中追加一个扩充大小的占位符（QSpacerItem）.
+  \brief Insert a expanding QSpacerItem to layout.
   
   \a stretch 没有作用的参数
   \a stretch Unused argument.
@@ -332,8 +332,8 @@ void DFlowLayout::addStretch(int stretch)
 }
 
 /*!
-  \brief 向布局中追加一个的占位符（QSpacerItem）
-  \brief Insert a QSpacerItem to layout
+  \brief 向布局中追加一个的占位符（QSpacerItem）.
+  \brief Insert a QSpacerItem to layout.
   
   \a spacerItem 待插入的 QSpacerItem
   \a spacerItem to be insert.
@@ -346,8 +346,8 @@ void DFlowLayout::addSpacerItem(QSpacerItem *spacerItem)
 }
 
 /*!
-  \brief 向布局中追加一个 QLayoutItem
-  \brief Insert a QLayoutItem to layout
+  \brief 向布局中追加一个 QLayoutItem.
+  \brief Insert a QLayoutItem to layout.
   
   \a item 待插入的 QLayoutItem
   \a item to be insert.
@@ -360,8 +360,10 @@ void DFlowLayout::addItem(QLayoutItem *item)
 }
 
 /*!
-  \brief 是否可以有固定高度
-  \brief check if layout can have a fixed height
+  \brief 是否可以有固定高度.
+  \brief check if layout can have a fixed height.
+
+  \return 可以通过高度获取宽度返回 true，否则返回 false.
   
   \sa heightForWidth()
  */
@@ -373,8 +375,10 @@ bool DFlowLayout::hasHeightForWidth() const
 }
 
 /*!
-  \brief 根据指定宽度获得对应高度
-  \brief set fixed height
+  \brief 根据指定宽度获得对应高度.
+  \brief set fixed height.
+  \a width 宽度.
+  \return 指定高度.
   
   \sa heightForWidth()
  */
@@ -392,8 +396,8 @@ int DFlowLayout::heightForWidth(int width) const
 }
 
 /*!
-  \brief 布局内的元素数量
-  \brief item count in layout
+  \brief 布局内的元素数量.
+  \brief item count in layout.
  */
 int DFlowLayout::count() const
 {
@@ -443,8 +447,8 @@ QSize DFlowLayout::sizeHint() const
 }
 
 /*!
-  \brief 移除并取得 \a index 位置的对应元素
-  \brief take the QLayoutItem at the given \a index .
+  \brief 移除并取得 \a index 位置的对应元素.
+  \brief take the QLayoutItem at the given \a index.
  */
 QLayoutItem *DFlowLayout::takeAt(int index)
 {
@@ -473,9 +477,10 @@ Qt::Orientations DFlowLayout::expandingDirections() const
 }
 
 /*!
-  \brief 取得横横横向的元素疏密度（Spacing）
+  \brief 取得横横横向的元素疏密度（Spacing）.
   \brief get flow spacing in horizontal direction.
   
+  \return 返回水平方向的间距（疏密度）.
   \sa setHorizontalSpacing()
  */
 int DFlowLayout::horizontalSpacing() const
@@ -484,9 +489,10 @@ int DFlowLayout::horizontalSpacing() const
 }
 
 /*!
-  \brief 取得纵横横向的元素疏密度（Spacing）
+  \brief 取得纵横横向的元素疏密度（Spacing）.
   \brief get flow spacing in vertical direction.
-  
+
+  \return 返回竖直方向的间距（疏密度）.
   \sa setVerticalSpacing()
  */
 int DFlowLayout::verticalSpacing() const
@@ -497,7 +503,8 @@ int DFlowLayout::verticalSpacing() const
 /*!
   \brief 取得流布局的方向
   \brief get flow direction.
-  
+
+  \return 返回当前流布局的方向.
   \sa setFlow()
  */
 DFlowLayout::Flow DFlowLayout::flow() const
@@ -508,9 +515,11 @@ DFlowLayout::Flow DFlowLayout::flow() const
 }
 
 /*!
-  \brief 设置纵横横向的元素疏密度（Spacing）
+  \brief 设置纵横横向的元素疏密度（Spacing）.
   \brief set flow spacing in horizontal direction.
   
+  \a horizontalSpacing 水平间距值
+
   \sa setSpacing(), setVerticalSpacing()
  */
 void DFlowLayout::setHorizontalSpacing(int horizontalSpacing)
@@ -529,7 +538,9 @@ void DFlowLayout::setHorizontalSpacing(int horizontalSpacing)
 
 /*!
   \brief 设置纵横纵向的元素疏密度（Spacing）
-  \brief set flow spacing in vertical direction.
+  \brief set flow \a verticalSpacing in vertical direction.
+
+  \a verticalSpacing 竖直方向的间距值.
   
   \sa setSpacing(), setHorizontalSpacing()
  */
@@ -550,6 +561,8 @@ void DFlowLayout::setVerticalSpacing(int verticalSpacing)
 /*!
   \brief 设置纵横两个方向的元素疏密度（Spacing）
   \brief set flow \a spacing in horizontal and vertical direction.
+
+  \a spacing 两个方向的间距值.
   
   \sa setVerticalSpacing(), setHorizontalSpacing()
  */

@@ -79,7 +79,7 @@ DWIDGET_BEGIN_NAMESPACE
  */
 /*!
   \fn void DImageButton::checkedChanged(bool checked)
-  \brief 当按钮的选择状态发生改变时会发出该信号
+  \brief 当按钮的选择状态 \a checked 发生改变时会发出该信号
  */
 /*!
   \fn void DImageButton::stateChanged()

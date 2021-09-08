@@ -111,8 +111,9 @@ DButtonBoxButton::DButtonBoxButton(DStyle::StandardPixmap iconType, const QStrin
 }
 
 /*!
-  \brief DButtonBoxButton::setIcon 设置图标
-  \a icon图标
+  \brief 设置按钮图标.
+
+  \a icon 图标
  */
 void DButtonBoxButton::setIcon(const QIcon &icon)
 {
@@ -123,7 +124,9 @@ void DButtonBoxButton::setIcon(const QIcon &icon)
 }
 
 /*!
-  \brief DButtonBoxButton::setIcon 设置图标
+  \brief 设置按钮图标.
+  \overload
+
   \a iconType Qt标准图标
  */
 void DButtonBoxButton::setIcon(QStyle::StandardPixmap iconType)
@@ -135,7 +138,9 @@ void DButtonBoxButton::setIcon(QStyle::StandardPixmap iconType)
 }
 
 /*!
-  \brief DButtonBoxButton::setIcon 设置图标
+  \brief 设置按钮图标.
+  \overload
+
   \a iconType 标准图标
  */
 void DButtonBoxButton::setIcon(DStyle::StandardPixmap iconType)
@@ -147,7 +152,9 @@ void DButtonBoxButton::setIcon(DStyle::StandardPixmap iconType)
 }
 
 /*!
-  \brief DButtonBoxButton::iconSize 返回图标大小
+  \brief 返回图标大小.
+
+  \return 返回图标大小.
  */
 QSize DButtonBoxButton::iconSize() const
 {
@@ -170,7 +177,10 @@ QSize DButtonBoxButton::iconSize() const
 }
 
 /*!
-  \brief DButtonBoxButton::sizeHint
+  \brief DButtonBoxButton::sizeHint.
+
+  \return 按钮的推荐大小.
+
   \sa QAbstractButton::sizeHint()
  */
 QSize DButtonBoxButton::sizeHint() const
@@ -214,7 +224,9 @@ QSize DButtonBoxButton::sizeHint() const
 }
 
 /*!
-  \brief DButtonBoxButton::minimumSizeHint
+  \brief DButtonBoxButton::minimumSizeHint.
+
+  \return 按钮的最小大小策略.
   \sa QAbstractButton::minimumSizeHint()
  */
 QSize DButtonBoxButton::minimumSizeHint() const
@@ -441,7 +453,9 @@ void DButtonBox::setButtonList(const QList<DButtonBoxButton *> &list, bool check
 }
 
 /*!
-  \brief DButtonBox::buttonList
+  \brief DButtonBox::buttonList.
+
+  \return 返回按钮列表.
   \sa QButtonGroup::buttons()
  */
 QList<QAbstractButton *> DButtonBox::buttonList() const
@@ -452,7 +466,9 @@ QList<QAbstractButton *> DButtonBox::buttonList() const
 }
 
 /*!
-  \brief DButtonBox::checkedButton
+  \brief DButtonBox::checkedButton.
+
+  \return 返回 checked 状态的按钮.
   \sa QButtonGroup::checkedButton()
  */
 QAbstractButton *DButtonBox::checkedButton() const
@@ -464,6 +480,10 @@ QAbstractButton *DButtonBox::checkedButton() const
 
 /*!
   \brief DButtonBox::button
+
+  \a id 按钮的ID，与 DButtonBox::setId 设置的参数一致.
+  \return 返回对应\a id 的按钮，不存在返回 nullptr .
+
   \sa QButtonGroup::button()
  */
 QAbstractButton *DButtonBox::button(int id) const
@@ -474,7 +494,9 @@ QAbstractButton *DButtonBox::button(int id) const
 }
 
 /*!
-  \brief DButtonBox::setId
+  \brief 设置按钮 id .
+
+  \a button 用于设置 \a id 的按钮。
   \sa QButtonGroup::setId()
  */
 void DButtonBox::setId(QAbstractButton *button, int id)
@@ -485,7 +507,9 @@ void DButtonBox::setId(QAbstractButton *button, int id)
 }
 
 /*!
-  \brief DButtonBox::id
+  \brief 返回按钮 id .
+
+  \a button 对应的按钮.
   \sa QButtonGroup::id()
  */
 int DButtonBox::id(QAbstractButton *button) const
@@ -495,7 +519,9 @@ int DButtonBox::id(QAbstractButton *button) const
     return d->group->id(button);
 }
 /*!
-  \brief DButtonBox::checkedId
+  \brief 返回已选中按钮 id .
+
+  \return 返回已选中按钮 id .
   \sa QButtonGroup
  */
 int DButtonBox::checkedId() const

@@ -1211,6 +1211,18 @@ QVector<int> DPrintPreviewWidgetPrivate::requestPages(int page)
 }
 
 /*!
+    \class Dtk::Widget::DPrintPreviewWidget
+    \inmodule dtkwidget
+
+    打印预览对话框界面中的视图预览窗口，用于预览来自第三方应用中的
+    数据。通常情况下应用无需调用该类中的接口，只需要在 DPrintPreviewDialog
+    中处理即可。除此之外，该类还管理了将预览数据输出到打印机的功能，例如，另存为
+    PDF、另存为图片等功能。
+
+    \sa Dtk::Widget::DPrintPreviewDialog
+*/
+
+/*!
   \brief 构造一个 DPrintPreviewWidget。
   
   \a printer 打印机
@@ -1232,7 +1244,8 @@ DPrintPreviewWidget::~DPrintPreviewWidget()
 }
 
 /*!
-  \brief 设置打印预览widget是否可见。
+  \brief 设置打印预览widget是否可见.
+  \reimp
   
   \a visible 是否可见
  */
@@ -1245,7 +1258,7 @@ void DPrintPreviewWidget::setVisible(bool visible)
 }
 
 /*!
-  \brief 设置打印预览页面范围为所有页。
+  \brief 设置打印预览页面范围为所有页.
  */
 void DPrintPreviewWidget::setPageRangeALL()
 {
@@ -1256,7 +1269,7 @@ void DPrintPreviewWidget::setPageRangeALL()
 }
 
 /*!
-  \brief 设置是否需要重新生成页面内容。
+  \brief 设置是否需要重新生成页面内容.
   
   \a generate 是否需要重新生成页面内容
  */
@@ -1277,7 +1290,9 @@ void DPrintPreviewWidget::setPageRangeMode(PageRange mode)
 }
 
 /*!
-  \brief 获取页面选择范围模式。
+  \brief 获取页面选择范围模式.
+
+  \return 返回页码返回的模式.
  */
 DPrintPreviewWidget::PageRange DPrintPreviewWidget::pageRangeMode()
 {
@@ -1286,7 +1301,9 @@ DPrintPreviewWidget::PageRange DPrintPreviewWidget::pageRangeMode()
 }
 
 /*!
-  \brief 预览是否改变，当预览改变时需要调用。
+  \brief 预览是否改变，当预览改变时需要调用.
+
+  \a generate 预览是否发生改变.
  */
 void DPrintPreviewWidget::reviewChange(bool generate)
 {
@@ -1338,7 +1355,9 @@ void DPrintPreviewWidget::setPageRange(int from, int to)
 }
 
 /*!
-  \brief 获取预览总页数。
+  \brief 获取预览总页数.
+
+  \return 返回预览总页数.
  */
 int DPrintPreviewWidget::pagesCount()
 {
@@ -1347,7 +1366,9 @@ int DPrintPreviewWidget::pagesCount()
 }
 
 /*!
-  \brief 获取当前页的页码。
+  \brief 获取当前页的页码.
+
+  \return 返回当前页的页码.
  */
 int DPrintPreviewWidget::currentPage()
 {
@@ -1356,7 +1377,9 @@ int DPrintPreviewWidget::currentPage()
 }
 
 /*!
-  \brief 获取是否可翻页。
+  \brief 获取是否可翻页.
+
+  \return 可翻页返回true,不可翻页返回false.
  */
 bool DPrintPreviewWidget::turnPageAble()
 {
@@ -1369,7 +1392,7 @@ bool DPrintPreviewWidget::turnPageAble()
   
   \a colorMode 色彩模式
  */
-void DPrintPreviewWidget::setColorMode(const QPrinter::ColorMode &colorMode)
+void DPrintPreviewWidget::setColorMode(const DPrinter::ColorMode &colorMode)
 {
     Q_D(DPrintPreviewWidget);
 
@@ -1392,7 +1415,7 @@ void DPrintPreviewWidget::setColorMode(const QPrinter::ColorMode &colorMode)
   
   \a pageOrientation 页面方向
  */
-void DPrintPreviewWidget::setOrientation(const QPrinter::Orientation &pageOrientation)
+void DPrintPreviewWidget::setOrientation(const DPrinter::Orientation &pageOrientation)
 {
     Q_D(DPrintPreviewWidget);
 
@@ -1550,7 +1573,7 @@ void DPrintPreviewWidget::setWaterMarkRotate(qreal rotate)
 /*!
   \brief 设置水印缩放大小。
   
-  \a rotate 水印缩放大小
+  \a scale 水印缩放大小
  */
 void DPrintPreviewWidget::setWaterMarkScale(qreal scale)
 {
@@ -1570,7 +1593,7 @@ void DPrintPreviewWidget::setWaterMarkScale(qreal scale)
 /*!
   \brief 设置水印透明度。
   
-  \a rotate 水印透明度
+  \a opacity 水印透明度
  */
 void DPrintPreviewWidget::setWaterMarkOpacity(qreal opacity)
 {

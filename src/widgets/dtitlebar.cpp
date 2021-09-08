@@ -697,10 +697,10 @@ void DTitlebarPrivate::updateTabOrder()
  */
 
 /*!
-  \brief DTitlebar::DTitlebar create an default widget with icon/title/and buttons
+  \brief This function provides to create an default widget with icon/title/ and buttons
   \brief 创建一个DTitlebar对象，包含默认的窗口按钮.
 
-  \a parent
+  \a parent 父控件指针
  */
 DTitlebar::DTitlebar(QWidget *parent) :
     QFrame(parent),
@@ -1224,8 +1224,10 @@ void DTitlebar::setVisible(bool visible)
 }
 
 /*!
-  \brief DTitlebar::setEmbedMode set a titlebar is in parent;
-  \brief 设置为嵌入模式，而不是替换系统标题栏，用于不支持dxcb的平台
+  \brief This function provides to set a titlebar is in parent.
+  \brief 设置为嵌入模式，而不是替换系统标题栏，用于不支持dxcb的平台.
+
+  \a visible 为 true 时，替换系统标题栏，否则隐藏系统标题栏。
  */
 void DTitlebar::setEmbedMode(bool visible)
 {
@@ -1236,8 +1238,9 @@ void DTitlebar::setEmbedMode(bool visible)
 }
 
 /*!
-  \brief DTitlebar::menuIsVisible
-  \return true 菜单可见 false菜单不可见
+  \brief 菜单按钮的可视化.
+
+  \return true 菜单可见 false菜单不可见.
  */
 bool DTitlebar::menuIsVisible() const
 {
@@ -1246,8 +1249,9 @@ bool DTitlebar::menuIsVisible() const
 }
 
 /*!
-  \brief DTitlebar::setMenuVisible 设置菜单是否可见
-  \a visible true 菜单可见 false菜单不可见
+  \brief 设置菜单是否可见.
+
+  \a visible true 菜单可见 false菜单不可见.
  */
 void DTitlebar::setMenuVisible(bool visible)
 {
@@ -1256,8 +1260,9 @@ void DTitlebar::setMenuVisible(bool visible)
 }
 
 /*!
-  \brief DTitlebar::menuIsDisabled
-  \return true 菜单被禁用 false 菜单没有被禁用
+  \brief 菜单是否被禁用.
+
+  \return true 菜单被禁用 false 菜单没有被禁用。
  */
 bool DTitlebar::menuIsDisabled() const
 {
@@ -1266,8 +1271,9 @@ bool DTitlebar::menuIsDisabled() const
 }
 
 /*!
-  \brief DTitlebar::setMenuDisabled 设置菜单是否被禁用
-  \a disabled true 菜单被禁用 false菜单没有被禁用
+  \brief 设置菜单是否被禁用.
+
+  \a disabled true 菜单被禁用 false菜单没有被禁用。
  */
 void DTitlebar::setMenuDisabled(bool disabled)
 {
@@ -1276,7 +1282,8 @@ void DTitlebar::setMenuDisabled(bool disabled)
 }
 
 /*!
-  \brief DTitlebar::quitMenuIsDisabled
+  \brief 退出菜单是否被禁用.
+
   \return true 退出菜单被禁用 false退出菜单没有被禁用
  */
 bool DTitlebar::quitMenuIsDisabled() const
@@ -1287,7 +1294,8 @@ bool DTitlebar::quitMenuIsDisabled() const
 }
 
 /*!
-  \brief DTitlebar::setQuitMenuDisabled 设置退出菜单是否被禁用
+  \brief 设置退出菜单是否被禁用.
+
   \a disabled true 退出菜单被禁用 false退出菜单没有被禁用
  */
 void DTitlebar::setQuitMenuDisabled(bool disabled)
@@ -1302,7 +1310,8 @@ void DTitlebar::setQuitMenuDisabled(bool disabled)
 }
 
 /*!
-  \brief DTitlebar::setQuitMenuVisible 设置退出菜单是否被可见
+  \brief 设置退出菜单是否可见.
+
   \a visible true 退出菜单可见 false退出菜单不可见
  */
 void DTitlebar::setQuitMenuVisible(bool visible)
@@ -1317,7 +1326,8 @@ void DTitlebar::setQuitMenuVisible(bool visible)
 }
 
 /*!
-  \brief DTitlebar::switchThemeMenuIsVisible
+  \brief 设置主题切换菜单的可视化.
+
   \return true 切换主题菜单可见 false切换主题菜单不可见
  */
 bool DTitlebar::switchThemeMenuIsVisible() const
@@ -1328,8 +1338,9 @@ bool DTitlebar::switchThemeMenuIsVisible() const
 }
 
 /*!
-  \brief DTitlebar::setSwitchThemeMenuVisible 设置切换主题菜单是否可见
-  \a visible true 切换主题菜单可见 false切换主题菜单不可见
+  \brief 设置切换主题菜单是否可见.
+
+  \a visible true 切换主题菜单可见 false 切换主题菜单不可见。
  */
 void DTitlebar::setSwitchThemeMenuVisible(bool visible)
 {
@@ -1348,7 +1359,7 @@ void DTitlebar::setSwitchThemeMenuVisible(bool visible)
 }
 
 /*!
-  \brief DTitlebar::setDisableFlags will disable button match flags.
+  \brief This function provides to disable the button match flags.
   \brief 设置需要被禁用的按钮，仅仅是在界面上禁用按钮，还是可以通过事件等机制来调用对应接口.
 
   \a flags 需要被禁用的按钮标志位
@@ -1361,8 +1372,10 @@ void DTitlebar::setDisableFlags(Qt::WindowFlags flags)
 }
 
 /*!
-  \brief DTitlebar::disableFlags return which button is disabled.
+  \brief Return which button is disabled.
   \brief 当前被禁用的按钮标志位.
+
+  \return 被禁用的窗口标志。
  */
 Qt::WindowFlags DTitlebar::disableFlags() const
 {

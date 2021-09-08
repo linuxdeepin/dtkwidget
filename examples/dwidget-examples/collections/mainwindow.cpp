@@ -157,6 +157,8 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::menuItemInvoked(QAction *action)
 {
     if (action->text() == "testPrinter") {
+// 下面注释的目的用于在 QDoc 生成文档是能够直接使用 \snippet 命令选取这段代码进行展示
+//! [0]
         DPrintPreviewDialog dialog(this);
         //测试保存PDF文件名称接口
         dialog.setDocName("test");
@@ -214,6 +216,7 @@ void MainWindow::menuItemInvoked(QAction *action)
                     }
                 });
         dialog.exec();
+//! [0]
         return;
     }
     if (action->text() == "dfm-settings") {

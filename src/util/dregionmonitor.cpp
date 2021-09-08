@@ -2,10 +2,7 @@
 #include "private/dregionmonitor_p.h"
 
 DWIDGET_BEGIN_NAMESPACE
-/*!
-  \brief DRegionMonitor::DRegionMonitor 这个类已经废弃不用,请使用libdtkgui
-  \a parent
- */
+
 DRegionMonitor::DRegionMonitor(QObject *parent)
     : QObject(parent)
     , DObject(*new DRegionMonitorPrivate(this, this))

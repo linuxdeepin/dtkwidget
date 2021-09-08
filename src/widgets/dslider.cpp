@@ -72,31 +72,38 @@ private:
 
 /*!
   \fn void DSlider::valueChanged(int value)
-  \brief 信号会在 slider \a value 属性的值改变时被发送
+  \brief 信号会在 slider \a value 属性的值改变时被发送.
  */
 /*!
   \fn void DSlider::sliderMoved(int position)
-  \brief 信号会在 slider 拖动时被发送
+  \brief 信号会在 slider 拖动时被发送.
+
+  \a position 为 slider 被拖动的指针的位置。
  */
 /*!
   \fn void DSlider::sliderReleased()
-  \brief 信号会在 slider被松开时被发送
+  \brief 信号会在 slider 被松开时被发送.
  */
 /*!
   \fn void DSlider::rangeChanged(int min, int max)
-  \brief 信号会在 range 属性的值改变时被发送
+  \brief 信号会在 range 属性的值改变时被发送.
+
+  \a min 为 range 的最小值， \a max 为 range 的最大值。
  */
 /*!
   \fn void DSlider::actionTriggered(int action)
-  \brief 信号会在 slider actoin 触发时被发送
+  \brief 信号会在 slider \a action 触发时被发送
  */
 /*!
   \fn void DSlider::iconClicked(SliderIcons icon, bool checked)
-  \brief 信号会在左右 iconbutton 被点击时被发送
+  \brief 信号会在左右 iconbutton 被点击时被发送.
+
+  \a icon 表示按钮被点击的位置，\a checked 表示按钮是否被选中。
  */
 
 /*!
-  \brief DSlider的构造函数
+  \brief DSlider的构造函数.
+
   \a parent 参数被发送到 QWidget 构造函数。
 
   \sa Qt::Orientation
@@ -127,8 +134,11 @@ bool DSlider::event(QEvent *e)
 }
 
 /*!
-  \brief DSlider::eventFilter
-  此函数处理了鼠标滚轮事件
+  \brief 事件过滤器函数.
+  \reimp
+
+  此函数目前仅处理了鼠标滚轮事件
+  \a watched 被监听的子控件，\a e 对应的事件指针。
  */
 bool DSlider::eventFilter(QObject *watched, QEvent *e)
 {
@@ -141,7 +151,10 @@ bool DSlider::eventFilter(QObject *watched, QEvent *e)
 }
 
 /*!
-  \brief DSlider::orientation
+  \brief 滑块方向
+
+  \return 返回当前滑块的方向。
+
   \sa QSlider::orientation()
  */
 Qt::Orientation DSlider::orientation() const
@@ -150,9 +163,10 @@ Qt::Orientation DSlider::orientation() const
     return d->slider->orientation();
 }
 /*!
-  \brief DSlider::slider返回 QSlider 对象
-  若 DSlider 不满足输入框的使用需求，请用此函数抛出的对象
-  \return
+  \brief 返回 QSlider 对象.
+
+  若 DSlider 不满足输入框的使用需求，请用此函数抛出的对象。
+  \return QSlider 对象。
  */
 QSlider *DSlider::slider()
 {
@@ -161,8 +175,8 @@ QSlider *DSlider::slider()
 }
 
 /*!
-  \brief DSlider::setLeftIcon设置滑块左侧图标
-  \a left 图标
+  \brief 设置滑块左侧图标.
+  \a left 左图标
  */
 void DSlider::setLeftIcon(const QIcon &left)
 {
@@ -189,8 +203,8 @@ void DSlider::setLeftIcon(const QIcon &left)
 }
 
 /*!
-  \brief DSlider::setRightIcon设置滑块右图标
-  \a right 图标
+  \brief 设置滑块右图标.
+  \a right 右图标
  */
 void DSlider::setRightIcon(const QIcon &right)
 {
@@ -216,7 +230,7 @@ void DSlider::setRightIcon(const QIcon &right)
 }
 
 /*!
-  \brief DSlider::setIconSize设置滑块图标大小
+  \brief 设置滑块图标大小.
   \a size 图标大小
  */
 void DSlider::setIconSize(const QSize &size)
@@ -235,8 +249,11 @@ void DSlider::setIconSize(const QSize &size)
 }
 
 /*!
-  \brief DSlider::setMinimum
-  \sa QSlider::setMinimum()
+  \brief 设置滑动范围的最小值.
+
+  \a min 滑动最小值。
+
+  \sa QSlider::setMinimum() DSlider::minimum()
  */
 void DSlider::setMinimum(int min)
 {
@@ -245,8 +262,11 @@ void DSlider::setMinimum(int min)
 }
 
 /*!
-  \brief DSlider::minimum
-  \sa QSlider::minimum()
+  \brief 滑动范围的最小值.
+
+  \return 返回滑动范围的最小值。
+
+  \sa QSlider::minimum() DSlider::setMinimum()
  */
 int DSlider::minimum() const
 {
@@ -255,7 +275,10 @@ int DSlider::minimum() const
 }
 
 /*!
-  \brief DSlider::setValue
+  \brief 设置滑块当前值
+
+  \a value 滑块的当前值。
+
   \sa QSlider::setValue()
  */
 void DSlider::setValue(int value)
@@ -275,7 +298,13 @@ int DSlider::value() const
 }
 
 /*!
-  \brief DSlider::setPageStep
+  \brief 设置页面单步的大小
+
+  使用按键 PageUp 或者 PageDown 时，滑块
+  滑动的单步大小。
+
+  \a pageStep 单步大小.
+
   \sa QSlider::setPageStep()
  */
 void DSlider::setPageStep(int pageStep)
@@ -285,8 +314,11 @@ void DSlider::setPageStep(int pageStep)
 }
 
 /*!
-  \brief DSlider::pageStep
-  \sa QSlider::pageStep()
+  \brief 返回页面单步大小
+
+  \return 页面单步大小的值。
+
+  \sa QSlider::pageStep() DSlider::setPageStep()
  */
 int DSlider::pageStep() const
 {
@@ -295,8 +327,11 @@ int DSlider::pageStep() const
 }
 
 /*!
-  \brief DSlider::setMaximum
-  \sa QSlider::setMaximum()
+  \brief 设置滑动范围的最大值
+
+  \a max 滑动范围的最大值。
+
+  \sa QSlider::setMaximum() DSlider::maximum()
  */
 void DSlider::setMaximum(int max)
 {
@@ -305,7 +340,10 @@ void DSlider::setMaximum(int max)
 }
 
 /*!
-  \brief DSlider::maximum
+  \brief 返回滑动范围的最大值
+
+  \return 滑动范围的最大值
+
   \sa QSlider::maximum
  */
 int DSlider::maximum() const
@@ -315,10 +353,11 @@ int DSlider::maximum() const
 }
 
 /*!
-  \brief DSlider::setLeftTicks设置刻度在滑块左侧
-  根据 QStringList 数量，绘制刻度的个数，绘制刻度标识
-  滑块为水平,刻度在滑块上方
-  滑块为垂直,刻度在滑块左侧
+  \brief 设置滑块左侧的刻度值.
+
+  根据 QStringList 数量，绘制刻度的个数，绘制刻度标识：
+  滑块为水平,刻度在滑块上方；滑块为垂直,刻度在滑块左侧。
+
   \a info 刻度标识
  */
 void DSlider::setLeftTicks(const QStringList &info)
@@ -350,10 +389,11 @@ void DSlider::setLeftTicks(const QStringList &info)
 }
 
 /*!
-  \brief DSlider::setRightTicks设置刻度在滑块右侧
-  根据 QStringList 数量，绘制刻度的个数，绘制刻度标识
-  滑块为水平,刻度在滑块下方
-  滑块为垂直,刻度在滑块右侧
+  \brief 设置滑块右侧的刻度值.
+
+  根据 QStringList 数量，绘制刻度的个数，绘制刻度标识：
+  滑块为水平,刻度在滑块下方；滑块为垂直,刻度在滑块右侧。
+
   \a info 刻度标识
  */
 void DSlider::setRightTicks(const QStringList &info)
@@ -385,7 +425,10 @@ void DSlider::setRightTicks(const QStringList &info)
 }
 
 /*!
-  \brief DSlider::setAboveTicks设置刻度在滑块上方
+  \brief 设置滑块上方的刻度值
+
+  \a info 刻度标识.
+
   \sa DSlider::setLeftTicks()
  */
 void DSlider::setAboveTicks(const QStringList &info)
@@ -394,7 +437,10 @@ void DSlider::setAboveTicks(const QStringList &info)
 }
 
 /*!
-  \brief DSlider::setBelowTicks设置刻度在滑块下方
+  \brief 设置滑块下方的刻度值
+
+  \a info 刻度标识.
+
   \sa DSlider::setRightTicks()
  */
 void DSlider::setBelowTicks(const QStringList &info)
@@ -403,21 +449,24 @@ void DSlider::setBelowTicks(const QStringList &info)
 }
 
 /*!
-  \brief DSlider::setMarkPositions 设置显示双边的刻度线（不显示刻度值）
-  举例用途：比如调节音量的 DSlider，需要在 value = 100 的地方标记一个刻度，而不需要显示其他的刻度值（并且实际音量值是可以超过 100 的）
+  \brief 设置显示双边的刻度线（不显示刻度值）.
+
+  举例用途：比如调节音量的 DSlider ，需要在 value = 100 的地方标记一个刻度，而不需要显示其他的刻度值（并且实际音量值是可以超过 100 的）
   其他：设置指定数值的刻度线(setMarkPositions)和设置刻度线+刻度值(setBelowTicks)是两个相互独立的，且互不干扰，若是同时使用，也会同时绘画各自的线；
-  另外两个的先后顺序也并没有关系
+  另外两个的先后顺序也并没有关系.
+
+  \a list 双边刻度线的值.
   
   \code 示例代码
   DSlider* slider = new DSlider(Qt::Horizontal, wTemp);
   QStringList list1;
-  list1<<"0"<<"25"<<"50"<<"75"<<"100";
+  list1 << "0" << "25" << "50" << "75" << "100";
   slider->setBelowTicks(list1);
   QStringList list2;
-  list2<<"0"<<"25"<<"50"<<"75"<<"100"";
+  list2 << "0" << "25" << "50" << "75" << "100"";
   slider->setAboveTicks(list2);
   QList<int> list3;
-  list3<<0<<30<<80;
+  list3 << 0 << 30 << 80;
   slider->setMarkPositions(list3);
   slider->setMinimum(0);
   slider->setMaximum(100);
@@ -470,7 +519,10 @@ void DSlider::setMarkPositions(QList<int> list)
 }
 
 /*!
-  \brief DSlider::setMouseWheelEnabled设置鼠标滚轮是否开启
+  \brief 设置鼠标滚轮是否开启.
+
+  开启鼠标滚轮后，用户可以通过鼠标滚轮来控制滑块的滑动。
+
   \a enabled 是否开启鼠标滚轮
  */
 void DSlider::setMouseWheelEnabled(bool enabled)
@@ -518,8 +570,9 @@ void DSliderPrivate::updtateTool(int value)
 }
 
 /*!
-  \brief DSlider::setTipValue 此函数会创建气泡，气泡将跟随滑块移动
-  \a open value 非空开启气泡 value 空关闭气泡(销毁)
+  \brief 用于创建气泡，气泡将跟随滑块移动.
+
+  \a value 非空开启气泡 \a value 空关闭气泡(销毁)
  */
 void DSlider::setTipValue(const QString &value)
 {
@@ -549,10 +602,12 @@ void DSlider::setTipValue(const QString &value)
 }
 
 /*!
-  \brief DSlider::tickPosition返回滑块的记号位置
-  获取滑块刻度当前朝向
+  \brief 返回滑块的记号位置.
+
+  获取滑块刻度当前朝向。
+
+  \return 滑块刻度的朝向
   \sa QSlider::TickPosition
-  \return
  */
 QSlider::TickPosition DSlider::tickPosition() const
 {
@@ -574,7 +629,12 @@ QSlider::TickPosition DSlider::tickPosition() const
 }
 
 /*!
-  \brief DSlider::sizeHint
+  \brief 滑动条的大小策略
+
+  这个函数会返回该滑动条推荐的大小，如果
+  滑动条没有布局，这个大小将会是一个无效值，如果
+  存在布局，将返回该布局下的推荐大小。
+
   \sa  QSlider::sizeHint
  */
 QSize DSlider::sizeHint() const
@@ -587,8 +647,10 @@ QSize DSlider::sizeHint() const
 }
 
 /*!
-  \brief DSlider::setHandleVisible 设置滑块时候显示
-  \a b 显示滑块的 bool 值
+  \brief 设置滑块是否显示.
+
+  \a b 为 true 时滑块显示，否则滑块隐藏。
+  默认地，滑块为显示状态。
  */
 void DSlider::setHandleVisible(bool b)
 {
@@ -602,7 +664,8 @@ void DSlider::setHandleVisible(bool b)
 }
 
 /*!
-  \brief DSlider::handleVisible 获取滑块是否显示的状态
+  \brief 获取滑块是否显示的状态.
+
   \return 返回滑块是否显示的状态
  */
 bool DSlider::handleVisible() const
@@ -612,9 +675,11 @@ bool DSlider::handleVisible() const
 }
 
 /*!
-  \brief DSlider::setEnabledAcrossStyle 滑槽是否禁用活动色填充已经滑过的滑槽
+  \brief 该函数用于设置滑槽是否禁用活动色填充已经滑过的滑槽.
+
   默认普通 DSlider 滑过的滑槽是活动色填充， 调用过 setXXXTicks 的 DSlider 则默认禁用活动色填充
   \a enabled true 无活动色，可用于音量平衡等不需要显示滑过的，false 滑过的位置(如左侧)是高亮色显示，如调节亮度等(默认)
+  默认地，改属性为 false 。
  */
 void DSlider::setEnabledAcrossStyle(bool enabled)
 {

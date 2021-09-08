@@ -311,6 +311,10 @@ bool DListView::isActiveRect(const QRect &rect) const
 
 /*!
   \brief 与 DListView::isVisualRect 相同
+
+  \a rect 用于判断的位置矩形.
+  \return 成功包含矩形返回 true，否则返回 false.
+
   \sa DListView::isVisualRect
  */
 bool DListView::isVisualRect(const QRect &rect) const
@@ -338,6 +342,9 @@ int DListView::count() const
 
 /*!
   \fn void DListView::orientationChanged(Qt::Orientation orientation)
+
+  \a orientation 改变的方向值.
+
   \sa DListView::orientation
  */
 
@@ -485,6 +492,14 @@ bool DListView::removeItems(int index, int count)
 }
 
 /*!
+  \brief 此函数用于添加顶部小控件.
+
+  与 DListView::getHeaderWidget 类似，但返回要移除的顶部控件的对象.
+  \a widget 头部控件实例.
+
+  \return 成功添加返回添加进 DListView 的索引值，已存在返回对应控件
+  的索引值.
+
   \sa DListView::getHeaderWidget
  */
 int DListView::addHeaderWidget(QWidget *widget)
@@ -532,7 +547,12 @@ int DListView::addHeaderWidget(QWidget *widget)
 }
 
 /*!
-  \sa DListView::getHeaderWidget
+  \brief 此函数用于移除头部控件小控件.
+
+  \a index 添加进 DListView 中头部小控件
+  的索引值，是 DListView::addHeaderWidget 的返回值.
+
+  \sa DListView::addFooterWidget
  */
 void DListView::removeHeaderWidget(int index)
 {
@@ -543,7 +563,14 @@ void DListView::removeHeaderWidget(int index)
 }
 
 /*!
-  \brief 与 DListView::getHeaderWidget 类似，但返回要移除的顶部控件的对象
+  \brief 此函数用于移除头部小控件并返回该控件.
+
+  与 DListView::getHeaderWidget 类似，但返回要移除的顶部控件的对象
+
+  \a index 添加进 DListView 中头部小控件
+  的索引值，是 DListView::addHeaderWidget 的返回值.
+  \return 成功移除返回获取到的头部小控件，否则返回 nullptr .
+
   \sa DListView::getHeaderWidget
  */
 QWidget *DListView::takeHeaderWidget(int index)
@@ -563,6 +590,12 @@ QWidget *DListView::takeHeaderWidget(int index)
 }
 
 /*!
+  \brief 此函数用于添加底层页脚小控件.
+
+  \a widget 底层页脚控件实例.
+  \return 成功添加返回对应的索引值，如果已存在，则返回
+  对应的索引值。
+
   \sa DListView::getFooterWidget
  */
 int DListView::addFooterWidget(QWidget *widget)
@@ -615,7 +648,12 @@ int DListView::addFooterWidget(QWidget *widget)
 }
 
 /*!
-  \sa DListView::getFooterWidget
+  \brief 此函数用于移除底层页脚控件.
+
+  \a index 添加进 DListView 中底层页脚控件
+  的索引值，是 DListView::addFooterWidget 的返回值.
+
+  \sa DListView::addFooterWidget
  */
 void DListView::removeFooterWidget(int index)
 {
@@ -626,6 +664,11 @@ void DListView::removeFooterWidget(int index)
 }
 
 /*!
+  \brief 移除底层页脚控件并返回该控件.
+
+  \a index 添加进 DListView 中底层页脚控件
+  的索引值，是 DListView::addFooterWidget 的返回值.
+
   \sa DListView::getFooterWidget DListView::takeHeaderWidget
  */
 QWidget *DListView::takeFooterWidget(int index)
@@ -645,6 +688,13 @@ QWidget *DListView::takeFooterWidget(int index)
 }
 
 /*!
+  \brief 此函数用于设置 DListView 的方向.
+
+  \a flow 为 DListView 的方向，有 QListView::Flow::LeftToRight 和
+  QListView::Flow::TopToBottom 两个值。
+
+  \a wrapping 用于控制项布局是否自动换行，true 表示自动换行，false 表示非自动换行。
+
   \sa DListView::orientation
  */
 void DListView::setOrientation(QListView::Flow flow, bool wrapping)
@@ -684,7 +734,8 @@ void DListView::setOrientation(QListView::Flow flow, bool wrapping)
 }
 
 /*!
-  \brief 开始编辑一个item
+  \brief 开始编辑一个item.
+
   \a index 指定要编辑的item的位置
  */
 void DListView::edit(const QModelIndex &index)
@@ -693,7 +744,8 @@ void DListView::edit(const QModelIndex &index)
 }
 
 /*!
-  \brief DListView::setBackgroundType 设定item的背景色类型
+  \brief 设定item的背景色类型.
+
   \a backgroundType 背景色类型
  */
 void DListView::setBackgroundType(DStyledItemDelegate::BackgroundType backgroundType)
@@ -712,7 +764,8 @@ void DListView::setBackgroundType(DStyledItemDelegate::BackgroundType background
 }
 
 /*!
-  \brief DListView::setItemMargins 设定item的内容margin
+  \brief 设定item的内容margin.
+
   \a itemMargins margin值
  */
 void DListView::setItemMargins(const QMargins &itemMargins)
@@ -723,7 +776,8 @@ void DListView::setItemMargins(const QMargins &itemMargins)
 }
 
 /*!
-  \brief DListView::setItemSize设定item的尺寸
+  \brief 设定item的尺寸.
+
   \a itemSize 尺寸的大小
  */
 void DListView::setItemSize(QSize itemSize)
@@ -734,7 +788,8 @@ void DListView::setItemSize(QSize itemSize)
 }
 
 /*!
-  \brief DListView::setItemSpacing　设定item的间距大小
+  \brief 设定item的间距大小.
+
   \a spacing　间距大小值
  */
 void DListView::setItemSpacing(int spacing)
@@ -745,7 +800,8 @@ void DListView::setItemSpacing(int spacing)
 }
 
 /*!
-  \brief DListView::setItemRadius 设定item的圆角大小
+  \brief 设定item的圆角大小.
+
   \a radius 圆角大小值
  */
 void DListView::setItemRadius(int radius)

@@ -96,6 +96,10 @@ void DInputDialogPrivate::init()
 /*!
   \class Dtk::Widget::DInputDialog
   \inmodule dtkwidget
+  \obsolete
+
+  Use QInputDialog instead.
+
   \brief 快速创建一个获取可输入数据的对话框.
   
   DInputDialog 一般直接调用其静态函数 DInputDialog::getText DInputDialog::getItem DInputDialog::getInt DInputDialog::getDouble 来直接获取文字，选项，整数，浮点数

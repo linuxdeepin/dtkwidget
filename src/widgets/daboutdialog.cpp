@@ -259,7 +259,7 @@ DAboutDialog::DAboutDialog(QWidget *parent)
   \property DAboutDialog::windowTitle
   
   \brief the title of the dialog.
-  \brief 返回关于对话框窗口的标题
+  \brief 返回关于对话框窗口的标题.
  */
 QString DAboutDialog::windowTitle() const
 {
@@ -270,7 +270,7 @@ QString DAboutDialog::windowTitle() const
   \property DAboutDialog::productName
   
   \brief the product name to be shown on the dialog.
-  \brief 返回对话框显示的应用名称
+  \brief 返回对话框显示的应用名称.
  */
 QString DAboutDialog::productName() const
 {
@@ -283,7 +283,7 @@ QString DAboutDialog::productName() const
   \property DAboutDialog::version
   
   \brief the version number to be shown on the dialog.
-  \brief 返回关于对话框显示的版本
+  \brief 返回关于对话框显示的版本.
  */
 QString DAboutDialog::version() const
 {
@@ -296,7 +296,7 @@ QString DAboutDialog::version() const
   \property DAboutDialog::description
 
   \brief the description to be show on the dialog.
-  \brief 返回关于对话框显示的描述
+  \brief 返回关于对话框显示的描述.
  */
 QString DAboutDialog::description() const
 {
@@ -307,7 +307,7 @@ QString DAboutDialog::description() const
 
 /*!
   \brief the vendor logo to be shown on the dialog.
-  \return 返回对话框中的公司/组织 logo 图片
+  \return 返回对话框中的公司/组织 logo 图片.
  */
 const QPixmap *DAboutDialog::companyLogo() const
 {
@@ -319,7 +319,7 @@ const QPixmap *DAboutDialog::companyLogo() const
 /*!
   \property DAboutDialog::websiteName
   \brief the vendor website name to be shown on the dialog.
-  \brief 返回对话框中显示的公司/组织网站名称
+  \brief 返回对话框中显示的公司/组织网站名称.
   
   Usually be in form like www.deepin.org.
   通常采用 www.deepin.org 等形式。
@@ -333,8 +333,8 @@ QString DAboutDialog::websiteName() const
 
 /*!
   \property DAboutDialog::websiteLink
-  \brief the corresponding web address of websiteName()
-  \brief 返回 websiteName() 相应的网址
+  \brief the corresponding web address of websiteName().
+  \brief 返回 websiteName() 相应的网址.
   
   The website link will be open in the browser if the user clicks on
   the website text shown on the dialog.
@@ -352,7 +352,7 @@ QString DAboutDialog::websiteLink() const
 
   \brief the web address to be open open when user clicks on the "Acknowlegement"
   text show on the dialog.
-  \brief 返回鸣谢链接地址
+  \brief 返回鸣谢链接地址.
  */
 QString DAboutDialog::acknowledgementLink() const
 {
@@ -365,7 +365,7 @@ QString DAboutDialog::acknowledgementLink() const
   \property DAboutDialog::license
 
   \brief the license to be shown on the dialog.
-  \brief 对话框显示的许可证
+  \brief 对话框显示的许可证.
  */
 QString DAboutDialog::license() const
 {
@@ -375,7 +375,9 @@ QString DAboutDialog::license() const
 }
 
 /*!
-  \brief 设置对话框窗口标题
+  \brief 设置对话框窗口标题.
+
+  \a windowTitle 窗口标题字符串.
  */
 void DAboutDialog::setWindowTitle(const QString &windowTitle)
 {
@@ -383,9 +385,9 @@ void DAboutDialog::setWindowTitle(const QString &windowTitle)
 }
 
 /*!
-  \brief 设置展示的图标
+  \brief 设置展示的 \a icon 图标.
   
-  在关于对话框展示的图标
+  在关于对话框展示的图标.
  */
 void DAboutDialog::setProductIcon(const QIcon &icon)
 {
@@ -395,7 +397,8 @@ void DAboutDialog::setProductIcon(const QIcon &icon)
 }
 
 /*!
-  \brief 设置应用名称
+  \brief 设置应用名称.
+  \a productName 产品名称.
  */
 void DAboutDialog::setProductName(const QString &productName)
 {
@@ -405,7 +408,7 @@ void DAboutDialog::setProductName(const QString &productName)
 }
 
 /*!
-  \brief 设置版本
+  \brief 此函数用于设置指定的 \a version 版本信息.
  */
 void DAboutDialog::setVersion(const QString &version)
 {
@@ -415,7 +418,7 @@ void DAboutDialog::setVersion(const QString &version)
 }
 
 /*!
-  \brief 设置描述信息
+  \brief 此函数用于设置指定的 \a description 描述信息.
  */
 void DAboutDialog::setDescription(const QString &description)
 {
@@ -425,7 +428,7 @@ void DAboutDialog::setDescription(const QString &description)
 }
 
 /*!
-  \brief 设置组织标志
+  \brief 此函数用于设置指定的 \a companyLogo 组织标志.
  */
 void DAboutDialog::setCompanyLogo(const QPixmap &companyLogo)
 {
@@ -435,7 +438,7 @@ void DAboutDialog::setCompanyLogo(const QPixmap &companyLogo)
 }
 
 /*!
-  \brief 设置网站名称
+  \brief 此函数用于设置指定的 \a websiteName 网站名称
  */
 void DAboutDialog::setWebsiteName(const QString &websiteName)
 {
@@ -450,7 +453,7 @@ void DAboutDialog::setWebsiteName(const QString &websiteName)
 }
 
 /*!
-  \brief 设置网站链接
+  \brief 此函数用于设置指定的 \a websiteLink 网站链接
  */
 void DAboutDialog::setWebsiteLink(const QString &websiteLink)
 {
@@ -465,7 +468,7 @@ void DAboutDialog::setWebsiteLink(const QString &websiteLink)
 }
 
 /*!
-  \brief 设置鸣谢链接
+  \brief 此函数用于设置指定的 \a acknowledgementLink 鸣谢链接
  */
 void DAboutDialog::setAcknowledgementLink(const QString &acknowledgementLink)
 {
@@ -476,7 +479,7 @@ void DAboutDialog::setAcknowledgementLink(const QString &acknowledgementLink)
 }
 
 /*!
-  \brief 设置鸣谢链接是否显示
+  \brief 此函数用于设置指定的 \a visible 设置鸣谢链接是否显示
  */
 void DAboutDialog::setAcknowledgementVisible(bool visible)
 {
@@ -486,7 +489,7 @@ void DAboutDialog::setAcknowledgementVisible(bool visible)
 }
 
 /*!
-  \brief 设置许可证
+  \brief 此函数用于设置指定的 \a license 许可证.
  */
 void DAboutDialog::setLicense(const QString &license)
 {

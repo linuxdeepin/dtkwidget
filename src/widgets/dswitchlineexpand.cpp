@@ -31,6 +31,7 @@ DWIDGET_BEGIN_NAMESPACE
 /*!
   \fn void DSwitchHeaderLine::checkedChanged(bool arg)
   \brief 信号在控件开关状态发生改变时触发.
+  \a arg checked状态
  */
 
 /*!
@@ -75,8 +76,8 @@ void DSwitchHeaderLine::mousePressEvent(QMouseEvent *)
  */
 
 /*!
-  \brief DSwitchLineExpand::DSwitchLineExpand 为 DSwitchLineExpand 类
-  的构造函数。
+  \brief DSwitchLineExpand 类的构造函数.
+
   \a parent 指定了控件的父控件。
  */
 DSwitchLineExpand::DSwitchLineExpand(QWidget *parent) :

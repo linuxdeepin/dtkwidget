@@ -58,7 +58,10 @@ public:
 /*!
   \class Dtk::Widget::DSegmentedHighlight
   \inmodule dtkwidget
+  \obsolete
   \brief DSegmentedHighlight 类代表了 DSegmentedControl 中当前选中（即高亮）的部分.
+
+  请使用 Dtk::Widget::DButtonBox 代替。
  */
 
 /*!
@@ -87,17 +90,23 @@ DSegmentedHighlight::DSegmentedHighlight(QWidget *parent) :
 
 /*!
   \fn void DSegmentedControl::currentChanged(int index)
-  \brief 信号在当前选中（高亮）的 Segment 发生改变时触发。
+  \brief 信号在当前选中（高亮）的 Segment 发生改变时触发.
+
+  \a index 当前标签的索引.
  */
 
 /*!
   \fn void DSegmentedControl::currentTitleChanged(QString title)
-  \brief 信号在当前选中（高亮）的 Segment 发生改变时触发。
+  \brief 信号在当前选中（高亮）的 Segment 发生改变时触发.
+
+  \a title 改变的标签标题.
  */
 
 /*!
   \fn void DSegmentedControl::animationDurationChanged(int animationDuration)
-  \brief 信号在高亮动画的动画周期发生改变时触发。
+  \brief 信号在高亮动画的动画周期发生改变时触发.
+
+  \a animationDuration 改变的动画周期.
  */
 
 /*!

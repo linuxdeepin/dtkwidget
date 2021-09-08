@@ -2249,6 +2249,54 @@ void DPrintPreviewDialogPrivate::pageRangeError(TipsNum tipNum)
     isOnFocus = false;
 }
 
+/*!
+    \class Dtk::Widget::DPrintPreviewDialog
+    \inmodule dtkwidget
+
+    \brief Dtk 风格的打印预览页面.
+
+    一个用于创建 Dtk 风格的打印预览页面，通常情况下，只需要
+    构建一个 DPrintPreivewDialog 对象，并将原始数据绘制
+    到连接 DPrintPreview::paintRequested 信号的槽函数
+    中,最后以模态的形式显示就可以正常使用。
+
+    dtkwidget 项目的 collection 示例中有对打印预览的简单
+    示例。简单的讲：打印预览拥有两种预览模式，1. 同步预览模式
+    ，适用于数据量较小，且更新不太频繁的原始数据中，这种模式下
+    默认情况下的，打印预览仅会在页面大小或者打印机属性发生变化
+    时发射 DPrintPreview::paintRequested 信号。2. 异步
+    预览模式，该模式适用于数据量较大，且更新较频繁的原始数据，
+    这种模式下，打印预览会频繁触发异步的 DPrintPreview::paintRequested
+    信号，但每次接收的数据量较小，因此不用担心响应速度的问题。
+    默认情况下的打印预览窗口为同步模式。
+
+    \section1 \b 基本使用
+    该代码在 example 中可以看到，这里简单贴出对应内容.
+    \snippet mainwindow.cpp 0
+
+    示例的预览效果如下：
+    \image DPrintPreviewExample.png
+
+    上述代码中用宏 AsynPreview 控制是否使用异步模式，并且通过
+    分别连接两种模式的 DPrintPreview::paintRequested 信号
+    将原始数据绘制到打印机 printer 中。需要注意的是，异步模式下
+    该信号会传递一个 pageRange 的页码数据，这个数据里面会放置
+    本次重绘需要展示的页面，应用可以根据原始数据，动态提供对应
+    页码的数据给打印预览。同样地，在打印预览最后打印的阶段，也会
+    根据用户选择的页码多少，向外获取对应页码的原始数据。
+    \warning pageRange 对应的数据为页码值，而非页面索引值！
+
+    \section1 \b 其他接口
+    除同步和异步接口之外，打印预览还提供给外部一些其他接口，例如
+    setDocName 设置数据文件名，在输出 pdf 或者图片时可以看到
+    效果。 setPrintFromPath 按照文件路径打印的接口，使用这个
+    接口将文件的路径传递给打印机，打印预览会在用户点击打印按钮后
+    将该路径和用户操作的属性直接传递给打印机，而不通过打印预览进行
+    中间处理，需要注意的是，使用了这个接口后，仍需要通过DPrintPreview::paintRequested
+    信号传递原始数据，并且，由于使用该接口后，属性操作完全取决于打印机
+    ，因此部分打印预览的高级功能会禁用。
+ */
+
 DPrintPreviewDialog::DPrintPreviewDialog(QWidget *parent)
     : DDialog(*new DPrintPreviewDialogPrivate(this), parent)
 {
@@ -2384,8 +2432,9 @@ QString DPrintPreviewDialog::docName() const
 }
 
 /*!
-  \brief DPrintPreviewDialog::setPrintFromPath 根据路径的文件进行打印
+  \brief DPrintPreviewDialog::setPrintFromPath 根据路径的文件进行打印.
   \a path 文件路径
+  \return 设置成功返回 true, 否则返回 false.
  */
 bool DPrintPreviewDialog::setPrintFromPath(const QString &path)
 {

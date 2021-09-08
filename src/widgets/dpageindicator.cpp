@@ -30,20 +30,13 @@ DWIDGET_BEGIN_NAMESPACE
   \class Dtk::Widget::DPageIndicator
   \inmodule dtkwidget
   \brief The DPageIndicator class provides indicator of which page is currently showing.
+  \brief DPageIndicator 类提供了一种用来指示一组元素中当前可见元素索引的控件.
   
   DPageIndicator is control that displays a horizontal series of dots,
   each of which corresponds to a page/widget may appear on top of it.
   
   It's inspired by UIPageControl of Apple.
-  See https://developer.apple.com/documentation/uikit/uipagecontrol.
-  
-  \note The design of this control is that it's just used to display, not
-  to control which page is currently visible.
-  
-  
-  \class Dtk::Widget::DPageIndicator
-  \inmodule dtkwidget
-  \brief DPageIndicator 类提供了一种用来指示一组元素中当前可见元素索引的控件。
+  See \l {https://developer.apple.com/documentation/uikit/uipagecontrol}.
   
   控件会显示了一系列的点，代表一组元素。其中每一个点固定对应于元素组中
   的一个元素，元素组中的元素在一个时间点只能显示其中的一个（ 如 QStackedLayout ），
@@ -53,6 +46,8 @@ DWIDGET_BEGIN_NAMESPACE
   \image pageindicator.png
   
   \note 此控件只用来显示当前元素位置以及层叠关系，并不能用来实际操纵元素的显示行为。
+  \note The design of this control is that it's just used to display, not
+  to control which page is currently visible.
  */
 
 /*!
