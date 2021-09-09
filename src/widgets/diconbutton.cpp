@@ -235,9 +235,9 @@ void DIconButton::initStyleOption(DStyleOptionButton *option) const
     option->iconSize = iconSize();
 
     if (backgroundRole() == QPalette::Highlight) {
-        option->palette.setBrush(QPalette::Light, option->dpalette.lightLively());
+        option->palette.setBrush(QPalette::Light, option->dpalette.highlight());
         option->palette.setBrush(QPalette::Button, option->palette.highlight());
-        option->palette.setBrush(QPalette::Dark, option->dpalette.darkLively());
+        option->palette.setBrush(QPalette::Dark, option->dpalette.highlight());
         option->palette.setBrush(QPalette::ButtonText, option->palette.highlightedText());
     }
 }
