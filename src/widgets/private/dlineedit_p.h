@@ -46,6 +46,8 @@ public:
     QLineEdit *lineEdit;
     QHBoxLayout *hLayout;
 
+    bool bEnableCut = true;
+    bool bEnableCopy = true;
     bool bSpeechToText = true;
     bool bTextToSpeech = true;
     bool bTextToTranslate = true;

@@ -421,6 +421,47 @@ void DLineEdit::setTextToTranslateEnabled(bool enable)
     D_D(DLineEdit);
     d->bTextToTranslate = enable;
 }
+
+/*!
+  \brief DLineEdit::cutEnabled
+  \return true文本可剪切　false不可剪切
+ */
+bool DLineEdit::cutEnabled() const
+{
+    D_DC(DLineEdit);
+    return d->bEnableCut;
+}
+
+/*!
+  \brief DLineEdit::setCutEnabled 设置输入文本是否可拷贝
+  \a enabled　true输入文本可剪切　false不可剪切
+ */
+void DLineEdit::setCutEnabled(bool enable)
+{
+    D_D(DLineEdit);
+    d->bEnableCut = enable;
+}
+
+/*!
+  \brief DLineEdit::copyEnabled
+  \return true文本可拷贝　false不可拷贝
+ */
+bool DLineEdit::copyEnabled() const
+{
+    D_DC(DLineEdit);
+    return d->bEnableCopy;
+}
+
+/*!
+  \brief DLineEdit::setCopyEnabled 设置输入文本是否可拷贝
+  \a enabled　true输入文本可拷贝　false不可拷贝
+ */
+void DLineEdit::setCopyEnabled(bool enable)
+{
+    D_D(DLineEdit);
+    d->bEnableCopy = enable;
+}
+
 /*!
   \brief 事件过滤器
 
@@ -442,6 +483,14 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
         Q_EMIT focusChanged(false);
     } else if (watched == lineEdit() && event->type() == QEvent::KeyPress) {
         QKeyEvent *pKeyEvent = static_cast<QKeyEvent *>(event);
+
+        if (pKeyEvent == QKeySequence::Copy && !copyEnabled()) {
+            return true;
+        }
+        if (pKeyEvent == QKeySequence::Cut && !cutEnabled()) {
+            return true;
+        }
+
         if (pKeyEvent == QKeySequence::SelectAll) {
             QApplication::clipboard()->setText(lineEdit()->text(), QClipboard::Mode::Selection);
         }
@@ -482,6 +531,15 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
 
         QLineEdit *pLineEdit = static_cast<QLineEdit*>(watched);
         QMenu *menu = pLineEdit->createStandardContextMenu();
+
+        for (QAction *action : menu->actions()) {
+            if (action->text().startsWith(QLineEdit::tr("&Copy"))) {
+                action->setEnabled(copyEnabled());
+            }
+            if (action->text().startsWith(QLineEdit::tr("Cu&t"))) {
+                action->setEnabled(cutEnabled());
+            }
+        }
 
         connect(menu, &QMenu::triggered, this, [pLineEdit](QAction *pAction) {
             if (pAction->text().startsWith(QLineEdit::tr("Select All"))) {

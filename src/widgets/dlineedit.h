@@ -79,6 +79,12 @@ public:
     bool textToTranslateIsEnabled() const;
     void setTextToTranslateEnabled(bool enable);
 
+    bool copyEnabled() const;
+    void setCopyEnabled(bool enable);
+
+    bool cutEnabled() const;
+    void setCutEnabled(bool enable);
+
 Q_SIGNALS:
     void alertChanged(bool alert) const;
     void focusChanged(bool onFocus) const;
