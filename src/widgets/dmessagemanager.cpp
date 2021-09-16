@@ -78,7 +78,7 @@ DMessageManager *DMessageManager::instance()  //公有静态函数
  */
 void DMessageManager::sendMessage(QWidget *par, DFloatingMessage *floMsg)
 {
-    QWidget *content = par->findChild<QWidget *>(D_MESSAGE_MANAGER_CONTENT);
+    QWidget *content = par->findChild<QWidget *>(D_MESSAGE_MANAGER_CONTENT, Qt::FindDirectChildrenOnly);
 
     if (!content) {
         content = new QWidget(par);
@@ -111,10 +111,10 @@ void DMessageManager::sendMessage(QWidget *par, DFloatingMessage *floMsg)
  */
 void DMessageManager::sendMessage(QWidget *par, const QIcon &icon, const QString &message)
 {
-    QWidget *content = par->findChild<QWidget *>(D_MESSAGE_MANAGER_CONTENT);
+    QWidget *content = par->findChild<QWidget *>(D_MESSAGE_MANAGER_CONTENT, Qt::FindDirectChildrenOnly);
     int text_message_count = 0;
 
-    for (DFloatingMessage *message : content->findChildren<DFloatingMessage*>()) {
+    for (DFloatingMessage *message : content->findChildren<DFloatingMessage*>(QString(), Qt::FindDirectChildrenOnly)) {
         if (message->messageType() == DFloatingMessage::TransientType) {
             ++text_message_count;
         }
@@ -139,7 +139,7 @@ void DMessageManager::sendMessage(QWidget *par, const QIcon &icon, const QString
  */
 bool DMessageManager::setContentMargens(QWidget *par, const QMargins &margins)
 {
-    QWidget *content = par->findChild<QWidget *>(D_MESSAGE_MANAGER_CONTENT);
+    QWidget *content = par->findChild<QWidget *>(D_MESSAGE_MANAGER_CONTENT, Qt::FindDirectChildrenOnly);
     if (content) {
         content->setContentsMargins(margins);
         return true;
@@ -164,13 +164,13 @@ bool DMessageManager::eventFilter(QObject *watched, QEvent *event)
             if (widget->objectName() == D_MESSAGE_MANAGER_CONTENT) {
                 content = widget;
             } else {
-                content = widget->findChild<QWidget*>(D_MESSAGE_MANAGER_CONTENT);
+                content = widget->findChild<QWidget*>(D_MESSAGE_MANAGER_CONTENT, Qt::FindDirectChildrenOnly);
             }
 
             QWidget *par = content->parentWidget();
 
             // 限制通知消息的最大宽度
-            for (DFloatingMessage *message : content->findChildren<DFloatingMessage*>()) {
+            for (DFloatingMessage *message : content->findChildren<DFloatingMessage*>(QString(), Qt::FindDirectChildrenOnly)) {
                 message->setMaximumWidth(par->rect().marginsRemoved(content->contentsMargins()).width());
                 message->setMinimumHeight(message->sizeHint().height());
             }
