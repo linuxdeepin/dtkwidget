@@ -1101,7 +1101,7 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
             QPalette pa = opt->palette;
 
             if (btn->features & DStyleOptionButton::TitleBarButton) {
-                if (!(opt->state & (State_MouseOver | State_Sunken))) {
+                if (!(opt->state & (State_MouseOver | State_Sunken)) || !(opt->state & State_Enabled)) {
                     pa.setBrush(QPalette::Background, Qt::transparent);
                 } else {
                     QColor color;
