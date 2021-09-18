@@ -1768,9 +1768,12 @@ case static_cast<uint32_t>(SP_##Value): { \
     case SP_IndicatorUnchecked:
         return QIcon::fromTheme("unselected_indicator");
     case SP_IndicatorChecked: {
-        const QIcon &icon = QIcon::fromTheme("selected_indicator");
+        bool checked = opt && (opt->state & QStyle::State_Selected);
+        const QIcon &sci = QIcon::fromTheme("selected_checked_indicator");
+        bool useNewIcon = checked && !sci.isNull();
+        const QIcon &icon = useNewIcon ? sci : QIcon::fromTheme("selected_indicator");
         DStyledIconEngine *icon_engine = new DStyledIconEngine(std::bind(DStyledIconEngine::drawIcon, icon, std::placeholders::_1, std::placeholders::_2), QStringLiteral("IndicatorChecked"));
-        icon_engine->setFrontRole(widget, DPalette::Highlight);
+        icon_engine->setFrontRole(widget, useNewIcon ? DPalette::HighlightedText : DPalette::Highlight );
         return QIcon(icon_engine);
     }
     case SP_DeleteButton:
