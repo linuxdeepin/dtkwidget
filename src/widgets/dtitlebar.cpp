@@ -931,6 +931,15 @@ bool DTitlebar::event(QEvent *e)
         d->updateCenterArea();
     }
 
+    if (e->type() == QEvent::FocusIn) {
+        QFocusEvent *fe = static_cast<QFocusEvent*>(e);
+        if (fe->reason() == Qt::TabFocusReason || fe->reason() == Qt::BacktabFocusReason) {
+            e->accept();
+            // 还需要 Tab 切换焦点时不不会出现再自己身上减少一次按 Tab 键 fix bug-65703
+            fe->reason() == Qt::TabFocusReason ? focusNextChild() : focusPreviousChild();
+        }
+    }
+
     return QFrame::event(e);
 }
 
