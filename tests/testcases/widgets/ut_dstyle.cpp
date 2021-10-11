@@ -25,6 +25,7 @@
 #include <DStyleOptionButton>
 #include <QTest>
 #include <QTextLayout>
+#include <QPainterPath>
 
 #include "dstyle.h"
 DWIDGET_USE_NAMESPACE
