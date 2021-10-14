@@ -379,9 +379,14 @@ void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
 
     bool allowResize = true;
 
-    if (q->window() && q->window()->windowHandle()) {
-        auto functions_hints = DWindowManagerHelper::getMotifFunctions(q->window()->windowHandle());
-        allowResize = functions_hints.testFlag(DWindowManagerHelper::FUNC_RESIZE);
+    if (QWidget * window = q->window()) {
+        if (window->windowHandle()) {
+            auto functions_hints = DWindowManagerHelper::getMotifFunctions(window->windowHandle());
+            allowResize = functions_hints.testFlag(DWindowManagerHelper::FUNC_RESIZE);
+        }
+
+        if (allowResize && Q_LIKELY(q->testAttribute(Qt::WA_WState_Created)) && Q_LIKELY(q->testAttribute(Qt::WA_Resized)))
+            allowResize = (window->maximumSize() != window->minimumSize());
     }
 
     bool showMax = (type.testFlag(Qt::WindowMaximizeButtonHint) || forceShow) && !forceHide && allowResize;
