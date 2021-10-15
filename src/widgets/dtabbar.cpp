@@ -242,12 +242,20 @@ public:
             ll = isRectType ? 6 : TabSpacing;
             lr = isRectType ? 6 : TabSpacing;
         }
+
+        /* 右箭头、添加按钮都显示，则右键投左右边距6，添加按钮左右边距10
+         * 右箭头、添加按钮都不显示，则没有边距
+         * 只显示右键，左右边距为6
+         * 只显示添加按钮，左右边距为10
+         */
         if (rightScrollButton->isVisible()) {
             rl = isRectType ? 6 : TabSpacing;
-            const int AddButtonLeftMargin = 8;
+            const int AddButtonLeftMargin = 6;
             al = AddButtonLeftMargin;
         }
         if (addButton->isVisible()) {
+            const int AddButtonLeftMargin = 10;
+            al = AddButtonLeftMargin;
             const int AddButtonRightMargin = 10;
             ar = AddButtonRightMargin;
         }
@@ -264,7 +272,6 @@ public:
             leftBtnR->changeSize(0, lr);
             rightBtnL->changeSize(0, rl);
             addBtnL->changeSize(0, al);
-            addBtnR->changeSize(0, al);
             addBtnR->changeSize(0, ar);
         }
         layout->invalidate();
