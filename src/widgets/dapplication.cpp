@@ -1468,7 +1468,9 @@ void DApplication::handleHelpAction()
         d->appHandler->handleHelpAction();
         return;
     }
-
+    if (!DApplicationPrivate::isUserManualExists()) {
+        return;
+    }
 #ifdef Q_OS_LINUX
     QString appid = applicationName();
 

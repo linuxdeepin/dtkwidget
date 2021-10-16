@@ -112,7 +112,7 @@ void DMainWindowPrivate::init()
         QObject::connect(help, &QShortcut::activated,
         q, [ = ]() {
             DApplication *dapp = qobject_cast<DApplication *>(qApp);
-            if (dapp && DApplicationPrivate::isUserManualExists()) {
+            if (dapp) {
                 dapp->handleHelpAction();
             }
         });
