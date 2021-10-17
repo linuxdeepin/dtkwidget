@@ -6,7 +6,7 @@ CONFIG -= app_bundle
 # 如果不需要编译打印预览的单元测试 可以打开这个宏
 #DEFINES += DTK_NO_PRINTPREVIEWTEST
 
-QT += widgets dtkcore$$D_VERION dtkgui$$D_VERION testlib
+QT += widgets dtkcore$$D_VERSION dtkgui$$D_VERSION testlib
 
 unix:QMAKE_RPATHDIR += $$OUT_PWD/../src
 unix:LIBS += -lgtest -lglib-2.0
