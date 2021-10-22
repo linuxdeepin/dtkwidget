@@ -73,6 +73,9 @@ public:
     void setDisableFlags(Qt::WindowFlags flags);
     Qt::WindowFlags disableFlags() const;
 
+    void setSplitScreenEnabled(bool enabled);
+    bool splitScreenIsEnabled() const;
+
     virtual QSize sizeHint() const override;
     virtual QSize minimumSizeHint() const override;
 

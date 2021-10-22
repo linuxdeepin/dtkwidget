@@ -122,6 +122,7 @@ void DPrintPreviewDialogPrivate::initui()
     DTitlebar *titlebar = q->findChild<DTitlebar *>();
     Q_ASSERT(titlebar);
     titlebar->setAutoFillBackground(true);
+    titlebar->setSplitScreenEnabled(false);
 
     DPalette pa = DPaletteHelper::instance()->palette(titlebar);
     pa.setBrush(DPalette::Background, pa.base());

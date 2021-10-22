@@ -38,5 +38,13 @@
         <file>light/icons/dorpper_normal_32px.svg</file>
         <file>dark/icons/titlebar_more_50px.svg</file>
         <file>light/icons/titlebar_more_50px.svg</file>
+        <file>dark/actions/splitscreen_left_36px.svg</file>
+        <file>dark/actions/splitscreen_right_36px.svg</file>
+        <file>dark/actions/splitscreen_showmaximize_36px.svg</file>
+        <file>dark/actions/splitscreen_shownormal_36px.svg</file>
+        <file>light/actions/splitscreen_left_36px.svg</file>
+        <file>light/actions/splitscreen_right_36px.svg</file>
+        <file>light/actions/splitscreen_showmaximize_36px.svg</file>
+        <file>light/actions/splitscreen_shownormal_36px.svg</file>
     </qresource>
 </RCC>

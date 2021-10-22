@@ -216,6 +216,11 @@ public:
         SP_AddButton,                               //新增按钮
         SP_TitleQuitFullButton,                     //标题栏(「」)
         SP_TitleMoreButton,                         //标题栏 "更多" 按钮
+
+        SP_Title_SS_LeftButton,                     //标题栏左分屏按钮
+        SP_Title_SS_RightButton,                    //标题栏右分屏按钮
+        SP_Title_SS_ShowMaximizeButton,             //标题栏最大化分屏按钮
+        SP_Title_SS_ShowNormalButton,               //标题栏还原分屏按钮
         SP_CustomBase = QStyle::SP_CustomBase + 0xf00000
     };
 

@@ -1828,6 +1828,14 @@ case static_cast<uint32_t>(SP_##Value): { \
         return QIcon::fromTheme("search_indicator");
     case SP_TitleMoreButton:
         return QIcon::fromTheme("titlebar_more");
+    case SP_Title_SS_LeftButton:
+        return QIcon::fromTheme("splitscreen_left");
+    case SP_Title_SS_RightButton:
+        return QIcon::fromTheme("splitscreen_right");
+    case SP_Title_SS_ShowNormalButton:
+        return QIcon::fromTheme("splitscreen_shownormal");
+    case SP_Title_SS_ShowMaximizeButton:
+        return QIcon::fromTheme("splitscreen_showmaximize");
     default:
         break;
     }
