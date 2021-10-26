@@ -18,8 +18,8 @@ enum Margins{
   \class Dtk::Widget::DCommandLinkButton
   \inmodule dtkwidget
 
-  一个继承于 QAbstractButton 的按钮,外形和链接很像;也可以是带有箭头的链接
-  常用于点击之后,跳转到另外一个窗口或者页面,比如浏览器的前进后退按钮
+  \brief DCommandLinkButton  一个继承于 QAbstractButton 的按钮,外形和链接很像;
+  也可以是带有箭头的链接。常用于点击之后,跳转到另外一个窗口或者页面,比如浏览器的前进后退按钮
  */
 
 /*!

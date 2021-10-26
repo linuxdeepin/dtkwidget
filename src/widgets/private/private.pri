@@ -54,7 +54,8 @@ HEADERS += \
     $$PWD/dsearchcombobox_p.h \
     $$PWD/dprintpreviewdialog_p.h \
     $$PWD/dprintpreviewwidget_p.h \
-    $$PWD/dpalettehelper_p.h
+    $$PWD/dpalettehelper_p.h \
+    $$PWD/dcombobox_p.h
 
 SOURCES += \
     $$PWD/dthemehelper.cpp

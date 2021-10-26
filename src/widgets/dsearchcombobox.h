@@ -29,7 +29,7 @@
 DWIDGET_BEGIN_NAMESPACE
 
 class DSearchComboBoxPrivate;
-class LIBDTKWIDGETSHARED_EXPORT DSearchComboBox : public DComboBox, public DTK_CORE_NAMESPACE::DObject
+class LIBDTKWIDGETSHARED_EXPORT DSearchComboBox : public DComboBox
 {
     Q_OBJECT
     Q_DISABLE_COPY(DSearchComboBox)

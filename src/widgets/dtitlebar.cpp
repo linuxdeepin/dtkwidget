@@ -379,9 +379,14 @@ void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
 
     bool allowResize = true;
 
-    if (q->window() && q->window()->windowHandle()) {
-        auto functions_hints = DWindowManagerHelper::getMotifFunctions(q->window()->windowHandle());
-        allowResize = functions_hints.testFlag(DWindowManagerHelper::FUNC_RESIZE);
+    if (QWidget * window = q->window()) {
+        if (window->windowHandle()) {
+            auto functions_hints = DWindowManagerHelper::getMotifFunctions(window->windowHandle());
+            allowResize = functions_hints.testFlag(DWindowManagerHelper::FUNC_RESIZE);
+        }
+
+        if (allowResize && Q_LIKELY(q->testAttribute(Qt::WA_WState_Created)) && Q_LIKELY(q->testAttribute(Qt::WA_Resized)))
+            allowResize = (window->maximumSize() != window->minimumSize());
     }
 
     bool showMax = (type.testFlag(Qt::WindowMaximizeButtonHint) || forceShow) && !forceHide && allowResize;
@@ -924,6 +929,15 @@ bool DTitlebar::event(QEvent *e)
         D_D(DTitlebar);
 
         d->updateCenterArea();
+    }
+
+    if (e->type() == QEvent::FocusIn) {
+        QFocusEvent *fe = static_cast<QFocusEvent*>(e);
+        if (fe->reason() == Qt::TabFocusReason || fe->reason() == Qt::BacktabFocusReason) {
+            e->accept();
+            // 还需要 Tab 切换焦点时不不会出现再自己身上减少一次按 Tab 键 fix bug-65703
+            fe->reason() == Qt::TabFocusReason ? focusNextChild() : focusPreviousChild();
+        }
     }
 
     return QFrame::event(e);
