@@ -1,1 +1,2 @@
 #include "dcombobox.h"
+#include "dwidgetstype.h"
