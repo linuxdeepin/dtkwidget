@@ -34,6 +34,7 @@ public:
     bool flat = false;
     qint64 iconType = -1;
     bool circleStatus = false;
+    DDciIcon dciIcon;
 
     D_DECLARE_PUBLIC(DIconButton)
 };

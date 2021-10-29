@@ -42,6 +42,7 @@ public:
     }
 
     qint64 iconType = -1;
+    DDciIcon dciIcon;
 };
 
 /*!
@@ -110,6 +111,12 @@ DButtonBoxButton::DButtonBoxButton(DStyle::StandardPixmap iconType, const QStrin
     d_func()->iconType = static_cast<qint64>(iconType);
 }
 
+DButtonBoxButton::DButtonBoxButton(const DDciIcon &dciIcon, const QString &text, QWidget *parent)
+    : DButtonBoxButton(text, parent)
+{
+    setIcon(dciIcon);
+}
+
 /*!
   \brief 设置按钮图标.
 
@@ -149,6 +156,20 @@ void DButtonBoxButton::setIcon(DStyle::StandardPixmap iconType)
 
     d->iconType = iconType;
     QAbstractButton::setIcon(DStyleHelper(style()).standardIcon(iconType, nullptr, this));
+}
+
+void DButtonBoxButton::setIcon(const DDciIcon &icon)
+{
+    D_D(DButtonBoxButton);
+
+    d->dciIcon = icon;
+}
+
+DDciIcon DButtonBoxButton::dciIcon() const
+{
+    D_DC(DButtonBoxButton);
+
+    return d->dciIcon;
 }
 
 /*!
@@ -248,6 +269,12 @@ void DButtonBoxButton::initStyleOption(DStyleOptionButtonBoxButton *option) cons
     option->text = text();
     option->icon = icon();
     option->iconSize = iconSize();
+
+    D_DC(DButtonBoxButton);
+    if (!d->dciIcon.isNull()) {
+        option->dciIcon = d->dciIcon;
+        option->features |= QStyleOptionButton::ButtonFeature(DStyleOptionButton::HasDciIcon);
+    }
 
     if (DButtonBox *p = qobject_cast<DButtonBox*>(parent())) {
         option->orientation = p->orientation();

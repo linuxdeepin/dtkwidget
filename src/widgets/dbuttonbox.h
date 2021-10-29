@@ -43,10 +43,14 @@ public:
                      const QString &text = QString(), QWidget *parent = nullptr);
     DButtonBoxButton(DStyle::StandardPixmap iconType = static_cast<DStyle::StandardPixmap>(-1),
                      const QString &text = QString(), QWidget *parent = nullptr);
+    DButtonBoxButton(const DDciIcon &dciIcon, const QString &text = QString(), QWidget *parent = nullptr);
 
     void setIcon(const QIcon &icon);
     void setIcon(QStyle::StandardPixmap iconType);
     void setIcon(DStyle::StandardPixmap iconType);
+
+    void setIcon(const DDciIcon &icon);
+    DDciIcon dciIcon() const;
 
     QSize iconSize() const;
     QSize sizeHint() const;

@@ -24,6 +24,7 @@
 #include <dtkwidget_global.h>
 #include <DPalette>
 
+#include <DDciIcon>
 #include <QStyleOption>
 
 QT_BEGIN_NAMESPACE
@@ -61,6 +62,7 @@ public:
 
     virtual void init(QWidget *widget);
     virtual void init(const QWidget *widget);
+    virtual ~DStyleOption() {}
 
     DPalette dpalette;
 };
@@ -73,10 +75,12 @@ public:
         WarningButton = (SuggestButton << 1),
         FloatingButton = (WarningButton << 1),
         TitleBarButton = (FloatingButton << 1),
-        CircleButton = (TitleBarButton << 1)
+        CircleButton = (TitleBarButton << 1),
+        HasDciIcon = (CircleButton << 1)
     };
 
     void init(const QWidget *widget) override;
+    DDciIcon dciIcon;
 };
 
 class DStyleOptionButtonBoxButton : public DStyleOptionButton
@@ -133,6 +137,22 @@ class DStyleOptionIcon : public QStyleOption, public DStyleOption
 {
 public:
     QIcon icon;
+};
+
+typedef DStyleOptionIcon DStyleOptionIconV1;
+
+class DStyleOptionIconV2 : public DStyleOptionIconV1
+{
+public:
+    enum IconType { SI_QIcon, SI_DciIcon };
+
+    IconType iconType;
+    QSize iconSize;
+    Qt::Alignment iconAlignment;
+
+    DDciIcon dciIcon;
+    DDciIcon::Theme dciTheme;
+    DDciIcon::Mode dciMode;
 };
 
 class DStyleOptionViewItem : public QStyleOptionViewItem, public DStyleOption
