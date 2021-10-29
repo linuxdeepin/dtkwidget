@@ -1,5 +1,8 @@
 #include "dmessagemanager.h"
+
 #include <DFloatingMessage>
+#include <DDciIcon>
+
 #include <QVBoxLayout>
 #include <QEvent>
 
@@ -57,6 +60,29 @@ bool DMessageManager::eventFilter(QObject *watched, QEvent *event)
 }
 
 DWIDGET_BEGIN_NAMESPACE
+template<typename IconType>
+static void sendMessage_helper(DMessageManager *manager, QWidget *par, IconType icon, const QString &message)
+{
+    QWidget *content = par->findChild<QWidget *>(D_MESSAGE_MANAGER_CONTENT, Qt::FindDirectChildrenOnly);
+    int text_message_count = 0;
+
+    for (DFloatingMessage *message : content->findChildren<DFloatingMessage*>(QString(), Qt::FindDirectChildrenOnly)) {
+        if (message->messageType() == DFloatingMessage::TransientType) {
+            ++text_message_count;
+        }
+    }
+
+    // TransientType 类型的通知消息，最多只允许同时显示三个
+    if (text_message_count >= 3)
+        return;
+
+    DFloatingMessage *floMsg = new DFloatingMessage(DFloatingMessage::TransientType);
+    floMsg->setAttribute(Qt::WA_DeleteOnClose);
+    floMsg->setIcon(icon);
+    floMsg->setMessage(message);
+    manager->sendMessage(par, floMsg);
+}
+
 DMessageManager::DMessageManager()               //私有静态构造函数
 {
 }
@@ -111,24 +137,12 @@ void DMessageManager::sendMessage(QWidget *par, DFloatingMessage *floMsg)
  */
 void DMessageManager::sendMessage(QWidget *par, const QIcon &icon, const QString &message)
 {
-    QWidget *content = par->findChild<QWidget *>(D_MESSAGE_MANAGER_CONTENT, Qt::FindDirectChildrenOnly);
-    int text_message_count = 0;
+    sendMessage_helper(instance(), par, icon, message);
+}
 
-    for (DFloatingMessage *message : content->findChildren<DFloatingMessage*>(QString(), Qt::FindDirectChildrenOnly)) {
-        if (message->messageType() == DFloatingMessage::TransientType) {
-            ++text_message_count;
-        }
-    }
-
-    // TransientType 类型的通知消息，最多只允许同时显示三个
-    if (text_message_count >= 3)
-        return;
-
-    DFloatingMessage *floMsg = new DFloatingMessage(DFloatingMessage::TransientType);
-    floMsg->setAttribute(Qt::WA_DeleteOnClose);
-    floMsg->setIcon(icon);
-    floMsg->setMessage(message);
-    sendMessage(par, floMsg);
+void DMessageManager::sendMessage(QWidget *par, const DDciIcon &icon, const QString &message)
+{
+    sendMessage_helper(instance(), par, icon, message);
 }
 
 /*!

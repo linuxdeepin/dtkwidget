@@ -152,6 +152,12 @@ void DFloatingMessage::setIcon(const QIcon &ico)
     d->iconButton->setIcon(ico);
 }
 
+void DFloatingMessage::setIcon(const DDciIcon &icon)
+{
+    D_D(DFloatingMessage);
+    d->iconButton->setIcon(icon);
+}
+
 /*!
   \brief 设置显示的文本消息(文字)
   \a str 消息文本的具体文字内容

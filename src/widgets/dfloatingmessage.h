@@ -46,6 +46,7 @@ public:
     MessageType messageType() const;
 
     void setIcon(const QIcon &ico);
+    void setIcon(const DDciIcon &icon);
     void setMessage(const QString &str);
     void setWidget(QWidget *w);
     void setDuration(int msec);

@@ -65,6 +65,12 @@ DFloatingButton::DFloatingButton(const QIcon &icon, const QString &text, QWidget
     setText(text);
 }
 
+DFloatingButton::DFloatingButton(const DDciIcon &icon, const QString &text, QWidget *parent)
+    : DFloatingButton(text, parent)
+{
+    setIcon(icon);
+}
+
 DStyleOptionButton DFloatingButton::baseStyleOption() const
 {
     DStyleOptionButton opt;
@@ -77,6 +83,9 @@ void DFloatingButton::initStyleOption(DStyleOptionButton *option) const
 {
     DIconButton::initStyleOption(option);
     option->features = QStyleOptionButton::ButtonFeature(DStyleOptionButton::FloatingButton);
+
+    if (!option->dciIcon.isNull())
+        option->features |= QStyleOptionButton::ButtonFeature(DStyleOptionButton::HasDciIcon);
 }
 
 DWIDGET_END_NAMESPACE

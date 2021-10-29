@@ -4,6 +4,11 @@
 #include <QObject>
 #include <QWidget>
 #include <dtkwidget_global.h>
+#include <dtkgui_global.h>
+
+DGUI_BEGIN_NAMESPACE
+class DDciIcon;
+DGUI_END_NAMESPACE
 
 DWIDGET_BEGIN_NAMESPACE
 class DFloatingMessage;
@@ -19,6 +24,7 @@ public:
 
     void sendMessage(QWidget *par, DFloatingMessage *floMsg);
     void sendMessage(QWidget *par, const QIcon &icon, const QString &message);
+    void sendMessage(QWidget *par, const DGUI_NAMESPACE::DDciIcon &icon, const QString &message);
     bool setContentMargens(QWidget *par, const QMargins &margins);
 
 protected:
