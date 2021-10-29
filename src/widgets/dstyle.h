@@ -23,6 +23,7 @@
 
 #include <dtkwidget_global.h>
 #include <DPalette>
+#include <DDciIcon>
 
 #include <QCommonStyle>
 #include <QPainter>
@@ -229,6 +230,7 @@ public:
                               qint8 redFloat = 0, qint8 greenFloat = 0, qint8 blueFloat = 0, qint8 alphaFloat = 0);
     static QColor blendColor(const QColor &substrate, const QColor &superstratum);
     static QPair<QIcon::Mode, QIcon::State> toIconModeState(const QStyleOption *option);
+    static DDciIcon::Mode toDciIconMode(const QStyleOption *option);
 
     static void setTooltipTextFormat(Qt::TextFormat format);
     static Qt::TextFormat tooltipTextFormat();

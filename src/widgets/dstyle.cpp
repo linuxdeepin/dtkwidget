@@ -104,6 +104,33 @@ QPair<QIcon::Mode, QIcon::State> DStyle::toIconModeState(const QStyleOption *opt
     return qMakePair(mode, state);
 }
 
+DDciIcon::Mode DStyle::toDciIconMode(const QStyleOption *option)
+{
+    DDciIcon::Mode mode = DDciIcon::Normal;
+
+    if (option->state & QStyle::State_Enabled) {
+        if (option->state & (State_Sunken | State_Selected)) {
+            mode = DDciIcon::Pressed;
+        } else if (option->state & State_MouseOver) {
+            mode = DDciIcon::Hover;
+        }
+    } else {
+        mode = DDciIcon::Disabled;
+    }
+
+    return mode;
+}
+
+static DDciIconPalette makeIconPalette(const QPalette &pal)
+{
+    DDciIconPalette iconPalette;
+    iconPalette.setForeground(pal.color(QPalette::WindowText));
+    iconPalette.setBackground(pal.color(QPalette::Window));
+    iconPalette.setHighlight(pal.color(QPalette::Highlight));
+    iconPalette.setHighlightForeground(pal.color(QPalette::HighlightedText));
+    return iconPalette;
+}
+
 /*!
   \brief 设置 tooltip 的文本格式.
 
@@ -1140,11 +1167,24 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
     case PE_IconButtonIcon: {
         if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton *>(opt)) {
             DStyleHelper dstyle(style);
-            DStyleOptionIcon icon_option;
+            bool hasDciIcon = (btn->features & DStyleOptionButton::HasDciIcon);
+            DStyleOptionIconV2 icon_option;
 
             icon_option.QStyleOption::operator =(*opt);
-            icon_option.icon = btn->icon;
+            if (hasDciIcon) {
+                icon_option.dciIcon = btn->dciIcon;
+                icon_option.iconType = DStyleOptionIconV2::SI_DciIcon;
+                icon_option.dciMode = toDciIconMode(opt);
+                icon_option.dciTheme = (DGuiApplicationHelper::toColorType(btn->palette)
+                                        == DGuiApplicationHelper::LightType) ? DDciIcon::Light : DDciIcon::Dark;
+            } else {
+                icon_option.icon = btn->icon;
+                icon_option.iconType = DStyleOptionIconV2::SI_QIcon;
+            }
+
+            icon_option.iconSize = btn->iconSize;
             icon_option.dpalette = btn->dpalette;
+            icon_option.iconAlignment = Qt::AlignCenter;
 
             QPalette pa = opt->palette;
 
@@ -1185,20 +1225,40 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
         break;
     }
     case PE_Icon: {
-        if (const DStyleOptionIcon *icon_opt = qstyleoption_cast<const DStyleOptionIcon *>(opt)) {
-            if (icon_opt->icon.isNull()) {
-                return;
+        if (const DStyleOptionIconV2 *icon_opt = qstyleoption_cast<const DStyleOptionIconV2 *>(opt)) {
+            switch (icon_opt->iconType) {
+            case DStyleOptionIconV2::SI_QIcon: {
+                auto *data = const_cast<DStyleOptionIconV2 *>(icon_opt)->icon.data_ptr();
+                if (!data)
+                    return;
+
+                if (DStyledIconEngine *engine = dynamic_cast<DStyledIconEngine *>(data->engine)) {
+                    engine->paint(p, opt->palette, opt->rect);
+                } else {
+                    auto icon_mode_state = toIconModeState(opt);
+                    p->setBrush(opt->palette.background());
+                    p->setPen(QPen(opt->palette.foreground(), 1));
+                    icon_opt->icon.paint(p, opt->rect, icon_opt->iconAlignment, icon_mode_state.first, icon_mode_state.second);
+                }
             }
+                break;
 
-            auto *data = const_cast<DStyleOptionIcon *>(icon_opt)->icon.data_ptr();
+            case DStyleOptionIconV2::SI_DciIcon: {
+                DDciIcon icon = icon_opt->dciIcon;
+                if (icon.isNull())
+                    break;
 
-            if (DStyledIconEngine *engine = dynamic_cast<DStyledIconEngine *>(data->engine)) {
-                engine->paint(p, opt->palette, opt->rect);
-            } else {
-                auto icon_mode_state = toIconModeState(opt);
-                p->setBrush(opt->palette.background());
-                p->setPen(QPen(opt->palette.foreground(), 1));
-                icon_opt->icon.paint(p, opt->rect, Qt::AlignCenter, icon_mode_state.first, icon_mode_state.second);
+                p->save();
+                p->setBrush(Qt::NoBrush);
+                const DDciIconPalette &iconPalette = makeIconPalette(opt->palette);
+                int iconSizeForRect = qMax(icon_opt->iconSize.width(), icon_opt->iconSize.height());
+                const QRect iconRect{icon_opt->rect.topLeft(), QSize(iconSizeForRect, iconSizeForRect)};
+                icon_opt->dciIcon.paint(p, iconRect, p->device() ? p->device()->devicePixelRatioF()
+                                                                 : qApp->devicePixelRatio(), icon_opt->dciTheme,
+                                        icon_opt->dciMode, icon_opt->iconAlignment, iconPalette);
+                p->restore();
+            }
+                break;
             }
         }
         break;
@@ -1398,6 +1458,7 @@ void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const Q
             DStyleHelper dstyle(style);
             dstyle.drawControl(CE_ButtonBoxButtonBevel, btn, p, w);
             DStyleOptionButton subopt = *btn;
+            subopt.dciIcon = btn->dciIcon;
             subopt.rect = dstyle.subElementRect(SE_ButtonBoxButtonContents, btn, w);
             dstyle.drawControl(CE_ButtonBoxButtonLabel, &subopt, p, w);
             if ((btn->state & State_HasFocus)) {

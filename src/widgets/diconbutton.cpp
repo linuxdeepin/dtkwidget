@@ -57,6 +57,12 @@ DIconButton::DIconButton(DStyle::StandardPixmap iconType, QWidget *parent)
     setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
 }
 
+DIconButton::DIconButton(const DDciIcon &dciIcon, QWidget *parent)
+    : DIconButton(parent)
+{
+    setIcon(dciIcon);
+}
+
 DIconButton::~DIconButton()
 {
 
@@ -96,6 +102,23 @@ void DIconButton::setIcon(DStyle::StandardPixmap iconType)
 
     d->iconType = iconType;
     QAbstractButton::setIcon(DStyleHelper(style()).standardIcon(iconType, nullptr, this));
+}
+
+void DIconButton::setIcon(const DDciIcon &icon)
+{
+    D_D(DIconButton);
+
+    d->iconType = -1;
+    d->dciIcon = icon;
+    this->update();
+    this->updateGeometry();
+}
+
+DDciIcon DIconButton::dciIcon() const
+{
+    D_DC(DIconButton);
+
+    return d->dciIcon;
 }
 
 QSize DIconButton::sizeHint() const
@@ -138,7 +161,6 @@ QSize DIconButton::iconSize() const
     DStyleHelper dstyle(style());
     DStyleOptionButton opt = baseStyleOption();
     int size = dstyle.pixelMetric(DStyle::PM_IconButtonIconSize, &opt, this);
-
     if (Q_LIKELY(size > 0)) {
         return QSize(size, size);
     }
@@ -227,7 +249,12 @@ void DIconButton::initStyleOption(DStyleOptionButton *option) const
         option->state |= QStyle::State_Raised;
 
     if (enabledCircle()) {
-        option->features = QStyleOptionButton::ButtonFeature(DStyleOptionButton::CircleButton);
+        option->features |= QStyleOptionButton::ButtonFeature(DStyleOptionButton::CircleButton);
+    }
+
+    if (!d->dciIcon.isNull()) {
+        option->dciIcon = d->dciIcon;
+        option->features |= QStyleOptionButton::ButtonFeature(DStyleOptionButton::HasDciIcon);
     }
 
     option->text = text();

@@ -35,6 +35,7 @@ public:
     explicit DFloatingButton(DStyle::StandardPixmap iconType = static_cast<DStyle::StandardPixmap>(-1), QWidget *parent = nullptr);
     explicit DFloatingButton(const QString &text, QWidget *parent = nullptr);
     DFloatingButton(const QIcon& icon, const QString &text = QString(), QWidget *parent = nullptr);
+    DFloatingButton(const DDciIcon &icon, const QString &text = QString(), QWidget *parent = nullptr);
 
 protected:
     DStyleOptionButton baseStyleOption() const override;

@@ -24,8 +24,13 @@
 #include <dtkwidget_global.h>
 #include <DObject>
 #include <DStyle>
+#include <DDciIcon>
 
 #include <QAbstractButton>
+
+DGUI_BEGIN_NAMESPACE
+class DDciIcon;
+DGUI_END_NAMESPACE
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -42,11 +47,15 @@ public:
     explicit DIconButton(QWidget *parent = nullptr);
     explicit DIconButton(QStyle::StandardPixmap iconType = static_cast<QStyle::StandardPixmap>(-1), QWidget *parent = nullptr);
     explicit DIconButton(DStyle::StandardPixmap iconType = static_cast<DStyle::StandardPixmap>(-1), QWidget *parent = nullptr);
+    explicit DIconButton(const DDciIcon &dciIcon, QWidget *parent = nullptr);
     ~DIconButton() override;
 
     void setIcon(const QIcon &icon);
     void setIcon(QStyle::StandardPixmap iconType);
     void setIcon(DStyle::StandardPixmap iconType);
+    void setIcon(const DDciIcon &icon);
+
+    DDciIcon dciIcon() const;
 
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
