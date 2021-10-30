@@ -15,6 +15,7 @@ BuildRequires:  qt5-linguist
 BuildRequires:  qt5-qtbase-static
 BuildRequires:  dtkgui-devel
 BuildRequires:  dtkcore-devel
+BuildRequires:  gtest-devel
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Concurrent)
 BuildRequires:  pkgconfig(Qt5DBus)
