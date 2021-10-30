@@ -81,6 +81,12 @@ load(dtk_cmake)
 
 load(dtk_module)
 
+!isEmpty(DTK_MULTI_VERSION) {
+# 支持上游一包多依赖
 load(dtk_multiversion)
+# 5.5 5.6可通过重复调用此函数,来增加对更多版本的支持
 dtkBuildMultiVersion(5.5)
+
+# INSTALL变量增加多版本下的配置文件
 load(dtk_install_multiversion)
+}
