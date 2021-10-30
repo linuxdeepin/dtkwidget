@@ -71,6 +71,7 @@ export PATH=%{_qt5_bindir}:$PATH
 %doc README.md
 %license LICENSE
 %{_libdir}/lib%{name}.so.5*
+%{_libdir}/examples
 %{_libdir}/libdtk-*/
 %{_datadir}/libdtk-*/
 
