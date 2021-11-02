@@ -2,6 +2,7 @@ INCLUDEPATH += $$PWD/../../../src/
 INCLUDEPATH += $$PWD/../../../src/widgets/
 INCLUDEPATH += $$OUT_PWD/../src/
 
+!contains(QMAKE_HOST.arch, mips.*) {
 SOURCES += \
     $$PWD/ut_daboutdialog.cpp \
     $$PWD/ut_dabstractdialog.cpp \
@@ -85,3 +86,4 @@ SOURCES += \
     $$PWD/ut_dtitlebar.cpp \
     $$PWD/ut_dpageindicator.cpp \
     $$PWD/ut_dtiplabel.cpp
+}
