@@ -230,12 +230,12 @@ void DAlertControl::showAlertMessage(const QString &text, QWidget *follower, int
     }
 
     if (follower) {
-        d->frame->setParent(follower->parentWidget());
+        d->frame->setParent(follower->topLevelWidget());
         d->follower = follower;
         //installEventFilter(d->follower);
         d->follower->installEventFilter(this);
     } else {
-        d->frame->setParent(d->target->parentWidget());
+        d->frame->setParent(d->target->topLevelWidget());
         d->follower = d->target;
         d->follower->installEventFilter(this);
     }
