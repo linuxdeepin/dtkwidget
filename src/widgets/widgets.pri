@@ -117,7 +117,6 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dprintpreviewwidget.h \
     $$PWD/dprintpickcolorwidget.h \
     $$PWD/dpalettehelper.h \
-    $$PWD/dpalettehelper.h \
     $$PWD/dcombobox.h \
     $$PWD/dfontcombobox.h
 
