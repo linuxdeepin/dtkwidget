@@ -1363,12 +1363,6 @@ void DPrintPreviewDialogPrivate::marginsUpdate(bool isPrinterChanged)
 void DPrintPreviewDialogPrivate::themeTypeChange(DGuiApplicationHelper::ColorType themeType)
 {
     Q_Q(DPrintPreviewDialog);
-    DWidget *titleWidget = q->findChild<DWidget *>("titlewidget");
-    DPalette m_pa = DPaletteHelper::instance()->palette(titleWidget);
-    m_pa.setBrush(DPalette::Background, m_pa.base());
-    DPaletteHelper::instance()->setPalette(titleWidget, m_pa);
-    titleWidget->setAutoFillBackground(true);
-
     QList<DFrame *> m_frameList = q->findChildren<DFrame *>();
     QList<DBackgroundGroup *> m_back = q->findChildren<DBackgroundGroup *>();
 
