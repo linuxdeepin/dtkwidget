@@ -1419,6 +1419,7 @@ void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const Q
             const QColor &background = dstyle.getColor(opt, checked ? QPalette::Highlight : QPalette::Button);
             p->setBrush(background);
             p->setPen(QPen(background, 1));
+            p->setRenderHint(QPainter::Antialiasing); // 统一使用抗锯齿，避免中间按钮未使用抗锯齿高度不对齐
             int radius = dstyle.pixelMetric(PM_FrameRadius, opt, w);
             int margins = dstyle.pixelMetric(PM_FrameMargins, opt, w);
             DStyleOptionButtonBoxButton::ButtonPosition pos = btn->position;
@@ -1429,7 +1430,6 @@ void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const Q
 
             switch (pos) {
             case DStyleOptionButtonBoxButton::Beginning: {
-                p->setRenderHint(QPainter::Antialiasing);
                 QRect rect;
 
                 if (btn->orientation == Qt::Horizontal) {
@@ -1454,7 +1454,6 @@ void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const Q
                 break;
             }
             case DStyleOptionButtonBoxButton::End: {
-                p->setRenderHint(QPainter::Antialiasing);
                 QRect rect;
 
                 if (btn->orientation == Qt::Horizontal) {
