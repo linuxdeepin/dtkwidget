@@ -77,6 +77,7 @@ private:
     DSplitScreenButton *rightSplitButton        = nullptr;
     DSplitScreenButton *maximizeButton          = nullptr;
 
+    QWidget *contentWidget = nullptr;
     QBasicTimer hideTimer;
     DArrowRectangle::FloatMode floatMode;
 };

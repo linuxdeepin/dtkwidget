@@ -237,7 +237,7 @@ void DSplitScreenWidget::init()
     this->setRadiusArrowStyleEnable(true);
     this->setBorderColor(QColor(0, 0, 0, qRound(0.05 * 255)));
 
-    QWidget *contentWidget = new QWidget(this);
+    contentWidget = new QWidget(this);
     QHBoxLayout *contentLayout = new QHBoxLayout(contentWidget);
 
     this->leftSplitButton = new DSplitScreenButton(DStyle::SP_Title_SS_LeftButton, this);
@@ -309,6 +309,7 @@ bool DSplitScreenWidget::eventFilter(QObject *o, QEvent *e)
 
 void DSplitScreenWidget::showEvent(QShowEvent *e)
 {
+    this->setContent(contentWidget);
     DArrowRectangle::showEvent(e);
 
     QRect rect = this->rect();
@@ -925,7 +926,15 @@ void DTitlebarPrivate::showSplitScreenWidget()
 
     auto centerPos = maxButton->mapToGlobal(maxButton->rect().center());
     auto bottomPos = maxButton->mapToGlobal(maxButton->rect().bottomLeft());
-    splitWidget->show(centerPos.x() - splitWidget->arrowWidth() / 2, bottomPos.y());
+
+    QRect rect = QApplication::desktop()->screenGeometry(splitWidget->window());
+    if (bottomPos.y() + splitWidget->height() > rect.height()) {
+        splitWidget->setArrowDirection(DArrowRectangle::ArrowBottom);
+        splitWidget->show(centerPos.x() - splitWidget->arrowWidth() / 2, bottomPos.y() - maxButton->rect().height());
+    } else {
+        splitWidget->setArrowDirection(DArrowRectangle::ArrowTop);
+        splitWidget->show(centerPos.x() - splitWidget->arrowWidth() / 2, bottomPos.y());
+    }
 }
 
 void DTitlebarPrivate::hideSplitScreenWidget()
