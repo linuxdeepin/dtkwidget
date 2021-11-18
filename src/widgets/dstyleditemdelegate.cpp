@@ -277,7 +277,9 @@ public:
 
             icon_rect.moveCenter(rect.center());
             icon_rect.moveLeft(rect.left());
-            icon.paint(pa, icon_rect);
+
+            auto modeStatePair = DStyle::toIconModeState(&option);
+            icon.paint(pa, icon_rect, Qt::AlignCenter, modeStatePair.first, modeStatePair.second);
         }
 
         // draw text
@@ -299,14 +301,12 @@ public:
         const DViewItemActionList &actionList = qvariant_cast<DViewItemActionList>(value);
         DViewItemActionList visiable_actionList;
         for (auto action : actionList) {
-            if (action->isVisible()) {
+            if (action->isVisible())
                 visiable_actionList.append(action);
-                if (action->widget())
-                    action->widget()->setVisible(true);
-            } else {
-                // action为隐藏状态需要将widget隐藏
-                if (action->widget())
-                    action->widget()->setVisible(false);
+
+            if (QWidget *actionWidget = action->widget()) {
+                actionWidget->setVisible(action->isVisible());
+                actionWidget->setEnabled(option.state & QStyle::State_Enabled);
             }
         }
 
