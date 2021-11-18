@@ -105,7 +105,7 @@ DAlertControl::~DAlertControl()
 void DAlertControl::setAlert(bool isAlert)
 {
     D_D(DAlertControl);
-    if (isAlert == d->isAlert) {
+    if (isAlert == d->isAlert || !d->target) {
         return;
     }
 
@@ -214,6 +214,8 @@ void DAlertControl::showAlertMessage(const QString &text, int duration)
 void DAlertControl::showAlertMessage(const QString &text, QWidget *follower, int duration)
 {
     D_D(DAlertControl);
+    if (!d->target)
+        return;
 
     if (!d->tooltip) {
         d->tooltip = new DToolTip(text);
@@ -232,7 +234,6 @@ void DAlertControl::showAlertMessage(const QString &text, QWidget *follower, int
     if (follower) {
         d->frame->setParent(follower->topLevelWidget());
         d->follower = follower;
-        //installEventFilter(d->follower);
         d->follower->installEventFilter(this);
     } else {
         d->frame->setParent(d->target->topLevelWidget());
@@ -243,7 +244,8 @@ void DAlertControl::showAlertMessage(const QString &text, QWidget *follower, int
     d->tooltip->setText(text);
     if (d->frame->parent()) {
         d->updateTooltipPos();
-        d->frame->show();
+        // 如果 target 都隐藏了,显示警告消息毫无意义，只会让人困惑
+        d->frame->setVisible(d->target->isVisibleTo(d->target->topLevelWidget()));
         d->frame->adjustSize();
         d->frame->raise();
     }
@@ -282,10 +284,15 @@ DAlertControl::DAlertControl(DAlertControlPrivate &d, QObject *parent)
 bool DAlertControl::eventFilter(QObject *watched, QEvent *event)
 {
     Q_D(DAlertControl);
-    if (watched == d->follower && (event->type() == QEvent::Move ||
-                                   event->type() == QEvent::Resize)) {
-        d->updateTooltipPos();
+    if (watched == d->follower) {
+        if (event->type() == QEvent::Move || event->type() == QEvent::Resize)
+            d->updateTooltipPos();
+
+        if (event->type() == QEvent::Hide || event->type() == QEvent::HideToParent)
+            hideAlertMessage();
     }
+
+
     return QObject::eventFilter(watched, event);
 }
 
