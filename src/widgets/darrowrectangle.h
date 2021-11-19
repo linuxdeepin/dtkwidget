@@ -77,6 +77,7 @@ public:
     Q_PROPERTY(qreal shadowBlurRadius READ shadowBlurRadius WRITE setShadowBlurRadius)
 
     int radius() const;
+    bool radiusForceEnabled() const;
     int arrowHeight() const;
     int arrowWidth() const;
     int arrowX() const;
@@ -88,6 +89,7 @@ public:
     ArrowDirection arrowDirection() const;
 
     void setRadius(int value);
+    void setRadiusForceEnable(bool enable);
     void setArrowHeight(int value);
     void setArrowWidth(int value);
     void setArrowX(int value);
