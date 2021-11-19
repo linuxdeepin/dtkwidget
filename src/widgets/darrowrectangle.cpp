@@ -1124,6 +1124,10 @@ void DArrowRectanglePrivate::updateClipPath()
 
 bool DArrowRectanglePrivate::radiusEnabled()
 {
+    D_Q(DArrowRectangle);
+    if (q->property("_d_radius_force").toBool())
+        return true;
+
     if (m_wmHelper && !m_wmHelper->hasComposite()) {
         return false;
     }
