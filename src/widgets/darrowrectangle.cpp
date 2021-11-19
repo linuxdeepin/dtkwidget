@@ -335,6 +335,16 @@ void DArrowRectangle::setRadiusArrowStyleEnable(bool enable)
 }
 
 /*!
+  \brief DArrowRectangle::setRadiusForceEnable 设置圆角样式.
+  \brief 默认窗管支持特效混成时有圆角，没有特效时没有圆角，如果启用一直都有圆角
+  \a enable 是否开启.
+ */
+void DArrowRectangle::setRadiusForceEnable(bool enable)
+{
+    setProperty("_d_radius_force", enable);
+}
+
+/*!
   \property DArrowRectangle::shadowXOffset
 
   \brief 这属性表示小部件及其阴影在x轴上的偏移量
@@ -528,6 +538,18 @@ int DArrowRectangle::radius() const
     D_DC(DArrowRectangle);
 
     return d->m_radius;
+}
+
+/*!
+  \property DArrowRectangle::radiusForceEnabled
+
+  \brief 是否强制(忽略特效)开启圆角
+
+  Getter: DArrowRectangle::radiusForceEnabled , Setter: DArrowRectangle::setRadiusForceEnable
+ */
+bool DArrowRectangle::radiusForceEnabled() const
+{
+    return property("_d_radius_force").toBool();
 }
 
 /*!
@@ -1158,7 +1180,7 @@ void DArrowRectanglePrivate::updateClipPath()
 bool DArrowRectanglePrivate::radiusEnabled()
 {
     D_Q(DArrowRectangle);
-    if (q->property("_d_radius_force").toBool())
+    if (q->radiusForceEnabled())
         return true;
 
     if (m_wmHelper && !m_wmHelper->hasComposite()) {
