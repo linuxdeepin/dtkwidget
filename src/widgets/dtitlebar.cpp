@@ -209,9 +209,18 @@ void DSplitScreenWidget::updateMaximizeButtonIcon(bool isMaximized)
 {
     if (isMaximized) {
         this->maximizeButton->setIcon(DStyle::SP_Title_SS_ShowMaximizeButton);
+        this->maximizeButton->setToolTip(qApp->translate("DSplitScreenWidget", "Unmaximize"));
     } else {
         this->maximizeButton->setIcon(DStyle::SP_Title_SS_ShowNormalButton);
+        this->maximizeButton->setToolTip(qApp->translate("DSplitScreenWidget", "Maximize"));
     }
+}
+
+void DSplitScreenWidget::setButtonsEnable(bool enable)
+{
+    this->maximizeButton->setEnabled(enable);
+    this->leftSplitButton->setEnabled(enable);
+    this->rightSplitButton->setEnabled(enable);
 }
 
 void DSplitScreenWidget::onThemeTypeChanged(DGuiApplicationHelper::ColorType ct)
@@ -243,7 +252,8 @@ void DSplitScreenWidget::init()
     this->leftSplitButton = new DSplitScreenButton(DStyle::SP_Title_SS_LeftButton, this);
     this->rightSplitButton = new DSplitScreenButton(DStyle::SP_Title_SS_RightButton, this);
     this->maximizeButton = new DSplitScreenButton(DStyle::SP_Title_SS_ShowNormalButton, this);
-
+    this->leftSplitButton->setToolTip(qApp->translate("DSplitScreenWidget", "Tile window to left of screen"));
+    this->rightSplitButton->setToolTip(qApp->translate("DSplitScreenWidget", "Tile window to right of screen"));
 
     contentLayout->setMargin(0);
     contentLayout->setSpacing(10);
@@ -254,6 +264,7 @@ void DSplitScreenWidget::init()
     this->setContent(contentWidget);
     onThemeTypeChanged(DGuiApplicationHelper::instance()->themeType());
     qApp->installEventFilter(this);
+
     disabledByScreenGeometryAndWindowSize({leftSplitButton, rightSplitButton, maximizeButton});
 
     QObject::connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged, this, &DSplitScreenWidget::onThemeTypeChanged);
@@ -895,20 +906,17 @@ void DTitlebarPrivate::showSplitScreenWidget()
     if (!splitScreenWidgetEnable)
         return;
 
-    if (!Q_LIKELY(supportSplitScreenByWM()))
-        return;
-
     if (disableFlags.testFlag(Qt::WindowMaximizeButtonHint))
         return;
 
-    if (!splitWidget) {
-        DSplitScreenWidget::FloatMode floatMode = DSplitScreenWidget::FloatWindow;
-        if (auto wmHelper = DWindowManagerHelper::instance()) {
-            if (wmHelper->hasComposite())
-                floatMode = DSplitScreenWidget::FloatWidget;
-        }
+    // 应产品要求 2D 模式下不对窗口分屏做任何显示
+    if (auto wmHelper = DWindowManagerHelper::instance()) {
+        if (!wmHelper->hasComposite())
+            return;
+    }
 
-        splitWidget = new DSplitScreenWidget(floatMode, q->window());
+    if (!splitWidget) {
+        splitWidget = new DSplitScreenWidget(DSplitScreenWidget::FloatWidget, q->window());
 
         QObject::connect(splitWidget, &DSplitScreenWidget::maximizeButtonClicked, q,
                          std::bind(&DTitlebarPrivate::changeWindowSplitedState, this, DSplitScreenWidget::SplitFullScreen));
@@ -921,6 +929,8 @@ void DTitlebarPrivate::showSplitScreenWidget()
     if (splitWidget->isVisible())
         return;
 
+    // 应产品要求，窗管不支持分屏时禁用分屏按钮
+    splitWidget->setButtonsEnable(supportSplitScreenByWM());
     if (auto window = targetWindow())
         splitWidget->updateMaximizeButtonIcon(window->isMaximized());
 

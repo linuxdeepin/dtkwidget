@@ -56,6 +56,7 @@ public:
     void hide();
     void hideImmediately();
     void updateMaximizeButtonIcon(bool isMaximized);
+    void setButtonsEnable(bool enable);
 
 Q_SIGNALS:
     void maximizeButtonClicked();
