@@ -927,7 +927,13 @@ void DTitlebarPrivate::showSplitScreenWidget()
     auto centerPos = maxButton->mapToGlobal(maxButton->rect().center());
     auto bottomPos = maxButton->mapToGlobal(maxButton->rect().bottomLeft());
 
-    QRect rect = QApplication::desktop()->screenGeometry(splitWidget->window());
+    QRect rect;
+    if (QScreen *screen = QGuiApplication::screenAt(QCursor::pos())) {
+        rect = screen->geometry();
+    } else {
+        rect = QGuiApplication::primaryScreen()->geometry();
+    }
+
     if (bottomPos.y() + splitWidget->height() > rect.height()) {
         splitWidget->setArrowDirection(DArrowRectangle::ArrowBottom);
         splitWidget->show(centerPos.x() - splitWidget->arrowWidth() / 2, bottomPos.y() - maxButton->rect().height());
