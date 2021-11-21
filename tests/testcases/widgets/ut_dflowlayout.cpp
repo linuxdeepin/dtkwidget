@@ -28,15 +28,17 @@ class ut_DFlowLayout : public testing::Test
 protected:
     void SetUp() override
     {
-        target = new DFlowLayout();
+        holder = new QWidget;
+        target = new DFlowLayout(holder);
     }
     void TearDown() override
     {
-        if (target) {
-            delete target;
-            target = nullptr;
+        if (holder) {
+            delete holder;
+            holder = nullptr;
         }
     }
+    QWidget * holder = nullptr;
     DFlowLayout *target = nullptr;
 };
 

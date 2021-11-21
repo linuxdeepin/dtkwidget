@@ -29,19 +29,17 @@ class ut_DBackgroundGroup : public testing::Test
 protected:
     void SetUp() override
     {
-        widget = new QWidget();
-        layout = new QHBoxLayout(widget);
+        layout = new QHBoxLayout();
         target = new DBackgroundGroup(layout);
     }
     void TearDown() override
     {
-        if (widget) {
-            delete widget;
-            widget = nullptr;
+        if (target) {
+            delete target;
+            target = nullptr;
         }
     }
     DBackgroundGroup *target = nullptr;
-    QWidget* widget = nullptr;
     QLayout* layout = nullptr;
 };
 
