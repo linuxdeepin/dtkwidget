@@ -7,12 +7,12 @@
         <translation>ཐུགས་རྗེ་ཞུ་བ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1238"/>
+        <location filename="../widgets/dapplication.cpp" line="1526"/>
         <source>Version: %1</source>
         <translation>པར་གཞི།  %1</translation>
     </message>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1242"/>
+        <location filename="../widgets/dapplication.cpp" line="1530"/>
         <source>%1 is released under %2</source>
         <translation>%1ཡིས་%2ཡི་གྲོས་དོན་བརྩི་སྲུང་བྱས་ནས་ཁྱབ་བསྒྲགས་བྱ་རྒྱུ།</translation>
     </message>
@@ -20,87 +20,87 @@
 <context>
     <name>DCrumbEdit</name>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="900"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="840"/>
         <source>Black</source>
         <translation>ནག་པོ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="903"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="843"/>
         <source>White</source>
         <translation>དཀར་པོ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="906"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="846"/>
         <source>Dark Gray</source>
         <translation>སྐྱ་ནག</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="909"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="849"/>
         <source>Gray</source>
         <translation>སྐྱ་མདོག</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="912"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="852"/>
         <source>Light Gray</source>
         <translation>སྐྱ་དཀར།</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="915"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="855"/>
         <source>Red</source>
         <translation>དམར་པོ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="918"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="858"/>
         <source>Green</source>
         <translation>ལྗང་གུ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="921"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="861"/>
         <source>Blue</source>
         <translation>སྔོན་པོ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="924"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="864"/>
         <source>Cyan</source>
         <translation>མཐིང་མདོག</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="927"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="867"/>
         <source>Magenta</source>
         <translation>དམར་སྐྱ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="930"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="870"/>
         <source>Yellow</source>
         <translation>སེར་པོ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="933"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="873"/>
         <source>Dark Red</source>
         <translation>དམར་སྨུག</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="936"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="876"/>
         <source>Dark Green</source>
         <translation>ལྗང་ནག</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="939"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="879"/>
         <source>Dark Blue</source>
         <translation>སྔོ་ནག</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="942"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="882"/>
         <source>Dark Cyan</source>
         <translation>མཐིང་ནག</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="945"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="885"/>
         <source>Dark Magenta</source>
         <translation>མཆིན་མདོག</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="948"/>
+        <location filename="../widgets/dcrumbedit.cpp" line="888"/>
         <source>Dark Yellow</source>
         <translation>སྨུག་སེར།</translation>
     </message>
@@ -129,22 +129,22 @@
 <context>
     <name>DLineEdit</name>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="471"/>
+        <location filename="../widgets/dlineedit.cpp" line="562"/>
         <source>Stop reading</source>
         <translation>ཀློག་འདོན་བྱེད་མཚམས་འཇོག་རྒྱུ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="473"/>
+        <location filename="../widgets/dlineedit.cpp" line="564"/>
         <source>Text to Speech</source>
         <translation>སྐད་སྒྲའི་ཀློག་འདོན།</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="496"/>
+        <location filename="../widgets/dlineedit.cpp" line="587"/>
         <source>Translate</source>
         <translation>ཡིག་སྒྱུར།</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="518"/>
+        <location filename="../widgets/dlineedit.cpp" line="609"/>
         <source>Speech To Text</source>
         <translation>སྐད་སྒྲའི་དཔོད་བྲིས།</translation>
     </message>
@@ -152,337 +152,337 @@
 <context>
     <name>DPrintPreviewDialogPrivate</name>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="232"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1175"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="235"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1181"/>
         <source>Advanced</source>
         <translation>མཐོ་རིམ་སྒྲིག་བཀོད།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="255"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="258"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>འདོར་བ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="256"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1596"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="259"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1597"/>
         <source>Print</source>
         <comment>button</comment>
         <translation>པར་འདེབས།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="272"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="275"/>
         <source>Basic</source>
         <translation>རྨང་གཞིའི་སྒྲིག་བཀོད།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="287"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="290"/>
         <source>Printer</source>
         <translation>པར་འདེབས་འཕྲུལ་འཁོར།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="301"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="304"/>
         <source>Copies</source>
         <translation>པར་འདེབས་གྲངས།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="321"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="324"/>
         <source>Page range</source>
         <translation>ཤོག་གྲངས་ཁྱབ་ཁོངས།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="323"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="326"/>
         <source>All</source>
         <translation>ཚང་མ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="324"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="327"/>
         <source>Current page</source>
         <translation>མིག་སྔའི་ཤོག་ངོས།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="325"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="328"/>
         <source>Select pages</source>
         <translation>དམིགས་བཙུགས་ཤོག་ངོས།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="340"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="343"/>
         <source>Orientation</source>
         <translation>པར་འདེབས་ཕྱོགས།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="364"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="367"/>
         <source>Portrait</source>
         <translation>འཕྲེད་དུ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="374"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="377"/>
         <source>Landscape</source>
         <translation>གཞུང་དུ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="402"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="405"/>
         <source>Pages</source>
         <translation>ཤོག་ངོས་སྒྲིག་བཀོད།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="412"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="415"/>
         <source>Color mode</source>
         <translation>ཚོས་གཞི།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="414"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1553"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1620"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="417"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1554"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1621"/>
         <source>Color</source>
         <translation>ཚོན་ཁྲ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="414"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1605"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1620"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="417"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1606"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1621"/>
         <source>Grayscale</source>
         <translation>ཚོན་མེད།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="425"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="428"/>
         <source>Margins</source>
         <translation>མཐའ་ཐག</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="427"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="430"/>
         <source>Narrow (mm)</source>
         <translation>ཆུང་བ།(mm)</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="427"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="430"/>
         <source>Normal (mm)</source>
         <translation>དཀྱུས་མ།(mm)</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="427"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="430"/>
         <source>Moderate (mm)</source>
         <translation>འོས་འཚམ།(mm)</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="427"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="430"/>
         <source>Customize (mm)</source>
         <translation>རང་སྒྲུབ།(mm)</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="433"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="436"/>
         <source>Top</source>
         <translation>སྟེང་།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="436"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="439"/>
         <source>Left</source>
         <translation>གཡོན།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="439"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="442"/>
         <source>Bottom</source>
         <translation>འོག</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="442"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="445"/>
         <source>Right</source>
         <translation>གཡས།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="487"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="490"/>
         <source>Scaling</source>
         <translation>ཆུང་སྒྱུར།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="501"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="504"/>
         <source>Actual size</source>
         <translation>དངོས་ཡོད་ཆེ་ཆུང་།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="510"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="513"/>
         <source>Scale</source>
         <translation>རང་སྒྲུབ་བསྡུར་ཚད།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="541"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="544"/>
         <source>Paper</source>
         <translation>ཤོག་བུ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="551"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="554"/>
         <source>Paper size</source>
         <translation>ཤོག་བུའི་ཆེ་ཆུང་།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="564"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="567"/>
         <source>Print Layout</source>
         <translation>པར་འདེབས་བྱེད་ཐབས།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="575"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="578"/>
         <source>Duplex</source>
         <translation>ངོས་ཟུང་པར་འདེབས།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="588"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="591"/>
         <source>N-up printing</source>
         <translation>འདྲ་གཤིབ་པར་འདེབས།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="590"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="593"/>
         <source>2 pages/sheet, 1×2</source>
         <translation>ཤོག་ལྷེ་རེར་པར་ངོས་2  1×2</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="590"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="593"/>
         <source>4 pages/sheet, 2×2</source>
         <translation>ཤོག་ལྷེ་རེར་པར་ངོས་4  2×2</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="590"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="593"/>
         <source>6 pages/sheet, 2×3</source>
         <translation>ཤོག་ལྷེ་རེར་པར་ངོས་6  2×3</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="590"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="593"/>
         <source>9 pages/sheet, 3×3</source>
         <translation>ཤོག་ལྷེ་རེར་པར་ངོས་9  3×3</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="590"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="593"/>
         <source>16 pages/sheet, 4×4</source>
         <translation>ཤོག་ལྷེ་རེར་པར་ངོས་16  4×4</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="599"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="602"/>
         <source>Layout direction</source>
         <translation>མཉམ་འདེབས་ཀྱི་གོ་རིམ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="644"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="647"/>
         <source>Page Order</source>
         <translation>པར་འདེབས་གོ་རིམ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="655"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="658"/>
         <source>Collate pages</source>
         <translation>རེ་རེ་བཞིན་པར་འདེབས།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="661"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="664"/>
         <source>Print pages in order</source>
         <translation>གོ་རིམ་ལྟར་པར་འདེབས་པ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="663"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="666"/>
         <source>Front to back</source>
         <translation>མདུན་ནས་རྒྱབ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="663"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="666"/>
         <source>Back to front</source>
         <translation>རྒྱབ་ནས་མདུན།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="687"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="690"/>
         <source>Watermark</source>
         <translation>ཆུ་ཚོན་པར་རྒྱག</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="698"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="701"/>
         <source>Add watermark</source>
         <translation>ཆུ་ཚོན་པར་རྒྱག་སྣོན་པ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="740"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="743"/>
         <source>Text watermark</source>
         <translation>ཡི་གེ་ཆུ་ཚོན་པར་རྒྱག</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="742"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="745"/>
         <source>Confidential</source>
         <translation>གསང་ཆེན།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="742"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="745"/>
         <source>Draft</source>
         <translation>ཟིན་བྲིས།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="742"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="745"/>
         <source>Sample</source>
         <translation>མ་དཔེ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="742"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="745"/>
         <source>Custom</source>
         <translation>རང་སྒྲུབ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="750"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="753"/>
         <source>Input your text</source>
         <translation>རང་སྒྲུབ་ཆུ་ཚོན་པར་རྒྱག་ནང་འཇུག་བྱེད་པ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="773"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="776"/>
         <source>Picture watermark</source>
         <translation>པར་རིས་ཆུ་ཚོན་པར་རྒྱག</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="794"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="797"/>
         <source>Layout</source>
         <translation>པར་འདེབས་བྱེད་ཐབས།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="796"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="799"/>
         <source>Tile</source>
         <translation>སྙོམས་འདིང་།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="796"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="799"/>
         <source>Center</source>
         <translation>དཀྱིལ་སྒྲིག</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="807"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="810"/>
         <source>Angle</source>
         <translation>ཀྱོག་ཚད།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="823"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="826"/>
         <source>Size</source>
         <translation>ཆེ་ཆུང་།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="844"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="847"/>
         <source>Transparency</source>
         <translation>གསལ་ཚད།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="901"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="904"/>
         <source>Print to PDF</source>
         <translation>PDFལ་ཉར་བ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="902"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="905"/>
         <source>Save as Image</source>
         <translation>པར་རིས་གཞན་ཉར།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1171"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1177"/>
         <source>Collapse</source>
         <translation>བསྡུ་བ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1294"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1301"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1300"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1307"/>
         <source>Flip on short edge</source>
         <translation>ཐག་ཐུང་ནས་ཕྱིར་སྐོར་བ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1297"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1300"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1303"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1306"/>
         <source>Flip on long edge</source>
         <translation>ཐག་རིང་ནས་ཕྱིར་སྐོར་བ།</translation>
     </message>
@@ -507,33 +507,33 @@
         <translation>ཡང་དག་པའི་རྣམ་གཞག་ནང་འཇུག་བྱེད། དཔེར་ན། 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1558"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1559"/>
         <source>Save</source>
         <comment>button</comment>
         <translation>ཉར་བ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2168"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2174"/>
         <source>*.pdf</source>
         <translation>*.pdf</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1672"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1673"/>
         <source>For example, 1,3,5-7,11-15,18,21</source>
         <translation>རྣམ་གཞག་ནང་འཇུག་བྱོས། 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2168"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2174"/>
         <source>Save as PDF</source>
         <translation>PDFལྟར་ཉར་བ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2207"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2213"/>
         <source>Save as image</source>
         <translation>པར་རིས་ལ་ཉར་བ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2209"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2215"/>
         <source>Images</source>
         <translation>པར་རིས་ཡིག་ཆ།</translation>
     </message>
@@ -541,20 +541,20 @@
 <context>
     <name>DPrintPreviewWidget</name>
     <message>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1590"/>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1593"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1619"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1622"/>
         <source>Confidential</source>
         <translation>གསང་ཆེན།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1608"/>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1611"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1637"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1640"/>
         <source>Draft</source>
         <translation>ཟིན་བྲིས།</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1626"/>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1629"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1655"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1658"/>
         <source>Sample</source>
         <translation>མ་དཔེ།</translation>
     </message>
@@ -562,7 +562,7 @@
 <context>
     <name>DSearchEdit</name>
     <message>
-        <location filename="../widgets/dsearchedit.cpp" line="291"/>
+        <location filename="../widgets/dsearchedit.cpp" line="297"/>
         <source>Search</source>
         <translation>འཚོལ་ཞིབ།</translation>
     </message>
@@ -599,24 +599,47 @@
     </message>
 </context>
 <context>
+    <name>DSplitScreenWidget</name>
+    <message>
+        <location filename="../widgets/dtitlebar.cpp" line="212"/>
+        <source>Unmaximize</source>
+        <translation>སོར་ཆུད།</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dtitlebar.cpp" line="215"/>
+        <source>Maximize</source>
+        <translation>ཆེ་སྒྱུར།</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dtitlebar.cpp" line="255"/>
+        <source>Tile window to left of screen</source>
+        <translation>སྒེའུ་ཁུང་གཡོན་ངོས་སུ་མཐུད་པ།</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dtitlebar.cpp" line="256"/>
+        <source>Tile window to right of screen</source>
+        <translation>སྒེའུ་ཁུང་གཡས་ངོས་སུ་མཐུད་པ།</translation>
+    </message>
+</context>
+<context>
     <name>DTextEdit</name>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="171"/>
+        <location filename="../widgets/dtextedit.cpp" line="185"/>
         <source>Stop reading</source>
         <translation>ཀློག་འདོན་བྱེད་མཚམས་འཇོག་རྒྱུ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="173"/>
+        <location filename="../widgets/dtextedit.cpp" line="187"/>
         <source>Text to Speech</source>
         <translation>སྐད་སྒྲའི་ཀློག་འདོན།</translation>
     </message>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="196"/>
+        <location filename="../widgets/dtextedit.cpp" line="210"/>
         <source>Translate</source>
         <translation>ཡིག་སྒྱུར།</translation>
     </message>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="218"/>
+        <location filename="../widgets/dtextedit.cpp" line="232"/>
         <source>Speech To Text</source>
         <translation>སྐད་སྒྲའི་དཔོད་བྲིས།</translation>
     </message>
@@ -624,7 +647,7 @@
 <context>
     <name>PickColorWidget</name>
     <message>
-        <location filename="../widgets/dprintpickcolorwidget.cpp" line="109"/>
+        <location filename="../widgets/dprintpickcolorwidget.cpp" line="110"/>
         <source>Color</source>
         <translation>ཚོན་ཁྲ།</translation>
     </message>
@@ -632,7 +655,17 @@
 <context>
     <name>QLineEdit</name>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="454"/>
+        <location filename="../widgets/dlineedit.cpp" line="536"/>
+        <source>&amp;Copy</source>
+        <translation>པར་སློག(&amp;C)</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dlineedit.cpp" line="539"/>
+        <source>Cu&amp;t</source>
+        <translation>དྲས་པ།(&amp;T)</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dlineedit.cpp" line="545"/>
         <source>Select All</source>
         <translation>ཡོངས་འདེམས།</translation>
     </message>
@@ -640,12 +673,12 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../widgets/dsimplelistview.cpp" line="1334"/>
+        <location filename="../widgets/dsimplelistview.cpp" line="1366"/>
         <source>No search result</source>
         <translation>འཚོལ་ཞིབ་བྱས་འབྲས་མེད།</translation>
     </message>
     <message>
-        <location filename="../widgets/private/settings/content.cpp" line="331"/>
+        <location filename="../widgets/private/settings/content.cpp" line="336"/>
         <source>Restore Defaults</source>
         <translation>སོར་བཞག་སླར་གསོ།</translation>
     </message>
@@ -653,7 +686,7 @@
 <context>
     <name>QWidgetTextControl</name>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="163"/>
+        <location filename="../widgets/dtextedit.cpp" line="177"/>
         <source>Select All</source>
         <translation>ཡོངས་འདེམས།</translation>
     </message>
@@ -669,37 +702,37 @@
 <context>
     <name>TitleBarMenu</name>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="527"/>
+        <location filename="../widgets/dtitlebar.cpp" line="763"/>
         <source>Theme</source>
         <translation>བརྗོད་བྱ་གཙོ་བོ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="529"/>
+        <location filename="../widgets/dtitlebar.cpp" line="765"/>
         <source>Light Theme</source>
         <translation>ཁ་དཀར་པོ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="530"/>
+        <location filename="../widgets/dtitlebar.cpp" line="766"/>
         <source>Dark Theme</source>
         <translation>ཁ་སྨུག་པོ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="531"/>
+        <location filename="../widgets/dtitlebar.cpp" line="767"/>
         <source>System Theme</source>
         <translation>མ་ལག་གི་རྗེས་འབྲངས་བ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="555"/>
+        <location filename="../widgets/dtitlebar.cpp" line="792"/>
         <source>Help</source>
         <translation>རོགས་པ།</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="563"/>
+        <location filename="../widgets/dtitlebar.cpp" line="800"/>
         <source>About</source>
         <translation>སྐོར།</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="570"/>
+        <location filename="../widgets/dtitlebar.cpp" line="807"/>
         <source>Exit</source>
         <translation>ཕྱིར་འབུད།</translation>
     </message>
