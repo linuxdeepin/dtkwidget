@@ -161,6 +161,7 @@ public:
     quint8 fontGenericSizeType = DFontSizeManager::T6;
     // 字号的差值
     quint16 fontPixelSizeDiff = 0;
+    QObject guarder;
 
     void updateWidgetFont(DFontSizeManager *manager, DFontSizeManager::SizeType type)
     {
@@ -240,7 +241,7 @@ void DFontSizeManager::bind(QWidget *widget, DFontSizeManager::SizeType type, in
     widget->setFont(get(type, weight, widget->font()));
 
     if (!widget->property("_d_dtk_fontSizeBind").toBool()){
-        QObject::connect(widget, &QWidget::destroyed, [this, widget] {
+        QObject::connect(widget, &QWidget::destroyed, &(d->guarder), [this, widget] {
             unbind(widget);
         });
         widget->setProperty("_d_dtk_fontSizeBind", true);
