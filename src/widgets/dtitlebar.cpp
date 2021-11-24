@@ -265,7 +265,7 @@ void DSplitScreenWidget::init()
     onThemeTypeChanged(DGuiApplicationHelper::instance()->themeType());
     qApp->installEventFilter(this);
 
-    disabledByScreenGeometryAndWindowSize({leftSplitButton, rightSplitButton, maximizeButton});
+    disabledByScreenGeometryAndWindowSize({leftSplitButton, rightSplitButton});
 
     QObject::connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged, this, &DSplitScreenWidget::onThemeTypeChanged);
     QObject::connect(this->leftSplitButton, &DSplitScreenButton::clicked, this, &DSplitScreenWidget::leftSplitScreenButtonClicked);
@@ -301,11 +301,15 @@ bool DSplitScreenWidget::eventFilter(QObject *o, QEvent *e)
             hide();
         break;
 
+    case QEvent::Close:
+        if (!o->objectName().compare(QLatin1String("qtooltip_label")))
+            break;
+
+        Q_FALLTHROUGH();
     case QEvent::WindowActivate:
     case QEvent::WindowDeactivate:
     case QEvent::FocusIn:
     case QEvent::FocusOut:
-    case QEvent::Close:
     case QEvent::MouseButtonRelease:
     case QEvent::MouseButtonDblClick:
     case QEvent::Wheel:
@@ -915,6 +919,10 @@ void DTitlebarPrivate::showSplitScreenWidget()
             return;
     }
 
+    // 窗管不支持分屏时，不显示分屏菜单
+    if (!Q_LIKELY(supportSplitScreenByWM()))
+        return;
+
     if (!splitWidget) {
         splitWidget = new DSplitScreenWidget(DSplitScreenWidget::FloatWidget, q->window());
 
@@ -929,8 +937,6 @@ void DTitlebarPrivate::showSplitScreenWidget()
     if (splitWidget->isVisible())
         return;
 
-    // 应产品要求，窗管不支持分屏时禁用分屏按钮
-    splitWidget->setButtonsEnable(supportSplitScreenByWM());
     if (auto window = targetWindow())
         splitWidget->updateMaximizeButtonIcon(window->isMaximized());
 
