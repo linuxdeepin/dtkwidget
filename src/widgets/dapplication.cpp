@@ -60,15 +60,6 @@
 #include <DFontSizeManager>
 #include <DTitlebar>
 
-#ifdef Q_OS_UNIX
-#include <QDBusError>
-#include <QDBusReply>
-#include <QDBusInterface>
-#include <QDBusPendingCall>
-#include <QDBusConnection>
-#include <QDBusConnectionInterface>
-#endif
-
 #ifdef Q_OS_LINUX
 #include "startupnotificationmonitor.h"
 
@@ -84,43 +75,6 @@
 DCORE_USE_NAMESPACE
 
 DWIDGET_BEGIN_NAMESPACE
-
-class LoadManualServiceWorker : public QThread
-{
-public:
-    explicit LoadManualServiceWorker(QObject *parent = nullptr);
-    ~LoadManualServiceWorker() override;
-    void checkManualServiceWakeUp();
-
-protected:
-    void run() override;
-};
-
-LoadManualServiceWorker::LoadManualServiceWorker(QObject *parent)
-    : QThread(parent)
-{
-    if (!parent)
-        connect(qApp, &QApplication::aboutToQuit, this, std::bind(&LoadManualServiceWorker::exit, this, 0));
-}
-
-LoadManualServiceWorker::~LoadManualServiceWorker()
-{
-}
-
-void LoadManualServiceWorker::run()
-{
-    QDBusInterface("com.deepin.Manual.Search",
-                   "/com/deepin/Manual/Search",
-                   "com.deepin.Manual.Search");
-}
-
-void LoadManualServiceWorker::checkManualServiceWakeUp()
-{
-    if (this->isRunning())
-        return;
-
-    start();
-}
 
 DApplicationPrivate::DApplicationPrivate(DApplication *q) :
     DObjectPrivate(q)
@@ -505,47 +459,7 @@ void DApplicationPrivate::_q_resizeWindowContentsForVirtualKeyboard()
 
 bool DApplicationPrivate::isUserManualExists()
 {
-#ifdef Q_OS_LINUX
-    auto loadManualFromLocalFile = [=]() -> bool {
-        const QString appName = qApp->applicationName();
-        bool dmanAppExists = QFile::exists("/usr/bin/dman");
-        bool dmanDataExists = false;
-        // search all subdirectories
-        QString strManualPath = "/usr/share/deepin-manual";
-        QDirIterator it(strManualPath, QDirIterator::Subdirectories);
-        while (it.hasNext()) {
-            QFileInfo file(it.next());
-            if (file.isDir() && file.fileName().contains(appName, Qt::CaseInsensitive)) {
-                dmanDataExists = true;
-                break;
-            }
-
-            if (file.isDir())
-                continue;
-        }
-        return  dmanAppExists && dmanDataExists;
-    };
-
-    QDBusConnection conn = QDBusConnection::sessionBus();
-    if (conn.interface()->isServiceRegistered("com.deepin.Manual.Search")) {
-        QDBusInterface manualSearch("com.deepin.Manual.Search",
-                                    "/com/deepin/Manual/Search",
-                                    "com.deepin.Manual.Search");
-        if (manualSearch.isValid()) {
-            QDBusReply<bool> reply = manualSearch.call("ManualExists", qApp->applicationName());
-            return reply.value();
-        } else {
-            return loadManualFromLocalFile();
-        }
-    } else {
-        static LoadManualServiceWorker *manualWorker = new LoadManualServiceWorker;
-        manualWorker->checkManualServiceWakeUp();
-
-        return loadManualFromLocalFile();
-    }
-#else
-    return false;
-#endif
+    return DGuiApplicationHelper::instance()->hasUserManual();
 }
 
 /*!
@@ -1470,27 +1384,7 @@ void DApplication::handleHelpAction()
         d->appHandler->handleHelpAction();
         return;
     }
-    if (!DApplicationPrivate::isUserManualExists()) {
-        return;
-    }
-#ifdef Q_OS_LINUX
-    QString appid = applicationName();
-
-    // new interface use applicationName as id
-    QDBusInterface manual("com.deepin.Manual.Open",
-                          "/com/deepin/Manual/Open",
-                          "com.deepin.Manual.Open");
-    QDBusReply<void> reply = manual.call("ShowManual", appid);
-    if (reply.isValid())  {
-        qDebug() << "call com.deepin.Manual.Open success";
-        return;
-    }
-    qDebug() << "call com.deepin.Manual.Open failed" << reply.error();
-    // fallback to old interface
-    QProcess::startDetached("dman", QStringList() << appid);
-#else
-    qWarning() << "not support dman now";
-#endif
+    DGuiApplicationHelper::instance()->handleHelpAction();
 }
 
 /*!
