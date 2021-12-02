@@ -20,8 +20,8 @@
 
 #include <dwidgetutil.h>
 #include <DSysInfo>
+#include <DGuiApplicationHelper>
 
-#include <QDesktopServices>
 #include <QUrl>
 #include <QDebug>
 #include <QVBoxLayout>
@@ -40,35 +40,6 @@
 
 DCORE_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
-
-#ifdef Q_OS_UNIX
-class EnvReplaceGuard
-{
-public:
-    EnvReplaceGuard(const int uid);
-    ~EnvReplaceGuard();
-
-    char *m_backupLogName;
-    char *m_backupHome;
-};
-
-EnvReplaceGuard::EnvReplaceGuard(const int uid)
-{
-    m_backupLogName = getenv("LOGNAME");
-    m_backupHome = getenv("HOME");
-
-    struct passwd *pwd = getpwuid(uid);
-
-    setenv("LOGNAME", pwd->pw_name, 1);
-    setenv("HOME", pwd->pw_dir, 1);
-}
-
-EnvReplaceGuard::~EnvReplaceGuard()
-{
-    setenv("LOGNAME", m_backupLogName, 1);
-    setenv("HOME", m_backupHome, 1);
-}
-#endif
 
 const QString DAboutDialogPrivate::websiteLinkTemplate = "<a href='%1' style='text-decoration: none; font-size:13px; color: #004EE5;'>%2</a>";
 
@@ -193,23 +164,7 @@ void DAboutDialogPrivate::updateAcknowledgementLabel()
 
 void DAboutDialogPrivate::_q_onLinkActivated(const QString &link)
 {
-#ifdef Q_OS_UNIX
-    // workaround for pkexec apps
-    bool ok = false;
-    const int pkexecUid = qEnvironmentVariableIntValue("PKEXEC_UID", &ok);
-
-    if (ok)
-    {
-        EnvReplaceGuard _env_guard(pkexecUid);
-        Q_UNUSED(_env_guard);
-
-        QDesktopServices::openUrl(QUrl(link));
-    }
-    else
-#endif
-    {
-        QDesktopServices::openUrl(QUrl(link));
-    }
+    DGUI_NAMESPACE::DGuiApplicationHelper::openUrl(link);
 }
 
 QPixmap DAboutDialogPrivate::loadPixmap(const QString &file)
