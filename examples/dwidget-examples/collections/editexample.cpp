@@ -34,6 +34,8 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QLabel>
+#include <QShortcut>
+#include <QDebug>
 
 DWIDGET_USE_NAMESPACE
 
@@ -414,6 +416,15 @@ DKeySequenceEditExample::DKeySequenceEditExample(QWidget *parent)
 
     mainLayout->addSpacing(76);
     mainLayout->addWidget(label, 0, Qt::AlignHCenter);
+
+    QShortcut *shortCut = new QShortcut(this);
+    shortCut->setKey(QKeySequence(keyEdit->keySequence()));
+    connect(shortCut, &QShortcut::activated, this, [shortCut](){
+        qWarning() << "shorcut is trigger" << shortCut->key();
+    });
+    connect(keyEdit, &DKeySequenceEdit::editingFinished, this, [shortCut](QKeySequence key){
+        shortCut->setKey(key);
+    });
 }
 
 QString DKeySequenceEditExample::getTitleName() const

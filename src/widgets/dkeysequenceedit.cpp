@@ -14,6 +14,7 @@
 #include <DStyle>
 
 #include <QVBoxLayout>
+#include "private/qkeymapper_p.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -254,8 +255,27 @@ void DKeySequenceEdit::keyPressEvent(QKeyEvent *e)
         return;
     }
 
+    if (e->modifiers() & Qt::ShiftModifier) {
+        QList<int> possibleKeys = QKeyMapper::possibleKeys(e);
+        int pkTotal = possibleKeys.count();
+        if (!pkTotal)
+            return;
+        bool found = false;
+        for (int i = 0; i < possibleKeys.size(); ++i) {
+            if (possibleKeys.at(i) - nextKey == int(e->modifiers())
+                || (possibleKeys.at(i) == nextKey && e->modifiers() == Qt::ShiftModifier)) {
+                nextKey = possibleKeys.at(i);
+                found = true;
+                break;
+            }
+        }
+        // Use as fallback
+        if (!found)
+            nextKey = possibleKeys.first();
+    }
+
     QString modifiers = QKeySequence(e->modifiers()).toString();
-    QString key =  QKeySequence(e->key()).toString();
+    QString key =  QKeySequence(nextKey).toString();
 
     QKeySequence sequence(modifiers + key);
     bool flags = setKeySequence(sequence);
