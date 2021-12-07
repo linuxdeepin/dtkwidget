@@ -503,7 +503,7 @@ void DTitlebarPrivate::init()
     q->setFocusPolicy(Qt::StrongFocus);
 
     // fix wayland 下显示了两个应用图标，系统标题栏 和 dtk标题栏 均显示应用图标
-    q->setEmbedMode(!DApplication::isDXcbPlatform());
+    q->setEmbedMode(!(DApplication::isDXcbPlatform()|| (qApp->platformName() == "dwayland" || qApp->property("_d_isDwayland").toBool())));
 }
 
 QWidget *DTitlebarPrivate::targetWindow()

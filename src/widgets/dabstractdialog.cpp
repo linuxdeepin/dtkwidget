@@ -70,7 +70,8 @@ void DAbstractDialogPrivate::init(bool blurIfPossible)
 
         bgBlurWidget->setBlurEnabled(blurIfPossible);
         q->setAttribute(Qt::WA_TranslucentBackground, blurIfPossible);
-    } else {
+    } else if (qApp->platformName() == "dwayland" || qApp->property("_d_isDwayland").toBool()) {
+        handle = new DPlatformWindowHandle(q, q);
         // fix wayland no titlebar
         //q->setWindowFlags(q->windowFlags() | Qt::FramelessWindowHint);
     }

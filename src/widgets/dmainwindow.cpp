@@ -45,7 +45,7 @@ DMainWindowPrivate::DMainWindowPrivate(DMainWindow *qq)
 {
     titlebar = new DTitlebar(qq);
     titlebar->setAccessibleName("DMainWindowTitlebar");
-    if (DApplication::isDXcbPlatform()) {
+    if (DApplication::isDXcbPlatform() || (qApp->platformName() == "dwayland" || qApp->property("_d_isDwayland").toBool())) {
         handle = new DPlatformWindowHandle(qq, qq);
         qq->setMenuWidget(titlebar);
     } else {
