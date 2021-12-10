@@ -744,9 +744,13 @@ QPainterPath DArrowRectanglePrivate::getLeftCornerPath()
 
         if (DApplication::isDXcbPlatform())
             rect = rect.marginsRemoved(QMargins((DArrowRectangle::FloatWidget == floatMode) ? 0 : delta, delta, delta - q->margin(), delta));
-        else
-            rect = rect.marginsRemoved(QMargins((DArrowRectangle::FloatWidget == floatMode) ? 0 : 0, delta,
-                                                (DArrowRectangle::FloatWidget == floatMode) ? delta - q->margin() : delta *2, delta));
+        else {
+            QMargins margins((DArrowRectangle::FloatWidget == floatMode) ? 0 : 0, delta,
+                             (DArrowRectangle::FloatWidget == floatMode) ? delta - q->margin() : delta *2, delta);
+            if (rect.width() > (margins.left() + margins.right()) &&
+                rect.height() > (margins.top() + margins.bottom()))
+                rect = rect.marginsRemoved(margins);
+        }
     }
 
     QPoint cornerPoint(rect.x(), rect.y() + (m_arrowY > 0 ? m_arrowY : (rect.height() / 2)));
@@ -827,8 +831,12 @@ QPainterPath DArrowRectanglePrivate::getRightCornerPath()
 
         if (DApplication::isDXcbPlatform())
             rect = rect.marginsRemoved(QMargins((DArrowRectangle::FloatWidget == floatMode) ? delta - q->margin() : delta, delta, (DArrowRectangle::FloatWidget == floatMode) ? 0 : delta, delta));
-        else
-            rect = rect.marginsRemoved(QMargins((DArrowRectangle::FloatWidget == floatMode) ? delta -q->margin() : delta *2, delta, (DArrowRectangle::FloatWidget == floatMode) ? 0 : 0, delta));
+        else {
+            QMargins margins((DArrowRectangle::FloatWidget == floatMode) ? delta -q->margin() : delta *2, delta, (DArrowRectangle::FloatWidget == floatMode) ? 0 : 0, delta);
+            if (rect.width() > (margins.left() + margins.right()) &&
+                rect.height() > (margins.top() + margins.bottom()))
+                rect = rect.marginsRemoved(margins);
+        }
     }
 
     QPoint cornerPoint(rect.x() + rect.width(), rect.y() + (m_arrowY > 0 ? m_arrowY : rect.height() / 2));
@@ -911,8 +919,12 @@ QPainterPath DArrowRectanglePrivate::getTopCornerPath()
         if (DApplication::isDXcbPlatform())
             rect = rect.marginsRemoved(QMargins(delta, (DArrowRectangle::FloatWidget == floatMode) ? 0 : delta,
                                                 delta, (DArrowRectangle::FloatWidget == floatMode) ? delta -q->margin() : delta));
-        else
-            rect = rect.marginsRemoved(QMargins(delta, 0, delta, (DArrowRectangle::FloatWidget == floatMode) ? delta - q->margin() : delta * 2));
+        else {
+            QMargins margins(delta, 0, delta, (DArrowRectangle::FloatWidget == floatMode) ? delta - q->margin() : delta * 2);
+            if (rect.width() > (margins.left() + margins.right()) &&
+                rect.height() > (margins.top() + margins.bottom()))
+                rect = rect.marginsRemoved(margins);
+        }
     }
 
     QPoint cornerPoint(rect.x() + (m_arrowX > 0 ? m_arrowX : rect.width() / 2), rect.y());
@@ -971,8 +983,12 @@ QPainterPath DArrowRectanglePrivate::getBottomCornerPath()
 
         if (DApplication::isDXcbPlatform())
             rect = rect.marginsRemoved(QMargins(delta, (DArrowRectangle::FloatWidget == floatMode) ? delta -q->margin() : delta, delta, (DArrowRectangle::FloatWidget == floatMode) ? 0 : delta));
-        else
-            rect = rect.marginsRemoved(QMargins(delta, (DArrowRectangle::FloatWidget == floatMode) ? delta - q->margin() : delta *2, delta, 0));
+        else {
+            QMargins margins(delta, (DArrowRectangle::FloatWidget == floatMode) ? delta - q->margin() : delta *2, delta, 0);
+            if (rect.width() > (margins.left() + margins.right()) &&
+                rect.height() > (margins.top() + margins.bottom()))
+                rect = rect.marginsRemoved(margins);
+        }
     }
 
     QPoint cornerPoint(rect.x() + (m_arrowX > 0 ? m_arrowX : qRound(double(rect.width()) / 2)), rect.y() + rect.height());
