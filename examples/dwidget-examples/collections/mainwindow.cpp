@@ -222,10 +222,10 @@ void MainWindow::menuItemInvoked(QAction *action)
     if (action->text() == "dfm-settings") {
         QTemporaryFile tmpFile;
         tmpFile.open();
-        auto backend = new Dtk::Core::QSettingBackend(tmpFile.fileName(), this);
+        Dtk::Core::QSettingBackend backend(tmpFile.fileName());
 
         auto settings = Dtk::Core::DSettings::fromJsonFile(":/resources/data/dfm-settings.json");
-        settings->setBackend(backend);
+        settings->setBackend(&backend);
 
         DSettingsDialog dsd(this);
         dsd.updateSettings(settings);
@@ -236,10 +236,10 @@ void MainWindow::menuItemInvoked(QAction *action)
     if (action->text() == "dt-settings") {
         QTemporaryFile tmpFile;
         tmpFile.open();
-        auto backend = new Dtk::Core::QSettingBackend(tmpFile.fileName(), this);
+        Dtk::Core::QSettingBackend backend(tmpFile.fileName());
 
         auto settings = Dtk::Core::DSettings::fromJsonFile(":/resources/data/dt-settings.json");
-        settings->setBackend(backend);
+        settings->setBackend(&backend);
 
         QFontDatabase fontDatabase;
         auto fontFamliy = settings->option("base.font.family");
