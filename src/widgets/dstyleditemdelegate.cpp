@@ -303,7 +303,7 @@ public:
         for (auto action : actionList) {
             if (action->isVisible())
                 visiable_actionList.append(action);
-
+            action->setEnabled(option.state & QStyle::State_Enabled);
             if (QWidget *actionWidget = action->widget()) {
                 actionWidget->setVisible(action->isVisible());
                 actionWidget->setEnabled(option.state & QStyle::State_Enabled);
