@@ -140,6 +140,32 @@ void DComboBox::showPopup()
 
     QComboBox::showPopup();
 
+    auto getRowCount = [=]{
+        int count = 0;
+        QStack<QModelIndex> toCheck;
+        toCheck.push(view()->rootIndex());
+#if QT_CONFIG(treeview)
+        QTreeView *treeView = qobject_cast<QTreeView*>(view());
+#endif
+        while (!toCheck.isEmpty()) {
+            QModelIndex parent = toCheck.pop();
+            for (int i = 0, end = model()->rowCount(parent); i < end; ++i) {
+                QModelIndex idx = model()->index(i, modelColumn(), parent);
+                if (!idx.isValid())
+                    continue;
+#if QT_CONFIG(treeview)
+                if (model()->hasChildren(idx) && treeView && treeView->isExpanded(idx))
+                    toCheck.push(idx);
+#endif
+                ++count;
+            }
+        }
+        return count;
+    };
+    // 小于 16 的时候使用 qt 默认的，直接返回，避免显示多余的空白
+    if (getRowCount() <= maxVisibleItems()) {
+        return;
+    }
     //获取下拉视图容器
     if (QComboBoxPrivateContainer *container = this->findChild<QComboBoxPrivateContainer *>()) {
         // 重置最大高度
