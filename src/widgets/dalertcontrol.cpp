@@ -240,6 +240,7 @@ void DAlertControl::showAlertMessage(const QString &text, QWidget *follower, int
         d->follower = d->target;
         d->follower->installEventFilter(this);
     }
+    d->follower->topLevelWidget()->installEventFilter(this);
 
     d->tooltip->setText(text);
     if (d->frame->parent()) {
@@ -292,7 +293,13 @@ bool DAlertControl::eventFilter(QObject *watched, QEvent *event)
             hideAlertMessage();
     }
 
+    if (d->follower && watched == d->follower->topLevelWidget()) {
+        if (event->type() == QEvent::HoverMove)
+            d->updateTooltipPos();
 
+        if (d->timer.isActive())
+            d->frame->setVisible(!d->follower->visibleRegion().isNull());
+    }
     return QObject::eventFilter(watched, event);
 }
 
