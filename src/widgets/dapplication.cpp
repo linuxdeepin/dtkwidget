@@ -58,6 +58,7 @@
 #include <DPlatformHandle>
 #include <DGuiApplicationHelper>
 #include <DFontSizeManager>
+#include <DTitlebar>
 
 #ifdef Q_OS_UNIX
 #include <QDBusError>
@@ -1589,6 +1590,21 @@ static inline bool basePrintPropertiesDialog(const QWidget *w)
 
 bool DApplication::notify(QObject *obj, QEvent *event)
 {
+    if (event->type() == QEvent::FocusIn) {
+        QFocusEvent *fe = static_cast<QFocusEvent*>(event);
+        QWidget *widget = qobject_cast<QWidget*>(obj);
+        if (widget && fe->reason() == Qt::ActiveWindowFocusReason && !widget->isTopLevel()
+                && ((widget->focusPolicy() & Qt::StrongFocus) != Qt::StrongFocus || qobject_cast<DTitlebar *>(widget)))  {
+            // 针对激活窗口所获得的焦点，为了避免被默认给到窗口内部的控件上，此处将焦点还给主窗口并且只设置一次
+#define NON_FIRST_ACTIVE "_d_dtk_non_first_active_focus"
+            QWidget *top_window = widget->topLevelWidget();
+            if (top_window->isWindow() && !top_window->property(NON_FIRST_ACTIVE).toBool()) {
+                top_window->setFocus();
+                top_window->setProperty(NON_FIRST_ACTIVE, true);
+            }
+        }
+    }
+
     if (event->type() == QEvent::ApplicationFontChange) {
         // ApplicationFontChange 调用 font() 是 ok 的，如果在 fontChanged 中调用在某些版本中会出现 deadlock
         DFontSizeManager::instance()->setFontGenericPixelSize(static_cast<quint16>(DFontSizeManager::fontPixelSize(font())));
