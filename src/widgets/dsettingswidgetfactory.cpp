@@ -486,14 +486,15 @@ QPair<QWidget *, QWidget *> createSpinButtonOptionHandle(QObject *opt)
     rightWidget->setButtonSymbols(QAbstractSpinBox::PlusMinus);
     rightWidget->setObjectName("OptionDSpinBox");
     rightWidget->setAccessibleName("OptionDSpinBox");
-    rightWidget->setValue(option->value().toInt());
-
     if (option->data("max").isValid()) {
         rightWidget->setMaximum(option->data("max").toInt());
     }
     if (option->data("min").isValid()) {
         rightWidget->setMinimum(option->data("min").toInt());
     }
+
+    // The default range is 0-99. so we setMaximum/setMinimum first
+    rightWidget->setValue(option->value().toInt());
 
     auto translateContext = opt->property(PRIVATE_PROPERTY_translateContext).toByteArray();
 
