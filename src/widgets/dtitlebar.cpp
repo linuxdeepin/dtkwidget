@@ -1159,6 +1159,13 @@ void DTitlebar::showMenu()
 
 void DTitlebar::showEvent(QShowEvent *event)
 {
+    if (qobject_cast<QDialog *>(topLevelWidget())) {
+        // QDialog::setvisible will send QFocusEvent (QEvent::FocusIn, Qt::TabFocusReason);
+        // that will cause DTitlebar focus to next widget(see DTitlebar::event)
+        if (topLevelWidget()->focusWidget() == this)
+            clearFocus();
+    }
+
     //fix the width issue and process menu
     D_D(DTitlebar);
     d->separatorTop->setFixedWidth(width());
