@@ -23,6 +23,7 @@
 #include <QApplication>
 #include <QMouseEvent>
 #include <QProcess>
+#include <QStandardPaths>
 
 #include <DWindowManagerHelper>
 #include <DObjectPrivate>
@@ -88,6 +89,7 @@ private:
 #ifndef QT_NO_MENU
     void _q_addDefaultMenuItems();
     void _q_helpActionTriggered();
+    void _q_feedbackActionTriggerd();
     void _q_aboutActionTriggered();
     void _q_quitActionTriggered();
     void _q_switchThemeActionTriggered(QAction*action);
@@ -127,6 +129,7 @@ private:
 #ifndef QT_NO_MENU
     QMenu               *menu             = Q_NULLPTR;
     QAction             *helpAction       = Q_NULLPTR;
+    QAction             *feedbackAction   = Q_NULLPTR;
     QAction             *aboutAction      = Q_NULLPTR;
     QAction             *quitAction       = Q_NULLPTR;
     bool                canSwitchTheme    = true;
@@ -799,6 +802,13 @@ void DTitlebarPrivate::_q_addDefaultMenuItems()
         helpAction->setVisible(false);
     }
 
+    // add feedback menu item for deepin or uos application
+    if (!feedbackAction && qApp->organizationName() == "deepin" && !QStandardPaths::findExecutable("deepin-feedback").isEmpty()) {
+        feedbackAction = new QAction(qApp->translate("TitleBarMenu", "Feedback"), menu);
+        QObject::connect(feedbackAction, SIGNAL(triggered(bool)), q, SLOT(_q_feedbackActionTriggerd()));
+        menu->addAction(feedbackAction);
+    }
+
     // add about menu item.
     if (!aboutAction) {
         aboutAction = new QAction(qApp->translate("TitleBarMenu", "About"), menu);
@@ -822,6 +832,10 @@ void DTitlebarPrivate::_q_helpActionTriggered()
     if (dapp) {
         dapp->handleHelpAction();
     }
+}
+
+void DTitlebarPrivate::_q_feedbackActionTriggerd() {
+    QProcess::startDetached("deepin-feedback", { qApp->applicationName() });
 }
 
 void DTitlebarPrivate::_q_aboutActionTriggered()
