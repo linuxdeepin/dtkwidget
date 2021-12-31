@@ -297,13 +297,15 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
                     if (QLabel *label = qobject_cast<QLabel *>(widget.first)) {
                         if (widget.second)
                             label->setBuddy(widget.second);
-                        label->setSizePolicy(QSizePolicy::Maximum, label->sizePolicy().verticalPolicy());
                     }
 
                     if (widget.first) {
-                        hLay->addWidget(widget.first, 2);
+                        QWidget *container = new QWidget;
+                        QHBoxLayout *hLayout = new QHBoxLayout(container);
+                        hLayout->addWidget(widget.first);
+                        hLayout->addStretch(1);
+                        hLay->addWidget(container, 2);
                     }
-                    hLay->addStretch(1);
                     if (widget.second) {
                         hLay->addWidget(widget.second, 3);
                     }
