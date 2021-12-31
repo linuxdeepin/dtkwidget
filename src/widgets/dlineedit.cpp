@@ -533,11 +533,11 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
         QMenu *menu = pLineEdit->createStandardContextMenu();
 
         for (QAction *action : menu->actions()) {
-            if (action->text().startsWith(QLineEdit::tr("&Copy"))) {
-                action->setEnabled(copyEnabled());
+            if (action->text().startsWith(QLineEdit::tr("&Copy")) && !copyEnabled()  ) {
+                action->setEnabled(false);
             }
-            if (action->text().startsWith(QLineEdit::tr("Cu&t"))) {
-                action->setEnabled(cutEnabled());
+            if (action->text().startsWith(QLineEdit::tr("Cu&t")) && !cutEnabled()) {
+                action->setEnabled(false);
             }
         }
 
