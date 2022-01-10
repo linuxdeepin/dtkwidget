@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="sq" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="sq">
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -7,12 +7,12 @@
         <translation>Falënderime</translation>
     </message>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1526"/>
+        <location filename="../widgets/dapplication.cpp" line="1528"/>
         <source>Version: %1</source>
         <translation>Version: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1530"/>
+        <location filename="../widgets/dapplication.cpp" line="1532"/>
         <source>%1 is released under %2</source>
         <translation>%1 hidhet në qarkullim sipas %2</translation>
     </message>
@@ -121,7 +121,7 @@
 <context>
     <name>DKeySequenceEdit</name>
     <message>
-        <location filename="../widgets/dkeysequenceedit.cpp" line="85"/>
+        <location filename="../widgets/dkeysequenceedit.cpp" line="86"/>
         <source>Enter a new shortcut</source>
         <translation>Jepni shkurtore të re</translation>
     </message>
@@ -601,22 +601,22 @@
 <context>
     <name>DSplitScreenWidget</name>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="212"/>
+        <location filename="../widgets/dtitlebar.cpp" line="215"/>
         <source>Unmaximize</source>
         <translation>Çmaksimizoje</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="215"/>
+        <location filename="../widgets/dtitlebar.cpp" line="218"/>
         <source>Maximize</source>
         <translation>Maksimizoje</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="255"/>
+        <location filename="../widgets/dtitlebar.cpp" line="258"/>
         <source>Tile window to left of screen</source>
         <translation>Dritare kuadrati majtas ekranit</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="256"/>
+        <location filename="../widgets/dtitlebar.cpp" line="259"/>
         <source>Tile window to right of screen</source>
         <translation>Dritare kuadrati djathtas ekranit</translation>
     </message>
@@ -678,7 +678,7 @@
         <translation>S’ka përfundime kërkimi</translation>
     </message>
     <message>
-        <location filename="../widgets/private/settings/content.cpp" line="336"/>
+        <location filename="../widgets/private/settings/content.cpp" line="340"/>
         <source>Restore Defaults</source>
         <translation>Rikthe Parazgjedhjet</translation>
     </message>
@@ -702,37 +702,42 @@
 <context>
     <name>TitleBarMenu</name>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="763"/>
+        <location filename="../widgets/dtitlebar.cpp" line="770"/>
         <source>Theme</source>
         <translation>Temë</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="765"/>
+        <location filename="../widgets/dtitlebar.cpp" line="772"/>
         <source>Light Theme</source>
         <translation>Temë e Çelët</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="766"/>
+        <location filename="../widgets/dtitlebar.cpp" line="773"/>
         <source>Dark Theme</source>
         <translation>Temë e Errët</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="767"/>
+        <location filename="../widgets/dtitlebar.cpp" line="774"/>
         <source>System Theme</source>
         <translation>Temë Sistemi</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="792"/>
+        <location filename="../widgets/dtitlebar.cpp" line="799"/>
         <source>Help</source>
         <translation>Ndihmë</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="800"/>
+        <location filename="../widgets/dtitlebar.cpp" line="807"/>
+        <source>Feedback</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/dtitlebar.cpp" line="814"/>
         <source>About</source>
         <translation>Mbi</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="807"/>
+        <location filename="../widgets/dtitlebar.cpp" line="821"/>
         <source>Exit</source>
         <translation>Dil</translation>
     </message>

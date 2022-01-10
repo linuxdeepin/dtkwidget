@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="cs" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="cs">
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -7,12 +7,12 @@
         <translation>Poděkování</translation>
     </message>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1526"/>
+        <location filename="../widgets/dapplication.cpp" line="1528"/>
         <source>Version: %1</source>
         <translation>Verze: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1530"/>
+        <location filename="../widgets/dapplication.cpp" line="1532"/>
         <source>%1 is released under %2</source>
         <translation>%1 je vydáno pod %2</translation>
     </message>
@@ -110,7 +110,7 @@
     <message>
         <location filename="../widgets/dinputdialog.cpp" line="42"/>
         <source>Cancel</source>
-        <translation>Storno</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <location filename="../widgets/dinputdialog.cpp" line="43"/>
@@ -121,7 +121,7 @@
 <context>
     <name>DKeySequenceEdit</name>
     <message>
-        <location filename="../widgets/dkeysequenceedit.cpp" line="85"/>
+        <location filename="../widgets/dkeysequenceedit.cpp" line="86"/>
         <source>Enter a new shortcut</source>
         <translation>Zadejte novou zkratku</translation>
     </message>
@@ -161,7 +161,7 @@
         <location filename="../widgets/dprintpreviewdialog.cpp" line="258"/>
         <source>Cancel</source>
         <comment>button</comment>
-        <translation>Storno</translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="259"/>
@@ -387,17 +387,17 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="690"/>
         <source>Watermark</source>
-        <translation>Vodotisk</translation>
+        <translation>Vodoznak</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="701"/>
         <source>Add watermark</source>
-        <translation>Přidat vodotisk</translation>
+        <translation>Přidat vodoznak</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="743"/>
         <source>Text watermark</source>
-        <translation>Textový vodotisk</translation>
+        <translation>Textový vodoznak</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="745"/>
@@ -427,7 +427,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="776"/>
         <source>Picture watermark</source>
-        <translation>Obrázkový vodotisk</translation>
+        <translation>Obrázkový vodoznak</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="797"/>
@@ -582,7 +582,7 @@
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="81"/>
         <source>This shortcut conflicts with %1, click on Add to make this shortcut effective immediately</source>
-        <translation>Tato klávesová zkratka se střetává s %1. Aby začala platit, klikněte na Přidat</translation>
+        <translation>Tato klávesová zkratka se střetává s %1. Aby začala platit, klepněte na Přidat</translation>
     </message>
 </context>
 <context>
@@ -601,24 +601,24 @@
 <context>
     <name>DSplitScreenWidget</name>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="212"/>
-        <source>Unmaximize</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <location filename="../widgets/dtitlebar.cpp" line="215"/>
+        <source>Unmaximize</source>
+        <translation>Zrušit zvětšení</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dtitlebar.cpp" line="218"/>
         <source>Maximize</source>
-        <translation type="unfinished"/>
+        <translation>Zvětšit</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="255"/>
+        <location filename="../widgets/dtitlebar.cpp" line="258"/>
         <source>Tile window to left of screen</source>
-        <translation type="unfinished"/>
+        <translation>Dlaždice okna nalevo obrazovky</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="256"/>
+        <location filename="../widgets/dtitlebar.cpp" line="259"/>
         <source>Tile window to right of screen</source>
-        <translation type="unfinished"/>
+        <translation>Dlaždice okna napravo obrazovky</translation>
     </message>
 </context>
 <context>
@@ -657,12 +657,12 @@
     <message>
         <location filename="../widgets/dlineedit.cpp" line="536"/>
         <source>&amp;Copy</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Kopírovat</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="539"/>
         <source>Cu&amp;t</source>
-        <translation type="unfinished"/>
+        <translation>Vyjmou&amp;t</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="545"/>
@@ -678,7 +678,7 @@
         <translation>Nic nenalezeno</translation>
     </message>
     <message>
-        <location filename="../widgets/private/settings/content.cpp" line="336"/>
+        <location filename="../widgets/private/settings/content.cpp" line="340"/>
         <source>Restore Defaults</source>
         <translation>Vráti na výchozí hodnoty</translation>
     </message>
@@ -702,37 +702,42 @@
 <context>
     <name>TitleBarMenu</name>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="763"/>
+        <location filename="../widgets/dtitlebar.cpp" line="770"/>
         <source>Theme</source>
         <translation>Vzhled</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="765"/>
+        <location filename="../widgets/dtitlebar.cpp" line="772"/>
         <source>Light Theme</source>
         <translation>Světlý vzhled</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="766"/>
+        <location filename="../widgets/dtitlebar.cpp" line="773"/>
         <source>Dark Theme</source>
         <translation>Tmavý vzhled</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="767"/>
+        <location filename="../widgets/dtitlebar.cpp" line="774"/>
         <source>System Theme</source>
         <translation>Systémový vzhled</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="792"/>
+        <location filename="../widgets/dtitlebar.cpp" line="799"/>
         <source>Help</source>
         <translation>Nápověda</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="800"/>
+        <location filename="../widgets/dtitlebar.cpp" line="807"/>
+        <source>Feedback</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/dtitlebar.cpp" line="814"/>
         <source>About</source>
         <translation>O aplikaci</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="807"/>
+        <location filename="../widgets/dtitlebar.cpp" line="821"/>
         <source>Exit</source>
         <translation>Ukončit</translation>
     </message>

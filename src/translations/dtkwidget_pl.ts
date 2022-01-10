@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="pl" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="pl">
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -7,12 +7,12 @@
         <translation>Podziękowania</translation>
     </message>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1526"/>
+        <location filename="../widgets/dapplication.cpp" line="1528"/>
         <source>Version: %1</source>
         <translation>Wersja: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1530"/>
+        <location filename="../widgets/dapplication.cpp" line="1532"/>
         <source>%1 is released under %2</source>
         <translation>%1 zostało wydane w oparciu o %2</translation>
     </message>
@@ -121,7 +121,7 @@
 <context>
     <name>DKeySequenceEdit</name>
     <message>
-        <location filename="../widgets/dkeysequenceedit.cpp" line="85"/>
+        <location filename="../widgets/dkeysequenceedit.cpp" line="86"/>
         <source>Enter a new shortcut</source>
         <translation>Wprowadź nowy skrót</translation>
     </message>
@@ -141,7 +141,7 @@
     <message>
         <location filename="../widgets/dlineedit.cpp" line="587"/>
         <source>Translate</source>
-        <translation>Tłumacz</translation>
+        <translation>Przetłumacz</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="609"/>
@@ -155,7 +155,7 @@
         <location filename="../widgets/dprintpreviewdialog.cpp" line="235"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1181"/>
         <source>Advanced</source>
-        <translation>Zaawansowany</translation>
+        <translation>Zaawansowane</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="258"/>
@@ -242,7 +242,7 @@
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1606"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1621"/>
         <source>Grayscale</source>
-        <translation>Skala szarości</translation>
+        <translation>Odcienie szarości</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="428"/>
@@ -402,12 +402,12 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="745"/>
         <source>Confidential</source>
-        <translation>Tajny</translation>
+        <translation>Poufne</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="745"/>
         <source>Draft</source>
-        <translation>Projekt</translation>
+        <translation>Wersja Robocza</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="745"/>
@@ -417,7 +417,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="745"/>
         <source>Custom</source>
-        <translation>Personalizowany</translation>
+        <translation>Niestandardowe</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="753"/>
@@ -427,7 +427,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="776"/>
         <source>Picture watermark</source>
-        <translation>Obrazek jako znak wodny</translation>
+        <translation>Obraz jako znak wodny</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="797"/>
@@ -472,7 +472,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1177"/>
         <source>Collapse</source>
-        <translation>Opadający</translation>
+        <translation>Połącz</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1300"/>
@@ -544,13 +544,13 @@
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1619"/>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1622"/>
         <source>Confidential</source>
-        <translation>Tajny</translation>
+        <translation>Poufne</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1637"/>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1640"/>
         <source>Draft</source>
-        <translation>Projekt</translation>
+        <translation>Wersja Robocza</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1655"/>
@@ -582,7 +582,7 @@
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="81"/>
         <source>This shortcut conflicts with %1, click on Add to make this shortcut effective immediately</source>
-        <translation>Ten skrót powoduje konflikt z %1, kliknij Dodaj, aby ten skrót od razu zadziałał</translation>
+        <translation>Ten skrót powoduje konflikt z %1, kliknij Dodaj, aby skrót zadziałał od razu</translation>
     </message>
 </context>
 <context>
@@ -601,22 +601,22 @@
 <context>
     <name>DSplitScreenWidget</name>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="212"/>
+        <location filename="../widgets/dtitlebar.cpp" line="215"/>
         <source>Unmaximize</source>
         <translation>Normalizuj</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="215"/>
+        <location filename="../widgets/dtitlebar.cpp" line="218"/>
         <source>Maximize</source>
         <translation>Maksymalizuj</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="255"/>
+        <location filename="../widgets/dtitlebar.cpp" line="258"/>
         <source>Tile window to left of screen</source>
         <translation>Przypnij okno do lewej części ekranu</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="256"/>
+        <location filename="../widgets/dtitlebar.cpp" line="259"/>
         <source>Tile window to right of screen</source>
         <translation>Przypnij okno do prawej części ekranu</translation>
     </message>
@@ -636,7 +636,7 @@
     <message>
         <location filename="../widgets/dtextedit.cpp" line="210"/>
         <source>Translate</source>
-        <translation>Tłumacz</translation>
+        <translation>Przetłumacz</translation>
     </message>
     <message>
         <location filename="../widgets/dtextedit.cpp" line="232"/>
@@ -662,7 +662,7 @@
     <message>
         <location filename="../widgets/dlineedit.cpp" line="539"/>
         <source>Cu&amp;t</source>
-        <translation type="unfinished"/>
+        <translation>Cu&amp;t</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="545"/>
@@ -678,7 +678,7 @@
         <translation>Brak wyników wyszukiwania</translation>
     </message>
     <message>
-        <location filename="../widgets/private/settings/content.cpp" line="336"/>
+        <location filename="../widgets/private/settings/content.cpp" line="340"/>
         <source>Restore Defaults</source>
         <translation>Przywróć domyślne</translation>
     </message>
@@ -702,37 +702,42 @@
 <context>
     <name>TitleBarMenu</name>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="763"/>
+        <location filename="../widgets/dtitlebar.cpp" line="770"/>
         <source>Theme</source>
         <translation>Motyw</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="765"/>
+        <location filename="../widgets/dtitlebar.cpp" line="772"/>
         <source>Light Theme</source>
         <translation>Jasny</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="766"/>
+        <location filename="../widgets/dtitlebar.cpp" line="773"/>
         <source>Dark Theme</source>
         <translation>Ciemny</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="767"/>
+        <location filename="../widgets/dtitlebar.cpp" line="774"/>
         <source>System Theme</source>
         <translation>Systemowy</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="792"/>
+        <location filename="../widgets/dtitlebar.cpp" line="799"/>
         <source>Help</source>
         <translation>Pomoc</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="800"/>
+        <location filename="../widgets/dtitlebar.cpp" line="807"/>
+        <source>Feedback</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/dtitlebar.cpp" line="814"/>
         <source>About</source>
         <translation>O programie</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="807"/>
+        <location filename="../widgets/dtitlebar.cpp" line="821"/>
         <source>Exit</source>
         <translation>Wyjdź</translation>
     </message>

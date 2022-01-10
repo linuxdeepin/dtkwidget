@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="hu" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="hu">
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -7,12 +7,12 @@
         <translation>Köszönetnyilvánítás</translation>
     </message>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1526"/>
+        <location filename="../widgets/dapplication.cpp" line="1528"/>
         <source>Version: %1</source>
         <translation>Verzió: %1</translation>
     </message>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1530"/>
+        <location filename="../widgets/dapplication.cpp" line="1532"/>
         <source>%1 is released under %2</source>
         <translation>A %1 a %2 alatti kiadás</translation>
     </message>
@@ -121,7 +121,7 @@
 <context>
     <name>DKeySequenceEdit</name>
     <message>
-        <location filename="../widgets/dkeysequenceedit.cpp" line="85"/>
+        <location filename="../widgets/dkeysequenceedit.cpp" line="86"/>
         <source>Enter a new shortcut</source>
         <translation>Adjon meg egy új gyorsbillentyűt</translation>
     </message>
@@ -601,22 +601,22 @@
 <context>
     <name>DSplitScreenWidget</name>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="212"/>
+        <location filename="../widgets/dtitlebar.cpp" line="215"/>
         <source>Unmaximize</source>
         <translation>Teljes képernyő viszavonása</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="215"/>
+        <location filename="../widgets/dtitlebar.cpp" line="218"/>
         <source>Maximize</source>
         <translation>Teljes képernyő</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="255"/>
+        <location filename="../widgets/dtitlebar.cpp" line="258"/>
         <source>Tile window to left of screen</source>
         <translation>Csempe ablak a képernyő bal oldalán </translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="256"/>
+        <location filename="../widgets/dtitlebar.cpp" line="259"/>
         <source>Tile window to right of screen</source>
         <translation>Csempe ablak a képernyő jobb oldalán </translation>
     </message>
@@ -678,7 +678,7 @@
         <translation>Nincs keresési eredmény</translation>
     </message>
     <message>
-        <location filename="../widgets/private/settings/content.cpp" line="336"/>
+        <location filename="../widgets/private/settings/content.cpp" line="340"/>
         <source>Restore Defaults</source>
         <translation>Alapértelmezések visszaállítása</translation>
     </message>
@@ -702,37 +702,42 @@
 <context>
     <name>TitleBarMenu</name>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="763"/>
+        <location filename="../widgets/dtitlebar.cpp" line="770"/>
         <source>Theme</source>
         <translation>Téma</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="765"/>
+        <location filename="../widgets/dtitlebar.cpp" line="772"/>
         <source>Light Theme</source>
         <translation>Világos mód</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="766"/>
+        <location filename="../widgets/dtitlebar.cpp" line="773"/>
         <source>Dark Theme</source>
         <translation>Sötét mód</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="767"/>
+        <location filename="../widgets/dtitlebar.cpp" line="774"/>
         <source>System Theme</source>
         <translation>Rendszer téma</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="792"/>
+        <location filename="../widgets/dtitlebar.cpp" line="799"/>
         <source>Help</source>
         <translation>Segítség</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="800"/>
+        <location filename="../widgets/dtitlebar.cpp" line="807"/>
+        <source>Feedback</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/dtitlebar.cpp" line="814"/>
         <source>About</source>
         <translation>Az alkalmazásról</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="807"/>
+        <location filename="../widgets/dtitlebar.cpp" line="821"/>
         <source>Exit</source>
         <translation>Kilépés</translation>
     </message>

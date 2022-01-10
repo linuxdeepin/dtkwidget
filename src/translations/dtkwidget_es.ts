@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="es" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="es">
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -7,12 +7,12 @@
         <translation>Agradecimientos</translation>
     </message>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1526"/>
+        <location filename="../widgets/dapplication.cpp" line="1528"/>
         <source>Version: %1</source>
         <translation>Versión %1</translation>
     </message>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1530"/>
+        <location filename="../widgets/dapplication.cpp" line="1532"/>
         <source>%1 is released under %2</source>
         <translation>%1 está lanzado bajo %2</translation>
     </message>
@@ -121,7 +121,7 @@
 <context>
     <name>DKeySequenceEdit</name>
     <message>
-        <location filename="../widgets/dkeysequenceedit.cpp" line="85"/>
+        <location filename="../widgets/dkeysequenceedit.cpp" line="86"/>
         <source>Enter a new shortcut</source>
         <translation>Introducir un nuevo atajo</translation>
     </message>
@@ -601,24 +601,24 @@
 <context>
     <name>DSplitScreenWidget</name>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="212"/>
-        <source>Unmaximize</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <location filename="../widgets/dtitlebar.cpp" line="215"/>
+        <source>Unmaximize</source>
+        <translation>Minimizar</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dtitlebar.cpp" line="218"/>
         <source>Maximize</source>
-        <translation type="unfinished"/>
+        <translation>Maximizar</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="255"/>
+        <location filename="../widgets/dtitlebar.cpp" line="258"/>
         <source>Tile window to left of screen</source>
-        <translation type="unfinished"/>
+        <translation>Ventana en mosaico a la izquierda de la pantalla</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="256"/>
+        <location filename="../widgets/dtitlebar.cpp" line="259"/>
         <source>Tile window to right of screen</source>
-        <translation type="unfinished"/>
+        <translation>Ventana en mosaico a la derecha de la pantalla</translation>
     </message>
 </context>
 <context>
@@ -657,12 +657,12 @@
     <message>
         <location filename="../widgets/dlineedit.cpp" line="536"/>
         <source>&amp;Copy</source>
-        <translation type="unfinished"/>
+        <translation>%Copiar</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="539"/>
         <source>Cu&amp;t</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Cortar</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="545"/>
@@ -678,7 +678,7 @@
         <translation>No se encontraron resultados</translation>
     </message>
     <message>
-        <location filename="../widgets/private/settings/content.cpp" line="336"/>
+        <location filename="../widgets/private/settings/content.cpp" line="340"/>
         <source>Restore Defaults</source>
         <translation>Restaurar valores predeterminados</translation>
     </message>
@@ -702,37 +702,42 @@
 <context>
     <name>TitleBarMenu</name>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="763"/>
+        <location filename="../widgets/dtitlebar.cpp" line="770"/>
         <source>Theme</source>
         <translation>Tema</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="765"/>
+        <location filename="../widgets/dtitlebar.cpp" line="772"/>
         <source>Light Theme</source>
         <translation>Tema claro</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="766"/>
+        <location filename="../widgets/dtitlebar.cpp" line="773"/>
         <source>Dark Theme</source>
         <translation>Tema oscuro</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="767"/>
+        <location filename="../widgets/dtitlebar.cpp" line="774"/>
         <source>System Theme</source>
         <translation>Tema del sistema</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="792"/>
+        <location filename="../widgets/dtitlebar.cpp" line="799"/>
         <source>Help</source>
         <translation>Ayuda</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="800"/>
+        <location filename="../widgets/dtitlebar.cpp" line="807"/>
+        <source>Feedback</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/dtitlebar.cpp" line="814"/>
         <source>About</source>
         <translation>Acerca de</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="807"/>
+        <location filename="../widgets/dtitlebar.cpp" line="821"/>
         <source>Exit</source>
         <translation>Salir</translation>
     </message>
