@@ -211,10 +211,10 @@ void DSplitScreenWidget::hideImmediately()
 void DSplitScreenWidget::updateMaximizeButtonIcon(bool isMaximized)
 {
     if (isMaximized) {
-        this->maximizeButton->setIcon(DStyle::SP_Title_SS_ShowMaximizeButton);
+        this->maximizeButton->setIcon(DStyle::SP_Title_SS_ShowNormalButton);
         this->maximizeButton->setToolTip(qApp->translate("DSplitScreenWidget", "Unmaximize"));
     } else {
-        this->maximizeButton->setIcon(DStyle::SP_Title_SS_ShowNormalButton);
+        this->maximizeButton->setIcon(DStyle::SP_Title_SS_ShowMaximizeButton);
         this->maximizeButton->setToolTip(qApp->translate("DSplitScreenWidget", "Maximize"));
     }
 }
