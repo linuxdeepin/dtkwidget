@@ -285,6 +285,8 @@ void DFileChooserEditPrivate::_q_showFileChooserDialog()
     }
 
     q->dialogClosed(code);
+    dialog->deleteLater();
+    dialog = nullptr;
 }
 
 DWIDGET_END_NAMESPACE
