@@ -302,6 +302,8 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
                     if (widget.first) {
                         QWidget *container = new QWidget;
                         QHBoxLayout *hLayout = new QHBoxLayout(container);
+                        hLayout->setSpacing(0);
+                        hLayout->setMargin(0);
                         hLayout->addWidget(widget.first);
                         hLayout->addStretch(1);
                         hLay->addWidget(container, 2);
