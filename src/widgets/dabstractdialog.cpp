@@ -48,7 +48,9 @@ DAbstractDialogPrivate::DAbstractDialogPrivate(DAbstractDialog *qq):
 void DAbstractDialogPrivate::init(bool blurIfPossible)
 {
     D_Q(DAbstractDialog);
-
+    // TODO: 这里对dialog特殊处理，dialog不需要设置固定的位置，否则里面的坐标会发生偏移导致点击偏移
+    // 但是这不是问题的根本原因，还需要进一步分析。该属性在插件中做了特殊处理
+    q->QDialog::setProperty("DAbstractDialog", true);
     if (qApp->isDXcbPlatform()) {
         handle = new DPlatformWindowHandle(q, q);
 
