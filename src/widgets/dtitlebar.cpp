@@ -666,7 +666,7 @@ void DTitlebarPrivate::updateCenterArea()
 
 void DTitlebarPrivate::handleParentWindowStateChange()
 {
-    maxButton->setMaximized(targetWindow()->windowState() == Qt::WindowMaximized);
+    maxButton->setMaximized(targetWindow()->windowState().testFlag(Qt::WindowMaximized));
     updateFullscreen();
     updateButtonsState(targetWindow()->windowFlags());
 }
