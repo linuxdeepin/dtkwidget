@@ -1195,7 +1195,10 @@ void DArrowRectanglePrivate::init(DArrowRectangle::FloatMode mode)
 
         m_wmHelper = DWindowManagerHelper::instance();
 
-        q->connect(m_wmHelper, &DWindowManagerHelper::hasCompositeChanged, q, static_cast<void (DArrowRectangle::*)()>(&DArrowRectangle::update), Qt::QueuedConnection);
+        q->connect(m_wmHelper, &DWindowManagerHelper::hasCompositeChanged, q, [q, this](){
+            q->update();
+            this->updateClipPath();
+        }, Qt::QueuedConnection);
     } else {
         DGraphicsGlowEffect *glowEffect = new DGraphicsGlowEffect;
         glowEffect->setBlurRadius(q->shadowBlurRadius());
