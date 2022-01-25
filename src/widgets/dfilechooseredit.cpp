@@ -23,7 +23,8 @@
 
 #include <QScreen>
 #include <QGuiApplication>
-
+#include <private/qguiapplication_p.h>
+#include <QWindow>
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
@@ -275,6 +276,15 @@ void DFileChooserEditPrivate::_q_showFileChooserDialog()
 
     q->dialogOpened();
 
+    if (!dialog) {
+        qWarning("init filedialog failed!!");
+        return;
+    }
+
+    // 多次打开时有时会出现 filedialog 不显示的问题 exec 前确保没显示否则不调用 helper->show
+    if (dialog->isVisible())
+        dialog->setVisible(false);
+
     int code = dialog->exec();
 
     if (code == QDialog::Accepted && !dialog->selectedFiles().isEmpty()) {
@@ -284,9 +294,11 @@ void DFileChooserEditPrivate::_q_showFileChooserDialog()
         Q_EMIT q->fileChoosed(fileName);
     }
 
+    // exec 后如果 filedialog 还阻塞了应用就要隐藏掉
+    if (qApp->modalWindow() == dialog->windowHandle())
+        QGuiApplicationPrivate::hideModalWindow(dialog->windowHandle());
+
     q->dialogClosed(code);
-    dialog->deleteLater();
-    dialog = nullptr;
 }
 
 DWIDGET_END_NAMESPACE
