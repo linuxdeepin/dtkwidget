@@ -744,7 +744,11 @@ void DTitlebarPrivate::_q_onTopWindowMotifHintsChanged(quint32 winId)
     minButton->setEnabled(functions_hints.testFlag(DWindowManagerHelper::FUNC_MINIMIZE));
     maxButton->setEnabled(functions_hints.testFlag(DWindowManagerHelper::FUNC_MAXIMIZE)
                           && functions_hints.testFlag(DWindowManagerHelper::FUNC_RESIZE));
-    closeButton->setEnabled(functions_hints.testFlag(DWindowManagerHelper::FUNC_CLOSE));
+    if (!qgetenv("WAYLAND_DISPLAY").isEmpty() && disableFlags.testFlag(Qt::WindowCloseButtonHint)) {
+        closeButton->setEnabled(false);
+    } else {
+        closeButton->setEnabled(functions_hints.testFlag(DWindowManagerHelper::FUNC_CLOSE));
+    }
     // sync button state
 #if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
     disableFlags.setFlag(Qt::WindowMinimizeButtonHint, !minButton->isEnabled());
