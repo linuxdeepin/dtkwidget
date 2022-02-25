@@ -148,7 +148,7 @@ private:
     bool                autoHideOnFullscreen = false;
     bool                fullScreenButtonVisible = true;
     bool                splitScreenWidgetEnable = true;
-
+    QTimer              *maxButtonPressAndHoldTimer = nullptr;
     Q_DECLARE_PUBLIC(DTitlebar)
 };
 
@@ -313,10 +313,14 @@ bool DSplitScreenWidget::eventFilter(QObject *o, QEvent *e)
     case QEvent::WindowDeactivate:
     case QEvent::FocusIn:
     case QEvent::FocusOut:
-    case QEvent::MouseButtonRelease:
     case QEvent::MouseButtonDblClick:
     case QEvent::Wheel:
         hideImmediately();
+        break;
+    case QEvent::MouseButtonRelease:
+        if (!isMaxButtonPressAndHold) {
+            hideImmediately();
+        }
         break;
     default:
         break;
@@ -375,6 +379,8 @@ void DTitlebarPrivate::init()
     minButton       = new DWindowMinButton;
     maxButton       = new DWindowMaxButton;
     closeButton     = new DWindowCloseButton;
+    maxButtonPressAndHoldTimer = new QTimer(q);
+    maxButtonPressAndHoldTimer->setSingleShot(true);
 
     if (DGuiApplicationHelper::isTabletEnvironment()) {
         optionButton = new DTabletWindowOptionButton;
@@ -494,6 +500,11 @@ void DTitlebarPrivate::init()
                q, SLOT(_q_onTopWindowMotifHintsChanged(quint32)));
     q->connect(DGuiApplicationHelper::instance()->systemTheme(), &DPlatformTheme::iconThemeNameChanged, q, [ = ]() {
         iconLabel->update();
+    });
+    q->connect(maxButtonPressAndHoldTimer, &QTimer::timeout, q, [this]() {
+        showSplitScreenWidget();
+        if (splitWidget && splitWidget->isVisible())
+            splitWidget->isMaxButtonPressAndHold = true;
     });
 
     // 默认需要构造一个空的选项菜单
@@ -696,6 +707,11 @@ void DTitlebarPrivate::handleParentWindowIdChange()
 
 void DTitlebarPrivate::_q_toggleWindowState()
 {
+    if (splitWidget && splitWidget->isMaxButtonPressAndHold) {
+        splitWidget->isMaxButtonPressAndHold = false;
+        return;
+    }
+
     QWidget *parentWindow = targetWindow();
 
     if (!parentWindow || disableFlags.testFlag(Qt::WindowMaximizeButtonHint)) {
@@ -997,10 +1013,14 @@ void DTitlebarPrivate::hideSplitScreenWidget()
 
 void DTitlebarPrivate::changeWindowSplitedState(quint32 type)
 {
-    //### 目前接口尚不公开在 dtkgui 中，等待获取后续接口稳定再做移植
+    if (splitWidget && splitWidget->isVisible()) {
+        splitWidget->isMaxButtonPressAndHold = false;
+        splitWidget->hideImmediately();
+    }
     D_Q(DTitlebar);
     QFunctionPointer splitWindowOnScreen = Q_NULLPTR;
 
+    //### 目前接口尚不公开在 dtkgui 中，等待获取后续接口稳定再做移植
     splitWindowOnScreen = qApp->platformFunction(CHANGESPLITWINDOW_VAR);
 
     const QWindow *windowHandle = nullptr;
@@ -1285,6 +1305,14 @@ bool DTitlebar::eventFilter(QObject *obj, QEvent *event)
         }
         case QEvent::Leave: {
             d->hideSplitScreenWidget();
+            break;
+        }
+        case QEvent::MouseButtonPress: {
+            d->maxButtonPressAndHoldTimer->start(300);
+            break;
+        }
+        case QEvent::MouseButtonRelease: {
+            d->maxButtonPressAndHoldTimer->stop();
             break;
         }
         default:

@@ -81,6 +81,10 @@ private:
     QWidget *contentWidget = nullptr;
     QBasicTimer hideTimer;
     DArrowRectangle::FloatMode floatMode;
+    bool isMaxButtonPressAndHold = false;
+
+    friend class DTitlebarPrivate;
+    friend class DTitlebar;
 };
 
 DWIDGET_END_NAMESPACE
