@@ -29,7 +29,7 @@ public:
         QVBoxLayout *layout = new QVBoxLayout(this);
         layout->setContentsMargins(layout->contentsMargins().left(), 0, layout->contentsMargins().right(), 0);
         layout->setSpacing(0);
-        label->setForegroundRole(QPalette::Highlight);
+        label->setForegroundRole(QPalette::ButtonText);
         layout->addWidget(label);
     }
 
