@@ -409,6 +409,7 @@ void DTitlebarPrivate::init()
 
     iconLabel->setIconSize(QSize(DefaultIconWidth, DefaultIconHeight));
     iconLabel->setWindowFlags(Qt::WindowTransparentForInput);
+    iconLabel->setAttribute( Qt::WA_TransparentForMouseEvents, true);
     iconLabel->setFocusPolicy(Qt::NoFocus);
     iconLabel->setAccessibleName("DTitlebarIconLabel");
     iconLabel->setFlat(true);
