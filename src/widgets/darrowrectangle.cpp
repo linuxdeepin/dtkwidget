@@ -1112,10 +1112,6 @@ void DArrowRectanglePrivate::updateClipPath()
 {
     D_Q(DArrowRectangle);
 
-    if (!m_handle) {
-        return;
-    }
-
     QPainterPath path;
 
     switch (m_arrowDirection) {
@@ -1135,7 +1131,19 @@ void DArrowRectanglePrivate::updateClipPath()
         path = getRightCornerPath();
     }
 
-    m_handle->setClipPath(path);
+    if (m_handle) {
+        m_handle->setClipPath(path);
+    } else {
+        // clipPath without handle
+        QPainterPathStroker stroker;
+        stroker.setCapStyle(Qt::RoundCap);
+        stroker.setJoinStyle(Qt::RoundJoin);
+        stroker.setWidth(2);
+        QPainterPath outPath = stroker.createStroke(path);
+        QPolygon polygon = outPath.united(path).toFillPolygon().toPolygon();
+
+        q->setMask(polygon);
+    }
 }
 
 bool DArrowRectanglePrivate::radiusEnabled()
@@ -1200,12 +1208,12 @@ void DArrowRectanglePrivate::init(DArrowRectangle::FloatMode mode)
             this->updateClipPath();
         }, Qt::QueuedConnection);
     } else {
-        DGraphicsGlowEffect *glowEffect = new DGraphicsGlowEffect;
-        glowEffect->setBlurRadius(q->shadowBlurRadius());
-        glowEffect->setDistance(m_shadowDistance);
-        glowEffect->setXOffset(q->shadowXOffset());
-        glowEffect->setYOffset(q->shadowYOffset());
-        q->setGraphicsEffect(glowEffect);
+//        DGraphicsGlowEffect *glowEffect = new DGraphicsGlowEffect;
+//        glowEffect->setBlurRadius(q->shadowBlurRadius());
+//        glowEffect->setDistance(m_shadowDistance);
+//        glowEffect->setXOffset(q->shadowXOffset());
+//        glowEffect->setYOffset(q->shadowYOffset());
+//        q->setGraphicsEffect(glowEffect);
 
         m_wmHelper = nullptr;
     }
