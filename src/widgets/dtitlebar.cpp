@@ -643,9 +643,7 @@ void DTitlebarPrivate::updateButtonsFunc()
         return;
     }
     if (!qgetenv("WAYLAND_DISPLAY").isEmpty()) {
-        if (disableFlags.testFlag(Qt::WindowCloseButtonHint)) {
-            closeButton->setEnabled(false);
-        }
+        closeButton->setEnabled(!disableFlags.testFlag(Qt::WindowCloseButtonHint));
         return;
     }
 
