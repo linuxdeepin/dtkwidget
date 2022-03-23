@@ -84,7 +84,7 @@ bool DTextEdit::event(QEvent *e)
         return true;
     } else if (e->type() == QEvent::Polish) {
         DStyleHelper dstyle(style());
-        int frame_radius = dstyle.pixelMetric(DStyle::PM_FrameRadius, nullptr, this);
+        int frame_radius = dstyle.pixelMetric(DStyle::PM_FrameRadius, nullptr, this) / 2;
         setViewportMargins(frame_radius, 0, frame_radius, 0);
 
         d->widgetTop->setFixedHeight(frame_radius);
