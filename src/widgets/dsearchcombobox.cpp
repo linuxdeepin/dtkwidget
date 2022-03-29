@@ -68,8 +68,7 @@ void DSearchComboBox::showPopup()
 {
     Q_D(DSearchComboBox);
     QComboBoxPrivate *dd = reinterpret_cast<QComboBoxPrivate *>(qGetPtrHelper(d_ptr));
-    QComboBox::showPopup();
-
+    DComboBox::showPopup();
     if(auto layout = static_cast<QBoxLayout*>(dd->container->layout())) {
         if (!isEditable() && !d->searchEdit) {
             //因为dd->container容器在QComboBox::showPopup()
@@ -83,7 +82,8 @@ void DSearchComboBox::showPopup()
             layout->setSpacing(0);
             searlayout->addWidget(d->searchEdit);
             layout->insertLayout(0, searlayout);
-
+            dd->container->setFixedHeight(dd->container->height() + d->searchEdit->height() +
+                                          layout->spacing() + layout->margin() + layoutMargin);
             d->proxyModel = new QSortFilterProxyModel(this);
             d->proxyModel->setSourceModel(model());
 
