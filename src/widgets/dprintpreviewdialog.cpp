@@ -1279,8 +1279,12 @@ void DPrintPreviewDialogPrivate::judgeSupportedAttributes(const QString &lastPap
     QPrinterInfo updateinfo(*printer);
 
     QStringList pageSizeList;
+    int index = -1;
     for (int i = 0; i < updateinfo.supportedPageSizes().size(); i++) {
         pageSizeList.append(updateinfo.supportedPageSizes().at(i).key());
+        if (index == -1 && updateinfo.supportedPageSizes().at(i).id() == QPageSize::PageSizeId::A4) {
+            index = i;
+        }
     }
     paperSizeCombo->addItems(pageSizeList);
     if (pageSizeList.contains(lastPaperSize)) {
@@ -1288,7 +1292,7 @@ void DPrintPreviewDialogPrivate::judgeSupportedAttributes(const QString &lastPap
     } else {
         //调用绘制预览
         paperSizeCombo->blockSignals(false);
-        paperSizeCombo->setCurrentText("A4");
+        paperSizeCombo->setCurrentIndex(index == - 1 ? 0 : index);
     }
 
     //判断当前打印机是否支持双面打印，不支持禁用双面打印按钮，pdf不做判断
