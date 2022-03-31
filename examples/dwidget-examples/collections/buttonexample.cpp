@@ -959,10 +959,10 @@ DSearchComboBoxExample::DSearchComboBoxExample(QWidget *parent)
     pHBoxLayout_1->setSpacing(0);
 
     DSearchComboBox *pComboBox_1 = new DSearchComboBox(this);
-    pComboBox_1->setEditable(true);
-    pComboBox_1->addItem("手动选择驱动方案");
-    pComboBox_1->addItem("手动选择驱动方案");
-    pComboBox_1->addItem("手动选择驱动方案");
+    pComboBox_1->setEditable(false);
+    for (int i = 0; i < 16; ++i) {
+        pComboBox_1->addItem(QString("手动选择驱动方案%1").arg(i + 1));
+    }
     pComboBox_1->setFixedSize(240, 36);
     pHBoxLayout_1->addWidget(pComboBox_1);
 
