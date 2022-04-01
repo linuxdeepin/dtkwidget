@@ -48,7 +48,13 @@ public:
         if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::LightType) {
             p.setBackground(QColor(255, 255, 255));
         } else {
-            p.setBackground(QColor(109, 109, 109));
+            QColor bgColor(109, 109, 109);
+            if ((opt.state & QStyle::State_Active) == 0) {
+                auto inactive_mask_color = dp.color(QPalette::Window);
+                inactive_mask_color.setAlphaF(0.6);
+                bgColor = DGuiApplicationHelper::blendColor(bgColor, inactive_mask_color);
+            }
+            p.setBackground(bgColor);
         }
 
         p.setPen(QPen(dp.frameBorder(), opt.lineWidth));
