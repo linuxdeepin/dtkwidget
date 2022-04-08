@@ -35,8 +35,11 @@ DWIDGET_BEGIN_NAMESPACE
   \a parent 为创建对象的父控件。
  */
 DWindowCloseButton::DWindowCloseButton(QWidget * parent)
-    : DIconButton(QStyle::SP_TitleBarCloseButton, parent)
+    : DIconButton(parent)
 {
+    //QStyle::SP_TitleBarCloseButton
+    auto iconEngine = new DStyledIconEngine(DDrawUtils::drawTitleBarCloseButton, QStringLiteral("TitleBarCloseButton"));
+    setIcon(QIcon(iconEngine));
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
     setFlat(true);
 }

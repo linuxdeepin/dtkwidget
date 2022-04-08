@@ -26,11 +26,24 @@ public:
     DWindowMaxButtonPrivate(DWindowMaxButton* qq)
         : DIconButtonPrivate(qq)
     {
-        m_isMaximized = false;
+    }
+
+    void setMaximized(bool isMaximized)
+    {
+        if (isMaximized == m_isMaximized)
+            return;
+
+        m_isMaximized = isMaximized;
+        auto drawFun = !isMaximized ? DDrawUtils::drawTitleBarMaxButton : DDrawUtils::drawTitleBarNormalButton;
+        QString iconName = !isMaximized ? QStringLiteral("TitleBarMaxButton") : QStringLiteral("TitleBarNormalButton");
+
+        q_func()->setIcon(QIcon (new DStyledIconEngine(drawFun, iconName)));
+
+        Q_EMIT q_func()->maximizedChanged(isMaximized);
     }
 
 private:
-    bool m_isMaximized;
+    bool m_isMaximized = true;
     Q_DECLARE_PUBLIC(DWindowMaxButton)
 };
 
@@ -56,7 +69,7 @@ DWindowMaxButton::DWindowMaxButton(QWidget * parent) :
     DIconButton(*new DWindowMaxButtonPrivate(this), parent)
 {
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
-    setIcon(QStyle::SP_TitleBarMaxButton);
+    setMaximized(false);
     setFlat(true);
 }
 
@@ -93,18 +106,7 @@ void DWindowMaxButton::setMaximized(bool isMaximized)
 {
     D_D(DWindowMaxButton);
 
-    if (d->m_isMaximized == isMaximized)
-        return;
-
-    d->m_isMaximized = isMaximized;
-
-    if (isMaximized) {
-        setIcon(QStyle::SP_TitleBarNormalButton);
-    } else {
-        setIcon(QStyle::SP_TitleBarMaxButton);
-    }
-
-    Q_EMIT maximizedChanged(isMaximized);
+    d->setMaximized(isMaximized);
 }
 
 void DWindowMaxButton::initStyleOption(DStyleOptionButton *option) const
