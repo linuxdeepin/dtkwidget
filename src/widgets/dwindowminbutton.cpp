@@ -40,6 +40,9 @@ DWIDGET_BEGIN_NAMESPACE
 DWindowMinButton::DWindowMinButton(QWidget * parent)
     : DIconButton(QStyle::SP_TitleBarMinButton, parent)
 {
+    //QStyle::SP_TitleBarMinButton
+    auto iconEngine = new DStyledIconEngine(DDrawUtils::drawTitleBarMinButton, QStringLiteral("TitleBarMinButton"));
+    setIcon(QIcon(iconEngine));
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
     setFlat(true);
 }

@@ -36,8 +36,11 @@ DWIDGET_BEGIN_NAMESPACE
   \a parent 为创建对象的父控件。
  */
 DWindowOptionButton::DWindowOptionButton(QWidget * parent)
-    : DIconButton(QStyle::SP_TitleBarMenuButton, parent)
+    : DIconButton(parent)
 {
+    //QStyle::SP_TitleBarMenuButton
+    auto iconEngine = new DStyledIconEngine(DDrawUtils::drawTitleBarMenuButton, QStringLiteral("TitleBarMenuButton"));
+    setIcon(QIcon(iconEngine));
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
     setFlat(true);
 }
