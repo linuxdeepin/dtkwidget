@@ -294,7 +294,7 @@ bool DAlertControl::eventFilter(QObject *watched, QEvent *event)
     }
 
     if (d->follower && watched == d->follower->topLevelWidget()) {
-        if (event->type() == QEvent::HoverMove)
+        if (event->type() == QEvent::HoverMove || event->type() == QEvent::UpdateRequest)
             d->updateTooltipPos();
 
         if (d->timer.isActive())
