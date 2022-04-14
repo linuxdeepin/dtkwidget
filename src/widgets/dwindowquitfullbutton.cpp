@@ -26,8 +26,11 @@
 DWIDGET_BEGIN_NAMESPACE
 
 DWindowQuitFullButton::DWindowQuitFullButton(QWidget * parent)
-    : DIconButton(DStyle::SP_TitleQuitFullButton ,parent)
+    : DIconButton(parent)
 {
+    //DStyle::SP_TitleQuitFullButton
+    auto iconEngine = new DStyledIconEngine(DDrawUtils::drawTitleQuitFullButton, QStringLiteral("TitleQuitFullButton"));
+    setIcon(QIcon(iconEngine));
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
     setFlat(true);
 }
