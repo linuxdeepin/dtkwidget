@@ -53,7 +53,8 @@ DMainWindowPrivate::DMainWindowPrivate(DMainWindow *qq)
 #ifdef Q_OS_MAC
         OSX::HideWindowTitlebar(qq->winId());
 #else
-        titlebar->setEmbedMode(true);
+     //   titlebar->setEmbedMode(true);
+     qq->setWindowFlag(Qt::FramelessWindowHint);
 #endif
     }
 

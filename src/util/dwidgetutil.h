@@ -44,6 +44,10 @@ QIcon getCircleIcon(const QIcon &icon, int diameter = 36);
 
 void moveToCenter(QWidget *w);
 
+// 使用平台接口移动窗口， qt 5.15及以后不需要传入pos，5.15之前需要传入localpos
+bool startMoveWindow(QWindow *window, QPoint pos = QPoint());
+
+
 DWIDGET_END_NAMESPACE
 
 #endif // DUTILITY_H

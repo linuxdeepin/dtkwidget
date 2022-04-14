@@ -51,6 +51,7 @@
 #include "dblureffectwidget.h"
 #include "dwidgetstype.h"
 #include "dlabel.h"
+#include <DWidgetUtil>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -60,6 +61,11 @@ DWIDGET_BEGIN_NAMESPACE
 const int DefaultTitlebarHeight = 50;
 const int DefaultIconHeight = 32;
 const int DefaultIconWidth = 32;
+
+static bool inline isDWaylandPlatform()
+{
+    return qApp->platformName() == "dwayland" || qApp->property("_d_isDwayland").toBool();
+}
 
 class DTitlebarPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 {
@@ -518,7 +524,7 @@ void DTitlebarPrivate::init()
     q->setFocusPolicy(Qt::StrongFocus);
 
     // fix wayland 下显示了两个应用图标，系统标题栏 和 dtk标题栏 均显示应用图标
-    q->setEmbedMode(!(DApplication::isDXcbPlatform()|| (qApp->platformName() == "dwayland" || qApp->property("_d_isDwayland").toBool())));
+//    q->setEmbedMode(!(DApplication::isDXcbPlatform()|| (qApp->platformName() == "dwayland" || qApp->property("_d_isDwayland").toBool())));
 }
 
 QWidget *DTitlebarPrivate::targetWindow()
@@ -584,7 +590,6 @@ void DTitlebarPrivate::updateFullscreen()
 void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
 {
     D_Q(DTitlebar);
-    bool useDXcb = DPlatformWindowHandle::isEnabledDXcb(targetWindow());
     bool isFullscreen = targetWindow()->windowState().testFlag(Qt::WindowFullScreen);
 
 //    bool forceShow = !useDXcb;
@@ -604,7 +609,7 @@ void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
     }
 
     // Never show in embed/fullscreen
-    bool forceHide = (!useDXcb) || embedMode || isFullscreen;
+    bool forceHide = embedMode || isFullscreen;
 
     bool showMin = (type.testFlag(Qt::WindowMinimizeButtonHint) || forceShow) && !forceHide;
     minButton->setVisible(showMin);
@@ -622,8 +627,8 @@ void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
     }
 
     bool showMax = (type.testFlag(Qt::WindowMaximizeButtonHint) || forceShow) && !forceHide && allowResize;
-    bool showClose = type.testFlag(Qt::WindowCloseButtonHint) && useDXcb;
-    bool showQuit = isFullscreen && useDXcb && fullScreenButtonVisible;
+    bool showClose = type.testFlag(Qt::WindowCloseButtonHint);
+    bool showQuit = isFullscreen && fullScreenButtonVisible;
     maxButton->setVisible(showMax);
     closeButton->setVisible(showClose);
 
@@ -695,7 +700,6 @@ void DTitlebarPrivate::handleParentWindowIdChange()
 {
     if (!targetWindowHandle) {
         targetWindowHandle = targetWindow()->windowHandle();
-
         updateButtonsFunc();
     } else if (targetWindow()->windowHandle() != targetWindowHandle) {
         // Parent change???, show never here
@@ -1847,6 +1851,10 @@ void DTitlebar::mouseMoveEvent(QMouseEvent *event)
         if (!d->mousePressed) {
             return;
         }
+
+        if (!DApplication::isDXcbPlatform() && !isDWaylandPlatform())
+            startMoveWindow(d->targetWindow()->windowHandle(), event->pos());
+
         Q_EMIT mouseMoving(button);
     }
 

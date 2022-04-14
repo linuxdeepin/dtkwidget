@@ -23,6 +23,7 @@
 #include <QTextLayout>
 #include <QApplication>
 #include <QDesktopWidget>
+#include <qpa/qplatformwindow.h>
 
 QT_BEGIN_NAMESPACE
 //extern Q_WIDGETS_EXPORT void qt_blurImage(QImage &blurImage, qreal radius, bool quality, int transposed = 0);
@@ -103,6 +104,19 @@ QIcon getCircleIcon(const QIcon &icon, int diameter)
 {
     QPixmap pixmap = icon.pixmap(QSize(diameter, diameter));
     return getCircleIcon(pixmap, diameter);
+}
+
+bool startMoveWindow(QWindow *window, QPoint pos)
+{
+    if (Q_UNLIKELY(!window || !window->isVisible() || !window->handle()))
+        return false;
+
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
+    return window->handle()->startSystemMove(pos);
+#else
+    Q_UNUSED(pos);
+    return window->handle()->startSystemMove();
+#endif
 }
 
 DWIDGET_END_NAMESPACE

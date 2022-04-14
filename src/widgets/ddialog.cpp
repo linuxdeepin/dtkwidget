@@ -122,7 +122,7 @@ void DDialogPrivate::init()
         qApp->acclimatizeVirtualKeyboard(contentWidget);
     }
 
-    titleBar = new DTitlebar();
+    titleBar = new DTitlebar(q);
     titleBar->setAccessibleName("DDialogTitleBar");
     titleBar->setIcon(icon); //设置标题icon
     titleBar->setMenuVisible(false);

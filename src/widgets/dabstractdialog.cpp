@@ -25,6 +25,7 @@
 #include <QLabel>
 #include <QDebug>
 #include <QComboBox>
+#include <qpa/qplatformwindow.h>
 
 #include "danchors.h"
 #include "dialog_constants.h"
@@ -36,6 +37,7 @@
 
 #include <DGuiApplicationHelper>
 #include <DWindowManagerHelper>
+#include <DWidgetUtil>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -74,8 +76,9 @@ void DAbstractDialogPrivate::init(bool blurIfPossible)
         q->setAttribute(Qt::WA_TranslucentBackground, blurIfPossible);
     } else if (qApp->platformName() == "dwayland" || qApp->property("_d_isDwayland").toBool()) {
         handle = new DPlatformWindowHandle(q, q);
-        // fix wayland no titlebar
-        //q->setWindowFlags(q->windowFlags() | Qt::FramelessWindowHint);
+    } else {
+        // csd
+        q->setWindowFlags(q->windowFlags() | Qt::FramelessWindowHint);
     }
 
     q->resize(DIALOG::DEFAULT_WIDTH, DIALOG::DEFAULT_HEIGHT);
@@ -370,7 +373,8 @@ void DAbstractDialog::mouseMoveEvent(QMouseEvent *event)
     }
 
     if (d->mousePressed) {
-        move(event->globalPos() - d->dragPosition);
+        //move(event->globalPos() - d->dragPosition);
+        startMoveWindow(windowHandle(), event->pos());
         d->mouseMoved = true;
     }
 

@@ -85,7 +85,8 @@ DSettingsDialog::DSettingsDialog(QWidget *parent) :
     rightFrame->setAccessibleName("DSettingDialogRightFrame");
 
     QVBoxLayout *rightlayout = new QVBoxLayout(rightFrame);
-    d->frameBar = new DTitlebar;
+    d->frameBar = new DTitlebar(this);
+    setWindowFlag(Qt::FramelessWindowHint);
     d->frameBar->setMenuVisible(false);
     d->frameBar->setTitle(QString());
     d->frameBar->setAccessibleName("DSettingTitleBar");
