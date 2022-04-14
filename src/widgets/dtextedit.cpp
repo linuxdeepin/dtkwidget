@@ -171,6 +171,9 @@ void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
     }
 
     QMenu *menu = createStandardContextMenu();
+    if (!menu)
+        return QTextEdit::contextMenuEvent(e);
+
     menu->addSeparator();
 
     connect(menu, &QMenu::triggered, this, [this](QAction *pAction) {
