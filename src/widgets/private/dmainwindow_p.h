@@ -40,6 +40,8 @@ public:
 
     DPlatformWindowHandle   *handle     = Q_NULLPTR;
     DTitlebar               *titlebar   = Q_NULLPTR;
+    QWidget                 *sideArea   = Q_NULLPTR;
+    QToolBar                *toolBar    = Q_NULLPTR;
     DShadowLine             *titleShadow = nullptr;
     QShortcut               *help       = Q_NULLPTR;
 

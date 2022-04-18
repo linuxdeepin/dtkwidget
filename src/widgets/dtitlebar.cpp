@@ -34,6 +34,7 @@
 
 #include "dpalettehelper.h"
 #include "dstyleoption.h"
+#include "diconbutton.h"
 #include "dwindowclosebutton.h"
 #include "dwindowmaxbutton.h"
 #include "dwindowminbutton.h"
@@ -96,6 +97,7 @@ private:
 #endif
 
     void setIconVisible(bool visible);
+    DIconButton *setSideTitle(bool visible);
     void updateTabOrder();
     void showSplitScreenWidget();
     void hideSplitScreenWidget();
@@ -104,6 +106,9 @@ private:
     bool supportSplitScreenByWM();
 
     QHBoxLayout         *mainLayout;
+    QWidget             *logoArea;
+    DIconButton         *sideButton = nullptr;
+    QHBoxLayout         *sideLayout;
     QWidget             *leftArea;
     QHBoxLayout         *leftLayout;
     QWidget             *rightArea;
@@ -368,6 +373,8 @@ void DTitlebarPrivate::init()
     D_Q(DTitlebar);
 
     mainLayout      = new QHBoxLayout;
+    logoArea        = new QWidget;
+    sideLayout      = new QHBoxLayout(logoArea);
     leftArea        = new QWidget;
     leftLayout      = new QHBoxLayout(leftArea);
     rightArea       = new QWidget;
@@ -421,6 +428,14 @@ void DTitlebarPrivate::init()
     iconLabel->setFlat(true);
     // 默认无图标，所以隐藏
     iconLabel->hide();
+
+    logoArea->setWindowFlag(Qt::WindowTransparentForInput);
+    logoArea->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+    logoArea->setAccessibleName("DTitlebarLogoArea");
+    logoArea->setContentsMargins(0,0,0,0);
+    sideLayout->setMargin(0);
+    sideLayout->setSpacing(0);
+    sideLayout->setContentsMargins(0, 0, 0, 0);
 
     leftArea->setWindowFlag(Qt::WindowTransparentForInput);
     leftArea->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
@@ -679,7 +694,7 @@ void DTitlebarPrivate::updateCenterArea()
         return;
     }
 
-    int padding = qMax(leftArea->width(), rightArea->width());
+    int padding = qMax(/*logoArea->width() + */leftArea->width(), rightArea->width());
     QRect rect(0, 0, q->width() - 2 * padding, q->height());
     rect.moveCenter(q->rect().center());
     centerArea->setGeometry(rect);
@@ -899,19 +914,51 @@ void DTitlebarPrivate::_q_switchThemeActionTriggered(QAction *action)
 
 void DTitlebarPrivate::setIconVisible(bool visible)
 {
+    D_Q(DTitlebar);
+
     if (iconLabel->isVisible() == visible)
         return;
 
     if (visible) {
-        leftLayout->insertSpacing(0, 10);
-        leftLayout->insertWidget(1, iconLabel, 0, Qt::AlignLeading | Qt::AlignVCenter);
+        leftLayout->insertWidget(0, logoArea, Qt::AlignLeading | Qt::AlignVCenter);
+
+        sideLayout->insertSpacing(0, 10);
+        sideLayout->insertWidget(1, iconLabel, 0, Qt::AlignLeading | Qt::AlignVCenter);
         iconLabel->show();
     } else {
         iconLabel->hide();
         // 从布局中移除图标相关的东西
-        delete leftLayout->takeAt(0);
-        delete leftLayout->takeAt(1);
+        delete sideLayout->takeAt(0);
+        delete sideLayout->takeAt(1);
     }
+}
+
+DIconButton *DTitlebarPrivate::setSideTitle(bool visible)
+{
+    int startIndex = iconLabel->isVisible() ? 0 : 2;
+    if (visible) {
+        if (!sideButton) {
+            sideButton = new DIconButton(DStyle::SP_ExpandElement);
+            sideButton->setFlat(true);
+            sideButton->setObjectName("DIconButton SP_AddButton");
+        }
+
+        sideLayout->insertSpacing(startIndex, 20);
+        sideLayout->insertWidget(startIndex + 1, sideButton, 0, Qt::AlignLeft | Qt::AlignVCenter);
+        sideLayout->addStretch(1);
+
+        sideButton->show();
+    } else {
+        sideButton->hide();
+        // 从布局中移除图标相关的东西 TODO: 改成itemAt, 在设置的时候就记录下来比较准确
+        delete sideLayout->takeAt(startIndex);
+        delete sideLayout->takeAt(startIndex + 1);
+        delete sideLayout->takeAt(startIndex + 2);
+
+        delete mainLayout->takeAt(startIndex);
+        delete mainLayout->takeAt(startIndex + 1);
+    }
+    return sideButton;
 }
 
 void DTitlebarPrivate::updateTabOrder()
@@ -920,7 +967,7 @@ void DTitlebarPrivate::updateTabOrder()
 
     QList<QWidget *> orderWidget;
     QList<QHBoxLayout *> orderLayout;
-    orderLayout << leftLayout << centerLayout << rightLayout;
+    orderLayout << sideLayout << leftLayout << centerLayout << rightLayout;
 
     //查找 leftLayout、centerLayout、rightLayout 三个区域中有 TabFocus 属性的 widget
     for (QHBoxLayout * lyt : orderLayout) {
@@ -1448,6 +1495,26 @@ void DTitlebar::removeWidget(QWidget *w)
 
     updateGeometry();
     d->updateTabOrder();
+}
+
+
+DIconButton * DTitlebar::setSideTitle(bool show)
+{
+    D_D(DTitlebar);
+    return d->setSideTitle(show);
+}
+
+QWidget *DTitlebar::sideTitle()
+{
+    D_DC(DTitlebar);
+
+    return d->logoArea;
+}
+
+void DTitlebar::shrinkToFitWidth()
+{
+    D_D(DTitlebar);
+    d->logoArea->setFixedWidth(d->logoArea->sizeHint().width() + 10);
 }
 
 /*!

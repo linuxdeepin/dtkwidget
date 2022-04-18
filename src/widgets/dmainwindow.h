@@ -55,6 +55,9 @@ public:
 
     DTitlebar *titlebar() const;
 
+    void setSideArea(QWidget *widget);
+    QWidget *sideArea();
+
     bool isDXcbWindow() const;
 
     int windowRadius() const;
@@ -108,6 +111,7 @@ public Q_SLOTS:
     void setTitlebarShadowEnabled(bool titlebarShadowEnabled);
 
 Q_SIGNALS:
+    void sideAreaVisiableChanged(bool show);
     void windowRadiusChanged();
     void borderWidthChanged();
     void borderColorChanged();

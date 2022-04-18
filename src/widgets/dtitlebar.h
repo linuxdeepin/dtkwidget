@@ -29,6 +29,7 @@ DGUI_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
 class DTitlebarPrivate;
+class DIconButton;
 class LIBDTKWIDGETSHARED_EXPORT DTitlebar : public QFrame, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
@@ -47,6 +48,10 @@ public:
 
     void addWidget(QWidget *w, Qt::Alignment alignment = Qt::Alignment());
     void removeWidget(QWidget *w);
+
+    DIconButton *setSideTitle(bool show);
+    QWidget *sideTitle();    // 返回 leftErea 设置颜色,获取button
+    void shrinkToFitWidth();
 
     int buttonAreaWidth() const;
     bool separatorVisible() const;

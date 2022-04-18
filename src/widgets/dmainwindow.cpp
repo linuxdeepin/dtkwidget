@@ -29,6 +29,7 @@
 #include <QWindow>
 #include <QMouseEvent>
 #include <QComboBox>
+#include <QToolBar>
 
 #ifdef Q_OS_MAC
 #include "osxwindow.h"
@@ -130,8 +131,12 @@ void DMainWindowPrivate::updateTitleShadowGeometry()
 
     if (!titleShadow)
         return;
-
     QRect rect(0, titlebar->geometry().bottom() + 1, q->width(), titleShadow->sizeHint().height());
+
+    if (toolBar && toolBar->isVisible()) {
+        rect.moveTo(toolBar->width(), 0);
+    }
+
     titleShadow->setGeometry(rect);
     // 全凭时会隐藏窗口标题栏，因此不应该显示标题栏的阴影
     titleShadow->setVisible(!q->isFullScreen());
@@ -176,6 +181,71 @@ DTitlebar *DMainWindow::titlebar() const
     D_DC(DMainWindow);
 
     return d->titlebar;
+}
+
+void DMainWindow::setSideArea(QWidget *widget)
+{
+    D_D(DMainWindow);
+
+    d->sideArea = widget;
+    d->toolBar = new QToolBar(this);
+    widget->setParent(d->toolBar);
+    d->toolBar->setMovable(false);
+    int sideWidth = widget->size().width() > 200 ? 200 : widget->size().width();
+    d->toolBar->setFixedWidth(sideWidth);
+    addToolBar(Qt::LeftToolBarArea, d->toolBar);
+    if (d->titlebar) {
+        auto button = d->titlebar->setSideTitle(true);
+        QWidget *area = d->titlebar->sideTitle();
+        area->setFixedWidth(sideWidth);
+
+        // 取 widget 的背景色设置为 titlebar 和 toolbar 的背景色
+        QPalette palette = widget->palette();
+        palette.setColor(QPalette::Button, widget->palette().color(QPalette::Button));
+
+        auto areaBgRole = area->backgroundRole();
+        auto toolBgRole = d->toolBar->backgroundRole();
+        QPalette oldPaletteToolBar = d->toolBar->palette();
+        QPalette oldPaletteArea = d->toolBar->palette();
+
+        d->toolBar->setPalette(palette);
+        area->setPalette(palette);
+
+        d->toolBar->setAutoFillBackground(true);
+        d->toolBar->setBackgroundRole(QPalette::Button);
+
+        area->setAutoFillBackground(true);
+        area->setBackgroundRole(QPalette::Button);
+
+        connect(button, &DIconButton::clicked, this, [=](bool checked){
+            button->setIcon(d->toolBar->isVisible() ? DStyle::SP_ExpandElement : DStyle::SP_ReduceElement);
+            d->toolBar->setVisible(!d->toolBar->isVisible());
+            Q_EMIT sideAreaVisiableChanged(checked);
+
+            if (!d->toolBar->isVisible()) {
+                d->toolBar->setBackgroundRole(toolBgRole);
+                area->setBackgroundRole(areaBgRole);
+                d->toolBar->setPalette(oldPaletteToolBar);
+                area->setPalette(oldPaletteArea);
+                d->titlebar->shrinkToFitWidth();
+            } else {
+                area->setBackgroundRole(QPalette::Button);
+                d->toolBar->setBackgroundRole(QPalette::Button);
+                d->toolBar->setPalette(palette);
+                area->setPalette(palette);
+                area->setFixedWidth(sideWidth);
+            }
+
+            d->updateTitleShadowGeometry();
+        });
+    }
+}
+
+QWidget *DMainWindow::sideArea()
+{
+    D_DC(DMainWindow);
+
+    return d->sideArea;
 }
 
 /*!
