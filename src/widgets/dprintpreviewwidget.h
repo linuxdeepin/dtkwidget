@@ -102,6 +102,7 @@ public:
     void setCustomWaterMark(const QString &text);
     void setTextWaterMark(const QString &text);
     void setWaterMarkFont(const QFont &font);
+    QColor waterMarkColor() const;
     void setWaterMarkColor(const QColor &color);
     void setWaterMarkLayout(int layout);
     void setImposition(Imposition im);
@@ -137,6 +138,7 @@ Q_SIGNALS:
     void pagesCountChanged(int pages);
 
 private:
+    void timerEvent(QTimerEvent *event) override;
     void setCurrentTargetPage(int page);
 
     D_DECLARE_PRIVATE(DPrintPreviewWidget)

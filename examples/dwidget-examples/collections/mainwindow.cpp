@@ -149,6 +149,7 @@ void MainWindow::menuItemInvoked(QAction *action)
         DPrintPreviewDialog dialog(this);
         //测试保存PDF文件名称接口
         dialog.setDocName("test");
+        dialog.setPluginMimeData("secrecy");
 #ifdef AsynPreview
         dialog.setAsynPreview(31);
         connect(&dialog, QOverload<DPrinter *, const QVector<int> &>::of(&DPrintPreviewDialog::paintRequested),
@@ -173,7 +174,6 @@ void MainWindow::menuItemInvoked(QAction *action)
                         painter.resetTransform();
                         if (!firstPage)
                             _printer->newPage();
-                        // qApp->processEvents();
 
                         // 给出调用方widget界面作为打印内容
                         double xscale = _printer->pageRect().width() / double(this->width());

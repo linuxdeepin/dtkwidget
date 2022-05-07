@@ -15,6 +15,7 @@
 #include <QWheelEvent>
 #include <QPicture>
 #include <qmath.h>
+#include <QBasicTimer>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -148,6 +149,10 @@ public:
     {
         color = c;
     }
+    inline QColor getColor() const
+    {
+        return color;
+    }
     inline void setBoundingRect(const QRectF &rect)
     {
         qreal rotate = rotation();
@@ -247,6 +252,7 @@ public:
 
     void init();
     void populateScene();
+    void updatePreview();
     void generatePreview();
     void fitView();
     void print(bool printAsPicture = false);
@@ -318,6 +324,7 @@ public:
 
     struct NumberUpData;
     NumberUpData *numberUpPrintData;
+    QBasicTimer updateTimer;
     Q_DECLARE_PUBLIC(DPrintPreviewWidget)
 };
 

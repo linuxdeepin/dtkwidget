@@ -27,6 +27,7 @@
 #include <DScrollArea>
 #include <DScrollBar>
 #include <DPlatformWindowHandle>
+#include <QPluginLoader>
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -79,6 +80,40 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+static QLatin1String _d_printSettingNameMap[DPrintPreviewSettingInterface::SC_ControlCount] = {
+    QLatin1String("PrinterFrame"),
+    QLatin1String("CopyCountFrame"),
+    QLatin1String("PageRangeFrame"),
+    QLatin1String("PageRangeTypeWidget"),
+    QLatin1String("CustomPageEdit"),
+    QLatin1String("OrientationBackgroundGroup"),
+    QLatin1String("PaperSizeFrame"),
+    QLatin1String("DuplexFrame"),
+    QLatin1String("DuplexTypeComboBox"),
+    QLatin1String("N-UpFrame"),
+    QLatin1String("N-UpNumberComboBox"),
+    QLatin1String("N-UpButtonWidget"),
+    QLatin1String("PrintOrderBackgroundGroup"),
+    QLatin1String("PrintOrderSequentialPrintWidget"),
+    QLatin1String("PrintOrderTypeComboBox"),
+    QLatin1String("ColorModeFrame"),
+    QLatin1String("MarginsFrame"),
+    QLatin1String("MarginsTypeComboBox"),
+    QLatin1String("MarginsAdjustWidget"),
+    QLatin1String("ScalingContentBackgroundGroup"),
+    QLatin1String("WaterMarkFrame"),
+    QLatin1String("WaterMarkTypeBackgroundGroup"),
+    QLatin1String("WaterMarkTextTypeComboBox"),
+    QLatin1String("WaterMarkCustomTextEdit"),
+    QLatin1String("WaterMarkTextFontComboBox"),
+    QLatin1String("WaterMarkTextColorButton"),
+    QLatin1String("WaterMarkImagePathEdit"),
+    QLatin1String("WaterMarkLayoutFrame"),
+    QLatin1String("WaterMarkAngleFrame"),
+    QLatin1String("WaterMarkSizeFrame"),
+    QLatin1String("WaterMarkTransparencyFrame"),
+};
+
 void setwidgetfont(QWidget *widget, DFontSizeManager::SizeType type = DFontSizeManager::T5)
 {
     QFont font = widget->font();
@@ -106,6 +141,8 @@ void DPrintPreviewDialogPrivate::startup()
     Q_Q(DPrintPreviewDialog);
 
     this->printer = new DPrinter;
+    this->settingHelper = new PreviewSettingsPluginHelper(this);
+    PreviewSettingsPluginHelper::loadPlugin();
 
     if (qApp)
         qApp->installEventFilter(q);
@@ -286,6 +323,7 @@ void DPrintPreviewDialogPrivate::initbasicui()
 
     //打印机选择
     DFrame *printerFrame = new DFrame(basicsettingwdg);
+    printerFrame->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_PrinterWidget]);
     layout->addWidget(printerFrame);
     printerFrame->setMinimumSize(WIDTH_NORMAL, HEIGHT_NORMAL);
     setfrmaeback(printerFrame);
@@ -299,7 +337,7 @@ void DPrintPreviewDialogPrivate::initbasicui()
 
     //打印份数
     DFrame *copycountFrame = new DFrame(basicsettingwdg);
-    copycountFrame->setObjectName("copucountframe");
+    copycountFrame->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_CopiesWidget]);
     layout->addWidget(copycountFrame);
     copycountFrame->setMinimumSize(WIDTH_NORMAL, HEIGHT_NORMAL);
     setfrmaeback(copycountFrame);
@@ -319,7 +357,7 @@ void DPrintPreviewDialogPrivate::initbasicui()
 
     //页码范围
     DFrame *pageFrame = new DFrame(basicsettingwdg);
-    pageFrame->setObjectName("pageFrame");
+    pageFrame->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_PageRangeWidget]);
     layout->addWidget(pageFrame);
     pageFrame->setMinimumSize(WIDTH_NORMAL, 94);
     setfrmaeback(pageFrame);
@@ -330,12 +368,16 @@ void DPrintPreviewDialogPrivate::initbasicui()
     pageRangeCombo->addItem(qApp->translate("DPrintPreviewDialogPrivate", "All"));
     pageRangeCombo->addItem(qApp->translate("DPrintPreviewDialogPrivate", "Current page"));
     pageRangeCombo->addItem(qApp->translate("DPrintPreviewDialogPrivate", "Select pages"));
-    QHBoxLayout *hrangebox = new QHBoxLayout();
+    QWidget *hrangeWidget = new QWidget(q);
+    hrangeWidget->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_PageRange_TypeControl]);
+    QHBoxLayout *hrangebox = new QHBoxLayout(hrangeWidget);
+    hrangebox->setMargin(0);
     hrangebox->addWidget(pagerangelabel, 4);
     hrangebox->addWidget(pageRangeCombo, 9);
 
     pageRangeEdit = new DLineEdit;
-    pagelayout->addLayout(hrangebox);
+    pageRangeEdit->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_PageRange_SelectEdit]);
+    pagelayout->addWidget(hrangeWidget);
     pagelayout->addWidget(pageRangeEdit);
     pageRangeEdit->installEventFilter(q);
 
@@ -345,6 +387,7 @@ void DPrintPreviewDialogPrivate::initbasicui()
 
     //打印方向
     DLabel *orientationLabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Orientation"), basicsettingwdg);
+    orientationLabel->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_OrientationWidget]);
     setwidgetfont(orientationLabel);
     QHBoxLayout *orientationtitlelayout = new QHBoxLayout;
     orientationtitlelayout->setContentsMargins(10, 0, 0, 0);
@@ -387,7 +430,7 @@ void DPrintPreviewDialogPrivate::initbasicui()
     orientationlayout->addWidget(portraitwdg);
     orientationlayout->addWidget(landscapewdg);
     DBackgroundGroup *back = new DBackgroundGroup(orientationlayout);
-    back->setObjectName("OrientationBackgroundGroup");
+    back->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_OrientationWidget]);
     back->setItemSpacing(2);
     DPalette pa = DPaletteHelper::instance()->palette(back);
     pa.setBrush(DPalette::Base, pa.itemBackground());
@@ -413,6 +456,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     pagestitlelayout->addWidget(pagesLabel, Qt::AlignLeft | Qt::AlignBottom);
 
     DFrame *colorframe = new DFrame;
+    colorframe->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_ColorModeWidget]);
     setfrmaeback(colorframe);
     colorframe->setFixedHeight(HEIGHT_NORMAL);
     QHBoxLayout *colorlayout = new QHBoxLayout(colorframe);
@@ -424,18 +468,21 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     colorlayout->setContentsMargins(10, 4, 10, 4);
 
     DFrame *marginsframe = new DFrame;
-    marginsframe->setObjectName("marginsFrame");
+    marginsframe->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_MarginWidget]);
     setfrmaeback(marginsframe);
     QVBoxLayout *marginslayout = new QVBoxLayout(marginsframe);
     marginslayout->setContentsMargins(10, 5, 10, 5);
     QHBoxLayout *marginscombolayout = new QHBoxLayout;
     DLabel *marginlabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Margins"));
     marginsCombo = new DComboBox;
+    marginsCombo->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_Margin_TypeControl]);
     marginsCombo->addItems(QStringList() << qApp->translate("DPrintPreviewDialogPrivate", "Narrow (mm)") << qApp->translate("DPrintPreviewDialogPrivate", "Normal (mm)") << qApp->translate("DPrintPreviewDialogPrivate", "Moderate (mm)") << qApp->translate("DPrintPreviewDialogPrivate", "Customize (mm)"));
     marginscombolayout->addWidget(marginlabel, 4);
     marginscombolayout->addWidget(marginsCombo, 9);
 
-    QHBoxLayout *marginsspinlayout = new QHBoxLayout;
+    QWidget *marginSpinWidget = new QWidget(q);
+    marginSpinWidget->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_Margin_AdjustContol]);
+    QHBoxLayout *marginsspinlayout = new QHBoxLayout(marginSpinWidget);
     marginsspinlayout->setContentsMargins(0, 0, 0, 0);
     DLabel *toplabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Top"));
     marginTopSpin = new DDoubleSpinBox;
@@ -472,7 +519,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     marginsspinlayout->addLayout(marginslabellayout2);
     marginsspinlayout->addLayout(marginsspinboxlayout2);
     marginslayout->addLayout(marginscombolayout);
-    marginslayout->addLayout(marginsspinlayout);
+    marginslayout->addWidget(marginSpinWidget);
 
     QRegExp reg("^([5-5][0-4]|[1-4][0-9]|[0-9])?(\\.[0-9][0-9])|55(\\.[8-8][0-8])|55(\\.[0-7][0-9])");
     QRegExpValidator *val = new QRegExpValidator(reg, marginsframe);
@@ -492,6 +539,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     QVBoxLayout *scalinglayout = new QVBoxLayout;
     scalinglayout->setContentsMargins(10, 0, 10, 0);
     DLabel *scalingLabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Scaling"), advancesettingwdg);
+    scalingLabel->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_ScalingWidget]);
     QHBoxLayout *scalingtitlelayout = new QHBoxLayout;
     scalingtitlelayout->setContentsMargins(10, 20, 0, 0);
     scalingtitlelayout->addWidget(scalingLabel, Qt::AlignLeft | Qt::AlignBottom);
@@ -534,7 +582,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     scalingcontentlayout->addWidget(customscalewdg);
 
     DBackgroundGroup *back = new DBackgroundGroup(scalingcontentlayout);
-    back->setObjectName("ScalingContentBackgroundGroup");
+    back->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_ScalingWidget]);
     back->setItemSpacing(1);
     DPalette pa = DPaletteHelper::instance()->palette(back);
     pa.setBrush(DPalette::Base, pa.itemBackground());
@@ -546,12 +594,14 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     QVBoxLayout *paperlayout = new QVBoxLayout;
     paperlayout->setContentsMargins(10, 0, 10, 0);
     DLabel *paperLabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Paper"), advancesettingwdg);
+    paperLabel->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_PaperSizeWidget]);
     setwidgetfont(paperLabel, DFontSizeManager::T5);
     QHBoxLayout *papertitlelayout = new QHBoxLayout;
     papertitlelayout->setContentsMargins(10, 0, 0, 0);
     papertitlelayout->addWidget(paperLabel, Qt::AlignLeft | Qt::AlignBottom);
 
     DFrame *paperframe = new DFrame;
+    paperframe->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_PaperSizeWidget]);
     setfrmaeback(paperframe);
     paperframe->setFixedHeight(HEIGHT_NORMAL);
     QHBoxLayout *paperframelayout = new QHBoxLayout(paperframe);
@@ -575,10 +625,12 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     drawingtitlelayout->addWidget(drawingLabel, Qt::AlignLeft | Qt::AlignBottom);
 
     DFrame *duplexframe = new DFrame;
+    duplexframe->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_DuplexWidget]);
     setfrmaeback(duplexframe);
     duplexframe->setFixedHeight(HEIGHT_NORMAL);
     QHBoxLayout *duplexlayout = new QHBoxLayout(duplexframe);
     duplexCombo = new DComboBox;
+    duplexCombo->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_Duplex_TypeControl]);
     duplexCheckBox = new DCheckBox(qApp->translate("DPrintPreviewDialogPrivate", "Duplex"));
     duplexCombo->setFixedHeight(36);
     duplexlayout->setContentsMargins(5, 5, 10, 5);
@@ -587,13 +639,14 @@ void DPrintPreviewDialogPrivate::initadvanceui()
 
     //并列打印
     DFrame *sidebysideframe = new DFrame;
-    sidebysideframe->setObjectName("btnframe");
+    sidebysideframe->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_NPrintWidget]);
     setfrmaeback(sidebysideframe);
     QVBoxLayout *sidebysideframelayout = new QVBoxLayout(sidebysideframe);
     sidebysideframelayout->setContentsMargins(0, 0, 0, 0);
     QHBoxLayout *pagepersheetlayout = new QHBoxLayout;
     sidebysideCheckBox = new DCheckBox(qApp->translate("DPrintPreviewDialogPrivate", "N-up printing"));
     pagePerSheetCombo = new DComboBox;
+    pagePerSheetCombo->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_NPrint_Numbers]);
     pagePerSheetCombo->addItems(QStringList() << qApp->translate("DPrintPreviewDialogPrivate", "2 pages/sheet, 1×2") << qApp->translate("DPrintPreviewDialogPrivate", "4 pages/sheet, 2×2") << qApp->translate("DPrintPreviewDialogPrivate", "6 pages/sheet, 2×3") << qApp->translate("DPrintPreviewDialogPrivate", "9 pages/sheet, 3×3") << qApp->translate("DPrintPreviewDialogPrivate", "16 pages/sheet, 4×4"));
     pagePerSheetCombo->setFixedHeight(36);
     pagepersheetlayout->setContentsMargins(5, 5, 10, 5);
@@ -601,7 +654,10 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     pagepersheetlayout->addWidget(pagePerSheetCombo, 9);
     sidebysideframelayout->addLayout(pagepersheetlayout);
 
-    QHBoxLayout *printdirectlayout = new QHBoxLayout;
+    QWidget *printDirectWidget = new QWidget(q);
+    printDirectWidget->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_NPrint_Layout]);
+    settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_NPrint_Layout, false);
+    QHBoxLayout *printdirectlayout = new QHBoxLayout(printDirectWidget);
     printdirectlayout->setContentsMargins(0, 0, 10, 5);
     DLabel *directlabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Layout direction"));
     DToolButton *lrtbBtn = new DToolButton;
@@ -630,14 +686,13 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     btnLayout->addWidget(repeatBtn);
     printdirectlayout->addWidget(directlabel, 2);
     printdirectlayout->addWidget(btnWidget, 5);
-    sidebysideframelayout->addLayout(printdirectlayout);
+    sidebysideframelayout->addWidget(printDirectWidget);
     QList<DToolButton *> listBtn = btnWidget->findChildren<DToolButton *>();
     int num = 0;
     for (DToolButton *btn : listBtn) {
         btn->setIconSize(QSize(18, 18));
         btn->setFixedSize(QSize(36, 36));
         btn->setCheckable(true);
-        btn->setEnabled(false);
         directGroup->addButton(btn, num);
         num++;
     }
@@ -649,6 +704,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     QVBoxLayout *orderlayout = new QVBoxLayout;
     orderlayout->setContentsMargins(10, 0, 10, 0);
     DLabel *orderLabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Page Order"), advancesettingwdg);
+    orderLabel->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_PageOrderWidget]);
     setwidgetfont(orderLabel, DFontSizeManager::T5);
     QHBoxLayout *ordertitlelayout = new QHBoxLayout;
     ordertitlelayout->setContentsMargins(0, 20, 0, 0);
@@ -663,12 +719,13 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     collatelayout->addWidget(printCollateRadio);
     printCollateRadio->setChecked(true);
     inorderwdg = new DWidget;
-    inorderwdg->setObjectName("InorderWidget");
+    inorderwdg->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_PageOrder_SequentialPrint]);
     QHBoxLayout *inorderlayout = new QHBoxLayout(inorderwdg);
     printInOrderRadio = new DRadioButton(qApp->translate("DPrintPreviewDialogPrivate", "Print pages in order")); //按顺序打印
     inorderCombo = new DComboBox;
+    inorderCombo->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_PageOrder_TypeControl]);
+    settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_PageOrder_TypeControl, false);
     inorderCombo->addItems(QStringList() << qApp->translate("DPrintPreviewDialogPrivate", "Front to back") << qApp->translate("DPrintPreviewDialogPrivate", "Back to front"));
-    inorderCombo->setEnabled(false);
     inorderlayout->addWidget(printInOrderRadio, 4);
     inorderlayout->addWidget(inorderCombo, 9);
 
@@ -680,6 +737,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     printOrderGroup->addButton(printInOrderRadio, 1);
 
     DBackgroundGroup *backorder = new DBackgroundGroup(ordercontentlayout);
+    backorder->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_PageOrderWidget]);
     backorder->setItemSpacing(1);
     pa = DPaletteHelper::instance()->palette(backorder);
     pa.setBrush(DPalette::Base, pa.itemBackground());
@@ -692,13 +750,14 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     QVBoxLayout *watermarklayout = new QVBoxLayout;
     watermarklayout->setContentsMargins(10, 0, 10, 0);
     DLabel *watermarkLabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Watermark"), advancesettingwdg);
+    watermarkLabel->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_WatermarkWidget]);
     QHBoxLayout *watermarktitlelayout = new QHBoxLayout;
     watermarktitlelayout->setContentsMargins(10, 20, 0, 0);
     watermarktitlelayout->addWidget(watermarkLabel, Qt::AlignLeft | Qt::AlignBottom);
     setwidgetfont(watermarkLabel, DFontSizeManager::T5);
 
     DFrame *watermarkframe = new DFrame;
-    watermarkframe->setObjectName("WaterMarkFrame");
+    watermarkframe->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_WatermarkWidget]);
     setfrmaeback(watermarkframe);
     QHBoxLayout *texttypelayout = new QHBoxLayout;
     texttypelayout->setContentsMargins(10, 10, 10, 10);
@@ -710,6 +769,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     watermarkframe->setLayout(texttypelayout);
 
     watermarksettingwdg = new DWidget;
+    watermarksettingwdg->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_WatermarkWidget]);
     watermarksettingwdg->setMinimumWidth(WIDTH_NORMAL);
     initWaterMarkui();
     watermarksettingwdg->hide();
@@ -746,13 +806,16 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     QHBoxLayout *hlayout1 = new QHBoxLayout;
     DRadioButton *textBtn = new DRadioButton(qApp->translate("DPrintPreviewDialogPrivate", "Text watermark"));
     waterTextCombo = new DComboBox;
+    waterTextCombo->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_Watermark_TextType]);
+
     waterTextCombo->addItems(QStringList() << qApp->translate("DPrintPreviewDialogPrivate", "Confidential") << qApp->translate("DPrintPreviewDialogPrivate", "Draft") << qApp->translate("DPrintPreviewDialogPrivate", "Sample") << qApp->translate("DPrintPreviewDialogPrivate", "Custom"));
     hlayout1->addWidget(textBtn, 4);
     hlayout1->addWidget(waterTextCombo, 9);
 
     QHBoxLayout *hlayout2 = new QHBoxLayout;
     waterTextEdit = new DLineEdit;
-    waterTextEdit->setEnabled(false);
+    waterTextEdit->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_Watermark_CustomText]);
+    settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_CustomText, false);
     waterTextEdit->lineEdit()->setMaxLength(16);
     waterTextEdit->lineEdit()->setPlaceholderText(qApp->translate("DPrintPreviewDialogPrivate", "Input your text"));
     hlayout2->addWidget(new DLabel, 4);
@@ -760,8 +823,10 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
 
     QHBoxLayout *hlayout3 = new QHBoxLayout;
     fontCombo = new DComboBox;
+    fontCombo->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_Watermark_TextFont]);
 
     waterColorBtn = new DIconButton(textWatermarkWdg);
+    waterColorBtn->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_Watermark_TextColor]);
     waterColorBtn->setFixedSize(36, 36);
     waterColor = QColor("#6f6f6f");
     _q_selectColorButton(waterColor);
@@ -779,6 +844,7 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     picHlayout->setContentsMargins(0, 0, 5, 0);
     DRadioButton *picBtn = new DRadioButton(qApp->translate("DPrintPreviewDialogPrivate", "Picture watermark"));
     picPathEdit = new DFileChooserEdit;
+    picPathEdit->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_Watermark_ImageEdit]);
     picPathEdit->setNameFilters(QStringList() << "*.png *.jpg");
     QString desktopPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
     picPathEdit->setDirectoryUrl(QUrl(desktopPath, QUrl::TolerantMode));
@@ -792,9 +858,11 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     waterTypeGroup->addButton(picBtn, 1);
 
     DBackgroundGroup *back = new DBackgroundGroup(vWatertypeLayout);
+    back->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_Watermark_TypeGroup]);
     back->setItemSpacing(2);
 
     DFrame *posframe = new DFrame;
+    posframe->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_Watermark_Layout]);
     setfrmaeback(posframe);
     posframe->setFixedHeight(HEIGHT_NORMAL);
     QHBoxLayout *posframelayout = new QHBoxLayout(posframe);
@@ -808,6 +876,7 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     posframelayout->setContentsMargins(10, 4, 10, 4);
 
     DFrame *inclinatframe = new DFrame;
+    inclinatframe->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_Watermark_Angle]);
     setfrmaeback(inclinatframe);
     inclinatframe->setFixedHeight(HEIGHT_NORMAL);
     QHBoxLayout *inclinatframelayout = new QHBoxLayout(inclinatframe);
@@ -824,6 +893,7 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     inclinatframelayout->setContentsMargins(10, 4, 10, 4);
 
     DFrame *sizeframe = new DFrame;
+    sizeframe->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_Watermark_Size]);
     setfrmaeback(sizeframe);
     sizeframe->setFixedHeight(HEIGHT_NORMAL);
     QHBoxLayout *sizeframelayout = new QHBoxLayout(sizeframe);
@@ -845,6 +915,7 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     sizeframelayout->setContentsMargins(10, 4, 10, 4);
 
     DFrame *opaframe = new DFrame;
+    opaframe->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_Watermark_Transparency]);
     setfrmaeback(opaframe);
     opaframe->setFixedHeight(HEIGHT_NORMAL);
     QHBoxLayout *opaframelayout = new QHBoxLayout(opaframe);
@@ -902,7 +973,6 @@ void DPrintPreviewDialogPrivate::marginsLayout(bool adapted)
 
 void DPrintPreviewDialogPrivate::initdata()
 {
-    Q_Q(DPrintPreviewDialog);
     QStringList itemlist;
     itemlist << QPrinterInfo::availablePrinterNames()
              << qApp->translate("DPrintPreviewDialogPrivate", "Print to PDF")
@@ -922,8 +992,8 @@ void DPrintPreviewDialogPrivate::initdata()
     orientationgroup->button(0)->setChecked(true);
     scaleRateEdit->setValue(100);
     scaleRateEdit->setEnabled(false);
-    duplexCombo->setEnabled(false);
-    pagePerSheetCombo->setEnabled(false);
+    settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Duplex_TypeControl, false);
+    settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_NPrint_Numbers, false);
     isInited = true;
     fontSizeMore = true;
 }
@@ -951,59 +1021,59 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(picPathEdit->lineEdit(), &QLineEdit::textEdited, q, [this] { this->customPictureWatermarkChoosed(picPathEdit->text()); });
     QObject::connect(picPathEdit, &DFileChooserEdit::fileChoosed, q, [this](const QString &filePath) { this->customPictureWatermarkChoosed(filePath); });
 
-    QObject::connect(sizeBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), q, [=](int value) {
+    QObject::connect(sizeBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), q, [this](int value) {
         waterSizeSlider->setValue(value);
     });
-    QObject::connect(opaBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), q, [=](int value) {
+    QObject::connect(opaBox, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), q, [this](int value) {
         wmOpaSlider->setValue(value);
     });
-    QObject::connect(fontCombo, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), q, [=] {
+    QObject::connect(fontCombo, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), q, [this] {
         QFont font(fontCombo->currentText());
         font.setPointSize(WATERFONT_SIZE);
         pview->setWaterMarkFont(font);
     });
     QObject::connect(pickColorWidget, SIGNAL(selectColorButton(QColor)), q, SLOT(_q_selectColorButton(QColor)));
-    QObject::connect(waterPosCombox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), q, [=](int index) {
+    QObject::connect(waterPosCombox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), q, [this](int index) {
         if (index == waterPosCombox->count() - 1) {
             pview->setWaterMarkLayout(WATERLAYOUT_CENTER);
         } else {
             pview->setWaterMarkLayout(WATERLAYOUT_TILED);
         }
     });
-    QObject::connect(directGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), q, [=](int index) {
+    QObject::connect(directGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), q, [this](int index) {
         directGroup->button(index)->setChecked(true);
         directChoice = index;
         pview->setOrder(DPrintPreviewWidget::Order(index));
     });
-    QObject::connect(inclinatBox, &QSpinBox::editingFinished, q, [=]() {
+    QObject::connect(inclinatBox, &QSpinBox::editingFinished, q, [this]() {
         _d_setSpinboxDefaultValue(spinboxTextCaches, inclinatBox);
         pview->setWaterMarkRotate(inclinatBox->value());
     });
-    QObject::connect(waterSizeSlider, &DSlider::valueChanged, q, [=](int value) {
+    QObject::connect(waterSizeSlider, &DSlider::valueChanged, q, [this](int value) {
         sizeBox->setValue(value);
         qreal m_value = static_cast<qreal>(value) / 100.00;
         pview->setWaterMarkScale(m_value);
     });
-    QObject::connect(wmOpaSlider, &DSlider::valueChanged, q, [=](int value) {
+    QObject::connect(wmOpaSlider, &DSlider::valueChanged, q, [this](int value) {
         opaBox->setValue(value);
         qreal m_value = static_cast<qreal>(value) / 100.00;
         pview->setWaterMarkOpacity(m_value);
     });
-    QObject::connect(printOrderGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), q, [=](int index) {
+    QObject::connect(printOrderGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), q, [this](int index) {
         Q_Q(DPrintPreviewDialog);
         if (index == 0) {
-            inorderCombo->setEnabled(false);
+            settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_PageOrder_TypeControl, false);
             // 此时不是按照文件路径打印 将并打选项开启
             if (q->printFromPath().isEmpty())
-                q->findChild<DFrame *>("btnframe")->setEnabled(true);
+                settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_NPrintWidget, true);
         } else {
-            inorderCombo->setEnabled(true);
-            q->findChild<DFrame *>("btnframe")->setEnabled(false);
+            settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_PageOrder_TypeControl, true);
+            settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_NPrintWidget, false);
         }
     });
-    QObject::connect(waterMarkBtn, &DSwitchButton::clicked, q, [=](bool isClicked) { this->waterMarkBtnClicked(isClicked); });
+    QObject::connect(waterMarkBtn, &DSwitchButton::checkedChanged, q, [this](bool checked) { this->waterMarkBtnClicked(checked); });
     QObject::connect(waterTypeGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), q, [=](int index) { this->watermarkTypeChoosed(index); });
-    QObject::connect(pageRangeEdit, &DLineEdit::editingFinished, [=] {
+    QObject::connect(pageRangeEdit, &DLineEdit::editingFinished, [this] {
         _q_customPagesFinished();
     });
     QObject::connect(pageRangeEdit, &DLineEdit::focusChanged, q, [this](bool onFocus) {
@@ -1014,16 +1084,15 @@ void DPrintPreviewDialogPrivate::initconnections()
             pageRangeError(NullTip);
         }
     });
-    QObject::connect(sidebysideCheckBox, &DCheckBox::stateChanged, q, [=](int status) {
+    QObject::connect(sidebysideCheckBox, &DCheckBox::stateChanged, q, [this](int status) {
         if (status == 0) {
-            if (printDeviceCombo->currentIndex() < printDeviceCombo->count() - 2)
-                inorderwdg->setEnabled(true);
+            if (isActualPrinter(printDeviceCombo->currentText()))
+                settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_PageOrder_SequentialPrint, true);
             setPageLayoutEnable(false);
             pview->setImposition(DPrintPreviewWidget::One);
             originTotalPageLabel->setVisible(false);
         } else {
-            inorderwdg->setEnabled(false);
-            inorderCombo->setEnabled(false);
+            settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_PageOrder_SequentialPrint, false);
             printOrderGroup->button(0)->setChecked(true);
             setPageLayoutEnable(true);
             directGroup->button(directChoice)->setChecked(true);
@@ -1031,12 +1100,12 @@ void DPrintPreviewDialogPrivate::initconnections()
             originTotalPageLabel->setVisible(true);
         }
     });
-    QObject::connect(jumpPageEdit->lineEdit(), &QLineEdit::textChanged, q, [ = ](QString str) {
+    QObject::connect(jumpPageEdit->lineEdit(), &QLineEdit::textChanged, q, [ this ](QString str) {
         if (str.toInt() > totalPageLabel->text().toInt())
             jumpPageEdit->lineEdit()->setText(totalPageLabel->text());
     });
 
-    QObject::connect(pview, &DPrintPreviewWidget::totalPages, [this](int pages) {
+    QObject::connect(pview, &DPrintPreviewWidget::totalPages, q, [this](int pages) {
         int targetPage = pview->targetPageCount(pages);
         jumpPageEdit->setRange(FIRST_PAGE, targetPage);
         totalPageLabel->setText(QString::number(targetPage));
@@ -1048,6 +1117,7 @@ void DPrintPreviewDialogPrivate::initconnections()
             originTotalPageLabel->setVisible(false);
         jumpPageEdit->setMaximum(targetPage);
         setTurnPageBtnStatus();
+        _q_customPagesFinished();
     });
     QObject::connect(pview, &DPrintPreviewWidget::pagesCountChanged, [this](int pages) {
         totalPageLabel->setNum(pview->targetPageCount(pages));
@@ -1075,51 +1145,22 @@ void DPrintPreviewDialogPrivate::initconnections()
         pview->setCurrentPage(jumpPageEdit->value());
         setTurnPageBtnStatus();
     });
-    QObject::connect(paperSizeCombo, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), q, [this](int index) {
-        Q_UNUSED(index)
-        QPrinterInfo prInfo(*printer);
+    QObject::connect(paperSizeCombo, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), q, [this](int) {
         if (paperSizeCombo->count() == 0) {
             printer->setPageSize(QPrinter::A4);
             return ;
         }
-        if (printDeviceCombo->currentIndex() != printDeviceCombo->count() - 1 && printDeviceCombo->currentIndex() != printDeviceCombo->count() - 2) {
-            printer->setPageSize(prInfo.supportedPageSizes().at(paperSizeCombo->currentIndex()));
-        } else {
-            switch (paperSizeCombo->currentIndex()) {
-            case 0:
-                printer->setPageSize(QPrinter::A3);
-                break;
-            case 1:
-                printer->setPageSize(QPrinter::A4);
-                break;
-            case 2:
-                printer->setPageSize(QPrinter::A5);
-                break;
-            case 3:
-                printer->setPageSize(QPrinter::B4);
-                break;
-            case 4:
-                printer->setPageSize(QPrinter::B5);
-                break;
-            case 5:
-                printer->setPageSize(QPrinter::Custom);
-                printer->setPageSizeMM(QSizeF(EightK_Weight, EightK_Height));
-                break;
-            case 6:
-                printer->setPageSize(QPrinter::Custom);
-                printer->setPageSizeMM(QSizeF(SixteenK_Weight, SixteenK_Height));
-                break;
-            }
-        }
+
+        matchFitablePageSize();
         if (isInited) {
             this->marginsUpdate(false);
         }
-        if (pview->pageRangeMode() == DPrintPreviewWidget::SelectPage)
+        if (pview->pageRangeMode() == DPrintPreviewWidget::SelectPage && pageRangeCombo->isEnabled())
             pageRangeCombo->setCurrentIndex(PAGERANGE_ALL);
 
     });
 
-    QObject::connect(scaleRateEdit->lineEdit(), &QLineEdit::editingFinished, q, [=] {
+    QObject::connect(scaleRateEdit->lineEdit(), &QLineEdit::editingFinished, q, [this] {
         if (scaleGroup->checkedId() == SCALE) {
             _d_setSpinboxDefaultValue(spinboxTextCaches, scaleRateEdit);
             if (scaleRateEdit->value() < 10)
@@ -1210,37 +1251,7 @@ void DPrintPreviewDialogPrivate::setupPrinter()
     }
     //高级设置
     //设置纸张大小
-    QPrinterInfo prInfo(*printer);
-    if (printDeviceCombo->currentIndex() != printDeviceCombo->count() - 1
-        && printDeviceCombo->currentIndex() != printDeviceCombo->count() - 2) {
-        printer->setPageSize(prInfo.supportedPageSizes().at(paperSizeCombo->currentIndex()));
-    } else {
-        switch (paperSizeCombo->currentIndex()) {
-        case 0:
-            printer->setPageSize(QPrinter::A3);
-            break;
-        case 1:
-            printer->setPageSize(QPrinter::A4);
-            break;
-        case 2:
-            printer->setPageSize(QPrinter::A5);
-            break;
-        case 3:
-            printer->setPageSize(QPrinter::B4);
-            break;
-        case 4:
-            printer->setPageSize(QPrinter::B5);
-            break;
-        case 5:
-            printer->setPageSize(QPrinter::Custom);
-            printer->setPageSizeMM(QSizeF(EightK_Weight, EightK_Height));
-            break;
-        case 6:
-            printer->setPageSize(QPrinter::Custom);
-            printer->setPageSizeMM(QSizeF(SixteenK_Weight, SixteenK_Height));
-            break;
-        }
-    }
+    matchFitablePageSize();
     //设置双面打印
     if (duplexCheckBox->isChecked()) {
         if (duplexCombo->count() == 1) {
@@ -1249,13 +1260,10 @@ void DPrintPreviewDialogPrivate::setupPrinter()
             else
                 printer->setDuplex(QPrinter::DuplexShortSide);
         } else {
-            switch (duplexCombo->currentIndex()) {
-            case 0:
+            if (duplexCombo->currentText() == qApp->translate("DPrintPreviewDialogPrivate", "Flip on long edge")) {
                 printer->setDuplex(QPrinter::DuplexLongSide);
-                break;
-            case 1:
+            } else {
                 printer->setDuplex(QPrinter::DuplexShortSide);
-                break;
             }
         }
     } else {
@@ -1298,6 +1306,7 @@ void DPrintPreviewDialogPrivate::judgeSupportedAttributes(const QString &lastPap
         }
     }
     paperSizeCombo->addItems(pageSizeList);
+    updateSubControlSettings(DPrintPreviewSettingInfo::PS_PaperSize);
     if (pageSizeList.contains(lastPaperSize)) {
         paperSizeCombo->setCurrentText(lastPaperSize);
     } else {
@@ -1310,22 +1319,25 @@ void DPrintPreviewDialogPrivate::judgeSupportedAttributes(const QString &lastPap
     QString lastDuplexComboText = duplexCombo->currentText();
     duplexCombo->clear();
     if (updateinfo.supportedDuplexModes().contains(QPrinter::DuplexLongSide) || updateinfo.supportedDuplexModes().contains(QPrinter::DuplexShortSide)) {
-        duplexCheckBox->setEnabled(true);
+        settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_DuplexWidget, true);
         if (!updateinfo.supportedDuplexModes().contains(QPrinter::DuplexLongSide)) {
             duplexCombo->addItem(qApp->translate("DPrintPreviewDialogPrivate", "Flip on short edge"));
+            updateSubControlSettings(DPrintPreviewSettingInfo::PS_PrintDuplex);
             supportedDuplexFlag = false;
         } else if (!updateinfo.supportedDuplexModes().contains(QPrinter::DuplexShortSide)) {
             duplexCombo->addItem(qApp->translate("DPrintPreviewDialogPrivate", "Flip on long edge"));
+            updateSubControlSettings(DPrintPreviewSettingInfo::PS_PrintDuplex);
             supportedDuplexFlag = true;
         } else if (updateinfo.supportedDuplexModes().contains(QPrinter::DuplexLongSide) && updateinfo.supportedDuplexModes().contains(QPrinter::DuplexShortSide)) {
             duplexCombo->addItem(qApp->translate("DPrintPreviewDialogPrivate", "Flip on long edge"));
             duplexCombo->addItem(qApp->translate("DPrintPreviewDialogPrivate", "Flip on short edge"));
+            updateSubControlSettings(DPrintPreviewSettingInfo::PS_PrintDuplex);
             duplexCombo->setCurrentText(lastDuplexComboText);
         }
     } else {
         duplexCheckBox->setChecked(false);
-        duplexCheckBox->setEnabled(false);
-        duplexCombo->setEnabled(false);
+        settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_DuplexWidget, false);
+        settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Duplex_TypeControl, false);
     }
 }
 
@@ -1439,6 +1451,34 @@ QVector<int> DPrintPreviewDialogPrivate::checkDuplication(QVector<int> data)
     return data;
 }
 
+void DPrintPreviewDialogPrivate::updateAllControlSettings()
+{
+    if (!settingUpdateTimer.isActive())
+        settingUpdateTimer.start(0, q_func());
+}
+
+void DPrintPreviewDialogPrivate::updateAllCOntentSettings_impl()
+{
+    for (int i = DPrintPreviewSettingInfo::PS_Printer; i <= DPrintPreviewSettingInfo::PS_Watermark + 1; ++i) {
+        int subtype = -1;
+        if (i >= DPrintPreviewSettingInfo::PS_Watermark)
+            subtype = i - DPrintPreviewSettingInfo::PS_Watermark;
+        updateSubControlSettings(static_cast<DPrintPreviewSettingInfo::SettingType>(i), subtype);
+    }
+}
+
+void DPrintPreviewDialogPrivate::updateAllControlStatus()
+{
+    for (int i = 0; i < DPrintPreviewSettingInterface::SC_ControlCount; ++i)
+        settingHelper->updateSettingStatus(static_cast<DPrintPreviewSettingInterface::SettingSubControl>(i));
+}
+
+void DPrintPreviewDialogPrivate::updateSubControlSettings(DPrintPreviewSettingInfo::SettingType setting, int subtype)
+{
+    DPrintPreviewSettingInfo *info = settingHelper->loadInfo(setting, subtype);
+    settingHelper->updateSettingInfo(info);
+}
+
 /*!
   \brief DPrintPreviewDialogPrivate::setEnable 设置纸张范围自定义可输入状态
   \a value 判断选择的范围类型
@@ -1448,9 +1488,9 @@ void DPrintPreviewDialogPrivate::setEnable(const int &value, DComboBox *combox)
 {
     if (combox == pageRangeCombo) {
         if (value != pageRangeCombo->count() - 1) {
-            pageRangeEdit->setEnabled(false);
+            settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_PageRange_SelectEdit, false);
         } else {
-            pageRangeEdit->setEnabled(true);
+            settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_PageRange_SelectEdit, true);
         }
     }
 }
@@ -1500,11 +1540,12 @@ void DPrintPreviewDialogPrivate::watermarkTypeChoosed(int index)
 
     if (index == 0) {
         pview->refreshBegin();
-        waterTextCombo->setEnabled(true);
-        fontCombo->setEnabled(true);
-        picPathEdit->setEnabled(false);
-        if (colorModeCombo->count() == 2 && colorModeCombo->currentIndex() == colorModeCombo->count() - 2)
-            waterColorBtn->setEnabled(true);
+        settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_TextType, true);
+        settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_TextFont, true);
+        settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_ImageEdit, false);
+        if (colorModeCombo->count() == 2 &&
+                colorModeCombo->currentText() == qApp->translate("DPrintPreviewDialogPrivate", "Color"))
+            settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_TextColor, true);
         _q_textWaterMarkModeChanged(waterTextCombo->currentIndex());
         initWaterSettings();
         //获取可支持的所有字体
@@ -1516,6 +1557,7 @@ void DPrintPreviewDialogPrivate::watermarkTypeChoosed(int index)
 
             fontCombo->addItem(font);
         }
+        updateSubControlSettings(DPrintPreviewSettingInfo::PS_Watermark, DPrintPreviewWatermarkInfo::TextWatermark);
 
         if (!q->property("_d_print_waterIsInit").toBool()) {
             // 初始化才使用系统默认字体 下次切换时保留上一次字体
@@ -1534,11 +1576,11 @@ void DPrintPreviewDialogPrivate::watermarkTypeChoosed(int index)
         pview->setWaterMarkType(Type_Text);
         pview->refreshEnd();
     } else if (index == 1) {
-        waterTextCombo->setEnabled(false);
-        fontCombo->setEnabled(false);
-        waterColorBtn->setEnabled(false);
-        waterTextEdit->setEnabled(false);
-        picPathEdit->setEnabled(true);
+        settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_TextType, false);
+        settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_TextFont, false);
+        settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_TextColor, false);
+        settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_CustomText, false);
+        settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_ImageEdit, true);
         pview->setWaterMarkType(Type_Image);
     }
     typeChoice = index;
@@ -1556,59 +1598,19 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
     paperSizeCombo->clear();
     paperSizeCombo->blockSignals(true);
     colorModeCombo->blockSignals(true);
-    if (index >= printDeviceCombo->count() - 2) {
-        //pdf
-        copycountspinbox->setDisabled(true);
-        copycountspinbox->setValue(1);
-        duplexCheckBox->setCheckState(Qt::Unchecked);
-        duplexCheckBox->setEnabled(false);
-        duplexCombo->clear();
-        duplexCombo->setEnabled(false);
-        waterColorBtn->setEnabled(true);
-        if (colorModeCombo->count() == 1)
-            colorModeCombo->insertItem(0, qApp->translate("DPrintPreviewDialogPrivate", "Color"));
-        colorModeCombo->blockSignals(false);
-        colorModeCombo->setCurrentIndex(0);
-        colorModeCombo->setEnabled(false);
-        supportedColorMode = true;
-        printBtn->setText(qApp->translate("DPrintPreviewDialogPrivate", "Save", "button"));
-        paperSizeCombo->setCurrentIndex(1);
-        QStringList pdfPaperSize = QStringList() << "A3"
-                                                 << "A4"
-                                                 << "A5"
-                                                 << "B4"
-                                                 << "B5"
-                                                 << "8K"
-                                                 << "16K";
-        paperSizeCombo->addItems(pdfPaperSize);
-        if (pdfPaperSize.contains(lastPaperSize))
-            paperSizeCombo->setCurrentText(lastPaperSize);
-        else {
-            //调用绘制预览
-            paperSizeCombo->blockSignals(false);
-            paperSizeCombo->setCurrentIndex(1);
-        }
-        printer->setPrinterName("");
-        printOrderGroup->button(0)->setChecked(true);
-        inorderwdg->setEnabled(false);
-        if (!isInited) {
-            waterColor = QColor("#6f6f6f");
-            _q_selectColorButton(waterColor);
-            pickColorWidget->convertColor(waterColor);
-            pickColorWidget->setRgbEdit(waterColor);
-        }
-    } else {
+    QString currentName = printDeviceCombo->itemText(index);
+    if (isActualPrinter(currentName)) {
         //actual printer
         if (printer) {
             if (q->printFromPath().isEmpty() && !sidebysideCheckBox->isChecked()) {
-                inorderwdg->setEnabled(true);
+                settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_PageOrder_SequentialPrint, true);
             } else {
-                inorderwdg->setEnabled(false);
+                settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_PageOrder_SequentialPrint, false);
             }
-            copycountspinbox->setDisabled(false);
-            paperSizeCombo->setEnabled(true);
-            colorModeCombo->setEnabled(true);
-            printer->setPrinterName(printDeviceCombo->itemText(index));
+            settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_CopiesWidget, true);
+            settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_PaperSizeWidget, true);
+            settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_ColorModeWidget, true);
+            printer->setPrinterName(currentName);
             printBtn->setText(qApp->translate("DPrintPreviewDialogPrivate", "Print", "button"));
             judgeSupportedAttributes(lastPaperSize);
         }
@@ -1619,8 +1621,9 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
         if (!currentDevice.supportedColorModes().contains(QPrint::Color)) {
             colorModeCombo->blockSignals(false);
             colorModeCombo->addItem(qApp->translate("DPrintPreviewDialogPrivate", "Grayscale"));
+            updateSubControlSettings(DPrintPreviewSettingInfo::PS_ColorMode);
             supportedColorMode = false;
-            waterColorBtn->setEnabled(false);
+            settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_TextColor, false);
             waterColor = QColor("#6f6f6f");
             _q_selectColorButton(waterColor);
             pickColorWidget->convertColor(waterColor);
@@ -1634,23 +1637,68 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
             }
 
             colorModeCombo->addItems(QStringList() << qApp->translate("DPrintPreviewDialogPrivate", "Color") << qApp->translate("DPrintPreviewDialogPrivate", "Grayscale"));
+            updateSubControlSettings(DPrintPreviewSettingInfo::PS_ColorMode);
             colorModeCombo->blockSignals(false);
             if (colorModeCombo->currentText() == lastColormode) {
-                colorModeCombo->setCurrentIndex(0);
+                colorModeCombo->setCurrentText(qApp->translate("DPrintPreviewDialogPrivate", "Color"));
                 supportedColorMode = true;
             } else {
-                colorModeCombo->setCurrentIndex(1);
+                colorModeCombo->setCurrentText(qApp->translate("DPrintPreviewDialogPrivate", "Grayscale"));
                 supportedColorMode = false;
             }
-            if (colorModeCombo->currentIndex() == colorModeCombo->count() - 2) {
-                waterColorBtn->setEnabled(true);
-            }
+            if (colorModeCombo->currentText() == qApp->translate("DPrintPreviewDialogPrivate", "Color"))
+                settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_TextColor, true);
+        }
+    } else {
+        //pdf
+        settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_CopiesWidget, false);
+        copycountspinbox->setValue(1);
+        duplexCheckBox->setCheckState(Qt::Unchecked);
+        duplexCombo->clear();
+        settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_DuplexWidget, false);
+        settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_TextColor, true);
+        if (colorModeCombo->count() == 1)
+            colorModeCombo->insertItem(0, qApp->translate("DPrintPreviewDialogPrivate", "Color"));
+        updateSubControlSettings(DPrintPreviewSettingInfo::PS_ColorMode);
+        colorModeCombo->blockSignals(false);
+        colorModeCombo->setCurrentIndex(0);
+        settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_ColorModeWidget, false);
+        supportedColorMode = true;
+        printBtn->setText(qApp->translate("DPrintPreviewDialogPrivate", "Save", "button"));
+        paperSizeCombo->setCurrentIndex(1);
+        QStringList pdfPaperSize = QStringList() << "A3"
+                                                 << "A4"
+                                                 << "A5"
+                                                 << "B4"
+                                                 << "B5"
+                                                 << "8K"
+                                                 << "16K";
+        paperSizeCombo->addItems(pdfPaperSize);
+        updateSubControlSettings(DPrintPreviewSettingInfo::PS_PaperSize);
+        if (pdfPaperSize.contains(lastPaperSize))
+            paperSizeCombo->setCurrentText(lastPaperSize);
+        else {
+            //调用绘制预览
+            paperSizeCombo->blockSignals(false);
+            paperSizeCombo->setCurrentIndex(1);
+        }
+        printer->setPrinterName("");
+        printOrderGroup->button(0)->setChecked(true);
+        settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_PageOrder_SequentialPrint, false);
+        if (!isInited) {
+            waterColor = QColor("#6f6f6f");
+            _q_selectColorButton(waterColor);
+            pickColorWidget->convertColor(waterColor);
+            pickColorWidget->setRgbEdit(waterColor);
         }
     }
+
     marginsUpdate(true);
-    if (pview->pageRangeMode() == DPrintPreviewWidget::SelectPage)
+    if (pview->pageRangeMode() == DPrintPreviewWidget::SelectPage && pageRangeCombo->isEnabled())
         pageRangeCombo->setCurrentIndex(PAGERANGE_ALL);
     paperSizeCombo->blockSignals(false);
+    if (isInited)
+        updateAllControlSettings();
 }
 
 /*!
@@ -1659,7 +1707,6 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
  */
 void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
 {
-    Q_Q(DPrintPreviewDialog);
     setEnable(index, pageRangeCombo);
     pageRangeEdit->lineEdit()->setPlaceholderText("");
     pageRangeEdit->setText("");
@@ -1735,7 +1782,7 @@ void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
         pview->updatePreview();
     }
 
-    if (pview->pageRangeMode() == DPrintPreviewWidget::SelectPage)
+    if (pview->pageRangeMode() == DPrintPreviewWidget::SelectPage && pageRangeCombo->isEnabled())
         pageRangeCombo->setCurrentIndex(PAGERANGE_ALL);
 
     if (marginOldValue.length() > 4)
@@ -1760,12 +1807,12 @@ void DPrintPreviewDialogPrivate::_q_ColorModeChange(int index)
     if (index == 0) {
         // color
         pview->setColorMode(DPrinter::Color);
-        waterColorBtn->setEnabled(true);
+        settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_TextColor, true);
         supportedColorMode = true;
     } else {
         // gray
         pview->setColorMode(DPrinter::GrayScale);
-        waterColorBtn->setEnabled(false);
+        settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_TextColor, false);
         supportedColorMode = false;
         waterColor = QColor("#6f6f6f");
     }
@@ -1788,7 +1835,7 @@ void DPrintPreviewDialogPrivate::_q_orientationChanged(int index)
         // 横向按钮
         pview->setOrientation(DPrinter::Landscape);
     }
-    if (pview->pageRangeMode() == DPrintPreviewWidget::SelectPage)
+    if (pview->pageRangeMode() == DPrintPreviewWidget::SelectPage && pageRangeCombo->isEnabled())
         pageRangeCombo->setCurrentIndex(PAGERANGE_ALL);
 }
 
@@ -1884,7 +1931,7 @@ void DPrintPreviewDialogPrivate::adjustMargins()
     marginOldValue << topMarginF << leftMarginF << rightMarginF << bottomMarginF;
     this->printer->setPageMargins(QMarginsF(leftMarginF, topMarginF, rightMarginF, bottomMarginF), QPageLayout::Millimeter);
     this->pview->updatePreview();
-    if (pview->pageRangeMode() == DPrintPreviewWidget::SelectPage)
+    if (pview->pageRangeMode() == DPrintPreviewWidget::SelectPage && pageRangeCombo->isEnabled())
         pageRangeCombo->setCurrentIndex(PAGERANGE_ALL);
 }
 
@@ -1958,9 +2005,9 @@ void DPrintPreviewDialogPrivate::_q_currentPageSpinChanged(int value)
 void DPrintPreviewDialogPrivate::_q_checkStateChanged(int state)
 {
     if (!state)
-        duplexCombo->setEnabled(false);
+        settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Duplex_TypeControl, false);
     else {
-        duplexCombo->setEnabled(true);
+        settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Duplex_TypeControl, true);
     }
 }
 
@@ -1971,12 +2018,12 @@ void DPrintPreviewDialogPrivate::_q_checkStateChanged(int state)
 void DPrintPreviewDialogPrivate::_q_textWaterMarkModeChanged(int index)
 {
     if (index != waterTextCombo->count() - 1) {
-        waterTextEdit->setEnabled(false);
+        settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_CustomText, false);
         pview->setTextWaterMark(waterTextCombo->currentText());
         if (!waterTextEdit->text().isEmpty())
             waterTextEdit->clear();
     } else {
-        waterTextEdit->setEnabled(true);
+        settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_CustomText, true);
         if (!lastCusWatermarkText.isEmpty()) {
             waterTextEdit->setText(lastCusWatermarkText);
             pview->setTextWaterMark(lastCusWatermarkText);
@@ -2018,11 +2065,11 @@ void DPrintPreviewDialogPrivate::customPictureWatermarkChoosed(const QString &fi
   \brief DPrintPreviewDialogPrivate::waterMarkBtnClicked 是否开启水印
   \a state 水印开启
  */
-void DPrintPreviewDialogPrivate::waterMarkBtnClicked(bool isClicked)
+void DPrintPreviewDialogPrivate::waterMarkBtnClicked(bool checked)
 {
-    if (isClicked) {
+    if (checked) {
         wmSpacer->changeSize(WIDTH_NORMAL, SPACER_HEIGHT_HIDE);
-        watermarksettingwdg->show();
+        settingHelper->setSubControlVisible(DPrintPreviewSettingInterface::SC_WatermarkWidget, true);
         waterTypeGroup->button(typeChoice)->setChecked(true);
         watermarkTypeChoosed(typeChoice);
         if (typeChoice == Type_Image - 1 && !picPathEdit->text().isEmpty())
@@ -2044,12 +2091,12 @@ void DPrintPreviewDialogPrivate::disablePrintSettings()
     if (pview->printFromPath().isEmpty())
         return;
 
-    q->findChild<DBackgroundGroup *>("OrientationBackgroundGroup")->setEnabled(false);
-    q->findChild<DFrame *>("marginsFrame")->setEnabled(false);
-    q->findChild<DBackgroundGroup *>("ScalingContentBackgroundGroup")->setEnabled(false);
-    q->findChild<DFrame *>("WaterMarkFrame")->setEnabled(false);
-    q->findChild<DFrame *>("btnframe")->setEnabled(false);
-    q->findChild<DWidget *>("InorderWidget")->setEnabled(false);
+    settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_OrientationWidget, false);
+    settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_ScalingWidget, false);
+    settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_MarginWidget, false);
+    settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_WatermarkWidget, false);
+    settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_PageOrder_SequentialPrint, false);
+    settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_NPrintWidget, false);
     q->findChild<DWidget *>("CollateWidget")->setEnabled(false);
 }
 
@@ -2059,11 +2106,50 @@ void DPrintPreviewDialogPrivate::disablePrintSettings()
  */
 void DPrintPreviewDialogPrivate::setPageLayoutEnable(const bool &checked)
 {
-    QList<DToolButton *> btnList = advancesettingwdg->findChild<DFrame *>("btnframe")->findChildren<DToolButton *>();
-    for (DToolButton *button : btnList) {
-        button->setEnabled(checked);
+    settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_NPrint_Layout, checked);
+    settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_NPrint_Numbers, checked);
+}
+
+void DPrintPreviewDialogPrivate::matchFitablePageSize()
+{
+    QPrinterInfo prInfo(*printer);
+    if (isActualPrinter(printDeviceCombo->currentText())) {
+        auto const &pageSizes = prInfo.supportedPageSizes();
+        auto it = std::find_if(pageSizes.cbegin(), pageSizes.cend(), [&](const QPageSize &pageSize) {
+            return pageSize.key() == paperSizeCombo->currentText();
+        });
+
+        if (it != pageSizes.end())
+            printer->setPageSize(*it);
+    } else {
+        if (paperSizeCombo->currentText() == "A3")
+            printer->setPageSize(QPrinter::A3);
+        else if (paperSizeCombo->currentText() == "A4")
+            printer->setPageSize(QPrinter::A4);
+        else if (paperSizeCombo->currentText() == "A5")
+            printer->setPageSize(QPrinter::A4);
+        else if (paperSizeCombo->currentText() == "B4")
+            printer->setPageSize(QPrinter::A4);
+        else if (paperSizeCombo->currentText() == "B4")
+            printer->setPageSize(QPrinter::B4);
+        else if (paperSizeCombo->currentText() == "B5")
+            printer->setPageSize(QPrinter::B5);
+        else if (paperSizeCombo->currentText() == "8K") {
+            printer->setPageSize(QPrinter::Custom);
+            printer->setPageSizeMM(QSizeF(EightK_Weight, EightK_Height));
+        } else if (paperSizeCombo->currentText() == "16K") {
+            printer->setPageSize(QPrinter::Custom);
+            printer->setPageSizeMM(QSizeF(SixteenK_Weight, SixteenK_Height));
+        } else {
+            printer->setPageSize(QPrinter::A4);
+        }
     }
-    pagePerSheetCombo->setEnabled(checked);
+}
+
+bool DPrintPreviewDialogPrivate::isActualPrinter(const QString &name)
+{
+    const QStringList &printerNames = QPrinterInfo::availablePrinterNames();
+    return printerNames.contains(name);
 }
 
 /*!
@@ -2157,10 +2243,11 @@ void DPrintPreviewDialogPrivate::_q_startPrint(bool clicked)
         setupPrinter();
     }
 
-    bool isSavePicture = (printDeviceCombo->currentIndex() == printDeviceCombo->count() - 1);
+    bool isSavePicture = (printDeviceCombo->currentText() == qApp->translate("DPrintPreviewDialogPrivate", "Save as Image"));
+    bool isSavePdf = (printDeviceCombo->currentText() == qApp->translate("DPrintPreviewDialogPrivate", "Print to PDF"));
     QString desktopPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
     desktopPath += QStringLiteral("/");
-    if (printDeviceCombo->currentIndex() == printDeviceCombo->count() - 2) {
+    if (isSavePdf) {
         /*外部通过setDocName设置，如果不做任何操作默认保存名称print.pdf*/
         if (printer == nullptr) {
             return;
@@ -2326,6 +2413,37 @@ DPrintPreviewDialog::~DPrintPreviewDialog()
     Q_D(DPrintPreviewDialog);
     if (nullptr != d->printer)
         delete d->printer;
+    delete d->settingHelper;
+}
+
+void DPrintPreviewDialog::setPluginMimeData(const QVariant &mimeData)
+{
+    PreviewSettingsPluginHelper::loadPlugin();
+    PreviewSettingsPluginHelper::setPluginMimeData(mimeData);
+}
+
+QVariant DPrintPreviewDialog::pluginMimeData()
+{
+    PreviewSettingsPluginHelper::loadPlugin();
+    return PreviewSettingsPluginHelper::pluginMimeData();
+}
+
+QStringList DPrintPreviewDialog::availablePlugins()
+{
+    PreviewSettingsPluginHelper::loadPlugin();
+    return PreviewSettingsPluginHelper::availablePlugins();
+}
+
+bool DPrintPreviewDialog::setCurrentPlugin(const QString &pluginName)
+{
+    PreviewSettingsPluginHelper::loadPlugin();
+    return PreviewSettingsPluginHelper::setCurrentPlugin(pluginName);
+}
+
+QString DPrintPreviewDialog::currentPlugin()
+{
+    PreviewSettingsPluginHelper::loadPlugin();
+    return PreviewSettingsPluginHelper::currentPlugin();
 }
 
 bool DPrintPreviewDialog::event(QEvent *event)
@@ -2341,6 +2459,10 @@ bool DPrintPreviewDialog::event(QEvent *event)
             d->marginsLayout(false);
         }
         d->fontSizeMore = false;
+    } else if (event->type() == QEvent::Show) {
+        d->pview->updatePreview();
+        d->updateAllControlSettings();
+        d->updateAllControlStatus();
     }
     return DDialog::event(event);
 }
@@ -2504,6 +2626,481 @@ void DPrintPreviewDialog::resizeEvent(QResizeEvent *event)
         this->findChild<DWidget *>("leftWidget")->setMaximumWidth(this->width() - 20 - 2 - 452 * per);
         d->back->setItemSpacing(2);
     }
+}
+
+void DPrintPreviewDialog::timerEvent(QTimerEvent *event)
+{
+    Q_D(DPrintPreviewDialog);
+    if (event->timerId() == d->settingUpdateTimer.timerId()) {
+        d->settingUpdateTimer.stop();
+        d->updateAllCOntentSettings_impl();
+    }
+
+    return DDialog::timerEvent(event);
+}
+
+QVariant PreviewSettingsPluginHelper::m_printSettingData;
+DPrintPreviewSettingInterface *PreviewSettingsPluginHelper::m_currentInterface = nullptr;
+QList<DPrintPreviewSettingInterface *> PreviewSettingsPluginHelper::m_availablePlugins = {};
+PreviewSettingsPluginHelper::PreviewSettingsPluginHelper(DPrintPreviewDialogPrivate *dd)
+    : d(dd)
+{
+}
+
+DPrintPreviewSettingInfo *PreviewSettingsPluginHelper::loadInfo(DPrintPreviewSettingInfo::SettingType type, int subType)
+{
+    if (!m_currentInterface)
+        return nullptr;
+
+    DPrintPreviewSettingInfo *info = nullptr;
+    switch (type) {
+    case DPrintPreviewSettingInfo::PS_Printer: {
+        DPrintPreviewPrinterInfo *printerInfo = new DPrintPreviewPrinterInfo;
+        for (int index = 0; index < d->printDeviceCombo->count(); ++index)
+            printerInfo->printers << d->printDeviceCombo->itemText(index);
+        info = printerInfo;
+    }
+        break;
+    case DPrintPreviewSettingInfo::PS_Copies: {
+        DPrintPreviewCopiesInfo *copiesInfo = new DPrintPreviewCopiesInfo;
+        copiesInfo->copies = d->copycountspinbox->value();
+        info = copiesInfo;
+    }
+        break;
+    case DPrintPreviewSettingInfo::PS_PageRange: {
+        DPrintPreviewPageRangeInfo *pageRangeInfo = new DPrintPreviewPageRangeInfo;
+        pageRangeInfo->rangeType = d->pview->pageRangeMode();
+        pageRangeInfo->selectPages = d->pageRangeEdit->text();
+        info = pageRangeInfo;
+    }
+        break;
+    case DPrintPreviewSettingInfo::PS_Orientation: {
+        DPrintPreviewOrientationInfo *orientationInfo = new DPrintPreviewOrientationInfo;
+        orientationInfo->orientationMode = d->printer->orientation();
+        info  = orientationInfo;
+    }
+        break;
+    case DPrintPreviewSettingInfo::PS_PaperSize: {
+        DPrintPreviewPaperSizeInfo *paperSizeInfo = new DPrintPreviewPaperSizeInfo;
+        for (int index = 0; index < d->paperSizeCombo->count(); ++index)
+            paperSizeInfo->pageSize << d->paperSizeCombo->itemText(index);
+        info = paperSizeInfo;
+    }
+        break;
+    case DPrintPreviewSettingInfo::PS_PrintDuplex: {
+        DPrintPreviewPrintDuplexInfo *duplexInfo = new DPrintPreviewPrintDuplexInfo;
+        duplexInfo->enable = d->duplexCheckBox->isChecked();
+        duplexInfo->duplex = d->printer->duplex();
+        info = duplexInfo;
+    }
+        break;
+    case DPrintPreviewSettingInfo::PS_NUpPrinting: {
+        DPrintPreviewNUpPrintInfo *nupInfo = new DPrintPreviewNUpPrintInfo;
+        nupInfo->enable = d->sidebysideCheckBox->isChecked();
+        nupInfo->imposition = d->pview->imposition();
+        nupInfo->order = d->pview->order();
+        info = nupInfo;
+    }
+        break;
+    case DPrintPreviewSettingInfo::PS_PageOrder: {
+        DPrintPreviewPageOrderInfo *orderInfo = new DPrintPreviewPageOrderInfo;
+        orderInfo->pageOrder = (d->printOrderGroup->checkedId() == 0) ? DPrintPreviewPageOrderInfo::CollatePage : DPrintPreviewPageOrderInfo::InOrderPage;
+        orderInfo->inOrdertype = (d->inorderCombo->currentIndex() == 0) ? DPrintPreviewPageOrderInfo::FrontToBack : DPrintPreviewPageOrderInfo::BackToFront;
+        info = orderInfo;
+    }
+        break;
+    case DPrintPreviewSettingInfo::PS_ColorMode: {
+        DPrintPreviewColorModeInfo *colorInfo = new DPrintPreviewColorModeInfo;
+        for (int index = 0; index < d->colorModeCombo->count(); ++index)
+            colorInfo->colorMode << d->colorModeCombo->itemText(index);
+        info = colorInfo;
+    }
+        break;
+    case DPrintPreviewSettingInfo::PS_PaperMargins: {
+        DPrintPreviewPaperMarginsInfo *marginInfo = new DPrintPreviewPaperMarginsInfo;
+        switch (d->marginsCombo->currentIndex()) {
+        case 0:
+            marginInfo->marginType = DPrintPreviewPaperMarginsInfo::Narrow;
+            break;
+        case 1:
+            marginInfo->marginType = DPrintPreviewPaperMarginsInfo::Normal;
+            break;
+        case 2:
+            marginInfo->marginType = DPrintPreviewPaperMarginsInfo::Moderate;
+            break;
+        case 3:
+            marginInfo->marginType = DPrintPreviewPaperMarginsInfo::Customize;
+            break;
+        default:
+            break;
+        }
+        marginInfo->topMargin = d->marginTopSpin->value();
+        marginInfo->bottomMargin = d->marginBottomSpin->value();
+        marginInfo->leftMargin = d->marginBottomSpin->value();
+        marginInfo->rightMargin = d->marginBottomSpin->value();
+        info = marginInfo;
+    }
+        break;
+    case DPrintPreviewSettingInfo::PS_Scaling: {
+        DPrintPreviewScalingInfo *scalingInfo = new DPrintPreviewScalingInfo;
+        scalingInfo->scalingType = (d->scaleGroup->checkedId() == ACTUAL_SIZE) ? DPrintPreviewScalingInfo::ActualSize
+                                                                               : DPrintPreviewScalingInfo::ScaleSize;
+        scalingInfo->scaleRatio = d->scaleRateEdit->value();
+        info = scalingInfo;
+    }
+        break;
+    case DPrintPreviewSettingInfo::PS_Watermark: {
+        DPrintPreviewWatermarkInfo *watermarkInfo = nullptr;
+        switch (subType) {
+        case DPrintPreviewWatermarkInfo::TextWatermark: {
+            DPrintPreviewTextWatermarkInfo *textWaterMark = new DPrintPreviewTextWatermarkInfo;
+            switch (d->waterTextCombo->currentIndex()) {
+            case 0:
+                textWaterMark->textType = DPrintPreviewTextWatermarkInfo::Confidential;
+                break;
+            case 1:
+                textWaterMark->textType = DPrintPreviewTextWatermarkInfo::Draft;
+                break;
+            case 2:
+                textWaterMark->textType = DPrintPreviewTextWatermarkInfo::Sample;
+                break;
+            case 3:
+                textWaterMark->textType = DPrintPreviewTextWatermarkInfo::Custom;
+                break;
+            }
+            textWaterMark->customText = d->waterTextEdit->text();
+            for (int index = 0; index < d->fontCombo->count(); ++index)
+                textWaterMark->fontList << d->fontCombo->itemText(index);
+            textWaterMark->color = d->pview->waterMarkColor();
+            watermarkInfo = textWaterMark;
+        }
+            break;
+        case DPrintPreviewWatermarkInfo::ImageWatermark: {
+            DPrintPreviewImageWatermarkInfo *imageWaterMark = new DPrintPreviewImageWatermarkInfo;
+            imageWaterMark->imagePath = d->picPathEdit->text();
+            watermarkInfo = imageWaterMark;
+        }
+            break;
+        default:
+            break;
+        }
+
+        watermarkInfo->opened = d->waterMarkBtn->isChecked();
+        watermarkInfo->angle = d->inclinatBox->value();
+        watermarkInfo->size = d->waterSizeSlider->value();
+        watermarkInfo->transparency = d->wmOpaSlider->value();
+        info = watermarkInfo;
+    }
+        break;
+    default:
+        break;
+    }
+
+    if (!info)
+        return info;
+
+    if (m_currentInterface->settingFilter(d->settingHelper->m_printSettingData, info))
+        return info;
+    delete info;
+    return nullptr;
+}
+
+void PreviewSettingsPluginHelper::setSubControlVisible(DPrintPreviewSettingInterface::SettingSubControl subControlType, bool visible)
+{
+    QWidgetList sourceList = subControl(subControlType);
+    for (QWidget *w : sourceList)
+        doUpdateStatus(w, subControlType, visible, w->isEnabledTo(w->parentWidget()));
+}
+
+void PreviewSettingsPluginHelper::setSubControlEnabled(DPrintPreviewSettingInterface::SettingSubControl subControlType, bool enabled)
+{
+    QWidgetList sourceList = subControl(subControlType);
+    for (QWidget *w : sourceList)
+        doUpdateStatus(w, subControlType, w->isVisibleTo(w->parentWidget()), enabled);
+}
+
+void PreviewSettingsPluginHelper::updateSettingInfo(DPrintPreviewSettingInfo *info)
+{
+    if (!info)
+        return;
+
+    switch (info->type()) {
+    case DPrintPreviewSettingInfo::PS_Printer: {
+        DPrintPreviewPrinterInfo *printerInfo = static_cast<DPrintPreviewPrinterInfo *>(info);
+        QStringList targetPrinters, sourcePrinters;
+        for (int index = 0; index < d->printDeviceCombo->count(); ++index) {
+            const QString &p = d->printDeviceCombo->itemText(index);
+            sourcePrinters << p;
+            if (printerInfo->printers.contains(p))
+                targetPrinters << p;
+        }
+        if (targetPrinters.isEmpty() || targetPrinters == sourcePrinters)
+            break;
+        d->printDeviceCombo->blockSignals(true);
+        d->printDeviceCombo->clear();
+        d->printDeviceCombo->blockSignals(false);
+        d->printDeviceCombo->addItems(targetPrinters);
+    }
+        break;
+    case DPrintPreviewSettingInfo::PS_Copies: {
+        DPrintPreviewCopiesInfo *copiesInfo = static_cast<DPrintPreviewCopiesInfo*>(info);
+        d->copycountspinbox->setValue(copiesInfo->copies);
+    }
+        break;
+    case DPrintPreviewSettingInfo::PS_PageRange: {
+        DPrintPreviewPageRangeInfo *pageRangeInfo = static_cast<DPrintPreviewPageRangeInfo *>(info);
+        d->pageRangeCombo->setCurrentIndex(pageRangeInfo->rangeType);
+        d->pageRangeEdit->setText(pageRangeInfo->selectPages);
+        d->_q_customPagesFinished();
+    }
+        break;
+    case DPrintPreviewSettingInfo::PS_Orientation: {
+        DPrintPreviewOrientationInfo *orientationInfo = static_cast<DPrintPreviewOrientationInfo *>(info);
+        d->orientationgroup->button(orientationInfo->orientationMode)->setChecked(true);
+        d->_q_orientationChanged(orientationInfo->orientationMode);
+    }
+        break;
+    case DPrintPreviewSettingInfo::PS_PaperSize: {
+        DPrintPreviewPaperSizeInfo *paperSizeInfo = static_cast<DPrintPreviewPaperSizeInfo *>(info);
+        QStringList paperSizes, sourcePaperSizes;
+        for (int index = 0; index < d->paperSizeCombo->count(); ++index) {
+            const QString &paper = d->paperSizeCombo->itemText(index);
+            sourcePaperSizes << paper;
+            if (paperSizeInfo->pageSize.contains(paper))
+                paperSizes << paper;
+        }
+        if (paperSizes.isEmpty() || paperSizes == sourcePaperSizes)
+            break;
+        d->paperSizeCombo->blockSignals(true);
+        d->paperSizeCombo->clear();
+        d->paperSizeCombo->blockSignals(false);
+        d->paperSizeCombo->addItems(paperSizes);
+        d->paperSizeCombo->setCurrentIndex(0);
+    }
+        break;
+    case DPrintPreviewSettingInfo::PS_PrintDuplex: {
+        DPrintPreviewPrintDuplexInfo *duplexInfo = static_cast<DPrintPreviewPrintDuplexInfo *>(info);
+        d->duplexCheckBox->setChecked(duplexInfo->enable);
+        d->duplexCombo->setCurrentIndex(duplexInfo->duplex == DPrinter::DuplexShortSide ? 1 : 0);
+    }
+        break;
+    case DPrintPreviewSettingInfo::PS_NUpPrinting: {
+        DPrintPreviewNUpPrintInfo *nupInfo = static_cast<DPrintPreviewNUpPrintInfo *>(info);
+        d->sidebysideCheckBox->setChecked(nupInfo->enable);
+        if (nupInfo->imposition == DPrintPreviewWidget::One) {
+            d->sidebysideCheckBox->setChecked(false);
+            break;
+        }
+
+        d->pagePerSheetCombo->setCurrentIndex(nupInfo->imposition - 1);
+        d->directGroup->button(nupInfo->order)->click();
+    }
+        break;
+    case DPrintPreviewSettingInfo::PS_PageOrder: {
+        DPrintPreviewPageOrderInfo *orderInfo = static_cast<DPrintPreviewPageOrderInfo *>(info);
+        d->printOrderGroup->button(orderInfo->pageOrder)->click();
+        d->inorderCombo->setCurrentIndex(orderInfo->inOrdertype);
+    }
+        break;
+    case DPrintPreviewSettingInfo::PS_ColorMode: {
+        DPrintPreviewColorModeInfo *colorInfo = static_cast<DPrintPreviewColorModeInfo *>(info);
+        QStringList targetColors, sourceColors;
+        for (int index = 0; index < d->colorModeCombo->count(); ++index) {
+            const QString &color = d->colorModeCombo->itemText(index);
+            sourceColors << color;
+            if (colorInfo->colorMode.contains(color))
+                targetColors << color;
+        }
+        if (targetColors.isEmpty() || targetColors == sourceColors)
+            break;
+        d->colorModeCombo->blockSignals(true);
+        d->colorModeCombo->clear();
+        d->colorModeCombo->blockSignals(false);
+        d->colorModeCombo->addItems(targetColors);
+    }
+        break;
+    case DPrintPreviewSettingInfo::PS_PaperMargins: {
+        DPrintPreviewPaperMarginsInfo *marginInfo = static_cast<DPrintPreviewPaperMarginsInfo *>(info);
+        d->marginsCombo->setCurrentIndex(marginInfo->marginType);
+        d->marginTopSpin->setValue(marginInfo->topMargin);
+        d->marginBottomSpin->setValue(marginInfo->bottomMargin);
+        d->marginLeftSpin->setValue(marginInfo->leftMargin);
+        d->marginRightSpin->setValue(marginInfo->rightMargin);
+        d->_q_marginEditFinished();
+    }
+        break;
+    case DPrintPreviewSettingInfo::PS_Scaling: {
+        DPrintPreviewScalingInfo *scalingInfo = static_cast<DPrintPreviewScalingInfo *>(info);
+        d->scaleGroup->button(scalingInfo->scalingType + 1)->click();
+        d->scaleRateEdit->setValue(scalingInfo->scaleRatio);
+    }
+        break;
+    case DPrintPreviewSettingInfo::PS_Watermark: {
+        DPrintPreviewWatermarkInfo *watermarkInfo = static_cast<DPrintPreviewWatermarkInfo *>(info);
+        d->waterMarkBtn->setChecked(watermarkInfo->opened);
+        if (!watermarkInfo->opened) {
+            d->pview->setWaterMarkType(DPrintPreviewDialogPrivate::Type_None);
+            break;  // Watermark button should not update any watermarking function when off
+        }
+
+        d->pview->refreshBegin();
+        switch (watermarkInfo->watermarkType()) {
+        case DPrintPreviewWatermarkInfo::TextWatermark: {
+            DPrintPreviewTextWatermarkInfo *textWaterMark = static_cast<DPrintPreviewTextWatermarkInfo *>(watermarkInfo);
+            d->waterTextCombo->setCurrentIndex(textWaterMark->textType);
+            d->waterTextEdit->setText(textWaterMark->customText);
+            d->_q_customTextWatermarkFinished();
+            QStringList targetFonts, sourceFonts;
+            for (int index = 0; index < d->fontCombo->count(); ++index) {
+                const QString &font = d->fontCombo->itemText(index);
+                sourceFonts << font;
+                if (textWaterMark->fontList.contains(font))
+                   targetFonts << font;
+            }
+
+            if (!targetFonts.isEmpty() && targetFonts != sourceFonts) {
+                d->fontCombo->blockSignals(true);
+                d->fontCombo->clear();
+                d->fontCombo->blockSignals(false);
+                d->fontCombo->addItems(targetFonts);
+            }
+
+            if (d->supportedColorMode)
+                d->_q_selectColorButton(textWaterMark->color);
+        }
+            break;
+        case DPrintPreviewWatermarkInfo::ImageWatermark: {
+            DPrintPreviewImageWatermarkInfo *imageWaterMark = static_cast<DPrintPreviewImageWatermarkInfo *>(watermarkInfo);
+            d->picPathEdit->setText(imageWaterMark->imagePath);
+        }
+            break;
+        }
+
+        d->waterPosCombox->setCurrentIndex(watermarkInfo->layout == DPrintPreviewWatermarkInfo::Tiled ? 0 : 1);
+        d->inclinatBox->setValue(watermarkInfo->angle);
+        d->waterSizeSlider->setValue(watermarkInfo->angle);
+        d->wmOpaSlider->setValue(watermarkInfo->transparency);
+        d->pview->refreshEnd();
+    }
+        break;
+    default:
+        break;
+    }
+}
+
+void PreviewSettingsPluginHelper::updateSettingStatus(DPrintPreviewSettingInterface::SettingSubControl subControlType)
+{
+    QWidgetList sourceList = subControl(subControlType);
+    for (QWidget *w : sourceList)
+        doUpdateStatus(w, subControlType, w->isVisibleTo(w->parentWidget()), w->isEnabledTo(w->parentWidget()));
+}
+
+void PreviewSettingsPluginHelper::doUpdateStatus(QWidget *source, DPrintPreviewSettingInterface::SettingSubControl subControlType, bool visible, bool enabled)
+{
+    if (!source)
+        return;
+
+    do {
+        if (!m_currentInterface)
+            break;
+
+        DPrintPreviewSettingInterface::SettingStatus status = m_currentInterface->settingStatus(d->settingHelper->m_printSettingData, subControlType);
+        switch (status) {
+        case DPrintPreviewSettingInterface::Hidden:
+            source->setVisible(false);
+            return;
+        case DPrintPreviewSettingInterface::Disabled:
+            source->setEnabled(false);
+            return;
+        default:
+            break;
+        }
+    } while (false);
+
+    source->setVisible(visible);
+    source->setEnabled(enabled);
+}
+
+QWidgetList PreviewSettingsPluginHelper::subControl(DPrintPreviewSettingInterface::SettingSubControl subControlType) const
+{
+    if (subControlType >= sizeof(_d_printSettingNameMap) / sizeof(_d_printSettingNameMap[0]))
+        return {};
+    return d->q_func()->findChildren<QWidget *>(_d_printSettingNameMap[subControlType]);
+}
+
+void PreviewSettingsPluginHelper::loadPlugin()
+{
+    static bool loaded = false;
+    if (loaded)
+        return;
+    const QString &path = pluginPath();
+    if (!QFileInfo(path).exists())
+        return;
+
+    QDir pluginDir(path);
+    const QStringList &entryList = pluginDir.entryList(QDir::Files);
+    for (const QString &fileName : entryList) {
+        QPluginLoader loader(pluginDir.absoluteFilePath(fileName));
+        QObject *plugin = loader.instance();
+        if (!plugin)
+            continue;
+        DPrintPreviewSettingInterface *interface = dynamic_cast<DPrintPreviewSettingInterface *>(plugin);
+        if (!interface)
+            continue;
+        m_availablePlugins.append(interface);
+    }
+    loaded = true;
+    if (!m_availablePlugins.isEmpty())
+        m_currentInterface = m_availablePlugins.first();
+}
+
+void PreviewSettingsPluginHelper::setPluginMimeData(const QVariant &data)
+{
+    m_printSettingData = data;
+}
+
+QVariant PreviewSettingsPluginHelper::pluginMimeData()
+{
+    return m_printSettingData;
+}
+
+QStringList PreviewSettingsPluginHelper::availablePlugins()
+{
+    QStringList targets;
+    std::for_each(m_availablePlugins.cbegin(), m_availablePlugins.cend(), [&](DPrintPreviewSettingInterface *interface) {
+        targets << interface->name();
+    });
+    return targets;
+}
+
+QString PreviewSettingsPluginHelper::currentPlugin()
+{
+    return m_currentInterface ? m_currentInterface->name() : QLatin1String("");
+}
+
+bool PreviewSettingsPluginHelper::setCurrentPlugin(const QString &pluginName)
+{
+    auto it = std::find_if(m_availablePlugins.cbegin(), m_availablePlugins.cend(), [=](DPrintPreviewSettingInterface *interface) {
+        if (interface->name() != pluginName)
+            return false;
+        return true;
+    });
+
+    if (it == m_availablePlugins.cend()) {
+        qWarning() << "DPrintPreviewDialog: " << "No plugin named " << pluginName << " was found.";
+        return false;
+    }
+    m_currentInterface = *it;
+    return true;
+}
+
+QString PreviewSettingsPluginHelper::pluginPath()
+{
+#if defined(Q_OS_LINUX)
+    return QLatin1String("/usr/share/deepin/dtk/plugins/printsupport");
+#else
+    return QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + QLatin1String("/printsupport") + QLatin1String("/plugins");
+#endif
 }
 
 DWIDGET_END_NAMESPACE

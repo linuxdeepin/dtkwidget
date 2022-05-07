@@ -118,7 +118,9 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dprintpickcolorwidget.h \
     $$PWD/dpalettehelper.h \
     $$PWD/dcombobox.h \
-    $$PWD/dfontcombobox.h
+    $$PWD/dfontcombobox.h \
+    $$PWD/dprintpreviewsettinginterface.h \
+    $$PWD/dprintpreviewsettinginfo.h
 
 SOURCES += $$PWD/dslider.cpp \
     $$PWD/dbackgroundgroup.cpp \
@@ -207,7 +209,8 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dprintpickcolorwidget.cpp \
     $$PWD/dpalettehelper.cpp \
     $$PWD/dcombobox.cpp \
-    $$PWD/dfontcombobox.cpp
+    $$PWD/dfontcombobox.cpp \
+    $$PWD/dprintpreviewsettinginfo.cpp
 
 RESOURCES += \
     $$PWD/icons.qrc \
