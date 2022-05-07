@@ -163,11 +163,14 @@ void DPrintPreviewWidgetPrivate::populateScene()
     scene->setSceneRect(QRect(QPoint(0, 0), paperSize));
 }
 
+void DPrintPreviewWidgetPrivate::updatePreview()
+{
+    generatePreview();
+    graphicsView->updateGeometry();
+}
+
 void DPrintPreviewWidgetPrivate::generatePreview()
 {
-    if (refreshMode == RefreshDelay)
-        return;
-
     int totalPages = 0;
     if (isAsynPreview) {
         if (currentPageNumber == 0) {
@@ -1243,6 +1246,7 @@ DPrintPreviewWidget::~DPrintPreviewWidget()
 {
     Q_D(DPrintPreviewWidget);
 
+    d->updateTimer.stop();
     delete d->numberUpPrintData;
 }
 
@@ -1255,9 +1259,7 @@ DPrintPreviewWidget::~DPrintPreviewWidget()
 void DPrintPreviewWidget::setVisible(bool visible)
 {
     QWidget::setVisible(visible);
-    if (visible) {
-        updatePreview();
-    }
+    // updatePreview() function move into DPrintPreviewDialog show event.
 }
 
 /*!
@@ -1423,7 +1425,7 @@ void DPrintPreviewWidget::setOrientation(const DPrinter::Orientation &pageOrient
     Q_D(DPrintPreviewWidget);
 
     d->previewPrinter->setOrientation(pageOrientation);
-    d->generatePreview();
+    updatePreview();
 }
 
 /*!
@@ -1726,6 +1728,22 @@ void DPrintPreviewWidget::setWaterMarkFont(const QFont &font)
 }
 
 /*!
+  \brief 获取文字水印的颜色。
+
+  \return 文字水印的颜色
+ */
+QColor DPrintPreviewWidget::waterMarkColor() const
+{
+    Q_D(const DPrintPreviewWidget);
+
+    if (imposition() == DPrintPreviewWidget::One) {
+        return d->waterMark->getColor();
+    } else {
+        return d->numberUpPrintData->waterProperty->color;
+    }
+}
+
+/*!
   \brief 设置文字水印的颜色。
   
   \a color 文字水印的颜色
@@ -1842,7 +1860,6 @@ void DPrintPreviewWidget::setOrder(Order order)
 
         d->generatePreview();
         Q_EMIT pagesCountChanged(d->pageRange.count());
-
     } else {
         d->order = order;
         totalPage = pagesCount();
@@ -1938,8 +1955,9 @@ QByteArray DPrintPreviewWidget::printerColorModel() const
 void DPrintPreviewWidget::updatePreview()
 {
     Q_D(DPrintPreviewWidget);
-    d->generatePreview();
-    d->graphicsView->updateGeometry();
+
+    if (!d->updateTimer.isActive())
+        d->updateTimer.start(0, this);
 }
 
 /*!
@@ -2001,8 +2019,9 @@ void DPrintPreviewWidget::setCurrentPage(int page)
         int lastPage = d->index2page(d->currentPageNumber - 1);
         if (lastPage > 0)
             d->pages.at(lastPage - 1)->setVisible(false);
-    } else
+    } else if (!d->pages.isEmpty()) {
         d->pages.first()->setVisible(false);
+    }
     d->setCurrentPageNumber(page);
     if (d->isAsynPreview) {
         d->previewPages = d->requestPages(page);
@@ -2048,6 +2067,19 @@ void DPrintPreviewWidget::themeTypeChanged(DGuiApplicationHelper::ColorType them
         d->graphicsView->setBackgroundBrush(QColor(0, 0, 0, 42));
     else
         d->graphicsView->setBackgroundBrush(QColor(255, 255, 255, 120));
+}
+
+void DPrintPreviewWidget::timerEvent(QTimerEvent *event)
+{
+    Q_D(DPrintPreviewWidget);
+    if (event->timerId() == d->updateTimer.timerId()) {
+        if (d->updateTimer.isActive()) {
+            d->updateTimer.stop();
+            d->updatePreview();
+        }
+    }
+
+    return DFrame::timerEvent(event);
 }
 
 DPrinter::DPrinter(QPrinter::PrinterMode mode)
