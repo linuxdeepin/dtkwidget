@@ -34,6 +34,13 @@ public:
     explicit DPrintPreviewDialog(QWidget *parent = nullptr);
     ~DPrintPreviewDialog() override;
 
+    static void setPluginMimeData(const QVariant &mimeData);
+    static QVariant pluginMimeData();
+
+    static bool setCurrentPlugin(const QString &pluginName);
+    static QString currentPlugin();
+
+    static QStringList availablePlugins();
 Q_SIGNALS:
     void paintRequested(DPrinter *printer);
     void paintRequested(DPrinter *printer, const QVector<int> &pageRange);
@@ -73,6 +80,7 @@ public:
     // QWidget interface
 protected:
     virtual void resizeEvent(QResizeEvent *event) override;
+    void timerEvent(QTimerEvent *event) override;
 };
 
 DWIDGET_END_NAMESPACE
