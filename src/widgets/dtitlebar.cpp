@@ -178,6 +178,7 @@ void DSplitScreenButton::initStyleOption(DStyleOptionButton *option) const
         if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::LightType) {
             backgroundBrush = DStyle::adjustColor(backgroundBrush, 0, 0, 0, 0, 0, 0, 3);
             iconForeColor = dpal.brush(DPalette::TextTitle).color();
+
         }
 
         pal.setBrush(QPalette::Light, backgroundBrush);
