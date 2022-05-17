@@ -13,7 +13,13 @@ Deepin Tool Kit (Dtk) is the base devlopment tool of all C++/Qt Developer work o
 ### Build from source code
 
 1. Make sure you have installed all dependencies.
-
+````
+sudo apt build-dep .
+````
+If you need to use the designer plugin, you should also install:
+````
+sudo apt install qttools5-dev
+````
 2. Build:
 
 ````
