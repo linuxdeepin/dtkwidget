@@ -1138,10 +1138,18 @@ void DArrowRectanglePrivate::updateClipPath()
         QPainterPathStroker stroker;
         stroker.setCapStyle(Qt::RoundCap);
         stroker.setJoinStyle(Qt::RoundJoin);
-        stroker.setWidth(2);
+        // stroker.setWidth(2);
         QPainterPath outPath = stroker.createStroke(path);
+
+        if (q->windowHandle() && q->isTopLevel()) {
+            D_Q(DArrowRectangle);
+            qreal device_pixel_ratio = q->windowHandle()->screen()->devicePixelRatio();
+            outPath = outPath * device_pixel_ratio;
+        }
+
         QPolygon polygon = outPath.united(path).toFillPolygon().toPolygon();
 
+        q->clearMask();
         q->setMask(polygon);
     }
 }

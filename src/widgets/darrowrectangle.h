@@ -131,4 +131,22 @@ protected:
 
 DWIDGET_END_NAMESPACE
 
+QT_BEGIN_NAMESPACE
+inline QPainterPath operator *(const QPainterPath &path, qreal scale)
+{
+    if (qFuzzyCompare(1.0, scale))
+        return path;
+
+    QPainterPath new_path = path;
+
+    for (int i = 0; i < path.elementCount(); ++i) {
+        const QPainterPath::Element &e = path.elementAt(i);
+
+        new_path.setElementPositionAt(i, qRound(e.x * scale), qRound(e.y * scale));
+    }
+
+    return new_path;
+}
+QT_END_NAMESPACE
+
 #endif // DARROWRECTANGLE_H
