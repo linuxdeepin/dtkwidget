@@ -84,16 +84,14 @@ bool PrintPreviewSettingsPlugin::settingFilter(const QVariant &mimeData, DPrintP
     }
     case DPrintPreviewSettingInfo::PS_Watermark: {
         auto waterMarkInfo = static_cast<DPrintPreviewWatermarkInfo *>(info);
-        if (waterMarkInfo->watermarkType() == DPrintPreviewWatermarkInfo::TextWatermark) {
-            auto textInfo = static_cast<DPrintPreviewTextWatermarkInfo *>(waterMarkInfo);
-            textInfo->textType = DPrintPreviewTextWatermarkInfo::Custom;
-            textInfo->customText = "控制的自定义文本";
-            textInfo->color = Qt::red;
-        }
+        waterMarkInfo->currentWatermarkType = DPrintPreviewWatermarkInfo::TextWatermark;
+        waterMarkInfo->textType = DPrintPreviewWatermarkInfo::Custom;
+        waterMarkInfo->customText = "控制的自定义文本";
+        waterMarkInfo->textColor = Qt::red;
 
         waterMarkInfo->opened = true;
         waterMarkInfo->angle = 40;
-        waterMarkInfo->layout = DPrintPreviewTextWatermarkInfo::Tiled;
+        waterMarkInfo->layout = DPrintPreviewWatermarkInfo::Tiled;
         waterMarkInfo->size = 20;
         waterMarkInfo->transparency = 60;
     }
@@ -136,10 +134,10 @@ DPrintPreviewSettingInterface::SettingStatus PrintPreviewSettingsPlugin::setting
     if (!path.endsWith("secrecy"))
         return DPrintPreviewSettingInterface::settingStatus(mimeData, control);
 
-    DPrintPreviewSettingInterface::SettingStatus status = DPrintPreviewSettingInterface::Disabled;
+    DPrintPreviewSettingInterface::SettingStatus status = DPrintPreviewSettingInterface::Default;
     switch (control) {
     case DPrintPreviewSettingInterface::SC_WatermarkWidget:
-        status = DPrintPreviewSettingInterface::Hidden;
+        status = DPrintPreviewSettingInterface::Disabled;
         break;
     default:
         break;
