@@ -1142,6 +1142,7 @@ void DArrowRectanglePrivate::updateClipPath()
         QPainterPath outPath = stroker.createStroke(path);
         QPolygon polygon = outPath.united(path).toFillPolygon().toPolygon();
 
+        q->clearMask();
         q->setMask(polygon);
     }
 }
