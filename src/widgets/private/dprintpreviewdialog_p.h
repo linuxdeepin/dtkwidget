@@ -78,9 +78,9 @@ public:
     void tipSelected(TipsNum tipNum);
     QVector<int> checkDuplication(QVector<int> data);
 
-    void updateSubControlSettings(DPrintPreviewSettingInfo::SettingType setting, int subtype = -1);
+    void updateSubControlSettings(DPrintPreviewSettingInfo::SettingType setting);
     void updateAllControlSettings();
-    void updateAllCOntentSettings_impl();
+    void updateAllContentSettings_impl();
     void updateAllControlStatus();
 
     void setEnable(const int &value, DComboBox *combox); //控件可用
@@ -203,7 +203,7 @@ class PreviewSettingsPluginHelper
 {
 public:
     PreviewSettingsPluginHelper(DPrintPreviewDialogPrivate *dd);
-    DPrintPreviewSettingInfo *loadInfo(DPrintPreviewSettingInfo::SettingType type, int subType = -1);
+    DPrintPreviewSettingInfo *loadInfo(DPrintPreviewSettingInfo::SettingType type);
 
     void setSubControlVisible(DPrintPreviewSettingInterface::SettingSubControl subControlType, bool visible);
     void setSubControlEnabled(DPrintPreviewSettingInterface::SettingSubControl subControlType, bool enabled);
