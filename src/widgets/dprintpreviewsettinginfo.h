@@ -208,15 +208,17 @@ public:
         Tiled,
         Center
     };
-    DPrintPreviewWatermarkInfo(WatermarkType type)
+    enum TextType {
+        Confidential,
+        Draft,
+        Sample,
+        Custom
+    };
+
+    DPrintPreviewWatermarkInfo()
         : DPrintPreviewSettingInfo(PS_Watermark)
-        , m_watermarkType(type)
     {
 
-    }
-
-    inline WatermarkType watermarkType() const {
-        return m_watermarkType;
     }
 
     bool opened;
@@ -224,41 +226,11 @@ public:
     int size;
     int transparency;
     Layout layout;
-
-private:
-    WatermarkType m_watermarkType;
-};
-
-class DPrintPreviewTextWatermarkInfo : public DPrintPreviewWatermarkInfo
-{
-public:
-    enum TextType {
-        Confidential,
-        Draft,
-        Sample,
-        Custom
-    };
-    DPrintPreviewTextWatermarkInfo()
-        : DPrintPreviewWatermarkInfo(TextWatermark)
-    {
-
-    }
-
+    WatermarkType currentWatermarkType;
     TextType textType;
     QString customText;
     QStringList fontList;
-    QColor color;
-};
-
-class DPrintPreviewImageWatermarkInfo : public DPrintPreviewWatermarkInfo
-{
-public:
-    DPrintPreviewImageWatermarkInfo()
-        : DPrintPreviewWatermarkInfo(ImageWatermark)
-    {
-
-    }
-
+    QColor textColor;
     QString imagePath;
 };
 
