@@ -1453,14 +1453,10 @@ void DPrintPreviewDialogPrivate::updateAllControlSettings()
         settingUpdateTimer.start(0, q_func());
 }
 
-void DPrintPreviewDialogPrivate::updateAllCOntentSettings_impl()
+void DPrintPreviewDialogPrivate::updateAllContentSettings_impl()
 {
-    for (int i = DPrintPreviewSettingInfo::PS_Printer; i <= DPrintPreviewSettingInfo::PS_Watermark + 1; ++i) {
-        int subtype = -1;
-        if (i >= DPrintPreviewSettingInfo::PS_Watermark)
-            subtype = i - DPrintPreviewSettingInfo::PS_Watermark;
-        updateSubControlSettings(static_cast<DPrintPreviewSettingInfo::SettingType>(i), subtype);
-    }
+    for (int i = DPrintPreviewSettingInfo::PS_Printer; i <= DPrintPreviewSettingInfo::PS_Watermark; ++i)
+        updateSubControlSettings(static_cast<DPrintPreviewSettingInfo::SettingType>(i));
 }
 
 void DPrintPreviewDialogPrivate::updateAllControlStatus()
@@ -1469,9 +1465,9 @@ void DPrintPreviewDialogPrivate::updateAllControlStatus()
         settingHelper->updateSettingStatus(static_cast<DPrintPreviewSettingInterface::SettingSubControl>(i));
 }
 
-void DPrintPreviewDialogPrivate::updateSubControlSettings(DPrintPreviewSettingInfo::SettingType setting, int subtype)
+void DPrintPreviewDialogPrivate::updateSubControlSettings(DPrintPreviewSettingInfo::SettingType setting)
 {
-    DPrintPreviewSettingInfo *info = settingHelper->loadInfo(setting, subtype);
+    DPrintPreviewSettingInfo *info = settingHelper->loadInfo(setting);
     settingHelper->updateSettingInfo(info);
 }
 
@@ -1553,7 +1549,6 @@ void DPrintPreviewDialogPrivate::watermarkTypeChoosed(int index)
 
             fontCombo->addItem(font);
         }
-        updateSubControlSettings(DPrintPreviewSettingInfo::PS_Watermark, DPrintPreviewWatermarkInfo::TextWatermark);
 
         if (!q->property("_d_print_waterIsInit").toBool()) {
             // 初始化才使用系统默认字体 下次切换时保留上一次字体
@@ -2072,7 +2067,7 @@ void DPrintPreviewDialogPrivate::waterMarkBtnClicked(bool checked)
             customPictureWatermarkChoosed(picPathEdit->text());
     } else {
         wmSpacer->changeSize(WIDTH_NORMAL, SPACER_HEIGHT_SHOW);
-        watermarksettingwdg->hide();
+        settingHelper->setSubControlVisible(DPrintPreviewSettingInterface::SC_WatermarkWidget, false);
         pview->setWaterMarkType(Type_None);
     }
 }
@@ -2629,7 +2624,7 @@ void DPrintPreviewDialog::timerEvent(QTimerEvent *event)
     Q_D(DPrintPreviewDialog);
     if (event->timerId() == d->settingUpdateTimer.timerId()) {
         d->settingUpdateTimer.stop();
-        d->updateAllCOntentSettings_impl();
+        d->updateAllContentSettings_impl();
     }
 
     return DDialog::timerEvent(event);
@@ -2643,7 +2638,7 @@ PreviewSettingsPluginHelper::PreviewSettingsPluginHelper(DPrintPreviewDialogPriv
 {
 }
 
-DPrintPreviewSettingInfo *PreviewSettingsPluginHelper::loadInfo(DPrintPreviewSettingInfo::SettingType type, int subType)
+DPrintPreviewSettingInfo *PreviewSettingsPluginHelper::loadInfo(DPrintPreviewSettingInfo::SettingType type)
 {
     if (!m_currentInterface)
         return nullptr;
@@ -2746,38 +2741,33 @@ DPrintPreviewSettingInfo *PreviewSettingsPluginHelper::loadInfo(DPrintPreviewSet
     }
         break;
     case DPrintPreviewSettingInfo::PS_Watermark: {
-        DPrintPreviewWatermarkInfo *watermarkInfo = nullptr;
-        switch (subType) {
+        DPrintPreviewWatermarkInfo *watermarkInfo = new DPrintPreviewWatermarkInfo;
+        watermarkInfo->currentWatermarkType = static_cast<DPrintPreviewWatermarkInfo::WatermarkType>(d->waterTypeGroup->checkedId());
+        switch (watermarkInfo->currentWatermarkType) {
         case DPrintPreviewWatermarkInfo::TextWatermark: {
-            DPrintPreviewTextWatermarkInfo *textWaterMark = new DPrintPreviewTextWatermarkInfo;
             switch (d->waterTextCombo->currentIndex()) {
             case 0:
-                textWaterMark->textType = DPrintPreviewTextWatermarkInfo::Confidential;
+                watermarkInfo->textType = DPrintPreviewWatermarkInfo::Confidential;
                 break;
             case 1:
-                textWaterMark->textType = DPrintPreviewTextWatermarkInfo::Draft;
+                watermarkInfo->textType = DPrintPreviewWatermarkInfo::Draft;
                 break;
             case 2:
-                textWaterMark->textType = DPrintPreviewTextWatermarkInfo::Sample;
+                watermarkInfo->textType = DPrintPreviewWatermarkInfo::Sample;
                 break;
             case 3:
-                textWaterMark->textType = DPrintPreviewTextWatermarkInfo::Custom;
+                watermarkInfo->textType = DPrintPreviewWatermarkInfo::Custom;
                 break;
             }
-            textWaterMark->customText = d->waterTextEdit->text();
+            watermarkInfo->customText = d->waterTextEdit->text();
             for (int index = 0; index < d->fontCombo->count(); ++index)
-                textWaterMark->fontList << d->fontCombo->itemText(index);
-            textWaterMark->color = d->pview->waterMarkColor();
-            watermarkInfo = textWaterMark;
+                watermarkInfo->fontList << d->fontCombo->itemText(index);
+            watermarkInfo->textColor = d->pview->waterMarkColor();
         }
             break;
         case DPrintPreviewWatermarkInfo::ImageWatermark: {
-            DPrintPreviewImageWatermarkInfo *imageWaterMark = new DPrintPreviewImageWatermarkInfo;
-            imageWaterMark->imagePath = d->picPathEdit->text();
-            watermarkInfo = imageWaterMark;
+            watermarkInfo->imagePath = d->picPathEdit->text();
         }
-            break;
-        default:
             break;
         }
 
@@ -2940,17 +2930,17 @@ void PreviewSettingsPluginHelper::updateSettingInfo(DPrintPreviewSettingInfo *in
         }
 
         d->pview->refreshBegin();
-        switch (watermarkInfo->watermarkType()) {
+        d->waterTypeGroup->button(int(watermarkInfo->currentWatermarkType))->setChecked(true);
+        switch (watermarkInfo->currentWatermarkType) {
         case DPrintPreviewWatermarkInfo::TextWatermark: {
-            DPrintPreviewTextWatermarkInfo *textWaterMark = static_cast<DPrintPreviewTextWatermarkInfo *>(watermarkInfo);
-            d->waterTextCombo->setCurrentIndex(textWaterMark->textType);
-            d->waterTextEdit->setText(textWaterMark->customText);
+            d->waterTextCombo->setCurrentIndex(watermarkInfo->textType);
+            d->waterTextEdit->setText(watermarkInfo->customText);
             d->_q_customTextWatermarkFinished();
             QStringList targetFonts, sourceFonts;
             for (int index = 0; index < d->fontCombo->count(); ++index) {
                 const QString &font = d->fontCombo->itemText(index);
                 sourceFonts << font;
-                if (textWaterMark->fontList.contains(font))
+                if (watermarkInfo->fontList.contains(font))
                    targetFonts << font;
             }
 
@@ -2962,12 +2952,11 @@ void PreviewSettingsPluginHelper::updateSettingInfo(DPrintPreviewSettingInfo *in
             }
 
             if (d->supportedColorMode)
-                d->_q_selectColorButton(textWaterMark->color);
+                d->_q_selectColorButton(watermarkInfo->textColor);
         }
             break;
         case DPrintPreviewWatermarkInfo::ImageWatermark: {
-            DPrintPreviewImageWatermarkInfo *imageWaterMark = static_cast<DPrintPreviewImageWatermarkInfo *>(watermarkInfo);
-            d->picPathEdit->setText(imageWaterMark->imagePath);
+            d->picPathEdit->setText(watermarkInfo->imagePath);
         }
             break;
         }
@@ -3002,11 +2991,14 @@ void PreviewSettingsPluginHelper::doUpdateStatus(QWidget *source, DPrintPreviewS
 
         DPrintPreviewSettingInterface::SettingStatus status = m_currentInterface->settingStatus(d->settingHelper->m_printSettingData, subControlType);
         switch (status) {
-        case DPrintPreviewSettingInterface::Hidden:
+        case DPrintPreviewSettingInterface::Hidden: {
+            source->setEnabled(enabled);
             source->setVisible(false);
+        }
             return;
         case DPrintPreviewSettingInterface::Disabled:
             source->setEnabled(false);
+            source->setVisible(visible);
             return;
         default:
             break;
