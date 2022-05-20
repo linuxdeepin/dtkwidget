@@ -4,6 +4,9 @@
 
 #ifndef DPRINTPREVIEWDIALOG_H
 #define DPRINTPREVIEWDIALOG_H
+#ifndef DTK_PRINTSUPPORT_PLUGIN
+#define DTK_PRINTSUPPORT_PLUGIN
+#endif
 
 #include <DDialog>
 #include <dprintpreviewwidget.h>
