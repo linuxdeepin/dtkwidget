@@ -2967,7 +2967,8 @@ void PreviewSettingsPluginHelper::updateSettingInfo(DPrintPreviewSettingInfo *in
 
         d->waterPosCombox->setCurrentIndex(watermarkInfo->layout == DPrintPreviewWatermarkInfo::Tiled ? 0 : 1);
         d->inclinatBox->setValue(watermarkInfo->angle);
-        d->waterSizeSlider->setValue(watermarkInfo->angle);
+        Q_EMIT d->inclinatBox->editingFinished();
+        d->waterSizeSlider->setValue(watermarkInfo->size);
         d->wmOpaSlider->setValue(watermarkInfo->transparency);
         d->pview->refreshEnd();
     }
