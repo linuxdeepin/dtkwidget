@@ -58,13 +58,13 @@ QSize DFlowLayoutPrivate::doLayout(const QRect &rect, bool testOnly) const
 
         if(q->parentWidget()->layoutDirection() == Qt::RightToLeft) {
             for (QLayoutItem *item : itemList) {
-                int nextX = x - item->sizeHint().width() - horizontalSpacing;
+                // QRect's x2 = x1 + width - 1
+                int nextX = x - item->sizeHint().width() - horizontalSpacing + 1;
 
                 if (nextX + horizontalSpacing < effectiveRect.x() && lineHeight > 0) {
-                    maxWidth = qMax(effectiveRect.right() - x, maxWidth);
                     x = effectiveRect.right();
                     y = y + lineHeight + verticalSpacing;
-                    nextX = x - item->sizeHint().width() - horizontalSpacing;
+                    nextX = x - item->sizeHint().width() - horizontalSpacing + 1;
                     lineHeight = 0;
                 }
 
@@ -77,19 +77,21 @@ QSize DFlowLayoutPrivate::doLayout(const QRect &rect, bool testOnly) const
                 }
 
                 x = nextX;
+                // QRect's width = x2 - x1 + 1
+                maxWidth = qMax(effectiveRect.right() - nextX - horizontalSpacing + 1, maxWidth);
                 lineHeight = qMax(lineHeight, item->sizeHint().height());
             }
 
             size_hint = QSize(maxWidth, y + lineHeight - rect.y() + bottom);
         } else {
             for (QLayoutItem *item : itemList) {
-                int nextX = x + item->sizeHint().width() + horizontalSpacing;
+                // QRect's x2 = x1 + width - 1
+                int nextX = x + item->sizeHint().width() + horizontalSpacing - 1;
 
                 if (nextX - horizontalSpacing > effectiveRect.right() && lineHeight > 0) {
-                    maxWidth = qMax(x, maxWidth);
                     x = effectiveRect.x();
                     y = y + lineHeight + verticalSpacing;
-                    nextX = x + item->sizeHint().width() + horizontalSpacing;
+                    nextX = x + item->sizeHint().width() + horizontalSpacing - 1;
                     lineHeight = 0;
                 }
 
@@ -97,6 +99,8 @@ QSize DFlowLayoutPrivate::doLayout(const QRect &rect, bool testOnly) const
                     item->setGeometry(QRect(QPoint(x, y), item->sizeHint()));
 
                 x = nextX;
+                // QRect's width = x2 - x1 + 1
+                maxWidth = qMax(nextX - effectiveRect.x() - horizontalSpacing + 1, maxWidth);
                 lineHeight = qMax(lineHeight, item->sizeHint().height());
             }
 
@@ -108,13 +112,13 @@ QSize DFlowLayoutPrivate::doLayout(const QRect &rect, bool testOnly) const
 
         if(q->parentWidget()->layoutDirection() == Qt::RightToLeft) {
             for (QLayoutItem *item : itemList) {
-                int nextY = y + item->sizeHint().height() + verticalSpacing;
+                // QRect's y2 = y1 + height - 1
+                int nextY = y + item->sizeHint().height() + verticalSpacing - 1;
 
                 if(nextY - verticalSpacing > effectiveRect.bottom() && lineWidth > 0) {
-                    maxHeight = qMax(y, maxHeight);
                     y = effectiveRect.y();
                     x = x - lineWidth - horizontalSpacing;
-                    nextY = y + item->sizeHint().height() + verticalSpacing;
+                    nextY = y + item->sizeHint().height() + verticalSpacing - 1;
                     lineWidth = 0;
                 }
 
@@ -122,19 +126,21 @@ QSize DFlowLayoutPrivate::doLayout(const QRect &rect, bool testOnly) const
                     item->setGeometry(QRect(QPoint(x - item->sizeHint().width(), y), item->sizeHint()));
 
                 y = nextY;
+                // height = y2 - y1 + 1
+                maxHeight = qMax(nextY - effectiveRect.y() - verticalSpacing + 1, maxHeight);
                 lineWidth = qMax(lineWidth, item->sizeHint().width());
             }
 
             size_hint = QSize(rect.right() - x + lineWidth + right + 1, maxHeight);
         } else {
             for (QLayoutItem *item : itemList) {
-                int nextY = y + item->sizeHint().height() + verticalSpacing;
+                // QRect's x2 = x1 + width - 1
+                int nextY = y + item->sizeHint().height() + verticalSpacing - 1;
 
                 if(nextY - verticalSpacing > effectiveRect.bottom() && lineWidth > 0) {
-                    maxHeight = qMax(y, maxHeight);
                     y = effectiveRect.y();
                     x = x + lineWidth + horizontalSpacing;
-                    nextY = y + item->sizeHint().height() + verticalSpacing;
+                    nextY = y + item->sizeHint().height() + verticalSpacing - 1;
                     lineWidth = 0;
                 }
 
@@ -142,6 +148,8 @@ QSize DFlowLayoutPrivate::doLayout(const QRect &rect, bool testOnly) const
                     item->setGeometry(QRect(QPoint(x, y), item->sizeHint()));
 
                 y = nextY;
+                // height = y2 - y1 + 1
+                maxHeight = qMax(nextY - effectiveRect.y() - verticalSpacing + 1, maxHeight);
                 lineWidth = qMax(lineWidth, item->sizeHint().width());
             }
 
@@ -473,7 +481,13 @@ QLayoutItem *DFlowLayout::takeAt(int index)
 
 Qt::Orientations DFlowLayout::expandingDirections() const
 {
-    return Qt::Vertical;
+    switch (d_func()->flow) {
+    case DFlowLayout::Flow::LeftToRight:
+        return Qt::Horizontal;
+    case DFlowLayout::Flow::TopToBottom:
+        return Qt::Vertical;
+    }
+    return QLayout::expandingDirections();
 }
 
 /*!
