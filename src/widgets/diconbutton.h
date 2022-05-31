@@ -45,8 +45,8 @@ class DIconButton : public QAbstractButton, public DCORE_NAMESPACE::DObject
 
 public:
     explicit DIconButton(QWidget *parent = nullptr);
-    explicit DIconButton(QStyle::StandardPixmap iconType = static_cast<QStyle::StandardPixmap>(-1), QWidget *parent = nullptr);
-    explicit DIconButton(DStyle::StandardPixmap iconType = static_cast<DStyle::StandardPixmap>(-1), QWidget *parent = nullptr);
+    explicit DIconButton(QStyle::StandardPixmap iconType, QWidget *parent = nullptr);
+    explicit DIconButton(DStyle::StandardPixmap iconType, QWidget *parent = nullptr);
     explicit DIconButton(const DDciIcon &dciIcon, QWidget *parent = nullptr);
     ~DIconButton() override;
 
