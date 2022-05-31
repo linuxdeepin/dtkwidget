@@ -31,8 +31,8 @@ class DFloatingButton : public DIconButton
 
 public:
     explicit DFloatingButton(QWidget *parent = nullptr);
-    explicit DFloatingButton(QStyle::StandardPixmap iconType = static_cast<QStyle::StandardPixmap>(-1), QWidget *parent = nullptr);
-    explicit DFloatingButton(DStyle::StandardPixmap iconType = static_cast<DStyle::StandardPixmap>(-1), QWidget *parent = nullptr);
+    explicit DFloatingButton(QStyle::StandardPixmap iconType, QWidget *parent = nullptr);
+    explicit DFloatingButton(DStyle::StandardPixmap iconType, QWidget *parent = nullptr);
     explicit DFloatingButton(const QString &text, QWidget *parent = nullptr);
     DFloatingButton(const QIcon& icon, const QString &text = QString(), QWidget *parent = nullptr);
     DFloatingButton(const DDciIcon &icon, const QString &text = QString(), QWidget *parent = nullptr);
