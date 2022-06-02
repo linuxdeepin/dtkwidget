@@ -58,6 +58,8 @@ QSize DFlowLayoutPrivate::doLayout(const QRect &rect, bool testOnly) const
 
         if(q->parentWidget()->layoutDirection() == Qt::RightToLeft) {
             for (QLayoutItem *item : itemList) {
+                if (item->isEmpty())
+                    continue;
                 // QRect's x2 = x1 + width - 1
                 int nextX = x - item->sizeHint().width() - horizontalSpacing + 1;
 
@@ -85,6 +87,8 @@ QSize DFlowLayoutPrivate::doLayout(const QRect &rect, bool testOnly) const
             size_hint = QSize(maxWidth, y + lineHeight - rect.y() + bottom);
         } else {
             for (QLayoutItem *item : itemList) {
+                if (item->isEmpty())
+                    continue;
                 // QRect's x2 = x1 + width - 1
                 int nextX = x + item->sizeHint().width() + horizontalSpacing - 1;
 
@@ -112,6 +116,8 @@ QSize DFlowLayoutPrivate::doLayout(const QRect &rect, bool testOnly) const
 
         if(q->parentWidget()->layoutDirection() == Qt::RightToLeft) {
             for (QLayoutItem *item : itemList) {
+                if (item->isEmpty())
+                    continue;
                 // QRect's y2 = y1 + height - 1
                 int nextY = y + item->sizeHint().height() + verticalSpacing - 1;
 
@@ -134,6 +140,8 @@ QSize DFlowLayoutPrivate::doLayout(const QRect &rect, bool testOnly) const
             size_hint = QSize(rect.right() - x + lineWidth + right + 1, maxHeight);
         } else {
             for (QLayoutItem *item : itemList) {
+                if (item->isEmpty())
+                    continue;
                 // QRect's x2 = x1 + width - 1
                 int nextY = y + item->sizeHint().height() + verticalSpacing - 1;
 
