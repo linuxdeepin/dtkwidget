@@ -280,6 +280,7 @@ void Content::updateSettings(const QByteArray &translateContext, QPointer<DTK_CO
             bgGroup->setItemSpacing(1);
             bgGroup->setItemMargins(QMargins(0, 0, 0, 0));
             bgGroup->setBackgroundRole(QPalette::Window);
+            bgGroup->setUseWidgetBackground(false);
             d->contentLayout->addWidget(bgGroup);
 
             for (auto option : subgroup->childOptions()) {
