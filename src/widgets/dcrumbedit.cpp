@@ -318,6 +318,8 @@ public:
         DCrumbTextFormat format = q->makeTextFormat();
 
         format.setText(tag_text);
+        if (currentText == tag_text)
+            format.setBackground(currentBrush);
         cursor.insertText(QString(QChar::ObjectReplacementCharacter), format);
     }
 
@@ -358,6 +360,8 @@ public:
             return false;
 
         DCrumbTextFormat format(cursor.charFormat());
+        currentText = format.text();
+        currentBrush = format.background();
 
         if (format.text().isEmpty())
             return false;
@@ -514,6 +518,8 @@ public:
     QMap<QString, DCrumbTextFormat> formats;
 
     bool dualClickMakeCrumb = false;
+    QString currentText;
+    QBrush currentBrush;
 
 public:
     QWidget* widgetTop;
