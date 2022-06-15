@@ -785,6 +785,10 @@ void DStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
     // 图标的绘制用也可能会使用这些颜色
     QPalette::ColorGroup cg = opt.state & QStyle::State_Enabled
                           ? QPalette::Normal : QPalette::Disabled;
+
+    if (cg == QPalette::Normal && !(opt.state & QStyle::State_Active))
+        cg = QPalette::Inactive;
+
     if (opt.state & QStyle::State_Selected) {
         painter->setPen(opt.palette.color(cg, QPalette::HighlightedText));
     } else {
@@ -1113,6 +1117,11 @@ void DStyledItemDelegate::initStyleOption(QStyleOptionViewItem *option, const QM
             option->rect.adjust(0, 0, 0 - d->itemSpacing, 0);
         } else {
             option->rect.adjust(0, 0, 0, 0 - d->itemSpacing);
+        }
+        if (lv->window() && lv->window()->isActiveWindow()) {
+            option->state |= QStyle::State_Active;
+        } else {
+            option->state &= (~QStyle::State_Active);
         }
     }
 
