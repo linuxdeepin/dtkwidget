@@ -285,6 +285,7 @@ bool DApplicationPrivate::loadTranslator(QList<DPathBuf> translateDirs, const QS
                 auto translator = new QTranslator(q);
                 translator->load(translatePath);
                 q->installTranslator(translator);
+                q->setProperty("dapp_locale", locale.name());
                 return true;
             }
         }
@@ -305,6 +306,7 @@ bool DApplicationPrivate::loadTranslator(QList<DPathBuf> translateDirs, const QS
                     auto translator = new QTranslator(q);
                     translator->load(translatePath);
                     q->installTranslator(translator);
+                    q->setProperty("dapp_locale", parseLocalNameList.at(0));
                     return true;
                 }
             }
