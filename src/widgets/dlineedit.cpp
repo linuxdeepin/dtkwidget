@@ -125,7 +125,7 @@ void DLineEdit::showAlertMessage(const QString &text, int duration)
 void DLineEdit::showAlertMessage(const QString &text, QWidget *follower, int duration)
 {
     D_D(DLineEdit);
-    d->control->showAlertMessage(text, follower ? follower : this, duration);
+    d->control->showAlertMessage(text, follower ? follower : this->lineEdit(), duration);
 }
 
 /*!
