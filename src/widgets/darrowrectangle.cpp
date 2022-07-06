@@ -1144,6 +1144,14 @@ void DArrowRectanglePrivate::updateClipPath()
 
         q->clearMask();
         q->setMask(polygon);
+
+        if (QWidget *widget = q->window()) {
+            if (QWindow *w = widget->windowHandle()) {
+                QList<QPainterPath> painterPaths;
+                painterPaths << outPath;
+                w->setProperty("_d_windowBlurPaths", QVariant::fromValue(painterPaths));
+            }
+        }
     }
 }
 
