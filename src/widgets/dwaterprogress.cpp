@@ -83,7 +83,7 @@ public:
     \brief 可以使用 DWaterProgress 类快速创建圆形容器内水位高低指示进度的动画控件.
     \brief Use DWaterProgress to create an new water animation progress.
 
-    \image dwaterprogress.png
+    \image html dwaterprogress.png
 
     可以使用 DWaterProgress 类快速创建圆形容器内水位高低指示进度的动画控件。并提供了可选的是否显示进度文字的选项。
     Use DWaterProgress to create an new water animation progress. There is also an optional progress

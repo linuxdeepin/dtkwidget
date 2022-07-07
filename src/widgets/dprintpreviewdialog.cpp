@@ -2281,7 +2281,7 @@ void DPrintPreviewDialogPrivate::pageRangeError(TipsNum tipNum)
     \snippet mainwindow.cpp 0
 
     示例的预览效果如下：
-    \image DPrintPreviewExample.png
+    \image html DPrintPreviewExample.png
 
     上述代码中用宏 AsynPreview 控制是否使用异步模式，并且通过
     分别连接两种模式的 DPrintPreview::paintRequested 信号

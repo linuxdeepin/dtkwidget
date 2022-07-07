@@ -53,7 +53,7 @@ void DSpinBoxPrivate::init()
   input is not correct. In addition, there's a DSpinBox::defaultValue property
   can be used to set a default value on the widget.
 
-  \image DSpinBox.png
+  \image html DSpinBox.png
  */
 
 // ========================SIGNAL START========================

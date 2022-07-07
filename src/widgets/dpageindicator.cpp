@@ -43,7 +43,7 @@ DWIDGET_BEGIN_NAMESPACE
   当前显示的元素所对应的点会被高亮以告知用户元素左右（或者上下）还有多少元素可以切换。
   
   例如下图中控制中心首页插件区域底部的指示器：
-  \image pageindicator.png
+  \image html pageindicator.png
   
   \note 此控件只用来显示当前元素位置以及层叠关系，并不能用来实际操纵元素的显示行为。
   \note The design of this control is that it's just used to display, not

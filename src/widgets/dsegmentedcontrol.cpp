@@ -85,7 +85,7 @@ DSegmentedHighlight::DSegmentedHighlight(QWidget *parent) :
   DSegmentedControl 更像是脱离于 QTabWidget 工作的 QTabBar 。
   
   它可以跟 QStackedLayout 搭配使用，达到切换标签页的功能，例如：
-  \image segmentedcontrol.png
+  \image html segmentedcontrol.png
  */
 
 /*!

@@ -58,7 +58,7 @@ private:
   \inmodule dtkwidget
   \brief 提供应用内通知的 Tooltip，类似安卓的 Toast.
 
-  \image DToast.gif
+  \image html DToast.gif
   \a parent
  */
 
