@@ -43,6 +43,8 @@
 
 #undef private
 
+#include "dapplication.h"
+
 #define MASK_COLOR_ALPHA_DEFAULT 204
 
 QT_BEGIN_NAMESPACE
@@ -186,6 +188,17 @@ bool DBlurEffectWidgetPrivate::updateWindowBlurArea(QWidget *topLevelWidget)
     }
 
     QList<const DBlurEffectWidget *> blurEffectWidgetList = blurEffectWidgetHash.values(topLevelWidget);
+
+    if (!DApplication::isDXcbPlatform()) {
+        Q_FOREACH (const DBlurEffectWidget *w, blurEffectWidgetList) {
+            if (QWidget *widget = w->window()) {
+                if (QWindow *window = widget->windowHandle()) {
+                    window->setProperty("_d_clipPath", QPolygon(topLevelWidget->rect()));
+                }
+            }
+        }
+        return true;
+    }
 
     bool isExistMaskPath = false;
 
