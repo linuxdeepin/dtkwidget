@@ -94,7 +94,7 @@ public:
   hlayout->addWidget(new QFrame);
   hlayout->addWidget(new QFrame);
   \endcode
-  \image DBackgroundGroup.png
+  \image html DBackgroundGroup.png
  */
 
 /*!

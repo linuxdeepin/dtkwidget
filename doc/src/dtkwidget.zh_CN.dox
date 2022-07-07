@@ -18,20 +18,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 /*!
-\page dtkwidget-index.html
+    \module dtkwidget
+    \mainpage DTK Widget 模块
 
-\keyword DTK Widget Reference Documentation
-\title DTK Widget Docs
-
-DtkWidget is Deepin graphical user interface for deepin desktop development.
-
-\list
-\li \l {DTK Gui Docs}
-\li \l {DTK Gui 模块}
-\li \l {DTK Core Docs}
-\li \l {DTK Core 模块}
-\li \l {DTK Widget 模块}
-\endlist
+    \brief DtkWidget is Deepin graphical user interface for deepin desktop development.
 */

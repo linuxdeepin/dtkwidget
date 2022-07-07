@@ -167,7 +167,7 @@ void DStackWidgetPrivate::setCurrentIndex(int index)
   使用 DStackWidget::popWidget 出栈当前内容并显示下层内容(如果有的话), 还有 DStackWidget::insertWidget 可以指定插入的位置.
   
   如果要自定义动画则需要继承 DAbstractStackWidgetTransition, 具体实现可参考 DSlideStackWidgetTransition 类, DSlideStackWidgetTransition 类是 DStackWidget 使用的默认动画即滑动.
-  \image DStackWidget.gif
+  \image html DStackWidget.gif
  */
 
 /*!

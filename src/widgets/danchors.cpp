@@ -32,7 +32,7 @@ DWIDGET_BEGIN_NAMESPACE
   除了比较传统的布局方式之外，DtkWidget 还提供了一种使用锚定概念布局控件的方法（
   类似于 QQuickItem 中的 anchors 属性），可以认为每个控件具有一组6个不可见的“锚
   线”：left，horizontalCenter，right，top，verticalCenter和bottom，如图所示：
-  \image edges_anchors.png
+  \image html edges_anchors.png
   使用 DAnchors 可以让 QWidget 基于这些“锚线”来确定相互间的关系，如：
   \code
   DAnchors<QLabel> rect1(new QLabel("rect1"));
@@ -41,7 +41,7 @@ DWIDGET_BEGIN_NAMESPACE
   rect2.setLeft(rect1.right());
   \endcode
   这样 rect2 的左边界就会和 rect1 的右边界对齐：
-  \image edge1.png
+  \image html edge1.png
   另外还可以同时设置多个“锚线”：
   \code
   DAnchors<QLabel> rect1(new QLabel("rect1"));
@@ -50,7 +50,7 @@ DWIDGET_BEGIN_NAMESPACE
   rect2.setTop(rect1.bottom());
   rect2.setLeft(rect1.right());
   \endcode
-  \image edge3.png
+  \image html edge3.png
   锚定布局同时在多个控件中使用，控件之间只需要满足以下条件：
   \a 控件之间为兄弟关系，或被锚定控件为父控件
   \a 锚定关系不能循环绑定
@@ -58,7 +58,7 @@ DWIDGET_BEGIN_NAMESPACE
   锚定系统允许设置“锚线”之间的间距，和“锚线”一一对应，每个控件都有一组4个 margin：
   leftMargin, rightMargin, topMargin 和 bottomMargin 以及两个 offset：
   horizontalCenterOffset 和 verticalCenterOffset。
-  \image margins_anchors.png
+  \image html margins_anchors.png
   下面是左margin的例子：
   \code
   DAnchors<QLabel> rect1(new QLabel("rect1"));
@@ -68,7 +68,7 @@ DWIDGET_BEGIN_NAMESPACE
   rect2.setLeft(rect1.right());
   \endcode
   rect2 的左边界相距 rect1 的右边界5个像素：
-  \image edge2.png
+  \image html edge2.png
   \note margin 仅仅是对设置的锚点生效，并不是让控件本身增加了边距，如果设置了
   margin，但并没有设置相应的锚点，对控件本身而已是没有任何影响的。margin 的值可以
   为负数，通过值的正负来决定margin的方向（内 margin 还是外 margin）

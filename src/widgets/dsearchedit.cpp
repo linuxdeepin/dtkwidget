@@ -175,7 +175,7 @@ private:
   
   相比于一般的输入框控件，DSearchEdit 提供了搜索按钮指示，用户使用起来会更加自然。
   如图示：
-  \image searchedit.png
+  \image html searchedit.png
   
   \warning DSearchEdit 与 QLineEdit、DLineEdit 没有继承关系，功能不兼容。
  */
