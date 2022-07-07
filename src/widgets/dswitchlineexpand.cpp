@@ -72,7 +72,7 @@ void DSwitchHeaderLine::mousePressEvent(QMouseEvent *)
   控件由标题栏和内容两部分组成，标题栏左侧显示控件标题，右侧显示一个开关控件，
   用户通过点击右侧的开关控件，来控制标题栏下面的内容部分展开还是合上。
   
-  \image switchlineexpand.png
+  \image html switchlineexpand.png
  */
 
 /*!

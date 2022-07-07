@@ -46,7 +46,7 @@ enum layoutMargin
 
   DSearchComboBox提供了在下拉列表中搜索功能
   DSearchComboBox该控件适用于在大段列表中快速查找
-  \image DSearchComboBox.png
+  \image html DSearchComboBox.png
  */
 DSearchComboBox::DSearchComboBox(QWidget *parent)
     : DComboBox(*new DSearchComboBoxPrivate(this), parent)

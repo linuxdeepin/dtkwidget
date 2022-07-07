@@ -610,7 +610,7 @@ QBrush CrumbObjectInterface::backgroundBrush(const QRect &rect, const QBrush &br
     DCrumbEdit 允许通过给定字符串的形式便捷的向其中添加一个默认样式的标签，也可以通过自行构建标签文字样式。请参见 insertCrumb()
     和 appendCrumb() 的不同重载。可以通过 crumbList() 获得当前标签输入控件中包含的标签列表。
 
-    \image DCrumbEdit.png
+    \image html DCrumbEdit.png
     \sa DCrumbTextFormat
 */
 

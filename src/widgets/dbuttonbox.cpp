@@ -54,7 +54,7 @@ public:
   \note 代码示例
   \note DButtonBoxButton *btn1 = new DButtonBoxButton("btn1");
   \note btn1->setIcon(QStyle::StandardPixmap::SP_ArrowUp);
-  \image DButtonBoxButton.png
+  \image html DButtonBoxButton.png
   \sa Dtk::Widget::DButtonBox
  */
 
@@ -378,7 +378,7 @@ DStyleOptionButtonBoxButton::ButtonPosition DButtonBoxPrivate::getButtonPosition
   btn1->setIcon(QStyle::StandardPixmap::SP_ArrowUp);
   box.setButtonList({btn1, btn2}, true);
   \endcode
-  \image DButtonBox.png
+  \image html DButtonBox.png
 
   \sa Dtk::Widget::DButtonBoxButton
  */

@@ -45,7 +45,7 @@ DSpinnerPrivate::DSpinnerPrivate(DSpinner *qq)
     DSpinner provide a spinning animation widget to indicate a waiting state. Call start() to start
     the spinning animation.
 
-    \image DSpinner.gif
+    \image html DSpinner.gif
 */
 
 /*!

@@ -413,7 +413,7 @@ bool DBlurEffectWidgetPrivate::updateWindowBlurArea(QWidget *topLevelWidget)
  */
 
 /*!
-  \enum Dtk::Widget::DBlurEffectWidget::BlurMode
+  \enum DBlurEffectWidget::BlurMode
   DBlurEffectWidget::BlurMode 模糊算法
   
   \value GaussianBlur
@@ -421,17 +421,17 @@ bool DBlurEffectWidgetPrivate::updateWindowBlurArea(QWidget *topLevelWidget)
  */
 
 /*!
-  \enum Dtk::Widget::DBlurEffectWidget::BlendMode
+  \enum DBlurEffectWidget::BlendMode
   DBlurEffectWidget::BlendMode 模糊模式
-  \image blur-effect.png
+  \image html blur-effect.png
   
-  \value InWindowBlend
+  \var DBlurEffectWidget::BlendMode DBlurEffectWidget::InWindowBlend
   以窗口内部控件作为模糊背景
   
-  \value BehindWindowBlend
+  \var DBlurEffectWidget::BlendMode DBlurEffectWidget::BehindWindowBlend
   以外部的其它窗口作为模糊背景
   
-  \value InWidgetBlend
+  \var DBlurEffectWidget::BlendMode DBlurEffectWidget::InWidgetBlend
   同 DBlurEffectWidget::InWindowBlend，区别是不会自动更新用于模糊的源图片
   可手动调用 DBlurEffectWidget::updateBlurSourceImage 更新，以此来实现自行控制模糊
   源图片的更新时机

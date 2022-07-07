@@ -166,7 +166,7 @@ QSize DFlowLayoutPrivate::doLayout(const QRect &rect, bool testOnly) const
     \brief DFlowLayout 类提供了一个简便的流布局.
     \brief The DFlowLayout class provides a flow list layout.
 
-    \image dflowlayout.png
+    \image html dflowlayout.png
 
     上方图片是一个 DFlowLayout 的典型应用场景。注意示例图中的标题文本并不是 DFlowLayout 的一部分。
     The above image is a classic use case of DFlowLayout. Notably the title text label in

@@ -119,7 +119,7 @@ DBaseExpandPrivate::~DBaseExpandPrivate()
   
   \sa DHeaderLine
   
-  \image DBaseExpand.gif
+  \image html DBaseExpand.gif
  */
 
 /*!
