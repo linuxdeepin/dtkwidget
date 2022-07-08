@@ -51,7 +51,7 @@ void NavigationDelegate::paint(QPainter *painter, const QStyleOptionViewItem &op
         painter->setPen(pen);
         painter->setFont(DFontSizeManager::instance()->get(DFontSizeManager::T4, QFont::Medium, opt.font));
         QRect rect = opt.rect.marginsRemoved(QMargins(10, 0, 10, 0));
-        auto text = opt.fontMetrics.elidedText(index.data().toString(), Qt::ElideRight, rect.width());
+        auto text = painter->fontMetrics().elidedText(index.data().toString(), Qt::ElideRight, rect.width());
         painter->drawText(rect, Qt::AlignLeft | Qt::AlignVCenter, text);
         break;
     }
