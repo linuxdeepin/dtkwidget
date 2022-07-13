@@ -17,16 +17,14 @@
 
 #include "mainwindow.h"
 
-#include <DTitlebar>
 #include <DApplication>
 #include <DApplicationSettings>
 #include <DWidgetUtil>
 #include <DLog>
-#include <DDialog>
 
 #include <QDebug>
-#include <QTextBrowser>
 
+DCORE_USE_NAMESPACE
 DWIDGET_USE_NAMESPACE
 
 int main(int argc, char *argv[])
@@ -35,22 +33,25 @@ int main(int argc, char *argv[])
     DWIDGET_INIT_RESOURCE();
 #endif
     DApplication *a = DApplication::globalApplication(argc, argv);
-    qDebug() << a->arguments();
+
     DApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
-    Dtk::Core::DLogManager::registerConsoleAppender();
+    DLogManager::registerConsoleAppender();
 
     a->loadTranslator();
 #ifdef Q_OS_UNIX
     a->setOOMScoreAdj(500);
 #endif
 
-    if (!DGuiApplicationHelper::setSingleInstance("deepin-tool-kit-examples")) {
+    a->setAutoActivateWindows(true);
+    if (!a->setSingleInstance("deepin-tool-kit-examples")) {
         qDebug() << "another instance is running!!";
         return 0;
     }
 
     a->setApplicationName("dtk-example");
     a->setOrganizationName("deepin");
+    a->setApplicationVersion("1.0");
+
     DApplicationSettings as;
     Q_UNUSED(as)
 
