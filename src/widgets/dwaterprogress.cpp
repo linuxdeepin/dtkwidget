@@ -66,7 +66,7 @@ public:
     QList<Pop> pops;
 
     int     interval = 33;
-    int     value = 0;
+    int     value = -1;
 
     double  frontXOffset = 0;
     double  backXOffset = 0;
@@ -156,7 +156,7 @@ void DWaterProgress::setValue(int value)
 /*!
   \brief set progress text \a visible or not
   \brief 设置是否显示进度
-  
+
   set the progress text value(like 50% when value is 50) \a visible.
   设置进度文字是否显示，如值为 50 时显示 50% 。
  */
@@ -213,8 +213,6 @@ void DWaterProgressPrivate::initUI()
 {
     D_Q(DWaterProgress);
     q->setMinimumSize(100, 100);
-
-    value = 0;
 
     timer = new QTimer(q);
     timer->setInterval(interval);
