@@ -1288,7 +1288,7 @@ void DPrintPreviewDialogPrivate::judgeSupportedAttributes(const QString &lastPap
     QStringList pageSizeList;
     int index = -1;
     for (int i = 0; i < updateinfo.supportedPageSizes().size(); i++) {
-        pageSizeList.append(updateinfo.supportedPageSizes().at(i).key());
+        pageSizeList.append(updateinfo.supportedPageSizes().at(i).name());
         if (index == -1 && updateinfo.supportedPageSizes().at(i).id() == QPageSize::PageSizeId::A4) {
             index = i;
         }
