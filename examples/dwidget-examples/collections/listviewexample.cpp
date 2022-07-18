@@ -126,6 +126,7 @@ DListViewExample::DListViewExample(QWidget *parent)
     QVBoxLayout *listviewPicLayout = new QVBoxLayout(listviewPicWidget);
     DListView *fingerPrintLV = new DListView(listViewWidget);
     DListView *browserLV = new DListView(listViewWidget);
+    browserLV->setDragDropMode(QListView::InternalMove);
     DListView *screenLV = new DListView(listViewWidget);
     QStandardItemModel *fingerPrintModel = new QStandardItemModel(fingerPrintLV);
     QStandardItemModel *browserModel = new QStandardItemModel(browserLV);
@@ -151,12 +152,21 @@ DListViewExample::DListViewExample(QWidget *parent)
 
     DStandardItem *browserItem1 = new DStandardItem(QIcon("://images/example/DListViewBrowser_1.svg"), "谷歌浏览器");
 
+    browserModel->setItemPrototype(new DStandardItem());
     // 设置其他style时，转换指针为空
     if (DStyle *ds = qobject_cast<DStyle *>(style())) {
         auto action = new DViewItemAction(Qt::AlignVCenter, QSize(), QSize(), true);
         action->setIcon(ds->standardIcon(DStyle::SP_IndicatorChecked));
         action->setParent(this);
         browserItem1->setActionList(Qt::Edge::RightEdge, {action});
+        connect(action, &DViewItemAction::triggered, this, [action, browserModel]() {
+            for (int i = 0; i < browserModel->rowCount(); i++) {
+                auto item =  dynamic_cast<DStandardItem *>(browserModel->item(i));
+                Q_ASSERT(item);
+                if (item->actionList(Qt::RightEdge).contains(action))
+                    qDebug() << "clicked the row" << i;
+            }
+        });
     }
 
     DStandardItem *browserItem2 = new DStandardItem(QIcon("://images/example/DListViewBrowser_2.svg"), "火狐浏览器");
@@ -214,6 +224,13 @@ DListViewExample::DListViewExample(QWidget *parent)
     screenModel->appendRow(screenItem2);
     screenModel->appendRow(screenItem3);
     screenModel->appendRow(screenItem4);
+
+    for (int i = 0 ; i < browserModel->rowCount(); i++)
+    {
+        auto item = browserModel->item(i);
+        item->setDragEnabled(true);
+        item->setDropEnabled(false);
+    }
 
     listViewWLayout->setContentsMargins(85, 0, 85, 0);
     listViewWLayout->setSpacing(60);
