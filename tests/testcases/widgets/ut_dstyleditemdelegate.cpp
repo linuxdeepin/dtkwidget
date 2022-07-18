@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2021 ~ 2021 Uniontech Software Technology Co.,Ltd.
+* Copyright (C) 2021 ~ 2022 Uniontech Software Technology Co.,Ltd.
 *
 * Author:     Ye ShanShan <yeshanshan@uniontech.com>
 *
@@ -16,11 +16,12 @@
 * GNU General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public License
-* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+* along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include <gtest/gtest.h>
 #include <QListView>
+#include <QPointer>
 
 #include "dstyleditemdelegate.h"
 DWIDGET_USE_NAMESPACE
@@ -207,3 +208,53 @@ TEST_F(ut_DViewItemAction, setWidget)
     ASSERT_EQ(target->widget(), widget);
     widget->deleteLater();
 };
+
+TEST_F(ut_DViewItemAction, actionDestoryByDStandItem)
+{
+    QStandardItemModel* model = new QStandardItemModel();
+    QPointer<DViewItemAction> actionPointer(new DViewItemAction());
+    ASSERT_TRUE(actionPointer);
+
+    DStandardItem *item = new DStandardItem();
+    item->setActionList(Qt::RightEdge, {actionPointer});
+    model->appendRow(item);
+
+    QPointer<DViewItemAction> actionPointer2(new DViewItemAction());
+    item->setActionList(Qt::RightEdge, {actionPointer2});
+    ASSERT_FALSE(actionPointer);
+
+    // release now avoid DStandardItem is clear in next event loop.
+    delete model;
+
+    ASSERT_FALSE(actionPointer2);
+}
+
+TEST_F(ut_DViewItemAction, actionDestoryByDStandItemWithClone)
+{
+    DStandardItem *item = new DStandardItem();
+    QPointer<DViewItemAction> actionPointer(new DViewItemAction());
+    item->setActionList(Qt::RightEdge, {actionPointer});
+
+    DStandardItem *item2 = dynamic_cast<DStandardItem *>(item->clone());
+    delete item;
+    ASSERT_TRUE(actionPointer);
+    delete item2;
+    ASSERT_FALSE(actionPointer);
+}
+
+TEST_F(ut_DViewItemAction, accessActionByActionList)
+{
+    QStandardItemModel* model = new QStandardItemModel();
+    DViewItemAction *action = new DViewItemAction();
+
+    DStandardItem *item = new DStandardItem();
+    item->setActionList(Qt::RightEdge, {action});
+    model->appendRow(item);
+
+    auto itemModel = dynamic_cast<DStandardItem *>(model->item(0));
+    ASSERT_TRUE(itemModel);
+
+    ASSERT_TRUE(itemModel->actionList(Qt::RightEdge).contains(action));
+
+    model->deleteLater();
+}
