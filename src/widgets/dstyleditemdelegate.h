@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 ~ 2019 Deepin Technology Co., Ltd.
+ * Copyright (C) 2017 ~ 2022 Deepin Technology Co., Ltd.
  *
  * Author:     zccrs <zccrs@live.com>
  *
@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #ifndef DSTYLEDITEMDELEGATE_H
 #define DSTYLEDITEMDELEGATE_H
@@ -135,6 +135,8 @@ public:
 
     void setFontSize(DFontSizeManager::SizeType size);
     QFont font() const;
+
+    virtual QStandardItem *clone() const override;
 };
 
 DWIDGET_END_NAMESPACE
