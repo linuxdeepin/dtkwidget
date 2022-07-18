@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 ~ 2019 Deepin Technology Co., Ltd.
+ * Copyright (C) 2017 ~ 2022 Deepin Technology Co., Ltd.
  *
  * Author:     zccrs <zccrs@live.com>
  *
@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include "dstyleditemdelegate.h"
 #include "dobject_p.h"
@@ -40,6 +40,96 @@
 Q_DECLARE_METATYPE(QMargins)
 
 DWIDGET_BEGIN_NAMESPACE
+
+struct ActionListData : public QSharedData {
+    explicit ActionListData() { }
+    explicit ActionListData(const DViewItemActionList& v)
+        : list(v)
+    {
+    }
+    ~ActionListData ()
+    {
+        qDeleteAll(list);
+    }
+    DViewItemActionList list;
+};
+
+class ActionList
+{
+public:
+    explicit ActionList() { }
+    explicit ActionList(ActionListData *data)
+        : m_data(data)
+    {
+    }
+    inline bool isValid() const
+    {
+        return m_data;
+    }
+    inline const ActionListData* constData() const
+    {
+        return m_data.constData();
+    }
+private:
+    friend QDataStream &operator<<(QDataStream &s, const ActionList &v);
+    friend QDataStream &operator>>(QDataStream &s, ActionList &v);
+    QSharedDataPointer<ActionListData> m_data;
+};
+
+QDataStream &operator<<(QDataStream &ds, const ActionList &v)
+{
+    quintptr data = reinterpret_cast<quintptr>(v.m_data.data());
+    ds << data;
+    return ds;
+}
+
+QDataStream &operator>>(QDataStream &ds, ActionList &v)
+{
+    quintptr data;
+    ds >> data;
+    v.m_data = reinterpret_cast<ActionListData *>(data);
+    return ds;
+}
+DWIDGET_END_NAMESPACE
+
+Q_DECLARE_METATYPE(DTK_WIDGET_NAMESPACE::ActionList)
+
+DWIDGET_BEGIN_NAMESPACE
+static void saveDViewItemActionList(QDataStream &s, const void *d)
+{
+    const ActionList &data = *static_cast<const ActionList*>(d);
+    s << data;
+}
+
+static void loadDViewItemActionList(QDataStream &s, void *d)
+{
+    ActionList &data = *static_cast<ActionList*>(d);
+    s >> data;
+}
+
+__attribute__((constructor))
+static void registerMetaType ()
+{
+    // register DViewItemActionList's stream operator to support that QMetaType can using save and load function.
+    QMetaType::registerStreamOperators(QMetaTypeId<DTK_WIDGET_NAMESPACE::ActionList>::qt_metatype_id(),
+                                       saveDViewItemActionList,
+                                       loadDViewItemActionList);
+}
+
+static DViewItemActionList qvariantToActionList(const QVariant &v)
+{
+    const ActionList &wrapper = v.value<ActionList>();
+    if (wrapper.isValid())
+        return wrapper.constData()->list;
+
+    return DViewItemActionList();
+}
+
+static QVariant actionListToQVariant(const DViewItemActionList &v)
+{
+    ActionList wrapper(new ActionListData(v));
+    return QVariant::fromValue(wrapper);
+}
 
 class DViewItemActionPrivate : public DCORE_NAMESPACE::DObjectPrivate
 {
@@ -298,7 +388,7 @@ public:
 
     static QSize drawActions(QPainter *pa, const QStyleOptionViewItem &option, const QVariant &value, Qt::Edge edge, QList<QPair<QAction*, QRect>> *clickableActionRect)
     {
-        const DViewItemActionList &actionList = qvariant_cast<DViewItemActionList>(value);
+        const DViewItemActionList &actionList = qvariantToActionList(value);
         DViewItemActionList visiable_actionList;
         for (auto action : actionList) {
             if (action->isVisible())
@@ -776,7 +866,7 @@ void DStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
         const_cast<DStyledItemDelegatePrivate*>(d)->clickableActionMap.remove(index);
     }
 
-    const DViewItemActionList &text_action_list = qvariant_cast<DViewItemActionList>(index.data(Dtk::TextActionListRole));
+    const DViewItemActionList &text_action_list = qvariantToActionList(index.data(Dtk::TextActionListRole));
 
     opt.rect = itemContentRect;
     QRect iconRect, textRect, checkRect;
@@ -906,7 +996,7 @@ QSize DStyledItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QM
     QRect pixmapRect, textRect, checkRect;
     DStyle::viewItemLayout(style, &opt, &pixmapRect, &textRect, &checkRect, true);
 
-    const DViewItemActionList &text_action_list = qvariant_cast<DViewItemActionList>(index.data(Dtk::TextActionListRole));
+    const DViewItemActionList &text_action_list = qvariantToActionList(index.data(Dtk::TextActionListRole));
 
     for (const DViewItemAction *action : text_action_list) {
         const QSize &action_size = d->displayActionSize(action, style, opt);
@@ -1207,13 +1297,6 @@ static Dtk::ItemDataRole getActionPositionRole(Qt::Edge edge)
     return Dtk::LeftActionListRole;
 }
 
-static void clearActions(const DViewItemActionList &list)
-{
-    for (auto action : list) {
-        action->deleteLater();
-    }
-}
-
 /*!
   \class Dtk::Widget::DStandardItem
   \inmodule dtkwidget
@@ -1227,11 +1310,6 @@ static void clearActions(const DViewItemActionList &list)
  */
 DStandardItem::~DStandardItem()
 {
-    for (Qt::Edge e : {Qt::TopEdge, Qt::LeftEdge, Qt::RightEdge, Qt::BottomEdge}) {
-        clearActions(qvariant_cast<DViewItemActionList>(data(getActionPositionRole(e))));
-    }
-
-    clearActions(textActionList());
 }
 
 /*!
@@ -1245,11 +1323,10 @@ void DStandardItem::setActionList(Qt::Edge edge, const DViewItemActionList &list
     QVariant value;
 
     if (!list.isEmpty()) {
-        value = QVariant::fromValue(list);
+        value = actionListToQVariant(list);;
     }
 
     auto role = getActionPositionRole(edge);
-    clearActions(qvariant_cast<DViewItemActionList>(data(role)));
     setData(value, role);
 }
 
@@ -1260,7 +1337,7 @@ void DStandardItem::setActionList(Qt::Edge edge, const DViewItemActionList &list
  */
 DViewItemActionList DStandardItem::actionList(Qt::Edge edge) const
 {
-    return qvariant_cast<DViewItemActionList>(data(getActionPositionRole(edge)));
+    return qvariantToActionList(data(getActionPositionRole(edge)));
 }
 
 /*!
@@ -1313,10 +1390,9 @@ void DStandardItem::setTextActionList(const DViewItemActionList &list)
     QVariant value;
 
     if (!list.isEmpty()) {
-        value = QVariant::fromValue(list);
+        value = actionListToQVariant(list);;
     }
 
-    clearActions(textActionList());
     setData(value, Dtk::TextActionListRole);
 }
 
@@ -1325,7 +1401,7 @@ void DStandardItem::setTextActionList(const DViewItemActionList &list)
  */
 DViewItemActionList DStandardItem::textActionList() const
 {
-    return qvariant_cast<DViewItemActionList>(data(Dtk::TextActionListRole));
+    return qvariantToActionList(data(Dtk::TextActionListRole));
 }
 
 void DStandardItem::setTextColorRole(DPalette::ColorType role)
@@ -1376,6 +1452,11 @@ void DStandardItem::setFontSize(DFontSizeManager::SizeType size)
 QFont DStandardItem::font() const
 {
     return getViewItemFont(index(), Dtk::ViewItemFontLevelRole);
+}
+
+QStandardItem *DStandardItem::clone() const
+{
+    return new DStandardItem(*this);
 }
 
 DWIDGET_END_NAMESPACE
