@@ -366,6 +366,9 @@ public:
         if (format.text().isEmpty())
             return false;
 
+        if (cursor.atEnd() && mousePos.x() > q->cursorRect().right())
+            return false;
+
         makeCrumb();
 
         if (mousePos.x() < q->cursorRect().left())
