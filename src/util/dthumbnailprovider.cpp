@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "dthumbnailprovider.h"
+#include "dtkwidget/util/dthumbnailprovider.h"
 #include <DObjectPrivate>
 
 #include <QCryptographicHash>

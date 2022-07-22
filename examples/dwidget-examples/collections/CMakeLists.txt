@@ -1,15 +1,15 @@
-cmake_minimum_required(VERSION 3.23)
-project(collections)
+#cmake_minimum_required(VERSION 3.5)
+#project(collections)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
+set(BIN_NAME collections)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 
 find_package(DtkGui REQUIRED)
@@ -24,7 +24,7 @@ find_package(Qt5 REQUIRED COMPONENTS PrintSupport)
 set(IMAGES images.qrc)
 set(RESCOUCES resources.qrc)
 set(THEME icons/theme-icons.qrc)
-add_executable(${PROJECT_NAME}
+add_executable(${BIN_NAME}
   ${IMAGES}
   ${RESCOUCES}
   ${THEME}
@@ -69,18 +69,20 @@ add_executable(${PROJECT_NAME}
   lcdnumberexample.cpp 
   menuexample.cpp
 )
-target_link_libraries(${PROJECT_NAME} PRIVATE 
+target_link_libraries(${BIN_NAME} PRIVATE 
   Qt5::Widgets
   Qt5::Core
-	Qt5::Svg
-	Qt5::PrintSupport
-	dtkwidget
-	${DtkGui_LIBRARIES}
-	${DtkCore_LIBRARIES}
+  Qt5::Svg
+  Qt5::PrintSupport
+  dtkwidget
+  ${DtkGui_LIBRARIES}
+  ${DtkCore_LIBRARIES}
 )
-target_include_directories(${PROJECT_NAME} PUBLIC
-  ../../../src/widgets/
-  ../../../src/
-  ../../../src/util/
+target_include_directories(${BIN_NAME} PUBLIC
+  ../../../include/dtkwidget/DWidget/
+  ../../../include/dtkwidget/widgets/
+  ../../../include/dtkwidget/util/
+  ../../../include/dtkwidget/global/
   ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
 )
+install(TARGETS ${BIN_NAME} DESTINATION lib/libdtk/DWidget/examples/)

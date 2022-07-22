@@ -6,9 +6,9 @@ pkgdesc='Deepin graphical user interface library'
 arch=('x86_64' 'aarch64')
 url="https://github.com/linuxdeepin/dtkwidget"
 license=('LGPL3')
-depends=('deepin-qt-dbus-factory-git' 'dtkcore-git' 'dtkgui-git' 'librsvg' 'qt5-multimedia' 'qt5-svg'
+depends=('deepin-qt-dbus-factory' 'dtkcore' 'dtkgui' 'librsvg' 'qt5-multimedia' 'qt5-svg'
          'qt5-x11extras' 'startup-notification')
-makedepends=('git' 'qt5-tools' 'gtest' 'dtkcommon-git' 'dtkcore-git' 'dtkgui-git')
+makedepends=('git' 'qt5-tools' 'gtest' 'dtkcommon' 'dtkcore' 'dtkgui' 'ninja')
 provides=('dtkwidget')
 conflicts=('dtkwidget')
 groups=('deepin-git')
@@ -16,16 +16,21 @@ source=('source.tar.gz')
 sha512sums=('SKIP')
 
 prepare() {
-    cd $deepin_source_name
+    mkdir -p build
 }
 
 build() {
-  cd $deepin_source_name
-  qmake-qt5 PREFIX=/usr
-  make
+  cd build
+	cmake -GNinja \
+	    -DHUNTER_ENABLED=OFF \
+      -DCMAKE_INSTALL_LIBDIR=/usr/lib \
+      -DCMAKE_INSTALL_PREFIX=/usr \
+      -DCMAKE_BUILD_TYPE=Release \
+		../
+  ninja
 }
 
 package() {
-  cd $deepin_source_name
-  make INSTALL_ROOT="$pkgdir" install
+  cd build
+  DESTDIR="$pkgdir" ninja install
 }

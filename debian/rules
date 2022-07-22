@@ -7,18 +7,15 @@ DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 
 DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
 
-ifneq (,$(wildcard .git/config))
-	CONFIG_VERSION=
+VERSION = $(DEB_VERSION_UPSTREAM)
+_PACK_VER = $(shell echo $(VERSION) | awk -F'[+_~-]' '{print $$1}')
+_BUILD_VER = $(shell echo $(VERSION) | awk -F'[+_~-]' '{print $$2}' | sed 's/[^0-9]//g')
+ifeq ($(_BUILD_VER),)
+	CONFIG_VERSION = $(_PACK_VER)
 else
-	VERSION = $(DEB_VERSION_UPSTREAM)
-	_PACK_VER = $(shell echo $(VERSION) | awk -F'[+_~-]' '{print $$1}')
-	_BUILD_VER = $(shell echo $(VERSION) | awk -F'[+_~-]' '{print $$2}' | sed 's/[^0-9]//g')
-	ifeq ($(_BUILD_VER),)
-		CONFIG_VERSION = $(_PACK_VER)
-	else
-		CONFIG_VERSION = $(_PACK_VER).$(_BUILD_VER)
-	endif
+	CONFIG_VERSION = $(_PACK_VER).$(_BUILD_VER)
 endif
+
 %:
 	dh $@ --parallel
 

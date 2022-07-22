@@ -107,7 +107,7 @@ class DPrintPickColorWidget : public DWidget
 {
     Q_OBJECT
 public:
-    DPrintPickColorWidget(QWidget *parent);
+    DPrintPickColorWidget(QWidget *parent = nullptr);
     ~DPrintPickColorWidget();
     void initUI();
     void initConnection();

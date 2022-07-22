@@ -68,12 +68,13 @@ TEST_F(ut_DWaterProgress, testDwaterProressSetValue)
     ASSERT_TRUE(progress->value() == 50);
 }
 
+// TODO break
 TEST_F(ut_DWaterProgress, testDwaterProressPaintEvent)
 {
     widget->show();
     ASSERT_TRUE(QTest::qWaitForWindowExposed(widget, 100));
 }
-
+// break
 TEST_F(ut_DWaterProgress, testDwaterProressChangeEvent)
 {
     widget->show();

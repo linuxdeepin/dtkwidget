@@ -18,7 +18,7 @@
 #include "dswitchbutton.h"
 #include <DStyle>
 #include <DStyleOptionButton>
-#include <private/dswitchbutton_p.h>
+#include "private/dswitchbutton_p.h"
 
 #include <QApplication>
 

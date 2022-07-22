@@ -26,7 +26,7 @@
 #include <QDebug>
 #include <QComboBox>
 
-#include "danchors.h"
+//#include "danchors.h"
 #include "dialog_constants.h"
 #include "dabstractdialog.h"
 #include "private/dabstractdialogprivate_p.h"

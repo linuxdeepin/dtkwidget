@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ddesktopservices.h"
+#include "dtkwidget/util/ddesktopservices.h"
 
 DWIDGET_BEGIN_NAMESPACE
 

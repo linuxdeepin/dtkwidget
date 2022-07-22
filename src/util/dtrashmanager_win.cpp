@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "dtrashmanager.h"
+#include "dtkwidget/util/dtrashmanager.h"
 
 #include <DObjectPrivate>
 

@@ -24,7 +24,7 @@
 #include <qtypetraits.h>
 #include <DListView>
 
-#include "widgets/dmainwindow.h"
+#include "dmainwindow.h"
 #include <dtkwidget_global.h>
 
 class PageWindowInterface;

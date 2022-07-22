@@ -24,8 +24,8 @@
 #include <DImageButton>
 #include <dmpriscontrol.h>
 #include <dtickeffect.h>
-#include "private/mpris/dbusmpris.h"
-#include "private/mpris/dmprismonitor.h"
+#include "mpris/dbusmpris.h"
+#include "mpris/dmprismonitor.h"
 
 #include <QScrollArea>
 
