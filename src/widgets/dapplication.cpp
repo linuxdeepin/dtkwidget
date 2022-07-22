@@ -74,7 +74,7 @@
 
 #include <DDBusSender>
 
-#include <QGSettings>
+#include <QGSettings/QGSettings>
 #endif
 
 #define DXCB_PLUGIN_KEY "dxcb"
@@ -294,15 +294,15 @@ bool DApplicationPrivate::loadDtkTranslator(QList<QLocale> localeFallback)
     q->installTranslator(qtbaseTranslator);
 
     QList<DPathBuf> translateDirs;
-    auto dtkwidgetDir = DWIDGET_TRANSLATIONS_DIR;
+    //auto dtkwidgetDir = DWIDGET_TRANSLATIONS_DIR;
     auto dtkwidgetName = "dtkwidget";
 
     //("/home/user/.local/share", "/usr/local/share", "/usr/share")
     auto dataDirs = DStandardPaths::standardLocations(QStandardPaths::GenericDataLocation);
-    for (const auto &path : dataDirs) {
-        DPathBuf DPathBuf(path);
-        translateDirs << DPathBuf / dtkwidgetDir;
-    }
+    //for (const auto &path : dataDirs) {
+    //    DPathBuf DPathBuf(path);
+    //    translateDirs << DPathBuf / dtkwidgetDir;
+    //}
 
     DPathBuf runDir(q->applicationDirPath());
     translateDirs << runDir.join("translations");

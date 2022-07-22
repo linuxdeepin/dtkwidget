@@ -251,10 +251,13 @@ bool DSearchEdit::isVoiceInput() const
 {
 #ifndef DTK_NO_MULTIMEDIA
     D_DC(DSearchEdit);
+#ifdef ENABLE_AI
     return d->voiceInput && d->voiceInput->state() == QAudio::ActiveState;
+#endif // 
 #else
     return false;
 #endif
+	return false;
 }
 
 void DSearchEdit::setPlaceholderText(const QString &text)

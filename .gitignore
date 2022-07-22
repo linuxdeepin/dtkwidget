@@ -26,6 +26,7 @@ src/qt_lib_dtk*.pri
 
 # misc
 .vscode/
-
+build
+.cache
 # cmake files
 cmake/*

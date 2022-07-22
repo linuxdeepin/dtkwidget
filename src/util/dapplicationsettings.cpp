@@ -24,7 +24,7 @@
 #include <DObjectPrivate>
 
 #ifdef Q_OS_LINUX
-#include <QGSettings>
+#include <QGSettings/QGSettings>
 #endif
 #include <QCoreApplication>
 
