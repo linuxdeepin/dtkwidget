@@ -31,4 +31,4 @@ target_link_libraries(
   ${DtkGui_LIBRARIES}
   ${DtkCore_LIBRARIES}
 )
-install(TARGETS ${BIN_NAME} DESTINATION lib/libdtk/DWidget/bin)
+install(TARGETS ${BIN_NAME} DESTINATION "lib/libdtk-${BREAKVERSION}/DWidget/bin")

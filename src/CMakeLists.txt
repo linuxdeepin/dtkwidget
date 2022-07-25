@@ -23,7 +23,7 @@ find_package(Qt5 REQUIRED COMPONENTS Network)
 find_package(Qt5 REQUIRED COMPONENTS Concurrent)
 find_package(Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt5 REQUIRED COMPONENTS PrintSupport)
-find_package(Qt5 REQUIRED COMPONENTS Multimedia)
+#find_package(Qt5 REQUIRED COMPONENTS Multimedia)
 find_package(Qt5 REQUIRED COMPONENTS LinguistTools)
 
 find_package(PkgConfig REQUIRED)
@@ -65,8 +65,9 @@ qt5_add_translation(TRANSLATEDFILES ${TRANSLATE})
 
 
 add_definitions(-DSN_API_NOT_YET_FROZEN)
+add_definitions(-DDTK_NO_MULTIMEDIA)
 #TrainslateDir
-add_definitions(-DDWIDGET_TRANSLATIONS_DIR="${PROJECT_NAME}/DWidget/translate")
+add_definitions(-DDWIDGET_TRANSLATIONS_DIR="libdtk-${BREAKVERSION}/DWidget/translate")
 find_package(Qt5 COMPONENTS X11Extras)
 find_package(Qt5 COMPONENTS DBus)
 add_library(${PROJECT_NAME} SHARED
@@ -85,6 +86,8 @@ add_library(${PROJECT_NAME} SHARED
   ${SETTIONS}
   ${NOTIFICATION}
 
+  platforms/x11/xutil.h
+  platforms/x11/xutil.cpp
   #UTILS
   ${UTILHEAEDER}
   util/private/dregionmonitor_p.h
@@ -113,7 +116,7 @@ target_link_libraries(
   Qt5::PrintSupport
   #Qt5::WaylandCompositor
   #Qt5::XcbQpa
-  Qt5::Multimedia
+	#Qt5::Multimedia
   ${DtkGui_LIBRARIES}
   ${DtkCore_LIBRARIES}
   ${QGSettings_LIBRARIES}
@@ -142,12 +145,12 @@ set_target_properties(${LIB_NAME} PROPERTIES
     SOVERSION ${CMAKE_PROJECT_VERSION_MAJOR}
 )
 install(TARGETS ${LIB_NAME} DESTINATION lib/)
-install(DIRECTORY ../include/dtkwidget/DWidget/ DESTINATION include/libdtk/DWidget/ FILES_MATCHING PATTERN "*")
-install(DIRECTORY ../include/dtkwidget/util/ DESTINATION include/libdtk/DWidget/ FILES_MATCHING PATTERN "*")
-install(DIRECTORY ../include/dtkwidget/global/ DESTINATION include/libdtk/DWidget/ FILES_MATCHING PATTERN "*")
-install(DIRECTORY ../include/dtkwidget/widgets/ DESTINATION include/libdtk/DWidget/ FILES_MATCHING PATTERN "*")
+install(DIRECTORY ../include/dtkwidget/DWidget/ DESTINATION "include/libdtk-${BREAKVERSION}/DWidget/" FILES_MATCHING PATTERN "*")
+install(DIRECTORY ../include/dtkwidget/util/ DESTINATION "include/libdtk-${BREAKVERSION}/DWidget/" FILES_MATCHING PATTERN "*")
+install(DIRECTORY ../include/dtkwidget/global/ DESTINATION "include/libdtk-${BREAKVERSION}/DWidget/" FILES_MATCHING PATTERN "*")
+install(DIRECTORY ../include/dtkwidget/widgets/ DESTINATION "include/libdtk-${BREAKVERSION}/DWidget/" FILES_MATCHING PATTERN "*")
 
-install(FILES ${TRANSLATEDFILES} DESTINATION share/libdtk/DWidget/translations)
+install(FILES ${TRANSLATEDFILES} DESTINATION "share/libdtk-${BREAKVERSION}/DWidget/translations")
 #target_link_directories(${PROJECT_NAME} PUBLIC .)
 #message(STATUS ${Qt5Gui_PRIVATE_INCLUDE_DIRS})
 #endif(LINUX)

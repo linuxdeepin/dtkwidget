@@ -21,8 +21,9 @@ prepare() {
 
 build() {
   cd build
-	cmake -GNinja \
-	    -DHUNTER_ENABLED=OFF \
+  cmake -GNinja \
+      -DHUNTER_ENABLED=OFF \
+      -DNOTPACKAGE=OFF \
       -DCMAKE_INSTALL_LIBDIR=/usr/lib \
       -DCMAKE_INSTALL_PREFIX=/usr \
       -DCMAKE_BUILD_TYPE=Release \
