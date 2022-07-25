@@ -18,7 +18,7 @@ find_package(DtkCore REQUIRED)
 
 find_package(Qt5 REQUIRED COMPONENTS Core)
 find_package(Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt5 REQUIRED COMPONENTS Svg)
+#find_package(Qt5 REQUIRED COMPONENTS Svg)
 find_package(Qt5 REQUIRED COMPONENTS PrintSupport)
 
 set(IMAGES images.qrc)
@@ -72,7 +72,7 @@ add_executable(${BIN_NAME}
 target_link_libraries(${BIN_NAME} PRIVATE 
   Qt5::Widgets
   Qt5::Core
-  Qt5::Svg
+  #  Qt5::Svg
   Qt5::PrintSupport
   dtkwidget
   ${DtkGui_LIBRARIES}
@@ -85,4 +85,4 @@ target_include_directories(${BIN_NAME} PUBLIC
   ../../../include/dtkwidget/global/
   ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
 )
-install(TARGETS ${BIN_NAME} DESTINATION "lib/libdtk-${BREAKVERSION}/DWidget/examples/")
+install(TARGETS ${BIN_NAME} DESTINATION "${CMAKE_INSTALL_LIBDIR}/libdtk-${BREAKVERSION}/DWidget/examples/")

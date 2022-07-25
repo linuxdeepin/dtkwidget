@@ -1,4 +1,4 @@
-usr/lib/*.so.*
-usr/lib/*.so
+usr/lib/*/*.so.*
+usr/lib/*/*.so
 #usr/lib/*/libmsc.so
 usr/share/*/*/translations/*

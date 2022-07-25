@@ -86,8 +86,8 @@ add_library(${PROJECT_NAME} SHARED
   ${SETTIONS}
   ${NOTIFICATION}
 
-  platforms/x11/xutil.h
-  platforms/x11/xutil.cpp
+  #platforms/x11/xutil.h
+  #platforms/x11/xutil.cpp
   #UTILS
   ${UTILHEAEDER}
   util/private/dregionmonitor_p.h
@@ -144,13 +144,13 @@ set_target_properties(${LIB_NAME} PROPERTIES
     VERSION ${CMAKE_PROJECT_VERSION}
     SOVERSION ${CMAKE_PROJECT_VERSION_MAJOR}
 )
-install(TARGETS ${LIB_NAME} DESTINATION lib/)
-install(DIRECTORY ../include/dtkwidget/DWidget/ DESTINATION "include/libdtk-${BREAKVERSION}/DWidget/" FILES_MATCHING PATTERN "*")
-install(DIRECTORY ../include/dtkwidget/util/ DESTINATION "include/libdtk-${BREAKVERSION}/DWidget/" FILES_MATCHING PATTERN "*")
-install(DIRECTORY ../include/dtkwidget/global/ DESTINATION "include/libdtk-${BREAKVERSION}/DWidget/" FILES_MATCHING PATTERN "*")
-install(DIRECTORY ../include/dtkwidget/widgets/ DESTINATION "include/libdtk-${BREAKVERSION}/DWidget/" FILES_MATCHING PATTERN "*")
+install(TARGETS ${LIB_NAME} DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(DIRECTORY ../include/dtkwidget/DWidget/ DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/libdtk-${BREAKVERSION}/DWidget/" FILES_MATCHING PATTERN "*")
+install(DIRECTORY ../include/dtkwidget/util/ DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/libdtk-${BREAKVERSION}/DWidget/" FILES_MATCHING PATTERN "*")
+install(DIRECTORY ../include/dtkwidget/global/ DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/libdtk-${BREAKVERSION}/DWidget/" FILES_MATCHING PATTERN "*")
+install(DIRECTORY ../include/dtkwidget/widgets/ DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/libdtk-${BREAKVERSION}/DWidget/" FILES_MATCHING PATTERN "*")
 
-install(FILES ${TRANSLATEDFILES} DESTINATION "share/libdtk-${BREAKVERSION}/DWidget/translations")
+install(FILES ${TRANSLATEDFILES} DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/libdtk-${BREAKVERSION}/DWidget/translations")
 #target_link_directories(${PROJECT_NAME} PUBLIC .)
 #message(STATUS ${Qt5Gui_PRIVATE_INCLUDE_DIRS})
 #endif(LINUX)
