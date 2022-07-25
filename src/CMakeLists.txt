@@ -24,6 +24,7 @@ find_package(Qt5 REQUIRED COMPONENTS Concurrent)
 find_package(Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt5 REQUIRED COMPONENTS PrintSupport)
 find_package(Qt5 REQUIRED COMPONENTS Multimedia)
+find_package(Qt5 REQUIRED COMPONENTS LinguistTools)
 
 find_package(PkgConfig REQUIRED)
 
@@ -59,7 +60,8 @@ file(GLOB WIDGETSOURCE widgets/*.cpp)
 file(GLOB WIDGETHEADER ../include/dtkwidget/widgets/*)
 file(GLOB SETTIONS widgets/private/settings/*)
 file(GLOB NOTIFICATION widgets/private/startupnotifications/*)
-
+file(GLOB TRANSLATE translations/*)
+qt5_add_translation(TRANSLATEDFILES ${TRANSLATE})
 
 
 add_definitions(-DSN_API_NOT_YET_FROZEN)
@@ -71,6 +73,7 @@ add_library(${PROJECT_NAME} SHARED
   # Header
 
   #WIDGETS
+	${TRANSLATEDFILES}
   ${WIDGETHEADER}
   ${WIDGETSOURCE}
   ${PRIVATEMPRISHEADER}
@@ -144,7 +147,7 @@ install(DIRECTORY ../include/dtkwidget/util/ DESTINATION include/libdtk/DWidget/
 install(DIRECTORY ../include/dtkwidget/global/ DESTINATION include/libdtk/DWidget/ FILES_MATCHING PATTERN "*")
 install(DIRECTORY ../include/dtkwidget/widgets/ DESTINATION include/libdtk/DWidget/ FILES_MATCHING PATTERN "*")
 
-install(DIRECTORY translations DESTINATION share/libdtk/DWidget/)
+install(FILES ${TRANSLATEDFILES} DESTINATION share/libdtk/DWidget/translations)
 #target_link_directories(${PROJECT_NAME} PUBLIC .)
 #message(STATUS ${Qt5Gui_PRIVATE_INCLUDE_DIRS})
 #endif(LINUX)
