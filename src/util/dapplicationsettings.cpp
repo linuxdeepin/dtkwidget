@@ -18,13 +18,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "dapplicationsettings.h"
+#include "dtkwidget/util/dapplicationsettings.h"
 
 #include <DGuiApplicationHelper>
 #include <DObjectPrivate>
 
 #ifdef Q_OS_LINUX
-#include <QGSettings>
+#include <QGSettings/QGSettings>
 #endif
 #include <QCoreApplication>
 

@@ -41,7 +41,7 @@ protected:
     }
     DDrawerGroup *target = nullptr;
 };
-
+//QObject::connect(Dtk::Widget::DBaseExpand, Dtk::Widget::DExpandGroup): invalid nullptr parameter
 TEST_F(ut_DDrawerGroup, addExpand)
 {
     DDrawer *drawer = new DDrawer();

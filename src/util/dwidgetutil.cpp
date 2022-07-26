@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "dwidgetutil.h"
+#include "dtkwidget/util/dwidgetutil.h"
 
 #include <QPixmap>
 #include <QPainter>

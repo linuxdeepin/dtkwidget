@@ -70,11 +70,11 @@
 #endif
 
 #ifdef Q_OS_LINUX
-#include "startupnotificationmonitor.h"
+#include "private/startupnotifications/startupnotificationmonitor.h"
 
 #include <DDBusSender>
 
-#include <QGSettings>
+#include <QGSettings/QGSettings>
 #endif
 
 #define DXCB_PLUGIN_KEY "dxcb"

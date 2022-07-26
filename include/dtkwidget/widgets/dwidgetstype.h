@@ -107,7 +107,7 @@ typedef QDataWidgetMapper DDataWidgetMapper;
 typedef QFocusFrame DFocusFrame;
 typedef QHeaderView DHeaderView;
 #ifndef Q_QDOC
-typedef QInputDialog DInputDialog;
+//typedef QInputDialog DInputDialog;
 #endif
 typedef QMdiArea DMdiArea;
 typedef QMdiSubWindow DMdiSubWindow;

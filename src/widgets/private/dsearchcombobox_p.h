@@ -22,7 +22,7 @@
 #define DSEARCHCOMBOBOX_P_H
 
 #include "dsearchcombobox.h"
-#include "private/dcombobox_p.h"
+#include "dcombobox_p.h"
 #include <DObjectPrivate>
 #include <DSearchEdit>
 #include <QSortFilterProxyModel>
