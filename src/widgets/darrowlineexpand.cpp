@@ -16,7 +16,7 @@
  */
 
 #include "darrowlineexpand.h"
-#include "dthememanager.h"
+//#include "dthememanager.h"
 
 #include <QResizeEvent>
 

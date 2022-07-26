@@ -16,7 +16,7 @@
  */
 
 #include "dswitchlineexpand.h"
-#include "dthememanager.h"
+//#include "dthememanager.h"
 
 #include <QResizeEvent>
 

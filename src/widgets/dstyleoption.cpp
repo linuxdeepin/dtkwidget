@@ -26,7 +26,7 @@
 #include "dstyleoption.h"
 
 #include "dlineedit.h"
-#include "private/dlineedit_p.h"
+//#include "private/dlineedit_p.h"
 #include "dpalettehelper.h"
 
 #include <QGuiApplication>

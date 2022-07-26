@@ -17,7 +17,7 @@
 
 #include <QDebug>
 
-#include "dthememanager.h"
+//#include "dthememanager.h"
 #include "dstackwidget.h"
 #include "private/dstackwidget_p.h"
 

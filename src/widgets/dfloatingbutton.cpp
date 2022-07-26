@@ -20,7 +20,7 @@
  */
 #include "dfloatingbutton.h"
 #include "dstyleoption.h"
-#include "dobject_p.h"
+//#include "dobject_p.h"
 #include "dstyle.h"
 
 #include <private/qabstractbutton_p.h>

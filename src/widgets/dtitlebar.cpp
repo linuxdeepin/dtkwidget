@@ -30,6 +30,7 @@
 #include <DPlatformTheme>
 #include <QScreen>
 #include <QWindow>
+#include <DDialog>
 #include <qpa/qplatformwindow.h>
 
 #include "dpalettehelper.h"
@@ -41,15 +42,15 @@
 #include "dtabletwindowoptionbutton.h"
 #include "dwindowquitfullbutton.h"
 #include "dplatformwindowhandle.h"
-#include "daboutdialog.h"
+//#include "daboutdialog.h"
 #include "dapplication.h"
 #include "private/dapplication_p.h"
 #include "private/dsplitscreen_p.h"
 #include "dmainwindow.h"
 #include "DHorizontalLine"
-#include "dimagebutton.h"
+//#include "dimagebutton.h"
 #include "dblureffectwidget.h"
-#include "dwidgetstype.h"
+//#include "dwidgetstype.h"
 #include "dlabel.h"
 
 DWIDGET_BEGIN_NAMESPACE

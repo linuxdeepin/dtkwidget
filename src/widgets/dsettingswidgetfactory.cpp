@@ -41,8 +41,8 @@
 #include <DTipLabel>
 #include <DDialog>
 
-#include "private/settings/shortcutedit.h"
-#include "private/settings/buttongroup.h"
+//#include "private/settings/shortcutedit.h"
+//#include "private/settings/buttongroup.h"
 #include "private/settings/combobox.h"
 #include "private/settings/contenttitle.h"
 

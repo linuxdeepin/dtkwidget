@@ -24,7 +24,7 @@
 #include <DFrame>
 #include <DStyle>
 
-#include "dthememanager.h"
+//#include "dthememanager.h"
 #include "dipv4lineedit.h"
 #include "private/dipv4lineedit_p.h"
 

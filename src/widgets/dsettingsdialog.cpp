@@ -32,8 +32,8 @@
 #include "private/settings/navigation.h"
 
 #include "dapplication.h"
-#include "dspinbox.h"
-#include "dwindowclosebutton.h"
+//#include "dspinbox.h"
+//#include "dwindowclosebutton.h"
 
 DWIDGET_BEGIN_NAMESPACE
 

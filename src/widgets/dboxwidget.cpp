@@ -20,7 +20,7 @@
 #include <QDebug>
 #include <QResizeEvent>
 
-#include "dthememanager.h"
+//#include "dthememanager.h"
 #include "dboxwidget.h"
 #include "private/dboxwidget_p.h"
 

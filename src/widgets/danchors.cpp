@@ -361,7 +361,7 @@ class DAnchorsBasePrivate : public QSharedData
     void tryDestory()
     {
         // TODO 应该是析构函数调用, 当ref.load() == 1时，提前释放资源。
-        if (ref.load() == 1)
+        if (ref.loadRelaxed() == 1)
             doDestory();
     }
     void doDestory()

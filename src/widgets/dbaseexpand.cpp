@@ -16,7 +16,7 @@
  */
 
 #include "dbaseexpand.h"
-#include "dthememanager.h"
+//#include "dthememanager.h"
 #include "dboxwidget.h"
 
 #include <QResizeEvent>

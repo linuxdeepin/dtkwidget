@@ -16,8 +16,8 @@
  */
 
 #include "dimagebutton.h"
-#include "dconstants.h"
-#include "dthememanager.h"
+//#include "dconstants.h"
+//#include "dthememanager.h"
 #include "private/dimagebutton_p.h"
 
 #include <QMouseEvent>

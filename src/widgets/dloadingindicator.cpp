@@ -20,7 +20,7 @@
 
 #include "dloadingindicator.h"
 #include "private/dloadingindicator_p.h"
-#include "dthememanager.h"
+//#include "dthememanager.h"
 
 DWIDGET_BEGIN_NAMESPACE
 

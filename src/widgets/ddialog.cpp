@@ -30,10 +30,10 @@
 #include <QRegularExpression>
 #include <DFontSizeManager>
 #include <DApplication>
-
+#include <DIconButton>
 #include "private/ddialog_p.h"
 
-#include "ddialogclosebutton.h"
+//#include "ddialogclosebutton.h"
 #include "dialog_constants.h"
 #include "ddialog.h"
 #include "dboxwidget.h"

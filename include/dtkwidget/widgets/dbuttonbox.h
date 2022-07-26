@@ -49,7 +49,7 @@ public:
     void setIcon(DStyle::StandardPixmap iconType);
 
     QSize iconSize() const;
-    QSize sizeHint() const;
+    QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
 
 private:

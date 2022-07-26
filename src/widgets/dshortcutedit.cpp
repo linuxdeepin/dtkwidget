@@ -16,7 +16,7 @@
  */
 
 #include "dshortcutedit.h"
-#include "dthememanager.h"
+//#include "dthememanager.h"
 
 #include <QHBoxLayout>
 #include <QEvent>

@@ -16,7 +16,7 @@
  */
 
 #include "dbaseline.h"
-#include "dthememanager.h"
+//#include "dthememanager.h"
 
 DWIDGET_BEGIN_NAMESPACE
 

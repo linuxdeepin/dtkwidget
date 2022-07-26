@@ -28,7 +28,7 @@
 #include <QLabel>
 #include <QIcon>
 
-#include "dthememanager.h"
+//#include "dthememanager.h"
 #include "dgraphicsgloweffect.h"
 #include "dhidpihelper.h"
 

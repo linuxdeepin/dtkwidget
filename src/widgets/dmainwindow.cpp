@@ -22,7 +22,7 @@
 #include "dmessagemanager.h"
 
 #include "private/dmainwindow_p.h"
-#include "private/dapplication_p.h"
+//#include "private/dapplication_p.h"
 
 #include <QKeySequence>
 #include <QShortcut>

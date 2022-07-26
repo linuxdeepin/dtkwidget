@@ -17,9 +17,10 @@
 
 #include <DObjectPrivate>
 #include <DGuiApplicationHelper>
+#include <QStyleOption>
+
 
 #include "dpalettehelper.h"
-#include "dstyleoption.h"
 #include "private/dpalettehelper_p.h"
 
 DWIDGET_BEGIN_NAMESPACE

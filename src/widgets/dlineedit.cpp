@@ -23,7 +23,7 @@
 
 #include "dlineedit.h"
 #include "private/dlineedit_p.h"
-#include "darrowrectangle.h"
+//#include "darrowrectangle.h"
 
 #include <DToolTip>
 #include <DPalette>

@@ -194,7 +194,7 @@ void MainWindow::menuItemInvoked(QAction *action)
                         double scale = qMin(xscale, yscale);
                         painter.translate(_printer->pageRect().width() / 2.0, _printer->pageRect().height() / 2.0);
                         painter.scale(scale, scale);
-                        painter.translate(-this->width() / 2, -this->height() / 2);
+                        painter.translate(-this->width() / 2.0, - this->height() / 2.0);
                         this->render(&painter);
 
                         painter.resetTransform();

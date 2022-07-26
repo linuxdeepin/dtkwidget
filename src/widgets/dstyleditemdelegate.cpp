@@ -24,7 +24,7 @@
 #include "dpalettehelper.h"
 #include "dstyle.h"
 
-#include "dlistview.h"
+//#include "dlistview.h"
 
 #include <QDebug>
 #include <QApplication>

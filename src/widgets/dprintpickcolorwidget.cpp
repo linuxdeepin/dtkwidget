@@ -24,8 +24,8 @@
 #include "dlabel.h"
 #include "dlineedit.h"
 #include "dapplication.h"
-#include "dslider.h"
-#include "dfloatingwidget.h"
+//#include "dslider.h"
+//#include "dfloatingwidget.h"
 #include "diconbutton.h"
 #include "qbuttongroup.h"
 
