@@ -135,6 +135,16 @@ void DTextEdit::keyPressEvent(QKeyEvent *event)
 
 void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
 {
+    auto msg = QDBusMessage::createMethodCall("com.iflytek.aiassistant", "/",
+                                   "org.freedesktop.DBus.Peer", "Ping");
+    // 用之前 Ping 一下, 300ms 内没回复就认定是服务出问题，不再添加助手菜单项
+    auto pingReply = QDBusConnection::sessionBus().call(msg, QDBus::BlockWithGui, 300);
+    auto errorType = QDBusConnection::sessionBus().lastError().type();
+    if (errorType == QDBusError::Timeout || errorType == QDBusError::NoReply) {
+        qWarning() << pingReply << "\nwill not add aiassistant actions!";
+        return QTextEdit::contextMenuEvent(e);
+    }
+
     QDBusInterface testSpeech("com.iflytek.aiassistant",
                                "/aiassistant/tts",
                                "com.iflytek.aiassistant.tts",
