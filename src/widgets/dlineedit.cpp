@@ -501,11 +501,40 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
             return QWidget::eventFilter(watched, event);
         }
 
+        QLineEdit *pLineEdit = static_cast<QLineEdit*>(watched);
+        QMenu *menu = pLineEdit->createStandardContextMenu();
+
+        for (QAction *action : menu->actions()) {
+            if (action->text().startsWith(QLineEdit::tr("&Copy")) && !copyEnabled()  ) {
+                action->setEnabled(false);
+            }
+            if (action->text().startsWith(QLineEdit::tr("Cu&t")) && !cutEnabled()) {
+                action->setEnabled(false);
+            }
+        }
+        connect(menu, &QMenu::triggered, this, [pLineEdit](QAction *pAction) {
+            if (pAction->text().startsWith(QLineEdit::tr("Select All"))) {
+                QApplication::clipboard()->setText(pLineEdit->text(), QClipboard::Mode::Selection);
+            }
+        });
+
+        auto msg = QDBusMessage::createMethodCall("com.iflytek.aiassistant", "/",
+                                       "org.freedesktop.DBus.Peer", "Ping");
+        // 用之前 Ping 一下, 300ms 内没回复就认定是服务出问题，不再添加助手菜单项
+        auto pingReply = QDBusConnection::sessionBus().call(msg, QDBus::BlockWithGui, 300);
+        auto errorType = QDBusConnection::sessionBus().lastError().type();
+        if (errorType == QDBusError::Timeout || errorType == QDBusError::NoReply) {
+            qWarning() << pingReply << "\nwill not add aiassistant actions!";
+            menu->popup(static_cast<QContextMenuEvent*>(event)->globalPos());
+            event->accept();
+            return true;
+        }
+
         QDBusInterface testSpeech("com.iflytek.aiassistant",
                                    "/aiassistant/tts",
                                    "com.iflytek.aiassistant.tts",
                                    QDBusConnection::sessionBus());
-        //测试朗读接口是否开启
+        // 测试朗读接口是否开启
         QDBusReply<bool> speechReply = testSpeech.call(QDBus::AutoDetect, "getTTSEnable");
 
         QDBusInterface testReading("com.iflytek.aiassistant",
@@ -528,24 +557,6 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
                                    QDBusConnection::sessionBus());
         //测试听写接口是否开启
         QDBusReply<bool> speechToTextReply = testSpeechToText.call(QDBus::AutoDetect, "getIatEnable");
-
-        QLineEdit *pLineEdit = static_cast<QLineEdit*>(watched);
-        QMenu *menu = pLineEdit->createStandardContextMenu();
-
-        for (QAction *action : menu->actions()) {
-            if (action->text().startsWith(QLineEdit::tr("&Copy")) && !copyEnabled()  ) {
-                action->setEnabled(false);
-            }
-            if (action->text().startsWith(QLineEdit::tr("Cu&t")) && !cutEnabled()) {
-                action->setEnabled(false);
-            }
-        }
-
-        connect(menu, &QMenu::triggered, this, [pLineEdit](QAction *pAction) {
-            if (pAction->text().startsWith(QLineEdit::tr("Select All"))) {
-                QApplication::clipboard()->setText(pLineEdit->text(), QClipboard::Mode::Selection);
-            }
-        });
 
         //朗读,翻译,听写都没有开启，则弹出默认菜单
         if (!speechReply.value() && !translateReply.value() && !speechToTextReply.value()) {
