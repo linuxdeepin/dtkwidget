@@ -36,6 +36,8 @@
 #include <QTableView>
 #include <QListWidget>
 #include <private/qlayoutengine_p.h>
+#include <DGuiApplicationHelper>
+#include <DDciIcon>
 
 Q_DECLARE_METATYPE(QMargins)
 
@@ -146,6 +148,7 @@ public:
     QMargins clickMargins;
     bool clickable = false;
     QWidget *widget = nullptr;
+    DDciIcon dciIcon;
 
     qint8 colorType = -1;
     qint8 colorRole = -1;
@@ -362,14 +365,27 @@ public:
 
         // draw icon
         if (icon_size.isValid()) {
-            const QIcon &icon = action->icon();
             QRect icon_rect(QPoint(0, 0), icon_size);
 
             icon_rect.moveCenter(rect.center());
             icon_rect.moveLeft(rect.left());
 
-            auto modeStatePair = DStyle::toIconModeState(&option);
-            icon.paint(pa, icon_rect, Qt::AlignCenter, modeStatePair.first, modeStatePair.second);
+            if (action->dciIcon().isNull()) {
+                const QIcon &icon = action->icon();
+                auto modeStatePair = DStyle::toIconModeState(&option);
+                icon.paint(pa, icon_rect, Qt::AlignCenter, modeStatePair.first, modeStatePair.second);
+            } else {
+                DDciIcon dciicon = action->dciIcon();
+                DDciIcon::Mode mode = DStyle::toDciIconMode(&option);
+                auto appTheme = DGuiApplicationHelper::toColorType(option.palette);
+                DDciIcon::Theme theme = appTheme == DGuiApplicationHelper::LightType ? DDciIcon::Light : DDciIcon::Dark;
+                DDciIconPalette palette{option.palette.color(cg, QPalette::WindowText), option.palette.color(cg, QPalette::Window),
+                                        option.palette.color(cg, QPalette::Highlight), option.palette.color(cg, QPalette::HighlightedText)};
+                if (option.state & QStyle::State_Selected)
+                    palette.setForeground(option.palette.color(cg, QPalette::HighlightedText));
+                dciicon.paint(pa, icon_rect, pa->device() ? pa->device()->devicePixelRatio()
+                                                          : qApp->devicePixelRatio(), theme, mode, Qt::AlignCenter, palette);
+            }
         }
 
         // draw text
@@ -746,6 +762,20 @@ QWidget *DViewItemAction::widget() const
     return d->widget;
 }
 
+void DViewItemAction::setDciIcon(const DDciIcon &dciIcon)
+{
+    D_D(DViewItemAction);
+
+    d->dciIcon = dciIcon;
+}
+
+DDciIcon DViewItemAction::dciIcon() const
+{
+    D_DC(DViewItemAction);
+
+    return d->dciIcon;
+}
+
 static QPalette::ColorRole getViewItemColorRole(const QModelIndex &index, int role)
 {
     const QVariant &value = index.data(role);
@@ -887,13 +917,31 @@ void DStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
 
     // draw icon
     if (opt.features & QStyleOptionViewItem::HasDecoration) {
-        QIcon::Mode mode = QIcon::Normal;
-        if (!(opt.state & QStyle::State_Enabled))
-            mode = QIcon::Disabled;
-        else if (opt.state & QStyle::State_Selected)
-            mode = QIcon::Selected;
-        QIcon::State state = opt.state & QStyle::State_Open ? QIcon::On : QIcon::Off;
-        opt.icon.paint(painter, iconRect, opt.decorationAlignment, mode, state);
+        QVariant icon = index.data(Qt::DecorationRole);
+        DDciIcon dciIcon;
+        if (icon.canConvert<DTK_GUI_NAMESPACE::DDciIcon>())
+            dciIcon = qvariant_cast<DDciIcon>(icon);
+
+        if (dciIcon.isNull()) {
+            QIcon::Mode mode = QIcon::Normal;
+            if (!(opt.state & QStyle::State_Enabled))
+                mode = QIcon::Disabled;
+            else if (opt.state & QStyle::State_Selected)
+                mode = QIcon::Selected;
+            QIcon::State state = opt.state & QStyle::State_Open ? QIcon::On : QIcon::Off;
+            opt.icon.paint(painter, iconRect, opt.decorationAlignment, mode, state);
+        } else {
+            DDciIcon::Mode mode = DStyle::toDciIconMode(&option);
+            auto appTheme = DGuiApplicationHelper::toColorType(option.palette);
+            DDciIcon::Theme theme = appTheme == DGuiApplicationHelper::LightType ? DDciIcon::Light : DDciIcon::Dark;
+            DDciIconPalette palette{option.palette.color(cg, QPalette::WindowText), option.palette.color(cg, QPalette::Window),
+                                    option.palette.color(cg, QPalette::Highlight), option.palette.color(cg, QPalette::HighlightedText)};
+            if (option.state & QStyle::State_Selected)
+                palette.setForeground(opt.palette.color(cg, QPalette::HighlightedText));
+            dciIcon.paint(painter, iconRect, painter->device() ? painter->device()->devicePixelRatioF()
+                                                               : qApp->devicePixelRatio(),
+                          theme, mode, Qt::AlignCenter, palette);
+        }
     }
 
     // draw the text
@@ -1174,6 +1222,25 @@ void DStyledItemDelegate::initStyleOption(QStyleOptionViewItem *option, const QM
 {
     QStyledItemDelegate::initStyleOption(option, index);
 
+    QVariant value = index.data(Qt::DecorationRole);
+    if (value.canConvert<DDciIcon>()) {
+        // The dciicon can not be set to opt.icon
+        auto dciIcon = qvariant_cast<DDciIcon>(value);
+        DDciIcon::Mode mode;
+        if (!(option->state & QStyle::State_Enabled))
+            mode = DDciIcon::Disabled;
+        else if (option->state & QStyle::State_Selected)
+            mode = DDciIcon::Pressed;
+        else
+            mode = DDciIcon::Normal;
+        auto appTheme = DGuiApplicationHelper::toColorType(option->palette);
+        DDciIcon::Theme theme = appTheme == DGuiApplicationHelper::LightType ? DDciIcon::Light : DDciIcon::Dark;
+        int actualSize = dciIcon.actualSize(option->decorationSize.width(), theme, mode);
+        // For highdpi icons actualSize might be larger than decorationSize, which we don't want. Clamp it to decorationSize.
+        option->decorationSize = QSize(qMin(option->decorationSize.width(), actualSize),
+                                       qMin(option->decorationSize.height(), actualSize));
+    }
+
     if (option->viewItemPosition == QStyleOptionViewItem::ViewItemPosition::Invalid) {
         const int rowCount =  index.model()->rowCount();
         if (rowCount == 1) {
@@ -1452,6 +1519,16 @@ void DStandardItem::setFontSize(DFontSizeManager::SizeType size)
 QFont DStandardItem::font() const
 {
     return getViewItemFont(index(), Dtk::ViewItemFontLevelRole);
+}
+
+void DStandardItem::setDciIcon(const DDciIcon &dciIcon)
+{
+    setData(QVariant::fromValue<DDciIcon>(dciIcon), Qt::DecorationRole);
+}
+
+DDciIcon DStandardItem::dciIcon() const
+{
+    return qvariant_cast<DDciIcon>(data(Qt::DecorationRole));
 }
 
 QStandardItem *DStandardItem::clone() const

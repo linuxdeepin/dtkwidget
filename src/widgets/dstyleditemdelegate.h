@@ -31,6 +31,10 @@
 #include <QStandardItem>
 #include <QAbstractItemView>
 
+DGUI_BEGIN_NAMESPACE
+class DDciIcon;
+DGUI_END_NAMESPACE
+
 DWIDGET_BEGIN_NAMESPACE
 
 class DViewItemActionPrivate;
@@ -64,6 +68,9 @@ public:
 
     void setWidget(QWidget *widget);
     QWidget *widget() const;
+
+    void setDciIcon(const DDciIcon &dciIcon);
+    DDciIcon dciIcon() const;
 };
 typedef QList<DViewItemAction *> DViewItemActionList;
 
@@ -135,6 +142,9 @@ public:
 
     void setFontSize(DFontSizeManager::SizeType size);
     QFont font() const;
+
+    void setDciIcon(const DDciIcon &dciIcon);
+    DDciIcon dciIcon() const;
 
     virtual QStandardItem *clone() const override;
 };
