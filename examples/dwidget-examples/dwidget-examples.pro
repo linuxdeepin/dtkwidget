@@ -1,3 +1,4 @@
 TEMPLATE =  subdirs
-SUBDIRS += collections \
-    PrintPreviewSettingsPlugin
+SUBDIRS += \
+    collections \
+#    PrintPreviewSettingsPlugin \ # (默认关闭)

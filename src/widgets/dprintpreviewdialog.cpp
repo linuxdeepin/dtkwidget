@@ -2779,6 +2779,21 @@ DPrintPreviewSettingInfo *PreviewSettingsPluginHelper::loadInfo(DPrintPreviewSet
         watermarkInfo->angle = d->inclinatBox->value();
         watermarkInfo->size = d->waterSizeSlider->value();
         watermarkInfo->transparency = d->wmOpaSlider->value();
+
+        // TODO: Remove it.
+        QVariant spacingProperty = d->pview->property("_d_print_waterMarkRowSpacing");
+        if (spacingProperty.isValid()) {
+            watermarkInfo->rowSpacing = spacingProperty.toDouble();
+        } else {
+            watermarkInfo->rowSpacing = -1;
+        }
+
+        spacingProperty = d->pview->property("_d_print_waterMarkColumnSpacing");
+        if (spacingProperty.isValid()) {
+            watermarkInfo->columnSpacing = spacingProperty.toDouble();
+        } else {
+            watermarkInfo->columnSpacing = -1;
+        }
         info = watermarkInfo;
     }
         break;
@@ -2970,6 +2985,19 @@ void PreviewSettingsPluginHelper::updateSettingInfo(DPrintPreviewSettingInfo *in
         Q_EMIT d->inclinatBox->editingFinished();
         d->waterSizeSlider->setValue(watermarkInfo->size);
         d->wmOpaSlider->setValue(watermarkInfo->transparency);
+
+        // TODO: Remove it.
+        if (!qFuzzyCompare(watermarkInfo->rowSpacing, -1)) {
+            qreal rowSpacing = watermarkInfo->rowSpacing;
+            rowSpacing = qBound(0.0, rowSpacing, 10.0);
+            d->pview->setProperty("_d_print_waterMarkRowSpacing", rowSpacing);
+        }
+
+        if (!qFuzzyCompare(watermarkInfo->columnSpacing, -1)) {
+            qreal columnSpacing = watermarkInfo->columnSpacing;
+            columnSpacing = qBound(0.0, columnSpacing, 2.0);
+            d->pview->setProperty("_d_print_waterMarkColumnSpacing", columnSpacing);
+        }
         d->pview->refreshEnd();
     }
         break;
