@@ -225,6 +225,8 @@ public:
     int angle;
     int size;
     int transparency;
+    qreal rowSpacing;
+    qreal columnSpacing;
     Layout layout;
     WatermarkType currentWatermarkType;
     TextType textType;
