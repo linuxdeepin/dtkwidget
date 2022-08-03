@@ -2269,8 +2269,25 @@ void WaterMark::updatePicture(QPainter *painter, bool isPreview)
 
         QFontMetrics fm(font);
         QSize textSize = fm.size(Qt::TextSingleLine, text);
-        int space = qMin(textSize.width(), textSize.height());
-        QSize spaceSize = QSize(WATER_TEXTSPACE, space) * numberUpScale * wScale;
+
+        // TODO: Remove it.
+        QVariant spacingProperty = pwidget->property("_d_print_waterMarkRowSpacing");
+        int rowSpace;
+        if (spacingProperty.isValid()) {
+            rowSpace = qRound(textSize.height() * spacingProperty.toDouble());
+        } else {
+            rowSpace = WATER_TEXTSPACE;
+        }
+
+        int columnSpace;
+        spacingProperty = pwidget->property("_d_print_waterMarkColumnSpacing");
+        if (spacingProperty.isValid()) {
+            columnSpace = qRound(textSize.width() * spacingProperty.toDouble());
+        } else {
+            columnSpace = qMin(textSize.width(), textSize.height());
+        }
+
+        QSize spaceSize = QSize(columnSpace, rowSpace) * numberUpScale * wScale;
         QImage textImage(textSize + spaceSize, QImage::Format_ARGB32);
         textImage.fill(Qt::transparent);
         QPainter tp;

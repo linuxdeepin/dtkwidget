@@ -90,10 +90,12 @@ bool PrintPreviewSettingsPlugin::settingFilter(const QVariant &mimeData, DPrintP
         waterMarkInfo->textColor = Qt::red;
 
         waterMarkInfo->opened = true;
-        waterMarkInfo->angle = 40;
+        waterMarkInfo->angle = 0;
         waterMarkInfo->layout = DPrintPreviewWatermarkInfo::Tiled;
         waterMarkInfo->size = 20;
         waterMarkInfo->transparency = 60;
+        waterMarkInfo->rowSpacing = 1.0;
+        waterMarkInfo->columnSpacing = 0.5;
     }
         return true;
     case DPrintPreviewSettingInfo::PS_NUpPrinting: {
