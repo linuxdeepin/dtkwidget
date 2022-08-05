@@ -30,6 +30,7 @@
 #include <QApplication>
 #include <QScreen>
 #include <QEvent>
+#include <qpa/qplatformnativeinterface.h>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -485,7 +486,13 @@ void DArrowRectangle::setBackgroundColor(const QColor &backgroundColor)
 
     d->m_backgroundColor = backgroundColor;
 
-    if (d->m_handle && d->m_backgroundColor.toRgb().alpha() < 255) {
+    auto noTitlebarEnabled = []{
+        QFunctionPointer enableNoTitlebar = qApp->platformFunction("_d_isEnableNoTitlebar");
+        bool enabled = qApp->platformName() == "dwayland" || qApp->property("_d_isDwayland").toBool();
+        return enabled && enableNoTitlebar != nullptr;
+    };
+
+    if ((d->m_handle || noTitlebarEnabled) && d->m_backgroundColor.toRgb().alpha() < 255) {
         if (!d->m_blurBackground) {
             d->m_blurBackground = new DBlurEffectWidget(this);
             d->m_blurBackground->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
@@ -1166,12 +1173,13 @@ void DArrowRectanglePrivate::updateClipPath()
 
         q->clearMask();
         q->setMask(polygon);
-
-        if (QWidget *widget = q->window()) {
-            if (QWindow *w = widget->windowHandle()) {
+        if (m_blurBackground)
+            m_blurBackground->setMaskPath(path);
+        if (QWindow *window = q->windowHandle()) {
+            if (auto handle = window->handle()) {
                 QList<QPainterPath> painterPaths;
-                painterPaths << outPath;
-                w->setProperty("_d_windowBlurPaths", QVariant::fromValue(painterPaths));
+                painterPaths << outPath.united(path);
+                QGuiApplication::platformNativeInterface()->setWindowProperty(handle, "_d_windowBlurPaths", QVariant::fromValue(painterPaths));
             }
         }
     }
