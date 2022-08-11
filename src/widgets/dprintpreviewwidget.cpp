@@ -1,4 +1,7 @@
-﻿#include "dprintpreviewwidget.h"
+// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+//
+// SPDX-License-Identifier: LGPL-3.0-or-later
+
 #include "private/dprintpreviewwidget_p.h"
 #include <QVBoxLayout>
 #include <private/qprinter_p.h>

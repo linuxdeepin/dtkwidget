@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+#
+# SPDX-License-Identifier: LGPL-3.0-or-later
+
 BUILD_DIR=`pwd`/../build-ut
 HTML_DIR=${BUILD_DIR}/html
 XML_DIR=${BUILD_DIR}/report
