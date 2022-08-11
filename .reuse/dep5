@@ -1,0 +1,86 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: dtkwidget
+Upstream-Contact: UnionTech Software Technology Co., Ltd. <>
+Source: https://github.com/linuxdeepin/dtkwidget
+
+# ci
+Files: .github/* .gitlab-ci.yml
+Copyright: None
+License: CC0-1.0
+
+# gitignore
+Files: .gitignore 
+Copyright: None
+License: CC0-1.0
+
+# xml toml json conf yaml
+Files:  *.toml *.json *conf *.yaml
+Copyright: None
+License: CC0-1.0
+
+#interface
+Files: src/widgets/D* src/util/D*
+Copyright: None
+License: CC0-1.0
+
+#DBus
+Files: src/widgets/dbus/* src/widgets/private/mpris/*
+Copyright: None
+License: CC0-1.0
+
+# rpm
+Files: rpm/*
+Copyright: None
+License: CC0-1.0
+
+# debian
+Files: debian/*
+Copyright: None
+License: LGPL-3.0-or-later
+
+# Arch
+Files: archlinux/*
+Copyright: None
+License: CC0-1.0
+
+# README&DOC
+Files: README.md CHANGELOG.md doc/*
+Copyright: UnionTech Software Technology Co., Ltd.
+License: CC-BY-4.0
+
+# Project file
+Files: *.pro *.prf *.pri *.qrc *CMakeLists.txt
+Copyright: None
+License: CC0-1.0
+
+# Printview
+Files: tests/testcases/printpreview/*
+Copyright: None
+License: CC0-1.0
+
+# imag
+Files: doc/images/* src/widgets/assets/images/* plugin/dtkuiplugin/images/*
+Copyright: UnionTech Software Technology Co., Ltd.
+License: LGPL-3.0-or-later
+
+# svg
+Files: examples/dwidget-examples/collections/icons/texts/* plugin/dtkuidemo/logo_icon.svg
+Copyright: UnionTech Software Technology Co., Ltd.
+License: LGPL-3.0-or-later
+
+#example png
+Files: examples/dwidget-examples/collections/images/*
+Copyright: UnionTech Software Technology Co., Ltd.
+License: LGPL-3.0-or-later
+
+#icon
+Files: src/widgets/assets/icons/* 
+Copyright: UnionTech Software Technology Co., Ltd.
+License: LGPL-3.0-or-later
+
+#ui
+Files: *.ui
+Copyright: UnionTech Software Technology Co., Ltd.
+License: LGPL-3.0-or-later
+
+
