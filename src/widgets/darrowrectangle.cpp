@@ -22,7 +22,7 @@
 #include "dstyle.h"
 
 #include <DGuiApplicationHelper>
-
+#include<qpa/qplatformnativeinterface.h>
 #ifdef Q_OS_LINUX
 #include <X11/extensions/shape.h>
 #include <QX11Info>
@@ -33,6 +33,10 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+static bool isDwayland()
+{
+    return qApp->platformName() == "dwayland" || qApp->property("_d_isDwayland").toBool();
+}
 /*!
   \class Dtk::Widget::DArrowRectangle
   \inmodule dtkwidget
@@ -475,7 +479,7 @@ void DArrowRectangle::setBackgroundColor(const QColor &backgroundColor)
 
     d->m_backgroundColor = backgroundColor;
 
-    if (d->m_handle && d->m_backgroundColor.toRgb().alpha() < 255) {
+    if ((d->m_handle || isDwayland()) && d->m_backgroundColor.toRgb().alpha() < 255) {
         if (!d->m_blurBackground) {
             d->m_blurBackground = new DBlurEffectWidget(this);
             d->m_blurBackground->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
@@ -1131,9 +1135,11 @@ void DArrowRectanglePrivate::updateClipPath()
         path = getRightCornerPath();
     }
 
+
+
     if (m_handle) {
         m_handle->setClipPath(path);
-    } else {
+    } else if (DArrowRectangle::FloatWindow == floatMode && isDwayland()) {
         // clipPath without handle
         QPainterPathStroker stroker;
         stroker.setCapStyle(Qt::RoundCap);
@@ -1144,13 +1150,16 @@ void DArrowRectanglePrivate::updateClipPath()
 
         q->clearMask();
         q->setMask(polygon);
+        if (m_blurBackground)
+            m_blurBackground->setMaskPath(path);
 
         if (QWidget *widget = q->window()) {
             if (QWindow *w = widget->windowHandle()) {
                 QList<QPainterPath> painterPaths;
                 painterPaths << outPath.united(path);
-                DPlatformHandle handle(w);
-                handle.setWindowBlurAreaByWM(painterPaths);
+                // 背景模糊也要设置一个 path
+                qApp->platformNativeInterface()->setWindowProperty(w->handle(), "_d_windowBlurPaths",
+                                                                   QVariant::fromValue(painterPaths));
             }
         }
     }
