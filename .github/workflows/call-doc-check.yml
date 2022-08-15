@@ -1,16 +1,13 @@
-name: Call License and README Check
+name: doxygen-check
 on:
   pull_request_target:
-    types: [opened, synchronize]
-
-permissions:
-  pull-requests: write
-  contents: read
+    paths-ignore:
+      - ".github/workflows/**"
 
 concurrency:
   group: ${{ github.workflow }}-pull/${{ github.event.number }}
   cancel-in-progress: true
 
 jobs:
-  license-check:
-    uses: linuxdeepin/.github/.github/workflows/license-check.yml@master
+  check_job:
+    uses: linuxdeepin/.github/.github/workflows/doc-check.yml@master
