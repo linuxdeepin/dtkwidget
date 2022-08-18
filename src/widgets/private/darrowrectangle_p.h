@@ -66,9 +66,9 @@ public:
 
     DArrowRectangle::FloatMode floatMode = DArrowRectangle::FloatWindow;
     QPointer<QWidget> m_content;
-    DPlatformWindowHandle *m_handle = NULL;
-    DBlurEffectWidget *m_blurBackground = NULL;
-    DWindowManagerHelper *m_wmHelper;
+    DPlatformWindowHandle *m_handle = nullptr;
+    DBlurEffectWidget *m_blurBackground = nullptr;
+    DWindowManagerHelper *m_wmHelper = nullptr;
     bool leftRightRadius = false;
     bool radiusArrowStyleEnable = false;
 };
