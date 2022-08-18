@@ -90,9 +90,6 @@ private:
     void updateTabOrder();
     void showSplitScreenWidget();
     void hideSplitScreenWidget();
-    /*SplitLeft: 1; SplitRight: 2; SplitFullScreen: 15*/
-    void changeWindowSplitedState(quint32 type);
-    bool supportSplitScreenByWM();
     void updateSizeBySizeMode()
     {
         if (optionButton)
@@ -136,7 +133,7 @@ private:
     DHorizontalLine     *separator;
 
     DBlurEffectWidget   *blurWidget = nullptr;
-    QPointer<DSplitScreenWidget>  splitWidget = nullptr;
+    QPointer<DSplitScreenWidget> splitWidget = nullptr;
     DSidebarHelper      *sidebarHelper = nullptr;
     DIconButton         *expandButton = nullptr;
 
@@ -166,212 +163,6 @@ private:
     QWidget             *sidebarBackgroundWidget = nullptr;
     Q_DECLARE_PUBLIC(DTitlebar)
 };
-
-DSplitScreenButton::DSplitScreenButton(DStyle::StandardPixmap sp, QWidget *parent)
-    : DIconButton(sp, parent)
-{
-    this->setIconSize(QSize(36, 36));
-
-    auto dpal = DPaletteHelper::instance()->palette(this);
-    dpal.setColor(DPalette::FrameBorder, Qt::transparent);
-    DPaletteHelper::instance()->setPalette(this, dpal);
-}
-
-void DSplitScreenButton::initStyleOption(DStyleOptionButton *option) const
-{
-    DIconButton::initStyleOption(option);
-
-    bool hover = (option->state & QStyle::State_MouseOver);
-    bool selected = (option->state & QStyle::State_Sunken);
-
-    if (hover && !selected) {
-        // 调整背景色和图标调色板
-        auto pal = option->palette;
-        auto dpal = DPaletteHelper::instance()->palette(this);
-        QColor backgroundBrush = dpal.itemBackground().color();
-        QColor iconForeColor = Qt::white;
-        if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::LightType) {
-            backgroundBrush = DStyle::adjustColor(backgroundBrush, 0, 0, 0, 0, 0, 0, 3);
-            iconForeColor = dpal.brush(DPalette::TextTitle).color();
-
-        }
-
-        pal.setBrush(QPalette::Light, backgroundBrush);
-        pal.setBrush(QPalette::Dark, backgroundBrush);
-        pal.setBrush(QPalette::ButtonText, iconForeColor);
-
-        option->palette = pal;
-    } else if (!hover && !selected) {
-        option->features |= (QStyleOptionButton::Flat | QStyleOptionButton::ButtonFeature(DStyleOptionButton::TitleBarButton));
-    }
-}
-
-DSplitScreenWidget::DSplitScreenWidget(FloatMode mode, QWidget *parent)
-    : DArrowRectangle(ArrowTop, mode, parent)
-    , floatMode(mode)
-{
-    this->init();
-}
-
-void DSplitScreenWidget::hide()
-{
-    if (!hideTimer.isActive())
-        hideTimer.start(300, this);
-}
-
-void DSplitScreenWidget::hideImmediately()
-{
-    close();
-}
-
-void DSplitScreenWidget::updateMaximizeButtonIcon(bool isMaximized)
-{
-    if (isMaximized) {
-        this->maximizeButton->setIcon(DStyle::SP_Title_SS_ShowNormalButton);
-        this->maximizeButton->setToolTip(qApp->translate("DSplitScreenWidget", "Unmaximize"));
-    } else {
-        this->maximizeButton->setIcon(DStyle::SP_Title_SS_ShowMaximizeButton);
-        this->maximizeButton->setToolTip(qApp->translate("DSplitScreenWidget", "Maximize"));
-    }
-}
-
-void DSplitScreenWidget::setButtonsEnable(bool enable)
-{
-    this->maximizeButton->setEnabled(enable);
-    this->leftSplitButton->setEnabled(enable);
-    this->rightSplitButton->setEnabled(enable);
-}
-
-void DSplitScreenWidget::onThemeTypeChanged(DGuiApplicationHelper::ColorType ct)
-{
-    if (ct == DGuiApplicationHelper::DarkType) {
-        this->setBackgroundColor(QColor(25, 25, 25, qRound(0.8 * 255)));
-    } else {
-        this->setBackgroundColor(this->palette().window().color());
-    }
-}
-
-void DSplitScreenWidget::init()
-{
-    this->setAttribute(Qt::WA_DeleteOnClose);
-    this->setWindowFlag(Qt::ToolTip);
-    this->setMargin(10);
-    this->setShadowXOffset(0);
-    this->setShadowYOffset(6);
-    this->setShadowBlurRadius(20);
-    this->setRadius(18);
-    this->setArrowWidth(50);
-    this->setArrowHeight(30);
-    this->setRadiusArrowStyleEnable(true);
-    this->setBorderColor(QColor(0, 0, 0, qRound(0.05 * 255)));
-
-    contentWidget = new QWidget(this);
-    QHBoxLayout *contentLayout = new QHBoxLayout(contentWidget);
-
-    this->leftSplitButton = new DSplitScreenButton(DStyle::SP_Title_SS_LeftButton, this);
-    this->rightSplitButton = new DSplitScreenButton(DStyle::SP_Title_SS_RightButton, this);
-    this->maximizeButton = new DSplitScreenButton(DStyle::SP_Title_SS_ShowNormalButton, this);
-    this->leftSplitButton->setToolTip(qApp->translate("DSplitScreenWidget", "Tile window to left of screen"));
-    this->rightSplitButton->setToolTip(qApp->translate("DSplitScreenWidget", "Tile window to right of screen"));
-
-    contentLayout->setMargin(0);
-    contentLayout->setSpacing(10);
-    contentLayout->addWidget(this->leftSplitButton);
-    contentLayout->addWidget(this->rightSplitButton);
-    contentLayout->addWidget(this->maximizeButton);
-
-    this->setContent(contentWidget);
-    onThemeTypeChanged(DGuiApplicationHelper::instance()->themeType());
-    qApp->installEventFilter(this);
-
-    disabledByScreenGeometryAndWindowSize({leftSplitButton, rightSplitButton});
-
-    QObject::connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged, this, &DSplitScreenWidget::onThemeTypeChanged);
-    QObject::connect(this->leftSplitButton, &DSplitScreenButton::clicked, this, &DSplitScreenWidget::leftSplitScreenButtonClicked);
-    QObject::connect(this->rightSplitButton, &DSplitScreenButton::clicked, this, &DSplitScreenWidget::rightSplitScreenButtonClicked);
-    QObject::connect(this->maximizeButton, &DSplitScreenButton::clicked, this, &DSplitScreenWidget::maximizeButtonClicked);
-}
-
-void DSplitScreenWidget::disabledByScreenGeometryAndWindowSize(QWidgetList wList)
-{
-    QDesktopWidget *desktop = qApp->desktop();
-    QWidget *window = this->window();
-
-    if (Q_LIKELY(desktop) && Q_LIKELY(window)) {
-        QRect screenRect = desktop->screenGeometry(window);
-
-        // 窗口尺寸大于屏幕分辨率时 禁用控件
-        if (screenRect.width() < window->minimumWidth() || screenRect.height() < window->minimumHeight())
-            for (QWidget *w : wList)
-                w->setDisabled(true);
-    }
-}
-
-bool DSplitScreenWidget::eventFilter(QObject *o, QEvent *e)
-{
-    switch (e->type()) {
-    case QEvent::Enter:
-        if (o == this)
-            hideTimer.stop();
-        break;
-
-    case QEvent::Leave:
-        if (o == this)
-            hide();
-        break;
-
-    case QEvent::Close:
-        if (!o->objectName().compare(QLatin1String("qtooltip_label")))
-            break;
-
-        Q_FALLTHROUGH();
-    case QEvent::WindowActivate:
-    case QEvent::WindowDeactivate:
-    case QEvent::FocusIn:
-    case QEvent::FocusOut:
-    case QEvent::MouseButtonDblClick:
-    case QEvent::Wheel:
-        hideImmediately();
-        break;
-    case QEvent::MouseButtonRelease:
-        if (!isMaxButtonPressAndHold) {
-            hideImmediately();
-        }
-        break;
-    default:
-        break;
-    }
-
-    return false;
-}
-
-void DSplitScreenWidget::showEvent(QShowEvent *e)
-{
-    this->setContent(contentWidget);
-    DArrowRectangle::showEvent(e);
-
-    QRect rect = this->rect();
-    qreal delta = this->shadowBlurRadius();
-    int arrowSpacing = (DArrowRectangle::FloatWidget == floatMode) ? this->arrowWidth() / 2 : this->arrowWidth();
-
-    if (DApplication::isDXcbPlatform())
-        rect = rect.marginsRemoved(QMarginsF(delta, (DArrowRectangle::FloatWidget == floatMode) ? 0 : delta,
-                                             delta, delta - this->margin()).toMargins());
-    else
-        rect = rect.marginsRemoved(QMarginsF(delta, 0, delta, (DArrowRectangle::FloatWidget == floatMode)
-                                             ? delta - this->margin() : delta * 2).toMargins());
-
-
-    this->setArrowX(rect.width() / 2 + arrowSpacing);
-}
-
-void DSplitScreenWidget::timerEvent(QTimerEvent *e)
-{
-    if (e->timerId() == hideTimer.timerId()) {
-        hideTimer.stop();
-        hideImmediately();
-    }
-}
 
 DTitlebarPrivate::DTitlebarPrivate(DTitlebar *qq)
     : DObjectPrivate(qq)
@@ -737,9 +528,6 @@ void DTitlebarPrivate::_q_toggleWindowState()
                && (maxButton->isVisible())) {
         parentWindow->showMaximized();
     }
-
-    if (splitWidget)
-        splitWidget->updateMaximizeButtonIcon(parentWindow->isMaximized());
 }
 
 void DTitlebarPrivate::_q_showMinimized()
@@ -979,25 +767,15 @@ void DTitlebarPrivate::showSplitScreenWidget()
     }
 
     // 窗管不支持分屏时，不显示分屏菜单
-    if (!Q_LIKELY(supportSplitScreenByWM()))
+    if (!Q_LIKELY(DSplitScreenWidget::supportSplitScreenByWM(q->window())))
         return;
 
     if (!splitWidget) {
-        splitWidget = new DSplitScreenWidget(DSplitScreenWidget::FloatWidget, q->window());
-
-        QObject::connect(splitWidget, &DSplitScreenWidget::maximizeButtonClicked, q,
-                         std::bind(&DTitlebarPrivate::changeWindowSplitedState, this, DSplitScreenWidget::SplitFullScreen));
-        QObject::connect(splitWidget, &DSplitScreenWidget::leftSplitScreenButtonClicked, q,
-                         std::bind(&DTitlebarPrivate::changeWindowSplitedState, this, DSplitScreenWidget::SplitLeftHalf));
-        QObject::connect(splitWidget, &DSplitScreenWidget::rightSplitScreenButtonClicked, q,
-                         std::bind(&DTitlebarPrivate::changeWindowSplitedState, this, DSplitScreenWidget::SplitRightHalf));
+        splitWidget = new DSplitScreenWidget(q->window());
     }
 
     if (splitWidget->isVisible())
         return;
-
-    if (auto window = targetWindow())
-        splitWidget->updateMaximizeButtonIcon(window->isMaximized());
 
     auto centerPos = maxButton->mapToGlobal(maxButton->rect().center());
     auto bottomPos = maxButton->mapToGlobal(maxButton->rect().bottomLeft());
@@ -1010,11 +788,9 @@ void DTitlebarPrivate::showSplitScreenWidget()
     }
 
     if (bottomPos.y() + splitWidget->height() > rect.height()) {
-        splitWidget->setArrowDirection(DArrowRectangle::ArrowBottom);
-        splitWidget->show(centerPos.x() - splitWidget->arrowWidth() / 2, bottomPos.y() - maxButton->rect().height());
+        splitWidget->show(QPoint(centerPos.x() - splitWidget->width() / 2, bottomPos.y() - maxButton->rect().height() - splitWidget->height()));
     } else {
-        splitWidget->setArrowDirection(DArrowRectangle::ArrowTop);
-        splitWidget->show(centerPos.x() - splitWidget->arrowWidth() / 2, bottomPos.y());
+        splitWidget->show(QPoint(centerPos.x() - splitWidget->width() / 2, bottomPos.y()));
     }
 }
 
@@ -1027,49 +803,6 @@ void DTitlebarPrivate::hideSplitScreenWidget()
         return;
 
     splitWidget->hide();
-}
-
-void DTitlebarPrivate::changeWindowSplitedState(quint32 type)
-{
-    if (splitWidget && splitWidget->isVisible()) {
-        splitWidget->isMaxButtonPressAndHold = false;
-        splitWidget->hideImmediately();
-    }
-    D_Q(DTitlebar);
-    QFunctionPointer splitWindowOnScreen = Q_NULLPTR;
-
-    //### 目前接口尚不公开在 dtkgui 中，等待获取后续接口稳定再做移植
-    splitWindowOnScreen = qApp->platformFunction(CHANGESPLITWINDOW_VAR);
-
-    const QWindow *windowHandle = nullptr;
-    const QWidget *window = q->window();
-
-    if (window)
-        windowHandle  = window->windowHandle();
-
-    if (splitWindowOnScreen && windowHandle && windowHandle->handle())
-        reinterpret_cast<void(*)(quint32, quint32)>(splitWindowOnScreen)(windowHandle->handle()->winId(), type);
-}
-
-bool DTitlebarPrivate::supportSplitScreenByWM()
-{
-    //### 目前接口尚不公开在 dtkgui 中，等待获取后续接口稳定再做移植
-    D_Q(DTitlebar);
-    QFunctionPointer getSupportSplitWindow = Q_NULLPTR;
-    bool supported = false;
-
-    getSupportSplitWindow = qApp->platformFunction(GETSUPPORTSPLITWINDOW_VAR);
-
-    const QWindow *windowHandle = nullptr;
-    const QWidget *window = q->window();
-
-    if (window)
-        windowHandle  = window->windowHandle();
-
-    if (getSupportSplitWindow && windowHandle && windowHandle->handle())
-        supported = reinterpret_cast<bool(*)(quint32)>(getSupportSplitWindow)(windowHandle->handle()->winId());
-
-    return supported;
 }
 
 #endif
