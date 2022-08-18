@@ -1116,6 +1116,9 @@ void DArrowRectanglePrivate::updateClipPath()
 {
     D_Q(DArrowRectangle);
 
+    if (!isDwayland() && !m_handle)
+        return;
+
     QPainterPath path;
 
     switch (m_arrowDirection) {
@@ -1134,8 +1137,6 @@ void DArrowRectanglePrivate::updateClipPath()
     default:
         path = getRightCornerPath();
     }
-
-
 
     if (m_handle) {
         m_handle->setClipPath(path);
@@ -1226,8 +1227,17 @@ void DArrowRectanglePrivate::init(DArrowRectangle::FloatMode mode)
             q->update();
             this->updateClipPath();
         }, Qt::QueuedConnection);
+    } else if (DArrowRectangle::FloatWidget == floatMode) {
+        DGraphicsGlowEffect *glowEffect = new DGraphicsGlowEffect;
+        glowEffect->setBlurRadius(q->shadowBlurRadius());
+        glowEffect->setDistance(m_shadowDistance);
+        glowEffect->setXOffset(q->shadowXOffset());
+        glowEffect->setYOffset(q->shadowYOffset());
+        q->setGraphicsEffect(glowEffect);
     } else {
-        m_wmHelper = nullptr;
+#ifndef QT_DEBUG
+        qDebug() << "wayland:" << isDwayland() << "floatMode:" << floatMode;
+#endif
     }
 }
 
