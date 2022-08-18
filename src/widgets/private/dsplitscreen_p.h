@@ -7,64 +7,93 @@
 
 #include <dtkwidget_global.h>
 
-#include <DArrowRectangle>
-#include <DGuiApplicationHelper>
-#include <DIconButton>
+#include <QTimer>
 
-DGUI_USE_NAMESPACE
+#include "DGuiApplicationHelper"
+#include "dblureffectwidget.h"
+#include "dflowlayout.h"
+#include "dframe.h"
+#include "DPushButton"
+
 DWIDGET_BEGIN_NAMESPACE
 
-class DSplitScreenButton : public DIconButton
+class DSplitScreenPlaceholder :  public DPushButton
 {
     Q_OBJECT
 public:
-    explicit DSplitScreenButton(DStyle::StandardPixmap sp, QWidget *parent = nullptr);
+    enum PositionFlag {
+        Left = 1 << 0,
+        Right = 1 << 1,
+        Top = 1 << 2,
+        Bottom = 1 << 3,
+    };
+    Q_DECLARE_FLAGS(Position, PositionFlag)
+    Q_FLAG(Position)
 
-protected:
-    void initStyleOption(DStyleOptionButton *option) const;
+    explicit DSplitScreenPlaceholder(Position position, QWidget *parent = nullptr);
+    DSplitScreenPlaceholder::Position position() const;
+
+    void paintEvent(QPaintEvent *event) override;
+    bool event(QEvent *event) override;
+
+private:
+    Position m_position;
+    bool m_paintFocus = false;
 };
 
-class DSplitScreenWidget : public DArrowRectangle
+class DSplitScreenCell : public DFrame
 {
     Q_OBJECT
 public:
-    enum SplitScreenMode {
-        SplitLeftHalf = 1,
-        SplitRightHalf = 2,
-        SplitFullScreen = 15
+    enum ModeFlag {
+        TwoSplit = 1,
+        ThreeSplit = 2,
+        FourSplit = 4,
+        SupportTwoSplit = TwoSplit,
+        SupportFourSplit = ThreeSplit,
+        PositionType = 1 << 4,
+        Left = 1 << (PositionType + 1)
     };
-    Q_ENUM(SplitScreenMode)
+    Q_DECLARE_FLAGS(Mode, ModeFlag)
+    Q_FLAG(Mode)
 
-    explicit DSplitScreenWidget(DSplitScreenWidget::FloatMode mode, QWidget *parent = nullptr);
+    DSplitScreenCell(const Mode mode, QWidget *parent = nullptr);
+
+Q_SIGNALS:
+    void screenSelected(DSplitScreenCell::Mode type, DSplitScreenPlaceholder::Position position);
+private Q_SLOTS:
+    void onScreenPlaceholderSelected();
+private:
+    QVector<DSplitScreenPlaceholder::Position> positionsByScreenMode(const DSplitScreenCell::Mode mode);
+
+    DFlowLayout *layout = nullptr;
+    DSplitScreenCell::Mode m_type;
+};
+
+class DSplitScreenWidget : public DBlurEffectWidget
+{
+    Q_OBJECT
+public:
+
+    explicit DSplitScreenWidget(QWidget *parent = nullptr);
 
     void hide();
     void hideImmediately();
-    void updateMaximizeButtonIcon(bool isMaximized);
-    void setButtonsEnable(bool enable);
-
-Q_SIGNALS:
-    void maximizeButtonClicked();
-    void leftSplitScreenButtonClicked();
-    void rightSplitScreenButtonClicked();
+    static bool supportSplitScreenByWM(const QWidget *window);
+    void show(const QPoint &pos);
 
 private Q_SLOTS:
-    void onThemeTypeChanged(DGuiApplicationHelper::ColorType ct);
+    void onThemeTypeChanged(DGUI_NAMESPACE::DGuiApplicationHelper::ColorType ct);
+    void onScreenSelected(DSplitScreenCell::Mode type, DSplitScreenPlaceholder::Position position);
 
 protected:
     void init();
-    void disabledByScreenGeometryAndWindowSize(QWidgetList w);
+    bool disableByScreenGeometryAndWindowSize() const;
     bool eventFilter(QObject *o, QEvent *e) override;
-    void showEvent(QShowEvent *e) override;
     void timerEvent(QTimerEvent *e) override;
 
 private:
-    DSplitScreenButton *leftSplitButton         = nullptr;
-    DSplitScreenButton *rightSplitButton        = nullptr;
-    DSplitScreenButton *maximizeButton          = nullptr;
-
-    QWidget *contentWidget = nullptr;
     QBasicTimer hideTimer;
-    DArrowRectangle::FloatMode floatMode;
     bool isMaxButtonPressAndHold = false;
 
     friend class DTitlebarPrivate;
@@ -72,4 +101,7 @@ private:
 };
 
 DWIDGET_END_NAMESPACE
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(DTK_WIDGET_NAMESPACE::DSplitScreenPlaceholder::Position)
+Q_DECLARE_OPERATORS_FOR_FLAGS(DTK_WIDGET_NAMESPACE::DSplitScreenCell::Mode)
 #endif // DSPLITSCREEN_P_H

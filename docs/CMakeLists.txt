@@ -51,6 +51,7 @@ set (DOXYGEN_EXPAND_ONLY_PREDEF "YES")
 set(DOXYGEN_EXCLUDE_PATTERNS
     ${PROJECT_SOURCE_DIR}/src/widgets/private/dimageviewer_p.h
     ${PROJECT_SOURCE_DIR}/src/widgets/private/dimagevieweritems_p.h
+    ${PROJECT_SOURCE_DIR}/src/widgets/private/dsplitscreen_p.h
     ${PROJECT_SOURCE_DIR}/src/widgets/dimagevieweritems.cpp
 )
 
