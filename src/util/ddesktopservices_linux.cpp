@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
-#include "ddesktopservices.h"
+#include "dtkwidget/util/ddesktopservices.h"
 
 #include <QDBusInterface>
 #include <QDBusPendingCall>

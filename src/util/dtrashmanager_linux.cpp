@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
-#include "dtrashmanager.h"
+#include "dtkwidget/util/dtrashmanager.h"
 
 #include <DObjectPrivate>
 #include <DStandardPaths>

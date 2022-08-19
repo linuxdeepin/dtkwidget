@@ -1,0 +1,6 @@
+find_package(Dtk REQUIRED Core)
+find_package(Dtk REQUIRED Gui)
+set(DTKWIDGET_INCLUDE_DIR @CMAKE_INSTALL_FULL_INCLUDEDIR@/libdtk-@PROJECT_VERSION@/DWidget)
+set(DTKWIDGET_TOOL_DIR @CMAKE_INSTALL_FULL_LIBDIR@/libdtk-@PROJECT_VERSION@/DWidget/bin)
+set(DtkWidget_LIBRARIES dtkwidget ${DtkCore_LIBRARIES} ${DtkGui_LIBRARIES})
+include_directories("${DTKWIDGET_INCLUDE_DIR}")

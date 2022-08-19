@@ -17,8 +17,10 @@ else
 endif
 
 %:
-	dh $@ --buildsystem=qmake --parallel
+	dh $@ --parallel
 
+override_dh_auto_configure:
+	dh_auto_configure -- -DNOTPACKAGE=OFF -DBUILD_DOCS=OFF -DDVERSION=$(_PACK_VER)
 #override_dh_auto_configure:
 #	dh_auto_configure -- LIB_INSTALL_DIR=/usr/lib/$(DEB_HOST_MULTIARCH)
 #override_dh_makeshlibs:

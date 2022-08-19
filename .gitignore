@@ -21,11 +21,22 @@ build*/
 
 src/DtkWidgets
 src/dtkwidget_config.h
-cmake/DtkWidget/DtkWidgetConfig.cmake
+cmake/DtkWidget
 src/qt_lib_dtk*.pri
 
 # misc
 .vscode/
-
+build
+.cache
 # cmake files
-cmake/*
+asan*
+archlinux/source.tar.gz
+archlinux/src
+archlinux/pkg
+archlinux/*.pkg.tar.zst
+include/dtkwidget/global/dtkwidget_config.h
+DtkWidgetConfig.cmake
+qt_lib_dtkwidget.pri
+dtkwidget.pc
+*.qdoc
+CMakeLists.txt.user
