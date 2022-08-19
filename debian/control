@@ -3,12 +3,12 @@ Section: libdevel
 Priority: optional
 Maintainer: Deepin Packages Builder <packages@deepin.com>
 Build-Depends: debhelper (>= 9), pkg-config, libudev-dev,
- libqt5x11extras5-dev, libxext-dev, qttools5-dev-tools,
+ libqt5x11extras5-dev, libxext-dev, qttools5-dev-tools, qttools5-dev,
  x11proto-xext-dev, libxcb-util0-dev, libstartup-notification0-dev,
  libmtdev-dev, qtbase5-private-dev, libegl1-mesa-dev, libudev-dev,
  libfontconfig1-dev, libfreetype6-dev, libglib2.0-dev, libxrender-dev,
  libdtkcore-dev, libgsettings-qt-dev, libqt5svg5-dev, libxi-dev,
- libdtkgui-dev, libcups2-dev, libgtest-dev
+ libdtkgui-dev, libcups2-dev, libgtest-dev, libdtkcore5-bin, cmake
 Standards-Version: 3.9.8
 
 Package: libdtkwidget5

@@ -2,13 +2,14 @@
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
-#include "dapplicationsettings.h"
+
+#include "dtkwidget/util/dapplicationsettings.h"
 
 #include <DGuiApplicationHelper>
 #include <DObjectPrivate>
 
 #ifdef Q_OS_LINUX
-#include <QGSettings>
+#include <QGSettings/QGSettings>
 #endif
 #include <QCoreApplication>
 

@@ -4,7 +4,7 @@ Upstream-Contact: UnionTech Software Technology Co., Ltd. <>
 Source: https://github.com/linuxdeepin/dtkwidget
 
 # ci
-Files: .github/* .gitlab-ci.yml
+Files: .github/* .gitlab-ci.yml output/results.txt
 Copyright: None
 License: CC0-1.0
 
@@ -19,7 +19,7 @@ Copyright: None
 License: CC0-1.0
 
 #interface
-Files: src/widgets/D* src/util/D*
+Files: include/dtkwidget/DWidget/*
 Copyright: None
 License: CC0-1.0
 
@@ -49,7 +49,7 @@ Copyright: UnionTech Software Technology Co., Ltd.
 License: CC-BY-4.0
 
 # Project file
-Files: *.pro *.prf *.pri *.qrc *CMakeLists.txt
+Files: *.pro *.prf *.pri *.qrc *CMakeLists.txt *.cmake *.in
 Copyright: None
 License: CC0-1.0
 

@@ -34,6 +34,7 @@ set (DOXYGEN_EXPAND_ONLY_PREDEF "YES")
 
 doxygen_add_docs (doxygen
     ${PROJECT_SOURCE_DIR}/src
+    ${PROJECT_SOURCE_DIR}/include
     ${PROJECT_SOURCE_DIR}/doc
     ALL
     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}

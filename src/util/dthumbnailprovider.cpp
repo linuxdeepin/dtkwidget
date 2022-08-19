@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
-#include "dthumbnailprovider.h"
+#include "dtkwidget/util/dthumbnailprovider.h"
 #include <DObjectPrivate>
 
 #include <QCryptographicHash>

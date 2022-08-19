@@ -35,7 +35,7 @@ TEST_F(ut_DPrintPreviewDialog, isAsynPreview)
 
 TEST_F(ut_DPrintPreviewDialog, paintRequested)
 {
-    target->paintRequested(1, 1);
+//target->paintRequested(1, 1);
 };
 
 TEST_F(ut_DPrintPreviewDialog, printFromPath)
@@ -45,8 +45,8 @@ TEST_F(ut_DPrintPreviewDialog, printFromPath)
 
 TEST_F(ut_DPrintPreviewDialog, setAsynPreview)
 {
-    target->setAsynPreview(1);
-    ASSERT_EQ(target->asynPreview(), 1);
+    //target->setAsynPreview(1);
+    //ASSERT_EQ(target->asynPreview(), 1);
 };
 
 TEST_F(ut_DPrintPreviewDialog, setDocName)
@@ -55,8 +55,8 @@ TEST_F(ut_DPrintPreviewDialog, setDocName)
     ASSERT_EQ(target->docName(), "setDocName");
 };
 
-TEST_F(ut_DPrintPreviewDialog, setPrintFromPath)
-{
-    target->setPrintFromPath("setPrintFromPath");
-    ASSERT_EQ(target->printFromPath(), "setPrintFromPath");
-};
+//TEST_F(ut_DPrintPreviewDialog, setPrintFromPath)
+//{
+//    target->setPrintFromPath("setPrintFromPath");
+//    ASSERT_EQ(target->printFromPath(), "setPrintFromPath");
+//};

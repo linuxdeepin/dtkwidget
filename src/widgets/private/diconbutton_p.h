@@ -7,7 +7,7 @@
 
 #include <dobject_p.h>
 #include <DIconButton>
-
+#include <ddciicon.h>
 DWIDGET_BEGIN_NAMESPACE
 
 class DIconButtonPrivate : public DCORE_NAMESPACE::DObjectPrivate

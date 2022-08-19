@@ -2,7 +2,8 @@
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
-#include "daccessibilitychecker.h"
+
+#include "dtkwidget/util/daccessibilitychecker.h"
 
 #include <DObjectPrivate>
 

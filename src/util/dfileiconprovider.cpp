@@ -5,7 +5,7 @@
 #include <DObjectPrivate>
 #include <DGuiApplicationHelper>
 
-#include "dfileiconprovider.h"
+#include "dtkwidget/util/dfileiconprovider.h"
 
 #include <QLibrary>
 #include <QMimeDatabase>

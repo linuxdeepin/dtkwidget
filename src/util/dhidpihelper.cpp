@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
-#include "dhidpihelper.h"
+#include "dtkwidget/util/dhidpihelper.h"
 
 #include <QPixmap>
 #include <QImageReader>
