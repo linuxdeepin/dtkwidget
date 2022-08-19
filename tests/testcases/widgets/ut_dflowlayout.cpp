@@ -47,7 +47,6 @@ TEST_F(ut_DFlowLayout, addStretch)
 
 TEST_F(ut_DFlowLayout, expandingDirections)
 {
-    target->setFlow(DFlowLayout::Flow::TopToBottom);
     ASSERT_EQ(target->expandingDirections(), Qt::Vertical);
 };
 

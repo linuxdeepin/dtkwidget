@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
-#include "dwidgetutil.h"
+#include "dtkwidget/util/dwidgetutil.h"
 
 #include <QPixmap>
 #include <QPainter>

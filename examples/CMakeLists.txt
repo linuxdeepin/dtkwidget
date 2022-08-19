@@ -1,0 +1,2 @@
+add_subdirectory(dwidget-examples/collections)
+add_subdirectory(dwidget-examples/PrintPreviewSettingsPlugin)

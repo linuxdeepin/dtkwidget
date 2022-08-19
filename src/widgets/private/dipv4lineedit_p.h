@@ -5,9 +5,10 @@
 #ifndef DIPV4LINEEDIT_P_H
 #define DIPV4LINEEDIT_P_H
 
-#include "dlineedit_p.h"
 #include <DIpv4LineEdit>
 #include <DImageButton>
+#include <DLineEdit>
+#include <DObjectPrivate>
 
 DWIDGET_BEGIN_NAMESPACE
 
