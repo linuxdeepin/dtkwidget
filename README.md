@@ -1,6 +1,6 @@
 # Deepin Tool Kit Widget {#mainpage}
 
-Deepin Tool Kit (Dtk) is the base devlopment tool of all C++/Qt Developer work on Deepin.
+Deepin Tool Kit Widget(DtkWidget) provides the base widgets on Deepin.
 
 ## Dependencies
 
@@ -14,7 +14,7 @@ Deepin Tool Kit (Dtk) is the base devlopment tool of all C++/Qt Developer work o
 
 1. Make sure you have installed all dependencies.
 ````
-sudo apt build-dep .
+sudo apt build-dep
 ````
 If you need to use the designer plugin, you should also install:
 ````
@@ -25,7 +25,7 @@ sudo apt install qttools5-dev
 ````
 $ mkdir build
 $ cd build
-$ qmake ..
+$ cmake ..
 $ make
 ````
 
@@ -49,8 +49,7 @@ Any usage issues can ask for help via
 We encourage you to report issues and contribute changes
 
 * [Contribution guide for developers](https://github.com/linuxdeepin/developer-center/wiki/Contribution-Guidelines-for-Developers-en). (English)
-* [开发者代码贡献指南](https://github.com/linuxdeepin/developer-center/wiki/Contribution-Guidelines-for-Developers) (中文)
 
 ## License
 
-deepin-tool-kit is licensed under [GPLv3](LICENSE).
+deepin-tool-kit is licensed under [LGPLv3](LICENSE).
