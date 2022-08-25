@@ -508,7 +508,9 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
         auto msg = QDBusMessage::createMethodCall("com.iflytek.aiassistant", "/",
                                        "org.freedesktop.DBus.Peer", "Ping");
         // 用之前 Ping 一下, 300ms 内没回复就认定是服务出问题，不再添加助手菜单项
-        auto pingReply = QDBusConnection::sessionBus().call(msg, QDBus::BlockWithGui, 300);
+        // Fix：Bug-154857 此处不能使用 BlockWithGui 否则右键事件会被处理，事件传递到
+        //  DSearchEdit 上会导致 edit 获得焦点然后菜单弹出后又失去焦点，有闪烁现象。。
+        auto pingReply = QDBusConnection::sessionBus().call(msg, QDBus::Block, 300);
         auto errorType = QDBusConnection::sessionBus().lastError().type();
         if (errorType == QDBusError::Timeout || errorType == QDBusError::NoReply) {
             qWarning() << pingReply << "\nwill not add aiassistant actions!";
