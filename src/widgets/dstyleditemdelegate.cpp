@@ -206,7 +206,7 @@ public:
         return DStyle::viewItemSize(style, &item, Qt::DisplayRole);
     }
 
-    static QList<QRect> doActionsLayout(QRect base, const QList<DViewItemAction*> &list, Qt::Orientation orientation,
+    static QList<QRect> doActionsLayout(QRect base, const DViewItemActionList &list, Qt::Orientation orientation,
                                         Qt::LayoutDirection direction, const QSize &fallbackIconSize, QSize *bounding)
     {
         if (list.isEmpty()) {
@@ -1006,10 +1006,10 @@ QSize DStyledItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QM
 
     QSize size = (pixmapRect | textRect | checkRect).size();
 
-    const DViewItemActionList &left_actions = qvariant_cast<QList<DViewItemAction*>>(index.data(Dtk::LeftActionListRole));
-    const DViewItemActionList &right_actions = qvariant_cast<QList<DViewItemAction*>>(index.data(Dtk::RightActionListRole));
-    const DViewItemActionList &top_actions = qvariant_cast<QList<DViewItemAction*>>(index.data(Dtk::TopActionListRole));
-    const DViewItemActionList &bottom_actions = qvariant_cast<QList<DViewItemAction*>>(index.data(Dtk::BottomActionListRole));
+    const DViewItemActionList &left_actions = qvariantToActionList(index.data(Dtk::LeftActionListRole));
+    const DViewItemActionList &right_actions = qvariantToActionList(index.data(Dtk::RightActionListRole));
+    const DViewItemActionList &top_actions = qvariantToActionList(index.data(Dtk::TopActionListRole));
+    const DViewItemActionList &bottom_actions = qvariantToActionList(index.data(Dtk::BottomActionListRole));
 
     QSize action_area_size;
     // 获取左边区域大小
