@@ -59,7 +59,7 @@ find_package (Qt5 CONFIG REQUIRED COMPONENTS DBus Xml)
 set (BUILD_DOCS ON CACHE BOOL "Generate doxygen-based documentation")
 
 if (BUILD_DOCS)
-  add_subdirectory(doc)
+  add_subdirectory(docs)
 endif ()
 
 configure_file(misc/DtkWidgetConfig.cmake.in DtkWidgetConfig.cmake @ONLY)
