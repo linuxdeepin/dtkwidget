@@ -44,7 +44,7 @@ Copyright: None
 License: CC0-1.0
 
 # README&DOC
-Files: README.md CHANGELOG.md doc/*
+Files: README.md README.zh_CN.md CHANGELOG.md docs/*
 Copyright: UnionTech Software Technology Co., Ltd.
 License: CC-BY-4.0
 

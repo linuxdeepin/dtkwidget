@@ -8,7 +8,7 @@ url="https://github.com/linuxdeepin/dtkwidget"
 license=('LGPL3')
 depends=('deepin-qt-dbus-factory-git' 'dtkcore-git' 'dtkgui-git' 'librsvg' 'qt5-multimedia' 'qt5-svg'
          'qt5-x11extras' 'startup-notification')
-makedepends=('git' 'qt5-tools' 'gtest' 'dtkcommon-git' 'dtkcore-git' 'dtkgui-git' 'ninja' 'cmake')
+makedepends=('git' 'qt5-tools' 'gtest' 'dtkcommon-git' 'dtkcore-git' 'dtkgui-git' 'ninja' 'cmake' 'doxygen')
 provides=('dtkwidget')
 conflicts=('dtkwidget')
 groups=('deepin-git')
@@ -22,7 +22,8 @@ build() {
       -DHUNTER_ENABLED=OFF \
       -DLINUXNAME="archlinux"\
       -DNOTPACKAGE=OFF \
-      -DBUILD_DOCS=OFF \
+      -DBUILD_DOCS=ON \
+      -DQCH_INSTALL_DESTINATION=/usr/share/doc/qt \
       -DCMAKE_INSTALL_LIBDIR=/usr/lib \
       -DCMAKE_INSTALL_PREFIX=/usr \
       -DCMAKE_BUILD_TYPE=Release 
