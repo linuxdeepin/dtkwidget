@@ -1,5 +1,6 @@
 #cmake_minimum_required(VERSION 3.5)
-set(BIN_NAME test)
+
+set(BIN_NAME "ut-${PROJECT_NAME}")
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_AUTOMOC ON)
@@ -190,3 +191,4 @@ target_include_directories(${BIN_NAME} PUBLIC
   ${XCBUTIL_INCLUDE_DIRS}
   #${GLIB_INCLUDE_DIRS}
 )
+add_test(NAME ${BIN_NAME} COMMAND ${BIN_NAME})
