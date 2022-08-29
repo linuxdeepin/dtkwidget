@@ -21,7 +21,7 @@ build() {
   cmake -GNinja \
       -DHUNTER_ENABLED=OFF \
       -DLINUXNAME="archlinux"\
-      -DNOTPACKAGE=OFF \
+      -DBUILD_PLUGINS=OFF \
       -DBUILD_DOCS=ON \
       -DQCH_INSTALL_DESTINATION=/usr/share/doc/qt \
       -DCMAKE_INSTALL_LIBDIR=/usr/lib \
