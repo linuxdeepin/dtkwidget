@@ -73,7 +73,10 @@ MainWindow::MainWindow(QWidget *parent)
     m_pListView->setItemSize(QSize(200, 50));
     m_pListView->setModel(m_pListViewModel);
 
-    mainLayout->addWidget(m_pListView);
+    setSidebarWidget(m_pListView);
+    setSidebarWidth(200);
+
+//    mainLayout->addWidget(m_pListView);
 
     mainLayout->addWidget(m_pStackedWidget);
 

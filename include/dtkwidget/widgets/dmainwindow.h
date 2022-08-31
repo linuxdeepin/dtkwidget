@@ -16,7 +16,6 @@ DWIDGET_BEGIN_NAMESPACE
 
 class DMainWindowPrivate;
 class DTitlebar;
-
 class LIBDTKWIDGETSHARED_EXPORT DMainWindow : public QMainWindow, public DTK_CORE_NAMESPACE::DObject
 {
     Q_OBJECT
@@ -41,6 +40,18 @@ public:
     explicit DMainWindow(QWidget *parent = 0);
 
     DTitlebar *titlebar() const;
+
+    void setSidebarWidget(QWidget *widget);
+    QWidget * sidebarWidget();
+
+    int  sidebarWidth() const;
+    void setSidebarWidth(int width);
+
+    bool sidebarVisble() const;
+    void setSidebarVisible(bool visible);
+
+    bool sidebarExpanded() const;
+    void setSidebarExpanded(bool expended);
 
     bool isDXcbWindow() const;
 
@@ -109,6 +120,8 @@ Q_SIGNALS:
     void enableSystemMoveChanged();
     void enableBlurWindowChanged();
     void autoInputMaskByClipPathChanged();
+    void sidebarVisbleChanged(bool visible);
+    void sidebarExpanedChanged(bool expaned);
 
 protected:
     DMainWindow(DMainWindowPrivate &dd, QWidget *parent = 0);

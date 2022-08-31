@@ -11,6 +11,7 @@
 #include <QMouseEvent>
 #include <QProcess>
 #include <QStandardPaths>
+#include <QWidgetAction>
 
 #include <DWindowManagerHelper>
 #include <DObjectPrivate>
@@ -32,6 +33,7 @@
 #include "dapplication.h"
 #include "private/dapplication_p.h"
 #include "private/dsplitscreen_p.h"
+#include "private/dmainwindow_p.h"
 #include "dmainwindow.h"
 #include "DHorizontalLine"
 #include "dimagebutton.h"
@@ -47,6 +49,7 @@ DWIDGET_BEGIN_NAMESPACE
 const int DefaultTitlebarHeight = 50;
 const int DefaultIconHeight = 32;
 const int DefaultIconWidth = 32;
+const int DefaultExpandButtonSize = 48;
 
 class DTitlebarPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 {
@@ -112,6 +115,8 @@ private:
 
     DBlurEffectWidget   *blurWidget = nullptr;
     QPointer<DSplitScreenWidget>  splitWidget = nullptr;
+    DSidebarHelper      *sidebarHelper = nullptr;
+    DIconButton         *expandButton = nullptr;
 
 #ifndef QT_NO_MENU
     QMenu               *menu             = Q_NULLPTR;
@@ -136,6 +141,7 @@ private:
     bool                fullScreenButtonVisible = true;
     bool                splitScreenWidgetEnable = true;
     QTimer              *maxButtonPressAndHoldTimer = nullptr;
+    QWidget             *sidebarBackgroundWidget = nullptr;
     Q_DECLARE_PUBLIC(DTitlebar)
 };
 
@@ -800,6 +806,7 @@ void DTitlebarPrivate::_q_addDefaultMenuItems()
             group->addAction(lightThemeAction);
             group->addAction(darkThemeAction);
 
+
             QObject::connect(group, SIGNAL(triggered(QAction*)),
                              q, SLOT(_q_switchThemeActionTriggered(QAction*)));
 
@@ -1203,7 +1210,8 @@ void DTitlebar::showEvent(QShowEvent *event)
     d->separatorTop->setFixedWidth(width());
     d->separatorTop->move(0, 0);
     d->separator->setFixedWidth(width());
-    d->separator->move(0, height() - d->separator->height());
+    int x = (d->sidebarHelper && d->sidebarHelper->expanded()) ? d->sidebarHelper->width() : 0;
+    d->separator->move(x, height() - d->separator->height());
 
 #ifndef QT_NO_MENU
     // 默认菜单需要在showevent添加，否则`menu`接口返回空actions，导致接口逻辑不兼容
@@ -1401,6 +1409,57 @@ void DTitlebar::setCustomWidget(QWidget *w, bool fixCenterPos)
         d->titleLabel = nullptr;
         d->centerArea->hide();
     }
+}
+
+void DTitlebar::setSidebarHelper(DSidebarHelper *helper)
+{
+    D_D(DTitlebar);
+    if (d->sidebarHelper == helper)
+        return;
+
+    d->sidebarHelper = helper;
+
+    if (!d->expandButton) {
+        d->expandButton = new DIconButton(this);
+        d->expandButton->setIcon(DDciIcon::fromTheme("window_sidebar"));
+        d->expandButton->setIconSize(QSize(DefaultExpandButtonSize, DefaultExpandButtonSize));
+        d->expandButton->setCheckable(true);
+        d->expandButton->setChecked(true);
+        d->expandButton->setFlat(true);
+
+        d->sidebarBackgroundWidget = new QWidget(this);
+        d->sidebarBackgroundWidget->setFixedHeight(height());
+        d->sidebarBackgroundWidget->setAutoFillBackground(true);
+        d->sidebarBackgroundWidget->setBackgroundRole(DPalette::Button);
+        d->sidebarBackgroundWidget->move(pos());
+        d->sidebarBackgroundWidget->show();
+        d->sidebarBackgroundWidget->lower();
+        d->leftLayout->addWidget(d->expandButton, 0, Qt::AlignLeft);
+        connect(d->expandButton, &DIconButton::clicked, [this, d] (bool isExpanded) {
+            d->sidebarBackgroundWidget->setVisible(isExpanded);
+            d->sidebarHelper->setExpanded(isExpanded);
+            int x = isExpanded ? d->sidebarHelper->width() : 0;
+            d->separator->move(x, height() - d->separator->height());
+        });
+        connect(d->sidebarHelper, &DSidebarHelper::widthChanged, this, [d] (int width) {
+            d->sidebarBackgroundWidget->setFixedWidth(width);
+        });
+    }
+
+    connect(helper, &DSidebarHelper::visibleChanged, this, [this](bool visible){
+        qInfo() << "visibleChanged" << visible;
+        d_func()->expandButton->setVisible(visible);
+    });
+    connect(helper, &DSidebarHelper::expandChanged, this, [](bool expanded){
+        qInfo() << "expandChanged" << expanded;
+    });
+    connect(helper, &DSidebarHelper::backgroundColorChanged, this, [](QColor backgroundColor){
+        qInfo() << "backgroundColorChanged" << backgroundColor.name(QColor::NameFormat::HexArgb);
+    });
+    connect(helper, &DSidebarHelper::widthChanged, this, [](int width){
+        qInfo() << "widthChanged" << width;
+    });
+
 }
 
 void DTitlebar::addWidget(QWidget *w, Qt::Alignment alignment)

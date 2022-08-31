@@ -50,4 +50,7 @@
     <qresource prefix="/dsg/built-in-icons">
         <file alias="window_menu.dci">bloom/window_menu.dci</file>
     </qresource>
+    <qresource prefix="/dsg">
+        <file alias="built-in-icons/window_sidebar.dci">bloom/window_sidebar.dci</file>
+    </qresource>
 </RCC>
