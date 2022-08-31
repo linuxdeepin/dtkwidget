@@ -14,7 +14,7 @@
 
 DGUI_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
-
+class DSidebarHelper;
 class DTitlebarPrivate;
 class LIBDTKWIDGETSHARED_EXPORT DTitlebar : public QFrame, public DTK_CORE_NAMESPACE::DObject
 {
@@ -31,6 +31,8 @@ public:
 
     QWidget *customWidget() const;
     void setCustomWidget(QWidget *, bool fixCenterPos = false);
+
+    void setSidebarHelper(DSidebarHelper *helper);
 
     void addWidget(QWidget *w, Qt::Alignment alignment = Qt::Alignment());
     void removeWidget(QWidget *w);
