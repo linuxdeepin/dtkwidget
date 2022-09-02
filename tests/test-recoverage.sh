@@ -15,11 +15,11 @@ cd ..
 
 cmake -Bbuild -DCMAKE_BUILD_TYPE=Debug 
 
-cmake --build build --target test -j$(nproc)
+cmake --build build --target ut-DtkWidget -j$(nproc)
 
 cd $BUILD_DIR
 
-./ut-DtkWidget
+./ut-DtkWidget -gtest_output=xml:${XML_DIR}/report_dtkwidget.xml
 lcov -d ./ -c -o coverage_all.info
 lcov --extract coverage_all.info $EXTRACT_ARGS --output-file coverage.info
 filter_files=(
