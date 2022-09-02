@@ -1,22 +1,12 @@
 cmake_minimum_required (VERSION 3.10)
 
-option(DVERSION "define project version" "5.5.22")
-if(DVERSION)
-  project (DtkWidget
-    VERSION ${DVERSION}
-    DESCRIPTION "DTK Widget module"
-    HOMEPAGE_URL "https://github.com/linuxdeepin/dtkwidget"
-    LANGUAGES CXX C
-  )
-else()
-  project (DtkWidget
-    #VERSION "${DTK_REPO_MODULE_VERSION}"
-    VERSION "5.5.23"
-    DESCRIPTION "DTK Widget module"
-    HOMEPAGE_URL "https://github.com/linuxdeepin/dtkwidget"
-    LANGUAGES CXX C
-  )
-endif()
+set (DVERSION "5.6.0.2" CACHE STRING "define project version")
+project (DtkWidget
+  VERSION ${DVERSION}
+  DESCRIPTION "DTK Widget module"
+  HOMEPAGE_URL "https://github.com/linuxdeepin/dtkwidget"
+  LANGUAGES CXX C
+)
 #set(BREAKVERSION "5")
 include(GNUInstallDirs)
 # set project name
