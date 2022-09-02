@@ -15,7 +15,7 @@ cd ..
 
 cmake -Bbuild -DCMAKE_BUILD_TYPE=Debug 
 
-cmake --build build --target test -j$(nproc)
+cmake --build build --target ut-DtkWidget -j$(nproc)
 
 cd $BUILD_DIR
 
