@@ -235,7 +235,7 @@ TEST_F(ut_DViewItemAction, actionDestoryByDStandItemWithClone)
     QPointer<DViewItemAction> actionPointer(new DViewItemAction());
     item->setActionList(Qt::RightEdge, {actionPointer});
 
-    DStandardItem *item2 = dynamic_cast<DStandardItem *>(item->clone());
+    QStandardItem *item2 = item->clone();
     delete item;
     ASSERT_TRUE(actionPointer);
     delete item2;
