@@ -1454,9 +1454,4 @@ QFont DStandardItem::font() const
     return getViewItemFont(index(), Dtk::ViewItemFontLevelRole);
 }
 
-QStandardItem *DStandardItem::clone() const
-{
-    return new DStandardItem(*this);
-}
-
 DWIDGET_END_NAMESPACE

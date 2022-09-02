@@ -135,8 +135,6 @@ public:
 
     void setFontSize(DFontSizeManager::SizeType size);
     QFont font() const;
-
-    virtual QStandardItem *clone() const override;
 };
 
 DWIDGET_END_NAMESPACE
