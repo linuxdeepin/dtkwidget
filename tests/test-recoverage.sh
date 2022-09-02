@@ -19,7 +19,7 @@ cmake --build build --target test -j$(nproc)
 
 cd $BUILD_DIR
 
-./test
+./ut-DtkWidget
 lcov -d ./ -c -o coverage_all.info
 lcov --extract coverage_all.info $EXTRACT_ARGS --output-file coverage.info
 filter_files=(
