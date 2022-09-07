@@ -166,6 +166,8 @@ static QImage dropShadow(const QPixmap &px, qreal radius, const QColor &color)
     QImage tmp(px.size() + QSize(radius * 2, radius * 2), QImage::Format_ARGB32_Premultiplied);
     tmp.fill(0);
     QPainter tmpPainter(&tmp);
+    tmpPainter.setOpacity(0.3); // design requirement
+    tmpPainter.setRenderHint(QPainter::Antialiasing);
     tmpPainter.setCompositionMode(QPainter::CompositionMode_Source);
     tmpPainter.drawPixmap(QPoint(radius, radius), px);
     tmpPainter.end();
@@ -264,6 +266,7 @@ void drawShadow(QPainter *pa, const QRect &rect, qreal xRadius, qreal yRadius, c
 
         pa.setBrush(sc);
         pa.setPen(Qt::NoPen);
+        pa.setRenderHint(QPainter::Antialiasing);
         pa.drawRoundedRect(shadow_base.rect(), xRadius, yRadius);
         pa.end();
 
@@ -299,6 +302,7 @@ void drawShadow(QPainter *pa, const QRect &rect, const QPainterPath &path, const
     shadow_base.setDevicePixelRatio(scale);
 
     QPainter paTmp(&shadow_base);
+    paTmp.setRenderHint(QPainter::Antialiasing, true);
     paTmp.setBrush(sc);
     paTmp.setPen(Qt::NoPen);
     paTmp.drawPath(path);
@@ -1131,12 +1135,12 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
                 shadow_rect.setHeight(qMin(shadow_rect.width(), shadow_rect.height()));
                 shadow_rect.moveCenter(opt->rect.center() + QPoint(shadow_xoffset / 2.0, shadow_yoffset / 2.0));
 
+                p->setRenderHint(QPainter::Antialiasing);
                 DDrawUtils::drawShadow(p, shadow_rect, frame_radius, frame_radius,
                                        DStyle::adjustColor(color, 0, 0, +30), shadow_radius, QPoint(0, 0));
 
                 p->setPen(Qt::NoPen);
                 p->setBrush(color);
-                p->setRenderHint(QPainter::Antialiasing);
                 p->drawEllipse(content_rect);
             } else if (btn->features & DStyleOptionButton::CircleButton) {
                 QRect content_rect = opt->rect;
