@@ -479,7 +479,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     QWidget *marginSpinWidget = new QWidget(q);
     marginSpinWidget->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_Margin_AdjustContol]);
     QHBoxLayout *marginsspinlayout = new QHBoxLayout(marginSpinWidget);
-    marginsspinlayout->setContentsMargins(0, 0, 0, 0);
+
     DLabel *toplabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Top"));
     marginTopSpin = new DDoubleSpinBox;
     marginTopSpin->installEventFilter(q);
@@ -514,7 +514,9 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     marginsspinlayout->addLayout(marginsspinboxlayout1);
     marginsspinlayout->addLayout(marginslabellayout2);
     marginsspinlayout->addLayout(marginsspinboxlayout2);
+    marginslayout->setSpacing(0);
     marginslayout->addLayout(marginscombolayout);
+    marginslayout->addSpacing(10);
     marginslayout->addWidget(marginSpinWidget);
 
     QRegExp reg("^([5-5][0-4]|[1-4][0-9]|[0-9])?(\\.[0-9][0-9])|55(\\.[8-8][0-8])|55(\\.[0-7][0-9])");
