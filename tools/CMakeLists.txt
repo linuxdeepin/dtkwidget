@@ -25,10 +25,9 @@ add_executable(
 )
 target_link_libraries(
   ${BIN_NAME} PRIVATE
-  #  Qt5::Widgets 
   #Qt5::Core
   Qt5::Svg
   ${DtkGui_LIBRARIES}
   #  ${DtkCore_LIBRARIES}
 )
-install(TARGETS ${BIN_NAME} DESTINATION "${CMAKE_INSTALL_LIBDIR}/libdtk-${CMAKE_PROJECT_VERSION}/DWidget/bin")
+install(TARGETS ${BIN_NAME} DESTINATION "${TOOL_INSTALL_DIR}")

@@ -1,13 +1,11 @@
 prefix=@CMAKE_INSTALL_PREFIX@
 exec_prefix=${prefix}
-libdir=${prefix}/lib
-includedir=${prefix}/include/libdtk-@PROJECT_VERSION@/DWidget
+libdir=@LIBRARY_INSTALL_DIR@
+includedir=@INCLUDE_INSTALL_DIR@
 
-
-Name: DTKWIDGET
+Name: dtkwidget
 Description: Deepin Tool Kit dtkwidget header files
 Version: @PROJECT_VERSION@
-Libs: -ldtkwidget 
+Libs: -L${libdir} -ldtkwidget 
 Cflags: -I${includedir}
 Requires: dtkcore, dtkgui
-
