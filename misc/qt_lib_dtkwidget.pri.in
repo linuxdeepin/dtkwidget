@@ -4,12 +4,11 @@ QT.dtkwidget.MINOR_VERSION = @PROJECT_VERSION_MINOR@
 QT.dtkwidget.PATCH_VERSION = @PROJECT_VERSION_PATCH@
 QT.dtkwidget.name = dtkwidget
 QT.dtkwidget.module = dtkwidget
-QT.dtkwidget.tools = @CMAKE_INSTALL_FULL_LIBDIR@/libdtk-@PROJECT_VERSION@/DWidget/bin
-QT.dtkwidget.libs = @CMAKE_INSTALL_FULL_LIBDIR@
-QT.dtkwidget.includes = @CMAKE_INSTALL_FULL_INCLUDEDIR@/libdtk-@PROJECT_VERSION@/DWidget
+QT.dtkwidget.tools = @TOOL_INSTALL_DIR@
+QT.dtkwidget.libs = @LIBRARY_INSTALL_DIR@
+QT.dtkwidget.includes = @INCLUDE_INSTALL_DIR@
 QT.dtkwidget.frameworks =
 QT.dtkwidget.depends = core gui dtkcore network concurrent dtkgui printsupport printsupport_private widgets widgets_private gui_private x11extras dbus
 QT.dtkwidget.module_config = v2 internal_module ltcg
 QT.dtkwidget.DEFINES = 
 QT_MODULES += 
-
