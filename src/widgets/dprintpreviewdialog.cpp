@@ -271,6 +271,7 @@ void DPrintPreviewDialogPrivate::initright(QVBoxLayout *layout)
     scrollarea->setWidgetResizable(true);
     scrollarea->setFrameShape(QFrame::NoFrame);
     scrollarea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    scrollarea->setBackgroundRole(QPalette::Base);
     advancesettingwdg->hide();
 
     advanceBtn = new DPushButton(qApp->translate("DPrintPreviewDialogPrivate", "Advanced"));
@@ -1406,6 +1407,8 @@ void DPrintPreviewDialogPrivate::themeTypeChange(DGuiApplicationHelper::ColorTyp
         DPaletteHelper::instance()->setPalette(m_frameList.at(i), pa);
     }
     for (int i = 0; i < m_back.size(); i++) {
+        if (m_back.at(i)->objectName() == "backGround")
+            continue;
         DPaletteHelper::instance()->setPalette(m_back.at(i), pa);
     }
 }
