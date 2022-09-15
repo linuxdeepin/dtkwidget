@@ -1729,6 +1729,7 @@ void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
         }
         if (pageRangeEdit->isAlert()) {
             pageRangeEdit->clear();
+            pageRangeEdit->setAlert(false);
             pageRangeEdit->lineEdit()->setPlaceholderText(qApp->translate("DPrintPreviewDialogPrivate", "For example, 1,3,5-7,11-15,18,21"));
         }
     }
