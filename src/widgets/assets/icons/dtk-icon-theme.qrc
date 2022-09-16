@@ -18,8 +18,6 @@
         <file>dark/icons/printer_original_12px.svg</file>
         <file>dark/icons/search_action_36px.svg</file>
         <file>light/icons/search_action_36px.svg</file>
-        <file>dark/icons/print_previewscale_18px.svg</file>
-        <file>light/icons/print_previewscale_18px.svg</file>
         <file>dark/icons/dorpper_normal_32px.svg</file>
         <file>light/icons/dorpper_normal_32px.svg</file>
         <file>dark/icons/titlebar_more_50px.svg</file>
@@ -28,6 +26,7 @@
         <file>dark/actions/splitscreen_right_36px.svg</file>
         <file>dark/actions/splitscreen_showmaximize_36px.svg</file>
         <file>dark/actions/splitscreen_shownormal_36px.svg</file>
+        <file>light/actions/print_previewscale_18px.svg</file>
         <file>light/actions/printer_dropup_14px.svg</file>
         <file>light/actions/printer_dropdown_14px.svg</file>
         <file>light/actions/splitscreen_left_36px.svg</file>
@@ -39,6 +38,7 @@
         <file>light/actions/printer_lrtb_3_24px.svg</file>
         <file>light/actions/printer_lrtb_4_24px.svg</file>
         <file>light/actions/printer_lrtb_5_24px.svg</file>
+        <file>dark/actions/print_previewscale_18px.svg</file>
         <file>dark/actions/printer_dropdown_14px.svg</file>
         <file>dark/actions/printer_dropup_14px.svg</file>
         <file>dark/actions/printer_lrtb_1_24px.svg</file>
