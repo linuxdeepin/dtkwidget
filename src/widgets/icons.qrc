@@ -25,4 +25,7 @@
         <file>assets/icons/light/icons/water_back_383px.svg</file>
         <file>assets/icons/light/icons/water_front_383px.svg</file>
     </qresource>
+    <qresource prefix="/dsg">
+        <file alias="built-in-icons/window_menu.dci">assets/icons/bloom/window_menu.dci</file>
+    </qresource>
 </RCC>

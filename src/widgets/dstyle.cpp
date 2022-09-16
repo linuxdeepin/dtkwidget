@@ -3,6 +3,9 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
 #include "dstyle.h"
+#include "ddciicon.h"
+#include "ddciiconpalette.h"
+#include "dguiapplicationhelper.h"
 #include "dstyleoption.h"
 
 #include <DGuiApplicationHelper>
@@ -633,12 +636,13 @@ void drawTitleBarMenuButton(QPainter *pa, const QRectF &rect)
     content_rect.moveCenter(rect.center().toPoint());
     pa->setPen(pen);
 
-    pa->setRenderHint(QPainter::Antialiasing, pa->device()->devicePixelRatioF() > 1.0);
-    pa->drawLine(content_rect.x(), content_rect.y(), content_rect.topRight().x() - 2, content_rect.topRight().y());
-    pa->drawLine(content_rect.bottomLeft(), content_rect.bottomRight());
-
-    qreal y = content_rect.center().y();
-    pa->drawLine(content_rect.x(), y, content_rect.topRight().x(), y);
+    const DDciIcon &icon = DDciIcon::fromTheme(QLatin1String("window_menu"));
+    auto devicePixelRatio = pa->device() ? pa->device()->devicePixelRatioF()
+                                         : qApp->devicePixelRatio();
+    auto appTheme = DGuiApplicationHelper::toColorType(pa->pen().color());
+    DDciIcon::Theme theme = appTheme == DGuiApplicationHelper::LightType ? DDciIcon::Light : DDciIcon::Dark;
+    DDciIconPalette palette(pa->pen().color());
+    icon.paint(pa, rect.toRect(), devicePixelRatio, theme, DDciIcon::Normal, Qt::AlignCenter, palette);
 }
 
 void drawTitleBarMinButton(QPainter *pa, const QRectF &rect)
