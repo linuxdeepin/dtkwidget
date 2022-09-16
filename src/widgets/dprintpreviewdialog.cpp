@@ -818,8 +818,8 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_CustomText, false);
     waterTextEdit->lineEdit()->setMaxLength(16);
     waterTextEdit->lineEdit()->setPlaceholderText(qApp->translate("DPrintPreviewDialogPrivate", "Input your text"));
-    hlayout2->addWidget(new DLabel, 4);
-    hlayout2->addWidget(waterTextEdit, 9);
+    hlayout2->addStretch(5);
+    hlayout2->addWidget(waterTextEdit, 10);
 
     QHBoxLayout *hlayout3 = new QHBoxLayout;
     fontCombo = new DComboBox;
@@ -2024,6 +2024,7 @@ void DPrintPreviewDialogPrivate::_q_textWaterMarkModeChanged(int index)
             pview->setTextWaterMark(lastCusWatermarkText);
         }
     }
+    waterTextEdit->setVisible(index == waterTextCombo->count() - 1);
 }
 
 /*!
