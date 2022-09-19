@@ -51,9 +51,8 @@ foreach(FILENAME ${CONFIGSOURCE})
   file(APPEND ${CONFIGNAME} "#define DTKWIDGET_CLASS_${thefile}\n")
 endforeach()
 
-file(GLOB TRANSLATE translations/*)
+file(GLOB TRANSLATE translations/*.ts)
 qt5_add_translation(TRANSLATEDFILES ${TRANSLATE})
-
 
 add_definitions(-DSN_API_NOT_YET_FROZEN)
 add_definitions(-DDTK_NO_MULTIMEDIA)
