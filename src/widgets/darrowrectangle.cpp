@@ -479,7 +479,8 @@ void DArrowRectangle::setBackgroundColor(const QColor &backgroundColor)
 
     d->m_backgroundColor = backgroundColor;
 
-    if ((d->m_handle || isDwayland()) && d->m_backgroundColor.toRgb().alpha() < 255) {
+    bool isFloatWindow = d->floatMode == FloatWindow;
+    if ((d->m_handle || (isFloatWindow && isDwayland())) && d->m_backgroundColor.toRgb().alpha() < 255) {
         if (!d->m_blurBackground) {
             d->m_blurBackground = new DBlurEffectWidget(this);
             d->m_blurBackground->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
