@@ -16,25 +16,30 @@ Deepint Tool Kit Core(DtkWidget) 提供各种UOS风格dtk基础控件.
 
 1. 确保已经安装了所有的编译依赖.
 ````bash
-sudo apt build-dep
+$ sudo apt build-dep ./
 ````
-如果需要使用qtcreator的`设计`功能，需要安装以下依赖:
+如果需要使用 `qtcreator` 的设计功能，可以 ：
 ```bash
-sudo apt install qttools5-dev
+$ sudo apt install qttools5-dev
+
+# build
+$ cmake ./plugin/dtkuiplugin -B build -DINSTALL_PLUGIN=ON
+$ cmake --build build -j$(nproc)
+
+# install
+$ sudo make install
 ```
-2. 构建:
+2. 构建 `dtkwidget` :
 
 ```bash
-mkdir build
-cd build
-cmake ..
-make
+$ cmake -B build
+$ cmake --build build -j$(nproc)
 ```
 
 3. 安装:
 
 ```bash
-sudo make install
+$ sudo make install
 ```
 
 ## 帮助
