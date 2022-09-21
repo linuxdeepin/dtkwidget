@@ -61,4 +61,4 @@ $ sudo make install
 
 ## 协议
 
-DTK工具包遵循协议 [LGPLv3](LICENSE).
+DTK工具包遵循协议 [LGPL-3.0-or-later](LICENSE).
