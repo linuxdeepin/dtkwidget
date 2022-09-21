@@ -59,4 +59,4 @@ We encourage you to report issues and contribute changes
 
 ## License
 
-deepin-tool-kit is licensed under [LGPLv3](LICENSE).
+deepin-tool-kit is licensed under [LGPL-3.0-or-later](LICENSE).
