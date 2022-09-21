@@ -62,6 +62,6 @@ target_include_directories(${UIPLUGIN} PUBLIC
 set (INSTALL_PLUGIN OFF CACHE BOOL "install dtk designer plugin")
 if (INSTALL_PLUGIN)
     set(QT_PLUGIN_DESIGNER_PATH "qt5/plugins/designer/")
-    install(TARGETS ${BIN_NAME} DESTINATION "${CMAKE_INSTALL_FULL_LIBDIR}/${QT_PLUGIN_DESIGNER_PATH}")
+    install(TARGETS ${UIPLUGIN} DESTINATION "${CMAKE_INSTALL_FULL_LIBDIR}/${QT_PLUGIN_DESIGNER_PATH}")
     message("install path:" "${CMAKE_INSTALL_FULL_LIBDIR}/${QT_PLUGIN_DESIGNER_PATH}")
 endif()

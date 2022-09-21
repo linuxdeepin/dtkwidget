@@ -13,32 +13,34 @@ Deepin Tool Kit Widget(DtkWidget) provides the base widgets on Deepin.
 ### Build from source code
 
 1. Make sure you have installed all dependencies.
-````
+```bash
 $ sudo apt build-dep ./
-````
+```
 If you need to use the designer plugin, you can:
-````
+```bash
 $ sudo apt install qttools5-dev
 
 # build
-$ cmake ./plugin/dtkuiplugin -B build -DINSTALL_PLUGIN=ON
+$ cmake ./plugin/dtkuiplugin -B build -DINSTALL_PLUGIN=ON -DCMAKE_INSTALL_PREFIX=/usr
 $ cmake --build build -j$(nproc)
 
 # install
+$ cd build
 $ sudo make install
-````
+```
 2. Build:
 
-````
+```bash
 $ cmake -B build
 $ cmake --build build -j$(nproc)
-````
+```
 
 3. Install:
 
-````
+```bash
+$ cd build
 $ sudo make install
-````
+```
 
 ## Getting help
 
