@@ -20,7 +20,6 @@ public:
     DShadowLinePrivate(DShadowLine *qq)
         : DObjectPrivate(qq)
     {
-
     }
 
     QPixmap shadow;
@@ -34,11 +33,22 @@ DShadowLine::DShadowLine(QWidget *parent)
     : QWidget(parent)
     , DObject(*new DShadowLinePrivate(this))
 {
-    connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged, this, [this] {
-        D_D(DShadowLine);
-        d->shadow = QPixmap();
-        update();
-    });
+    D_D(DShadowLine);
+    // 在非变色龙主题下，无法通过QIcon::fromtheme访问这个图标资源
+    // 为了让软件在其他非变色龙的主题上正常显示，这里不使用图标引擎，而直接使用图标
+    auto getPixmap = [=](DGuiApplicationHelper::ColorType themeType) {
+        return themeType == DGuiApplicationHelper::LightType ?
+                   QPixmap::fromImage(QImage(":/icons/deepin/builtin/light/texts/titlebar_shadow_20px.svg")) :
+                   QPixmap::fromImage(QImage(":/icons/deepin/builtin/dark/texts/titlebar_shadow_20px.svg"));
+    };
+    d->shadow = getPixmap(DGuiApplicationHelper::instance()->themeType());
+    connect(DGuiApplicationHelper::instance(),
+            &DGuiApplicationHelper::themeTypeChanged,
+            this,
+            [=](DGuiApplicationHelper::ColorType themeType) {
+                d->shadow = getPixmap(themeType);
+                update();
+            });
 
     setAttribute(Qt::WA_TransparentForMouseEvents);
     setFocusPolicy(Qt::NoFocus);
@@ -53,10 +63,6 @@ void DShadowLine::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event)
     D_D(DShadowLine);
-
-    if (d->shadow.isNull()) {
-        d->shadow = QIcon::fromTheme("titlebar_shadow").pixmap(sizeHint());
-    }
 
     QPainter pa(this);
     pa.drawPixmap(contentsRect(), d->shadow);
