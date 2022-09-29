@@ -35,6 +35,7 @@
 #include <QLineEdit>
 #include <QTableView>
 #include <QListWidget>
+#include <QPointer>
 #include <private/qlayoutengine_p.h>
 
 Q_DECLARE_METATYPE(QMargins)
@@ -145,7 +146,7 @@ public:
     QSize maxSize;
     QMargins clickMargins;
     bool clickable = false;
-    QWidget *widget = nullptr;
+    QPointer<QWidget> widget = nullptr;
 
     qint8 colorType = -1;
     qint8 colorRole = -1;
@@ -431,12 +432,78 @@ public:
         return bounding;
     }
 
+    static DViewItemActionList allActions(const QModelIndex &index)
+    {
+        static const QVector<ItemDataRole> rules {
+            LeftActionListRole,
+                    TopActionListRole,
+                    RightActionListRole,
+                    BottomActionListRole,
+                    TextActionListRole
+        };
+        DViewItemActionList results;
+        for (const auto role: rules) {
+            const auto &list = qvariantToActionList(index.data(role));
+            if (list.isEmpty())
+                continue;
+            results << list;
+        }
+        return results;
+    }
+
+    bool readyRecordVisibleWidgetOfCurrentFrame()
+    {
+        // multi QEvent maybe be merged to one using postEvent
+        // so we can clear cache avoid to recording multi ItemWidget.
+        if (Q_UNLIKELY(hasStartRecord)) {
+            currentWidgets.clear();
+            return false;
+        }
+        hasStartRecord = true;
+        return true;
+    }
+
+    void updateWidgetVisibleInUnvisualArea()
+    {
+        hasStartRecord = false;
+        if (lastWidgets.isEmpty() && currentWidgets.isEmpty())
+            return;
+
+        for (const auto &widget : qAsConst(lastWidgets)) {
+            if (currentWidgets.contains(widget))
+                continue;
+            if (widget && widget->isVisible())
+                widget->setVisible(false);
+        }
+
+        lastWidgets.swap(currentWidgets);
+        currentWidgets.clear();
+    }
+
+    void recordVisibleWidgetOfCurrentFrame(const QModelIndex &index)
+    {
+        // only record virsual widget when starting record.
+        if (Q_UNLIKELY(!hasStartRecord))
+            return;
+
+        for (auto action : allActions(index)) {
+            if (!action->isVisible())
+                continue;
+
+            if (auto widget = action->widget())
+                currentWidgets.append(QPointer<QWidget>(widget));
+        }
+    }
+
     DStyledItemDelegate::BackgroundType backgroundType = DStyledItemDelegate::NoBackground;
     QMargins margins;
     QSize itemSize;
     int itemSpacing = 0;
     QMap<QModelIndex, QList<QPair<QAction*, QRect>>> clickableActionMap;
     QAction *pressedAction = nullptr;
+    QList<QPointer<QWidget>> lastWidgets;
+    QList<QPointer<QWidget>> currentWidgets;
+    bool hasStartRecord = false;
 };
 
 /*!
@@ -731,7 +798,7 @@ void DViewItemAction::setWidget(QWidget *widget)
 {
     D_D(DViewItemAction);
 
-    d->widget = widget;
+    d->widget = QPointer<QWidget>(widget);
     d->widget->setVisible(false);
 }
 
@@ -788,6 +855,7 @@ DStyledItemDelegate::DStyledItemDelegate(QAbstractItemView *parent)
 {
     //支持QAction的点击
     parent->viewport()->installEventFilter(this);
+    parent->installEventFilter(this);
 
     // 初始化 background type. 注意 setBackgroundType() 中有额外的处理操作，所以不能直接简单的修改默认值
     setBackgroundType(DStyledItemDelegate::RoundedBackground);
@@ -974,6 +1042,8 @@ void DStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
                                               ? QPalette::Highlight : QPalette::Window);
         style->drawPrimitive(QStyle::PE_FrameFocusRect, &o, painter, widget);
     }
+
+    const_cast<DStyledItemDelegatePrivate*>(d)->recordVisibleWidgetOfCurrentFrame(index);
 }
 
 QSize DStyledItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -1274,6 +1344,22 @@ bool DStyledItemDelegate::eventFilter(QObject *object, QEvent *event)
     }
     default:
         break;
+    }
+    if (object == parent()) {
+        static const QEvent::Type UpdateWidgetVisibleEvent(
+                    static_cast<QEvent::Type>(QEvent::registerEventType()));
+
+        if (event->type() == QEvent::Paint) {
+            D_D(DStyledItemDelegate);
+            if (d->readyRecordVisibleWidgetOfCurrentFrame()) {
+                auto updateEvent = new QEvent(UpdateWidgetVisibleEvent);
+                qApp->postEvent(parent(), updateEvent);
+            }
+        } else if (event->type() == UpdateWidgetVisibleEvent) {
+            D_D(DStyledItemDelegate);
+            d->updateWidgetVisibleInUnvisualArea();
+            return true;
+        }
     }
 
     return QStyledItemDelegate::eventFilter(object, event);
