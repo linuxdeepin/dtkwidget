@@ -55,7 +55,7 @@ qt5_add_translation(TRANSLATEDFILES ${TRANSLATE})
 
 add_definitions(-DSN_API_NOT_YET_FROZEN)
 add_definitions(-DDTK_NO_MULTIMEDIA)
-#TrainslateDir
+#TranslateDir
 add_definitions(-DDWIDGET_TRANSLATIONS_DIR="libdtk-${CMAKE_PROJECT_VERSION}/DWidget/translations")
 find_package(Qt5 COMPONENTS X11Extras)
 find_package(Qt5 COMPONENTS DBus)
