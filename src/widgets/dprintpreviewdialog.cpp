@@ -1704,6 +1704,7 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
 void DPrintPreviewDialogPrivate::_q_pageRangeChanged(int index)
 {
     setEnable(index, pageRangeCombo);
+    pageRangeEdit->setVisible(index == DPrintPreviewWidget::SelectPage);
     pageRangeEdit->lineEdit()->setPlaceholderText("");
     pageRangeEdit->setText("");
     if (index == DPrintPreviewWidget::AllPage || index == DPrintPreviewWidget::CurrentPage) {
