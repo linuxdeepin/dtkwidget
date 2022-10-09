@@ -799,13 +799,14 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     vContentLayout->setContentsMargins(0, 5, 0, 5);
     vContentLayout->setSpacing(10);
     QVBoxLayout *vWatertypeLayout = new QVBoxLayout;
+    vWatertypeLayout->setContentsMargins(0, 0, 0, 0);
     textWatermarkWdg = new DWidget;
     picWatermarkWdg = new DWidget;
     vWatertypeLayout->addWidget(textWatermarkWdg);
     vWatertypeLayout->addWidget(picWatermarkWdg);
 
     QVBoxLayout *textVlayout = new QVBoxLayout;
-    textVlayout->setContentsMargins(0, 0, 5, 0);
+    textVlayout->setContentsMargins(9, 9, 14, 9);
     QHBoxLayout *hlayout1 = new QHBoxLayout;
     DRadioButton *textBtn = new DRadioButton(qApp->translate("DPrintPreviewDialogPrivate", "Text watermark"));
     waterTextCombo = new DComboBox;
@@ -844,7 +845,7 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     textWatermarkWdg->setLayout(textVlayout);
 
     QHBoxLayout *picHlayout = new QHBoxLayout;
-    picHlayout->setContentsMargins(0, 0, 5, 0);
+    picHlayout->setContentsMargins(9, 9, 14, 9);
     DRadioButton *picBtn = new DRadioButton(qApp->translate("DPrintPreviewDialogPrivate", "Picture watermark"));
     picPathEdit = new DFileChooserEdit;
     picPathEdit->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_Watermark_ImageEdit]);
