@@ -2239,6 +2239,9 @@ QIcon DStyle::standardIcon(QStyle::StandardPixmap st, const QStyleOption *opt, c
         CASE_ICON(TitleQuitFullButton)
     case SP_LineEditClearButton:
         return QIcon::fromTheme("button_edit-clear");
+    case SP_CommandLink:
+            return QIcon::fromTheme(QLatin1String("go-next"),
+                                    QIcon::fromTheme(QLatin1String("forward")));
     default:
         break;
     }
