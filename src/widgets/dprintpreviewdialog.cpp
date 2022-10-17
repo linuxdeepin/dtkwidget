@@ -98,6 +98,7 @@ static QLatin1String _d_printSettingNameMap[DPrintPreviewSettingInterface::SC_Co
     QLatin1String("MarginsAdjustWidget"),
     QLatin1String("ScalingContentBackgroundGroup"),
     QLatin1String("WaterMarkFrame"),
+    QLatin1String("WaterMarkContentFrame"),
     QLatin1String("WaterMarkTypeBackgroundGroup"),
     QLatin1String("WaterMarkTextTypeComboBox"),
     QLatin1String("WaterMarkCustomTextEdit"),
@@ -768,7 +769,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     watermarkframe->setLayout(texttypelayout);
 
     watermarksettingwdg = new DWidget;
-    watermarksettingwdg->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_WatermarkWidget]);
+    watermarksettingwdg->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_WatermarkContentWidget]);
     watermarksettingwdg->setMinimumWidth(WIDTH_NORMAL);
     initWaterMarkui();
     watermarksettingwdg->hide();
@@ -2069,14 +2070,14 @@ void DPrintPreviewDialogPrivate::waterMarkBtnClicked(bool checked)
 {
     if (checked) {
         wmSpacer->changeSize(WIDTH_NORMAL, SPACER_HEIGHT_HIDE);
-        settingHelper->setSubControlVisible(DPrintPreviewSettingInterface::SC_WatermarkWidget, true);
+        settingHelper->setSubControlVisible(DPrintPreviewSettingInterface::SC_WatermarkContentWidget, true);
         waterTypeGroup->button(typeChoice)->setChecked(true);
         watermarkTypeChoosed(typeChoice);
         if (typeChoice == Type_Image - 1 && !picPathEdit->text().isEmpty())
             customPictureWatermarkChoosed(picPathEdit->text());
     } else {
         wmSpacer->changeSize(WIDTH_NORMAL, SPACER_HEIGHT_SHOW);
-        settingHelper->setSubControlVisible(DPrintPreviewSettingInterface::SC_WatermarkWidget, false);
+        settingHelper->setSubControlVisible(DPrintPreviewSettingInterface::SC_WatermarkContentWidget, false);
         pview->setWaterMarkType(Type_None);
     }
 }

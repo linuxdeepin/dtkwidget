@@ -39,6 +39,7 @@ public:
         SC_Margin_AdjustContol,
         SC_ScalingWidget,
         SC_WatermarkWidget,
+        SC_WatermarkContentWidget,
         SC_Watermark_TypeGroup,
         SC_Watermark_TextType,
         SC_Watermark_CustomText,
