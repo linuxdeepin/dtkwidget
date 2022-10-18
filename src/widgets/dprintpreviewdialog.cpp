@@ -328,8 +328,10 @@ void DPrintPreviewDialogPrivate::initbasicui()
     QHBoxLayout *printerlayout = new QHBoxLayout(printerFrame);
     printerlayout->setContentsMargins(10, 0, 10, 0);
     DLabel *printerlabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Printer"), printerFrame);
+    printerlabel->setSizePolicy(QSizePolicy::Maximum, printerlabel->sizePolicy().verticalPolicy());
     printDeviceCombo = new DComboBox(basicsettingwdg);
     printerlayout->addWidget(printerlabel, 4);
+    printerlayout->addStretch(1);
     printerlayout->addWidget(printDeviceCombo, 9);
     printerlayout->setAlignment(printDeviceCombo, Qt::AlignVCenter);
 
@@ -342,11 +344,13 @@ void DPrintPreviewDialogPrivate::initbasicui()
     QHBoxLayout *copycountlayout = new QHBoxLayout(copycountFrame);
     copycountlayout->setContentsMargins(10, 0, 10, 0);
     DLabel *copycountlabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Copies"), copycountFrame);
+    copycountlabel->setSizePolicy(QSizePolicy::Maximum, copycountlabel->sizePolicy().verticalPolicy());
     copycountspinbox = new DSpinBox(copycountFrame);
     copycountspinbox->setEnabledEmbedStyle(true);
     copycountspinbox->setRange(1, 999);
     copycountspinbox->installEventFilter(q);
     copycountlayout->addWidget(copycountlabel, 4);
+    copycountlayout->addStretch(1);
     copycountlayout->addWidget(copycountspinbox, 9);
 
     QRegExp re("^[1-9][0-9][0-9]$");
@@ -362,6 +366,7 @@ void DPrintPreviewDialogPrivate::initbasicui()
     QVBoxLayout *pagelayout = new QVBoxLayout(pageFrame);
     pagelayout->setContentsMargins(10, 5, 10, 5);
     DLabel *pagerangelabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Page range"), pageFrame);
+    pagerangelabel->setSizePolicy(QSizePolicy::Maximum, printerlabel->sizePolicy().verticalPolicy());
     pageRangeCombo = new DComboBox(pageFrame);
     pageRangeCombo->addItem(qApp->translate("DPrintPreviewDialogPrivate", "All"));
     pageRangeCombo->addItem(qApp->translate("DPrintPreviewDialogPrivate", "Current page"));
@@ -371,6 +376,7 @@ void DPrintPreviewDialogPrivate::initbasicui()
     QHBoxLayout *hrangebox = new QHBoxLayout(hrangeWidget);
     hrangebox->setMargin(0);
     hrangebox->addWidget(pagerangelabel, 4);
+    hrangebox->addStretch(1);
     hrangebox->addWidget(pageRangeCombo, 9);
 
     pageRangeEdit = new DLineEdit;
@@ -451,7 +457,8 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     setwidgetfont(pagesLabel, DFontSizeManager::T5);
     QHBoxLayout *pagestitlelayout = new QHBoxLayout;
     pagestitlelayout->setContentsMargins(10, 20, 0, 0);
-    pagestitlelayout->addWidget(pagesLabel, Qt::AlignLeft | Qt::AlignBottom);
+    pagestitlelayout->addWidget(pagesLabel);
+    pagestitlelayout->setAlignment(pagesLabel, Qt::AlignLeft | Qt::AlignBottom);
 
     DFrame *colorframe = new DFrame;
     colorframe->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_ColorModeWidget]);
@@ -459,9 +466,11 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     colorframe->setFixedHeight(HEIGHT_NORMAL);
     QHBoxLayout *colorlayout = new QHBoxLayout(colorframe);
     DLabel *colorlabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Color mode"));
+    colorlabel->setSizePolicy(QSizePolicy::Maximum, colorlabel->sizePolicy().verticalPolicy());
     colorModeCombo = new DComboBox;
     colorModeCombo->addItems(QStringList() << qApp->translate("DPrintPreviewDialogPrivate", "Color") << qApp->translate("DPrintPreviewDialogPrivate", "Grayscale"));
     colorlayout->addWidget(colorlabel, 4);
+    colorlayout->addStretch(1);
     colorlayout->addWidget(colorModeCombo, 9);
     colorlayout->setContentsMargins(10, 4, 10, 4);
 
@@ -472,10 +481,12 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     marginslayout->setContentsMargins(10, 5, 10, 5);
     QHBoxLayout *marginscombolayout = new QHBoxLayout;
     DLabel *marginlabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Margins"));
+    marginlabel->setSizePolicy(QSizePolicy::Maximum, marginlabel->sizePolicy().verticalPolicy());
     marginsCombo = new DComboBox;
     marginsCombo->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_Margin_TypeControl]);
     marginsCombo->addItems(QStringList() << qApp->translate("DPrintPreviewDialogPrivate", "Narrow (mm)") << qApp->translate("DPrintPreviewDialogPrivate", "Normal (mm)") << qApp->translate("DPrintPreviewDialogPrivate", "Moderate (mm)") << qApp->translate("DPrintPreviewDialogPrivate", "Customize (mm)"));
     marginscombolayout->addWidget(marginlabel, 4);
+    marginscombolayout->addStretch(1);
     marginscombolayout->addWidget(marginsCombo, 9);
 
     QWidget *marginSpinWidget = new QWidget(q);
@@ -542,7 +553,9 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     scalingLabel->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_ScalingWidget]);
     QHBoxLayout *scalingtitlelayout = new QHBoxLayout;
     scalingtitlelayout->setContentsMargins(10, 20, 0, 0);
-    scalingtitlelayout->addWidget(scalingLabel, Qt::AlignLeft | Qt::AlignBottom);
+    scalingtitlelayout->addWidget(scalingLabel);
+    scalingtitlelayout->setAlignment(scalingLabel, Qt::AlignLeft | Qt::AlignBottom);
+
     setwidgetfont(scalingLabel, DFontSizeManager::T5);
 
     scaleGroup = new QButtonGroup(q);
@@ -598,7 +611,8 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     setwidgetfont(paperLabel, DFontSizeManager::T5);
     QHBoxLayout *papertitlelayout = new QHBoxLayout;
     papertitlelayout->setContentsMargins(10, 0, 0, 0);
-    papertitlelayout->addWidget(paperLabel, Qt::AlignLeft | Qt::AlignBottom);
+    papertitlelayout->addWidget(paperLabel);
+    papertitlelayout->setAlignment(paperLabel, Qt::AlignLeft | Qt::AlignBottom);
 
     DFrame *paperframe = new DFrame;
     paperframe->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_PaperSizeWidget]);
@@ -606,9 +620,11 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     paperframe->setFixedHeight(HEIGHT_NORMAL);
     QHBoxLayout *paperframelayout = new QHBoxLayout(paperframe);
     DLabel *papersizelabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Paper size"));
+    papersizelabel->setSizePolicy(QSizePolicy::Maximum, papersizelabel->sizePolicy().verticalPolicy());
     paperSizeCombo = new DComboBox;
     paperSizeCombo->setFixedHeight(36);
     paperframelayout->addWidget(papersizelabel, 4);
+    paperframelayout->addStretch(1);
     paperframelayout->addWidget(paperSizeCombo, 9);
     paperframelayout->setContentsMargins(10, 4, 10, 4);
     paperlayout->addLayout(papertitlelayout);
@@ -622,7 +638,8 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     setwidgetfont(drawingLabel, DFontSizeManager::T5);
     QHBoxLayout *drawingtitlelayout = new QHBoxLayout;
     drawingtitlelayout->setContentsMargins(10, 20, 0, 0);
-    drawingtitlelayout->addWidget(drawingLabel, Qt::AlignLeft | Qt::AlignBottom);
+    drawingtitlelayout->addWidget(drawingLabel);
+    drawingtitlelayout->setAlignment(drawingLabel, Qt::AlignLeft | Qt::AlignBottom);
 
     DFrame *duplexframe = new DFrame;
     duplexframe->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_DuplexWidget]);
@@ -708,7 +725,8 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     setwidgetfont(orderLabel, DFontSizeManager::T5);
     QHBoxLayout *ordertitlelayout = new QHBoxLayout;
     ordertitlelayout->setContentsMargins(0, 20, 0, 0);
-    ordertitlelayout->addWidget(orderLabel, Qt::AlignLeft | Qt::AlignBottom);
+    ordertitlelayout->addWidget(orderLabel);
+    ordertitlelayout->setAlignment(orderLabel, Qt::AlignLeft | Qt::AlignBottom);
 
     QVBoxLayout *ordercontentlayout = new QVBoxLayout;
     ordercontentlayout->setContentsMargins(0, 0, 0, 0);
@@ -753,7 +771,9 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     watermarkLabel->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_WatermarkWidget]);
     QHBoxLayout *watermarktitlelayout = new QHBoxLayout;
     watermarktitlelayout->setContentsMargins(10, 20, 0, 0);
-    watermarktitlelayout->addWidget(watermarkLabel, Qt::AlignLeft | Qt::AlignBottom);
+    watermarktitlelayout->addWidget(watermarkLabel);
+    watermarktitlelayout->setAlignment(watermarkLabel, Qt::AlignLeft | Qt::AlignBottom);
+
     setwidgetfont(watermarkLabel, DFontSizeManager::T5);
 
     DFrame *watermarkframe = new DFrame;
@@ -762,9 +782,11 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     QHBoxLayout *texttypelayout = new QHBoxLayout;
     texttypelayout->setContentsMargins(10, 10, 10, 10);
     DLabel *addlabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Add watermark"));
+    addlabel->setSizePolicy(QSizePolicy::Maximum, addlabel->sizePolicy().verticalPolicy());
     waterMarkBtn = new DSwitchButton;
     waterMarkBtn->setChecked(false);
     texttypelayout->addWidget(addlabel, Qt::AlignLeft);
+    texttypelayout->addStretch(1);
     texttypelayout->addWidget(waterMarkBtn, Qt::AlignRight);
     watermarkframe->setLayout(texttypelayout);
 
@@ -868,11 +890,13 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     posframe->setFixedHeight(HEIGHT_NORMAL);
     QHBoxLayout *posframelayout = new QHBoxLayout(posframe);
     DLabel *poslabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Layout"));
+    poslabel->setSizePolicy(QSizePolicy::Maximum, poslabel->sizePolicy().verticalPolicy());
     waterPosCombox = new DComboBox;
     waterPosCombox->addItems(QStringList() << qApp->translate("DPrintPreviewDialogPrivate", "Tile") << qApp->translate("DPrintPreviewDialogPrivate", "Center"));
     waterPosCombox->setCurrentIndex(waterPosCombox->count() - 1);
     waterPosCombox->setFixedHeight(36);
     posframelayout->addWidget(poslabel, 4);
+    posframelayout->addStretch(1);
     posframelayout->addWidget(waterPosCombox, 9);
     posframelayout->setContentsMargins(10, 4, 10, 4);
 
@@ -882,6 +906,7 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     inclinatframe->setFixedHeight(HEIGHT_NORMAL);
     QHBoxLayout *inclinatframelayout = new QHBoxLayout(inclinatframe);
     DLabel *inclinatlabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Angle"));
+    inclinatlabel->setSizePolicy(QSizePolicy::Maximum, inclinatlabel->sizePolicy().verticalPolicy());
     inclinatBox = new DSpinBox;
     inclinatBox->setSuffix("°");
     inclinatBox->setValue(30);
@@ -890,6 +915,7 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     inclinatBox->setFixedHeight(36);
     inclinatBox->setEnabledEmbedStyle(true);
     inclinatframelayout->addWidget(inclinatlabel, 4);
+    inclinatframelayout->addStretch(1);
     inclinatframelayout->addWidget(inclinatBox, 9);
     inclinatframelayout->setContentsMargins(10, 4, 10, 4);
 
@@ -899,6 +925,7 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     sizeframe->setFixedHeight(HEIGHT_NORMAL);
     QHBoxLayout *sizeframelayout = new QHBoxLayout(sizeframe);
     DLabel *sizelabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Size"));
+    sizelabel->setSizePolicy(QSizePolicy::Maximum, sizelabel->sizePolicy().verticalPolicy());
     waterSizeSlider = new DSlider;
     sizeBox = new DSpinBox;
     sizeBox->lineEdit()->setReadOnly(true);
@@ -911,6 +938,7 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     waterSizeSlider->setValue(100);
     waterSizeSlider->setMinimum(10);
     sizeframelayout->addWidget(sizelabel, 4);
+    sizeframelayout->addStretch(1);
     sizeframelayout->addWidget(waterSizeSlider, 7);
     sizeframelayout->addWidget(sizeBox, 2);
     sizeframelayout->setContentsMargins(10, 4, 10, 4);
@@ -921,6 +949,7 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     opaframe->setFixedHeight(HEIGHT_NORMAL);
     QHBoxLayout *opaframelayout = new QHBoxLayout(opaframe);
     DLabel *opalabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Transparency"));
+    opalabel->setSizePolicy(QSizePolicy::Maximum, opalabel->sizePolicy().verticalPolicy());
     wmOpaSlider = new DSlider;
     opaBox = new DSpinBox;
     opaBox->lineEdit()->setReadOnly(true);
@@ -932,6 +961,7 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     wmOpaSlider->setValue(30);
     wmOpaSlider->setMaximum(100);
     opaframelayout->addWidget(opalabel, 4);
+    opaframelayout->addStretch(1);
     opaframelayout->addWidget(wmOpaSlider, 7);
     opaframelayout->addWidget(opaBox, 2);
     opaframelayout->setContentsMargins(10, 4, 10, 4);
