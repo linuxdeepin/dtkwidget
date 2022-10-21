@@ -57,6 +57,14 @@ We encourage you to report issues and contribute changes
 
 * [Contribution guide for developers](https://github.com/linuxdeepin/developer-center/wiki/Contribution-Guidelines-for-Developers-en). (English)
 
+## Made with dtkwidget
+
+List of some open source projects using dtkwidget: (Contact us or open a pull request to add yours)
+
+ - **[DMarked](https://github.com/DMarked/DMarked)**: Markdown Editor with dtkwidget
+ - **[DtkTimer](https://github.com/gfdgd-xi/timer)**: Clock with dtkwidget
+ - **[simple-image-filter](https://github.com/dependon/simple-image-filter)**: Image Process with dtkwidget
+ - **[SparkStore](https://github.com/Spark-Store/Spark-Store)**: SparkStore
 ## License
 
 deepin-tool-kit is licensed under [LGPL-3.0-or-later](LICENSE).

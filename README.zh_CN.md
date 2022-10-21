@@ -59,6 +59,15 @@ $ sudo make install
 
 * [开发者代码贡献指南](https://github.com/linuxdeepin/developer-center/wiki/Contribution-Guidelines-for-Developers)
 
+## 使用dtkwidget的项目
+
+下面是使用dtkwidget的开源项目:(如果您想添加属于自己的开源项目请给我们提交PR)
+
+ - **[DMarked](https://github.com/DMarked/DMarked)**: 使用Dtk构建的Markdown编辑器
+ - **[DtkTimer](https://github.com/gfdgd-xi/timer)**: 使用DtkWidget构建的时钟
+ - **[simple-image-filter](https://github.com/dependon/simple-image-filter)**: 使用DtkWidget构建的图像处理软件 
+ - **[SparkStore](https://github.com/Spark-Store/Spark-Store)**: 星火商店
+
 ## 协议
 
 DTK工具包遵循协议 [LGPL-3.0-or-later](LICENSE).
