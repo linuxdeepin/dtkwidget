@@ -67,6 +67,9 @@ $ sudo make install
  - **[DtkTimer](https://github.com/gfdgd-xi/timer)**: 使用DtkWidget构建的时钟
  - **[simple-image-filter](https://github.com/dependon/simple-image-filter)**: 使用DtkWidget构建的图像处理软件 
  - **[SparkStore](https://github.com/Spark-Store/Spark-Store)**: 星火商店
+ - **[WingHexExplorer](https://github.com/Wing-summer/WingHexExplorer)**: 使用DtkWidget构建的强大的十六进制编辑器
+ - **[WingTool](https://github.com/Wing-summer/WingTool)**: 使用DtkWidget构建的基于插件的工具箱
+ - **[ScreenLight](https://github.com/Wing-summer/ScreenLight)**: 使用DtkWidget构建的用于调节屏幕亮度的小工具
 
 ## 协议
 
