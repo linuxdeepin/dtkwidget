@@ -59,6 +59,8 @@
 #define DXCB_PLUGIN_SYMBOLIC_PROPERTY "_d_isDxcb"
 #define QT_THEME_CONFIG_PATH "D_QT_THEME_CONFIG_PATH"
 
+extern QWidget *qt_button_down;
+
 DCORE_USE_NAMESPACE
 
 DWIDGET_BEGIN_NAMESPACE
@@ -1491,6 +1493,13 @@ bool DApplication::notify(QObject *obj, QEvent *event)
     if (event->type() == QEvent::ApplicationFontChange) {
         // ApplicationFontChange 调用 font() 是 ok 的，如果在 fontChanged 中调用在某些版本中会出现 deadlock
         DFontSizeManager::instance()->setFontGenericPixelSize(static_cast<quint16>(DFontSizeManager::fontPixelSize(font())));
+    }
+
+    if (QEvent::MouseMove == event->type() && qt_button_down) {
+        QMouseEvent *me = static_cast<QMouseEvent*>(event);
+        if (!me->buttons()) {
+            qt_button_down = nullptr;
+        }
     }
 
     return QApplication::notify(obj, event);
