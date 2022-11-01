@@ -547,6 +547,9 @@ DApplication::DApplication(int &argc, char **argv) :
         setAttribute(Qt::AA_ForceRasterWidgets);
     }
 
+    if (!qEnvironmentVariableIsSet("D_DTK_SHOWSHORTCUTSINCONTEXTMENUS"))
+        setAttribute(Qt::AA_DontShowShortcutsInContextMenus);
+
 #ifdef Q_OS_LINUX
     // set qpixmap cache limit
     if (QGSettings::isSchemaInstalled("com.deepin.dde.dapplication"))
