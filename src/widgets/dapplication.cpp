@@ -234,7 +234,7 @@ bool DApplicationPrivate::loadDtkTranslator(QList<QLocale> localeFallback)
     qtTranslator->load("qtbase_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
     q->installTranslator(qtbaseTranslator);
 
-    QList<DPathBuf> translateDirs;
+    QList<QString> translateDirs;
     auto dtkwidgetDir = DWIDGET_TRANSLATIONS_DIR;
     auto dtkwidgetName = "dtkwidget";
 
@@ -242,73 +242,14 @@ bool DApplicationPrivate::loadDtkTranslator(QList<QLocale> localeFallback)
     auto dataDirs = DStandardPaths::standardLocations(QStandardPaths::GenericDataLocation);
     for (const auto &path : dataDirs) {
         DPathBuf DPathBuf(path);
-        translateDirs << DPathBuf / dtkwidgetDir;
+        translateDirs << (DPathBuf / dtkwidgetDir).toString();
     }
-
-    DPathBuf runDir(q->applicationDirPath());
-    translateDirs << runDir.join("translations");
-
-    DPathBuf currentDir(QDir::currentPath());
-    translateDirs << currentDir.join("translations");
 
 #ifdef DTK_STATIC_TRANSLATION
-    translateDirs << DPathBuf(":/dtk/translations");
+    translateDirs << QString(":/dtk/translations");
 #endif
 
-    return loadTranslator(translateDirs, dtkwidgetName, localeFallback);
-}
-
-bool DApplicationPrivate::loadTranslator(QList<DPathBuf> translateDirs, const QString &name, QList<QLocale> localeFallback)
-{
-    D_Q(DApplication);
-
-    QStringList missingQmfiles;
-    for (auto &locale : localeFallback) {
-        QString translateFilename = QString("%1_%2").arg(name).arg(locale.name());
-        for (auto &path : translateDirs) {
-            QString translatePath = (path / translateFilename).toString();
-            if (QFile::exists(translatePath + ".qm")) {
-                qDebug() << "load translate" << translatePath;
-                auto translator = new QTranslator(q);
-                translator->load(translatePath);
-                q->installTranslator(translator);
-                q->setProperty("dapp_locale", locale.name());
-                return true;
-            }
-        }
-
-        // fix english does not need to translation..
-        if (locale.language() != QLocale::English) {
-            missingQmfiles << translateFilename + ".qm";
-        }
-
-        QStringList parseLocalNameList = locale.name().split("_", QString::SkipEmptyParts);
-        if (parseLocalNameList.length() > 0) {
-            translateFilename = QString("%1_%2").arg(name)
-                                .arg(parseLocalNameList.at(0));
-            for (auto &path : translateDirs) {
-                QString translatePath = (path / translateFilename).toString();
-                if (QFile::exists(translatePath + ".qm")) {
-                    qDebug() << "translatePath after feedback:" << translatePath;
-                    auto translator = new QTranslator(q);
-                    translator->load(translatePath);
-                    q->installTranslator(translator);
-                    q->setProperty("dapp_locale", parseLocalNameList.at(0));
-                    return true;
-                }
-            }
-        }
-
-        // fix english does not need to translation..
-        if (locale.language() != QLocale::English) {
-            missingQmfiles << translateFilename + ".qm";
-        }
-    }
-
-    if (missingQmfiles.size() > 0) {
-        qWarning() << name << "can not find qm files" << missingQmfiles;
-    }
-    return false;
+    return DGuiApplicationHelper::loadTranslator(dtkwidgetName, translateDirs, localeFallback);
 }
 
 // 自动激活DMainWindow类型的窗口
@@ -779,24 +720,20 @@ bool DApplication::loadTranslator(QList<QLocale> localeFallback)
 
     d->loadDtkTranslator(localeFallback);
 
-    QList<DPathBuf> translateDirs;
+    QList<QString> translateDirs;
     auto appName = applicationName();
     //("/home/user/.local/share", "/usr/local/share", "/usr/share")
     auto dataDirs = DStandardPaths::standardLocations(QStandardPaths::GenericDataLocation);
     for (const auto &path : dataDirs) {
         DPathBuf DPathBuf(path);
-        translateDirs << DPathBuf / appName / "translations";
+        translateDirs << (DPathBuf / appName / "translations").toString();
     }
-    DPathBuf runDir(this->applicationDirPath());
-    translateDirs << runDir.join("translations");
-    DPathBuf currentDir(QDir::currentPath());
-    translateDirs << currentDir.join("translations");
 
 #ifdef DTK_STATIC_TRANSLATION
-    translateDirs << DPathBuf(":/dtk/translations");
+    translateDirs << QString(":/dtk/translations");
 #endif
 
-    return d->loadTranslator(translateDirs, appName, localeFallback);
+    return DGuiApplicationHelper::loadTranslator(appName, translateDirs, localeFallback);
 }
 
 /*!
