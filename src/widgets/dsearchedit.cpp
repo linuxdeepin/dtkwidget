@@ -332,6 +332,7 @@ void DSearchEditPrivate::init()
 
     center_layout->addWidget(iconbtn, 0, Qt::AlignVCenter);
     center_layout->addWidget(label, 0, Qt::AlignCenter);
+    center_layout->addSpacing(12 / qApp->devicePixelRatio());
     layout->addWidget(iconWidget, 0, Qt::AlignCenter);
 
     QAction* clearAction = q->lineEdit()->findChild<QAction *>(QLatin1String("_q_qlineeditclearaction"));
