@@ -38,7 +38,6 @@ public:
 #endif
 
     bool loadDtkTranslator(QList<QLocale> localeFallback);
-    bool loadTranslator(QList<DPathBuf> translateDirs, const QString &name, QList<QLocale> localeFallback);
     void _q_onNewInstanceStarted();
 
     // 为控件适应当前虚拟键盘的位置
