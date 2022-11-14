@@ -1172,12 +1172,8 @@ void DTitlebar::showMenu()
 {
     D_D(DTitlebar);
 
-#ifndef QT_NO_MENU
-    // 默认菜单应该是showmenu之前添加, 而非showevent
-    d->_q_addDefaultMenuItems();
-#endif
-     if (d->helpAction)
-         d->helpAction->setVisible(DApplicationPrivate::isUserManualExists());
+    if (d->helpAction)
+        d->helpAction->setVisible(DApplicationPrivate::isUserManualExists());
 
     if (d->menu) {
         // 更新主题选中的项
@@ -1220,6 +1216,11 @@ void DTitlebar::showEvent(QShowEvent *event)
     d->separatorTop->move(0, 0);
     d->separator->setFixedWidth(width());
     d->separator->move(0, height() - d->separator->height());
+
+#ifndef QT_NO_MENU
+    // 默认菜单需要在showevent添加，否则`menu`接口返回空actions，导致接口逻辑不兼容
+    d->_q_addDefaultMenuItems();
+#endif
 
     QWidget::showEvent(event);
 
