@@ -855,7 +855,6 @@ DStyledItemDelegate::DStyledItemDelegate(QAbstractItemView *parent)
 {
     //支持QAction的点击
     parent->viewport()->installEventFilter(this);
-    parent->installEventFilter(this);
 
     // 初始化 background type. 注意 setBackgroundType() 中有额外的处理操作，所以不能直接简单的修改默认值
     setBackgroundType(DStyledItemDelegate::RoundedBackground);
@@ -1345,7 +1344,8 @@ bool DStyledItemDelegate::eventFilter(QObject *object, QEvent *event)
     default:
         break;
     }
-    if (object == parent()) {
+    const auto view = qobject_cast<QAbstractItemView*>(parent());
+    if (view && object == view->viewport()) {
         static const QEvent::Type UpdateWidgetVisibleEvent(
                     static_cast<QEvent::Type>(QEvent::registerEventType()));
 
@@ -1353,7 +1353,7 @@ bool DStyledItemDelegate::eventFilter(QObject *object, QEvent *event)
             D_D(DStyledItemDelegate);
             if (d->readyRecordVisibleWidgetOfCurrentFrame()) {
                 auto updateEvent = new QEvent(UpdateWidgetVisibleEvent);
-                qApp->postEvent(parent(), updateEvent);
+                qApp->postEvent(view->viewport(), updateEvent);
             }
         } else if (event->type() == UpdateWidgetVisibleEvent) {
             D_D(DStyledItemDelegate);
