@@ -1,0 +1,116 @@
+// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+//
+// SPDX-License-Identifier: LGPL-3.0-or-later
+
+/*!
+@~chinese
+@file dimageviewer.h
+
+dimageviewer.h 提供基础的图片浏览控件 DImageViewer
+
+@class Dtk::Widget::DImageViewer
+@brief DImageViewer 提供基础的图片浏览功能。
+
+包括展示、拖拽、缩放等，通过键鼠或触摸屏进行交互。
+
+
+@fn Dtk::Widget::DImageViewer::DImageViewer(QWidget *parent)
+@brief 构造 DImageViewer 实例，并指定父控件
+@param parent 作为实例的父控件
+
+@fn Dtk::Widget::DImageViewer::DImageViewer(const QImage &image, QWidget *parent)
+@brief 构造 DImageViewer 实例，并指定默认展示图片及父控件
+@param image 展示的图片
+@param parent 作为实例的父控件
+
+@fn Dtk::Widget::DImageViewer::DImageViewer(const QString &fileName, QWidget *parent)
+@brief 构造 DImageViewer 实例，并指定默认展示图片文件及父控件
+@param fileName 展示的图片文件路径
+@param parent 作为实例的父控件
+
+@fn Dtk::Widget::DImageViewer::~DImageViewer()
+@brief 析构 DImageViewer 实例
+
+@fn void Dtk::Widget::DImageViewer::imageChanged(const QImage &image)
+@brief 图片变更信号，展示图片实例变更后触发
+@param image 图片实例
+
+@fn QImage Dtk::Widget::DImageViewer::image() const
+@brief 返回当前展示图片实例，当未设置图片或图片未加载完成时，返回空值
+@return 图片实例
+
+@fn void Dtk::Widget::DImageViewer::setImage(const QImage &image)
+@brief 设置当前展示图片实例
+@param[in] image 图片实例
+
+@fn void Dtk::Widget::DImageViewer::fileNameChanged(const QString &fileName)
+@brief 图片文件路径变更信号，通过 setFileName 设置文件路径后触发
+@param fileName 图片文件路径
+
+@fn QString Dtk::Widget::DImageViewer::fileName() const
+@brief 获取当前展示的图片文件路径，若图片并未通过文件路径加载或未设置展示图片时，返回空值
+@return 图片文件路径
+
+@fn void Dtk::Widget::DImageViewer::setFileName(const QString &fileName)
+@brief 设置当前展示的图片文件路径
+@param[in] fileName 图片文件路径
+
+@fn int Dtk::Widget::DImageViewer::imageFrameCount() const
+@brief 对于支持图片切换显示的多页图，返回当前图片所包含的图片帧数，其它类型图片返回1
+@return 当前图片总帧数
+
+@fn void Dtk::Widget::DImageViewer::imageFrameIndexChanged(int index)
+@brief 图片帧索引变更信号，通过 setImageFrameIndex 设置图片帧索引后触发，仅对多页图有效
+@param index 图片帧索引
+
+@fn int Dtk::Widget::DImageViewer::imageFrameIndex() const
+@brief 获取当前图片帧索引
+@return 图片帧索引
+
+@fn void Dtk::Widget::DImageViewer::setImageFrameIndex(int index)
+@brief 设置当前图片帧索引，若为多页图，切换当前展示的图片
+@param[in] index 图片帧索引
+@note 对于支持图片切换显示的多页图，允许设置当前显示的图片帧号，其它类型图片不支持
+
+@fn void Dtk::Widget::DImageViewer::scaleFactorChanged(qreal scaleFactor)
+@brief 图片缩放比例系数变更信号，通过界面交互或 setScaleFactor 设置缩放比例系数后触发
+@param scaleFactor 图片缩放比例系数
+
+@fn qreal Dtk::Widget::DImageViewer::scaleFactor() const
+@brief 获取当前图片缩放比例系数
+@return 图片缩放比例系数
+
+@fn void Dtk::Widget::DImageViewer::setScaleFactor(qreal factor)
+@brief 设置当前图片缩放比例系数
+@param[in] factor 图片缩放比例系数
+@note 根据此系数调整图片展示效果，使用键鼠操作时，缩放比例系数范围为 0.02 ~ 20
+
+@fn void Dtk::Widget::DImageViewer::autoFitImage()
+@brief 自动切换图片缩放比例，当图片大小小于控件大小时，保持原始大小；当前图片大于控件大小时，使图片适配控件大小展示
+@sa DImageViewer::fitToWidget
+@sa DImageViewer::fitOriginalImageSize
+
+@fn void Dtk::Widget::DImageViewer::fitToWidget()
+@brief 使图片调整缩放比例，适配控件大小展示
+
+@fn void Dtk::Widget::DImageViewer::fitNormalSize()
+@brief 使图片保持原始大小展示，图片超过控件大小的区域将不会被绘制
+
+@fn void Dtk::Widget::DImageViewer::rotateClockwise()
+@brief 顺时针旋转图片90°
+
+@fn void Dtk::Widget::DImageViewer::rotateCounterclockwise()
+@brief 逆时针旋转图片90°
+
+@fn void Dtk::Widget::DImageViewer::clear()
+@brief 清除当前展示的图片，包括存储的图片实例及文件路径
+
+@fn void Dtk::Widget::DImageViewer::centerOn(qreal x, qreal y)
+@brief 以传入坐标为中心展示图片
+@param[in] x x轴坐标
+@param[in] y y轴坐标
+
+@fn void Dtk::Widget::DImageViewer::transformChanged();
+@brief 坐标变换信号，当图片通过界面交互或属性变更导致图片显示坐标、大小等变更时触发
+
+*/
