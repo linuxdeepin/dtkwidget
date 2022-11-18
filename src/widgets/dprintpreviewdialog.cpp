@@ -2151,7 +2151,7 @@ void DPrintPreviewDialogPrivate::matchFitablePageSize()
     if (isActualPrinter(printDeviceCombo->currentText())) {
         auto const &pageSizes = prInfo.supportedPageSizes();
         auto it = std::find_if(pageSizes.cbegin(), pageSizes.cend(), [&](const QPageSize &pageSize) {
-            return pageSize.key() == paperSizeCombo->currentText();
+            return pageSize.name() == paperSizeCombo->currentText();
         });
 
         if (it != pageSizes.end())
