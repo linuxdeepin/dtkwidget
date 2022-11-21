@@ -5,15 +5,12 @@
 #include "dimageviewer.h"
 #include "private/dimageviewer_p.h"
 #include "private/dimagevieweritems_p.h"
-#include "private/dimageviewerlibs_p.h"
 
 #include <QGestureEvent>
-#include <QPinchGesture>
 #include <QImageReader>
+#include <QPinchGesture>
 
 DWIDGET_BEGIN_NAMESPACE
-
-Q_GLOBAL_STATIC(DLibFreeImage, DLibFreeImageInstance)
 
 DImageViewerPrivate::DImageViewerPrivate(DImageViewer *qq)
     : DObjectPrivate(qq)
@@ -22,10 +19,20 @@ DImageViewerPrivate::DImageViewerPrivate(DImageViewer *qq)
 
 DImageViewerPrivate::~DImageViewerPrivate()
 {
-
+    // todo
 }
 
 void DImageViewerPrivate::init()
+{
+    // todo
+}
+
+void DImageViewerPrivate::handleGestureEvent(QGestureEvent *gesture)
+{
+    // todo
+}
+
+void DImageViewerPrivate::pinchTriggered(QPinchGesture *gestrue)
 {
     // todo
 }
@@ -39,33 +46,6 @@ void DImageViewerPrivate::_q_pinchAnimeFinished()
 {
     // todo
 }
-
-
-DImageViewerEngine::DImageViewerEngine()
-{
-
-}
-
-QImage DImageViewerEngine::loadImage(const QString &fileName)
-{
-    // todo
-}
-
-QImage DImageViewerEngine::rotateImage(const QImage &image, qreal angle)
-{
-    // todo
-}
-
-QImage DImageViewerEngine::scaleTo(const QImage &image, const QSize &size)
-{
-    // todo
-}
-
-bool DImageViewerEngine::saveImage(const QImage &image, const QString &fileName)
-{
-    // todo
-}
-
 
 DImageViewer::DImageViewer(QWidget *parent)
     : DGraphicsView(parent)
@@ -95,7 +75,7 @@ DImageViewer::DImageViewer(const QString &fileName, QWidget *parent)
 
 DImageViewer::~DImageViewer()
 {
-
+    // todo
 }
 
 QImage DImageViewer::image() const
@@ -114,21 +94,6 @@ QString DImageViewer::fileName() const
 }
 
 void DImageViewer::setFileName(const QString &fileName)
-{
-    // todo
-}
-
-int DImageViewer::imageFrameCount() const
-{
-    // todo
-}
-
-int DImageViewer::imageFrameIndex() const
-{
-    // todo
-}
-
-void DImageViewer::setImageFrameIndex(int index)
 {
     // todo
 }
@@ -164,6 +129,16 @@ void DImageViewer::rotateClockwise()
 }
 
 void DImageViewer::rotateCounterclockwise()
+{
+    // todo
+}
+
+qreal DImageViewer::rotateAngle() const
+{
+    // todo
+}
+
+void DImageViewer::resetRotateAngle()
 {
     // todo
 }
