@@ -51,23 +51,6 @@ dimageviewer.h 提供基础的图片浏览控件 DImageViewer
 @brief 设置当前展示的图片文件路径
 @param[in] fileName 图片文件路径
 
-@fn int Dtk::Widget::DImageViewer::imageFrameCount() const
-@brief 对于支持图片切换显示的多页图，返回当前图片所包含的图片帧数，其它类型图片返回1
-@return 当前图片总帧数
-
-@fn void Dtk::Widget::DImageViewer::imageFrameIndexChanged(int index)
-@brief 图片帧索引变更信号，通过 setImageFrameIndex 设置图片帧索引后触发，仅对多页图有效
-@param index 图片帧索引
-
-@fn int Dtk::Widget::DImageViewer::imageFrameIndex() const
-@brief 获取当前图片帧索引
-@return 图片帧索引
-
-@fn void Dtk::Widget::DImageViewer::setImageFrameIndex(int index)
-@brief 设置当前图片帧索引，若为多页图，切换当前展示的图片
-@param[in] index 图片帧索引
-@note 对于支持图片切换显示的多页图，允许设置当前显示的图片帧号，其它类型图片不支持
-
 @fn void Dtk::Widget::DImageViewer::scaleFactorChanged(qreal scaleFactor)
 @brief 图片缩放比例系数变更信号，通过界面交互或 setScaleFactor 设置缩放比例系数后触发
 @param scaleFactor 图片缩放比例系数
@@ -92,11 +75,24 @@ dimageviewer.h 提供基础的图片浏览控件 DImageViewer
 @fn void Dtk::Widget::DImageViewer::fitNormalSize()
 @brief 使图片保持原始大小展示，图片超过控件大小的区域将不会被绘制
 
+@fn void Dtk::Widget::DImageViewer::rotateAngleChanged(qreal angle)
+@brief 当展示图片旋转时触发，旋转角度为90°的倍数
+@param angle 图片旋转角度
+@sa DImageViewer::rotateClockwise
+@sa DImageViewer::rotateCounterclockwise
+@sa DImageViewer::resetRotateAngle
+
 @fn void Dtk::Widget::DImageViewer::rotateClockwise()
 @brief 顺时针旋转图片90°
 
 @fn void Dtk::Widget::DImageViewer::rotateCounterclockwise()
 @brief 逆时针旋转图片90°
+
+@fn void Dtk::Widget::DImageViewer::rotateAngle() const
+@brief 返回当前图片的旋转角度，旋转角度为90°的倍数
+
+@fn void Dtk::Widget::DImageViewer::resetRotateAngle() const
+@brief 重置当前图片的旋转角度，图片恢复为初始角度展示
 
 @fn void Dtk::Widget::DImageViewer::clear()
 @brief 清除当前展示的图片，包括存储的图片实例及文件路径

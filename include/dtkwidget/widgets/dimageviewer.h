@@ -18,8 +18,8 @@ class LIBDTKWIDGETSHARED_EXPORT DImageViewer : public DGraphicsView, public DCOR
 
     Q_PROPERTY(QImage image READ image WRITE setImage NOTIFY imageChanged)
     Q_PROPERTY(QString fileName READ fileName WRITE setFileName NOTIFY fileNameChanged)
-    Q_PROPERTY(int imageFrameIndex READ imageFrameIndex WRITE setImageFrameIndex NOTIFY imageFrameIndexChanged)
     Q_PROPERTY(qreal scaleFactor READ scaleFactor WRITE setScaleFactor NOTIFY scaleFactorChanged)
+    Q_PROPERTY(qreal rotateAngle READ rotateAngle NOTIFY rotateAngleChanged) 
 
 public:
     explicit DImageViewer(QWidget *parent = nullptr);
@@ -32,9 +32,6 @@ public:
     QString fileName() const;
     void setFileName(const QString &fileName);
 
-    int imageFrameCount() const;
-    int imageFrameIndex() const;
-    void setImageFrameIndex(int index);
     qreal scaleFactor() const;
     void setScaleFactor(qreal factor);
 
@@ -43,6 +40,8 @@ public:
     void fitNormalSize();
     void rotateClockwise();
     void rotateCounterclockwise();
+    qreal rotateAngle() const;
+    void resetRotateAngle();
     void clear();
 
     void centerOn(qreal x, qreal y);
@@ -50,8 +49,8 @@ public:
 Q_SIGNALS:
     void imageChanged(const QImage &image);
     void fileNameChanged(const QString &fileName);
-    void imageFrameIndexChanged(int index);
     void scaleFactorChanged(qreal scaleFactor);
+    void rotateAngleChanged(qreal angle);
     void transformChanged();
 
 protected:
