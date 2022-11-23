@@ -82,6 +82,7 @@ set(WIDGET_TEST
   testcases/widgets/ut_dgraphicsgloweffect.cpp
   testcases/widgets/ut_dheaderline.cpp
   testcases/widgets/ut_diconbutton.cpp
+  testcases/widgets/ut_dimageviewer.cpp
   testcases/widgets/ut_dinputdialog.cpp
   testcases/widgets/ut_dipv4lineedit.cpp
   testcases/widgets/ut_dkeysequenceedit.cpp

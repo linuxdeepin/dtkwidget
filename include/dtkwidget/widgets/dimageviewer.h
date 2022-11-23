@@ -68,7 +68,6 @@ private:
     Q_DISABLE_COPY(DImageViewer)
     D_DECLARE_PRIVATE(DImageViewer)
 
-    D_PRIVATE_SLOT(void _q_imageLoadFinished())
     D_PRIVATE_SLOT(void _q_pinchAnimeFinished())
 };
 
