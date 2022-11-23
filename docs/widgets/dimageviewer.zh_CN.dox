@@ -32,7 +32,11 @@ dimageviewer.h 提供基础的图片浏览控件 DImageViewer
 @param image 图片实例
 
 @fn QImage Dtk::Widget::DImageViewer::image() const
-@brief 返回当前展示图片实例，当未设置图片或图片未加载完成时，返回空值
+@brief 返回当前展示图片实例，当未设置图片时，返回空值
+
+通过 setFileName() 加载时，根据不同图片类型，返回的图片实例不同。
+动态图返回首帧图片实例，SVG图片根据默认大小构造图片实例返回。
+
 @return 图片实例
 
 @fn void Dtk::Widget::DImageViewer::setImage(const QImage &image)
@@ -44,7 +48,7 @@ dimageviewer.h 提供基础的图片浏览控件 DImageViewer
 @param fileName 图片文件路径
 
 @fn QString Dtk::Widget::DImageViewer::fileName() const
-@brief 获取当前展示的图片文件路径，若图片并未通过文件路径加载或未设置展示图片时，返回空值
+@brief 获取当前展示的图片文件路径，若图片并未通过文件路径加载时，返回空值
 @return 图片文件路径
 
 @fn void Dtk::Widget::DImageViewer::setFileName(const QString &fileName)
