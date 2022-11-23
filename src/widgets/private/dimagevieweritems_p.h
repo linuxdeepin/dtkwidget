@@ -17,6 +17,7 @@ DWIDGET_BEGIN_NAMESPACE
 class DGraphicsPixmapItem : public QGraphicsPixmapItem
 {
 public:
+    explicit DGraphicsPixmapItem(QGraphicsItem *parent = nullptr);
     explicit DGraphicsPixmapItem(const QPixmap &pixmap, QGraphicsItem *parent = nullptr);
     ~DGraphicsPixmapItem() Q_DECL_OVERRIDE;
 
@@ -29,14 +30,21 @@ private:
     QPair<qreal, QPixmap> cachePixmap;
 };
 
-class DGraphicsMovieItem : public QGraphicsPixmapItem
+class DGraphicsMovieItem : public QObject, public QGraphicsPixmapItem
 {
+    Q_OBJECT
 public:
+    explicit DGraphicsMovieItem(QGraphicsItem *parent = nullptr);
     explicit DGraphicsMovieItem(const QString &fileName, QGraphicsItem *parent = nullptr);
     ~DGraphicsMovieItem() Q_DECL_OVERRIDE;
 
+    void setFileName(const QString &fileName);    
+
 private:
-    QMovie *movie = nullptr;
+    Q_SLOT void onMovieFrameChanged();
+
+private:
+    QMovie *movie;
 };
 
 class DGraphicsSVGItem : public QGraphicsObject
@@ -44,6 +52,8 @@ class DGraphicsSVGItem : public QGraphicsObject
 public:
     explicit DGraphicsSVGItem(QGraphicsItem *parent = nullptr);
     explicit DGraphicsSVGItem(const QString &fileName, QGraphicsItem *parent = nullptr);
+
+    void setFileName(const QString &fileName);
 
     QRectF boundingRect() const Q_DECL_OVERRIDE;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) Q_DECL_OVERRIDE;
@@ -56,7 +66,7 @@ private:
 
 private:
     DGUI_NAMESPACE::DSvgRenderer *renderer = nullptr;
-    QRectF svgRect;
+    QRectF imageRect;
 };
 
 DWIDGET_END_NAMESPACE
