@@ -9,7 +9,7 @@ Copyright: None
 License: CC0-1.0
 
 # gitignore
-Files: .gitignore 
+Files: .gitignore
 Copyright: None
 License: CC0-1.0
 
@@ -74,7 +74,7 @@ Copyright: UnionTech Software Technology Co., Ltd.
 License: LGPL-3.0-or-later
 
 #icon
-Files: src/widgets/assets/icons/* 
+Files: src/widgets/assets/icons/*
 Copyright: UnionTech Software Technology Co., Ltd.
 License: LGPL-3.0-or-later
 
@@ -83,4 +83,7 @@ Files: *.ui
 Copyright: UnionTech Software Technology Co., Ltd.
 License: LGPL-3.0-or-later
 
-
+# doxygen theme
+Files: docs/doxygentheme/*
+Copyright: Copyright (c) 2021 - 2022 jothepro
+License: MIT

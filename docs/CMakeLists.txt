@@ -28,6 +28,22 @@ set (DOXYGEN_PREDEFINED
     "\"DWIDGET_END_NAMESPACE=}}\""
     "\"DWIDGET_USE_NAMESPACE=using namespace Dtk::Widget\;\""
 )
+if(BUILD_THEME)
+set (DOXYGEN_HTML_EXTRA_STYLESHEET "docs/doxygentheme/doxygen-awesome.css"
+                                "docs/doxygentheme/doxygen-awesome-sidebar-only.css"
+                                "docs/doxygentheme/doxygen-awesome-sidebar-only-darkmode-toggle.css"
+                                )
+set (DOXYGEN_HTML_EXTRA_FILES "docs/doxygentheme/doxygen-awesome-darkmode-toggle.js"
+                            "docs/doxygentheme/doxygen-awesome-fragment-copy-button.js"
+                            "docs/doxygentheme/doxygen-awesome-paragraph-link.js"
+                            "docs/doxygentheme/doxygen-awesome-interactive-toc.js"
+                            )
+set (DOXYGEN_GENERATE_TREEVIEW "YES")
+set (DOXYGEN_DISABLE_INDEX "NO")
+set (DOXYGEN_FULL_SIDEBAR "NO")
+set (DOXYGEN_HTML_HEADER "docs/doxygentheme/header.html")
+endif()
+
 set (DOXYGEN_MACRO_EXPANSION "YES")
 set (DOXYGEN_EXPAND_ONLY_PREDEF "YES")
 
