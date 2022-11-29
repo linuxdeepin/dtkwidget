@@ -1,0 +1,82 @@
+/*!
+@~chinese
+@file daboutdialog.h
+@ingroup dtkwidget
+@class Dtk::Widget::DAboutDialog
+DAboutDialog 类提供了应用程序的关于对话框，规范所有 deepin 应用关于窗口设计规范，符合 Deepin风格
+
+@property QString Dtk::Widget::DAboutDialog::windowTitle()
+    @brief 返回对话标题栏内容
+
+@fn void Dtk::Widget::DAboutDialog::setWindowTitle(const QString &windowTitle)
+    @brief 设置对话标题栏内容
+    @sa DAboutDialog::windowTitle()
+
+@property QString Dtk::Widget::DAboutDialog::productName()
+    @brief 返回对话框显示的应用名称
+
+@fn void Dtk::Widget::DAboutDialog::setProductName(const QString &productName)
+    @brief 设置对话框显示的应用名称
+    @sa DAboutDialog::productName()
+
+@property QString Dtk::Widget::DAboutDialog::version()
+    @brief 返回指定的version版本信息
+
+@fn void Dtk::Widget::DAboutDialog::setVersion(const QString &version)
+    @brief 设置指定的version版本信息
+    @sa DAboutDialog::version()
+
+@property QString Dtk::Widget::DAboutDialog::description()
+    @brief 返回指定的 description 描述信息.
+
+@fn void Dtk::Widget::DAboutDialog::setDescription()
+    @brief 此函数用于设置指定的 description 描述信息.
+    @sa DAboutDialog::description()
+
+@property QString Dtk::Widget::DAboutDialog::license()
+    @brief 返回指定的license许可证
+
+@fn void Dtk::Widget::DAboutDialog::setLicense(const QString &license)
+    @brief 设置指定的license许可证
+    @sa DAboutDialog::license()
+
+@property QString Dtk::Widget::DAboutDialog::websiteName()
+    @brief 返回指向的网站名
+
+@fn void Dtk::Widget::DAboutDialog::setWebsiteName(const QString &websiteName)
+    @brief 设置指向的网站名
+
+    通常采用 www.deepin.org 等形式
+
+    @sa DAboutDialog::websiteName()
+
+@property QString Dtk::Widget::DAboutDialog::websiteLink()
+    @brief 返回指定的网站连接
+
+    如果用户点击对话框中显示的网址，则会打开相应的链接
+
+@fn void Dtk::Widget::DAboutDialog::setWebsiteLink(const QString &websiteLink)
+    @brief 设置指定的网站连接
+    @sa DAboutDialog::websiteLink()
+
+@property QString Dtk::Widget::DAboutDialog::acknowledgementLink()
+    @brief 返回指定acknowledgementLink鸣谢连接
+
+@fn void Dtk::Widget::DAboutDialog::setAcknowledgementLink(const QString &acknowledgementLink)
+    @brief 设置指定acknowledgementLink鸣谢连接
+    @sa DAboutDialog::acknowledgementLink()
+
+@fn void Dtk::Widget::DAboutDialog::setAcknowledgementLink(bool visible)
+    @brief 此函数用于设置指定的 visible 设置鸣谢链接是否显示
+    @sa DAboutDialog::acknowledgementLink()
+
+@fn void Dtk::Widget::DAboutDialog::setProductIcon(const QIcon &icon)
+    @brief 设置展示的 icon 图标.
+
+    在关于对话框展示的图标.
+
+@fn void Dtk::Widget::DAboutDialog::setCompanyLogo(const QPixmap &companyLogo)
+    @brief 此函数用于设置指定的 companyLogo 组织标志
+
+
+*/
