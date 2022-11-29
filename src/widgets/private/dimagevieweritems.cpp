@@ -104,14 +104,12 @@ DGraphicsSVGItem::DGraphicsSVGItem(QGraphicsItem *parent)
     : QGraphicsObject(parent)
 {
     renderer = new DSvgRenderer(this);
-    setCacheMode(QGraphicsItem::DeviceCoordinateCache);
 }
 
 DGraphicsSVGItem::DGraphicsSVGItem(const QString &fileName, QGraphicsItem *parent)
     : QGraphicsObject(parent)
 {
     renderer = new DSvgRenderer(this);
-    setCacheMode(QGraphicsItem::DeviceCoordinateCache);
     renderer->load(fileName);
     updateDefaultSize();
 }
