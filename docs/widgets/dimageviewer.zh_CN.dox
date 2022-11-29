@@ -1,58 +1,52 @@
 /*!
 @~chinese
 @file dimageviewer.h
-
-dimageviewer.h 提供基础的图片浏览控件 DImageViewer
+@brief dimageviewer.h 提供基础的图片浏览控件 DImageViewer
 
 @class Dtk::Widget::DImageViewer
 @brief DImageViewer 提供基础的图片浏览功能。
-
-包括展示、拖拽、缩放等，通过键鼠或触摸屏进行交互。
-
+@details 提供图片浏览的控件，通过传入QImage或文件路径加载展示图片，通过键鼠或触摸屏进行拖拽、缩放等交互。
 
 @fn Dtk::Widget::DImageViewer::DImageViewer(QWidget *parent)
 @brief 构造 DImageViewer 实例，并指定父控件
-@param parent 作为实例的父控件
+@param[in] parent 作为实例的父控件
 
 @fn Dtk::Widget::DImageViewer::DImageViewer(const QImage &image, QWidget *parent)
 @brief 构造 DImageViewer 实例，并指定默认展示图片及父控件
-@param image 展示的图片
-@param parent 作为实例的父控件
+@param[in] image 展示的图片
+@param[in] parent 作为实例的父控件
 
 @fn Dtk::Widget::DImageViewer::DImageViewer(const QString &fileName, QWidget *parent)
 @brief 构造 DImageViewer 实例，并指定默认展示图片文件及父控件
-@param fileName 展示的图片文件路径
-@param parent 作为实例的父控件
+@param[in] fileName 展示的图片文件路径
+@param[in] parent 作为实例的父控件
 
 @fn Dtk::Widget::DImageViewer::~DImageViewer()
 @brief 析构 DImageViewer 实例
 
 @fn void Dtk::Widget::DImageViewer::imageChanged(const QImage &image)
 @brief 图片变更信号，展示图片实例变更后触发
-@param image 图片实例
+@param[in] image 图片实例
 
 @fn QImage Dtk::Widget::DImageViewer::image() const
 @brief 返回当前展示图片实例，当未设置图片时，返回空值
-
-通过 setFileName() 加载时，根据不同图片类型，返回的图片实例不同。
-动态图返回首帧图片实例，SVG图片根据默认大小构造图片实例返回。
-
+@details 通过 setFileName() 加载时，根据不同图片类型，返回的图片实例不同。动态图返回首帧图片实例，SVG图片根据默认大小构造图片实例返回。
 @return 图片实例
 
 @fn void Dtk::Widget::DImageViewer::setImage(const QImage &image)
-@brief 设置当前展示图片实例
+@brief 设置当前展示图片实例，若为有效图片，将在内部调用 autoFitImage() 
 @param[in] image 图片实例
 
 @fn void Dtk::Widget::DImageViewer::fileNameChanged(const QString &fileName)
 @brief 图片文件路径变更信号，通过 setFileName 设置文件路径后触发
-@param fileName 图片文件路径
+@param[in] fileName 图片文件路径
 
 @fn QString Dtk::Widget::DImageViewer::fileName() const
 @brief 获取当前展示的图片文件路径，若图片并未通过文件路径加载时，返回空值
 @return 图片文件路径
 
 @fn void Dtk::Widget::DImageViewer::setFileName(const QString &fileName)
-@brief 设置当前展示的图片文件路径
+@brief 设置当前展示的图片文件路径，若为有效图片，将在内部调用 autoFitImage()
 @param[in] fileName 图片文件路径
 
 @fn void Dtk::Widget::DImageViewer::scaleFactorChanged(qreal scaleFactor)
@@ -68,6 +62,11 @@ dimageviewer.h 提供基础的图片浏览控件 DImageViewer
 @param[in] factor 图片缩放比例系数
 @note 根据此系数调整图片展示效果，使用键鼠操作时，缩放比例系数范围为 0.02 ~ 20
 
+@fn void Dtk::Widget::DImageViewer::scaleImage(qreal factor)
+@brief 按缩放比例系数缩放当前图片，在已有缩放比例上累加
+@param[in] factor 图片缩放比例系数
+@note 根据此系数调整图片展示效果，使用键鼠操作时，缩放比例系数范围为 0.02 ~ 20
+
 @fn void Dtk::Widget::DImageViewer::autoFitImage()
 @brief 自动切换图片缩放比例，当图片大小小于控件大小时，保持原始大小；当前图片大于控件大小时，使图片适配控件大小展示
 @sa DImageViewer::fitToWidget
@@ -80,8 +79,8 @@ dimageviewer.h 提供基础的图片浏览控件 DImageViewer
 @brief 使图片保持原始大小展示，图片超过控件大小的区域将不会被绘制
 
 @fn void Dtk::Widget::DImageViewer::rotateAngleChanged(qreal angle)
-@brief 当展示图片旋转时触发，旋转角度为90°的倍数
-@param angle 图片旋转角度
+@brief 当展示图片旋转时触发，旋转角度为90°的倍数，范围在 -360° ~ 360°
+@param[in] angle 图片旋转角度
 @sa DImageViewer::rotateClockwise
 @sa DImageViewer::rotateCounterclockwise
 @sa DImageViewer::resetRotateAngle
@@ -92,8 +91,8 @@ dimageviewer.h 提供基础的图片浏览控件 DImageViewer
 @fn void Dtk::Widget::DImageViewer::rotateCounterclockwise()
 @brief 逆时针旋转图片90°
 
-@fn void Dtk::Widget::DImageViewer::rotateAngle() const
-@brief 返回当前图片的旋转角度，旋转角度为90°的倍数
+@fn int Dtk::Widget::DImageViewer::rotateAngle() const
+@brief 返回当前图片的旋转角度，旋转角度为90°的倍数，范围在 -360° ~ 360°
 
 @fn void Dtk::Widget::DImageViewer::resetRotateAngle() const
 @brief 重置当前图片的旋转角度，图片恢复为初始角度展示
@@ -106,7 +105,23 @@ dimageviewer.h 提供基础的图片浏览控件 DImageViewer
 @param[in] x x轴坐标
 @param[in] y y轴坐标
 
+@fn QRect Dtk::Widget::DImageViewer::visibleImageRect() const
+@brief 返回当前展示图片的几何信息，包含在图片上的坐标，显示大小，可用于图片裁剪、定位等
+@return 展示图片的集合信息
+
 @fn void Dtk::Widget::DImageViewer::transformChanged();
 @brief 坐标变换信号，当图片通过界面交互或属性变更导致图片显示坐标、大小等变更时触发
+
+@fn void Dtk::Widget::DImageViewer::requestPreviousImage()
+@brief 请求切换上一张图片，触摸屏滑动切换时触发
+
+@fn void Dtk::Widget::DImageViewer::requestNextImage()
+@brief 请求切换下一张图片，触摸屏滑动切换时触发
+
+@fn void DImageViewer::scaleAtPoint(QPoint pos, qreal factor)
+@brief 在设置坐标位置缩放图片，将在当前缩放比例基础上持续缩放
+@param[in] pos 坐标
+@param[in] factor 图片缩放比例 
+@sa DImageViewer::scaleImage
 
 */
