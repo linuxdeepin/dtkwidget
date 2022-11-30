@@ -81,9 +81,9 @@ DAlertControl::~DAlertControl()
 }
 
 /*!
-  \brief DAlertControl::setAlert设置是否开启警告模式
-  警告模式，开启警告模式，target将显示警告颜色
-  \a isAlert 是否开启警告模式
+@~english
+  \brief DAlertControl::setAlertSet whether to turn on the warning modeOpen the warning mode, Target will display the warning color
+  \a isAlert Whether to turn on a warning mode
  */
 void DAlertControl::setAlert(bool isAlert)
 {
@@ -108,7 +108,8 @@ void DAlertControl::setAlert(bool isAlert)
 }
 
 /*!
-  \brief DAlertControl::alert返回当前是否处于警告模式
+@~english
+  \brief DAlertControl::alertBack to whether it is currently in a warning mode
  */
 bool DAlertControl::isAlert() const
 {
@@ -118,8 +119,9 @@ bool DAlertControl::isAlert() const
 }
 
 /*!
-  \brief DAlertControl::defaultAlertColor返回默认告警颜色
-  \note 默认颜色和原 DLineEdit 一致
+@~english
+  \brief DAlertControl::defaultAlertColorBack to the default alarm color
+  \note The default color is consistent with the original DLINEEDIT
  */
 QColor DAlertControl::defaultAlertColor() const
 {
@@ -127,8 +129,9 @@ QColor DAlertControl::defaultAlertColor() const
 }
 
 /*!
-  \brief DAlertControl::setAlertColor 设置告警颜色
-  \a c 告警颜色
+@~english
+  \brief DAlertControl::setAlertColor Set alarm color
+  \a c Alarm color
  */
 void DAlertControl::setAlertColor(QColor c)
 {
@@ -144,7 +147,8 @@ void DAlertControl::setAlertColor(QColor c)
 }
 
 /*!
-  \brief DAlertControl::alertColor 返回当前告警颜色
+@~english
+  \brief DAlertControl::alertColor Return to the current alarm color
  */
 QColor DAlertControl::alertColor() const
 {
@@ -153,9 +157,9 @@ QColor DAlertControl::alertColor() const
 }
 
 /*!
-  \brief DAlertControl::setMessageAlignment指定对齐方式
-  现只支持左，右，居中， 默认左对齐.
-  \note 参数为其他时，默认左对齐
+@~english
+  \brief DAlertControl::setMessageAlignmentSpecify the alignment method Now only support the left, right, center, default left
+  \note When the parameters are other, the default left
   \a alignment 消息对齐方式
  */
 void DAlertControl::setMessageAlignment(Qt::Alignment alignment)
@@ -165,7 +169,8 @@ void DAlertControl::setMessageAlignment(Qt::Alignment alignment)
 }
 
 /*!
-  \brief DAlertControl::messageAlignment 返回当前告警 tooltips 对齐方式
+@~english
+  \brief DAlertControl::messageAlignment Return to the current alarm Tooltips alignment method
  */
 Qt::Alignment DAlertControl::messageAlignment() const
 {
@@ -174,11 +179,12 @@ Qt::Alignment DAlertControl::messageAlignment() const
 }
 
 /*!
-  \brief DAlertControl::showAlertMessage显示警告消息
-  显示指定的文本消息，超过指定时间后警告消息消失.
-  \note 时间参数为-1时，警告消息将一直存在
-  \a text 警告的文本
-  \a duration 显示的时间长度，单位毫秒
+@~english
+  \brief DAlertControl::showAlertMessage Display warning message
+ Display the specified text message, exceeding the warning message disappearing after the specified time.
+  \note When the time parameter is -1, the warning message will always exist
+  \a text Warning text
+  \a duration Display time length, unit milliseconds
  */
 void DAlertControl::showAlertMessage(const QString &text, int duration)
 {
@@ -186,13 +192,14 @@ void DAlertControl::showAlertMessage(const QString &text, int duration)
 }
 
 /*!
-  \brief DAlertControl::showAlertMessage显示警告消息.
+@~english
+  \brief DAlertControl::showAlertMessage Display warning message.
 
-  显示指定的文本消息，超过指定时间后警告消息消失.
-  \note 时间参数为-1时，警告消息将一直存在
-  \a text 警告的文本
-  \a follow 指定文本消息跟随的对象
-  \a duration 显示的时间长度，单位毫秒
+  Display the specified text message, exceeding the warning message disappearing after the specified time
+  \note When the time parameter is -1, the warning message will always exist
+  \a text Warning text
+  \a follow Specify the object of the text message
+  \a duration Display time length, unit milliseconds
  */
 void DAlertControl::showAlertMessage(const QString &text, QWidget *follower, int duration)
 {
@@ -242,6 +249,7 @@ void DAlertControl::showAlertMessage(const QString &text, QWidget *follower, int
 }
 
 /*!
+@~english
   \brief DAlertControl:: hideAlertMessage隐藏警告消息框
  */
 void DAlertControl::hideAlertMessage()
