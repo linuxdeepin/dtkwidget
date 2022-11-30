@@ -27,12 +27,12 @@ class LIBDTKWIDGETSHARED_EXPORT DAbstractDialog : public QDialog, public DTK_COR
 
 public:
     enum DisplayPosition {
-        Center,
-        TopRight
+        Center,/*!<@~english display this dialog in the center of the screen */
+        TopRight/*!<@~english display this dialog in the top right of the screen */
     };
-    enum DisplayPostion {
-        DisplayCenter = Center, /*!< display this dialog in the center of the screen */
-        DisplayTopRight = TopRight /*!< display this dialog in the top right of the screen */
+    enum DisplayPostion { // This is wrong, but keep it for compatibility
+        DisplayCenter = Center,
+        DisplayTopRight = TopRight
     };
 
     Q_ENUMS(DisplayPosition)
@@ -61,6 +61,7 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     /**
+    @~english
      * \brief sizeChanged is emitted when the size of this dialog changed.
      * \a size is the target size.
      */
