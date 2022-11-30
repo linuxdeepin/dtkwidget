@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 3.10)
 
-set (DVERSION "5.6.0.2" CACHE STRING "define project version")
+set (DVERSION "5.6.2" CACHE STRING "define project version")
 project (DtkWidget
   VERSION ${DVERSION}
   DESCRIPTION "DTK Widget module"

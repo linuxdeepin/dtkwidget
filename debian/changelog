@@ -1,3 +1,9 @@
+dtkwidget (5.6.2.2) unstable; urgency=medium
+
+  * Release 5.6.2.2
+
+ -- Deepin Packages Builder <packages@deepin.com>  Wed, 30 Nov 2022 10:41:14 +0800
+
 dtkwidget (5.6.1) unstable; urgency=medium
 
   * snipe release 5.6.1
