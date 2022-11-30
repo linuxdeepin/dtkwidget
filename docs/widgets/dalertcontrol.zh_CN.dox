@@ -1,0 +1,63 @@
+/*!
+@~chinese
+@file dalertcontrol.h
+@ingroup dtkwidget
+@class Dtk::Widget::DAlertControl
+@brief 此类是提供了应用程序的警告对话框, 符合Deepin风格
+
+@fn Dtk::Widget::DAlertControl::DAlertControl(QWidget *target,  QObject *parent = nullptr)
+@brief 构造函数, 禁止拷贝构造
+
+@fn Dtk::Widget::DAlertControl::~DAlertControl()
+@brief 析构函数
+
+@property bool Dtk::Widget::DAlertControl::alert
+@brief 警告模式属性
+@note 这是一个属性而非函数
+@sa read方法  [isAlert](@ref Dtk::Widget::DAlertControl::isAlert())
+@sa write方法 [setAlert](@ref Dtk::Widget::DAlertControl::setAlert(bool isAlert))
+
+@property bool Dtk::Widget::DAlertControl::isAlert()
+@brief 返回是否开启警告模式, 若开启警告模式, target将显示警告色
+
+@fn void Dtk::Widget::DAlertControl::setAlert(bool isAlert)
+@brief 设置是否开启警告模式, 若开启警告模式, target将显示警告色
+@sa DAboutDialog::isAlert()
+
+@property QColor Dtk::Widget::DAlertControl::alertColor()
+@brief 返回警告颜色
+
+@fn void Dtk::Widget::DAlertControl::setAlertColor(QColor c)
+@brief 设置警告颜色
+@sa DAboutDialog::alertColor()
+
+@fn QColor Dtk::Widget::DAlertControl::defaultAlertColor()
+@brief 返回默认警告颜色
+@note 默认颜色和原 DLineEdit 一致
+
+@fn void Dtk::Widget::DAlertControl::setMessageAlignment(Qt::Alignment alignment)
+@brief 指定对齐方式, 现只支持左, 右, 居中, 默认左对齐.
+@note 参数为其他时, 默认左对齐 alignment 消息对齐方式
+
+@fn Qt::Alignment Dtk::Widget::DAlertControl::messageAlignment()
+@brief 返回当前告警tooltips对齐方式
+
+@fn void Dtk::Widget::DAlertControl::showAlertMessage(const QString &text,  int duration = 3000)
+@brief 显示警告消息
+@details 显示指定的文本消息, 超过指定时间后警告消息消失
+@note 时间参数为-1时, 警告消息将一直存在
+@param[in] text 警告的文本
+@param[in] duration 显示的时间长度, 单位毫秒
+
+@fn void Dtk::Widget::DAlertControl::showAlertMessage(const QString &text,  QWidget *follower,  int duration = 3000)
+@brief  显示警告消息
+@param[in] follow 指定文本消息跟随的对象
+@sa DAlertControl::showAlertMessage(const QString &text,  int duration = 3000)
+
+@fn void Dtk::Widget::DAlertControl::hideAlertMessage()
+@brief 隐藏警告消息框
+
+@fn void Dtk::Widget::DAlertControl::alertChanged(bool alert)
+@brief 警告信息发生改变
+
+*/
