@@ -47,4 +47,7 @@
         <file>dark/actions/printer_lrtb_4_24px.svg</file>
         <file>dark/actions/printer_lrtb_5_24px.svg</file>
     </qresource>
+    <qresource prefix="/dsg/built-in-icons">
+        <file alias="window_menu.dci">bloom/window_menu.dci</file>
+    </qresource>
 </RCC>
