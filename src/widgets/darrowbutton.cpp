@@ -38,15 +38,14 @@ int ArrowButtonIcon::buttonState() const
 }
 
 /*!
+@~english    
   \class Dtk::Widget::DArrowButton
   \inmodule dtkwidget
-  \brief 可以使用 DArrowButton 类快速创建箭头形状的按钮.
-  \brief DArrowButton allowed you create button with arrow icon conveniently.
+  @brief DArrowButton allowed you create button with arrow icon conveniently.
 
   \image html DArrowButton.png
 
-  DArrowButton 提供了快速的方式创建包含箭头标识的按钮，并允许通过 setArrowDirection() 设置箭头方向来直接改按钮的箭头图标的方向。
-  此外，还可以通过 arrowButtonDirection 和 arrowButtonState 属性获取和修改箭头按钮的状态。
+  
   You can use DArrowButton to create button with arrow icon, and it also allowed you update the arrow direction by
   calling setArrowDirection() . You can also update arrow state via arrowButtonDirection and arrowButtonState property.
 
@@ -54,10 +53,10 @@ int ArrowButtonIcon::buttonState() const
 */
 
 /*!
-  \brief Construct a new DArrowButton with DArrowButton::ArrowDown direction
-  \brief 构造一个 DArrowButton 箭头按钮，默认箭头方向向下
-
-  \a parent 父控件指针.
+@~english
+  @brief Construct a new DArrowButton with DArrowButton::ArrowDown direction.
+  
+  \a parent Parent control pointer.
  */
 DArrowButton::DArrowButton(QWidget *parent)
     : QLabel(parent)
@@ -88,10 +87,10 @@ DArrowButton::DArrowButton(QWidget *parent)
 }
 
 /*!
-  \brief Set arrow direction of the button.
-  \brief 设置按钮的箭头方向.
+@~english
+  @brief Set arrow direction of the button.
 
-  \a direction 箭头的方向.
+  \a direction The direction of the arrow.
 
   \sa DArrowButton::ArrowDirection DArrowButton::arrowDirection()
  */
@@ -102,10 +101,10 @@ void DArrowButton::setArrowDirection(ArrowDirection direction)
 }
 
 /*!
-  \brief Get the arrow direction of the button.
-  \brief 获取箭头方向.
+@~english
+  @brief Get the arrow direction of the button.
 
-  \return 返回箭头方向.
+  \return Returns the direction of the arrow.
  */
 int DArrowButton::arrowDirection() const
 {
@@ -113,10 +112,10 @@ int DArrowButton::arrowDirection() const
 }
 
 /*!
-  \brief Set the button state.
-  \brief 设置按钮状态
+@~english
+  @brief Set the button state.
 
-  \a state 箭头按钮的状态.
+  \a state The state of the arrow button.
  */
 void DArrowButton::setButtonState(ArrowButtonState state)
 {
@@ -125,10 +124,10 @@ void DArrowButton::setButtonState(ArrowButtonState state)
 }
 
 /*!
-  \brief Get the button state
-  \brief 获得按钮状态
+@~english
+  @brief Get the button state.
 
-  \return 返回按钮的状态.
+  \return Returns the status of the button.
  */
 int DArrowButton::buttonState() const
 {
@@ -206,50 +205,43 @@ void DArrowButton::initButtonState()
 }
 
 /*!
+@~english
   \enum Dtk::Widget::DArrowButton::ArrowDirection
-  
-  \brief The ArrowDirection enum indicate the direction of the arrow icon in the arrown button
-  \brief DArrowButton::ArrowDirection 表示箭头图标的方向。
+
+  @brief The ArrowDirection enum indicate the direction of the arrow icon in the arrown button.
   
   \value ArrowUp
   Up direction
-  箭头朝上
   
   \value ArrowDown
   Down direction
-  箭头朝下
   
   \value ArrowLeft
   Left direction
-  箭头朝左
   
   \value ArrowRight
   Right direction
-  箭头朝右
- */
+*/
 
 /*!
+@~english
   \enum Dtk::Widget::DArrowButton::ArrowButtonState
   
-  \brief The ArrowDirection enum indicate the direction of the arrow icon in the arrown button
-  \brief DArrowButton::ArrowDirection 表示箭头图标的方向。
+  @brief The ArrowDirection enum indicate the direction of the arrow icon in the arrown button.
   
   \value  ArrowStateNormal
   Normal state
-  普通状态
   
   \value  ArrowStateHover
   Mouse hover state
-  鼠标在按钮上方悬停状态
   
   \value  ArrowStatePress
   Button got pressed state
-  按钮被按下状态
  */
 
 /*!
-  \brief Update arrow direction of the button
-  \brief 更新箭头按钮中箭头的方向
+@~english
+  @brief Update arrow direction of the button.
  */
 void DArrowButton::updateIconDirection(ArrowDirection direction)
 {
@@ -259,8 +251,8 @@ void DArrowButton::updateIconDirection(ArrowDirection direction)
 }
 
 /*!
-  \brief Update icon state of the button
-  \brief 更新箭头按钮中图标的状态
+@~english
+  @brief Update icon state of the button.
  */
 void DArrowButton::updateIconState(ArrowButtonState state)
 {
