@@ -11,7 +11,7 @@ set(KEYBOARD
   ${CMAKE_CURRENT_LIST_DIR}/private/keyboardmonitor/dkeyboardmonitor.h
   ${CMAKE_CURRENT_LIST_DIR}/private/keyboardmonitor/dkeyboardmonitor.cpp
 )
-set(ICONS ${CMAKE_CURRENT_LIST_DIR}/assets/dtk_img_resources.qrc)
+set(ICONS ${CMAKE_CURRENT_LIST_DIR}/icons.qrc)
 set(ICONTHEME ${CMAKE_CURRENT_LIST_DIR}/assets/icons/dtk-icon-theme.qrc)
 set(widgets_SRC
   ${PRIVATEMPRISHEADER}
