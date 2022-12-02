@@ -1,0 +1,51 @@
+/*!
+@~chinese
+@file dlabel.h
+@ingroup dtkwidget
+@class Dtk::Widget::DLabel
+@brief DLabel一个重新实现的 QLabel。
+@details DLabel提供了将 DLabel 显示在指定位置的函数
+DLabel提供了改变字体颜色的函数。
+
+@fn DLabel::DLabel(QWidget *parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags())
+@brief DLabel的构造函数.
+@param[in] parent 参数被发送到 QLabel 构造函数.
+
+@fn DLabel::DLabel(const QString &text, QWidget *parent = nullptr)
+@brief DLabel的构造函数.
+@param[in] text 文本信息
+@param[in] parent 指定父对象.
+
+@fn DLabel::~DLabel()
+@brief DLabel的析构函数
+
+@fn void DLabel::setForegroundRole(QPalette::ColorRole role)
+@brief 显示的字体颜色
+@param[in] role 字体颜色(QPalette::ColorRole)
+
+@fn void DLabel::setForegroundRole(DPalette::ColorType color)
+@brief 显示的字体颜色
+@param[in] color 字体颜色
+
+@fn void DLabel::setElideMode(Qt::TextElideMode elideMode)
+@brief 设置省略号显示的模式
+@param[in] elideMode 省略模式枚举
+
+@fn Qt::TextElideMode DLabel::elideMode() const
+@brief 获取省略号的模式
+@return 返回省略号的模式
+
+@fn DLabel::DLabel(DLabelPrivate &dd, QWidget *parent = nullptr)
+@brief DLabel的构造函数.
+@param[in] dd 私有成员变量
+@param[in] parent 父控件
+
+@fn void DLabel::initPainter(QPainter *painter) const override
+@brief 初始化 painter
+@param[in] painter 形参
+
+@fn void DLabel::paintEvent(QPaintEvent *event) override
+@brief DLabel::paintEvent
+@param[in] event 消息事件
+@sa QLabel::paintEvent()
+*/

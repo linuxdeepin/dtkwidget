@@ -12,17 +12,19 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
+@~english
   \class Dtk::Widget::DLabel
   \inmodule dtkwidget
-  \brief DLabel一个重新实现的 QLabel.
+  @brief DLabel a re-implementation QLabel.
 
-  DLabel提供了将 DLabel 显示在指定位置的函数
-  DLabel提供了改变字体颜色的函数
+  DLabel provides a function to display the DLabel at a specified location
+  DLabel provides a function to change the font color
  */
 
 /*!
-  \brief DLabel的构造函数.
-  \a parent 参数被发送到 QLabel 构造函数。
+@~english
+  @brief Constructor for DLabel.
+  \a parent The argument is sent to the QLabel constructor.
  */
 DLabel::DLabel(QWidget *parent, Qt::WindowFlags f)
     : QLabel(parent, f)
@@ -33,9 +35,10 @@ DLabel::DLabel(QWidget *parent, Qt::WindowFlags f)
 }
 
 /*!
-  \brief DLabel的构造函数.
-  \a text 文本信息
-  \a parent 参数被发送到 QLabel 构造函数。
+@~english
+  @brief Constructor for DLabel.
+  \a text Text message
+  \a parent Specifying the parent object.
  */
 DLabel::DLabel(const QString &text, QWidget *parent)
     : QLabel(text, parent)
@@ -51,8 +54,9 @@ DLabel::~DLabel()
 }
 
 /*!
-  \brief DLabel::setForegroundRole 显示的字体颜色
-  \a role 字体颜色（QPalette::ColorRole）
+@~english
+  @brief DLabel::setForegroundRole The font color displayed
+  \a role Font color（QPalette::ColorRole）
  */
 void DLabel::setForegroundRole(QPalette::ColorRole role)
 {
@@ -63,8 +67,9 @@ void DLabel::setForegroundRole(QPalette::ColorRole role)
 }
 
 /*!
-  \brief DLabel::setForegroundRole显示的字体颜色
-  \a color 字体颜色
+@~english
+  @brief DLabel::setForegroundRole The font color displayed
+  \a color Font color
  */
 void DLabel::setForegroundRole(DPalette::ColorType color)
 {
@@ -73,8 +78,9 @@ void DLabel::setForegroundRole(DPalette::ColorType color)
 }
 
 /*!
-  \brief DLabel::setElideMode 设置省略号显示的模式
-  \a elideMode 省略模式枚举
+@~english
+  @brief DLabel::setElideMode Set the mode of ellipsis display
+  \a elideMode Omitted schema enumeration
  */
 void DLabel::setElideMode(Qt::TextElideMode elideMode)
 {
@@ -87,8 +93,9 @@ void DLabel::setElideMode(Qt::TextElideMode elideMode)
 }
 
 /*!
-  \brief DLabel::elideMode 获取省略号的模式
-  \return 返回省略号的模式
+@~english
+  @brief DLabel::elideMode Gets the pattern of the ellipsis
+  \return Returns the pattern of ellipses
  */
 Qt::TextElideMode DLabel::elideMode() const
 {
@@ -97,9 +104,10 @@ Qt::TextElideMode DLabel::elideMode() const
 }
 
 /*!
-  \brief DLabel::DLabel 构造函数
-  \a dd 私有类成员变量
-  \a parent 父控件
+@~english
+  @brief DLabel::DLabel Constructor function
+  \a dd Private class member variables
+  \a parent Parent control
  */
 DLabel::DLabel(DLabelPrivate &dd, QWidget *parent)
     : QLabel(parent)
@@ -109,8 +117,9 @@ DLabel::DLabel(DLabelPrivate &dd, QWidget *parent)
 }
 
 /*!
-  \brief DLabel::initPainter 初始化 painter
-  \a painter painter 形参
+@~english
+  @brief DLabel::initPainter Initialization painter
+  \a painter painter parameter
  */
 void DLabel::initPainter(QPainter *painter) const
 {
@@ -123,8 +132,9 @@ void DLabel::initPainter(QPainter *painter) const
 }
 
 /*!
-  \brief DLabel::paintEvent
-  \a event 消息事件
+@~english
+  @brief DLabel::paintEvent
+  \a event Message event
   \sa QLabel::paintEvent()
  */
 void DLabel::paintEvent(QPaintEvent *event)
