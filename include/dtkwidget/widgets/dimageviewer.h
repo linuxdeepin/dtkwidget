@@ -19,7 +19,7 @@ class LIBDTKWIDGETSHARED_EXPORT DImageViewer : public DGraphicsView, public DCOR
     Q_PROPERTY(QImage image READ image WRITE setImage NOTIFY imageChanged)
     Q_PROPERTY(QString fileName READ fileName WRITE setFileName NOTIFY fileNameChanged)
     Q_PROPERTY(qreal scaleFactor READ scaleFactor WRITE setScaleFactor NOTIFY scaleFactorChanged)
-    Q_PROPERTY(qreal rotateAngle READ rotateAngle NOTIFY rotateAngleChanged) 
+    Q_PROPERTY(int rotateAngle READ rotateAngle NOTIFY rotateAngleChanged) 
 
 public:
     explicit DImageViewer(QWidget *parent = nullptr);
@@ -34,41 +34,40 @@ public:
 
     qreal scaleFactor() const;
     void setScaleFactor(qreal factor);
+    void scaleImage(qreal factor);
 
     void autoFitImage();
     void fitToWidget();
     void fitNormalSize();
     void rotateClockwise();
     void rotateCounterclockwise();
-    qreal rotateAngle() const;
+    int rotateAngle() const;
     void resetRotateAngle();
     void clear();
 
     void centerOn(qreal x, qreal y);
+    QRect visibleImageRect() const;
+
+    Q_SLOT void scaleAtPoint(QPoint pos, qreal factor);
 
 Q_SIGNALS:
     void imageChanged(const QImage &image);
     void fileNameChanged(const QString &fileName);
     void scaleFactorChanged(qreal scaleFactor);
-    void rotateAngleChanged(qreal angle);
+    void rotateAngleChanged(int angle);
     void transformChanged();
+    void requestPreviousImage();
+    void requestNextImage();
 
 protected:
-    void mouseDoubleClickEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
-    void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
-    void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     void wheelEvent(QWheelEvent *event) Q_DECL_OVERRIDE;
-    void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
-    void timerEvent(QTimerEvent *event) Q_DECL_OVERRIDE;
-    void drawBackground(QPainter *painter, const QRectF &rect) Q_DECL_OVERRIDE;
     bool event(QEvent *event) Q_DECL_OVERRIDE;
 
 private:
     Q_DISABLE_COPY(DImageViewer)
     D_DECLARE_PRIVATE(DImageViewer)
 
-    D_PRIVATE_SLOT(void _q_imageLoadFinished())
     D_PRIVATE_SLOT(void _q_pinchAnimeFinished())
 };
 
