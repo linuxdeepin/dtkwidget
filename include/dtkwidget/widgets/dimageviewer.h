@@ -50,6 +50,12 @@ public:
 
     Q_SLOT void scaleAtPoint(QPoint pos, qreal factor);
 
+    void beginCropImage();
+    void endCropImage();
+    void resetCropImage();
+    void setCropAspectRatio(qreal w, qreal h);
+    QRect cropImageRect() const;
+
 Q_SIGNALS:
     void imageChanged(const QImage &image);
     void fileNameChanged(const QString &fileName);
@@ -58,6 +64,7 @@ Q_SIGNALS:
     void transformChanged();
     void requestPreviousImage();
     void requestNextImage();
+    void cropImageChanged(const QRect &rect);
 
 protected:
     void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;

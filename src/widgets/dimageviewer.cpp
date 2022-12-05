@@ -14,6 +14,7 @@
 #include <QMimeDatabase>
 #include <QPinchGesture>
 #include <QVariantAnimation>
+#include <QGraphicsRectItem>
 #include <qmath.h>
 
 DGUI_USE_NAMESPACE
@@ -29,14 +30,23 @@ DImageViewerPrivate::DImageViewerPrivate(DImageViewer *qq)
 
 DImageViewerPrivate::~DImageViewerPrivate()
 {
-    if (contentItem) {
-        q_func()->scene()->removeItem(contentItem);
-        delete contentItem;
-    }
-
     if (pinchData) {
         delete pinchData;
     }
+
+    if (cropData) {
+        // Crop image item may be lose parent when setting a null image, need released manually.
+        // Must release before content item.
+        if (cropData->cropItem) {
+            q_func()->scene()->removeItem(cropData->cropItem);
+            delete cropData->cropItem;
+        }
+
+        delete cropData;
+    }
+
+    // Proxy item and content item will be autodelete in scene.
+    q_func()->scene()->clear();
 }
 
 void DImageViewerPrivate::init()
@@ -60,6 +70,14 @@ void DImageViewerPrivate::init()
     q->grabGesture(Qt::SwipeGesture);
     q->grabGesture(Qt::PanGesture);
     q->viewport()->setCursor(Qt::ArrowCursor);
+
+    // The proxy item store rotation info, and clip the content item when setting the crop rect.
+    proxyItem = new QGraphicsRectItem;
+    proxyItem->setFlags(proxyItem->flags() | QGraphicsItem::ItemClipsChildrenToShape);
+    // Not draw proxy item rect.
+    proxyItem->setPen(QPen(Qt::NoPen));
+    proxyItem->setBrush(QBrush(Qt::NoBrush));
+    q->scene()->addItem(proxyItem);
 }
 
 ImageType DImageViewerPrivate::detectImageType(const QString &fileName) const
@@ -104,7 +122,10 @@ void DImageViewerPrivate::resetItem(ImageType type)
 
         imageType = type;
     } else if (contentItem) {
+        contentItem->setPos(0, 0);
         contentItem->resetTransform();
+        proxyItem->setRotation(0);
+        proxyItem->resetTransform();
         return;
     }
 
@@ -123,7 +144,10 @@ void DImageViewerPrivate::resetItem(ImageType type)
     }
 
     if (contentItem) {
-        q->scene()->addItem(contentItem);
+        contentItem->setParentItem(proxyItem);
+        proxyItem->setRotation(0);
+        proxyItem->resetTransform();
+        proxyItem->setRect(contentItem->boundingRect());
     }
 }
 
@@ -152,12 +176,12 @@ QImage DImageViewerPrivate::loadImage(const QString &fileName, ImageType type) c
 void DImageViewerPrivate::updateItemAndSceneRect()
 {
     D_Q(DImageViewer);
-    if (contentItem) {
-        QRectF itemRect = contentItem->mapRectToScene(contentItem->boundingRect());
+    if (proxyItem) {
+        QRectF itemRect = proxyItem->mapRectToScene(proxyItem->boundingRect());
         // The image rect top left point will be changed after rotation,
         // needs to adjust top left point to the accurate position.
         if (itemRect.left() != 0 || itemRect.top() != 0) {
-            contentItem->moveBy(-itemRect.left(), -itemRect.top());
+            proxyItem->moveBy(-itemRect.left(), -itemRect.top());
             itemRect.moveTopLeft(QPointF(0, 0));
         }
         q->setSceneRect(itemRect);
@@ -171,9 +195,9 @@ bool DImageViewerPrivate::rotatable() const
 
 bool DImageViewerPrivate::isRotateVertical() const
 {
-    if (contentItem) {
+    if (proxyItem) {
         // Check item rotation angle around 90 and 270 degrees.
-        qreal angle = abs(contentItem->rotation());
+        qreal angle = abs(proxyItem->rotation());
         return (angle > 35 && angle < 135) || (angle > 225 && angle < 315);
     }
     return false;
@@ -253,10 +277,10 @@ void DImageViewerPrivate::pinchTriggered(QPinchGesture *gesture)
         if (abs(rotationDelta) > 0.2) {
             if (qFuzzyIsNull(pinchData->rotationTouchAngle)) {
                 // First rotation step.
-                pinchData->storeItemAngle = contentItem->rotation();
+                pinchData->storeItemAngle = proxyItem->rotation();
             }
             pinchData->rotationTouchAngle = gesture->rotationAngle();
-            contentItem->setRotation(pinchData->storeItemAngle + pinchData->rotationTouchAngle);
+            proxyItem->setRotation(pinchData->storeItemAngle + pinchData->rotationTouchAngle);
         }
     }
 
@@ -320,7 +344,7 @@ void DImageViewerPrivate::playRotationAnimation()
     QObject::connect(animation, &QVariantAnimation::valueChanged, [=](const QVariant &value) {
         pinchData->rotationTouchAngle = value.toReal();
         if (static_cast<int>(value.toReal()) != static_cast<int>(endvalue)) {
-            contentItem->setRotation(pinchData->storeItemAngle + pinchData->rotationTouchAngle);
+            proxyItem->setRotation(pinchData->storeItemAngle + pinchData->rotationTouchAngle);
         }
     });
 
@@ -340,10 +364,19 @@ void DImageViewerPrivate::_q_pinchAnimeFinished()
     // Set image item rotate angle.
     int rotateAngle = (pinchData->storeItemAngle + pinchData->rotationEndValue) % 360;
     qreal validAngle = validRotateAngle(rotateAngle);
-    contentItem->setRotation(validAngle);
+    proxyItem->setRotation(validAngle);
     updateItemAndSceneRect();
 
     pinchData->storeItemAngle = 0;
+}
+
+void DImageViewerPrivate::checkCropData()
+{
+    if (!cropData) {
+        cropData = new CropData;
+        cropData->cropItem = new DGraphicsCropItem;
+        cropData->cropItem->setVisible(false);
+    }
 }
 
 void DImageViewerPrivate::handleMousePressEvent(QMouseEvent *event)
@@ -424,22 +457,37 @@ DImageViewer::~DImageViewer()
 QImage DImageViewer::image() const
 {
     D_DC(DImageViewer);
-    return d->contentImage;
+
+    QImage result = d->contentImage;
+    if (d->cropData && !d->cropData->cropRect.isEmpty()) {
+        result = result.copy(d->cropData->cropRect);
+    }
+
+    int angle = rotateAngle();
+    if (0 != angle) {
+        QTransform rotateMatrix;
+        rotateMatrix.rotate(angle);
+        result = result.transformed(rotateMatrix, Qt::SmoothTransformation);
+    }
+
+    // Return cut out and rotate image.
+    return result;
 }
 
 void DImageViewer::setImage(const QImage &image)
 {
     D_D(DImageViewer);
     d->resetItem(ImageTypeStatic);
-    Q_ASSERT(d->contentItem);
+    Q_ASSERT(d->contentItem && d->proxyItem);
 
     auto staticItem = static_cast<DGraphicsPixmapItem *>(d->contentItem);
     staticItem->setPixmap(QPixmap::fromImage(image));
     d->contentImage = image;
 
     // Change item center, will affect rotation and scale.
-    auto itemSize = d->contentItem->boundingRect().size();
-    d->contentItem->setTransformOriginPoint(itemSize.width() / 2, itemSize.height() / 2);
+    d->proxyItem->setRect(d->contentItem->boundingRect());
+    auto itemSize = d->proxyItem->boundingRect().size();
+    d->proxyItem->setTransformOriginPoint(itemSize.width() / 2, itemSize.height() / 2);
     d->updateItemAndSceneRect();
     autoFitImage();
     update();
@@ -465,7 +513,7 @@ void DImageViewer::setFileName(const QString &fileName)
         return;
     }
 
-    Q_ASSERT(d->contentItem);
+    Q_ASSERT(d->contentItem && d->proxyItem);
     d->fileName = fileName;
     d->contentImage = d->loadImage(d->fileName, d->imageType);
 
@@ -490,7 +538,8 @@ void DImageViewer::setFileName(const QString &fileName)
     }
 
     // Change item center, will affect rotation and scale.
-    d->contentItem->setTransformOriginPoint(d->contentItem->boundingRect().center());
+    d->proxyItem->setRect(d->contentItem->boundingRect());
+    d->proxyItem->setTransformOriginPoint(d->proxyItem->boundingRect().center());
     d->updateItemAndSceneRect();
     autoFitImage();
     update();
@@ -593,45 +642,45 @@ void DImageViewer::fitNormalSize()
 void DImageViewer::rotateClockwise()
 {
     D_D(DImageViewer);
-    if (d->contentItem) {
-        int rotation = (static_cast<int>(d->contentItem->rotation()) + 90) % 360;
-        d->contentItem->setRotation(d->validRotateAngle(rotation));
+    if (d->proxyItem) {
+        int rotation = (static_cast<int>(d->proxyItem->rotation()) + 90) % 360;
+        d->proxyItem->setRotation(d->validRotateAngle(rotation));
         d->updateItemAndSceneRect();
         autoFitImage();
 
-        Q_EMIT rotateAngleChanged(d->contentItem->rotation());
+        Q_EMIT rotateAngleChanged(d->proxyItem->rotation());
     }
 }
 
 void DImageViewer::rotateCounterclockwise()
 {
     D_D(DImageViewer);
-    if (d->contentItem) {
-        int rotation = (static_cast<int>(d->contentItem->rotation()) - 90) % 360;
-        d->contentItem->setRotation(d->validRotateAngle(rotation));
+    if (d->proxyItem) {
+        int rotation = (static_cast<int>(d->proxyItem->rotation()) - 90) % 360;
+        d->proxyItem->setRotation(d->validRotateAngle(rotation));
         d->updateItemAndSceneRect();
         autoFitImage();
 
-        Q_EMIT rotateAngleChanged(d->contentItem->rotation());
+        Q_EMIT rotateAngleChanged(d->proxyItem->rotation());
     }
 }
 
 int DImageViewer::rotateAngle() const
 {
     D_DC(DImageViewer);
-    return d->contentItem ? d->contentItem->rotation() : 0;
+    return d->proxyItem ? d->proxyItem->rotation() : 0;
 }
 
 void DImageViewer::resetRotateAngle()
 {
     D_D(DImageViewer);
-    if (d->contentItem && !qFuzzyIsNull(d->contentItem->rotation())) {
+    if (d->proxyItem && !qFuzzyIsNull(d->proxyItem->rotation())) {
         // Reset scene rect.
         if (d->isRotateVertical()) {
             d->updateItemAndSceneRect();
         }
 
-        d->contentItem->setRotation(0);
+        d->proxyItem->setRotation(0);
         autoFitImage();
 
         Q_EMIT rotateAngleChanged(0);
@@ -647,7 +696,7 @@ void DImageViewer::clear()
         delete d->contentItem;
         d->contentItem = nullptr;
     }
-    scene()->clear();
+    d->proxyItem->resetTransform();
     resetTransform();
 
     d->fileName.clear();
@@ -689,6 +738,80 @@ void DImageViewer::scaleAtPoint(QPoint pos, qreal factor)
     centerOn(static_cast<int>(centerScenePos.x()), static_cast<int>(centerScenePos.y()));
 }
 
+void DImageViewer::beginCropImage()
+{
+    D_D(DImageViewer);
+    if (d->proxyItem) {
+        d->checkCropData();
+        d->cropData->cropItem->updateContentItem(d->proxyItem);
+        d->cropData->cropItem->setVisible(true);
+    }
+}
+
+void DImageViewer::endCropImage()
+{
+    D_D(DImageViewer);
+    if (d->cropData) {
+        // Crop item must remove parent after corped.
+        d->cropData->cropItem->setParentItem(nullptr);
+        d->cropData->cropItem->setVisible(false);
+
+        QRect newRect = d->cropData->cropItem->cropRect();
+
+        if (newRect != d->proxyItem->boundingRect()) {
+            // Already has crop rect, add new crop rect.
+            if (!d->cropData->cropRect.isEmpty()) {
+                newRect.moveTopLeft(newRect.topLeft() + d->cropData->cropRect.topLeft());
+            }
+            d->cropData->cropRect = newRect;
+
+            if (d->contentItem) {
+                d->contentItem->setPos(-newRect.left(), -newRect.top());
+            }
+
+            d->proxyItem->setRect(0, 0, newRect.width(), newRect.height());
+            d->proxyItem->setTransformOriginPoint(d->proxyItem->boundingRect().center());
+            d->updateItemAndSceneRect();
+
+            Q_EMIT cropImageChanged(d->cropData->cropRect);
+        }
+    }
+}
+
+void DImageViewer::resetCropImage()
+{
+    D_D(DImageViewer);
+    if (d->cropData && d->contentItem) {
+        d->cropData->cropItem->setParentItem(nullptr);
+        d->cropData->cropItem->setVisible(false);
+        d->cropData->cropRect = QRect();
+
+        d->contentItem->setPos(0, 0);
+        d->contentItem->resetTransform();
+        d->proxyItem->setRect(d->contentItem->boundingRect());
+        d->proxyItem->setTransformOriginPoint(d->proxyItem->boundingRect().center());
+        d->updateItemAndSceneRect();
+        autoFitImage();
+    }
+}
+
+void DImageViewer::setCropAspectRatio(qreal w, qreal h)
+{
+    D_D(DImageViewer);
+    if (d->cropData) {
+        d->cropData->cropItem->setAspectRatio(w, h);
+    }
+}
+
+QRect DImageViewer::cropImageRect() const
+{
+    D_DC(DImageViewer);
+    if (d->cropData) {
+        return d->cropData->cropRect;
+    }
+    return QRect();
+}
+
 void DImageViewer::mouseMoveEvent(QMouseEvent *event)
 {
     if (!(Qt::NoButton | event->buttons())) {
@@ -704,6 +827,17 @@ void DImageViewer::mouseMoveEvent(QMouseEvent *event)
 void DImageViewer::wheelEvent(QWheelEvent *event)
 {
     if (event->modifiers() == Qt::ControlModifier) {
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
+        qreal delta = event->delta();
+#else
+        qreal delta = event->angleDelta().y();
+#endif
+        if (delta > 0) {
+            Q_EMIT requestPreviousImage();
+        } else if (delta < 0) {
+            Q_EMIT requestNextImage();
+        }
+    } else {
         qreal factor = qPow(1.2, event->angleDelta().y() / 240.0);
         // Qt deprecated pos() since 5.15
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
