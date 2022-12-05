@@ -11,8 +11,10 @@
 class QGestureEvent;
 class QPinchGesture;
 class QImageReader;
+class QGraphicsRectItem;
 
 DWIDGET_BEGIN_NAMESPACE
+class DGraphicsCropItem;
 
 enum ImageType {
     ImageTypeBlank = 0,
@@ -26,7 +28,7 @@ class DImageViewerPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
     D_DECLARE_PUBLIC(DImageViewer)
 
 public:
-    DImageViewerPrivate(DImageViewer *qq);
+    explicit DImageViewerPrivate(DImageViewer *qq);
     ~DImageViewerPrivate() Q_DECL_OVERRIDE;
 
     void init();
@@ -49,10 +51,13 @@ public:
     void playRotationAnimation();
     void _q_pinchAnimeFinished();
 
+    void checkCropData();
+
     void handleMousePressEvent(QMouseEvent *event);
     void handleMouseReleaseEvent(QMouseEvent *event);
     void handleResizeEvent(QResizeEvent *event);
 
+    QGraphicsRectItem *proxyItem = nullptr;
     QGraphicsItem *contentItem = nullptr;
     ImageType imageType = ImageType::ImageTypeBlank;
     QImage contentImage;
@@ -75,6 +80,13 @@ public:
         QPointF centerPoint;
     };
     PinchData *pinchData = nullptr;
+
+    struct CropData
+    {
+        DGraphicsCropItem *cropItem = nullptr;
+        QRect cropRect;
+    };
+    CropData *cropData = nullptr;
 };
 
 DWIDGET_END_NAMESPACE

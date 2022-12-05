@@ -26,7 +26,7 @@
 
 @fn void Dtk::Widget::DImageViewer::imageChanged(const QImage &image)
 @brief 图片变更信号，展示图片实例变更后触发
-@param[in] image 图片实例
+@param image 图片实例
 
 @fn QImage Dtk::Widget::DImageViewer::image() const
 @brief 返回当前展示图片实例，当未设置图片时，返回空值
@@ -39,7 +39,7 @@
 
 @fn void Dtk::Widget::DImageViewer::fileNameChanged(const QString &fileName)
 @brief 图片文件路径变更信号，通过 setFileName 设置文件路径后触发
-@param[in] fileName 图片文件路径
+@param fileName 图片文件路径
 
 @fn QString Dtk::Widget::DImageViewer::fileName() const
 @brief 获取当前展示的图片文件路径，若图片并未通过文件路径加载时，返回空值
@@ -80,7 +80,7 @@
 
 @fn void Dtk::Widget::DImageViewer::rotateAngleChanged(qreal angle)
 @brief 当展示图片旋转时触发，旋转角度为90°的倍数，范围在 -360° ~ 360°
-@param[in] angle 图片旋转角度
+@param angle 图片旋转角度
 @sa DImageViewer::rotateClockwise
 @sa DImageViewer::rotateCounterclockwise
 @sa DImageViewer::resetRotateAngle
@@ -118,10 +118,34 @@
 @fn void Dtk::Widget::DImageViewer::requestNextImage()
 @brief 请求切换下一张图片，触摸屏滑动切换时触发
 
-@fn void DImageViewer::scaleAtPoint(QPoint pos, qreal factor)
+@fn void Dtk::Widget::DImageViewer::scaleAtPoint(QPoint pos, qreal factor)
 @brief 在设置坐标位置缩放图片，将在当前缩放比例基础上持续缩放
 @param[in] pos 坐标
 @param[in] factor 图片缩放比例 
 @sa DImageViewer::scaleImage
+
+@fn void Dtk::Widget::DImageViewer::beginCropImage()
+@brief 设置开始裁剪图片，在界面显示裁剪工具，允许拖拽锚点调整裁剪区域
+@sa DImageViewer::endCropImage
+
+@fn void Dtk::Widget::DImageViewer::endCropImage()
+@brief 设置结束裁剪图片，隐藏裁剪工具，根据裁剪区域调整显示图片
+@sa DImageViewer::beginCropImage
+
+@fn void Dtk::Widget::DImageViewer::resetCropImage()
+@brief 复位裁剪图片，恢复图片大小
+
+@fn void Dtk::Widget::DImageViewer::setCropAspectRatio(qreal w, qreal h)
+@brief 设置裁剪工具宽高比，例如16:9/4:3等，设置后，裁剪工具会按比例调整大小，尽可能包含当前展示图片内容
+@param[in] w 相对宽度比例
+@param[in] h 相对高度比例
+
+@fn QRect Dtk::Widget::DImageViewer::cropImageRect() const
+@brief 获取当前图片裁剪矩形，此矩形对应图片的像素坐标
+@return 图片裁剪矩形
+
+@fn void Dtk::Widget::DImageViewer::cropImageChanged(const QRect &rect)
+@brief 图片裁剪矩形变更信号，图片裁剪完成后触发
+@param rect 图片裁剪矩形
 
 */
