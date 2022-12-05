@@ -8,6 +8,7 @@
 #include <QObject>
 #include <QSignalSpy>
 #include <QTouchEvent>
+#include <QGraphicsSceneMouseEvent>
 
 #include "dimageviewer.h"
 #include "private/dimagevieweritems_p.h"
@@ -233,7 +234,8 @@ TEST_F(ut_DImageViewer, testClear)
 
     ASSERT_TRUE(viewer->image().isNull());
     auto items = viewer->scene()->items();
-    ASSERT_TRUE(items.isEmpty());
+    // Has proxy item.
+    ASSERT_EQ(items.size(), 1);
 
     ASSERT_EQ(0, viewer->rotateAngle());
     ASSERT_TRUE(qFuzzyCompare(1.0, viewer->scaleFactor()));
@@ -276,6 +278,49 @@ TEST_F(ut_DImageViewer, testScaleAtPoint)
 
     viewer->scaleAtPoint(QPoint(0, 0), 2);
     ASSERT_TRUE(qFuzzyCompare(2.0, viewer->scaleFactor()));
+}
+
+TEST_F(ut_DImageViewer, testCropImageRect)
+{
+    viewer->setImage(createNormalImage());
+    viewer->beginCropImage();
+
+    QGraphicsSceneMouseEvent pressEvent(QEvent::GraphicsSceneMousePress);
+    pressEvent.setButton(Qt::LeftButton);
+    pressEvent.setPos(QPointF(0, 0));
+    viewer->scene()->mousePressEvent(&pressEvent);
+
+    QGraphicsSceneMouseEvent moveEvent(QEvent::GraphicsSceneMouseMove);
+    moveEvent.setButton(Qt::LeftButton);
+    moveEvent.setLastScenePos(QPointF(0, 0));
+    moveEvent.setScenePos(QPointF(150, 150));
+    viewer->scene()->mouseMoveEvent(&moveEvent);
+
+    QGraphicsSceneMouseEvent releaseEvent(QEvent::GraphicsSceneMouseRelease);
+    releaseEvent.setButton(Qt::LeftButton);
+    viewer->scene()->mouseReleaseEvent(&releaseEvent);
+
+    viewer->endCropImage();
+
+    ASSERT_EQ(QRect(150, 150, 150, 150), viewer->cropImageRect());
+}
+
+TEST_F(ut_DImageViewer, testSetCropAspectRatio)
+{
+    viewer->setImage(createNormalImage());
+    viewer->beginCropImage();
+    viewer->setCropAspectRatio(16.0, 9.0);
+    viewer->endCropImage();
+    QRect cropRect = viewer->cropImageRect();
+    qreal ratio = (1.0 * cropRect.width()) / cropRect.height();
+    ASSERT_TRUE(ratio - (16.0 / 9.0) < 0.01);
+
+    viewer->beginCropImage();
+    viewer->setCropAspectRatio(3.0, 4.0);
+    viewer->endCropImage();
+    cropRect = viewer->cropImageRect();
+    ratio = (1.0 * cropRect.width()) / cropRect.height();
+    ASSERT_TRUE(ratio - (3.0 / 4.0) < 0.01);
 }
 
 TEST_F(ut_DImageViewer, testImageChanged)
@@ -408,5 +453,17 @@ TEST_F(ut_DImageViewer, testRequestNextImage)
     // Test multi point touch.
     QTouchEvent touchEvent2(QEvent::TouchEnd, nullptr, Qt::NoModifier, Qt::TouchPointReleased, {point, point});
     viewer->event(&touchEvent2);
+    ASSERT_EQ(changeSignal.count(), 1);
+}
+
+TEST_F(ut_DImageViewer, testCropImageFinished)
+{
+    viewer->setImage(createNormalImage());
+    QSignalSpy changeSignal(viewer, &DImageViewer::cropImageChanged);
+
+    viewer->beginCropImage();
+    viewer->setCropAspectRatio(16.0, 9.0);
+    viewer->endCropImage();
+
     ASSERT_EQ(changeSignal.count(), 1);
 }

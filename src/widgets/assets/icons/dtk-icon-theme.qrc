@@ -46,6 +46,14 @@
         <file>dark/actions/printer_lrtb_3_24px.svg</file>
         <file>dark/actions/printer_lrtb_4_24px.svg</file>
         <file>dark/actions/printer_lrtb_5_24px.svg</file>
+        <file>dark/icons/selection_bottomleft_40px.svg</file>
+        <file>dark/icons/selection_topright_40px.svg</file>
+        <file>dark/icons/selection_topleft_40px.svg</file>
+        <file>dark/icons/selection_bottomright_40px.svg</file>
+        <file>light/icons/selection_topright_40px.svg</file>
+        <file>light/icons/selection_topleft_40px.svg</file>
+        <file>light/icons/selection_bottomright_40px.svg</file>
+        <file>light/icons/selection_bottomleft_40px.svg</file>
     </qresource>
     <qresource prefix="/dsg/built-in-icons">
         <file alias="window_menu.dci">bloom/window_menu.dci</file>

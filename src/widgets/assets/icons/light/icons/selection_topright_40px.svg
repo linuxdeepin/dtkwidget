@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>selection02 </title>
+    <defs>
+        <path d="M4.00087166,1 C3.4481055,1 3,1.44463086 3,2.00087166 L3,15.9991283 C3,16.5518945 3.44335318,17 4.0093689,17 L5.9906311,17 C6.54809015,17 7,16.544239 7,15.9975267 L7,6.00247329 C7,5.44882258 7.45576096,5 8.00247329,5 L17.9975267,5 C18.5511774,5 19,4.55664682 19,3.9906311 L19,2.0093689 C19,1.45190985 18.5553691,1 17.9991283,1 L4.00087166,1 Z" id="path-1"></path>
+        <filter x="-15.6%" y="-15.6%" width="143.7%" height="143.8%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="1" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="浅色主题" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="裁切样式" transform="translate(-1271.000000, -140.000000)">
+            <g id="选区" transform="translate(207.000000, 140.000000)">
+                <g id="selection02-" transform="translate(1064.000000, 0.000000)">
+                    <g id="selection01" transform="translate(11.000000, 9.000000) scale(-1, 1) translate(-11.000000, -9.000000) ">
+                        <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                        <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
