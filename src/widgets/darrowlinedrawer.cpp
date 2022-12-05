@@ -94,18 +94,20 @@ public:
 };
 
 /*!
+@~english
   \class Dtk::Widget::DArrowLineDrawer
   \inmodule dtkwidget
-  \brief 一个美观的可展开的控件.
+  @brief A beautiful expandable control.
   
-  DArrowLineDrawer 继承自 DDrawer 并提供了了 ArrowHeaderLine (一个带有箭头标示的按钮)作为其固定的标题控件，也就是说跟 DDrawer 相比省去了提供标题控件的步骤，只需要提供内容控件即可，如果需要自定义标题控件应该使用 DDrawer 类。
+  DArrowLineDrawer inherited from DDrawer and provide ArrowHeaderLine (a button marked with an arrow)as its fixed title control，that is to say, compared with DDrawer, the step of providing title control is omitted，you only need to provide content controls，if you need a custom title control, you should use the DDrawer class.
   \sa  DDrawer
  */
 
 /*!
-  \brief 构造一个 DArrowLineDrawer 实例
+@~english
+  @brief Construct a DArrowLineDrawer example
   
-  \a parent 为实例的父控件
+  \a parent is the parent control of the instance
  */
 DArrowLineDrawer::DArrowLineDrawer(QWidget *parent)
     : DDrawer(*new DArrowLineDrawerPrivate(this), parent)
@@ -121,9 +123,10 @@ DArrowLineDrawer::DArrowLineDrawer(QWidget *parent)
 }
 
 /*!
-  \brief 设置标题要显示的文字
+@~english
+  @brief Set the text for the title to display
   
-  \a title 标题内容
+  \a title Title content
  */
 void DArrowLineDrawer::setTitle(const QString &title)
 {
@@ -132,9 +135,10 @@ void DArrowLineDrawer::setTitle(const QString &title)
 }
 
 /*!
-  \brief 设置是否展开以显示内容控件
+@~english
+  @brief Sets whether to expand to display the content control
   
-  \a value 为 true 即为显示，反之则反
+  \a value If it is true, it will be displayed, and vice versa.
  */
 void DArrowLineDrawer::setExpand(bool value)
 {
@@ -145,8 +149,9 @@ void DArrowLineDrawer::setExpand(bool value)
 }
 
 /*!
-  \brief 获取标题控件
-  \return 标题控件
+@~english
+  @brief Get the title control
+  \return Title control
   \sa DHeaderLine DBaseLine
  */
 DBaseLine *DArrowLineDrawer::headerLine()
