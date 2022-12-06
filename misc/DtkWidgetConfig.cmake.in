@@ -6,7 +6,8 @@ set(DtkWidget_TOOL_DIRS "@PACKAGE_TOOL_INSTALL_DIR@")
 
 include(CMakeFindDependencyMacro)
 find_dependency(Dtk REQUIRED Core Gui)
-set(DtkWidget_LIBRARIES dtkwidget ${DtkCore_LIBRARIES} ${DtkGui_LIBRARIES})
+find_library(DtkWidget_LIBRARIES dtkwidget ${DtkWidget_LIBRARY_DIRS})
+set(DtkWidget_LIBRARIES ${DtkWidget_LIBRARIES} ${DtkCore_LIBRARIES} ${DtkGui_LIBRARIES})
 
 include_directories("${DtkWidget_INCLUDE_DIRS}")
 
