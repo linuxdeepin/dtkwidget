@@ -125,6 +125,30 @@ public:
     QBrush backgroundBrush(const QRect &rect, const QBrush &brush);
 };
 
+class DCrumbEditPanelFrame : public QWidget {
+    Q_OBJECT
+
+public:
+    explicit DCrumbEditPanelFrame(QWidget *parent = nullptr)
+        :QWidget(parent)
+    {
+        setFocusProxy(parent);
+    }
+
+protected:
+    void paintEvent(QPaintEvent *event) override;
+};
+
+void DCrumbEditPanelFrame::paintEvent(QPaintEvent *event)
+{
+    QPainter p(this);
+    QStyleOptionFrame panel;
+    panel.initFrom(parentWidget());
+    panel.rect = rect();
+    style()->drawPrimitive(QStyle::PE_PanelLineEdit, &panel, &p, parentWidget());
+    QWidget::paintEvent(event);
+}
+
 /*!
     \class Dtk::Widget::DCrumbTextFormat
     \inmodule dtkwidget
@@ -277,11 +301,14 @@ public:
         widgetLeft = new QWidget(qq);
         widgetRight = new QWidget(qq);
         crumbRadius = DStyle::pixelMetric(qq->style(), DStyle::PM_FrameRadius);
+        panelFrame = new DCrumbEditPanelFrame(qq);
+        panelFrame->stackUnder(qq->viewport());
 
         widgetTop->setAccessibleName("DCrumbEditTopWidget");
         widgetBottom->setAccessibleName("DCrumbEditBottomWidget");
         widgetLeft->setAccessibleName("DCrumbEditLeftWidget");
         widgetRight->setAccessibleName("DCrumbEditRightWidget");
+        panelFrame->setAccessibleName("DCrumbEditPanelFrame");
     }
 
     void registerHandler(QAbstractTextDocumentLayout *layout)
@@ -523,6 +550,7 @@ public:
     bool dualClickMakeCrumb = false;
     QString currentText;
     QBrush currentBrush;
+    DCrumbEditPanelFrame* panelFrame = nullptr;
 
 public:
     QWidget* widgetTop;
@@ -625,9 +653,13 @@ DCrumbEdit::DCrumbEdit(QWidget *parent)
 
     qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
 
+    int frameRadius = DStyle::pixelMetric(style(), DStyle::PM_FrameRadius);
+    int margins = DStyle::pixelMetric(style(), DStyle::PM_FrameMargins);
     viewport()->setAutoFillBackground(false);
     viewport()->setAccessibleName("DCrumbViewport");
     setFrameShape(QFrame::NoFrame);
+    int margin = frameRadius / 2 + margins + 2;
+    setViewportMargins(margin, margin, margin, margin);
 
     d->widgetTop->setFixedWidth(1);
     d->widgetBottom->setFixedWidth(1);
@@ -991,6 +1023,8 @@ bool DCrumbEdit::event(QEvent *e)
         d->widgetBottom->setFixedHeight(frame_radius);
         d->widgetLeft->setFixedWidth(frame_radius);
         d->widgetRight->setFixedWidth(frame_radius);
+    } else if (e->type() == QEvent::Resize) {
+        d->panelFrame->resize(size());
     }
 
     return QTextEdit::event(e);
@@ -999,13 +1033,6 @@ bool DCrumbEdit::event(QEvent *e)
 /*!\reimp */
 void DCrumbEdit::paintEvent(QPaintEvent *event)
 {
-    QPainter p(viewport());
-
-    QStyleOptionFrame panel;
-    initStyleOption(&panel);
-    panel.rect = viewport()->rect();
-    style()->drawPrimitive(QStyle::PE_PanelLineEdit, &panel, &p, this);
-
     QTextEdit::paintEvent(event);
 }
 
