@@ -47,18 +47,20 @@ void ArrowHeaderLine::reverseArrowDirection()
 }
 
 /*!
+@~english
   \class Dtk::Widget::DArrowLineExpand
   \inmodule dtkwidget
-  \brief 一个美观的可展开的控件.
+  @brief a beautiful expandable control.
   
-  DArrowLineExpand 继承自 DBaseExpand 并提供了了 ArrowHeaderLine (一个带有箭头标示的按钮)作为其固定的标题控件，也就是说跟 DBaseExpand 相比省去了提供标题控件的步骤，只需要提供内容控件即可，如果需要自定义标题控件应该使用 DBaseExpand 类。
+  DArrowLineExpand inherited from DBaseExpand and provide ArrowHeaderLine (a button marked with an arrow)as its fixed title control，that is to say, compared with DBaseExpand, the step of providing title control is omitted，you only need to provide content controls，If you need a custom title control, you should use the DBaseExpand class。
   \sa  DBaseExpand
  */
 
 /*!
-  \brief 构造一个 DArrowLineExpand 实例
+@~english
+  @brief Construct a DArrowLineExpand instance
   
-  \a parent 为实例的父控件
+  \a parent Is the parent control of the instance
  */
 DArrowLineExpand::DArrowLineExpand(QWidget *parent) : DBaseExpand(parent)
 {
@@ -71,9 +73,10 @@ DArrowLineExpand::DArrowLineExpand(QWidget *parent) : DBaseExpand(parent)
 }
 
 /*!
-  \brief 设置标题要显示的文字
+@~english
+  @brief Set the text for the title to display
   
-  \a title 标题内容
+  \a title Title content
  */
 void DArrowLineExpand::setTitle(const QString &title)
 {
@@ -81,9 +84,10 @@ void DArrowLineExpand::setTitle(const QString &title)
 }
 
 /*!
-  \brief 设置是否展开以显示内容控件
+@~english
+  @brief Sets whether to expand to display the content control
   
-  \a value 为 true 即为显示，反之则反
+  \a value If it is true, it will be displayed, and vice versa
  */
 void DArrowLineExpand::setExpand(bool value)
 {
@@ -93,8 +97,9 @@ void DArrowLineExpand::setExpand(bool value)
 }
 
 /*!
-  \brief 获取标题控件
-  \return 标题控件
+@~english
+  @brief get the title control
+  \return title control
   \sa DHeaderLine DBaseLine
  */
 DBaseLine *DArrowLineExpand::headerLine()
