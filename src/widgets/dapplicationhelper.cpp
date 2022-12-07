@@ -17,7 +17,7 @@ public:
     }
 };
 
-__attribute__((constructor)) // 在库被加载时就执行此函数
+__attribute__((constructor)) // This function is executed when the library is loaded
 static void init_createHelper ()
 {
     if (!QApplication::instance() || qobject_cast<QApplication *>(QApplication::instance())) {
@@ -36,11 +36,11 @@ static DApplicationHelperPrivate *d = nullptr;
 /*!
   \class Dtk::Widget::DApplicationHelper
   \inmodule dtkwidget
-  \brief DApplicationHelper提供了一个修改的 DGuiApplicationHelper 类.
+  \brief `dApplicationHelper` provided a modified `DGuiApplicationHelper` 类.
  */
 
 /*!
-  \brief DApplicationHelper::instance返回 DApplicationHelper 对象
+  \brief `DApplicationHelper::instance`return `DApplicationHelper` object
  */
 DApplicationHelper *DApplicationHelper::instance()
 {
@@ -48,10 +48,10 @@ DApplicationHelper *DApplicationHelper::instance()
 }
 
 /*!
-  \brief DApplicationHelper::palette返回调色板
-  \a widget 控件
-  \a base 调色板
-  \return 调色板
+  \brief `DApplicationHelper::palette` return a palette
+  \a widget widget
+  \a base Palette
+  \return Palette
  */
 DPalette DApplicationHelper::palette(const QWidget *widget, const QPalette &base) const
 {
@@ -59,9 +59,9 @@ DPalette DApplicationHelper::palette(const QWidget *widget, const QPalette &base
 }
 
 /*!
-  \brief DApplicationHelper::setPalette将调色板设置到控件
-  \a widget 控件
-  \a palette 调色板
+  \brief `DApplicationHelper::setPalette` set the palette to the control
+  \a widget widget
+  \a palette palette
  */
 void DApplicationHelper::setPalette(QWidget *widget, const DPalette &palette)
 {
@@ -69,8 +69,8 @@ void DApplicationHelper::setPalette(QWidget *widget, const DPalette &palette)
 }
 
 /*!
-  \brief DApplicationHelper::resetPalette重置控件的调色板属性
-  \a widget 控件
+  \brief `DApplicationHelper::resetPalette` Reset the color panel attribute of the reset control
+  \a widget widget
  */
 void DApplicationHelper::resetPalette(QWidget *widget)
 {

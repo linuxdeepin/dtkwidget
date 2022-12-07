@@ -1,0 +1,27 @@
+/*!
+@~chinese
+@file dapplicationhelper.h
+@ingroup dtkwidget
+@class Dtk::Widget::DApplicationHelper
+@brief `DApplicationHelper` 提供了一个修改的 `DGuiApplicationHelper` 类.
+
+@fn DApplicationHelper *DApplicationHelper::instance()
+@brief `DApplicationHelper::instance` 返回 `DApplicationHelper` 对象
+
+@fn DPalette DApplicationHelper::palette(
+    const QWidget *widget, const QPalette &base) const
+@brief DApplicationHelper::palette返回调色板
+@param[in] widget 控件
+@param[in] base 调色板
+@return 调色板
+
+@fn void DApplicationHelper::setPalette(QWidget *widget, const DPalette &palette)
+@brief `DApplicationHelper::setPalette` 将调色板设置到控件
+@param[in] widget 控件
+@param[in] palette 调色板
+
+@fn void DApplicationHelper::resetPalette(QWidget *widget)
+@brief `DApplicationHelper::resetPalette`重置控件的调色板属性
+@param[in] widget 控件
+
+*/
