@@ -1,0 +1,22 @@
+/*!
+@~chinese
+@file daboutdialog.h
+@ingroup dtkwidget
+
+@class Dtk::Widget::DColoredProgressBar
+@brief `DColoredProgressBar`和`QProgressBar`功能差不多一样,只是它可以根据显示的值更改其外观
+
+@fn void DColoredProgressBar::addThreshold(int threshold, QBrush brush)
+@brief `DColoredProgressBar::addThreshold `添加一个新的阈值，并指定达到该值后要使用的画笔。如果一个相同值的阈值已经存在，它将被覆盖。
+@param[in] brush 当前显示的值不小于 threshold且小于下一个阈值时使用的画笔
+@param[in] threshold 使用此画笔的最小值
+
+@fn void DColoredProgressBar::removeThreshold(int threshold)
+@brief `DColoredProgressBar::removeThreshold` 移除一个threshold
+@param[in] threshold 被移除的threshold值
+
+@fn QList<int> DColoredProgressBar::thresholds() const
+@brief `DColoredProgressBar::thresholds` 获取所有的thresholds值
+@return  返回一个　threshold值的列表
+
+*/
