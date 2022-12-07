@@ -35,7 +35,6 @@ DColoredProgressBarPrivate::DColoredProgressBarPrivate(DColoredProgressBar *q)
   \inmodule dtkwidget
 
   \brief DColoredProgressBar is the same as QProgressBar, except it can change its appearance depending on the value displayed.
-  \brief DColoredProgressBar和QProgressBar功能差不多一样,只是它可以根据显示的值更改其外观
  */
 DColoredProgressBar::DColoredProgressBar(QWidget *parent)
     : QProgressBar(parent)
@@ -44,13 +43,10 @@ DColoredProgressBar::DColoredProgressBar(QWidget *parent)
 }
 
 /*!
-  \brief DColoredProgressBar::addThreshold 添加一个新的阈值，并指定达到该值后要使用的画笔。如果一个相同值的阈值已经存在，它将被覆盖。
   \brief DColoredProgressBar::addThreshold adds a new threshold value and specifies the brush to use once that value is reached.
 
   If a threshold of the same value already exists, it will be overwritten.
-  \a brush 当前显示的值不小于 threshold且小于下一个阈值时使用的画笔。
   \a brush The brush to use when the currently displayed value is no less than and less than the next threshold value.
-  \a threshold 使用此画笔的最小值。
   \a threshold Minimum value for this brush to be used.
  */
 void DColoredProgressBar::addThreshold(int threshold, QBrush brush)
@@ -61,10 +57,8 @@ void DColoredProgressBar::addThreshold(int threshold, QBrush brush)
 
 /*!
   \brief DColoredProgressBar::removeThreshold removes a threshold.
-  \brief DColoredProgressBar::removeThreshold 移除一个threshold
 
   \a threshold The threshold value to remove.
-  \a threshold 被移除的threshold值
  */
 void DColoredProgressBar::removeThreshold(int threshold)
 {
@@ -76,10 +70,8 @@ void DColoredProgressBar::removeThreshold(int threshold)
 
 /*!
   \brief DColoredProgressBar::threadsholds gets all threshold values.
-  \brief DColoredProgressBar::thresholds 获取所有的thresholds值
 
   \return A list of threshold values.
-  \return  返回一个　threshold值的列表
  */
 QList<int> DColoredProgressBar::thresholds() const
 {
