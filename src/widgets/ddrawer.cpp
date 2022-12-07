@@ -97,22 +97,21 @@ void DDrawerPrivate::init()
 /*!
   \class Dtk::Widget::DDrawer
   \inmodule dtkwidget
-  \brief 一个美观的可展开的控件.
+  \brief A beautifully developed control.
   
-  使用 DDrawer 类可以创建一个可展开的带有展开动画效果的控件，这个控件包含上下两部分，上面的控件为标题控件，这个控件会始终显示，下面的控件为内容控件，默认为不会显示，调用 DDrawer::setExpand 设置内容控件的可见性。使用 DDrawer::setHeader 和 DDrawer::setContent 设置分别设置标题控件和内容控件。
-  
+  using DDrawer Class can create a controllable control with an animation effect. This control contains the upper and lower parts. The above control is the title control. This control will always show.:: SETEXPAND to set the visibility of the content control.Use DDRAWER :: SetHeader and DDRAWER :: SetContent to set the title control and content control respectively.
   \sa DHeaderLine
  */
 
 /*!
   \fn void DDrawer::expandChange(bool e)
-  \brief 内容控件可见性发生改变的信号
-  \a e 为 true 表示内容控件变为了可见，反之则反
+  \brief Content control visibility signal
+  \a e For TRUE, the content control becomes visible, but vice versa
  */
 
 /*!
-  \brief 获取 DDrawer::DDrawer 实例
-  \a parent 作为实例的父控件
+  \brief Get DDRAWER :: DDRAWER example
+  \a parent As the parent control part of the example
  */
 DDrawer::DDrawer(QWidget *parent)
     : DDrawer(*new DDrawerPrivate(this), parent)
@@ -126,9 +125,9 @@ DDrawer::~DDrawer()
 }
 
 /*!
-  \brief 设置标题控件
-  标题控件会始终显示在布局里
-  \a header 标题控件
+  \brief Set the title control
+  The title control will always be displayed in the layout
+  \a header Title control
  */
 void DDrawer::setHeader(QWidget *header)
 {
@@ -147,10 +146,10 @@ void DDrawer::setHeader(QWidget *header)
 }
 
 /*!
-  \brief 设置内容控件
-  内容控件默认是隐藏的，调用 DDrawer::setExpand 设置其可见性
-  \a content 内容控件
-  \a alignment 内容控件在布局中的对齐方式
+  \brief Set the content control
+  Content control is hidden by default, call ddrawer :: setexpand settings for its visibility
+  \a content Content controlent control
+  \a alignment The alignment method of content control in the layout method of content control in the layout method of content control in the layout method of content control in the layout method of content control in the layout method of content control in the layout method of content control in the layout
  */
 void DDrawer::setContent(QWidget *content, Qt::Alignment alignment)
 {
@@ -171,8 +170,8 @@ void DDrawer::setContent(QWidget *content, Qt::Alignment alignment)
 }
 
 /*!
-  \brief 获取内容控件对象
-  \return 内容控件对象
+  \brief Get the content control object
+  \return Content control object
  */
 QWidget *DDrawer::getContent() const
 {
@@ -182,9 +181,9 @@ QWidget *DDrawer::getContent() const
 }
 
 /*!
-  \brief 设置标题控件的高度.
+  \brief Set the height of the title control.
 
-  \a height 指定的高度
+  \a height Specified height
  */
 void DDrawer::setHeaderHeight(int height)
 {
@@ -196,9 +195,9 @@ void DDrawer::setHeaderHeight(int height)
 }
 
 /*!
-  \brief 设置内容控件的可见性.
+  \brief Set the visibility of the content control.
 
-  \a value 为 true 则内容控件可见，反之则反
+  \a value For TRUE, the content control can be seen, but vice versant control can be seen, but vice versa
  */
 void DDrawer::setExpand(bool value)
 {
@@ -224,9 +223,9 @@ void DDrawer::setExpand(bool value)
 }
 
 /*!
-  \brief 获取当前内容控件的可见性.
+  \brief Visible to obtain the current content control.
 
-  \return 当前内容控件的可见性
+  \return Visible of the current content control
  */
 bool DDrawer::expand() const
 {
@@ -235,9 +234,9 @@ bool DDrawer::expand() const
 }
 
 /*!
-  \brief 设置内容控件的可见性改变时动画的时间.
+  \brief Set the time for the visibility of the content control when the animation time is changed.
 
-  \a duration 指定动画时间
+  \a duration Specify the animation time
  */
 void DDrawer::setAnimationDuration(int duration)
 {
@@ -246,8 +245,8 @@ void DDrawer::setAnimationDuration(int duration)
 }
 
 /*!
-  \brief 设置内容控件的可见性改变时动画的样式.
-  \a curve 指定动画样式
+  \brief setTheVisibilityOfTheContentControlWhenTheAnimationStyleIsChangedOfTheContentControlWhenTheAnimationStyleIsChanged
+  \a curve Specify animation style
  */
 void DDrawer::setAnimationEasingCurve(QEasingCurve curve)
 {
@@ -256,9 +255,9 @@ void DDrawer::setAnimationEasingCurve(QEasingCurve curve)
 }
 
 /*!
-  \brief 设置是否允许标题控件与内容控件之间的分割线.
+  \brief Set the segmentation line between the title control and the content control.
 
-  \a arg 为 ture 则显示分割线，反之则反
+  \a arg For ture, the segmentation line is displayed, but the instead does not display
  */
 void DDrawer::setSeparatorVisible(bool arg)
 {
@@ -267,9 +266,9 @@ void DDrawer::setSeparatorVisible(bool arg)
 }
 
 /*!
-  \brief 设置是否允许内容控件下的分割线.
+  \brief Set the segmentation line under the content control.
 
-  \a arg 为 ture 则显示分割线，反之则反
+  \a arg For ture, the segmentation line is displayed, but the instead does not display
  */
 void DDrawer::setExpandedSeparatorVisible(bool arg)
 {

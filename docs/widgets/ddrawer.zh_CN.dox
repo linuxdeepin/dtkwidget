@@ -1,0 +1,61 @@
+/*!
+@~chinese
+@file ddrawer.h
+@ingroup dtkwidget
+
+@class Dtk::Widget::DDrawer
+@brief 一个美观的可展开的控件。使用 DDrawer 类可以创建一个可展开的带有展开动画效果的控件，这个控件包含上下两部分，
+上面的控件为标题控件，这个控件会始终显示，下面的控件为内容控件，默认为不会显示，调用 `DDrawer::setExpand`设置内容
+控件的可见性。使用 `DDrawer::setHeader `和 `DDrawer::setContent` 设置分别设置标题控件和内容控件。
+@sa DHeaderLine
+
+@fn void DDrawer::expandChange(bool e)
+@brief 内容控件可见性发生改变的信号
+@param[in] e 为 true 表示内容控件变为了可见，反之则反
+
+@fn DDrawer::DDrawer(QWidget *parent)
+@brief 获取 `DDrawer::DDrawer `实例
+@aparam[in] parent 作为实例的父控件
+
+@fn void DDrawer::setHeader(QWidget *header)
+@brief 设置标题控件,标题控件会始终显示在布局里
+@param[in] header 标题控件
+
+@fn void DDrawer::setContent(QWidget *content, Qt::Alignment alignment)
+@brief 设置内容控件，内容控件默认是隐藏的，调用 `DDrawer::setExpand` 设置其可见性
+@param[in] content 内容控件
+@param[in] alignment 内容控件在布局中的对齐方式
+
+@fn QWidget *DDrawer::getContent() const
+@brief 获取内容控件对象
+@return 内容控件对象
+
+@fn void DDrawer::setHeaderHeight(int height)
+@brief 设置标题控件的高度
+@param[in] height 指定的高度
+
+@fn void DDrawer::setExpand(bool value)
+@brief 设置内容控件的可见性
+@param[in] value 为 true 则内容控件可见，反之则不显示
+
+@fn bool DDrawer::expand() const
+@brief 获取当前内容控件的可见性
+@return 当前内容控件的可见性
+
+@fn void DDrawer::setAnimationDuration(int duration)
+@brief 设置内容控件的可见性改变时动画的时间
+@param[in] duration 指定动画时间
+
+@fn void DDrawer::setAnimationEasingCurve(QEasingCurve curve)
+@brief 设置内容控件的可见性改变时动画的样式
+@param[in] curve 指定动画样式
+
+@fn void DDrawer::setSeparatorVisible(bool arg)
+@brief 设置是否允许标题控件与内容控件之间的分割线
+@param[in] arg 为 ture 则显示分割线，反之则不显示
+
+@fn void DDrawer::setExpandedSeparatorVisible(bool arg)
+@brief 设置是否允许内容控件下的分割线
+@param[in] arg 为 ture 则显示分割线，反之则不显示
+
+*/
