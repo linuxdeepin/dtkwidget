@@ -22,14 +22,14 @@ enum Margins{
   \class Dtk::Widget::DCommandLinkButton
   \inmodule dtkwidget
 
-  \brief DCommandLinkButton  一个继承于 QAbstractButton 的按钮,外形和链接很像;
-  也可以是带有箭头的链接。常用于点击之后,跳转到另外一个窗口或者页面,比如浏览器的前进后退按钮
+  \brief `DCommandLinkButton`  A button inherited in `QABSTRACTBUTTON`, the shape and link are very similar;
+  It can also be a link with arrows.Commonly used after clicking, jump to another window or page, such as the forward and back button of the browser
  */
 
 /*!
-  \brief 构造函数
-  \a text 控件显示的文字
-  \a parent 控件的父对象
+  \brief Constructor
+  \a text The text displayed by the control
+  \a parent The father of the control
  */
 DCommandLinkButton::DCommandLinkButton(const QString text, QWidget *parent)
     : QAbstractButton(parent)
@@ -38,8 +38,8 @@ DCommandLinkButton::DCommandLinkButton(const QString text, QWidget *parent)
 }
 
 /*!
-  \brief 获取控件的矩形大小
-  \return 返回本的控件矩形大小
+  \brief Get the rectangle size of the control
+  \return Return the control rectangle size
  */
 QSize DCommandLinkButton::sizeHint() const
 {
@@ -50,8 +50,8 @@ QSize DCommandLinkButton::sizeHint() const
 }
 
 /*!
-  \brief 初始化的一个 option 的风格,和一些基本的属性
-  \a option 实参是一个用来初始化的(按钮控件的)风格属性
+  \brief The style of an Option, and some basic attributes
+  \a option Real parameters are a (button control) style attribute used to initialize
  */
 void DCommandLinkButton::initStyleOption(DStyleOptionButton *option) const
 {
@@ -66,8 +66,8 @@ void DCommandLinkButton::initStyleOption(DStyleOptionButton *option) const
 }
 
 /*!
-  \brief 绘画事件
-  \a e 此处不使用
+  \brief Painting incident
+  \a e Not used here
  */
 void DCommandLinkButton::paintEvent(QPaintEvent *e)
 {
