@@ -48,6 +48,7 @@ add_executable(${BIN_NAME}
   widgetexample.h 
   lcdnumberexample.h 
   menuexample.h
+  imageviewerexample.h
 
   main.cpp
   mainwindow.cpp 
@@ -68,6 +69,7 @@ add_executable(${BIN_NAME}
   widgetexample.cpp 
   lcdnumberexample.cpp 
   menuexample.cpp
+  imageviewerexample.cpp
 )
 target_link_libraries(${BIN_NAME} PRIVATE 
   Qt5::Widgets

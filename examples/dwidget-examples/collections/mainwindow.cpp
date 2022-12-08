@@ -40,6 +40,7 @@
 #include "rubberbandexample.h"
 #include "widgetexample.h"
 #include "lcdnumberexample.h"
+#include "imageviewerexample.h"
 #include "mainwindow.h"
 #include "dsettingsbackend.h"
 #include "qsettingbackend.h"
@@ -324,6 +325,7 @@ void MainWindow::initModel()
     registerPage("RubberBand", new RubberBandExampleWindow(this), QIcon::fromTheme("icon_RubberBand"));
     registerPage("Widget", new WidgetExampleWindow(this), QIcon::fromTheme("icon_Widget"));
     registerPage("LCDNumber", new LCDNumberExampleWindow(this), QIcon::fromTheme("icon_LCDNumber"));
+    registerPage("ImageViewer", new ImageViewerExampleWindow(this), QIcon::fromTheme("icon_ScrollBar"));
 }
 
 void MainWindow::registerPage(const QString &pageName, PageWindowInterface *pPageWindow, const QIcon &icon)
