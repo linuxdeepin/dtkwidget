@@ -3,7 +3,8 @@
 @file daboutdialog.h
 @ingroup dtkwidget
 @class Dtk::Widget::DAboutDialog
-DAboutDialog 类提供了应用程序的关于对话框, 规范所有 deepin 应用关于窗口设计规范, 符合 deepin 风格
+@brief DAboutDialog 类提供了应用程序的关于对话框, 规范所有 deepin 应用关于窗口设计规范, 符合 deepin 风格
+@sa [daboutdialog](md_docs_widgets_daboutdialog_zh_CN.html)
 
 @property QString Dtk::Widget::DAboutDialog::windowTitle()
 @brief 返回对话标题栏内容
@@ -72,6 +73,6 @@ DAboutDialog 类提供了应用程序的关于对话框, 规范所有 deepin 应
 @details在关于对话框展示的图标.
 
 @fn void Dtk::Widget::DAboutDialog::setCompanyLogo(const QPixmap &companyLogo)
- @brief 此函数用于设置指定的 companyLogo 组织标志
+@brief 此函数用于设置指定的 companyLogo 组织标志
 
 */
