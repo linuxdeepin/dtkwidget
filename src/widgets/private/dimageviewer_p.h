@@ -16,11 +16,12 @@ class QGraphicsRectItem;
 DWIDGET_BEGIN_NAMESPACE
 class DGraphicsCropItem;
 
+/*! \internal */
 enum ImageType {
-    ImageTypeBlank = 0,
-    ImageTypeStatic,
-    ImageTypeDynamic,
-    ImageTypeSvg,
+    ImageTypeBlank = 0,  //!@~english Empty image or unsupported formats.
+    ImageTypeStatic,     //!@~english Normal image format.
+    ImageTypeDynamic,    //!@~english Dynamic image format，e.g.:*.jpg *.webp
+    ImageTypeSvg,        //!@~english SVG image format.
 };
 
 class DImageViewerPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
@@ -52,11 +53,13 @@ public:
     void _q_pinchAnimeFinished();
 
     void checkCropData();
+    void resetCropData();
 
     void handleMousePressEvent(QMouseEvent *event);
     void handleMouseReleaseEvent(QMouseEvent *event);
     void handleResizeEvent(QResizeEvent *event);
 
+private:
     QGraphicsRectItem *proxyItem = nullptr;
     QGraphicsItem *contentItem = nullptr;
     ImageType imageType = ImageType::ImageTypeBlank;
@@ -85,6 +88,7 @@ public:
     {
         DGraphicsCropItem *cropItem = nullptr;
         QRect cropRect;
+        bool cropping = false;
     };
     CropData *cropData = nullptr;
 };
