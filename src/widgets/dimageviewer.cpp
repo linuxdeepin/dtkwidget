@@ -23,11 +23,18 @@ DWIDGET_BEGIN_NAMESPACE
 const qreal MAX_SCALE_FACTOR = 20.0;
 const qreal MIN_SCALE_FACTOR = 0.02;
 
+/*!
+  \class Dtk::Widget::DImageViewerPrivate
+  \internal
+ */
+
+/*! \internal */
 DImageViewerPrivate::DImageViewerPrivate(DImageViewer *qq)
     : DObjectPrivate(qq)
 {
 }
 
+/*! \internal */
 DImageViewerPrivate::~DImageViewerPrivate()
 {
     if (pinchData) {
@@ -49,6 +56,7 @@ DImageViewerPrivate::~DImageViewerPrivate()
     q_func()->scene()->clear();
 }
 
+/*! \internal */
 void DImageViewerPrivate::init()
 {
     D_Q(DImageViewer);
@@ -80,6 +88,7 @@ void DImageViewerPrivate::init()
     q->scene()->addItem(proxyItem);
 }
 
+/*! \internal */
 ImageType DImageViewerPrivate::detectImageType(const QString &fileName) const
 {
     ImageType type = ImageType::ImageTypeBlank;
@@ -109,6 +118,7 @@ ImageType DImageViewerPrivate::detectImageType(const QString &fileName) const
     return type;
 }
 
+/*! \internal */
 void DImageViewerPrivate::resetItem(ImageType type)
 {
     D_Q(DImageViewer);
@@ -122,6 +132,8 @@ void DImageViewerPrivate::resetItem(ImageType type)
 
         imageType = type;
     } else if (contentItem) {
+        resetCropData();
+
         contentItem->setPos(0, 0);
         contentItem->resetTransform();
         proxyItem->setRotation(0);
@@ -151,6 +163,7 @@ void DImageViewerPrivate::resetItem(ImageType type)
     }
 }
 
+/*! \internal */
 QImage DImageViewerPrivate::loadImage(const QString &fileName, ImageType type) const
 {
     QImage image;
@@ -173,6 +186,7 @@ QImage DImageViewerPrivate::loadImage(const QString &fileName, ImageType type) c
     return image;
 }
 
+/*! \internal */
 void DImageViewerPrivate::updateItemAndSceneRect()
 {
     D_Q(DImageViewer);
@@ -188,11 +202,13 @@ void DImageViewerPrivate::updateItemAndSceneRect()
     }
 }
 
+/*! \internal */
 bool DImageViewerPrivate::rotatable() const
 {
     return (ImageTypeBlank != imageType && ImageTypeDynamic != imageType);
 }
 
+/*! \internal */
 bool DImageViewerPrivate::isRotateVertical() const
 {
     if (proxyItem) {
@@ -203,6 +219,7 @@ bool DImageViewerPrivate::isRotateVertical() const
     return false;
 }
 
+/*! \internal */
 qreal DImageViewerPrivate::validRotateAngle(qreal angle) const
 {
     // From Qt help doc: A rotation transformation of 180 degrees
@@ -215,11 +232,13 @@ qreal DImageViewerPrivate::validRotateAngle(qreal angle) const
     }
 }
 
+/*! \internal */
 qreal DImageViewerPrivate::validScaleFactor(qreal scale) const
 {
     return qBound(MIN_SCALE_FACTOR, scale, MAX_SCALE_FACTOR);
 }
 
+/*! \internal */
 qreal DImageViewerPrivate::widgetRelativeScale() const
 {
     D_QC(DImageViewer);
@@ -232,6 +251,7 @@ qreal DImageViewerPrivate::widgetRelativeScale() const
     }
 }
 
+/*! \internal */
 void DImageViewerPrivate::checkPinchData()
 {
     if (!pinchData) {
@@ -239,6 +259,7 @@ void DImageViewerPrivate::checkPinchData()
     }
 }
 
+/*! \internal */
 void DImageViewerPrivate::handleGestureEvent(QGestureEvent *gesture)
 {
     if (QGesture *pinch = gesture->gesture(Qt::PinchGesture)) {
@@ -246,6 +267,7 @@ void DImageViewerPrivate::handleGestureEvent(QGestureEvent *gesture)
     }
 }
 
+/*! \internal */
 void DImageViewerPrivate::pinchTriggered(QPinchGesture *gesture)
 {
     D_Q(DImageViewer);
@@ -303,6 +325,7 @@ void DImageViewerPrivate::pinchTriggered(QPinchGesture *gesture)
     }
 }
 
+/*! \internal */
 void DImageViewerPrivate::playRotationAnimation()
 {
     D_Q(DImageViewer);
@@ -352,6 +375,7 @@ void DImageViewerPrivate::playRotationAnimation()
     animation->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
+/*! \internal */
 void DImageViewerPrivate::_q_pinchAnimeFinished()
 {
     D_Q(DImageViewer);
@@ -370,6 +394,7 @@ void DImageViewerPrivate::_q_pinchAnimeFinished()
     pinchData->storeItemAngle = 0;
 }
 
+/*! \internal */
 void DImageViewerPrivate::checkCropData()
 {
     if (!cropData) {
@@ -379,6 +404,18 @@ void DImageViewerPrivate::checkCropData()
     }
 }
 
+/*! \internal */
+void DImageViewerPrivate::resetCropData()
+{
+    if (cropData) {
+        cropData->cropItem->setParentItem(nullptr);
+        cropData->cropItem->setVisible(false);
+        cropData->cropRect = QRect();
+        cropData->cropping = false;
+    }
+}
+
+/*! \internal */
 void DImageViewerPrivate::handleMousePressEvent(QMouseEvent *event)
 {
     D_Q(DImageViewer);
@@ -388,6 +425,7 @@ void DImageViewerPrivate::handleMousePressEvent(QMouseEvent *event)
     clickStartPointX = event->pos().x();
 }
 
+/*! \internal */
 void DImageViewerPrivate::handleMouseReleaseEvent(QMouseEvent *event)
 {
     D_Q(DImageViewer);
@@ -413,6 +451,7 @@ void DImageViewerPrivate::handleMouseReleaseEvent(QMouseEvent *event)
     maxTouchPoints = 0;
 }
 
+/*! \internal */
 void DImageViewerPrivate::handleResizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event);
@@ -690,6 +729,8 @@ void DImageViewer::resetRotateAngle()
 void DImageViewer::clear()
 {
     D_D(DImageViewer);
+    // Crop data need reset before release contentItem.
+    d->resetCropData();
 
     if (d->contentItem) {
         scene()->removeItem(d->contentItem);
@@ -741,8 +782,13 @@ void DImageViewer::scaleAtPoint(QPoint pos, qreal factor)
 void DImageViewer::beginCropImage()
 {
     D_D(DImageViewer);
-    if (d->proxyItem) {
+    if (d->proxyItem && d->contentItem) {
         d->checkCropData();
+        if (d->cropData->cropping) {
+            return;
+        }
+
+        d->cropData->cropping = true;
         d->cropData->cropItem->updateContentItem(d->proxyItem);
         d->cropData->cropItem->setVisible(true);
     }
@@ -751,7 +797,7 @@ void DImageViewer::beginCropImage()
 void DImageViewer::endCropImage()
 {
     D_D(DImageViewer);
-    if (d->cropData) {
+    if (d->cropData && d->cropData->cropping) {
         // Crop item must remove parent after corped.
         d->cropData->cropItem->setParentItem(nullptr);
         d->cropData->cropItem->setVisible(false);
@@ -775,6 +821,8 @@ void DImageViewer::endCropImage()
 
             Q_EMIT cropImageChanged(d->cropData->cropRect);
         }
+
+        d->cropData->cropping = false;
     }
 }
 
@@ -782,9 +830,7 @@ void DImageViewer::resetCropImage()
 {
     D_D(DImageViewer);
     if (d->cropData && d->contentItem) {
-        d->cropData->cropItem->setParentItem(nullptr);
-        d->cropData->cropItem->setVisible(false);
-        d->cropData->cropRect = QRect();
+        d->resetCropData();
 
         d->contentItem->setPos(0, 0);
         d->contentItem->resetTransform();
