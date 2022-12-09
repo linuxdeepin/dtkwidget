@@ -4,69 +4,311 @@
 @ingroup dtkwidget
 @class Dtk::Widget::DAboutDialog
 @brief DAboutDialog 类提供了应用程序的关于对话框, 规范所有 deepin 应用关于窗口设计规范, 符合 deepin 风格
-@sa [daboutdialog](md_docs_widgets_daboutdialog_zh_CN.html)
+@details
 
-@property QString Dtk::Widget::DAboutDialog::windowTitle()
+## 概述
+
+DAboutDialog 类提供了应用程序的关于对话框
+
+项目目录结构在同一目录下
+
+## CMakeLists.txt
+
+```cmake
+cmake_minimum_required(VERSION 3.1.0) # 指定cmake最低版本
+
+project(example1 VERSION 1.0.0 LANGUAGES CXX) # 指定项目名称, 版本, 语言 cxx就是c++
+
+set(CMAKE_CXX_STANDARD 11) # 指定c++标准
+set(CMAKE_CXX_STANDARD_REQUIRED ON) # 指定c++标准要求,至少为11以上
+set(target example1) # 指定目标名称
+
+set(CMAKE_AUTOMOC ON) # support qt moc # 支持qt moc
+set(CMAKE_AUTORCC ON) # support qt resource file # 支持qt资源文件
+set(CMAKE_AUTOUIC ON) # support qt ui file # 支持qt ui文件(非必须)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # support clangd 支持 clangd
+
+if (CMAKE_VERSION VERSION_LESS "3.7.0") # 如果cmake版本小于3.7.0
+    set(CMAKE_INCLUDE_CURRENT_DIR ON) # 设置包含当前目录
+endif()
+
+find_package(Qt5 COMPONENTS Widgets REQUIRED) # 寻找Qt5组件Widgets
+find_package(Qt5 COMPONENTS Gui  REQUIRED) # 寻找Qt5组件Gui
+find_package(Dtk COMPONENTS Widget REQUIRED) # 寻找Dtk组件Widget
+find_package(Dtk COMPONENTS Core REQUIRED) # 寻找Dtk组件Core
+find_package(Dtk COMPONENTS Gui) # 寻找Dtk组件Gui
+
+add_executable(example1     # 添加可执行文件
+        main.cpp
+)
+
+target_link_libraries(example1 PRIVATE
+    Qt5::Widgets
+    Qt5::Gui
+    dtkgui
+    dtkcore
+    dtkwidget
+) # 链接库
+
+```
+
+## main.cpp
+
+```cpp
+#include <DAboutDialog>
+#include <DApplication>
+DWIDGET_USE_NAMESPACE // 使用Dtk widget命名空间
+int main(int argc, char *argv[]) {
+    DApplication app(argc, argv);
+    app.setProductName("Dtk example"); // 设置产品名称
+    app.setOrganizationName("deepin");
+    DAboutDialog about;        // 创建DAboutDialog对象
+    about.setWindowTitle("这是一个最简单的例子"); // 设置窗口标题
+    about.show();              // 显示DAboutDialog
+    return app.exec();          // 运行程序
+}
+```
+
+这是一个最简单的例子，运行结果如下
+
+![example](/docs/images/daboutdialog_example.png)
+
+但是这个例子并不是我们实际上使用的样子，在我们实际上的使用过程中，我们需要添加一些信息，比如我们的logo，我们的版本号，我们的版权信息等等，这些信息都应该在app中设置，如下
+
+### CMakeLists.txt
+
+```cmake
+cmake_minimum_required(VERSION 3.1.0)
+
+project(example VERSION 1.0.0 LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(target example)
+
+set(CMAKE_AUTOMOC ON) # support qt moc
+set(CMAKE_AUTORCC ON) # support qt resource file
+set(CMAKE_AUTOUIC ON) # support qt ui file
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # suppot clangd
+
+if (CMAKE_VERSION VERSION_LESS "3.7.0")
+    set(CMAKE_INCLUDE_CURRENT_DIR ON)
+endif()
+
+find_package(Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt5 COMPONENTS Gui  REQUIRED)
+find_package(Dtk COMPONENTS Widget REQUIRED)
+find_package(Dtk COMPONENTS Core REQUIRED)
+find_package(Dtk COMPONENTS Gui)
+
+add_executable(example
+        widget.hpp
+        widget.cpp
+        main.cpp
+)
+
+target_link_libraries(example PRIVATE
+    Qt5::Widgets
+    Qt5::Gui
+    dtkgui
+    dtkcore
+    dtkwidget
+)
+```
+
+### main.cpp
+
+```cpp
+#include <DAboutDialog>
+#include <DApplication>
+#include "widget.hpp"
+
+DWIDGET_USE_NAMESPACE
+int main(int argc, char *argv[])
+{
+    DApplication a(argc, argv);
+    example example1;
+    example1.show();
+    a.setApplicationName("dtk example"); //直接设置app的名称
+    DAboutDialog dialog;
+    return a.exec();
+}
+```
+
+### widget.hpp
+
+```cpp
+#ifndef EXAMPLE_H
+#define EXAMPLE_H
+#include <DPushButton>
+#include <DLineEdit>
+#include <DLabel>
+#include <QVBoxLayout>
+#include <DMainWindow>
+DWIDGET_USE_NAMESPACE
+class example : public DMainWindow
+{
+    Q_OBJECT
+public:
+ example();
+ ~example();
+private:
+    QVBoxLayout *mainlayout;
+    DLabel *label;
+    DLineEdit *text;
+    DPushButton *button;
+
+private slots:
+void  printlog();
+};
+#endif
+
+```
+
+### widget.cpp
+
+```cpp
+#include "widget.hpp"
+#include <cstdio>
+#include <QDebug>
+example::example()
+{
+    mainlayout= new QVBoxLayout;
+    button = new DPushButton;
+    label = new DLabel("test");
+    text = new DLineEdit();
+    mainlayout->addWidget(label);
+    mainlayout->addWidget(text);
+    mainlayout->addWidget(button);
+    setLayout(mainlayout);
+    connect(button,SIGNAL(clicked()),this,SLOT(printlog()));
+}
+example::~example(){}
+
+void example::printlog()
+{
+    printf("%s\n","clicked");
+    qDebug() << "button clicked!"; // 如果没设置相应环境变量则此Debug无法输出
+}
+```
+
+效果如下图
+
+![example](/docs/images/daboutdialog_example2.png)
+
+
+@property QString Dtk::Widget::DAboutDialog::windowTitle
+@brief 话标题栏内容属性
+@sa read方法  [windowTitle](@ref Dtk::Widget::DAboutDialog::windowTitle() const)
+@sa write方法 [setWindowTitle](@ref Dtk::Widget::DAboutDialog::setWindowTitle(const QString &windowTitle))
+
+@fn QString Dtk::Widget::DAboutDialog::windowTitle() const
 @brief 返回对话标题栏内容
+@sa 属性 [windowTitle](@ref Dtk::Widget::DAboutDialog::windowTitle)
 
 @fn void Dtk::Widget::DAboutDialog::setWindowTitle(const QString &windowTitle)
 @brief 设置对话标题栏内容
-@sa DAboutDialog::windowTitle()
+@sa 属性 [windowTitle](@ref Dtk::Widget::DAboutDialog::windowTitle)
 
-@property QString Dtk::Widget::DAboutDialog::productName()
+@property QString Dtk::Widget::DAboutDialog::productName
+@brief 对话框显示的应用名称属性
+@sa read方法  [productName](@ref Dtk::Widget::DAboutDialog::productName() const)
+@sa write方法 [setProductName](@ref Dtk::Widget::DAboutDialog::setProductName(const QString &productName))
+
+@fn QString Dtk::Widget::DAboutDialog::productName() const
 @brief 返回对话框显示的应用名称
+@sa 属性 [productName](@ref Dtk::Widget::DAboutDialog::productName)
 
 @fn void Dtk::Widget::DAboutDialog::setProductName(const QString &productName)
 @brief 设置对话框显示的应用名称
-@sa DAboutDialog::productName()
+@sa 属性 [productName](@ref Dtk::Widget::DAboutDialog::productName)
 
-@property QString Dtk::Widget::DAboutDialog::version()
+@property QString Dtk::Widget::DAboutDialog::version
+@brief 指定的 version 版本信息属性
+@sa read方法  [version](@ref Dtk::Widget::DAboutDialog::version() const)
+@sa write方法 [setVersion](@ref Dtk::Widget::DAboutDialog::setVersion(const QString &version))
+
+@fn QString Dtk::Widget::DAboutDialog::version() const
 @brief 返回指定的 version 版本信息
+@sa 属性 [version](@ref Dtk::Widget::DAboutDialog::version)
 
 @fn void Dtk::Widget::DAboutDialog::setVersion(const QString &version)
 @brief 设置指定的 version 版本信息
-@sa DAboutDialog::version()
+@sa 属性 [version](@ref Dtk::Widget::DAboutDialog::version)
 
-@property QString Dtk::Widget::DAboutDialog::description()
-@brief 返回指定的 description 描述信息.
+@property QString Dtk::Widget::DAboutDialog::description
+@brief 指定的 description 描述信息属性
+@sa read方法  [description](@ref Dtk::Widget::DAboutDialog::description() const)
+@sa write方法 [setDescription](@ref Dtk::Widget::DAboutDialog::setDescription())
+
+@fn QString Dtk::Widget::DAboutDialog::description() const
+@brief 返回指定的 description 描述信息
+@sa 属性 [description](@ref Dtk::Widget::DAboutDialog::description)
 
 @fn void Dtk::Widget::DAboutDialog::setDescription()
 @brief 此函数用于设置指定的 description 描述信息.
-@sa DAboutDialog::description()
+@sa 属性 [description](@ref Dtk::Widget::DAboutDialog::description)
 
-@property QString Dtk::Widget::DAboutDialog::license()
+@property QString Dtk::Widget::DAboutDialog::license
+@brief 指定的license许可证属性
+@sa read方法  [license](@ref Dtk::Widget::DAboutDialog::license() const)
+@sa write方法 [setLicense](@ref Dtk::Widget::DAboutDialog::setLicense(const QString &license))
+
+@fn QString Dtk::Widget::DAboutDialog::license() const
 @brief 返回指定的license许可证
+@sa 属性 [license](@ref Dtk::Widget::DAboutDialog::license)
 
 @fn void Dtk::Widget::DAboutDialog::setLicense(const QString &license)
 @brief 设置指定的license许可证
-@sa DAboutDialog::license()
+@sa 属性 [license](@ref Dtk::Widget::DAboutDialog::license)
 
-@property QString Dtk::Widget::DAboutDialog::websiteName()
+@property QString Dtk::Widget::DAboutDialog::websiteName
+@brief 指向的网站名属性
+@sa read方法  [websiteName](@ref Dtk::Widget::DAboutDialog::websiteName() const)
+@sa write方法 [setWebsiteName](@ref Dtk::Widget::DAboutDialog::setWebsiteName(const QString &websiteName))
+
+
+@fn QString Dtk::Widget::DAboutDialog::websiteName() const
 @brief 返回指向的网站名
+@sa 属性 [websiteName](@ref Dtk::Widget::DAboutDialog::websiteName)
 
 @fn void Dtk::Widget::DAboutDialog::setWebsiteName(const QString &websiteName)
 @brief 设置指向的网站名
 @details通常采用 www.deepin.org 等形式
-@sa DAboutDialog::websiteName()
+@sa 属性 [websiteName](@ref Dtk::Widget::DAboutDialog::websiteName)
 
-@property QString Dtk::Widget::DAboutDialog::websiteLink()
-@brief 返回指定的网站连接
+@property QString Dtk::Widget::DAboutDialog::websiteLink
+@brief 指定的网站连接属性
 @details如果用户点击对话框中显示的网址, 则会打开相应的链接
+@sa read方法  [websiteLink](@ref Dtk::Widget::DAboutDialog::websiteLink() const)
+@sa write方法 [setWebsiteLink](@ref Dtk::Widget::DAboutDialog::setWebsiteLink(const QString &websiteLink))
+
+@fn QString Dtk::Widget::DAboutDialog::websiteLink() const
+@brief 返回指定的网站连接
+@sa 属性 [websiteLink](@ref Dtk::Widget::DAboutDialog::websiteLink)
 
 @fn void Dtk::Widget::DAboutDialog::setWebsiteLink(const QString &websiteLink)
 @brief 设置指定的网站连接
-@sa DAboutDialog::websiteLink()
+@sa 属性 [websiteLink](@ref Dtk::Widget::DAboutDialog::websiteLink)
 
-@property QString Dtk::Widget::DAboutDialog::acknowledgementLink()
+@property QString Dtk::Widget::DAboutDialog::acknowledgementLink
+@brief 指定acknowledgementLink鸣谢连接属性
+@sa read方法  [acknowledgementLink](@ref Dtk::Widget::DAboutDialog::acknowledgementLink() const)
+@sa write方法 [setAcknowledgementLink](@ref Dtk::Widget::DAboutDialog::setAcknowledgementLink(const QString &acknowledgementLink))
+
+@fn QString Dtk::Widget::DAboutDialog::acknowledgementLink() const
 @brief 返回指定acknowledgementLink鸣谢连接
+@sa 属性 [acknowledgementLink](@ref Dtk::Widget::DAboutDialog::acknowledgementLink)
 
 @fn void Dtk::Widget::DAboutDialog::setAcknowledgementLink(const QString &acknowledgementLink)
 @brief 设置指定acknowledgementLink鸣谢连接
-@sa DAboutDialog::acknowledgementLink()
+@sa 属性 [acknowledgementLink](@ref Dtk::Widget::DAboutDialog::acknowledgementLink)
 
 @fn void Dtk::Widget::DAboutDialog::setAcknowledgementLink(bool visible)
 @brief 此函数用于设置指定的 visible 设置鸣谢链接是否显示
-@sa DAboutDialog::acknowledgementLink()
+@sa 属性 [acknowledgementLink](@ref Dtk::Widget::DAboutDialog::acknowledgementLink)
 
 @fn void Dtk::Widget::DAboutDialog::setProductIcon(const QIcon &icon)
 @brief 设置展示的 icon 图标.
@@ -74,5 +316,8 @@
 
 @fn void Dtk::Widget::DAboutDialog::setCompanyLogo(const QPixmap &companyLogo)
 @brief 此函数用于设置指定的 companyLogo 组织标志
+
+@fn const QPixmap* Dtk::Widget::DAboutDialog::companyLogo() const
+@brief 返回指定的 companyLogo 组织标志
 
 */
