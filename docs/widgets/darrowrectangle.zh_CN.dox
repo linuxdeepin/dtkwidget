@@ -1,0 +1,194 @@
+/*!
+@~chinese
+@file darrowrectangle.h
+@ingroup dtkwidget
+@class Dtk::Widget::DArrowRectangle
+@brief DArrowRectangle 提供了可以在四个边中的任意一个边显示箭头的矩形控件.
+@details 通常用于作为其他控件的容器，将其显示在矩形内作为内容控件
+@sa DArrowRectangle::setContent()
+
+@enum Dtk::Widget::DArrowRectangle::ArrowDirection
+@brief 箭头方向枚举包含 DArrowRectangle 的箭头可能指向的可能方向.
+| **值**      | **含义**               |
+|:-----------:|:---------------------:|
+| ArrowLeft   | 指示此矩形的箭头将指向左侧 | 
+| ArrowRight  | 指示此矩形的箭头将指向右侧 |
+| ArrowTop    | 指示此矩形的箭头将指向上方 |
+| ArrowBottom | 指示此矩形的箭头将向下指向 |
+
+@enum Dtk::Widget::DArrowRectangle::FloatMode
+@brief FloatMode 表示不同的控件的浮动模式
+@details 控件的浮动模式表示控件如何显示在布局中,DArrowRectangle::FloatWindow 表示控件将会以一个单独的窗口显示，而 DArrowRectangle::FloatWidget 则表示控件只能显示在其父控件的布局中，不能超出父控件大小
+| **值**      | **含义** |
+|:-----------:|:-------:|
+| FloatWindow | 窗口模式 | 
+| FloatWidget | 控件模式 |
+
+@fn explicit DArrowRectangle::DArrowRectangle(ArrowDirection direction, QWidget *parent = nullptr)
+@brief 获取 DArrowRectangle 实例
+@param[in] direction 用于初始化箭头的方向
+@param[in] parent 作为其父控件
+
+@fn explicit DArrowRectangle::DArrowRectangle(ArrowDirection direction, FloatMode floatMode, QWidget *parent = nullptr)
+@brief 获取 DArrowRectangle 实例，并指定浮动模式.
+@param[in] direction 用于初始化箭头的方向
+@param[in] floatMode 浮动模式
+@param[in] parent 作为其父控件
+@sa DArrowRectangle::FloatMode
+
+@fn virtual void DArrowRectangle::show(int x, int y)
+@brief 在指定的坐标位置显示本控件
+@note 坐标被计算为箭头的位置，所以你不需要自己计算箭头位置
+@param[in] x 控件箭头的x轴坐标
+@param[in] y 控件箭头的y轴坐标
+
+@fn void DArrowRectangle::setContent(QWidget *content)
+@brief 设置要显示在矩形内的内容控件
+@param[in] content 要显示内容控件
+
+@fn QWidget *DArrowRectangle::getContent() const
+@brief 获取内容控件
+@return 正在显示的内容控件
+
+@fn void DArrowRectangle::resizeWithContent()
+@brief 根据内容控件的大小自动设置矩形控件的大小
+
+@fn QSize DArrowRectangle::getFixedSize()
+@brief 获取整个矩形控件的大小
+@return 矩形控件的大小
+
+@fn void DArrowRectangle::move(int x, int y)
+@brief 移动到指定的坐标位置
+@param[in] x 控件箭头的x轴坐标
+@param[in] y 控件箭头的y轴坐标
+@sa DArrowRectangle::show(int x, int y)
+@sa DArrowRectangle::show
+
+@property qreal DArrowRectangle::shadowYOffset
+@brief 这属性表示小部件及其阴影在y轴上的偏移量
+@details Getter: DArrowRectangle::shadowYOffset Setter: DArrowRectangle::setShadowYOffset
+@sa DArrowRectangle::shadowXOffset
+
+@fn void DArrowRectangle::setLeftRightRadius(bool enable)
+@brief 设置左右箭头时的圆角
+@param[in] enable 是否开启
+
+@fn void DArrowRectangle::setRadiusArrowStyleEnable(bool enable)
+@brief 设置圆角箭头样式
+@param[in] enable 是否开启
+
+@fn void DArrowRectangle::setRadiusForceEnable(bool enable)
+@brief 设置圆角样式
+@details 默认窗管支持特效混成时有圆角，没有特效时没有圆角，如果启用一直都有圆角
+@param[in] enable 是否开启
+
+@property qreal DArrowRectangle::shadowXOffset
+@brief 这属性表示小部件及其阴影在x轴上的偏移量
+@details Getter: DArrowRectangle::shadowXOffset Setter: DArrowRectangle::setShadowXOffset
+@sa DArrowRectangle::shadowYOffset
+
+@property qreal DArrowRectangle::shadowBlurRadius
+@brief 这个属性保存小部件阴影的模糊半径
+@details Getter: DArrowRectangle::shadowBlurRadius Setter: DArrowRectangle::setShadowBlurRadius
+
+@property QColor DArrowRectangle::borderColor
+@brief 这个属性表示控件边框的颜色
+@details Getter: DArrowRectangle::borderColor , Setter: DArrowRectangle::setBorderColor
+
+@property int DArrowRectangle::borderWidth
+@brief 这个属性表示控件边框的宽度
+@details Getter: DArrowRectangle::borderWidth , Setter: DArrowRectangle::setBorderWidth
+
+@property QColor DArrowRectangle::backgroundColor
+@brief 这个属性表示矩形控件的背景颜色
+@details Getter: DArrowRectangle::backgroundColor , Setter: DArrowRectangle::setBackgroundColor
+
+@property DArrowRectangle::ArrowDirection DArrowRectangle::arrowDirection
+@brief 这个属性表示箭头的方向
+@details Getter: DArrowRectangle::arrowDirection , Setter: DArrowRectangle::setArrowDirection
+
+@fn void DArrowRectangle::setBackgroundColor(DBlurEffectWidget::MaskColorType type)
+@brief 是一个重载方法
+@details 通过改变 DBlurEffectWidget::MaskColorType 来修改控件矩形的背景
+@param[in] type 要设置的蒙版颜色
+@sa DArrowRectangle::backgroundColor
+@sa DBlurEffectWidget::MaskColorType
+
+@property int DArrowRectangle::radius
+@brief 这个属性表示矩形的圆角
+@details Getter: DArrowRectangle::radius , Setter: DArrowRectangle::setRadius
+
+@property bool DArrowRectangle::radiusForceEnabled
+@brief 是否强制(忽略特效)开启圆角
+@details Getter: DArrowRectangle::radiusForceEnabled , Setter: DArrowRectangle::setRadiusForceEnable
+
+@property int DArrowRectangle::arrowHeight
+@brief 这个属性表示箭头的高度
+@details Getter: DArrowRectangle::arrowHeight , Setter: DArrowRectangle::setArrowHeight
+@sa DArrowRectangle::arrowWidth
+
+@property int DArrowRectangle::arrowWidth
+@brief 这个属性表示箭头的宽度
+@details Getter: DArrowRectangle::arrowWidth , Setter: DArrowRectangle::setArrowWidth
+@sa DArrowRectangle::arrowHeight
+
+@property int DArrowRectangle::arrowX
+@brief 这个属性表示箭头的x轴坐标
+@details Getter: DArrowRectangle::arrowX , Setter: DArrowRectangle::setArrowX
+@sa DArrowRectangle::arrowY
+
+@property int DArrowRectangle::arrowY
+@brief 这个属性表示箭头的y轴坐标
+@details Getter: DArrowRectangle::arrowY , Setter: DArrowRectangle::setArrowY
+@sa DArrowRectangle::arrowX
+
+@property int DArrowRectangle::margin
+@brief 这个属性表示边距大小
+@details 边距是指矩形最里面的像素与其内容最外面的像素之间的距离
+@details Getter: DArrowRectangle::margin , Setter: DArrowRectangle::setMargin
+@sa DArrowRectangle::setMargin
+
+@fn void DArrowRectangle::setArrowDirection(ArrowDirection value)
+@brief 设置箭头方向
+@param[in] value 箭头方向
+@sa DArrowRectangle::arrowDirection
+
+@fn void DArrowRectangle::setWidth(int value)
+@brief 设置整个控件固定的宽度
+@param[in] value 宽度大小
+
+@fn void DArrowRectangle::setHeight(int value)
+@brief 设置整个控件固定的高度
+@param[in] value 高度大小
+
+@fn void DArrowRectangle::setRadius(int value)
+@brief 设置圆角大小
+@param[in] value 圆角大小
+@sa DArrowRectangle::radius
+
+@fn void DArrowRectangle::setArrowHeight(int value)
+@brief 设置箭头高度
+@param[in] value 箭头高度
+@sa DArrowRectangle::arrowHeight
+
+@fn void DArrowRectangle::setArrowWidth(int value)
+@brief 设置箭头宽度
+@param[in] value 箭头宽度
+@sa DArrowRectangle::arrowWidth
+
+@fn void DArrowRectangle::setArrowX(int value)
+@brief 设置箭头 x 坐标的值
+@param[in] value x 坐标的值
+@sa DArrowRectangle::arrowX
+
+@fn void DArrowRectangle::setArrowY(int value)
+@brief 设置箭头 y 坐标的值
+@param[in] y 坐标的值
+@sa DArrowRectangle::arrowY
+
+@fn void DArrowRectangle::setMargin(int value)
+@brief 设置边距大小
+@param[in] value 边距大小
+@sa DArrowRectangle::margin
+
+*/
