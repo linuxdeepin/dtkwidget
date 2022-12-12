@@ -4,6 +4,7 @@
 
 #include "dtitlebar.h"
 
+#include <mutex>
 #include <QDebug>
 #include <QMenu>
 #include <QHBoxLayout>
@@ -821,6 +822,10 @@ void DTitlebarPrivate::_q_addDefaultMenuItems()
 
     // add help menu item.
     if (!helpAction) {
+        // init DGuiApplicationHelperPrivate::hasManual
+        static std::once_flag onceFlag;
+        std::call_once(onceFlag, DApplicationPrivate::isUserManualExists);
+
         helpAction = new QAction(qApp->translate("TitleBarMenu", "Help"), menu);
         QObject::connect(helpAction, SIGNAL(triggered(bool)), q, SLOT(_q_helpActionTriggered()));
         menu->addAction(helpAction);
