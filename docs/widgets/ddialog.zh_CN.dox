@@ -1,0 +1,233 @@
+/*!
+@~chinese
+@file ddialog.h
+@ingroup dtkwidget
+@class Dtk::Widget::DDialog
+@brief DDialog 旨在提供简要的讯问式对话框的快速实现。提供了包含标题，对话框内容，默认图标，用以添加按钮的布局和一个可以自由添加内容的内容布局。
+@details
+
+## DDialog概述
+
+DDialog 旨在提供简要的讯问式对话框的快速实现。提供了包含标题，对话框内容，默认图标，用以添加按钮的布局和一个可以自由添加内容的内容布局。
+可以使用 addButton() , insertButton(), setDefaultButton() 等函数方便的给对话框插入按钮并进行管理，可以使用 addContent(), insertContent()
+等函数操作内容布局。
+此外， DDialog 还提供了一些额外的函数以供实现一些常见的需求。如，可以通过设置 setOnButtonClickedClose() 为 true 来使得用户在点击任何对话框上的按钮后关闭对话框。
+当你需要快速构建较为简单结构的对话框，你应当使用 DDialog ，对于较为复杂的需求，请参阅 DAbstractDialog 或 QDialog 相关文档。
+
+通过简单的示例来快速了解DDialog:
+
+## CMakeLists.txt
+
+首先配置CMakeLists.txt文件：
+
+```cmake
+
+cmake_minimum_required(VERSION 3.1.0) # 指定cmake最低版本
+
+project(example1 VERSION 1.0.0 LANGUAGES CXX) # 指定项目名称, 版本, 语言 cxx就是c++
+
+set(CMAKE_CXX_STANDARD 11) # 指定c++标准
+set(CMAKE_CXX_STANDARD_REQUIRED ON) # 指定c++标准要求,至少为11以上
+# set(target example1) # 指定目标名称
+
+set(CMAKE_AUTOMOC ON) # support qt moc # 支持qt moc
+set(CMAKE_AUTORCC ON) # support qt resource file # 支持qt资源文件
+set(CMAKE_AUTOUIC ON) # support qt ui file # 支持qt ui文件(非必须)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # suppot clangd 支持clangd
+
+if (CMAKE_VERSION VERSION_LESS "3.7.0") # 如果cmake版本小于3.7.0
+    set(CMAKE_INCLUDE_CURRENT_DIR ON) # 设置包含当前目录
+endif()
+
+find_package(Qt5 COMPONENTS Widgets Core REQUIRED) # 寻找Qt5组件Widgets
+find_package(Qt5 COMPONENTS Gui  REQUIRED) # 寻找Qt5组件Gui
+find_package(Dtk COMPONENTS Widget REQUIRED) # 寻找Dtk组件Widget
+find_package(Dtk COMPONENTS Core REQUIRED) # 寻找Dtk组件Core
+find_package(Dtk COMPONENTS Gui REQUIRED) # 寻找Dtk组件Gui
+
+
+add_executable(example1     # 添加可执行文件
+        main.cpp
+)
+
+target_link_libraries(example1 PRIVATE Qt5::Widgets Qt5::Gui Qt5::Core dtkgui dtkcore dtkwidget) # 链接库
+
+```
+
+## main.cpp
+
+在main.cpp中实现示例代码：
+
+### 1.导包、设置命名空间
+
+```cpp
+
+#include <DApplication> //导入DApplication应用依赖包
+#include <DMainWindow> //导入DMainWindow主窗口依赖包
+#include <DPushButton> //导入DPushButton按钮依赖包
+#include <DDialog>  //导入DDialog对话框依赖包
+DWIDGET_USE_NAMESPACE //使用DWidget命名空间
+
+```
+
+### 2.主函数和应用
+
+如下我们写一个主函数，设置一个应用
+
+```cpp
+
+int main(int argc, char *argv[]){
+    DApplication app(argc, argv); //设置一个应用
+    //功能实现部分
+    return app.exec(); //运行应用
+}
+```
+
+### 3.实现对话框
+
+对话框分为模态对话框和非模态对话框：</br>
+模态对话框是在对话框关闭之前，不能再与同一个应用程序的其他窗口进行交互。</br>
+非模态对话框是可以与同一程序中的窗口交互的。</br>
+
+设置一个主窗口，在主窗口上设置一个按钮，实现通过点击按钮弹出对话框的功能</br>
+
+3.1 模态对话框实现</br>
+
+显示一个对话框一般有两种方式，一种是使用exec()方法，它总是以模态来显示对话框；另一种是使用show()方法，它使得对话框既可以模态显示，也可以非模态显示，决定它是模态还是非模态的是对话框的modal属性。
+
+```cpp
+int main(int argc, char *argv[]){
+    DApplication app(argc, argv); //设置一个应用
+    DMainWindow dmw; //设置一个主窗口
+    DPushButton *btn = new DPushButton("按钮",&dmw); //设置一个按钮，将按钮的父亲设置为主窗口
+    QObject::connect(btn, &DPushButton::clicked, [](){ //建立按钮点击的连接，按钮被按下时执行lambda函数，
+        DDialog *dialog = new DDialog; //新建一个指向对话框的指针
+        dialog->setAttribute(Qt::WidgetAttribute::WA_DeleteOnClose); //将指针设置为窗口关闭即释放
+        dialog->exec(); //显示对话框
+    });
+    dmw.show(); //显示主窗口
+    return app.exec(); //运行应用
+}
+```
+
+```cpp
+int main(int argc, char *argv[]){
+    DApplication app(argc, argv); //设置一个应用
+    DMainWindow dmw; //设置一个主窗口
+    DPushButton *btn = new DPushButton("按钮",&dmw); //设置一个按钮，将按钮的父亲设置为主窗口
+    QObject::connect(btn, &DPushButton::clicked, [](){ //建立按钮点击的连接，按钮被按下时执行lambda函数，
+        DDialog *dialog = new DDialog; //新建一个指向对话框的指针
+        dialog->setAttribute(Qt::WidgetAttribute::WA_DeleteOnClose); //将指针设置为窗口关闭即释放
+        dialog->setModal(true); //设置为模态对话框
+        dialog->show(); //显示对话框
+    });
+    dmw.show(); //显示主窗口
+    return app.exec(); //运行应用
+}
+```
+
+3.2 非模态对话框实现
+
+```cpp
+int main(int argc, char *argv[]){
+    DApplication app(argc, argv); //设置一个应用
+    DMainWindow dmw; //设置一个主窗口
+    DPushButton *btn = new DPushButton("按钮",&dmw); //设置一个按钮，将按钮的父亲设置为主窗口
+    QObject::connect(btn, &DPushButton::clicked, [](){ //建立按钮点击的连接，按钮被按下时执行lambda函数，
+        DDialog *dialog = new DDialog; //新建一个指向对话框的指针
+        dialog->setAttribute(Qt::WidgetAttribute::WA_DeleteOnClose); //将指针设置为窗口关闭即释放
+        dialog->show(); //显示对话框
+    });
+    dmw.show(); //显示主窗口
+    return app.exec(); //运行应用
+}
+```
+
+### 4. 对话框样式和设置
+
+通过addContent()添加对话框内容，通过addButton()给对话框添加按钮：
+
+```cpp
+dialog->addContent(new DPasswordEdit); //给对话框添加内容，此处添加一个密码框的匿名对象
+dialog->addButton("取消"); //添加一个取消按钮
+dialog->addButton("授权", false, DDialog::ButtonRecommend); //添加一个授权按钮并设置样式为 “推荐按钮” 的样式
+```
+
+对话框效果如下：</br>
+![ddialog_example](../images/ddialog_example.png)
+
+## DFileDialog
+
+```cpp
+#include <DApplication>
+#include <DMainWindow> 
+#include <DPushButton> 
+#include <DFileDialog>//导入文件对话框依赖包
+DWIDGET_USE_NAMESPACE //使用DWidget命名空间
+
+int main(int argc, char *argv[]){
+    DApplication app(argc, argv); //设置一个应用
+    DMainWindow dmw; //设置一个主窗口
+    DPushButton *btn = new DPushButton("按钮",&dmw); //设置一个按钮，将按钮的父亲设置为主窗口
+    QObject::connect(btn, &DPushButton::clicked, [](){ //建立按钮点击的连接，按钮被按下时执行lambda函数，
+        DFileDialog *dialog = new DFileDialog; //新建一个指向对话框的指针
+        dialog->setAttribute(Qt::WidgetAttribute::WA_DeleteOnClose); //将指针设置为窗口关闭即释放    
+        dialog->exec(); //显示对话框
+    });
+    dmw.show(); //显示主窗口
+    return app.exec(); //运行应用
+}
+```
+
+运行后点击按钮显示文件对话框，如下图所示：</br>
+![dfiledialog_example](../images/dfiledialog.png)
+
+## DMessageManager
+
+DTK提供了更为丰富和美观的消息提示，包含可自动消失的信息和点击后消失的信息，下面通过一个示例来了解。</br>
+
+设置一个主窗口，在主窗口上设置两个按钮，一个按钮点击以后会弹出可自动消失的提示消息，另一个按钮点击以后会弹出点击消失的提示信息。示例代码如下：
+
+```cpp
+#include <DApplication>
+#include <DMainWindow> 
+#include <DPushButton> 
+#include <DMessageManager>
+DWIDGET_USE_NAMESPACE //使用DWidget命名空间
+
+int main(int argc, char *argv[]){
+    DApplication app(argc, argv); //设置一个应用
+    DMainWindow dmw; //设置一个主窗口
+    dmw.resize(400,300); //重新设置主窗口大小
+    DPushButton *btn1 = new DPushButton("自动消失信息",&dmw); //新建一个按钮
+    btn1->move(0,50); //移动按钮
+    DPushButton *btn2 = new DPushButton("点击消失信息",&dmw); 
+    btn2->move(0,100);    
+    QObject::connect(btn1, &DPushButton::clicked, &dmw, [&dmw](){ //建立第一个按钮的连接
+        //点击按钮后发出消息，消息的父亲设为主窗口，使用standardIcon（）设置样式并添加提示信息
+        DMessageManager::instance()->sendMessage(&dmw, QApplication::style()->standardIcon(QStyle::SP_MessageBoxWarning), "这是自动消失的信息");
+    });    
+    QObject::connect(btn2, &DPushButton::clicked, [&dmw](){ //建立第二个按钮的连接
+        DFloatingMessage *message = new DFloatingMessage(DFloatingMessage::ResidentType); //新建一个指向新消息的指针，指定消息类型为ResidentType
+        message->setIcon(QApplication::style()->standardIcon(QStyle::SP_MessageBoxWarning)); //使用standardIcon（）设置样式
+        message->setMessage("这是不会自动消失的提示消息"); //设置提示信息
+        message->setWidget(new DPushButton("确认")); //在消息对话框上添加一个新按钮，并设置按钮信息
+        DMessageManager::instance()->sendMessage(&dmw, message); //发送信息，父亲设为主窗口
+    });    
+    dmw.show(); //显示主窗口
+    return app.exec(); //运行应用
+}
+
+```
+
+运行后效果如下图所示，主窗口效果图：</br>
+![dmessagemanager_mw](../images/dmessagemanager_mw.png)
+
+点击第一个按钮（自动消失信息）以后效果图：</br>
+![dmessagemanager_mw](../images/dmessagemanager_1.png)
+
+点击第二个按钮（点击消失按钮）以后效果图：</br>
+![dmessagemanager_mw](../images/dmessagemanager_2.png)
+
+*/
