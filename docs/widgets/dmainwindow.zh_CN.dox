@@ -1,0 +1,199 @@
+/*!
+@~chinese
+@file dmainwindow.h
+@class Dtk::Widget::DMainWindow
+@ingroup dtkwidget
+@brief DMainWindow类提供了一个主应用程序窗口,主窗口为构建应用程序的用户提供了一个框架
+界面。与Qmainwindow相比，DmainWindow具有自己的布局它只有标题栏和内容区域，更简单。
+开发人员可以提供自定义的标题栏和内容，以使应用功能丰富。
+@details
+
+## 概述
+DMainWindow类提供了一个主应用程序窗口,主窗口为构建应用程序的用户提供了一个框架
+界面。与Qmainwindow相比，DmainWindow具有自己的布局它只有标题栏和内容区域，更简单。
+开发人员可以提供自定义的标题栏和内容，以使应用功能丰富。
+
+使用如下代码显示一个最简单的DMainWindow窗口：<br>
+
+## CMakeLists.txt
+
+```cmake
+cmake_minimum_required(VERSION 3.1.0) # 指定cmake最低版本
+
+project(example1 VERSION 1.0.0 LANGUAGES CXX) # 指定项目名称, 版本, 语言 cxx就是c++
+
+set(CMAKE_CXX_STANDARD 11) # 指定c++标准
+set(CMAKE_CXX_STANDARD_REQUIRED ON) # 指定c++标准要求,至少为11以上
+# set(target example1) # 指定目标名称
+
+set(CMAKE_AUTOMOC ON) # support qt moc # 支持qt moc
+set(CMAKE_AUTORCC ON) # support qt resource file # 支持qt资源文件
+set(CMAKE_AUTOUIC ON) # support qt ui file # 支持qt ui文件(非必须)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # suppot clangd 支持clangd
+
+if (CMAKE_VERSION VERSION_LESS "3.7.0") # 如果cmake版本小于3.7.0
+    set(CMAKE_INCLUDE_CURRENT_DIR ON) # 设置包含当前目录
+endif()
+
+find_package(Qt5 COMPONENTS Widgets Core REQUIRED) # 寻找Qt5组件Widgets
+find_package(Qt5 COMPONENTS Gui  REQUIRED) # 寻找Qt5组件Gui
+find_package(Dtk COMPONENTS Widget REQUIRED) # 寻找Dtk组件Widget
+find_package(Dtk COMPONENTS Core REQUIRED) # 寻找Dtk组件Core
+find_package(Dtk COMPONENTS Gui REQUIRED) # 寻找Dtk组件Gui
+
+
+add_executable(example1     # 添加可执行文件
+        main.cpp
+)
+
+target_link_libraries(example1 PRIVATE Qt5::Widgets Qt5::Gui Qt5::Core dtkgui dtkcore dtkwidget) # 链接库
+```
+
+## main.cpp
+
+```cpp
+#include <DApplication> //应用程序依赖
+#include <DMainWindow> //主窗口依赖
+#include <DApplicationSettings> //进行应用设置的依赖
+DWIDGET_USE_NAMESPACE; //使用DTK widget命名空间
+
+int main(int argc, char *argv[]){
+    DApplication app(argc, argv); //设置一个应用
+        
+    app.setApplicationName("这是应用名称"); //设置应用名称
+    app.setOrganizationName("deepin"); //设置关于信息中的系统信息
+    app.setApplicationVersion("2.0"); //设置关于信息中的版本号
+        
+    DApplicationSettings as;
+    Q_UNUSED(as) //设置记住应用主题
+    
+    DMainWindow dwm;    //使用DMainWindow类实例化一个窗口
+    dwm.resize(400,250); //可使用resize()对窗口大小进行调整
+    dwm.show(); //显示这个窗口
+        
+    return app.exec(); //运行应用
+}
+
+```
+
+以上例子运行结果如下：<br>
+
+![example](/docs/images/dmainwindow_example.png)
+
+点击菜单栏About弹出关于对话框，关于对话框具体参见[daboutdialog](classDtk_1_1Widget_1_1DAboutDialog.html)，效果如下<br>
+
+![example2](/docs/images/dmainwindow_example2.png)
+
+@property DMainWindow::titlebar
+@brief 为主窗口设置`titlebar`
+@return 主窗口使用的`dtitlebar`实例
+
+@property DMainWindow::isDXcbWindow
+@brief 支持许多功能，例如背景模糊和窗口剪裁，仅当窗口使用DXCB QT平台插件时。
+@return 该窗口是否为dxcb backended
+
+@property DMainWindow::windowRadius
+@brief 该属性保持主窗口的半径
+
+@property DMainWindow::borderWidth
+@brief 该属性拥有主窗边框的宽度
+
+@property DMainWindow::borderColor
+@brief 此属性具有主窗口边框的颜色
+
+@property DMainWindow::shadowRadius
+@brief 该属性拥有主窗口的阴影半径
+
+@property DMainWindow::shadowOffset
+@brief 此属性保存在窗户阴影上应用的偏移量
+
+@property DMainWindow::shadowColor
+@brief 此属性拥有窗户阴影的颜色
+
+@property DMainWindow::clipPath
+@brief 此属性保留了自定义QPainterPath来夹住窗口。默认DMAINWINDOW被剪辑为一个
+转角矩形，但是您可以提供自定义的`QPainterPath`来执行自定义形状的窗口
+@sa DMainWindow::frameMask
+
+@property DMainWindow::frameMask
+@brief 此属性将蒙版贴在窗口上。对于更好的剪辑质量，例如抗质量，请改用属性`dmainwindow :: clippath`
+
+@property DMainWindow::translucentBackground
+@brief 该属性属于窗口是否具有半透明背景
+
+@property DMainWindow::enableSystemResize
+@brief 此属性保留是否可以由用户调整窗口大小。此属性的默认值是正确的。您可以将此属性设置为false并实现此属性的调整窗口大小
+
+@property DMainWindow::enableSystemMove
+@brief 此属性保留用户是否可以移动窗口。此属性的默认值为true。您可以将此属性设置为false，并选择有效的区域拖动和移动
+
+@property DMainWindow::autoInputMaskByClipPath
+@brief 此属性是否将用户输入是否被剪辑路径掩盖，此属性的默认值是true
+
+@property DMainWindow::enableBlurWindow
+@brief 该属性是否有窗口背景是否模糊
+
+@property DMainWindow::titlebarShadowEnabled
+@brief titleBar阴影属性,用于设置或者判断是否设置titleBar阴影属性
+
+@brief DMainWindow::setWindowRadius　设定窗口的圆角
+@sa windowRadius　窗口的圆角值
+
+@fn void DMainWindow::setBorderWidth 
+@brief 设定边框的宽度
+@sa borderWidth　边框的宽度
+
+@fn void DMainWindow::setBorderColor
+@brief 设定边框的颜色
+@sa borderColor　边框的颜色
+
+@fn void DMainWindow::setShadowRadius 
+@brief 设定阴影区域的圆角
+@sa shadowRadius　阴影区域圆角大小
+
+@fn void DMainWindow::setShadowOffset
+@brief 设定阴影区域的偏移距离
+@sa shadowOffset　阴影区域的偏移距离
+
+@fn Dvoid MainWindow::setShadowColor
+@brief 设定阴影的颜色
+@sa shadowColor　阴影的颜色
+
+@fn void DMainWindow::setClipPath
+@brief 设定裁剪路径
+@sa clipPath　裁剪的路径
+
+@fn void DMainWindow::setFrameMask
+@brief 设定边框的mask区域
+@sa frameMask mask区域
+
+@fn void DMainWindow::setTranslucentBackground
+@brief 设定时候擦除背景
+@sa translucentBackground true擦除背景　false不擦除背景
+
+@fn void DMainWindow::setEnableSystemResize　
+@brief 设定是否允许系统调整窗口大小
+@sa enableSystemResize　true允许系统调整　false不允许系统调整
+
+@fn void DMainWindow::setEnableSystemMove 
+@brief 设定时候允许系统移动窗口
+@sa enableSystemMove　true允许移动　false不允许移动
+
+@fn void DMainWindow::setEnableBlurWindow　
+@brief 设置窗口模糊效果, shinese 开启此功能请设置`setAttribute(Qt::WA_TranslucentBackground)`
+@sa `enableBlurWindow` true开启模糊效果　false关闭模糊效果
+
+@fn void DMainWindow::setAutoInputMaskByClipPath
+@brief 通过裁剪区域自动设定mask.
+@sa autoInputMaskByClipPath true自动设定　false不自动设定
+
+@fn void DMainWindow::sendMessage
+@brief 发送浮动消息
+@sa icon 消息展示图标, message　消息内容
+
+@fn void DMainWindow::sendMessage
+@brief 发送浮动消息
+@sa message　DFloatingMessage消息
+
+*/
