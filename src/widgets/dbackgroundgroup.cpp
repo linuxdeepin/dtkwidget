@@ -83,12 +83,13 @@ public:
 };
 
 /*!
+@~english
   \class Dtk::Widget::DBackgroundGroup
   \inmodule dtkwidget
-  \brief DBackgroundGroup提供了将布局控件改成圆角边框(将布局看成一个整体).
+  @brief DBackgroundGroup provides the ability to change the layout control to a rounded border(view the layout as a whole).
 
-  \note 示例代码
-  \code
+  @note sample code
+  @code
   QWidget w;
   QHBoxLayout* mainlayout = new QHBoxLayout(&w);
   mainlayout->addWidget(new QPushButton("btn"));
@@ -97,14 +98,15 @@ public:
   mainlayout->addWidget(group);
   hlayout->addWidget(new QFrame);
   hlayout->addWidget(new QFrame);
-  \endcode
-  \image html DBackgroundGroup.png
+  @endcode
+  @image html DBackgroundGroup.png
  */
 
 /*!
-  \brief DBackgroundGroup::DBackgroundGroup构造函数
-  \a layout 布局对象
-  \a parent 参数被发送到 QWidget 构造函数
+@~english
+  @brief DBackgroundGroup::DBackgroundGroup constructor function
+  \a layout Layout Object
+  \a parent parameters are sent to QWidget constructor function
  */
 DBackgroundGroup::DBackgroundGroup(QLayout *layout, QWidget *parent)
     : QWidget(parent)
@@ -117,8 +119,9 @@ DBackgroundGroup::DBackgroundGroup(QLayout *layout, QWidget *parent)
 }
 
 /*!
-  \brief DBackgroundGroup::itemMargins返回控件在布局内的边距
-  \return 控件在布局内的边距
+@~english
+  @brief DBackgroundGroup::itemMargins returns the margin of the control within the layout
+  \return control margins within the layout
  */
 QMargins DBackgroundGroup::itemMargins() const
 {
@@ -128,8 +131,9 @@ QMargins DBackgroundGroup::itemMargins() const
 }
 
 /*!
-  \brief DBackgroundGroup::useWidgetBackground是否使用 QWidget 背景颜色
-  \return
+@~english
+  @brief DBackgroundGroup::useWidgetBackground whether to use the QWidget background color
+  \return whether to use the QWidget background color
  */
 bool DBackgroundGroup::useWidgetBackground() const
 {
@@ -139,8 +143,9 @@ bool DBackgroundGroup::useWidgetBackground() const
 }
 
 /*!
-  \brief DBackgroundGroup::setLayout设置布局
-  \a layout 布局
+@~english
+  @brief DBackgroundGroup::setLayout setting the Layout
+  \a layout layout
  */
 void DBackgroundGroup::setLayout(QLayout *layout)
 {
@@ -175,8 +180,9 @@ QPalette::ColorRole DBackgroundGroup::backgroundRole() const
 }
 
 /*!
-  \brief DBackgroundGroup::setItemMargins设置控件在布局内的边距
-  \a itemMargins 控件在布局内的边距
+@~english
+  @brief DBackgroundGroup::setItemMargins set the margins of the control within the layout
+  \a itemMargins control margins within the layout
  */
 void DBackgroundGroup::setItemMargins(QMargins itemMargins)
 {
@@ -187,8 +193,9 @@ void DBackgroundGroup::setItemMargins(QMargins itemMargins)
 }
 
 /*!
-  \brief DBackgroundGroup::setItemSpacing设置布局内控件间的距离
-  \a spacing 距离
+@~english
+  @brief DBackgroundGroup::setItemSpacing set the distance between the layout internal controls
+  \a spacing distance
  */
 void DBackgroundGroup::setItemSpacing(int spacing)
 {
@@ -199,9 +206,9 @@ void DBackgroundGroup::setItemSpacing(int spacing)
 }
 
 /*!
-  \brief DBackgroundGroup::setUseWidgetBackground设置是否使用 QWidget 背景颜色
-  设置是否使用 QWidget 背景颜色,并发送 useWidgetBackgroundChanged 信号
-  \a useWidgetBackground 是否使用 QWidget 背景颜色
+@~english
+  @brief DBackgroundGroup::setUseWidgetBackground set whether to use the QWidget background color,and send the useWidgetBackgroundChanged signal
+  \a useWidgetBackground whether to use QWidget background color
  */
 void DBackgroundGroup::setUseWidgetBackground(bool useWidgetBackground)
 {
