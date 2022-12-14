@@ -1,0 +1,49 @@
+/*!
+@~chinese
+@file dbackgroundgroup.h
+@ingroup dtkwidget
+@class Dtk::Widget::DBackgroundGroup
+@brief DBackgroundGroup提供了将布局控件改成圆角边框(将布局看成一个整体)
+@note 示例代码
+@code
+QWidget w;
+QHBoxLayout* mainlayout = new QHBoxLayout(&w);
+mainlayout->addWidget(new QPushButton("btn"));
+QHBoxLayout *hlayout = new QHBoxLayout;
+DBackgroundGroup *group = new DBackgroundGroup(hlayout,&w);
+mainlayout->addWidget(group);
+hlayout->addWidget(new QFrame);
+hlayout->addWidget(new QFrame);
+@endcode
+@image html DBackgroundGroup.png
+
+@fn explicit DBackgroundGroup::DBackgroundGroup(QLayout *layout = nullptr, QWidget *parent = nullptr)
+@brief DBackgroundGroup构造函数
+@param[in] layout 布局对象
+@param[in] parent 参数被发送到 QWidget 构造函数
+
+@fn QMargins DBackgroundGroup::itemMargins() const
+@brief 返回控件在布局内的边距
+@return 控件在布局内的边距
+
+@fn bool DBackgroundGroup::useWidgetBackground() const
+@brief 是否使用 QWidget 背景颜色
+@return 是否使用 QWidget 背景颜色
+
+@fn void DBackgroundGroup::setLayout(QLayout *layout)
+@brief 设置布局
+@param[in] layout 布局
+
+@fn void DBackgroundGroup::setItemMargins(QMargins itemMargins)
+@brief 设置控件在布局内的边距
+@param[in] itemMargins 控件在布局内的边距
+
+@fn void DBackgroundGroup::setItemSpacing(int spacing)
+@brief 设置布局内控件间的距离
+@param[in] spacing 距离
+
+@fn void DBackgroundGroup::setUseWidgetBackground(bool useWidgetBackground)
+@brief 设置是否使用 QWidget 背景颜色,并发送 useWidgetBackgroundChanged 信号
+@param[in] useWidgetBackground 是否使用 QWidget 背景颜色
+
+*/
