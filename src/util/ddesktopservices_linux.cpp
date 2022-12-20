@@ -3,9 +3,7 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
 #include "dtkwidget/util/ddesktopservices.h"
-
-#include <QDBusInterface>
-#include <QDBusPendingCall>
+#include <QtDBus/QtDBus>
 #include <QDebug>
 #include <QFile>
 #include <QGSettings/QGSettings>
@@ -214,11 +212,14 @@ bool DDesktopServices::previewSystemSoundEffect(const QString &name)
         return false;
     }
 
+    const auto& infc = QDBusConnection::sessionBus().interface();
+    bool isNewRegistered = infc->isServiceRegistered(QLatin1String("org.deepin.dde.SoundEffect1"));
+    const QLatin1String service(isNewRegistered ? "org.deepin.dde.SoundEffect1" :"com.deepin.daemon.SoundEffect");
+    const QLatin1String path(isNewRegistered ? "/org/deepin/dde/SoundEffect1" : "/com/deepin/daemon/SoundEffect");
+    const QLatin1String interface(isNewRegistered ? "org.deepin.dde.SoundEffect1" :"com.deepin.daemon.SoundEffect");
+
     // 使用后端 dbus 接口播放系统音频，音频存放目录： /usr/share/sounds/deepin/stereo/
-    QDBusInterface interface(QStringLiteral("com.deepin.daemon.SoundEffect"),
-                                            QStringLiteral("/com/deepin/daemon/SoundEffect"),
-                                            QStringLiteral("com.deepin.daemon.SoundEffect"));
-    return interface.call("PlaySound", name).type() != QDBusMessage::ErrorMessage;
+    return QDBusInterface(service, path, interface).call("PlaySound", name).type() != QDBusMessage::ErrorMessage;
 }
 
 QString DDesktopServices::getNameByEffectType(const DDesktopServices::SystemSoundEffect &effect)
