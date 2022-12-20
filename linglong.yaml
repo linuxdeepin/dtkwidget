@@ -1,0 +1,37 @@
+package:
+  id: dtkwidget
+  name: dtkwidget
+  kind: lib
+  version: 5.6.3
+  description: |
+    Deepin graphical user interface library \
+    DtkWidget is Deepin graphical user interface for deepin desktop development.
+
+source:
+  kind: local
+
+base:
+  id: org.deepin.base/23.0.0
+
+depends:
+  - id: qtbase/5.15.7
+  - id: qttools/5.15.7
+  - id: qtx11extras/5.15.7
+  - id: qtsvg/5.15.7
+  - id: gsettings-qt/0.3.1.1
+  - id: dtkcommon/5.6.3
+  - id: dtkcore/5.6.3
+  - id: dtkgui/5.6.3
+  - id: googletest/1.8.1
+  - id: libqtxdg/3.6.0.1
+  - id: cups/2.3.0.2
+
+variables:
+  extra_args: |
+    -DBUILD_EXAMPLES=OFF \
+    -DBUILD_DOCS=OFF \
+    -DVERSION=${VERSION}
+
+build:
+  kind: cmake
+
