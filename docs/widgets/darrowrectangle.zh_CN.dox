@@ -7,6 +7,124 @@
 @details 通常用于作为其他控件的容器，将其显示在矩形内作为内容控件
 @sa DArrowRectangle::setContent()
 
+## DArrowRectangle 用法示例
+通过简单的程序来了解 DArrowRectangle的用法。
+项目目录结构在同一目录下。
+
+### CMakeLists.txt
+```cmake
+cmake_minimum_required(VERSION 3.1.0) # 指定cmake最低版本
+
+project(example1 VERSION 1.0.0 LANGUAGES CXX) # 指定项目名称, 版本, 语言 cxx就是c++
+
+set(CMAKE_CXX_STANDARD 11) # 指定c++标准
+set(CMAKE_CXX_STANDARD_REQUIRED ON) # 指定c++标准要求,至少为11以上
+set(target example1) # 指定目标名称
+
+set(CMAKE_AUTOMOC ON) # support qt moc # 支持qt moc
+set(CMAKE_AUTORCC ON) # support qt resource file # 支持qt资源文件
+set(CMAKE_AUTOUIC ON) # support qt ui file # 支持qt ui文件(非必须)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # support clangd 支持 clangd
+
+if (CMAKE_VERSION VERSION_LESS "3.7.0") # 如果cmake版本小于3.7.0
+    set(CMAKE_INCLUDE_CURRENT_DIR ON) # 设置包含当前目录
+endif()
+
+find_package(Qt5 COMPONENTS Widgets REQUIRED) # 寻找Qt5组件Widgets
+find_package(Qt5 COMPONENTS Gui  REQUIRED) # 寻找Qt5组件Gui
+find_package(Dtk COMPONENTS Widget REQUIRED) # 寻找Dtk组件Widget
+find_package(Dtk COMPONENTS Core REQUIRED) # 寻找Dtk组件Core
+find_package(Dtk COMPONENTS Gui) # 寻找Dtk组件Gui
+
+add_executable(example1     # 添加可执行文件
+        main.cpp
+)
+
+target_link_libraries(example1 PRIVATE
+    Qt5::Widgets
+    Qt5::Gui
+    dtkgui
+    dtkcore
+    dtkwidget
+) # 链接库
+```
+
+### main.cpp (浮动方式为 FloatWidget)
+
+```cpp
+
+#include <DArrowRectangle> //导入DArrowRectangle依赖包
+#include <DApplication>
+#include <DMainWindow>
+#include <DWidget>
+#include <DPushButton>
+DWIDGET_USE_NAMESPACE //使用DTK widget命名空间
+
+int main(int argc, char *argv[]){
+    DApplication app(argc, argv);
+    DMainWindow win; //实例化一个 mainwindow 作为主窗口
+    win.resize(400,250); //设置窗口大小
+
+    //实例化一个 DArrowRectangle 控件， 第一个参数指定方向，第二个参数指定浮动方式，第三个参数指定父控件地址
+    DArrowRectangle *arrRec = new DArrowRectangle(DArrowRectangle::ArrowTop, DArrowRectangle::FloatWidget, &win);
+    DWidget widget; //新建一个 widget 作为DArrowRectangle中的显示内容
+    DPushButton *btn = new DPushButton("按钮", &widget); //新建一个按钮放到上面新建的widget中
+    btn->move(20,25);
+
+    widget.resize(100,70); //设置 widget 大小，注意 DArrowRectangle 会根据其内容 widget 的大小改变其本身大小
+    arrRec->setContent(&widget); //将 widget 放置到 DArrowRectangle 里
+    arrRec->setArrowX(50); //设置 DArrowRectangle 的箭头位置
+    arrRec->setRadiusArrowStyleEnable(true); //可通过此函数设置 DArrowRectangle 箭头是否为圆角风格
+    arrRec->setRadius(8); //设置 DArrowRectangle 圆角值
+    arrRec->move(200, 50); //移动 DArrowRectangle 的位置
+
+    win.show(); //展示主窗口
+    return app.exec(); //运行程序并等待响应
+}
+
+```
+
+运行程序效果如下：</br>
+
+![darrowrectangle_example1](/docs/images/darrowrectangle_example1.png)
+
+### main.cpp (浮动方式为 FloatWindow)
+
+```cpp
+
+#include <DArrowRectangle> //导入DArrowRectangle依赖包
+#include <DApplication>
+#include <DMainWindow>
+#include <DWidget>
+#include <DPushButton>
+DWIDGET_USE_NAMESPACE //使用DTK widget命名空间
+
+int main(int argc, char *argv[]){
+    DApplication app(argc, argv);
+
+    //实例化一个 DArrowRectangle 控件， 第一个参数指定方向，第二个参数指定浮动方式，第三个参数指定父控件地址
+    DArrowRectangle *arrRec = new DArrowRectangle(DArrowRectangle::ArrowTop, DArrowRectangle::FloatWindow);
+    DWidget widget; //新建一个 widget 作为DArrowRectangle中的显示内容
+    DPushButton *btn = new DPushButton("按钮", &widget); //新建一个按钮放到上面新建的widget中
+    btn->move(20,25);
+
+    widget.resize(100,60); //设置 widget 大小，注意 DArrowRectangle 会根据其内容 widget 的大小改变其本身大小
+    arrRec->setContent(&widget); //将 widget 放置到 DArrowRectangle 里
+    arrRec->setArrowX(50); //设置 DArrowRectangle 的箭头位置
+    arrRec->setRadiusArrowStyleEnable(true); //可通过此函数设置 DArrowRectangle 的箭头是否为圆角风格
+    arrRec->setRadius(8); //设置 DArrowRectangle 圆角值
+    arrRec->show(200, 500); //显示 DArrowRectangle
+
+    return app.exec(); //运行程序并等待响应
+}
+
+```
+
+运行程序效果如下：</br>
+
+![darrowrectangle_example2](/docs/images/darrowrectangle_example2.png)
+
 @enum Dtk::Widget::DArrowRectangle::ArrowDirection
 @brief 箭头方向枚举包含 DArrowRectangle 的箭头可能指向的可能方向.
 | **值**      | **含义**               |
