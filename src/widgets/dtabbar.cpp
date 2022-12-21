@@ -15,6 +15,8 @@
 #include <QDragMoveEvent>
 #include <QTimer>
 #include <QToolTip>
+#include <private/qhighdpiscaling_p.h>
+
 #include <DApplicationHelper>
 
 #include <private/qtabbar_p.h>
@@ -609,6 +611,10 @@ void DTabBarPrivate::setupDragableTab()
 
     drag->setPixmap(grabImage);
     drag->setMimeData(mime_data);
+
+    if (window()->windowHandle() && window()->windowHandle()->screen())
+        hotspot = QHighDpiScaling::mapPositionFromNative(hotspot, window()->windowHandle()->screen()->handle());
+
     drag->setHotSpot(hotspot);
 
     qRegisterMetaType<Qt::DropAction>();
