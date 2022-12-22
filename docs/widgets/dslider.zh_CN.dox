@@ -1,0 +1,278 @@
+/*!
+@~chinese
+@file dslider.h
+@ingroup dtkwidget
+@class Dtk::Widget::DSlider
+@brief DSlider一个聚合 QSlider 的滑块，DSlider提供了在滑块两侧设置图标函数，且设置的滑块更加美观
+@details
+
+## DSlider 简单示例
+通过使用 DSlider 实现一个简单需求，有一个按钮，需要通过一个DSlider滑块改变按钮的位置，滑块左滑按钮左移，滑块右滑按钮右移
+
+### CMakeLists.txt
+
+```cmake
+
+cmake_minimum_required(VERSION 3.1.0) # 指定cmake最低版本
+
+project(example1 VERSION 1.0.0 LANGUAGES CXX) # 指定项目名称, 版本, 语言 cxx就是c++
+
+set(CMAKE_CXX_STANDARD 11) # 指定c++标准
+set(CMAKE_CXX_STANDARD_REQUIRED ON) # 指定c++标准要求,至少为11以上
+set(target example1) # 指定目标名称
+
+set(CMAKE_AUTOMOC ON) # support qt moc # 支持qt moc
+set(CMAKE_AUTORCC ON) # support qt resource file # 支持qt资源文件
+set(CMAKE_AUTOUIC ON) # support qt ui file # 支持qt ui文件(非必须)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # support clangd 支持 clangd
+
+if (CMAKE_VERSION VERSION_LESS "3.7.0") # 如果cmake版本小于3.7.0
+    set(CMAKE_INCLUDE_CURRENT_DIR ON) # 设置包含当前目录
+endif()
+
+find_package(Qt5 COMPONENTS Widgets REQUIRED) # 寻找Qt5组件Widgets
+find_package(Qt5 COMPONENTS Gui  REQUIRED) # 寻找Qt5组件Gui
+find_package(Dtk COMPONENTS Widget REQUIRED) # 寻找Dtk组件Widget
+find_package(Dtk COMPONENTS Core REQUIRED) # 寻找Dtk组件Core
+find_package(Dtk COMPONENTS Gui) # 寻找Dtk组件Gui
+
+add_executable(example1     # 添加可执行文件
+        main.cpp
+)
+
+target_link_libraries(example1 PRIVATE
+    Qt5::Widgets
+    Qt5::Gui
+    dtkgui
+    dtkcore
+    dtkwidget
+) # 链接库
+
+```
+
+### main.cpp
+
+```cpp
+
+#include <DApplication>
+#include <DMainWindow>
+#include <DSlider>
+#include <DPushButton>
+DWIDGET_USE_NAMESPACE //使用Dtk widget的命名空间
+
+int main(int argc, char *argv[]){
+    DApplication app(argc, argv);
+    DMainWindow win;
+    win.resize(800,500);
+
+    DSlider *dslider = new DSlider(Qt::Horizontal, &win); //新建一个水平方向的DSlider，父亲设置为主窗口
+    dslider->move(0,50);
+    dslider->setLeftIcon(win.style()->standardIcon(DStyle::SP_ArrowLeft)); //给滑块设置一个左图标，这里使用一个自带的左箭头
+    dslider->setRightIcon(win.style()->standardIcon(DStyle::SP_ArrowRight)); //给滑块设置一个右图标，这里使用自带的右箭头
+    dslider->setFixedWidth(400); //设置滑块的宽度
+
+    DPushButton *btn = new DPushButton("按钮", &win); //设置一个按钮
+    btn->move(0,100); //移动按钮的位置
+
+    //建立一个滑块与按钮的连接，滑块滑动发出信号，按钮接收，lambda函数中设置按钮的移动，并且打印出滑块的当前数值
+    QObject::connect(dslider, &DSlider::valueChanged, btn, [dslider, btn](){
+        int sliderValue = dslider->value();
+        qDebug() << sliderValue;
+        btn->move(sliderValue * 5, 100);
+    });
+
+    win.show();
+    return app.exec();
+}
+
+```
+程序运行效果如下：
+
+![dslider_example](/docs/images/dslider_example.png)
+
+@class Dtk::Widget::DSlider
+@brief DSlider一个聚合 QSlider 的滑块
+@details DSlider提供了在滑块两侧设置图标函数, DSlider提供了滑块的刻度及刻度标识
+
+@fn void DSlider::valueChanged(int value)
+@brief 信号会在 slider 的 value 值改变时被发送
+@param[in] value slider 的当前值
+ 
+@fn void DSlider::sliderMoved(int position)
+@brief 信号会在 slider 拖动时被发送
+@param[in] position 为 slider 被拖动的指针的位置
+
+@fn void DSlider::sliderReleased()
+@brief 信号会在 slider 被松开时被发送
+
+@fn void DSlider::rangeChanged(int min, int max)
+@brief 信号会在 range 属性的值改变时被发送
+@param[in] min 为 range 的最小值
+@param[in] max 为 range 的最大值
+
+@fn void DSlider::actionTriggered(int action)
+@brief 信号会在 action 被触发时被发送
+
+@fn void DSlider::iconClicked(SliderIcons icon, bool checked)
+@brief 信号会在左右 iconbutton 被点击时被发送
+@param[in] icon 表示按钮被点击的位置
+@param[in] checked 表示按钮是否被选中
+
+@brief DSlider的构造函数
+@param[in] orientation 滑块方向
+@param[in] parent 参数被发送到 QWidget 构造函数
+@sa Qt::Orientation
+
+@fn bool DSlider::eventFilter(QObject *watched, QEvent *e)
+@brief 事件过滤器函数
+@reimp 此函数目前仅处理了鼠标滚轮事件
+@param[in] watched 被监听的子控件
+@param[in] e 对应的事件指针
+
+@fn Qt::Orientation DSlider::orientation() const
+@brief 滑块方向
+@return 返回当前滑块的方向。
+@sa QSlider::orientation()
+
+@fn QSlider *DSlider::slider()
+@brief 返回 QSlider 对象,若 DSlider 不满足输入框的使用需求，请用此函数抛出的对象。
+@return QSlider 对象。
+
+@fn void DSlider::setLeftIcon(const QIcon &left)
+@brief 设置滑块左侧图标.
+@param[in] left 左图标
+
+@fn void DSlider::setRightIcon(const QIcon &right)
+@brief 设置滑块右图标.
+@param[in] right 右图标
+
+@fn void DSlider::setIconSize(const QSize &size)
+@brief 设置滑块图标大小.
+@param[in] size 图标大小
+
+@fn void DSlider::setMinimum(int min)
+@brief 设置滑动范围的最小值.
+@param[in] min 滑动最小值。
+@sa QSlider::setMinimum() DSlider::minimum()
+
+@fn int DSlider::minimum() const
+@brief 滑动范围的最小值.
+@return 返回滑动范围的最小值。
+@sa QSlider::minimum() DSlider::setMinimum()
+
+@fn void DSlider::setValue(int value)
+@brief 设置滑块当前值
+@param[in] value 滑块的当前值。
+@sa QSlider::setValue()
+
+@fn int DSlider::value() const
+@brief DSlider::value
+@sa QSlider::value()
+
+@fn void DSlider::setPageStep(int pageStep)
+@brief 设置页面单步的大小, 使用按键 PageUp 或者 PageDown 时，滑块滑动的单步大小。
+@param[in] pageStep 单步大小.
+@sa QSlider::setPageStep()
+
+@fn int DSlider::pageStep() const
+@brief 返回页面单步大小
+@return 页面单步大小的值。
+@sa QSlider::pageStep() DSlider::setPageStep()
+
+@fn void DSlider::setMaximum(int max)
+@brief 设置滑动范围的最大值
+@param[in] max 滑动范围的最大值。
+@sa QSlider::setMaximum() DSlider::maximum()
+
+@fn int DSlider::maximum() const
+@brief 返回滑动范围的最大值
+@return 滑动范围的最大值
+@sa QSlider::maximum
+
+@fn void DSlider::setLeftTicks(const QStringList &info)
+@brief 设置滑块左侧的刻度值. 
+@details 根据 QStringList 数量，绘制刻度的个数，绘制刻度标识：滑块为水平,刻度在滑块上方；滑块为垂直,刻度在滑块左侧。
+@param[in] info 刻度标识
+
+@fn void DSlider::setRightTicks(const QStringList &info)
+@brief 设置滑块右侧的刻度值. 
+@details 根据 QStringList 数量，绘制刻度的个数，绘制刻度标识：滑块为水平,刻度在滑块下方；滑块为垂直,刻度在滑块右侧。
+@param[in] info 刻度标识
+
+@brief 设置滑块上方的刻度值
+@param[in] info 刻度标识.
+@sa DSlider::setLeftTicks()
+
+@fn void DSlider::setBelowTicks(const QStringList &info)
+@brief 设置滑块下方的刻度值
+@param[in] info 刻度标识.
+@sa DSlider::setRightTicks()
+
+@fn void DSlider::setMarkPositions(QList<int> list)
+@brief 设置显示双边的刻度线（不显示刻度值）.
+@details 举例用途：比如调节音量的 DSlider ，需要在 value = 100 的地方标记一个刻度，而不需要显示其他的刻度值（并且实际音量值是可以超过 100 的）
+其他：设置指定数值的刻度线(setMarkPositions)和设置刻度线+刻度值(setBelowTicks)是两个相互独立的，且互不干扰，若是同时使用，也会同时绘画各自的线；
+另外两个的先后顺序也并没有关系.
+@param[in] list 双边刻度线的值.
+
+@fn void DSlider::setMouseWheelEnabled(bool enabled)
+@brief 设置鼠标滚轮是否开启.
+@details 开启鼠标滚轮后，用户可以通过鼠标滚轮来控制滑块的滑动。
+@param[in] enabled 是否开启鼠标滚轮
+
+@fn void DSlider::setTipValue(const QString &value)
+@brief 用于创建气泡，气泡将跟随滑块移动.
+@param[in] value 非空开启气泡，空关闭气泡(销毁)
+
+@fn QSlider::TickPosition DSlider::tickPosition() const
+@brief 返回滑块的记号位置. 获取滑块刻度当前朝向。
+@return 滑块刻度的朝向
+@sa QSlider::TickPosition
+
+@fn QSize DSlider::sizeHint() const
+@brief 滑动条的大小策略.
+@details 这个函数会返回该滑动条推荐的大小，如果滑动条没有布局，这个大小将会是一个无效值，如果存在布局，将返回该布局下的推荐大小。
+@sa  QSlider::sizeHint
+
+@fn void DSlider::setHandleVisible(bool b)
+@brief 设置滑块是否显示.
+@param[in] b 为 true 时滑块显示，否则滑块隐藏, 默认地, 滑块为显示状态
+
+@fn bool DSlider::handleVisible() const
+@brief 获取滑块是否显示的状态.
+@return 返回滑块是否显示的状态
+
+@fn void DSlider::setEnabledAcrossStyle(bool enabled)
+@brief 该函数用于设置滑槽是否禁用活动色填充已经滑过的滑槽.
+@details 默认普通 DSlider 滑过的滑槽是活动色填充， 调用过 setXXXTicks 的 DSlider 则默认禁用活动色填充
+@param[in] enabled true 无活动色，可用于音量平衡等不需要显示滑过的，false 滑过的位置(如左侧)
+    是高亮色显示，如调节亮度等(默认)默认地，改属性为 false 。
+
+@fn void SliderStrip::setScaleInfo(QStringList scaleInfo, QSlider::TickPosition tickPosition)
+@brief SliderStrip::setScaleInfo 设置显示刻度线和刻度值
+@param[in] scaleInfo 显示的刻度值
+@param[in] tickPosition 显示的方向枚举值
+
+@fn void SliderStrip::setMarkList(QList<int> list, QSlider::TickPosition tickPosition)
+@brief SliderStrip::setMarkList 设置显示刻度线（不显示刻度值）
+@param[in] list 显示的刻度线的list
+@param[in] tickPosition 显示的方向枚举值
+
+@fn QList<int> SliderStrip::getList()
+@brief SliderStrip::getList 返回刻度线的 list
+@return 刻度线的 list
+
+@fn QStringList SliderStrip::getScaleInfo()
+@brief SliderStrip::getScaleInfo 返回刻度值的 list
+@return 度值的 list
+
+@fn void SliderStrip::paintEvent(QPaintEvent *event)
+@brief SliderStrip::paintEvent
+@sa QWidget::paintEvent()
+
+@fn bool SliderStrip::event(QEvent *e)
+@brief SliderStrip::event
+@sa QWidget::event()
+
+*/

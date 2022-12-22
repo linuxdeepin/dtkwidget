@@ -45,50 +45,56 @@ private:
 };
 
 /*!
+  @~english
   \class Dtk::Widget::DSlider
   \inmodule dtkwidget
-  \brief DSlider一个聚合 QSlider 的滑块.
+  \brief DSlider A slider that aggregates QSLIDER.
 
-  DSlider提供了在滑块两侧设置图标函数
-  DSlider提供了滑块的刻度及刻度标识
+  DSlider Provides icon functions on both sides of the slider
+  DSlider Provide the size and scale identification of the slider
  */
 
 /*!
+  @~english
   \fn void DSlider::valueChanged(int value)
-  \brief 信号会在 slider \a value 属性的值改变时被发送.
+  \brief The signal will be sent when the value of the Slider Value property is changed.
  */
 /*!
+  @~english
   \fn void DSlider::sliderMoved(int position)
-  \brief 信号会在 slider 拖动时被发送.
-
-  \a position 为 slider 被拖动的指针的位置。
+  \brief The signal will be sent when the slider drags.
+  \param[in] position The position of the pointer dragged by Slider.
  */
 /*!
+  @~english
   \fn void DSlider::sliderReleased()
-  \brief 信号会在 slider 被松开时被发送.
+  \brief The signal will be sent when the slider is loosened.
  */
 /*!
+  @~english
   \fn void DSlider::rangeChanged(int min, int max)
-  \brief 信号会在 range 属性的值改变时被发送.
-
-  \a min 为 range 的最小值， \a max 为 range 的最大值。
+  \brief The signal will be sent when the value of the Range attribute is changed
+  \param[in] min The minimum value of Range
+  \param[in] max is the maximum value of Range
  */
 /*!
+  @~english
   \fn void DSlider::actionTriggered(int action)
-  \brief 信号会在 slider \a action 触发时被发送
+  \brief The signal is sent when the slider action triggers
  */
 /*!
+  @~english
   \fn void DSlider::iconClicked(SliderIcons icon, bool checked)
-  \brief 信号会在左右 iconbutton 被点击时被发送.
-
-  \a icon 表示按钮被点击的位置，\a checked 表示按钮是否被选中。
+  \brief The signal will be sent when Iconbutton is clicked.
+  \param[in] icon Express the position where the button is clicked, 
+  and Checked indicates whether the button is selected.
  */
 
 /*!
-  \brief DSlider的构造函数.
-
-  \a parent 参数被发送到 QWidget 构造函数。
-
+  @~english
+  \brief DSLider's constructor.
+  \param[in] orientation Slip direction.
+  \param[in] parent The parameters are sent to the QWIDGET constructor.
   \sa Qt::Orientation
  */
 DSlider::DSlider(Qt::Orientation orientation, QWidget *parent)
@@ -117,11 +123,11 @@ bool DSlider::event(QEvent *e)
 }
 
 /*!
-  \brief 事件过滤器函数.
-  \reimp
-
-  此函数目前仅处理了鼠标滚轮事件
-  \a watched 被监听的子控件，\a e 对应的事件指针。
+  @~english
+  \brief Event filter function
+  \details This function currently only handle the mouse roller incident
+  \param[in] watched Subsidined control
+  \param[in] e Corresponding event pointer
  */
 bool DSlider::eventFilter(QObject *watched, QEvent *e)
 {
@@ -134,10 +140,9 @@ bool DSlider::eventFilter(QObject *watched, QEvent *e)
 }
 
 /*!
-  \brief 滑块方向
-
-  \return 返回当前滑块的方向。
-
+  @~english
+  \brief orientation of slider
+  \return Return to the direction of the current slider
   \sa QSlider::orientation()
  */
 Qt::Orientation DSlider::orientation() const
@@ -146,10 +151,10 @@ Qt::Orientation DSlider::orientation() const
     return d->slider->orientation();
 }
 /*!
-  \brief 返回 QSlider 对象.
-
-  若 DSlider 不满足输入框的使用需求，请用此函数抛出的对象。
-  \return QSlider 对象。
+  @~english
+  \brief return QSLider object.
+  \details If DSLider does not meet the needs of the input box, use this function to throw it.
+  \return QSlider Object.
  */
 QSlider *DSlider::slider()
 {
@@ -158,8 +163,9 @@ QSlider *DSlider::slider()
 }
 
 /*!
-  \brief 设置滑块左侧图标.
-  \a left 左图标
+  @~english
+  \brief Set the left icon on the left side of the slider.
+  \param[in] left Left icon
  */
 void DSlider::setLeftIcon(const QIcon &left)
 {
@@ -186,8 +192,9 @@ void DSlider::setLeftIcon(const QIcon &left)
 }
 
 /*!
-  \brief 设置滑块右图标.
-  \a right 右图标
+  @~english
+  \brief Set the right icon of slider.
+  \param[in] right Right icon
  */
 void DSlider::setRightIcon(const QIcon &right)
 {
@@ -213,8 +220,9 @@ void DSlider::setRightIcon(const QIcon &right)
 }
 
 /*!
-  \brief 设置滑块图标大小.
-  \a size 图标大小
+  @~english
+  \brief Set the slider icon size.
+  \param[in] size Icon size
  */
 void DSlider::setIconSize(const QSize &size)
 {
@@ -232,10 +240,9 @@ void DSlider::setIconSize(const QSize &size)
 }
 
 /*!
-  \brief 设置滑动范围的最小值.
-
-  \a min 滑动最小值。
-
+  @~english
+  \brief Set the minimum value of sliding range.
+  \param[in] min Slide the minimum value.
   \sa QSlider::setMinimum() DSlider::minimum()
  */
 void DSlider::setMinimum(int min)
@@ -245,10 +252,9 @@ void DSlider::setMinimum(int min)
 }
 
 /*!
-  \brief 滑动范围的最小值.
-
-  \return 返回滑动范围的最小值。
-
+  @~english
+  \brief The minimum value of sliding range.
+  \return Return to the minimum value of sliding range.
   \sa QSlider::minimum() DSlider::setMinimum()
  */
 int DSlider::minimum() const
@@ -258,10 +264,9 @@ int DSlider::minimum() const
 }
 
 /*!
-  \brief 设置滑块当前值
-
-  \a value 滑块的当前值。
-
+  @~english
+  \brief Set the current value of slider
+  \param[in] value The current value of the slider.
   \sa QSlider::setValue()
  */
 void DSlider::setValue(int value)
@@ -271,6 +276,7 @@ void DSlider::setValue(int value)
 }
 
 /*!
+  @~english
   \brief DSlider::value
   \sa QSlider::value()
  */
@@ -281,13 +287,10 @@ int DSlider::value() const
 }
 
 /*!
-  \brief 设置页面单步的大小
-
-  使用按键 PageUp 或者 PageDown 时，滑块
-  滑动的单步大小。
-
-  \a pageStep 单步大小.
-
+  @~english
+  \brief Set the size of the page single step.
+  \details use the kernel Pageup or PageDown, the slider slides the single step size.
+  \param[in] pageStep One-step size.
   \sa QSlider::setPageStep()
  */
 void DSlider::setPageStep(int pageStep)
@@ -297,10 +300,9 @@ void DSlider::setPageStep(int pageStep)
 }
 
 /*!
-  \brief 返回页面单步大小
-
-  \return 页面单步大小的值。
-
+  @~english
+  \brief Back to the page single step size
+  \return The one-step value of the page.
   \sa QSlider::pageStep() DSlider::setPageStep()
  */
 int DSlider::pageStep() const
@@ -310,10 +312,9 @@ int DSlider::pageStep() const
 }
 
 /*!
-  \brief 设置滑动范围的最大值
-
-  \a max 滑动范围的最大值。
-
+  @~english
+  \brief Set the maximum value of sliding range
+  \param[in] max The maximum value of sliding range.
   \sa QSlider::setMaximum() DSlider::maximum()
  */
 void DSlider::setMaximum(int max)
@@ -323,10 +324,9 @@ void DSlider::setMaximum(int max)
 }
 
 /*!
-  \brief 返回滑动范围的最大值
-
-  \return 滑动范围的最大值
-
+  @~english
+  \brief Back to the maximum value of sliding range
+  \return The maximum value of sliding range
   \sa QSlider::maximum
  */
 int DSlider::maximum() const
@@ -336,12 +336,12 @@ int DSlider::maximum() const
 }
 
 /*!
-  \brief 设置滑块左侧的刻度值.
-
-  根据 QStringList 数量，绘制刻度的个数，绘制刻度标识：
-  滑块为水平,刻度在滑块上方；滑块为垂直,刻度在滑块左侧。
-
-  \a info 刻度标识
+  @~english
+  \brief Set the scale on the left side of the slider. 
+  \details According to the quantity of QStringList，draw number of scales，Draw the scale identification:
+  The slider is horizontal, and the scale is above the slider; 
+  the slider is vertical and the scale is on the left side of the slider.
+  \param[in] info Scale identification
  */
 void DSlider::setLeftTicks(const QStringList &info)
 {
@@ -372,12 +372,12 @@ void DSlider::setLeftTicks(const QStringList &info)
 }
 
 /*!
-  \brief 设置滑块右侧的刻度值.
-
-  根据 QStringList 数量，绘制刻度的个数，绘制刻度标识：
-  滑块为水平,刻度在滑块下方；滑块为垂直,刻度在滑块右侧。
-
-  \a info 刻度标识
+  @~english
+  \brief Set the scale value of the right side of the slider. 
+  \details According to the number of QStringList, the number of drawing scale, draw scale identification:
+  The slider is horizontal, and the scale is below the slider; 
+  the slider is vertical and the scale is on the right side of the slider.
+  \param[in] info Scale identification
  */
 void DSlider::setRightTicks(const QStringList &info)
 {
@@ -408,10 +408,9 @@ void DSlider::setRightTicks(const QStringList &info)
 }
 
 /*!
-  \brief 设置滑块上方的刻度值
-
-  \a info 刻度标识.
-
+  @~english
+  \brief Set the scale value above the slider
+  \param[in] info Scale logo.
   \sa DSlider::setLeftTicks()
  */
 void DSlider::setAboveTicks(const QStringList &info)
@@ -420,10 +419,9 @@ void DSlider::setAboveTicks(const QStringList &info)
 }
 
 /*!
-  \brief 设置滑块下方的刻度值
-
-  \a info 刻度标识.
-
+  @~english
+  \brief Set the scale value below the slider
+  \param[in] info Scale logo.
   \sa DSlider::setRightTicks()
  */
 void DSlider::setBelowTicks(const QStringList &info)
@@ -432,14 +430,14 @@ void DSlider::setBelowTicks(const QStringList &info)
 }
 
 /*!
-  \brief 设置显示双边的刻度线（不显示刻度值）.
+  @~english
+  \brief Set the bilateral scales (no scale value).
 
-  举例用途：比如调节音量的 DSlider ，需要在 value = 100 的地方标记一个刻度，而不需要显示其他的刻度值（并且实际音量值是可以超过 100 的）
-  其他：设置指定数值的刻度线(setMarkPositions)和设置刻度线+刻度值(setBelowTicks)是两个相互独立的，且互不干扰，若是同时使用，也会同时绘画各自的线；
-  另外两个的先后顺序也并没有关系.
+  \details For example: The dslider of the sound volume requires a scale in the place of value = 100 without displaying other scale values (and the actual volume value can exceed 100)
+  Other: Set the specified value line (SetmarkPositions) and setting scale line+scale value (Setbelowticks) are two independent and do not interfere with each other. If they are used at the same time, they will also draw their own lines at the same time;
+  The other two sequential order does not matter.
 
-  \a list 双边刻度线的值.
-  
+  \param[in] list The value of the bilateral scale line.
   \code 示例代码
   DSlider* slider = new DSlider(Qt::Horizontal, wTemp);
   QStringList list1;
@@ -502,11 +500,10 @@ void DSlider::setMarkPositions(QList<int> list)
 }
 
 /*!
-  \brief 设置鼠标滚轮是否开启.
-
-  开启鼠标滚轮后，用户可以通过鼠标滚轮来控制滑块的滑动。
-
-  \a enabled 是否开启鼠标滚轮
+  @~english
+  \brief Set whether the mouse roller is turned on.
+  \details After turning on the mouse wheel, the user can control the sliding slide through the mouse roller.
+  \param[in] enabled Whether to turn on the mouse wheel
  */
 void DSlider::setMouseWheelEnabled(bool enabled)
 {
@@ -553,9 +550,10 @@ void DSliderPrivate::updtateTool(int value)
 }
 
 /*!
-  \brief 用于创建气泡，气泡将跟随滑块移动.
-
-  \a value 非空开启气泡 \a value 空关闭气泡(销毁)
+  @~english
+  \brief For the creation of bubbles, the bubbles will follow the slider.
+  \param[in] value Non-empty: open bubble
+  \param[in] value empty: Turn off bubbles (destroyed)
  */
 void DSlider::setTipValue(const QString &value)
 {
@@ -585,11 +583,10 @@ void DSlider::setTipValue(const QString &value)
 }
 
 /*!
-  \brief 返回滑块的记号位置.
-
-  获取滑块刻度当前朝向。
-
-  \return 滑块刻度的朝向
+  @~english
+  \brief the slider's mark position. 
+  \details Get the slider extension currently facing.
+  \return The orientation of the slider
   \sa QSlider::TickPosition
  */
 QSlider::TickPosition DSlider::tickPosition() const
@@ -612,11 +609,12 @@ QSlider::TickPosition DSlider::tickPosition() const
 }
 
 /*!
-  \brief 滑动条的大小策略
+  @~english
+  \brief The size strategy of sliding bars
 
-  这个函数会返回该滑动条推荐的大小，如果
-  滑动条没有布局，这个大小将会是一个无效值，如果
-  存在布局，将返回该布局下的推荐大小。
+  \details This function will return the recommended size recommended by the sliding bar, if
+  There is no layout of sliding bars, this size will be an invalid value, if
+  There is a layout that will return to the recommendation size under the layout.
 
   \sa  QSlider::sizeHint
  */
@@ -630,10 +628,10 @@ QSize DSlider::sizeHint() const
 }
 
 /*!
-  \brief 设置滑块是否显示.
-
-  \a b 为 true 时滑块显示，否则滑块隐藏。
-  默认地，滑块为显示状态。
+  @~english
+  \brief Set the slider whether to display it.
+  \param[in] b Show the slider for True, otherwise the slider will be hidden.
+  By default, the slider is the display state.
  */
 void DSlider::setHandleVisible(bool b)
 {
@@ -647,9 +645,9 @@ void DSlider::setHandleVisible(bool b)
 }
 
 /*!
-  \brief 获取滑块是否显示的状态.
-
-  \return 返回滑块是否显示的状态
+  @~english
+  \brief Get the state of whether the slider is displayed.
+  \return Whether the back slider is displayed
  */
 bool DSlider::handleVisible() const
 {
@@ -658,11 +656,11 @@ bool DSlider::handleVisible() const
 }
 
 /*!
-  \brief 该函数用于设置滑槽是否禁用活动色填充已经滑过的滑槽.
-
-  默认普通 DSlider 滑过的滑槽是活动色填充， 调用过 setXXXTicks 的 DSlider 则默认禁用活动色填充
-  \a enabled true 无活动色，可用于音量平衡等不需要显示滑过的，false 滑过的位置(如左侧)是高亮色显示，如调节亮度等(默认)
-  默认地，改属性为 false 。
+  @~english
+  \brief This function is used to set the sliding color that has been slid over.
+  \details The sliding skating of ordinary DSLider is filled with active color. DSLider that calls SetxXXTICKS defaults to active color filling by default
+  \param[in] enabled true Lustless，It can be used for the volume balance, etc. It does not need to be displayed, the position of FALSE slipping (such as the left) is a high -bright color display, such as adjusting brightness, etc. (default)
+  By default, the attribute is False.
  */
 void DSlider::setEnabledAcrossStyle(bool enabled)
 {
@@ -733,10 +731,10 @@ QSize SliderStrip::sizeHint() const
 }
 
 /*!
-  \internal
-  \brief SliderStrip::setScaleInfo 设置显示刻度线和刻度值
-  \a scaleInfo 显示的刻度值
-  \a tickPosition 显示的方向枚举值
+  @~english
+  \brief SliderStrip::setScaleInfo Set the display scales and scale values
+  \param[in] scaleInfo Display scale value
+  \param[in] tickPosition Display direction enumeration value
  */
 void SliderStrip::setScaleInfo(QStringList scaleInfo, QSlider::TickPosition tickPosition)
 {
@@ -745,10 +743,10 @@ void SliderStrip::setScaleInfo(QStringList scaleInfo, QSlider::TickPosition tick
 }
 
 /*!
-  \internal
-  \brief SliderStrip::setMarkList 设置显示刻度线（不显示刻度值）
-  \a list 显示的刻度线的list
-  \a tickPosition 显示的方向枚举值
+  @~english
+  \brief SliderStrip::setMarkList Set the display scales (no display scale value)
+  \param[in] list List of the displayed scale
+  \param[in] tickPosition Display direction enumeration value
  */
 void SliderStrip::setMarkList(QList<int> list, QSlider::TickPosition tickPosition)
 {
@@ -757,9 +755,9 @@ void SliderStrip::setMarkList(QList<int> list, QSlider::TickPosition tickPositio
 }
 
 /*!
-  \internal
-  \brief SliderStrip::getList 返回刻度线的 list
-  \return 刻度线的 list
+  @~english
+  \brief SliderStrip::getList Return to List of the scale line
+  \return List of scale line
  */
 QList<int> SliderStrip::getList()
 {
@@ -767,9 +765,9 @@ QList<int> SliderStrip::getList()
 }
 
 /*!
-  \internal
-  \brief SliderStrip::getScaleInfo 返回刻度值的 list
-  \return 度值的 list
+  @~english
+  \brief SliderStrip::getScaleInfo Return to the List of Dialogue
+  \return List
  */
 QStringList SliderStrip::getScaleInfo()
 {
@@ -777,7 +775,7 @@ QStringList SliderStrip::getScaleInfo()
 }
 
 /*!
-  \internal
+  @~english
   \brief SliderStrip::paintEvent
   \sa QWidget::paintEvent()
  */
@@ -902,7 +900,7 @@ void SliderStrip::paintEvent(QPaintEvent *event)
 }
 
 /*!
-  \internal
+  @~english
   \brief SliderStrip::event
   \sa QWidget::event()
  */
