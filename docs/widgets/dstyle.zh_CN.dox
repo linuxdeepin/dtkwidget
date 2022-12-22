@@ -154,8 +154,8 @@ int main(int argc, char *argv[]){
 
 运行程序效果如下图所示：</br>
 
-![dstyle_example1](../images/dstyle_example1.png)</br>
+![dstyle_example1](/docs/images/dstyle_example1.png)</br>
 
-![dstyle_example2](../images/dstyle_example2.png)</br>
+![dstyle_example2](/docs/images/dstyle_example2.png)</br>
 
 */
