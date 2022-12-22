@@ -19,6 +19,7 @@ enum Margins{
 };
 
 /*!
+  @~english
   \class Dtk::Widget::DCommandLinkButton
   \inmodule dtkwidget
 
@@ -27,6 +28,7 @@ enum Margins{
  */
 
 /*!
+  @~english
   \brief Constructor
   \a text The text displayed by the control
   \a parent The father of the control
@@ -38,6 +40,7 @@ DCommandLinkButton::DCommandLinkButton(const QString text, QWidget *parent)
 }
 
 /*!
+  @~english
   \brief Get the rectangle size of the control
   \return Return the control rectangle size
  */
@@ -50,6 +53,7 @@ QSize DCommandLinkButton::sizeHint() const
 }
 
 /*!
+  @~english
   \brief The style of an Option, and some basic attributes
   \a option Real parameters are a (button control) style attribute used to initialize
  */
@@ -66,6 +70,7 @@ void DCommandLinkButton::initStyleOption(DStyleOptionButton *option) const
 }
 
 /*!
+  @~english
   \brief Painting incident
   \a e Not used here
  */
