@@ -1,0 +1,212 @@
+/*!
+@~chinese
+@file dsettingsdialog.h
+@ingroup dtkwidget
+@class Dtk::Widget::DSettingsDialog
+@brief DSettingsDialog 为使用DSettings的Dtk程序提供一个通用的设置对话框，这个对话框可以通过json配置文件来自动生成
+@details
+
+## 示例程序
+通过一个简单的示例来学会使用 DSettingsDialog ,这个示例要实现这样一个类似浏览器设置的需求
+当打开新项目时的设置和打开新窗口/新标签时的设置
+
+通过json文件来写设置的需求，如下：
+
+### settings.json
+
+json设置了一个基础设置，分为 open_action 和 New Tab & Window 两块，两块又分别有其具体的两个设置，
+open_action 有一个是否总是在新窗口打开页面的设置和打开文件的设置，实现方式分别是 checkbox 和 combobox ；
+New Tab & Window 有一个新窗口打开的方式和新标签打开的方式两个设置，都是 combobox 实现。
+
+```json
+
+{
+    "groups": [{
+        "key": "base",
+        "name": "Basic settings",
+        "groups": [{
+                "key": "open_action",
+                "name": "Open Action",
+                "options": [{
+                        "key": "alway_open_on_new",
+                        "type": "checkbox",
+                        "text": "Always Open On New Windows",
+                        "default": true
+                    },
+                    {
+                        "key": "open_file_action",
+                        "name": "Open File:",
+                        "type": "combobox",
+                        "default": ""
+                    }
+                ]
+            },
+            {
+                "key": "new_tab_windows",
+                "name": "New Tab & Window",
+                "options": [{
+                        "key": "new_window_path",
+                        "name": "New Window Open:",
+                        "type": "combobox",
+                        "default": ""
+                    },
+                    {
+                        "key": "new_tab_path",
+                        "name": "New Tab Open:",
+                        "type": "combobox",
+                        "default": ""
+                    }
+                ]
+            }
+        ]
+    }]
+}
+
+```
+
+### resources.qrc
+
+json文件配置完后需要将其添加到资源文件 resources.qrc
+
+```
+
+<RCC>
+    <qresource prefix="/">
+        <file>settingsData/settings.json</file>
+    </qresource>
+</RCC>
+
+
+```
+
+### CMakeLists.txt
+
+配置CMake
+
+```cmake
+
+cmake_minimum_required(VERSION 3.1.0) # 指定cmake最低版本
+
+project(example1 VERSION 1.0.0 LANGUAGES CXX) # 指定项目名称, 版本, 语言 cxx就是c++
+
+set(CMAKE_CXX_STANDARD 11) # 指定c++标准
+set(CMAKE_CXX_STANDARD_REQUIRED ON) # 指定c++标准要求,至少为11以上
+set(target example1) # 指定目标名称
+
+set(CMAKE_AUTOMOC ON) # support qt moc # 支持qt moc
+set(CMAKE_AUTORCC ON) # support qt resource file # 支持qt资源文件
+set(CMAKE_AUTOUIC ON) # support qt ui file # 支持qt ui文件(非必须)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # support clangd 支持 clangd
+
+if (CMAKE_VERSION VERSION_LESS "3.7.0") # 如果cmake版本小于3.7.0
+    set(CMAKE_INCLUDE_CURRENT_DIR ON) # 设置包含当前目录
+endif()
+
+find_package(Qt5 COMPONENTS Widgets REQUIRED) # 寻找Qt5组件Widgets
+find_package(Qt5 COMPONENTS Gui  REQUIRED) # 寻找Qt5组件Gui
+find_package(Dtk COMPONENTS Widget REQUIRED) # 寻找Dtk组件Widget
+find_package(Dtk COMPONENTS Core REQUIRED) # 寻找Dtk组件Core
+find_package(Dtk COMPONENTS Gui) # 寻找Dtk组件Gui
+
+
+set(RESCOUCES resources.qrc) #设置资源文件变量名
+add_executable(example1     # 添加可执行文件
+  ${RESCOUCES}              #添加资源文件
+  main.cpp
+)
+
+target_link_libraries(example1 PRIVATE
+    Qt5::Widgets
+    Qt5::Gui
+    dtkgui
+    dtkcore
+    dtkwidget
+) # 链接库
+
+```
+
+### main.cpp
+代码部分
+
+```cpp
+
+#include <DApplication>
+#include <DMainWindow>
+#include <DSettingsDialog>
+#include <QTemporaryFile>
+#include <QDebug>
+#include <DPushButton>
+#include <QObject>
+#include <qsettingbackend.h>
+DWIDGET_USE_NAMESPACE
+
+int main(int argc, char *argv[]){
+    DApplication app(argc, argv);
+    DMainWindow win;
+    DPushButton *btn = new DPushButton("设置", &win); //初始化一个设置按钮
+    win.resize(800,600);
+    btn->move(0, 50);
+
+    //建立设置按钮的连接，点击按钮弹出设置页面
+    QObject::connect(btn, &QPushButton::clicked, &win, [&win](){
+        //初始化一个存储后端
+        QTemporaryFile tmpFile;
+        tmpFile.open();
+        Dtk::Core::QSettingBackend backend(tmpFile.fileName());
+
+        //从json中初始化配置
+        auto settings = Dtk::Core::DSettings::fromJsonFile(":/settingsData/settings.json");
+        settings->setBackend(&backend);
+
+        //初始化一个设置显示窗口
+        DSettingsDialog dsd(&win);
+        dsd.updateSettings(settings); //将设置加载到设置窗口
+        dsd.exec(); //设置窗口显示并等待响应
+    });
+
+    win.show();
+    return app.exec();
+}
+
+```
+
+运行程序，效果如下：
+
+![dsettingsdialog_example](/docs/images/dsettingsdialog_example.png)
+
+
+@fn DSettingsWidgetFactory *DSettingsDialog::widgetFactory() const
+@brief 获取当前对话框使用的控件构造工厂
+@details 每一个设置对话框都有自己的构造工厂实例，这些实例并不会共享数据。
+@return 返回当前对话框使用的控件构造工厂
+
+@fn void DSettingsDialog::setResetVisible(bool visible)
+@brief DSettingsDialog::setResetV配置文件实例。isible 设置恢复默认设置按钮是否显示
+@param[in] visible true显示 false隐藏
+@note 请在 updateSettings() 后调用
+
+@fn void DSettingsDialog::scrollToGroup(const QString &groupKey)
+@brief DSettingsDialog::scrollToGroup 使对话框跳转到指定的 group 项目
+@param[in] groupKey DSettings 中 groupKeys 以及其子项 childGroups
+@note 请在对话框 show() 以后调用
+
+@fn void DSettingsDialog::setIcon(const QIcon &icon)
+@brief DSettingsDialog::setIcon 设置标题栏的图标 QIcon
+@param[in] icon 设置的 Icon
+
+@fn void DSettingsDialog::updateSettings(Dtk::Core::DSettings *settings)
+@brief 根据settings数据来创建控件，该方法只能调用一次。
+@param[in] settings 配置文件实例。
+
+@fn void DSettingsDialog::updateSettings(Dtk::Core::DSettings *settings)
+@brief 根据settings数据来创建控件，并使用translateContext来进行国际化，该方法只能调用一次.
+
+@fn void DSettingsDialog::updateSettings(const QByteArray &translateContext, Core::DSettings *settings)
+@brief 根据settings数据来创建控件，并使用translateContext来进行国际化，该方法只能调用一次.
+@param[in] translateContext 国际化使用的上下文。
+@param[in] settings 配置文件实例。
+@sa DSettingsDialog::updateSettings(Dtk::Core::DSettings *settings)
+
+
+*/
