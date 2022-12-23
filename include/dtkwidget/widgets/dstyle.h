@@ -136,6 +136,7 @@ public:
         PM_ContentsMargins,                                     //内容的边距（一般只用于左右边距）
         PM_ContentsSpacing,                                     //内容的间距（可用于列表项中每一项的距离）
         PM_ButtonMinimizedSize,                                 //按钮控件的最小大小
+        PM_ToolTipLabelWidth,                                   // Maximum width that a ToolTip label can reach
         PM_CustomBase = QStyle::PM_CustomBase + 0xf00000
     };
 
@@ -217,8 +218,8 @@ public:
     static QPair<QIcon::Mode, QIcon::State> toIconModeState(const QStyleOption *option);
     static DDciIcon::Mode toDciIconMode(const QStyleOption *option);
 
-    static void setTooltipTextFormat(Qt::TextFormat format);
-    static Qt::TextFormat tooltipTextFormat();
+    D_DECL_DEPRECATED_X("Use DToolTip::setToolTipTextFormat(Qt::TextFormat format)") static void setTooltipTextFormat(Qt::TextFormat format);
+    D_DECL_DEPRECATED_X("Use DToolTip::toolTipTextFormat()") static Qt::TextFormat tooltipTextFormat();
     static DStyle::StyleState getState(const QStyleOption *option);
     static void setFocusRectVisible(QWidget *widget, bool visible);
     static void setFrameRadius(QWidget *widget, int radius);
