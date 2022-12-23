@@ -20,6 +20,7 @@
  */
 #include "dlabel.h"
 #include "private/dlabel_p.h"
+#include "dtooltip.h"
 
 #include <DPaletteHelper>
 
@@ -215,6 +216,23 @@ void DLabel::paintEvent(QPaintEvent *event)
             if (elideMode() != Qt::ElideNone) {
                 const QFontMetrics fm(fontMetrics());
                 text = fm.elidedText(text, elideMode(), width(), Qt::TextShowMnemonic);
+            }
+            const DToolTip::ToolTipShowMode &toolTipShowMode = DToolTip::toolTipShowMode(this);
+            if (toolTipShowMode != DToolTip::Default) {
+                const bool showToolTip = (toolTipShowMode == DToolTip::AlwaysShow)
+                        || ((toolTipShowMode == DToolTip::ShowWhenElided) && (d->text != text));
+                if (DToolTip::needUpdateToolTip(this, showToolTip)) {
+                    QString toolTip;
+                    if (showToolTip) {
+                        QTextOption textOption;
+                        textOption.setWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
+                        textOption.setTextDirection(opt.direction);
+                        textOption.setAlignment(Qt::Alignment(align));
+                        toolTip = DToolTip::wrapToolTipText(d->text, textOption);
+                    }
+                    this->setToolTip(toolTip);
+                    DToolTip::setShowToolTip(this, showToolTip);
+                }
             }
             style->drawItemText(&painter, lr.toRect(), flags, palette, isEnabled(), text, foregroundRole());
         }
