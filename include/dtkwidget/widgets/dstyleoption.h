@@ -29,6 +29,7 @@ enum ItemDataRole {
     ViewItemFontLevelRole,
     ViewItemBackgroundRole,
     ViewItemForegroundRole,
+    ViewItemShowToolTipRole,
     UserRole = Qt::UserRole << 2
 };
 
