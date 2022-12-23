@@ -20,6 +20,7 @@
  */
 #include "dstyle.h"
 #include "dstyleoption.h"
+#include "dtooltip.h"
 
 #include <DGuiApplicationHelper>
 
@@ -46,7 +47,6 @@ QT_END_NAMESPACE
 DGUI_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
-static Qt::TextFormat textFormat = Qt::TextFormat::AutoText;
 
 /*!
   \brief 该函数用于调整给定颜色.
@@ -114,7 +114,7 @@ QPair<QIcon::Mode, QIcon::State> DStyle::toIconModeState(const QStyleOption *opt
  */
 void DStyle::setTooltipTextFormat(Qt::TextFormat format)
 {
-    textFormat = format;
+    DToolTip::setToolTipTextFormat(format);
 }
 /*!
   \brief 获取 tooltip 文本格式.
@@ -125,7 +125,7 @@ void DStyle::setTooltipTextFormat(Qt::TextFormat format)
  */
 Qt::TextFormat DStyle::tooltipTextFormat()
 {
-    return textFormat;
+    return DToolTip::toolTipTextFormat();
 }
 
 void DStyle::setFocusRectVisible(QWidget *widget, bool visible)
@@ -1584,6 +1584,8 @@ int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyle
         return 10;
     case PM_ButtonMinimizedSize:
         return 36;
+    case PM_ToolTipLabelWidth:
+        return 300;
     default:
         break;
     }
@@ -2753,6 +2755,8 @@ void DStyle::viewItemLayout(const QStyleOptionViewItem *opt, QRect *pixmapRect, 
 QRect DStyle::viewItemDrawText(const QStyle *style, QPainter *p, const QStyleOptionViewItem *option, const QRect &rect)
 {
     Q_UNUSED(style)
+    QModelIndex index = option->index;
+    const QWidget *view = option->widget;
     QRect textRect = rect;
     const bool wrapText = option->features & QStyleOptionViewItem::WrapText;
     QTextOption textOption;
@@ -2815,6 +2819,36 @@ QRect DStyle::viewItemDrawText(const QStyle *style, QPainter *p, const QStyleOpt
         line.draw(p, position);
     }
 
+    // Update ToolTip
+    const DToolTip::ToolTipShowMode &showMode = DToolTip::toolTipShowMode(view);
+    if (showMode != DToolTip::Default) {
+        const bool showToolTip = (showMode == DToolTip::AlwaysShow) ||
+                ((showMode == DToolTip::ShowWhenElided) && (elidedIndex != -1));
+        QVariant vShowToolTip = index.data(ItemDataRole::ViewItemShowToolTipRole);
+        bool needUpdate = false;
+        if (vShowToolTip.isValid()) {
+            bool oldShowStatus = vShowToolTip.toBool();
+            if (showToolTip != oldShowStatus) {
+                needUpdate = true;
+            }
+        } else {
+            needUpdate = true;
+        }
+        if (needUpdate) {
+            QString toolTipString = index.data(Qt::DisplayRole).toString();
+            QString toolTip;
+            if (showToolTip) {
+                QTextOption toolTipOption;
+                toolTipOption.setWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
+                toolTipOption.setTextDirection(option->direction);
+                toolTipOption.setAlignment(QStyle::visualAlignment(option->direction, option->displayAlignment));
+                toolTip = DToolTip::wrapToolTipText(toolTipString, toolTipOption);
+            }
+            QAbstractItemModel *model = const_cast<QAbstractItemModel *>(index.model());
+            model->setData(index, toolTip, Qt::ToolTipRole);
+            model->setData(index, showToolTip, ItemDataRole::ViewItemShowToolTipRole);
+        }
+    }
     return layoutRect;
 }
 
