@@ -4,18 +4,107 @@
 @ingroup dtkwidget
 @class Dtk::Widget::DBackgroundGroup
 @brief DBackgroundGroup提供了将布局控件改成圆角边框(将布局看成一个整体)
-@note 示例代码
-@code
-QWidget w;
-QHBoxLayout* mainlayout = new QHBoxLayout(&w);
-mainlayout->addWidget(new QPushButton("btn"));
-QHBoxLayout *hlayout = new QHBoxLayout;
-DBackgroundGroup *group = new DBackgroundGroup(hlayout,&w);
-mainlayout->addWidget(group);
-hlayout->addWidget(new QFrame);
-hlayout->addWidget(new QFrame);
-@endcode
-@image html DBackgroundGroup.png
+@details
+
+## 示例程序
+通过一个简单的示例来了解如何使用 DBackgroundGroup 设置一个布局， 将页面分成两块，其中一块设置一个按钮，另一块使用 DBackgroundGroup 并在 DBackgroundGroup 中添加 控件。
+
+### CMakeLists.txt
+
+```cmake
+
+cmake_minimum_required(VERSION 3.1.0) # 指定cmake最低版本
+
+project(example1 VERSION 1.0.0 LANGUAGES CXX) # 指定项目名称, 版本, 语言 cxx就是c++
+
+set(CMAKE_CXX_STANDARD 11) # 指定c++标准
+set(CMAKE_CXX_STANDARD_REQUIRED ON) # 指定c++标准要求,至少为11以上
+set(target example1) # 指定目标名称
+
+set(CMAKE_AUTOMOC ON) # support qt moc # 支持qt moc
+set(CMAKE_AUTORCC ON) # support qt resource file # 支持qt资源文件
+set(CMAKE_AUTOUIC ON) # support qt ui file # 支持qt ui文件(非必须)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # support clangd 支持 clangd
+
+if (CMAKE_VERSION VERSION_LESS "3.7.0") # 如果cmake版本小于3.7.0
+    set(CMAKE_INCLUDE_CURRENT_DIR ON) # 设置包含当前目录
+endif()
+
+find_package(Qt5 COMPONENTS Widgets REQUIRED) # 寻找Qt5组件Widgets
+find_package(Qt5 COMPONENTS Gui  REQUIRED) # 寻找Qt5组件Gui
+find_package(Dtk COMPONENTS Widget REQUIRED) # 寻找Dtk组件Widget
+find_package(Dtk COMPONENTS Core REQUIRED) # 寻找Dtk组件Core
+find_package(Dtk COMPONENTS Gui) # 寻找Dtk组件Gui
+
+add_executable(example1     # 添加可执行文件
+        main.cpp
+)
+
+target_link_libraries(example1 PRIVATE
+    Qt5::Widgets
+    Qt5::Gui
+    dtkgui
+    dtkcore
+    dtkwidget
+) # 链接库
+
+
+```
+
+### main.cpp
+
+```cpp
+
+#include <DApplication>
+#include <DWidget>
+#include <DBackgroundGroup>
+#include <QVBoxLayout>
+#include <QPushButton>
+#include <QFrame>
+
+DWIDGET_USE_NAMESPACE
+
+int main(int argc, char *argv[]){
+    DApplication app(argc, argv);
+    DWidget win;
+
+    //新建一个水平的主布局
+    QHBoxLayout* mainlayout = new QHBoxLayout(&win);
+    //在新建的主布局上添加一个按钮
+    mainlayout->addWidget(new QPushButton("按钮"));
+
+    //再新建一个水平布局
+    QHBoxLayout *hlayout = new QHBoxLayout;
+    
+    //新建一个 DBackgroundGroup 组， 将布局 hlayout 放入组中
+    DBackgroundGroup *group = new DBackgroundGroup(hlayout,&win);
+    //将新建组添加到主布局中， 由于主布局上已有一个按钮，且为水平布局，这个 DBackgroundGroup 组会紧靠按钮右方
+    mainlayout->addWidget(group);
+    //给布局 hlayout 添加内容控件，此处为两个空QFrame
+    hlayout->addWidget(new QFrame);
+    hlayout->addWidget(new QFrame);
+
+    win.resize(800,500);
+    win.show();
+    return app.exec();
+}
+
+```
+
+依次使用以下命令编译并运行程序
+
+```linux
+
+cmake -B build
+cmake --build build
+./build/example1
+
+```
+
+程序运行效果如下
+
+![dbackgroundgroup_example](/docs/images/dbackgroundgroup_example.png)
 
 @fn explicit DBackgroundGroup::DBackgroundGroup(QLayout *layout = nullptr, QWidget *parent = nullptr)
 @brief DBackgroundGroup构造函数
