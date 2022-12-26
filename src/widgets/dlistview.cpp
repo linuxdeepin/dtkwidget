@@ -147,41 +147,49 @@ void DListViewPrivate::onOrientationChanged()
 
 // ====================Signals begin====================
 /*!
+  @~english
   \fn void DListView::currentChanged(const QModelIndex &previous)
-  \brief 这个信号当当前item发生改变时被调用
+  \brief This signal is called when the current item changes
   
-  listview会有一个始终表示当前item索引的 QModelIndex 对象，
-  当这个 QModelIndex 对象表示的位置发生改变时这个信号才会被调用，而不是当前item的内容发生改变时。
-  当鼠标单机某一个item或者使用键盘切换item时，
+  \details ListView will have a QModelIndex object that always represents the current Item index,
+  This signal is called when the location of this QModelIndex object changes, not the content of the current ITEM content changes.
+  When a mouse ordered machine to switch item with a keyboard
   
-  \a previous 为之前的item的索引对象
+  \param[in] previous It is the index object of the previous item
   
   \sa QModelIndex QListView::currentChanged
  */
 
 /*!
+  @~english
   \fn void DListView::triggerEdit(const QModelIndex &index)
-  \brief 这个信号当有新的item被编辑时被调用
+  \brief This signal is called when a new item is edited
   
-  \a index 为正在编辑的item的索引对象
+  \param[in] index the indexing object of item that is being edited
   
   \sa QModelIndex QAbstractItemView::EditTrigger
  */
 // ====================Signals end====================
 
 /*!
+  @~english
   \class Dtk::Widget::DListView
   \inmodule dtkwidget
-  \brief 一个用于展示一列数据的控件.
+  \brief A control for displaying a column of data.
   
-  DListView 类似与 QListView 属于 Qt's model/view framework 的一个类，常被用来展示一列数据，当数据较多时可以滚动控件以显示跟多内容。
-  但与 QListView 也有不同之处，DListView 提供了顶部控件和底部控件，它们始终显示在listview中，不会因为滚动而不可见，另外还提供了方便编辑
-  数据的方法，如：addItem , addItems , insertItem , takeItem , removeItem , 以及一些开发中常用的信号。
+  \details DListView is similar to QListView a class that belongs to QT's Model/View Framework.
+   It is often used to display a column of data. When the data is more, you can roll the control
+    to display and multiple contents.
+  But it is also different from QLISTView. DListView provides top controls and bottom controls. 
+  They are always displayed in ListView, which will not be visible because of rolling.
+  The method of data, such as: additem, additems, insertitem, takeItem, removeItem, and some 
+  commonly used signals in development.
  */
 
 /*!
-  \brief 获取一个 DListView 实例
-  \a parent 被用来作为 DListView 实例的父控件
+  @~english
+  \brief Get a dlistView instance
+  \param[in] parent Parents controlled by the DListView instance
  */
 DListView::DListView(QWidget *parent) :
     QListView(parent),
@@ -191,11 +199,12 @@ DListView::DListView(QWidget *parent) :
 }
 
 /*!
-  \brief 获取控件当前的状态
+  @~english
+  \brief Get the current state of the control
   
-  控件可以有正在被拖拽，正在被编辑，正在播放动画等状态，详细可以查阅：QAbstractItemView::State
+  The control can be dragged, edited by editor, and is playing animation and other states. You can check in detail:QAbstractItemView::State
   
-  \return 控件当前的状态
+  \return the current state of control
   
   \sa QAbstractItemView::State
  */
@@ -249,16 +258,17 @@ QSize DListView::minimumSizeHint() const
 }
 
 /*!
-  \brief 获取一个顶部控件
+  @~english
+  \brief Get a top control
   
-  顶部控件与item一样都会在listview中被显示出来，而且顶部控件会始终在所有item之上，
-  也就是说顶部控件与item不同的地方在于顶部控件始终显示在布局中，而不会因为鼠标滚动不可见。
-  另外顶部控件可以有多个，它们的布局方式(方向)与item的布局方向相同
+  \details The top control will be displayed in ListView, and the top control will always be above all item.
+  That is to say, the difference between the top control and item is that the top control is always displayed in the layout, not because the mouse rolling is not visible.
+  In addition, there are multiple top controls. Their layout (direction) is the same as the layout direction of item
   
-  \a index 指定要获取的顶部控件的索引
-  \return 返回在指定索引处的顶部控件对象
+  \param[in] index Specify the index of the top control to be obtained
+  \return Return to the top control object at the designated index
   
-  \note 注意顶部控件并不是像 GridLayout 的表头，表头是始终在水平方向上布局的
+  \note Note that the top control is not like the head of GridLayout, and the header is always deployed in the horizontal direction
   
   \sa DListView::getFooterWidget DListView::addHeaderWidget DListView::removeHeaderWidget DListView::takeHeaderWidget
  */
@@ -268,9 +278,10 @@ QWidget *DListView::getHeaderWidget(int index) const
 }
 
 /*!
-  \brief 获取一个底部控件
-  \a index 指定要获取的底部控件的索引
-  \return 返回在指定索引处的底部控件对象
+  @~english
+  \brief Get a bottom control
+  \param[in] index Specify the index of the bottom control to be obtained
+  \return return to the bottom control object at the specified index
   \sa DListView::getHeaderWidget
  */
 QWidget *DListView::getFooterWidget(int index) const
@@ -279,12 +290,13 @@ QWidget *DListView::getFooterWidget(int index) const
 }
 
 /*!
-  \brief 判断给定的 QRect 是否与 listview 的item可显示区域有重叠
+  @~english
+  \brief Determine whether the given QRect is overlapped with the item of ListView.
   
-  listview 的item可显示区域即为 listview 的 viewport ， items只能在 viewport 显示，超出这一区域的 item 将不可见。
+  \details The Item of ListView shows the ViewPort of ListView. item can only be displayed in ViewPort. item beyond this area will be invisible.
   
-  \a rect 要对比的 QRect
-  \return 返回两个矩形是否有重叠区域
+  \param[in] rect QRct to compare
+  \return Whether the two rectangles have overlapping areas
   \sa DListView::isVisualRect
  */
 bool DListView::isActiveRect(const QRect &rect) const
@@ -297,10 +309,11 @@ bool DListView::isActiveRect(const QRect &rect) const
 }
 
 /*!
-  \brief 与 DListView::isVisualRect 相同
+  @~english
+  \brief Same as dlistView::IsvisualRect
 
-  \a rect 用于判断的位置矩形.
-  \return 成功包含矩形返回 true，否则返回 false.
+  \param[in] rect The position rectangle for judging.
+  \return Successfully contains rectangular return true，Otherwise, return false.
 
   \sa DListView::isVisualRect
  */
@@ -312,15 +325,16 @@ bool DListView::isVisualRect(const QRect &rect) const
 }
 
 /*!
+  @~english
   \fn void DListView::rowCountChanged()
   \sa DListView::count
  */
 
 /*!
+  @~english
   \property DListView::count
-  \brief 这个属性保存共有多少行数据
-  
-  Getter: DListView::count , Signal: DListView::rowCountChanged
+  \brief How many lines of data is there in this attribute preservation
+  \details Getter: DListView::count , Signal: DListView::rowCountChanged
  */
 int DListView::count() const
 {
@@ -328,19 +342,19 @@ int DListView::count() const
 }
 
 /*!
+  @~english
   \fn void DListView::orientationChanged(Qt::Orientation orientation)
 
-  \a orientation 改变的方向值.
+  \param[in] orientation The direction value of the change.
 
   \sa DListView::orientation
  */
 
 /*!
+  @~english
   \property DListView::orientation
-  \brief 这个属性保存listview中item的布局方式
-  
-  Getter: DListView::orientation , Setter: DListView::setOrientation , Signal: DListView::orientationChanged
-  
+  \brief This attribute saves the layout of Item in ListView
+  \details Getter: DListView::orientation , Setter: DListView::setOrientation , Signal: DListView::orientationChanged
   \sa Qt::Orientation
  */
 Qt::Orientation DListView::orientation() const
@@ -353,11 +367,12 @@ Qt::Orientation DListView::orientation() const
 }
 
 /*!
-  \brief 设置 DListView 要使用的模型
+  @~english
+  \brief Set the model you want to use dlistView
   
-  模型用来为 listview 提供数据，以实现数据层与界面层分离的结构, 详细请查阅 Qt's model/view framework
+  \details The model is used to provide data for ListView to achieve the structure of the separation of the data layer and the interface layer. For details, please refer to Qt's Model/View Framework
   
-  \a model 模型对象
+  \param[in] model Model object
   \sa QListView::setModel
  */
 void DListView::setModel(QAbstractItemModel *model)
@@ -407,9 +422,10 @@ QSize DListView::itemSize() const
 }
 
 /*!
-  \brief 在列表底部新增一个item
-  \a data 要新增的数据
-  \return 返回是否新增成功
+  @~english
+  \brief Add an Item at the bottom of the list
+  \param[in] data New data to be added
+  \return return whether it is successful to add
  */
 bool DListView::addItem(const QVariant &data)
 {
@@ -417,9 +433,10 @@ bool DListView::addItem(const QVariant &data)
 }
 
 /*!
-  \brief 一次性在列表底部新增多个item
-  \a datas 要新增的数据组成的列表
-  \return 是否新增成功
+  @~english
+  \brief Add more item at the bottom of the list at one time
+  \param[in] datas List of new data composition
+  \return Whether it is successful
  */
 bool DListView::addItems(const QVariantList &datas)
 {
@@ -427,10 +444,11 @@ bool DListView::addItems(const QVariantList &datas)
 }
 
 /*!
-  \brief 在指定行处新增一个item
-  \a index 要增加item的行号
-  \a data 要增加的item的数据
-  \return 是否新增成功
+  @~english
+  \brief Add a new item at the designated bank
+  \param[in] index To increase the line number of Item
+  \param[in] data Item data to be added
+  \return Whether it is successful
  */
 bool DListView::insertItem(int index, const QVariant &data)
 {
@@ -441,10 +459,11 @@ bool DListView::insertItem(int index, const QVariant &data)
 }
 
 /*!
-  \brief 在指定行处新增多个item
-  \a index 要增加item的行号
-  \a datas 要增加的items的数据组成的列表
-  \return 是否新增成功
+  @~english
+  \brief Add more item at the designated bank
+  \param[in] index To increase the line number of Item
+  \param[in] datas List of data composition of items data
+  \return Whether it is successful
  */
 bool DListView::insertItems(int index, const QVariantList &datas)
 {
@@ -458,9 +477,10 @@ bool DListView::insertItems(int index, const QVariantList &datas)
 }
 
 /*!
-  \brief 移除指定位置的item
-  \a index 要移除的item的行号
-  \return 是否移除成功
+  @~english
+  \brief Remove the designated position item
+  \param[in] index The line number of it to remove
+  \return Whether it is remove successfully
  */
 bool DListView::removeItem(int index)
 {
@@ -468,10 +488,11 @@ bool DListView::removeItem(int index)
 }
 
 /*!
-  \brief 一次移除多个item
-  \a index 开始移除item的行号
-  \a count 移除从 index 指定的行号开始，移除 count 个item
-  \return 返回是否移除成功
+  @~english
+  \brief Remove multiple item at a time
+  \param[in] index Start removing the line number of Item
+  \param[in] count Remove from the line number specified by index, remove the county item
+  \return Whether to return to remove success
  */
 bool DListView::removeItems(int index, int count)
 {
@@ -479,13 +500,14 @@ bool DListView::removeItems(int index, int count)
 }
 
 /*!
-  \brief 此函数用于添加顶部小控件.
+  @~english
+  \brief This function is used to add top controls.
 
-  与 DListView::getHeaderWidget 类似，但返回要移除的顶部控件的对象.
-  \a widget 头部控件实例.
+  Similar to dlistView::GetHeaderWidget, but returns the object of the top control to be removed.
+  \param[in] widget Head control instance.
 
-  \return 成功添加返回添加进 DListView 的索引值，已存在返回对应控件
-  的索引值.
+  \return Successfully adds to the index value of adding to dlistview, and the corresponding control has been returned
+  The index value.
 
   \sa DListView::getHeaderWidget
  */
@@ -534,10 +556,11 @@ int DListView::addHeaderWidget(QWidget *widget)
 }
 
 /*!
-  \brief 此函数用于移除头部控件小控件.
+  @~english
+  \brief This function is used to remove the head control small control.
 
-  \a index 添加进 DListView 中头部小控件
-  的索引值，是 DListView::addHeaderWidget 的返回值.
+  \param[in] index Add a small head control in dlistview
+  The index value is the return value of dlistView::addheaderWidget.
 
   \sa DListView::addFooterWidget
  */
@@ -550,13 +573,13 @@ void DListView::removeHeaderWidget(int index)
 }
 
 /*!
-  \brief 此函数用于移除头部小控件并返回该控件.
+  @~english
+  \brief This function is used to remove the small control of the head and return the control.
+  \details Similar to Dlistview::GetHeaderWidget, but returns the object of the top control to be removed
 
-  与 DListView::getHeaderWidget 类似，但返回要移除的顶部控件的对象
-
-  \a index 添加进 DListView 中头部小控件
-  的索引值，是 DListView::addHeaderWidget 的返回值.
-  \return 成功移除返回获取到的头部小控件，否则返回 nullptr .
+  \param[in] index Add a small head control in dlistview
+  The index value is the return value of dlistView::addheaderWidget.
+  \return Successfully remove the small head control obtained, otherwise return nullptr.
 
   \sa DListView::getHeaderWidget
  */
@@ -577,11 +600,12 @@ QWidget *DListView::takeHeaderWidget(int index)
 }
 
 /*!
-  \brief 此函数用于添加底层页脚小控件.
+  @~english
+  \brief This function is used to add a small control small control.
 
-  \a widget 底层页脚控件实例.
-  \return 成功添加返回对应的索引值，如果已存在，则返回
-  对应的索引值。
+  \param[in] widget the instance of control in footer
+  \return Successfully add the corresponding index value, if it exists, return
+  Corresponding index value.
 
   \sa DListView::getFooterWidget
  */
@@ -635,10 +659,11 @@ int DListView::addFooterWidget(QWidget *widget)
 }
 
 /*!
-  \brief 此函数用于移除底层页脚控件.
+  @~english
+  \brief This function is used to remove the underlying foot-footed control.
 
-  \a index 添加进 DListView 中底层页脚控件
-  的索引值，是 DListView::addFooterWidget 的返回值.
+  \param[in] index Add to dlistview mid-layer footer control
+  Index value，It is the return value of dlistView::addfooterWidget.
 
   \sa DListView::addFooterWidget
  */
@@ -651,10 +676,11 @@ void DListView::removeFooterWidget(int index)
 }
 
 /*!
-  \brief 移除底层页脚控件并返回该控件.
+  @~english
+  \brief Remove the bottom foot control and return to the control.
 
-  \a index 添加进 DListView 中底层页脚控件
-  的索引值，是 DListView::addFooterWidget 的返回值.
+  \param[in] index Add the index value of the bottom -footed control control in dlistview,
+  It is the return value of dlistView::addfooterWidget.
 
   \sa DListView::getFooterWidget DListView::takeHeaderWidget
  */
@@ -675,12 +701,14 @@ QWidget *DListView::takeFooterWidget(int index)
 }
 
 /*!
-  \brief 此函数用于设置 DListView 的方向.
+  @~english
+  \brief This function is used to set the direction of dlistview
 
-  \a flow 为 DListView 的方向，有 QListView::Flow::LeftToRight 和
-  QListView::Flow::TopToBottom 两个值。
+  \param[in] flow The direction of dlistview，have QListView::Flow::LeftToRight and
+  QListView::Flow::TopToBottom 
 
-  \a wrapping 用于控制项布局是否自动换行，true 表示自动换行，false 表示非自动换行。
+  \param[in] wrapping Used to control whether the layout is automatically changed. 
+  True indicates that automatic changes are replaced, and False indicates non -automatic bank.
 
   \sa DListView::orientation
  */
@@ -721,9 +749,10 @@ void DListView::setOrientation(QListView::Flow flow, bool wrapping)
 }
 
 /*!
-  \brief 开始编辑一个item.
+  @~english
+  \brief Edit a item.
 
-  \a index 指定要编辑的item的位置
+  \param[in] index Specify the location of the Item to edit
  */
 void DListView::edit(const QModelIndex &index)
 {
@@ -731,9 +760,10 @@ void DListView::edit(const QModelIndex &index)
 }
 
 /*!
-  \brief 设定item的背景色类型.
+  @~english
+  \brief Set the background color type of item.
 
-  \a backgroundType 背景色类型
+  \param[in] backgroundType Background color
  */
 void DListView::setBackgroundType(DStyledItemDelegate::BackgroundType backgroundType)
 {
@@ -751,9 +781,10 @@ void DListView::setBackgroundType(DStyledItemDelegate::BackgroundType background
 }
 
 /*!
-  \brief 设定item的内容margin.
+  @~english
+  \brief Set the content of the item Margin.
 
-  \a itemMargins margin值
+  \param[in] itemMargins margin value
  */
 void DListView::setItemMargins(const QMargins &itemMargins)
 {
@@ -763,9 +794,10 @@ void DListView::setItemMargins(const QMargins &itemMargins)
 }
 
 /*!
-  \brief 设定item的尺寸.
+  @~english
+  \brief Set the size of Item.
 
-  \a itemSize 尺寸的大小
+  \param[in] itemSize itemSize
  */
 void DListView::setItemSize(QSize itemSize)
 {
@@ -775,9 +807,10 @@ void DListView::setItemSize(QSize itemSize)
 }
 
 /*!
-  \brief 设定item的间距大小.
+  @~english
+  \brief Set the spacing size of Item.
 
-  \a spacing　间距大小值
+  \param[in] spacing　Spacing value
  */
 void DListView::setItemSpacing(int spacing)
 {
@@ -787,9 +820,9 @@ void DListView::setItemSpacing(int spacing)
 }
 
 /*!
-  \brief 设定item的圆角大小.
-
-  \a radius 圆角大小值
+  @~english
+  \brief Set the rounded corner size of Item.
+  \param[in] radius Rounded corner size value
  */
 void DListView::setItemRadius(int radius)
 {
