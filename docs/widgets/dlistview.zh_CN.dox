@@ -1,0 +1,332 @@
+/*!
+@~chinese
+@file dlistview.h
+@ingroup dtkwidget
+@class Dtk::Widget::DListView
+@brief DListView 一个用于展示一列数据的控件.
+@details DListView 类似与 QListView 属于 Qt's model/view framework 的一个类，常被用来展示一列数据，当数据较多时可以滚动控件以显示跟多内容。
+但与 QListView 也有不同之处，DListView 提供了顶部控件和底部控件，它们始终显示在listview中，不会因为滚动而不可见，另外还提供了方便编辑
+数据的方法，如：addItem , addItems , insertItem , takeItem , removeItem , 以及一些开发中常用的信号。
+
+## DListView 示例
+通过简单的示例来学习如何使用 DListView 
+
+项目目录结构在同一目录下
+
+### CMakeLists.txt
+
+```cmake
+cmake_minimum_required(VERSION 3.1.0) # 指定cmake最低版本
+
+project(example1 VERSION 1.0.0 LANGUAGES CXX) # 指定项目名称, 版本, 语言 cxx就是c++
+
+set(CMAKE_CXX_STANDARD 11) # 指定c++标准
+set(CMAKE_CXX_STANDARD_REQUIRED ON) # 指定c++标准要求,至少为11以上
+set(target example1) # 指定目标名称
+
+set(CMAKE_AUTOMOC ON) # support qt moc # 支持qt moc
+set(CMAKE_AUTORCC ON) # support qt resource file # 支持qt资源文件
+set(CMAKE_AUTOUIC ON) # support qt ui file # 支持qt ui文件(非必须)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # support clangd 支持 clangd
+
+if (CMAKE_VERSION VERSION_LESS "3.7.0") # 如果cmake版本小于3.7.0
+    set(CMAKE_INCLUDE_CURRENT_DIR ON) # 设置包含当前目录
+endif()
+
+find_package(Qt5 COMPONENTS Widgets REQUIRED) # 寻找Qt5组件Widgets
+find_package(Qt5 COMPONENTS Gui  REQUIRED) # 寻找Qt5组件Gui
+find_package(Dtk COMPONENTS Widget REQUIRED) # 寻找Dtk组件Widget
+find_package(Dtk COMPONENTS Core REQUIRED) # 寻找Dtk组件Core
+find_package(Dtk COMPONENTS Gui) # 寻找Dtk组件Gui
+
+add_executable(example1     # 添加可执行文件
+        main.cpp
+)
+
+target_link_libraries(example1 PRIVATE
+    Qt5::Widgets
+    Qt5::Gui
+    ${DtkGui_LIBRARIES}
+    ${DtkCore_LIBRARIES}
+    ${DtkWidget_LIBRARIES}
+) # 链接库
+
+```
+
+### main.cpp
+
+```cpp
+
+#include <DApplication>
+#include <DListView>
+#include <DMainWindow>
+#include <DWidget>
+#include <DStyle>
+#include <DHeaderView>
+#include <QStyle>
+#include <QLabel>
+
+DWIDGET_USE_NAMESPACE
+
+int main(int argc, char *argv[]){
+    DApplication app(argc, argv);
+    DMainWindow win;
+
+    //新建一个标准模型
+    QStandardItemModel *model = new QStandardItemModel();
+
+    //写一个函数，函数的功能是新建显示在窗口中的条目，条目内容，设置不可编辑以及将条目添加到model中
+    auto AddItems = [&win, &model](QIcon icon, QString name){
+        DStandardItem *item = new DStandardItem(icon, name); //条目包含图标和名称
+        item->setEditable(false); //设置条目不可被编辑
+        model->appendRow(item); //将条目添加到model中
+        return item;
+    };
+
+    //调用函数新建四个条目
+    auto item0 = AddItems(win.style()->standardIcon(DStyle::SP_ComputerIcon), "电脑");
+    auto item1 = AddItems(win.style()->standardIcon(DStyle::SP_DirIcon), "文件");
+    auto item2 = AddItems(win.style()->standardIcon(DStyle::SP_DriveCDIcon), "媒体");
+    auto item3 = AddItems(win.style()->standardIcon(DStyle::SP_TrashIcon), "回收站");
+
+    //增加一个条目中的action， 可用作标识、与其他条目区别开，设置位置、大小、是否可点击
+    DViewItemAction *action = new DViewItemAction(Qt::AlignCenter, QSize(), QSize(), true);
+    //将QStyle转为DStyle
+    DStyle *style = qobject_cast<DStyle *>(win.style());
+    //给action设置图标
+    action->setIcon(style->standardIcon(DStyle::SP_IndicatorChecked));
+    //设置显示到哪个条目上，这里设置到item1
+    item1->setActionList(Qt::Edge::RightEdge, {action});
+
+    //新建一个 dlistview
+    DListView *listview = new DListView();
+    //将上面设置好的模型加载到listview中
+    listview->setModel(model);
+    //设置 listview 背景颜色的样式
+    listview->setBackgroundType(DStyledItemDelegate::BackgroundType::RoundedBackground);
+
+    //新建一个header模型
+    QStandardItemModel *hmodel = new QStandardItemModel();
+    //设置header内容
+    hmodel->setHorizontalHeaderLabels({"功能", "最后打开时间"});
+    //新建一个headerview
+    DHeaderView *headerview = new DHeaderView(Qt::Horizontal);
+    //将模型加载到headerview
+    headerview->setModel(hmodel);
+    //设置headerview高度最大值
+    headerview->setMaximumHeight(36);
+    //设置 headerview 调整尺寸方式，此处设为随窗口尺寸变化
+    headerview->setSectionResizeMode(DHeaderView::Stretch);
+    //将headerview添加到listview
+    listview->addHeaderWidget(headerview);
+
+    //为footer设置一个标签
+    QLabel *label = new QLabel("共四项内容"); 
+    //设置标签居中显示
+    label->setAlignment(Qt::AlignCenter);
+    //将标签添加到footer
+    listview->addFooterWidget(label);
+
+    //将 listview 放入主窗口
+    win.setCentralWidget(listview);
+
+    win.resize(500,350);
+    win.show();
+    return app.exec();
+}
+
+```
+
+上述代码中 setBackgroundType 中的参数为枚举类型，其他的枚举值为 BackgroundType_Mask, ClipCornerBackground, 
+NoBackground, NoNormalState, 可以更改代码中枚举值查看效果
+
+依次使用 如下命令 编译和运行程序
+
+```bash
+
+cmake -B build
+cmake --build build
+./build/example1
+
+```
+
+程序运行效果如下：
+
+![dlistview_example](dlistview_example.png)
+
+@fn void DListView::currentChanged(const QModelIndex &previous)
+@brief 这个信号当当前item发生改变时被调用
+@details listview会有一个始终表示当前item索引的 QModelIndex 对象，
+当这个 QModelIndex 对象表示的位置发生改变时这个信号才会被调用，而不是当前item的内容发生改变时。
+当鼠标单机某一个item或者使用键盘切换item时，
+@param[in] previous 为之前的item的索引对象
+@sa QModelIndex QListView::currentChanged
+
+@fn void DListView::triggerEdit(const QModelIndex &index)
+@brief 这个信号当有新的item被编辑时被调用
+@param[in] index 为正在编辑的item的索引对象
+@sa QModelIndex QAbstractItemView::EditTrigger
+
+@fn DListView::DListView(QWidget *parent)
+@brief 获取一个 DListView 实例
+@param[in] parent 被用来作为 DListView 实例的父控件
+
+@fn QAbstractItemView::State DListView::state() const
+@brief 获取控件当前的状态
+控件可以有正在被拖拽，正在被编辑，正在播放动画等状态，详细可以查阅：QAbstractItemView::State
+@return 控件当前的状态
+@sa QAbstractItemView::State
+
+@fn QWidget *DListView::getHeaderWidget(int index) const
+@brief 获取一个顶部控件
+@details 顶部控件与item一样都会在listview中被显示出来，而且顶部控件会始终在所有item之上，
+也就是说顶部控件与item不同的地方在于顶部控件始终显示在布局中，而不会因为鼠标滚动不可见。
+另外顶部控件可以有多个，它们的布局方式(方向)与item的布局方向相同
+@param[in] index 指定要获取的顶部控件的索引
+@return 返回在指定索引处的顶部控件对象
+@note 注意顶部控件并不是像 GridLayout 的表头，表头是始终在水平方向上布局的
+@sa DListView::getFooterWidget DListView::addHeaderWidget DListView::removeHeaderWidget DListView::takeHeaderWidget
+
+@fn QWidget *DListView::getFooterWidget(int index) const
+@brief 获取一个底部控件
+@param[in] index 指定要获取的底部控件的索引
+@return 返回在指定索引处的底部控件对象
+@sa DListView::getHeaderWidget
+
+@fn bool DListView::isActiveRect(const QRect &rect) const
+@brief 判断给定的 QRect 是否与 listview 的item可显示区域有重叠
+@details listview 的item可显示区域即为 listview 的 viewport ， items只能在 viewport 显示，超出这一区域的 item 将不可见。
+@param[in] rect 要对比的 QRect
+@return 返回两个矩形是否有重叠区域
+@sa DListView::isVisualRect
+
+@fn bool DListView::isVisualRect(const QRect &rect) const
+@brief 与 DListView::isVisualRect 相同
+@param[in] rect 用于判断的位置矩形.
+@return 成功包含矩形返回 true，否则返回 false.
+@sa DListView::isVisualRect
+
+@fn void DListView::rowCountChanged()
+@sa DListView::count
+
+@property DListView::count
+@brief 这个属性保存共有多少行数据
+@details Getter: DListView::count , Signal: DListView::rowCountChanged
+
+@fn void DListView::orientationChanged(Qt::Orientation orientation)
+@param[in] orientation 改变的方向值.
+@sa DListView::orientation
+
+@property DListView::orientation
+@brief 这个属性保存listview中item的布局方式
+@details Getter: DListView::orientation , Setter: DListView::setOrientation , Signal: DListView::orientationChanged
+@sa Qt::Orientation
+
+@fn void DListView::setModel(QAbstractItemModel *model)
+@brief 设置 DListView 要使用的模型
+@details 模型用来为 listview 提供数据，以实现数据层与界面层分离的结构, 详细请查阅 Qt's model/view framework
+@param[in] model 模型对象
+@sa QListView::setModel
+
+@fn bool DListView::addItem(const QVariant &data)
+@brief 在列表底部新增一个item
+@param[in] data 要新增的数据
+@return 返回是否新增成功
+
+@fn bool DListView::addItems(const QVariantList &datas)
+@brief 一次性在列表底部新增多个item
+@param[in] datas 要新增的数据组成的列表
+@return 是否新增成功
+
+@fn bool DListView::insertItem(int index, const QVariant &data)
+@brief 在指定行处新增一个item
+@param[in] index 要增加item的行号
+@param[in] data 要增加的item的数据
+@return 是否新增成功
+
+@fn bool DListView::insertItems(int index, const QVariantList &datas)
+@brief 在指定行处新增多个item
+@param[in] index 要增加item的行号
+@param[in] datas 要增加的items的数据组成的列表
+@return 是否新增成功
+
+@fn bool DListView::removeItem(int index)
+@brief 移除指定位置的item
+@param[in] index 要移除的item的行号
+@return 是否移除成功
+
+@fn bool DListView::removeItems(int index, int count)
+@brief 一次移除多个item
+@param[in] index 开始移除item的行号
+@param[in] count 移除从 index 指定的行号开始，移除 count 个item
+@return 返回是否移除成功
+
+@fn int DListView::addHeaderWidget(QWidget *widget)
+@brief 此函数用于添加顶部小控件.
+与 DListView::getHeaderWidget 类似，但返回要移除的顶部控件的对象.
+@param[in] widget 头部控件实例.
+@return 成功添加返回添加进 DListView 的索引值，已存在返回对应控件
+的索引值.
+@sa DListView::getHeaderWidget
+
+@fn void DListView::removeHeaderWidget(int index)
+@brief 此函数用于移除头部控件小控件.
+@param[in] index 添加进 DListView 中头部小控件
+的索引值，是 DListView::addHeaderWidget 的返回值.
+@sa DListView::addFooterWidget
+
+@fn QWidget *DListView::takeHeaderWidget(int index)
+@brief 此函数用于移除头部小控件并返回该控件.
+@details 与 DListView::getHeaderWidget 类似，但返回要移除的顶部控件的对象
+@param[in] index 添加进 DListView 中头部小控件的索引值，是 DListView::addHeaderWidget 的返回值.
+@return 成功移除返回获取到的头部小控件，否则返回 nullptr .
+@sa DListView::getHeaderWidget
+
+@fn int DListView::addFooterWidget(QWidget *widget)
+@brief 此函数用于添加底层页脚小控件.
+@param[in] widget 底层页脚控件实例.
+@return 成功添加返回对应的索引值，如果已存在，则返回对应的索引值。
+@sa DListView::getFooterWidget
+
+@fn void DListView::removeFooterWidget(int index)
+@brief 此函数用于移除底层页脚控件.
+@param[in] index 添加进 DListView 中底层页脚控件的索引值，是 DListView::addFooterWidget 的返回值.
+@sa DListView::addFooterWidget
+
+@fn QWidget *DListView::takeFooterWidget(int index)
+@brief 移除底层页脚控件并返回该控件.
+@param[in] index 添加进 DListView 中底层页脚控件的索引值，是 DListView::addFooterWidget 的返回值.
+@sa DListView::getFooterWidget DListView::takeHeaderWidget
+
+@fn void DListView::setOrientation(QListView::Flow flow, bool wrapping)
+@brief 此函数用于设置 DListView 的方向.
+@param[in] flow 为 DListView 的方向，有 QListView::Flow::LeftToRight 和 QListView::Flow::TopToBottom 两个值。
+@param[in] wrapping 用于控制项布局是否自动换行，true 表示自动换行，false 表示非自动换行。
+@sa DListView::orientation
+
+@fn void DListView::edit(const QModelIndex &index)
+@brief 开始编辑一个item.
+@param[in] index 指定要编辑的item的位置
+
+@fn void DListView::setBackgroundType(DStyledItemDelegate::BackgroundType backgroundType)
+@brief 设定item的背景色类型.
+@param[in] backgroundType 背景色类型
+
+@fn void DListView::setItemMargins(const QMargins &itemMargins)
+@brief 设定item的内容margin.
+@param[in] itemMargins margin值
+
+@fn void DListView::setItemSize(QSize itemSize)
+@brief 设定item的尺寸.
+@param[in] itemSize 尺寸的大小
+
+@fn void DListView::setItemSpacing(int spacing)
+@brief 设定item的间距大小.
+@param[in] spacing　间距大小值
+
+@fn void DListView::setItemRadius(int radius)
+@brief 设定item的圆角大小.
+@param[in] radius 圆角大小值
+
+*/
