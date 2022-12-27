@@ -1,7 +1,7 @@
 /*!
 @~chinese
 @file dbackgroundgroup.h
-@ingroup dtkwidget
+@ingroup listview
 @class Dtk::Widget::DBackgroundGroup
 @brief DBackgroundGroup提供了将布局控件改成圆角边框(将布局看成一个整体)
 @details

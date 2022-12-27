@@ -1,7 +1,7 @@
 /*!
 @~chinese
 @file dslider.h
-@ingroup dtkwidget
+@ingroup slider
 @class Dtk::Widget::DSlider
 @brief DSlider一个聚合 QSlider 的滑块，DSlider提供了在滑块两侧设置图标函数，且设置的滑块更加美观
 @details

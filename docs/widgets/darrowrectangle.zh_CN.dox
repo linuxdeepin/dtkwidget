@@ -1,7 +1,7 @@
 /*!
 @~chinese
 @file darrowrectangle.h
-@ingroup dtkwidget
+@ingroup tooltip
 @class Dtk::Widget::DArrowRectangle
 @brief DArrowRectangle 提供了可以在四个边中的任意一个边显示箭头的矩形控件.
 @details 通常用于作为其他控件的容器，将其显示在矩形内作为内容控件

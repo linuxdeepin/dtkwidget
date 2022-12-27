@@ -1,7 +1,7 @@
 /*!
 @~chinese
 @file dlistview.h
-@ingroup dtkwidget
+@ingroup listview
 @class Dtk::Widget::DListView
 @brief DListView 一个用于展示一列数据的控件.
 @details DListView 类似与 QListView 属于 Qt's model/view framework 的一个类，常被用来展示一列数据，当数据较多时可以滚动控件以显示跟多内容。

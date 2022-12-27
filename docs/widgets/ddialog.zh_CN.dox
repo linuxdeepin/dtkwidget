@@ -1,7 +1,7 @@
 /*!
 @~chinese
 @file ddialog.h
-@ingroup dtkwidget
+@ingroup dialog
 @class Dtk::Widget::DDialog
 @brief DDialog 旨在提供简要的讯问式对话框的快速实现。提供了包含标题，对话框内容，默认图标，用以添加按钮的布局和一个可以自由添加内容的内容布局。
 @details

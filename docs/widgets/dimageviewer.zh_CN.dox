@@ -1,6 +1,7 @@
 /*!
 @~chinese
 @file dimageviewer.h
+@ingroup imageviewer
 @brief dimageviewer.h 提供基础的图片浏览控件 DImageViewer
 
 @class Dtk::Widget::DImageViewer
