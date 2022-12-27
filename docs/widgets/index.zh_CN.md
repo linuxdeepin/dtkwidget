@@ -2,6 +2,7 @@
 
 @mainpage
 @defgroup dtkwidget
+@defgroup dsettings
 
 ## dtkwidget：dtk挂件
 

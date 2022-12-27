@@ -1,7 +1,7 @@
 /*!
 @~chinese
 @file dsettingsdialog.h
-@ingroup dtkwidget
+@ingroup dsettings
 @class Dtk::Widget::DSettingsDialog
 @brief DSettingsDialog 为使用DSettings的Dtk程序提供一个通用的设置对话框，这个对话框可以通过json配置文件来自动生成
 @details
@@ -18,47 +18,98 @@ json设置了一个基础设置，分为 open_action 和 New Tab & Window 两块
 open_action 有一个是否总是在新窗口打开页面的设置和打开文件的设置，实现方式分别是 checkbox 和 combobox ；
 New Tab & Window 有一个新窗口打开的方式和新标签打开的方式两个设置，都是 combobox 实现。
 
+其中实现控件除了checkbox、combobox还提供了lineedit, shortcut, spinbutton, buttongroup,radiogroup, slider, switchbutton,title1, title2，下文会在示例中一一展示
+
 ```json
 
 {
     "groups": [{
-        "key": "base",
-        "name": "Basic settings",
+        "key": "base", 
+        "name":  "基础设置", 
         "groups": [{
-                "key": "open_action",
-                "name": "Open Action",
-                "options": [{
-                        "key": "alway_open_on_new",
-                        "type": "checkbox",
-                        "text": "Always Open On New Windows",
-                        "default": true
-                    },
-                    {
-                        "key": "open_file_action",
-                        "name": "Open File:",
-                        "type": "combobox",
-                        "default": ""
-                    }
-                ]
+            "key": "setting1", 
+            "name": "设置一", 
+            "options": [{
+                "key": "checkbox_ex", 
+                "type": "checkbox",
+                "text": "是否打开此选项", 
+                "default": "true"
             },
             {
-                "key": "new_tab_windows",
-                "name": "New Tab & Window",
-                "options": [{
-                        "key": "new_window_path",
-                        "name": "New Window Open:",
-                        "type": "combobox",
-                        "default": ""
-                    },
-                    {
-                        "key": "new_tab_path",
-                        "name": "New Tab Open:",
-                        "type": "combobox",
-                        "default": ""
-                    }
-                ]
-            }
-        ]
+                "key": "combobox_ex", 
+                "type": "combobox",
+                "name": "请选择"
+            }]
+        }, 
+        {
+            "key": "setting2", 
+            "name": "设置二", 
+            "options": [{
+                "key": "lineedit_ex", 
+                "type": "lineedit"
+            },
+            {
+                "key": "shortcut_ex", 
+                "type": "shortcut"
+            }]
+        }, 
+        {
+            "key": "setting3", 
+            "name": "设置三", 
+            "options": [{
+                "key": "spinbutton_ex", 
+                "type": "spinbutton"
+            },
+            {
+                "key": "buttongroup_ex", 
+                "type": "buttongroup", 
+                "items": ["yes","no"],
+                "default": 1
+            }]
+        }, 
+        {
+            "key": "setting4", 
+            "name": "设置四", 
+            "options": [{
+                "key": "slider_ex", 
+                "type": "slider", 
+                "max": 100, 
+                "min": 0, 
+                "default": 50
+            },
+            {
+                "key": "radiogroup_ex", 
+                "type": "radiogroup", 
+                "items": ["选项一","选项二"],
+                "default": 1
+            }]
+        }, 
+        {
+            "key": "setting5", 
+            "name": "设置五", 
+            "options": [{
+                "key": "switchbutton_ex", 
+                "type": "switchbutton", 
+                "name": "switchbutton"
+            },
+            {
+                "key": "title1_ex", 
+                "type": "title1", 
+                "text": "title1", 
+                "default": "这是title1"
+            },
+            {
+                "key": "title2_ex", 
+                "type": "title2", 
+                "text": "title2", 
+                "default": "这是title2"
+            },
+            {
+                "key": "icon-button", 
+                "type": "icon-button"
+            }]
+        }]
+
     }]
 }
 
@@ -135,11 +186,15 @@ target_link_libraries(example1 PRIVATE
 #include <DMainWindow>
 #include <DSettingsDialog>
 #include <QTemporaryFile>
-#include <QDebug>
 #include <DPushButton>
 #include <QObject>
+#include <DSettingsWidgetFactory>
+#include <DSettingsOption>
+#include <DIconButton>
+#include "dtkcore_global.h"
 #include <qsettingbackend.h>
 DWIDGET_USE_NAMESPACE
+DCORE_USE_NAMESPACE
 
 int main(int argc, char *argv[]){
     DApplication app(argc, argv);
@@ -153,14 +208,20 @@ int main(int argc, char *argv[]){
         //初始化一个存储后端
         QTemporaryFile tmpFile;
         tmpFile.open();
-        Dtk::Core::QSettingBackend backend(tmpFile.fileName());
+        QSettingBackend backend(tmpFile.fileName());
 
         //从json中初始化配置
-        auto settings = Dtk::Core::DSettings::fromJsonFile(":/settingsData/settings.json");
+        auto settings = DSettings::fromJsonFile(":/settingsData/settings.json");
         settings->setBackend(&backend);
 
         //初始化一个设置显示窗口
         DSettingsDialog dsd(&win);
+        //如果自带控件不能满足需求，可自行注册控件，此处以一个Icon button为例
+        dsd.widgetFactory()->registerWidget("icon-button", [&win](QObject *obj){
+            DSettingsOption *option = qobject_cast<DSettingsOption *>(obj);
+            DIconButton *iconBtn = new DIconButton(DStyle::SP_DriveCDIcon);//新建一个icon button
+            return iconBtn;
+        });
         dsd.updateSettings(settings); //将设置加载到设置窗口
         dsd.exec(); //设置窗口显示并等待响应
     });
