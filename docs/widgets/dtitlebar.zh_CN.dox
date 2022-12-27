@@ -1,7 +1,7 @@
 /*!
 @~chinese
 @file dtitlebar.h
-@ingroup dtkwidget
+@ingroup window
 @class Dtk::Widget::DTitlebar
 @brief Dtitlebar是Dtk程序通用的标题栏组件，用于实现标题栏的高度定制化
 @details

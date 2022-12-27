@@ -1,8 +1,8 @@
 /*!
 @~chinese
 @file dmainwindow.h
+@ingroup window
 @class Dtk::Widget::DMainWindow
-@ingroup dtkwidget
 @brief DMainWindow类提供了一个主应用程序窗口,主窗口为构建应用程序的用户提供了一个框架
 界面。与Qmainwindow相比，DmainWindow具有自己的布局它只有标题栏和内容区域，更简单。
 开发人员可以提供自定义的标题栏和内容，以使应用功能丰富。
