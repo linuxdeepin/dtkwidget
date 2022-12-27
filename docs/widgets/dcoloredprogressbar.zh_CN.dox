@@ -1,7 +1,7 @@
 /*!
 @~chinese
-@file daboutdialog.h
-@ingroup dtkwidget
+@file dcoloredprogressbar.h
+@ingroup progressbar
 
 @class Dtk::Widget::DColoredProgressBar
 @brief `DColoredProgressBar`和`QProgressBar`功能差不多一样,只是它可以根据显示的值更改其外观
