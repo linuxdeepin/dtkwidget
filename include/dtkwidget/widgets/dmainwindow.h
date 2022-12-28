@@ -131,6 +131,7 @@ protected:
 
 private:
     D_DECLARE_PRIVATE(DMainWindow)
+    D_PRIVATE_SLOT(void _q_autoShowFeatureDialog())
 };
 
 DWIDGET_END_NAMESPACE

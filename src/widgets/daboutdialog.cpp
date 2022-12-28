@@ -8,6 +8,9 @@
 #include <dwidgetutil.h>
 #include <DSysInfo>
 #include <DGuiApplicationHelper>
+#include <DApplication>
+#include <DFontSizeManager>
+#include <DConfig>
 
 #include <QUrl>
 #include <QDebug>
@@ -15,10 +18,10 @@
 #include <QLabel>
 #include <QIcon>
 #include <QKeyEvent>
-#include <QApplication>
 #include <QImageReader>
-#include <DSysInfo>
 #include <QScrollArea>
+#include <QPainter>
+#include <QPainterPath>
 
 #ifdef Q_OS_UNIX
 #include <unistd.h>
@@ -29,6 +32,24 @@ DCORE_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
 const QString DAboutDialogPrivate::websiteLinkTemplate = "<a href='%1' style='text-decoration: none; font-size:13px; color: #004EE5;'>%2</a>";
+
+DRedPointLabel::DRedPointLabel(QWidget *parent)
+    : QLabel(parent)
+{
+}
+
+void DRedPointLabel::paintEvent(QPaintEvent *e)
+{
+    Q_UNUSED(e)
+    QPainter painter(this);
+    QRectF rcf(0, 0, 4, 4);
+    QPainterPath path;
+    path.addEllipse(rcf);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.fillPath(path, QColor("#FF0000"));
+    painter.setPen(QColor(0, 0, 0, 255 * 0.05));
+    painter.drawEllipse(rcf);
+}
 
 DAboutDialogPrivate::DAboutDialogPrivate(DAboutDialog *qq)
     : DDialogPrivate(qq)
@@ -50,9 +71,12 @@ void DAboutDialogPrivate::init()
 
     productNameLabel = new QLabel();
     productNameLabel->setObjectName("ProductNameLabel");
+    DFontSizeManager *fontManager =  DFontSizeManager::instance();
+    fontManager->bind(productNameLabel, DFontSizeManager::T5, QFont::DemiBold);
 
     versionLabel = new QLabel();
     versionLabel->setObjectName("VersionLabel");
+    fontManager->bind(versionLabel, DFontSizeManager::T8, QFont::DemiBold);
 
     companyLogoLabel = new QLabel();
     companyLogoLabel->setPixmap(loadPixmap(logoPath));
@@ -71,9 +95,10 @@ void DAboutDialogPrivate::init()
 
     descriptionLabel = new QLabel();
     descriptionLabel->setObjectName("DescriptionLabel");
-    descriptionLabel->setAlignment(Qt::AlignHCenter);
+    descriptionLabel->setAlignment(Qt::AlignLeft);
     descriptionLabel->setWordWrap(true);
     descriptionLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    fontManager->bind(descriptionLabel, DFontSizeManager::T8, QFont::DemiBold);
 
     licenseLabel = new QLabel();
     licenseLabel->setObjectName("LicenseLabel");
@@ -81,36 +106,63 @@ void DAboutDialogPrivate::init()
     licenseLabel->setWordWrap(true);
     licenseLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     licenseLabel->hide();
+    fontManager->bind(licenseLabel, DFontSizeManager::T10, QFont::Medium);
+
+    QLabel *versionTipLabel = new QLabel(QObject::tr("Version"));
+    fontManager->bind(versionTipLabel, DFontSizeManager::T10, QFont::Normal);
+    featureLabel = new QLabel(websiteLinkTemplate.arg(websiteLink).arg(QObject::tr("Features")));
+    featureLabel->setContextMenuPolicy(Qt::NoContextMenu);
+    featureLabel->setOpenExternalLinks(false);
+    redPointLabel = new DRedPointLabel();
+    redPointLabel->setFixedSize(10, 10);
+    QHBoxLayout *vFeatureLayout =  new QHBoxLayout;
+    vFeatureLayout->setMargin(0);
+    vFeatureLayout->setSpacing(0);
+    vFeatureLayout->addWidget(featureLabel, 0, Qt::AlignLeft);
+    vFeatureLayout->addWidget(redPointLabel, 0, Qt::AlignLeft);
+    vFeatureLayout->addStretch(0);
+    QLabel *homePageTipLabel = new QLabel(QObject::tr("Homepage"));
+    fontManager->bind(homePageTipLabel, DFontSizeManager::T10, QFont::Normal);
+    QLabel *descriptionTipLabel = new QLabel(QObject::tr("Description"));
+    fontManager->bind(descriptionTipLabel, DFontSizeManager::T10, QFont::Normal);
 
     q->connect(websiteLabel, SIGNAL(linkActivated(QString)), q, SLOT(_q_onLinkActivated(QString)));
+    q->connect(featureLabel, SIGNAL(linkActivated(QString)), q, SLOT(_q_onFeatureActivated(QString)));
     q->connect(acknowledgementLabel, SIGNAL(linkActivated(QString)), q, SLOT(_q_onLinkActivated(QString)));
     q->connect(descriptionLabel, SIGNAL(linkActivated(QString)), q, SLOT(_q_onLinkActivated(QString)));
     q->connect(licenseLabel, SIGNAL(linkActivated(QString)), q, SLOT(_q_onLinkActivated(QString)));
 
-    QVBoxLayout *mainLayout = new QVBoxLayout;
-    mainLayout->setContentsMargins(11, 20, 11, 10);
+    QVBoxLayout *leftVLayout = new QVBoxLayout;
+    leftVLayout->setContentsMargins(30, 3, 0, 20);
+    leftVLayout->setSpacing(0);
+    leftVLayout->addWidget(logoLabel, 0, Qt::AlignCenter);
+    leftVLayout->addSpacing(8);
+    leftVLayout->addWidget(productNameLabel, 0, Qt::AlignCenter);
+    leftVLayout->addSpacing(31);
+    leftVLayout->addWidget(companyLogoLabel, 0, Qt::AlignCenter);
+    leftVLayout->addSpacing(3);
+    leftVLayout->addWidget(licenseLabel, 0, Qt::AlignHCenter);
+    leftVLayout->addStretch(0);
+
+    QVBoxLayout *rightVLayout = new QVBoxLayout;
+    rightVLayout->setContentsMargins(0, 3, 30, 20);
+    rightVLayout->setSpacing(0);
+    rightVLayout->addWidget(versionTipLabel, 0, Qt::AlignLeft);
+    rightVLayout->addWidget(versionLabel, 0, Qt::AlignLeft);
+    rightVLayout->addLayout(vFeatureLayout);
+    rightVLayout->addSpacing(9);
+    rightVLayout->addWidget(homePageTipLabel, 0, Qt::AlignLeft);
+    rightVLayout->addWidget(websiteLabel, 0, Qt::AlignLeft);
+    rightVLayout->addSpacing(10);
+    rightVLayout->addWidget(descriptionTipLabel, 0, Qt::AlignLeft);
+    rightVLayout->addWidget(descriptionLabel, 0, Qt::AlignLeft);
+    rightVLayout->addStretch(0);
+
+    QHBoxLayout *mainLayout = new QHBoxLayout;
     mainLayout->setSpacing(0);
-    mainLayout->addWidget(logoLabel);
-    mainLayout->setAlignment(logoLabel, Qt::AlignCenter);
-    mainLayout->addSpacing(3);
-    mainLayout->addWidget(productNameLabel);
-    mainLayout->setAlignment(productNameLabel, Qt::AlignCenter);
-    mainLayout->addSpacing(6);
-    mainLayout->addWidget(versionLabel);
-    mainLayout->setAlignment(versionLabel, Qt::AlignCenter);
-    mainLayout->addSpacing(8);
-    mainLayout->addWidget(companyLogoLabel);
-    mainLayout->setAlignment(companyLogoLabel, Qt::AlignCenter);
-//    mainLayout->addSpacing(6);
-    mainLayout->addWidget(websiteLabel);
-    mainLayout->setAlignment(websiteLabel, Qt::AlignCenter);
-    mainLayout->addSpacing(5);
-//    mainLayout->addWidget(acknowledgementLabel);
-//    mainLayout->setAlignment(acknowledgementLabel, Qt::AlignCenter);
-    mainLayout->addSpacing(12);
-    mainLayout->addWidget(descriptionLabel, Qt::AlignHCenter);
-    mainLayout->addSpacing(7);
-    mainLayout->addWidget(licenseLabel, Qt::AlignHCenter);
+    mainLayout->setMargin(0);
+    mainLayout->addLayout(leftVLayout);
+    mainLayout->addLayout(rightVLayout);
 
     QScrollArea *mainScrollArea = new QScrollArea;
     QWidget  *mainContent = new QWidget;
@@ -125,6 +177,9 @@ void DAboutDialogPrivate::init()
     mainContent->setLayout(mainLayout);
     q->addContent(mainScrollArea);
 
+    DConfig config("org.deepin.dtkwidget.feature-display");
+    bool isUpdated = config.value("featureUpdated", false).toBool();
+    redPointLabel->setVisible(isUpdated);
     // make active
     q->setFocus();
 }
@@ -152,6 +207,17 @@ void DAboutDialogPrivate::updateAcknowledgementLabel()
 void DAboutDialogPrivate::_q_onLinkActivated(const QString &link)
 {
     DGUI_NAMESPACE::DGuiApplicationHelper::openUrl(link);
+}
+
+void DAboutDialogPrivate::_q_onFeatureActivated(const QString &)
+{
+    D_Q(DAboutDialog);
+    DConfig config("org.deepin.dtkwidget.feature-display");
+    if (config.value("featureUpdated", false).toBool()) {
+        config.setValue("featureUpdated", false);
+        redPointLabel->setVisible(false);
+    }
+    Q_EMIT q->featureActivated();
 }
 
 QPixmap DAboutDialogPrivate::loadPixmap(const QString &file)
@@ -334,7 +400,7 @@ void DAboutDialog::setProductIcon(const QIcon &icon)
 {
     D_D(DAboutDialog);
 
-    d->logoLabel->setPixmap(icon.pixmap(windowHandle(), QSize(96, 96)));
+    d->logoLabel->setPixmap(icon.pixmap(windowHandle(), QSize(128, 128)));
 }
 
 /*!

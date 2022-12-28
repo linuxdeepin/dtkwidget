@@ -9,7 +9,7 @@
 #include "dmessagemanager.h"
 #include "DBlurEffectWidget"
 #include "dsizemode.h"
-
+#include "dfeaturedisplaydialog.h"
 #include "private/dmainwindow_p.h"
 #include "private/dapplication_p.h"
 
@@ -21,6 +21,9 @@
 #include <QToolBar>
 #include <QVBoxLayout>
 #include <qwidgetaction.h>
+#include <QScreen>
+
+#include <DConfig>
 
 #ifdef Q_OS_MAC
 #include "osxwindow.h"
@@ -131,6 +134,24 @@ void DMainWindowPrivate::updateTitleShadowGeometry()
     titleShadow->raise();
 }
 
+void DMainWindowPrivate::_q_autoShowFeatureDialog()
+{
+    D_QC(DMainWindow);
+    if (q->windowHandle()->isActive()) {
+        qApp->featureDisplayDialog()->show();
+        const QPoint pos = q->pos();
+        QRect rect;
+        for (QScreen *screen : qApp->screens()) {
+            if (screen->geometry().contains(pos)) {
+                rect = screen->geometry();
+                break;
+            }
+        }
+        qApp->featureDisplayDialog()->moveToCenterByRect(rect);
+        q->disconnect(q->windowHandle(), SIGNAL(activeChanged()), q, SLOT(_q_autoShowFeatureDialog()));
+    }
+}
+
 /*!
   \class Dtk::Widget::DMainWindow
   \inmodule dtkwidget
@@ -157,6 +178,12 @@ DMainWindow::DMainWindow(QWidget *parent)
     //平板模式下DMainWindow屏蔽掉最大，最小,以及关闭按钮
     if (DGuiApplicationHelper::isTabletEnvironment()) {
         setWindowFlags(windowFlags() & ~(Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint));
+    }
+    DConfig config("org.deepin.dtkwidget.feature-display");
+    bool isAutoDisplayFeature = config.value("autoDisplayFeature", false).toBool();
+    if (isAutoDisplayFeature) {
+        connect(this->windowHandle(), SIGNAL(activeChanged()), this, SLOT(_q_autoShowFeatureDialog()));
+        config.setValue("autoDisplayFeature", false);
     }
 }
 
@@ -796,3 +823,5 @@ void DMainWindow::changeEvent(QEvent *event)
 }
 
 DWIDGET_END_NAMESPACE
+
+#include "moc_dmainwindow.cpp"

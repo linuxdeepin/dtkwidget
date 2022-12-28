@@ -40,6 +40,7 @@
 #include "dthememanager.h"
 #include "private/dapplication_p.h"
 #include "daboutdialog.h"
+#include "dfeaturedisplaydialog.h"
 #include "dmainwindow.h"
 #include "dsizemode.h"
 
@@ -1106,6 +1107,26 @@ void DApplication::setAboutDialog(DAboutDialog *aboutDialog)
     d->aboutDialog = aboutDialog;
 }
 
+DFeatureDisplayDialog *DApplication::featureDisplayDialog()
+{
+    D_D(DApplication);
+    if (d->featureDisplayDialog == nullptr) {
+        d->featureDisplayDialog = new DFeatureDisplayDialog(activeWindow());
+    }
+    return d->featureDisplayDialog;
+}
+
+void DApplication::setFeatureDisplayDialog(DFeatureDisplayDialog *featureDisplayDialog)
+{
+    D_D(DApplication);
+
+    if (d->featureDisplayDialog && d->featureDisplayDialog != featureDisplayDialog) {
+        d->featureDisplayDialog->deleteLater();
+    }
+
+    d->featureDisplayDialog = featureDisplayDialog;
+}
+
 /*!
   \property DApplication::visibleMenuShortcutText
 
@@ -1391,7 +1412,9 @@ void DApplication::handleAboutAction()
     connect(d->aboutDialog, &DAboutDialog::destroyed, this, [=] {
         d->aboutDialog = nullptr;
     });
-
+    connect(d->aboutDialog, &DAboutDialog::featureActivated, this, [this] {
+        featureDisplayDialog()->show();
+    });
     if (DGuiApplicationHelper::isTabletEnvironment()) {
         aboutDialog->exec();
     } else {
