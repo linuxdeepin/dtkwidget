@@ -1,7 +1,12 @@
+name: deploy docs
 on:
   push:
     branches: ["master"]
   workflow_dispatch:
+    inputs:
+      tag:
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -16,3 +21,7 @@ concurrency:
 jobs:
   deploydocs:
     uses: linuxdeepin/.github/.github/workflows/deploy-dev-doc.yml@master
+    with:
+      ref: ${{ inputs.tag }}
+    secrets:
+      APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
