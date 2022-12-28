@@ -341,6 +341,7 @@ DIconButtonExample::DIconButtonExample(QWidget *parent)
     pHBoxLayout->setSpacing(0);
 
     DIconButton *pButton_1 = new DIconButton(DStyle::SP_IncreaseElement, this);
+    pButton_1->setNewNotification(true);
 
     DIconButton *pButton_2 = new DIconButton(DStyle::SP_ArrowEnter, this);
 

@@ -224,6 +224,7 @@ public:
     static void setFocusRectVisible(QWidget *widget, bool visible);
     static void setFrameRadius(QWidget *widget, int radius);
     static void setUncheckedItemIndicatorVisible(QWidget *widget, bool visible);
+    static void setRedPointVisible(QObject *object, bool visible);
     DStyle();
 
     static void drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, const QStyleOption *opt, QPainter *p, const QWidget *w = nullptr);

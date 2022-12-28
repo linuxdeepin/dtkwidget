@@ -21,6 +21,7 @@ DCORE_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
 class DAboutDialog;
+class DFeatureDisplayDialog;
 
 class DApplicationPrivate : public DObjectPrivate
 {
@@ -72,6 +73,7 @@ public:
 
     DAppHandler *appHandler = Q_NULLPTR;
     DAboutDialog *aboutDialog = Q_NULLPTR;
+    DFeatureDisplayDialog *featureDisplayDialog = Q_NULLPTR;
 
     // 需要自适应虚拟键盘环境的窗口
     QPointer<QWidget> activeInputWindow;

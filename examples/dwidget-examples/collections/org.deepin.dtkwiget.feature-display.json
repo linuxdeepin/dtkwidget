@@ -1,0 +1,16 @@
+{
+    "magic": "dsg.config.override",
+    "version": "1.0",
+    "contents": {
+        "autoDisplayFeature": {
+            "value": true,
+            "serial": 1,
+            "permissions": "readwrite"
+        },
+        "featureUpdated": {
+            "value": true,
+            "serial": 1,
+            "permissions": "readwrite"
+        }
+    }
+}

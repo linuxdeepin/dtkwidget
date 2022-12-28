@@ -274,7 +274,7 @@ void DIconButton::keyPressEvent(QKeyEvent *event)
  */
 void DIconButton::setNewNotification(const bool set_new)
 {
-    this->setProperty("_d_dtk_newNotification", set_new);
+    DStyle::setRedPointVisible(this, set_new);
 }
 
 void DIconButton::paintEvent(QPaintEvent *event)

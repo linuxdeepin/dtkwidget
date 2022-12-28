@@ -20,6 +20,7 @@ DWIDGET_BEGIN_NAMESPACE
 class DApplication;
 class DApplicationPrivate;
 class DAboutDialog;
+class DFeatureDisplayDialog;
 class DAppHandler;
 
 #if defined(qApp)
@@ -98,6 +99,9 @@ public:
 
     DAboutDialog *aboutDialog();
     void setAboutDialog(DAboutDialog *aboutDialog);
+
+    DFeatureDisplayDialog *featureDisplayDialog();
+    void setFeatureDisplayDialog(DFeatureDisplayDialog *featureDisplayDialog);
 
     bool visibleMenuShortcutText() const;
     void setVisibleMenuShortcutText(bool value);
