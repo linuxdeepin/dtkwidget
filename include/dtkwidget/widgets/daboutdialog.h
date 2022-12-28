@@ -36,6 +36,9 @@ public:
     QString acknowledgementLink() const;
     QString license() const;
 
+Q_SIGNALS:
+    void featureActivated();
+
 public Q_SLOTS:
     void setWindowTitle(const QString &windowTitle);
     void setProductIcon(const QIcon &icon);
@@ -55,6 +58,7 @@ protected:
 
 private:
     Q_PRIVATE_SLOT(d_func(), void _q_onLinkActivated(const QString &link))
+    Q_PRIVATE_SLOT(d_func(), void _q_onFeatureActivated(const QString &link))
 
     Q_DISABLE_COPY(DAboutDialog)
     D_DECLARE_PRIVATE(DAboutDialog)

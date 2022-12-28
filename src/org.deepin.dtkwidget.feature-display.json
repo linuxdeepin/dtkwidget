@@ -1,0 +1,26 @@
+{
+  "magic": "dsg.config.meta",
+  "version": "1.0",
+  "contents": {
+      "featureUpdated": {
+          "value": false,
+          "serial": 0,
+          "flags": [],
+          "name": "Whether the application has new feature updates",
+          "name[zh_CN]": "配置应用的更新状态",
+          "description": "Configure the update status of the application",
+          "permissions": "readwrite",
+          "visibility": "public"
+      },
+      "autoDisplayFeature": {
+          "value": false,
+          "serial": 0,
+          "flags": [],
+          "name": "The application automatically display new features once",
+          "name[zh_CN]": "配置应用是否自动展示一次新特性",
+          "description": "The application automatically display updated contents once",
+          "permissions": "readwrite",
+          "visibility": "public"
+      }
+  }
+}

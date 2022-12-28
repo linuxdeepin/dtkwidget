@@ -88,3 +88,4 @@ target_include_directories(${BIN_NAME} PUBLIC
   ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
 )
 install(TARGETS ${BIN_NAME} DESTINATION "${CMAKE_INSTALL_LIBDIR}/libdtk-${CMAKE_PROJECT_VERSION}/DWidget/examples/")
+dconfig_override_files(APPID dtk-example META_NAME org.deepin.dtkwidget.feature-display FILES ./org.deepin.dtkwiget.feature-display.json)

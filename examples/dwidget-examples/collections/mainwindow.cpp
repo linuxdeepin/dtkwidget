@@ -47,6 +47,7 @@
 #include "dsettingsdialog.h"
 #include "dsettingsoption.h"
 #include "dsettings.h"
+#include "dfeaturedisplaydialog.h"
 
 DCORE_USE_NAMESPACE
 DWIDGET_USE_NAMESPACE
@@ -147,6 +148,16 @@ MainWindow::MainWindow(QWidget *parent)
 
     //初始化选中主菜单第一项
     m_pListView->setCurrentIndex(m_pListViewModel->index(0, 0));
+
+    DFeatureDisplayDialog *dlg = qApp->featureDisplayDialog();
+    dlg->setLinkButtonVisible(true);
+    dlg->setLinkUrl("http://www.chinauos.com");
+    dlg->setTitle("欢迎使用dtk");
+    dlg->addItem(new DFeatureItem(QIcon::fromTheme("dialog-warning"), "按钮", "普通的文字按钮(DPushButton)，带警告颜色的按钮(DWarningButton)，起引导作用的按钮(DSuggestButton)，工具栏按钮(DToolButton)，图标按钮(DIconButton)等。", dlg));
+    dlg->addItem(new DFeatureItem(QIcon::fromTheme("dialog-warning"), "提示", "悬停显示(DToolTip)，提示出现有延迟,鼠标是悬停2妙左右出现，触屏是按住就出现，带尖角的popup窗口(DArrowRectangle)。", dlg));
+    dlg->addItem(new DFeatureItem(QIcon::fromTheme("dialog-warning"), "对话框", "普通对话框(DDialog)，用于需要用户处理事务，又不希望跳转页面以致打断工作流程时。", dlg));
+    dlg->addItem(new DFeatureItem(QIcon::fromTheme("dialog-warning"), "DSpinner", "所有需要用户等待的地方，且没有具体的等待时间，不知道进度，可能很快也可能需要比较久。", dlg));
+    dlg->addItem(new DFeatureItem(QIcon::fromTheme("dialog-warning"), "进度条", "进度条(DWaterProgress)一种带趣味的展示形式，作用是减少用户枯燥的等待。", dlg));
 }
 
 #if 1

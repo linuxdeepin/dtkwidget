@@ -13,8 +13,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # find_package 
-find_package(DtkGui 5.6 REQUIRED)
-find_package(DtkCore 5.6 REQUIRED)
+find_package(Dtk REQUIRED COMPONENTS Core Gui)
 
 find_package(Qt5 REQUIRED COMPONENTS Core)
 find_package(Qt5 REQUIRED COMPONENTS Network)
@@ -110,3 +109,5 @@ install(DIRECTORY ../include/dtkwidget/global/ DESTINATION "${INCLUDE_INSTALL_DI
 install(DIRECTORY ../include/dtkwidget/widgets/ DESTINATION "${INCLUDE_INSTALL_DIR}" FILES_MATCHING PATTERN "*")
 
 install(FILES ${TRANSLATEDFILES} DESTINATION "${CMAKE_INSTALL_DATADIR}/libdtk-${CMAKE_PROJECT_VERSION}/DWidget/translations")
+
+DCONFIG_META_FILES(COMMONID org.deepin.dtkwidget FILES "./org.deepin.dtkwidget.feature-display.json")

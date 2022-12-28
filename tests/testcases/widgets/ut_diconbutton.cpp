@@ -48,7 +48,7 @@ TEST_F(ut_IConButton, testIConButton)
     ASSERT_TRUE(button->enabledCircle());
 
     button->setNewNotification(true);
-    ASSERT_TRUE(button->property("_d_dtk_newNotification").toBool());
+    ASSERT_TRUE(button->property("_d_menu_item_redpoint").toBool());
 
     button->setFlat(true);
     ASSERT_TRUE(button->isFlat());

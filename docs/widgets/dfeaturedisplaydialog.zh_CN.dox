@@ -1,0 +1,83 @@
+/*!
+@~chinese
+@file dfeaturedisplaydialog.h
+@ingroup dtkwidget
+
+@class Dtk::Widget::DFeatureItem
+@brief 特性介绍中的每项特性
+
+@fn explicit Dtk::Widget::DFeatureItem::DFeatureItem(const QIcon &icon, const QString &name, const QString &description, QObject *parent)
+@brief 特性项的构造函数
+@param[in] icon 特性项的图标
+@param[in] name 特性项的名称
+@param[in] description 特性项的内容描述
+@param[in] parent 特性项的父对象
+
+@fn explicit Dtk::Widget::DFeatureItem::~DFeatureItem()
+@brief 特性项的析构函数
+
+@fn QIcon Dtk::Widget::DFeatureItem::icon() const
+@brief 获取特性项的图标
+@return 特性项的图标
+
+@fn void Dtk::Widget::DFeatureItem::setIcon(const QIcon &icon)
+@brief 设置特性项的图标
+@param[in] icon 特性项的图标
+
+@fn QIcon Dtk::Widget::DFeatureItem::name() const
+@brief 获取特性项的名称
+@return 特性项的名称
+
+@fn QIcon Dtk::Widget::DFeatureItem::setName(const QString &name) const
+@brief 设置特性项的名称
+@param[in] name 特性项的名称
+
+@fn QIcon Dtk::Widget::DFeatureItem::description() const
+@brief 获取特性项的内容描述
+@return 特性项的内容描述
+
+@fn QIcon Dtk::Widget::DFeatureItem::setDescription(const QString &description) const
+@brief 设置特性项的内容描述
+@param[in] description 特性项的内容描述
+
+@class Dtk::Widget::DFeatureDisplayDialog
+@brief 特性介绍对话框，展示应用更新的新特性
+
+@fn Dtk::Widget::DFeatureDisplayDialog::DFeatureDisplayDialog(QWidget *parent)
+@brief 特性介绍对话框的构造函数
+@param[in] parent 特性介绍对话框的父对象
+
+@fn explicit Dtk::Widget::DFeatureDisplayDialog::~DFeatureDisplayDialog()
+@brief 特性介绍对话框的析构函数
+
+@fn void Dtk::Widget::DFeatureDisplayDialog::setTitle(const QString &title)
+@brief 设置特性介绍对话框的主题
+@param[in] title 特性介绍对话框的主题
+
+@fn void Dtk::Widget::DFeatureDisplayDialog::addItem(DFeatureItem *item)
+@brief 增加特性介绍对话框的特性项
+@param[in] item 特性介绍对话框的特性项
+
+@fn void Dtk::Widget::DFeatureDisplayDialog::removeItem(DFeatureItem *item)
+@brief 移除特性介绍对话框的特性项
+@param[in] item 特性介绍对话框的特性项
+
+@fn void Dtk::Widget::DFeatureDisplayDialog::addItems(QList<DFeatureItem*> items)
+@brief 增加多个特性介绍对话框的特性项
+@param[in] items 特性介绍对话框的特性项列表
+
+@fn void Dtk::Widget::DFeatureDisplayDialog::clearItems()
+@brief 清除特性介绍对话框的所有特性项
+
+@fn void Dtk::Widget::DFeatureDisplayDialog::setLinkButtonVisible(bool isVisible)
+@brief 设置链接按钮是否可见
+@param[in] isVisible 链接按钮是否可见
+
+@fn void Dtk::Widget::DFeatureDisplayDialog::setLinkUrl(const QString &url)
+@brief 设置链接按钮链接地址
+@param[in] isVisible 链接按钮的链接地址
+
+@fn void Dtk::Widget::DFeatureDisplayDialog::show()
+@brief 显示特性介绍对话框
+
+*/

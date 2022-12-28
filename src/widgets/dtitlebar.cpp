@@ -17,6 +17,7 @@
 #include <DWindowManagerHelper>
 #include <DObjectPrivate>
 #include <DPlatformTheme>
+#include <DConfig>
 #include <QScreen>
 #include <QWindow>
 #include <qpa/qplatformwindow.h>
@@ -195,6 +196,10 @@ void DTitlebarPrivate::init()
         optionButton = new DWindowOptionButton;
     }
 
+    auto config = new DConfig("org.deepin.dtkwidget.feature-display", "", q);
+    bool isUpdated = config->value("featureUpdated", false).toBool();
+    DStyle::setRedPointVisible(optionButton, isUpdated);
+
     separatorTop    = new DHorizontalLine(q);
     separator       = new DHorizontalLine(q);
     titleLabel      = centerArea;
@@ -305,6 +310,16 @@ void DTitlebarPrivate::init()
         if (splitWidget && splitWidget->isVisible())
             splitWidget->isMaxButtonPressAndHold = true;
     });
+    if (isUpdated) {
+        q->connect(config, &DConfig::valueChanged, q, [config, this](const QString &key){
+            if (key == "featureUpdated") {
+                auto result = config->value("featureUpdated", false);
+                DStyle::setRedPointVisible(optionButton, result.toBool());
+                optionButton->update();
+                config->deleteLater();
+            }
+        });
+    }
 
     // 默认需要构造一个空的选项菜单
     q->setMenu(new QMenu(q));
@@ -923,6 +938,10 @@ void DTitlebar::showMenu()
 
             action->setChecked(true);
         }
+
+        DConfig config("org.deepin.dtkwidget.feature-display");
+        bool isUpdated = config.value("featureUpdated", false).toBool();
+        DStyle::setRedPointVisible(d->aboutAction, isUpdated);
 
         d->menu->exec(d->optionButton->mapToGlobal(d->optionButton->rect().bottomLeft()));
         d->optionButton->update(); // FIX: bug-25253 sometimes optionButton not udpate after menu exec(but why?)

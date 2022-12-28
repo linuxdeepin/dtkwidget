@@ -116,6 +116,7 @@ public:
 
 private:
     D_DECLARE_PUBLIC(DMainWindow)
+    void _q_autoShowFeatureDialog();
 };
 
 DWIDGET_END_NAMESPACE

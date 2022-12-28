@@ -158,6 +158,11 @@ void DStyle::setUncheckedItemIndicatorVisible(QWidget *widget, bool visible)
     widget->setProperty("_d_dtk_UncheckedItemIndicator", visible);
 }
 
+void DStyle::setRedPointVisible(QObject *object, bool visible)
+{
+    object->setProperty("_d_menu_item_redpoint", visible);
+}
+
 namespace DDrawUtils {
 static QImage dropShadow(const QPixmap &px, qreal radius, const QColor &color)
 {
@@ -1348,7 +1353,7 @@ void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const Q
             }
 
             // 有新信息时添加小红点
-            if (w && w->property("_d_dtk_newNotification").toBool()){
+            if (w && w->property("_d_menu_item_redpoint").toBool()){
                 DPalette pa = DGuiApplicationHelper::instance()->standardPalette(DGuiApplicationHelper::LightType);
                 // 按图标大小50x50时，小红点大小6x6，距离右边和上面8个像素的比例绘制
                 const int redPointRadius = 3;
