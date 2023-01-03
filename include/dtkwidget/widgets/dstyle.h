@@ -13,6 +13,7 @@
 #include <QPainter>
 #include <QIconEngine>
 #include <QStyleOption>
+#include <QApplication>
 
 QT_BEGIN_NAMESPACE
 class QTextLayout;
@@ -301,7 +302,7 @@ public:
 class DStyleHelper
 {
 public:
-    inline DStyleHelper(const QStyle *style = nullptr) {
+    inline DStyleHelper(const QStyle *style = QApplication::style()) {
         setStyle(style);
     }
 
