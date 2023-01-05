@@ -1,12 +1,13 @@
-// SPDX-FileCopyrightText: 2015 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2015 - 2023 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
 #ifndef DAPPLICATION_P_H
 #define DAPPLICATION_P_H
 
-#include <DObjectPrivate>
+#include "dsizemode.h"
 
+#include <DObjectPrivate>
 #include <DApplication>
 #include <DPathBuf>
 
@@ -45,6 +46,8 @@ public:
     void acclimatizeVirtualKeyboardForFocusWidget(bool allowResizeContentsMargins);
     void _q_panWindowContentsForVirtualKeyboard();
     void _q_resizeWindowContentsForVirtualKeyboard();
+    void _q_sizeModeChanged();
+    void handleSizeModeChangeEvent(QWidget *widget, QEvent *event);
 
     static bool isUserManualExists();
 public:
