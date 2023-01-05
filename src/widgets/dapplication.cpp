@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2015 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2015 - 2023 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -41,6 +41,7 @@
 #include "private/dapplication_p.h"
 #include "daboutdialog.h"
 #include "dmainwindow.h"
+#include "dsizemode.h"
 
 #include <DPlatformHandle>
 #include <DGuiApplicationHelper>
@@ -387,6 +388,29 @@ void DApplicationPrivate::_q_resizeWindowContentsForVirtualKeyboard()
     acclimatizeVirtualKeyboardForFocusWidget(false);
 }
 
+void DApplicationPrivate::_q_sizeModeChanged()
+{
+    QEvent ev(QEvent::StyleChange);
+    for (auto item : qApp->topLevelWidgets()) {
+        handleSizeModeChangeEvent(item, &ev);
+    }
+}
+
+void DApplicationPrivate::handleSizeModeChangeEvent(QWidget *widget, QEvent *event)
+{
+    // 深度优先遍历，事件接受顺序：子 -> 父， 若parentWidget先处理event，可能存在布局没更新问题
+    for (auto w : widget->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly)) {
+        handleSizeModeChangeEvent(w, event);
+    }
+    if (widget->isTopLevel()) {
+        // TODO 顶层窗口需要延迟，否则内部控件布局出现异常，例如DDialog, 若send事件，导致
+        // 从compact -> normal -> campact时，DDialog内部控件布局的两次campact大小不一致.
+        qApp->postEvent(widget, new QEvent(*event));
+    } else {
+        QCoreApplication::sendEvent(widget, event);
+    }
+}
+
 bool DApplicationPrivate::isUserManualExists()
 {
     return DGuiApplicationHelper::instance()->hasUserManual();
@@ -576,6 +600,9 @@ DApplication::DApplication(int &argc, char **argv) :
             QTapAndHoldGesture::setTimeout(gsettings.get("longpress-duration").toInt() - 100);
     }
 #endif
+
+    connect(DGuiApplicationHelper::instance(), SIGNAL(sizeModeChanged(DGuiApplicationHelper::SizeMode)),
+            this, SLOT(_q_sizeModeChanged()));
 }
 
 /*!

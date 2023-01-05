@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2015 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2015 - 2023 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -159,6 +159,7 @@ private:
     D_PRIVATE_SLOT(void _q_onNewInstanceStarted())
     D_PRIVATE_SLOT(void _q_panWindowContentsForVirtualKeyboard())
     D_PRIVATE_SLOT(void _q_resizeWindowContentsForVirtualKeyboard())
+    D_PRIVATE_SLOT(void _q_sizeModeChanged())
 };
 
 class LIBDTKWIDGETSHARED_EXPORT DAppHandler {

@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2017 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2017 - 2023 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -8,6 +8,7 @@
 #include "dtitlebar.h"
 #include "dmessagemanager.h"
 #include "DBlurEffectWidget"
+#include "dsizemode.h"
 
 #include "private/dmainwindow_p.h"
 #include "private/dapplication_p.h"
@@ -785,7 +786,8 @@ void DMainWindow::resizeEvent(QResizeEvent *event)
 
 void DMainWindow::changeEvent(QEvent *event)
 {
-    if (event->type() == QEvent::WindowStateChange) {
+    if (event->type() == QEvent::WindowStateChange ||
+            event->type() == QEvent::StyleChange) {
         D_D(DMainWindow);
         d->updateTitleShadowGeometry();
     }
