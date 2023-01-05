@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2017 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2017 - 2023 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -41,16 +41,16 @@
 #include "dblureffectwidget.h"
 #include "dwidgetstype.h"
 #include "dlabel.h"
+#include "dsizemode.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
 #define CHANGESPLITWINDOW_VAR "_d_splitWindowOnScreen"
 #define GETSUPPORTSPLITWINDOW_VAR "_d_supportForSplittingWindow"
 
-const int DefaultTitlebarHeight = 50;
-const int DefaultIconHeight = 32;
-const int DefaultIconWidth = 32;
-const int DefaultExpandButtonSize = 48;
+static inline int DefaultTitlebarHeight() { return DSizeModeHelper::element(40, 50); }
+static inline int DefaultIconHeight() { return DSizeModeHelper::element(24, 32); }
+static inline int DefaultExpandButtonHeight() { return DSizeModeHelper::element(30, 48); }
 
 class DTitlebarPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 {
@@ -93,6 +93,27 @@ private:
     /*SplitLeft: 1; SplitRight: 2; SplitFullScreen: 15*/
     void changeWindowSplitedState(quint32 type);
     bool supportSplitScreenByWM();
+    void updateSizeBySizeMode()
+    {
+        if (optionButton)
+            optionButton->setIconSize(QSize(DefaultTitlebarHeight(), DefaultTitlebarHeight()));
+        if (minButton)
+            minButton->setIconSize(QSize(DefaultTitlebarHeight(), DefaultTitlebarHeight()));
+        if (maxButton)
+            maxButton->setIconSize(QSize(DefaultTitlebarHeight(), DefaultTitlebarHeight()));
+        if (closeButton)
+            closeButton->setIconSize(QSize(DefaultTitlebarHeight(), DefaultTitlebarHeight()));
+        if (quitFullButton)
+            quitFullButton->setIconSize(QSize(DefaultTitlebarHeight(), DefaultTitlebarHeight()));
+        if (expandButton)
+            expandButton->setIconSize(QSize(DefaultExpandButtonHeight(), DefaultExpandButtonHeight()));
+        if (iconLabel)
+            iconLabel->setIconSize(QSize(DefaultIconHeight(), DefaultIconHeight()));
+
+        D_Q(DTitlebar);
+        q->setFixedHeight(DefaultTitlebarHeight());
+        q->setMinimumHeight(DefaultTitlebarHeight());
+    }
 
     QHBoxLayout         *mainLayout;
     QWidget             *leftArea;
@@ -394,21 +415,16 @@ void DTitlebarPrivate::init()
     optionButton->installEventFilter(q);
 
     optionButton->setObjectName("DTitlebarDWindowOptionButton");
-    optionButton->setIconSize(QSize(DefaultTitlebarHeight, DefaultTitlebarHeight));
     optionButton->setAccessibleName("DTitlebarDWindowOptionButton");
     minButton->setObjectName("DTitlebarDWindowMinButton");
-    minButton->setIconSize(QSize(DefaultTitlebarHeight, DefaultTitlebarHeight));
     minButton->setAccessibleName("DTitlebarDWindowMinButton");
     maxButton->setObjectName("DTitlebarDWindowMaxButton");
-    maxButton->setIconSize(QSize(DefaultTitlebarHeight, DefaultTitlebarHeight));
     maxButton->setAccessibleName("DTitlebarDWindowMaxButton");
     maxButton->setAttribute(Qt::WA_AlwaysShowToolTips);
     closeButton->setObjectName("DTitlebarDWindowCloseButton");
     closeButton->setAccessibleName("DTitlebarDWindowCloseButton");
-    closeButton->setIconSize(QSize(DefaultTitlebarHeight, DefaultTitlebarHeight));
 
 
-    iconLabel->setIconSize(QSize(DefaultIconWidth, DefaultIconHeight));
     iconLabel->setWindowFlags(Qt::WindowTransparentForInput);
     iconLabel->setAttribute( Qt::WA_TransparentForMouseEvents, true);
     iconLabel->setFocusPolicy(Qt::NoFocus);
@@ -445,7 +461,6 @@ void DTitlebarPrivate::init()
         quitFullButton->installEventFilter(q);
         quitFullButton->setObjectName("DTitlebarDWindowQuitFullscreenButton");
         quitFullButton->setAccessibleName("DTitlebarDWindowQuitFullscreenButton");
-        quitFullButton->setIconSize(QSize(DefaultTitlebarHeight, DefaultTitlebarHeight));
         quitFullButton->hide();
         buttonLayout->addWidget(quitFullButton);
     }
@@ -477,8 +492,6 @@ void DTitlebarPrivate::init()
     mainLayout->addWidget(rightArea, 0, Qt::AlignRight);
 
     q->setLayout(mainLayout);
-    q->setFixedHeight(DefaultTitlebarHeight);
-    q->setMinimumHeight(DefaultTitlebarHeight);
 
     if (!DGuiApplicationHelper::isTabletEnvironment()) {
         q->connect(quitFullButton, &DWindowQuitFullButton::clicked, q, [ = ]() {
@@ -519,6 +532,8 @@ void DTitlebarPrivate::init()
     };
     // fix wayland 下显示了两个应用图标，系统标题栏 和 dtk标题栏 均显示应用图标
     q->setEmbedMode(!(DApplication::isDXcbPlatform()|| noTitlebarEnabled()));
+
+    updateSizeBySizeMode();
 }
 
 QWidget *DTitlebarPrivate::targetWindow()
@@ -1324,6 +1339,9 @@ bool DTitlebar::event(QEvent *e)
             // 还需要 Tab 切换焦点时不不会出现再自己身上减少一次按 Tab 键 fix bug-65703
             fe->reason() == Qt::TabFocusReason ? focusNextChild() : focusPreviousChild();
         }
+    } else if (e->type() == QEvent::StyleChange) {
+        D_D(DTitlebar);
+        d->updateSizeBySizeMode();
     }
 
     return QFrame::event(e);
@@ -1336,11 +1354,16 @@ void DTitlebar::resizeEvent(QResizeEvent *event)
 
     d->separatorTop->setFixedWidth(event->size().width());
     d->separator->setFixedWidth(event->size().width());
+    int x = (d->sidebarHelper && d->sidebarHelper->expanded()) ? d->sidebarHelper->width() : 0;
+    d->separator->move(x, height() - d->separator->height());
     d->updateCenterArea();
 
     if (d->blurWidget) {
         d->blurWidget->resize(event->size());
     }
+
+    if (d->sidebarBackgroundWidget)
+        d->sidebarBackgroundWidget->setFixedHeight(event->size().height());
 
     return QWidget::resizeEvent(event);
 }
@@ -1404,13 +1427,13 @@ void DTitlebar::setSidebarHelper(DSidebarHelper *helper)
     if (!d->expandButton) {
         d->expandButton = new DIconButton(this);
         d->expandButton->setIcon(DDciIcon::fromTheme("window_sidebar"));
-        d->expandButton->setIconSize(QSize(DefaultExpandButtonSize, DefaultExpandButtonSize));
+        d->expandButton->setIconSize(QSize(DefaultExpandButtonHeight(), DefaultExpandButtonHeight()));
         d->expandButton->setCheckable(true);
         d->expandButton->setChecked(true);
         d->expandButton->setFlat(true);
 
         d->sidebarBackgroundWidget = new QWidget(this);
-        d->sidebarBackgroundWidget->setFixedHeight(height());
+        d->sidebarBackgroundWidget->setAccessibleName("SidebarBackgroundWidget");
         d->sidebarBackgroundWidget->setAutoFillBackground(true);
         d->sidebarBackgroundWidget->setBackgroundRole(DPalette::Button);
         d->sidebarBackgroundWidget->move(pos());
@@ -1840,7 +1863,7 @@ QSize DTitlebar::sizeHint() const
     int padding = qMax(d->leftArea->sizeHint().width(), d->rightArea->sizeHint().width());
     int width = d->centerArea->sizeHint().width() + 2 * d->mainLayout->spacing() + 2 * padding;
 
-    return QSize(width, DefaultTitlebarHeight);
+    return QSize(width, DefaultTitlebarHeight());
 }
 
 QSize DTitlebar::minimumSizeHint() const

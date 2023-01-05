@@ -10,6 +10,7 @@
 #include "dtooltip.h"
 
 #include <DGuiApplicationHelper>
+#include "dsizemode.h"
 
 #include <QStyleOption>
 #include <QTextLayout>
@@ -1579,7 +1580,7 @@ int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyle
                 return radius;
             }
         }
-        return 8;
+        return DSizeModeHelper::element(6, 8);
     case PM_TopLevelWindowRadius:
         return 18;
     case PM_ShadowRadius:
@@ -1632,7 +1633,7 @@ int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyle
     case PM_ContentsSpacing:
         return 10;
     case PM_ButtonMinimizedSize:
-        return 36;
+        return DSizeModeHelper::element(24, 36);
     case PM_ToolTipLabelWidth:
         return 300;
     default:
@@ -1731,7 +1732,7 @@ QSize DStyle::sizeFromContents(const QStyle *style, DStyle::ContentsType ct, con
     case CT_IconButton:
         if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton *>(opt)) {
             if (btn->features & DStyleOptionButton::FloatingButton) {
-                return btn->iconSize * 2.5;
+                return DSizeModeHelper::element(btn->iconSize * 1.8, btn->iconSize * 2.5);
             }
 
             if (btn->features & DStyleOptionButton::Flat) {

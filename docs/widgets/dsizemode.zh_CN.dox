@@ -1,0 +1,16 @@
+/*!
+@~chinese
+@file dsizemode.h
+@ingroup dtkwidget
+
+@class Dtk::Widget::DSizeModeHelper
+@brief 控件大小模式对应的帮助类，提供一些公共方法，方便区分不同SizeMode类型下对应的元素值
+
+@fn static inline template <typename T> T DSizeModeHelper::element(const T &t1, const T &t2)
+@breif 根据当前的控件大小模式是否为紧凑模式返回对应的值
+@param[in] t1 紧凑模式对应的元素值
+@param[in] t2 非紧凑模式下对应的元素值
+@return 返回当前控件大小模式下对应模式下的元素值
+@sa Dtk::Gui::DGuiApplicationHelper::sizeMode()
+
+*/
