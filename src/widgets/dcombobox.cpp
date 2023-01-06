@@ -121,8 +121,6 @@ void DComboBox::showPopup()
 {
     D_D(DComboBox);
 
-    QComboBox::showPopup();
-
     auto getRowCount = [=]{
         int count = 0;
         QStack<QModelIndex> toCheck;
@@ -146,176 +144,121 @@ void DComboBox::showPopup()
         return count;
     };
     // 小于 16 的时候使用 qt 默认的，直接返回，避免显示多余的空白
-    if (getRowCount() <= maxVisibleItems()) {
-        return;
-    }
-    //获取下拉视图容器
-    if (QComboBoxPrivateContainer *container = this->findChild<QComboBoxPrivateContainer *>()) {
-        // 重置最大高度
+    QComboBoxPrivateContainer *container = this->findChild<QComboBoxPrivateContainer *>();
+    if (getRowCount() <= maxVisibleItems() || !container)
+        return QComboBox::showPopup();
 
-        QStyle * const style = this->style();
-        QStyleOptionComboBox opt;
-        initStyleOption(&opt);
-        const bool usePopup = style->styleHint(QStyle::SH_ComboBox_Popup, &opt, this);
+    // Calculate maximum height by maximum item size
+    QStyle * const style = this->style();
+    QStyleOptionComboBox opt;
+    initStyleOption(&opt);
+    const bool usePopup = style->styleHint(QStyle::SH_ComboBox_Popup, &opt, this);
 
-        QRect listRect(style->subControlRect(QStyle::CC_ComboBox, &opt,
-                                             QStyle::SC_ComboBoxListBoxPopup, this));
-        QRect screen = d->popupGeometry();
+    QRect listRect(style->subControlRect(QStyle::CC_ComboBox, &opt,
+                                         QStyle::SC_ComboBoxListBoxPopup, this));
+    QRect screen = d->popupGeometry();
 
-        QPoint below = mapToGlobal(listRect.bottomLeft());
-        int belowHeight = screen.bottom() - below.y();
-        QPoint above = mapToGlobal(listRect.topLeft());
-        int aboveHeight = above.y() - screen.y();
-        bool boundToScreen = !window()->testAttribute(Qt::WA_DontShowOnScreen);
+    bool boundToScreen = !window()->testAttribute(Qt::WA_DontShowOnScreen);
 
-        {
-            int listHeight = 0;
-            int count = 0;
-            QStack<QModelIndex> toCheck;
-            toCheck.push(view()->rootIndex());
+    {
+        int listHeight = 0;
+        int count = 0;
+        QStack<QModelIndex> toCheck;
+        toCheck.push(view()->rootIndex());
 #if QT_CONFIG(treeview)
-            QTreeView *treeView = qobject_cast<QTreeView*>(view());
-            if (treeView && treeView->header() && !treeView->header()->isHidden())
-                listHeight += treeView->header()->height();
+        QTreeView *treeView = qobject_cast<QTreeView*>(view());
+        if (treeView && treeView->header() && !treeView->header()->isHidden())
+            listHeight += treeView->header()->height();
 #endif
-            while (!toCheck.isEmpty()) {
-                QModelIndex parent = toCheck.pop();
-                for (int i = 0, end = model()->rowCount(parent); i < end; ++i) {
-                    QModelIndex idx = model()->index(i, modelColumn(), parent);
-                    if (!idx.isValid())
-                        continue;
-                    listHeight += view()->visualRect(idx).height();
+        while (!toCheck.isEmpty()) {
+            QModelIndex parent = toCheck.pop();
+            for (int i = 0, end = model()->rowCount(parent); i < end; ++i) {
+                QModelIndex idx = model()->index(i, modelColumn(), parent);
+                if (!idx.isValid())
+                    continue;
+                listHeight += view()->visualRect(idx).height();
 #if QT_CONFIG(treeview)
-                    if (model()->hasChildren(idx) && treeView && treeView->isExpanded(idx))
-                        toCheck.push(idx);
+                if (model()->hasChildren(idx) && treeView && treeView->isExpanded(idx))
+                    toCheck.push(idx);
 #endif
-                    ++count;
-                    if (count >= maxVisibleItems()) {
-                        toCheck.clear();
-                        break;
-                    }
-                }
-            }
-            if (count > 1)
-                listHeight += (count - 1) * container->spacing();
-            listRect.setHeight(listHeight);
-        }
-
-        {
-            // add the spacing for the grid on the top and the bottom;
-            int heightMargin = container->topMargin()  + container->bottomMargin();
-
-            // add the frame of the container
-            int marginTop, marginBottom;
-            container->getContentsMargins(0, &marginTop, 0, &marginBottom);
-            heightMargin += marginTop + marginBottom;
-
-            //add the frame of the view
-            view()->getContentsMargins(0, &marginTop, 0, &marginBottom);
-            marginTop += static_cast<QAbstractScrollAreaPrivate *>(QObjectPrivate::get(view()))->top;
-            marginBottom += static_cast<QAbstractScrollAreaPrivate *>(QObjectPrivate::get(view()))->bottom;
-            heightMargin += marginTop + marginBottom;
-
-            listRect.setHeight(listRect.height() + heightMargin);
-        }
-
-        {
-            // Hides or shows the scrollers when we emulate a popupmenu
-            if (style->styleHint(QStyle::SH_ComboBox_Popup, &opt, this) &&
-                    view()->verticalScrollBar()->minimum() < view()->verticalScrollBar()->maximum()) {
-                const int margin = style->pixelMetric(QStyle::PM_MenuScrollerHeight);
-
-                bool needTop = view()->verticalScrollBar()->value()
-                               > (view()->verticalScrollBar()->minimum() + container->topMargin());
-                if (needTop) {
-                    listRect.adjust(0, 0, 0, margin);
-                }
-
-                bool needBottom = view()->verticalScrollBar()->value()
-                                  < (view()->verticalScrollBar()->maximum() - container->bottomMargin() - container->topMargin());
-                if (needBottom) {
-                    listRect.adjust(0, 0, 0, margin);
+                ++count;
+                if (count >= maxVisibleItems()) {
+                    toCheck.clear();
+                    break;
                 }
             }
         }
-
-        // Add space for margin at top and bottom if the style wants it.
-        if (usePopup)
-            listRect.setHeight(listRect.height() + style->pixelMetric(QStyle::PM_MenuVMargin, &opt, this) * 2);
-
-        // Make sure the popup is wide enough to display its contents.
-        if (usePopup) {
-            const int diff = d->computeWidthHint() - width();
-            if (diff > 0)
-                listRect.setWidth(listRect.width() + diff);
-        }
-
-        //takes account of the minimum/maximum size of the container
-//        listRect.setSize( listRect.size().expandedTo(container->minimumSize())
-//                          .boundedTo(container->maximumSize()));
-
-        // make sure the widget fits on screen
-        if (boundToScreen) {
-            if (listRect.width() > screen.width() )
-                listRect.setWidth(screen.width());
-            if (mapToGlobal(listRect.bottomRight()).x() > screen.right()) {
-                below.setX(screen.x() + screen.width() - listRect.width());
-                above.setX(screen.x() + screen.width() - listRect.width());
-            }
-            if (mapToGlobal(listRect.topLeft()).x() < screen.x() ) {
-                below.setX(screen.x());
-                above.setX(screen.x());
-            }
-        }
-
-        QScrollBar *sb = view()->horizontalScrollBar();
-        Qt::ScrollBarPolicy policy = view()->horizontalScrollBarPolicy();
-        bool needHorizontalScrollBar = (policy == Qt::ScrollBarAsNeeded || policy == Qt::ScrollBarAlwaysOn)
-                && sb->minimum() < sb->maximum();
-        if (needHorizontalScrollBar) {
-            listRect.adjust(0, 0, 0, sb->height());
-        }
-
-        // 提前修改container高度，否则 view()->visualRect(view()->currentIndex())的位置计算错误
-        container->setMaximumHeight(listRect.height());
-
-        if (usePopup) {
-            // Position horizontally.
-            listRect.moveLeft(above.x());
-
-            // Position vertically so the curently selected item lines up
-            // with the combo box.
-            const QRect currentItemRect = view()->visualRect(view()->currentIndex());
-            const int offset = listRect.top() - currentItemRect.top();
-            listRect.moveTop(above.y() + offset - listRect.top());
-
-            // Clamp the listRect height and vertical position so we don't expand outside the
-            // available screen geometry.This may override the vertical position, but it is more
-            // important to show as much as possible of the popup.
-            const int height = !boundToScreen ? listRect.height() : qMin(listRect.height(), screen.height());
-            listRect.setHeight(height);
-
-            if (boundToScreen) {
-                if (listRect.top() < screen.top())
-                    listRect.moveTop(screen.top());
-                if (listRect.bottom() > screen.bottom())
-                    listRect.moveBottom(screen.bottom());
-            }
-        } else if (!boundToScreen || listRect.height() <= belowHeight) {
-            listRect.moveTopLeft(below);
-        } else if (listRect.height() <= aboveHeight) {
-            listRect.moveBottomLeft(above);
-        } else if (belowHeight >= aboveHeight) {
-            listRect.setHeight(belowHeight);
-            listRect.moveTopLeft(below);
-        } else {
-            listRect.setHeight(aboveHeight);
-            listRect.moveBottomLeft(above);
-        }
-
-        container->setGeometry(listRect);
+        if (count > 1)
+            listHeight += (count - 1) * container->spacing();
+        listRect.setHeight(listHeight);
     }
 
+    {
+        // add the spacing for the grid on the top and the bottom;
+        int heightMargin = container->topMargin()  + container->bottomMargin();
+
+        // add the frame of the container
+        int marginTop, marginBottom;
+        container->getContentsMargins(0, &marginTop, 0, &marginBottom);
+        heightMargin += marginTop + marginBottom;
+
+        //add the frame of the view
+        view()->getContentsMargins(0, &marginTop, 0, &marginBottom);
+        marginTop += static_cast<QAbstractScrollAreaPrivate *>(QObjectPrivate::get(view()))->top;
+        marginBottom += static_cast<QAbstractScrollAreaPrivate *>(QObjectPrivate::get(view()))->bottom;
+        heightMargin += marginTop + marginBottom;
+
+        listRect.setHeight(listRect.height() + heightMargin);
+    }
+
+    {
+        // Hides or shows the scrollers when we emulate a popupmenu
+        if (style->styleHint(QStyle::SH_ComboBox_Popup, &opt, this) &&
+                view()->verticalScrollBar()->minimum() < view()->verticalScrollBar()->maximum()) {
+            const int margin = style->pixelMetric(QStyle::PM_MenuScrollerHeight);
+
+            bool needTop = view()->verticalScrollBar()->value()
+                           > (view()->verticalScrollBar()->minimum() + container->topMargin());
+            if (needTop) {
+                listRect.adjust(0, 0, 0, margin);
+            }
+
+            bool needBottom = view()->verticalScrollBar()->value()
+                              < (view()->verticalScrollBar()->maximum() - container->bottomMargin() - container->topMargin());
+            if (needBottom) {
+                listRect.adjust(0, 0, 0, margin);
+            }
+        }
+    }
+
+    // Add space for margin at top and bottom if the style wants it.
+    if (usePopup)
+        listRect.setHeight(listRect.height() + style->pixelMetric(QStyle::PM_MenuVMargin, &opt, this) * 2);
+
+    // Make sure the popup is wide enough to display its contents.
+    if (usePopup) {
+        const int diff = d->computeWidthHint() - width();
+        if (diff > 0)
+            listRect.setWidth(listRect.width() + diff);
+    }
+
+    // make sure the widget fits on screen
+    if (boundToScreen && listRect.width() > screen.width())
+        listRect.setWidth(screen.width());
+
+    QScrollBar *sb = view()->horizontalScrollBar();
+    Qt::ScrollBarPolicy policy = view()->horizontalScrollBarPolicy();
+    bool needHorizontalScrollBar = (policy == Qt::ScrollBarAsNeeded || policy == Qt::ScrollBarAlwaysOn)
+            && sb->minimum() < sb->maximum();
+    if (needHorizontalScrollBar) {
+        listRect.adjust(0, 0, 0, sb->height());
+    }
+    container->setMaximumSize(listRect.size());
+    QComboBox::showPopup();
+    auto currentIndexTopLeft = view()->mapToGlobal(view()->visualRect(view()->currentIndex()).topLeft());
+    int offset = mapToGlobal(rect().topLeft()).y() - currentIndexTopLeft.y();
+    int newY = qMax(screen.top(), qMin(container->y() + offset, screen.bottom() - container->height()));
+    container->move(container->x(), newY);
 }
 
 DWIDGET_END_NAMESPACE
