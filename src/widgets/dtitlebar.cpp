@@ -43,6 +43,8 @@
 #include "dwidgetstype.h"
 #include "dlabel.h"
 #include "dsizemode.h"
+#include "private/dtitlebarsettingsimpl.h"
+#include "dtitlebarsettings.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -82,6 +84,7 @@ private:
     void _q_addDefaultMenuItems();
     void _q_helpActionTriggered();
     void _q_feedbackActionTriggerd();
+    void _q_toolBarActionTriggerd();
     void _q_aboutActionTriggered();
     void _q_quitActionTriggered();
     void _q_switchThemeActionTriggered(QAction*action);
@@ -113,6 +116,8 @@ private:
         q->setMinimumHeight(DefaultTitlebarHeight());
     }
 
+    void setFixedButtonsEnabled(bool isEnabled);
+
     QHBoxLayout         *mainLayout;
     QWidget             *leftArea;
     QHBoxLayout         *leftLayout;
@@ -142,6 +147,7 @@ private:
     QMenu               *menu             = Q_NULLPTR;
     QAction             *helpAction       = Q_NULLPTR;
     QAction             *feedbackAction   = Q_NULLPTR;
+    QAction             *toolbarAction    = Q_NULLPTR;
     QAction             *aboutAction      = Q_NULLPTR;
     QAction             *quitAction       = Q_NULLPTR;
     bool                canSwitchTheme    = true;
@@ -162,6 +168,8 @@ private:
     bool                splitScreenWidgetEnable = true;
     QTimer              *maxButtonPressAndHoldTimer = nullptr;
     QWidget             *sidebarBackgroundWidget = nullptr;
+    DTitlebarSettingsImpl *titlebarSettingsImpl = nullptr;
+    DTitlebarSettings *titlebarSettings = nullptr;
     Q_DECLARE_PUBLIC(DTitlebar)
 };
 
@@ -657,6 +665,14 @@ void DTitlebarPrivate::_q_addDefaultMenuItems()
         menu->addAction(feedbackAction);
     }
 
+    // add toolbarAction menu item for deepin or uos application
+    if (titlebarSettingsImpl->isValid() && !toolbarAction) {
+        toolbarAction = new QAction(qApp->translate("TitleBarMenu", "TitlebarSettings"), menu);
+        toolbarAction->setObjectName("TitlebarSettings");
+        QObject::connect(toolbarAction, SIGNAL(triggered(bool)), q, SLOT(_q_toolBarActionTriggerd()));
+        menu->addAction(toolbarAction);
+    }
+
     // add about menu item.
     if (!aboutAction) {
         aboutAction = new QAction(qApp->translate("TitleBarMenu", "About"), menu);
@@ -684,6 +700,25 @@ void DTitlebarPrivate::_q_helpActionTriggered()
 
 void DTitlebarPrivate::_q_feedbackActionTriggerd() {
     QProcess::startDetached("deepin-feedback", { qApp->applicationName() });
+}
+
+void DTitlebarPrivate::_q_toolBarActionTriggerd()
+{
+    D_Q(DTitlebar);
+
+    auto toolBarEditPanel = titlebarSettingsImpl->toolsEditPanel();
+    if (toolBarEditPanel->minimumWidth() >= q->width()) {
+        toolBarEditPanel->setParent(nullptr);
+        int x = q->mapToGlobal(q->pos()).x() - (toolBarEditPanel->width()- q->width()) / 2 ;
+        toolBarEditPanel->move(x, q->mapToGlobal(q->pos()).y() + q->height());
+    } else {
+        toolBarEditPanel->setParent(q->parentWidget());
+        toolBarEditPanel->move(0, q->height());
+        toolBarEditPanel->resize(q->width(), q->parentWidget()->height() * 70 / 100);
+    }
+    toolBarEditPanel->installEventFilter(q);
+
+    titlebarSettingsImpl->showEditPanel();
 }
 
 void DTitlebarPrivate::_q_aboutActionTriggered()
@@ -821,6 +856,14 @@ void DTitlebarPrivate::hideSplitScreenWidget()
 }
 
 #endif
+
+void DTitlebarPrivate::setFixedButtonsEnabled(bool isEnabled)
+{
+    maxButton->setEnabled(isEnabled);
+    minButton->setEnabled(isEnabled);
+    closeButton->setEnabled(isEnabled);
+    optionButton->setEnabled(isEnabled);
+}
 
 /*!
   @~english
@@ -1073,6 +1116,13 @@ bool DTitlebar::eventFilter(QObject *obj, QEvent *event)
 
         }
     }
+    if (d->titlebarSettings && d->titlebarSettingsImpl->hasEditPanel() && obj == d->titlebarSettingsImpl->toolsEditPanel()) {
+        if (event->type() == QEvent::Show) {
+            d->setFixedButtonsEnabled(false);
+        } else if ((event->type() == QEvent::Close)) {
+            d->setFixedButtonsEnabled(true);
+        }
+    }
     return QWidget::eventFilter(obj, event);
 }
 
@@ -1116,6 +1166,20 @@ void DTitlebar::resizeEvent(QResizeEvent *event)
 
     if (d->sidebarBackgroundWidget)
         d->sidebarBackgroundWidget->setFixedHeight(event->size().height());
+
+    if (d->titlebarSettingsImpl && d->titlebarSettingsImpl->hasEditPanel() && d->titlebarSettingsImpl->toolsEditPanel()->isVisible()) {
+        if (d->titlebarSettingsImpl->toolsEditPanel()->minimumWidth() >= this->width()) {
+            d->titlebarSettingsImpl->toolsEditPanel()->setWindowFlag(Qt::Dialog);
+            d->titlebarSettingsImpl->toolsEditPanel()->show();
+            int x = this->mapToGlobal(this->pos()).x() - (d->titlebarSettingsImpl->toolsEditPanel()->width()- this->width()) / 2 ;
+            d->titlebarSettingsImpl->toolsEditPanel()->move(x, this->mapToGlobal(this->pos()).y() + this->height());
+        } else {
+            d->titlebarSettingsImpl->toolsEditPanel()->setWindowFlag(Qt::Dialog, false);
+            d->titlebarSettingsImpl->toolsEditPanel()->show();
+            d->titlebarSettingsImpl->toolsEditPanel()->move(0, this->height());
+            d->titlebarSettingsImpl->toolsEditPanel()->resize(width(), parentWidget()->height() * 70 / 100);
+        }
+    }
 
     return QWidget::resizeEvent(event);
 }
@@ -1633,6 +1697,18 @@ void DTitlebar::setFullScreenButtonVisible(bool visible)
 {
     D_D(DTitlebar);
     d->fullScreenButtonVisible = visible;
+}
+
+DTitlebarSettings *DTitlebar::settings()
+{
+    D_D(DTitlebar);
+
+    if (!d->titlebarSettings) {
+        auto settings = new DTitlebarSettings(this);
+        d->titlebarSettingsImpl = settings->impl();
+        d->titlebarSettings = settings;
+    }
+    return d->titlebarSettings;
 }
 
 void DTitlebar::mouseMoveEvent(QMouseEvent *event)

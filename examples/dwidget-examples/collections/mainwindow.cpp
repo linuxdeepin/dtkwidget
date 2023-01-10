@@ -13,6 +13,7 @@
 #include <QTextCodec>
 #include <QDebug>
 #include <QComboBox>
+#include <QFontDatabase>
 
 #include <DStandardItem>
 #include <DTitlebar>
@@ -23,7 +24,6 @@
 #include <DPrintPreviewDialog>
 #include <DSettingsDialog>
 #include <DSettingsWidgetFactory>
-#include <QFontDatabase>
 
 #include "buttonexample.h"
 #include "editexample.h"
@@ -48,15 +48,109 @@
 #include "dsettingsoption.h"
 #include "dsettings.h"
 #include "dfeaturedisplaydialog.h"
+#include "dtitlebarsettings.h"
 
 DCORE_USE_NAMESPACE
 DWIDGET_USE_NAMESPACE
+
+class DTitleBarToolCut : public DTitleBarToolInterface {
+public:
+    virtual QString id() const override
+    {
+        return "builtin/edit-cut";
+    }
+    virtual QString description() override
+    {
+        return "edit-cut";
+    }
+    virtual QString iconName() override
+    {
+        return "edit-cut";
+    }
+    virtual QWidget *createView() override
+    {
+        auto view = new DIconButton();
+        view->setFixedSize(82, 36);
+        view->setIconSize(QSize(36, 36));
+        view->setIcon(QIcon::fromTheme("edit-cut"));
+        connect(this, &DTitleBarToolInterface::triggered, this, [this](){
+            qInfo() << "edit-cut executed";
+        });
+        connect(view, &DIconButton::clicked, this, [this](){
+            qInfo() << "edit-cut executed";
+        });
+        return view;
+    }
+};
+
+class DTitleBarToolDelete : public DTitleBarToolInterface {
+public:
+    virtual QString id() const override
+    {
+        return "builtin/edit-delete";
+    }
+    virtual QString description() override
+    {
+        return "edit-delete";
+    }
+    virtual QString iconName() override
+    {
+        return "edit-delete";
+    }
+    virtual QWidget *createView() override
+    {
+        auto view = new DIconButton();
+        view->setFixedSize(82, 36);
+        view->setIconSize(QSize(36, 36));
+        view->setIcon(QIcon::fromTheme("edit-delete"));
+
+        connect(this, &DTitleBarToolInterface::triggered, this, [this](){
+            qInfo() << "edit-delete executed";
+        });
+        connect(view, &DIconButton::clicked, this, [this](){
+            qInfo() << "edit-delete executed";
+        });
+        return view;
+    }
+};
+
+class DTitleBarToolFind : public DTitleBarToolInterface {
+public:
+    virtual QString id() const override
+    {
+        return "builtin/edit-find";
+    }
+    virtual QString description() override
+    {
+        return "edit-find";
+    }
+    virtual QString iconName() override
+    {
+        return "edit-find";
+    }
+    virtual QWidget *createView() override
+    {
+        auto view = new DIconButton();
+        view->setFixedSize(36, 36);
+        view->setIconSize(QSize(36, 36));
+        view->setIcon(QIcon::fromTheme("edit-find"));
+
+        connect(this, &DTitleBarToolInterface::triggered,this, [this](){
+            qInfo() << "edit-find executed";
+        });
+        connect(view, &DIconButton::clicked, this, [this](){
+            qInfo() << "edit-find executed";
+        });
+        return view;
+    }
+};
+
 
 MainWindow::MainWindow(QWidget *parent)
     : DMainWindow(parent)
 {
     setWindowIcon(QIcon(":/images/logo_icon.svg"));
-    setMinimumSize(qApp->primaryScreen()->availableSize() / 5 * 3);
+    setMinimumSize(qApp->primaryScreen()->availableSize() / 5);
 
     QHBoxLayout *mainLayout = new QHBoxLayout();
     mainLayout->setMargin(0);
@@ -122,6 +216,14 @@ MainWindow::MainWindow(QWidget *parent)
                                   | Qt::WindowMaximizeButtonHint
                                   | Qt::WindowSystemMenuHint);
         titlebar->setAutoHideOnFullscreen(true);
+
+        QList<DTitlebarToolBaseInterface *> tools;
+        tools << new DTitleBarToolCut()
+              << new DTitleBarToolDelete()
+              << new DTitleBarToolFind();
+        auto settings = titlebar->settings();
+        settings->initilize(tools, ":/resources/data/titlebar-settings.json");
+        settings->toolsEditPanel()->setMinimumWidth(this->width());
     }
 
     DButtonBox *buttonBox = new DButtonBox(titlebar);

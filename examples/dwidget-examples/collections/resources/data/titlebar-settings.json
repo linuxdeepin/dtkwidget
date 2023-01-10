@@ -1,0 +1,18 @@
+{
+    "spacingSize": 40,
+    "alignment": "left",
+    "tools": [
+        {
+            "key": "builtin/edit-cut"
+        },
+        {
+            "key": "builtin/spacer",
+            "fixed": true,
+            "count": 2
+        },
+        {
+            "key": "builtin/edit-delete",
+            "fixed": true
+        }
+    ]
+}

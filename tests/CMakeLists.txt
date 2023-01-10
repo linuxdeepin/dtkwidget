@@ -4,6 +4,7 @@ set(BIN_NAME "ut-${PROJECT_NAME}")
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(CMAKE_CXX_FLAGS "-fno-access-control")
@@ -123,6 +124,7 @@ set(WIDGET_TEST
   testcases/widgets/ut_dtickeffect.cpp
   testcases/widgets/ut_dtiplabel.cpp
   testcases/widgets/ut_dtitlebar.cpp
+  testcases/widgets/ut_dtitlebarsettings.cpp
   testcases/widgets/ut_dtoolbutton.cpp
   testcases/widgets/ut_dtooltip.cpp
   testcases/widgets/ut_dwarningbutton.cpp
@@ -138,10 +140,13 @@ set(WIDGET_TEST
 include(../src/util/util.cmake)
 include(../src/widgets/widgets.cmake)
 
+set(RESCOUCES data.qrc)
+
 add_executable(${BIN_NAME}
   main.cpp
   ${util_SRC}
   ${widgets_SRC}
+  ${RESCOUCES}
   ${WIDGET_TEST}
 )
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
