@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2017 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2017 - 2023 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -7,6 +7,7 @@
 #include "dstyleoption.h"
 #include "dpalettehelper.h"
 #include "dstyle.h"
+#include "dsizemode.h"
 
 #include "dlistview.h"
 
@@ -1246,7 +1247,7 @@ void DStyledItemDelegate::setBackgroundType(DStyledItemDelegate::BackgroundType 
         }
 
         int frame_margin = style->pixelMetric(static_cast<QStyle::PixelMetric>(DStyle::PM_FrameRadius));
-        d->margins += frame_margin;
+        d->margins += DSizeModeHelper::element(frame_margin / 2, frame_margin);
     }
 }
 
@@ -1396,6 +1397,19 @@ bool DStyledItemDelegate::eventFilter(QObject *object, QEvent *event)
         break;
     }
     const auto view = qobject_cast<QAbstractItemView*>(parent());
+    if (event->type() == QEvent::StyleChange && view) {
+        D_D(DStyledItemDelegate);
+        do {
+            if (d->margins.isNull())
+                break;
+
+            int frame_margin = DStyle::pixelMetric(view->style(), DStyle::PM_FrameRadius);
+            d->margins = QMargins() + DSizeModeHelper::element(frame_margin / 2, frame_margin);
+
+            // relayout to calculate size.
+            view->doItemsLayout();
+        } while (false);
+    }
     if (view && object == view->viewport()) {
         static const QEvent::Type UpdateWidgetVisibleEvent(
                     static_cast<QEvent::Type>(QEvent::registerEventType()));

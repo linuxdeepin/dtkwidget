@@ -1,10 +1,11 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2023 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
 #include "DApplication"
 #include "dkeysequenceedit.h"
 #include "dstyle.h"
+#include "dsizemode.h"
 
 #include "private/dkeysequenceedit_p.h"
 
@@ -157,6 +158,15 @@ protected:
             if (labelList.isEmpty())
                 setKeyVisible(false);
         }
+    }
+    void changeEvent(QEvent *event) override
+    {
+        if (event->type() == QEvent::StyleChange) {
+            for (auto item : labelList) {
+                item->setMinimumHeight(DSizeModeHelper::element(18, 24));
+            }
+        }
+        return QWidget::changeEvent(event);
     }
 };
 
@@ -345,7 +355,7 @@ void DKeyWidget::setKeyName(const QStringList &keyList)
     for (QString key : keyList) {
         DKeyLabel *label = new DKeyLabel(key);
         label->setAccessibleName(QString("DKeyWidgetKeyLabelAt").append(key));
-        label->setMinimumHeight(24);
+        label->setMinimumHeight(DSizeModeHelper::element(18, 24));
         layout()->addWidget(label);
         labelList.append(label);
     }

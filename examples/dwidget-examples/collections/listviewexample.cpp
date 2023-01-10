@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2020 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2020 - 2023 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -14,6 +14,7 @@
 #include <DHeaderView>
 #include <DColumnView>
 #include <DStyle>
+#include <DSizeMode>
 
 #include "listviewexample.h"
 
@@ -485,10 +486,9 @@ DColumnViewExample::DColumnViewExample(QWidget *parent)
     QStandardItemModel *model = new QStandardItemModel(this);
     QStyledItemDelegate *itemDelegate = new QStyledItemDelegate(cv);
 
-    auto insertItem = [](const QString &name, const QIcon &icon, int height, QStandardItemModel *model = nullptr, DStandardItem *parentItem = nullptr)
+    auto insertItem = [](const QString &name, const QIcon &icon, QStandardItemModel *model = nullptr, DStandardItem *parentItem = nullptr)
         -> DStandardItem * {
         DStandardItem *item = new DStandardItem(icon, name);
-        item->setSizeHint(QSize(item->sizeHint().width(), height));
         item->setEditable(false);
         item->setFontSize(DFontSizeManager::T8);
 
@@ -505,30 +505,33 @@ DColumnViewExample::DColumnViewExample(QWidget *parent)
     cv->setFrameShape(QFrame::NoFrame);
     cv->setColumnWidths({121, 162});
     cv->setItemDelegate(itemDelegate);
-    cv->setIconSize(QSize(24, 24));
+    cv->setIconSize(DSizeModeHelper::element(QSize(16,16), QSize(24, 24)));
+    connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::sizeModeChanged, this, [cv]() {
+        cv->setIconSize(DSizeModeHelper::element(QSize(16,16), QSize(24, 24)));
+    });
 
-    insertItem("视频", style()->standardIcon(QStyle::SP_DirIcon), 36, model);
-    DStandardItem *picItem = insertItem("图片", style()->standardIcon(QStyle::SP_DirIcon), 36, model);
-    insertItem("文档", style()->standardIcon(QStyle::SP_DirIcon), 36, model);
-    insertItem("下载", style()->standardIcon(QStyle::SP_DirIcon), 36, model);
-    insertItem("音乐", style()->standardIcon(QStyle::SP_DirIcon), 36, model);
-    insertItem("桌面", style()->standardIcon(QStyle::SP_DirIcon), 36, model);
+    insertItem("视频", style()->standardIcon(QStyle::SP_DirIcon), model);
+    DStandardItem *picItem = insertItem("图片", style()->standardIcon(QStyle::SP_DirIcon), model);
+    insertItem("文档", style()->standardIcon(QStyle::SP_DirIcon), model);
+    insertItem("下载", style()->standardIcon(QStyle::SP_DirIcon), model);
+    insertItem("音乐", style()->standardIcon(QStyle::SP_DirIcon), model);
+    insertItem("桌面", style()->standardIcon(QStyle::SP_DirIcon), model);
 
-    insertItem("我的图片", style()->standardIcon(QStyle::SP_DirIcon), 36, nullptr, picItem);
-    DStandardItem *myPicItem = insertItem("我的壁纸", style()->standardIcon(QStyle::SP_DirIcon), 36, nullptr, picItem);
-    insertItem("Snapshot", style()->standardIcon(QStyle::SP_DirIcon), 36, nullptr, picItem);
-    insertItem("深度截图", style()->standardIcon(QStyle::SP_DirIcon), 36, nullptr, picItem);
-    insertItem("iphone相册", style()->standardIcon(QStyle::SP_DirIcon), 36, nullptr, picItem);
+    insertItem("我的图片", style()->standardIcon(QStyle::SP_DirIcon), nullptr, picItem);
+    DStandardItem *myPicItem = insertItem("我的壁纸", style()->standardIcon(QStyle::SP_DirIcon), nullptr, picItem);
+    insertItem("Snapshot", style()->standardIcon(QStyle::SP_DirIcon), nullptr, picItem);
+    insertItem("深度截图", style()->standardIcon(QStyle::SP_DirIcon), nullptr, picItem);
+    insertItem("iphone相册", style()->standardIcon(QStyle::SP_DirIcon), nullptr, picItem);
 
-    insertItem("[WP] Mosaic [textless].jpg", QIcon(":/images/example/DColumViewPicIcon_1.png"), 36, nullptr, myPicItem);
-    insertItem("2.jpg", QIcon(":/images/example/DColumViewPicIcon_2.png"), 36, nullptr, myPicItem);
-    insertItem("underwater_16_10.jpg", QIcon(":/images/example/DColumViewPicIcon_3.png"), 36, nullptr, myPicItem);
-    insertItem("inthe sky.jpg", QIcon(":/images/example/DColumViewPicIcon_4.png"), 36, nullptr, myPicItem);
-    insertItem("25_III_2560_1600.jpg", QIcon(":/images/example/DColumViewPicIcon_5.png"), 36, nullptr, myPicItem);
-    insertItem("164_scaled.jpg", QIcon(":/images/example/DColumViewPicIcon_6.png"), 36, nullptr, myPicItem);
-    insertItem("[WP] Mosaic [textless].jpg", QIcon(":/images/example/DColumViewPicIcon_7.png"), 36, nullptr, myPicItem);
-    insertItem("03345_tyrrhenum_3840x2400.jpg", QIcon(":/images/example/DColumViewPicIcon_8.png"), 36, nullptr, myPicItem);
-    insertItem("03215_goodmorningyosemite_38..", QIcon(":/images/example/DColumViewPicIcon_9.png"), 36, nullptr, myPicItem);
+    insertItem("[WP] Mosaic [textless].jpg", QIcon(":/images/example/DColumViewPicIcon_1.png"), nullptr, myPicItem);
+    insertItem("2.jpg", QIcon(":/images/example/DColumViewPicIcon_2.png"), nullptr, myPicItem);
+    insertItem("underwater_16_10.jpg", QIcon(":/images/example/DColumViewPicIcon_3.png"), nullptr, myPicItem);
+    insertItem("inthe sky.jpg", QIcon(":/images/example/DColumViewPicIcon_4.png"), nullptr, myPicItem);
+    insertItem("25_III_2560_1600.jpg", QIcon(":/images/example/DColumViewPicIcon_5.png"), nullptr, myPicItem);
+    insertItem("164_scaled.jpg", QIcon(":/images/example/DColumViewPicIcon_6.png"), nullptr, myPicItem);
+    insertItem("[WP] Mosaic [textless].jpg", QIcon(":/images/example/DColumViewPicIcon_7.png"), nullptr, myPicItem);
+    insertItem("03345_tyrrhenum_3840x2400.jpg", QIcon(":/images/example/DColumViewPicIcon_8.png"), nullptr, myPicItem);
+    insertItem("03215_goodmorningyosemite_38..", QIcon(":/images/example/DColumViewPicIcon_9.png"), nullptr, myPicItem);
 
     cv->setModel(model);
     cv->setCurrentIndex(model->indexFromItem(picItem));

@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2019 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2019 - 2023 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -8,9 +8,9 @@
 #include "dguiapplicationhelper.h"
 #include "dstyleoption.h"
 #include "dtooltip.h"
+#include "dsizemode.h"
 
 #include <DGuiApplicationHelper>
-#include "dsizemode.h"
 
 #include <QStyleOption>
 #include <QTextLayout>
@@ -1608,7 +1608,7 @@ int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyle
     case PM_SwitchButtonHandleWidth:
         return 30;
     case PM_SwithcButtonHandleHeight:
-        return 24;
+        return DSizeModeHelper::element(20, 24);
     case PM_FloatingWidgetRadius: {
         if (const DStyleOptionFloatingWidget *wid = qstyleoption_cast<const DStyleOptionFloatingWidget *>(opt)) {
             if (wid->frameRadius != -1)
@@ -1617,11 +1617,11 @@ int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyle
         return dstyle.pixelMetric(PM_TopLevelWindowRadius, opt, widget);
     }
     case PM_FloatingWidgetShadowRadius:
-        return 8;
+        return DSizeModeHelper::element(4, 8);
     case PM_FloatingWidgetShadowHOffset:
         return 0;
     case PM_FloatingWidgetShadowVOffset:
-        return 4;
+        return DSizeModeHelper::element(2, 4);
     case PM_FloatingWidgetShadowMargins: {
         int shadow_radius = dstyle.pixelMetric(PM_FloatingWidgetShadowRadius, opt, widget);
         int shadow_hoffset = dstyle.pixelMetric(PM_FloatingWidgetShadowHOffset, opt, widget);
@@ -2137,11 +2137,11 @@ int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QW
         return 0;
     case PM_ButtonMargin:
     case PM_DefaultChildMargin:
-        return pixelMetric(PM_FrameRadius, opt, widget);
+        return DSizeModeHelper::element(pixelMetric(PM_FrameRadius, opt, widget) / 2, pixelMetric(PM_FrameRadius, opt, widget));
     case PM_DefaultFrameWidth:
         return 1;
     case PM_DefaultLayoutSpacing:
-        return 5;
+        return DSizeModeHelper::element(2, 5);
     case PM_DefaultTopLevelMargin:
         return pixelMetric(PM_TopLevelWindowRadius, opt, widget) / 2;
     case PM_MenuBarItemSpacing:
@@ -2156,9 +2156,9 @@ int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QW
         return 36;
     case PM_SliderLength:
     case PM_ScrollBarExtent:
-        return 20;
+        return DSizeModeHelper::element(16, 20);
     case PM_SliderControlThickness:
-        return 24;
+        return DSizeModeHelper::element(20, 24);
     case PM_MenuBarHMargin:
         return 10;
     case PM_MenuBarVMargin:
@@ -2175,7 +2175,7 @@ int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QW
         return 16;
     case PM_ListViewIconSize:
     case PM_LargeIconSize:
-        return 24;
+        return DSizeModeHelper::element(16, 24);
     case PM_IconViewIconSize:
         return 32;
     case PM_ScrollView_ScrollBarOverlap:

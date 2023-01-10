@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2020 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2020 - 2023 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -39,12 +39,12 @@ DProgressBarExample::DProgressBarExample(QWidget *parent)
     auto image1 = new DLabel();
     auto image2 = new DLabel();
 
-    pTextBar->setFixedSize(500, 35);
     pTextBar->setTextVisible(true);
+    pTextBar->setFixedWidth(500);
     pTextBar->setValue(45);
     pTextBar->setAlignment(Qt::AlignCenter);
 
-    pNoTextBar->setFixedSize(500, 8);
+    pNoTextBar->setFixedWidth(500);
     pNoTextBar->setValue(62);
 
     image1->setFixedSize(550, 426);
