@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2020 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2020 - 2023 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -27,6 +27,7 @@
 #include <DFontComboBox>
 #include <DListView>
 #include <DSearchComboBox>
+#include <DSizeMode>
 
 #include "buttonexample.h"
 
@@ -65,10 +66,14 @@ DPushButtonExample::DPushButtonExample(QWidget *parent)
     pVBoxLayout->addStretch();
 
     DPushButton *pButtonNormal = new DPushButton("button normal", this);
-    pButtonNormal->setFixedSize(200, 36);
+    pButtonNormal->setFixedWidth(200);
 
     DPushButton *pButtonDisabled = new DPushButton("button disabled", this);
-    pButtonDisabled->setFixedSize(200, 36);
+    pButtonDisabled->setFixedSize(DSizeModeHelper::element(QSize(200, 24), QSize(200, 36)));
+    // connect `sizeModeChanged()` signal to update Size.
+    connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::sizeModeChanged, [pButtonDisabled](DGuiApplicationHelper::SizeMode mode) {
+        pButtonDisabled->setFixedSize(DSizeModeHelper::element(QSize(200, 24), QSize(200, 36)));
+    });
     pButtonDisabled->setEnabled(false);
 
     pHBoxLayout_1->addStretch();
@@ -78,7 +83,7 @@ DPushButtonExample::DPushButtonExample(QWidget *parent)
     pHBoxLayout_1->addStretch();
 
     DPushButton *pPushButton = new DPushButton("push button", this);
-    pPushButton->setFixedSize(200, 36);
+    pPushButton->setFixedWidth(200);
     pPushButton->setCheckable(true);
 
     QMenu *pMenu = new QMenu(this);
@@ -89,7 +94,7 @@ DPushButtonExample::DPushButtonExample(QWidget *parent)
     pPushButton->setMenu(pMenu);
 
     DPushButton *pPushButtonDisabled = new DPushButton("push button", this);
-    pPushButtonDisabled->setFixedSize(200, 36);
+    pPushButtonDisabled->setFixedWidth(200);
     pPushButtonDisabled->setEnabled(false);
     pPushButtonDisabled->setMenu(pMenu);
 
@@ -136,12 +141,12 @@ DWarningButtonExample::DWarningButtonExample(QWidget *parent)
 
     DWarningButton *pWarningButton = new DWarningButton(this);
     pWarningButton->setText("warning");
-    pWarningButton->setFixedSize(200, 36);
+    pWarningButton->setFixedWidth(200);
 
     DWarningButton *pWarningButtonDisabled = new DWarningButton(this);
     pWarningButtonDisabled->setText("warning disabled");
     pWarningButtonDisabled->setEnabled(false);
-    pWarningButtonDisabled->setFixedSize(200, 36);
+    pWarningButtonDisabled->setFixedWidth(200);
 
     pHBoxLayout_1->addStretch();
     pHBoxLayout_1->addWidget(pWarningButton);
@@ -189,10 +194,10 @@ DSuggestButtonExample::DSuggestButtonExample(QWidget *parent)
     pVBoxLayout->addStretch();
 
     DSuggestButton *pRecommend = new DSuggestButton("recommend", this);
-    pRecommend->setFixedSize(200, 36);
+    pRecommend->setFixedWidth(200);
 
     DPushButton *pRecommendDisabled = new DPushButton("recommend disabled", this);
-    pRecommendDisabled->setFixedSize(200, 36);
+    pRecommendDisabled->setFixedWidth(200);
     pRecommendDisabled->setEnabled(false);
 
     pHBoxLayout_1->addStretch();
@@ -202,12 +207,12 @@ DSuggestButtonExample::DSuggestButtonExample(QWidget *parent)
     pHBoxLayout_1->addStretch();
 
     DSuggestButton *pHighlight = new DSuggestButton("highlight", this);
-    pHighlight->setFixedSize(200, 36);
+    pHighlight->setFixedWidth(200);
     pHighlight->setCheckable(true);
     pHighlight->setFocus();
 
     DPushButton *pHighlightDisabled = new DPushButton("highlight disabled", this);
-    pHighlightDisabled->setFixedSize(200, 36);
+    pHighlightDisabled->setFixedWidth(200);
     pHighlightDisabled->setEnabled(false);
 
     pHBoxLayout_2->addStretch();
@@ -336,44 +341,51 @@ DIconButtonExample::DIconButtonExample(QWidget *parent)
     pHBoxLayout->setSpacing(0);
 
     DIconButton *pButton_1 = new DIconButton(DStyle::SP_IncreaseElement, this);
-    pButton_1->setFixedSize(36, 36);
 
     DIconButton *pButton_2 = new DIconButton(DStyle::SP_ArrowEnter, this);
-    pButton_2->setFixedSize(36, 36);
 
     DIconButton *pButton_3 = new DIconButton(DStyle::SP_IncreaseElement, this);
     pButton_3->setEnabled(false);
-    pButton_3->setFixedSize(36, 36);
 
     DIconButton *pButton_4 = new DIconButton(DStyle::SP_ArrowEnter, this);
     pButton_4->setEnabled(false);
-    pButton_4->setFixedSize(36, 36);
 
     DIconButton *pButton_5 = new DIconButton(DStyle::SP_DeleteButton, this);
     pButton_5->setFlat(true);
-    pButton_5->setFixedSize(QSize(24, 24));
     pButton_5->setIconSize(QSize(16, 16));
     DStyle::setFocusRectVisible(pButton_5, false);
 
     DIconButton *pButton_6 = new DIconButton(DStyle::SP_AddButton, this);
     pButton_6->setFlat(true);
-    pButton_6->setFixedSize(QSize(24, 24));
     pButton_6->setIconSize(QSize(16, 16));
     DStyle::setFocusRectVisible(pButton_6, false);
 
     DIconButton *pButton_7 = new DIconButton(DStyle::SP_DeleteButton, this);
     pButton_7->setEnabled(false);
     pButton_7->setFlat(true);
-    pButton_7->setFixedSize(QSize(24, 24));
     pButton_7->setIconSize(QSize(16, 16));
     DStyle::setFocusRectVisible(pButton_7, false);
 
     DIconButton *pButton_8 = new DIconButton(DStyle::SP_AddButton, this);
     pButton_8->setEnabled(false);
     pButton_8->setFlat(true);
-    pButton_8->setFixedSize(QSize(24, 24));
     pButton_8->setIconSize(QSize(16, 16));
     DStyle::setFocusRectVisible(pButton_8, false);
+
+    auto updateButtonSize = [](QWidget *widget, int mode) {
+        for (auto button : widget->findChildren<DIconButton *>(QString(), Qt::FindDirectChildrenOnly)) {
+            if (button->iconSize() == QSize(16, 16)) {
+                button->setFixedSize(DSizeModeHelper::element(QSize(20, 20), QSize(24, 24)));
+            } else {
+                button->setFixedSize(DSizeModeHelper::element(QSize(24, 24), QSize(36, 36)));
+            }
+        }
+    };
+    updateButtonSize(this, DGuiApplicationHelper::instance()->sizeMode());
+    // connect `sizeModeChanged` signal for a control Widget to update size.
+    connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::sizeModeChanged, this, [updateButtonSize, this](int mode) {
+        updateButtonSize(this, mode);
+    });
 
     pHBoxLayout->addStretch();
     pHBoxLayout->addWidget(pButton_1);
@@ -444,31 +456,25 @@ DButtonBoxExample::DButtonBoxExample(QWidget *parent)
     DButtonBox *pButtonBox_1 = new DButtonBox;
 
     DButtonBoxButton *pButton_1 = new DButtonBoxButton(DStyle().standardIcon(DStyle::SP_ArrowLeave));
-    pButton_1->setFixedSize(36, 36);
 
     DButtonBoxButton *pButton_2 = new DButtonBoxButton(DStyle().standardIcon(DStyle::SP_ArrowEnter));
-    pButton_2->setFixedSize(36, 36);
 
     pButtonBox_1->setButtonList(QList<DButtonBoxButton *>() << pButton_1 << pButton_2, true);
 
     DButtonBox *pButtonBox_2 = new DButtonBox;
     DButtonBoxButton *pButton_3 = new DButtonBoxButton(DStyle().standardIcon(DStyle::SP_ArrowLeave));
-    pButton_3->setFixedSize(36, 36);
     pButton_3->setEnabled(false);
 
     DButtonBoxButton *pButton_4 = new DButtonBoxButton(DStyle().standardIcon(DStyle::SP_ArrowEnter));
-    pButton_4->setFixedSize(36, 36);
     pButton_4->setEnabled(false);
 
     pButtonBox_2->setButtonList(QList<DButtonBoxButton *>() << pButton_3 << pButton_4, true);
 
     DButtonBox *pButtonBox_3 = new DButtonBox;
     DButtonBoxButton *pButton_5 = new DButtonBoxButton(DStyle().standardIcon(DStyle::SP_LockElement), "锁定设置");
-    pButton_3->setFixedSize(36, 36);
     pButton_3->setEnabled(false);
 
     DButtonBoxButton *pButton_6 = new DButtonBoxButton(DStyle().standardIcon(DStyle::SP_UnlockElement), "解锁设置");
-    pButton_4->setFixedSize(36, 36);
     pButton_4->setEnabled(false);
 
     pButtonBox_3->setButtonList(QList<DButtonBoxButton *>() << pButton_5 << pButton_6, true);
@@ -497,6 +503,8 @@ DButtonBoxExample::DButtonBoxExample(QWidget *parent)
     pHBoxLayout_pic->addWidget(pLabel);
 
     pVBoxLayout->addLayout(pHBoxLayout_pic);
+
+    updateButtonsSize();
 }
 
 QString DButtonBoxExample::getTitleName() const
@@ -517,6 +525,26 @@ int DButtonBoxExample::getFixedHeight() const
     return 600;
 }
 
+void DButtonBoxExample::changeEvent(QEvent *event)
+{
+    // override `event()` to update Size.
+    if (event->type() == QEvent::StyleChange) {
+        updateButtonsSize();
+    }
+    return ExampleWindowInterface::changeEvent(event);
+}
+
+void DButtonBoxExample::updateButtonsSize()
+{
+    for (auto button : findChildren<DButtonBoxButton *>()) {
+        if (button->text().isEmpty()) {
+            button->setFixedSize(DSizeModeHelper::element(QSize(24, 24), QSize(36, 36)));
+        } else {
+            button->setFixedHeight(DSizeModeHelper::element(24, 36));
+        }
+    }
+}
+
 DFloatingButtonExample::DFloatingButtonExample(QWidget *parent)
     : ExampleWindowInterface(parent)
 {
@@ -530,10 +558,8 @@ DFloatingButtonExample::DFloatingButtonExample(QWidget *parent)
     pHBoxLayout->setSpacing(0);
 
     DFloatingButton *pFloatingButton_1 = new DFloatingButton(DStyle::SP_IncreaseElement, this);
-    pFloatingButton_1->setFixedSize(48, 48);
 
     DFloatingButton *pFloatingButton_2 = new DFloatingButton(DStyle::SP_IncreaseElement, this);
-    pFloatingButton_2->setFixedSize(48, 48);
     pFloatingButton_2->setEnabled(false);
 
     pHBoxLayout->addStretch();
@@ -793,14 +819,14 @@ DComboBoxExample::DComboBoxExample(QWidget *parent)
     pHBoxLayout_1->setSpacing(0);
 
     DComboBox *pComboBox_1 = new DComboBox;
-    pComboBox_1->setFixedSize(240, 36);
+    pComboBox_1->setFixedWidth(240);
     for (int i = 0; i < 30; i++) {
         pComboBox_1->addItem(QString("ComboBox button - %1").arg(i));
     }
     pHBoxLayout_1->addWidget(pComboBox_1);
 
     QComboBox *pComboBox_1_count = new QComboBox();
-    pComboBox_1_count->setFixedSize(100, 36);
+    pComboBox_1_count->setFixedWidth(100);
     pComboBox_1_count->addItem(QString::number(10));
     pComboBox_1_count->addItem(QString::number(20));
     pComboBox_1_count->addItem(QString::number(30));
@@ -817,7 +843,7 @@ DComboBoxExample::DComboBoxExample(QWidget *parent)
     pHBoxLayout_2->setMargin(0);
     pHBoxLayout_2->setSpacing(0);
     DComboBox *pComboBox_2 = new DComboBox;
-    pComboBox_2->setFixedSize(340, 36);
+    pComboBox_2->setFixedWidth(340);
     pComboBox_2->addItem("/space");
     pHBoxLayout_2->addWidget(pComboBox_2);
 
@@ -887,7 +913,7 @@ DFontComboBoxExample::DFontComboBoxExample(QWidget *parent)
     pHBoxLayout_1->setSpacing(0);
 
     DFontComboBox *pComboBox_1 = new DFontComboBox;
-    pComboBox_1->setFixedSize(240, 36);
+    pComboBox_1->setFixedWidth(240);
     connect(pComboBox_1, &DFontComboBox::currentFontChanged, [](const QFont &f){
         qDebug() << "selected font:" << f;
     });
@@ -946,7 +972,7 @@ DSearchComboBoxExample::DSearchComboBoxExample(QWidget *parent)
     for (int i = 0; i < 16; ++i) {
         pComboBox_1->addItem(QString("手动选择驱动方案%1").arg(i + 1));
     }
-    pComboBox_1->setFixedSize(240, 36);
+    pComboBox_1->setFixedWidth(240);
     pHBoxLayout_1->addWidget(pComboBox_1);
 
     pVBoxLayout->addSpacing(30);

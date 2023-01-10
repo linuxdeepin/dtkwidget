@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2020 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2020 - 2023 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -89,6 +89,8 @@ public:
     QString getTitleName() const override;
     QString getDescriptionInfo() const override;
     int getFixedHeight() const override;
+    virtual void changeEvent(QEvent *event) override;
+    void updateButtonsSize();
 };
 
 class DFloatingButtonExample : public ExampleWindowInterface

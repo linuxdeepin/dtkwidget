@@ -1,10 +1,11 @@
-// SPDX-FileCopyrightText: 2019 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2019 - 2023 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
 #include "dfloatingmessage.h"
 #include "private/dfloatingmessage_p.h"
 #include "ddialogclosebutton.h"
+#include "dsizemode.h"
 
 #include <QHBoxLayout>
 #include <QTimer>
@@ -50,7 +51,7 @@ void DFloatingMessagePrivate::init()
     iconButton->setFocusPolicy(Qt::NoFocus);
     iconButton->setAttribute(Qt::WA_TransparentForMouseEvents);
     iconButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    iconButton->setIconSize(QSize(30, 30));
+    iconButton->setIconSize(DSizeModeHelper::element(QSize(20, 20), QSize(30, 30)));
 
     hBoxLayout->addWidget(iconButton);
     hBoxLayout->addWidget(labMessage);
@@ -64,7 +65,7 @@ void DFloatingMessagePrivate::init()
         content  = nullptr;
         closeButton = new DDialogCloseButton(q);
         // FIX bug-20506 close button too small
-        closeButton->setIconSize(QSize(32, 32));
+        closeButton->setIconSize(DSizeModeHelper::element(QSize(20, 20), QSize(32, 32)));
 
         hBoxLayout->addWidget(closeButton);
         q->connect(closeButton, &DIconButton::clicked, q, &DFloatingMessage::closeButtonClicked);
@@ -204,6 +205,17 @@ void DFloatingMessage::showEvent(QShowEvent *event)
         d->timer->start();
 
     DFloatingWidget::showEvent(event);
+}
+
+void DFloatingMessage::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::StyleChange) {
+        D_D(DFloatingMessage);
+        d->iconButton->setIconSize(DSizeModeHelper::element(QSize(20, 20), QSize(30, 30)));
+        if (d->closeButton)
+            d->closeButton->setIconSize(DSizeModeHelper::element(QSize(20, 20), QSize(32, 32)));
+    }
+    return DFloatingWidget::changeEvent(event);
 }
 
 DWIDGET_END_NAMESPACE

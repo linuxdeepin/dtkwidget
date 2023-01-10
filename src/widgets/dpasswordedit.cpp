@@ -1,9 +1,10 @@
-// SPDX-FileCopyrightText: 2015 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2015 - 2023 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
 #include "dpasswordedit.h"
 #include "private/dpasswordedit_p.h"
+#include "dsizemode.h"
 
 #include <DUtil>
 #include <DStyle>
@@ -99,6 +100,15 @@ bool DPasswordEdit::echoButtonIsVisible() const
     return d->togglePasswordVisibleButton->isVisible();
 }
 
+void DPasswordEdit::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::StyleChange) {
+        D_D(DPasswordEdit);
+        d->togglePasswordVisibleButton->setIconSize(DSizeModeHelper::element(QSize(18, 18), QSize(24, 24)));
+    }
+    return DLineEdit::changeEvent(event);
+}
+
 DPasswordEditPrivate::DPasswordEditPrivate(DPasswordEdit *q)
     : DLineEditPrivate(q)
 {
@@ -116,7 +126,7 @@ void DPasswordEditPrivate::init()
     togglePasswordVisibleButton = new DSuggestButton;
     togglePasswordVisibleButton->setAccessibleName("DPasswordEditPasswordVisibleButton");
     togglePasswordVisibleButton->setIcon(DStyle::standardIcon(q->style(), DStyle::SP_ShowPassword));
-    togglePasswordVisibleButton->setIconSize(QSize(24, 24));
+    togglePasswordVisibleButton->setIconSize(DSizeModeHelper::element(QSize(18, 18), QSize(24, 24)));
 
     list.append(togglePasswordVisibleButton);
     q->setRightWidgets(list);
