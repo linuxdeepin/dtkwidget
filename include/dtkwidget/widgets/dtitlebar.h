@@ -14,7 +14,9 @@
 
 DGUI_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
+
 class DSidebarHelper;
+class DTitlebarSettings;
 class DTitlebarPrivate;
 class LIBDTKWIDGETSHARED_EXPORT DTitlebar : public QFrame, public DTK_CORE_NAMESPACE::DObject
 {
@@ -71,6 +73,8 @@ public:
     bool blurBackground() const;
     void setFullScreenButtonVisible(bool enabled);
 
+    DTitlebarSettings *settings();
+
 Q_SIGNALS:
     void optionClicked();
     void doubleClicked();
@@ -121,6 +125,7 @@ private:
     D_PRIVATE_SLOT(void _q_aboutActionTriggered())
     D_PRIVATE_SLOT(void _q_quitActionTriggered())
     D_PRIVATE_SLOT(void _q_switchThemeActionTriggered(QAction*))
+    D_PRIVATE_SLOT(void _q_toolBarActionTriggerd())
 #endif
 };
 
