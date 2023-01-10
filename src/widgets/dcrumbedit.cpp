@@ -1,10 +1,11 @@
-// SPDX-FileCopyrightText: 2017 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2017 - 2023 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
 #include "dcrumbedit.h"
 #include "dobject_p.h"
 #include "DStyle"
+#include "dsizemode.h"
 
 #include <QAbstractTextDocumentLayout>
 #include <QPainter>
@@ -17,6 +18,8 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QTime>
+
+#include <private/qtextdocument_p.h>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -527,6 +530,7 @@ public:
     int objectType;
     bool crumbReadOnly = false;
     int crumbRadius = 2;
+    bool explicitCrumbRadius = false;
     QString splitter = ",";
     QStringList formatList;
     QMap<QString, DCrumbTextFormat> formats;
@@ -972,6 +976,7 @@ void DCrumbEdit::setCrumbRadius(int crumbRadius)
     D_D(DCrumbEdit);
 
     d->crumbRadius = crumbRadius;
+    d->explicitCrumbRadius = true;
 }
 
 /*!
@@ -1009,6 +1014,28 @@ bool DCrumbEdit::event(QEvent *e)
         d->widgetRight->setFixedWidth(frame_radius);
     } else if (e->type() == QEvent::Resize) {
         d->panelFrame->resize(size());
+    } else if (e->type() == QEvent::StyleChange)  {
+        int frameRadius = DStyle::pixelMetric(style(), DStyle::PM_FrameRadius);
+        // update crumbRadius if not set.
+        if (!d->explicitCrumbRadius) {
+            d->crumbRadius = frameRadius;
+            auto collection = document()->docHandle()->formatCollection();
+            for (int i = 0; i < collection->numFormats(); ++i) {
+                // only update format in d->formats.
+                if (!collection->format(i).hasProperty(QTextFormat::UserProperty + 1))
+                    continue;
+                const auto key = collection->format(i).property(QTextFormat::UserProperty + 1).toString();
+                if (d->formats.contains(key))
+                    collection->formats[i].setProperty(QTextFormat::UserProperty + 4, crumbRadius());
+            }
+            for (auto iter = d->formats.begin(); iter != d->formats.end(); iter++) {
+                iter->setBackgroundRadius(crumbRadius());
+            }
+        }
+
+        int margins = DStyle::pixelMetric(style(), DStyle::PM_FrameMargins);
+        int margin = frameRadius / 2 + margins + 2;
+        setViewportMargins(margin, margin, margin, margin);
     }
 
     return QTextEdit::event(e);

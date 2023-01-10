@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2015 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2015 - 2023 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -31,6 +31,8 @@ protected:
     Q_DISABLE_COPY(DPasswordEdit)
     D_DECLARE_PRIVATE(DPasswordEdit)
     Q_PRIVATE_SLOT(d_func(), void _q_toggleEchoMode())
+
+    void changeEvent(QEvent *event) override;
 };
 
 DWIDGET_END_NAMESPACE

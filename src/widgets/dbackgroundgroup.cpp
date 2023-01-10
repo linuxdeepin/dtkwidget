@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2023 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -6,6 +6,7 @@
 #include "dstyleoption.h"
 #include "dstyle.h"
 #include "dobject_p.h"
+#include "dsizemode.h"
 
 #include <QBoxLayout>
 #include <QStylePainter>
@@ -268,6 +269,10 @@ bool DBackgroundGroup::event(QEvent *event)
         d->updateOptions();
         break;
     }
+    case QEvent::StyleChange: {
+        D_D(DBackgroundGroup);
+        d->updateLayoutSpacing();
+    } break;
     default:
         break;
     }

@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2017 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2017 - 2023 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -28,6 +28,7 @@
 #include "dtitlebar.h"
 #include "dwarningbutton.h"
 #include "dsuggestbutton.h"
+#include "dsizemode.h"
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -588,7 +589,7 @@ void DDialog::insertButton(int index, QAbstractButton *button, bool isDefault)
 
     DVerticalLine *line = new DVerticalLine;
     line->setObjectName("VLine");
-    line->setFixedHeight(30);
+    line->setFixedHeight(DSizeModeHelper::element(20, 30));
 
     d->buttonLayout->insertWidget(index * 2 , line);
     d->buttonLayout->insertWidget(index * 2 + 1, button);
@@ -1167,6 +1168,20 @@ bool DDialog::eventFilter(QObject *watched, QEvent *event)
     }
 
     return DAbstractDialog::eventFilter(watched, event);
+}
+
+void DDialog::changeEvent(QEvent *event)
+{
+    Q_D(DDialog);
+    if (event->type() == QEvent::StyleChange) {
+        for (int i = 0; i < d->buttonLayout->count(); ++i) {
+            if (auto line = qobject_cast<DVerticalLine *>(d->buttonLayout->itemAt(i)->widget())) {
+                line->setFixedHeight(DSizeModeHelper::element(20, 30));
+            }
+        }
+        d->updateSize();
+    }
+    return DAbstractDialog::changeEvent(event);
 }
 
 DWIDGET_END_NAMESPACE

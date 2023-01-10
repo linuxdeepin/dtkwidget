@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2015 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2015 - 2023 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -71,7 +71,6 @@ MainWindow::MainWindow(QWidget *parent)
     m_pListView = new DListView(this);
     m_pListView->setFixedWidth(200);
     m_pListView->setItemSpacing(0);
-    m_pListView->setItemSize(QSize(200, 50));
     m_pListView->setModel(m_pListViewModel);
 
     setSidebarWidget(m_pListView);
@@ -94,6 +93,15 @@ MainWindow::MainWindow(QWidget *parent)
         titlebar->menu()->addAction("dfm-settings");
         titlebar->menu()->addAction("dt-settings");
         titlebar->menu()->addAction("testPrinter");
+        auto sizeModeAction = titlebar->menu()->addAction(
+                     QString("SizeMode/%1").arg(DGuiApplicationHelper::isCompactMode() ? "Compact" : "Normal"));
+        connect(sizeModeAction, &QAction::triggered, this, [sizeModeAction]() {
+            DGuiApplicationHelper::instance()->setSizeMode(DGuiApplicationHelper::isCompactMode()
+                                                           ? DGuiApplicationHelper::NormalMode
+                                                           : DGuiApplicationHelper::CompactMode);
+            sizeModeAction->setText(
+                        QString("SizeMode/%1").arg(DGuiApplicationHelper::isCompactMode() ? "Compact" : "Normal"));
+        });
         QMenu *menu = titlebar->menu()->addMenu("sub-menu");
         connect(menu->addAction("show full screen"), &QAction::triggered, this, [this]() {
             this->isFullScreen() ? this->showNormal() : this->showFullScreen();
