@@ -1,0 +1,11 @@
+{
+    "spacingSize": 20,
+    "tools": [
+        {
+            "key": "builtin/search-tool"
+        },
+        {
+            "key": "test-tool"
+        }
+    ]
+}
