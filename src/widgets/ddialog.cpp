@@ -259,23 +259,14 @@ void DDialogPrivate::_q_defaultButtonTriggered()
 }
 
 /*!
-    \class Dtk::Widget::DDialog
+@~english
+    @class Dtk::Widget::DDialog
     \inmodule dtkwidget
 
-    \brief 可以使用 DDialog 类快速创建符合 DDE 风格的简要对话框窗口.
-    \brief Use DDialog class to create quick dialog window matched DDE style.
+    @brief Use DDialog class to create quick dialog window matched DDE style.
 
-    \ingroup dialog-classes
-    \ingroup abstractwidgets
-
-    DDialog 旨在提供简要的讯问式对话框的快速实现。提供了包含标题，对话框内容，默认图标，用以添加按钮的布局和一个可以自由添加内容的内容布局。
-    可以使用 addButton() , insertButton(), setDefaultButton() 等函数方便的给对话框插入按钮并进行管理，可以使用 addContent(), insertContent()
-    等函数操作内容布局。
-
-    此外， DDialog 还提供了一些额外的函数以供实现一些常见的需求。如，可以通过设置 setOnButtonClickedClose() 为 true 来使得用
-    户在点击任何对话框上的按钮后关闭对话框。
-
-    当你需要快速构建较为简单结构的对话框，你应当使用 DDialog ，对于较为复杂的需求，请参阅 DAbstractDialog 或 QDialog 相关文档。
+    @ingroup dialog-classes
+    @ingroup abstractwidgets
 
     \section1 differences Differences with QDialog
 
@@ -286,13 +277,14 @@ void DDialogPrivate::_q_defaultButtonTriggered()
     DDialog also provided some extra function which maybe useful for some common use case, for example, you can
     set setOnButtonClickedClose() to \c true , then once user clicked a button, the dialog will got closed.
 
-    \sa DAbstractDialog, QDialog
+    @sa DAbstractDialog, QDialog
 */
 
 /*!
-  \brief 构造一个 DDialog 对话框.
+@~english
+  @brief Construct a DDialog dialog box
 
-  \a parent 父控件指针.
+  \a parent Parent control pointer
  */
 DDialog::DDialog(QWidget *parent) :
     DAbstractDialog(*new DDialogPrivate(this), parent)
@@ -301,11 +293,12 @@ DDialog::DDialog(QWidget *parent) :
 }
 
 /*!
-  \brief 构造一个 DDialog 对话框。
+@~english
+  @brief Construct a DDialog dialog box
   
-  \a title 标题
-  \a message 对话框消息
-  \a parent 父控件
+  \a title Title
+  \a message Dialog box messages
+  \a parent Parent control pointer
  */
 DDialog::DDialog(const QString &title, const QString &message, QWidget *parent) :
     DAbstractDialog(*new DDialogPrivate(this), parent)
@@ -317,11 +310,12 @@ DDialog::DDialog(const QString &title, const QString &message, QWidget *parent) 
 }
 
 /*!
-  \brief 通过按钮文字获取按钮下标.
+@~english
+  @brief Gets the button index from its text
   
-  \a text 按钮文字
+  \a text The text of the button
   
-  \return 按钮下标
+  @return The index of the button
  */
 int DDialog::getButtonIndexByText(const QString &text) const
 {
@@ -338,7 +332,8 @@ int DDialog::getButtonIndexByText(const QString &text) const
 }
 
 /*!
-  \brief 获得对话框包含的按钮数量.
+@~english
+  @brief Gets the number of buttons that the dialog box contains.
  */
 int DDialog::buttonCount() const
 {
@@ -348,7 +343,8 @@ int DDialog::buttonCount() const
 }
 
 /*!
-  \brief 获得对话框所含的所有内容控件的数量.
+@~english
+  @brief Gets the number of all content controls that the dialog box contains.
  */
 int DDialog::contentCount() const
 {
@@ -358,7 +354,8 @@ int DDialog::contentCount() const
 }
 
 /*!
-  \brief 获得对话框的按钮列表
+@~english
+  @brief Gets a list of buttons for the dialog box
  */
 QList<QAbstractButton *> DDialog::getButtons() const
 {
@@ -368,7 +365,8 @@ QList<QAbstractButton *> DDialog::getButtons() const
 }
 
 /*!
-  \brief 获得对话框所含的所有内容控件列表
+@~english
+  @brief Gets a list of all content controls that the dialog box contains
  */
 QList<QWidget *> DDialog::getContents() const
 {
@@ -378,10 +376,11 @@ QList<QWidget *> DDialog::getContents() const
 }
 
 /*!
-  \brief 获得指定下标所对应的按钮.
+@~english
+  @brief Gets the button corresponding to the specified index
   
-  \a index 按钮下标
-  \return 对应的按钮
+  \a index The index of the button
+  @return Returns the button with the specified index
  */
 QAbstractButton *DDialog::getButton(int index) const
 {
@@ -391,9 +390,10 @@ QAbstractButton *DDialog::getButton(int index) const
 }
 
 /*!
-  \brief 获取指定下标对应的内容控件.
-  \a index　控件下标
-  \return 返回对应的内容控件
+@~english
+  @brief Gets the content control corresponding to the specified subscript
+  \a index The index of the control
+  @return Returns the corresponding content control
  */
 QWidget *DDialog::getContent(int index) const
 {
@@ -403,9 +403,10 @@ QWidget *DDialog::getContent(int index) const
 }
 
 /*!
-  \brief 返回对话框标题.
+@~english
+  @brief Returns the dialog box title
 
-  \return 返回对话框的标题内容
+  @return Returns the dialog box title
  */
 QString DDialog::title() const
 {
@@ -415,9 +416,10 @@ QString DDialog::title() const
 }
 
 /*!
-  \brief 返回对话框消息文本.
+@~english
+  @brief Returns the dialog box message text.
 
-  \return 返回对话框的显示信息
+  @return Returns the dialog box message text
  */
 QString DDialog::message() const
 {
@@ -427,9 +429,10 @@ QString DDialog::message() const
 }
 
 /*!
-  \brief 返回对话框图标.
+@~english
+  @brief Return to the dialog box icon
 
-  \return  返回对话框的icon
+  @return  Return to the dialog box icon
  */
 QIcon DDialog::icon() const
 {
@@ -439,8 +442,9 @@ QIcon DDialog::icon() const
 }
 
 /*!
-  \brief 返回对话框图标的 QPixmap 对象.
-  \return 返回ICON的pixmap
+@~english
+  @brief Returns the QPixmap object of the dialog icon
+  @return Returns the QPixmap object of the dialog icon
  */
 QPixmap DDialog::iconPixmap() const
 {
@@ -454,9 +458,10 @@ QPixmap DDialog::iconPixmap() const
 }
 
 /*!
-  \brief 返回对话框的文本格式.
+@~english
+  @brief Returns the text format of the dialog box
 
-  \return 返回设定的文本格式
+  @return Returns the text format of the dialog box
  */
 Qt::TextFormat DDialog::textFormat() const
 {
@@ -466,9 +471,10 @@ Qt::TextFormat DDialog::textFormat() const
 }
 
 /*!
-  \brief 检查在点击任何按钮后是否都会关闭对话框.
+@~english
+  @brief Check to see if the dialog closes after clicking any button
 
-  \return 关闭对话框返回 true , 否则返回 false.
+  @return Returns true if the dialog box is closed, false otherwise
  */
 bool DDialog::onButtonClickedClose() const
 {
@@ -478,8 +484,9 @@ bool DDialog::onButtonClickedClose() const
 }
 
 /*!
-  \brief 设定内容布局的内容 margin .
-  \a margins 具体的 margins
+@~english
+  @brief Sets the content margin for the content layout
+  \a margins Specific margins
  */
 void DDialog::setContentLayoutContentsMargins(const QMargins &margins)
 {
@@ -489,9 +496,10 @@ void DDialog::setContentLayoutContentsMargins(const QMargins &margins)
 }
 
 /*!
-  \brief 返回内容布局的边距.
+@~english
+  @brief Returns the margins for the content layout
 
-  \return 返回内容布局的内容margin
+  @return Returns the content margin of the content layout
  */
 QMargins DDialog::contentLayoutContentsMargins() const
 {
@@ -501,9 +509,10 @@ QMargins DDialog::contentLayoutContentsMargins() const
 }
 
 /*!
-  \brief 关闭按钮的可见属性.
+@~english
+  @brief Turns off the visibility property of the button
 
-  \return 返回关闭按钮是否可见的bool值
+  @return Returns the bool value of whether the close button is visible
  */
 bool DDialog::closeButtonVisible() const
 {
@@ -511,13 +520,14 @@ bool DDialog::closeButtonVisible() const
 }
 
 /*!
-  \brief 向对话框添加按钮.
+@~english
+  @brief Adds a button to the dialog box
   
-  \a text 按钮文字
-  \a isDefault 是否默认按钮
-  \a type 按钮类型
+  \a text The text of button
+  \a isDefault Default button or not
+  \a type Types of button
   
-  \return 所添加的按钮的下标
+  @return The index of the added button
  */
 int DDialog::addButton(const QString &text, bool isDefault, ButtonType type)
 {
@@ -529,11 +539,12 @@ int DDialog::addButton(const QString &text, bool isDefault, ButtonType type)
 }
 
 /*!
-  \brief 向对话框添加按钮.
+@~english
+  @brief Adds a button to the dialog box
   
-  \a text 按钮文字
+  \a text The text of button
   
-  \return 所添加的按钮的下标
+  @return The index of the added button
  */
 int DDialog::addButtons(const QStringList &text)
 {
@@ -545,12 +556,13 @@ int DDialog::addButtons(const QStringList &text)
 }
 
 /*!
-  \brief 向对话框插入按钮.
+@~english
+  @brief Adds a button to the dialog box
   
-  \a index 下标
-  \a text 按钮文字
-  \a isDefault 是否是默认按钮
-  \a type 按钮类型
+  \a index The index of the button to add
+  \a text The text of button
+  \a isDefault Default button or not
+  \a type Types of buttons
  */
 void DDialog::insertButton(int index, const QString &text, bool isDefault, ButtonType type)
 {
@@ -577,11 +589,12 @@ void DDialog::insertButton(int index, const QString &text, bool isDefault, Butto
 }
 
 /*!
-  \brief 向对话框插入按钮.
+@~english
+  @brief Inserts a button into the dialog box.
   
-  \a index 下标
-  \a button 待插入的按钮
-  \a isDefault 是否是默认按钮
+  \a index The index of the button to add
+  \a button Button to insert
+  \a isDefault Default button or not
  */
 void DDialog::insertButton(int index, QAbstractButton *button, bool isDefault)
 {
@@ -627,10 +640,11 @@ void DDialog::insertButton(int index, QAbstractButton *button, bool isDefault)
 }
 
 /*!
-  \brief 向对话框插入按钮.
+@~english
+  @brief Inserts a button into the dialog box
   
-  \a index 下标
-  \a text 按钮文字
+  \a index The index of the button to add
+  \a text The text of button
  */
 void DDialog::insertButtons(int index, const QStringList &text)
 {
@@ -640,9 +654,10 @@ void DDialog::insertButtons(int index, const QStringList &text)
 }
 
 /*!
-  \brief 从对话框移除按钮.
+@~english
+  @brief Removes the button from the dialog box
   
-  \a index 待移除按钮的下标
+  \a index The index of the button to remove
  */
 void DDialog::removeButton(int index)
 {
@@ -676,9 +691,10 @@ void DDialog::removeButton(int index)
 }
 
 /*!
-  \brief 从对话框移除按钮.
+@~english
+  @brief Removes the button from the dialog box
   
-  \a button 待移除的按钮
+  \a button The button to remove
  */
 void DDialog::removeButton(QAbstractButton *button)
 {
@@ -686,9 +702,10 @@ void DDialog::removeButton(QAbstractButton *button)
 }
 
 /*!
-  \brief 从对话框移除按钮.
+@~english
+  @brief Removes the button from the dialog box
   
-  \a text 待移除按钮的文本内容
+  \a text The text of the button to remove
  */
 void DDialog::removeButtonByText(const QString &text)
 {
@@ -699,7 +716,8 @@ void DDialog::removeButtonByText(const QString &text)
 }
 
 /*!
-  \brief 清除所有按钮.
+@~english
+  @brief Clear all buttons
  */
 void DDialog::clearButtons()
 {
@@ -717,10 +735,11 @@ void DDialog::clearButtons()
 }
 
 /*!
-  \brief 设置默认按钮.
+@~english
+  @brief Setting the default button
   
-  \a index 要设置的默认按钮的下标.
-  \return 设置成功返回 true，否则返回false.
+  \a index The index of the default button to set
+  @return Returns true on success and false otherwise
  */
 bool DDialog::setDefaultButton(int index)
 {
@@ -733,10 +752,11 @@ bool DDialog::setDefaultButton(int index)
 }
 
 /*!
-  \brief 设置默认按钮.
+@~english
+  @brief Setting the default button
   
-  \a str 要设置的默认按钮的文本内容
-  \sa default
+  \a str The text content of the default button to set
+  @sa default
  */
 bool DDialog::setDefaultButton(const QString &str)
 {
@@ -744,10 +764,11 @@ bool DDialog::setDefaultButton(const QString &str)
 }
 
 /*!
-  \brief 设置默认按钮
+@~english
+  @brief Setting the default button
   
-  \a button 要设置的默认按钮
-  \sa default
+  \a button Default button to set
+  @sa default
  */
 void DDialog::setDefaultButton(QAbstractButton *button)
 {
@@ -757,10 +778,11 @@ void DDialog::setDefaultButton(QAbstractButton *button)
 }
 
 /*!
-  \brief 添加控件到对话框内容布局.
+@~english
+  @brief Add controls to the dialog content layout.
   
-  \a widget 待添加的控件
-  \a alignment 对齐方式
+  \a widget Controls to add
+  \a alignment alignment
  */
 void DDialog::addContent(QWidget *widget, Qt::Alignment alignment)
 {
@@ -772,11 +794,12 @@ void DDialog::addContent(QWidget *widget, Qt::Alignment alignment)
 }
 
 /*!
-  \brief 在对话框内容布局指定位置插入控件.
+@~english
+  @brief Inserts a control at the location specified in the dialog box content layout
   
-  \a index 待插入的位置下标
-  \a widget 待插入的控件
-  \a alignment 对齐方式
+  \a index The index of the position to insert
+  \a widget Control to insert
+  \a alignment alignment
  */
 void DDialog::insertContent(int index, QWidget *widget, Qt::Alignment alignment)
 {
@@ -788,10 +811,11 @@ void DDialog::insertContent(int index, QWidget *widget, Qt::Alignment alignment)
 }
 
 /*!
-  \brief 从对话框内容布局中移除指定控件.
+@~english
+  @brief Removes the specified control from the dialog box content layout.
   
-  \a widget 待移除的控件
-  \a isDelete 是否执行删除
+  \a widget Control to remove
+  \a isDelete Whether to delete
  */
 void DDialog::removeContent(QWidget *widget, bool isDelete)
 {
@@ -806,9 +830,10 @@ void DDialog::removeContent(QWidget *widget, bool isDelete)
 }
 
 /*!
-  \brief 清空对话框内容布局中的所有内容.
+@~english
+  @brief Clear everything in the content layout of the dialog box.
   
-  \a isDelete 是否删除
+  \a isDelete Whether to delete
  */
 void DDialog::clearContents(bool isDelete)
 {
@@ -825,11 +850,12 @@ void DDialog::clearContents(bool isDelete)
 }
 
 /*!
-  \brief 设置对话框内容间隔.
+@~english
+  @brief Sets the dialog content interval.
   
-  设置对话框的内容布局的间隔 \a spacing 大小
+  \a spacing Spacing size for the content layout of the dialog box
   
-  \sa QBoxLayout::setSpacing
+  @sa QBoxLayout::setSpacing
  */
 void DDialog::setSpacing(int spacing)
 {
@@ -839,11 +865,12 @@ void DDialog::setSpacing(int spacing)
 }
 
 /*!
-  \brief 追加对话框内容间隔.
+@~english
+  @brief Append dialog box content intervals
   
-  在对话框的内容布局后追加一个非弹性，大小为 \a spacing 的间隔（一个 QSpacerItem ）。
+  Append an inelastic interval of size \a spacing after the content layout of the dialog box (a QSpacerItem)
   
-  \sa QBoxLayout::addSpacing
+  @sa QBoxLayout::addSpacing
  */
 void DDialog::addSpacing(int spacing)
 {
@@ -853,12 +880,13 @@ void DDialog::addSpacing(int spacing)
 }
 
 /*!
-  \brief 插入对话框内容间隔.
+@~english
+  @brief Insert dialog box content intervals.
   
-  在对话框的内容布局的指定位置插入一个非弹性，大小为 \a spacing 的间隔（一个 QSpacerItem ）。
-  \a index 插入间隔的索引位置.
+  Inserts an inelastic interval of size spacing (a QSpacerItem) at the specified position in the content layout of the dialog box.
+  \a index The index position at which the interval is inserted.
   
-  \sa QBoxLayout::insertSpacing
+  @sa QBoxLayout::insertSpacing
  */
 void DDialog::insertSpacing(int index, int spacing)
 {
@@ -868,9 +896,10 @@ void DDialog::insertSpacing(int index, int spacing)
 }
 
 /*!
-  \brief 清除内容间隔.
+@~english
+  @brief Clear content intervals.
   
-  清除对话框内容布局中包含的所有 QSpacerItem 。
+  Clear all QSpacerItems contained in the dialog content layout.
  */
 void DDialog::clearSpacing()
 {
@@ -886,10 +915,11 @@ void DDialog::clearSpacing()
 }
 
 /*!
-  \brief 设置按钮文字.
+@~english
+  @brief Setting button text.
   
-  \a index 需要设置文字的按钮的下标
-  \a text 所需要设置的文字
+  \a index The index of the button that requires the text to be set
+  \a text Text to set
  */
 void DDialog::setButtonText(int index, const QString &text)
 {
@@ -899,9 +929,10 @@ void DDialog::setButtonText(int index, const QString &text)
 }
 
 /*!
-  \brief 设置按钮图标.
-  \a index 需要设置图标的按钮的下标
-  \a icon 所需要设置的图标
+@~english
+  @brief Set button icon.
+  \a index The index of the button that needs to be set for the icon
+  \a icon Icon to set
  */
 void DDialog::setButtonIcon(int index, const QIcon &icon)
 {
@@ -911,9 +942,10 @@ void DDialog::setButtonIcon(int index, const QIcon &icon)
 }
 
 /*!
-  \brief 设置对话框标题.
+@~english
+  @brief Sets the dialog box title.
 
-  \a title 对话框标题.
+  \a title Dialog box title.
  */
 void DDialog::setTitle(const QString &title)
 {
@@ -930,9 +962,10 @@ void DDialog::setTitle(const QString &title)
 }
 
 /*!
-  \brief 设定标题Label内容是否可截断换行.
+@~english
+  @brief Specifies whether the content of the title Label can be truncated.
 
-  \a wordWrap true可换行　false不可以换行
+  \a wordWrap true can wrap a line. false can't wrap a line
  */
 void DDialog::setWordWrapTitle(bool wordWrap)
 {
@@ -941,9 +974,10 @@ void DDialog::setWordWrapTitle(bool wordWrap)
 }
 
 /*!
-  \brief 设置对话框消息内容.
+@~english
+  @brief Sets the dialog box message content.
 
-  \a message 对话框消息.
+  \a message Dialog box messages
  */
 void DDialog::setMessage(const QString &message)
 {
@@ -966,8 +1000,9 @@ void DDialog::setWordWrapMessage(bool wordWrap)
 }
 
 /*!
-  \brief 设置对话框图标.
-  \a icon 对话框图标.
+@~english
+  @brief Set the dialog icon
+  \a icon Dialog icon
  */
 void DDialog::setIcon(const QIcon &icon)
 {
@@ -981,12 +1016,13 @@ void DDialog::setIcon(const QIcon &icon)
 }
 
 /*!
-  \brief 设置对话框图标.
+@~english
+  @brief Set the dialog icon.
   \overload
 
-  为对话框设置图标，同时可以指定一个期望的图标大小。
+  Sets the icon for the dialog box and specifies a desired icon size.
 
-  \a icon 对话框图标 \a expectedSize 期望大小.
+  \a icon Dialog icon \a expectedSize Expected size.
  */
 void DDialog::setIcon(const QIcon &icon, const QSize &expectedSize)
 {
@@ -1004,9 +1040,10 @@ void DDialog::setIcon(const QIcon &icon, const QSize &expectedSize)
 }
 
 /*!
-  \brief 设置对话框位图图标.
+@~english
+  @brief Sets the dialog box bitmap icon.
 
-  \a iconPixmap pixmap类型图标.
+  \a iconPixmap icon of pixmap type.
  */
 void DDialog::setIconPixmap(const QPixmap &iconPixmap)
 {
@@ -1014,8 +1051,9 @@ void DDialog::setIconPixmap(const QPixmap &iconPixmap)
 }
 
 /*!
-  \brief 设置文字格式.
-  \a textFormat 文字格式.
+@~english
+  @brief Formatting text.
+  \a textFormat Text format.
  */
 void DDialog::setTextFormat(Qt::TextFormat textFormat)
 {
@@ -1032,9 +1070,10 @@ void DDialog::setTextFormat(Qt::TextFormat textFormat)
 }
 
 /*!
-  \brief 设置是否在点击按钮后关闭对话框.
+@~english
+  @brief Sets whether to close the dialog box when the button is clicked.
   
-  当 \a onButtonClickedClose 设置为 true 后，无论点击什么按钮，都会在点击后关闭对话框。
+  When \a onButtonClickedClose is set to true, whatever button is clicked will close the dialog box when clicked.
  */
 void DDialog::setOnButtonClickedClose(bool onButtonClickedClose)
 {
@@ -1044,14 +1083,15 @@ void DDialog::setOnButtonClickedClose(bool onButtonClickedClose)
 }
 
 /*!
-  \brief 以模态框形式显示当前对话框.
+@~english
+  @brief Displays the current dialog box as a modal.
   
-  以 \l{QDialog#Modal Dialogs}{模态框} 形式显示当前对话框，将会阻塞直到用户关闭对话框。
+  Displaying the current dialog as {QDialog#Modal Dialogs}{modal boxes} will block until the user closes the dialog box.
   
-  onButtonClickedClose()为 true 时返回当前点击按钮的Index，否则返回 结果。
-  \return 返回模态对话框处理的结果.
+  If \a onButtonClickedClose() is true, it returns the Index of the button that is currently clicked; otherwise, it returns the result.
+  @return Returns the result of the modal dialog processing.
 
-  \sa QDialog::exec()
+  @sa QDialog::exec()
  */
 int DDialog::exec()
 {
