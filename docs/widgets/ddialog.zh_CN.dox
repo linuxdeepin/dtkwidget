@@ -86,13 +86,13 @@ int main(int argc, char *argv[]){
 
 ### 3.实现对话框
 
-对话框分为模态对话框和非模态对话框：</br>
-模态对话框是在对话框关闭之前，不能再与同一个应用程序的其他窗口进行交互。</br>
-非模态对话框是可以与同一程序中的窗口交互的。</br>
+对话框分为模态对话框和非模态对话框：<br>
+模态对话框是在对话框关闭之前，不能再与同一个应用程序的其他窗口进行交互。<br>
+非模态对话框是可以与同一程序中的窗口交互的。<br>
 
-设置一个主窗口，在主窗口上设置一个按钮，实现通过点击按钮弹出对话框的功能</br>
+设置一个主窗口，在主窗口上设置一个按钮，实现通过点击按钮弹出对话框的功能
 
-3.1 模态对话框实现</br>
+3.1 模态对话框实现
 
 显示一个对话框一般有两种方式，一种是使用exec()方法，它总是以模态来显示对话框；另一种是使用show()方法，它使得对话框既可以模态显示，也可以非模态显示，决定它是模态还是非模态的是对话框的modal属性。
 
@@ -154,8 +154,8 @@ dialog->addButton("取消"); //添加一个取消按钮
 dialog->addButton("授权", false, DDialog::ButtonRecommend); //添加一个授权按钮并设置样式为 “推荐按钮” 的样式
 ```
 
-对话框效果如下：</br>
-![ddialog_example](../images/ddialog_example.png)
+对话框效果如下：<br>
+![ddialog_example](/docs/images/ddialog_example.png)
 
 ## DFileDialog
 
@@ -180,12 +180,12 @@ int main(int argc, char *argv[]){
 }
 ```
 
-运行后点击按钮显示文件对话框，如下图所示：</br>
-![dfiledialog_example](../images/dfiledialog.png)
+运行后点击按钮显示文件对话框，如下图所示：<br>
+![dfiledialog_example](/docs/images/dfiledialog.png)
 
 ## DMessageManager
 
-DTK提供了更为丰富和美观的消息提示，包含可自动消失的信息和点击后消失的信息，下面通过一个示例来了解。</br>
+DTK提供了更为丰富和美观的消息提示，包含可自动消失的信息和点击后消失的信息，下面通过一个示例来了解。
 
 设置一个主窗口，在主窗口上设置两个按钮，一个按钮点击以后会弹出可自动消失的提示消息，另一个按钮点击以后会弹出点击消失的提示信息。示例代码如下：
 
@@ -221,13 +221,283 @@ int main(int argc, char *argv[]){
 
 ```
 
-运行后效果如下图所示，主窗口效果图：</br>
-![dmessagemanager_mw](../images/dmessagemanager_mw.png)
+运行后效果如下图所示，主窗口效果图：<br>
+![dmessagemanager_mw](/docs/images/dmessagemanager_mw.png)
 
-点击第一个按钮（自动消失信息）以后效果图：</br>
-![dmessagemanager_mw](../images/dmessagemanager_1.png)
+点击第一个按钮（自动消失信息）以后效果图：<br>
+![dmessagemanager_mw](/docs/images/dmessagemanager_1.png)
 
-点击第二个按钮（点击消失按钮）以后效果图：</br>
-![dmessagemanager_mw](../images/dmessagemanager_2.png)
+点击第二个按钮（点击消失按钮）以后效果图：<br>
+![dmessagemanager_mw](/docs/images/dmessagemanager_2.png)
+
+@property QString Dtk::Widget::DDialog::title
+@brief 对话框标题属性
+@sa read方法  [title](@ref Dtk::Widget::DDialog::title() const)
+@sa write方法 [setTitle](@ref Dtk::Widget::DDialog::setTitle(const QString &title))
+
+@property QString Dtk::Widget::DDialog::message
+@brief 对话框消息属性
+@sa read方法  [message](@ref Dtk::Widget::DDialog::message() const)
+@sa write方法 [setMessage](@ref Dtk::Widget::DDialog::setMessage(const QString& message))
+
+@property QIcon Dtk::Widget::DDialog::icon
+@brief 对话框图标属性
+@sa read方法  [icon](@ref Dtk::Widget::DDialog::icon() const)
+@sa write方法 [setIcon](@ref Dtk::Widget::DDialog::setIcon(const QIcon &icon))
+
+@property Qt::TextFormat Dtk::Widget::DDialog::textFormat
+@brief 对话框的文本格式属性
+@sa read方法  [textFormat](@ref Dtk::Widget::DDialog::textFormat() const)
+@sa write方法 [setTextFormat](@ref Dtk::Widget::DDialog::setTextFormat(Qt::TextFormat textFormat))
+
+@property bool Dtk::Widget::DDialog::onButtonClickedClose
+@brief 标志是否在点击按钮后关闭对话框的属性
+@sa read方法  [onButtonClickedClose](@ref Dtk::Widget::DDialog::onButtonClickedClose() const)
+@sa write方法 [setOnButtonClickedClose](@ref Dtk::Widget::DDialog::setOnButtonClickedClose(bool onButtonClickedClose))
+
+@property bool Dtk::Widget::DDialog::closeButtonVisible
+@brief 关闭按钮的可见属性
+@sa read方法  [onButtonClickedClose](@ref Dtk::Widget::DDialog::onButtonClickedClose() const)
+@sa write方法 [setCloseButtonVisible](@ref Dtk::Widget::DDialog::setCloseButtonVisible(bool closeButtonVisible))
+
+@enum Dtk::Widget::DDialog::ButtonType  
+@brief 表示按钮类型
+@details
+| **值**          | **含义** |
+|:---------------:|:------:|
+| ButtonNormal    | 标准    | 
+| ButtonWarning   | 警告    |
+| ButtonRecommend | 推荐    |
+
+@fn Dtk::Widget::DDialog::DDialog(QWidget *parent = nullptr)
+@brief  构造一个 DDialog 对话框
+@param parent 父控件指针
+
+@fn Dtk::Widget::DDialog::DDialog(const QString &title, const QString &message, QWidget *parent)
+@brief 构造一个 DDialog 对话框
+@param title 标题
+@param message 对话框消息
+@param parent 父控件指针
+
+@fn int Dtk::Widget::DDialog::getButtonIndexByText(const QString &text) const
+@brief 通过按钮文字获取按钮下标
+@param text 按钮文字
+@return 按钮下标
+
+@fn int Dtk::Widget::DDialog::buttonCount() const
+@brief 获得对话框包含的按钮数量
+
+@fn int Dtk::Widget::DDialog::contentCount() const
+@brief 获得对话框包含的所有内容控件的数量
+
+@fn QList<QAbstractButton*> Dtk::Widget::DDialog::getButtons() const
+@brief 获得对话框的按钮列表
+
+@fn QList<QWidget*> Dtk::Widget::DDialog::getContents() const
+@brief 获得对话框包含的所有内容控件列表
+
+@fn QAbstractButton* Dtk::Widget::DDialog::getButton(int index) const
+@brief 获得指定下标所对应的按钮
+@param index 按钮下标
+@return 返回指定下标所对应的按钮
+
+@fn QWidget* Dtk::Widget::DDialog::getContent(int index) const
+@brief 获取指定下标对应的内容控件
+@param index 控件下标
+@return 返回对应的内容控件
+
+@fn QString Dtk::Widget::DDialog::title() const
+@brief 返回对话框标题
+@return 返回对话框的标题内容
+
+@fn QString Dtk::Widget::DDialog::message() const
+@brief 返回对话框消息文本
+@return 返回对话框的显示信息
+
+@fn QIcon Dtk::Widget::DDialog::icon() const
+@brief 返回对话框图标
+@return  返回对话框的icon
+
+@fn D_DECL_DEPRECATED QPixmap Dtk::Widget::DDialog::iconPixmap() const
+@brief 返回对话框图标的 QPixmap 对象
+@return 返回ICON的pixmap
+
+@fn Qt::TextFormat Dtk::Widget::DDialog::textFormat() const
+@brief 返回对话框的文本格式
+@return 返回设定的文本格式
+
+@fn bool Dtk::Widget::DDialog::onButtonClickedClose() const
+@brief 检查在点击任何按钮后是否都会关闭对话框
+@return 关闭对话框返回 true , 否则返回 false
+
+@fn void Dtk::Widget::DDialog::setContentLayoutContentsMargins(const QMargins &margins)
+@brief 设定内容布局的内容 margin
+@param margins 具体的 margins
+
+@fn QMargins Dtk::Widget::DDialog::contentLayoutContentsMargins() const
+@brief 返回内容布局的边距.
+@return 返回内容布局的内容margin
+
+@fn bool Dtk::Widget::DDialog::closeButtonVisible() const
+@brief 关闭按钮的可见属性.
+@return 返回关闭按钮是否可见的bool值
+
+@fn int Dtk::Widget::DDialog::addButton(const QString &text, bool isDefault = false, ButtonType type = ButtonNormal)
+@brief 向对话框添加按钮
+@param text 按钮文字
+@param isDefault 是否默认按钮
+@param type 按钮类型
+@return 所添加的按钮的下标
+
+@fn int Dtk::Widget::DDialog::addButtons(const QStringList &text)
+@brief 向对话框添加按钮
+@param text 按钮文字
+@return 所添加的按钮的下标
+
+@fn  void Dtk::Widget::DDialog::insertButton(int index, const QString &text, bool isDefault = false, ButtonType type = ButtonNormal)
+@brief 向对话框插入按钮
+@param index 下标
+@param text 按钮文字
+@param isDefault 是否是默认按钮
+@param type 按钮类型
+
+@fn void Dtk::Widget::DDialog::insertButton(int index, QAbstractButton* button, bool isDefault = false)
+@brief 向对话框插入按钮
+@param index 下标
+@param button 待插入的按钮
+@param isDefault 是否是默认按钮
+
+@fn void Dtk::Widget::DDialog::insertButtons(int index, const QStringList &text)
+@brief 向对话框插入按钮
+@param index 下标
+@param text 按钮文字
+
+@fn void Dtk::Widget::DDialog::removeButton(int index)
+@brief 从对话框移除按钮
+@param index 待移除按钮的下标
+
+@fn void Dtk::Widget::DDialog::removeButton(QAbstractButton *button)
+@brief 从对话框移除按钮
+@param button 待移除的按钮
+
+@fn void Dtk::Widget::DDialog::removeButtonByText(const QString &text)
+@brief 从对话框移除按钮
+@param text 待移除按钮的文本内容
+
+@fn void Dtk::Widget::DDialog::clearButtons()
+@brief 清除所有按钮
+
+@fn bool Dtk::Widget::DDialog::setDefaultButton(int index)
+@brief 设置默认按钮
+@param index 要设置的默认按钮的下标
+@return 设置成功返回 true,否则返回false
+
+@fn bool Dtk::Widget::DDialog::setDefaultButton(const QString &str)
+@brief 设置默认按钮
+@param str 要设置的默认按钮的文本内容
+@sa default
+
+@fn void Dtk::Widget::DDialog::setDefaultButton(QAbstractButton *button)
+@brief 设置默认按钮
+@param button 要设置的默认按钮
+@sa default
+
+@fn void Dtk::Widget::DDialog::addContent(QWidget *widget, Qt::Alignment alignment = {})
+@brief 添加控件到对话框内容布局.
+@param widget 待添加的控件
+@param alignment 对齐方式
+
+@fn void Dtk::Widget::DDialog::insertContent(int index, QWidget *widget, Qt::Alignment alignment = {})
+@brief 在对话框内容布局指定位置插入控件.
+@param index 待插入的位置下标
+@param widget 待插入的控件
+@param alignment 对齐方式
+
+@fn void Dtk::Widget::DDialog::removeContent(QWidget *widget, bool isDelete = true)
+@brief 从对话框内容布局中移除指定控件
+@param widget 待移除的控件
+@param isDelete 是否执行删除
+
+@fn void Dtk::Widget::DDialog::clearContents(bool isDelete = true)
+@brief 清空对话框内容布局中的所有内容.
+@param isDelete 是否删除
+
+@fn void Dtk::Widget::DDialog::setSpacing(int spacing)
+@brief 设置对话框内容间隔
+@param spacing 对话框的内容布局的间隔大小
+@sa QBoxLayout::setSpacing
+
+@fn void Dtk::Widget::DDialog::addSpacing(int spacing)
+@brief 追加对话框内容间隔.
+@details 在对话框的内容布局后追加一个非弹性，大小为 `spacing` 的间隔（一个 QSpacerItem ）
+@sa QBoxLayout::addSpacing
+
+@fn void Dtk::Widget::DDialog::insertSpacing(int index, int spacing)
+@brief 插入对话框内容间隔
+@details 在对话框的内容布局的指定位置插入一个非弹性，大小为 `spacing` 的间隔（一个 QSpacerItem ）。
+@param index 插入间隔的索引位置
+@param spacing 插入间隔的大小
+
+@fn void Dtk::Widget::DDialog::clearSpacing()
+@brief 清除内容间隔
+@details 清除对话框内容布局中包含的所有 QSpacerItem
+
+@fn void Dtk::Widget::DDialog::setButtonText(int index, const QString &text)
+@brief 设置按钮文字
+@param index 需要设置文字的按钮的下标
+@param text 所需要设置的文字
+
+@fn void Dtk::Widget::DDialog::setButtonIcon(int index, const QIcon &icon)
+@brief 设置按钮图标
+@param index 需要设置图标的按钮的下标
+@param icon 所需要设置的图标
+
+@fn void Dtk::Widget::DDialog::setTitle(const QString &title)
+@brief 设置对话框标题
+@param title 对话框标题
+
+@fn void Dtk::Widget::DDialog::setWordWrapTitle(bool wordWrap)
+@brief 设定标题Label内容是否可截断换行
+@param wordWrap true可换行,false不可以换行
+
+@fn void Dtk::Widget::DDialog::setMessage(const QString& message)
+@brief 设置对话框消息内容
+@param message 对话框消息
+
+@fn void Dtk::Widget::DDialog::setWordWrapMessage(bool wordWrap)
+@brief 设置对话框消息内容
+
+@fn void Dtk::Widget::DDialog::setIcon(const QIcon &icon)
+@brief 设置对话框图标
+@param icon 对话框图标
+
+@fn D_DECL_DEPRECATED void Dtk::Widget::DDialog::setIcon(const QIcon &icon, const QSize &expectedSize)
+@brief 设置对话框图标
+@details 为对话框设置图标，同时可以指定一个期望的图标大小。
+@param icon 对话框图标
+@param expectedSize 期望大小
+
+@fn D_DECL_DEPRECATED void Dtk::Widget::DDialog::setIconPixmap(const QPixmap &iconPixmap)
+@brief 设置对话框位图图标
+@param iconPixmap pixmap类型图标
+
+@fn void Dtk::Widget::DDialog::setTextFormat(Qt::TextFormat textFormat)
+@brief 设置文字格式
+@param textFormat 文字格式
+
+@fn void Dtk::Widget::DDialog::setOnButtonClickedClose(bool onButtonClickedClose)
+@brief 设置是否在点击按钮后关闭对话框
+@param onButtonClickedClose 设置为 true 后，无论点击什么按钮，都会在点击后关闭对话框。
+
+@fn void Dtk::Widget::DDialog::setCloseButtonVisible(bool closeButtonVisible)
+@brief 设置关闭按钮的可见性
+
+@fn int Dtk::Widget::DDialog::exec() Q_DECL_OVERRIDE
+@brief 以模态框形式显示当前对话框
+@details
+以 {QDialog#Modal Dialogs}{模态框} 形式显示当前对话框，将会阻塞直到用户关闭对话框。
+onButtonClickedClose()为 true 时返回当前点击按钮的Index，否则返回 结果。
+@return 返回模态对话框处理的结果
+@sa QDialog::exec()
 
 */
