@@ -43,9 +43,14 @@ Files: archlinux/*
 Copyright: None
 License: CC0-1.0
 
-# README&DOC
-Files: README.md README.zh_CN.md CHANGELOG.md docs/*
+# README
+Files: README.md README.zh_CN.md CHANGELOG.md
 Copyright: UnionTech Software Technology Co., Ltd.
+License: CC-BY-4.0
+
+# Docs
+Files: docs/*
+Copyright: 2023 deepin doc doc go SIG
 License: CC-BY-4.0
 
 # Project file
@@ -82,8 +87,3 @@ License: LGPL-3.0-or-later
 Files: *.ui
 Copyright: UnionTech Software Technology Co., Ltd.
 License: LGPL-3.0-or-later
-
-# doxygen theme
-Files: docs/doxygentheme/*
-Copyright: Copyright (c) 2021 - 2022 jothepro
-License: MIT

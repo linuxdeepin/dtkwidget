@@ -28,20 +28,34 @@ set (DOXYGEN_PREDEFINED
     "\"DWIDGET_END_NAMESPACE=}}\""
     "\"DWIDGET_USE_NAMESPACE=using namespace Dtk::Widget\;\""
 )
+
+set (BUILD_THEME OFF CACHE BOOL "Build doxgen theme")
 if(BUILD_THEME)
-set (DOXYGEN_HTML_EXTRA_STYLESHEET "docs/doxygentheme/doxygen-awesome.css"
-                                "docs/doxygentheme/doxygen-awesome-sidebar-only.css"
-                                "docs/doxygentheme/doxygen-awesome-sidebar-only-darkmode-toggle.css"
+if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/doxygen-theme")
+message(STATUS "doxygen-theme exist")
+else()
+execute_process(COMMAND git clone https://github.com/linuxdeepin/doxygen-theme.git --depth=1
+        WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+        TIMEOUT 60
+    )
+execute_process(COMMAND bash themesetting.sh
+        WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/doxygen-theme/
+)
+endif()
+set (DOXYGEN_HTML_EXTRA_STYLESHEET "docs/doxygen-theme/doxygen-awesome-css/doxygen-awesome.css"
+                                "docs/doxygen-theme/doxygen-awesome-css/doxygen-awesome-sidebar-only.css"
+                                "docs/doxygen-theme/doxygen-awesome-css/doxygen-awesome-sidebar-only-darkmode-toggle.css"
                                 )
-set (DOXYGEN_HTML_EXTRA_FILES "docs/doxygentheme/doxygen-awesome-darkmode-toggle.js"
-                            "docs/doxygentheme/doxygen-awesome-fragment-copy-button.js"
-                            "docs/doxygentheme/doxygen-awesome-paragraph-link.js"
-                            "docs/doxygentheme/doxygen-awesome-interactive-toc.js"
+set (DOXYGEN_HTML_EXTRA_FILES "docs/doxygen-theme/doxygen-awesome-css/doxygen-awesome-darkmode-toggle.js"
+                            "docs/doxygen-theme/doxygen-awesome-css/doxygen-awesome-fragment-copy-button.js"
+                            "docs/doxygen-theme/doxygen-awesome-css/doxygen-awesome-paragraph-link.js"
+                            "docs/doxygen-theme/doxygen-awesome-css/doxygen-awesome-interactive-toc.js"
                             )
 set (DOXYGEN_GENERATE_TREEVIEW "YES")
 set (DOXYGEN_DISABLE_INDEX "NO")
 set (DOXYGEN_FULL_SIDEBAR "NO")
-set (DOXYGEN_HTML_HEADER "docs/doxygentheme/header.html")
+set (DOXYGEN_HTML_HEADER "docs/doxygen-theme/doxygen-awesome-css/header.html")
+set (DOXYGEN_HTML_FOOTER "docs/doxygen-theme/doxygen-awesome-css/footer.html")
 endif()
 
 set (DOXYGEN_MACRO_EXPANSION "YES")
