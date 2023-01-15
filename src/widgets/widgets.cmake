@@ -1,35 +1,19 @@
 # TODO Maybe need to check if is apple or else 
-file(GLOB PRIVATEMPRISHEADER ${CMAKE_CURRENT_LIST_DIR}/private/mpris/*.h)
-file(GLOB PRIVATEMPRISSOURCE ${CMAKE_CURRENT_LIST_DIR}/private/mpris/*.cpp)
-file(GLOB WIDGETSOURCE ${CMAKE_CURRENT_LIST_DIR}/*.cpp)
-file(GLOB WIDGETHEADER ${CMAKE_CURRENT_LIST_DIR}/../../include/dtkwidget/widgets/*)
-file(GLOB WIDGETPROVATEHEADER ${CMAKE_CURRENT_LIST_DIR}/private/*.h)
-file(GLOB WIDGETPROVATESOURCE ${CMAKE_CURRENT_LIST_DIR}/private/*.cpp)
+file(GLOB MPRIS_HEADERS ${CMAKE_CURRENT_LIST_DIR}/private/mpris/*.h)
+file(GLOB MPRIS_SOURCES ${CMAKE_CURRENT_LIST_DIR}/private/mpris/*.cpp)
+file(GLOB WIDGETS_SOURCES ${CMAKE_CURRENT_LIST_DIR}/*.cpp ${CMAKE_CURRENT_LIST_DIR}/private/*.cpp)
+file(GLOB WIDGETS_PRIVATE_HEADERS ${CMAKE_CURRENT_LIST_DIR}/private/*.h)
 file(GLOB SETTINGS ${CMAKE_CURRENT_LIST_DIR}/private/settings/*)
-file(GLOB NOTIFICATION ${CMAKE_CURRENT_LIST_DIR}/private/startupnotifications/*)
-set(KEYBOARD 
-  ${CMAKE_CURRENT_LIST_DIR}/private/keyboardmonitor/dkeyboardmonitor.h
-  ${CMAKE_CURRENT_LIST_DIR}/private/keyboardmonitor/dkeyboardmonitor.cpp
-)
-set(ICONS ${CMAKE_CURRENT_LIST_DIR}/icons.qrc)
-set(ICONTHEME ${CMAKE_CURRENT_LIST_DIR}/assets/icons/dtk-icon-theme.qrc)
-set(widgets_SRC
-  ${PRIVATEMPRISHEADER}
-  ${PRIVATEMPRISSOURCE}
-
+file(GLOB NOTIFICATIONS ${CMAKE_CURRENT_LIST_DIR}/private/startupnotifications/*)
+file(GLOB KEYBOARD ${CMAKE_CURRENT_LIST_DIR}/private/keyboardmonitor/*)
+file(GLOB_RECURSE RESOURCES ${CMAKE_CURRENT_LIST_DIR}/*.qrc)
+set(WIDGETS
+  ${MPRIS_HEADERS}
+  ${MPRIS_SOURCES}
+  ${WIDGETS_SOURCES}
+  ${WIDGETS_PRIVATE_HEADERS}
   ${SETTINGS}
- 
-  ${NOTIFICATION}
-
+  ${NOTIFICATIONS}
   ${KEYBOARD}
-
-  ${WIDGETPROVATEHEADER}
-  ${WIDGETPROVATESOURCE}
-
-  ${ICONS}
-
-  ${ICONTHEME}
-
-  ${WIDGETHEADER}
-  ${WIDGETSOURCE}
+  ${RESOURCES}
 )
