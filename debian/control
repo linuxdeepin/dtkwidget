@@ -2,7 +2,7 @@ Source: dtkwidget
 Section: libdevel
 Priority: optional
 Maintainer: Deepin Packages Builder <packages@deepin.com>
-Build-Depends: debhelper (>= 9), pkg-config, libudev-dev,
+Build-Depends: debhelper-compat (= 12), pkg-config, libudev-dev,
  libqt5x11extras5-dev, libxext-dev, qttools5-dev-tools, qttools5-dev,
  x11proto-xext-dev, libxcb-util0-dev, libstartup-notification0-dev,
  libmtdev-dev, qtbase5-private-dev, libegl1-mesa-dev, libudev-dev,

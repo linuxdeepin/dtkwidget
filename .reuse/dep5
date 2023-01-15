@@ -19,7 +19,7 @@ Copyright: None
 License: CC0-1.0
 
 #interface
-Files: include/dtkwidget/DWidget/*
+Files: include/DWidget/*
 Copyright: None
 License: CC0-1.0
 
@@ -69,12 +69,12 @@ Copyright: UnionTech Software Technology Co., Ltd.
 License: LGPL-3.0-or-later
 
 # svg
-Files: examples/dwidget-examples/collections/icons/texts/* plugin/dtkuidemo/logo_icon.svg
+Files: examples/collections/icons/texts/* plugin/dtkuidemo/logo_icon.svg
 Copyright: UnionTech Software Technology Co., Ltd.
 License: LGPL-3.0-or-later
 
 #example png
-Files: examples/dwidget-examples/collections/images/*
+Files: examples/collections/images/*
 Copyright: UnionTech Software Technology Co., Ltd.
 License: LGPL-3.0-or-later
 

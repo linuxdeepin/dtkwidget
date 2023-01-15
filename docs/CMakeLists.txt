@@ -21,12 +21,12 @@ set (DOXYGEN_TAGFILES "qtcore.tags=qthelp://org.qt-project.qtcore/qtcore/" CACHE
 
 set (DOXYGEN_PREDEFINED
     "D_DECL_DEPRECATED_X(x)="
-    "\"DCORE_BEGIN_NAMESPACE=namespace Dtk { namespace Core {\""
-    "\"DCORE_END_NAMESPACE=}}\""
-    "\"DCORE_USE_NAMESPACE=using namespace Dtk::Core\;\""
-    "\"DWIDGET_BEGIN_NAMESPACE=namespace Dtk { namespace Widget {\""
-    "\"DWIDGET_END_NAMESPACE=}}\""
-    "\"DWIDGET_USE_NAMESPACE=using namespace Dtk::Widget\;\""
+    "DCORE_BEGIN_NAMESPACE=namespace Dtk { namespace Core {"
+    "DCORE_END_NAMESPACE=}}"
+    "DCORE_USE_NAMESPACE=using namespace Dtk::Core;"
+    "DWIDGET_BEGIN_NAMESPACE=namespace Dtk { namespace Widget {"
+    "DWIDGET_END_NAMESPACE=}}"
+    "DWIDGET_USE_NAMESPACE=using namespace Dtk::Widget;"
 )
 
 set (BUILD_THEME OFF CACHE BOOL "Build doxgen theme")
