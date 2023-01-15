@@ -1,9 +1,9 @@
-// SPDX-FileCopyrightText: 2019 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2019 - 2023 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
 
-#include "dtkwidget/util/dapplicationsettings.h"
+#include "dapplicationsettings.h"
 
 #include <DGuiApplicationHelper>
 #include <DObjectPrivate>

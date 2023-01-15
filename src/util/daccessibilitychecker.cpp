@@ -1,9 +1,9 @@
-// SPDX-FileCopyrightText: 2021 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2021 - 2023 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
 
-#include "dtkwidget/util/daccessibilitychecker.h"
+#include "daccessibilitychecker.h"
 
 #include <DObjectPrivate>
 
