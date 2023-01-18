@@ -17,19 +17,16 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
-  \class Dtk::Widget::DFileDialog
-  \inmodule dtkwidget
+@~english
+@class Dtk::Widget::DFileDialog
 
-  \brief The DFileDialog class provides a dialog that allow users to select files or directories.
-  \brief DFileDialog 类提供了一个可供用户选择文件或目录的对话框.
+  @brief The DFileDialog class provides a dialog that allow users to select
+  files or directories.
+  You can also add extra ComboBox and LineEdit widget via addComboBox() and
+  addLineEdit() to allowed user fill more field when needed. Values of these
+  extra fields can be accessed via getComboBoxValue() and getLineEditValue() .
 
-  You can also add extra ComboBox and LineEdit widget via addComboBox() and addLineEdit() to allowed
-  user fill more field when needed. Values of these extra fields can be accessed via getComboBoxValue() and
-  getLineEditValue() .
-  你也可以通过 addComboBox() 和 addLineEdit() 来为文件选择框增加额外的输入内容控件，并通过 getComboBoxValue()
-  和 getLineEditValue() 来得到用户所输入的值。
-
-  \image html DFileDialog.png
+@image html DFileDialog.png
 */
 
 DFileDialog::DFileDialog(QWidget *parent, Qt::WindowFlags f)
@@ -46,14 +43,10 @@ DFileDialog::DFileDialog(QWidget *parent, const QString &caption,
 }
 
 /*!
-  \brief Add an extra ComboBox widget to the DFileDialog
-  \brief 为文件选择框追加一个下拉单选框
-  
-  \a text ComboBox description text (as key for getting value).
-  \a data ComboBox options in a string list
-  
-  \a text 追加选项的描述文字（作为键）
-  \a data 多选框的选项列表
+@~english
+  @brief Add an extra ComboBox widget to the DFileDialog
+   text ComboBox description text (as key for getting value).
+   data ComboBox options in a string list
  */
 void DFileDialog::addComboBox(const QString &text, const QStringList &data)
 {
@@ -66,14 +59,10 @@ void DFileDialog::addComboBox(const QString &text, const QStringList &data)
 }
 
 /*!
-  \brief Add an extra ComboBox widget to the DFileDialog
-  \brief 为文件选择框追加一个下拉单选框
-  
-  \a text ComboBox description text (as key for getting value).
-  \a options ComboBox data
-  
-  \a text 追加选项的描述文字（作为键）
-  \a options 多选框的属性信息
+@~english
+  @brief Add an extra ComboBox widget to the DFileDialog
+   text ComboBox description text (as key for getting value).
+   options ComboBox data
  */
 void DFileDialog::addComboBox(const QString &text, const DFileDialog::DComboBoxOptions &options)
 {
@@ -91,11 +80,9 @@ void DFileDialog::addComboBox(const QString &text, const DFileDialog::DComboBoxO
 }
 
 /*!
-  \brief Add an extra LineEdit widget to the DFileDialog
-  \brief 为文件选择框追加一个输入框
-  
-  \a text LineEdit description text (as key for getting value).
-  \a text 追加选项的描述文字（作为键）
+@~english
+  @brief Add an extra LineEdit widget to the DFileDialog
+   text LineEdit description text (as key for getting value).
  */
 void DFileDialog::addLineEdit(const QString &text)
 {
@@ -105,14 +92,10 @@ void DFileDialog::addLineEdit(const QString &text)
 }
 
 /*!
-  \brief Add an extra LineEdit widget to the DFileDialog
-  \brief 为文件选择框追加一个输入框
-  
-  \a text LineEdit description text (as key for getting value).
-  \a options LineEdit data
-  
-  \a text 追加选项的描述文字（作为键）
-  \a options 输入框的属性信息
+@~english
+  @brief Add an extra LineEdit widget to the DFileDialog
+   text LineEdit description text (as key for getting value).
+   options LineEdit data
  */
 void DFileDialog::addLineEdit(const QString &text, const DFileDialog::DLineEditOptions &options)
 {
@@ -132,14 +115,13 @@ void DFileDialog::addLineEdit(const QString &text, const DFileDialog::DLineEditO
 }
 
 /*!
-  \brief Allow mixed selection
-  
+@~english
+  @brief Allow mixed selection
+  @details
   Allow user choose files and folders at the same time when selecting multiple files. By
   default user can only select files (folder not included) when selecting multiple files.
-  
   Notice that this option only works when file mode is QFileDialog::ExistingFiles
-  
-  \a on enable this feature or not.
+   on enable this feature or not.
  */
 void DFileDialog::setAllowMixedSelection(bool on)
 {
@@ -147,13 +129,10 @@ void DFileDialog::setAllowMixedSelection(bool on)
 }
 
 /*!
-  \brief Get the added extra ComboBox value
-  \brief 获得所追加的额外多选框的值
-  
-  \a text The description (key) of the ComboBox.
-  \a text 所追加的多选框的描述名（作为键）
-  
-  \sa addComboBox()
+@~english
+  @brief Get the added extra ComboBox value
+   text The description (key) of the ComboBox.
+  @sa addComboBox()
  */
 QString DFileDialog::getComboBoxValue(const QString &text) const
 {
@@ -161,13 +140,10 @@ QString DFileDialog::getComboBoxValue(const QString &text) const
 }
 
 /*!
-  \brief Get the added extra LineEdit value
-  \brief 获得所追加的额外输入框的值
-  
-  \a text The description (key) of the ComboBox.
-  \a text 所追加的多选框的描述名（作为键）
-  
-  \sa addLineEdit()
+@~english
+  @brief Get the added extra LineEdit value
+   text The description (key) of the ComboBox.
+  @sa addLineEdit()
  */
 QString DFileDialog::getLineEditValue(const QString &text) const
 {
@@ -189,6 +165,3 @@ void DFileDialog::setVisible(bool visible)
 }
 
 DWIDGET_END_NAMESPACE
-
-
-

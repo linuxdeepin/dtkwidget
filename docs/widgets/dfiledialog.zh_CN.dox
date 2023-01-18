@@ -2,11 +2,57 @@
 @~chinese
 @file dfiledialog.h
 @ingroup dialog
-@class
-@brief
-@details
+@class Dtk::Widget::DFileDialog
+@brief DFileDialog 类提供了一个可供用户选择文件或目录的对话框
+@details 你也可以通过`addComboBox()`和`addLineEdit()`来为文件选择框增加额外的输入内容控件，并通过`getComboBoxValue()`
+和`getLineEditValue()`来得到用户所输入的值。
 
-TODO: 添加类简介、示例代码、示例截图和函数使用说明等
+@fn Dtk::Widget::DFileDialog::DFileDialog(QWidget *parent, Qt::WindowFlags f)
+@brief 构造函数
+@param[in] parent 父窗口
+@param[in] f 窗口标志
 
+@fn Dtk::Widget::DFileDialog::DFileDialog(QWidget *parent, const QString &caption, const QString &directory, const QString &filter)
+@brief 构造函数
+@param[in] parent 父窗口
+@param[in] caption 标题
+@param[in] directory 目录
+@param[in] filter 过滤器
+
+@fn Dtk::Widget::DFileDialog::addComboBox(const QString &text, const QStringList &data)
+@brief 为文件选择框增加一个下拉框
+@param[in] text 追加选项的描述文字（作为键）
+@param[in] data 多选框的选项列表
+
+@fn Dtk::Widget::DFileDialog::addComboBox(const QString &text, const QStringList &data, const DFileDialog::DComboBoxOptions &options)
+@brief 为文件选择框增加一个下拉框
+@param[in] text 追加选项的描述文字（作为键）
+@param[in] data 多选框的属性信息
+
+@fn Dtk::Widget::DFileDialog::addLineEdit(const QString &text)
+@brief 为文件选择框增加一个输入框
+@param[in] text 追加选项的描述文字（作为键）
+
+@fn Dtk::Widget::DFileDialog::addLineEdit(const QString &text, const DFileDialog::DLineEditOptions &options)
+@brief 为文件选择框增加一个输入框
+@param[in] text 追加选项的描述文字（作为键）
+@param[in] options 输入框的属性信息
+
+@fn Dtk::Widget::DFileDialog::setAllowMixedSelection(bool on)
+@brief 设置是否允许混合选择
+
+@fn Dtk::Widget::DFileDialog::getComboBoxValue(const QString &text)
+@brief 获取下拉框的值
+@param[in] text 下拉框的描述文字（作为键）
+@sa addComboBox()
+
+@fn Dtk::Widget::DFileDialog::getLineEditValue(const QString &text)
+@brief 获取输入框的值
+@param[in] text 输入框的描述文字（作为键）
+@sa addLineEdit()
+
+@fn Dtk::Widget::DFileDialog::setVisible(bool visible)
+@brief 设置文件选择框是否可见
+@param[in] visible 是否可见
 
 */
