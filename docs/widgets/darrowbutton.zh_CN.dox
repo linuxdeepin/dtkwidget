@@ -5,26 +5,26 @@
 @class Dtk::Widget::DArrowButton
 @brief 可以使用 DArrowButton 类快速创建箭头形状的按钮。
 @details DArrowButton 提供了快速的方式创建包含箭头标识的按钮，并允许通过 setArrowDirection() 设置箭头方向来直接改按钮的箭头图标的方向。
-此外，还可以通过 arrowButtonDirection 和 arrowButtonState 属性获取和修改箭头按钮的状态。  
+此外，还可以通过 arrowButtonDirection 和 arrowButtonState 属性获取和修改箭头按钮的状态。
 @sa QLabel
 
-@enum Dtk::Widget::DArrowButton::ArrowDirection  
-@brief 表示箭头图标的方向  
+@enum Dtk::Widget::DArrowButton::ArrowDirection
+@brief 表示箭头图标的方向
 | **值**     | **含义** |
 |:----------:|:------:|
-| ArrowUp    | 箭头朝上 | 
+| ArrowUp    | 箭头朝上 |
 | ArrowDown  | 箭头朝下 |
 | ArrowLeft  | 箭头朝左 |
 | ArrowRight | 箭头朝右 |
 
-@enum Dtk::Widget::DArrowButton::ArrowButtonState  
+@enum Dtk::Widget::DArrowButton::ArrowButtonState
 @brief 表示箭头图标的方向
-| **值**           |  **含义**          | 
+| **值**           |  **含义**          |
 |:----------------:|:------------------:|
 | ArrowStateNormal | 普通状态            |
-| ArrowStateHover  | 鼠标在按钮上方悬停状态 | 
+| ArrowStateHover  | 鼠标在按钮上方悬停状态 |
 | ArrowStatePress  | 按钮被按下状态        |
-  
+
 @fn  DArrowButton::DArrowButton(QWidget *parent) : QLabel(parent)
 @brief 构造一个 DArrowButton 箭头按钮，默认箭头方向向下
 @param parent 父控件指针.
@@ -57,6 +57,27 @@
 @file darrowbutton.h
 @ingroup dtkwidget
 @class Dtk::Widget::ArrowButtonIcon
-//TODO:待添加注释
+
+@fn ArrowButtonIcon::ArrowButtonIcon(QWidget *parent)
+@brief 构造一个 ArrowButtonIcon 箭头按钮，默认箭头方向向下
+@details ArrowButtonIcon默认设置了`Qt::WA_TransparentForMouseEvents`属性
+当该属性被激活启用时，将会使所有发送到窗体和窗体内部子控件的鼠标事件无效。
+鼠标事件被分发到其它的窗体部件，就像本窗体部件及本窗体内的子控件没有出现在窗体层次体系中。
+鼠标单击和鼠标其它事件穿过（即绕开）本窗体部件及其内的子控件，这个属性默认是开启的。
+(说人话就是透明点击)
+
+@fn void ArrowButtonIcon::setArrowDirection(int direction)
+@brief 设置按钮的箭头方向.
+@param[in] direction 箭头的方向.
+
+@fn int ArrowButtonIcon::arrowDirection() const
+@brief 获取箭头方向.
+
+@fn int ArrowButtonIcon::buttonState() const
+@brief 获得按钮状态
+
+@fn void ArrowButtonIcon::setButtonState(int state)
+@brief 设置按钮状态
+@param[in] state 箭头按钮的状态.
 
 */
