@@ -2,11 +2,40 @@
 @~chinese
 @file dfloatingbutton.h
 @ingroup button
-@class
-@brief
-@details
+@class DFloatingButton
+@brief 悬浮按钮，呈现浮动效果
+@details 定制化的浮动按钮，能展示一种悬浮的效果，可以根据传入的图标参数具体调整
 
-TODO: 添加类简介、示例代码、示例截图和函数使用说明等
+@fn DFloatingButton::DFloatingButton(QWidget *parent)
+@brief 构造函数
+@param[in] parent 父控件
 
+@fn DFloatingButton::DFloatingButton(QStyle::StandardPixmap iconType, QWidget *parent)
+@brief 构造函数
+@param[in] iconType 图标类型
+
+@fn DFloatingButton::DFloatingButton(DStyle::StandardPixmap iconType, QWidget *parent)
+@brief 构造函数
+@param[in] iconType 图标类型
+
+@fn DFloatingButton::DFloatingButton(const QString &text, QWidget *parent)
+@brief 构造函数
+@param[in] text 按钮文本
+
+@fn DFloatingButton::DFloatingButton(const QIcon &icon, const QString &text, QWidget *parent)
+@brief 构造函数
+@param[in] icon 按钮图标
+
+@fn DFloatingButton::DFloatingButton(const DDciIcon &icon, const QString &text, QWidget *parent)
+@brief 构造函数
+@param[in] icon DCI按钮图标
+
+@fn DStyleOptionButton DFloatingButton::baseStyleOption() const
+@brief 获取基础的样式选项
+@return 基础的样式选项
+
+@fn void DFloatingButton::initBaseStyleOption(const DStyleOptionButton &option) const
+@brief 初始化基础的样式选项
+@param[in] option 基础的样式选项
 
 */
