@@ -9,290 +9,329 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
-  \class Dtk::Widget::DAnchorsBase
+@~english
+  @class Dtk::Widget::DAnchorsBase
   \inmodule dtkwidget
   
-  \brief DAnchorsBase 提供了一种指定 QWidget 与其它 QWidget 之间的关系来确定
-  其位置的方法.
+  @brief DAnchorsBase provides a way to specify the relationship between a QWidget and other QWidgets to determine its position.
   
-  除了比较传统的布局方式之外，DtkWidget 还提供了一种使用锚定概念布局控件的方法（
-  类似于 QQuickItem 中的 anchors 属性），可以认为每个控件具有一组6个不可见的“锚
-  线”：left，horizontalCenter，right，top，verticalCenter和bottom，如图所示：
-  \image html edges_anchors.png
-  使用 DAnchors 可以让 QWidget 基于这些“锚线”来确定相互间的关系，如：
-  \code
+  In addition to the more traditional layout approach, DtkWidget also provides a way to use anchored concept layout controls (
+  Similar to the anchors property in QQuickItem), each control can be thought of as having a set of six invisible anchors
+  Lines ": left, horizontalCenter, right, top, verticalCenter, and bottom, as shown:
+  @image html edges_anchors.png
+  Using DAnchors allows QWidgets to determine relationships based on these anchor lines, such as:
+  @code
   DAnchors<QLabel> rect1(new QLabel("rect1"));
   DAnchors<QLabel> rect2(new QLabel("rect2"));
   
   rect2.setLeft(rect1.right());
-  \endcode
-  这样 rect2 的左边界就会和 rect1 的右边界对齐：
-  \image html edge1.png
-  另外还可以同时设置多个“锚线”：
-  \code
+  @endcode
+  The left edge of rect2 will then line up with the right edge of rect1:
+  @image html edge1.png
+  You can also set multiple anchor lines at the same time:
+  @code
   DAnchors<QLabel> rect1(new QLabel("rect1"));
   DAnchors<QLabel> rect2(new QLabel("rect2"));
   
   rect2.setTop(rect1.bottom());
   rect2.setLeft(rect1.right());
-  \endcode
-  \image html edge3.png
-  锚定布局同时在多个控件中使用，控件之间只需要满足以下条件：
-  \a 控件之间为兄弟关系，或被锚定控件为父控件
-  \a 锚定关系不能循环绑定
-  \section1 margin_offset 锚定的间隔和偏移
-  锚定系统允许设置“锚线”之间的间距，和“锚线”一一对应，每个控件都有一组4个 margin：
-  leftMargin, rightMargin, topMargin 和 bottomMargin 以及两个 offset：
-  horizontalCenterOffset 和 verticalCenterOffset。
-  \image html margins_anchors.png
-  下面是左margin的例子：
-  \code
+  @endcode
+  @image html edge3.png
+  Anchor layout can be used in multiple controls at the same time, and the controls only need to meet the following conditions:
+  \a Controls are siblings, or anchored controls are parent controls
+  \a Anchoring relations cannot be bound cyclically
+  \section1 margin_offset
+  The anchor system allows you to set the spacing between "anchor lines", and each control has a set of four margins corresponding to the "anchor lines" :
+  leftMargin, rightMargin, topMargin, and bottomMargin and two offsets:
+  horizontalCenterOffset and verticalCenterOffset.
+  @image html margins_anchors.png
+  Here's an example of a left margin:
+  @code
   DAnchors<QLabel> rect1(new QLabel("rect1"));
   DAnchors<QLabel> rect2(new QLabel("rect2"));
   
   rect2.setLeftMargin(5);
   rect2.setLeft(rect1.right());
-  \endcode
-  rect2 的左边界相距 rect1 的右边界5个像素：
-  \image html edge2.png
-  \note margin 仅仅是对设置的锚点生效，并不是让控件本身增加了边距，如果设置了
-  margin，但并没有设置相应的锚点，对控件本身而已是没有任何影响的。margin 的值可以
-  为负数，通过值的正负来决定margin的方向（内 margin 还是外 margin）
+  @endcode
+  The left border of rect2 is 5 pixels from the right border of rect1:
+  @image html edge2.png
+  @note margin applies only to the anchor point you set, not to the control itself, if it is set
+  margin, but no corresponding anchor is set, which has no effect on the control itself. The value of margin does
+  Is a negative value, which determines the direction of the margin (inner margin or outer margin).
   
-  除了基于“锚线”来设置锚定外，另外还有 setCenterIn 和 setFill 这两个比较特殊的
-  的实现。
+  In addition to setting anchors based on "anchor lines," there are also setCenterIn and setFill, which are special
+  Implementation of.
   
-  \section1 loop_anchor 判断循环锚定的方式
-  假设 DAnchorsBase a1, a2; a1.setRight(a2.left()); 则判断 a1 和 a2 之间
-  会不会存在循环绑定的逻辑为:
-  尝试更改 a1 右边界的值，更新后如果 a2 左边界的值产出了变化，则认为会导致循环绑
-  定，否则认为不存在
+  \section1 loop_anchor
+  Suppose DAnchorsBase a1, a2; a1.setRight(a2.left());  I'm going to say between a1 and a2
+  The logic for whether there is a loop binding is:
+  Try to change the value of the right boundary of a1. If the value of the left boundary of a2 changes after the update, it is considered to cause a loop tie
+  Sure, otherwise it is considered not to exist
  */
 
 /*!
-  \property DAnchorsBase::target
-  \brief 绑定了锚定功能的控件对象
-  \note 只读
+@~english
+  @property DAnchorsBase::target
+  @brief The control object to which the anchor function is bound
+  @note Read only
   */
 
 /*!
-  \property DAnchorsBase::enabled
-  \brief 控制锚定功能是否开启，为 false 时仅仅表示不会根据控件各种属性的变化来
-  来更新它的位置，但锚定关系并没有被解除
-  \note 可读可写
+@~english
+  @property DAnchorsBase::enabled
+  @brief Controls whether anchoring is enabled. 
+  A false value simply means that the position of the control will not be updated based on changes to its various properties, 
+  but the anchoring relationship is not broken
+  @note Readable and writable
   */
 
 /*!
-  \property DAnchorsBase::anchors
-  \brief 一个指向自己的指针
-  \note 只读
+@~english
+  @property DAnchorsBase::anchors
+  @brief A pointer to itself
+  @note Read only
   */
 
 /*!
-  \property DAnchorsBase::top
-  \brief target 控件上边界锚线的信息
-  \note 只能和 top verticalCenter bottom 绑定
-  \note 对属性赋值不会更改它自身的值，而是对此锚线设置绑定关系
-  \note 可读可写
+@~english
+  @property DAnchorsBase::top
+  @brief Information about bounding anchor lines on the target control
+  @note Only binding to top verticalCenter bottom
+  @note Assigning a value to a property does not change its own value, but sets a binding to the anchor
+  @note Readable and writable
   */
 
 /*!
-  \property DAnchorsBase::bottom
-  \note 只能和 top verticalCenter bottom 绑定
-  \brief target 控件下边界锚线的信息
-  \note 对属性赋值不会更改它自身的值，而是对此锚线设置绑定关系
-  \note 可读可写
+@~english
+  @property DAnchorsBase::bottom
+  @note Only binding to top verticalCenter bottom
+  @brief Information about the anchor line under the target control
+  @note Assigning a value to a property does not change its own value, but sets a binding to the anchor
+  @note Readable and writable
   */
 
 /*!
-  \property DAnchorsBase::left
-  \note 只能和 left horizontalCenter right 绑定
-  \brief target 控件左边界锚线的信息
-  \note 对属性赋值不会更改它自身的值，而是对此锚线设置绑定关系
-  \note 可读可写
+@~english
+  @property DAnchorsBase::left
+  @note Only binding to left horizontalCenter right
+  @brief Information about the anchor line on the left boundary of the target control
+  @note Assigning a value to a property does not change its own value, but sets a binding to the anchor
+  @note Readable and writable
   */
 
 /*!
-  \property DAnchorsBase::right
-  \note 只能和 left horizontalCenter right 绑定
-  \brief target 控件右边界锚线的信息
-  \note 对属性赋值不会更改它自身的值，而是对此锚线设置绑定关系
-  \note 可读可写
+@~english
+  @property DAnchorsBase::right
+  @note Only binding to left horizontalCenter right
+  @brief Information about the anchor line on the right border of the target control
+  @note Assigning a value to a property does not change its own value, but sets a binding to the anchor
+  @note Readable and writable
   */
 
 /*!
-  \property DAnchorsBase::horizontalCenter
-  \note 只能和 left horizontalCenter right 绑定
-  \brief target 控件水平锚线的信息
-  \note 对属性赋值不会更改它自身的值，而是对此锚线设置绑定关系
-  \note 可读可写
+@~english
+  @property DAnchorsBase::horizontalCenter
+  @note Only binding to left horizontalCenter right
+  @brief target controls information about horizontal anchor lines
+  @note Assigning a value to a property does not change its own value, but sets a binding to the anchor
+  @note Readable and writable
   */
 
 /*!
-  \property DAnchorsBase::verticalCenter
-  \note 只能和 top verticalCenter bottom 绑定
-  \brief target 控件竖直锚线的信息
-  \note 对属性赋值不会更改它自身的值，而是对此锚线设置绑定关系
-  \note 可读可写
+@~english
+  @property DAnchorsBase::verticalCenter
+  @note Only binding to top verticalCenter bottom
+  @brief target controls vertical anchor line information
+  @note Assigning a value to a property does not change its own value, but sets a binding to the anchor
+  @note Readable and writable
   */
 
 /*!
-  \property DAnchorsBase::fill
-  \brief target 控件的填充目标对象
-  \note 可读可写
+@~english
+  @property DAnchorsBase::fill
+  @brief target control fills the target object
+  @note Readable and writable
   */
 
 /*!
-  \property DAnchorsBase::centerIn
-  \brief target 控件的居中目标对象
-  \note 可读可写
+@~english
+  @property DAnchorsBase::centerIn
+  @brief target control's centered target object
+  @note Readable and writable
   */
 
 /*!
-  \property DAnchorsBase::margins
-  \brief 上下左右四条“锚线”的边距，此值的优先级低于每条“锚线”特定的 margin 值
-  \note 可读可写
+@~english
+  @property DAnchorsBase::margins
+  @brief The margin of the top, bottom, left, and right anchor lines. This value has lower priority than the margin value specific to each anchor line
+  @note Readable and writable
   */
 
 /*!
-  \property DAnchorsBase::topMargin
-  \brief 上“锚线”的边距，优先级高于 margins
-  \note 可读可写
+@~english
+  @property DAnchorsBase::topMargin
+  @brief The margin of the upper "anchor line" has higher priority than the margins
+  @note Readable and writable
   */
 
 /*!
-  \property DAnchorsBase::bottomMargin
-  \brief 下“锚线”的边距，优先级高于 margins
-  \note 可读可写
+@~english
+  @property DAnchorsBase::bottomMargin
+  @brief The margin of the lower "anchor line" has higher priority than the margins
+  @note Readable and writable
   */
 
 /*!
-  \property DAnchorsBase::leftMargin
-  \brief 左“锚线”的边距，优先级高于 margins
-  \note 可读可写
+@~english
+  @property DAnchorsBase::leftMargin
+  @brief The margin of the left "anchor line" has higher priority than the margins
+  @note Readable and writable
   */
 
 /*!
-  \property DAnchorsBase::rightMargin
-  \brief 右“锚线”的边距，优先级高于 margins
-  \note 可读可写
+@~english
+  @property DAnchorsBase::rightMargin
+  @brief The margin of the right "anchor line" has higher priority than the margins
+  @note Readable and writable
   */
 
 /*!
-  \property DAnchorsBase::horizontalCenterOffset
-  \brief 水平“锚线”的偏移量
-  \note 可读可写
+@~english
+  @property DAnchorsBase::horizontalCenterOffset
+  @brief The offset of the horizontal "anchor line"
+  @note Readable and writable
   */
 
 /*!
-  \property DAnchorsBase::verticalCenterOffset
-  \brief 竖直“锚线”的偏移量
-  \note 可读可写
+@~english
+  @property DAnchorsBase::verticalCenterOffset
+  @brief The offset of the vertical anchor line
+  @note Readable and writable
   */
 
 /*!
-  \enum Dtk::Widget::DAnchorsBase::AnchorError
-  DAnchorsBase::AnchorError 设置锚定信息的过程中可能出现的错误类型
+@~english
+  @enum Dtk::Widget::DAnchorsBase::AnchorError
+  DAnchorsBase::AnchorError Types of errors that can occur in the process of setting anchor information
   
   \value NoError
-  设置锚定的过程中没有任何错误发生
+  There were no errors in setting up the anchor
   
   \value Conflict
-  表示设置的锚定关系跟已有关系存在冲突，如 fill 和 centerIn 不能同时设置
+  Indicates that the anchoring relationship is in conflict with an existing relationship, 
+  for example, fill and centerIn cannot be set at the same time
   
   \value TargetInvalid
-  表示设置锚定关系时的目标控件无效
+  Indicates that the target control is invalid when the anchor relationship is set
   
   \value PointInvalid
-  表示设置锚定关系时的“锚线”信息错误，如把 Qt::AnchorLeft 设置到了 Qt::AnchorTop 上
+  Indicates an error in the anchor information when setting the anchor relationship, 
+  such as when setting Qt::AnchorLeft to Qt::AnchorTop
   
   \value LoopBind
-  表示设置的锚定关系和已有关系形成了循环绑定
+  The anchored relation representing the setting and the existing relation form a cyclic binding
  */
 
 /*!
-  \fn void DAnchorsBase::enabledChanged(bool enabled)
-  \brief 信号会在 \a enabled 属性的值改变时被发送
+@~english
+  @fn void DAnchorsBase::enabledChanged(bool enabled)
+  @brief The signal is sent when the value of the \a enabled attribute changes
  */
 /*!
-  \fn void DAnchorsBase::topChanged(const DAnchorInfo *top)
-  \brief 信号会在 \a top 属性的值改变时被发送
+@~english
+  @fn void DAnchorsBase::topChanged(const DAnchorInfo *top)
+  @brief The signal is sent when the value of the \a top attribute changes
  */
 /*!
-  \fn void DAnchorsBase::bottomChanged(const DAnchorInfo *bottom)
-  \brief 信号会在 \a bottom 属性的值改变时被发送
+@~english
+  @fn void DAnchorsBase::bottomChanged(const DAnchorInfo *bottom)
+  @brief The signal is sent when the value of the \a bottom attribute changes
  */
 /*!
-  \fn void DAnchorsBase::leftChanged(const DAnchorInfo *left)
-  \brief 信号会在 \a left 属性的值改变时被发送
+@~english
+  @fn void DAnchorsBase::leftChanged(const DAnchorInfo *left)
+  @brief The signal is sent when the value of the \a left attribute changes
  */
 /*!
-  \fn void DAnchorsBase::rightChanged(const DAnchorInfo *right)
-  \brief 信号会在 \a right 属性的值改变时被发送
+@~english
+  @fn void DAnchorsBase::rightChanged(const DAnchorInfo *right)
+  @brief The signal is sent when the value of the \a right attribute changes
  */
 /*!
-  \fn void DAnchorsBase::horizontalCenterChanged(const DAnchorInfo *horizontalCenter)
-  \brief 信号会在 \a horizontalCenter 属性的值改变时被发送
+@~english
+  @fn void DAnchorsBase::horizontalCenterChanged(const DAnchorInfo *horizontalCenter)
+  @brief The signal is sent when the value of the \a horizontalCenter attribute changes
  */
 /*!
-  \fn void DAnchorsBase::verticalCenterChanged(const DAnchorInfo *verticalCenter)
-  \brief 信号会在 \a verticalCenter 属性的值改变时被发送
+@~english
+  @fn void DAnchorsBase::verticalCenterChanged(const DAnchorInfo *verticalCenter)
+  @brief The signal is sent when the value of the \a verticalCenter attribute changes
  */
 /*!
-  \fn void DAnchorsBase::fillChanged(QWidget *fill)
-  \brief 信号会在 \a fill 属性的值改变时被发送
+@~english
+  @fn void DAnchorsBase::fillChanged(QWidget *fill)
+  @brief The signal is sent when the value of the \a fill attribute changes
  */
 /*!
-  \fn void DAnchorsBase::centerInChanged(QWidget *centerIn)
-  \brief 信号会在 \a centerIn 属性的值改变时被发送
+@~english
+  @fn void DAnchorsBase::centerInChanged(QWidget *centerIn)
+  @brief The signal is sent when the value of the \a centerIn attribute changes
  */
 /*!
-  \fn void DAnchorsBase::marginsChanged(int margins)
-  \brief 信号会在 \a margins 属性的值改变时被发送
+@~english
+  @fn void DAnchorsBase::marginsChanged(int margins)
+  @brief The signal is sent when the value of the \a margins attribute changes
  */
 /*!
-  \fn void DAnchorsBase::topMarginChanged(int topMargin)
-  \brief 信号会在 \a topMargin 属性的值改变时被发送
+@~english
+  @fn void DAnchorsBase::topMarginChanged(int topMargin)
+  @brief The signal is sent when the value of the \a topMargin attribute changes
  */
 /*!
-  \fn void DAnchorsBase::bottomMarginChanged(int bottomMargin)
-  \brief 信号会在 \a bottomMargin 属性的值改变时被发送
+@~english
+  @fn void DAnchorsBase::bottomMarginChanged(int bottomMargin)
+  @brief The signal is sent when the value of the \a bottomMargin attribute changes
  */
 /*!
-  \fn void DAnchorsBase::leftMarginChanged(int leftMargin)
-  \brief 信号会在 \a leftMargin 属性的值改变时被发送
+@~english
+  @fn void DAnchorsBase::leftMarginChanged(int leftMargin)
+  @brief The signal is sent when the value of the \a leftMargin attribute changes
  */
 /*!
-  \fn DAnchorsBase::rightMarginChanged(int rightMargin)
-  \brief 信号会在 \a rightMargin 属性的值改变时被发送
+@~english
+  @fn DAnchorsBase::rightMarginChanged(int rightMargin)
+  @brief The signal is sent when the value of the \a rightMargin attribute changes
  */
 /*!
-  \fn DAnchorsBase::horizontalCenterOffsetChanged(int horizontalCenterOffset)
-  \brief 信号会在 \a horizontalCenterOffset 属性的值改变时被发送
+@~english
+  @fn DAnchorsBase::horizontalCenterOffsetChanged(int horizontalCenterOffset)
+  @brief The signal is sent when the value of the \a horizontalCenterOffset attribute changes
  */
 /*!
-  \fn DAnchorsBase::verticalCenterOffsetChanged(int verticalCenterOffset)
-  \brief 信号会在 \a verticalCenterOffset 属性的值改变时被发送
+@~english
+  @fn DAnchorsBase::verticalCenterOffsetChanged(int verticalCenterOffset)
+  @brief The signal is sent when the value of the \a verticalCenterOffset attribute changes
  */
 
 /*!
-  \class Dtk::Widget::DAnchors
+@~english
+  @class Dtk::Widget::DAnchors
   \inmodule dtkwidget
-  \brief DAnchors 是一个模板类，在 DAnchorsBase 的基础上保存了一个控件指针，
-  将控件和锚定绑定在一起使用，相当于把“锚线”属性附加到了控件本身.
+  @brief DAnchors is a template class that holds a control pointer on top of DAnchorsBase,
+  Using a control in conjunction with an anchor is like attaching an anchor property to the control itself.
   
-  重载了 “->”、“*”、“&” 等运算符，用于把 DAnchors 这层封装透明化，尽量减少使用
-  DAnchors<QWidget> 和直接使用 QWidget* 对象的区别。
+  The "->", "*", and "&" operators are overloaded to make the DAnchors layer transparent and minimize the difference between using DAnchors and directly using QWidget* objects.
  */
 
 /*!
-  \class Dtk::Widget::DAnchorInfo
+@~english
+  @class Dtk::Widget::DAnchorInfo
   \inmodule dtkwidget
-  \brief DAnchorInfo 用于记录“锚线”的锚定信息：被锚定的 DAnchorsBase 对象、
-  锚定的类型、目标“锚线”的信息.
+  @brief DAnchorInfo is used to record the anchoring information of the "anchor line" : the DAnchorsBase object being anchored, 
+  the type of anchoring, the information of the target "anchor line".
   
-  每条锚线都和一个 DAnchorInfo 对象相对应。一般来说，在使用锚定布局时，只需要关心
-  “锚线”的绑定关系，不用关心 DAnchorInfo 中存储的数据。
+  Each anchor line is associated with a DAnchorInfo object. In general, 
+  when using anchor layouts, you only need to care about the binding of the "anchor lines" and not about the data stored in DAnchorInfo.
  */
 
 class DAnchorsRect: public QRect
@@ -617,15 +656,15 @@ class DAnchorsBasePrivate : public QSharedData
 QMap<const QWidget *, DAnchorsBase *> DAnchorsBasePrivate::widgetMap;
 
 /*!
-  \brief 构造 DAnchorsBase 对象，传入的 w 对象会和一个新的 DAnchorsBase 对象
-  绑定到一起
-  \a w 需要使用锚定关系的控件
-  \note 对 w 设置的锚定关系不会随着本次构造的 DAnchorsBase 对象的销毁而消失。
-  此构造函数可能会隐式的构造一个新 DAnchorsBase 对象用于真正的功能实现，函数执行
-  时会先检查当前是否已经有和 w 对象绑定的 DAnchorsBase 对象，如果没有则会创建一
-  个新的 DAnchorsBase 对象与之绑定，否则使用已有的对象。隐式创建的 DAnchorsBase
-  对象会在对应的 QWidget 对象被销毁时自动销毁。
-  \sa target() clearAnchors() getAnchorBaseByWidget()
+@~english
+  @brief Construct the DAnchorsBase object, passing in the w object and binding it to a new DAnchorsBase object
+  \a w Controls that need to use anchored relationships
+  @note The anchoring relationship for w does not disappear with the destruction of the DAnchorsBase object for this construction.
+  This constructor may implicitly construct a new DAnchorsBase object for actual implementation, function execution
+  Will first check if there is already a DAnchorsBase object bound to the w object and create one if not
+  A new DAnchorsBase object is bound to it; otherwise, an existing object is used. Implicitly created DAnchorsBase
+  Object is automatically destroyed when the corresponding QWidget object is destroyed.
+  @sa target() clearAnchors() getAnchorBaseByWidget()
  */
 DAnchorsBase::DAnchorsBase(QWidget *w):
     QObject(w)
@@ -634,12 +673,12 @@ DAnchorsBase::DAnchorsBase(QWidget *w):
 }
 
 /*!
-  \brief 在析构时会判断此 DAnchorsBase 对象是否和 target 存在绑定关系，如果是
-  则从映射表中移除绑定
-  \warning DAnchorsBasePrivate 对象可能是在多个 DAnchorsBase 对象之间显式
-  共享的，所以在销毁 DAnchorsBase 后，对应的 DAnchorsBasePrivate 对象不一定
-  会被销毁
-  \sa QExplicitlySharedDataPointer
+@~english
+  @brief On destruction, the DAnchorsBase object is determined to be bound to the target, 
+  and if so, the binding is removed from the mapping table
+  @warning The DAnchorsBasePrivate object may be explicitly shared between multiple DAnchorsBase objects, 
+  so the corresponding DAnchorsBasePrivate object is not necessarily destroyed after the destruction of the DAnchorsBase
+  @sa QExplicitlySharedDataPointer
  */
 DAnchorsBase::~DAnchorsBase()
 {
@@ -666,10 +705,11 @@ QWidget *DAnchorsBase::target() const
 }
 
 /*!
-  \brief 返回 target 控件的扩展对象。此对象为 QWidget 对象额外提供了和控件大小、
-  位置相关的变化信号
-  \return
-  \sa Dtk::Widget::DEnhancedWidget
+@~english
+  @brief Returns the extension object of the target control.
+  This object provides additional change signals to the QWidget object related to the size and position of the widget
+  @return
+  @sa Dtk::Widget::DEnhancedWidget
  */
 DEnhancedWidget *DAnchorsBase::enhancedWidget() const
 {
@@ -814,10 +854,11 @@ int DAnchorsBase::alignWhenCentered() const
 }
 
 /*!
-  \brief 锚定过程中产生的错误，在一个新的锚定函数被调用之前会清空此错误状态，每次
-  调用锚定函数后，可以通过此函数的返回值来判断锚定设置是否成功
-  \return
-  \sa errorString()
+@~english
+  @brief Errors generated during anchoring will clear this state before a new anchoring function is called, 
+  and each time the anchoring function is called, the return value of this function can be used to determine whether the anchoring setup was successful
+  @return
+  @sa errorString()
  */
 DAnchorsBase::AnchorError DAnchorsBase::errorCode() const
 {
@@ -827,9 +868,10 @@ DAnchorsBase::AnchorError DAnchorsBase::errorCode() const
 }
 
 /*!
-  \brief 对 errorCode 的文本描述信息
-  \return
-  \sa errorCode
+@~english
+  @brief A textual description of the errorCode
+  @return
+  @sa errorCode
  */
 QString DAnchorsBase::errorString() const
 {
@@ -839,18 +881,19 @@ QString DAnchorsBase::errorString() const
 }
 
 /*!
-  \brief 如果此 info 设置了锚定对象，则返回 true ，否则返回 false
-  \code
+@~english
+  @brief Returns true if this info sets the anchor object, false otherwise
+  @code
   DAnchors<QWidget> w1;
   DAnchors<QWidget> w2;
   
   w1.setLeft(w2.right());
   
   qDebug() << w1.isBinding(w1.left()) << w2.isBinding(w2.right());
-  \endcode
-  打印内容为：ture false
+  @endcode
+  Print the content as：ture false
   \a info
-  \return
+  @return
  */
 bool DAnchorsBase::isBinding(const DAnchorInfo *info) const
 {
@@ -858,13 +901,14 @@ bool DAnchorsBase::isBinding(const DAnchorInfo *info) const
 }
 
 /*!
-  \brief 方便用户直接设置两个对象之间锚定关系的静态函数，调用此函数可能会隐式创建
-  DAnchorsBase 对象
-  \a w 要锚定的控件对象
-  \a p 要锚定的锚线/锚点
-  \a target 锚定的目标对象
-  \a point 锚定的目标锚线/锚点
-  \return 如果锚定成功，则返回 true，否则返回 false
+@~english
+  @brief A static function that allows you to set the anchoring relationship between two objects directly. 
+  Calling this function may implicitly create a DAnchorsBase object
+  \a w Control object to anchor
+  \a p Anchor line/anchor point to be anchored
+  \a target The target object to anchor
+  \a point The target anchor line/anchor point for anchoring
+  @return It returns true if anchoring was successful and false otherwise
  */
 bool DAnchorsBase::setAnchor(QWidget *w, const Qt::AnchorPoint &p, QWidget *target, const Qt::AnchorPoint &point)
 {
@@ -881,8 +925,9 @@ bool DAnchorsBase::setAnchor(QWidget *w, const Qt::AnchorPoint &p, QWidget *targ
 }
 
 /*!
-  \brief 清除和控件 w 相关的所有锚定关系，包括锚定w或者被w锚定的任何关联。会直接
-  销毁 w 对应的 DAnchorsBase 对象
+@~english
+  @brief Clears all anchoring relationships associated with control w, including any associations that anchor w or are anchored by w. Will be direct
+  The DAnchorsBase object corresponding to w is destroyed
   \a w
  */
 void DAnchorsBase::clearAnchors(const QWidget *w)
@@ -894,9 +939,10 @@ void DAnchorsBase::clearAnchors(const QWidget *w)
 }
 
 /*!
-  \brief 返回与 w 绑定的 DAnchorsBase 对象
+@~english
+  @brief Returns the DAnchorsBase object bound to w
   \a w
-  \return 如果 w 没有对应的锚定对象，则返回空
+  @return If there is no corresponding anchored object for w, then null is returned
  */
 DAnchorsBase *DAnchorsBase::getAnchorBaseByWidget(const QWidget *w)
 {
@@ -914,12 +960,13 @@ void DAnchorsBase::setEnabled(bool enabled)
 }
 
 /*!
-  \brief 为 DAnchorsBase::target 对象设置锚定规则
-  \note 可能会为目标控件隐式创建其对应的 DAnchorsBase 对象
-  \a p 为当前控件的哪个锚线/锚点设置锚定规则
-  \a target 锚定的目标控件
-  \a point 锚定的目标锚线/锚点
-  \return 如果设置成功，则返回 true，否则返回 false
+@~english
+  @brief Set the anchoring rules for the DAnchorsBase::target object
+  @note A corresponding DAnchorsBase object may be created implicitly for the target control
+  \a p Set the anchor rule for which anchor line/anchor point of the current control
+  \a target The anchored target control
+  \a point The target anchor line/anchor point for anchoring
+  @return It returns true if the setting was successful and false otherwise
  */
 bool DAnchorsBase::setAnchor(const Qt::AnchorPoint &p, QWidget *target, const Qt::AnchorPoint &point)
 {
@@ -1154,9 +1201,10 @@ bool DAnchorsBase::setCenterIn(QWidget *centerIn)
 }
 
 /*!
-  \brief 将 fill 中的target()作为参数调用其它重载函数
+@~english
+  @brief Call the other overloaded functions with the target() in fill as an argument
   \a fill
-  \return
+  @return
  */
 bool DAnchorsBase::setFill(DAnchorsBase *fill)
 {
@@ -1164,9 +1212,10 @@ bool DAnchorsBase::setFill(DAnchorsBase *fill)
 }
 
 /*!
-  \brief 将 centerIn 中的target()作为参数调用其它重载函数
+@~english
+  @brief Call other overloaded functions with target() in centerIn as an argument
   \a centerIn
-  \return
+  @return
  */
 bool DAnchorsBase::setCenterIn(DAnchorsBase *centerIn)
 {
@@ -1361,8 +1410,9 @@ void DAnchorsBase::setRight(int arg, Qt::AnchorPoint point)
 }
 
 /*!
-  \brief 移动 target 控件的上边界到 arg 这个位置
-  \a arg 要移动到的位置
+@~english
+  @brief Move the upper boundary of the target control to the arg position
+  \a arg The location to move to
  */
 void DAnchorsBase::moveTop(int arg)
 {
@@ -1370,8 +1420,9 @@ void DAnchorsBase::moveTop(int arg)
 }
 
 /*!
-  \brief 移动 target 控件的下边界到 arg 这个位置
-  \a arg 要移动到的位置
+@~english
+  @brief Move the lower boundary of the target control to arg
+  \a arg The location to move to
  */
 void DAnchorsBase::moveBottom(int arg)
 {
@@ -1379,8 +1430,9 @@ void DAnchorsBase::moveBottom(int arg)
 }
 
 /*!
-  \brief 移动 target 控件的左边界到 arg 这个位置
-  \a arg 要移动到的位置
+@~english
+  @brief Move the left edge of the target control to arg
+  \a arg The location to move to
  */
 void DAnchorsBase::moveLeft(int arg)
 {
@@ -1388,8 +1440,9 @@ void DAnchorsBase::moveLeft(int arg)
 }
 
 /*!
-  \brief 移动 target 控件的右边界到 arg 这个位置
-  \a arg 要移动到的位置
+@~english
+  @brief Move the right edge of the target control to arg
+  \a arg The location to move to
  */
 void DAnchorsBase::moveRight(int arg)
 {
@@ -1397,8 +1450,9 @@ void DAnchorsBase::moveRight(int arg)
 }
 
 /*!
-  \brief 移动 target 控件的水平中线到 arg 这个位置
-  \a arg 要移动到的位置
+@~english
+  @brief Move the horizontal midline of the target control to arg
+  \a arg The location to move to
  */
 void DAnchorsBase::moveHorizontalCenter(int arg)
 {
@@ -1406,8 +1460,9 @@ void DAnchorsBase::moveHorizontalCenter(int arg)
 }
 
 /*!
-  \brief 移动 target 控件的竖直中线到 arg 这个位置
-  \a arg 要移动到的位置
+@~english
+  @brief Move the middle vertical line of the target control to arg
+  \a arg The location to move to
  */
 void DAnchorsBase::moveVerticalCenter(int arg)
 {
@@ -1415,8 +1470,9 @@ void DAnchorsBase::moveVerticalCenter(int arg)
 }
 
 /*!
-  \brief 移动 target 控件的上边界到 arg 这个位置
-  \a arg 要移动到的位置
+@~english
+  @brief Move the top boundary of the target control to arg
+  \a arg The location to move to
  */
 void DAnchorsBase::moveCenter(const QPoint &arg)
 {
