@@ -1,0 +1,513 @@
+/*!
+@~chinese
+@file danchors.h
+@ingroup dtkwidget
+
+@class Dtk::Widget::DAnchorsBase
+@brief DAnchorsBase 提供了一种指定 QWidget 与其它 QWidget 之间的关系来确定其位置的方法.
+@details 除了比较传统的布局方式之外，DtkWidget 还提供了一种使用锚定概念布局控件的方法（
+类似于 QQuickItem 中的 anchors 属性），可以认为每个控件具有一组6个不可见的“锚
+线”：left，horizontalCenter，right，top，verticalCenter和bottom，如图所示：
+@image html edges_anchors.png
+使用 DAnchors 可以让 QWidget 基于这些“锚线”来确定相互间的关系，如：
+@code
+DAnchors<QLabel> rect1(new QLabel("rect1"));
+DAnchors<QLabel> rect2(new QLabel("rect2"));
+
+rect2.setLeft(rect1.right());
+@endcode
+这样 rect2 的左边界就会和 rect1 的右边界对齐：
+@image html edge1.png
+另外还可以同时设置多个“锚线”：
+@code
+DAnchors<QLabel> rect1(new QLabel("rect1"));
+DAnchors<QLabel> rect2(new QLabel("rect2"));
+
+rect2.setTop(rect1.bottom());
+rect2.setLeft(rect1.right());
+@endcode
+@image html edge3.png
+锚定布局同时在多个控件中使用，控件之间只需要满足以下条件：<br>
+`控件之间为兄弟关系，或被锚定控件为父控件`<br>
+`锚定关系不能循环绑定`
+@subsection 锚定的间隔和偏移
+锚定系统允许设置“锚线”之间的间距，和“锚线”一一对应，每个控件都有一组4个 margin：
+leftMargin, rightMargin, topMargin 和 bottomMargin 以及两个 offset：
+horizontalCenterOffset 和 verticalCenterOffset。
+@image html margins_anchors.png
+下面是左margin的例子：
+@code
+DAnchors<QLabel> rect1(new QLabel("rect1"));
+DAnchors<QLabel> rect2(new QLabel("rect2"));
+
+rect2.setLeftMargin(5);
+rect2.setLeft(rect1.right());
+@endcode
+rect2 的左边界相距 rect1 的右边界5个像素：
+@image html edge2.png
+@note margin 仅仅是对设置的锚点生效，并不是让控件本身增加了边距，如果设置了
+margin，但并没有设置相应的锚点，对控件本身而已是没有任何影响的。margin 的值可以
+为负数，通过值的正负来决定margin的方向（内 margin 还是外 margin）
+
+除了基于“锚线”来设置锚定外，另外还有 setCenterIn 和 setFill 这两个比较特殊的
+的实现。
+@subsection 判断循环锚定的方式
+假设 DAnchorsBase a1, a2; a1.setRight(a2.left()); 则判断 a1 和 a2 之间
+会不会存在循环绑定的逻辑为:
+尝试更改 a1 右边界的值，更新后如果 a2 左边界的值产出了变化，则认为会导致循环绑
+定，否则认为不存在
+
+@property QWidget Dtk::Widget::DAnchorsBase::target
+@brief 绑定了锚定功能的控件对象
+@note 只读
+@sa read方法  [target](@ref Dtk::Widget::DAnchorsBase::target() const)
+
+@property bool Dtk::Widget::DAnchorsBase::enabled
+@brief 控制锚定功能是否开启，为 false 时仅仅表示不会根据控件各种属性的变化来
+来更新它的位置，但锚定关系并没有被解除
+@note 可读可写
+@sa read方法  [enabled](@ref Dtk::Widget::DAnchorsBase::enabled() const)
+@sa write方法 [setEnabled](@ref Dtk::Widget::DAnchorsBase::setEnabled(bool enabled))
+
+@property DAnchorsBase* Dtk::Widget::DAnchorsBase::anchors
+@brief 一个指向自己的指针
+@note 只读
+@sa read方法  [anchors](@ref Dtk::Widget::DAnchorsBase::anchors() const)
+
+@property DAnchorInfo* Dtk::Widget::DAnchorsBase::top
+@brief target 控件上边界锚线的信息
+@note 只能和 top verticalCenter bottom 绑定
+@note 对属性赋值不会更改它自身的值，而是对此锚线设置绑定关系
+@note 可读可写
+@sa read方法  [top](@ref Dtk::Widget::DAnchorsBase::top() const)
+@sa write方法 [setTop](@ref Dtk::Widget::DAnchorsBase::setTop(const DAnchorInfo *top))
+
+@property DAnchorInfo* Dtk::Widget::DAnchorsBase::bottom
+@note 只能和 top verticalCenter bottom 绑定
+@brief target 控件下边界锚线的信息
+@note 对属性赋值不会更改它自身的值，而是对此锚线设置绑定关系
+@note 可读可写
+@sa read方法  [bottom](@ref Dtk::Widget::DAnchorsBase::bottom() const)
+@sa write方法 [setBottom](@ref Dtk::Widget::DAnchorsBase::setBottom(const DAnchorInfo *bottom))
+
+@property DAnchorInfo* Dtk::Widget::DAnchorsBase::left
+@note 只能和 left horizontalCenter right 绑定
+@brief target 控件左边界锚线的信息
+@note 对属性赋值不会更改它自身的值，而是对此锚线设置绑定关系
+@note 可读可写
+@sa read方法  [left](@ref Dtk::Widget::DAnchorsBase::left() const)
+@sa write方法 [setLeft](@ref Dtk::Widget::DAnchorsBase::setLeft(int arg, Qt::AnchorPoint point))
+
+@property DAnchorInfo* Dtk::Widget::DAnchorsBase::right
+@note 只能和 left horizontalCenter right 绑定
+@brief target 控件右边界锚线的信息
+@note 对属性赋值不会更改它自身的值，而是对此锚线设置绑定关系
+@note 可读可写
+@sa read方法  [right](@ref Dtk::Widget::DAnchorsBase::right() const)
+@sa write方法 [setRight](@ref Dtk::Widget::DAnchorsBase::setRight(const DAnchorInfo *right))
+
+@property DAnchorInfo* Dtk::Widget::DAnchorsBase::horizontalCenter
+@note 只能和 left horizontalCenter right 绑定
+@brief target 控件水平锚线的信息
+@note 对属性赋值不会更改它自身的值，而是对此锚线设置绑定关系
+@note 可读可写
+@sa read方法  [horizontalCenter](@ref Dtk::Widget::DAnchorsBase::horizontalCenter() const)
+@sa write方法 [setHorizontalCenter](@ref Dtk::Widget::DAnchorsBase::setHorizontalCenter(const DAnchorInfo *horizontalCenter))
+
+@property DAnchorInfo* Dtk::Widget::DAnchorsBase::verticalCenter
+@note 只能和 top verticalCenter bottom 绑定
+@brief target 控件竖直锚线的信息
+@note 对属性赋值不会更改它自身的值，而是对此锚线设置绑定关系
+@note 可读可写
+@sa read方法  [verticalCenter](@ref Dtk::Widget::DAnchorsBase::verticalCenter() const)
+@sa write方法 [setVerticalCenter](@ref Dtk::Widget::DAnchorsBase::setVerticalCenter(const DAnchorInfo *verticalCenter))
+
+@property QWidget* Dtk::Widget::DAnchorsBase::fill
+@brief target 控件的填充目标对象
+@note 可读可写
+@sa read方法  [fill](@ref Dtk::Widget::DAnchorsBase::fill() const)
+@sa write方法 [setFill](@ref Dtk::Widget::DAnchorsBase::setFill(QWidget *fill))
+
+@property QWidget* Dtk::Widget::DAnchorsBase::centerIn
+@brief target 控件的居中目标对象
+@note 可读可写
+@sa read方法  [centerIn](@ref Dtk::Widget::DAnchorsBase::centerIn() const)
+@sa write方法 [setCenterIn](@ref Dtk::Widget::DAnchorsBase::setCenterIn(QWidget *centerIn))
+
+@property int Dtk::Widget::DAnchorsBase::margins
+@brief 上下左右四条“锚线”的边距，此值的优先级低于每条“锚线”特定的 margin 值
+@note 可读可写
+@sa read方法  [margins](@ref Dtk::Widget::DAnchorsBase::margins() const)
+@sa write方法 [setMargins](@ref Dtk::Widget::DAnchorsBase::setMargins(int margins))
+
+@property int Dtk::Widget::DAnchorsBase::topMargin
+@brief 上“锚线”的边距，优先级高于 margins
+@note 可读可写
+@sa read方法  [topMargin](@ref Dtk::Widget::DAnchorsBase::topMargin() const)
+@sa write方法 [setTopMargin](@ref Dtk::Widget::DAnchorsBase::setTopMargin(int topMargin))
+
+@property int Dtk::Widget::DAnchorsBase::bottomMargin
+@brief 下“锚线”的边距，优先级高于 margins
+@note 可读可写
+@sa read方法  [bottomMargin](@ref Dtk::Widget::DAnchorsBase::bottomMargin() const)
+@sa write方法 [setBottomMargin](@ref Dtk::Widget::DAnchorsBase::setBottomMargin(int bottomMargin))
+
+@property int Dtk::Widget::DAnchorsBase::leftMargin
+@brief 左“锚线”的边距，优先级高于 margins
+@note 可读可写
+@sa read方法  [leftMargin](@ref Dtk::Widget::DAnchorsBase::leftMargin() const)
+@sa write方法 [setLeftMargin](@ref Dtk::Widget::DAnchorsBase::setLeftMargin(int leftMargin))
+
+@property int Dtk::Widget::DAnchorsBase::rightMargin
+@brief 右“锚线”的边距，优先级高于 margins
+@note 可读可写
+@sa read方法  [rightMargin](@ref Dtk::Widget::DAnchorsBase::rightMargin() const)
+@sa write方法 [setRightMargin](@ref Dtk::Widget::DAnchorsBase::setRightMargin(int rightMargin))
+
+@property int Dtk::Widget::DAnchorsBase::horizontalCenterOffset
+@brief 水平“锚线”的偏移量
+@note 可读可写
+@sa read方法  [horizontalCenterOffset](@ref Dtk::Widget::DAnchorsBase::horizontalCenterOffset() const)
+@sa write方法 [setHorizontalCenterOffset](@ref Dtk::Widget::DAnchorsBase::setHorizontalCenterOffset(int horizontalCenterOffset))
+
+@property int Dtk::Widget::DAnchorsBase::verticalCenterOffset
+@brief 竖直“锚线”的偏移量
+@note 可读可写
+@sa read方法  [verticalCenterOffset](@ref Dtk::Widget::DAnchorsBase::verticalCenterOffset() const)
+@sa write方法 [setHorizontalCenterOffset](@ref Dtk::Widget::DAnchorsBase::setHorizontalCenterOffset(int verticalCenterOffset))
+
+@property bool Dtk::Widget::DAnchorsBase::alignWhenCentered
+@brief 设置控件创建时是否对齐
+@note 可读可写
+@sa read方法  [alignWhenCentered](@ref Dtk::Widget::DAnchorsBase::alignWhenCentered() const)
+@sa write方法 [setAlignWhenCentered](@ref Dtk::Widget::DAnchorsBase::setAlignWhenCentered(bool alignWhenCentered))
+
+
+@enum Dtk::Widget::DAnchorsBase::AnchorError
+@brief 设置锚定信息的过程中可能出现的错误类型
+| **值**                      | **序号** | **含义**        |
+|:--------------------------:|:------:|:-------------:|
+| NoError       | 0      | 设置锚定的过程中没有任何错误发生   |
+| Conflict      | 1      | 表示设置的锚定关系跟已有关系存在冲突，如 fill 和 centerIn 不能同时设置 |
+| TargetInvalid | 2      | 表示设置锚定关系时的目标控件无效 |
+| PointInvalid  | 3      | 表示设置锚定关系时的“锚线”信息错误，如把 Qt::AnchorLeft 设置到了 Qt::AnchorTop 上 |
+| LoopBind      | 4      | 表示设置的锚定关系和已有关系形成了循环绑定 |
+
+@fn void Dtk::Widget::DAnchorsBase::enabledChanged(bool enabled)
+@brief 信号会在 `enabled` 属性的值改变时被发送
+
+@fn void Dtk::Widget::DAnchorsBase::topChanged(const DAnchorInfo *top)
+@brief 信号会在 `top` 属性的值改变时被发送
+
+@fn void Dtk::Widget::DAnchorsBase::bottomChanged(const DAnchorInfo *bottom)
+@brief 信号会在 `bottom` 属性的值改变时被发送
+
+@fn void Dtk::Widget::DAnchorsBase::leftChanged(const DAnchorInfo *left)
+@brief 信号会在 `left` 属性的值改变时被发送
+
+@fn void Dtk::Widget::DAnchorsBase::rightChanged(const DAnchorInfo *right)
+@brief 信号会在 `right` 属性的值改变时被发送
+
+@fn void Dtk::Widget::DAnchorsBase::horizontalCenterChanged(const DAnchorInfo *horizontalCenter)
+@brief 信号会在 `horizontalCenter` 属性的值改变时被发送
+
+@fn void Dtk::Widget::DAnchorsBase::verticalCenterChanged(const DAnchorInfo *verticalCenter)
+@brief 信号会在 `verticalCenter` 属性的值改变时被发送
+
+@fn void Dtk::Widget::DAnchorsBase::fillChanged(QWidget *fill)
+@brief 信号会在 `fill` 属性的值改变时被发送
+
+@fn void Dtk::Widget::DAnchorsBase::centerInChanged(QWidget *centerIn)
+@brief 信号会在 `centerIn` 属性的值改变时被发送
+
+@fn void Dtk::Widget::DAnchorsBase::marginsChanged(int margins)
+@brief 信号会在 `margins` 属性的值改变时被发送
+
+@fn void Dtk::Widget::DAnchorsBase::topMarginChanged(int topMargin)
+@brief 信号会在 `topMargin` 属性的值改变时被发送
+
+@fn void Dtk::Widget::DAnchorsBase::bottomMarginChanged(int bottomMargin)
+@brief 信号会在 `bottomMargin` 属性的值改变时被发送
+
+@fn void Dtk::Widget::DAnchorsBase::leftMarginChanged(int leftMargin)
+@brief 信号会在 `leftMargin` 属性的值改变时被发送
+
+@fn void Dtk::Widget::DAnchorsBase::rightMarginChanged(int rightMargin)
+@brief 信号会在 `rightMargin` 属性的值改变时被发送
+
+@fn void Dtk::Widget::DAnchorsBase::horizontalCenterOffsetChanged(int horizontalCenterOffset)
+@brief 信号会在 `horizontalCenterOffset` 属性的值改变时被发送
+
+@fn void Dtk::Widget::DAnchorsBase::verticalCenterOffsetChanged(int verticalCenterOffset)
+@brief 信号会在 `verticalCenterOffset` 属性的值改变时被发送
+
+@fn void Dtk::Widget::DAnchorsBase::alignWhenCenteredChanged(bool alignWhenCentered)
+@brief 信号会在 `alignWhenCentered` 属性的值改变时被发送
+
+@fn Dtk::Widget::DAnchorsBase::DAnchorsBase(QWidget *w)
+@brief 构造 DAnchorsBase 对象，传入的 w 对象会和一个新的 DAnchorsBase 对象绑定到一起
+@param w 需要使用锚定关系的控件
+@note 对 w 设置的锚定关系不会随着本次构造的 DAnchorsBase 对象的销毁而消失。
+此构造函数可能会隐式的构造一个新 DAnchorsBase 对象用于真正的功能实现，函数执行
+时会先检查当前是否已经有和 w 对象绑定的 DAnchorsBase 对象，如果没有则会创建一
+个新的 DAnchorsBase 对象与之绑定，否则使用已有的对象。隐式创建的 DAnchorsBase
+对象会在对应的 QWidget 对象被销毁时自动销毁。
+@sa target() clearAnchors() getAnchorBaseByWidget()
+
+@fn Dtk::Widget::DAnchorsBase::~DAnchorsBase()
+@brief 在析构时会判断此 DAnchorsBase 对象是否和 target 存在绑定关系，如果是则从映射表中移除绑定
+@warning DAnchorsBasePrivate 对象可能是在多个 DAnchorsBase 对象之间显式共享的，
+所以在销毁 DAnchorsBase 后，对应的 DAnchorsBasePrivate 对象不一定会被销毁
+@sa QExplicitlySharedDataPointer
+
+@fn QWidget* Dtk::Widget::DAnchorsBase::target() const
+@brief 返回 target 控件指针
+
+@fn DEnhancedWidget* Dtk::Widget::DAnchorsBase::enhancedWidget() const
+@brief 返回 target 控件的扩展对象。此对象为 QWidget 对象额外提供了和控件大小、位置相关的变化信号
+@return
+@sa Dtk::Widget::DEnhancedWidget
+
+@fn bool Dtk::Widget::DAnchorsBase::enabled() const
+@brief 返回 enabled 属性
+
+@fn DAnchorsBase* Dtk::Widget::DAnchorsBase::anchors() const
+@brief 返回 anchors 属性
+
+@fn DAnchorInfo* Dtk::Widget::DAnchorsBase::top() const
+@brief 返回 top 属性
+
+@fn DAnchorInfo* Dtk::Widget::DAnchorsBase::bottom() const
+@brief 返回 bottom 属性
+
+@fn DAnchorInfo* Dtk::Widget::DAnchorsBase::left() const
+@brief 返回 left 属性
+
+@fn DAnchorInfo* Dtk::Widget::DAnchorsBase::right() const
+@brief 返回 right 属性
+
+@fn DAnchorInfo* Dtk::Widget::DAnchorsBase::horizontalCenter() const
+@brief 返回 horizontalCenter 属性
+
+@fn DAnchorInfo* Dtk::Widget::DAnchorsBase::verticalCenter() const
+@brief 返回 verticalCenter 属性
+
+@fn QWidget* Dtk::Widget::DAnchorsBase::fill() const
+@brief 返回 fill 属性
+
+@fn QWidget* Dtk::Widget::DAnchorsBase::centerIn() const
+@brief 返回 centerIn 属性
+
+@fn int Dtk::Widget::DAnchorsBase::margins() const
+@brief 返回 margins 属性
+
+@fn int Dtk::Widget::DAnchorsBase::topMargin() const
+@brief 返回 topMargin 属性
+
+@fn int Dtk::Widget::DAnchorsBase::bottomMargin() const
+@brief 返回 bottomMargin 属性
+
+@fn int Dtk::Widget::DAnchorsBase::leftMargin() const
+@brief 返回 leftMargin 属性
+
+@fn int Dtk::Widget::DAnchorsBase::rightMargin() const
+@brief 返回 rightMargin 属性
+
+@fn int Dtk::Widget::DAnchorsBase::horizontalCenterOffset() const
+@brief 返回 horizontalCenterOffset 属性
+
+@fn int Dtk::Widget::DAnchorsBase::verticalCenterOffset() const
+@brief 返回 verticalCenterOffset 属性
+
+@fn int Dtk::Widget::DAnchorsBase::alignWhenCentered() const
+@brief 返回 alignWhenCentered 属性
+
+@fn AnchorError Dtk::Widget::DAnchorsBase::errorCode() const
+@brief 锚定过程中产生的错误，在一个新的锚定函数被调用之前会清空此错误状态，每次调用锚定函数后，可以通过此函数的返回值来判断锚定设置是否成功。
+@return
+@sa errorString()
+
+@fn QString Dtk::Widget::DAnchorsBase::errorString() const
+@brief 对 errorCode 的文本描述信息
+@return
+@sa errorCode
+
+@fn bool Dtk::Widget::DAnchorsBase::isBinding(const DAnchorInfo *info) const
+@brief 如果此 info 设置了锚定对象，则返回 true ，否则返回 false
+@code
+DAnchors<QWidget> w1;
+DAnchors<QWidget> w2;
+
+w1.setLeft(w2.right());
+
+qDebug() << w1.isBinding(w1.left()) << w2.isBinding(w2.right());
+@endcode
+打印内容为：ture false
+@param info
+@return
+
+@fn static bool Dtk::Widget::DAnchorsBase::setAnchor(QWidget *w, const Qt::AnchorPoint &p, QWidget *target, const Qt::AnchorPoint &point)
+@brief 方便用户直接设置两个对象之间锚定关系的静态函数，调用此函数可能会隐式创建DAnchorsBase 对象。
+@param w 要锚定的控件对象
+@param p 要锚定的锚线/锚点
+@param target 锚定的目标对象
+@param point 锚定的目标锚线/锚点
+@return 如果锚定成功，则返回 true，否则返回 false。
+
+@fn static void Dtk::Widget::DAnchorsBase::clearAnchors(const QWidget *w)
+@brief 清除和控件 w 相关的所有锚定关系，包括锚定w或者被w锚定的任何关联。会直接
+销毁 w 对应的 DAnchorsBase 对象
+@param w 锚定的控件对象
+
+@fn static DAnchorsBase* Dtk::Widget::DAnchorsBase::getAnchorBaseByWidget(const QWidget *w)
+@brief 返回与 w 绑定的 DAnchorsBase 对象
+@param w 锚定的控件对象
+@return 如果 w 没有对应的锚定对象，则返回空
+
+@fn void Dtk::Widget::DAnchorsBase::setEnabled(bool enabled)
+@brief 设置 enabled 属性
+
+@fn bool Dtk::Widget::DAnchorsBase::setAnchor(const Qt::AnchorPoint &p, QWidget *target, const Qt::AnchorPoint &point)
+@brief 为 DAnchorsBase::target 对象设置锚定规则
+@note 可能会为目标控件隐式创建其对应的 DAnchorsBase 对象
+@param p 为当前控件的哪个锚线/锚点设置锚定规则
+@param target 锚定的目标控件
+@param point 锚定的目标锚线/锚点
+@return 如果设置成功，则返回 true，否则返回 false。
+
+@fn bool Dtk::Widget::DAnchorsBase::setTop(const DAnchorInfo *top)
+@brief 设置 top 属性
+
+@fn bool Dtk::Widget::DAnchorsBase::setBottom(const DAnchorInfo *bottom)
+@brief 设置 bottom 属性
+
+@fn bool Dtk::Widget::DAnchorsBase::setLeft(const DAnchorInfo *left)
+@brief 设置 left 属性
+
+@fn bool Dtk::Widget::DAnchorsBase::setRight(const DAnchorInfo *right)
+@brief 设置 right 属性
+
+@fn bool Dtk::Widget::DAnchorsBase::setHorizontalCenter(const DAnchorInfo *horizontalCenter)
+@brief 设置 horizontalCenter 属性
+
+@fn bool Dtk::Widget::DAnchorsBase::setVerticalCenter(const DAnchorInfo *verticalCenter)
+@brief 设置 verticalCenter 属性
+
+@fn bool Dtk::Widget::DAnchorsBase::setFill(QWidget *fill)
+@brief 设置 fill 属性
+
+@fn bool Dtk::Widget::DAnchorsBase::setCenterIn(QWidget *centerIn)
+@brief 设置 centerIn 属性
+
+@fn bool Dtk::Widget::DAnchorsBase::setFill(DAnchorsBase *fill)
+@brief 将 fill 中的target()作为参数调用其它重载函数
+@param fill
+@return
+
+@fn bool Dtk::Widget::DAnchorsBase::setCenterIn(DAnchorsBase *centerIn)
+@brief 将 centerIn 中的target()作为参数调用其它重载函数
+@param centerIn
+@return
+
+@fn void Dtk::Widget::DAnchorsBase::setMargins(int margins)
+@brief 设置 margins 属性
+
+@fn void Dtk::Widget::DAnchorsBase::setTopMargin(int topMargin)
+@brief 设置 topMargin 属性
+
+@fn void Dtk::Widget::DAnchorsBase::setBottomMargin(int bottomMargin)
+@brief 设置 bottomMargin 属性
+
+@fn void Dtk::Widget::DAnchorsBase::setLeftMargin(int leftMargin)
+@brief 设置 leftMargin 属性
+
+@fn void Dtk::Widget::DAnchorsBase::setRightMargin(int rightMargin)
+@brief 设置 rightMargin 属性
+
+@fn void Dtk::Widget::DAnchorsBase::setHorizontalCenterOffset(int horizontalCenterOffset)
+@brief 设置 horizontalCenterOffset 属性
+
+@fn void Dtk::Widget::DAnchorsBase::setVerticalCenterOffset(int verticalCenterOffset)
+@brief 设置 verticalCenterOffset 属性
+
+@fn void Dtk::Widget::DAnchorsBase::setAlignWhenCentered(bool alignWhenCentered)
+@brief 设置 alignWhenCentered 属性
+
+@fn void Dtk::Widget::DAnchorsBase::setTop(int arg, Qt::AnchorPoint point)
+@brief 设置 target 控件到上
+
+@fn void Dtk::Widget::DAnchorsBase::setBottom(int arg, Qt::AnchorPoint point)
+@brief 设置 target 控件到下
+
+@fn void Dtk::Widget::DAnchorsBase::setLeft(int arg, Qt::AnchorPoint point)
+@brief 设置 target 控件到左
+
+@fn void Dtk::Widget::DAnchorsBase::setRight(int arg, Qt::AnchorPoint point)
+@brief 设置 target 控件到右
+
+@fn void Dtk::Widget::DAnchorsBase::setHorizontalCenter(int arg, Qt::AnchorPoint point)
+@brief 设置 target 控件水平
+
+@fn void Dtk::Widget::DAnchorsBase::setVerticalCenter(int arg, Qt::AnchorPoint point)
+@brief 设置 target 控件竖直
+
+@fn void Dtk::Widget::DAnchorsBase::moveTop(int arg)
+@brief 移动 target 控件的上边界到 arg 这个位置
+@param arg 要移动到的位置
+
+@fn void Dtk::Widget::DAnchorsBase::moveBottom(int arg)
+@brief 移动 target 控件的下边界到 arg 这个位置
+@param arg 要移动到的位置
+
+@fn void Dtk::Widget::DAnchorsBase::moveLeft(int arg)
+@brief 移动 target 控件的左边界到 arg 这个位置
+@param arg 要移动到的位置
+
+@fn void Dtk::Widget::DAnchorsBase::moveRight(int arg)
+@brief 移动 target 控件的右边界到 arg 这个位置
+@param arg 要移动到的位置
+
+@fn void Dtk::Widget::DAnchorsBase::moveHorizontalCenter(int arg)
+@brief 移动 target 控件的水平中线到 arg 这个位置
+@param arg 要移动到的位置
+
+@fn void Dtk::Widget::DAnchorsBase::moveVerticalCenter(int arg)
+@brief 移动 target 控件的竖直中线到 arg 这个位置
+@param arg 要移动到的位置
+
+@fn void Dtk::Widget::DAnchorsBase::moveCenter(const QPoint &arg)
+@brief 移动 target 控件的上边界到 arg 这个位置
+@param arg 要移动到的位置
+
+@fn void Dtk::Widget::DAnchorsBase::init(QWidget *w)
+@brief 初始化函数
+
+*/
+
+/*!
+@~chinese
+@file danchors.h
+@ingroup dtkwidget
+
+@class Dtk::Widget::DAnchors
+@brief DAnchors 是一个模板类，在 DAnchorsBase 的基础上保存了一个控件指针，
+将控件和锚定绑定在一起使用，相当于把“锚线”属性附加到了控件本身.
+@details 
+重载了 “->”、“*”、“&” 等运算符，用于把 DAnchors 这层封装透明化，<br>
+尽量减少使用DAnchors<QWidget> 和直接使用 QWidget* 对象的区别。
+
+*/
+
+/*!
+@~chinese
+@file danchors.h
+@ingroup dtkwidget
+
+@class Dtk::Widget::DAnchorInfo
+@brief DAnchorInfo 用于记录“锚线”的锚定信息：被锚定的 DAnchorsBase 对象、
+锚定的类型、目标“锚线”的信息.
+@details
+每条锚线都和一个 DAnchorInfo 对象相对应。一般来说，在使用锚定布局时，<br>
+只需要关心“锚线”的绑定关系，不用关心 DAnchorInfo 中存储的数据。
+
+*/
