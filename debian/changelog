@@ -1,3 +1,11 @@
+dtkwidget (5.6.6) unstable; urgency=medium
+
+  * Release 5.6.6 update with broken dtkcore
+  * Update doc, for danchors
+  * fix the broken case if open the popup window second time
+
+ -- Deepin Packages Builder <packages@deepin.com>  Thu, 06 Feb 2023 17:22:10 +0800
+
 dtkwidget (5.6.5) unstable; urgency=medium
 
   * Release 5.6.5
