@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 set(VERSION
-    "5.6.4"
+    "5.6.6"
     CACHE STRING "define project version"
 )
 
