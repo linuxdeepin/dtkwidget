@@ -139,15 +139,6 @@ void DMainWindowPrivate::_q_autoShowFeatureDialog()
     D_QC(DMainWindow);
     if (q->windowHandle()->isActive()) {
         qApp->featureDisplayDialog()->show();
-        const QPoint pos = q->pos();
-        QRect rect;
-        for (QScreen *screen : qApp->screens()) {
-            if (screen->geometry().contains(pos)) {
-                rect = screen->geometry();
-                break;
-            }
-        }
-        qApp->featureDisplayDialog()->moveToCenterByRect(rect);
         q->disconnect(q->windowHandle(), SIGNAL(activeChanged()), q, SLOT(_q_autoShowFeatureDialog()));
     }
 }

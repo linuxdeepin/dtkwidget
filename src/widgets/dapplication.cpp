@@ -1111,7 +1111,12 @@ DFeatureDisplayDialog *DApplication::featureDisplayDialog()
 {
     D_D(DApplication);
     if (d->featureDisplayDialog == nullptr) {
-        d->featureDisplayDialog = new DFeatureDisplayDialog(activeWindow());
+        d->featureDisplayDialog = new DFeatureDisplayDialog();
+        connect(this, &DApplication::aboutToQuit, this, [this]{
+            D_D(DApplication);
+            d->featureDisplayDialog->deleteLater();
+            d->featureDisplayDialog = nullptr;
+        });
     }
     return d->featureDisplayDialog;
 }
