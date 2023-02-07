@@ -9,6 +9,7 @@
 #include <DFontSizeManager>
 #include <DGuiApplicationHelper>
 
+#include <QApplication>
 #include <QLabel>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -326,6 +327,10 @@ void DFeatureDisplayDialog::show()
     d->createWidgetItems();
     d->updateItemWidth();
     DDialog::show();
+    if (QWidget* window = qApp->activeWindow()) {
+        const auto point(window->mapToGlobal(window->rect().topLeft()));
+        moveToCenterByRect(QRect(point.x(), point.y(), window->rect().width(), window->rect().height()));
+    }
 }
 
 DWIDGET_END_NAMESPACE
