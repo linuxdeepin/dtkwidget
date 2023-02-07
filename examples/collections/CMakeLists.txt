@@ -59,4 +59,4 @@ install(
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/dtk${PROJECT_VERSION_MAJOR}/DWidget/examples/"
 )
 
-dconfig_override_files(APPID dtk-example META_NAME org.deepin.dtkwidget.feature-display FILES ${CMAKE_CURRENT_LIST_DIR}/org.deepin.dtkwiget.feature-display.json)
+dconfig_override_files(APPID dtk-example META_NAME org.deepin.dtkwidget.feature-display FILES ${CMAKE_CURRENT_LIST_DIR}/org.deepin.dtkwidget.feature-display.json)
