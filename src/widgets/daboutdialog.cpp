@@ -1,8 +1,9 @@
-// SPDX-FileCopyrightText: 2017 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2017 - 2023 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
 #include "daboutdialog.h"
+#include "dfeaturedisplaydialog.h"
 #include "private/daboutdialog_p.h"
 
 #include <dwidgetutil.h>
@@ -113,6 +114,7 @@ void DAboutDialogPrivate::init()
     featureLabel = new QLabel(websiteLinkTemplate.arg(websiteLink).arg(QObject::tr("Features")));
     featureLabel->setContextMenuPolicy(Qt::NoContextMenu);
     featureLabel->setOpenExternalLinks(false);
+    featureLabel->setVisible(!qApp->featureDisplayDialog()->isEmpty());
     redPointLabel = new DRedPointLabel();
     redPointLabel->setFixedSize(10, 10);
     QHBoxLayout *vFeatureLayout =  new QHBoxLayout;
