@@ -48,6 +48,7 @@ public:
     void setLinkButtonVisible(bool isVisible);
     void setLinkUrl(const QString &url);
     void show();
+    bool isEmpty() const;
 
 private:
     D_DECLARE_PRIVATE(DFeatureDisplayDialog)
