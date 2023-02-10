@@ -333,5 +333,11 @@ void DFeatureDisplayDialog::show()
     }
 }
 
+bool DFeatureDisplayDialog::isEmpty() const
+{
+    Q_D(const DFeatureDisplayDialog);
+    return d->m_featureItems.isEmpty();
+}
+
 DWIDGET_END_NAMESPACE
 #include "moc_dfeaturedisplaydialog.cpp"
