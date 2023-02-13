@@ -1456,7 +1456,8 @@ void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const Q
             DStyleHelper dstyle(style);
             dstyle.drawControl(CE_ButtonBoxButtonBevel, btn, p, w);
             DStyleOptionButton subopt = *btn;
-            subopt.dciIcon = btn->dciIcon;
+            if (btn->features & DStyleOptionButton::HasDciIcon)
+                subopt.dciIcon = btn->dciIcon;
             subopt.rect = dstyle.subElementRect(SE_ButtonBoxButtonContents, btn, w);
             dstyle.drawControl(CE_ButtonBoxButtonLabel, &subopt, p, w);
             if ((btn->state & State_HasFocus)) {

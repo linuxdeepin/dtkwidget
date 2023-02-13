@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2017 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2017 - 2023 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -68,9 +68,6 @@ void DFloatingButton::initStyleOption(DStyleOptionButton *option) const
 {
     DIconButton::initStyleOption(option);
     option->features = QStyleOptionButton::ButtonFeature(DStyleOptionButton::FloatingButton);
-
-    if (!option->dciIcon.isNull())
-        option->features |= QStyleOptionButton::ButtonFeature(DStyleOptionButton::HasDciIcon);
 }
 
 DWIDGET_END_NAMESPACE
