@@ -234,6 +234,7 @@ int DMainWindow::sidebarWidth() const
     D_DC(DMainWindow);
     if (d->sidebarHelper)
         return d->sidebarHelper->width();
+    return 0;
 }
 
 void DMainWindow::setSidebarWidth(int width)
@@ -247,7 +248,8 @@ bool DMainWindow::sidebarVisble() const
 {
     D_DC(DMainWindow);
     if (d->sidebarHelper)
-        return d->sidebarHelper->visble();
+        return d->sidebarHelper->visible();
+    return false;
 }
 
 void DMainWindow::setSidebarVisible(bool visible)
@@ -262,6 +264,7 @@ bool DMainWindow::sidebarExpanded() const
     D_DC(DMainWindow);
     if (d->sidebarHelper)
         return d->sidebarHelper->expanded();
+    return false;
 }
 
 void DMainWindow::setSidebarExpanded(bool expended)
