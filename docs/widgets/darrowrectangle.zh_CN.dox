@@ -127,20 +127,22 @@ int main(int argc, char *argv[]){
 
 @enum Dtk::Widget::DArrowRectangle::ArrowDirection
 @brief 箭头方向枚举包含 DArrowRectangle 的箭头可能指向的可能方向.
-| **值**      | **含义**               |
-|:-----------:|:---------------------:|
-| ArrowLeft   | 指示此矩形的箭头将指向左侧 | 
-| ArrowRight  | 指示此矩形的箭头将指向右侧 |
-| ArrowTop    | 指示此矩形的箭头将指向上方 |
-| ArrowBottom | 指示此矩形的箭头将向下指向 |
+@var Dtk::Widget::DArrowRectangle::ArrowDirection Dtk::Widget::DArrowRectangle::ArrowLeft
+@brief 指示此矩形的箭头将指向左侧
+@var Dtk::Widget::DArrowRectangle::ArrowDirection Dtk::Widget::DArrowRectangle::ArrowRight
+@brief 指示此矩形的箭头将指向右侧
+@var Dtk::Widget::DArrowRectangle::ArrowDirection Dtk::Widget::DArrowRectangle::ArrowTop
+@brief 指示此矩形的箭头将指向上方
+@var Dtk::Widget::DArrowRectangle::ArrowDirection Dtk::Widget::DArrowRectangle::ArrowBottom
+@brief 指示此矩形的箭头将向下指向
 
 @enum Dtk::Widget::DArrowRectangle::FloatMode
 @brief FloatMode 表示不同的控件的浮动模式
 @details 控件的浮动模式表示控件如何显示在布局中,DArrowRectangle::FloatWindow 表示控件将会以一个单独的窗口显示，而 DArrowRectangle::FloatWidget 则表示控件只能显示在其父控件的布局中，不能超出父控件大小
-| **值**      | **含义** |
-|:-----------:|:-------:|
-| FloatWindow | 窗口模式 | 
-| FloatWidget | 控件模式 |
+@var Dtk::Widget::DArrowRectangle::FloatMode Dtk::Widget::DArrowRectangle::FloatWindow
+@brief 控件将会以一个单独的窗口显示
+@var Dtk::Widget::DArrowRectangle::FloatMode Dtk::Widget::DArrowRectangle::FloatWidget
+@brief 控件只能显示在其父控件的布局中，不能超出父控件大小
 
 @fn explicit DArrowRectangle::DArrowRectangle(ArrowDirection direction, QWidget *parent = nullptr)
 @brief 获取 DArrowRectangle 实例

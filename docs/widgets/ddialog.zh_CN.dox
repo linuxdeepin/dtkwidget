@@ -161,8 +161,8 @@ dialog->addButton("授权", false, DDialog::ButtonRecommend); //添加一个授�
 
 ```cpp
 #include <DApplication>
-#include <DMainWindow> 
-#include <DPushButton> 
+#include <DMainWindow>
+#include <DPushButton>
 #include <DFileDialog>//导入文件对话框依赖包
 DWIDGET_USE_NAMESPACE //使用DWidget命名空间
 
@@ -172,7 +172,7 @@ int main(int argc, char *argv[]){
     DPushButton *btn = new DPushButton("按钮",&dmw); //设置一个按钮，将按钮的父亲设置为主窗口
     QObject::connect(btn, &DPushButton::clicked, [](){ //建立按钮点击的连接，按钮被按下时执行lambda函数，
         DFileDialog *dialog = new DFileDialog; //新建一个指向对话框的指针
-        dialog->setAttribute(Qt::WidgetAttribute::WA_DeleteOnClose); //将指针设置为窗口关闭即释放    
+        dialog->setAttribute(Qt::WidgetAttribute::WA_DeleteOnClose); //将指针设置为窗口关闭即释放
         dialog->exec(); //显示对话框
     });
     dmw.show(); //显示主窗口
@@ -191,8 +191,8 @@ DTK提供了更为丰富和美观的消息提示，包含可自动消失的信�
 
 ```cpp
 #include <DApplication>
-#include <DMainWindow> 
-#include <DPushButton> 
+#include <DMainWindow>
+#include <DPushButton>
 #include <DMessageManager>
 DWIDGET_USE_NAMESPACE //使用DWidget命名空间
 
@@ -202,19 +202,19 @@ int main(int argc, char *argv[]){
     dmw.resize(400,300); //重新设置主窗口大小
     DPushButton *btn1 = new DPushButton("自动消失信息",&dmw); //新建一个按钮
     btn1->move(0,50); //移动按钮
-    DPushButton *btn2 = new DPushButton("点击消失信息",&dmw); 
-    btn2->move(0,100);    
+    DPushButton *btn2 = new DPushButton("点击消失信息",&dmw);
+    btn2->move(0,100);
     QObject::connect(btn1, &DPushButton::clicked, &dmw, [&dmw](){ //建立第一个按钮的连接
         //点击按钮后发出消息，消息的父亲设为主窗口，使用standardIcon（）设置样式并添加提示信息
         DMessageManager::instance()->sendMessage(&dmw, QApplication::style()->standardIcon(QStyle::SP_MessageBoxWarning), "这是自动消失的信息");
-    });    
+    });
     QObject::connect(btn2, &DPushButton::clicked, [&dmw](){ //建立第二个按钮的连接
         DFloatingMessage *message = new DFloatingMessage(DFloatingMessage::ResidentType); //新建一个指向新消息的指针，指定消息类型为ResidentType
         message->setIcon(QApplication::style()->standardIcon(QStyle::SP_MessageBoxWarning)); //使用standardIcon（）设置样式
         message->setMessage("这是不会自动消失的提示消息"); //设置提示信息
         message->setWidget(new DPushButton("确认")); //在消息对话框上添加一个新按钮，并设置按钮信息
         DMessageManager::instance()->sendMessage(&dmw, message); //发送信息，父亲设为主窗口
-    });    
+    });
     dmw.show(); //显示主窗口
     return app.exec(); //运行应用
 }
@@ -260,14 +260,14 @@ int main(int argc, char *argv[]){
 @sa read方法  [onButtonClickedClose](@ref Dtk::Widget::DDialog::onButtonClickedClose() const)
 @sa write方法 [setCloseButtonVisible](@ref Dtk::Widget::DDialog::setCloseButtonVisible(bool closeButtonVisible))
 
-@enum Dtk::Widget::DDialog::ButtonType  
+@enum Dtk::Widget::DDialog::ButtonType
 @brief 表示按钮类型
-@details
-| **值**          | **含义** |
-|:---------------:|:------:|
-| ButtonNormal    | 标准    | 
-| ButtonWarning   | 警告    |
-| ButtonRecommend | 推荐    |
+@var Dtk::Widget::DDialog::ButtonType Dtk::Widget::DDialog::ButtonType::ButtonNormal
+@brief 标准按钮
+@var Dtk::Widget::DDialog::ButtonType Dtk::Widget::DDialog::ButtonType::ButtonWarning
+@brief 警告按钮
+@var Dtk::Widget::DDialog::ButtonType Dtk::Widget::DDialog::ButtonType::ButtonRecommend
+@brief 推荐按钮
 
 @fn Dtk::Widget::DDialog::DDialog(QWidget *parent = nullptr)
 @brief  构造一个 DDialog 对话框
