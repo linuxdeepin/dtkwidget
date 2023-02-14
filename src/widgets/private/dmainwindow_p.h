@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2017 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2017 - 2023 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -18,7 +18,7 @@ DWIDGET_BEGIN_NAMESPACE
 class DSidebarHelper : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(bool visible READ visble WRITE setVisible NOTIFY visibleChanged)
+    Q_PROPERTY(bool visible READ visible WRITE setVisible NOTIFY visibleChanged)
     Q_PROPERTY(bool expanded READ expanded WRITE setExpanded NOTIFY expandChanged)
     Q_PROPERTY(int width READ width WRITE setWidth NOTIFY widthChanged)
     Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged)
@@ -40,7 +40,7 @@ public:
         Q_EMIT backgroundColorChanged(m_backgroundColor);
     }
 
-    bool visble() const
+    bool visible() const
     {
         return m_visible;
     }
