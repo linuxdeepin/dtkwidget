@@ -10,20 +10,23 @@
 
 @enum Dtk::Widget::DArrowButton::ArrowDirection
 @brief 表示箭头图标的方向
-| **值**     | **含义** |
-|:----------:|:------:|
-| ArrowUp    | 箭头朝上 |
-| ArrowDown  | 箭头朝下 |
-| ArrowLeft  | 箭头朝左 |
-| ArrowRight | 箭头朝右 |
+@var Dtk::Widget::DArrowButton::ArrowDirection Dtk::Widget::DArrowButton::ArrowUp
+@brief 箭头朝上
+@var Dtk::Widget::DArrowButton::ArrowDirection Dtk::Widget::DArrowButton::ArrowDown
+@brief 箭头朝下
+@var Dtk::Widget::DArrowButton::ArrowDirection Dtk::Widget::DArrowButton::ArrowLeft
+@brief 箭头朝左
+@var Dtk::Widget::DArrowButton::ArrowDirection Dtk::Widget::DArrowButton::ArrowRight
+@brief 箭头朝右
 
 @enum Dtk::Widget::DArrowButton::ArrowButtonState
 @brief 表示箭头图标的方向
-| **值**           |  **含义**          |
-|:----------------:|:------------------:|
-| ArrowStateNormal | 普通状态            |
-| ArrowStateHover  | 鼠标在按钮上方悬停状态 |
-| ArrowStatePress  | 按钮被按下状态        |
+@var Dtk::Widget::DArrowButton::ArrowButtonState Dtk::Widget::DArrowButton::ArrowStateNormal
+@brief 普通状态
+@var Dtk::Widget::DArrowButton::ArrowButtonState Dtk::Widget::DArrowButton::ArrowStateHover
+@brief 鼠标在按钮上方悬停状态
+@var Dtk::Widget::DArrowButton::ArrowButtonState Dtk::Widget::DArrowButton::ArrowStatePress
+@brief 按钮被按下状态
 
 @fn  DArrowButton::DArrowButton(QWidget *parent) : QLabel(parent)
 @brief 构造一个 DArrowButton 箭头按钮，默认箭头方向向下

@@ -37,11 +37,11 @@
 @sa DDialog, QDialog
 
 @enum Dtk::Widget::DAbstractDialog::DisplayPosition
-@brief
-| **值**                      | **序号** | **含义**        |
-|:--------------------------:|:------:|:-------------:|
-| Center     | 0      | 在屏幕中央显示此对话框   |
-| TopRight | 1      | 在屏幕的右上方显示此对话框 |
+@brief 对话框显示位置
+@var Dtk::Widget::DAbstractDialog::DisplayPosition Dtk::Widget::DAbstractDialog::Center
+@brief 在屏幕中央显示此对话框
+@var Dtk::Widget::DAbstractDialog::DisplayPosition Dtk::Widget::DAbstractDialog::TopRight
+@brief 在屏幕的右上方显示此对话框
 
 @fn Dtk::Widget::DAbstractDialog::DAbstractDialog(QWidget *parent = nullptr)
 @brief 构造一个DAbstractDialog实例
