@@ -185,13 +185,16 @@ margin，但并没有设置相应的锚点，对控件本身而已是没有任�
 
 @enum Dtk::Widget::DAnchorsBase::AnchorError
 @brief 设置锚定信息的过程中可能出现的错误类型
-| **值**                      | **序号** | **含义**        |
-|:--------------------------:|:------:|:-------------:|
-| NoError       | 0      | 设置锚定的过程中没有任何错误发生   |
-| Conflict      | 1      | 表示设置的锚定关系跟已有关系存在冲突，如 fill 和 centerIn 不能同时设置 |
-| TargetInvalid | 2      | 表示设置锚定关系时的目标控件无效 |
-| PointInvalid  | 3      | 表示设置锚定关系时的“锚线”信息错误，如把 Qt::AnchorLeft 设置到了 Qt::AnchorTop 上 |
-| LoopBind      | 4      | 表示设置的锚定关系和已有关系形成了循环绑定 |
+@var Dtk::Widget::DAnchorsBase::AnchorError Dtk::Widget::DAnchorsBase::NoError
+@brief 设置锚定的过程中没有任何错误发生
+@var Dtk::Widget::DAnchorsBase::AnchorError Dtk::Widget::DAnchorsBase::Conflict
+@brief 表示设置的锚定关系跟已有关系存在冲突，如 fill 和 centerIn 不能同时设置
+@var Dtk::Widget::DAnchorsBase::AnchorError Dtk::Widget::DAnchorsBase::TargetInvalid
+@brief 表示设置锚定关系时的目标控件无效
+@var Dtk::Widget::DAnchorsBase::AnchorError Dtk::Widget::DAnchorsBase::PointInvalid
+@brief 表示设置锚定关系时的“锚线”信息错误，如把 Qt::AnchorLeft 设置到了 Qt::AnchorTop 上
+@var Dtk::Widget::DAnchorsBase::AnchorError Dtk::Widget::DAnchorsBase::LoopBind
+@brief 表示设置的锚定关系和已有关系形成了循环绑定
 
 @fn void Dtk::Widget::DAnchorsBase::enabledChanged(bool enabled)
 @brief 信号会在 `enabled` 属性的值改变时被发送
@@ -492,7 +495,7 @@ qDebug() << w1.isBinding(w1.left()) << w2.isBinding(w2.right());
 @class Dtk::Widget::DAnchors
 @brief DAnchors 是一个模板类，在 DAnchorsBase 的基础上保存了一个控件指针，
 将控件和锚定绑定在一起使用，相当于把“锚线”属性附加到了控件本身.
-@details 
+@details
 重载了 “->”、“*”、“&” 等运算符，用于把 DAnchors 这层封装透明化，<br>
 尽量减少使用DAnchors<QWidget> 和直接使用 QWidget* 对象的区别。
 
