@@ -1257,7 +1257,6 @@ void DTitlebar::setSidebarHelper(DSidebarHelper *helper)
         d->sidebarBackgroundWidget->lower();
         d->leftLayout->addWidget(d->expandButton, 0, Qt::AlignLeft);
         connect(d->expandButton, &DIconButton::clicked, [this, d] (bool isExpanded) {
-            d->sidebarBackgroundWidget->setVisible(isExpanded);
             d->sidebarHelper->setExpanded(isExpanded);
             int x = isExpanded ? d->sidebarHelper->width() : 0;
             d->separator->move(x, height() - d->separator->height());
@@ -1268,11 +1267,10 @@ void DTitlebar::setSidebarHelper(DSidebarHelper *helper)
     }
 
     connect(helper, &DSidebarHelper::visibleChanged, this, [this](bool visible){
-        qInfo() << "visibleChanged" << visible;
         d_func()->expandButton->setVisible(visible);
     });
-    connect(helper, &DSidebarHelper::expandChanged, this, [](bool expanded){
-        qInfo() << "expandChanged" << expanded;
+    connect(helper, &DSidebarHelper::expandChanged, this, [this](bool isExpanded){
+        d_func()->sidebarBackgroundWidget->setVisible(isExpanded);
     });
     connect(helper, &DSidebarHelper::backgroundColorChanged, this, [](QColor backgroundColor){
         qInfo() << "backgroundColorChanged" << backgroundColor.name(QColor::NameFormat::HexArgb);
