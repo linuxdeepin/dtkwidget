@@ -80,4 +80,7 @@
 @fn void Dtk::Widget::DFeatureDisplayDialog::show()
 @brief 显示特性介绍对话框
 
+@fn bool Dtk::Widget::DFeatureDisplayDialog::isEmpty() const
+@brief 假如特性介绍对话框没有特性项返回true， 否则返回false
+@return 特性介绍对话框的内容是否为空
 */
