@@ -217,6 +217,7 @@ MainWindow::MainWindow(QWidget *parent)
                                   | Qt::WindowSystemMenuHint);
         titlebar->setAutoHideOnFullscreen(true);
 
+#ifdef D_TITLEBARSETTINGS
         QList<DTitlebarToolBaseInterface *> tools;
         tools << new DTitleBarToolCut()
               << new DTitleBarToolDelete()
@@ -224,6 +225,7 @@ MainWindow::MainWindow(QWidget *parent)
         auto settings = titlebar->settings();
         settings->initilize(tools, ":/resources/data/titlebar-settings.json");
         settings->toolsEditPanel()->setMinimumWidth(this->width());
+#endif
     }
 
     DButtonBox *buttonBox = new DButtonBox(titlebar);
