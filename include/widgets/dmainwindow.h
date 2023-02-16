@@ -47,7 +47,8 @@ public:
     int  sidebarWidth() const;
     void setSidebarWidth(int width);
 
-    bool sidebarVisble() const;
+    D_DECL_DEPRECATED_X("Please use sidebarVisible") bool sidebarVisble() const;
+    bool sidebarVisible() const ;
     void setSidebarVisible(bool visible);
 
     bool sidebarExpanded() const;
