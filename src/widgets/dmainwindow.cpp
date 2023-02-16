@@ -246,6 +246,11 @@ void DMainWindow::setSidebarWidth(int width)
 
 bool DMainWindow::sidebarVisble() const
 {
+    return sidebarVisible();
+}
+
+bool DMainWindow::sidebarVisible() const
+{
     D_DC(DMainWindow);
     if (d->sidebarHelper)
         return d->sidebarHelper->visible();
