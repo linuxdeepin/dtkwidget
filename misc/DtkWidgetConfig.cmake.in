@@ -1,8 +1,13 @@
 @PACKAGE_INIT@
 
 include(CMakeFindDependencyMacro)
-find_dependency(Dtk COMPONENTS Core Gui)
-find_dependency(Qt@QT_VERSION_MAJOR@ COMPONENTS Core Widgets DBus Network PrintSupport)
+find_dependency(DtkCore)
+find_dependency(DtkGui)
+find_dependency(Qt@QT_VERSION_MAJOR@Core)
+find_dependency(Qt@QT_VERSION_MAJOR@Widgets)
+find_dependency(Qt@QT_VERSION_MAJOR@DBus)
+find_dependency(Qt@QT_VERSION_MAJOR@Network)
+find_dependency(Qt@QT_VERSION_MAJOR@PrintSupport)
 include(${CMAKE_CURRENT_LIST_DIR}/DtkWidgetTargets.cmake)
 set(DtkWidget_LIBRARIES Dtk::Widget)
 get_target_property(DtkWidget_INCLUDE_DIRS Dtk::Widget INTERFACE_INCLUDE_DIRECTORIES)
