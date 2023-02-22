@@ -2,11 +2,327 @@
 @~chinese
 @file dlineedit.h
 @ingroup edit
-@class
-@brief
+@class Dtk::Widget::DLineEdit
+@brief DLineEdit一个聚合 QLineEdit 的输入框.
 @details
 
-TODO: 添加类简介、示例代码、示例截图和函数使用说明等
+## 概述
 
+- DLineEdit提供了向输入框左右两端插入控件的函数
+- DLineEdit提供了带警告颜色的输入框
+- DLineEdit提供了带文本警告消息的输入框
+
+LineEdit 是一个单行输入文本框，为用户提供了比较多的编辑功能，除了QLineEdit默认的功能，DLineEdit还提供警告提示，
+还可以通过 setLeftWidgets() 或者 setRightWidgets() 向编辑框左右侧添加额外控件
+
+下面通过一个简单登录界面的程序来演示DLineEdit
+
+## CMakeLists.txt
+
+配置 CMakeLists.txt 文件
+
+```cmake
+cmake_minimum_required(VERSION 3.1.0) # 指定cmake最低版本
+
+project(example1 VERSION 1.0.0 LANGUAGES CXX) # 指定项目名称, 版本, 语言 cxx就是c++
+
+set(CMAKE_CXX_STANDARD 11) # 指定c++标准
+set(CMAKE_CXX_STANDARD_REQUIRED ON) # 指定c++标准要求,至少为11以上
+set(target example1) # 指定目标名称
+
+set(CMAKE_AUTOMOC ON) # support qt moc # 支持qt moc
+set(CMAKE_AUTORCC ON) # support qt resource file # 支持qt资源文件
+set(CMAKE_AUTOUIC ON) # support qt ui file # 支持qt ui文件(非必须)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # support clangd 支持 clangd
+
+if (CMAKE_VERSION VERSION_LESS "3.7.0") # 如果cmake版本小于3.7.0
+    set(CMAKE_INCLUDE_CURRENT_DIR ON) # 设置包含当前目录
+endif()
+
+find_package(Qt5 COMPONENTS Widgets REQUIRED) # 寻找Qt5组件Widgets
+find_package(Qt5 COMPONENTS Gui  REQUIRED) # 寻找Qt5组件Gui
+find_package(Dtk COMPONENTS Widget REQUIRED) # 寻找Dtk组件Widget
+find_package(Dtk COMPONENTS Core REQUIRED) # 寻找Dtk组件Core
+find_package(Dtk COMPONENTS Gui) # 寻找Dtk组件Gui
+
+add_executable(example1     # 添加可执行文件
+        main.cpp
+)
+
+target_link_libraries(example1 PRIVATE
+    Qt5::Widgets
+    Qt5::Gui
+    ${DtkGui_LIBRARIES}
+    ${DtkCore_LIBRARIES}
+    ${DtkWidget_LIBRARIES}
+) # 链接库
+```
+
+## main.cpp
+
+```cpp
+#include <DApplication>
+#include <DMainWindow>
+#include <DPushButton>
+#include <DLineEdit>
+#include <DWidget>
+#include <QLayout>
+#include <DPushButton>
+#include <DPasswordEdit>
+
+DWIDGET_USE_NAMESPACE //使用DWidget命名空间
+
+int main(int argc, char *argv[]) {
+    DApplication app(argc,argv);
+
+    DMainWindow w;
+    //限制主程序窗口最小尺寸
+    w.setMinimumSize(300,200);
+    //新建一个窗体，容纳所有控件
+    DWidget *cw = new DWidget(&w);
+    //新建一个可以输入手机号的DLineEdit控件
+    DLineEdit *phoneEdit = new DLineEdit();
+    //设置占位符文本，用于提示输入信息
+    phoneEdit->setPlaceholderText("输入手机号");
+    //在右侧添加一个获取验证码的按钮，这里演示使用匿名对象
+    phoneEdit->setRightWidgets({new DPushButton("获取验证码")});
+
+    //新建一个可以输入密码的 DPasswordEdit 控件，它从 DLineEdit 继承而来，一个方便键入密码的控件
+    DPasswordEdit *pwdEdit = new DPasswordEdit();
+    //设置占位符文本，用于提示输入信息
+    pwdEdit->setPlaceholderText("输入密码");
+
+    //设置窗体的为垂直布局
+    QVBoxLayout *mainLayout = new QVBoxLayout(cw);
+
+    //将两个编辑框添加到布局
+    mainLayout->addWidget(phoneEdit);
+    mainLayout->addWidget(pwdEdit);
+
+    //新建两个按钮控件，用于取消和登录
+    DPushButton *cancelBtn = new DPushButton("取消");
+    DPushButton *loginBtn = new DPushButton("登录");
+
+    //将两个按钮放入一个水平布局中
+    QHBoxLayout *btnLayout = new QHBoxLayout();
+    btnLayout->addWidget(cancelBtn);
+    btnLayout->addWidget(loginBtn);
+
+    //将水平布局添加到外层窗体的垂直布局中
+    mainLayout->addLayout(btnLayout);
+
+    //运用connect，实现登录按钮被按下后的一系列操作
+    QObject::connect(loginBtn, &DPushButton::clicked, [&phoneEdit, &pwdEdit, &w](){
+        //简单判断手机号是否输入，若为空，则输入手机号的编辑框发出警示信息
+        if(phoneEdit->text().isEmpty()) {
+            //发出警示信息，显示五秒
+            phoneEdit->showAlertMessage("手机号不能为空",5000);
+            return;
+        }
+        //判断输入的密码位数是否大于等于6位，若不满足，则发出警示信息
+        if(pwdEdit->text().size() < 6) {
+            //发出警示信息，显示五秒
+            pwdEdit->showAlertMessage("请输入至少6位密码",5000);
+            return;
+        }
+        //满足所有条件后，主窗口发出登录成功提示信息
+        w.sendMessage(QApplication::style()->standardIcon(QStyle::SP_MessageBoxInformation), "登录成功！");
+    });
+
+    //将cw加入到主窗口中
+    w.setCentralWidget(cw);
+    w.show();
+    return app.exec();
+}
+```
+## 程序运行效果
+
+![不输入信息效果图](/docs/images/dlineedit_example1.png) <br>
+![发出警示信息效果图](/docs/images/dlineedit_example2.png)
+
+@property DLineEdit::alert
+@brief 警告模式属性.
+@details用于开启或者判断是否处于警告模式.
+
+@fn Dtk::Widget::DLineEdit::DLineEdit(QWidget *parent = nullptr)
+@brief DLineEdit的构造函数
+@param parent 参数被发送到 QWidget 构造函数
+
+@fn QLineEdit *Dtk::Widget::DLineEdit::lineEdit() const
+@brief 返回 QLineEdit 对象
+@note 若 DLineEdit 不满足输入框的使用需求，请用此函数抛出的对象
+@return 返回 QLineEdit 对象
+
+@fn void Dtk::Widget::DLineEdit::setAlert(bool isAlert)
+@brief 设置警告状态，橙黄色提示
+@param isAlert true为设置为警告状态，反之不是
+
+@fn bool Dtk::Widget::DLineEdit::isAlert() const
+@brief 返回当前是否是警告状态
+@return 返当前的警告状态
+
+@fn void Dtk::Widget::DLineEdit::showAlertMessage(const QString &text, int duration = 3000)
+@brief 显示警告消息
+显示指定的文本消息，超过指定时间后警告消息消失
+@param text 警告的文本
+@param duration 显示的时间长度，单位毫秒
+@note 时间参数为-1时，警告消息将一直存在
+
+@fn void Dtk::Widget::DLineEdit::showAlertMessage(const QString &text, QWidget *follower, int duration = 3000)
+@brief 显示警告消息
+显示指定的文本消息，超过指定时间后警告消息消失
+@param text 警告的文本
+@param follower tooltip 跟随
+@param duration 显示的时间长度，单位毫秒
+@note 时间参数为-1时，警告消息将一直存在
+
+@fn void Dtk::Widget::DLineEdit::setAlertMessageAlignment(Qt::Alignment alignment)
+@brief 指定对齐方式
+现只支持(下)左，(下)右，(下水平)居中， 默认左对齐
+@note 参数为其他时，默认左对齐
+@param alignment 消息对齐方式
+
+@fn Qt::Alignment Dtk::Widget::DLineEdit::alertMessageAlignment() const
+@brief 获取警告消息的对齐方式
+@return 返回警告消息的对齐方式
+
+@fn void Dtk::Widget::DLineEdit::hideAlertMessage()
+@brief 隐藏警告消息框
+
+@fn void Dtk::Widget::DLineEdit::setLeftWidgets(const QList<QWidget *> &list)
+@brief 向输入框左侧添加控件
+将 QList 里的控件插入到输入框的左侧
+@note 多次调用，只有最后一次调用生效
+@param list 存储控件的列表
+    
+@fn void Dtk::Widget::DLineEdit::setRightWidgets(const QList<QWidget *> &list)
+@brief 向输入框右侧添加控件
+将 QList 里的控件插入到输入框的右侧
+@note 多次调用，只有最后一次调用生效
+@param list 存储控件的列表
+
+@fn void Dtk::Widget::DLineEdit::setLeftWidgetsVisible(bool visible)
+@brief 是否隐藏输入框左侧控件.
+@param visible 是否隐藏
+
+@fn void Dtk::Widget::DLineEdit::setRightWidgetsVisible(bool visible)
+@brief 是否隐藏输入框右侧控件.
+@param visible 是否隐藏
+
+@fn void Dtk::Widget::DLineEdit::setClearButtonEnabled(bool enable)
+@brief 设置清除按钮是否可见.
+@param enable true 按钮可见 false 按钮不可见
+
+@fn bool Dtk::Widget::DLineEdit::isClearButtonEnabled() const
+@brief 返回清除按钮是否可见.
+@return true 清除按钮可见 false 清除按钮不可见
+
+@fn void Dtk::Widget::DLineEdit::setText(const QString &text)
+@brief 设置显示的文本.
+@param text 显示的文本
+
+@fn QString Dtk::Widget::DLineEdit::text()
+@brief 返回当前显示的文本.
+@return 返回显示的文本
+
+@fn void Dtk::Widget::DLineEdit::clear();
+@brief 清空编辑的内容
+
+@fn QLineEdit::EchoMode Dtk::Widget::DLineEdit::echoMode() const
+@brief 返回输入框的回显模式
+@return 返回回显的模式
+
+@fn void Dtk::Widget::DLineEdit::setEchoMode(QLineEdit::EchoMode mode)
+@brief 设置回显的模式
+@param mode 回显的模式
+
+@fn void Dtk::Widget::DLineEdit::setContextMenuPolicy(Qt::ContextMenuPolicy policy)
+@brief 设置行编辑控件的文本菜单策略
+@param policy 显示右键菜单的方式
+转发实际变量 QLineEdit 的 ContextMenuEvent 消息
+@sa QLineEdit::setContextMenuPolicy
+
+@fn bool Dtk::Widget::DLineEdit::speechToTextIsEnabled() const
+@brief 返回是否显示语音听写菜单项
+@return true 显示语音听写菜单项 false不显示
+
+@fn void Dtk::Widget::DLineEdit::setSpeechToTextEnabled(bool enable)
+@brief 设置是否显示语音听写菜单项
+@param enable true显示 flase不显示
+
+@fn void Dtk::Widget::DLineEdit::setPlaceholderText(const QString &)
+@brief 设置占位文本
+@param 参数1 占位文本
+
+@fn bool Dtk::Widget::DLineEdit::textToSpeechIsEnabled() const
+@brief 返回是否显示语音朗读菜单项
+@return true 显示语音朗读菜单项 false不显示
+
+@fn void Dtk::Widget::DLineEdit::setTextToSpeechEnabled(bool enable)
+@brief 设置是否显示语音朗读菜单项
+@param enable true显示 flase不显示
+
+@fn bool Dtk::Widget::DLineEdit::textToTranslateIsEnabled() const
+@brief 返回是否显示文本翻译菜单项
+@return true 显示文本翻译菜单项 false 不显示
+
+@fn void Dtk::Widget::DLineEdit::setTextToTranslateEnabled(bool enable)
+@brief 设置是否显示文本翻译菜单项
+@param enable true显示 flase不显示
+
+@fn bool Dtk::Widget::DLineEdit::copyEnabled() const
+@brief 返回文本是否可拷贝
+@return true文本可拷贝 false不可拷贝
+
+@fn void Dtk::Widget::DLineEdit::setCopyEnabled(bool enable)
+@brief 设置文本是否可拷贝
+@param enable true文本可拷贝 false不可拷贝
+
+@fn bool Dtk::Widget::DLineEdit::cutEnabled() const
+@brief 返回文本是否可裁切
+@return true文本可剪切 false不可剪切
+
+@fn void Dtk::Widget::DLineEdit::setCutEnabled(bool enable)
+@brief 设置输入文本是否可裁切
+@param enabled true输入文本可剪切 false不可剪切
+
+@fn bool Dtk::Widget::DLineEdit::eventFilter(QObject *watched, QEvent *event) override
+@brief 事件过滤器
+该过滤器不做任何过滤动作，但会监控输入框的焦点状态，并发送信号 focusChanged()。
+@param watched 被监听的子控件指针
+@param event 待过滤的事件
+@param event 实例
+@return 成功过滤返回 true，否则返回 false
+
+@fn void Dtk::Widget::DLineEdit::alertChanged(bool alert) const
+@brief 警告状态改变发出此信号
+@param alert 是否在警告状态
+
+@fn void Dtk::Widget::DLineEdit::focusChanged(bool onFocus) const
+@brief 焦点状态改变发出此信号
+@param onFocus 是否获取到焦点
+
+@fn void Dtk::Widget::DLineEdit::textChanged(const QString &)
+@brief 文本发生改变发出此信号
+@param 参数1 当前文本
+
+@fn void Dtk::Widget::DLineEdit::textEdited(const QString &)
+@brief 每当编辑文本时会发出此信号
+@param 参数1 当前文本
+
+@fn void Dtk::Widget::DLineEdit::cursorPositionChanged(int, int)
+@brief 光标位置改变发出此信号
+@param 参数1 旧位置
+@param 参数2 新位置
+
+@fn void Dtk::Widget::DLineEdit::returnPressed()
+@brief 按下Return键或Enter键会发出此信号
+
+@fn void Dtk::Widget::DLineEdit::editingFinished()
+@brief 当按下Return或Enter键或文本字段失去焦点时会发出此信号
+
+@fn void Dtk::Widget::DLineEdit::selectionChanged()
+@brief 每当选择更改时会发出此信号
 
 */
