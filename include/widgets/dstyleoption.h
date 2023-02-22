@@ -55,6 +55,9 @@ public:
 class DStyleOptionButton : public QStyleOptionButton, public DStyleOption
 {
 public:
+    explicit DStyleOptionButton();
+    DStyleOptionButton(const DStyleOptionButton &other);
+    DStyleOptionButton &operator=(const DStyleOptionButton &other);
     enum ButtonFeature {
         SuggestButton = (CommandLinkButton << 1),
         WarningButton = (SuggestButton << 1),
