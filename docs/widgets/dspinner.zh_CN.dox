@@ -2,11 +2,134 @@
 @~chinese
 @file dspinner.h
 @ingroup spinner
-@class
-@brief
-@details
+@class Dtk::Widget::DSpinner
+@brief 可以使用 DSpinner 类快速创建用于指示加载中状态的旋转等待图标动画控件.
+@details DSpinner 提供了一个用于指示加载中状态的旋转等待图标动画控件。在创建图标后，使用 start() 即可开始图标旋转的动画。
+@image html DSpinner.gif
 
-TODO: 添加类简介、示例代码、示例截图和函数使用说明等
+下面通过一个简单的实例来演示DSpinner
 
+## CMakeLists.txt
 
+配置 CMakeLists.txt 文件
+
+```cmake
+cmake_minimum_required(VERSION 3.1.0) # 指定cmake最低版本
+
+project(example1 VERSION 1.0.0 LANGUAGES CXX) # 指定项目名称, 版本, 语言 cxx就是c++
+
+set(CMAKE_CXX_STANDARD 11) # 指定c++标准
+set(CMAKE_CXX_STANDARD_REQUIRED ON) # 指定c++标准要求,至少为11以上
+set(target example1) # 指定目标名称
+
+set(CMAKE_AUTOMOC ON) # support qt moc # 支持qt moc
+set(CMAKE_AUTORCC ON) # support qt resource file # 支持qt资源文件
+set(CMAKE_AUTOUIC ON) # support qt ui file # 支持qt ui文件(非必须)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # support clangd 支持 clangd
+
+if (CMAKE_VERSION VERSION_LESS "3.7.0") # 如果cmake版本小于3.7.0
+    set(CMAKE_INCLUDE_CURRENT_DIR ON) # 设置包含当前目录
+endif()
+
+find_package(Qt5 COMPONENTS Widgets REQUIRED) # 寻找Qt5组件Widgets
+find_package(Qt5 COMPONENTS Gui  REQUIRED) # 寻找Qt5组件Gui
+find_package(Dtk COMPONENTS Widget REQUIRED) # 寻找Dtk组件Widget
+find_package(Dtk COMPONENTS Core REQUIRED) # 寻找Dtk组件Core
+find_package(Dtk COMPONENTS Gui) # 寻找Dtk组件Gui
+
+add_executable(example1     # 添加可执行文件
+        main.cpp
+)
+
+target_link_libraries(example1 PRIVATE
+    Qt5::Widgets
+    Qt5::Gui
+    ${DtkGui_LIBRARIES}
+    ${DtkCore_LIBRARIES}
+    ${DtkWidget_LIBRARIES}
+) # 链接库
+```
+
+## main.cpp
+
+```cpp
+#include <DApplication>
+#include <DMainWindow>
+#include <DPushButton>
+#include <DSpinner>
+#include <QLayout>
+
+DWIDGET_USE_NAMESPACE //使用DWidget命名空间
+
+int main(int argc, char *argv[]) {
+    DApplication app(argc,argv);
+
+    DMainWindow w;
+    //限制主程序窗口最小尺寸
+    w.setMinimumSize(300,200);
+    //新建一个窗体，容纳所有控件
+    DWidget *cw = new DWidget(&w);
+    //窗体使用水平布局
+    QHBoxLayout *layout = new QHBoxLayout(cw);
+    //设置对齐方式，向右对齐，防止spinner被隐藏后按钮乱跳
+    layout->setAlignment(Qt::AlignRight);
+
+    //添加一个DSpinner
+    DSpinner *spinner = new DSpinner();
+    spinner->setFixedSize(36,36);
+    //添加一个button，控制DSpinner
+    DPushButton *btn = new DPushButton("开始加载");
+    btn->setFixedWidth(100);
+    //将DSpinner和DPushButton添加到布局中
+    layout->addWidget(spinner);
+    layout->addWidget(btn);
+    //刚开始没有加载，隐藏spinner
+    spinner->hide();
+
+    //实现按钮被按下后的操作
+    QObject::connect(btn, &DPushButton::clicked, [&btn, &spinner](){
+        //如果spinner正在播放动画，按下按钮后切换到非加载模式，停止动画并隐藏spinner，反之开始动画并显示spinner
+        if(spinner->isPlaying()){
+            spinner->stop();
+            spinner->hide();
+            btn->setText("开始加载");
+        }
+        else {
+            spinner->show();
+            spinner->start();
+            btn->setText("取消加载");
+        }
+    });
+    //将cw放置在主窗口中
+    w.setCentralWidget(cw);
+    w.show();
+    return app.exec();
+}
+```
+
+## 程序运行效果
+
+![运行效果图](/docs/images/dspinner_example.gif)
+
+@fn Dtk::Widget::DSpinner::DSpinner(QWidget *parent = 0)
+@brief 创建一个 DSpinner 控件
+@param parent 父控件
+
+@fn Dtk::Widget::DSpinner::~DSpinner();
+@brief 析构函数
+
+@fn bool Dtk::Widget::DSpinner::isPlaying() const;
+@brief DSpinner 是否正在播放旋转动画.
+@return 正在播放返回 true，否则返回 false.
+
+@fn void Dtk::Widget::DSpinner::start();
+@brief DSpinner 开始旋转动画
+
+@fn void Dtk::Widget::DSpinner::stop();
+@brief DSpinner 停止旋转动画
+
+@fn void Dtk::Widget::DSpinner::setBackgroundColor(QColor color);
+@brief 设置控件的背景颜色
+@param color 需要设置的背景颜色
 */
