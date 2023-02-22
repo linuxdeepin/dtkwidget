@@ -102,6 +102,41 @@ void DStyleOption::init(const QWidget *widget)
   \a widget
   \sa Dtk::Widget::DSuggestButton
  */
+DStyleOptionButton::DStyleOptionButton()
+    : QStyleOptionButton ()
+    , DStyleOption ()
+{
+}
+
+/*!
+ * @brief DStyleOptionButton::DStyleOptionButton Custom copy constructor
+ * @param other Source object
+ */
+DStyleOptionButton::DStyleOptionButton(const DStyleOptionButton &other)
+    : QStyleOptionButton (other)
+    , DStyleOption (other)
+{
+    // `dciIcon` broke abi, so we need to distinguish weather `other` has dciIcon.
+    if (other.features & DStyleOptionButton::HasDciIcon)
+        dciIcon = other.dciIcon;
+}
+
+/*!
+ * @brief DStyleOptionButton::operator = Custom assignment constructor
+ * @param other Source obejct
+ * @return
+ */
+DStyleOptionButton &DStyleOptionButton::operator=(const DStyleOptionButton &other)
+{
+    // Set the value of the parent class member variable.
+    this->QStyleOptionButton::operator=(other);
+    this->DStyleOption::operator=(other);
+
+    if (other.features & DStyleOptionButton::HasDciIcon)
+        dciIcon = other.dciIcon;
+    return *this;
+}
+
 void DStyleOptionButton::init(const QWidget *widget)
 {
     DStyleOption::init(widget);
