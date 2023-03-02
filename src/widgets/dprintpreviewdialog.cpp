@@ -1042,7 +1042,7 @@ void DPrintPreviewDialogPrivate::initconnections()
 
     QObject::connect(advanceBtn, &QPushButton::clicked, q, [this] { this->showadvancesetting(); });
     QObject::connect(printDeviceCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_printerChanged(int)));
-    QObject::connect(cancelBtn, &DPushButton::clicked, q, &DPrintPreviewDialog::close);
+    QObject::connect(cancelBtn, &DPushButton::clicked, q, &DPrintPreviewDialog::reject);
     QObject::connect(pageRangeCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_pageRangeChanged(int)));
     QObject::connect(marginsCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_pageMarginChanged(int)));
     QObject::connect(printBtn, SIGNAL(clicked(bool)), q, SLOT(_q_startPrint(bool)));
@@ -2370,7 +2370,7 @@ void DPrintPreviewDialogPrivate::_q_startPrint(bool clicked)
 
     pview->print();
 
-    q->done(0);
+    q->accept();
 }
 
 void DPrintPreviewDialogPrivate::pageRangeError(TipsNum tipNum)
