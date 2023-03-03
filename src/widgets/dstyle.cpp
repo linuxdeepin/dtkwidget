@@ -2186,6 +2186,8 @@ int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QW
         return 32;
     case PM_ScrollView_ScrollBarOverlap:
         return true;
+    case PM_ToolBarIconSize:
+        return 16;
     default:
         break;
     }
