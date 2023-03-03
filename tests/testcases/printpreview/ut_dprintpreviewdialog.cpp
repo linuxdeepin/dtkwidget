@@ -5,6 +5,7 @@
 #include <gtest/gtest.h>
 #include <QTest>
 
+#include <QSignalSpy>
 #include <DIconButton>
 #include <DSuggestButton>
 #include <DLineEdit>
@@ -1631,4 +1632,62 @@ TEST_F(ut_DPrintPreviewDialog, themeTypeChanged)
     DGuiApplicationHelper::instance()->themeTypeChanged(DGuiApplicationHelper::LightType);
 
     DGuiApplicationHelper::instance()->themeTypeChanged(DGuiApplicationHelper::DarkType);
+}
+
+TEST_F(ut_DPrintPreviewDialog, testPrivateUpdateSubControlSettings)
+{
+    test_dialog_d->waterMarkBtn->setChecked(true);
+    QSignalSpy spy(test_dialog_d->inclinatBox, &DSpinBox::editingFinished);
+    test_dialog_d->updateSubControlSettings(DPrintPreviewSettingInfo::PS_Watermark);
+    if (DPrintPreviewDialog::currentPlugin().isEmpty()) {
+        EXPECT_EQ(spy.count(), 0);
+    } else {
+        auto info = testPrintDialog->createDialogSettingInfo(DPrintPreviewSettingInfo::PS_Watermark);
+        if (info) {
+            EXPECT_EQ(spy.count(), 1);
+            delete info;
+        } else {
+            EXPECT_EQ(spy.count(), 0);
+        }
+    }
+}
+
+TEST_F(ut_DPrintPreviewDialog, createDialogSettingInfo)
+{
+    if (!DPrintPreviewDialog::currentPlugin().isEmpty()) {
+        return;
+    }
+
+    auto info = testPrintDialog->createDialogSettingInfo(DPrintPreviewSettingInfo::PS_Watermark);
+    ASSERT_TRUE(info);
+    EXPECT_EQ(info->type(), DPrintPreviewSettingInfo::PS_Watermark);
+    delete info;
+
+    info = testPrintDialog->createDialogSettingInfo(DPrintPreviewSettingInfo::PS_SettingsCount);
+    ASSERT_FALSE(info);
+}
+
+TEST_F(ut_DPrintPreviewDialog, updateDialogSettingInfo)
+{
+    if (!DPrintPreviewDialog::currentPlugin().isEmpty()) {
+        return;
+    }
+
+    test_dialog_d->waterMarkBtn->setChecked(true);
+    auto info = testPrintDialog->createDialogSettingInfo(DPrintPreviewSettingInfo::PS_Watermark);
+    auto watermarkInfo = dynamic_cast<DPrintPreviewWatermarkInfo *>(info);
+    ASSERT_TRUE(watermarkInfo);
+    EXPECT_EQ(watermarkInfo->opened, true);
+
+    watermarkInfo->opened = false;
+    bool newFlag = false;
+    testPrintDialog->updateDialogSettingInfo(watermarkInfo);
+    delete watermarkInfo;
+
+    info = testPrintDialog->createDialogSettingInfo(DPrintPreviewSettingInfo::PS_Watermark);
+    watermarkInfo = dynamic_cast<DPrintPreviewWatermarkInfo *>(info);
+    ASSERT_TRUE(watermarkInfo);
+    EXPECT_EQ(newFlag, watermarkInfo->opened);
+
+    delete watermarkInfo;
 }

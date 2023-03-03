@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2019 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2019 - 2023 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -9,6 +9,7 @@
 #endif
 
 #include <DDialog>
+#include <dprintpreviewsettinginfo.h>
 #include <dprintpreviewwidget.h>
 
 DWIDGET_BEGIN_NAMESPACE
@@ -62,6 +63,9 @@ public:
 
     bool setAsynPreview(int totalPage);
     bool isAsynPreview() const;
+
+    DPrintPreviewSettingInfo *createDialogSettingInfo(DPrintPreviewSettingInfo::SettingType type);
+    void updateDialogSettingInfo(DPrintPreviewSettingInfo *info);
 
     // QWidget interface
 protected:
