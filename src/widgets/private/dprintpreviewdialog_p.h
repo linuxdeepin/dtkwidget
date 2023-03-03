@@ -203,7 +203,7 @@ class PreviewSettingsPluginHelper
 {
 public:
     PreviewSettingsPluginHelper(DPrintPreviewDialogPrivate *dd);
-    DPrintPreviewSettingInfo *loadInfo(DPrintPreviewSettingInfo::SettingType type);
+    DPrintPreviewSettingInfo *loadInfo(DPrintPreviewSettingInfo::SettingType type, bool manual = false);
 
     void setSubControlVisible(DPrintPreviewSettingInterface::SettingSubControl subControlType, bool visible);
     void setSubControlEnabled(DPrintPreviewSettingInterface::SettingSubControl subControlType, bool enabled);
