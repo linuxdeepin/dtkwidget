@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2023 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -1510,6 +1510,9 @@ void DPrintPreviewDialogPrivate::updateSubControlSettings(DPrintPreviewSettingIn
 {
     DPrintPreviewSettingInfo *info = settingHelper->loadInfo(setting);
     settingHelper->updateSettingInfo(info);
+    if (info) {
+        delete info;
+    }
 }
 
 /*!
@@ -2645,6 +2648,18 @@ bool DPrintPreviewDialog::isAsynPreview() const
     return d->pview->isAsynPreview();
 }
 
+DPrintPreviewSettingInfo *DPrintPreviewDialog::createDialogSettingInfo(DPrintPreviewSettingInfo::SettingType type)
+{
+    Q_D(DPrintPreviewDialog);
+    return d->settingHelper->loadInfo(type, true);
+}
+
+void DPrintPreviewDialog::updateDialogSettingInfo(DPrintPreviewSettingInfo *info)
+{
+    Q_D(DPrintPreviewDialog);
+    d->settingHelper->updateSettingInfo(info);
+}
+
 void DPrintPreviewDialog::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event);
@@ -2682,10 +2697,12 @@ PreviewSettingsPluginHelper::PreviewSettingsPluginHelper(DPrintPreviewDialogPriv
 {
 }
 
-DPrintPreviewSettingInfo *PreviewSettingsPluginHelper::loadInfo(DPrintPreviewSettingInfo::SettingType type)
+DPrintPreviewSettingInfo *PreviewSettingsPluginHelper::loadInfo(DPrintPreviewSettingInfo::SettingType type, bool manual)
 {
-    if (!m_currentInterface)
+    // Apps can manually get the current print dialog settings.
+    if (!manual && !m_currentInterface) {
         return nullptr;
+    }
 
     DPrintPreviewSettingInfo *info = nullptr;
     switch (type) {
@@ -2841,7 +2858,8 @@ DPrintPreviewSettingInfo *PreviewSettingsPluginHelper::loadInfo(DPrintPreviewSet
         break;
     }
 
-    if (!info)
+    // Apps can get setting info without the print plugin, otherwise need to be filter by plugin.
+    if (!info || !m_currentInterface)
         return info;
 
     if (m_currentInterface->settingFilter(d->settingHelper->m_printSettingData, info))

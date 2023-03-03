@@ -1,0 +1,34 @@
+/*!
+@~chinese
+@file dprintpreviewdialog.h
+@ingroup dialog
+@class Dtk::Widget::DPrintPreviewDialog
+@brief Dtk 风格的打印预览页面.
+@details 一个用于创建 Dtk 风格的打印预览页面，通常情况下，只需要构建一个 DPrintPreivewDialog 对象，
+并将原始数据绘制到连接 `DPrintPreview::paintRequested` 信号的槽函数中,最后以模态的形式显示就可以正常使用。
+
+TODO: 添加类简介、示例代码、示例截图和函数使用说明等
+
+@fn DPrintPreviewSettingInfo *Dtk::Widget::DPrintPreviewDialog::createDialogSettingInfo(DPrintPreviewSettingInfo::SettingType type)
+@brief 根据打印类型 `type` 创建打印界面设置对象，包含当前界面设置信息。
+@details 若不支持 `type` 类型的设置，将返回 nullptr ；打印插件可能过滤部分类型的设置，同样返回 nullptr 。
+使用示例
+```c++
+DPrintPreviewDialog dialog;
+auto info = dialog.createDialogSettingInfo(DPrintPreviewSettingInfo::PS_Watermark);
+if (info) {
+    // 设置打印参数
+    ...
+    dialog.updateDialogSettingInfo(info);
+    delete info;
+}
+```
+@param[in] type 打印界面配置类型
+@return 打印设置对象指针
+@warning 创建的打印设置对象生命周期由调用方管理，需手动释放对象
+
+@fn void Dtk::Widget::DPrintPreviewDialog::updateDialogSettingInfo(DPrintPreviewSettingInfo *info)
+@brief 通过 `info` 配置信息更新打印界面配置，配置将更新界面控件，可调整的选项包括基础设置、打印方向、页面设置、水印等。
+@param[in] info 提供打印界面设置信息
+
+*/
