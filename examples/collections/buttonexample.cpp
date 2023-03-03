@@ -292,6 +292,35 @@ DToolButtonExample::DToolButtonExample(QWidget *parent)
         showDialog("这是icon_Tooltip的图标");
     });
 
+    pToolBar->addAction(QIcon::fromTheme("icon_Dialog"), "", this, [] {
+        DDialog dialog("各种类型的ToolButton", "", nullptr);
+        dialog.setIcon(DStyle().standardIcon(DStyle::SP_MessageBoxInformation));
+        auto toolBar = new DToolBar;
+        toolBar->addAction(QIcon::fromTheme("icon_button"), "");
+        toolBar->addAction("文字");
+        toolBar->addAction("长文字123456");
+        {
+            auto action = toolBar->addAction("含菜单");
+            auto menu = new QMenu();
+            menu->addAction("Menu1");
+            action->setMenu(menu);
+        }
+        {
+            auto action = toolBar->addAction(QIcon::fromTheme("icon_button"), "");
+            auto menu = new QMenu();
+            menu->addAction("Menu1");
+            action->setMenu(menu);
+        }
+        {
+            auto action = toolBar->addAction(QIcon::fromTheme("icon_button"), "图标和文字");
+            if (auto widget = qobject_cast<QToolButton *>(toolBar->widgetForAction(action)))
+                    widget->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        }
+        dialog.addContent(toolBar);
+        dialog.exec();
+    });
+
+
     pHBoxLayout->addWidget(pToolBar);
 
     pVBoxLayout->addSpacing(20);
