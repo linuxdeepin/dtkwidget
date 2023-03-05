@@ -15,51 +15,57 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
-  \class Dtk::Widget::DFileChooserEdit
+@~english
+  @class Dtk::Widget::DFileChooserEdit
   \inmodule dtkwidget
-  \brief 带有选择文件按钮的文本编辑框.
+  @brief A text editing box with a button to select a file.
   
-  本控件基本与 DLineEdit 相同，但同时在编辑框的右侧提供了一个按钮，点击按钮将会出现一个选择文件的对话框，当在对话框中选择完毕点击确定之后，选择的结果将会出现在文本编辑框中。
-  另外还提供了设置对话框出现的位置，选择文件的类型，或设置文件名过滤器的方法以定制控件的功能。
+  This control is basically the same as DLineEdit, but at the same time provides a button on the right side of the edit box, click the button will appear a select file dialog box, when the selection is completed in the dialog box click OK, the selection result will appear in the text edit box.
+  There are also ways to customize the functionality of the control by setting where the dialog box appears, selecting the type of file, or setting a filename filter.
   
-  \sa DLineEdit QFileDialog
+  @sa DLineEdit QFileDialog
  */
 
 /*!
-  \enum Dtk::Widget::DFileChooserEdit::DialogDisplayPosition
-  \brief 这个枚举保存了对话框可以出现的位置
+@~english
+  @enum Dtk::Widget::DFileChooserEdit::DialogDisplayPosition
+  @brief This enum holds the locations where the dialog box can appear
   
   \value FollowParentWindow
-  跟随父窗口
+  Following the parent window
   
   \value CurrentMonitorCenter
-  鼠标所在的显示器的中心
+  The center of the display where the mouse is located
  */
 
 // =========================Signals begin=========================
 /*!
-  \fn void DFileChooserEdit::fileChoosed(const QString &fileName)
-  \brief 这个信号在文件被选择且点击了对话框的确认按钮之后被调用
-  \a fileName 被选中的文件名，包含其绝对路径
+@~english
+  @fn void DFileChooserEdit::fileChoosed(const QString &fileName)
+  @brief This signal is called after the file is selected and the Confirm button of the dialog box is clicked
+  \a fileName The name of the selected file, including its absolute path.
  */
 
 /*!
-  \fn void DFileChooserEdit::dialogOpened()
-  \brief 这个信号在对话框即将显示时被调用
-  \note 注意，此时对话框并没有显示
+@~english
+  @fn void DFileChooserEdit::dialogOpened()
+  @brief This signal is called when the dialog box is about to be displayed
+  @note Notice that the dialog box is not displayed
  */
 
 /*!
-  \fn void DFileChooserEdit::dialogClosed(int code)
-  \brief 这信号在对话框关闭时被调用，无论对话框是被点击了确认还是取消，都会调用本信号
-  \a code 对话框的返回码，返回码表示了对话框是因为点击了取消还是确认而关闭的
-  \sa QDialog::DialogCode
+@~english
+  @fn void DFileChooserEdit::dialogClosed(int code)
+  @brief This signal is called when the dialog box is closed, whether the dialog box is clicked to confirm or cancel, this signal is called
+  \a code The return code of the dialog box, which indicates whether the dialog box was closed by clicking Cancel or Confirm
+  @sa QDialog::DialogCode
  */
 // =========================Signals end=========================
 
 /*!
-  \brief 获取 DFileChooserEdit 的一个实例
-  \a parent 作为实例的父控件
+@~english
+  @brief Gets an instance of DFileChooserEdit
+  \a parent As the parent control of the instance
  */
 DFileChooserEdit::DFileChooserEdit(QWidget *parent)
     : DLineEdit(*new DFileChooserEditPrivate(this), parent)
@@ -70,13 +76,14 @@ DFileChooserEdit::DFileChooserEdit(QWidget *parent)
 }
 
 /*!
-  \brief 这个属性保存文件选择对话框将会出现的位置
+@~english
+  @brief This property holds the location where the file selection dialog box will appear
   
-  可选值为枚举 DFileChooserEdit::DialogDisplayPosition 中的值
+  Optional values for the enumeration DFileChooserEdit: : DialogDisplayPosition of values
   
   Getter: DFileChooserEdit::dialogDisplayPosition , Setter: DFileChooserEdit::setDialogDisplayPosition
   
-  \sa DFileChooserEdit::DialogDisplayPosition
+  @sa DFileChooserEdit::DialogDisplayPosition
  */
 DFileChooserEdit::DialogDisplayPosition DFileChooserEdit::dialogDisplayPosition() const
 {
@@ -86,11 +93,12 @@ DFileChooserEdit::DialogDisplayPosition DFileChooserEdit::dialogDisplayPosition(
 }
 
 /*!
-  \brief 设置对话框显示位置.
+@~english
+  @brief Set the position of the dialog box display.
 
-  \a dialogDisplayPosition 对话框的显示位置.
+  \a dialogDisplayPosition The position of the dialog box to display.
 
-  \sa DFileChooserEdit::dialogDisplayPosition
+  @sa DFileChooserEdit::dialogDisplayPosition
  */
 void DFileChooserEdit::setDialogDisplayPosition(DFileChooserEdit::DialogDisplayPosition dialogDisplayPosition)
 {
@@ -127,9 +135,10 @@ void DFileChooserEdit::initDialog()
 }
 
 /*!
-  \brief 设置文件选择模式
-  \a mode 要使用的模式
-  \sa DFileChooserEdit::fileMode
+@~english
+  @brief Set the file selection mode
+  \a mode Pattern to use
+  @sa DFileChooserEdit::fileMode
  */
 void DFileChooserEdit::setFileMode(QFileDialog::FileMode mode)
 {
@@ -142,12 +151,15 @@ void DFileChooserEdit::setFileMode(QFileDialog::FileMode mode)
 }
 
 /*!
-  \brief 获取对话框选择文件模式
+@~english
+  @brief Get dialog box to select file mode
   
-  有多种类型的选择模式，也就是说对话框可以有多种显示或行为，例如选择单个文件，选择多个文件亦或选择一个目录等，详细可以查阅：QFileDialog::FileMode
-  \return 返回但前的选择模式
-  \sa QFileDialog::FileMode
-  \note 目前本控件只支持选择单个文件，即便调用 DFileChooserEdit::setFileMode 设置了选择模式，当有多个文件在对话框中被选中时，取其第一个作为选择结果
+  There are multiple selection modes, which means that the dialog box can have multiple displays or behaviors, 
+  such as selecting a single file, selecting multiple files, or selecting a directory, etc. See QFileDialog::FileMode for details
+  @return Returns the current selection mode
+  @sa QFileDialog::FileMode
+  @note Currently only support this control to choose a single file, even call DFileChooserEdit: : setFileMode set selection mode, 
+  when there are multiple files in the dialog box is selected, take its first as a choice
  */
 QFileDialog::FileMode DFileChooserEdit::fileMode() const
 {
@@ -160,9 +172,10 @@ QFileDialog::FileMode DFileChooserEdit::fileMode() const
 }
 
 /*!
-  \brief 设置文件名过滤器
-  \a filters 要使用的文件名过滤器组成的列表
-  \sa DFileChooserEdit::nameFilters
+@~english
+  @brief Set the filename filter
+  \a filters A list of filename filters to use
+  @sa DFileChooserEdit::nameFilters
  */
 void  DFileChooserEdit::setNameFilters(const QStringList &filters)
 {
@@ -175,14 +188,17 @@ void  DFileChooserEdit::setNameFilters(const QStringList &filters)
 }
 
 /*!
-  \brief 文件名过滤器
+@~english
+  @brief Filename filter
   
-  默认此选项为空，即所有文件都可以被选择，当文件名过滤器被设置后，则只有文件名与过滤器匹配的文件可以被选择，
-  例如：设置了"*.txt"，则表示只有后缀名为"txt"的文件可以被选择，
-  或者同时设置了多个过滤器：QStringList() << "text file (*.txt)" << "picture file (*.png);
-  则会在文件选择对话框的下方出现设置的多个过滤选项，只是需要注意，一次只能使用一个过滤选项，也就是说不能同时即允许选择txt文件又允许选择png文件
-  \return 返回当前的文件名过滤器组成的列表
-  \sa DFileChooserEdit::setNameFilters
+  By default, all files are selected.When the filename filter is set,
+  only files with a filename matching the filename filter can be selected.
+  For example, if "*.txt" is set, only files with the suffix "txt" can be selected,
+  or if multiple filters are set: QStringList() << "text file (*.txt)" << "picture file (*.png);
+  You will see a list of options at the bottom of the file selection dialog, 
+  but note that only one option can be used at a time, which means you can't select both txt and png files at the same time
+  @return Returns a list of the current filename filters
+  @sa DFileChooserEdit::setNameFilters
  */
 QStringList DFileChooserEdit::nameFilters() const
 {
