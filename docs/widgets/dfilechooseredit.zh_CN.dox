@@ -7,6 +7,89 @@
 @details
 本控件基本与 DLineEdit 相同，但同时在编辑框的右侧提供了一个按钮，点击按钮将会出现一个选择文件的对话框，当在对话框中选择完毕点击确定之后，选择的结果将会出现在文本编辑框中。
 另外还提供了设置对话框出现的位置，选择文件的类型，或设置文件名过滤器的方法以定制控件的功能。
+
+下面提供DFileChooserEdit的例子:
+
+项目目录结构在同一目录下
+
+## CMakeLists.txt
+```cmake
+cmake_minimum_required(VERSION 3.1.0)                # 指定cmake最低版本
+
+project(example VERSION 1.0.0 LANGUAGES CXX) # 指定项目名称, 版本, 语言 cxx就是c++
+
+set(CMAKE_CXX_STANDARD 11)                           # 指定c++标准
+set(CMAKE_CXX_STANDARD_REQUIRED ON)                  # 指定c++标准要求,至少为11以上
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)                # 支持 clangd
+
+if (CMAKE_VERSION VERSION_LESS "3.7.0")              # 如果cmake版本小于3.7.0
+    set(CMAKE_INCLUDE_CURRENT_DIR ON)                # 设置包含当前目录
+endif()
+
+find_package(Qt5 REQUIRED COMPONENTS Widgets)        # 寻找Qt5组件Widgets
+find_package(Dtk REQUIRED COMPONENTS Widget)         # 寻找Dtk组件Widget
+
+add_executable(${PROJECT_NAME}                       # 生成可执行文件
+    main.cpp
+)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE        # 添加需要链接的共享库
+    Qt5::Widgets
+    ${DtkWidget_LIBRARIES}
+)
+```
+
+## main.cpp
+```cpp
+#include <DApplication>
+#include <DWidgetUtil>
+#include <DMainWindow>
+#include <QWidget>
+#include <QHBoxLayout>
+#include <DFileChooserEdit>
+
+DWIDGET_USE_NAMESPACE
+
+int main(int argc, char *argv[])
+{
+    DApplication a(argc, argv);
+    DMainWindow win;
+
+    // 创建一个widget容器
+    QWidget widget;
+    // 创建DFileChooserEdit对象
+    DFileChooserEdit dialog;
+
+    // 给widget设置水平布局
+    QHBoxLayout hLayout(&widget);
+
+    dialog.setFileMode(QFileDialog::Directory);  // 指定选择的模式，选择目录。
+    dialog.setDirectoryUrl(QUrl("file:///home"));  // 设置文件选择器打开路径为home目录
+
+    // 将dialogn放入到widget中
+    hLayout.addWidget(&dialog);
+    // widget放入主窗口
+    win.setCentralWidget(&widget);
+
+    win.resize(300,200);
+    win.show();
+    // 移动窗口到屏幕中心
+    Dtk::Widget::moveToCenter(&win);
+    return a.exec();
+}
+```
+
+编译运行
+```
+cmake -Bbuild
+cmake --build build
+./build/example
+```
+
+结果如下图
+![example](/docs/images/chooseredit-example.png)
+
 @sa DLineEdit QFileDialog
 
 @enum Dtk::Widget::DFileChooserEdit::DialogDisplayPosition
