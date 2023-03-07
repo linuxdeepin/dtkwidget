@@ -1,0 +1,79 @@
+/*!
+@~chinese
+@file dboxwidget.h
+@ingroup dtkwidget
+@class Dtk::Widget::DBoxWidget
+@brief DBoxWidget提供了一个自适应子控件大小的Widget
+@details
+在Qt编程中，使用QBoxLayout设置控件是很常见的，DBoxWidget提供了方便的封装，会根据需要的大小自动
+设置DBoxWidget的宽高。
+@sa DHBoxWidget
+@sa DVBoxWidget
+
+@property QBoxLayout::Direction Dtk::Widget::DBoxWidget::direction
+@brief 当前QBoxLayout使用的方向的属性
+@sa read方法 [direction](@ref Dtk::Widget::DBoxWidget::direction() const)
+@sa write方法 [setDirection](@ref Dtk::Widget::DBoxWidget::setDirection(QBoxLayout::Direction direction))
+
+@fn QBoxLayout::Direction DBoxWidget::direction() const
+@brief 这个属性返回当前 QBoxLayout 使用的方向
+@return QBoxLayout::Direction 当前的方向
+@sa 属性 [direction](@ref Dtk::Widget::DBoxWidget::direction)
+
+@fn void Dtk::Widget::DBoxWidget::setDirection(QBoxLayout::Direction direction)
+@brief 设置 QBoxLayout 当前的方向
+@param direction 方向
+@sa 属性 [direction](@ref Dtk::Widget::DBoxWidget::direction)
+
+@fn Dtk::Widget::DBoxWidget::DBoxWidget(QBoxLayout::Direction direction, QWidget *parent = 0)
+@brief DBoxWidget的构造函数
+@param direction 是设置内部QBoxLayout使用的方向
+@param parent 传递给QFrame的构造函数
+
+@fn QBoxLayout* Dtk::Widget::DBoxWidget::layout() const
+@brief 这个属性会返回当前使用的布局对象
+@details 这个属性可以用来获取内部布局，所以你可以设置布局上的一些额外属性来匹配自定义需求。
+@return 返回 QBoxLayout 类型的指针
+
+@fn void Dtk::Widget::DBoxWidget::addWidget(QWidget *widget)
+@brief 调用QBoxLayout的addWidget方法将QWidget添加到布局中
+@param widget 要添加的QWidget对象
+
+@fn void Dtk::Widget::DBoxWidget::updateSize(const QSize &size)
+@brief 当方向是 QBoxLayout::TopToBottom 或者 QBoxLayout::BottomToTop 时设置大小
+@details 固定高度将使用传入的高度，并设置最小宽度为传入的宽度。否则将使用传入的宽度当做固定宽度，高度为最小高度。
+@param size 传入的大小
+
+@fn QSize Dtk::Widget::DBoxWidget::sizeHint() const Q_DECL_OVERRIDE
+@brief DBoxWidget::sizeHint 重写 QWidget::sizeHint().
+@return 该控件的推荐大小.
+
+@fn void Dtk::Widget::DBoxWidget::sizeChanged(QSize size)
+@brief DBoxWidget 大小发生变化时的信号
+
+@fn void Dtk::Widget::DBoxWidget::directionChanged(QBoxLayout::Direction direction)
+@brief DBoxWidget 方向发生变化时的信号
+
+*/
+
+/*!
+@~chinese
+@class Dtk::Widget::DHBoxWidget
+@brief 设置成水平方向的DBoxWidget
+
+@fn Dtk::Widget::DHBoxWidget::DHBoxWidget(QWidget *parent = 0)
+@brief DHBoxWidget的构造函数
+@param parent 被传递给DBoxWidget构造函数
+
+*/
+
+/*!
+@~chinese
+@class Dtk::Widget::DVBoxWidget
+@brief 设置成垂直方向的DBoxWidget
+
+@fn Dtk::Widget::DVBoxWidget::DVBoxWidget(QWidget *parent = 0)
+@brief DVBoxWidget的构造函数
+@param parent 被传递给DBoxWidget构造函数
+
+*/
