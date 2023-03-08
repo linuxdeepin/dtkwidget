@@ -43,6 +43,9 @@
 @class Dtk::Widget::DFeatureDisplayDialog
 @brief 特性介绍对话框，展示应用更新的新特性
 
+结果如下图
+![example](/docs/images/dfeaturedisplaydialog.png)
+
 @fn Dtk::Widget::DFeatureDisplayDialog::DFeatureDisplayDialog(QWidget *parent)
 @brief 特性介绍对话框的构造函数
 @param[in] parent 特性介绍对话框的父对象
@@ -75,7 +78,7 @@
 
 @fn void Dtk::Widget::DFeatureDisplayDialog::setLinkUrl(const QString &url)
 @brief 设置链接按钮链接地址
-@param[in] isVisible 链接按钮的链接地址
+@param[in] url 链接按钮的链接地址
 
 @fn void Dtk::Widget::DFeatureDisplayDialog::show()
 @brief 显示特性介绍对话框
