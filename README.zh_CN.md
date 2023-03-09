@@ -1,8 +1,10 @@
 ## Deepin Tool Kit Widget
 
-Deepint Tool Kit Core(DtkWidget) 提供各种UOS风格dtk基础控件.
+Deepin Tool Kit Widget(DtkWidget) 提供各种UOS风格dtk基础控件.
 
-您应该首先阅读 [Deepin应用程序规范](\ref doc/Specification).
+## 文档
+
+中文文档：[dtkwidget文档](https://linuxdeepin.github.io/dtkwidget/index.html)
 
 ## 依赖
 
@@ -15,10 +17,13 @@ Deepint Tool Kit Core(DtkWidget) 提供各种UOS风格dtk基础控件.
 ### 从源代码构建
 
 1. 确保已经安装了所有的编译依赖.
+
 ```bash
-$ sudo apt build-dep ./
+sudo apt build-dep ./
 ```
+
 如果需要使用 `qtcreator` 的设计功能，可以 ：
+
 ```bash
 $ sudo apt install qttools5-dev
 
@@ -30,18 +35,19 @@ $ cmake --build build -j$(nproc)
 $ cd build
 $ sudo make install
 ```
+
 2. 构建 `dtkwidget` :
 
 ```bash
-$ cmake -B build
-$ cmake --build build -j$(nproc)
+cmake -B build
+cmake --build build -j$(nproc)
 ```
 
 3. 安装:
 
 ```bash
-$ cd build
-$ sudo make install
+cd build
+sudo make install
 ```
 
 ## 帮助
@@ -63,13 +69,13 @@ $ sudo make install
 
 下面是使用dtkwidget的开源项目:(如果您想添加属于自己的开源项目请给我们提交PR)
 
- - **[DMarked](https://github.com/DMarked/DMarked)**: 使用Dtk构建的Markdown编辑器
- - **[DtkTimer](https://github.com/gfdgd-xi/timer)**: 使用DtkWidget构建的时钟
- - **[simple-image-filter](https://github.com/dependon/simple-image-filter)**: 使用DtkWidget构建的图像处理软件 
- - **[SparkStore](https://github.com/Spark-Store/Spark-Store)**: 星火商店
- - **[WingHexExplorer](https://github.com/Wing-summer/WingHexExplorer)**: 使用DtkWidget构建的强大的十六进制编辑器
- - **[WingTool](https://github.com/Wing-summer/WingTool)**: 使用DtkWidget构建的基于插件的工具箱
- - **[ScreenLight](https://github.com/Wing-summer/ScreenLight)**: 使用DtkWidget构建的用于调节屏幕亮度的小工具
+* **[DMarked](https://github.com/DMarked/DMarked)**: 使用Dtk构建的Markdown编辑器
+* **[DtkTimer](https://github.com/gfdgd-xi/timer)**: 使用DtkWidget构建的时钟
+* **[simple-image-filter](https://github.com/dependon/simple-image-filter)**: 使用DtkWidget构建的图像处理软件
+* **[SparkStore](https://github.com/Spark-Store/Spark-Store)**: 星火商店
+* **[WingHexExplorer](https://github.com/Wing-summer/WingHexExplorer)**: 使用DtkWidget构建的强大的十六进制编辑器
+* **[WingTool](https://github.com/Wing-summer/WingTool)**: 使用DtkWidget构建的基于插件的工具箱
+* **[ScreenLight](https://github.com/Wing-summer/ScreenLight)**: 使用DtkWidget构建的用于调节屏幕亮度的小工具
 
 ## 协议
 
