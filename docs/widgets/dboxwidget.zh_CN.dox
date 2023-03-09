@@ -7,6 +7,92 @@
 @details
 在Qt编程中，使用QBoxLayout设置控件是很常见的，DBoxWidget提供了方便的封装，会根据需要的大小自动
 设置DBoxWidget的宽高。
+
+下面提供DBoxWidget的例子：
+
+项目目录结构在同一目录下
+
+## CMakeLists.txt
+
+```cmake
+cmake_minimum_required(VERSION 3.1.0)                # 指定cmake最低版本
+
+project(example VERSION 1.0.0 LANGUAGES CXX) # 指定项目名称, 版本, 语言 cxx就是c++
+
+set(CMAKE_CXX_STANDARD 11)                           # 指定c++标准
+set(CMAKE_CXX_STANDARD_REQUIRED ON)                  # 指定c++标准要求,至少为11以上
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)                # 支持 clangd
+
+if (CMAKE_VERSION VERSION_LESS "3.7.0")              # 如果cmake版本小于3.7.0
+    set(CMAKE_INCLUDE_CURRENT_DIR ON)                # 设置包含当前目录
+endif()
+
+find_package(Qt5 REQUIRED COMPONENTS Widgets)        # 寻找Qt5组件Widgets
+find_package(Dtk REQUIRED COMPONENTS Widget)         # 寻找Dtk组件Widget
+
+add_executable(${PROJECT_NAME}                       # 生成可执行文件
+    main.cpp
+)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE        # 添加需要链接的共享库
+    Qt5::Widgets
+    ${DtkWidget_LIBRARIES}
+)
+```
+
+## main.cpp
+
+```cpp
+#include <DApplication>
+#include <DWidgetUtil>
+#include <DMainWindow>
+#include <QBoxLayout>
+#include <dboxwidget.h>
+#include <DLineEdit>
+#include <DPushButton>
+
+DWIDGET_USE_NAMESPACE
+
+int main(int argc, char *argv[])
+{
+    DApplication a(argc, argv);
+    DMainWindow win;
+
+    // 设置水平方向 从左到右排列
+    QBoxLayout::Direction direction = QBoxLayout::LeftToRight;
+
+    // 创建DBoxWidget对象
+    DBoxWidget box(direction, &win);
+
+    // 添加一个DLineEdit控件，和一个按钮，可以看到控件水平放置
+    box.addWidget(new DLineEdit());
+    box.addWidget(new DPushButton("按钮"));
+
+    // 设置外边距为30px
+    box.layout()->setMargin(30);
+
+    // widget放入主窗口
+    win.setCentralWidget(&box);
+
+    win.resize(300,200);
+    win.show();
+    // 移动窗口到屏幕中心
+    Dtk::Widget::moveToCenter(&win);
+    return a.exec();
+}
+```
+
+编译运行
+```
+cmake -Bbuild
+cmake --build build
+./build/example
+```
+
+结果如下图
+![example](/docs/images/dboxwidget-example.png)
+
 @sa DHBoxWidget
 @sa DVBoxWidget
 
