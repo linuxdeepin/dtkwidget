@@ -33,7 +33,7 @@ public:
     const QPixmap *companyLogo() const;
     QString websiteName() const;
     QString websiteLink() const;
-    QString acknowledgementLink() const;
+    D_DECL_DEPRECATED_X("acknowledgement is no longer used") QString acknowledgementLink() const;
     QString license() const;
 
 Q_SIGNALS:
@@ -48,8 +48,8 @@ public Q_SLOTS:
     void setCompanyLogo(const QPixmap &companyLogo);
     void setWebsiteName(const QString &websiteName);
     void setWebsiteLink(const QString &websiteLink);
-    void setAcknowledgementLink(const QString &acknowledgementLink);
-    void setAcknowledgementVisible(bool visible);
+    D_DECL_DEPRECATED_X("acknowledgement is no longer used") void setAcknowledgementLink(const QString &acknowledgementLink);
+    D_DECL_DEPRECATED_X("acknowledgement is no longer used") void setAcknowledgementVisible(bool visible);
     void setLicense(const QString &license);
 
 protected:
