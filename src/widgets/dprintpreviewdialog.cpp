@@ -1629,10 +1629,8 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
 {
     Q_Q(DPrintPreviewDialog);
     QString lastPaperSize = paperSizeCombo->currentText();
-    QString lastColormode = colorModeCombo->currentText();
     paperSizeCombo->clear();
     paperSizeCombo->blockSignals(true);
-    colorModeCombo->blockSignals(true);
     QString currentName = printDeviceCombo->itemText(index);
     if (isActualPrinter(currentName)) {
         //actual printer
@@ -1653,36 +1651,36 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
         QPlatformPrinterSupport *ps = QPlatformPrinterSupportPlugin::get();
         QPrintDevice currentDevice = ps->createPrintDevice(printDeviceCombo->currentText());
         colorModeCombo->clear();
-        if (!currentDevice.supportedColorModes().contains(QPrint::Color)) {
-            colorModeCombo->blockSignals(false);
-            colorModeCombo->addItem(qApp->translate("DPrintPreviewDialogPrivate", "Grayscale"));
-            updateSubControlSettings(DPrintPreviewSettingInfo::PS_ColorMode);
-            supportedColorMode = false;
-            settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_TextColor, false);
-            waterColor = QColor("#6f6f6f");
-            _q_selectColorButton(waterColor);
-            pickColorWidget->convertColor(waterColor);
-            pickColorWidget->setRgbEdit(waterColor);
-        } else {
+        supportedColorMode = false;
+        if (currentDevice.supportedColorModes().contains(QPrint::Color)) {
             if (!isInited) {
                 waterColor = QColor("#6f6f6f");
                 _q_selectColorButton(waterColor);
                 pickColorWidget->convertColor(waterColor);
                 pickColorWidget->setRgbEdit(waterColor);
             }
-
-            colorModeCombo->addItems(QStringList() << qApp->translate("DPrintPreviewDialogPrivate", "Color") << qApp->translate("DPrintPreviewDialogPrivate", "Grayscale"));
-            updateSubControlSettings(DPrintPreviewSettingInfo::PS_ColorMode);
+            colorModeCombo->blockSignals(true);
+            colorModeCombo->addItem(qApp->translate("DPrintPreviewDialogPrivate", "Color"));
             colorModeCombo->blockSignals(false);
-            if (colorModeCombo->currentText() == lastColormode) {
-                colorModeCombo->setCurrentText(qApp->translate("DPrintPreviewDialogPrivate", "Color"));
-                supportedColorMode = true;
-            } else {
-                colorModeCombo->setCurrentText(qApp->translate("DPrintPreviewDialogPrivate", "Grayscale"));
-                supportedColorMode = false;
-            }
-            if (colorModeCombo->currentText() == qApp->translate("DPrintPreviewDialogPrivate", "Color"))
-                settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_TextColor, true);
+            updateSubControlSettings(DPrintPreviewSettingInfo::PS_ColorMode);
+            supportedColorMode = true;
+        }
+        if (currentDevice.supportedColorModes().contains(QPrint::GrayScale)) {
+            colorModeCombo->blockSignals(true);
+            colorModeCombo->addItem(qApp->translate("DPrintPreviewDialogPrivate", "Grayscale"));
+            colorModeCombo->blockSignals(false);
+            updateSubControlSettings(DPrintPreviewSettingInfo::PS_ColorMode);
+            waterColor = QColor("#6f6f6f");
+            _q_selectColorButton(waterColor);
+            pickColorWidget->convertColor(waterColor);
+            pickColorWidget->setRgbEdit(waterColor);
+        }
+        if (supportedColorMode) {
+            colorModeCombo->setCurrentText(qApp->translate("DPrintPreviewDialogPrivate", "Color"));
+            settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_TextColor, true);
+        } else {
+            colorModeCombo->setCurrentText(qApp->translate("DPrintPreviewDialogPrivate", "Grayscale"));
+            settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_TextColor, false);
         }
     } else {
         //pdf
