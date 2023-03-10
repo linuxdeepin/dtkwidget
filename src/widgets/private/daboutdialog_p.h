@@ -28,7 +28,6 @@ public:
     void init();
     void loadDistributionInfo();
     void updateWebsiteLabel();
-    void updateAcknowledgementLabel();
     void _q_onLinkActivated(const QString &link);
     void _q_onFeatureActivated(const QString &link);
 
@@ -44,13 +43,11 @@ public:
     QLabel *licenseLabel = nullptr;
     QLabel *companyLogoLabel = nullptr;
     QLabel *websiteLabel = nullptr;
-    QLabel *acknowledgementLabel = nullptr;
     QLabel *featureLabel = nullptr;
     DRedPointLabel *redPointLabel = nullptr;
     QString logoPath;
     QString websiteName;
     QString websiteLink;
-    QString acknowledgementLink;
     Q_DECLARE_PUBLIC(DAboutDialog)
 };
 

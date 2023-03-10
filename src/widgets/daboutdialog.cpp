@@ -88,12 +88,6 @@ void DAboutDialogPrivate::init()
     websiteLabel->setOpenExternalLinks(false);
     updateWebsiteLabel();
 
-    acknowledgementLabel = new QLabel();
-    acknowledgementLabel->setObjectName("AcknowledgementLabel");
-    acknowledgementLabel->setContextMenuPolicy(Qt::NoContextMenu);
-    acknowledgementLabel->setOpenExternalLinks(false);
-    updateAcknowledgementLabel();
-
     descriptionLabel = new QLabel();
     descriptionLabel->setObjectName("DescriptionLabel");
     descriptionLabel->setAlignment(Qt::AlignLeft);
@@ -130,7 +124,6 @@ void DAboutDialogPrivate::init()
 
     q->connect(websiteLabel, SIGNAL(linkActivated(QString)), q, SLOT(_q_onLinkActivated(QString)));
     q->connect(featureLabel, SIGNAL(linkActivated(QString)), q, SLOT(_q_onFeatureActivated(QString)));
-    q->connect(acknowledgementLabel, SIGNAL(linkActivated(QString)), q, SLOT(_q_onLinkActivated(QString)));
     q->connect(descriptionLabel, SIGNAL(linkActivated(QString)), q, SLOT(_q_onLinkActivated(QString)));
     q->connect(licenseLabel, SIGNAL(linkActivated(QString)), q, SLOT(_q_onLinkActivated(QString)));
 
@@ -198,12 +191,6 @@ void DAboutDialogPrivate::updateWebsiteLabel()
 {
     QString websiteText = QString(websiteLinkTemplate).arg(websiteLink).arg(websiteName);
     websiteLabel->setText(websiteText);
-}
-
-void DAboutDialogPrivate::updateAcknowledgementLabel()
-{
-    QString acknowledgementText = QString(websiteLinkTemplate).arg(acknowledgementLink).arg(QApplication::translate("DAboutDialog", "Acknowledgements"));
-    acknowledgementLabel->setText(acknowledgementText);
 }
 
 void DAboutDialogPrivate::_q_onLinkActivated(const QString &link)
@@ -365,9 +352,7 @@ QString DAboutDialog::websiteLink() const
  */
 QString DAboutDialog::acknowledgementLink() const
 {
-    D_DC(DAboutDialog);
-
-    return d->acknowledgementLink;
+    return QString();
 }
 
 /*!
@@ -485,23 +470,16 @@ void DAboutDialog::setWebsiteLink(const QString &websiteLink)
 @~english
   @brief This function is used to set the specified ACKNOWLEDGEMENTLINK Link
  */
-void DAboutDialog::setAcknowledgementLink(const QString &acknowledgementLink)
+void DAboutDialog::setAcknowledgementLink(const QString &)
 {
-    D_D(DAboutDialog);
-
-    d->acknowledgementLink = acknowledgementLink;
-    d->updateAcknowledgementLabel();
 }
 
 /*!
 @~english
   @brief This function is used to set the specified Visible settings to set the gratitude link to display
  */
-void DAboutDialog::setAcknowledgementVisible(bool visible)
+void DAboutDialog::setAcknowledgementVisible(bool)
 {
-    Q_UNUSED(visible)
-    D_D(DAboutDialog);
-//    d->acknowledgementLabel->setVisible(visible);
 }
 
 /*!
