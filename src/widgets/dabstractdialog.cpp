@@ -58,10 +58,9 @@ void DAbstractDialogPrivate::init(bool blurIfPossible)
         bgBlurWidget->setMaskColor(DBlurEffectWidget::AutoColor);
         bgBlurWidget->setMaskAlpha(204); // 80%
 
-        if (!DWindowManagerHelper::instance()->hasBlurWindow()
-                && DGuiApplicationHelper::instance()->isTabletEnvironment()) {
+        // blur if possible(wm support blur window)...
+        if (!DWindowManagerHelper::instance()->hasBlurWindow())
             blurIfPossible = false;
-        }
 
         bgBlurWidget->setBlurEnabled(blurIfPossible);
         q->setAttribute(Qt::WA_TranslucentBackground, blurIfPossible);
