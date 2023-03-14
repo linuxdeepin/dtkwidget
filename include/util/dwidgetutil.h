@@ -29,6 +29,7 @@ QStringList elideText(const QString &text, const QSize &size,
 QIcon getCircleIcon(const QPixmap &pixmap, int diameter = 36);
 QIcon getCircleIcon(const QIcon &icon, int diameter = 36);
 
+void grayScale(const QImage &image, QImage &dest, const QRect &rect = QRect());
 void moveToCenter(QWidget *w);
 
 DWIDGET_END_NAMESPACE

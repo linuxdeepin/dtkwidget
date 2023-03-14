@@ -1,0 +1,25 @@
+/*!
+@~chinese
+@file dwatermarkhelper.h
+
+@class Dtk::Widget::DWaterMaskHelper
+@inmodule dtkwidget
+@brief 不允许直接实例化此对象
+@param[in] parent
+@sa DWaterMaskHelper::instance
+
+@fn DWaterMarkHelper::instance
+@brief DWaterMarkHelper 的单例对象，使用 Q_GLOBAL_STATIC 定义，在第一次调用时实例化。
+
+@fn void DWaterMarkHelper::registerWidget(QWidget *widget)
+@brief 为指定窗口添加水印
+@param[in] widget 要添加水印的窗口
+
+@property WaterMarkData DWaterMarkHelper::data() const
+@brief 当前设置的水印信息
+
+@fn void DWaterMarkHelper::setData(const WaterMarkData &data)
+@brief 设置当前水印信息
+@param[in] data 需要设置的水印信息
+
+*/
