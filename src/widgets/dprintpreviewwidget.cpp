@@ -10,6 +10,8 @@
 #include <QtConcurrent>
 #include <QtAlgorithms>
 
+#include <DWidgetUtil>
+
 #include <cups/cups.h>
 #include <cups/ppd.h>
 
@@ -27,42 +29,6 @@
 #define WATER_TEXTSPACE WATER_DEFAULTFONTSIZE
 
 DWIDGET_BEGIN_NAMESPACE
-// 取自Qt源码qpixmapfilter.cpp 945行
-static void grayscale(const QImage &image, QImage &dest, const QRect &rect = QRect())
-{
-    QRect destRect = rect;
-    QRect srcRect = rect;
-    if (rect.isNull()) {
-        srcRect = dest.rect();
-        destRect = dest.rect();
-    }
-    if (&image != &dest) {
-        destRect.moveTo(QPoint(0, 0));
-    }
-
-    const unsigned int *data = reinterpret_cast<const unsigned int *>(image.bits());
-    unsigned int *outData = reinterpret_cast<unsigned int *>(dest.bits());
-
-    if (dest.size() == image.size() && image.rect() == srcRect) {
-        // a bit faster loop for grayscaling everything
-        int pixels = dest.width() * dest.height();
-        for (int i = 0; i < pixels; ++i) {
-            int val = qGray(data[i]);
-            outData[i] = qRgba(val, val, val, qAlpha(data[i]));
-        }
-    } else {
-        int yd = destRect.top();
-        for (int y = srcRect.top(); y <= srcRect.bottom() && y < image.height(); y++) {
-            data = reinterpret_cast<const unsigned int *>(image.scanLine(y));
-            outData = reinterpret_cast<unsigned int *>(dest.scanLine(yd++));
-            int xd = destRect.left();
-            for (int x = srcRect.left(); x <= srcRect.right() && x < image.width(); x++) {
-                int val = qGray(data[x]);
-                outData[xd++] = qRgba(val, val, val, qAlpha(data[x]));
-            }
-        }
-    }
-}
 
 static void saveImageToFile(int index, const QString &outPutFileName, const QString &suffix, bool isJpegImage, const QImage &srcImage)
 {
@@ -2230,7 +2196,7 @@ void WaterMark::setImage(const QImage &img)
     type = Image;
     sourceImage = img;
     graySourceImage = img;
-    grayscale(img, graySourceImage, img.rect());
+    DWIDGET_NAMESPACE::grayScale(img, graySourceImage, img.rect());
 }
 
 void WaterMark::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)

@@ -1,0 +1,108 @@
+/*!
+@~chinese
+@file dwatermarkwidget.h
+
+@class Dtk::Widget::WaterMarkData
+@inmodule dtkwidget
+@brief 水印信息结构
+@param[in] parent
+
+@property const Dtk::Widget::WaterMarkData::WaterMarkType &WaterMarkData::type()
+@brief 当前设置的水印类型
+
+@fn void Dtk::Widget::WaterMarkData::setType(WaterMarkType type)
+@brief 设置当前水印的类型
+@param[in] type 需要设置的水印类型
+
+@property const Dtk::Widget::WaterMarkData::WaterMarkLayout &WaterMarkData::layout()
+@brief 当前设置的水印布局类型
+
+@fn void WaterMarkData::setLayout(WaterMarkLayout layout)
+@brief 设置的水印布局类型
+@param[in] layout 需要设置的水印布局类型
+
+@property qreal WaterMarkData::scaleFactor()
+@brief 当前设置的水印整体缩放系数
+
+@fn void WaterMarkData::setScaleFactor(qreal scaleFactor)
+@brief 设置当前水印的整体缩放系数
+@param[in] scaleFactor 需要设置的水印整体缩放系数
+
+@property int WaterMarkData::spacing()
+@brief 当前设置的水印间距
+
+@fn void WaterMarkData::setSpacing(int spacing)
+@brief 设置当前水印的间距
+@param[in] spacing 需要设置的水印的间距
+
+@property int WaterMarkData::lineSpacing()
+@brief 当前设置的水印行间距
+
+@fn void WaterMarkData::setLineSpacing(int lineSpacing)
+@brief 设置当前水印的行间距
+@param[in] lineSpacing 需要设置的水印行间距
+
+@property const QString &WaterMarkData::text()
+@brief 当前设置的水印文本内容
+
+@fn void WaterMarkData::setText(const QString &text)
+@brief 设置当前水印的文本内容
+@param[in] text 需要设置的水印文本内容
+
+@property const QFont &WaterMarkData::font()
+@brief 当前设置的水印字体
+
+@fn void WaterMarkData::setFont(const QFont &font)
+@brief 设置当前水印的字体
+@param[in] font 需要设置的水印字体
+
+@property const QColor &WaterMarkData::color()
+@brief 当前设置的水印颜色
+
+@fn void WaterMarkData::setColor(const QColor &color)
+@brief 设置当前水印的颜色
+@param[in] color 需要设置的水印颜色
+
+@property qreal WaterMarkData::rotation()
+@brief 当前设置的水印旋转角度(0~360)
+
+@fn void WaterMarkData::setRotation(qreal rotation)
+@brief 设置当前水印的旋转角度(0~360)
+@param[in] rotation 需要设置的水印旋转角度
+
+@property qreal WaterMarkData::opacity()
+@brief 当前设置的水印透明度(0~1.0)
+
+@fn void WaterMarkData::setOpacity(qreal opacity)
+@brief 设置当前水印透明度(0~1.0)
+@param[in] opacity 需要设置的水印透明度
+
+@property const QImage &WaterMarkData::image()
+@brief 当前设置的水印图片
+
+@fn void WaterMarkData::setImage(const QImage &image)
+@brief 设置当前水印图片
+@param[in] 需要设置的水印图片
+
+@property bool WaterMarkData::grayScale()
+@brief 当前设置的水印图片是否需要灰度化
+
+@fn void WaterMarkData::setGrayScale(bool grayScale)
+@brief 设置当前水印图片是否需要灰度化，默认为true
+@param[in] grayScale 设置当前水印图片是否需要灰度化
+
+
+
+@class Dtk::Widget::DWaterMarkWidget
+@inmodule dtkwidget
+@brief 水印类，将覆盖设置的父界面，并跟随父界面动态调整大小
+@param[in]  parent
+
+@property const WaterMarkData &DWaterMarkWidget::data()
+@brief 当前设置的水印信息
+
+@fn void DWaterMarkWidget::setData(const WaterMarkData &data)
+@brief 设置当前水印信息
+@param[in] data 需要设置的水印信息
+
+*/
