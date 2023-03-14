@@ -92,4 +92,41 @@ QIcon getCircleIcon(const QIcon &icon, int diameter)
     return getCircleIcon(pixmap, diameter);
 }
 
+// 取自Qt源码qpixmapfilter.cpp 945行
+void grayScale(const QImage &image, QImage &dest, const QRect &rect)
+{
+    QRect destRect = rect;
+    QRect srcRect = rect;
+    if (rect.isNull()) {
+        srcRect = dest.rect();
+        destRect = dest.rect();
+    }
+    if (&image != &dest) {
+        destRect.moveTo(QPoint(0, 0));
+    }
+
+    const unsigned int *data = reinterpret_cast<const unsigned int *>(image.bits());
+    unsigned int *outData = reinterpret_cast<unsigned int *>(dest.bits());
+
+    if (dest.size() == image.size() && image.rect() == srcRect) {
+        // a bit faster loop for grayscaling everything
+        int pixels = dest.width() * dest.height();
+        for (int i = 0; i < pixels; ++i) {
+            int val = qGray(data[i]);
+            outData[i] = qRgba(val, val, val, qAlpha(data[i]));
+        }
+    } else {
+        int yd = destRect.top();
+        for (int y = srcRect.top(); y <= srcRect.bottom() && y < image.height(); y++) {
+            data = reinterpret_cast<const unsigned int *>(image.scanLine(y));
+            outData = reinterpret_cast<unsigned int *>(dest.scanLine(yd++));
+            int xd = destRect.left();
+            for (int x = srcRect.left(); x <= srcRect.right() && x < image.width(); x++) {
+                int val = qGray(data[x]);
+                outData[xd++] = qRgba(val, val, val, qAlpha(data[x]));
+            }
+        }
+    }
+}
+
 DWIDGET_END_NAMESPACE
