@@ -208,9 +208,8 @@ void DMainWindow::setSidebarWidget(QWidget *widget)
         contentAction->setVisible(false);
         addToolBar(Qt::LeftToolBarArea, tb);
         widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        QWidgetAction *action = static_cast<QWidgetAction *>(tb->addWidget(widget));
+        tb->addWidget(widget);
         widget->resize(tb->size());
-        qInfo() << "actionGeometry" << tb->actionGeometry(action);
 
         connect(d->sidebarHelper, &DSidebarHelper::widthChanged, tb, &QToolBar::setFixedWidth);
         connect(d->sidebarHelper, &DSidebarHelper::expandChanged, this, [tb, d] (bool expanded) {
@@ -805,7 +804,6 @@ void DMainWindow::resizeEvent(QResizeEvent *event)
 
     if (sidebarWidget()) {
         sidebarWidget()->resize(d->tb->size());
-        qInfo() << "sidebarWidget()->height" << sidebarWidget()->height() << d->tb->size();
     }
     return QMainWindow::resizeEvent(event);
 }
