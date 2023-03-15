@@ -10,6 +10,7 @@
 #include "DBlurEffectWidget"
 #include "dsizemode.h"
 #include "dfeaturedisplaydialog.h"
+#include "dsidebarhelper.h"
 #include "private/dmainwindow_p.h"
 #include "private/dapplication_p.h"
 

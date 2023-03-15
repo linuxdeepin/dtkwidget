@@ -24,6 +24,7 @@
 #include <DPrintPreviewDialog>
 #include <DSettingsDialog>
 #include <DSettingsWidgetFactory>
+#include <DSidebarHelper>
 
 #include "buttonexample.h"
 #include "editexample.h"
@@ -181,7 +182,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     DTitlebar *titlebar = this->titlebar();
     titlebar->setIcon(QIcon(":/images/logo_icon.svg"));
+    DSidebarHelper *sideBarHelper = new DSidebarHelper();
 
+    titlebar->setSidebarHelper(sideBarHelper);
     if (titlebar) {
         titlebar->setMenu(new QMenu(titlebar));
         titlebar->setSeparatorVisible(true);

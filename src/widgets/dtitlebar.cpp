@@ -43,6 +43,7 @@
 #include "dwidgetstype.h"
 #include "dlabel.h"
 #include "dsizemode.h"
+#include "dsidebarhelper.h"
 #include "private/dtitlebarsettingsimpl.h"
 #include "dtitlebarsettings.h"
 
