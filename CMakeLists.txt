@@ -123,11 +123,14 @@ if(BUILD_PLUGINS)
 endif()
 
 set(BUILD_DOCS
-    ON
+    OFF
     CACHE BOOL "Generate doxygen-based documentation"
 )
 
 if(BUILD_DOCS)
+    message("===================================")
+    message("     You can build docs  now       ")
+    message("===================================")
     add_subdirectory(docs)
 endif()
 
