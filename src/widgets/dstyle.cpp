@@ -1612,7 +1612,7 @@ int DStyle::pixelMetric(const QStyle *style, DStyle::PixelMetric m, const QStyle
         return 12;
     }
     case PM_SwitchButtonHandleWidth:
-        return 30;
+        return DSizeModeHelper::element(24, 30);
     case PM_SwithcButtonHandleHeight:
         return DSizeModeHelper::element(20, 24);
     case PM_FloatingWidgetRadius: {
