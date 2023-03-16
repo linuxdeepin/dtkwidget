@@ -62,7 +62,7 @@ void DAboutDialogPrivate::init()
 {
     D_Q(DAboutDialog);
 
-    q->setMinimumWidth(360);
+    q->setMaximumWidth(540);
 
     // overwrite default info if distribution config file existed.
     loadDistributionInfo();
@@ -89,6 +89,7 @@ void DAboutDialogPrivate::init()
     updateWebsiteLabel();
 
     descriptionLabel = new QLabel();
+    descriptionLabel->setFixedWidth(280);
     descriptionLabel->setObjectName("DescriptionLabel");
     descriptionLabel->setAlignment(Qt::AlignLeft);
     descriptionLabel->setWordWrap(true);
@@ -96,6 +97,7 @@ void DAboutDialogPrivate::init()
     fontManager->bind(descriptionLabel, DFontSizeManager::T8, QFont::DemiBold);
 
     licenseLabel = new QLabel();
+    licenseLabel->setFixedWidth(180);
     licenseLabel->setObjectName("LicenseLabel");
     licenseLabel->setAlignment(Qt::AlignHCenter);
     licenseLabel->setWordWrap(true);
@@ -128,19 +130,18 @@ void DAboutDialogPrivate::init()
     q->connect(licenseLabel, SIGNAL(linkActivated(QString)), q, SLOT(_q_onLinkActivated(QString)));
 
     QVBoxLayout *leftVLayout = new QVBoxLayout;
-    leftVLayout->setContentsMargins(30, 3, 0, 20);
+    leftVLayout->setContentsMargins(10, 3, 0, 10);
     leftVLayout->setSpacing(0);
     leftVLayout->addWidget(logoLabel, 0, Qt::AlignCenter);
     leftVLayout->addSpacing(8);
     leftVLayout->addWidget(productNameLabel, 0, Qt::AlignCenter);
-    leftVLayout->addSpacing(31);
+    leftVLayout->addStretch(0);
     leftVLayout->addWidget(companyLogoLabel, 0, Qt::AlignCenter);
     leftVLayout->addSpacing(3);
     leftVLayout->addWidget(licenseLabel, 0, Qt::AlignHCenter);
-    leftVLayout->addStretch(0);
 
     QVBoxLayout *rightVLayout = new QVBoxLayout;
-    rightVLayout->setContentsMargins(0, 3, 30, 20);
+    rightVLayout->setContentsMargins(0, 3, 20, 10);
     rightVLayout->setSpacing(0);
     rightVLayout->addWidget(versionTipLabel, 0, Qt::AlignLeft);
     rightVLayout->addWidget(versionLabel, 0, Qt::AlignLeft);
@@ -157,6 +158,7 @@ void DAboutDialogPrivate::init()
     mainLayout->setSpacing(0);
     mainLayout->setMargin(0);
     mainLayout->addLayout(leftVLayout);
+    mainLayout->addSpacing(29);
     mainLayout->addLayout(rightVLayout);
 
     QScrollArea *mainScrollArea = new QScrollArea;
