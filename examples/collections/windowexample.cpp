@@ -15,6 +15,7 @@
 #include <DStatusBar>
 #include <DTabBar>
 #include <DSlider>
+#include <DClipEffectWidget>
 
 #include "windowexample.h"
 
@@ -24,9 +25,10 @@ class ExampTitlebar : public DTitlebar
 {
 public:
    ExampTitlebar(QIcon icon)
+       : m_clipWidget(new DClipEffectWidget(this))
    {
        setIcon(icon);
-       setFixedSize(530, 50);
+       setFixedWidth(530);
    }
 
 private:
@@ -37,11 +39,23 @@ private:
        const DPalette &dp = DPaletteHelper::instance()->palette(this);
 
        p.save();
-       p.setPen(QPen(dp.frameBorder(), 2));
-       DDrawUtils::drawRoundedRect(&p, rect().adjusted(0 , 0, -1 , -1), 16, 16,
+       p.setPen(QPen(dp.frameBorder(), 1));
+       int radius = 18;
+       if (auto window = qobject_cast<DMainWindow *>(topLevelWidget()->window()))
+           radius = window->windowRadius();
+       DDrawUtils::drawRoundedRect(&p, rect().adjusted(0 , 0, -1 , -1), radius, radius,
                                    DDrawUtils::Corner::TopLeftCorner | DDrawUtils::Corner::TopRightCorner);
        p.restore();
+
+       // clip `closeButton`
+       QPainterPath path;
+       path.addRect(rect().adjusted(0, radius, 0, 0));
+       QPainterPath path2;
+       path2.addRoundedRect(rect(), radius, radius);
+       path += path2;
+       m_clipWidget->setClipPath(path);
    }
+   DClipEffectWidget *m_clipWidget;
 };
 
 class ExampWindow : public DMainWindow
