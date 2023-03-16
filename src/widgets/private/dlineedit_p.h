@@ -11,6 +11,7 @@
 #include <DObjectPrivate>
 #include <QPointer>
 #include <DFloatingWidget>
+#include <DSizeMode>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -24,6 +25,15 @@ public:
     void updateTooltipPos();
 
     void init();
+
+    static inline QSize defaultIconSize()
+    {
+        return DSizeModeHelper::element(QSize(18, 18), QSize(24, 24));
+    }
+    static inline int defaultButtonWidth()
+    {
+        return DSizeModeHelper::element(28, 40);
+    }
 
     DAlertControl *control{nullptr};
 

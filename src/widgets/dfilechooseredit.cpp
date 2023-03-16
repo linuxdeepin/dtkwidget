@@ -228,7 +228,13 @@ void DFileChooserEditPrivate::init()
     DSuggestButton *btn = new DSuggestButton(nullptr);
     btn->setAccessibleName("DFileChooserEditSuggestButton");
     btn->setIcon(DStyleHelper(q->style()).standardIcon(DStyle::SP_SelectElement, nullptr));
-    btn->setIconSize(QSize(24, 24));
+
+    btn->setFixedWidth(defaultButtonWidth());
+    btn->setIconSize(defaultIconSize());
+    QObject::connect(DGUI_NAMESPACE::DGuiApplicationHelper::instance(), &DGUI_NAMESPACE::DGuiApplicationHelper::sizeModeChanged, btn, [btn]() {
+        btn->setFixedWidth(defaultButtonWidth());
+        btn->setIconSize(defaultIconSize());
+    });
 
     q->setDialogDisplayPosition(DFileChooserEdit::DialogDisplayPosition::CurrentMonitorCenter);
 
