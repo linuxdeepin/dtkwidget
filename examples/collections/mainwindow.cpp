@@ -150,7 +150,7 @@ MainWindow::MainWindow(QWidget *parent)
     : DMainWindow(parent)
 {
     setWindowIcon(QIcon(":/images/logo_icon.svg"));
-    setMinimumSize(qApp->primaryScreen()->availableSize() / 5);
+    setMinimumSize(qApp->primaryScreen()->availableSize() / 5 * 3);
 
     QHBoxLayout *mainLayout = new QHBoxLayout();
     mainLayout->setMargin(0);
