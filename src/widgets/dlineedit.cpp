@@ -687,6 +687,8 @@ void DLineEditPrivate::init()
     q->connect(control, &DAlertControl::alertChanged, q, &DLineEdit::alertChanged);
 
     hLayout->setContentsMargins(0, 0, 0, 0);
+    // Set spacing to 10 for between widget.
+    hLayout->setSpacing(10);
     hLayout->addWidget(lineEdit);
 
     lineEdit->installEventFilter(q);
