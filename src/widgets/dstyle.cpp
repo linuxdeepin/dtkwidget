@@ -2142,8 +2142,9 @@ int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QW
     case PM_MenuDesktopFrameWidth:
         return 0;
     case PM_ButtonMargin:
+        return 10;
     case PM_DefaultChildMargin:
-        return DSizeModeHelper::element(pixelMetric(PM_FrameRadius, opt, widget) / 2, pixelMetric(PM_FrameRadius, opt, widget));
+        return DSizeModeHelper::element(pixelMetric(PM_FrameRadius, opt, widget), pixelMetric(PM_FrameRadius, opt, widget));
     case PM_DefaultFrameWidth:
         return 1;
     case PM_DefaultLayoutSpacing:
@@ -2188,6 +2189,8 @@ int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QW
         return true;
     case PM_ToolBarIconSize:
         return 16;
+    case PM_MenuButtonIndicator:
+        return DSizeModeHelper::element(8, QCommonStyle::pixelMetric(m, opt, widget));
     default:
         break;
     }
