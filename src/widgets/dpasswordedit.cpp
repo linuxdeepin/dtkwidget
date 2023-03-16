@@ -104,7 +104,8 @@ void DPasswordEdit::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::StyleChange) {
         D_D(DPasswordEdit);
-        d->togglePasswordVisibleButton->setIconSize(DSizeModeHelper::element(QSize(18, 18), QSize(24, 24)));
+        d->togglePasswordVisibleButton->setFixedWidth(d->defaultButtonWidth());
+        d->togglePasswordVisibleButton->setIconSize(d->defaultIconSize());
     }
     return DLineEdit::changeEvent(event);
 }
@@ -126,7 +127,8 @@ void DPasswordEditPrivate::init()
     togglePasswordVisibleButton = new DSuggestButton;
     togglePasswordVisibleButton->setAccessibleName("DPasswordEditPasswordVisibleButton");
     togglePasswordVisibleButton->setIcon(DStyle::standardIcon(q->style(), DStyle::SP_ShowPassword));
-    togglePasswordVisibleButton->setIconSize(DSizeModeHelper::element(QSize(18, 18), QSize(24, 24)));
+    togglePasswordVisibleButton->setFixedWidth(defaultButtonWidth());
+    togglePasswordVisibleButton->setIconSize(defaultIconSize());
 
     list.append(togglePasswordVisibleButton);
     q->setRightWidgets(list);
