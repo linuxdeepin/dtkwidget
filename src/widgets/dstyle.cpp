@@ -2182,7 +2182,7 @@ int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QW
         return 16;
     case PM_ListViewIconSize:
     case PM_LargeIconSize:
-        return DSizeModeHelper::element(16, 24);
+        return 24;
     case PM_IconViewIconSize:
         return 32;
     case PM_ScrollView_ScrollBarOverlap:
