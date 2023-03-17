@@ -8,19 +8,23 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
-  \class Dtk::Widget::DWindowOptionButton
+@~english
+  @class Dtk::Widget::DWindowOptionButton
   \inmodule dtkwidget
-  \brief The DWindowOptionButton class is used as the unified window option button.
-  \brief DWindowOptionButton 类是 DTK 窗口统一的菜单按钮控件.
+  @brief The DWindowOptionButton class is used as the unified window option button.
+  
   
   It's actually a special DImageButton which has the appearance of option button.
-  点击按钮后，默认会显示程序主菜单，包含“关于”、“帮助”等项。
+  After clicking the button, the main menu of the program will be displayed by default, which contains items such as “About” and “Help”.
+  
  */
 
 /*!
-  \brief DWindowOptionButton::DWindowOptionButton 是 DWindowOptionButton 的构造
-  函数，返回 DWindowOptionButton 对象，普通程序一般无需使用。
-  \a parent 为创建对象的父控件。
+@~english
+  @fn DWindowOptionButton::DWindowOptionButton(QWidget * parent)
+  @brief DWindowOptionButton::DWindowOptionButton is the constructor of DWindowOptionButton, which returns a DWindowOptionButton object. 
+  Normal programs do not need to use it.
+  \a parent is the parent widget of the created object.
  */
 DWindowOptionButton::DWindowOptionButton(QWidget * parent)
     : DIconButton(parent)
