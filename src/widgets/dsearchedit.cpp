@@ -287,10 +287,10 @@ void DSearchEditPrivate::init()
 
     action = new QAction(q);
     action->setObjectName("_d_search_leftAction");
-    action->setIcon(QIcon::fromTheme("search_action"));
+    action->setIcon(QIcon::fromTheme("search_indicator"));
     q->lineEdit()->addAction(action, QLineEdit::LeadingPosition);
     action->setVisible(false);
-    iconbtn->setIconSize(QSize(32, 32));
+    iconbtn->setIconSize(QSize(20, 20));
 
     DPalette pe;
     QStyleOption opt;
@@ -314,7 +314,7 @@ void DSearchEditPrivate::init()
     iconWidget->setAccessibleName("DSearchEditIconWidget");
     QHBoxLayout *center_layout = new QHBoxLayout(iconWidget);
     center_layout->setMargin(0);
-    center_layout->setSpacing(0);
+    center_layout->setSpacing(6);
 
     layout->setMargin(0);
     layout->setSpacing(0);
