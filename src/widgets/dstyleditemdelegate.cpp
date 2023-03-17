@@ -1247,7 +1247,8 @@ void DStyledItemDelegate::setBackgroundType(DStyledItemDelegate::BackgroundType 
         }
 
         int frame_margin = style->pixelMetric(static_cast<QStyle::PixelMetric>(DStyle::PM_FrameRadius));
-        d->margins += DSizeModeHelper::element(frame_margin / 2, frame_margin);
+        int left_right_margin = style->pixelMetric(static_cast<QStyle::PixelMetric>(DStyle::PM_ContentsMargins));
+        d->margins += QMargins(left_right_margin, frame_margin, left_right_margin, frame_margin);
     }
 }
 
@@ -1404,7 +1405,8 @@ bool DStyledItemDelegate::eventFilter(QObject *object, QEvent *event)
                 break;
 
             int frame_margin = DStyle::pixelMetric(view->style(), DStyle::PM_FrameRadius);
-            d->margins = QMargins() + DSizeModeHelper::element(frame_margin / 2, frame_margin);
+            int left_right_margin = DStyle::pixelMetric(view->style(), DStyle::PM_ContentsMargins);
+            d->margins = QMargins(left_right_margin, frame_margin, left_right_margin, frame_margin);
 
             // relayout to calculate size.
             view->doItemsLayout();
