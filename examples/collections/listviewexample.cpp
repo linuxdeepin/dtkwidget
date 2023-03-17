@@ -98,7 +98,6 @@ DListViewExample::DListViewExample(QWidget *parent)
         lv->setModel(model);
         lv->setItemSpacing(space);
         lv->setSpacing(0);
-        lv->setIconSize(QSize(32, 32));
         lv->setFixedHeight(fixHeight);
         lv->setContentsMargins(0, 0, 0, 0);
     };
@@ -270,7 +269,6 @@ DGroupBoxExample::DGroupBoxExample(QWidget *parent)
     gbPicLabel->setPixmap(QPixmap(":/images/example/DGroupBox.png").scaled(568, 444, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
     contentComboBox->addItems({"自动"});
     contentComboBox->setMinimumWidth(213);
-    groupBoxWidget->setFixedHeight(48);
 
     contentLayout->setContentsMargins(10, 6, 10, 6);
     contentLayout->addWidget(contentTextLabel);
