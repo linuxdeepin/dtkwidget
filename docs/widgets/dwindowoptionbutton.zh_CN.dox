@@ -1,0 +1,24 @@
+/*!
+@~chinese
+@file dwindowoptionbutton.h
+@ingroup dtkwidget
+
+@class Dtk::Widget::DWindowOptionButton
+@brief DWindowOptionButton 类是 DTK 窗口统一的菜单按钮控件
+
+@details 它实际上是一个特殊的DImageButton，它有着选项按钮的外观点击按钮后，
+默认会显示程序主菜单，包含“关于”、“帮助”等项。
+
+*/
+
+/*!
+@~chinese
+@file dwindowoptionbutton.h
+@ingroup dtkwidget
+
+@fn DWindowOptionButton::DWindowOptionButton(QWidget * parent)
+@brief DWindowOptionButton::DWindowOptionButton 是 DWindowOptionButton 的构造
+函数，返回 DWindowOptionButton 对象，普通程序一般无需使用。
+'parent 为创建对象的父控件'
+*/
+
