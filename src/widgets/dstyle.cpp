@@ -2191,6 +2191,8 @@ int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QW
         return 16;
     case PM_MenuButtonIndicator:
         return DSizeModeHelper::element(8, QCommonStyle::pixelMetric(m, opt, widget));
+    case PM_LineEditIconSize:
+        return DSizeModeHelper::element(20, 20);
     default:
         break;
     }
