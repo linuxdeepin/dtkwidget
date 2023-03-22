@@ -5,6 +5,7 @@
 
 #include "dapplicationsettings.h"
 
+#include <DConfig>
 #include <DGuiApplicationHelper>
 #include <DObjectPrivate>
 
@@ -42,62 +43,51 @@ DApplicationSettingsPrivate::DApplicationSettingsPrivate(DApplicationSettings *q
 void DApplicationSettingsPrivate::init()
 {
 #ifdef Q_OS_LINUX
-    D_Q(DApplicationSettings);
-
     const QString &on = qApp->organizationName();
     const QString &name = qApp->applicationName();
 
+    bool pathValid = true;
     if (on.isEmpty() || name.isEmpty()) {
-        qFatal("%s\n", "Must set organizationName & applicationName");
-        std::abort();
+        qErrnoWarning("%s\n", "Must set organizationName & applicationName");
+        pathValid = false;
     }
 
-    if (!QGSettings::isSchemaInstalled("com.deepin.dtk"))
+    // use dconfig to save application theme palette type
+    DGuiApplicationHelper::instance()->setAutoSaveApplicationTheme();
+
+    const QByteArray appId("org.deepin.dtk.helper");
+    const QByteArray restoredKey("restoredGSettings");
+    const QByteArray schema("com.deepin.dtk");
+    DTK_CORE_NAMESPACE::DConfig config(appId);
+    if (!config.isValid())
         return;
 
-    genericSettings = new QGSettings("com.deepin.dtk", QString("/dtk/%2/%3/").arg(on, name).toLocal8Bit(), q);
-    // 初始化设置
-    _q_onChanged(PALETTE_TYPE_KEY);
+    bool hasRestored = config.value(restoredKey).toBool();
+    bool validGs = pathValid && QGSettings::isSchemaInstalled(schema);
+    // gsettings to dconfig
+    if (!hasRestored && validGs) {
+        QGSettings genericSettings(schema, QString("/dtk/%2/%3/").arg(on, name).toLocal8Bit());
 
-    q->connect(genericSettings, SIGNAL(changed(const QString &)), q, SLOT(_q_onChanged(const QString &)));
-    q->connect(DGuiApplicationHelper::instance(), SIGNAL(paletteTypeChanged(ColorType)),
-               q, SLOT(_q_onPaletteTypeChanged()));
+        const QString &palette_type = genericSettings.get(PALETTE_TYPE_KEY).toString();
+        if (palette_type == "LightType") {
+            DGuiApplicationHelper::instance()->setPaletteType(DGuiApplicationHelper::LightType);
+        } else if (palette_type == "DarkType") {
+            DGuiApplicationHelper::instance()->setPaletteType(DGuiApplicationHelper::DarkType);
+        }
+
+        config.setValue(restoredKey, true);
+    }
 #endif
 }
 
 void DApplicationSettingsPrivate::_q_onChanged(const QString &key)
 {
-#ifdef Q_OS_LINUX
-    if (key != PALETTE_TYPE_KEY)
-        return;
 
-    const QString &palette_type = genericSettings->get(PALETTE_TYPE_KEY).toString();
-
-    if (palette_type == "LightType") {
-        DGuiApplicationHelper::instance()->setPaletteType(DGuiApplicationHelper::LightType);
-    } else if (palette_type == "DarkType") {
-        DGuiApplicationHelper::instance()->setPaletteType(DGuiApplicationHelper::DarkType);
-    } else if (palette_type == "UnknownType") {
-        DGuiApplicationHelper::instance()->setPaletteType(DGuiApplicationHelper::UnknownType);
-    }
-#endif
 }
 
 void DApplicationSettingsPrivate::_q_onPaletteTypeChanged()
 {
-#ifdef Q_OS_LINUX
-    switch (DGuiApplicationHelper::instance()->paletteType()) {
-    case DGuiApplicationHelper::LightType:
-        genericSettings->set(PALETTE_TYPE_KEY, "LightType");
-        break;
-    case DGuiApplicationHelper::DarkType:
-        genericSettings->set(PALETTE_TYPE_KEY, "DarkType");
-        break;
-    default:
-        genericSettings->set(PALETTE_TYPE_KEY, "UnknownType");
-        break;
-    }
-#endif
+
 }
 
 
