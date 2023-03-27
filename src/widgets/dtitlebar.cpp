@@ -51,7 +51,6 @@ DWIDGET_BEGIN_NAMESPACE
 #define CHANGESPLITWINDOW_VAR "_d_splitWindowOnScreen"
 #define GETSUPPORTSPLITWINDOW_VAR "_d_supportForSplittingWindow"
 
-static inline int DefaultTitlebarHeight() { return DSizeModeHelper::element(40, 50); }
 static inline int DefaultIconHeight() { return DSizeModeHelper::element(24, 32); }
 static inline int DefaultExpandButtonHeight() { return DSizeModeHelper::element(30, 48); }
 
@@ -97,26 +96,28 @@ private:
     void updateSizeBySizeMode()
     {
         if (optionButton)
-            optionButton->setIconSize(QSize(DefaultTitlebarHeight(), DefaultTitlebarHeight()));
+            optionButton->setIconSize(QSize(titlebarHeight, titlebarHeight));
         if (minButton)
-            minButton->setIconSize(QSize(DefaultTitlebarHeight(), DefaultTitlebarHeight()));
+            minButton->setIconSize(QSize(titlebarHeight, titlebarHeight));
         if (maxButton)
-            maxButton->setIconSize(QSize(DefaultTitlebarHeight(), DefaultTitlebarHeight()));
+            maxButton->setIconSize(QSize(titlebarHeight, titlebarHeight));
         if (closeButton)
-            closeButton->setIconSize(QSize(DefaultTitlebarHeight(), DefaultTitlebarHeight()));
+            closeButton->setIconSize(QSize(titlebarHeight, titlebarHeight));
         if (quitFullButton)
-            quitFullButton->setIconSize(QSize(DefaultTitlebarHeight(), DefaultTitlebarHeight()));
+            quitFullButton->setIconSize(QSize(titlebarHeight, titlebarHeight));
         if (expandButton)
             expandButton->setIconSize(QSize(DefaultExpandButtonHeight(), DefaultExpandButtonHeight()));
         if (iconLabel)
             iconLabel->setIconSize(QSize(DefaultIconHeight(), DefaultIconHeight()));
 
         D_Q(DTitlebar);
-        q->setFixedHeight(DefaultTitlebarHeight());
-        q->setMinimumHeight(DefaultTitlebarHeight());
+        q->setFixedHeight(titlebarHeight);
+        q->setMinimumHeight(titlebarHeight);
     }
 
     void setFixedButtonsEnabled(bool isEnabled);
+
+    void updateTitlebarHeight();
 
     QHBoxLayout         *mainLayout;
     QWidget             *leftArea;
@@ -142,6 +143,9 @@ private:
     QPointer<DSplitScreenWidget> splitWidget = nullptr;
     DSidebarHelper      *sidebarHelper = nullptr;
     DIconButton         *expandButton = nullptr;
+
+    int                 titlebarHeight = 50;
+    DConfig             *uiPreferDonfig = nullptr;
 
 #ifndef QT_NO_MENU
     QMenu               *menu             = Q_NULLPTR;
@@ -207,6 +211,9 @@ void DTitlebarPrivate::init()
     auto config = new DConfig("org.deepin.dtkwidget.feature-display", "", q);
     bool isUpdated = config->value("featureUpdated", false).toBool();
     DStyle::setRedPointVisible(optionButton, isUpdated);
+
+    uiPreferDonfig = new DConfig("org.deepin.dtk.ui.preference", "", q);
+    updateTitlebarHeight();
 
     separatorTop    = new DHorizontalLine(q);
     separator       = new DHorizontalLine(q);
@@ -328,6 +335,11 @@ void DTitlebarPrivate::init()
             }
         });
     }
+    q->connect(uiPreferDonfig, &DConfig::valueChanged, q, [this](const QString &key){
+        if (key == "titlebarHeight") {
+            updateTitlebarHeight();
+        }
+    });
 
     // 默认需要构造一个空的选项菜单
     q->setMenu(new QMenu(q));
@@ -865,6 +877,14 @@ void DTitlebarPrivate::setFixedButtonsEnabled(bool isEnabled)
     optionButton->setEnabled(isEnabled);
 }
 
+void DTitlebarPrivate::updateTitlebarHeight()
+{
+    titlebarHeight = uiPreferDonfig->value("titlebarHeight").toInt();
+    // 默认值是50，另外从配置读取进来的值超出0-100的范围，通过模式获取值，否则使用获取的配置值
+    if (titlebarHeight == 50 || titlebarHeight <= 0 || titlebarHeight > 100)
+        titlebarHeight = DSizeModeHelper::element(40, 50);
+}
+
 /*!
   @~english
   \class Dtk::Widget::DTitlebar
@@ -1143,6 +1163,7 @@ bool DTitlebar::event(QEvent *e)
         }
     } else if (e->type() == QEvent::StyleChange) {
         D_D(DTitlebar);
+        d->updateTitlebarHeight();
         d->updateSizeBySizeMode();
     }
 
@@ -1671,7 +1692,7 @@ QSize DTitlebar::sizeHint() const
     int padding = qMax(d->leftArea->sizeHint().width(), d->rightArea->sizeHint().width());
     int width = d->centerArea->sizeHint().width() + 2 * d->mainLayout->spacing() + 2 * padding;
 
-    return QSize(width, DefaultTitlebarHeight());
+    return QSize(width, d->titlebarHeight);
 }
 
 QSize DTitlebar::minimumSizeHint() const
