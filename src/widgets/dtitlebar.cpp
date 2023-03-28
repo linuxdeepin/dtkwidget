@@ -880,8 +880,8 @@ void DTitlebarPrivate::setFixedButtonsEnabled(bool isEnabled)
 void DTitlebarPrivate::updateTitlebarHeight()
 {
     titlebarHeight = uiPreferDonfig->value("titlebarHeight").toInt();
-    // 默认值是50，另外从配置读取进来的值超出0-100的范围，通过模式获取值，否则使用获取的配置值
-    if (titlebarHeight == 50 || titlebarHeight <= 0 || titlebarHeight > 100)
+    // 配置项默认值是-1，从配置读取进来的值超出0-100的范围，通过模式获取值，否则使用获取的配置值
+    if (titlebarHeight <= 0 || titlebarHeight > 100)
         titlebarHeight = DSizeModeHelper::element(40, 50);
 }
 
