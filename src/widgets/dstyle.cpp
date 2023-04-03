@@ -1683,9 +1683,8 @@ QRect DStyle::subElementRect(const QStyle *style, DStyle::SubElement r, const QS
     }
     case SE_SwitchButtonHandle: {
         if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton *>(opt)) {
-            DStyleHelper dstyle(style);
-            int handleWidth = dstyle.pixelMetric(PM_SwitchButtonHandleWidth, opt, widget);
-            int handleHeight = dstyle.pixelMetric(PM_SwithcButtonHandleHeight, opt, widget);
+            int handleWidth = btn->rect.width() / 2.0;
+            int handleHeight = btn->rect.height();
             //这里的borderWidth为2,间隙宽度为2, 所以为4
             QRect rectHandle(4, 4, handleWidth, handleHeight);
 
