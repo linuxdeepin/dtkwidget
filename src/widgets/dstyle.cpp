@@ -2190,8 +2190,6 @@ int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QW
         return 16;
     case PM_MenuButtonIndicator:
         return DSizeModeHelper::element(8, QCommonStyle::pixelMetric(m, opt, widget));
-    case PM_LineEditIconSize:
-        return DSizeModeHelper::element(20, 20);
     default:
         break;
     }
@@ -2203,7 +2201,7 @@ int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QW
 #endif
 
     if (Q_UNLIKELY(LineEditIconSize == m)) {
-        return widget ? (widget->height() < 34 ? 16 : 32) : 24;
+        return DSizeModeHelper::element(20, 20);
     }
 
     if (Q_UNLIKELY(m < QStyle::PM_CustomBase)) {
