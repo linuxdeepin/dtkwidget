@@ -1418,7 +1418,11 @@ bool DStyledItemDelegate::eventFilter(QObject *object, QEvent *event)
 
         if (event->type() == QEvent::Paint) {
             D_D(DStyledItemDelegate);
-            if (d->readyRecordVisibleWidgetOfCurrentFrame()) {
+            const QPaintEvent *pe = static_cast<QPaintEvent *>(event);
+            // We only hide widgets when updating all area, it maybe also to be paint when hover,
+            // and it's area is a specific part.
+            if (pe->rect() == view->viewport()->rect() &&
+                d->readyRecordVisibleWidgetOfCurrentFrame()) {
                 auto updateEvent = new QEvent(UpdateWidgetVisibleEvent);
                 qApp->postEvent(view->viewport(), updateEvent);
             }
