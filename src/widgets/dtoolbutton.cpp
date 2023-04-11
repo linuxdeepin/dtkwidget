@@ -27,11 +27,6 @@ void DToolButton::paintEvent(QPaintEvent *event)
 void DToolButton::initStyleOption(QStyleOptionToolButton *option) const
 {
     QToolButton::initStyleOption(option);
-    //判断条件不用Qt::ToolButtonTextBesideIcon原因
-    //会强制居中，大小不受sizeHint（）控制
-    if (!option->icon.isNull() && !option->text.isEmpty()) {
-        option->toolButtonStyle = Qt::ToolButtonTextBesideIcon;
-    }
 }
 
 QSize DToolButton::sizeHint() const
