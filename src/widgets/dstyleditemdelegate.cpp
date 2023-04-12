@@ -195,6 +195,25 @@ public:
         return DStyle::viewItemSize(style, &item, Qt::DisplayRole);
     }
 
+    // get rect in AlignVCenter layout for text.
+    static QRect textAndTextActionsLayout(const QRect &textRect, const QStyle *style, const QStyleOptionViewItem &option, const QModelIndex &index)
+    {
+        QStyleOptionViewItem opt = option;
+        opt.displayAlignment |= Qt::AlignVCenter;
+        QSize size;
+
+        if (!opt.text.isEmpty())
+            size = DStyle::viewItemSize(style, &opt, Qt::DisplayRole);
+
+        for (const DViewItemAction *action : qvariantToActionList(index.data(Dtk::TextActionListRole))) {
+            const QSize &action_size = displayActionSize(action, style, opt);
+            size.setWidth(qMax(size.width(), action_size.width()));
+            size.setHeight(size.height() + action_size.height());
+        }
+
+        return QStyle::alignedRect(opt.direction , opt.displayAlignment, size, textRect);
+    }
+
     static QList<QRect> doActionsLayout(QRect base, const DViewItemActionList &list, Qt::Orientation orientation,
                                         Qt::LayoutDirection direction, const QSize &fallbackIconSize, QSize *bounding)
     {
@@ -1015,7 +1034,12 @@ void DStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
             opt.displayAlignment &= ~Qt::AlignVCenter;
             opt.displayAlignment &= ~Qt::AlignBottom;
 
-            QRect bounding = DStyle::viewItemDrawText(style, painter, &opt, textRect);
+            QRect textRectbounding = d->textAndTextActionsLayout(textRect, style, opt, index);
+
+            QRect bounding(textRectbounding.topLeft(), QSize());
+            if (!opt.text.isEmpty()) {
+                bounding = DStyle::viewItemDrawText(style, painter, &opt, textRectbounding);
+            }
 
             // draw action text
             for (const DViewItemAction *action : text_action_list) {
