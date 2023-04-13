@@ -2141,7 +2141,7 @@ int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QW
     case PM_MenuDesktopFrameWidth:
         return 0;
     case PM_ButtonMargin:
-        return 10;
+        return 8;
     case PM_DefaultChildMargin:
         return DSizeModeHelper::element(pixelMetric(PM_FrameRadius, opt, widget), pixelMetric(PM_FrameRadius, opt, widget));
     case PM_DefaultFrameWidth:
