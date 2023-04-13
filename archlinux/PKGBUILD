@@ -9,7 +9,7 @@ pkgdesc='Deepin graphical user interface library'
 arch=('x86_64' 'aarch64')
 url="https://github.com/linuxdeepin/dtkwidget"
 license=('LGPL3')
-depends=('dtkcore-git' 'dtkgui-git' 'librsvg' 'qt5-svg'
+depends=('dtkcore-git' 'dtkgui-git' 'qt5-svg'
          'qt5-x11extras' 'dtkcommon-git' 'startup-notification')
 makedepends=('git' 'qt5-tools' 'gtest' 'ninja' 'cmake' 'doxygen')
 provides=('dtkwidget')
