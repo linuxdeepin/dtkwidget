@@ -5,6 +5,7 @@
 #include "widgetexample.h"
 
 #include <DCalendarWidget>
+#include <dmpriscontrol.h>
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -18,6 +19,7 @@ WidgetExampleWindow::WidgetExampleWindow(QWidget *parent)
 {
     addExampleWindow(new DCalendarWidgetExample(this));
     addExampleWindow(new DTableWidgetExample(this));
+    addExampleWindow(new DMPRISControlWidgetExample(this));
 }
 
 DCalendarWidgetExample::DCalendarWidgetExample(QWidget *parent)
@@ -179,4 +181,29 @@ QVariant CalendarModel::headerData(int section, Qt::Orientation orientation, int
     } else {
         return QVariant();
     }
+}
+
+DMPRISControlWidgetExample::DMPRISControlWidgetExample(QWidget *parent)
+    : ExampleWindowInterface(parent)
+{
+    QVBoxLayout *layout = new QVBoxLayout(this);
+
+    DMPRISControl *control = new DMPRISControl(this);
+    layout->addWidget(control, 0, Qt::AlignCenter);
+    control->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+}
+
+QString DMPRISControlWidgetExample::getTitleName() const
+{
+    return QStringLiteral("DMPRISControl");
+}
+
+QString DMPRISControlWidgetExample::getDescriptionInfo() const
+{
+    return QStringLiteral("支持MPRIS协议的媒体控制控件。");
+}
+
+int DMPRISControlWidgetExample::getFixedHeight() const
+{
+    return 200;
 }
