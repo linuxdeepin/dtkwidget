@@ -1,3 +1,12 @@
+dtkwidget (5.6.10) unstable; urgency=medium
+
+  * Release 5.6.10
+  * FIX #364 #373 #389 #390 #403 #408
+  * FIX Build error for Qt 5.15~6.1
+  * FIX DFloatingButton can't display dci icon
+
+ -- Deepin Packages Builder <packages@deepin.com>  Mon, 17 Apr 2023 17:14:10 +0800
+
 dtkwidget (5.6.9) unstable; urgency=medium
 
   * Release 5.6.9
