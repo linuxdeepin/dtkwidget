@@ -11,6 +11,13 @@
 #include <QVBoxLayout>
 #include <QTimer>
 #include <QScrollBar>
+#include <DSizeMode>
+#include <DGuiApplicationHelper>
+
+static const QSize ButtonSize = {52, 52};
+static const QSize CompactButtonSize = {44, 44};
+static const QSize IconSize = {36, 36};
+static constexpr int ButtonSpacing = 80;
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -110,12 +117,27 @@ void DMPRISControlPrivate::init()
     m_nextBtn         = new DFloatingButton(m_controlWidget);
     m_tickEffect      = new DTickEffect(m_title, m_title);
 
-    m_prevBtn->setIcon(QIcon::fromTheme(":/assets/images/play_previous.svg"));
+    auto setButtonSize = [this] {
+        const QSize ActualButtonSize = DSizeModeHelper::element(CompactButtonSize, ButtonSize);
+        m_prevBtn->setFixedSize(ActualButtonSize);
+        m_playBtn->setFixedSize(ActualButtonSize);
+        m_nextBtn->setFixedSize(ActualButtonSize);
+    };
+
+    QObject::connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::sizeModeChanged, q, [setButtonSize] {
+        setButtonSize();
+    });
+
+    setButtonSize();
+    m_prevBtn->setIcon(DDciIcon::fromTheme("play_previous"));
     m_prevBtn->setAccessibleName("DMPRISControlPrevFloatingButton");
-    m_playBtn->setIcon(QIcon::fromTheme(":/assets/images/play_start.svg"));
+    m_playBtn->setIcon(DDciIcon::fromTheme("play_start"));
     m_playBtn->setAccessibleName("DMPRISControlPlayFloatingButton");
-    m_nextBtn->setIcon(QIcon::fromTheme(":/assets/images/play_next.svg"));
+    m_nextBtn->setIcon(DDciIcon::fromTheme("play_next"));
     m_nextBtn->setAccessibleName("DMPRISControlNextFloatingButton");
+    m_prevBtn->setIconSize(IconSize);
+    m_playBtn->setIconSize(IconSize);
+    m_nextBtn->setIconSize(IconSize);
     m_prevBtn->setBackgroundRole(DPalette::Button);
     m_playBtn->setBackgroundRole(DPalette::Button);
     m_nextBtn->setBackgroundRole(DPalette::Button);
@@ -149,17 +171,12 @@ void DMPRISControlPrivate::init()
 
 #ifdef QT_DEBUG
     m_title->setText("MPRIS Title");
-
-    m_nextBtn->setIcon(QIcon::fromTheme(":/assets/images/arrow_right_normal.png"));
-    m_playBtn->setIcon(QIcon::fromTheme(":/assets/images/arrow_right_white.png"));
-    m_prevBtn->setIcon(QIcon::fromTheme(":/assets/images/arrow_left_normal.png"));
 #endif
 
     QHBoxLayout *controlLayout = new QHBoxLayout;
+    controlLayout->setSpacing(ButtonSpacing);
     controlLayout->addWidget(m_prevBtn);
-    controlLayout->addStretch();
     controlLayout->addWidget(m_playBtn);
-    controlLayout->addStretch();
     controlLayout->addWidget(m_nextBtn);
     controlLayout->setContentsMargins(0, 5, 0, 0);
     m_controlWidget->setLayout(controlLayout);
@@ -169,7 +186,6 @@ void DMPRISControlPrivate::init()
     centralLayout->addWidget(m_titleScrollArea);
     centralLayout->addWidget(m_picture);
     centralLayout->setAlignment(m_picture, Qt::AlignCenter);
-//    centralLayout->addLayout(controlLayout);
     centralLayout->addWidget(m_controlWidget);
     centralLayout->setMargin(0);
 
@@ -266,23 +282,13 @@ void DMPRISControlPrivate::_q_onPlaybackStatusChanged()
         return;
 
     const QString stat = m_mprisInter->playbackStatus();
-#ifdef QT_DEBUG
     if (stat == "Playing") {
         m_playStatus = true;
-        m_playBtn->setIcon(QIcon::fromTheme(":/assets/images/arrow_right_white.png"));
+        m_playBtn->setIcon(DDciIcon::fromTheme("play_pause"));
     } else {
         m_playStatus = false;
-        m_playBtn->setIcon(QIcon::fromTheme(":/assets/images/arrow_left_white.png"));
+        m_playBtn->setIcon(DDciIcon::fromTheme("play_start"));
     }
-#else
-    if (stat == "Playing") {
-        m_playStatus = true;
-        m_playBtn->setIcon(QIcon::fromTheme(":/assets/images/play_pause.svg"));
-    } else {
-        m_playStatus = false;
-        m_playBtn->setIcon(QIcon::fromTheme(":/assets/images/play_start.svg"));
-    }
-#endif
 }
 
 void DMPRISControlPrivate::_q_loadMPRISPath(const QString &path)
