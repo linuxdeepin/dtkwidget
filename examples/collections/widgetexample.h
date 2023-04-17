@@ -56,6 +56,18 @@ private:
     QTableView *tableView;
 };
 
+class DMPRISControlWidgetExample : public ExampleWindowInterface
+{
+    Q_OBJECT
+
+public:
+    explicit DMPRISControlWidgetExample(QWidget *parent = nullptr);
+
+    QString getTitleName() const override;
+    QString getDescriptionInfo() const override;
+    int getFixedHeight() const override;
+};
+
 class CalendarModel : public QAbstractTableModel
 {
     Q_OBJECT
