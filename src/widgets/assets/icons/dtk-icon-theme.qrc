@@ -63,8 +63,10 @@
     </qresource>
     <qresource prefix="/dsg/built-in-icons">
         <file alias="window_menu.dci">bloom/window_menu.dci</file>
-    </qresource>
-    <qresource prefix="/dsg">
-        <file alias="built-in-icons/window_sidebar.dci">bloom/window_sidebar.dci</file>
+        <file alias="window_sidebar.dci">bloom/window_sidebar.dci</file>
+        <file alias="play_start.dci">bloom/play_start.dci</file>
+        <file alias="play_pause.dci">bloom/play_pause.dci</file>
+        <file alias="play_previous.dci">bloom/play_previous.dci</file>
+        <file alias="play_next.dci">bloom/play_next.dci</file>
     </qresource>
 </RCC>
