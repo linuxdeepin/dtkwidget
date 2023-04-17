@@ -67,7 +67,6 @@ DStyleOptionButton DFloatingButton::baseStyleOption() const
 void DFloatingButton::initStyleOption(DStyleOptionButton *option) const
 {
     DIconButton::initStyleOption(option);
-    option->features = QStyleOptionButton::ButtonFeature(DStyleOptionButton::FloatingButton);
 }
 
 DWIDGET_END_NAMESPACE

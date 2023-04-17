@@ -282,7 +282,7 @@ void DIconButton::paintEvent(QPaintEvent *event)
     Q_UNUSED(event)
 
     DStylePainter p(this);
-    DStyleOptionButton opt;
+    DStyleOptionButton opt = baseStyleOption();
     initStyleOption(&opt);
     p.drawControl(DStyle::CE_IconButton, opt);
 }
