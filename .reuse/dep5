@@ -79,7 +79,7 @@ Copyright: UnionTech Software Technology Co., Ltd.
 License: LGPL-3.0-or-later
 
 #icon
-Files: src/widgets/assets/icons/*
+Files: src/widgets/assets/icons/* src/widgets/assets/built-in-icons/*
 Copyright: UnionTech Software Technology Co., Ltd.
 License: LGPL-3.0-or-later
 
