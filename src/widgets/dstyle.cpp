@@ -1125,7 +1125,7 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
             DStyleHelper dstyle(style);
 
             if (btn->features & DStyleOptionButton::FloatingButton) {
-                int frame_margins = 3;
+                int frame_margins = dstyle.pixelMetric(DStyle::PM_FloatingButtonFrameMargin, opt, w);
                 const QMargins margins(frame_margins, frame_margins, frame_margins, frame_margins);
                 QRect shadow_rect = opt->rect + margins;
                 const QRect content_rect = opt->rect - margins;
@@ -1737,7 +1737,10 @@ QSize DStyle::sizeFromContents(const QStyle *style, DStyle::ContentsType ct, con
     case CT_IconButton:
         if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton *>(opt)) {
             if (btn->features & DStyleOptionButton::FloatingButton) {
-                return DSizeModeHelper::element(btn->iconSize * 1.8, btn->iconSize * 2.5);
+                DStyleHelper dstyle(style);
+                int frame_margin = dstyle.pixelMetric(DStyle::PM_FloatingButtonFrameMargin, opt, widget);
+                QSize marginSize(2 * frame_margin, 2 * frame_margin);
+                return DSizeModeHelper::element(QSize(36, 36) + marginSize, QSize(48, 48) + marginSize);
             }
 
             if (btn->features & DStyleOptionButton::Flat) {
@@ -2190,6 +2193,8 @@ int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QW
         return 16;
     case PM_MenuButtonIndicator:
         return DSizeModeHelper::element(8, QCommonStyle::pixelMetric(m, opt, widget));
+    case PM_FloatingButtonFrameMargin:
+        return 3;
     default:
         break;
     }
