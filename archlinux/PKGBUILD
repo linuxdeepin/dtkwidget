@@ -21,7 +21,7 @@ sha512sums=('SKIP')
 
 build() {
   cd $sourcedir
-  cmake -GNinja \
+  cmake . -GNinja \
       -DMKSPECS_INSTALL_DIR=lib/qt/mkspecs/modules/\
       -DBUILD_PLUGINS=OFF \
       -DBUILD_DOCS=ON \
