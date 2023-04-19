@@ -137,6 +137,7 @@ public:
         PM_ContentsSpacing,                                     //内容的间距（可用于列表项中每一项的距离）
         PM_ButtonMinimizedSize,                                 //按钮控件的最小大小
         PM_ToolTipLabelWidth,                                   // Maximum width that a ToolTip label can reach
+        PM_FloatingButtonFrameMargin,                           // Frame margin that a floatingbutton has
         PM_CustomBase = QStyle::PM_CustomBase + 0xf00000
     };
 
