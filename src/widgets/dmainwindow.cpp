@@ -10,6 +10,7 @@
 #include "DBlurEffectWidget"
 #include "dsizemode.h"
 #include "dfeaturedisplaydialog.h"
+#include "denhancedwidget.h"
 #include "private/dmainwindow_p.h"
 #include "private/dapplication_p.h"
 
@@ -176,6 +177,12 @@ DMainWindow::DMainWindow(QWidget *parent)
         connect(this->windowHandle(), SIGNAL(activeChanged()), this, SLOT(_q_autoShowFeatureDialog()));
         config.setValue("autoDisplayFeature", false);
     }
+
+    D_D(DMainWindow);
+    DEnhancedWidget *hanceedWidget = new DEnhancedWidget(d->titlebar, parent);
+    connect(hanceedWidget, &DEnhancedWidget::heightChanged, hanceedWidget, [d]() {
+        d->updateTitleShadowGeometry();
+    });
 }
 
 /*!
