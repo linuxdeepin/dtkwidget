@@ -2178,7 +2178,7 @@ int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QW
     case PM_SmallIconSize:
         return 14;
     case PM_ButtonIconSize:
-        return int(DStyleHelper::pixelRatioScaled(16, widget));
+        return 16;
     case PM_ListViewIconSize:
     case PM_LargeIconSize:
         return 24;
