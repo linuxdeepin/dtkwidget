@@ -347,9 +347,6 @@ public:
     inline QIcon standardIcon(DStyle::StandardPixmap standardIcon, const QStyleOption *opt, const QWidget *widget = nullptr) const
     { return m_dstyle ? m_dstyle->standardIcon(standardIcon, opt, widget) : DStyle::standardIcon(m_style, standardIcon, opt, widget); }
 
-    inline static qreal pixelRatioScaled(const qreal value, const QWidget *w = nullptr)
-    { return value * (w ? w->devicePixelRatioF() : qApp->devicePixelRatio()); }
-
 private:
     const QStyle *m_style;
     const DStyle *m_dstyle;
