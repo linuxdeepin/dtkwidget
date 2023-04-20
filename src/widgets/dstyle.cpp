@@ -2187,6 +2187,7 @@ int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QW
     case PM_ScrollView_ScrollBarOverlap:
         return true;
     case PM_ToolBarIconSize:
+
         return 16;
     case PM_MenuButtonIndicator:
         return DSizeModeHelper::element(8, QCommonStyle::pixelMetric(m, opt, widget));
