@@ -2,11 +2,28 @@
 @~chinese
 @file dswitchbutton.h
 @ingroup button
-@class
-@brief
-@details
 
-TODO: 添加类简介、示例代码、示例截图和函数使用说明等
+@class Dtk::Widget::DSwitchButton
+@brief DSwitchButton 实现一个开关按钮
 
+@fn Dtk::Widget::DSwitchButton::DSwitchButton(QWidget *parent)
+@brief 构造 DSwitchButton 对象，传入父控件指针。
+@param parent 父控件指针
+
+@fn QSize Dtk::Widget::DSwitchButton::sizeHint() const
+@brief DSwitchButton::sizeHint 初始化控件矩形大小（在绘画之前）
+@return 控件矩形大小
+
+@fn void Dtk::Widget::DSwitchButton::paintEvent(QPaintEvent *e)
+@brief DSwitchButton::paintEvent 绘画处理
+@param e 绘画事件
+@sa QWidget::paintEvent()
+
+@fn void Dtk::Widget::DSwitchButton::initStyleOption(DStyleOptionButton *option) const
+@brief DSwitchButton::initStyleOption 初始化(用于继承的)抽象按钮对象,后面用于 DStylePainter 绘画 DStyle::CE_SwitchButton 枚举
+@param option 初始化了的的抽象风格按钮对象
+
+@fn void Dtk::Widget::DSwitchButton::checkedChanged(bool arg)
+@brief 选择状态的信号
 
 */
