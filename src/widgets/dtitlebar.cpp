@@ -93,7 +93,7 @@ private:
     void updateTabOrder();
     void showSplitScreenWidget();
     void hideSplitScreenWidget();
-    void updateSizeBySizeMode()
+    void updateTitleBarSize()
     {
         if (optionButton)
             optionButton->setIconSize(QSize(titlebarHeight, titlebarHeight));
@@ -338,6 +338,7 @@ void DTitlebarPrivate::init()
     q->connect(uiPreferDonfig, &DConfig::valueChanged, q, [this](const QString &key){
         if (key == "titlebarHeight") {
             updateTitlebarHeight();
+            updateTitleBarSize();
         }
     });
 
@@ -359,7 +360,7 @@ void DTitlebarPrivate::init()
     // fix wayland 下显示了两个应用图标，系统标题栏 和 dtk标题栏 均显示应用图标
     q->setEmbedMode(!(DApplication::isDXcbPlatform()|| noTitlebarEnabled()));
 
-    updateSizeBySizeMode();
+    updateTitleBarSize();
 }
 
 QWidget *DTitlebarPrivate::targetWindow()
@@ -1164,7 +1165,7 @@ bool DTitlebar::event(QEvent *e)
     } else if (e->type() == QEvent::StyleChange) {
         D_D(DTitlebar);
         d->updateTitlebarHeight();
-        d->updateSizeBySizeMode();
+        d->updateTitleBarSize();
     }
 
     return QFrame::event(e);
