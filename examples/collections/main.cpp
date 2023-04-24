@@ -1,11 +1,10 @@
-// SPDX-FileCopyrightText: 2015 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2015 - 2023 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
 #include "mainwindow.h"
 
 #include <DApplication>
-#include <DApplicationSettings>
 #include <DWidgetUtil>
 #include <DLog>
 
@@ -43,9 +42,6 @@ int main(int argc, char *argv[])
     a->setApplicationDescription(QApplication::translate("main", "Collections provides the examples for dtk applications."));
     a->setApplicationDisplayName(QObject::tr("Collections"));
     a->setApplicationLicense(QObject::tr("2023 UnionTech Software Technology Co., Ltd."));
-
-    DApplicationSettings as;
-    Q_UNUSED(as)
 
     MainWindow w;
     w.show();
