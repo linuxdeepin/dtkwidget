@@ -256,6 +256,13 @@ bool DArrowRectangle::event(QEvent *e)
 
 const QRect DArrowRectanglePrivate::currentScreenRect(const int x, const int y)
 {
+    if (floatMode == DArrowRectangle::FloatWidget) {
+        D_Q(DArrowRectangle);
+        if (q->parentWidget()) {
+            return q->parentWidget()->rect();
+        }
+    }
+
     for (QScreen *screen : qApp->screens())
         if (screen->geometry().contains(x, y)) {
             return screen->geometry();
