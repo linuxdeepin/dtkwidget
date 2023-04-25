@@ -1398,7 +1398,7 @@ void DApplication::handleAboutAction()
     DAboutDialog *aboutDialog = new DAboutDialog(activeWindow());
     aboutDialog->setProductName(productName());
     aboutDialog->setProductIcon(productIcon());
-    aboutDialog->setVersion(translate("DAboutDialog", "Version: %1").arg(applicationVersion()));
+    aboutDialog->setVersion(applicationVersion());
     aboutDialog->setDescription(applicationDescription());
 
     if (!applicationLicense().isEmpty()) {
