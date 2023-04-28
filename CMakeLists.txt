@@ -14,6 +14,11 @@ project(DtkWidget
 
 set(LIB_NAME dtkwidget)
 
+# Set install path
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+    set(CMAKE_INSTALL_PREFIX /usr)
+endif()
+
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
@@ -32,11 +37,6 @@ set(BUILD_PLUGINS
     ON
     CACHE BOOL "Build plugin and plugin example"
 )
-
-# Set install path
-if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-    set(CMAKE_INSTALL_PREFIX /usr)
-endif()
 
 set(INCLUDE_INSTALL_DIR
     "${CMAKE_INSTALL_INCLUDEDIR}/dtk${PROJECT_VERSION_MAJOR}/DWidget"
