@@ -9,17 +9,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
 <context>
     <name>DAboutDialog</name>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="203"/>
-        <source>Acknowledgements</source>
-        <translation>Poděkování</translation>
-    </message>
-    <message>
-        <location filename="../widgets/dapplication.cpp" line="1396"/>
-        <source>Version: %1</source>
-        <translation>Verze: %1</translation>
-    </message>
-    <message>
-        <location filename="../widgets/dapplication.cpp" line="1400"/>
+        <location filename="../widgets/dapplication.cpp" line="1405"/>
         <source>%1 is released under %2</source>
         <translation>%1 je vydáno pod %2</translation>
     </message>
@@ -136,22 +126,22 @@ SPDX-License-Identifier: LGPL-3.0-or-later
 <context>
     <name>DLineEdit</name>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="562"/>
+        <location filename="../widgets/dlineedit.cpp" line="593"/>
         <source>Stop reading</source>
         <translation>Přestat předčítat</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="564"/>
+        <location filename="../widgets/dlineedit.cpp" line="595"/>
         <source>Text to Speech</source>
         <translation>Text na řeč</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="587"/>
+        <location filename="../widgets/dlineedit.cpp" line="618"/>
         <source>Translate</source>
         <translation>Přeložit</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="609"/>
+        <location filename="../widgets/dlineedit.cpp" line="640"/>
         <source>Speech To Text</source>
         <translation>Řeč na text</translation>
     </message>
@@ -172,7 +162,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="302"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1646"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1647"/>
         <source>Print</source>
         <comment>button</comment>
         <translation>Tisk</translation>
@@ -239,19 +229,17 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="475"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1580"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1671"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1675"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1681"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1693"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1583"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1663"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1679"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1694"/>
         <source>Color</source>
         <translation>Barva</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="475"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1655"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1671"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1678"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1670"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1682"/>
         <source>Grayscale</source>
         <translation>Stupně šedé</translation>
     </message>
@@ -472,13 +460,13 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1013"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2282"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2283"/>
         <source>Print to PDF</source>
         <translation>Vytisknout do PDF</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1014"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2281"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2282"/>
         <source>Save as Image</source>
         <translation>Uložit jako obrázek</translation>
     </message>
@@ -521,33 +509,33 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <translation>Zadejte čísla stránek jako např.: 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1699"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1700"/>
         <source>Save</source>
         <comment>button</comment>
         <translation>Uložit</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2311"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2312"/>
         <source>*.pdf</source>
         <translation>*.pdf</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1769"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1770"/>
         <source>For example, 1,3,5-7,11-15,18,21</source>
         <translation>Například, 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2311"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2312"/>
         <source>Save as PDF</source>
         <translation>Uložit jako PDF</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2350"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2351"/>
         <source>Save as image</source>
         <translation>Uložit jako obrázek</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2352"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2353"/>
         <source>Images</source>
         <translation>Obrázky</translation>
     </message>
@@ -555,20 +543,20 @@ SPDX-License-Identifier: LGPL-3.0-or-later
 <context>
     <name>DPrintPreviewWidget</name>
     <message>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1624"/>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1627"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1590"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1593"/>
         <source>Confidential</source>
         <translation>Důvěrné</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1642"/>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1645"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1608"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1611"/>
         <source>Draft</source>
         <translation>Koncept</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1660"/>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1663"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1626"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1629"/>
         <source>Sample</source>
         <translation>Ukázka</translation>
     </message>
@@ -636,6 +624,29 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     </message>
 </context>
 <context>
+    <name>DToolbarEditPanel</name>
+    <message>
+        <location filename="../widgets/private/dtitlebareditpanel.cpp" line="884"/>
+        <source>Default toolset</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/private/dtitlebareditpanel.cpp" line="915"/>
+        <source>Drag your favorite items into the toolbar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/private/dtitlebareditpanel.cpp" line="916"/>
+        <source>Drag below items into the toolbar to restore defaults</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/private/dtitlebareditpanel.cpp" line="921"/>
+        <source>Confirm</source>
+        <translation>Potvrdit</translation>
+    </message>
+</context>
+<context>
     <name>PickColorWidget</name>
     <message>
         <location filename="../widgets/dprintpickcolorwidget.cpp" line="94"/>
@@ -646,17 +657,17 @@ SPDX-License-Identifier: LGPL-3.0-or-later
 <context>
     <name>QLineEdit</name>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="495"/>
+        <location filename="../widgets/dlineedit.cpp" line="526"/>
         <source>&amp;Copy</source>
         <translation>&amp;Kopírovat</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="498"/>
+        <location filename="../widgets/dlineedit.cpp" line="529"/>
         <source>Cu&amp;t</source>
         <translation>Vyjmou&amp;t</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="503"/>
+        <location filename="../widgets/dlineedit.cpp" line="534"/>
         <source>Select All</source>
         <translation>Vybrat vše</translation>
     </message>
@@ -674,34 +685,34 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <translation>Vráti na výchozí hodnoty</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="111"/>
+        <location filename="../widgets/daboutdialog.cpp" line="108"/>
         <source>Version</source>
-        <translation type="unfinished"/>
+        <translation>Verze</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="113"/>
+        <location filename="../widgets/daboutdialog.cpp" line="110"/>
         <source>Features</source>
-        <translation type="unfinished"/>
+        <translation>Funkce</translation>
+    </message>
+    <message>
+        <location filename="../widgets/daboutdialog.cpp" line="122"/>
+        <source>Homepage</source>
+        <translation>Hlavní stránka</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="124"/>
-        <source>Homepage</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../widgets/daboutdialog.cpp" line="126"/>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>Popisek</translation>
     </message>
     <message>
-        <location filename="../widgets/dfeaturedisplaydialog.cpp" line="150"/>
+        <location filename="../widgets/dfeaturedisplaydialog.cpp" line="151"/>
         <source>Continue</source>
-        <translation type="unfinished"/>
+        <translation>Další</translation>
     </message>
     <message>
-        <location filename="../widgets/dfeaturedisplaydialog.cpp" line="174"/>
+        <location filename="../widgets/dfeaturedisplaydialog.cpp" line="175"/>
         <source>Learn More</source>
-        <translation type="unfinished"/>
+        <translation>Zjistit více</translation>
     </message>
 </context>
 <context>
@@ -723,42 +734,47 @@ SPDX-License-Identifier: LGPL-3.0-or-later
 <context>
     <name>TitleBarMenu</name>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="613"/>
+        <location filename="../widgets/dtitlebar.cpp" line="634"/>
         <source>Theme</source>
         <translation>Vzhled</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="615"/>
+        <location filename="../widgets/dtitlebar.cpp" line="636"/>
         <source>Light Theme</source>
         <translation>Světlý vzhled</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="616"/>
+        <location filename="../widgets/dtitlebar.cpp" line="637"/>
         <source>Dark Theme</source>
         <translation>Tmavý vzhled</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="617"/>
+        <location filename="../widgets/dtitlebar.cpp" line="638"/>
         <source>System Theme</source>
         <translation>Systémový vzhled</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="647"/>
+        <location filename="../widgets/dtitlebar.cpp" line="668"/>
         <source>Help</source>
         <translation>Nápověda</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="655"/>
+        <location filename="../widgets/dtitlebar.cpp" line="676"/>
         <source>Feedback</source>
         <translation>Zpětná vazba</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="662"/>
+        <location filename="../widgets/dtitlebar.cpp" line="683"/>
+        <source>Custom toolbar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/dtitlebar.cpp" line="691"/>
         <source>About</source>
         <translation>O aplikaci</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="669"/>
+        <location filename="../widgets/dtitlebar.cpp" line="698"/>
         <source>Exit</source>
         <translation>Ukončit</translation>
     </message>

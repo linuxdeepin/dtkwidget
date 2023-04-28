@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ko">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="eu">
 
 <!--
 SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
@@ -11,7 +11,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dapplication.cpp" line="1405"/>
         <source>%1 is released under %2</source>
-        <translation>%1은(는) %2에 따라 배포됩니다</translation>
+        <translation>%1 %2 pean argitaratu da</translation>
     </message>
 </context>
 <context>
@@ -19,87 +19,87 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="869"/>
         <source>Black</source>
-        <translation>검은색</translation>
+        <translation>Beltza</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="872"/>
         <source>White</source>
-        <translation>흰색</translation>
+        <translation>Zuria</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="875"/>
         <source>Dark Gray</source>
-        <translation>진한 회색</translation>
+        <translation>Gris iluna</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="878"/>
         <source>Gray</source>
-        <translation>회색</translation>
+        <translation>Grisa</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="881"/>
         <source>Light Gray</source>
-        <translation>밝은 회색</translation>
+        <translation>Gris argia</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="884"/>
         <source>Red</source>
-        <translation>빨간색</translation>
+        <translation>Gorria</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="887"/>
         <source>Green</source>
-        <translation>녹색</translation>
+        <translation>Berdea</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="890"/>
         <source>Blue</source>
-        <translation>파란색</translation>
+        <translation>Urdina</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="893"/>
         <source>Cyan</source>
-        <translation>청록색</translation>
+        <translation>Zian</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="896"/>
         <source>Magenta</source>
-        <translation>자홍색</translation>
+        <translation>Magenta</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="899"/>
         <source>Yellow</source>
-        <translation>노란색</translation>
+        <translation>Horia</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="902"/>
         <source>Dark Red</source>
-        <translation>진한 빨간색</translation>
+        <translation>Gorri iluna</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="905"/>
         <source>Dark Green</source>
-        <translation>진한 녹색</translation>
+        <translation>Berde iluna</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="908"/>
         <source>Dark Blue</source>
-        <translation>진한 파란색</translation>
+        <translation>Urdin iluna</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="911"/>
         <source>Dark Cyan</source>
-        <translation>진한 청록색</translation>
+        <translation>Zian iluna</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="914"/>
         <source>Dark Magenta</source>
-        <translation>진한 자홍색</translation>
+        <translation>Magenta iluna</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="917"/>
         <source>Dark Yellow</source>
-        <translation>진한 노란색</translation>
+        <translation>Hori iluna</translation>
     </message>
 </context>
 <context>
@@ -107,12 +107,12 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dinputdialog.cpp" line="29"/>
         <source>Cancel</source>
-        <translation>취소</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <location filename="../widgets/dinputdialog.cpp" line="30"/>
         <source>Confirm</source>
-        <translation>확인</translation>
+        <translation>Berretsi</translation>
     </message>
 </context>
 <context>
@@ -120,7 +120,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dkeysequenceedit.cpp" line="97"/>
         <source>Enter a new shortcut</source>
-        <translation>새 단축키를 입력하십시오</translation>
+        <translation>Sartu lasterbide berri bat</translation>
     </message>
 </context>
 <context>
@@ -128,22 +128,22 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dlineedit.cpp" line="593"/>
         <source>Stop reading</source>
-        <translation>읽기 중지</translation>
+        <translation>Utzi irakurtzeari</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="595"/>
         <source>Text to Speech</source>
-        <translation>텍스트 음성 변환</translation>
+        <translation>Testutik hizketara</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="618"/>
         <source>Translate</source>
-        <translation>번역하기</translation>
+        <translation>Itzuli</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="640"/>
         <source>Speech To Text</source>
-        <translation>음성 텍스트 변환</translation>
+        <translation>Hizketatik testura</translation>
     </message>
 </context>
 <context>
@@ -152,60 +152,60 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/dprintpreviewdialog.cpp" line="278"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1268"/>
         <source>Advanced</source>
-        <translation type="unfinished"/>
+        <translation>Aurreratua</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="301"/>
         <source>Cancel</source>
         <comment>button</comment>
-        <translation>취소</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="302"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1647"/>
         <source>Print</source>
         <comment>button</comment>
-        <translation type="unfinished"/>
+        <translation>Inprimatu</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="318"/>
         <source>Basic</source>
-        <translation type="unfinished"/>
+        <translation>Oinarrizkoa</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="334"/>
         <source>Printer</source>
-        <translation type="unfinished"/>
+        <translation>Inprimagailua</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="350"/>
         <source>Copies</source>
-        <translation type="unfinished"/>
+        <translation>Kopiak</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="372"/>
         <source>Page range</source>
-        <translation type="unfinished"/>
+        <translation>Orri tartea</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="375"/>
         <source>All</source>
-        <translation type="unfinished"/>
+        <translation>Denak</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="376"/>
         <source>Current page</source>
-        <translation type="unfinished"/>
+        <translation>Uneko orria</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="377"/>
         <source>Select pages</source>
-        <translation type="unfinished"/>
+        <translation>Hautatu orriak</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="397"/>
         <source>Orientation</source>
-        <translation type="unfinished"/>
+        <translation>Orientazioa</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="422"/>
@@ -491,17 +491,17 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1461"/>
         <source>Input page numbers please</source>
-        <translation>페이지 번호를 입력하세요</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1464"/>
         <source>Maximum page number reached</source>
-        <translation>최대 페이지 수에 도달했습니다.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1467"/>
         <source>Input English comma please</source>
-        <translation>영어 쉼표를 입력하세요</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1470"/>
@@ -527,17 +527,17 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2312"/>
         <source>Save as PDF</source>
-        <translation>PDF로 저장</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2351"/>
         <source>Save as image</source>
-        <translation>이미지로 저장</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2353"/>
         <source>Images</source>
-        <translation>이미지</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -566,7 +566,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dsearchedit.cpp" line="286"/>
         <source>Search</source>
-        <translation>검색</translation>
+        <translation>Bilatu</translation>
     </message>
 </context>
 <context>
@@ -574,17 +574,17 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="65"/>
         <source>Cancel</source>
-        <translation>취소</translation>
+        <translation>Utzi</translation>
     </message>
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="66"/>
         <source>Replace</source>
-        <translation>바꾸기</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="68"/>
         <source>This shortcut conflicts with %1, click on Add to make this shortcut effective immediately</source>
-        <translation>이 단축키는 %1과 충돌합니다. 추가를 클릭하여이 단축키를 즉시 적용하십시오</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -592,12 +592,12 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dshortcutedit.cpp" line="18"/>
         <source>Please input a new shortcut</source>
-        <translation>새 단축키를 입력하십시오</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/dshortcutedit.cpp" line="89"/>
         <source>None</source>
-        <translation>없음</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -605,22 +605,22 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dtextedit.cpp" line="202"/>
         <source>Stop reading</source>
-        <translation>읽기 중지</translation>
+        <translation>Utzi irakurtzeari</translation>
     </message>
     <message>
         <location filename="../widgets/dtextedit.cpp" line="204"/>
         <source>Text to Speech</source>
-        <translation>텍스트 음성 변환</translation>
+        <translation>Testutik hizketara</translation>
     </message>
     <message>
         <location filename="../widgets/dtextedit.cpp" line="227"/>
         <source>Translate</source>
-        <translation>번역하기</translation>
+        <translation>Itzuli</translation>
     </message>
     <message>
         <location filename="../widgets/dtextedit.cpp" line="249"/>
         <source>Speech To Text</source>
-        <translation>음성 텍스트 변환</translation>
+        <translation>Hizketatik testura</translation>
     </message>
 </context>
 <context>
@@ -643,7 +643,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/private/dtitlebareditpanel.cpp" line="921"/>
         <source>Confirm</source>
-        <translation>확인</translation>
+        <translation>Berretsi</translation>
     </message>
 </context>
 <context>
@@ -677,12 +677,12 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dsimplelistview.cpp" line="1347"/>
         <source>No search result</source>
-        <translation>검색 결과 없음</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/private/settings/content.cpp" line="330"/>
         <source>Restore Defaults</source>
-        <translation>기본값 복원</translation>
+        <translation>Leheneratu lehenetsiak</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="108"/>
@@ -728,7 +728,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/private/settings/shortcutedit.cpp" line="104"/>
         <source>Please enter a new shortcut</source>
-        <translation>새 단축키를 입력하십시오</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -736,27 +736,27 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="634"/>
         <source>Theme</source>
-        <translation>테마</translation>
+        <translation>Gaia</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="636"/>
         <source>Light Theme</source>
-        <translation>밝은 색상 테마</translation>
+        <translation>Gai argia</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="637"/>
         <source>Dark Theme</source>
-        <translation>어두운 색상 테마</translation>
+        <translation>Gai iluna</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="638"/>
         <source>System Theme</source>
-        <translation>시스템 테마</translation>
+        <translation>Sistemaren gaia</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="668"/>
         <source>Help</source>
-        <translation>도움말</translation>
+        <translation>Irten</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="676"/>
@@ -771,12 +771,12 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="691"/>
         <source>About</source>
-        <translation>프로그램 정보</translation>
+        <translation>Honi buruz</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="698"/>
         <source>Exit</source>
-        <translation>종료</translation>
+        <translation>Irten</translation>
     </message>
 </context>
 </TS>

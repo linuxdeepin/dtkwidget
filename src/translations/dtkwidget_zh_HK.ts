@@ -9,17 +9,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
 <context>
     <name>DAboutDialog</name>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="203"/>
-        <source>Acknowledgements</source>
-        <translation>鳴謝</translation>
-    </message>
-    <message>
-        <location filename="../widgets/dapplication.cpp" line="1396"/>
-        <source>Version: %1</source>
-        <translation>版本：%1</translation>
-    </message>
-    <message>
-        <location filename="../widgets/dapplication.cpp" line="1400"/>
+        <location filename="../widgets/dapplication.cpp" line="1405"/>
         <source>%1 is released under %2</source>
         <translation>%1遵循%2協議發佈</translation>
     </message>
@@ -136,22 +126,22 @@ SPDX-License-Identifier: LGPL-3.0-or-later
 <context>
     <name>DLineEdit</name>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="562"/>
+        <location filename="../widgets/dlineedit.cpp" line="593"/>
         <source>Stop reading</source>
         <translation>停止朗讀</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="564"/>
+        <location filename="../widgets/dlineedit.cpp" line="595"/>
         <source>Text to Speech</source>
         <translation>語音朗讀</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="587"/>
+        <location filename="../widgets/dlineedit.cpp" line="618"/>
         <source>Translate</source>
         <translation>翻譯</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="609"/>
+        <location filename="../widgets/dlineedit.cpp" line="640"/>
         <source>Speech To Text</source>
         <translation>語音聽寫</translation>
     </message>
@@ -172,7 +162,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="302"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1646"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1647"/>
         <source>Print</source>
         <comment>button</comment>
         <translation>打 印</translation>
@@ -239,19 +229,17 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="475"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1580"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1671"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1675"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1681"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1693"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1583"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1663"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1679"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1694"/>
         <source>Color</source>
         <translation>彩色</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="475"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1655"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1671"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1678"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1670"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1682"/>
         <source>Grayscale</source>
         <translation>黑白</translation>
     </message>
@@ -472,13 +460,13 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1013"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2282"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2283"/>
         <source>Print to PDF</source>
         <translation>存為PDF</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1014"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2281"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2282"/>
         <source>Save as Image</source>
         <translation>另存為圖片</translation>
     </message>
@@ -521,33 +509,33 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <translation>請輸入正確格式，例：1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1699"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1700"/>
         <source>Save</source>
         <comment>button</comment>
         <translation>保 存</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2311"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2312"/>
         <source>*.pdf</source>
         <translation>*.pdf</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1769"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1770"/>
         <source>For example, 1,3,5-7,11-15,18,21</source>
         <translation>可輸入格式：1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2311"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2312"/>
         <source>Save as PDF</source>
         <translation>保存為PDF</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2350"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2351"/>
         <source>Save as image</source>
         <translation>保存為圖片</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2352"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2353"/>
         <source>Images</source>
         <translation>圖片文件</translation>
     </message>
@@ -555,20 +543,20 @@ SPDX-License-Identifier: LGPL-3.0-or-later
 <context>
     <name>DPrintPreviewWidget</name>
     <message>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1624"/>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1627"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1590"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1593"/>
         <source>Confidential</source>
         <translation>絕密</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1642"/>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1645"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1608"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1611"/>
         <source>Draft</source>
         <translation>草稿</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1660"/>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1663"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1626"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1629"/>
         <source>Sample</source>
         <translation>樣本</translation>
     </message>
@@ -636,6 +624,29 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     </message>
 </context>
 <context>
+    <name>DToolbarEditPanel</name>
+    <message>
+        <location filename="../widgets/private/dtitlebareditpanel.cpp" line="884"/>
+        <source>Default toolset</source>
+        <translation>默認項目組</translation>
+    </message>
+    <message>
+        <location filename="../widgets/private/dtitlebareditpanel.cpp" line="915"/>
+        <source>Drag your favorite items into the toolbar</source>
+        <translation>將喜愛的項目拖入工具欄</translation>
+    </message>
+    <message>
+        <location filename="../widgets/private/dtitlebareditpanel.cpp" line="916"/>
+        <source>Drag below items into the toolbar to restore defaults</source>
+        <translation>將該組項目拖入工具欄以恢復默認</translation>
+    </message>
+    <message>
+        <location filename="../widgets/private/dtitlebareditpanel.cpp" line="921"/>
+        <source>Confirm</source>
+        <translation>確定</translation>
+    </message>
+</context>
+<context>
     <name>PickColorWidget</name>
     <message>
         <location filename="../widgets/dprintpickcolorwidget.cpp" line="94"/>
@@ -646,17 +657,17 @@ SPDX-License-Identifier: LGPL-3.0-or-later
 <context>
     <name>QLineEdit</name>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="495"/>
+        <location filename="../widgets/dlineedit.cpp" line="526"/>
         <source>&amp;Copy</source>
         <translation>複製(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="498"/>
+        <location filename="../widgets/dlineedit.cpp" line="529"/>
         <source>Cu&amp;t</source>
         <translation>剪切(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="503"/>
+        <location filename="../widgets/dlineedit.cpp" line="534"/>
         <source>Select All</source>
         <translation>全選</translation>
     </message>
@@ -674,32 +685,32 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <translation>恢復默認</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="111"/>
+        <location filename="../widgets/daboutdialog.cpp" line="108"/>
         <source>Version</source>
         <translation>版本</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="113"/>
+        <location filename="../widgets/daboutdialog.cpp" line="110"/>
         <source>Features</source>
         <translation>版本特性</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="124"/>
+        <location filename="../widgets/daboutdialog.cpp" line="122"/>
         <source>Homepage</source>
         <translation>主頁</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="126"/>
+        <location filename="../widgets/daboutdialog.cpp" line="124"/>
         <source>Description</source>
         <translation>描述</translation>
     </message>
     <message>
-        <location filename="../widgets/dfeaturedisplaydialog.cpp" line="150"/>
+        <location filename="../widgets/dfeaturedisplaydialog.cpp" line="151"/>
         <source>Continue</source>
         <translation>繼續</translation>
     </message>
     <message>
-        <location filename="../widgets/dfeaturedisplaydialog.cpp" line="174"/>
+        <location filename="../widgets/dfeaturedisplaydialog.cpp" line="175"/>
         <source>Learn More</source>
         <translation>了解更多</translation>
     </message>
@@ -723,42 +734,47 @@ SPDX-License-Identifier: LGPL-3.0-or-later
 <context>
     <name>TitleBarMenu</name>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="613"/>
+        <location filename="../widgets/dtitlebar.cpp" line="634"/>
         <source>Theme</source>
         <translation>主題</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="615"/>
+        <location filename="../widgets/dtitlebar.cpp" line="636"/>
         <source>Light Theme</source>
         <translation>淺色</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="616"/>
+        <location filename="../widgets/dtitlebar.cpp" line="637"/>
         <source>Dark Theme</source>
         <translation>深色</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="617"/>
+        <location filename="../widgets/dtitlebar.cpp" line="638"/>
         <source>System Theme</source>
         <translation>跟隨系統</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="647"/>
+        <location filename="../widgets/dtitlebar.cpp" line="668"/>
         <source>Help</source>
         <translation>幫助</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="655"/>
+        <location filename="../widgets/dtitlebar.cpp" line="676"/>
         <source>Feedback</source>
         <translation>反饋</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="662"/>
+        <location filename="../widgets/dtitlebar.cpp" line="683"/>
+        <source>Custom toolbar</source>
+        <translation>自定義工具欄</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dtitlebar.cpp" line="691"/>
         <source>About</source>
         <translation>關於</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="669"/>
+        <location filename="../widgets/dtitlebar.cpp" line="698"/>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
