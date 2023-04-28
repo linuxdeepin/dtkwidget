@@ -680,7 +680,7 @@ void DTitlebarPrivate::_q_addDefaultMenuItems()
 
     // add toolbarAction menu item for deepin or uos application
     if (titlebarSettingsImpl && titlebarSettingsImpl->isValid() && !toolbarAction) {
-        toolbarAction = new QAction(qApp->translate("TitleBarMenu", "TitlebarSettings"), menu);
+        toolbarAction = new QAction(qApp->translate("TitleBarMenu", "Custom toolbar"), menu);
         toolbarAction->setObjectName("TitlebarSettings");
         QObject::connect(toolbarAction, SIGNAL(triggered(bool)), q, SLOT(_q_toolBarActionTriggerd()));
         menu->addAction(toolbarAction);

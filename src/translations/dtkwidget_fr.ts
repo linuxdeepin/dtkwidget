@@ -9,17 +9,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
 <context>
     <name>DAboutDialog</name>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="203"/>
-        <source>Acknowledgements</source>
-        <translation>Remerciements </translation>
-    </message>
-    <message>
-        <location filename="../widgets/dapplication.cpp" line="1396"/>
-        <source>Version: %1</source>
-        <translation>Version : %1</translation>
-    </message>
-    <message>
-        <location filename="../widgets/dapplication.cpp" line="1400"/>
+        <location filename="../widgets/dapplication.cpp" line="1405"/>
         <source>%1 is released under %2</source>
         <translation>%1 est publié sous %2</translation>
     </message>
@@ -136,22 +126,22 @@ SPDX-License-Identifier: LGPL-3.0-or-later
 <context>
     <name>DLineEdit</name>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="562"/>
+        <location filename="../widgets/dlineedit.cpp" line="593"/>
         <source>Stop reading</source>
         <translation>Arrêter la lecture</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="564"/>
+        <location filename="../widgets/dlineedit.cpp" line="595"/>
         <source>Text to Speech</source>
         <translation>Texte vers voix</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="587"/>
+        <location filename="../widgets/dlineedit.cpp" line="618"/>
         <source>Translate</source>
         <translation>Traduire</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="609"/>
+        <location filename="../widgets/dlineedit.cpp" line="640"/>
         <source>Speech To Text</source>
         <translation>Voix vers texte</translation>
     </message>
@@ -172,7 +162,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="302"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1646"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1647"/>
         <source>Print</source>
         <comment>button</comment>
         <translation>Impression</translation>
@@ -239,19 +229,17 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="475"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1580"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1671"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1675"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1681"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1693"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1583"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1663"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1679"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1694"/>
         <source>Color</source>
         <translation>Couleur</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="475"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1655"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1671"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1678"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1670"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1682"/>
         <source>Grayscale</source>
         <translation>Niveaux de gris</translation>
     </message>
@@ -472,13 +460,13 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1013"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2282"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2283"/>
         <source>Print to PDF</source>
         <translation>Imprimer au format PDF</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1014"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2281"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2282"/>
         <source>Save as Image</source>
         <translation>Enregistrer comme image</translation>
     </message>
@@ -521,33 +509,33 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <translation>Entrez les numéros de page comme ceci : 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1699"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1700"/>
         <source>Save</source>
         <comment>button</comment>
         <translation>Sauvegarder</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2311"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2312"/>
         <source>*.pdf</source>
         <translation>*.pdf</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1769"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1770"/>
         <source>For example, 1,3,5-7,11-15,18,21</source>
         <translation>Par exemple, 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2311"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2312"/>
         <source>Save as PDF</source>
         <translation>Enregistrer au format PDF</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2350"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2351"/>
         <source>Save as image</source>
         <translation>Enregistrer comme image</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2352"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2353"/>
         <source>Images</source>
         <translation>Images</translation>
     </message>
@@ -555,20 +543,20 @@ SPDX-License-Identifier: LGPL-3.0-or-later
 <context>
     <name>DPrintPreviewWidget</name>
     <message>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1624"/>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1627"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1590"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1593"/>
         <source>Confidential</source>
         <translation>Confidentiel</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1642"/>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1645"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1608"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1611"/>
         <source>Draft</source>
         <translation>Brouillon</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1660"/>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1663"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1626"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1629"/>
         <source>Sample</source>
         <translation>Échantillon</translation>
     </message>
@@ -636,6 +624,29 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     </message>
 </context>
 <context>
+    <name>DToolbarEditPanel</name>
+    <message>
+        <location filename="../widgets/private/dtitlebareditpanel.cpp" line="884"/>
+        <source>Default toolset</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/private/dtitlebareditpanel.cpp" line="915"/>
+        <source>Drag your favorite items into the toolbar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/private/dtitlebareditpanel.cpp" line="916"/>
+        <source>Drag below items into the toolbar to restore defaults</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/private/dtitlebareditpanel.cpp" line="921"/>
+        <source>Confirm</source>
+        <translation>Confirmer</translation>
+    </message>
+</context>
+<context>
     <name>PickColorWidget</name>
     <message>
         <location filename="../widgets/dprintpickcolorwidget.cpp" line="94"/>
@@ -646,17 +657,17 @@ SPDX-License-Identifier: LGPL-3.0-or-later
 <context>
     <name>QLineEdit</name>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="495"/>
+        <location filename="../widgets/dlineedit.cpp" line="526"/>
         <source>&amp;Copy</source>
-        <translation>&amp;Copier</translation>
+        <translation>Copier</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="498"/>
+        <location filename="../widgets/dlineedit.cpp" line="529"/>
         <source>Cu&amp;t</source>
-        <translation>Cou&amp;per</translation>
+        <translation>Couper</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="503"/>
+        <location filename="../widgets/dlineedit.cpp" line="534"/>
         <source>Select All</source>
         <translation>Tout sélectionner</translation>
     </message>
@@ -674,34 +685,34 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <translation>Réinitialiser par défaut</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="111"/>
+        <location filename="../widgets/daboutdialog.cpp" line="108"/>
         <source>Version</source>
-        <translation type="unfinished"/>
+        <translation>Version</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="113"/>
+        <location filename="../widgets/daboutdialog.cpp" line="110"/>
         <source>Features</source>
-        <translation type="unfinished"/>
+        <translation>Fonctionnalités</translation>
+    </message>
+    <message>
+        <location filename="../widgets/daboutdialog.cpp" line="122"/>
+        <source>Homepage</source>
+        <translation>Page d’accueil</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="124"/>
-        <source>Homepage</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../widgets/daboutdialog.cpp" line="126"/>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>Description</translation>
     </message>
     <message>
-        <location filename="../widgets/dfeaturedisplaydialog.cpp" line="150"/>
+        <location filename="../widgets/dfeaturedisplaydialog.cpp" line="151"/>
         <source>Continue</source>
-        <translation type="unfinished"/>
+        <translation>Continuer</translation>
     </message>
     <message>
-        <location filename="../widgets/dfeaturedisplaydialog.cpp" line="174"/>
+        <location filename="../widgets/dfeaturedisplaydialog.cpp" line="175"/>
         <source>Learn More</source>
-        <translation type="unfinished"/>
+        <translation>En apprendre plus</translation>
     </message>
 </context>
 <context>
@@ -723,42 +734,47 @@ SPDX-License-Identifier: LGPL-3.0-or-later
 <context>
     <name>TitleBarMenu</name>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="613"/>
+        <location filename="../widgets/dtitlebar.cpp" line="634"/>
         <source>Theme</source>
         <translation>Thème</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="615"/>
+        <location filename="../widgets/dtitlebar.cpp" line="636"/>
         <source>Light Theme</source>
         <translation>Thème clair</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="616"/>
+        <location filename="../widgets/dtitlebar.cpp" line="637"/>
         <source>Dark Theme</source>
         <translation>Thème sombre</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="617"/>
+        <location filename="../widgets/dtitlebar.cpp" line="638"/>
         <source>System Theme</source>
         <translation>Thème du système</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="647"/>
+        <location filename="../widgets/dtitlebar.cpp" line="668"/>
         <source>Help</source>
         <translation>Aide</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="655"/>
+        <location filename="../widgets/dtitlebar.cpp" line="676"/>
         <source>Feedback</source>
         <translation>Retour d&apos;information</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="662"/>
+        <location filename="../widgets/dtitlebar.cpp" line="683"/>
+        <source>Custom toolbar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/dtitlebar.cpp" line="691"/>
         <source>About</source>
         <translation>À propos</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="669"/>
+        <location filename="../widgets/dtitlebar.cpp" line="698"/>
         <source>Exit</source>
         <translation>Quitter</translation>
     </message>

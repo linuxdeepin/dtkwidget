@@ -9,17 +9,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
 <context>
     <name>DAboutDialog</name>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="203"/>
-        <source>Acknowledgements</source>
-        <translation>Penghargaan</translation>
-    </message>
-    <message>
-        <location filename="../widgets/dapplication.cpp" line="1396"/>
-        <source>Version: %1</source>
-        <translation>Versi: %1</translation>
-    </message>
-    <message>
-        <location filename="../widgets/dapplication.cpp" line="1400"/>
+        <location filename="../widgets/dapplication.cpp" line="1405"/>
         <source>%1 is released under %2</source>
         <translation>%1 dikeluarkan bawah %2</translation>
     </message>
@@ -136,22 +126,22 @@ SPDX-License-Identifier: LGPL-3.0-or-later
 <context>
     <name>DLineEdit</name>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="562"/>
+        <location filename="../widgets/dlineedit.cpp" line="593"/>
         <source>Stop reading</source>
         <translation>Henti membaca</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="564"/>
+        <location filename="../widgets/dlineedit.cpp" line="595"/>
         <source>Text to Speech</source>
         <translation>Teks ke Pertuturan</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="587"/>
+        <location filename="../widgets/dlineedit.cpp" line="618"/>
         <source>Translate</source>
         <translation>Terjemah</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="609"/>
+        <location filename="../widgets/dlineedit.cpp" line="640"/>
         <source>Speech To Text</source>
         <translation>Pertuturan Ke Teks</translation>
     </message>
@@ -172,7 +162,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="302"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1646"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1647"/>
         <source>Print</source>
         <comment>button</comment>
         <translation>Cetak</translation>
@@ -239,19 +229,17 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="475"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1580"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1671"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1675"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1681"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1693"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1583"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1663"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1679"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1694"/>
         <source>Color</source>
         <translation>Warna</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="475"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1655"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1671"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1678"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1670"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1682"/>
         <source>Grayscale</source>
         <translation>Skala kelabu</translation>
     </message>
@@ -472,13 +460,13 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1013"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2282"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2283"/>
         <source>Print to PDF</source>
         <translation>Cetak ke PDF</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1014"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2281"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2282"/>
         <source>Save as Image</source>
         <translation>Simpan sebagai Imej</translation>
     </message>
@@ -521,33 +509,33 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <translation>Masukkan nombor halaman seperti berikut: 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1699"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1700"/>
         <source>Save</source>
         <comment>button</comment>
         <translation>Simpan</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2311"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2312"/>
         <source>*.pdf</source>
         <translation>*.pdf</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1769"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="1770"/>
         <source>For example, 1,3,5-7,11-15,18,21</source>
         <translation>Contohnya, 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2311"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2312"/>
         <source>Save as PDF</source>
         <translation>Simpan sebagai PDF</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2350"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2351"/>
         <source>Save as image</source>
         <translation>Simpan sebagai imej</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2352"/>
+        <location filename="../widgets/dprintpreviewdialog.cpp" line="2353"/>
         <source>Images</source>
         <translation>Imej</translation>
     </message>
@@ -555,20 +543,20 @@ SPDX-License-Identifier: LGPL-3.0-or-later
 <context>
     <name>DPrintPreviewWidget</name>
     <message>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1624"/>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1627"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1590"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1593"/>
         <source>Confidential</source>
         <translation>Sulit</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1642"/>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1645"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1608"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1611"/>
         <source>Draft</source>
         <translation>Draf</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1660"/>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1663"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1626"/>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="1629"/>
         <source>Sample</source>
         <translation>Sampel</translation>
     </message>
@@ -636,6 +624,29 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     </message>
 </context>
 <context>
+    <name>DToolbarEditPanel</name>
+    <message>
+        <location filename="../widgets/private/dtitlebareditpanel.cpp" line="884"/>
+        <source>Default toolset</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/private/dtitlebareditpanel.cpp" line="915"/>
+        <source>Drag your favorite items into the toolbar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/private/dtitlebareditpanel.cpp" line="916"/>
+        <source>Drag below items into the toolbar to restore defaults</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/private/dtitlebareditpanel.cpp" line="921"/>
+        <source>Confirm</source>
+        <translation>Sahkan</translation>
+    </message>
+</context>
+<context>
     <name>PickColorWidget</name>
     <message>
         <location filename="../widgets/dprintpickcolorwidget.cpp" line="94"/>
@@ -646,17 +657,17 @@ SPDX-License-Identifier: LGPL-3.0-or-later
 <context>
     <name>QLineEdit</name>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="495"/>
+        <location filename="../widgets/dlineedit.cpp" line="526"/>
         <source>&amp;Copy</source>
         <translation>Sa&amp;lin</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="498"/>
+        <location filename="../widgets/dlineedit.cpp" line="529"/>
         <source>Cu&amp;t</source>
         <translation>Po&amp;tong</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="503"/>
+        <location filename="../widgets/dlineedit.cpp" line="534"/>
         <source>Select All</source>
         <translation>Pilih Semua</translation>
     </message>
@@ -674,34 +685,34 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <translation>Pulih Lalai</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="111"/>
+        <location filename="../widgets/daboutdialog.cpp" line="108"/>
         <source>Version</source>
-        <translation type="unfinished"/>
+        <translation>Versi</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="113"/>
+        <location filename="../widgets/daboutdialog.cpp" line="110"/>
         <source>Features</source>
-        <translation type="unfinished"/>
+        <translation>Ciri-ciri</translation>
+    </message>
+    <message>
+        <location filename="../widgets/daboutdialog.cpp" line="122"/>
+        <source>Homepage</source>
+        <translation>Laman Utama</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="124"/>
-        <source>Homepage</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <location filename="../widgets/daboutdialog.cpp" line="126"/>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>Keterangan</translation>
     </message>
     <message>
-        <location filename="../widgets/dfeaturedisplaydialog.cpp" line="150"/>
+        <location filename="../widgets/dfeaturedisplaydialog.cpp" line="151"/>
         <source>Continue</source>
-        <translation type="unfinished"/>
+        <translation>Teruskan</translation>
     </message>
     <message>
-        <location filename="../widgets/dfeaturedisplaydialog.cpp" line="174"/>
+        <location filename="../widgets/dfeaturedisplaydialog.cpp" line="175"/>
         <source>Learn More</source>
-        <translation type="unfinished"/>
+        <translation>Ketahui Lagi</translation>
     </message>
 </context>
 <context>
@@ -723,42 +734,47 @@ SPDX-License-Identifier: LGPL-3.0-or-later
 <context>
     <name>TitleBarMenu</name>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="613"/>
+        <location filename="../widgets/dtitlebar.cpp" line="634"/>
         <source>Theme</source>
         <translation>Tema</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="615"/>
+        <location filename="../widgets/dtitlebar.cpp" line="636"/>
         <source>Light Theme</source>
         <translation>Tema Cerah</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="616"/>
+        <location filename="../widgets/dtitlebar.cpp" line="637"/>
         <source>Dark Theme</source>
         <translation>Tema Gelap</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="617"/>
+        <location filename="../widgets/dtitlebar.cpp" line="638"/>
         <source>System Theme</source>
         <translation>Tema Sistem</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="647"/>
+        <location filename="../widgets/dtitlebar.cpp" line="668"/>
         <source>Help</source>
         <translation>Bantuan</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="655"/>
+        <location filename="../widgets/dtitlebar.cpp" line="676"/>
         <source>Feedback</source>
         <translation>Maklum balas</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="662"/>
+        <location filename="../widgets/dtitlebar.cpp" line="683"/>
+        <source>Custom toolbar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/dtitlebar.cpp" line="691"/>
         <source>About</source>
         <translation>Perihal</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="669"/>
+        <location filename="../widgets/dtitlebar.cpp" line="698"/>
         <source>Exit</source>
         <translation>Keluar</translation>
     </message>
