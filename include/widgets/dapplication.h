@@ -21,6 +21,7 @@ class DApplication;
 class DApplicationPrivate;
 class DAboutDialog;
 class DFeatureDisplayDialog;
+class DLicenseDialog;
 class DAppHandler;
 
 #if defined(qApp)
@@ -119,6 +120,15 @@ public:
     void acclimatizeVirtualKeyboard(QWidget *window);
     void ignoreVirtualKeyboard(QWidget *window);
     bool isAcclimatizedVirtualKeyboard(QWidget *window) const;
+
+    QString applicationCreditsFile() const;
+    void setApplicationCreditsFile(const QString &file);
+
+    QByteArray applicationCreditsContent() const;
+    void setApplicationCreditsContent(const QByteArray &content);
+
+    QString licensePath() const;
+    void setLicensePath(const QString &path);
 
 #ifdef VERSION
     static inline QString buildVersion(const QString &fallbackVersion)

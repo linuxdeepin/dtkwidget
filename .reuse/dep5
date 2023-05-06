@@ -63,6 +63,11 @@ Files: tests/testcases/printpreview/*
 Copyright: None
 License: CC0-1.0
 
+# others
+Files: examples/collections/resources/data/LGPLv3.txt
+Copyright: None
+License: CC0-1.0
+
 # imag
 Files: doc/images/* src/widgets/assets/images/* plugin/dtkuiplugin/images/*
 Copyright: UnionTech Software Technology Co., Ltd.

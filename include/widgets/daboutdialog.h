@@ -35,9 +35,11 @@ public:
     QString websiteLink() const;
     D_DECL_DEPRECATED_X("acknowledgement is no longer used") QString acknowledgementLink() const;
     QString license() const;
+    void setLicenseEnabled(bool enabled);
 
 Q_SIGNALS:
     void featureActivated();
+    void licenseActivated();
 
 public Q_SLOTS:
     void setWindowTitle(const QString &windowTitle);
@@ -49,7 +51,7 @@ public Q_SLOTS:
     void setWebsiteName(const QString &websiteName);
     void setWebsiteLink(const QString &websiteLink);
     D_DECL_DEPRECATED_X("acknowledgement is no longer used") void setAcknowledgementLink(const QString &acknowledgementLink);
-    D_DECL_DEPRECATED_X("acknowledgement is no longer used") void setAcknowledgementVisible(bool visible);
+    void setAcknowledgementVisible(bool visible);
     void setLicense(const QString &license);
 
 protected:
@@ -59,6 +61,7 @@ protected:
 private:
     Q_PRIVATE_SLOT(d_func(), void _q_onLinkActivated(const QString &link))
     Q_PRIVATE_SLOT(d_func(), void _q_onFeatureActivated(const QString &link))
+    Q_PRIVATE_SLOT(d_func(), void _q_onLicenseActivated(const QString &link))
 
     Q_DISABLE_COPY(DAboutDialog)
     D_DECLARE_PRIVATE(DAboutDialog)

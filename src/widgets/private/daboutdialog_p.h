@@ -12,6 +12,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+class DLicenseDialog;
 class DRedPointLabel : public QLabel
 {
 public:
@@ -30,6 +31,7 @@ public:
     void updateWebsiteLabel();
     void _q_onLinkActivated(const QString &link);
     void _q_onFeatureActivated(const QString &link);
+    void _q_onLicenseActivated(const QString &link);
 
     QPixmap loadPixmap(const QString &file);
 
@@ -45,6 +47,8 @@ public:
     QLabel *websiteLabel = nullptr;
     QLabel *featureLabel = nullptr;
     DRedPointLabel *redPointLabel = nullptr;
+    QLabel *acknowledgementTipLabel = nullptr;
+    QLabel *acknowledgementLabel = nullptr;
     QString logoPath;
     QString websiteName;
     QString websiteLink;

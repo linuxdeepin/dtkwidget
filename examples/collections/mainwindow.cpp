@@ -26,6 +26,7 @@
 #include <DSettingsWidgetFactory>
 
 #include "buttonexample.h"
+#include "dlicensedialog.h"
 #include "editexample.h"
 #include "sliderexample.h"
 #include "menuexample.h"

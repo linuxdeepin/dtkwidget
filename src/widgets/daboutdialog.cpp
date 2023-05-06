@@ -123,11 +123,20 @@ void DAboutDialogPrivate::init()
     fontManager->bind(homePageTipLabel, DFontSizeManager::T10, QFont::Normal);
     QLabel *descriptionTipLabel = new QLabel(QObject::tr("Description"));
     fontManager->bind(descriptionTipLabel, DFontSizeManager::T10, QFont::Normal);
+    acknowledgementTipLabel = new QLabel(QObject::tr("Acknowledgements"));
+    fontManager->bind(acknowledgementTipLabel, DFontSizeManager::T10, QFont::Normal);
+    acknowledgementLabel = new QLabel(QObject::tr("Sincerely appreciate the open-source software used."));
+    acknowledgementLabel->setFixedWidth(280);
+    acknowledgementLabel->setWordWrap(true);
+    acknowledgementLabel->setContextMenuPolicy(Qt::NoContextMenu);
+    acknowledgementLabel->setOpenExternalLinks(false);
+    fontManager->bind(acknowledgementLabel, DFontSizeManager::T8, QFont::DemiBold);
 
     q->connect(websiteLabel, SIGNAL(linkActivated(QString)), q, SLOT(_q_onLinkActivated(QString)));
     q->connect(featureLabel, SIGNAL(linkActivated(QString)), q, SLOT(_q_onFeatureActivated(QString)));
     q->connect(descriptionLabel, SIGNAL(linkActivated(QString)), q, SLOT(_q_onLinkActivated(QString)));
     q->connect(licenseLabel, SIGNAL(linkActivated(QString)), q, SLOT(_q_onLinkActivated(QString)));
+    q->connect(acknowledgementLabel, SIGNAL(linkActivated(QString)), q, SLOT(_q_onLicenseActivated(QString)));
 
     QVBoxLayout *leftVLayout = new QVBoxLayout;
     leftVLayout->setContentsMargins(10, 3, 0, 10);
@@ -152,6 +161,9 @@ void DAboutDialogPrivate::init()
     rightVLayout->addSpacing(10);
     rightVLayout->addWidget(descriptionTipLabel, 0, Qt::AlignLeft);
     rightVLayout->addWidget(descriptionLabel, 0, Qt::AlignLeft);
+    rightVLayout->addSpacing(10);
+    rightVLayout->addWidget(acknowledgementTipLabel, 0, Qt::AlignLeft);
+    rightVLayout->addWidget(acknowledgementLabel, 0, Qt::AlignLeft);
     rightVLayout->addStretch(0);
 
     QHBoxLayout *mainLayout = new QHBoxLayout;
@@ -209,6 +221,12 @@ void DAboutDialogPrivate::_q_onFeatureActivated(const QString &)
         redPointLabel->setVisible(false);
     }
     Q_EMIT q->featureActivated();
+}
+
+void DAboutDialogPrivate::_q_onLicenseActivated(const QString &)
+{
+    D_Q(DAboutDialog);
+    Q_EMIT q->licenseActivated();
 }
 
 QPixmap DAboutDialogPrivate::loadPixmap(const QString &file)
@@ -369,6 +387,17 @@ QString DAboutDialog::license() const
     return d->licenseLabel->text();
 }
 
+void DAboutDialog::setLicenseEnabled(bool enabled)
+{
+    D_D(DAboutDialog);
+    QString ack = QObject::tr("Sincerely appreciate the open-source software used.");
+    if (enabled) {
+        QString tmp = QObject::tr("open-source software");
+        ack = ack.replace(tmp, d->websiteLinkTemplate.arg(d->websiteLink).arg(tmp));
+    }
+    d->acknowledgementLabel->setText(ack);
+}
+
 /*!
 @~english
   @brief Set the title of the dialog box window.
@@ -480,8 +509,11 @@ void DAboutDialog::setAcknowledgementLink(const QString &)
 @~english
   @brief This function is used to set the specified Visible settings to set the gratitude link to display
  */
-void DAboutDialog::setAcknowledgementVisible(bool)
+void DAboutDialog::setAcknowledgementVisible(bool isVisible)
 {
+    D_D(DAboutDialog);
+    d->acknowledgementTipLabel->setVisible(isVisible);
+    d->acknowledgementLabel->setVisible(isVisible);
 }
 
 /*!
