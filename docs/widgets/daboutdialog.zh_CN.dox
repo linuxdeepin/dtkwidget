@@ -306,6 +306,9 @@ void example::printlog()
 @brief 设置指定acknowledgementLink鸣谢连接
 @sa 属性 [acknowledgementLink](@ref Dtk::Widget::DAboutDialog::acknowledgementLink)
 
+@fn void Dtk::Widget::DAboutDialog::setAcknowledgementVisible(const QString &acknowledgementLink)
+@brief 设置鸣谢是否可见
+
 @fn void Dtk::Widget::DAboutDialog::setAcknowledgementLink(bool visible)
 @brief 此函数用于设置指定的 visible 设置鸣谢链接是否显示
 @sa 属性 [acknowledgementLink](@ref Dtk::Widget::DAboutDialog::acknowledgementLink)
