@@ -3,5 +3,7 @@
         <file>resources/data/dfm-settings.json</file>
         <file>resources/data/dt-settings.json</file>
         <file>resources/data/titlebar-settings.json</file>
+        <file>resources/data/example-license.json</file>
+        <file>resources/data/LGPLv3.txt</file>
     </qresource>
 </RCC>

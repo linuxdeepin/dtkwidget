@@ -1,0 +1,35 @@
+/*!
+@~chinese
+@file dlicensedialog.h
+@ingroup dtkwidget
+
+@class Dtk::Widget::DLicenseDialog
+@brief 开源许可协议对话框，展示应用及组件所用的开源许可协议
+
+@fn Dtk::Widget::DLicenseDialog::DLicenseDialog(QWidget *parent)
+@brief 开源许可协议对话框的构造函数
+@param[in] parent 开源许可协议对话框的父对象
+
+@fn explicit Dtk::Widget::DLicenseDialog::~DLicenseDialog()
+@brief 开源许可协议对话框的析构函数
+
+@fn void Dtk::Widget::DLicenseDialog::setContent(const QByteArray &content)
+@brief 设置协议相关的内容
+@param[in] content 协议相关的内容
+
+@fn void Dtk::Widget::DLicenseDialog::setFile(const QString &file)
+@brief 设置协议文件
+@param[in] file 协议文件
+
+@fn void Dtk::Widget::DLicenseDialog::setLicenseSearchPath(const QString &path)
+@brief 自定义协议内容路径
+@param[in] path 协议内容路径
+
+@fn bool Dtk::Widget::DLicenseDialog::load()
+@brief 加载开源许可协议
+@return 开源许可协议是否加载成功
+
+@fn bool Dtk::Widget::DLicenseDialog::isValid() const;
+@brief 开源许可协议是否有效
+@return 开源许可协议是否有效
+*/
