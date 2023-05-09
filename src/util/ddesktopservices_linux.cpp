@@ -212,11 +212,16 @@ bool DDesktopServices::previewSystemSoundEffect(const QString &name)
         return false;
     }
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
     const auto& infc = QDBusConnection::sessionBus().interface();
-    bool isNewRegistered = infc->isServiceRegistered(QLatin1String("org.deepin.dde.SoundEffect1"));
-    const QLatin1String service(isNewRegistered ? "org.deepin.dde.SoundEffect1" :"com.deepin.daemon.SoundEffect");
-    const QLatin1String path(isNewRegistered ? "/org/deepin/dde/SoundEffect1" : "/com/deepin/daemon/SoundEffect");
-    const QLatin1String interface(isNewRegistered ? "org.deepin.dde.SoundEffect1" :"com.deepin.daemon.SoundEffect");
+    QStringList activatableServiceNames = infc->activatableServiceNames();
+    bool isNewInterface = activatableServiceNames.contains(QLatin1String("org.deepin.dde.SoundEffect1"));
+#else
+    bool isNewInterface = false; // Qt 5.14 以下就直接用旧的接口
+#endif
+    const QLatin1String service(isNewInterface ? "org.deepin.dde.SoundEffect1" :"com.deepin.daemon.SoundEffect");
+    const QLatin1String path(isNewInterface ? "/org/deepin/dde/SoundEffect1" : "/com/deepin/daemon/SoundEffect");
+    const QLatin1String interface(isNewInterface ? "org.deepin.dde.SoundEffect1" :"com.deepin.daemon.SoundEffect");
 
     // 使用后端 dbus 接口播放系统音频，音频存放目录： /usr/share/sounds/deepin/stereo/
     return QDBusInterface(service, path, interface).call("PlaySound", name).type() != QDBusMessage::ErrorMessage;
