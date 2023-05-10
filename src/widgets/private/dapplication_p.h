@@ -74,6 +74,10 @@ public:
     QString appDescription;
     QString homePage;
     QString acknowledgementPage;
+    QString applicationCreditsFile;
+    QByteArray applicationCreditsContent;
+    QString licensePath;
+
     bool acknowledgementPageVisible = true;
 
     bool visibleMenuShortcutText   = false;
@@ -83,6 +87,7 @@ public:
 
     DAppHandler *appHandler = Q_NULLPTR;
     DAboutDialog *aboutDialog = Q_NULLPTR;
+    DLicenseDialog *licenseDialog = Q_NULLPTR;
 
     // 需要自适应虚拟键盘环境的窗口
     QPointer<QWidget> activeInputWindow;

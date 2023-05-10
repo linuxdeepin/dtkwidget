@@ -51,6 +51,9 @@ int main(int argc, char *argv[])
     a->setApplicationName("dtk-example");
     a->setOrganizationName("deepin");
     a->setApplicationVersion("1.0");
+    a->setApplicationDescription(QApplication::translate("main", "Collections provides the examples for dtk applications."));
+    a->setApplicationCreditsFile(":/resources/data/example-license.json");
+    a->setLicensePath(":/resources/data");
 
     DApplicationSettings as;
     Q_UNUSED(as)

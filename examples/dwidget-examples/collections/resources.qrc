@@ -2,5 +2,8 @@
     <qresource prefix="/">
         <file>resources/data/dfm-settings.json</file>
         <file>resources/data/dt-settings.json</file>
+        <file>resources/data/example-license.json</file>
+        <file>resources/data/GPL-2.txt</file>
+        <file>resources/data/MIT.txt</file>
     </qresource>
 </RCC>
