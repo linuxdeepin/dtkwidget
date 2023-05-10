@@ -9,7 +9,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
 <context>
     <name>DAboutDialog</name>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1405"/>
+        <location filename="../widgets/dapplication.cpp" line="1421"/>
         <source>%1 is released under %2</source>
         <translation>%1 je vydáno pod %2</translation>
     </message>
@@ -628,17 +628,17 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/private/dtitlebareditpanel.cpp" line="884"/>
         <source>Default toolset</source>
-        <translation type="unfinished"/>
+        <translation>Výchozí sada nástrojů</translation>
     </message>
     <message>
         <location filename="../widgets/private/dtitlebareditpanel.cpp" line="915"/>
         <source>Drag your favorite items into the toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Přetáhněte oblíbené položky na panel nástrojů</translation>
     </message>
     <message>
         <location filename="../widgets/private/dtitlebareditpanel.cpp" line="916"/>
         <source>Drag below items into the toolbar to restore defaults</source>
-        <translation type="unfinished"/>
+        <translation>Přetažením níže uvedených položek na panel nástrojů obnovíte výchozí nastavení.</translation>
     </message>
     <message>
         <location filename="../widgets/private/dtitlebareditpanel.cpp" line="921"/>
@@ -685,24 +685,41 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <translation>Vráti na výchozí hodnoty</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="108"/>
+        <location filename="../widgets/daboutdialog.cpp" line="109"/>
         <source>Version</source>
         <translation>Verze</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="110"/>
+        <location filename="../widgets/daboutdialog.cpp" line="111"/>
         <source>Features</source>
         <translation>Funkce</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="122"/>
+        <location filename="../widgets/daboutdialog.cpp" line="123"/>
         <source>Homepage</source>
         <translation>Hlavní stránka</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="124"/>
+        <location filename="../widgets/daboutdialog.cpp" line="125"/>
         <source>Description</source>
         <translation>Popisek</translation>
+    </message>
+    <message>
+        <location filename="../widgets/daboutdialog.cpp" line="127"/>
+        <source>Acknowledgements</source>
+        <translation>Poděkování</translation>
+    </message>
+    <message>
+        <location filename="../widgets/daboutdialog.cpp" line="129"/>
+        <location filename="../widgets/daboutdialog.cpp" line="395"/>
+        <location filename="../widgets/daboutdialog.cpp" line="400"/>
+        <source>Sincerely appreciate the open-source software used.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/daboutdialog.cpp" line="396"/>
+        <source>open-source software</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/dfeaturedisplaydialog.cpp" line="151"/>
@@ -713,6 +730,11 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/dfeaturedisplaydialog.cpp" line="175"/>
         <source>Learn More</source>
         <translation>Zjistit více</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dlicensedialog.cpp" line="74"/>
+        <source>Credits</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -766,7 +788,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="683"/>
         <source>Custom toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Vlastní panel nástrojů</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="691"/>

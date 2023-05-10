@@ -9,7 +9,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
 <context>
     <name>DAboutDialog</name>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1405"/>
+        <location filename="../widgets/dapplication.cpp" line="1421"/>
         <source>%1 is released under %2</source>
         <translation>%1 hidhet në qarkullim sipas %2</translation>
     </message>
@@ -685,24 +685,41 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <translation>Rikthe Parazgjedhjet</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="108"/>
+        <location filename="../widgets/daboutdialog.cpp" line="109"/>
         <source>Version</source>
         <translation>Version</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="110"/>
+        <location filename="../widgets/daboutdialog.cpp" line="111"/>
         <source>Features</source>
         <translation>Veçori</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="122"/>
+        <location filename="../widgets/daboutdialog.cpp" line="123"/>
         <source>Homepage</source>
         <translation>Faqe hyrëse</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="124"/>
+        <location filename="../widgets/daboutdialog.cpp" line="125"/>
         <source>Description</source>
         <translation>Përshkrim</translation>
+    </message>
+    <message>
+        <location filename="../widgets/daboutdialog.cpp" line="127"/>
+        <source>Acknowledgements</source>
+        <translation>Falënderime</translation>
+    </message>
+    <message>
+        <location filename="../widgets/daboutdialog.cpp" line="129"/>
+        <location filename="../widgets/daboutdialog.cpp" line="395"/>
+        <location filename="../widgets/daboutdialog.cpp" line="400"/>
+        <source>Sincerely appreciate the open-source software used.</source>
+        <translation>Vlerësoni sinqerisht software-in me burim të hapët të përdorur.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/daboutdialog.cpp" line="396"/>
+        <source>open-source software</source>
+        <translation>software me burim të hapët</translation>
     </message>
     <message>
         <location filename="../widgets/dfeaturedisplaydialog.cpp" line="151"/>
@@ -713,6 +730,11 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/dfeaturedisplaydialog.cpp" line="175"/>
         <source>Learn More</source>
         <translation>Mësoni Më Tepër</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dlicensedialog.cpp" line="74"/>
+        <source>Credits</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -766,7 +788,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="683"/>
         <source>Custom toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Panel vetjak</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="691"/>
