@@ -9,7 +9,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
 <context>
     <name>DAboutDialog</name>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1405"/>
+        <location filename="../widgets/dapplication.cpp" line="1421"/>
         <source>%1 is released under %2</source>
         <translation>%1 został wydany na licencji %2</translation>
     </message>
@@ -406,7 +406,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="838"/>
         <source>Draft</source>
-        <translation>Wersja Robocza</translation>
+        <translation>Wersja robocza</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="838"/>
@@ -479,14 +479,14 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1359"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1368"/>
         <source>Flip on short edge</source>
-        <translation>Odwróć krótszą krawędź</translation>
+        <translation>Odwróć wzdłuż krótszej krawędzi</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1298"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1363"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1367"/>
         <source>Flip on long edge</source>
-        <translation>Przerzuć wzdłuż długiej krawędzi</translation>
+        <translation>Odwróć wzdłuż dłuższej krawędzi</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1461"/>
@@ -496,7 +496,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1464"/>
         <source>Maximum page number reached</source>
-        <translation>Maksymalna liczba stron osiągnięta</translation>
+        <translation>Osiągnięto maksymalną liczbę stron</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1467"/>
@@ -552,7 +552,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1608"/>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1611"/>
         <source>Draft</source>
-        <translation>Wersja Robocza</translation>
+        <translation>Wersja robocza</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1626"/>
@@ -584,7 +584,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="68"/>
         <source>This shortcut conflicts with %1, click on Add to make this shortcut effective immediately</source>
-        <translation>Ten skrót powoduje konflikt z %1, kliknij Dodaj, aby skrót zadziałał od razu</translation>
+        <translation>Ten skrót jest w konflikcie z %1, kliknij Dodaj, aby go nadpisać</translation>
     </message>
 </context>
 <context>
@@ -685,24 +685,41 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <translation>Przywróć domyślne</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="108"/>
+        <location filename="../widgets/daboutdialog.cpp" line="109"/>
         <source>Version</source>
         <translation>Wersja</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="110"/>
+        <location filename="../widgets/daboutdialog.cpp" line="111"/>
         <source>Features</source>
         <translation>Funkcje</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="122"/>
+        <location filename="../widgets/daboutdialog.cpp" line="123"/>
         <source>Homepage</source>
         <translation>Strona główna</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="124"/>
+        <location filename="../widgets/daboutdialog.cpp" line="125"/>
         <source>Description</source>
         <translation>Opis</translation>
+    </message>
+    <message>
+        <location filename="../widgets/daboutdialog.cpp" line="127"/>
+        <source>Acknowledgements</source>
+        <translation>Podziękowania</translation>
+    </message>
+    <message>
+        <location filename="../widgets/daboutdialog.cpp" line="129"/>
+        <location filename="../widgets/daboutdialog.cpp" line="395"/>
+        <location filename="../widgets/daboutdialog.cpp" line="400"/>
+        <source>Sincerely appreciate the open-source software used.</source>
+        <translation>Szczere podziękowania dla użytego oprogramowania open-source.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/daboutdialog.cpp" line="396"/>
+        <source>open-source software</source>
+        <translation>oprogramowanie open-source</translation>
     </message>
     <message>
         <location filename="../widgets/dfeaturedisplaydialog.cpp" line="151"/>
@@ -713,6 +730,11 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/dfeaturedisplaydialog.cpp" line="175"/>
         <source>Learn More</source>
         <translation>Dowiedz się więcej</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dlicensedialog.cpp" line="74"/>
+        <source>Credits</source>
+        <translation>Zasługi</translation>
     </message>
 </context>
 <context>
@@ -766,7 +788,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="683"/>
         <source>Custom toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Niestandardowy pasek narzędzi</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="691"/>
