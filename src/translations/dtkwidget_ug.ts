@@ -9,7 +9,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
 <context>
     <name>DAboutDialog</name>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1405"/>
+        <location filename="../widgets/dapplication.cpp" line="1421"/>
         <source>%1 is released under %2</source>
         <translation>%1 قۇيۇپ بېرىش ئاستىداi %2</translation>
     </message>
@@ -685,24 +685,41 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <translation>ئەسلىدىكى تەڭشەك ھالىتىگە قايتۇرۇش</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="108"/>
+        <location filename="../widgets/daboutdialog.cpp" line="109"/>
         <source>Version</source>
         <translation>نەشرى</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="110"/>
+        <location filename="../widgets/daboutdialog.cpp" line="111"/>
         <source>Features</source>
         <translation>نەشر ئالاھىدىلىكى</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="122"/>
+        <location filename="../widgets/daboutdialog.cpp" line="123"/>
         <source>Homepage</source>
         <translation>باش بەت</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="124"/>
+        <location filename="../widgets/daboutdialog.cpp" line="125"/>
         <source>Description</source>
         <translation>تەسۋىر</translation>
+    </message>
+    <message>
+        <location filename="../widgets/daboutdialog.cpp" line="127"/>
+        <source>Acknowledgements</source>
+        <translation>مۇقىملاشتۇرۇش </translation>
+    </message>
+    <message>
+        <location filename="../widgets/daboutdialog.cpp" line="129"/>
+        <location filename="../widgets/daboutdialog.cpp" line="395"/>
+        <location filename="../widgets/daboutdialog.cpp" line="400"/>
+        <source>Sincerely appreciate the open-source software used.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../widgets/daboutdialog.cpp" line="396"/>
+        <source>open-source software</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../widgets/dfeaturedisplaydialog.cpp" line="151"/>
@@ -713,6 +730,11 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/dfeaturedisplaydialog.cpp" line="175"/>
         <source>Learn More</source>
         <translation>تېخىمۇ كۆپ چۈشىنىش</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dlicensedialog.cpp" line="74"/>
+        <source>Credits</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

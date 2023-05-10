@@ -9,7 +9,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
 <context>
     <name>DAboutDialog</name>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1405"/>
+        <location filename="../widgets/dapplication.cpp" line="1421"/>
         <source>%1 is released under %2</source>
         <translation>%1 is uitgebracht onder de %2</translation>
     </message>
@@ -685,24 +685,41 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <translation>Standaardwaarden herstellen</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="108"/>
+        <location filename="../widgets/daboutdialog.cpp" line="109"/>
         <source>Version</source>
         <translation>Versie</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="110"/>
+        <location filename="../widgets/daboutdialog.cpp" line="111"/>
         <source>Features</source>
         <translation>Kenmerken</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="122"/>
+        <location filename="../widgets/daboutdialog.cpp" line="123"/>
         <source>Homepage</source>
         <translation>Website</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="124"/>
+        <location filename="../widgets/daboutdialog.cpp" line="125"/>
         <source>Description</source>
         <translation>Beschrijving</translation>
+    </message>
+    <message>
+        <location filename="../widgets/daboutdialog.cpp" line="127"/>
+        <source>Acknowledgements</source>
+        <translation>Kennisgeving</translation>
+    </message>
+    <message>
+        <location filename="../widgets/daboutdialog.cpp" line="129"/>
+        <location filename="../widgets/daboutdialog.cpp" line="395"/>
+        <location filename="../widgets/daboutdialog.cpp" line="400"/>
+        <source>Sincerely appreciate the open-source software used.</source>
+        <translation>Maak dankbaar gebruik van opensourcesoftware.</translation>
+    </message>
+    <message>
+        <location filename="../widgets/daboutdialog.cpp" line="396"/>
+        <source>open-source software</source>
+        <translation>opensourcesoftware</translation>
     </message>
     <message>
         <location filename="../widgets/dfeaturedisplaydialog.cpp" line="151"/>
@@ -713,6 +730,11 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/dfeaturedisplaydialog.cpp" line="175"/>
         <source>Learn More</source>
         <translation>Meer informatie</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dlicensedialog.cpp" line="74"/>
+        <source>Credits</source>
+        <translation>Met dank aan</translation>
     </message>
 </context>
 <context>
@@ -766,7 +788,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="683"/>
         <source>Custom toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Aangepaset werkbalk</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="691"/>
