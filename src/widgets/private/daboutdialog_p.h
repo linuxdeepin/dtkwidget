@@ -33,6 +33,7 @@ public:
     void updateWebsiteLabel();
     void updateAcknowledgementLabel();
     void _q_onLinkActivated(const QString &link);
+    void _q_onLicenseActivated(const QString &link);
     QPixmap loadPixmap(const QString &file);
 
     static const QString websiteLinkTemplate;

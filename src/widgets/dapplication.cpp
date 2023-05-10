@@ -44,6 +44,7 @@
 #include <private/qwidget_p.h>
 
 #include <DStandardPaths>
+#include <DLicenseDialog>
 
 #ifdef Q_OS_UNIX
 #include <unistd.h>
@@ -1428,6 +1429,42 @@ bool DApplication::isAcclimatizedVirtualKeyboard(QWidget *window) const
     return d->acclimatizeVirtualKeyboardWindows.contains(window);
 }
 
+QString DApplication::applicationCreditsFile() const
+{
+    D_DC(DApplication);
+    return d->applicationCreditsFile;
+}
+
+void DApplication::setApplicationCreditsFile(const QString &file)
+{
+    D_D(DApplication);
+    d->applicationCreditsFile = file;
+}
+
+QByteArray DApplication::applicationCreditsContent() const
+{
+    D_DC(DApplication);
+    return d->applicationCreditsContent;
+}
+
+void DApplication::setApplicationCreditsContent(const QByteArray &content)
+{
+    D_D(DApplication);
+    d->applicationCreditsContent = content;
+}
+
+QString DApplication::licensePath() const
+{
+    D_DC(DApplication);
+    return d->licensePath;
+}
+
+void DApplication::setLicensePath(const QString &path)
+{
+    D_D(DApplication);
+    d->licensePath = path;
+}
+
 /*!
    \brief 设置 app 的处理程序.
 
@@ -1511,9 +1548,23 @@ void DApplication::handleAboutAction()
         return;
     }
 
+    if (d->licenseDialog == nullptr) {
+        d->licenseDialog = new DLicenseDialog();
+        d->licenseDialog->setFile(d->applicationCreditsFile);
+        d->licenseDialog->setContent(d->applicationCreditsContent);
+        d->licenseDialog->setLicenseSearchPath(d->licensePath);
+        d->licenseDialog->load();
+        connect(this, &DApplication::aboutToQuit, this, [this]{
+            D_D(DApplication);
+            d->licenseDialog->deleteLater();
+            d->licenseDialog = nullptr;
+        });
+    }
+
     if (d->aboutDialog) {
         d->aboutDialog->activateWindow();
         d->aboutDialog->raise();
+        d->aboutDialog->setLicenseEnabled(d->licenseDialog->isValid());
         if (DGuiApplicationHelper::isTabletEnvironment()) {
             d->aboutDialog->exec();
         } else {
@@ -1541,10 +1592,14 @@ void DApplication::handleAboutAction()
     // 不能使用aboutToClose信号 应用能够打开多个的情况下 打开关于后直接关闭程序
     // 此时aboutToColose信号不会触发 再次打开程序并打开关于会出现访问野指针 程序崩溃的情况
     d->aboutDialog = aboutDialog;
+    d->aboutDialog->setLicenseEnabled(d->licenseDialog->isValid());
     connect(d->aboutDialog, &DAboutDialog::destroyed, this, [=] {
         d->aboutDialog = nullptr;
     });
-
+    connect(d->aboutDialog, &DAboutDialog::licenseActivated, this, [d] {
+        d->licenseDialog->activateWindow();
+        d->licenseDialog->show();
+    });
     if (DGuiApplicationHelper::isTabletEnvironment()) {
         aboutDialog->exec();
     } else {

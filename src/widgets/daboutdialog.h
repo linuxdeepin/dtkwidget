@@ -61,6 +61,10 @@ public Q_SLOTS:
     void setAcknowledgementLink(const QString &acknowledgementLink);
     void setAcknowledgementVisible(bool visible);
     void setLicense(const QString &license);
+    void setLicenseEnabled(bool enabled);
+
+Q_SIGNALS:
+    void licenseActivated();
 
 protected:
     void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
@@ -68,6 +72,7 @@ protected:
 
 private:
     Q_PRIVATE_SLOT(d_func(), void _q_onLinkActivated(const QString &link))
+    Q_PRIVATE_SLOT(d_func(), void _q_onLicenseActivated(const QString &link))
 
     Q_DISABLE_COPY(DAboutDialog)
     D_DECLARE_PRIVATE(DAboutDialog)

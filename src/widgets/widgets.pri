@@ -120,7 +120,8 @@ HEADERS += $$PWD/dslider.h\
     $$PWD/dcombobox.h \
     $$PWD/dfontcombobox.h \
     $$PWD/dprintpreviewsettinginterface.h \
-    $$PWD/dprintpreviewsettinginfo.h
+    $$PWD/dprintpreviewsettinginfo.h \
+    $$PWD/dlicensedialog.h
 
 SOURCES += $$PWD/dslider.cpp \
     $$PWD/dbackgroundgroup.cpp \
@@ -210,7 +211,8 @@ SOURCES += $$PWD/dslider.cpp \
     $$PWD/dpalettehelper.cpp \
     $$PWD/dcombobox.cpp \
     $$PWD/dfontcombobox.cpp \
-    $$PWD/dprintpreviewsettinginfo.cpp
+    $$PWD/dprintpreviewsettinginfo.cpp \
+    $$PWD/dlicensedialog.cpp
 
 RESOURCES += \
     $$PWD/icons.qrc \
@@ -376,4 +378,5 @@ includes.files += \
     $$PWD/DPrintPreviewDialog \
     $$PWD/DFileChooserEdit \
     $$PWD/DPaletteHelper \
-    $$PWD/DAccessibilityChecker
+    $$PWD/DAccessibilityChecker \
+    $$PWD/DLicenseDialog
