@@ -112,6 +112,8 @@ void DAboutDialogPrivate::init()
     acknowledgementLabel->setOpenExternalLinks(false);
     acknowledgementLabel->setText(QObject::tr("Sincerely appreciate the open-source software used."));
     acknowledgementLabel->setWordWrap(true);
+    QHBoxLayout *acknowledgementLayout = new QHBoxLayout;
+    acknowledgementLayout->addWidget(acknowledgementLabel, Qt::AlignHCenter);
 
     descriptionLabel = new QLabel();
     descriptionLabel->setObjectName("DescriptionLabel");
@@ -150,11 +152,11 @@ void DAboutDialogPrivate::init()
     mainLayout->setAlignment(websiteLabel, Qt::AlignCenter);
     mainLayout->addSpacing(12);
     mainLayout->addWidget(descriptionLabel, Qt::AlignHCenter);
-    mainLayout->addSpacing(7);
+    licenseLabel->setContentsMargins(0, 7, 0, 0);
     mainLayout->addWidget(licenseLabel, Qt::AlignHCenter);
     mainLayout->addSpacing(5);
-    mainLayout->addWidget(acknowledgementLabel);
-    mainLayout->setAlignment(acknowledgementLabel, Qt::AlignCenter);
+    mainLayout->addLayout(acknowledgementLayout);
+    mainLayout->addStretch(0);
 
     QScrollArea *mainScrollArea = new QScrollArea;
     QWidget  *mainContent = new QWidget;
@@ -515,7 +517,7 @@ void DAboutDialog::setLicense(const QString &license)
     D_D(DAboutDialog);
 
     d->licenseLabel->setText(license);
-//    d->licenseLabel->setVisible(!license.isEmpty());
+    d->licenseLabel->setVisible(!license.isEmpty());
 }
 
 void DAboutDialog::keyPressEvent(QKeyEvent *event)
