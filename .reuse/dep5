@@ -64,7 +64,7 @@ Copyright: None
 License: CC0-1.0
 
 # others
-Files: examples/collections/resources/data/LGPLv3.txt
+Files: examples/collections/resources/data/*.txt
 Copyright: None
 License: CC0-1.0
 

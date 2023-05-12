@@ -4,6 +4,7 @@
         <file>resources/data/dt-settings.json</file>
         <file>resources/data/titlebar-settings.json</file>
         <file>resources/data/example-license.json</file>
-        <file>resources/data/LGPLv3.txt</file>
-    </qresource>
+        <file>resources/data/MIT.txt</file>
+        <file>resources/data/GPL-2.txt</file>
+</qresource>
 </RCC>

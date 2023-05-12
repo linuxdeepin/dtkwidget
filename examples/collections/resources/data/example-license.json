@@ -1,26 +1,32 @@
 [
     {
-        "name": "Qt",
-        "version": "5.15.3",
-        "copyright": "Copyright 2023 The Qt Company Ltd. All rights reserved.",
-        "license": "LGPLv3"
+    "name": "pkg-config",
+    "version": "",
+    "copyright": "NOASSERTION",
+    "license": "MIT"
     },
     {
-        "name": "dtkcommon",
-        "version": "5.6.8",
-        "copyright": "Copyright 2023 The Uniontech Company Ltd. All rights reserved.",
-        "license": "LGPLv3"
+    "name": "lshw",
+    "version": "",
+    "copyright": "NOASSERTION",
+    "license": "GPL-2"
     },
     {
-        "name": "dtkgui",
-        "version": "5.6.8",
-        "copyright": "Copyright 2023 The Uniontech Company Ltd. All rights reserved.",
-        "license": "LGPLv3"
+    "name": "debhelper",
+    "version": "",
+    "copyright": "NOASSERTION",
+    "license": "GPL-2"
     },
     {
-        "name": "dtkcore",
-        "version": "5.6.8",
-        "copyright": "Copyright 2023 The Uniontech Company Ltd. All rights reserved.",
-        "license": "LGPLv3"
+    "name": "pkg-config",
+    "version": "",
+    "copyright": "NOASSERTION",
+    "license": "MIT"
+    },
+    {
+    "name": "debhelper",
+    "version": "",
+    "copyright": "NOASSERTION",
+    "license": "GPL-2"
     }
 ]
