@@ -18,6 +18,10 @@
 
 #include <cmath>
 
+QT_BEGIN_NAMESPACE
+extern bool qt_is_gui_used;
+QT_END_NAMESPACE
+
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
@@ -354,12 +358,26 @@ const QFont DFontSizeManager::get(DFontSizeManager::SizeType type, int weight, c
     return font;
 }
 
+static int d_defaultDpi()
+{
+    if (QCoreApplication::instance()->testAttribute(Qt::AA_Use96Dpi))
+        return 96;
+
+    if (!qt_is_gui_used)
+        return 75;
+
+    //PI has not been initialised, or it is being initialised. Give a default dpi
+    return 100;
+}
+
 int DFontSizeManager::fontPixelSize(const QFont &font)
 {
     int px = font.pixelSize();
 
     if (px == -1) {
-        px = qRound(std::floor(((font.pointSizeF() * font.d->dpi) / 72) * 100 + 0.5) / 100);
+        // font.d->dpi <= 0 is unacceptable,this fallback is to avoid errors.
+        // TODO: Remove me if invalid font dpi was fixed
+        px = qRound(std::floor(((font.pointSizeF() * (font.d->dpi <= 0 ? d_defaultDpi() : font.d->dpi)) / 72) * 100 + 0.5) / 100);
     }
 
     return px;
