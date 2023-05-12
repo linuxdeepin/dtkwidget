@@ -162,6 +162,10 @@ void DLicenseDialogPrivate::addComponentItem(const DLicenseInfo::DComponentInfo 
     enterAction->setIcon(DStyle::standardIcon(q->style(), DStyle::SP_ArrowEnter));
     pItem->setActionList(Qt::RightEdge, DViewItemActionList() << enterAction);
     listModel->appendRow(pItem);
+    const auto index  = pItem->index();
+    QObject::connect(enterAction, &DViewItemAction::triggered, enterAction, [this, index] {
+        Q_EMIT listView->clicked(index);
+    });
 }
 
 bool DLicenseDialogPrivate::loadLicense()
@@ -226,6 +230,8 @@ void DLicenseDialog::hideEvent(QHideEvent *)
     D_D(DLicenseDialog);
     d->backwardBtn->setVisible(false);
     d->stackedLayout->setCurrentIndex(0);
+    d->scrollArea->horizontalScrollBar()->setValue(0);
+    d->scrollArea->verticalScrollBar()->setValue(0);
 }
 DWIDGET_END_NAMESPACE
 #include "moc_dlicensedialog.cpp"
