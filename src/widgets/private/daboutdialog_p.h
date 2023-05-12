@@ -12,7 +12,6 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DLicenseDialog;
 class DRedPointLabel : public QLabel
 {
 public:
