@@ -33,7 +33,7 @@ public:
     const QPixmap *companyLogo() const;
     QString websiteName() const;
     QString websiteLink() const;
-    D_DECL_DEPRECATED_X("acknowledgement is no longer used") QString acknowledgementLink() const;
+    QString acknowledgementLink() const;
     QString license() const;
 
 Q_SIGNALS:
@@ -48,8 +48,8 @@ public Q_SLOTS:
     void setCompanyLogo(const QPixmap &companyLogo);
     void setWebsiteName(const QString &websiteName);
     void setWebsiteLink(const QString &websiteLink);
-    D_DECL_DEPRECATED_X("acknowledgement is no longer used") void setAcknowledgementLink(const QString &acknowledgementLink);
-    D_DECL_DEPRECATED_X("acknowledgement is no longer used") void setAcknowledgementVisible(bool visible);
+    void setAcknowledgementLink(const QString &acknowledgementLink);
+    void setAcknowledgementVisible(bool visible);
     void setLicense(const QString &license);
 
 protected:
@@ -59,6 +59,7 @@ protected:
 private:
     Q_PRIVATE_SLOT(d_func(), void _q_onLinkActivated(const QString &link))
     Q_PRIVATE_SLOT(d_func(), void _q_onFeatureActivated(const QString &link))
+    Q_PRIVATE_SLOT(d_func(), void _q_onLicenseActivated(const QString &link))
 
     Q_DISABLE_COPY(DAboutDialog)
     D_DECLARE_PRIVATE(DAboutDialog)

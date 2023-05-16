@@ -20,6 +20,7 @@ protected:
     void paintEvent(QPaintEvent *e) override;
 };
 
+class DLicenseDialog;
 class DAboutDialogPrivate : public DDialogPrivate
 {
 public:
@@ -30,7 +31,7 @@ public:
     void updateWebsiteLabel();
     void _q_onLinkActivated(const QString &link);
     void _q_onFeatureActivated(const QString &link);
-
+    void _q_onLicenseActivated(const QString &link);
     QPixmap loadPixmap(const QString &file);
 
     static const QString websiteLinkTemplate;
@@ -45,6 +46,10 @@ public:
     QLabel *websiteLabel = nullptr;
     QLabel *featureLabel = nullptr;
     DRedPointLabel *redPointLabel = nullptr;
+    QLabel *acknowledgementLabel = nullptr;
+    QLabel *acknowledgementTipLabel = nullptr;
+    DLicenseDialog *licenseDialog = Q_NULLPTR;
+
     QString logoPath;
     QString websiteName;
     QString websiteLink;
