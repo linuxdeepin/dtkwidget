@@ -37,6 +37,9 @@ class LIBDTKWIDGETSHARED_EXPORT DApplication : public QApplication, public DTK_C
     Q_PROPERTY(bool visibleMenuCheckboxWidget READ visibleMenuCheckboxWidget WRITE setVisibleMenuCheckboxWidget)
     Q_PROPERTY(bool visibleMenuIcon READ visibleMenuIcon WRITE setVisibleMenuIcon)
     Q_PROPERTY(bool autoActivateWindows READ autoActivateWindows WRITE setAutoActivateWindows)
+    Q_PROPERTY(QString applicationCreditsFile READ applicationCreditsFile WRITE setApplicationCreditsFile)
+    Q_PROPERTY(QByteArray applicationCreditsContent READ applicationCreditsContent WRITE setApplicationCreditsContent)
+    Q_PROPERTY(QString licensePath READ licensePath WRITE setLicensePath)
 
 public:
     static DApplication *globalApplication(int &argc, char **argv);
