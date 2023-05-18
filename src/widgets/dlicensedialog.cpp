@@ -75,7 +75,7 @@ void DLicenseDialogPrivate::init()
     titleBar->setAccessibleName("DLicenseDialogTitleBar");
     titleBar->setMenuVisible(false);
     titleBar->setBackgroundTransparent(true);
-    titleBar->setTitle(QObject::tr("open-source software"));
+    titleBar->setTitle(QObject::tr("Open-Source Software"));
     titleBar->addWidget(backwardBtn, Qt::AlignLeft | Qt::AlignVCenter);
 
     backwardBtn->setVisible(false);
