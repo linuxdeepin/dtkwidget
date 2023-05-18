@@ -9,7 +9,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
 <context>
     <name>DAboutDialog</name>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1421"/>
+        <location filename="../widgets/dapplication.cpp" line="1454"/>
         <source>%1 is released under %2</source>
         <translation>%1ཡིས་%2ཡི་གྲོས་དོན་བརྩི་སྲུང་བྱས་ནས་ཁྱབ་བསྒྲགས་བྱ་རྒྱུ།</translation>
     </message>
@@ -685,41 +685,40 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <translation>སོར་བཞག་སླར་གསོ།</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="109"/>
+        <location filename="../widgets/daboutdialog.cpp" line="108"/>
         <source>Version</source>
         <translation>པར་གཞི།  </translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="111"/>
+        <location filename="../widgets/daboutdialog.cpp" line="110"/>
         <source>Features</source>
         <translation>པར་གཞིའི་ཁྱད་ཆོས།</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="123"/>
+        <location filename="../widgets/daboutdialog.cpp" line="122"/>
         <source>Homepage</source>
         <translation>གཙོ་ངོས།</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="125"/>
+        <location filename="../widgets/daboutdialog.cpp" line="124"/>
         <source>Description</source>
         <translation>ཞིབ་བརྗོད།</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="127"/>
+        <location filename="../widgets/daboutdialog.cpp" line="126"/>
         <source>Acknowledgements</source>
         <translation>ཐུགས་རྗེ་ཞུ་བ།</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="129"/>
-        <location filename="../widgets/daboutdialog.cpp" line="395"/>
-        <location filename="../widgets/daboutdialog.cpp" line="400"/>
+        <location filename="../widgets/daboutdialog.cpp" line="128"/>
+        <location filename="../widgets/daboutdialog.cpp" line="393"/>
         <source>Sincerely appreciate the open-source software used.</source>
-        <translation type="unfinished"/>
+        <translation>སྤྱོད་བཞིན་པའི་སྒོ་འབྱེད་མཉེན་ཆས་ལ་བཀའ་དྲིན་ཆེ་ཞུ།</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="396"/>
+        <location filename="../widgets/daboutdialog.cpp" line="395"/>
         <source>open-source software</source>
-        <translation type="unfinished"/>
+        <translation>སྒོ་འབྱེད་མཉེན་ཆས།</translation>
     </message>
     <message>
         <location filename="../widgets/dfeaturedisplaydialog.cpp" line="151"/>
@@ -732,9 +731,9 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <translation>དེ་བས་མང་བར་རྒྱུས་ལོན།</translation>
     </message>
     <message>
-        <location filename="../widgets/dlicensedialog.cpp" line="74"/>
-        <source>Credits</source>
-        <translation type="unfinished"/>
+        <location filename="../widgets/dlicensedialog.cpp" line="78"/>
+        <source>Open-Source Software</source>
+        <translation>སྒོ་འབྱེད་མཉེན་ཆས།</translation>
     </message>
 </context>
 <context>
@@ -788,7 +787,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="683"/>
         <source>Custom toolbar</source>
-        <translation type="unfinished"/>
+        <translation>རང་འཇོག་ཡོ་བྱད་བསྟར་བྱང་།</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="691"/>
