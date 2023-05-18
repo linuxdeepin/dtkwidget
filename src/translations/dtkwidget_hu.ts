@@ -9,7 +9,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
 <context>
     <name>DAboutDialog</name>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1421"/>
+        <location filename="../widgets/dapplication.cpp" line="1454"/>
         <source>%1 is released under %2</source>
         <translation>A %1 a %2 alatti kiadás</translation>
     </message>
@@ -685,39 +685,38 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <translation>Alapértelmezések visszaállítása</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="109"/>
+        <location filename="../widgets/daboutdialog.cpp" line="108"/>
         <source>Version</source>
         <translation>Verzió</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="111"/>
+        <location filename="../widgets/daboutdialog.cpp" line="110"/>
         <source>Features</source>
         <translation>Tulajdonságok</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="123"/>
+        <location filename="../widgets/daboutdialog.cpp" line="122"/>
         <source>Homepage</source>
         <translation>Kezdőoldal</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="125"/>
+        <location filename="../widgets/daboutdialog.cpp" line="124"/>
         <source>Description</source>
         <translation>Leírás</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="127"/>
+        <location filename="../widgets/daboutdialog.cpp" line="126"/>
         <source>Acknowledgements</source>
         <translation>Köszönetnyilvánítás</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="129"/>
-        <location filename="../widgets/daboutdialog.cpp" line="395"/>
-        <location filename="../widgets/daboutdialog.cpp" line="400"/>
+        <location filename="../widgets/daboutdialog.cpp" line="128"/>
+        <location filename="../widgets/daboutdialog.cpp" line="393"/>
         <source>Sincerely appreciate the open-source software used.</source>
         <translation>Őszintén köszönjük, hogy nyílt forráskódú szoftvert használ.</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="396"/>
+        <location filename="../widgets/daboutdialog.cpp" line="395"/>
         <source>open-source software</source>
         <translation>Nyílt forráskódú szoftver</translation>
     </message>
@@ -732,9 +731,9 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <translation>Tudjon meg többet</translation>
     </message>
     <message>
-        <location filename="../widgets/dlicensedialog.cpp" line="74"/>
-        <source>Credits</source>
-        <translation>Elismerés</translation>
+        <location filename="../widgets/dlicensedialog.cpp" line="78"/>
+        <source>Open-Source Software</source>
+        <translation>Nyílt forráskódú szoftver</translation>
     </message>
 </context>
 <context>
