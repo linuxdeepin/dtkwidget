@@ -9,7 +9,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
 <context>
     <name>DAboutDialog</name>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1421"/>
+        <location filename="../widgets/dapplication.cpp" line="1454"/>
         <source>%1 is released under %2</source>
         <translation>%1遵循%2协议发布</translation>
     </message>
@@ -685,39 +685,38 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <translation>恢复默认</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="109"/>
+        <location filename="../widgets/daboutdialog.cpp" line="108"/>
         <source>Version</source>
         <translation>版本</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="111"/>
+        <location filename="../widgets/daboutdialog.cpp" line="110"/>
         <source>Features</source>
         <translation>版本特性</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="123"/>
+        <location filename="../widgets/daboutdialog.cpp" line="122"/>
         <source>Homepage</source>
         <translation>主页</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="125"/>
+        <location filename="../widgets/daboutdialog.cpp" line="124"/>
         <source>Description</source>
         <translation>描述</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="127"/>
+        <location filename="../widgets/daboutdialog.cpp" line="126"/>
         <source>Acknowledgements</source>
-        <translation>致谢</translation>
+        <translation>鸣谢</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="129"/>
-        <location filename="../widgets/daboutdialog.cpp" line="395"/>
-        <location filename="../widgets/daboutdialog.cpp" line="400"/>
+        <location filename="../widgets/daboutdialog.cpp" line="128"/>
+        <location filename="../widgets/daboutdialog.cpp" line="393"/>
         <source>Sincerely appreciate the open-source software used.</source>
         <translation>致谢所使用的开源软件</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="396"/>
+        <location filename="../widgets/daboutdialog.cpp" line="395"/>
         <source>open-source software</source>
         <translation>开源软件</translation>
     </message>
@@ -732,9 +731,9 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <translation>了解更多</translation>
     </message>
     <message>
-        <location filename="../widgets/dlicensedialog.cpp" line="74"/>
-        <source>Credits</source>
-        <translation>许可</translation>
+        <location filename="../widgets/dlicensedialog.cpp" line="78"/>
+        <source>Open-Source Software</source>
+        <translation>开源软件</translation>
     </message>
 </context>
 <context>

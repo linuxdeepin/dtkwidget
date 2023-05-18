@@ -9,7 +9,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
 <context>
     <name>DAboutDialog</name>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1421"/>
+        <location filename="../widgets/dapplication.cpp" line="1454"/>
         <source>%1 is released under %2</source>
         <translation>%1 està publicada d&apos;acord amb %2</translation>
     </message>
@@ -685,39 +685,38 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <translation>Restableix els valors per defecte</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="109"/>
+        <location filename="../widgets/daboutdialog.cpp" line="108"/>
         <source>Version</source>
         <translation>Versió</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="111"/>
+        <location filename="../widgets/daboutdialog.cpp" line="110"/>
         <source>Features</source>
         <translation>Característiques</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="123"/>
+        <location filename="../widgets/daboutdialog.cpp" line="122"/>
         <source>Homepage</source>
         <translation>Pàgina inicial</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="125"/>
+        <location filename="../widgets/daboutdialog.cpp" line="124"/>
         <source>Description</source>
         <translation>Descripció</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="127"/>
+        <location filename="../widgets/daboutdialog.cpp" line="126"/>
         <source>Acknowledgements</source>
         <translation>Agraïments</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="129"/>
-        <location filename="../widgets/daboutdialog.cpp" line="395"/>
-        <location filename="../widgets/daboutdialog.cpp" line="400"/>
+        <location filename="../widgets/daboutdialog.cpp" line="128"/>
+        <location filename="../widgets/daboutdialog.cpp" line="393"/>
         <source>Sincerely appreciate the open-source software used.</source>
         <translation>Agraïm sincerament tot el programari de codi obert usat.</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="396"/>
+        <location filename="../widgets/daboutdialog.cpp" line="395"/>
         <source>open-source software</source>
         <translation>programari de codi obert</translation>
     </message>
@@ -732,9 +731,9 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <translation>Més informació</translation>
     </message>
     <message>
-        <location filename="../widgets/dlicensedialog.cpp" line="74"/>
-        <source>Credits</source>
-        <translation>Crèdits</translation>
+        <location filename="../widgets/dlicensedialog.cpp" line="78"/>
+        <source>Open-Source Software</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
