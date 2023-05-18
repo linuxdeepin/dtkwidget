@@ -66,6 +66,16 @@ DCORE_USE_NAMESPACE
 
 DWIDGET_BEGIN_NAMESPACE
 
+extern "C" LIBDTKWIDGETSHARED_EXPORT void setApplicationCreditsFile(const QString &file)
+{
+    qApp->setApplicationCreditsFile(file);
+}
+
+extern "C" LIBDTKWIDGETSHARED_EXPORT void setLicensePath(const QString &path)
+{
+    qApp->setLicensePath(path);
+}
+
 DApplicationPrivate::DApplicationPrivate(DApplication *q) :
     DObjectPrivate(q)
 {

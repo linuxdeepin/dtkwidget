@@ -10,6 +10,7 @@
 #include <DPalette>
 
 #include <QApplication>
+#include <QLibrary>
 
 DGUI_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
@@ -202,6 +203,26 @@ public:
 };
 
 static _DtkBuildVersion _dtk_build_version;
+#endif
+
+#define DTK_LICENSE_FEATURE
+
+#ifdef DTK_LICENSE_FEATURE
+#define SET_LICENSE(file, licensePath) \
+    QLibrary myLib("dtkwidget"); \
+    typedef void (*MyPrototype)(const QString &); \
+    MyPrototype setApplicationCreditsFile = (MyPrototype) myLib.resolve("setApplicationCreditsFile"); \
+    if (setApplicationCreditsFile) { \
+        setApplicationCreditsFile(file); \
+    } else { \
+            qWarning() << "resolve setApplicationCreditsFile failed!"; \
+    } \
+        MyPrototype setLicensePath = (MyPrototype) myLib.resolve("setLicensePath"); \
+        if (setLicensePath) { \
+            setLicensePath(licensePath); \
+    } else { \
+            qWarning() << "resolve setLicensePath failed!"; \
+    }
 #endif
 
 DWIDGET_END_NAMESPACE

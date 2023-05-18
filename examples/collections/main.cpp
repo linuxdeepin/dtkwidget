@@ -42,8 +42,10 @@ int main(int argc, char *argv[])
     a->setApplicationDescription(QApplication::translate("main", "Collections provides the examples for dtk applications."));
     a->setApplicationDisplayName(QObject::tr("Collections"));
     a->setApplicationLicense(QObject::tr("2023 UnionTech Software Technology Co., Ltd."));
-    a->setProperty("applicationCreditsFile", ":/resources/data/example-license.json");
-    a->setProperty("licensePath", ":/resources/data");
+
+#ifdef DTK_LICENSE_FEATURE
+    SET_LICENSE(":/resources/data/example-license.json", ":/resources/data");
+#endif
 
     MainWindow w;
     w.show();
