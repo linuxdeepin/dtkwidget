@@ -258,7 +258,7 @@ const QRect DArrowRectanglePrivate::currentScreenRect(const int x, const int y)
 {
     if (floatMode == DArrowRectangle::FloatWidget) {
         D_Q(DArrowRectangle);
-        if (q->parentWidget()) {
+        if (q->windowType() == Qt::Widget && q->parentWidget()) {
             return q->parentWidget()->rect();
         }
     }
