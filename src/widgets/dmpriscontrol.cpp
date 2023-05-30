@@ -161,7 +161,7 @@ void DMPRISControlPrivate::init()
     m_titleScrollArea->setWidgetResizable(true);
     m_titleScrollArea->setFocusPolicy(Qt::NoFocus);
     m_titleScrollArea->setFrameStyle(QFrame::NoFrame);
-    m_titleScrollArea->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
+    m_titleScrollArea->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     m_titleScrollArea->setContentsMargins(0, 0, 0, 0);
     m_titleScrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     m_titleScrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -178,7 +178,7 @@ void DMPRISControlPrivate::init()
     controlLayout->addWidget(m_prevBtn);
     controlLayout->addWidget(m_playBtn);
     controlLayout->addWidget(m_nextBtn);
-    controlLayout->setContentsMargins(0, 5, 0, 0);
+    controlLayout->setMargin(0);
     m_controlWidget->setLayout(controlLayout);
     m_controlWidget->setAccessibleName("DMPRISControlCentralWidget");
 
