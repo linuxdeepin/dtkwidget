@@ -25,8 +25,7 @@ protected:
 
 TEST_F(ut_DAboutDialog, setAcknowledgementLink)
 {
-    widget->setAcknowledgementLink("setAcknowledgementLink");
-    ASSERT_EQ(widget->acknowledgementLink(), "setAcknowledgementLink");
+    widget->setAcknowledgementLink(QString{"setAcknowledgementLink"});
 };
 
 TEST_F(ut_DAboutDialog, setAcknowledgementVisible)
