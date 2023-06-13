@@ -2,10 +2,9 @@
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
-#include <QApplication>
 #include <QTimer>
 #include <gtest/gtest.h>
-
+#include <DApplication>
 
 #ifdef QT_DEBUG
 #include <sanitizer/asan_interface.h>
@@ -30,7 +29,7 @@ int main(int argc, char *argv[])
     // gerrit编译时没有显示器，需要指定环境变量
     qputenv("QT_QPA_PLATFORM", "offscreen");
 
-    QApplication app(argc, argv);
+	Dtk::Widget::DApplication app(argc, argv);
     ::testing::InitGoogleTest(&argc, argv);
 
 #ifdef QT_DEBUG
