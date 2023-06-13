@@ -110,7 +110,10 @@ void DAboutDialogPrivate::init()
     featureLabel = new QLabel(websiteLinkTemplate.arg(websiteLink).arg(QObject::tr("Features")));
     featureLabel->setContextMenuPolicy(Qt::NoContextMenu);
     featureLabel->setOpenExternalLinks(false);
-    featureLabel->setVisible(!qApp->featureDisplayDialog()->isEmpty());
+    if (qobject_cast<DApplication *>(qApp))
+      featureLabel->setVisible(!qApp->featureDisplayDialog()->isEmpty());
+    else
+     featureLabel->setVisible(false);
     redPointLabel = new DRedPointLabel();
     redPointLabel->setFixedSize(10, 10);
     QHBoxLayout *vFeatureLayout =  new QHBoxLayout;
