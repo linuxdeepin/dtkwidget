@@ -22,7 +22,7 @@ DRubberBandExample::DRubberBandExample(QWidget *parent)
     , m_pRubberBand(nullptr)
 {
     QVBoxLayout *pVBoxLayout = new QVBoxLayout;
-    pVBoxLayout->setMargin(0);
+    pVBoxLayout->setContentsMargins(0, 0, 0, 0);
     pVBoxLayout->setSpacing(0);
 
     setLayout(pVBoxLayout);

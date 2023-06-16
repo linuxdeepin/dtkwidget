@@ -8,7 +8,9 @@
 #include <QWidget>
 #include <QStandardItemModel>
 #include <QStackedWidget>
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
 #include <qtypetraits.h>
+#endif
 #include <DListView>
 
 #include "dmainwindow.h"

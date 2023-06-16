@@ -159,7 +159,7 @@ MainWindow::MainWindow(QWidget *parent) :
         stackWidget->addWidget(label);
 
         label->setAutoFillBackground(true);
-        label->setPalette(QPalette(QPalette::Background, QColor(255, 255 * i / n, 255 - 255 * i / n)));
+        label->setPalette(QPalette(QPalette::Window, QColor(255, 255 * i / n, 255 - 255 * i / n)));
     }
 
     // stackWidget->setFocusPolicy(Qt::NoFocus);
