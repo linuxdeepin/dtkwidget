@@ -38,8 +38,9 @@
 #include <QTime>
 #include <QFontDatabase>
 #include <QDesktopServices>
-#include <QRegExp>
-#include <QRegExpValidator>
+#include <QRegularExpression>
+#include <QRegularExpressionValidator>
+#include <QStandardPaths>
 #include <QTimer>
 #include <QKeyEvent>
 #include <private/qprint_p.h>
@@ -167,7 +168,7 @@ void DPrintPreviewDialogPrivate::initui()
     titlebar->setSplitScreenEnabled(false);
 
     DPalette pa = DPaletteHelper::instance()->palette(titlebar);
-    pa.setBrush(DPalette::Background, pa.base());
+    pa.setBrush(DPalette::Window, pa.base());
     DPaletteHelper::instance()->setPalette(titlebar, pa);
 
     QHBoxLayout *mainlayout = new QHBoxLayout();
@@ -242,8 +243,8 @@ void DPrintPreviewDialogPrivate::initleft(QVBoxLayout *layout)
     pbottomlayout->addWidget(lastBtn);
     pbottomlayout->addStretch();
 
-    QRegExp reg("^([1-9][0-9]*)");
-    QRegExpValidator *val = new QRegExpValidator(reg, jumpPageEdit);
+    QRegularExpression reg("^([1-9][0-9]*)");
+    auto val = new QRegularExpressionValidator{reg, jumpPageEdit};
     jumpPageEdit->lineEdit()->setValidator(val);
 
     DPalette m_pa = DPaletteHelper::instance()->palette(pview);
@@ -357,8 +358,8 @@ void DPrintPreviewDialogPrivate::initbasicui()
     copycountlayout->addStretch(1);
     copycountlayout->addWidget(copycountspinbox, 9);
 
-    QRegExp re("^[1-9][0-9][0-9]$");
-    QRegExpValidator *va = new QRegExpValidator(re, copycountspinbox);
+    QRegularExpression re("^[1-9][0-9][0-9]$");
+    auto va = new QRegularExpressionValidator(re, copycountspinbox);
     copycountspinbox->lineEdit()->setValidator(va);
 
     //页码范围
@@ -378,7 +379,7 @@ void DPrintPreviewDialogPrivate::initbasicui()
     QWidget *hrangeWidget = new QWidget(q);
     hrangeWidget->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_PageRange_TypeControl]);
     QHBoxLayout *hrangebox = new QHBoxLayout(hrangeWidget);
-    hrangebox->setMargin(0);
+    hrangebox->setContentsMargins(0, 0, 0, 0);
     hrangebox->addWidget(pagerangelabel, 4);
     hrangebox->addStretch(1);
     hrangebox->addWidget(pageRangeCombo, 9);
@@ -536,8 +537,8 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     marginslayout->addSpacing(10);
     marginslayout->addWidget(marginSpinWidget);
 
-    QRegExp reg("^([5-5][0-4]|[1-4][0-9]|[0-9])?(\\.[0-9][0-9])|55(\\.[8-8][0-8])|55(\\.[0-7][0-9])");
-    QRegExpValidator *val = new QRegExpValidator(reg, marginsframe);
+    QRegularExpression reg("^([5-5][0-4]|[1-4][0-9]|[0-9])?(\\.[0-9][0-9])|55(\\.[8-8][0-8])|55(\\.[0-7][0-9])");
+    auto val = new QRegularExpressionValidator(reg, marginsframe);
     QList<DDoubleSpinBox *> list = marginsframe->findChildren<DDoubleSpinBox *>();
     for (int i = 0; i < list.size(); i++) {
         list.at(i)->setEnabledEmbedStyle(true);
@@ -582,8 +583,8 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     DRadioButton *customSizeRadio = new DRadioButton(qApp->translate("DPrintPreviewDialogPrivate", "Scale"));
     scaleGroup->addButton(customSizeRadio, SCALE);
     scaleRateEdit = new DSpinBox;
-    QRegExp scaleReg("^([1-9][0-9]?|[1][0-9]{2}|200)$");
-    QRegExpValidator *scaleVal = new QRegExpValidator(scaleReg, scaleRateEdit);
+    QRegularExpression scaleReg("^([1-9][0-9]?|[1][0-9]{2}|200)$");
+    auto scaleVal = new QRegularExpressionValidator(scaleReg, scaleRateEdit);
     scaleRateEdit->lineEdit()->setValidator(scaleVal);
     scaleRateEdit->setEnabledEmbedStyle(true);
     scaleRateEdit->setRange(1, 200);
@@ -1075,7 +1076,13 @@ void DPrintPreviewDialogPrivate::initconnections()
             pview->setWaterMarkLayout(WATERLAYOUT_TILED);
         }
     });
-    QObject::connect(directGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), q, [this](int index) {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    QObject::connect(directGroup, static_cast<void (QButtonGroup::*)(QAbstractButton *)>(&QButtonGroup::buttonClicked), q,
+#else
+    QObject::connect(directGroup, &QButtonGroup::buttonClicked, q,
+#endif
+    [this](QAbstractButton *btn) {
+        auto index = directGroup->id(btn);
         directGroup->button(index)->setChecked(true);
         directChoice = index;
         pview->setOrder(DPrintPreviewWidget::Order(index));
@@ -1094,8 +1101,14 @@ void DPrintPreviewDialogPrivate::initconnections()
         qreal m_value = static_cast<qreal>(value) / 100.00;
         pview->setWaterMarkOpacity(m_value);
     });
-    QObject::connect(printOrderGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), q, [this](int index) {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    QObject::connect(printOrderGroup, static_cast<void (QButtonGroup::*)(QAbstractButton *)>(&QButtonGroup::buttonClicked), q,
+#else
+    QObject::connect(printOrderGroup, &QButtonGroup::buttonClicked, q,
+#endif
+    [this](QAbstractButton *btn) {
         Q_Q(DPrintPreviewDialog);
+        auto index = printOrderGroup->id(btn);
         if (index == 0) {
             settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_PageOrder_TypeControl, false);
             // 此时不是按照文件路径打印 将并打选项开启
@@ -1107,7 +1120,15 @@ void DPrintPreviewDialogPrivate::initconnections()
         }
     });
     QObject::connect(waterMarkBtn, &DSwitchButton::checkedChanged, q, [this](bool checked) { this->waterMarkBtnClicked(checked); });
-    QObject::connect(waterTypeGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), q, [=](int index) { this->watermarkTypeChoosed(index); });
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    QObject::connect(waterTypeGroup, static_cast<void (QButtonGroup::*)(QAbstractButton *)>(&QButtonGroup::buttonClicked), q,
+#else
+    QObject::connect(waterTypeGroup, &QButtonGroup::buttonClicked, q,
+#endif
+    [this](QAbstractButton* btn) {
+        auto index = waterTypeGroup->id(btn);
+        this->watermarkTypeChoosed(index);
+    });
     QObject::connect(pageRangeEdit, &DLineEdit::editingFinished, [this] {
         _q_customPagesFinished();
     });
@@ -1182,7 +1203,7 @@ void DPrintPreviewDialogPrivate::initconnections()
     });
     QObject::connect(paperSizeCombo, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), q, [this](int) {
         if (paperSizeCombo->count() == 0) {
-            printer->setPageSize(QPrinter::A4);
+            printer->setPageSize(QPageSize::A4);
             return ;
         }
 
@@ -1205,7 +1226,13 @@ void DPrintPreviewDialogPrivate::initconnections()
             pview->updateView();
         }
     });
-    QObject::connect(scaleGroup, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), q, [this](int id) {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    QObject::connect(scaleGroup, static_cast<void (QButtonGroup::*)(QAbstractButton *)>(&QButtonGroup::buttonClicked), q,
+#else
+    QObject::connect(scaleGroup, &QButtonGroup::buttonClicked, q, 
+#endif
+[this](QAbstractButton *btn) {
+        auto id = scaleGroup->id(btn);
         if (id == ACTUAL_SIZE) {
             pview->setScale(1);
             scaleRateEdit->setEnabled(false);
@@ -1235,7 +1262,7 @@ void DPrintPreviewDialogPrivate::initconnections()
                      q, [this, q](DGuiApplicationHelper::ColorType themeType) {
         DTitlebar *titlebar = q->findChild<DTitlebar *>();
         DPalette pa = DPaletteHelper::instance()->palette(titlebar);
-        pa.setBrush(DPalette::Background, pa.base());
+        pa.setBrush(DPalette::Window, pa.base());
         DPaletteHelper::instance()->setPalette(titlebar, pa);
         this->themeTypeChange(themeType);
     });
@@ -1280,9 +1307,9 @@ void DPrintPreviewDialogPrivate::setupPrinter()
     printer->setCopyCount(copycountspinbox->value());
     //设置打印方向
     if (orientationgroup->checkedId() == 0)
-        printer->setOrientation(QPrinter::Portrait);
+        printer->setPageOrientation(QPageLayout::Orientation::Portrait);
     else {
-        printer->setOrientation(QPrinter::Landscape);
+        printer->setPageOrientation(QPageLayout::Orientation::Landscape);
     }
     //高级设置
     //设置纸张大小
@@ -1484,7 +1511,7 @@ QVector<int> DPrintPreviewDialogPrivate::checkDuplication(QVector<int> data)
             }
         }
     }
-    qSort(data.begin(), data.end());
+    std::sort(data.begin(), data.end());
     return data;
 }
 
@@ -1584,9 +1611,13 @@ void DPrintPreviewDialogPrivate::watermarkTypeChoosed(int index)
             settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_TextColor, true);
         _q_textWaterMarkModeChanged(waterTextCombo->currentIndex());
         initWaterSettings();
-        //获取可支持的所有字体
+        // 获取可支持的所有字体
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
         QFontDatabase fdb;
         QStringList fontList = fdb.families(QFontDatabase::Any);
+#else
+        QStringList fontList = QFontDatabase::families(QFontDatabase::Any);
+#endif
         Q_FOREACH (const QString &font, fontList) {
             if (fontCombo->findText(font) != -1)
                 continue;
@@ -2159,25 +2190,25 @@ void DPrintPreviewDialogPrivate::matchFitablePageSize()
             printer->setPageSize(*it);
     } else {
         if (paperSizeCombo->currentText() == "A3")
-            printer->setPageSize(QPrinter::A3);
+            printer->setPageSize(QPageSize::A3);
         else if (paperSizeCombo->currentText() == "A4")
-            printer->setPageSize(QPrinter::A4);
+            printer->setPageSize(QPageSize::A4);
         else if (paperSizeCombo->currentText() == "A5")
-            printer->setPageSize(QPrinter::A4);
+            printer->setPageSize(QPageSize::A4);
         else if (paperSizeCombo->currentText() == "B4")
-            printer->setPageSize(QPrinter::A4);
+            printer->setPageSize(QPageSize::A4);
         else if (paperSizeCombo->currentText() == "B4")
-            printer->setPageSize(QPrinter::B4);
+            printer->setPageSize(QPageSize::B4);
         else if (paperSizeCombo->currentText() == "B5")
-            printer->setPageSize(QPrinter::B5);
+            printer->setPageSize(QPageSize::B5);
         else if (paperSizeCombo->currentText() == "8K") {
-            printer->setPageSize(QPrinter::Custom);
-            printer->setPageSizeMM(QSizeF(EightK_Weight, EightK_Height));
+            printer->setPageSize(QPageSize::Custom);
+            printer->setPageSize(QPageSize{QSize{EightK_Weight, EightK_Height}});
         } else if (paperSizeCombo->currentText() == "16K") {
-            printer->setPageSize(QPrinter::Custom);
-            printer->setPageSizeMM(QSizeF(SixteenK_Weight, SixteenK_Height));
+            printer->setPageSize(QPageSize::Custom);
+            printer->setPageSize(QPageSize{QSize{SixteenK_Weight, SixteenK_Height}});
         } else {
-            printer->setPageSize(QPrinter::A4);
+            printer->setPageSize(QPageSize::A4);
         }
     }
 }
@@ -2726,7 +2757,7 @@ DPrintPreviewSettingInfo *PreviewSettingsPluginHelper::loadInfo(DPrintPreviewSet
         break;
     case DPrintPreviewSettingInfo::PS_Orientation: {
         DPrintPreviewOrientationInfo *orientationInfo = new DPrintPreviewOrientationInfo;
-        orientationInfo->orientationMode = d->printer->orientation();
+        orientationInfo->orientationMode = static_cast<DPrinter::Orientation>(d->printer->pageLayout().orientation());
         info  = orientationInfo;
     }
         break;

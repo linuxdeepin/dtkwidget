@@ -27,12 +27,17 @@ ButtonGroup::ButtonGroup(QWidget *parent) :
     d->group = new QButtonGroup;
     d->layout = new QHBoxLayout(this);
     d->layout->setSpacing(0);
-    d->layout->setMargin(0);
-
-    connect(d->group,static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonReleased),
-            this, [=](int){
+    d->layout->setContentsMargins(0, 0, 0, 0);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    connect(d->group, static_cast<void (QButtonGroup::*)(QAbstractButton *)>(&QButtonGroup::buttonReleased),
+            this, [=](QAbstractButton *) {
+              Q_EMIT buttonChecked(d->group->checkedId());
+            });
+#else
+    connect(d->group,&QButtonGroup::buttonReleased,this, [=](QAbstractButton *){
         Q_EMIT buttonChecked(d->group->checkedId());
     });
+#endif
 }
 
 ButtonGroup::~ButtonGroup()

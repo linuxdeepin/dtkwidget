@@ -265,7 +265,7 @@ void drawShadow(QPainter *pa, const QRect &rect, qreal xRadius, qreal yRadius, c
 
     const QString &key = QString("dtk-shadow-%1x%2-%3-%4").arg(xRadius).arg(yRadius).arg(sc.name()).arg(radius);
 
-    if (!QPixmapCache::find(key, shadow)) {
+    if (!QPixmapCache::find(key, &shadow)) {
         QImage shadow_base(QSize(xRadius * 3, yRadius * 3), QImage::Format_ARGB32_Premultiplied);
         shadow_base.fill(0);
         QPainter pa(&shadow_base);
@@ -1188,7 +1188,7 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
 
             if (btn->features & DStyleOptionButton::TitleBarButton) {
                 if (!(opt->state & (State_MouseOver | State_Sunken)) || !(opt->state & State_Enabled)) {
-                    pa.setBrush(QPalette::Background, Qt::transparent);
+                    pa.setBrush(QPalette::Window, Qt::transparent);
                 } else {
                     QColor color;
                     DGuiApplicationHelper *guiAppHelp = DGuiApplicationHelper::instance();
@@ -1196,21 +1196,21 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
                         color = QColor(255, 255, 255, 255 * 0.05);
                     else
                         color = QColor(0, 0, 0, 255 * 0.05);
-                    pa.setBrush(QPalette::Background, color);
+                    pa.setBrush(QPalette::Window, color);
                 }
 
                 if (opt->state & State_Sunken) {
-                    pa.setBrush(QPalette::Foreground, opt->palette.highlight());
+                    pa.setBrush(QPalette::WindowText, opt->palette.highlight());
                 } else {
-                    pa.setBrush(QPalette::Foreground, opt->palette.buttonText());
+                    pa.setBrush(QPalette::WindowText, opt->palette.buttonText());
                 }
             } else {
-                pa.setBrush(QPalette::Background, dstyle.generatedBrush(opt, pa.button(), pa.currentColorGroup(), QPalette::Button));
+                pa.setBrush(QPalette::Window, dstyle.generatedBrush(opt, pa.button(), pa.currentColorGroup(), QPalette::Button));
 
                 if (opt->state & QStyle::State_On) {
-                    pa.setBrush(QPalette::Foreground, dstyle.generatedBrush(opt, pa.highlightedText(), pa.currentColorGroup(), QPalette::HighlightedText));
+                    pa.setBrush(QPalette::WindowText, dstyle.generatedBrush(opt, pa.highlightedText(), pa.currentColorGroup(), QPalette::HighlightedText));
                 } else {
-                    pa.setBrush(QPalette::Foreground, dstyle.generatedBrush(opt, pa.buttonText(), pa.currentColorGroup(), QPalette::ButtonText));
+                    pa.setBrush(QPalette::WindowText, dstyle.generatedBrush(opt, pa.buttonText(), pa.currentColorGroup(), QPalette::ButtonText));
                 }
             }
 
@@ -1234,8 +1234,8 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
                     engine->paint(p, opt->palette, opt->rect);
                 } else {
                     auto icon_mode_state = toIconModeState(opt);
-                    p->setBrush(opt->palette.background());
-                    p->setPen(QPen(opt->palette.foreground(), 1));
+                    p->setBrush(opt->palette.window());
+                    p->setPen(QPen(opt->palette.windowText(), 1));
                     icon_opt->icon.paint(p, opt->rect, icon_opt->iconAlignment, icon_mode_state.first, icon_mode_state.second);
                 }
             }
@@ -2057,7 +2057,7 @@ DStyle::StyleState DStyle::getState(const QStyleOption *option)
 
 static DStyle::StateFlags getFlags(const QStyleOption *option)
 {
-    DStyle::StateFlags flags = 0;
+    DStyle::StateFlags flags{0};
 
     if (option->state.testFlag(DStyle::State_On)) {
         flags |= DStyle::SS_CheckedFlag;
@@ -2082,20 +2082,20 @@ void DStyle::drawPrimitive(QStyle::PrimitiveElement pe, const QStyleOption *opt,
 {
     switch (pe) {
     case PE_IndicatorArrowUp:
-        p->setPen(QPen(opt->palette.foreground(), 1));
+        p->setPen(QPen(opt->palette.windowText(), 1));
         return DDrawUtils::drawArrowUp(p, opt->rect);
     case PE_IndicatorArrowDown:
-        p->setPen(QPen(opt->palette.foreground(), 1));
+        p->setPen(QPen(opt->palette.windowText(), 1));
         return DDrawUtils::drawArrowDown(p, opt->rect);
     case PE_IndicatorArrowRight:
-        p->setPen(QPen(opt->palette.foreground(), 1));
+        p->setPen(QPen(opt->palette.windowText(), 1));
         return DDrawUtils::drawArrowRight(p, opt->rect);
     case PE_IndicatorArrowLeft:
-        p->setPen(QPen(opt->palette.foreground(), 1));
+        p->setPen(QPen(opt->palette.windowText(), 1));
         return DDrawUtils::drawArrowLeft(p, opt->rect);
     case PE_IndicatorHeaderArrow:
         if (const QStyleOptionHeader *header = qstyleoption_cast<const QStyleOptionHeader *>(opt)) {
-            p->setPen(QPen(opt->palette.foreground(), 1));
+            p->setPen(QPen(opt->palette.windowText(), 1));
             // sort up draw down icon, since both windows, mac and even wikipedia did this...
             if (header->sortIndicator & QStyleOptionHeader::SortUp) {
                 return proxy()->drawPrimitive(PE_IndicatorArrowDown, opt, p, w);
@@ -2145,14 +2145,16 @@ int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QW
         return 0;
     case PM_ButtonMargin:
         return 8;
-    case PM_DefaultChildMargin:
+    case PM_LayoutLeftMargin:
+    case PM_LayoutRightMargin:
+    case PM_LayoutTopMargin:
+    case PM_LayoutBottomMargin:
         return DSizeModeHelper::element(pixelMetric(PM_FrameRadius, opt, widget), pixelMetric(PM_FrameRadius, opt, widget));
     case PM_DefaultFrameWidth:
         return 1;
-    case PM_DefaultLayoutSpacing:
+    case PM_LayoutHorizontalSpacing:
+    case PM_LayoutVerticalSpacing:
         return DSizeModeHelper::element(2, 5);
-    case PM_DefaultTopLevelMargin:
-        return pixelMetric(PM_TopLevelWindowRadius, opt, widget) / 2;
     case PM_MenuBarItemSpacing:
         return 6;
     case PM_IndicatorWidth:
@@ -3004,8 +3006,8 @@ void DStyledIconEngine::paint(QPainter *painter, const QPalette &palette, const 
     if (!m_drawFun)
         return;
 
-    painter->setBrush(palette.background());
-    painter->setPen(QPen(palette.foreground(), painter->pen().widthF()));
+    painter->setBrush(palette.window());
+    painter->setPen(QPen(palette.windowText(), painter->pen().widthF()));
 
     m_drawFun(painter, rect);
 }
@@ -3056,9 +3058,12 @@ void DStyledIconEngine::setFrontRole(const QWidget *widget, QPalette::ColorRole 
 
 void DStyledIconEngine::virtual_hook(int id, void *data)
 {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     if (id == IconNameHook) {
         *reinterpret_cast<QString *>(data) = m_iconName;
-    } else if (id == IsNullHook) {
+    } else
+#endif
+    if (id == IsNullHook) {
         *reinterpret_cast<bool *>(data) = !m_drawFun;
     }
 

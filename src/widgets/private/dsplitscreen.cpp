@@ -3,8 +3,12 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
 #include "dsplitscreen_p.h"
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <QDesktopWidget>
+#else
 #include <QWindow>
+#include <QScreen>
+#endif
 #include <QLoggingCategory>
 #include <qpa/qplatformwindow.h>
 
@@ -307,14 +311,22 @@ void DSplitScreenWidget::init()
 
 bool DSplitScreenWidget::disableByScreenGeometryAndWindowSize() const
 {
+    auto window = this->window();
+    QRect screenRect;
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QDesktopWidget *desktop = qApp->desktop();
-    QWidget *window = this->window();
 
-    if (Q_LIKELY(desktop) && Q_LIKELY(window)) {
-        QRect screenRect = desktop->screenGeometry(window);
-
+    if (Q_LIKELY(window) && Q_LIKELY(desktop)) {
+        screenRect = desktop->screenGeometry(window);
+    }
+#else
+    if(auto screen = QGuiApplication::primaryScreen()){
+        screenRect = screen->geometry();
+    }
+#endif
+    if (Q_LIKELY(!screenRect.isNull()) && Q_LIKELY(window)) {
         // 窗口尺寸大于屏幕分辨率时 禁用控件
-        if (screenRect.width() < window->minimumWidth() || screenRect.height() < window->minimumHeight())
+        if(screenRect.width() < window->minimumWidth() || screenRect.height() < window->minimumHeight())
             return true;
     }
     return false;

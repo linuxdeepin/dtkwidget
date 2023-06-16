@@ -55,7 +55,11 @@ Q_SIGNALS:
 protected:
     void paintEvent(QPaintEvent *e) Q_DECL_OVERRIDE;
     void mouseReleaseEvent(QMouseEvent *e) Q_DECL_OVERRIDE;
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     void enterEvent(QEvent *e) Q_DECL_OVERRIDE;
+#else
+    void enterEvent(QEnterEvent *e) Q_DECL_OVERRIDE;
+#endif
     void leaveEvent(QEvent *e) Q_DECL_OVERRIDE;
 
 private:

@@ -97,7 +97,7 @@ void DLicenseDialogPrivate::init()
     QWidget *licenseWidget = new QWidget;
     QVBoxLayout *licenseLayout = new QVBoxLayout(licenseWidget);
     licenseLayout->setSpacing(0);
-    licenseLayout->setMargin(20);
+    licenseLayout->setContentsMargins(20, 20, 20, 20);
     licenseLayout->addWidget(componentNameLabel);
     licenseLayout->addSpacing(16);
     licenseLayout->addWidget(new DHorizontalLine);

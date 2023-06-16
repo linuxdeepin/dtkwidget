@@ -101,7 +101,12 @@ QString DToolTip::wrapToolTipText(QString text, QTextOption option)
         toolTipLayout.endLayout();
         for (int i = 0; i < toolTipLayout.lineCount(); ++i) {
             const auto &currentLine = toolTipLayout.lineAt(i);
-            toolTip.append(toolTipLayout.text().midRef(currentLine.textStart(), currentLine.textLength()));
+            const auto &toolTipText = toolTipLayout.text();
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+            toolTip.append(toolTipText.midRef(currentLine.textStart(), currentLine.textLength()));
+#else
+            toolTip.append(QStringView{toolTipText}.mid(currentLine.textStart(), currentLine.textLength()));
+#endif
             toolTip.append('\n');
         }
     }

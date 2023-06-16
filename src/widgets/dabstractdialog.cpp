@@ -4,7 +4,9 @@
 
 #include <QMouseEvent>
 #include <QApplication>
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
 #include <QDesktopWidget>
+#endif
 #include <QPushButton>
 #include <QScreen>
 #include <QPainter>
@@ -320,8 +322,11 @@ void DAbstractDialog::mousePressEvent(QMouseEvent *event)
 
     if (event->button() == Qt::LeftButton) {
         D_D(DAbstractDialog);
-
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         d->dragPosition = event->globalPos() - frameGeometry().topLeft();
+#else
+        d->dragPosition = event->globalPosition().toPoint() - frameGeometry().topLeft();
+#endif
         d->mousePressed = true;
     }
 
@@ -357,7 +362,11 @@ void DAbstractDialog::mouseMoveEvent(QMouseEvent *event)
     }
 
     if (d->mousePressed) {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         move(event->globalPos() - d->dragPosition);
+#else
+        move(event->globalPosition().toPoint() - d->dragPosition);
+#endif
         d->mouseMoved = true;
     }
 

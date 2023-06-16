@@ -6,7 +6,6 @@
 #define DAPPLICATION_P_H
 
 #include "dsizemode.h"
-
 #include <DObjectPrivate>
 #include <DApplication>
 #include <DPathBuf>
@@ -17,17 +16,19 @@
 class QLocalServer;
 class QTranslator;
 
-DCORE_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
+DCORE_USE_NAMESPACE
 
 class DAboutDialog;
 class DFeatureDisplayDialog;
 
 class DApplicationPrivate : public DObjectPrivate
 {
-    D_DECLARE_PUBLIC(DApplication)
 
 public:
+
+    D_DECLARE_PUBLIC(DApplication)
+
     explicit DApplicationPrivate(DApplication *q);
     ~DApplicationPrivate();
 

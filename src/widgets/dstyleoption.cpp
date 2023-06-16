@@ -353,7 +353,7 @@ const QFont DFontSizeManager::get(DFontSizeManager::SizeType type, int weight, c
     QFont font = base;
 
     font.setPixelSize(fontPixelSize(type));
-    font.setWeight(weight);
+    font.setWeight(static_cast<QFont::Weight>(weight));
 
     return font;
 }

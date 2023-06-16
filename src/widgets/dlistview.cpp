@@ -921,6 +921,7 @@ bool DListView::edit(const QModelIndex &index, QAbstractItemView::EditTrigger tr
     return tmp;
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0) //TODO: error Maybe
 QStyleOptionViewItem DListView::viewOptions() const
 {
     QStyleOptionViewItem item = QListView::viewOptions();
@@ -935,6 +936,7 @@ QStyleOptionViewItem DListView::viewOptions() const
 
     return item;
 }
+#endif
 
 QModelIndex DListView::moveCursor(QAbstractItemView::CursorAction cursorAction, Qt::KeyboardModifiers modifiers)
 {

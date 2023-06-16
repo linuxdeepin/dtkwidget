@@ -6,13 +6,17 @@
 #include <QtDBus/QtDBus>
 #include <QDebug>
 #include <QFile>
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
 #include <QGSettings/QGSettings>
+#endif
 
 DWIDGET_BEGIN_NAMESPACE
 
-#define EASY_CALL_DBUS(name)\
-    QDBusInterface *interface = fileManager1DBusInterface();\
-    return interface && interface->call(#name, urls2uris(urls), startupId).type() != QDBusMessage::ErrorMessage;
+#define EASY_CALL_DBUS(name)                                          \
+  QDBusInterface *interface = fileManager1DBusInterface();            \
+  return interface &&                                                 \
+         interface->call(#name, urls2uris(urls), startupId).type() != \
+             QDBusMessage::ErrorMessage;
 
 static const QStringList SOUND_EFFECT_LIST {
     "message",
@@ -71,24 +75,27 @@ static QList<QUrl> path2urls(const QList<QString> &paths)
          to camel case 'keyName' or 'KeyName'.
   This function converts GSettings key names to names
   suitable for Qt getters and setters.
-  
+
   Well fsck this.
-  
+
   \a name key name
   \return key name converted to camel case
   \internal
  */
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
 static QString GSettingsKeyToCamelCase(const QString name)
 {
-    QStringList parts = name.split('-', QString::SkipEmptyParts);
+    QStringList parts = name.split('-',Qt::SkipEmptyParts);
     for (int i=1; i<parts.size(); ++i)
         parts[i][0] = parts[i][0].toUpper();
 
     return parts.join("");
 }
+#endif
 
 static bool systemSoundEffectEnabled(const QString &name)
 {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QGSettings settings("com.deepin.dde.sound-effect");
 
     const bool effEnabled = settings.get("enabled").toBool();
@@ -104,6 +111,9 @@ static bool systemSoundEffectEnabled(const QString &name)
     }
 
     return effEnabled;
+#else
+    return false;
+#endif
 }
 
 bool DDesktopServices::showFolder(QString localFilePath, const QString &startupId)

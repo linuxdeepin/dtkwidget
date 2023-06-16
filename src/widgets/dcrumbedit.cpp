@@ -6,7 +6,7 @@
 #include "dobject_p.h"
 #include "DStyle"
 #include "dsizemode.h"
-
+#include <QRandomGenerator>
 #include <QAbstractTextDocumentLayout>
 #include <QPainter>
 #include <QPainterPath>
@@ -259,7 +259,7 @@ DCrumbTextFormat::DCrumbTextFormat(int objectType)
 {
     setObjectType(objectType);
 
-    setBackground(getGradientBrush(static_cast<Background>(qrand() % 12)));
+    setBackground(getGradientBrush(static_cast<Background>(QRandomGenerator::global()->generate() % 12)));
     setTextColor(Qt::white);
 #if QT_VERSION < QT_VERSION_CHECK(5, 12, 0)
     setVerticalAlignment(QTextCharFormat::AlignBaseline);
@@ -557,9 +557,9 @@ QSizeF CrumbObjectInterface::intrinsicSize(QTextDocument *doc, int posInDocument
     int radius = crumb_format.backgroundRadius();
 
     if (crumb_format.tagColor().isValid())
-        return QSizeF(font_metrics.width(crumb_format.text()) + font_metrics.height() + radius + 2, font_metrics.height() + 2);
+        return QSizeF(font_metrics.horizontalAdvance(crumb_format.text()) + font_metrics.height() + radius + 2, font_metrics.height() + 2);
 
-    return QSizeF(font_metrics.width(crumb_format.text()) + 2 * radius + 2, font_metrics.height() + 2 + TopMargin *2);
+    return QSizeF(font_metrics.horizontalAdvance(crumb_format.text()) + 2 * radius + 2, font_metrics.height() + 2 + TopMargin *2);
 }
 
 void CrumbObjectInterface::drawObject(QPainter *painter, const QRectF &rect,
@@ -639,7 +639,7 @@ DCrumbEdit::DCrumbEdit(QWidget *parent)
 {
     Q_D(DCrumbEdit);
 
-    qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
+    QRandomGenerator::global()->seed(QTime(0, 0, 0).secsTo(QTime::currentTime()));
 
     int frameRadius = DStyle::pixelMetric(style(), DStyle::PM_FrameRadius);
     int margins = DStyle::pixelMetric(style(), DStyle::PM_FrameMargins);
@@ -840,7 +840,7 @@ DCrumbTextFormat DCrumbEdit::makeTextFormat() const
 
     DCrumbTextFormat format(d->objectType);
 
-    format.setFontFamily(font().family());
+    format.setFontFamilies(font().families());
     format.setBackgroundRadius(d->crumbRadius);
 
     return format;
@@ -1018,8 +1018,12 @@ bool DCrumbEdit::event(QEvent *e)
         int frameRadius = DStyle::pixelMetric(style(), DStyle::PM_FrameRadius);
         // update crumbRadius if not set.
         if (!d->explicitCrumbRadius) {
-            d->crumbRadius = frameRadius;
-            auto collection = document()->docHandle()->formatCollection();
+        d->crumbRadius = frameRadius;
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+        auto collection = document()->docHandle()->formatCollection();
+#else
+        auto collection = QTextDocumentPrivate::get(document())->formatCollection();
+#endif
             for (int i = 0; i < collection->numFormats(); ++i) {
                 // only update format in d->formats.
                 if (!collection->format(i).hasProperty(QTextFormat::UserProperty + 1))

@@ -26,10 +26,10 @@ DBaseLine::DBaseLine(QWidget *parent) : QLabel(parent)
 {
     this->setFixedHeight(CONTENT_HEADER_HEIGHT);
     m_leftLayout = new QHBoxLayout();
-    m_leftLayout->setMargin(0);
+    m_leftLayout->setContentsMargins(0,0,0,0);
     m_leftLayout->setSpacing(0);
     m_rightLayout = new QHBoxLayout();
-    m_rightLayout->setMargin(0);
+    m_rightLayout->setContentsMargins(0, 0, 0, 0);
     m_rightLayout->setSpacing(0);
 
     m_mainLayout = new QHBoxLayout();

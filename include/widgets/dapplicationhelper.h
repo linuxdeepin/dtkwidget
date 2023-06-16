@@ -9,8 +9,9 @@
 #include <DGuiApplicationHelper>
 #include <DPalette>
 
-DGUI_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
+
+DGUI_USE_NAMESPACE
 
 class D_DECL_DEPRECATED_X("Use DPaletteHelper") DApplicationHelper : public DGuiApplicationHelper
 {

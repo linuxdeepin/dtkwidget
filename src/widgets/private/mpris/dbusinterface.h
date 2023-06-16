@@ -34,7 +34,12 @@ class DBusInterface: public QDBusAbstractInterface
             const QMetaObject* self = metaObject();
             for (int i=self->propertyOffset(); i < self->propertyCount(); ++i) {
                 QMetaProperty p = self->property(i);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
                 QGenericArgument value(QMetaType::typeName(p.type()), const_cast<void*>(changedProps[prop].constData()));
+#else
+                QGenericArgument value(p.metaType().name(), const_cast<void*>(changedProps[prop].constData()));
+#endif
+                
                 if (p.name() == prop) {
                     Q_EMIT p.notifySignal().invoke(this, value);
                 }

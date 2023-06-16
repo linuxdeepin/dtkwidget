@@ -18,9 +18,11 @@
 #include <QPrinter>
 #undef private
 
-DGUI_USE_NAMESPACE
+
 
 DWIDGET_BEGIN_NAMESPACE
+
+DGUI_USE_NAMESPACE
 
 class DPrintPreviewWidgetPrivate;
 
@@ -29,6 +31,8 @@ class DPrinter : public QPrinter
 public:
     explicit DPrinter(PrinterMode mode = ScreenResolution);
     ~DPrinter() {}
+
+    enum Orientation { Portrait, Landscape };
 
     void setPreviewMode(bool isPreview);
 

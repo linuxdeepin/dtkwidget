@@ -30,7 +30,11 @@ public:
     QString productName() const;
     QString version() const;
     QString description() const;
-    const QPixmap *companyLogo() const;
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+    D_DECL_DEPRECATED_X("this method will be deprecated after dtk6") const QPixmap *companyLogo() const;
+#else
+    QPixmap companyLogo() const;
+#endif
     QString websiteName() const;
     QString websiteLink() const;
     D_DECL_DEPRECATED_X("acknowledgement is no longer used") QString acknowledgementLink() const;

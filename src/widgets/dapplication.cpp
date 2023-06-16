@@ -2,6 +2,9 @@
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
+#include "dapplication.h"
+#include "private/dapplication_p.h"
+
 #include <QtGlobal>
 #ifdef Q_OS_LINUX
 #ifdef private
@@ -36,9 +39,7 @@
 #include <unistd.h>
 #endif
 
-#include "dapplication.h"
 #include "dthememanager.h"
-#include "private/dapplication_p.h"
 #include "daboutdialog.h"
 #include "dfeaturedisplaydialog.h"
 #include "dmainwindow.h"
@@ -54,17 +55,19 @@
 #include "private/startupnotifications/startupnotificationmonitor.h"
 
 #include <DDBusSender>
-
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
 #include <QGSettings>
 #endif
+#endif
 
+
+
+DWIDGET_BEGIN_NAMESPACE
+
+DCORE_USE_NAMESPACE
 #define DXCB_PLUGIN_KEY "dxcb"
 #define DXCB_PLUGIN_SYMBOLIC_PROPERTY "_d_isDxcb"
 #define QT_THEME_CONFIG_PATH "D_QT_THEME_CONFIG_PATH"
-
-DCORE_USE_NAMESPACE
-
-DWIDGET_BEGIN_NAMESPACE
 
 DApplicationPrivate::DApplicationPrivate(DApplication *q) :
     DObjectPrivate(q)
@@ -138,8 +141,11 @@ static bool tryAcquireSystemSemaphore(QSystemSemaphore *ss, qint64 timeout = 10)
     _tmp_ss.acquire();
 
     QElapsedTimer t;
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QFuture<bool> request = QtConcurrent::run(ss, &QSystemSemaphore::acquire);
-
+#else
+    QFuture<bool> request = QtConcurrent::run(&QSystemSemaphore::acquire,ss);
+#endif
     t.start();
 
     while (Q_LIKELY(t.elapsed() < timeout && !request.isFinished()));
@@ -230,11 +236,19 @@ bool DApplicationPrivate::loadDtkTranslator(QList<QLocale> localeFallback)
     D_Q(DApplication);
 
     auto qtTranslator = new QTranslator(q);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     qtTranslator->load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+#else
+    qtTranslator->load("qt_" + QLocale::system().name(), QLibraryInfo::path(QLibraryInfo::TranslationsPath));
+#endif
     q->installTranslator(qtTranslator);
 
     auto qtbaseTranslator = new QTranslator(q);
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     qtTranslator->load("qtbase_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+#else
+    qtTranslator->load("qtbase_" + QLocale::system().name(), QLibraryInfo::path(QLibraryInfo::TranslationsPath));
+#endif
     q->installTranslator(qtbaseTranslator);
 
     QList<QString> translateDirs;
@@ -404,10 +418,14 @@ void DApplicationPrivate::handleSizeModeChangeEvent(QWidget *widget, QEvent *eve
     for (auto w : widget->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly)) {
         handleSizeModeChangeEvent(w, event);
     }
-    if (widget->isTopLevel()) {
+    if (widget->isWindow()) {
         // TODO 顶层窗口需要延迟，否则内部控件布局出现异常，例如DDialog, 若send事件，导致
         // 从compact -> normal -> campact时，DDialog内部控件布局的两次campact大小不一致.
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        qApp->postEvent(widget, event->clone());
+#else
         qApp->postEvent(widget, new QEvent(*event));
+#endif
     } else {
         QCoreApplication::sendEvent(widget, event);
     }
@@ -574,6 +592,7 @@ DApplication::DApplication(int &argc, char **argv) :
     }
 
 #ifdef Q_OS_LINUX
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     // set qpixmap cache limit
     if (QGSettings::isSchemaInstalled("com.deepin.dde.dapplication"))
     {
@@ -602,9 +621,14 @@ DApplication::DApplication(int &argc, char **argv) :
             QTapAndHoldGesture::setTimeout(gsettings.get("longpress-duration").toInt() - 100);
     }
 #endif
+#endif
 
     connect(DGuiApplicationHelper::instance(), SIGNAL(sizeModeChanged(DGuiApplicationHelper::SizeMode)),
             this, SLOT(_q_sizeModeChanged()));
+}
+
+DApplication::~DApplication() {
+    
 }
 
 /*!
@@ -1244,7 +1268,7 @@ void DApplication::setAutoActivateWindows(bool autoActivateWindows)
  */
 void DApplication::acclimatizeVirtualKeyboard(QWidget *window)
 {
-    Q_ASSERT(!window->property("_dtk_NoTopLevelEnabled").toBool() ? window->isTopLevel() : true
+    Q_ASSERT(!window->property("_dtk_NoTopLevelEnabled").toBool() ? window->isWindow() : true
              && !window->testAttribute(Qt::WA_LayoutOnEntireRect)
              && !window->testAttribute(Qt::WA_ContentsMarginsRespectsSafeArea));
 
@@ -1522,7 +1546,7 @@ bool DApplication::notify(QObject *obj, QEvent *event)
     if (event->type() == QEvent::FocusIn) {
         QFocusEvent *fe = static_cast<QFocusEvent*>(event);
         QWidget *widget = qobject_cast<QWidget*>(obj);
-        if (widget && fe->reason() == Qt::ActiveWindowFocusReason && !widget->isTopLevel()
+        if (widget && fe->reason() == Qt::ActiveWindowFocusReason && !widget->isWindow()
                 && ((widget->focusPolicy() & Qt::StrongFocus) != Qt::StrongFocus || qobject_cast<DTitlebar *>(widget)))  {
             // 针对激活窗口所获得的焦点，为了避免被默认给到窗口内部的控件上，此处将焦点还给主窗口并且只设置一次
 #define NON_FIRST_ACTIVE "_d_dtk_non_first_active_focus"
