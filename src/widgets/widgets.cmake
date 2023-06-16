@@ -7,6 +7,7 @@ file(GLOB SETTINGS ${CMAKE_CURRENT_LIST_DIR}/private/settings/*)
 file(GLOB NOTIFICATIONS ${CMAKE_CURRENT_LIST_DIR}/private/startupnotifications/*)
 file(GLOB KEYBOARD ${CMAKE_CURRENT_LIST_DIR}/private/keyboardmonitor/*)
 file(GLOB_RECURSE RESOURCES ${CMAKE_CURRENT_LIST_DIR}/*.qrc)
+
 set(WIDGETS
   ${MPRIS_HEADERS}
   ${MPRIS_SOURCES}
