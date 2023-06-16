@@ -12,7 +12,11 @@
 #include<qpa/qplatformnativeinterface.h>
 #ifdef Q_OS_LINUX
 #include <X11/extensions/shape.h>
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <QX11Info>
+#else
+#include <QtGui/private/qtx11extras_p.h>
+#endif
 #endif
 #include <QApplication>
 #include <QScreen>
@@ -1366,7 +1370,7 @@ void DArrowRectanglePrivate::paintEvent(QPaintEvent *e)
     QColor bk_color;
 
     if (!m_backgroundColor.isValid()) {
-        bk_color = qApp->palette().background().color();
+        bk_color = qApp->palette().window().color();
     } else {
         bk_color = m_backgroundColor;
     }

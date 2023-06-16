@@ -3,7 +3,11 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
 #include <QtWidgets>
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <QX11Info>
+#else
+#include <QtGui/private/qtx11extras_p.h>
+#endif
 
 #include <libsn/sn-monitor.h>
 #include <xcb/xcb_aux.h>
@@ -101,8 +105,11 @@ StartupNotificationMonitor::~StartupNotificationMonitor()
 {
     qApp->removeNativeEventFilter(this);
 }
-
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 bool StartupNotificationMonitor::nativeEventFilter(const QByteArray &eventType, void *message, long *)
+#else
+bool StartupNotificationMonitor::nativeEventFilter(const QByteArray &eventType, void *message, qintptr *)
+#endif
 {
     if(Q_LIKELY(eventType == "xcb_generic_event_t")) {
         xcb_generic_event_t* event = static_cast<xcb_generic_event_t *>(message);

@@ -209,7 +209,7 @@ void DSimpleListView::setColumnTitleInfo(QList<QString> titles, QList<int> width
         if (widths[i] == -1) {
             d->columnWidths << widths[i];
         } else {
-            int renderTitleWidth = fm.width(titles[i]) + d->titlePadding + arrowUpNormalImage.width() / arrowUpNormalImage.devicePixelRatio() + d->titleArrowPadding * 2;
+            int renderTitleWidth = fm.horizontalAdvance(titles[i]) + d->titlePadding + arrowUpNormalImage.width() / arrowUpNormalImage.devicePixelRatio() + d->titleArrowPadding * 2;
             d->columnWidths << std::max(widths[i], renderTitleWidth);
         }
     }
@@ -855,18 +855,30 @@ void DSimpleListView::mouseMoveEvent(QMouseEvent *mouseEvent)
     // Scroll if mouse drag at scrollbar.
     if (d->mouseDragScrollbar) {
         int barHeight = getScrollbarHeight();
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         d->renderOffset = adjustRenderOffset((mouseEvent->y() - barHeight / 2 - d->titleHeight) / (getScrollAreaHeight() * 1.0) * d->getItemsTotalHeight());
-
+#else
+        d->renderOffset = adjustRenderOffset((mouseEvent->position().y() - barHeight / 2 - d->titleHeight) / (getScrollAreaHeight() * 1.0) * d->getItemsTotalHeight());
+#endif
         repaint();
     }
     // Update scrollbar status with mouse position.
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     else if (isMouseAtScrollArea(mouseEvent->x()) != d->mouseAtScrollArea) {
         d->mouseAtScrollArea = isMouseAtScrollArea(mouseEvent->x());
+#else
+    else if (isMouseAtScrollArea(mouseEvent->position().x()) != d->mouseAtScrollArea) {
+        d->mouseAtScrollArea = isMouseAtScrollArea(mouseEvent->position().x());
+#endif
         repaint();
     }
     // Otherwise to check titlebar arrow status.
     else {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         bool atTitleArea = isMouseAtTitleArea(mouseEvent->y());
+#else
+        bool atTitleArea = isMouseAtTitleArea(mouseEvent->position().y());
+#endif
 
         if (atTitleArea) {
             int hoverColumn = -1;
@@ -878,8 +890,13 @@ void DSimpleListView::mouseMoveEvent(QMouseEvent *mouseEvent)
                 int columnCounter = 0;
                 int columnRenderX = 0;
                 for (int renderWidth:renderWidths) {
-                    if (renderWidth > 0) {
-                        if (mouseEvent->x() > columnRenderX && mouseEvent->x() < columnRenderX + renderWidth) {
+                  if (renderWidth > 0) {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+                        auto mx = mouseEvent->x();
+#else
+                        auto mx = mouseEvent->position().x();
+#endif
+                        if (mx > columnRenderX && mx < columnRenderX + renderWidth) {
                             hoverColumn = columnCounter;
 
                             break;
@@ -898,8 +915,11 @@ void DSimpleListView::mouseMoveEvent(QMouseEvent *mouseEvent)
                 repaint();
             }
         } else {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
             int hoverItemIndex = (d->renderOffset + mouseEvent->y() - d->titleHeight) / d->rowHeight;
-
+#else
+            int hoverItemIndex = (d->renderOffset + mouseEvent->position().y() - d->titleHeight) / d->rowHeight;
+#endif
             // NOTE: hoverItemIndex may be less than 0, we need check index here.
             if (hoverItemIndex >= 0 && hoverItemIndex < (*d->renderItems).length()) {
                 DSimpleListItem *item = (*d->renderItems)[hoverItemIndex];
@@ -910,7 +930,12 @@ void DSimpleListView::mouseMoveEvent(QMouseEvent *mouseEvent)
                 int columnRenderX = 0;
                 for (int renderWidth:renderWidths) {
                     if (renderWidth > 0) {
-                        if (mouseEvent->x() > columnRenderX && mouseEvent->x() < columnRenderX + renderWidth) {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+                        auto mx = mouseEvent->x();
+#else
+                        auto mx = mouseEvent->position().x();
+#endif
+                        if (mx > columnRenderX && mx < columnRenderX + renderWidth) {
                             break;
                         }
 
@@ -927,9 +952,13 @@ void DSimpleListView::mouseMoveEvent(QMouseEvent *mouseEvent)
                 }
 
                 // Emit mouseHoverChanged signal.
-                mouseHoverChanged(d->mouseHoverItem, item, columnCounter,
-                                  QPoint(mouseEvent->x() - columnRenderX,
-                                         d->renderOffset + mouseEvent->y() - hoverItemIndex * d->rowHeight));
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+                auto point = QPoint{mouseEvent->x() - columnRenderX, d->renderOffset + mouseEvent->y() - hoverItemIndex * d->rowHeight};
+#else
+                auto point = QPoint{mouseEvent->position().x() - columnRenderX,
+                                         d->renderOffset + mouseEvent->position().y() - hoverItemIndex * d->rowHeight};
+#endif
+                mouseHoverChanged(d->mouseHoverItem, item, columnCounter,point);
                 d->mouseHoverItem = item;
 
                 if (d->lastHoverItem == NULL || !item->sameAs(d->lastHoverItem) || columnCounter != d->lastHoverColumnIndex) {
@@ -948,9 +977,13 @@ void DSimpleListView::mousePressEvent(QMouseEvent *mouseEvent)
     D_D(DSimpleListView);
 
     setFocus();
-
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     bool atTitleArea = isMouseAtTitleArea(mouseEvent->y());
     bool atScrollArea = isMouseAtScrollArea(mouseEvent->x());
+#else
+    bool atTitleArea = isMouseAtTitleArea(mouseEvent->position().y());
+    bool atScrollArea = isMouseAtScrollArea(mouseEvent->position().x());
+#endif
 
     // Sort items with column's sorting algorithms when click on title area.
     if (atTitleArea) {
@@ -963,7 +996,12 @@ void DSimpleListView::mousePressEvent(QMouseEvent *mouseEvent)
                 int columnRenderX = 0;
                 for (int renderWidth:renderWidths) {
                     if (renderWidth > 0) {
-                        if (mouseEvent->x() > columnRenderX && mouseEvent->x() < columnRenderX + renderWidth) {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+                        auto mx = mouseEvent->x();
+#else
+                        auto mx = mouseEvent->position().x();
+#endif
+                        if (mx > columnRenderX && mx < columnRenderX + renderWidth) {
                             // If switch other column, default order is from top to bottom.
                             if (columnCounter != d->defaultSortingColumn) {
                                 (*d->sortingOrderes)[columnCounter] = true;
@@ -1007,7 +1045,7 @@ void DSimpleListView::mousePressEvent(QMouseEvent *mouseEvent)
                         action->setCheckable(true);
                         action->setChecked(columnVisibles[i]);
 
-                        connect(action, &QAction::triggered, this, [this, action, i] {
+                        connect(action, &QAction::triggered, this, [this, i] {
                             if (i>=columnVisibles.size()) return ;
 
                            columnVisibles[i] = !columnVisibles[i];
@@ -1031,18 +1069,27 @@ void DSimpleListView::mousePressEvent(QMouseEvent *mouseEvent)
         int barY = getScrollbarY();
 
         // Flag mouseDragScrollbar when click on scrollbar.
-        if (mouseEvent->y() > barY && mouseEvent->y() < barY + barHeight) {
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+        auto my = mouseEvent->y();
+#else
+        auto my = mouseEvent->position().y();
+#endif
+        if (my > barY && my < barY + barHeight) {
             d->mouseDragScrollbar = true;
         }
         // Scroll if click out of scrollbar area.
         else {
-            d->renderOffset = adjustRenderOffset((mouseEvent->y() - barHeight / 2 - d->titleHeight) / (getScrollAreaHeight() * 1.0) * d->getItemsTotalHeight());
+            d->renderOffset = adjustRenderOffset((my - barHeight / 2 - d->titleHeight) / (getScrollAreaHeight() * 1.0) * d->getItemsTotalHeight());
             repaint();
         }
     }
     // Select items.
     else {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         int pressItemIndex = (d->renderOffset + mouseEvent->y() - d->titleHeight) / d->rowHeight;
+#else
+        int pressItemIndex = (d->renderOffset + mouseEvent->position().y() - d->titleHeight) / d->rowHeight;
+#endif
 
         if (pressItemIndex >= d->renderItems->count()) {
             if (!d->isKeepSelectWhenClickBlank) {
@@ -1088,7 +1135,12 @@ void DSimpleListView::mousePressEvent(QMouseEvent *mouseEvent)
                     int columnRenderX = 0;
                     for (int renderWidth:renderWidths) {
                         if (renderWidth > 0) {
-                            if (mouseEvent->x() > columnRenderX && mouseEvent->x() < columnRenderX + renderWidth) {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+                            auto mx = mouseEvent->x();
+#else
+                            auto mx = mouseEvent->position().x();
+#endif
+                            if (mx > columnRenderX && mx < columnRenderX + renderWidth) {
                                 break;
                             }
 
@@ -1097,9 +1149,13 @@ void DSimpleListView::mousePressEvent(QMouseEvent *mouseEvent)
 
                         columnCounter++;
                     }
-                    mousePressChanged((*d->renderItems)[pressItemIndex], columnCounter,
-                                      QPoint(mouseEvent->x() - columnRenderX,
-                                             d->renderOffset + mouseEvent->y() - pressItemIndex * d->rowHeight));
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+                    auto point = QPoint(mouseEvent->x() - columnRenderX, d->renderOffset + mouseEvent->y() - pressItemIndex * d->rowHeight);
+#else
+                    auto point = QPoint(mouseEvent->position().x() - columnRenderX,
+                                            d->renderOffset + mouseEvent->position().y() - pressItemIndex * d->rowHeight);
+#endif
+                    mousePressChanged((*d->renderItems)[pressItemIndex], columnCounter, point);
 
                     repaint();
                 }
@@ -1150,7 +1206,11 @@ void DSimpleListView::mouseReleaseEvent(QMouseEvent *mouseEvent)
     }
 
     // Emit mouseReleaseChanged signal.
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     int releaseItemIndex = (d->renderOffset + mouseEvent->y() - d->titleHeight) / d->rowHeight;
+#else
+    int releaseItemIndex = (d->renderOffset + mouseEvent->position().y() - d->titleHeight) / d->rowHeight;
+#endif
 
     if (releaseItemIndex >= 0 && releaseItemIndex < (*d->renderItems).length()) {
         QList<int> renderWidths = getRenderWidths();
@@ -1158,7 +1218,12 @@ void DSimpleListView::mouseReleaseEvent(QMouseEvent *mouseEvent)
         int columnRenderX = 0;
         for (int renderWidth:renderWidths) {
             if (renderWidth > 0) {
-                if (mouseEvent->x() > columnRenderX && mouseEvent->x() < columnRenderX + renderWidth) {
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+                auto mx = mouseEvent->x();
+#else
+                auto mx = mouseEvent->position().x();
+#endif
+                if (mx > columnRenderX && mx < columnRenderX + renderWidth) {
                     break;
                 }
 
@@ -1167,21 +1232,25 @@ void DSimpleListView::mouseReleaseEvent(QMouseEvent *mouseEvent)
 
             columnCounter++;
         }
-        mouseReleaseChanged((*d->renderItems)[releaseItemIndex], columnCounter,
-                            QPoint(mouseEvent->x() - columnRenderX,
-                                   d->renderOffset + mouseEvent->y() - releaseItemIndex * d->rowHeight));
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+        auto point = QPoint{mouseEvent->x() - columnRenderX, d->renderOffset + mouseEvent->y() - releaseItemIndex * d->rowHeight};
+#else
+        auto point = QPoint{mouseEvent->position().x() - columnRenderX,
+                                   d->renderOffset + mouseEvent->position().y() - releaseItemIndex * d->rowHeight};
+#endif
+        mouseReleaseChanged((*d->renderItems)[releaseItemIndex], columnCounter, point);
     }
 }
 
 void DSimpleListView::wheelEvent(QWheelEvent *event)
 {
     D_D(DSimpleListView);
-
-    if (event->orientation() == Qt::Vertical) {
+    auto delta = event->angleDelta();
+    if (delta.y() != 0) {
         // Record old render offset to control scrollbar whether display.
         d->oldRenderOffset = d->renderOffset;
 
-        qreal scrollStep = event->angleDelta().y() / 120.0;
+        qreal scrollStep = delta.y() / 120.0;
         d->renderOffset = adjustRenderOffset(d->renderOffset - scrollStep * d->scrollUnit);
 
         repaint();
@@ -1434,7 +1503,7 @@ void DSimpleListView::selectNextItemWithOffset(int scrollOffset)
         }
 
         if (lastIndex != -1) {
-            lastIndex = std::min(d->renderItems->count() - 1, lastIndex + scrollOffset);
+            lastIndex = std::min<qsizetype>(d->renderItems->count() - 1, lastIndex + scrollOffset);
 
             clearSelections(false);
 
@@ -1592,9 +1661,9 @@ void DSimpleListView::shiftSelectNextItemWithOffset(int scrollOffset)
 
             if (firstIndex == lastSelectionIndex) {
                 selectionStartIndex = firstIndex;
-                selectionEndIndex = std::min(d->renderItems->count() - 1, lastIndex + scrollOffset);
+                selectionEndIndex = std::min<qsizetype>(d->renderItems->count() - 1, lastIndex + scrollOffset);
             } else {
-                selectionStartIndex = std::min(d->renderItems->count() - 1, firstIndex + scrollOffset);
+                selectionStartIndex = std::min<qsizetype>(d->renderItems->count() - 1, firstIndex + scrollOffset);
                 selectionEndIndex = lastIndex;
             }
 
@@ -1743,7 +1812,7 @@ int DSimpleListView::getBottomRenderOffset()
 void DSimpleListViewPrivate::sortItemsByColumn(int column, bool descendingSort)
 {
     if (sortingAlgorithms->count() != 0 && sortingAlgorithms->count() == columnTitles.count() && sortingOrderes->count() == columnTitles.count()) {
-        qSort(renderItems->begin(), renderItems->end(), [&](const DSimpleListItem *item1, const DSimpleListItem *item2) {
+        std::sort(renderItems->begin(), renderItems->end(), [&](const DSimpleListItem *item1, const DSimpleListItem *item2) {
                 return (*sortingAlgorithms)[column](item1, item2, descendingSort);
             });
     }

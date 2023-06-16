@@ -98,10 +98,12 @@ static void loadDViewItemActionList(QDataStream &s, void *d)
 __attribute__((constructor))
 static void registerMetaType ()
 {
+    #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     // register DViewItemActionList's stream operator to support that QMetaType can using save and load function.
     QMetaType::registerStreamOperators(QMetaTypeId<DTK_WIDGET_NAMESPACE::ActionList>::qt_metatype_id(),
                                        saveDViewItemActionList,
                                        loadDViewItemActionList);
+    #endif
 }
 
 static DViewItemActionList qvariantToActionList(const QVariant &v)
@@ -1080,7 +1082,7 @@ void DStyledItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
             break;
         }
 
-        style->drawPrimitive(QStyle::PE_IndicatorViewItemCheck, &option, painter, widget);
+        style->drawPrimitive(QStyle::PE_IndicatorItemViewItemCheck, &option, painter, widget);
     }
 
     // reset rect for focus rect

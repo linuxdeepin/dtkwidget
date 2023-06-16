@@ -246,7 +246,7 @@ void IconTextWidget::setContent(const QIcon &icon, const QString &text, const QS
 
     QVBoxLayout *mainVLayout = new QVBoxLayout(this);
     mainVLayout->setSpacing(0);
-    mainVLayout->setMargin(0);
+    mainVLayout->setContentsMargins(0, 0, 0, 0);
     mainVLayout->addWidget(m_iconWidget, 0, Qt::AlignHCenter);
     mainVLayout->addSpacing(6);
     mainVLayout->addWidget(m_titleLabel, 0, Qt::AlignHCenter);
@@ -358,12 +358,12 @@ void DCollapseWidget::updateMinimumValue()
             }
         }
     }
-
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     minimum += 2 * m_mainHLayout->margin();
-    qDebug() << "+" << 2 * m_mainHLayout->margin();
-
+#else
+    minimum += m_mainHLayout->contentsMargins().right() + m_mainHLayout->contentsMargins().left();
+#endif
     m_minimumWidth = minimum;
-    qDebug() << "minimum:" << m_minimumWidth << "width:" << this->width() << "count:" << m_mainHLayout->count();
 }
 
 void DCollapseWidget::initExpandButton()

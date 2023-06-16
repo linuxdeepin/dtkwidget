@@ -313,10 +313,10 @@ void DSearchEditPrivate::init()
     iconWidget->setObjectName("iconWidget");
     iconWidget->setAccessibleName("DSearchEditIconWidget");
     QHBoxLayout *center_layout = new QHBoxLayout(iconWidget);
-    center_layout->setMargin(0);
+    center_layout->setContentsMargins(0, 0, 0, 0);
     center_layout->setSpacing(6);
 
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
 
     center_layout->addWidget(iconbtn, 0, Qt::AlignVCenter);

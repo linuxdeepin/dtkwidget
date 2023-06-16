@@ -15,9 +15,11 @@ QT_BEGIN_NAMESPACE
 class QGuiApplication;
 QT_END_NAMESPACE
 
-DGUI_USE_NAMESPACE
+
 
 DTK_BEGIN_NAMESPACE
+
+DGUI_USE_NAMESPACE
 
 enum ItemDataRole {
     MarginsRole = Qt::UserRole + 1,

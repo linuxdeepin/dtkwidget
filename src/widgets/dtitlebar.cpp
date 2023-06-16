@@ -20,6 +20,7 @@
 #include <DConfig>
 #include <QScreen>
 #include <QWindow>
+#include <QActionGroup>
 #include <qpa/qplatformwindow.h>
 
 #include "dpalettehelper.h"
@@ -283,7 +284,7 @@ void DTitlebarPrivate::init()
     rightLayout->setContentsMargins(0, 0, 0, 0);
     auto rightAreaLayout = new QHBoxLayout(rightArea);
     rightAreaLayout->setContentsMargins(0, 0, 0, 0);
-    rightAreaLayout->setMargin(0);
+    rightAreaLayout->setContentsMargins(0, 0, 0, 0);
     rightAreaLayout->setSpacing(0);
     rightAreaLayout->addLayout(rightLayout);
     rightAreaLayout->addWidget(buttonArea);

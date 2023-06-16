@@ -423,8 +423,8 @@ QSize DFlowLayout::minimumSize() const
 
     for (QLayoutItem *item : d->itemList)
         size = size.expandedTo(item->minimumSize());
-
-    size += QSize(2 * margin(), 2 * margin());
+    auto margin = this->contentsMargins();
+    size += QSize(2 * (margin.right() + margin.left()), 2 * (margin.top() + margin.bottom()));
 
     return size;
 }

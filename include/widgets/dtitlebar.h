@@ -12,8 +12,10 @@
 #include <QFrame>
 #include <QMenu>
 
-DGUI_USE_NAMESPACE
+
 DWIDGET_BEGIN_NAMESPACE
+
+DGUI_USE_NAMESPACE
 
 class DSidebarHelper;
 class DTitlebarSettings;

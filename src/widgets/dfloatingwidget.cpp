@@ -59,7 +59,7 @@ void DFloatingWidget::setWidget(QWidget *widget)
 
     if (!d->layout) {
         d->layout = new QHBoxLayout(this);
-        d->layout->setMargin(0);
+        d->layout->setContentsMargins(0, 0, 0, 0);
     }
 
     for (int i = 0; i < d->layout->count(); ++i) {

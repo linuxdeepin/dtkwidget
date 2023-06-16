@@ -110,7 +110,9 @@ protected:
     void currentChanged(const QModelIndex &current, const QModelIndex &previous) Q_DECL_OVERRIDE;
     bool edit(const QModelIndex &index, EditTrigger trigger, QEvent *event) Q_DECL_OVERRIDE;
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QStyleOptionViewItem viewOptions() const override;
+#endif
     virtual QModelIndex moveCursor(CursorAction cursorAction,
                                    Qt::KeyboardModifiers modifiers) override;
     QSize viewportSizeHint() const override;

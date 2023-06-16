@@ -72,7 +72,7 @@ static bool writeTrashInfo(const QString &fileBaseName, const QString &sourceFil
 
     data.append("[Trash Info]\n");
     data.append("Path=").append(sourceFilePath.toUtf8().toPercentEncoding("/")).append("\n");
-    data.append("DeletionDate=").append(datetime.toString(Qt::ISODate)).append("\n");
+    data.append("DeletionDate=").append(datetime.toString(Qt::ISODate).toLocal8Bit()).append("\n");
 
     qint64 size = metadata.write(data);
     metadata.close();

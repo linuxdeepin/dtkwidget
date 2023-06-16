@@ -21,12 +21,15 @@
 #include <QTableView>
 #include <QItemDelegate>
 #include <QTreeView>
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <QDesktopWidget>
+#endif
 #include <QLayout>
 #include <QScrollBar>
 #include <QHeaderView>
 #include <QScreen>
 #include <QStack>
+#include <QWindow>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -50,9 +53,8 @@ QRect DComboBoxPrivate::popupGeometry()
     bool useFullScreenForPopupMenu = false;
     if (const QPlatformTheme *theme = QGuiApplicationPrivate::platformTheme())
         useFullScreenForPopupMenu = theme->themeHint(QPlatformTheme::UseFullScreenForPopupMenu).toBool();
-    return useFullScreenForPopupMenu ?
-                QApplication::desktop()->screenGeometry(q) :
-                QApplication::desktop()->availableGeometry(q);
+    auto screen = q->window()->windowHandle()->screen();
+    return useFullScreenForPopupMenu ? screen->geometry() : screen->availableGeometry();
 }
 
 /*!
@@ -71,7 +73,7 @@ int DComboBoxPrivate::computeWidthHint() const
 
     for (int i = 0; i < count; ++i) {
 #if QT_DEPRECATED_SINCE(5, 11)
-        const int textWidth = fontMetrics.width(q->itemText(i));
+        const int textWidth = fontMetrics.horizontalAdvance(q->itemText(i));
 #else
         const int textWidth = fontMetrics.horizontalAdvance(q->itemText(i));
 #endif
@@ -198,15 +200,13 @@ void DComboBox::showPopup()
         int heightMargin = container->topMargin()  + container->bottomMargin();
 
         // add the frame of the container
-        int marginTop, marginBottom;
-        container->getContentsMargins(0, &marginTop, 0, &marginBottom);
-        heightMargin += marginTop + marginBottom;
+        const auto& containerMargin = container->contentsMargins();
+        heightMargin += containerMargin.top() + containerMargin.bottom();
 
         //add the frame of the view
-        view()->getContentsMargins(0, &marginTop, 0, &marginBottom);
-        marginTop += static_cast<QAbstractScrollAreaPrivate *>(QObjectPrivate::get(view()))->top;
-        marginBottom += static_cast<QAbstractScrollAreaPrivate *>(QObjectPrivate::get(view()))->bottom;
-        heightMargin += marginTop + marginBottom;
+        const auto& viewMargin = view()->contentsMargins();
+        heightMargin += (viewMargin.top() + static_cast<QAbstractScrollAreaPrivate *>(QObjectPrivate::get(view()))->top
+                        + viewMargin.bottom() + static_cast<QAbstractScrollAreaPrivate *>(QObjectPrivate::get(view()))->bottom);
 
         listRect.setHeight(listRect.height() + heightMargin);
     }

@@ -44,7 +44,7 @@ void DIpv4LineEditPrivate::init()
     QHBoxLayout *hbox_layout = new QHBoxLayout;
 
     hbox_layout->setSpacing(0);
-    hbox_layout->setMargin(0);
+    hbox_layout->setContentsMargins(0, 0, 0, 0);
     hbox_layout->addWidget(getEdit());
     hbox_layout->addWidget(getLabel());
     hbox_layout->addWidget(getEdit());

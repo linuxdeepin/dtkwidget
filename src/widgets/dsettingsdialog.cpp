@@ -81,7 +81,7 @@ DSettingsDialog::DSettingsDialog(QWidget *parent) :
     d->content->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     d->content->setAccessibleName("DSettingDialogContentWidget");
 
-    rightlayout->setMargin(0);
+    rightlayout->setContentsMargins(0, 0, 0, 0);
     rightlayout->addWidget(d->content);
 
     QHBoxLayout *bottomlayout = new QHBoxLayout;

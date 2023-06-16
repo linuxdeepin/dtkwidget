@@ -125,7 +125,7 @@ void DMessageManager::sendMessage(QWidget *par, DFloatingMessage *floMsg)
         par->installEventFilter(this);
         QVBoxLayout *layout = new QVBoxLayout(content);
         layout->setSpacing(0);
-        layout->setMargin(0);
+        layout->setContentsMargins(0, 0, 0, 0);
         layout->setDirection(QBoxLayout::BottomToTop);
         content->show();
     }
