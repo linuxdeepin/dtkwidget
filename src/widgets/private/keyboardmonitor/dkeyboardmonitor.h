@@ -6,7 +6,11 @@
 #define KEYBOARDMONITOR_H
 
 #include <QThread>
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <QX11Info>
+#else
+#include <QtGui/private/qtx11extras_p.h>
+#endif
 #include <dtkwidget_global.h>
 
 DWIDGET_BEGIN_NAMESPACE

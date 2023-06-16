@@ -294,7 +294,10 @@ void DBackgroundGroupPrivate::updateLayoutSpacing()
     int spacing = itemSpacing;
 
     if (spacing < 0) {
-        spacing = q->style()->pixelMetric(QStyle::PM_DefaultLayoutSpacing, nullptr, q);
+        if(lo == QBoxLayout::LeftToRight || lo == QBoxLayout::RightToLeft)
+            spacing = q->style()->pixelMetric(QStyle::PM_LayoutHorizontalSpacing, nullptr, q);
+        else
+            spacing = q->style()->pixelMetric(QStyle::PM_LayoutVerticalSpacing, nullptr, q);
     }
 
     if (lo == QBoxLayout::LeftToRight || lo == QBoxLayout::RightToLeft) {

@@ -8,11 +8,11 @@
 #include <dtkwidget_global.h>
 #include <DObject>
 #include <DPalette>
-
 #include <QApplication>
 
-DGUI_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
+
+DGUI_USE_NAMESPACE
 
 #define DAPPLICATION_XSTRING(s) DAPPLICATION_STRING(s)
 #define DAPPLICATION_STRING(s) #s
@@ -27,7 +27,7 @@ class DAppHandler;
 #if defined(qApp)
 #undef qApp
 #endif
-#define qApp (static_cast<DApplication *>(QCoreApplication::instance()))
+#define qApp (static_cast<Dtk::Widget::DApplication *>(QCoreApplication::instance()))
 
 class LIBDTKWIDGETSHARED_EXPORT DApplication : public QApplication, public DTK_CORE_NAMESPACE::DObject
 {
@@ -45,7 +45,7 @@ public:
     static DApplication *globalApplication(int &argc, char **argv);
 
     DApplication(int &argc, char **argv);
-
+    ~DApplication();
     enum SingleScope {
         UserScope,
         SystemScope

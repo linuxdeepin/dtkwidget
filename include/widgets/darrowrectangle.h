@@ -5,7 +5,6 @@
 #ifndef DARROWRECTANGLE_H
 #define DARROWRECTANGLE_H
 
-#include <QDesktopWidget>
 #include <QWidget>
 #include <QLabel>
 #include <QTextLine>

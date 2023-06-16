@@ -54,14 +54,14 @@ bool DBlurEffectWidgetPrivate::isBehindWindowBlendMode() const
     D_QC(DBlurEffectWidget);
 
     return blendMode == DBlurEffectWidget::BehindWindowBlend
-           || q->isTopLevel();
+           || q->isWindow();
 }
 
 bool DBlurEffectWidgetPrivate::isFull() const
 {
     D_QC(DBlurEffectWidget);
 
-    return full || (q->isTopLevel() && !(blurRectXRadius && blurRectYRadius) && maskPath.isEmpty());
+    return full || (q->isWindow() && !(blurRectXRadius && blurRectYRadius) && maskPath.isEmpty());
 }
 
 void DBlurEffectWidgetPrivate::addToBlurEffectWidgetHash()
@@ -77,7 +77,7 @@ void DBlurEffectWidgetPrivate::addToBlurEffectWidgetHash()
 
     QWidget *topLevelWidget = q->topLevelWidget();
 
-    blurEffectWidgetHash.insertMulti(topLevelWidget, q);
+    blurEffectWidgetHash.insert(topLevelWidget, q);
     windowOfBlurEffectHash[q] = topLevelWidget;
     updateWindowBlurArea(topLevelWidget);
 }
@@ -904,11 +904,11 @@ void DBlurEffectWidget::updateBlurSourceImage(const QRegion &ren)
             QImage area = window()->backingStore()->handle()->toImage().copy(tmp_rect * device_pixel_ratio);
             area = area.scaledToWidth(area.width() / device_pixel_ratio);
 
-            for (const QRect &rect : ren.rects()) {
+            for (const QRect &rect : ren) {
                 pa_image.drawImage(rect.topLeft() + QPoint(d->radius, d->radius), rect == area.rect() ? area : area.copy(rect));
             }
         } else {
-            for (const QRect &rect : ren.rects()) {
+            for (const QRect &rect : ren) {
                 pa_image.drawImage(rect.topLeft() + QPoint(d->radius, d->radius),
                                    window()->backingStore()->handle()->toImage().copy(rect.translated(point_offset)));
             }
@@ -993,7 +993,7 @@ void DBlurEffectWidget::moveEvent(QMoveEvent *event)
 {
     D_D(DBlurEffectWidget);
 
-    if (isTopLevel()) {
+    if (isWindow()) {
         return QWidget::moveEvent(event);
     }
 

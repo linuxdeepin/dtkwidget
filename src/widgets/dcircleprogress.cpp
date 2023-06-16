@@ -31,7 +31,7 @@ DCircleProgressPrivate::DCircleProgressPrivate(DCircleProgress *q)
     mainLayout->addWidget(&m_bottomLabel);
     mainLayout->addStretch();
     mainLayout->setSpacing(0);
-    mainLayout->setMargin(0);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
 
     q->setLayout(mainLayout);
 }
@@ -255,8 +255,11 @@ void DCircleProgress::mouseReleaseEvent(QMouseEvent *e)
 
     Q_EMIT clicked();
 }
-
+#if QT_VERSION > QT_VERSION_CHECK(6, 0, 0)
+void DCircleProgress::enterEvent(QEnterEvent *e)
+#else
 void DCircleProgress::enterEvent(QEvent *e)
+#endif
 {
     Q_EMIT mouseEntered();
 

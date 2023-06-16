@@ -13,7 +13,8 @@
 #include <private/qcombobox_p.h>
 #endif
 #include <private/qcombobox_p.h>
-
+#include <QRegularExpression>
+#include <QRegularExpressionValidator>
 #include <QLayout>
 
 DWIDGET_BEGIN_NAMESPACE
@@ -62,12 +63,11 @@ void DSearchComboBox::showPopup()
 
             QHBoxLayout *searlayout = new QHBoxLayout;
             searlayout->setContentsMargins(layoutMargin, layoutMargin, layoutMargin, 0);
-            layout->setMargin(0);
+            layout->setContentsMargins(0, 0, 0, 0);
             layout->setSpacing(0);
             searlayout->addWidget(d->searchEdit);
             layout->insertLayout(0, searlayout);
-            dd->container->setFixedHeight(dd->container->height() + d->searchEdit->height() +
-                                          layout->spacing() + layout->margin() + layoutMargin);
+            dd->container->setFixedHeight(dd->container->height() + d->searchEdit->height() + layout->spacing() + layout->contentsMargins().top() + layoutMargin);
             d->proxyModel = new QSortFilterProxyModel(this);
             d->proxyModel->setSourceModel(model());
 
@@ -76,8 +76,7 @@ void DSearchComboBox::showPopup()
             setModel(d->proxyModel);
 
             connect(d->searchEdit, &DSearchEdit::textChanged, this, [ = ] (const QString & text){
-                d->proxyModel->setFilterRegExp(QRegExp(text, Qt::CaseInsensitive,
-                                                              QRegExp::FixedString));
+                d->proxyModel->setFilterRegularExpression(QRegularExpression(QRegularExpression::escape(text),QRegularExpression::CaseInsensitiveOption));
             });
         }
     }

@@ -61,7 +61,7 @@ DBaseExpandPrivate::DBaseExpandPrivate(DBaseExpand *qq)
 
     QVBoxLayout *layout_contentLoader = new QVBoxLayout(m_contentLoader);
 
-    layout_contentLoader->setMargin(0);
+    layout_contentLoader->setContentsMargins(0, 0, 0, 0);
     layout_contentLoader->setSpacing(0);
     layout_contentLoader->addWidget(m_boxWidget);
     layout_contentLoader->addStretch();

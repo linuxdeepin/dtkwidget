@@ -87,9 +87,11 @@ DPalette DPaletteHelper::palette(const QWidget *widget, const QPalette &base) co
         // 关注控件palette改变的事件
         const_cast<QWidget *>(widget)->installEventFilter(const_cast<DPaletteHelper *>(this));
     } while (false);
-
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     palette.QPalette::operator=(base.resolve() ? base : widget->palette());
-
+#else
+    palette = base.resolveMask() ? base : widget->palette();
+#endif
     return palette;
 }
 

@@ -117,7 +117,7 @@ QSize DIconButton::sizeHint() const
     initStyleOption(&opt);
 
     opt.rect.setSize(opt.iconSize);
-    bp->sizeHint = DStyleHelper(style()).sizeFromContents(DStyle::CT_IconButton, &opt, opt.iconSize, this).expandedTo(QApplication::globalStrut());
+    bp->sizeHint = DStyleHelper(style()).sizeFromContents(DStyle::CT_IconButton, &opt, opt.iconSize, this).expandedTo(QSize{0,0});
     int size = qMax(bp->sizeHint.width(), bp->sizeHint.height());
     bp->sizeHint.setHeight(size);
     bp->sizeHint.setWidth(size);

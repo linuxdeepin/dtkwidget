@@ -12,7 +12,7 @@
 #include <DApplication>
 #include <DFontSizeManager>
 #include <DConfig>
-
+#include <QWindow>
 #include <QUrl>
 #include <QDebug>
 #include <QVBoxLayout>
@@ -113,11 +113,11 @@ void DAboutDialogPrivate::init()
     if (qobject_cast<DApplication *>(qApp))
       featureLabel->setVisible(!qApp->featureDisplayDialog()->isEmpty());
     else
-     featureLabel->setVisible(false);
+      featureLabel->setVisible(false);
     redPointLabel = new DRedPointLabel();
     redPointLabel->setFixedSize(10, 10);
     QHBoxLayout *vFeatureLayout =  new QHBoxLayout;
-    vFeatureLayout->setMargin(0);
+    vFeatureLayout->setContentsMargins(0, 0, 0, 0);
     vFeatureLayout->setSpacing(0);
     vFeatureLayout->addWidget(featureLabel, 0, Qt::AlignLeft);
     vFeatureLayout->addWidget(redPointLabel, 0, Qt::AlignLeft);
@@ -171,7 +171,7 @@ void DAboutDialogPrivate::init()
 
     QHBoxLayout *mainLayout = new QHBoxLayout;
     mainLayout->setSpacing(0);
-    mainLayout->setMargin(0);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->addLayout(leftVLayout);
     mainLayout->addSpacing(29);
     mainLayout->addLayout(rightVLayout);
@@ -180,7 +180,7 @@ void DAboutDialogPrivate::init()
     QWidget  *mainContent = new QWidget;
     QPalette scrollPalette;
 
-    scrollPalette.setBrush(QPalette::Background, Qt::transparent);
+    scrollPalette.setBrush(QPalette::Window, Qt::transparent);
     mainScrollArea->setFrameShape(QFrame::NoFrame);
     mainScrollArea->setWidget(mainContent);
     mainScrollArea->setWidgetResizable(true);
@@ -332,7 +332,11 @@ QString DAboutDialog::description() const
   @brief the vendor logo to be shown on the dialog.
   @return 返回对话框中的公司/组织 logo 图片.
  */
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 const QPixmap *DAboutDialog::companyLogo() const
+#else
+QPixmap DAboutDialog::companyLogo() const
+#endif
 {
     D_DC(DAboutDialog);
 
@@ -420,8 +424,12 @@ void DAboutDialog::setWindowTitle(const QString &windowTitle)
 void DAboutDialog::setProductIcon(const QIcon &icon)
 {
     D_D(DAboutDialog);
-
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     d->logoLabel->setPixmap(icon.pixmap(windowHandle(), QSize(128, 128)));
+#else
+    auto window = windowHandle();
+    d->logoLabel->setPixmap(icon.pixmap(window->baseSize(), window->screen()->devicePixelRatio()));
+#endif
 }
 
 /*!

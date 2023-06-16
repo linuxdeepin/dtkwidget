@@ -11,7 +11,9 @@
 #include <QCloseEvent>
 #include <QApplication>
 #include <QSpacerItem>
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <QDesktopWidget>
+#endif
 #include <QScreen>
 #include <QAction>
 #include <QRegularExpression>
@@ -129,7 +131,6 @@ void DDialogPrivate::init()
 
     // MainLayout--ButtonLayout
     buttonLayout = new QHBoxLayout;
-    buttonLayout->setMargin(0);
     buttonLayout->setContentsMargins(DIALOG::BUTTON_LAYOUT_LEFT_MARGIN,
                                      DIALOG::BUTTON_LAYOUT_TOP_MARGIN,
                                      DIALOG::BUTTON_LAYOUT_RIGHT_MARGIN,
@@ -150,12 +151,12 @@ const QScreen *DDialogPrivate::getScreen() const
 {
     D_QC(DDialog);
 
-    const QScreen *screen = qApp->screens()[qApp->desktop()->screenNumber(q)];
+    const QScreen *screen = q->screen();
 
     if (screen)
         return screen;
 
-    screen = qApp->screens()[qApp->desktop()->screenNumber(QCursor::pos())];
+    screen = QGuiApplication::screenAt(QCursor::pos());
 
     return screen;
 }
@@ -169,13 +170,12 @@ QMap<int, QString> DDialogPrivate::scanTags(QString origin) const
 {
     QMap<int, QString> result;
 
-    QRegExp re("<.*?>");
-    int index = origin.indexOf(re, 0);
-    int matchLength = 0;
-    while (index >= 0) {
-        result[index] = re.cap();
-        matchLength = re.matchedLength();
-        index = origin.indexOf(re, index + matchLength);
+    QRegularExpression re("<.*?>");
+    QRegularExpressionMatch match;
+    int index = origin.indexOf(re, 0,&match);
+    while (match.hasMatch()) {
+        result[index] = match.captured();
+        index = origin.indexOf(re, index + match.capturedLength(),&match);
     }
 
     return result;
@@ -186,7 +186,7 @@ QMap<int, QString> DDialogPrivate::scanTags(QString origin) const
 QString DDialogPrivate::elideString(QString str, const QFontMetrics &fm, int width) const
 {
     QString trimmed = trimTag(str);
-    if (fm.width(trimmed) > width) {
+    if (fm.horizontalAdvance(trimmed) > width) {
         QMap<int, QString> info = scanTags(str);
         QString elided = fm.elidedText(trimmed, Qt::ElideMiddle, width);
         int elideStart = elided.indexOf("…");

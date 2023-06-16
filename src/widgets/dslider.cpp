@@ -722,7 +722,7 @@ QSize SliderStrip::sizeHint() const
         int max = 0;
 
         for (int i = 0; i < scaleInfo.count(); i++) {
-            max = qMax(max, fontMetrics().width(scaleInfo[i]));
+            max = qMax(max, fontMetrics().horizontalAdvance(scaleInfo[i]));
         }
         size.setWidth(max + fontSize / 2);
     }

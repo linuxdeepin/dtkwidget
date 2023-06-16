@@ -110,7 +110,7 @@ DSegmentedControl::DSegmentedControl(QWidget *parent)
     D_D(DSegmentedControl);
 
     d->hLayout->setSpacing(1);
-    d->hLayout->setMargin(0);
+    d->hLayout->setContentsMargins(0, 0, 0, 0);
     d->hLayout->setObjectName("TabBar");
     d->highlight->setObjectName("Highlight");
     d->highlight->installEventFilter(this);

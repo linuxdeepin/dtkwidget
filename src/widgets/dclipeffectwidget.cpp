@@ -260,7 +260,7 @@ void DClipEffectWidget::showEvent(QShowEvent *event)
 
     QWidget *pw = parentWidget();
 
-    while (pw && !pw->isTopLevel()) {
+    while (pw && !pw->isWindow()) {
         d->parentList << pw;
 
         pw->installEventFilter(this);

@@ -78,7 +78,12 @@ Q_GLOBAL_STATIC(DThemeManagerStaticPrivate, DThemeManagerStatic)
 DThemeManager *DThemeManager::instance()
 {
     // 正在初始化时返回空对象，否则会导致当前线程陷入死锁
-    if (Q_QGS_DThemeManagerStatic::guard.load() == QtGlobalStatic::Initializing) {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+    if (Q_QGS_DThemeManagerStatic::guard.loadRelaxed() == QtGlobalStatic::Initializing)
+#else
+    if (Q_QGS_DThemeManagerStatic::guard.load() == QtGlobalStatic::Initializing)
+#endif
+    {
         return nullptr;
     }
 

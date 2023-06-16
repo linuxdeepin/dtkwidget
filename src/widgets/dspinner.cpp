@@ -116,7 +116,7 @@ void DSpinner::setBackgroundColor(QColor color)
 {
     setAutoFillBackground(true);
     QPalette pal = palette();
-    pal.setColor(QPalette::Background, color);
+    pal.setColor(QPalette::Window, color);
     setPalette(pal);
 }
 

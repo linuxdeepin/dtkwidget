@@ -474,7 +474,7 @@ DTitlebarToolFactory::~DTitlebarToolFactory()
 void DTitlebarToolFactory::add(DTitlebarToolBaseInterface *tool)
 {
     bool exist = false;
-    for (const auto item : qAsConst(m_tools)) {
+    for (const auto &item : qAsConst(m_tools)) {
         if (item.tool->id() == tool->id()) {
             exist =  true;
             break;

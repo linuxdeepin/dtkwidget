@@ -520,6 +520,7 @@ void DWaterMarkWidget::paintEvent(QPaintEvent *)
         } else {
             drawWaterTexture(painter, d->textureImage, d->data.rotation(), rect());
         }
+        break;
     }
     case WaterMarkData::WaterMarkType::Image:
     {
@@ -547,6 +548,7 @@ void DWaterMarkWidget::paintEvent(QPaintEvent *)
         } else {
             drawWaterTexture(painter, d->textureImage, d->data.rotation(), rect());
         }
+        break;
     }
     }
 }

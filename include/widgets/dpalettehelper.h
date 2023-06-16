@@ -9,8 +9,10 @@
 #include <DPalette>
 #include <DObject>
 
-DGUI_USE_NAMESPACE
+
 DWIDGET_BEGIN_NAMESPACE
+
+DGUI_USE_NAMESPACE
 
 class DPaletteHelperPrivate;
 class DPaletteHelper : public QObject

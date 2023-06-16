@@ -6,10 +6,13 @@
 
 #include "private/dcombobox_p.h"
 #include <DObjectPrivate>
-
+#include <QScreen>
+#include <QWindow>
 #include <QListView>
 #include <QTableView>
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <QDesktopWidget>
+#endif
 #include <QEvent>
 #include <QApplication>
 
@@ -137,7 +140,7 @@ bool DFontComboBox::event(QEvent *e)
         QListView *lview = qobject_cast<QListView*>(view());
         if (lview) {
             lview->window()->setFixedWidth(qMin(width() * 5 / 3,
-                               QApplication::desktop()->availableGeometry(lview).width()));
+                               lview->window()->windowHandle()->screen()->availableGeometry().width()));
         }
     }
     return DComboBox::event(e);

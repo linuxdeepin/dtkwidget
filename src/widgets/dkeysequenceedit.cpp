@@ -205,7 +205,7 @@ bool DKeySequenceEdit::setKeySequence(const QKeySequence &keySequence)
     D_D(DKeySequenceEdit);
     QString writing = getKeySequence(keySequence);
     QStringList keyText;
-    keyText << writing.split("+", QString::SkipEmptyParts);
+    keyText << writing.split("+", Qt::SkipEmptyParts);
 
     if (writing.contains("++")) {
         keyText << "+";
@@ -330,7 +330,7 @@ void DKeySequenceEditPrivate::init()
     rightWidget = new DKeyWidget(q);
 
     rightWidget->setAccessibleName("DKeySequenceEditKeyWidget");
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
 
     layout->addWidget(rightWidget, 0, Qt::AlignRight);

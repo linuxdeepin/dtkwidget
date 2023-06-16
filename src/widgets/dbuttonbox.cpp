@@ -223,8 +223,15 @@ QSize DButtonBoxButton::sizeHint() const
 
     DStyleHelper dstyle(style());
 
-    d->sizeHint = (dstyle.sizeFromContents(DStyle::CT_ButtonBoxButton, &opt, QSize(w, h), this).
-                  expandedTo(QApplication::globalStrut()));
+    d->sizeHint = (dstyle
+                       .sizeFromContents(DStyle::CT_ButtonBoxButton, &opt,
+                                         QSize(w, h), this)
+                       .expandedTo(
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+                           QSize{0,0}));
+#else
+                           QApplication::globalStrut()));
+#endif
     return d->sizeHint;
 }
 
@@ -350,7 +357,7 @@ void DButtonBoxPrivate::init()
     q->connect(group, SIGNAL(buttonToggled(QAbstractButton*, bool)), q, SIGNAL(buttonToggled(QAbstractButton*, bool)));
 
     layout = new QHBoxLayout(q);
-    layout->setMargin(0);
+    layout->setContentsMargins(0,0,0,0);
     layout->setSpacing(0);
 }
 

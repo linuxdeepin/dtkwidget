@@ -16,8 +16,8 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QDebug>
-#include <QRegExp>
-#include <QRegExpValidator>
+#include <QRegularExpression>
+#include <QRegularExpressionValidator>
 #include <QKeyEvent>
 #include <DWindowManagerHelper>
 
@@ -94,7 +94,7 @@ void DPrintPickColorWidget::initUI()
     DLabel *valueLabel = new DLabel(qApp->translate("PickColorWidget", "Color"));
     valueLineEdit = new DLineEdit;
     valueLineEdit->setClearButtonEnabled(false);
-    valueLineEdit->lineEdit()->setValidator(new QRegExpValidator(QRegExp("[0-9A-Fa-f]{6,8}"), this));
+    valueLineEdit->lineEdit()->setValidator(new QRegularExpressionValidator(QRegularExpression("[0-9A-Fa-f]{6,8}"), this));
     valueLayout->setContentsMargins(0, 0, 0, 0);
     valueLayout->addWidget(valueLabel);
     valueLayout->addSpacing(5);
@@ -373,7 +373,11 @@ void ColorLabel::paintEvent(QPaintEvent *)
     painter.drawImage(this->rect(), backgroundImage);
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 void ColorLabel::enterEvent(QEvent *e)
+#else
+void ColorLabel::enterEvent(QEnterEvent *e)
+#endif
 {
     m_lastCursor = this->cursor();
     qApp->setOverrideCursor(pickColorCursor());
