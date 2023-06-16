@@ -41,7 +41,7 @@ DDialogExample::DDialogExample(QWidget *parent)
     DLabel *label = new DLabel;
     QVBoxLayout *mainlayout = new QVBoxLayout(this);
     DPushButton *btn = new DPushButton("开始还原");
-    mainlayout->setMargin(0);
+    mainlayout->setContentsMargins(0,0,0,0);
     mainlayout->setSpacing(0);
 
     label->setPixmap(QPixmap(":/images/example/DDialog.png"));
@@ -92,7 +92,7 @@ DFileDialogExample::DFileDialogExample(QWidget *parent)
     DFileChooserEdit *dialog = new DFileChooserEdit;
     QVBoxLayout *mainLayout= new QVBoxLayout(this);
 
-    mainLayout->setMargin(0);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->setSpacing(0);
     label1->setFixedSize(550, 334);
     label2->setFixedSize(550, 334);
@@ -154,7 +154,7 @@ DMessageManagerExample::DMessageManagerExample(QWidget *parent)
     label->setPixmap(QPixmap(":/images/example/dock_notice.png"));
     labelLayout->addStretch(10);
 
-    mainlayout->setMargin(0);
+    mainlayout->setContentsMargins(0, 0, 0, 0);
     mainlayout->setSpacing(0);
     mainlayout->addWidget(btn1, 0, Qt::AlignCenter);
     mainlayout->addWidget(btn2, 0, Qt::AlignCenter);

@@ -100,7 +100,7 @@ public:
        slider->setFixedWidth(131);
 
        layout->setSpacing(0);
-       layout->setMargin(0);
+       layout->setContentsMargins(0, 0, 0, 0);
        layout->addSpacing(254);
        layout->addWidget(new QLabel("7项"));
        layout->addWidget(slider, 0, Qt::AlignRight);

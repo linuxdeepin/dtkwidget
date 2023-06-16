@@ -23,12 +23,12 @@ DSpinnerExample::DSpinnerExample(QWidget *parent)
     : ExampleWindowInterface(parent)
 {
     QVBoxLayout *pVBoxLayout = new QVBoxLayout;
-    pVBoxLayout->setMargin(0);
+    pVBoxLayout->setContentsMargins(0, 0, 0, 0);
     pVBoxLayout->setSpacing(0);
     setLayout(pVBoxLayout);
 
     QHBoxLayout *pHBoxLayout_1 = new QHBoxLayout;
-    pHBoxLayout_1->setMargin(0);
+    pHBoxLayout_1->setContentsMargins(0, 0, 0, 0);
     pHBoxLayout_1->setSpacing(0);
 
     auto getSpinnerWidget = [](const QSize &size) {
@@ -59,7 +59,7 @@ DSpinnerExample::DSpinnerExample(QWidget *parent)
     pLabel_1->setScaledContents(true);
 
     QHBoxLayout *pHBoxLayout_pic_1 = new QHBoxLayout;
-    pHBoxLayout_pic_1->setMargin(0);
+    pHBoxLayout_pic_1->setContentsMargins(0, 0, 0, 0);
     pHBoxLayout_pic_1->setSpacing(0);
     pHBoxLayout_pic_1->addWidget(pLabel_1);
 

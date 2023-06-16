@@ -52,7 +52,7 @@ QWidget *PageWindowInterface::doLayout(ExampleWindowInterface *pExample)
     pLabel_2->setText(pExample->getDescriptionInfo());
 
     QVBoxLayout *pVBoxLayout_label = new QVBoxLayout;
-    pVBoxLayout_label->setMargin(10);
+    pVBoxLayout_label->setContentsMargins(10, 10, 10, 10);
     pVBoxLayout_label->setSpacing(0);
     pDescriptionLabel->setLayout(pVBoxLayout_label);
 
@@ -62,7 +62,7 @@ QWidget *PageWindowInterface::doLayout(ExampleWindowInterface *pExample)
     pVBoxLayout_label->addStretch();
 
     QHBoxLayout *pHBoxLayout = new QHBoxLayout;
-    pHBoxLayout->setMargin(0);
+    pHBoxLayout->setContentsMargins(0, 0, 0, 0);
     pHBoxLayout->setSpacing(0);
 
     pWidget->setLayout(pHBoxLayout);
@@ -84,7 +84,7 @@ void PageWindowInterface::initPageWindow()
     QWidget *pWidget = new QWidget(this);
 
     QVBoxLayout *pVBoxLayout = new QVBoxLayout;
-    pVBoxLayout->setMargin(10);
+    pVBoxLayout->setContentsMargins(10, 10, 10, 10);
     pVBoxLayout->setSpacing(10);
     pWidget->setLayout(pVBoxLayout);
 
@@ -98,7 +98,7 @@ void PageWindowInterface::initPageWindow()
     pArea->setWidgetResizable(true);
 
     QHBoxLayout *pHBoxLayout = new QHBoxLayout;
-    pHBoxLayout->setMargin(0);
+    pHBoxLayout->setContentsMargins(0, 0, 0, 0);
     pHBoxLayout->setSpacing(0);
     setLayout(pHBoxLayout);
     pHBoxLayout->addWidget(pArea);

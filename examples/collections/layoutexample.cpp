@@ -43,7 +43,7 @@ DFrameExample::DFrameExample(QWidget *parent)
 
     frameLayout->setContentsMargins(23, 0, 23, 0);
     frameLayout->addWidget(frame);
-    picLayout->setMargin(0);
+    picLayout->setContentsMargins(0, 0, 0, 0);
     picLayout->addWidget(picLabel);
 
     layout->setSpacing(0);
@@ -105,7 +105,7 @@ DSplitterExample::DSplitterExample(QWidget *parent)
     splitterLayout->setSpacing(100);
     splitterLayout->setContentsMargins(169, 0, 169, 0);
     splitterLayout->addWidget(hSplitter);
-    picLayout->setMargin(0);
+    picLayout->setContentsMargins(0, 0, 0, 0);
     picLayout->addWidget(picLabel);
 
     layout->setSpacing(0);
@@ -153,9 +153,9 @@ DVerticalLineExample::DVerticalLineExample(QWidget *parent)
     picLabel->setScaledContents(true);
     picLabel->setPixmap(picPixmap);
 
-    verticalLineLayout->setMargin(0);
+    verticalLineLayout->setContentsMargins(0, 0, 0, 0);
     verticalLineLayout->addWidget(verticalLine);
-    picLayout->setMargin(0);
+    picLayout->setContentsMargins(0, 0, 0, 0);
     picLayout->addWidget(picLabel);
 
     layout->setSpacing(0);

@@ -153,7 +153,11 @@ QVariant CalendarModel::data(const QModelIndex &index, int role) const
             return QString::number(days);
         }
     }
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     case Qt::TextColorRole: {
+#else
+    case Qt::ForegroundRole:{
+#endif
         // 设置文字颜色
         if (m_tableData[index.row()][index.column()].month() == QDate::currentDate().month()) {
             return palette.color(DPalette::TextTitle);
@@ -174,7 +178,11 @@ QVariant CalendarModel::data(const QModelIndex &index, int role) const
 
 QVariant CalendarModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if (role == Qt::BackgroundColorRole || role == Qt::BackgroundRole)
+    if (
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+        role == Qt::BackgroundColorRole ||
+#endif
+        role == Qt::BackgroundRole)
         return DGuiApplicationHelper::instance()->applicationPalette().brush(DPalette::ItemBackground);
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole) {
         return header.value(section);
