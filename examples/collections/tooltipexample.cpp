@@ -30,12 +30,12 @@ DToolTipExample::DToolTipExample(QWidget *parent)
     : ExampleWindowInterface(parent)
 {
     QVBoxLayout *pVBoxLayout = new QVBoxLayout;
-    pVBoxLayout->setMargin(0);
+    pVBoxLayout->setContentsMargins(0, 0, 0, 0);
     pVBoxLayout->setSpacing(0);
     setLayout(pVBoxLayout);
 
     QHBoxLayout *pHBoxLayout_1 = new QHBoxLayout;
-    pHBoxLayout_1->setMargin(0);
+    pHBoxLayout_1->setContentsMargins(0, 0, 0, 0);
     pHBoxLayout_1->setSpacing(0);
 
     DPushButton *pButton_1 = new DPushButton("悬停显示ToolTip");
@@ -59,7 +59,7 @@ DToolTipExample::DToolTipExample(QWidget *parent)
     pLabel_1->setScaledContents(true);
 
     QHBoxLayout *pHBoxLayout_pic_1 = new QHBoxLayout;
-    pHBoxLayout_pic_1->setMargin(0);
+    pHBoxLayout_pic_1->setContentsMargins(0, 0, 0, 0);
     pHBoxLayout_pic_1->setSpacing(0);
     pHBoxLayout_pic_1->addWidget(pLabel_1);
 
@@ -89,12 +89,12 @@ DArrowRectangleExample::DArrowRectangleExample(QWidget *parent)
     : ExampleWindowInterface(parent)
 {
     QVBoxLayout *pVBoxLayout = new QVBoxLayout;
-    pVBoxLayout->setMargin(0);
+    pVBoxLayout->setContentsMargins(0, 0, 0, 0);
     pVBoxLayout->setSpacing(0);
     setLayout(pVBoxLayout);
 
     QHBoxLayout *pHBoxLayout_1 = new QHBoxLayout;
-    pHBoxLayout_1->setMargin(0);
+    pHBoxLayout_1->setContentsMargins(0, 0, 0, 0);
     pHBoxLayout_1->setSpacing(0);
 
     //DArrowRectangle的FloatWidget模式必须要有父窗口
@@ -105,7 +105,7 @@ DArrowRectangleExample::DArrowRectangleExample(QWidget *parent)
     pContentWidget->setFixedSize(300, 300);
     pRectangle_1->setContent(pContentWidget);
     QVBoxLayout *pVBoxLayout_content = new QVBoxLayout;
-    pVBoxLayout_content->setMargin(0);
+    pVBoxLayout_content->setContentsMargins(0, 0, 0, 0);
     pVBoxLayout_content->setSpacing(0);
     pContentWidget->setLayout(pVBoxLayout_content);
 
@@ -137,7 +137,7 @@ DArrowRectangleExample::DArrowRectangleExample(QWidget *parent)
         pTitle_2->setFont(font);
 
         QVBoxLayout *pVBoxLayout = new QVBoxLayout;
-        pVBoxLayout->setMargin(0);
+        pVBoxLayout->setContentsMargins(0, 0, 0, 0);
         pVBoxLayout->setSpacing(0);
         middleLabel->setLayout(pVBoxLayout);
 
@@ -154,7 +154,7 @@ DArrowRectangleExample::DArrowRectangleExample(QWidget *parent)
         pVBoxLayout->addSpacing(10);
 
         QHBoxLayout *pHBoxLayout = new QHBoxLayout;
-        pHBoxLayout->setMargin(0);
+        pHBoxLayout->setContentsMargins(0, 0, 0, 0);
         pHBoxLayout->setSpacing(0);
         pHBoxLayout->addSpacing(10);
         pHBoxLayout->addWidget(pLeftIcon);
@@ -202,7 +202,7 @@ DArrowRectangleExample::DArrowRectangleExample(QWidget *parent)
     pLabel_1->setScaledContents(true);
 
     QHBoxLayout *pHBoxLayout_pic_1 = new QHBoxLayout;
-    pHBoxLayout_pic_1->setMargin(0);
+    pHBoxLayout_pic_1->setContentsMargins(0, 0, 0, 0);
     pHBoxLayout_pic_1->setSpacing(0);
     pHBoxLayout_pic_1->addWidget(pLabel_1);
 

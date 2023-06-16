@@ -22,7 +22,7 @@ ImageViewerExample::ImageViewerExample(QWidget *parent)
     setLayout(mainLayout);
 
     QVBoxLayout *buttonLayout = new QVBoxLayout;
-    buttonLayout->setMargin(0);
+    buttonLayout->setContentsMargins(0, 0, 0, 0);
     buttonLayout->setSpacing(0);
 
     DPushButton *fitToWidget = new DPushButton("适应窗口", this);

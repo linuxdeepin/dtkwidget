@@ -252,12 +252,12 @@ DToolButtonExample::DToolButtonExample(QWidget *parent)
     : ExampleWindowInterface(parent)
 {
     QVBoxLayout *pVBoxLayout = new QVBoxLayout;
-    pVBoxLayout->setMargin(0);
+    pVBoxLayout->setContentsMargins(0, 0, 0, 0);
     pVBoxLayout->setSpacing(0);
     setLayout(pVBoxLayout);
 
     QHBoxLayout *pHBoxLayout = new QHBoxLayout;
-    pHBoxLayout->setMargin(20);
+    pHBoxLayout->setContentsMargins(20, 20, 20, 20);
     pHBoxLayout->setSpacing(0);
 
     auto showDialog = [](const QString &info) {
@@ -334,7 +334,7 @@ DToolButtonExample::DToolButtonExample(QWidget *parent)
     pLabel->setScaledContents(true);
 
     QHBoxLayout *pHBoxLayout_pic = new QHBoxLayout;
-    pHBoxLayout_pic->setMargin(0);
+    pHBoxLayout_pic->setContentsMargins(0, 0, 0, 0);
     pHBoxLayout_pic->setSpacing(0);
     pHBoxLayout_pic->addWidget(pLabel);
 
@@ -361,12 +361,12 @@ DIconButtonExample::DIconButtonExample(QWidget *parent)
     : ExampleWindowInterface(parent)
 {
     QVBoxLayout *pVBoxLayout = new QVBoxLayout;
-    pVBoxLayout->setMargin(0);
+    pVBoxLayout->setContentsMargins(0, 0, 0, 0);
     pVBoxLayout->setSpacing(0);
     setLayout(pVBoxLayout);
 
     QHBoxLayout *pHBoxLayout = new QHBoxLayout;
-    pHBoxLayout->setMargin(10);
+    pHBoxLayout->setContentsMargins(10, 10, 10, 10);
     pHBoxLayout->setSpacing(0);
 
     DIconButton *pButton_1 = new DIconButton(DStyle::SP_IncreaseElement, this);
@@ -447,7 +447,7 @@ DIconButtonExample::DIconButtonExample(QWidget *parent)
     pLabel->setScaledContents(true);
 
     QHBoxLayout *pHBoxLayout_pic = new QHBoxLayout;
-    pHBoxLayout_pic->setMargin(0);
+    pHBoxLayout_pic->setContentsMargins(0, 0, 0, 0);
     pHBoxLayout_pic->setSpacing(0);
     pHBoxLayout_pic->addWidget(pLabel);
 
@@ -475,12 +475,12 @@ DButtonBoxExample::DButtonBoxExample(QWidget *parent)
     : ExampleWindowInterface(parent)
 {
     QVBoxLayout *pVBoxLayout = new QVBoxLayout;
-    pVBoxLayout->setMargin(0);
+    pVBoxLayout->setContentsMargins(0, 0, 0, 0);
     pVBoxLayout->setSpacing(0);
     setLayout(pVBoxLayout);
 
     QHBoxLayout *pHBoxLayout = new QHBoxLayout;
-    pHBoxLayout->setMargin(10);
+    pHBoxLayout->setContentsMargins(0, 0, 0, 0);
     pHBoxLayout->setSpacing(0);
 
     DButtonBox *pButtonBox_1 = new DButtonBox;
@@ -528,7 +528,7 @@ DButtonBoxExample::DButtonBoxExample(QWidget *parent)
     pLabel->setScaledContents(true);
 
     QHBoxLayout *pHBoxLayout_pic = new QHBoxLayout;
-    pHBoxLayout_pic->setMargin(0);
+    pHBoxLayout_pic->setContentsMargins(0, 0, 0, 0);
     pHBoxLayout_pic->setSpacing(0);
     pHBoxLayout_pic->addWidget(pLabel);
 
@@ -579,12 +579,12 @@ DFloatingButtonExample::DFloatingButtonExample(QWidget *parent)
     : ExampleWindowInterface(parent)
 {
     QVBoxLayout *pVBoxLayout = new QVBoxLayout;
-    pVBoxLayout->setMargin(0);
+    pVBoxLayout->setContentsMargins(0, 0, 0, 0);
     pVBoxLayout->setSpacing(0);
     setLayout(pVBoxLayout);
 
     QHBoxLayout *pHBoxLayout = new QHBoxLayout;
-    pHBoxLayout->setMargin(10);
+    pHBoxLayout->setContentsMargins(10, 10, 10, 10);
     pHBoxLayout->setSpacing(0);
 
     DFloatingButton *pFloatingButton_1 = new DFloatingButton(DStyle::SP_IncreaseElement, this);
@@ -608,7 +608,7 @@ DFloatingButtonExample::DFloatingButtonExample(QWidget *parent)
     pLabel->setScaledContents(true);
 
     QHBoxLayout *pHBoxLayout_pic = new QHBoxLayout;
-    pHBoxLayout_pic->setMargin(0);
+    pHBoxLayout_pic->setContentsMargins(0, 0, 0, 0);
     pHBoxLayout_pic->setSpacing(0);
     pHBoxLayout_pic->addWidget(pLabel);
 
@@ -639,12 +639,12 @@ DSwitchButtonExample::DSwitchButtonExample(QWidget *parent)
     : ExampleWindowInterface(parent)
 {
     QVBoxLayout *pVBoxLayout = new QVBoxLayout;
-    pVBoxLayout->setMargin(0);
+    pVBoxLayout->setContentsMargins(0, 0, 0, 0);
     pVBoxLayout->setSpacing(0);
     setLayout(pVBoxLayout);
 
     QHBoxLayout *pHBoxLayout = new QHBoxLayout;
-    pHBoxLayout->setMargin(0);
+    pHBoxLayout->setContentsMargins(0, 0, 0, 0);
     pHBoxLayout->setSpacing(0);
 
     DSwitchButton *pSwitchButton_1 = new DSwitchButton;
@@ -668,7 +668,7 @@ DSwitchButtonExample::DSwitchButtonExample(QWidget *parent)
     pLabel->setScaledContents(true);
 
     QHBoxLayout *pHBoxLayout_pic = new QHBoxLayout;
-    pHBoxLayout_pic->setMargin(0);
+    pHBoxLayout_pic->setContentsMargins(0, 0, 0, 0);
     pHBoxLayout_pic->setSpacing(0);
     pHBoxLayout_pic->addWidget(pLabel);
 
@@ -697,12 +697,12 @@ DRadioButtonExample::DRadioButtonExample(QWidget *parent)
     : ExampleWindowInterface(parent)
 {
     QVBoxLayout *pVBoxLayout = new QVBoxLayout;
-    pVBoxLayout->setMargin(0);
+    pVBoxLayout->setContentsMargins(0, 0, 0, 0);
     pVBoxLayout->setSpacing(0);
     setLayout(pVBoxLayout);
 
     QHBoxLayout *pHBoxLayout = new QHBoxLayout;
-    pHBoxLayout->setMargin(0);
+    pHBoxLayout->setContentsMargins(0, 0, 0, 0);
     pHBoxLayout->setSpacing(0);
 
     DRadioButton *pRadioButton_1 = new DRadioButton;
@@ -728,7 +728,7 @@ DRadioButtonExample::DRadioButtonExample(QWidget *parent)
     pLabel->setScaledContents(true);
 
     QHBoxLayout *pHBoxLayout_pic = new QHBoxLayout;
-    pHBoxLayout_pic->setMargin(0);
+    pHBoxLayout_pic->setContentsMargins(0, 0, 0, 0);
     pHBoxLayout_pic->setSpacing(0);
     pHBoxLayout_pic->addWidget(pLabel);
 
@@ -758,12 +758,12 @@ DCheckButtonExample::DCheckButtonExample(QWidget *parent)
     : ExampleWindowInterface(parent)
 {
     QVBoxLayout *pVBoxLayout = new QVBoxLayout;
-    pVBoxLayout->setMargin(0);
+    pVBoxLayout->setContentsMargins(0, 0, 0, 0);
     pVBoxLayout->setSpacing(0);
     setLayout(pVBoxLayout);
 
     QHBoxLayout *pHBoxLayout = new QHBoxLayout;
-    pHBoxLayout->setMargin(0);
+    pHBoxLayout->setContentsMargins(0, 0, 0, 0);
     pHBoxLayout->setSpacing(0);
 
     DCheckBox *pCheckBox_1 = new DCheckBox("");
@@ -809,7 +809,7 @@ DCheckButtonExample::DCheckButtonExample(QWidget *parent)
     pLabel->setScaledContents(true);
 
     QHBoxLayout *pHBoxLayout_pic = new QHBoxLayout;
-    pHBoxLayout_pic->setMargin(0);
+    pHBoxLayout_pic->setContentsMargins(0, 0, 0, 0);
     pHBoxLayout_pic->setSpacing(0);
     pHBoxLayout_pic->addWidget(pLabel);
 
@@ -840,12 +840,12 @@ DComboBoxExample::DComboBoxExample(QWidget *parent)
     : ExampleWindowInterface(parent)
 {
     QVBoxLayout *pVBoxLayout = new QVBoxLayout;
-    pVBoxLayout->setMargin(0);
+    pVBoxLayout->setContentsMargins(0, 0, 0, 0);
     pVBoxLayout->setSpacing(0);
     setLayout(pVBoxLayout);
 
     QHBoxLayout *pHBoxLayout_1 = new QHBoxLayout;
-    pHBoxLayout_1->setMargin(0);
+    pHBoxLayout_1->setContentsMargins(0, 0, 0, 0);
     pHBoxLayout_1->setSpacing(0);
 
     DComboBox *pComboBox_1 = new DComboBox;
@@ -870,7 +870,7 @@ DComboBoxExample::DComboBoxExample(QWidget *parent)
     pHBoxLayout_1->addWidget(pComboBox_1_count);
 
     QHBoxLayout *pHBoxLayout_2 = new QHBoxLayout;
-    pHBoxLayout_2->setMargin(0);
+    pHBoxLayout_2->setContentsMargins(0, 0, 0, 0);
     pHBoxLayout_2->setSpacing(0);
     DComboBox *pComboBox_2 = new DComboBox;
     pComboBox_2->setFixedWidth(340);
@@ -895,12 +895,12 @@ DComboBoxExample::DComboBoxExample(QWidget *parent)
     pLabel_2->setScaledContents(true);
 
     QHBoxLayout *pHBoxLayout_pic_1 = new QHBoxLayout;
-    pHBoxLayout_pic_1->setMargin(0);
+    pHBoxLayout_pic_1->setContentsMargins(0, 0, 0, 0);
     pHBoxLayout_pic_1->setSpacing(0);
     pHBoxLayout_pic_1->addWidget(pLabel_1);
 
     QHBoxLayout *pHBoxLayout_pic_2 = new QHBoxLayout;
-    pHBoxLayout_pic_2->setMargin(0);
+    pHBoxLayout_pic_2->setContentsMargins(0, 0, 0, 0);
     pHBoxLayout_pic_2->setSpacing(0);
     pHBoxLayout_pic_2->addWidget(pLabel_2);
 
@@ -934,12 +934,12 @@ DFontComboBoxExample::DFontComboBoxExample(QWidget *parent)
     : ExampleWindowInterface(parent)
 {
     QVBoxLayout *pVBoxLayout = new QVBoxLayout;
-    pVBoxLayout->setMargin(0);
+    pVBoxLayout->setContentsMargins(0, 0, 0, 0);
     pVBoxLayout->setSpacing(0);
     setLayout(pVBoxLayout);
 
     QHBoxLayout *pHBoxLayout_1 = new QHBoxLayout;
-    pHBoxLayout_1->setMargin(0);
+    pHBoxLayout_1->setContentsMargins(0, 0, 0, 0);
     pHBoxLayout_1->setSpacing(0);
 
     DFontComboBox *pComboBox_1 = new DFontComboBox;
@@ -960,7 +960,7 @@ DFontComboBoxExample::DFontComboBoxExample(QWidget *parent)
     pLabel_1->setScaledContents(true);
 
     QHBoxLayout *pHBoxLayout_pic_1 = new QHBoxLayout;
-    pHBoxLayout_pic_1->setMargin(0);
+    pHBoxLayout_pic_1->setContentsMargins(0, 0, 0, 0);
     pHBoxLayout_pic_1->setSpacing(0);
     pHBoxLayout_pic_1->addWidget(pLabel_1);
 
@@ -989,12 +989,12 @@ DSearchComboBoxExample::DSearchComboBoxExample(QWidget *parent)
     : ExampleWindowInterface(parent)
 {
     QVBoxLayout *pVBoxLayout = new QVBoxLayout;
-    pVBoxLayout->setMargin(0);
+    pVBoxLayout->setContentsMargins(0, 0, 0, 0);
     pVBoxLayout->setSpacing(0);
     setLayout(pVBoxLayout);
 
     QHBoxLayout *pHBoxLayout_1 = new QHBoxLayout;
-    pHBoxLayout_1->setMargin(0);
+    pHBoxLayout_1->setContentsMargins(0, 0, 0, 0);
     pHBoxLayout_1->setSpacing(0);
 
     DSearchComboBox *pComboBox_1 = new DSearchComboBox(this);
@@ -1016,7 +1016,7 @@ DSearchComboBoxExample::DSearchComboBoxExample(QWidget *parent)
     pLabel_1->setScaledContents(true);
 
     QHBoxLayout *pHBoxLayout_pic_1 = new QHBoxLayout;
-    pHBoxLayout_pic_1->setMargin(0);
+    pHBoxLayout_pic_1->setContentsMargins(0, 0, 0, 0);
     pHBoxLayout_pic_1->setSpacing(0);
     pHBoxLayout_pic_1->addWidget(pLabel_1);
 

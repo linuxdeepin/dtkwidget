@@ -10,7 +10,11 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
 #include <QTextCodec>
+#else
+#include <QStringConverter>
+#endif
 #include <QDebug>
 #include <QComboBox>
 #include <QFontDatabase>
@@ -154,7 +158,7 @@ MainWindow::MainWindow(QWidget *parent)
     setMinimumSize(qApp->primaryScreen()->availableSize() / 5 * 3);
 
     QHBoxLayout *mainLayout = new QHBoxLayout();
-    mainLayout->setMargin(0);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->setSpacing(5);
 
     QWidget *centralWidget = new QWidget(this);
@@ -304,10 +308,18 @@ void MainWindow::menuItemInvoked(QAction *action)
                             _printer->newPage();
 
                         // 给出调用方widget界面作为打印内容
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
                         double xscale = _printer->pageRect().width() / double(this->width());
                         double yscale = _printer->pageRect().height() / double(this->height());
                         double scale = qMin(xscale, yscale);
                         painter.translate(_printer->pageRect().width() / 2.0, _printer->pageRect().height() / 2.0);
+#else
+                        double xscale = _printer->pageLayout().paintRectPixels(_printer->resolution()).width() / double(this->width());
+                        double yscale = _printer->pageLayout().paintRectPixels(_printer->resolution()).height() / double(this->height());
+                        double scale = qMin(xscale, yscale);
+                        painter.translate(_printer->pageLayout().paintRectPixels(_printer->resolution()).width() / 2.0,
+                                          _printer->pageLayout().paintRectPixels(_printer->resolution()).height() /2.0);
+#endif
                         painter.scale(scale, scale);
                         painter.translate(-this->width() / 2, -this->height() / 2);
                         this->render(&painter);
@@ -316,7 +328,11 @@ void MainWindow::menuItemInvoked(QAction *action)
                         QFont font /*("CESI仿宋-GB2312")*/;
                         font.setPixelSize(16);
                         font = QFont(font, painter.device());
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
                         QRectF rect = _printer->pageRect();
+#else
+                        QRectF rect = _printer->pageLayout().paintRectPixels(_printer->resolution());
+#endif
                         rect = QRectF(0, 0, rect.width(), rect.height());
                         painter.setFont(font);
                         // 画可用页面矩形,提供调试效果参考
@@ -380,7 +396,12 @@ void MainWindow::menuItemInvoked(QAction *action)
         });
 
         QStringList codings;
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         for (auto coding : QTextCodec::availableCodecs()) {
+#else
+        for (auto i = 0; i < QStringConverter::LastEncoding; ++i) {
+            QString coding = QStringConverter::nameForEncoding(static_cast<QStringConverter::Encoding>(i));
+#endif
             codings << coding;
         }
 

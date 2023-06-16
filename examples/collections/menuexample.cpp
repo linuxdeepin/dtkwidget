@@ -71,7 +71,7 @@ DMenuExample::DMenuExample(QWidget *parent)
 
     leftMenu = new QMenu(menuTopWidget);
 
-    picLayout->setMargin(0);
+    picLayout->setContentsMargins(0, 0, 0, 0);
     picLayout->setSpacing(0);
     picLayout->addWidget(label);
 
@@ -122,13 +122,13 @@ DMenuExample::DMenuExample(QWidget *parent)
     leftMenu->addAction("属性");
 
     menuTopLayout->setSpacing(10);
-    menuTopLayout->setMargin(0);
+    menuTopLayout->setContentsMargins(0, 0, 0, 0);
     menuTopLayout->addWidget(topLeftMenuLabel, 0, Qt::AlignBottom);
     menuTopLayout->addWidget(topMidMenuLabel, 0, Qt::AlignBottom);
     menuTopLayout->addWidget(topRightMenuLabel, 0, Qt::AlignBottom);
 
     menuLayout->setSpacing(30);
-    menuLayout->setMargin(0);
+    menuLayout->setContentsMargins(0, 0, 0, 0);
     menuLayout->addWidget(menuTopWidget);
     menuLayout->addWidget(topBottomMenuLabel, 0, Qt::AlignCenter);
 
