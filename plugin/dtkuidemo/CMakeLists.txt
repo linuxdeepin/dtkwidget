@@ -16,6 +16,7 @@ add_executable(
 
 target_link_libraries(${DEMO} PRIVATE
     Qt${QT_VERSION_MAJOR}::Core
+    Qt${QT_VERSION_MAJOR}::Gui
     Qt${QT_VERSION_MAJOR}::GuiPrivate
-    ${LIB_NAME}
+    ${LIBNAME}
 )

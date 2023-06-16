@@ -30,7 +30,7 @@ variables:
   extra_args: |
     -DBUILD_EXAMPLES=OFF \
     -DBUILD_DOCS=OFF \
-    -DVERSION=${VERSION}
+    -DDTK_VERSION=${VERSION}
 
 build:
   kind: cmake

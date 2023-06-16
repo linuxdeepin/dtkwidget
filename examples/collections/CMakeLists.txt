@@ -1,7 +1,7 @@
 set(BIN_NAME collections)
 set(CMAKE_AUTOUIC ON)
 
-find_package(Qt5 REQUIRED COMPONENTS Gui Widgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Gui Widgets)
 
 add_executable(${BIN_NAME}
     images.qrc
@@ -50,13 +50,12 @@ add_executable(${BIN_NAME}
 )
 
 target_link_libraries(${BIN_NAME} PRIVATE
-    Qt5::Widgets
-    Qt5::GuiPrivate
-    ${LIB_NAME}
+    Qt${QT_VERSION_MAJOR}::Widgets
+    Qt${QT_VERSION_MAJOR}::Gui
+    Qt${QT_VERSION_MAJOR}::GuiPrivate
+    ${LIBNAME}
 )
 install(
     TARGETS ${BIN_NAME}
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/dtk${PROJECT_VERSION_MAJOR}/DWidget/examples/"
 )
-
-dconfig_override_files(APPID dtk-example META_NAME org.deepin.dtkwidget.feature-display FILES ${CMAKE_CURRENT_LIST_DIR}/org.deepin.dtkwidget.feature-display.json)
