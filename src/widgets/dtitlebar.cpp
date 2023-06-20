@@ -602,23 +602,28 @@ void DTitlebarPrivate::_q_onTopWindowMotifHintsChanged(quint32 winId)
 
     updateButtonsState(targetWindow()->windowFlags());
 
-    minButton->setEnabled(functions_hints.testFlag(DWindowManagerHelper::FUNC_MINIMIZE));
-    maxButton->setEnabled(functions_hints.testFlag(DWindowManagerHelper::FUNC_MAXIMIZE)
-                          && functions_hints.testFlag(DWindowManagerHelper::FUNC_RESIZE));
-    if (!qgetenv("WAYLAND_DISPLAY").isEmpty()) {
-        closeButton->setEnabled(!disableFlags.testFlag(Qt::WindowCloseButtonHint));
+    bool enableMin = functions_hints.testFlag(DWindowManagerHelper::FUNC_MINIMIZE);
+    bool enableMax = functions_hints.testFlag(DWindowManagerHelper::FUNC_MAXIMIZE) && functions_hints.testFlag(DWindowManagerHelper::FUNC_RESIZE);
+    bool enableClose;
+    if (!qEnvironmentVariableIsEmpty("WAYLAND_DISPLAY")) {
+        enableClose = !disableFlags.testFlag(Qt::WindowCloseButtonHint);
     } else {
-        closeButton->setEnabled(functions_hints.testFlag(DWindowManagerHelper::FUNC_CLOSE));
+        enableClose = functions_hints.testFlag(DWindowManagerHelper::FUNC_CLOSE);
+    }
+    if(q->window()->isEnabled()) {
+        minButton->setEnabled(enableMin);
+        maxButton->setEnabled(enableMax);
+        closeButton->setEnabled(enableClose);
     }
     // sync button state
 #if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
-    disableFlags.setFlag(Qt::WindowMinimizeButtonHint, !minButton->isEnabled());
-    disableFlags.setFlag(Qt::WindowMaximizeButtonHint, !maxButton->isEnabled());
-    disableFlags.setFlag(Qt::WindowCloseButtonHint, !closeButton->isEnabled());
+    disableFlags.setFlag(Qt::WindowMinimizeButtonHint, !enableMin);
+    disableFlags.setFlag(Qt::WindowMaximizeButtonHint, !enableMax);
+    disableFlags.setFlag(Qt::WindowCloseButtonHint, !enableClose);
 #else
-    setWindowFlag(disableFlags, Qt::WindowMinimizeButtonHint, !minButton->isEnabled());
-    setWindowFlag(disableFlags, Qt::WindowMaximizeButtonHint, !maxButton->isEnabled());
-    setWindowFlag(disableFlags, Qt::WindowCloseButtonHint, !closeButton->isEnabled());
+    setWindowFlag(disableFlags, Qt::WindowMinimizeButtonHint, !enableMin);
+    setWindowFlag(disableFlags, Qt::WindowMaximizeButtonHint, !enableMax);
+    setWindowFlag(disableFlags, Qt::WindowCloseButtonHint, !enableClose);
 #endif
 }
 
