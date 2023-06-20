@@ -2334,9 +2334,11 @@ QBrush DStyle::generatedBrush(StateFlags flags, const QBrush &base, QPalette::Co
         switch (role) {
         case QPalette::Button:
         case QPalette::Light:
-        case QPalette::Dark:
-            colorNew = adjustColor(colorNew, 0, 0, -10, 0, 0, 0, 0);
+        case QPalette::Dark: {
+            DGuiApplicationHelper::ColorType type = DGuiApplicationHelper::toColorType(option->palette);
+            colorNew = adjustColor(colorNew, 0, 0, type == DGuiApplicationHelper::DarkType ? 10 : -10, 0, 0, 0, 0);
             break;
+        }
         case QPalette::Highlight:
             colorNew = adjustColor(colorNew, 0, 0, +20);
             break;
