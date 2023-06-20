@@ -9,6 +9,7 @@
 
 #include "dstyleditemdelegate.h"
 DWIDGET_USE_NAMESPACE
+DGUI_USE_NAMESPACE
 class ut_DStandardItem : public testing::Test
 {
 protected:
