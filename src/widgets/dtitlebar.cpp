@@ -209,11 +209,11 @@ void DTitlebarPrivate::init()
         optionButton = new DWindowOptionButton;
     }
 
-    auto config = new DConfig("org.deepin.dtkwidget.feature-display", "", q);
+    auto config = new DConfig("org.deepin.dtk.preference", "", q);
     bool isUpdated = config->value("featureUpdated", false).toBool();
     DStyle::setRedPointVisible(optionButton, isUpdated);
 
-    uiPreferDonfig = new DConfig("org.deepin.dtk.ui.preference", "", q);
+    uiPreferDonfig = new DConfig("org.deepin.dtk.preference", "", q);
     updateTitlebarHeight();
 
     separatorTop    = new DHorizontalLine(q);
@@ -1004,7 +1004,7 @@ void DTitlebar::showMenu()
             action->setChecked(true);
         }
 
-        DConfig config("org.deepin.dtkwidget.feature-display");
+        DConfig config("org.deepin.dtk.preference");
         bool isUpdated = config.value("featureUpdated", false).toBool();
         DStyle::setRedPointVisible(d->aboutAction, isUpdated);
 

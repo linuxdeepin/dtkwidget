@@ -189,7 +189,7 @@ void DAboutDialogPrivate::init()
     mainContent->setLayout(mainLayout);
     q->addContent(mainScrollArea);
 
-    DConfig config("org.deepin.dtkwidget.feature-display");
+    DConfig config("org.deepin.dtk.preference");
     bool isUpdated = config.value("featureUpdated", false).toBool();
     redPointLabel->setVisible(isUpdated);
     // make active
@@ -218,7 +218,7 @@ void DAboutDialogPrivate::_q_onLinkActivated(const QString &link)
 void DAboutDialogPrivate::_q_onFeatureActivated(const QString &)
 {
     D_Q(DAboutDialog);
-    DConfig config("org.deepin.dtkwidget.feature-display");
+    DConfig config("org.deepin.dtk.preference");
     if (config.value("featureUpdated", false).toBool()) {
         config.setValue("featureUpdated", false);
         redPointLabel->setVisible(false);

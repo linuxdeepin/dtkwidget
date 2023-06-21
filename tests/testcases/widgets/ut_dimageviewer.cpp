@@ -9,6 +9,10 @@
 #include <QSignalSpy>
 #include <QTouchEvent>
 #include <QGraphicsSceneMouseEvent>
+#if QT_VERSION > QT_VERSION_CHECK(6, 0, 0)
+#include <QWindow>
+#include <private/qeventpoint_p.h>
+#endif
 
 #include "dimageviewer.h"
 #include "private/dimagevieweritems_p.h"
@@ -422,6 +426,7 @@ TEST_F(ut_DImageViewer, testRequestPreviousImage)
     QSignalSpy changeSignal(viewer, &DImageViewer::requestPreviousImage);
 
     // Simulate event trigger.
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QTouchEvent::TouchPoint point;
     point.setStartPos(QPointF(0, 0));
     point.setLastPos(QPointF(300, 0));
@@ -434,6 +439,20 @@ TEST_F(ut_DImageViewer, testRequestPreviousImage)
     QTouchEvent touchEvent2(QEvent::TouchEnd, nullptr, Qt::NoModifier, Qt::TouchPointReleased, {point});
     viewer->event(&touchEvent2);
     ASSERT_EQ(changeSignal.count(), 1);
+#else
+    QMutableEventPoint point;
+    point.setGlobalPosition({0,0});
+    point.setGlobalLastPosition({300,0});
+    QTouchEvent touchEvent{QEvent::TouchEnd,nullptr,Qt::NoModifier,{point}};
+
+    viewer->event(&touchEvent);
+    ASSERT_EQ(changeSignal.count(), 1);
+
+    point.setGlobalLastPosition({100,0});
+    QTouchEvent touchEvent2{QEvent::TouchEnd, nullptr, Qt::NoModifier, {point}};
+    viewer->event(&touchEvent2);
+    ASSERT_EQ(changeSignal.count(), 1);
+#endif
 }
 
 TEST_F(ut_DImageViewer, testRequestNextImage)
@@ -442,6 +461,7 @@ TEST_F(ut_DImageViewer, testRequestNextImage)
     QSignalSpy changeSignal(viewer, &DImageViewer::requestNextImage);
 
     // Simulate event trigger.
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QTouchEvent::TouchPoint point;
     point.setStartPos(QPointF(0, 0));
     point.setLastPos(QPointF(-300, 0));
@@ -454,6 +474,20 @@ TEST_F(ut_DImageViewer, testRequestNextImage)
     QTouchEvent touchEvent2(QEvent::TouchEnd, nullptr, Qt::NoModifier, Qt::TouchPointReleased, {point, point});
     viewer->event(&touchEvent2);
     ASSERT_EQ(changeSignal.count(), 1);
+#else
+    QMutableEventPoint point;
+    point.setGlobalPosition({0,0});
+    point.setGlobalLastPosition({-300, 0});
+    QTouchEvent touchEvent(QEvent::TouchEnd, nullptr, Qt::NoModifier,{point});
+
+    viewer->event(&touchEvent);
+    ASSERT_EQ(changeSignal.count(), 1);
+
+    // Test multi point touch.
+    QTouchEvent touchEvent2(QEvent::TouchEnd, nullptr, Qt::NoModifier, {point, point});
+    viewer->event(&touchEvent2);
+    ASSERT_EQ(changeSignal.count(), 1);
+#endif
 }
 
 TEST_F(ut_DImageViewer, testCropImageFinished)
