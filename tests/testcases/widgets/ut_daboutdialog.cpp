@@ -36,7 +36,11 @@ TEST_F(ut_DAboutDialog, setAcknowledgementVisible)
 TEST_F(ut_DAboutDialog, setCompanyLogo)
 {
     widget->setCompanyLogo(QPixmap(50, 50));
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     ASSERT_EQ(widget->companyLogo()->size(), QSize(50, 50));
+#else
+    ASSERT_EQ(widget->companyLogo().size(), QSize(50, 50));
+#endif
 };
 
 TEST_F(ut_DAboutDialog, setDescription)

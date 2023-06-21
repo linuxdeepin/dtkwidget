@@ -171,7 +171,7 @@ DMainWindow::DMainWindow(QWidget *parent)
     if (DGuiApplicationHelper::isTabletEnvironment()) {
         setWindowFlags(windowFlags() & ~(Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint));
     }
-    DConfig config("org.deepin.dtkwidget.feature-display");
+    DConfig config("org.deepin.dtk.preference");
     bool isAutoDisplayFeature = config.value("autoDisplayFeature", false).toBool();
     if (isAutoDisplayFeature) {
         connect(this->windowHandle(), SIGNAL(activeChanged()), this, SLOT(_q_autoShowFeatureDialog()));
