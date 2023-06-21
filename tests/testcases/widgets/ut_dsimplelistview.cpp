@@ -38,7 +38,7 @@ public:
         pen.setWidth(50);
         painter->setPen(pen);
         painter->setBrush(QBrush(Qt::green));
-        painter->drawRoundRect(rect);
+        painter->drawRoundedRect(rect, 25, 25, Qt::RelativeSize);
         if (isSelectTest) {
             SelectedTest(isSelect);
         }
