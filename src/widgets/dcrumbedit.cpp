@@ -639,8 +639,6 @@ DCrumbEdit::DCrumbEdit(QWidget *parent)
 {
     Q_D(DCrumbEdit);
 
-    QRandomGenerator::global()->seed(QTime(0, 0, 0).secsTo(QTime::currentTime()));
-
     int frameRadius = DStyle::pixelMetric(style(), DStyle::PM_FrameRadius);
     int margins = DStyle::pixelMetric(style(), DStyle::PM_FrameMargins);
     viewport()->setAutoFillBackground(false);
