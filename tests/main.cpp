@@ -13,12 +13,12 @@
 /**
   添加Qt事件循环,兼容gtest.
  */
-int runTest(QCoreApplication &app)
+int runTest(Dtk::Widget::DApplication &app)
 {
     int ret = 0;
-    QTimer::singleShot(0, &app, [&app, &ret](){
-        ret = RUN_ALL_TESTS();
-        app.quit();
+    QTimer::singleShot(0, &app, [&app, &ret]() {
+      ret = RUN_ALL_TESTS();
+      app.quit();
     });
     app.exec();
     return ret;
@@ -26,11 +26,10 @@ int runTest(QCoreApplication &app)
 
 int main(int argc, char *argv[])
 {
-    // gerrit编译时没有显示器，需要指定环境变量
-    qputenv("QT_QPA_PLATFORM", "offscreen");
-
 	Dtk::Widget::DApplication app(argc, argv);
     ::testing::InitGoogleTest(&argc, argv);
+  // gerrit编译时没有显示器，需要指定环境变量
+  qputenv("QT_QPA_PLATFORM", "offscreen");     
 
 #ifdef QT_DEBUG
     __sanitizer_set_report_path("asan.log");
