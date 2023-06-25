@@ -139,8 +139,10 @@ bool DFontComboBox::event(QEvent *e)
     if (e->type() == QEvent::Resize) {
         QListView *lview = qobject_cast<QListView*>(view());
         if (lview) {
-            lview->window()->setFixedWidth(qMin(width() * 5 / 3,
-                               lview->window()->windowHandle()->screen()->availableGeometry().width()));
+          lview->winId();
+          auto window = lview->window();
+          window->setFixedWidth(qMin(width() * 5 / 3,
+                               window->windowHandle()->screen()->availableGeometry().width()));
         }
     }
     return DComboBox::event(e);

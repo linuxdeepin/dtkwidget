@@ -804,9 +804,12 @@ void DDialog::addContent(QWidget *widget, Qt::Alignment alignment)
 void DDialog::insertContent(int index, QWidget *widget, Qt::Alignment alignment)
 {
     D_D(DDialog);
-
+# if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     d->contentLayout->insertWidget(index + DIALOG::CONTENT_INSERT_OFFSET,
                                    widget, 0, alignment);
+#else
+    d->contentLayout->insertWidget(index, widget, 0, alignment); //TODO: remove offset temporarily, this modification may cause some errors to occur
+#endif
     d->contentList << widget;
 }
 
