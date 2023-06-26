@@ -1,3 +1,27 @@
+dtkwidget (5.6.13) unstable; urgency=medium
+
+  * chore: change the text of the title on licensedialog
+  * chore: Add properties about license in dapplication interface
+  * chore: Change the text of the title in dlicensedialog
+  * fix: 修改分屏菜单位置错误(Bug: 199083)(Influence: 锁屏界面/任务栏等网络插件窗口显示,窗口分屏提示窗口)
+  * fix: abnormal font size(Issue: #17)
+  * chore: update translations abouut license
+  * fix: DApplication casting error
+  * fix: TextEdit color group not update(Bug: 196603)
+  * feat(build): support Qt6
+  * feat(lib): support Qt6
+  * feat(others): support Qt6
+  * fix: correct copy assignment operator
+  * fix: compile error of unit test
+  * fix: Attempted to overwrite a QRandomGenerator to system() or global().
+  * fix: unit test error under qt5
+  * chore: remove old dependency
+  * fix: fix compile error under qt6
+  * fix: unit test error under qt6
+  * fix: titlebar buttons don't recover
+
+ -- Deepin Packages Builder <packages@deepin.org>  Mon, 26 Jun 2023 10:12:00 +0800
+
 dtkwidget (5.6.12) unstable; urgency=medium
 
   * Release 5.6.12
