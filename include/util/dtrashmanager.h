@@ -11,6 +11,8 @@
 
 #include <QObject>
 
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
+
 DWIDGET_BEGIN_NAMESPACE
 
 class DTrashManagerPrivate;
@@ -33,3 +35,5 @@ private:
 DWIDGET_END_NAMESPACE
 
 #endif // DTKWIDGET_DTRASHMANAGER_H
+
+#endif

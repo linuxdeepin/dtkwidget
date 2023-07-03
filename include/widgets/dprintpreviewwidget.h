@@ -79,10 +79,14 @@ public:
     void setPageRange(const QVector<int> &rangePages);
     void setPageRange(int from, int to);
     void setPageRangeALL();
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
     D_DECL_DEPRECATED void setReGenerate(bool generate);
+#endif
     void setPageRangeMode(PageRange mode);
     PageRange pageRangeMode();
-    void reviewChange(bool generate);
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
+    D_DECL_DEPRECATED void reviewChange(bool generate);
+#endif
     int pagesCount();
     int currentPage();
     bool turnPageAble();

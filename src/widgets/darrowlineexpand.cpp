@@ -5,6 +5,8 @@
 #include "darrowlineexpand.h"
 #include "dthememanager.h"
 
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
+
 #include <QResizeEvent>
 
 DWIDGET_BEGIN_NAMESPACE
@@ -120,3 +122,5 @@ void DArrowLineExpand::resizeEvent(QResizeEvent *e)
 }
 
 DWIDGET_END_NAMESPACE
+
+#endif

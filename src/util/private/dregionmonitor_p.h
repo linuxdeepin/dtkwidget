@@ -5,6 +5,8 @@
 #ifndef DREGIONMONITOR_P_H_DWIDGET
 #define DREGIONMONITOR_P_H_DWIDGET
 
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
+
 #include <dtkwidget_global.h>
 #include <dobject_p.h>
 #include <QRegion>
@@ -27,3 +29,5 @@ public:
 DWIDGET_END_NAMESPACE
 
 #endif // DREGIONMONITOR_P_H_DWIDGET
+
+#endif

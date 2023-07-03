@@ -624,11 +624,14 @@ int DPrintPreviewWidgetPrivate::page2index(int page)
     return pageRange.indexOf(page);
 }
 
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
+
 void DPrintPreviewWidgetPrivate::impositionPages()
 {
     setCurrentPage(FIRST_PAGE);
     return;
 }
+#endif
 
 int DPrintPreviewWidgetPrivate::impositionPages(DPrintPreviewWidget::Imposition im)
 {
@@ -1241,13 +1244,15 @@ void DPrintPreviewWidget::setPageRangeALL()
 
 /*!
   \brief 设置是否需要重新生成页面内容.
-  
+
   \a generate 是否需要重新生成页面内容
  */
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 void DPrintPreviewWidget::setReGenerate(bool generate)
 {
     reviewChange(generate);
 }
+#endif
 
 /*!
   \brief 设置页面选择范围模式。
@@ -1276,11 +1281,13 @@ DPrintPreviewWidget::PageRange DPrintPreviewWidget::pageRangeMode()
 
   \a generate 预览是否发生改变.
  */
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 void DPrintPreviewWidget::reviewChange(bool generate)
 {
     Q_D(DPrintPreviewWidget);
     d->reviewChanged = generate;
 }
+#endif
 
 /*!
   \brief 设置预览页面范围。

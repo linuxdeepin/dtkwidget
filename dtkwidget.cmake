@@ -70,6 +70,18 @@ file(GLOB_RECURSE PUBLIC_HEADERS "${PROJECT_SOURCE_DIR}/include/*.h")
 list(APPEND PUBLIC_HEADERS ${D_HEADERS})
 list(APPEND PUBLIC_HEADERS ${AUTOCONFIG})
 
+if("${DTK_VERSION_MAJOR}" STREQUAL "6")
+  list(REMOVE_ITEM PUBLIC_HEADERS "${PROJECT_SOURCE_DIR}/include/DWidget/DApplicationHelper")
+  list(REMOVE_ITEM PUBLIC_HEADERS "${PROJECT_SOURCE_DIR}/include/DWidget/DApplicationSettings")
+  list(REMOVE_ITEM PUBLIC_HEADERS "${PROJECT_SOURCE_DIR}/include/DWidget/DArrowLineExpand")
+  list(REMOVE_ITEM PUBLIC_HEADERS "${PROJECT_SOURCE_DIR}/include/DWidget/DExpandGroup")
+  list(REMOVE_ITEM PUBLIC_HEADERS "${PROJECT_SOURCE_DIR}/include/DWidget/DImageButton")
+  list(REMOVE_ITEM PUBLIC_HEADERS "${PROJECT_SOURCE_DIR}/include/DWidget/DSegmentedControl")
+  list(REMOVE_ITEM PUBLIC_HEADERS "${PROJECT_SOURCE_DIR}/include/DWidget/DSegmentedHighlight")
+  list(REMOVE_ITEM PUBLIC_HEADERS "${PROJECT_SOURCE_DIR}/include/DWidget/DThemeManager")
+  list(REMOVE_ITEM PUBLIC_HEADERS "${PROJECT_SOURCE_DIR}/include/DWidget/DToast")
+endif()
+
 set (BUILD_DOCS ON CACHE BOOL "Generate doxygen-based documentation")
 
 if (NOT CMAKE_BUILD_TYPE)

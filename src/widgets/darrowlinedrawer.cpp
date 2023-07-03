@@ -154,11 +154,13 @@ void DArrowLineDrawer::setExpand(bool value)
   \return Title control
   \sa DHeaderLine DBaseLine
  */
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 DBaseLine *DArrowLineDrawer::headerLine()
 {
     D_D(DArrowLineDrawer);
     return d->headerLine;
 }
+#endif
 
 void DArrowLineDrawer::setHeader(QWidget *header)
 {

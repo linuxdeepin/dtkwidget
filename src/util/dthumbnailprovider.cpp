@@ -5,6 +5,8 @@
 #include "dthumbnailprovider.h"
 #include <DObjectPrivate>
 
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
+
 #include <QCryptographicHash>
 #include <QDir>
 #include <QDateTime>
@@ -439,3 +441,5 @@ void DThumbnailProvider::run()
 }
 
 DWIDGET_END_NAMESPACE
+
+#endif

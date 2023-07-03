@@ -18,6 +18,9 @@
 DWIDGET_BEGIN_NAMESPACE
 
 class DShortcutEditLabel;
+
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
+
 class D_DECL_DEPRECATED_X("Use DKeySequenceEdit instead.") LIBDTKWIDGETSHARED_EXPORT DShortcutEdit : public QFrame
 {
     Q_OBJECT
@@ -62,6 +65,8 @@ private:
 
     static const QString DefaultTips;
 };
+
+#endif
 
 class DShortcutEditLabel : public QLabel
 {

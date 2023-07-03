@@ -136,10 +136,12 @@ void DSpinBox::showAlertMessage(const QString &text, QWidget *follower, int dura
   
   使用 DSpinBox::defaultValue 获取默认值，使用 DSpinBox::setDefaultValue 设置默认值, 点击控件上的 reset 按钮会设置为此值。
  */
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 int DSpinBox::defaultValue() const
 {
     return 0;
 }
+#endif
 
 void DSpinBox::setEnabledEmbedStyle(bool enabled)
 {
@@ -153,10 +155,12 @@ void DSpinBox::setAlert(bool alert)
     d->lineEdit->setAlert(alert);
 }
 
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 void DSpinBox::setDefaultValue(int defaultValue)
 {
     Q_UNUSED(defaultValue)
 }
+#endif
 
 DDoubleSpinBoxPrivate::DDoubleSpinBoxPrivate(DDoubleSpinBox *parent) :
     DObjectPrivate(parent)
@@ -222,10 +226,12 @@ void DDoubleSpinBox::showAlertMessage(const QString &text, QWidget *follower, in
     d->lineEdit->showAlertMessage(text, follower, duration);
 }
 
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 double DDoubleSpinBox::defaultValue() const
 {
     return 0;
 }
+#endif
 
 QLineEdit *DDoubleSpinBox::lineEdit() const
 {
@@ -243,10 +249,11 @@ void DDoubleSpinBox::setAlert(bool alert)
 
     d->lineEdit->setAlert(alert);
 }
-
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 void DDoubleSpinBox::setDefaultValue(double defaultValue)
 {
     Q_UNUSED(defaultValue)
 }
+#endif
 
 DWIDGET_END_NAMESPACE

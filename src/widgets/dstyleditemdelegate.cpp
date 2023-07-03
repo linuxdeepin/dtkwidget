@@ -661,6 +661,7 @@ DViewItemAction::DViewItemAction(Qt::Alignment alignment, const QSize &iconSize,
     d->clickable = clickable;
 }
 
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 DViewItemAction::DViewItemAction(Qt::Alignment alignment, const QSize &iconSize,
                                  const QSize &maxSize, bool clickable, QObject *parent)
     : DViewItemAction(alignment, iconSize, maxSize, clickable)
@@ -669,6 +670,7 @@ DViewItemAction::DViewItemAction(Qt::Alignment alignment, const QSize &iconSize,
         qWarning() << "setting parent for a DViewItemAction object is no longer supported.";
     }
 }
+#endif
 
 /*!
   \brief 获取 DViewItemAction 放置的(水平)位置

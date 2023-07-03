@@ -5,12 +5,13 @@
 #ifndef DTHEMEMANAGER_H
 #define DTHEMEMANAGER_H
 
+#include <dtkwidget_global.h>
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
+
 #include <QObject>
 #include <QString>
 #include <QGlobalStatic>
-
 #include <DObject>
-#include <dtkwidget_global.h>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -55,3 +56,5 @@ private:
 DWIDGET_END_NAMESPACE
 
 #endif // DTHEMEMANAGER_H
+
+#endif

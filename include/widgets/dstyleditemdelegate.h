@@ -30,8 +30,10 @@ class DViewItemAction : public QAction, public DCORE_NAMESPACE::DObject
 public:
     explicit DViewItemAction(Qt::Alignment alignment = Qt::Alignment(), const QSize &iconSize = QSize(),
                              const QSize &maxSize = QSize(), bool clickable = false);
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
     D_DECL_DEPRECATED explicit DViewItemAction(Qt::Alignment alignment, const QSize &iconSize,
                                                const QSize &maxSize, bool clickable, QObject *parent);
+#endif
 
     Qt::Alignment alignment() const;
     QSize iconSize() const;

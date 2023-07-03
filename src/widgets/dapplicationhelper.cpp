@@ -4,7 +4,7 @@
 
 #include "dapplicationhelper.h"
 #include "dpalettehelper.h"
-
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 #include <QApplication>
 
 DWIDGET_BEGIN_NAMESPACE
@@ -104,3 +104,4 @@ bool DApplicationHelper::event(QEvent *event)
 }
 
 DWIDGET_END_NAMESPACE
+#endif

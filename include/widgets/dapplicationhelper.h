@@ -9,6 +9,8 @@
 #include <DGuiApplicationHelper>
 #include <DPalette>
 
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
+
 DWIDGET_BEGIN_NAMESPACE
 
 DGUI_USE_NAMESPACE
@@ -37,3 +39,5 @@ private:
 DWIDGET_END_NAMESPACE
 
 #endif // DAPPLICATIONHELPER_H
+
+#endif

@@ -35,9 +35,10 @@ public:
     QWidget *createWidget(const QByteArray &translateContext, QPointer<DTK_CORE_NAMESPACE::DSettingsOption> option);
     QPair<QWidget*, QWidget*> createItem(QPointer<DTK_CORE_NAMESPACE::DSettingsOption> option) const;
     QPair<QWidget*, QWidget*> createItem(const QByteArray &translateContext, QPointer<DTK_CORE_NAMESPACE::DSettingsOption> option) const;
-
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
     D_DECL_DEPRECATED static QWidget *createTwoColumWidget(DTK_CORE_NAMESPACE::DSettingsOption *option, QWidget *rightWidget);
     D_DECL_DEPRECATED static QWidget *createTwoColumWidget(const QByteArray &translateContext, DTK_CORE_NAMESPACE::DSettingsOption *option, QWidget *rightWidget);
+#endif
     static QPair<QWidget*, QWidget*> createStandardItem(const QByteArray &translateContext, DTK_CORE_NAMESPACE::DSettingsOption *option, QWidget *rightWidget);
 
 private:

@@ -377,11 +377,12 @@ QString DAboutDialog::websiteLink() const
   @brief the web address to be open open when user clicks on the "Acknowlegement"
   text show on the dialog.
  */
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 QString DAboutDialog::acknowledgementLink() const
 {
     return QString();
 }
-
+#endif
 /*!
 @~english
   @property DAboutDialog::license
@@ -513,10 +514,11 @@ void DAboutDialog::setWebsiteLink(const QString &websiteLink)
 @~english
   @brief This function is used to set the specified ACKNOWLEDGEMENTLINK Link
  */
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 void DAboutDialog::setAcknowledgementLink(const QString &)
 {
 }
-
+#endif
 /*!
 @~english
   @brief This function is used to set the specified Visible settings to set the gratitude link to display

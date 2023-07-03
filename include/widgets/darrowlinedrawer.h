@@ -20,7 +20,9 @@ public:
     explicit DArrowLineDrawer(QWidget *parent = nullptr);
     void setTitle(const QString &title);
     void setExpand(bool value);
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
     D_DECL_DEPRECATED DBaseLine *headerLine();
+#endif
 
 private:
     void setHeader(QWidget *header);

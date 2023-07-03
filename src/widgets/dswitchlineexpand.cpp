@@ -67,15 +67,12 @@ void DSwitchHeaderLine::mousePressEvent(QMouseEvent *)
 
   \a parent 指定了控件的父控件。
  */
-DSwitchLineExpand::DSwitchLineExpand(QWidget *parent) :
-    DBaseExpand(parent)
-{
+DSwitchLineExpand::DSwitchLineExpand(QWidget *parent) : DDrawer(parent) {
     m_headerLine = new DSwitchHeaderLine(this);
     m_headerLine->setExpand(expand());
     m_headerLine->setAccessibleName("DSwitchLineExpandHeaderLine");
-    connect(m_headerLine, &DSwitchHeaderLine::checkedChanged, [ = ](bool arg) {
-        DBaseExpand::setExpand(arg);
-    });
+    connect(m_headerLine, &DSwitchHeaderLine::checkedChanged,
+            [=](bool arg) { DDrawer::setExpand(arg); });
     setHeader(m_headerLine);
 }
 
@@ -117,14 +114,14 @@ DBaseLine *DSwitchLineExpand::header()
  */
 void DSwitchLineExpand::setHeader(QWidget *header)
 {
-    DBaseExpand::setHeader(header);
+    DDrawer::setHeader(header);
 }
 
 void DSwitchLineExpand::resizeEvent(QResizeEvent *e)
 {
     m_headerLine->setFixedWidth(e->size().width());
 
-    DBaseExpand::resizeEvent(e);
+    DDrawer::resizeEvent(e);
 }
 
 DWIDGET_END_NAMESPACE
