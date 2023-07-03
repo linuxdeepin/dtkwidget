@@ -5,6 +5,8 @@
 #include "dregionmonitor.h"
 #include "private/dregionmonitor_p.h"
 
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
+
 DWIDGET_BEGIN_NAMESPACE
 
 DRegionMonitor::DRegionMonitor(QObject *parent)
@@ -78,3 +80,4 @@ DRegionMonitorPrivate::~DRegionMonitorPrivate()
 }
 
 DWIDGET_END_NAMESPACE
+#endif

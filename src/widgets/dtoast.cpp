@@ -4,6 +4,8 @@
 
 #include "dtoast.h"
 
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
+
 #include <DObjectPrivate>
 
 #include <QGraphicsOpacityEffect>
@@ -243,3 +245,5 @@ void DToastPrivate::initUI()
 
 
 DWIDGET_END_NAMESPACE
+
+#endif

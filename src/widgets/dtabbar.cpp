@@ -28,7 +28,7 @@
 #undef private
 #undef protected
 
-#include "dapplication.h"
+#include "dpalettehelper.h"
 #include "diconbutton.h"
 
 DWIDGET_BEGIN_NAMESPACE
@@ -61,7 +61,7 @@ static inline bool horz(QBoxLayout::Direction dir)
 static inline QColor getColor(const QStyleOption *option, DPalette::ColorType type, const QWidget *w)
 {
     if (auto s = qobject_cast<DStyle*>(w->style())) {
-        const DPalette &pa = DApplicationHelper::instance()->palette(w, option->palette);
+        const DPalette &pa = DPaletteHelper::instance()->palette(w, option->palette);
         return s->generatedBrush(option, pa.brush(type), pa.currentColorGroup(), type).color();
     }
     return QColor();

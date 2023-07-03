@@ -7,6 +7,8 @@
 
 #include <DImageButton>
 
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
+
 #include <DObjectPrivate>
 
 DWIDGET_BEGIN_NAMESPACE
@@ -37,3 +39,5 @@ public:
 DWIDGET_END_NAMESPACE
 
 #endif // DIMAGEBUTTON_P_H
+
+#endif

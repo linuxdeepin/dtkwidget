@@ -8,7 +8,7 @@
 #include <QWidget>
 
 #include <dtkwidget_global.h>
-#include <dbaseexpand.h>
+#include <ddrawer.h>
 #include <DSwitchButton>
 #include <dheaderline.h>
 
@@ -33,7 +33,7 @@ private:
 
 };
 
-class LIBDTKWIDGETSHARED_EXPORT DSwitchLineExpand : public DBaseExpand
+class LIBDTKWIDGETSHARED_EXPORT DSwitchLineExpand : public DDrawer
 {
     Q_OBJECT
 public:

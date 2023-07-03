@@ -8,6 +8,8 @@
 #include <dtkwidget_global.h>
 #include <DObject>
 
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
+
 DWIDGET_BEGIN_NAMESPACE
 
 class DApplicationSettingsPrivate;
@@ -28,3 +30,5 @@ private:
 DWIDGET_END_NAMESPACE
 
 #endif // DAPPLICATIONSETTINGS_H
+
+#endif

@@ -269,7 +269,9 @@ public:
     int targetPage(int page);
     int index2page(int index);
     int page2index(int page);
-    D_DECL_DEPRECATED void impositionPages(); // 拼版
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
+    D_DECL_DEPRECATED void impositionPages();  // 拼版
+#endif
     int impositionPages(DPrintPreviewWidget::Imposition im); // 每页版数
     QImage generateWaterMarkImage() const;
     PrintOptions printerOptions();
@@ -308,8 +310,9 @@ public:
     DPrintPreviewWidget::Order order;
     qreal scale = 1.0;
     DPrintPreviewWidget::PageRange pageRangeMode = DPrintPreviewWidget::AllPage;
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
     D_DECL_DEPRECATED bool reviewChanged = true; // 预览页面是否发生改变
-
+#endif
     DPrinter *previewPrinter;
     RefreshMode refreshMode;
 

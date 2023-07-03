@@ -14,6 +14,8 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
+
 // static const variables
 const QString DShortcutEdit::DefaultTips = tr("Please input a new shortcut");
 
@@ -235,6 +237,7 @@ QString DShortcutEdit::convertShortcutKeys(const QString &keys)
 
     return newKeys;
 }
+#endif
 
 DShortcutEditLabel::DShortcutEditLabel(QWidget *parent)
     : QLabel(parent)

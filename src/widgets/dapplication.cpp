@@ -119,6 +119,7 @@ DApplicationPrivate::~DApplicationPrivate()
 
 }
 
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 QString DApplicationPrivate::theme() const
 {
     return DThemeManager::instance()->theme();
@@ -129,6 +130,7 @@ void DApplicationPrivate::setTheme(const QString &theme)
     DThemeManager *themeManager = DThemeManager::instance();
     themeManager->setTheme(theme);
 }
+#endif
 
 static bool tryAcquireSystemSemaphore(QSystemSemaphore *ss, qint64 timeout = 10)
 {
@@ -650,24 +652,28 @@ DApplication::~DApplication() {
 
   \return the theme name.
  */
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 QString DApplication::theme() const
 {
     D_DC(DApplication);
 
     return d->theme();
 }
+#endif
 
 /*!
   \brief set theme for the application to use the theme we provide.
 
   \a theme is the name of the theme we want to set.
  */
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 void DApplication::setTheme(const QString &theme)
 {
     D_D(DApplication);
 
     d->setTheme(theme);
 }
+#endif
 
 #ifdef Q_OS_UNIX
 /*!
@@ -797,6 +803,7 @@ bool DApplication::loadTranslator(QList<QLocale> localeFallback)
 
   \return 设置成功返回 true，否则返回 false。
  */
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 bool DApplication::loadDXcbPlugin()
 {
     Q_ASSERT_X(!qApp, "DApplication::loadDxcbPlugin", "Must call before QGuiApplication defined object");
@@ -810,6 +817,7 @@ bool DApplication::loadDXcbPlugin()
 
     return qputenv("QT_QPA_PLATFORM", DXCB_PLUGIN_KEY);
 }
+#endif
 
 /*!
   \brief 检查当前程序是否使用了dxcb平台插件.
@@ -1477,9 +1485,11 @@ void DApplication::handleAboutAction()
     if (!applicationLicense().isEmpty()) {
         aboutDialog->setLicense(translate("DAboutDialog", "%1 is released under %2").arg(productName()).arg(applicationLicense()));
     }
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
     if (!applicationAcknowledgementPage().isEmpty()) {
         aboutDialog->setAcknowledgementLink(applicationAcknowledgementPage());
     }
+#endif
     aboutDialog->setAcknowledgementVisible(d->acknowledgementPageVisible);
     aboutDialog->setAttribute(Qt::WA_DeleteOnClose);
 

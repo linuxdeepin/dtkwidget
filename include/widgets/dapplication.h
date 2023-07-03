@@ -50,9 +50,10 @@ public:
         UserScope,
         SystemScope
     };
-
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
     D_DECL_DEPRECATED QString theme() const;
     D_DECL_DEPRECATED void setTheme(const QString &theme);
+#endif
 
 #ifdef Q_OS_UNIX
     void setOOMScoreAdj(const int score);
@@ -63,8 +64,10 @@ public:
 
     bool loadTranslator(QList<QLocale> localeFallback = QList<QLocale>() << QLocale::system());
 
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
     //! warning: Must call before QGuiApplication defined object
     D_DECL_DEPRECATED static bool loadDXcbPlugin();
+#endif
     static bool isDXcbPlatform();
 
     // return the libdtkwidget version of build application

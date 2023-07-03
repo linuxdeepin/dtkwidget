@@ -220,9 +220,10 @@ public:
     static QColor blendColor(const QColor &substrate, const QColor &superstratum);
     static QPair<QIcon::Mode, QIcon::State> toIconModeState(const QStyleOption *option);
     static DDciIcon::Mode toDciIconMode(const QStyleOption *option);
-
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
     D_DECL_DEPRECATED_X("Use DToolTip::setToolTipTextFormat(Qt::TextFormat format)") static void setTooltipTextFormat(Qt::TextFormat format);
     D_DECL_DEPRECATED_X("Use DToolTip::toolTipTextFormat()") static Qt::TextFormat tooltipTextFormat();
+#endif
     static DStyle::StyleState getState(const QStyleOption *option);
     static void setFocusRectVisible(QWidget *widget, bool visible);
     static void setFrameRadius(QWidget *widget, int radius);
