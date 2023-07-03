@@ -31,9 +31,10 @@ public:
 
     explicit DApplicationPrivate(DApplication *q);
     ~DApplicationPrivate();
-
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
     D_DECL_DEPRECATED QString theme() const;
     D_DECL_DEPRECATED void setTheme(const QString &theme);
+#endif    
 
     bool setSingleInstanceBySemaphore(const QString &key);
 #ifdef Q_OS_UNIX

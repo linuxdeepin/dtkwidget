@@ -13,6 +13,8 @@
 #include <dtkwidget_global.h>
 #include <DObject>
 
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
+
 DWIDGET_BEGIN_NAMESPACE
 class DImageButtonPrivate;
 class LIBDTKWIDGETSHARED_EXPORT D_DECL_DEPRECATED_X("Use DIconButton") DImageButton : public QLabel, public DTK_CORE_NAMESPACE::DObject
@@ -93,3 +95,5 @@ private:
 DWIDGET_END_NAMESPACE
 
 #endif // DIMAGEBUTTON_H
+
+#endif

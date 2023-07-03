@@ -13,6 +13,8 @@
 #include "dobject_p.h"
 #include "dgraphicsclipeffect.h"
 
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
+
 DCORE_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
@@ -522,3 +524,4 @@ void DSegmentedControl::buttonClicked()
 }
 
 DWIDGET_END_NAMESPACE
+#endif

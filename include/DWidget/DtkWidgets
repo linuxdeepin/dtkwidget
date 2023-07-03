@@ -4,11 +4,17 @@
 #include "dthumbnailprovider.h"
 #include "dwidgetutil.h"
 #include "ddesktopservices.h"
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 #include "dtrashmanager.h"
+#endif
 #include "dhidpihelper.h"
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 #include "dapplicationsettings.h"
+#endif
 #include "daccessibilitychecker.h"
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 #include "dregionmonitor.h"
+#endif
 #include "dabstractdialog.h"
 #include "ddialog.h"
 #include "dialog_constants.h"
@@ -20,20 +26,30 @@
 #include "dmpriscontrol.h"
 #include "dslider.h"
 #include "dbackgroundgroup.h"
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 #include "dthememanager.h"
+#endif
 #include "dapplication.h"
 #include "dconstants.h"
 #include "dbaseline.h"
 #include "dheaderline.h"
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 #include "dbaseexpand.h"
+#endif
 #include "darrowbutton.h"
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 #include "darrowlineexpand.h"
+#endif
 #include "dswitchlineexpand.h"
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 #include "dimagebutton.h"
+#endif
 #include "dloadingindicator.h"
 #include "dsearchedit.h"
 #include "dswitchbutton.h"
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 #include "dsegmentedcontrol.h"
+#endif
 #include "dlineedit.h"
 #include "dwindowmaxbutton.h"
 #include "dwindowminbutton.h"
@@ -41,10 +57,14 @@
 #include "dwindowoptionbutton.h"
 #include "dtabletwindowoptionbutton.h"
 #include "dwindowquitfullbutton.h"
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 #include "dshortcutedit.h"
+#endif
 #include "dsimplelistview.h"
 #include "dsimplelistitem.h"
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 #include "dexpandgroup.h"
+#endif
 #include "darrowrectangle.h"
 #include "dgraphicsgloweffect.h"
 #include "dboxwidget.h"
@@ -73,7 +93,9 @@
 #include "dtabbar.h"
 #include "dsuggestbutton.h"
 #include "dstyleoption.h"
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 #include "dtoast.h"
+#endif
 #include "danchors.h"
 #include "dstyle.h"
 #include "dfloatingbutton.h"
@@ -81,7 +103,9 @@
 #include "dstyleditemdelegate.h"
 #include "diconbutton.h"
 #include "dfloatingwidget.h"
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 #include "dapplicationhelper.h"
+#endif
 #include "dfloatingmessage.h"
 #include "dmessagemanager.h"
 #include "dbuttonbox.h"

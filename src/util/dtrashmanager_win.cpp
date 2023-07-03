@@ -4,6 +4,8 @@
 
 #include "dtrashmanager.h"
 
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
+
 #include <DObjectPrivate>
 
 #include <QDirIterator>
@@ -141,3 +143,5 @@ DTrashManager::DTrashManager()
 }
 
 DWIDGET_END_NAMESPACE
+
+#endif

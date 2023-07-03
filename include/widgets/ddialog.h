@@ -49,7 +49,9 @@ public:
     QString title() const;
     QString message() const;
     QIcon icon() const;
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
     D_DECL_DEPRECATED QPixmap iconPixmap() const;
+#endif
     Qt::TextFormat textFormat() const;
     bool onButtonClickedClose() const;
 
@@ -96,8 +98,10 @@ public Q_SLOTS:
     void setMessage(const QString& message);
     void setWordWrapMessage(bool wordWrap);
     void setIcon(const QIcon &icon);
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
     D_DECL_DEPRECATED void setIcon(const QIcon &icon, const QSize &expectedSize);
     D_DECL_DEPRECATED void setIconPixmap(const QPixmap &iconPixmap);
+#endif
     void setTextFormat(Qt::TextFormat textFormat);
     void setOnButtonClickedClose(bool onButtonClickedClose);
     void setCloseButtonVisible(bool closeButtonVisible);

@@ -7,7 +7,7 @@
 #include "dboxwidget.h"
 
 #include <QResizeEvent>
-
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 DWIDGET_BEGIN_NAMESPACE
 
 class DBaseExpandPrivate
@@ -303,3 +303,4 @@ void DBaseExpand::resizeEvent(QResizeEvent *e)
 }
 
 DWIDGET_END_NAMESPACE
+#endif

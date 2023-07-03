@@ -15,7 +15,7 @@
 
 #include "dthememanager.h"
 #include "dapplication.h"
-
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 DWIDGET_BEGIN_NAMESPACE
 
 class DThemeManagerStaticPrivate : public DThemeManager
@@ -621,3 +621,5 @@ void DThemeManager::updateThemeOnParentChanged(QWidget *widget)
 }
 
 DWIDGET_END_NAMESPACE
+
+#endif

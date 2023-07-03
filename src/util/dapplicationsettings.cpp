@@ -4,7 +4,7 @@
 
 
 #include "dapplicationsettings.h"
-
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 #include <DObjectPrivate>
 
 DWIDGET_BEGIN_NAMESPACE
@@ -58,3 +58,4 @@ DApplicationSettings::DApplicationSettings(QObject *parent)
 DWIDGET_END_NAMESPACE
 
 #include "moc_dapplicationsettings.cpp"
+#endif

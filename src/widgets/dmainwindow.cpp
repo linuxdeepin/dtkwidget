@@ -250,10 +250,12 @@ void DMainWindow::setSidebarWidth(int width)
         d->sidebarHelper->setWidth(width);
 }
 
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 bool DMainWindow::sidebarVisble() const
 {
     return sidebarVisible();
 }
+#endif
 
 bool DMainWindow::sidebarVisible() const
 {

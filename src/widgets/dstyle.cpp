@@ -127,10 +127,13 @@ static DDciIconPalette makeIconPalette(const QPalette &pal)
 
   \sa Qt::TextFormat
  */
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 void DStyle::setTooltipTextFormat(Qt::TextFormat format)
 {
     DToolTip::setToolTipTextFormat(format);
 }
+#endif
+
 /*!
   \brief 获取 tooltip 文本格式.
 
@@ -138,10 +141,12 @@ void DStyle::setTooltipTextFormat(Qt::TextFormat format)
 
   \sa Qt::TextFormat
  */
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 Qt::TextFormat DStyle::tooltipTextFormat()
 {
     return DToolTip::toolTipTextFormat();
 }
+#endif
 
 void DStyle::setFocusRectVisible(QWidget *widget, bool visible)
 {

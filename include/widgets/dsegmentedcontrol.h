@@ -5,14 +5,16 @@
 #ifndef DSEGMENTEDCONTROL_H
 #define DSEGMENTEDCONTROL_H
 
+#include <dtkwidget_global.h>
+
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
+
 #include <QFrame>
 #include <QHBoxLayout>
 #include <QToolButton>
 #include <QPropertyAnimation>
 #include <QList>
 #include <QEasingCurve>
-
-#include <dtkwidget_global.h>
 #include <DObject>
 
 DWIDGET_BEGIN_NAMESPACE
@@ -81,3 +83,5 @@ protected:
 
 DWIDGET_END_NAMESPACE
 #endif // DSEGMENTEDCONTROL_H
+
+#endif

@@ -12,6 +12,8 @@
 #include <dtkwidget_global.h>
 #include <dbaseexpand.h>
 
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
+
 DWIDGET_BEGIN_NAMESPACE
 
 class LIBDTKWIDGETSHARED_EXPORT D_DECL_DEPRECATED_X("Use DDrawerGroup") DExpandGroup : public QObject
@@ -40,3 +42,5 @@ private:
 DWIDGET_END_NAMESPACE
 
 #endif // EXPANDGROUP_H
+
+#endif

@@ -18,8 +18,10 @@ class LIBDTKWIDGETSHARED_EXPORT DSpinBox : public QSpinBox, public DTK_CORE_NAME
     Q_OBJECT
 
     Q_PROPERTY(bool alert READ isAlert WRITE setAlert NOTIFY alertChanged)
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
     Q_PROPERTY(int defaultValue READ defaultValue WRITE setDefaultValue NOTIFY defaultValueChanged)
-
+#endif
+    
 public:
     explicit DSpinBox(QWidget *parent = nullptr);
 
@@ -28,17 +30,23 @@ public:
     bool isAlert() const;
     void showAlertMessage(const QString &text, int duration = 3000);
     void showAlertMessage(const QString &text, QWidget *follower, int duration = 3000);
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
     D_DECL_DEPRECATED int defaultValue() const;
+#endif
 
     void setEnabledEmbedStyle(bool enabled);
 
 public Q_SLOTS:
     void setAlert(bool alert);
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
     D_DECL_DEPRECATED void setDefaultValue(int defaultValue);
+#endif
 
 Q_SIGNALS:
     void alertChanged(bool alert);
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
     D_DECL_DEPRECATED void defaultValueChanged(int defaultValue);
+#endif
 
 private:
     D_DECLARE_PRIVATE(DSpinBox)
@@ -50,7 +58,9 @@ class LIBDTKWIDGETSHARED_EXPORT DDoubleSpinBox : public QDoubleSpinBox, public D
     Q_OBJECT
 
     Q_PROPERTY(bool alert READ isAlert WRITE setAlert NOTIFY alertChanged)
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
     Q_PROPERTY(double defaultValue READ defaultValue WRITE setDefaultValue NOTIFY defaultValueChanged)
+#endif
 
 public:
     explicit DDoubleSpinBox(QWidget *parent = nullptr);
@@ -58,18 +68,24 @@ public:
     bool isAlert() const;
     void showAlertMessage(const QString &text, int duration = 3000);
     void showAlertMessage(const QString &text, QWidget *follower, int duration = 3000);
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
     D_DECL_DEPRECATED double defaultValue() const;
+#endif
 
     QLineEdit *lineEdit() const;
     void setEnabledEmbedStyle(bool enabled);
 
 public Q_SLOTS:
     void setAlert(bool alert);
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
     D_DECL_DEPRECATED void setDefaultValue(double defaultValue);
+#endif
 
 Q_SIGNALS:
     void alertChanged(bool alert);
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
     D_DECL_DEPRECATED void defaultValueChanged(double defaultValue);
+#endif
 
 private:
     D_DECLARE_PRIVATE(DDoubleSpinBox)

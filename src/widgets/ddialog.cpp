@@ -446,6 +446,7 @@ QIcon DDialog::icon() const
   @brief Returns the QPixmap object of the dialog icon
   @return Returns the QPixmap object of the dialog icon
  */
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 QPixmap DDialog::iconPixmap() const
 {
     D_DC(DDialog);
@@ -456,6 +457,7 @@ QPixmap DDialog::iconPixmap() const
         return d->icon.pixmap(d->icon.availableSizes().at(0));
     }
 }
+#endif
 
 /*!
 @~english
@@ -1027,6 +1029,7 @@ void DDialog::setIcon(const QIcon &icon)
 
   \a icon Dialog icon \a expectedSize Expected size.
  */
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 void DDialog::setIcon(const QIcon &icon, const QSize &expectedSize)
 {
     D_D(DDialog);
@@ -1041,6 +1044,7 @@ void DDialog::setIcon(const QIcon &icon, const QSize &expectedSize)
     QPixmap pixmap = icon.pixmap(actualSize);
     setIconPixmap(pixmap);
 }
+#endif
 
 /*!
 @~english
@@ -1048,10 +1052,12 @@ void DDialog::setIcon(const QIcon &icon, const QSize &expectedSize)
 
   \a iconPixmap icon of pixmap type.
  */
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 void DDialog::setIconPixmap(const QPixmap &iconPixmap)
 {
     setIcon(QIcon(iconPixmap));
 }
+#endif
 
 /*!
 @~english

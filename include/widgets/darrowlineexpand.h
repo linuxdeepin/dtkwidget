@@ -12,6 +12,9 @@
 #include <DIconButton>
 #include <dbaseline.h>
 #include <dheaderline.h>
+
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
+
 DWIDGET_BEGIN_NAMESPACE
 
 class D_DECL_DEPRECATED ArrowHeaderLine : public DHeaderLine
@@ -54,3 +57,5 @@ private:
 DWIDGET_END_NAMESPACE
 
 #endif // DARROWLINEEXPAND_H
+
+#endif

@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
 #include "dexpandgroup.h"
-
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 DWIDGET_USE_NAMESPACE
 
 /*!
@@ -153,4 +153,4 @@ void DExpandGroup::onExpandChanged(bool v)
     }
 }
 
-
+#endif

@@ -46,8 +46,9 @@ public:
 
     int  sidebarWidth() const;
     void setSidebarWidth(int width);
-
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
     D_DECL_DEPRECATED_X("Please use sidebarVisible") bool sidebarVisble() const;
+#endif
     bool sidebarVisible() const ;
     void setSidebarVisible(bool visible);
 

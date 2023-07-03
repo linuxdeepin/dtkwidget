@@ -13,6 +13,8 @@
 
 #include <functional>
 
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
+
 QT_BEGIN_NAMESPACE
 class QMimeType;
 QT_END_NAMESPACE
@@ -69,3 +71,5 @@ private:
 DWIDGET_END_NAMESPACE
 
 #endif // DTKWIDGET_DFILETHUMBNAILPROVIDER_H
+
+#endif

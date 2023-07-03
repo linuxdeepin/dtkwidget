@@ -15,6 +15,8 @@
 #include <dtkwidget_global.h>
 #include <dconstants.h>
 
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
+
 DWIDGET_BEGIN_NAMESPACE
 
 class D_DECL_DEPRECATED ContentLoader : public QFrame
@@ -62,3 +64,5 @@ private:
 DWIDGET_END_NAMESPACE
 
 #endif // DBASEEXPAND_H
+
+#endif
