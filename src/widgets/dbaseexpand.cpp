@@ -98,26 +98,28 @@ DBaseExpandPrivate::~DBaseExpandPrivate()
 }
 
 /*!
-  \class Dtk::Widget::DBaseExpand
-  \inmodule dtkwidget
-  \brief 一个美观的可展开的控件.
+@~english
+  @class Dtk::Widget::DBaseExpand
+  @brief A beautiful expandable widget.
   
-  使用 DBaseExpand 类可以创建一个可展开的带有展开动画效果的控件，这个控件包含上下两部分，上面的控件为标题控件，这个控件会始终显示，下面的控件为内容控件，默认为不会显示，调用 DBaseExpand::setExpand 设置内容控件的可见性。使用 DBaseExpand::setHeader 和 DBaseExpand::setContent 设置分别设置标题控件和内容控件。
+  Using the DBaseExpand class, you can create an expandable widget with animation effects. This widget contains the upper and lower parts. The upper widget is a title widget，which will always be displayed. The lower widget is a content widget, which defaults to not being displayed.
+  Call DBaseExpand::setExpand to set the visibility of the content widget. Use DBaseExpand::setHeader and DBaseExpand::setContent to set the title widget and content widget respectively.
+
+  @sa DHeaderLine
   
-  \sa DHeaderLine
-  
-  \image html DBaseExpand.gif
+  @image html DBaseExpand.gif
  */
 
 /*!
-  \fn void DBaseExpand::expandChange(bool e)
-  \brief 内容控件可见性发生改变的信号
-  \a e 为 true 表示内容控件变为了可见，反之则反
- */
+@~english
+  @fn void DBaseExpand::expandChange(bool e)
+  @brief content widget visibility signal
+  @param[in] e If "true", the content widget becomes visible, otherwise, the content widget becomes invisible.
 
 /*!
-  \brief 获取 DBaseExpand::DBaseExpand 实例
-  \a parent 作为实例的父控件
+@~english
+  @brief get DBaseExpand::DBaseExpand instance
+  @param[in] parent as the parent widget part of the example
  */
 DBaseExpand::DBaseExpand(QWidget *parent)
     : QWidget(parent)
@@ -132,9 +134,10 @@ DBaseExpand::~DBaseExpand()
 }
 
 /*!
-  \brief 设置标题控件
-  标题控件会始终显示在布局里
-  \a header 标题控件
+@~english
+  @brief set the title widget
+  The title widget will always be displayed in the layout.
+  @param[in] header title widget
  */
 void DBaseExpand::setHeader(QWidget *header)
 {
@@ -153,10 +156,11 @@ void DBaseExpand::setHeader(QWidget *header)
 }
 
 /*!
-  \brief 设置内容控件
-  内容控件默认是隐藏的，调用 DBaseExpand::setExpand 设置其可见性
-  \a content 内容控件
-  \a alignment 内容控件在布局中的对齐方式
+@~english
+  @brief set the content widget
+  Content widget is hidden by default, call dbaseexpand::setexpand to set its visibility.
+  @param[in] content content widget
+  @param[in] alignment content widget's alignment method in layout
  */
 void DBaseExpand::setContent(QWidget *content, Qt::Alignment alignment)
 {
@@ -177,8 +181,9 @@ void DBaseExpand::setContent(QWidget *content, Qt::Alignment alignment)
 }
 
 /*!
-  \brief 获取内容控件对象
-  \return 内容控件对象
+@~english
+  @brief get the content widget object
+  @return content widget object
  */
 
 QWidget *DBaseExpand::getContent() const
@@ -189,9 +194,10 @@ QWidget *DBaseExpand::getContent() const
 }
 
 /*!
-  \brief 设置标题控件的高度
+@~english
+  @brief set the height of the title widget
   
-  \a height 指定的高度
+  @param[in] height specified height
  */
 void DBaseExpand::setHeaderHeight(int height)
 {
@@ -203,9 +209,10 @@ void DBaseExpand::setHeaderHeight(int height)
 }
 
 /*!
-  \brief 设置内容控件的可见性
+@~english
+  @brief set the visibility of the content widget
   
-  \a value 为 true 则内容控件可见，反之则反
+  @param[in] value If "true", the content widget is visible, otherwise, the content widget is not visible.
  */
 void DBaseExpand::setExpand(bool value)
 {
@@ -231,9 +238,10 @@ void DBaseExpand::setExpand(bool value)
 }
 
 /*!
-  \brief 获取当前内容控件的可见性
+@~english
+  @brief get the visiblity of the current content widget
   
-  \return 当前内容控件的可见性
+  @return visiblity of the current content widget
  */
 bool DBaseExpand::expand() const
 {
@@ -242,9 +250,10 @@ bool DBaseExpand::expand() const
 }
 
 /*!
-  \brief 设置内容控件的可见性改变时动画的时间
+@~english
+  @brief set the duration for the visibility of the content widget
   
-  \a duration 指定动画时间
+  @param[in] duration specified animation duration
  */
 void DBaseExpand::setAnimationDuration(int duration)
 {
@@ -253,9 +262,10 @@ void DBaseExpand::setAnimationDuration(int duration)
 }
 
 /*!
-  \brief 设置内容控件的可见性改变时动画的样式
+@~english
+  @brief set the visibility of the content widget when the animation style is changed
   
-  \a curve 指定动画样式
+  @param[in] curve specified animation style
  */
 void DBaseExpand::setAnimationEasingCurve(QEasingCurve curve)
 {
@@ -264,9 +274,10 @@ void DBaseExpand::setAnimationEasingCurve(QEasingCurve curve)
 }
 
 /*!
-  \brief 设置是否允许标题控件与内容控件之间的分割线
+@~english
+  @brief set whether to allow the segmentation line between the title widget and the content widget
   
-  \a arg 为 ture 则显示分割线，反之则反
+  @param[in] arg If "true", the segmentation line is visible, otherwise, the segmentation line is not visible.
  */
 void DBaseExpand::setSeparatorVisible(bool arg)
 {
@@ -275,9 +286,10 @@ void DBaseExpand::setSeparatorVisible(bool arg)
 }
 
 /*!
-  \brief 设置是否允许内容控件下的分割线
+@~english
+  @brief set whether to allow the segmentation line under the content widget
   
-  \a arg 为 ture 则显示分割线，反之则反
+  @param[in] arg If "true", the segmentation line is visible, otherwise, the segmentation line is not visible.
  */
 void DBaseExpand::setExpandedSeparatorVisible(bool arg)
 {
