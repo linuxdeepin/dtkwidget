@@ -2,11 +2,75 @@
 @~chinese
 @file dwaterprogress.h
 @ingroup progressbar
-@class
-@brief
+
+@class Dtk::Widget::DWaterProgress
+@brief 可以使用 DWaterProgress 类快速创建圆形容器内水位高低指示进度的动画控件.并提供了可选的是否显示进度文字的选项。
 @details
+### 示例代码
+#### main.cpp
+```cpp
+#include <DApplication>
+#include <DMainWindow>
+#include <DWidgetUtil>
+#include <QTimer>
+#include <QLayout>
+#include <DWaterProgress>
 
-TODO: 添加类简介、示例代码、示例截图和函数使用说明等
+DWIDGET_USE_NAMESPACE
 
+int main(int argc, char *argv[])
+{
+    DApplication a(argc, argv);
+    DMainWindow w;
+    w.setMinimumSize(QSize(600, 200));
 
+    QWidget *cw = new QWidget(&w);
+    QVBoxLayout *layout = new QVBoxLayout(cw);
+
+    DWaterProgress *waterProgress = new DWaterProgress(cw);
+    waterProgress->setValue(0);
+    layout->addWidget(waterProgress);
+    layout->setAlignment(Qt::AlignCenter);
+
+    w.setCentralWidget(cw);
+    w.show();
+
+    QTimer timer;
+    int progress = 0;
+    timer.setInterval(100);
+    QObject::connect(&timer, &QTimer::timeout, [&]() {
+        progress += 1;
+        waterProgress->setValue(progress);
+        if (progress >= 100) {
+            timer.stop();
+        }
+    });
+    timer.start();
+
+    Dtk::Widget::moveToCenter(&w);
+
+    return a.exec();
+}
+```
+### demo运行图片
+@image html dwaterprogress.png
+可见，给出了进度条的一种趣味展示形式，作用是可以减少用户等待中的枯燥，
+作为一个中间状态展示给用户，富有趣味性地告知用户该进程进行的进度。
+
+@fn int DWaterProgress::value() const
+@brief 当前进度值
+
+@fn void DWaterProgress::start()
+@brief 开始水位动画
+
+@fn void DWaterProgress::stop()
+@brief 停止水位动画
+
+@fn void DWaterProgress::setValue(int value)
+@brief 设置当前进度值，（范围 0~100）
+@param[in] value 当前的进度值
+
+@fn void DWaterProgress::setTextVisible(bool visible)
+@brief 设置是否显示进度文字
+@param[in] visible 设置进度文字是否显示，如值为 50 时显示 50% 。
 */
