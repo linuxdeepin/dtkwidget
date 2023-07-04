@@ -1537,86 +1537,112 @@ QTabBarPrivate *DTabBarPrivate::dd() const
 }
 
 /*!
-  \class Dtk::Widget::DTabBar
+@~english
+  @class Dtk::Widget::DTabBar
   \inmodule dtkwidget
-  \brief DTabBar 是一个标签栏控件，是在 QTabBar 基础之上进行扩展增强.
+  @brief DTabBar is a tab bar control that is an extension and enhancement of QTabBar
   
-  增加了许多特性，比如：新建按钮，支持向外拖放事件...该控件目前被深度编辑器中所使用。
+  Added many features, such as a new button and support for dragging and dropping events outward This control is currently used in the depth editor.
  */
 
 /*!
-  \fn void DTabBar::currentChanged(int index)
-  \brief 当前索引位置改变.
+@~english
+  @fn void DTabBar::currentChanged(int index)
+  @brief The current index position has changed
 
-  \a index 改变的索引值.
+  @param[in] index Changed index value
  */
-/*!
-  \fn void DTabBar::tabCloseRequested(int index)
-  \brief 点击关闭后发出.
 
-  \a index 关闭的索引值.
- */
 /*!
-  \fn void DTabBar::tabMoved(int from, int to)
-  \brief 索引位置发生变化
+@~english
+  @fn void DTabBar::tabCloseRequested(int index)
+  @brief Click to close and send out
 
-  \a from 索引位置变化的初始值， \a to 位置变化后的索引值.
+  @param[in] index Closed index value
  */
-/*!
-  \fn void DTabBar::tabIsInserted(int index)
-  \brief 新标签已插入.
 
-  \a index 被插入标签的索引值.
- */
 /*!
-  \fn void DTabBar::tabIsRemoved(int index)
-  \brief 标签已删除.
+@~english
+  @fn void DTabBar::tabMoved(int from, int to)
+  @brief Index position has changed
 
-  \a index 被删除标签的索引值.
+  @param[in] a Initial value of change in index position from， @param[in] to Index value after position change
  */
-/*!
-  \fn void DTabBar::tabBarClicked(int index)
-  \brief 点击索引标签.
 
-  \a index 点击标签的索引值.
- */
 /*!
-  \fn void DTabBar::tabBarDoubleClicked(int index)
-  \brief 双击索引标签.
+@~english
+  @fn void DTabBar::tabIsInserted(int index)
+  @brief The new label has been inserted
 
-  \a index 双击标记的索引值.
+  @param[in] index The index value of the inserted label
  */
-/*!
-  \fn void DTabBar::tabAddRequested()
-  \brief 新标签加入.
- */
-/*!
-  \fn void DTabBar::tabReleaseRequested(int index)
-  \brief 索引标签鼠标释放.
 
-  \a index 标签释放的索引值.
- */
 /*!
-  \fn void DTabBar::dragActionChanged(Qt::DropAction action)
-  \brief 鼠标形状发生变化.
+@~english
+  @fn void DTabBar::tabIsRemoved(int index)
+  @brief The label has been deleted
 
-  \a action 改变的拖拽动作.
+  @param[in] index The index value of the deleted label
  */
-/*!
-  \fn void DTabBar::tabDroped(int index, Qt::DropAction action, QObject *target)
-  \brief 标签拖放.
 
-  \a index 拖放的标签索引， \a action 拖放的动作, \a target 被拖放的标签 DTabBar 实例
- */
 /*!
-  \fn void DTabBar::dragStarted()
-  \brief 开始拖起.
- */
-/*!
-  \fn void DTabBar::dragEnd(Qt::DropAction action)
-  \brief 拖放结束.
+@~english
+  @fn void DTabBar::tabBarClicked(int index)
+  @brief Click on the index tab
 
-  \a action 拖放动作.
+  @param[in] index Click on the index value of the label
+ */
+
+/*!
+@~english
+  @fn void DTabBar::tabBarDoubleClicked(int index)
+  @brief Double click on the index label
+
+  @param[in] index Double click on the index value of the tag
+ */
+
+/*!
+@~english
+  @fn void DTabBar::tabAddRequested()
+  @brief Add a new label
+ */
+
+/*!
+@~english
+  @fn void DTabBar::tabReleaseRequested(int index)
+  @brief Index label mouse release
+
+  @param[in] index Index value for label release
+ */
+
+/*!
+@~english
+  @fn void DTabBar::dragActionChanged(Qt::DropAction action)
+  @brief The shape of the mouse has changed
+
+  @param[in] action Drag and drop actions for changes
+ */
+
+/*!
+@~english
+  @fn void DTabBar::tabDroped(int index, Qt::DropAction action, QObject *target)
+  @brief Label drag and drop
+
+  @param[in] index Drag and drop tag indexing， @param[in] action Drag and drop action, @param[in] target Dragged DTabBar instance
+ */
+
+/*!
+@~english
+  @fn void DTabBar::dragStarted()
+  @brief Start dragging
+ */
+
+/*!
+@~english
+  @fn void DTabBar::dragEnd(Qt::DropAction action)
+  @brief End dragging
+
+  @param[in] action Drag and drop action.
  */
 
 DTabBar::DTabBar(QWidget *parent)
@@ -1627,9 +1653,10 @@ DTabBar::DTabBar(QWidget *parent)
 }
 
 /*!
-  \brief 设置索引标签的最小尺寸.
+@~english
+  @brief Set the minimum size of the index tag.
 
-  \a index 被设置标签的索引值，size ，\a size 最小大小.
+  @param[in] index The index value of the set tag. @param[in] size Minimum size.
  */
 void DTabBar::setTabMinimumSize(int index, const QSize &size)
 {
@@ -1646,9 +1673,10 @@ void DTabBar::setTabMinimumSize(int index, const QSize &size)
 }
 
 /*!
-  \brief 设置索引标签的最大尺寸.
+@~english
+  @brief Set the maximum size of the index tag.
 
-  \a index 被设置标签的索引值，size ，\a size 最大大小.
+  @param[in] index The index value of the set tag， @param[in] size Maximum size.
  */
 void DTabBar::setTabMaximumSize(int index, const QSize &size)
 {
@@ -1665,9 +1693,10 @@ void DTabBar::setTabMaximumSize(int index, const QSize &size)
 }
 
 /*!
-  \brief 新建标签栏按钮是否可见.
+@~english
+  @brief The new tab button is visible or not
 
-  \return 新建按钮可见，返回 ture 否则，返回 false 。
+  @return The new tab button is visible then return true.Otherwise return false.
  */
 bool DTabBar::visibleAddButton() const
 {
@@ -1677,9 +1706,10 @@ bool DTabBar::visibleAddButton() const
 }
 
 /*!
-  \brief 标签栏形状.
+@~english
+  @brief The shape of the tab bar.
 
-  \return 返回当前 DTabBar 实例的标签栏形状.
+  @return Return the shape of the current DTabBar instance's tab bar.
  */
 QTabBar::Shape DTabBar::shape() const
 {
@@ -1687,9 +1717,10 @@ QTabBar::Shape DTabBar::shape() const
 }
 
 /*!
-  \brief 设置标签栏形状.
+@~english
+  @brief Set the shape of the tab bar.
 
-  \a shape 标签栏形状.
+  @param[in] shape Tab bar shape.
  */
 void DTabBar::setShape(QTabBar::Shape shape)
 {
@@ -1718,10 +1749,11 @@ void DTabBar::setShape(QTabBar::Shape shape)
 }
 
 /*!
-  \brief 添加一个新的标签，返回新标签的索引.
+@~english
+  @brief Add a new tab and return the index of the new tab.
 
-  \a text 新标签的标题文本.
-  \return 返回新标签的索引.
+  @param[in] text Title text of the new tab.
+  @return Return the index of the new tab.
  */
 int DTabBar::addTab(const QString &text)
 {
@@ -1729,10 +1761,11 @@ int DTabBar::addTab(const QString &text)
 }
 
 /*!
-  \brief 添加一个新的标签，包含图标、文本.
+@~english
+  @brief Add a new tab with an icon and text.
 
-  \a icon 新标签的标题图标， \a text 新标签的标题文本.
-  \return 返回新标签的索引.
+  @param[in] icon Title icon of the new tab， @param[in] text Title text of the new tab.
+  @return Return the index of the new tab.
  */
 int DTabBar::addTab(const QIcon &icon, const QString &text)
 {
@@ -1740,15 +1773,15 @@ int DTabBar::addTab(const QIcon &icon, const QString &text)
 }
 
 /*!
-  \brief 插入一个文本标签.
+@~english
+  @brief Insert a text label.
 
-  \a index 被插入的标签索引值， \a text 新标签的标题文本.
+  @param[in] index The index value of the inserted label. @param[in] text Title text of the new label.
 
-  \warning 如果参数 \a index 超过了当前索引，将会在最后添加
-  一个新标签.
+  @warning if @param[in] index exceeds the current index, a new label will be added at the end.
 
-  \return 返回插入后的新标签索引.
-  \sa QTabBar::insertTab()
+  @return ndex of the newly inserted label.
+  @sa QTabBar::insertTab()
  */
 int DTabBar::insertTab(int index, const QString &text)
 {
@@ -1756,11 +1789,14 @@ int DTabBar::insertTab(int index, const QString &text)
 }
 
 /*!
-  \brief 插入一个图标文本标签.
+@~english
+  @brief Insert an icon text label.
 
-  \a index 被插入的标签索引值，\a icon 新标签的图标，\a text 新标签文本
+  @param[in] index Index value at which the label will be inserted.
+  @param[in] icon Icon of the new label.
+  @param[in] text Text of the new label.
 
-  \return 返回插入后的新标签索引.
+  @return Index of the newly inserted label.
  */
 int DTabBar::insertTab(int index, const QIcon &icon, const QString &text)
 {
@@ -1768,9 +1804,10 @@ int DTabBar::insertTab(int index, const QIcon &icon, const QString &text)
 }
 
 /*!
-  \brief 移除标签索引位置
+@~english
+  @brief Remove the label at the specified index position.
 
-  \a index 被移除的标签索引值.
+  @param[in] index Index value of the label to be removed.
  */
 void DTabBar::removeTab(int index)
 {
@@ -1778,9 +1815,11 @@ void DTabBar::removeTab(int index)
 }
 
 /*!
-  \brief 移动标签索引位置
+@~english
+  @brief Check if the label at the specified index position is enabled.
 
-  \a from 被移动前的标签索引，\a to 被移动后的标签索引.
+  @param[in] index Label index.
+  @return True if the label is enabled, false otherwise.
  */
 void DTabBar::moveTab(int from, int to)
 {
@@ -1788,11 +1827,11 @@ void DTabBar::moveTab(int from, int to)
 }
 
 /*!
-  \brief 是否启用标签索引位置
+@~english
+  @brief 是否启用标签索引位置
 
-  \a index 标签索引值.
-
-  \return 启用标签索引返回 true，否则返回 false.
+  @param[in] index 标签索引值.
+  @return 启用标签索引返回 true，否则返回 false.
  */
 bool DTabBar::isTabEnabled(int index) const
 {
@@ -1800,9 +1839,11 @@ bool DTabBar::isTabEnabled(int index) const
 }
 
 /*!
-  \brief 设置标签索引位置启用状态
+@~english
+  @brief Set the enabled state of the label at the specified index position.
 
-  \a index 标签索引，\a enable 是否启用.
+  @param[in] index Label index.
+  @param[in] enable Whether to enable the label.
  */
 void DTabBar::setTabEnabled(int index, bool enable)
 {
@@ -1810,10 +1851,11 @@ void DTabBar::setTabEnabled(int index, bool enable)
 }
 
 /*!
-  \brief 返回标签索引位置文本.
+@~english
+  @brief Return the text of the label at the specified index position.
 
-  \a index 标签索引.
-  \return 返回对应索引的文本.
+  @param[in] index Label index.
+  @return Text of the corresponding label.
  */
 QString DTabBar::tabText(int index) const
 {
@@ -1821,9 +1863,11 @@ QString DTabBar::tabText(int index) const
 }
 
 /*!
-  \brief 设置标签索引位置文本.
-
-  \a index 标签索引， \a text 标签文本.
+@~english
+  @brief Set the text of the label at the specified index position.
+  
+  @param[in] index Label index.
+  @param[in] text Label text.
  */
 void DTabBar::setTabText(int index, const QString &text)
 {
@@ -1831,10 +1875,11 @@ void DTabBar::setTabText(int index, const QString &text)
 }
 
 /*!
-  \brief 返回标签索引位置图标.
+@~english
+  @brief Return the icon of the label at the specified index position.
 
-  \a index 标签索引.
-  \return 对应标签的图标.
+  @param[in] index Label index.
+  @return Icon of the corresponding label.
  */
 QIcon DTabBar::tabIcon(int index) const
 {
@@ -1842,9 +1887,10 @@ QIcon DTabBar::tabIcon(int index) const
 }
 
 /*!
-  \brief 设置标签索引位置图标.
+@~english
+  @brief Set the icon of the label at the specified index position.
 
-  \a index 标签索引， \a icon 对应的标签图标.
+  @param[in] index label index， @param[in] icon Corresponding label icon.
  */
 void DTabBar::setTabIcon(int index, const QIcon &icon)
 {
@@ -1852,9 +1898,10 @@ void DTabBar::setTabIcon(int index, const QIcon &icon)
 }
 
 /*!
-  \brief 缩略模式.
+@~english
+  @brief Truncation mode.
 
-  \return 返回标签的文本缩略模式.
+  @return Return the text truncation mode of the label.
  */
 Qt::TextElideMode DTabBar::elideMode() const
 {
@@ -1862,9 +1909,10 @@ Qt::TextElideMode DTabBar::elideMode() const
 }
 
 /*!
-  \brief 设置缩略模式
+@~english
+  @brief Set the truncation mode for the text.
 
-  \a mode 文本缩略模式.
+  @param[in] mode Text truncation mode.
  */
 void DTabBar::setElideMode(Qt::TextElideMode mode)
 {
@@ -1874,9 +1922,10 @@ void DTabBar::setElideMode(Qt::TextElideMode mode)
 #ifndef QT_NO_TOOLTIP
 
 /*!
-  \brief 设置标签索引位置提示文本.
+@~english
+  @brief Set the tooltip text of the label at the specified index position.
 
-  \a index 标签索引, \a tip 提示文本.
+  @param[in] index Label index., @param[in] tip Tooltip text..
  */
 void DTabBar::setTabToolTip(int index, const QString &tip)
 {
@@ -1884,9 +1933,10 @@ void DTabBar::setTabToolTip(int index, const QString &tip)
 }
 
 /*!
-  \brief 返回标签索引位置提示文本.
+@~english
+  @brief Return the tooltip text of the label at the specified index position.
 
-  \a index 标签索引.
+  @param[in] index label index
  */
 QString DTabBar::tabToolTip(int index) const
 {
@@ -1907,9 +1957,10 @@ QString DTabBar::tabWhatsThis(int index) const
 #endif
 
 /*!
-  \brief 设置标签索引位置数据.
+@~english
+  @brief Set the data of the label at the specified index position.
 
-  \a index 标签索引, \a data 标签数据.
+  @param[in] index label index, @param[in] data label data
  */
 void DTabBar::setTabData(int index, const QVariant &data)
 {
@@ -1917,10 +1968,11 @@ void DTabBar::setTabData(int index, const QVariant &data)
 }
 
 /*!
-  \brief 返回标签索引位置数据.
+@~english
+  @brief Return the data of the label at the specified index position.
 
-  \a index 标签索引.
-  \return 标签数据.
+  @param[in] index label index
+  @return label data
  */
 QVariant DTabBar::tabData(int index) const
 {
@@ -1928,10 +1980,11 @@ QVariant DTabBar::tabData(int index) const
 }
 
 /*!
-  \brief 返回标签索引位置矩形.
+@~english
+  @brief Return the rectangle of the label at the specified index position.
 
-  \a index 标签索引.
-  \return 标签矩形.
+  @param[in] index Label index.
+  @return Label rectangle.
  */
 QRect DTabBar::tabRect(int index) const
 {
@@ -1943,10 +1996,11 @@ QRect DTabBar::tabRect(int index) const
 }
 
 /*!
-  \brief 根据位置返回标签索引位置.
+@~english
+  @brief Return the label index position based on the position.
 
-  \a pos 对应标签坐标，可以时标签内的任意坐标.
-  \return 返回对应标签的索引值.
+  @param[in] pos Coordinates of the corresponding label, which can be any coordinates within the label.
+  @return Return the index value of the corresponding label.
  */
 int DTabBar::tabAt(const QPoint &pos) const
 {
@@ -1954,9 +2008,10 @@ int DTabBar::tabAt(const QPoint &pos) const
 }
 
 /*!
-  \brief 当前的标签索引位置.
+@~english
+  @brief Current position of the tab index.
 
-  \return 当前标签索引.
+  @return Current tab index.
  */
 int DTabBar::currentIndex() const
 {
@@ -1964,9 +2019,10 @@ int DTabBar::currentIndex() const
 }
 
 /*!
-  \brief 标签总数.
+@~english
+  @brief the total num of labels
 
-  \return 返回标签总数.
+  @return return the total num of labels
  */
 int DTabBar::count() const
 {
@@ -1984,9 +2040,10 @@ bool DTabBar::drawBase() const
 }
 
 /*!
-  \brief 图标大小.
+@~english
+  @brief the size of icon
 
-  \return 返回图标大小.
+  @return return the size of icon
  */
 QSize DTabBar::iconSize() const
 {
@@ -1994,9 +2051,10 @@ QSize DTabBar::iconSize() const
 }
 
 /*!
-  \brief 设置图标大小.
+@~english
+  @brief set the size of icon
 
-  \a size 图标大小.
+  @param[in] size the size of icon
  */
 void DTabBar::setIconSize(const QSize &size)
 {
@@ -2014,9 +2072,10 @@ void DTabBar::setUsesScrollButtons(bool useButtons)
 }
 
 /*!
-  \brief 标签栏是否可关闭.
+@~english
+  @brief The tab bar is closable or not
 
-  \return 返回标签是否可关闭.
+  @return Return whether the label is closable.
  */
 bool DTabBar::tabsClosable() const
 {
@@ -2024,9 +2083,10 @@ bool DTabBar::tabsClosable() const
 }
 
 /*!
-  \brief 设置标签栏是否可关闭.
+@~english
+  @brief Set whether the tab bar is closable or not.
 
-  \a closable 标签是否可关闭.
+  @param[in] closable the label is closable or not 
  */
 void DTabBar::setTabsClosable(bool closable)
 {
@@ -2155,11 +2215,12 @@ QWindow *DTabBar::dragIconWindow() const
 }
 
 /*!
-  \brief 启用直角样式的 Tabbar.
+@~english
+  @brief 启用直角样式的 Tabbar.
 
   此风格适用于切换窗口的操作,多用于支持多开的应用.
 
-  \a enable true 启用，false 恢复
+  @param[in] enable true 启用，false 恢复
  */
 void DTabBar::setEnabledEmbedStyle(bool enable)
 {
@@ -2187,9 +2248,10 @@ void DTabBar::setEnabledEmbedStyle(bool enable)
 }
 
 /*!
-  \brief 设置 tab 标签文字对齐方式.
+@~english
+  @brief 设置 tab 标签文字对齐方式.
 
-  \a alignment 对齐方式.
+  @param[in] alignment 对齐方式.
  */
 void DTabBar::setTabLabelAlignment(Qt::Alignment alignment)
 {
@@ -2197,9 +2259,10 @@ void DTabBar::setTabLabelAlignment(Qt::Alignment alignment)
 }
 
 /*!
-  \brief 设置当前标签索引位置.
+@~english
+  @brief 设置当前标签索引位置.
 
-  \a index 标签索引.
+  @param[in] index 标签索引.
  */
 void DTabBar::setCurrentIndex(int index)
 {
@@ -2207,9 +2270,10 @@ void DTabBar::setCurrentIndex(int index)
 }
 
 /*!
-  \brief 设置新建标签按钮是否显示.
+@~english
+  @brief 设置新建标签按钮是否显示.
 
-  \a visibleAddButton 新建按钮是否可视.
+  @param[in] visibleAddButton 新建按钮是否可视.
  */
 void DTabBar::setVisibleAddButton(bool visibleAddButton)
 {
@@ -2220,9 +2284,10 @@ void DTabBar::setVisibleAddButton(bool visibleAddButton)
 }
 
 /*!
-  \brief 设置开始拖动距离.
+@~english
+  @brief 设置开始拖动距离.
 
-  \a startDragDistance 开始拖动的距离.
+  @param[in] startDragDistance 开始拖动的距离.
  */
 void DTabBar::setStartDragDistance(int startDragDistance)
 {
@@ -2230,9 +2295,10 @@ void DTabBar::setStartDragDistance(int startDragDistance)
 }
 
 /*!
-  \brief 设置颜色.
+@~english
+  @brief 设置颜色.
 
-  \a maskColor 遮罩颜色.
+  @param[in] maskColor 遮罩颜色.
  */
 void DTabBar::setMaskColor(QColor maskColor)
 {

@@ -6,7 +6,235 @@
 @brief
 @details
 
-TODO: 添加类简介、示例代码、示例截图和函数使用说明等
+@class Dtk::Widget::DTabBar
+@brief DTabBar 是一个标签栏控件，是在 QTabBar 基础之上进行扩展增强.
+增加了许多特性，比如：新建按钮，支持向外拖放事件...该控件目前被深度编辑器中所使用。
+@image html docs/images/dtabbar1.png width=600 height=280
+@image html docs/images/dtabbar2.png width=800 height=580
+@image html docs/images/dtabbar3.png width=800 height=580
 
+@fn void DTabBar::currentChanged(int index)
+@brief 当前索引位置改变.
+@param[in] index 改变的索引值.
 
+@fn void DTabBar::tabCloseRequested(int index)
+@brief 点击关闭后发出.
+@param[in] index 关闭的索引值.
+
+@fn void DTabBar::tabMoved(int from, int to)
+@brief 索引位置发生变化
+@param[in] from 索引位置变化的初始值
+@param[in] to 位置变化后的索引值.
+
+@fn void DTabBar::tabIsInserted(int index)
+@brief 新标签已插入.
+@param[in] index 被插入标签的索引值.
+
+@fn void DTabBar::tabIsRemoved(int index)
+@brief 标签已删除.
+@param[in] index 被删除标签的索引值.
+
+@fn void DTabBar::tabBarClicked(int index)
+@brief 点击索引标签.
+@param[in] index 点击标签的索引值.
+
+@fn void DTabBar::tabBarDoubleClicked(int index)
+@brief 双击索引标签.
+@param[in] index 双击标记的索引值.
+
+@fn void DTabBar::tabAddRequested()
+@brief 新标签加入.
+
+@fn void DTabBar::tabReleaseRequested(int index)
+@brief 索引标签鼠标释放.
+@param[in] index 标签释放的索引值.
+
+@fn void DTabBar::dragActionChanged(Qt::DropAction action)
+@brief 鼠标形状发生变化.
+@param[in] action 改变的拖拽动作.
+
+@fn void DTabBar::tabDroped(int index, Qt::DropAction action, QObject *target)
+@brief 标签拖放.
+@param[in] index 拖放的标签索引
+@param[in] action 拖放的动作
+
+@fn void DTabBar::dragStarted()
+@brief 开始拖起.
+
+@fn void DTabBar::dragEnd(Qt::DropAction action)
+@brief 拖放结束.
+@param[in] action 拖放动作.
+
+@fn void DTabBar::setTabMinimumSize(int index, const QSize &size)
+@brief 设置索引标签的最小尺寸.
+@param[in] index 被设置标签的索引值
+@param[in] size size的最小大小.
+
+@fn void DTabBar::setTabMaximumSize(int index, const QSize &size)
+@brief 设置索引标签的最大尺寸.
+@param[in] index 被设置标签的索引值
+@param[in] size size的最大大小.
+
+@fn bool DTabBar::visibleAddButton() const
+@brief 新建标签栏按钮是否可见.
+@return 新建按钮可见,返回 ture;否则,返回 false.
+
+@fn QTabBar::Shape DTabBar::shape() const
+@brief 标签栏形状.
+@return 返回当前 DTabBar 实例的标签栏形状.
+
+@fn void DTabBar::setShape(QTabBar::Shape shape)
+@brief 设置标签栏形状.
+@param[in] shape 标签栏形状.
+
+@fn int DTabBar::addTab(const QString &text)
+@brief 添加一个新的标签，返回新标签的索引.
+@param[in] text 新标签的标题文本.
+@return 返回新标签的索引.
+
+@fn int DTabBar::addTab(const QIcon &icon, const QString &text)
+@brief 添加一个新的标签，包含图标、文本.
+@param[in] icon 新标签的标题图标
+@param[in] text 新标签的标题文本.
+@return 返回新标签的索引.
+
+@fn int DTabBar::insertTab(int index, const QString &text)
+@brief 插入一个文本标签.
+@param[in] index 被插入的标签索引值
+@param[in] text 新标签的标题文本.
+@warning 如果参数 index 超过了当前索引，将会在最后添加一个新标签.
+@return 返回插入后的新标签索引.
+@sa QTabBar::insertTab()
+
+@fn int DTabBar::insertTab(int index, const QIcon &icon, const QString &text)
+@brief 插入一个图标文本标签.
+@param[in] index 被插入的标签索引值
+@param[in] icon 新标签的图标
+@param[in] text 新标签文本
+@return 返回插入后的新标签索引.
+
+@fn void DTabBar::removeTab(int index)
+@brief 移除标签索引位置
+@param[in] index 被移除的标签索引值.
+
+@fn void DTabBar::moveTab(int from, int to)
+@brief 移动标签索引位置
+@param[in] from 被移动前的标签索引
+@param[in] to 被移动后的标签索引.
+
+@fn bool DTabBar::isTabEnabled(int index) const
+@brief 是否启用标签索引位置
+@param[in] index 标签索引值.
+@return 启用标签索引返回 true,否则返回 false.
+
+@fn void DTabBar::setTabEnabled(int index, bool enable)
+@brief 设置标签索引位置启用状态
+@param[in] index 标签索引
+@param[in] enable 是否启用.
+
+@fn void DTabBar::setTabEnabled(int index, bool enable)
+@brief 返回标签索引位置文本.
+@param index 标签索引.
+@return 返回对应索引的文本.
+
+@fn void DTabBar::setTabText(int index, const QString &text)
+@brief 设置标签索引位置文本.
+@param[in] index 标签索引
+@param[in] text 标签文本.
+
+@fn void DTabBar::setTabText(int index, const QString &text)
+@brief 返回标签索引位置图标.
+@param[in] index 标签索引.
+@return 对应标签的图标.
+
+@fn void DTabBar::setTabIcon(int index, const QIcon &icon)
+@brief 设置标签索引位置图标.
+@param[in] index 标签索引
+@param[in] icon 对应的标签图标.
+
+@fn Qt::TextElideMode DTabBar::elideMode() const
+@brief 缩略模式.
+@return 返回标签的文本缩略模式.
+
+@fn void DTabBar::setElideMode(Qt::TextElideMode mode)
+@brief 设置缩略模式
+@param[in] mode 文本缩略模式.
+
+@fn void DTabBar::setTabToolTip(int index, const QString &tip)
+@brief 设置标签索引位置提示文本.
+@param[in] index 标签索引
+@param[in] tip 提示文本.
+
+@fn QString DTabBar::tabToolTip(int index) const
+@brief 返回标签索引位置提示文本.
+@param[in] index 标签索引.
+
+@fn void DTabBar::setTabData(int index, const QVariant &data)
+@brief 设置标签索引位置数据.
+@param[in] index 标签索引
+@param[in] data 标签数据.
+
+@fn QVariant DTabBar::tabData(int index) const
+@brief 返回标签索引位置数据.
+@param[in] index 标签索引.
+@return 标签数据.
+
+@fn QRect DTabBar::tabRect(int index) const
+@brief 返回标签索引位置矩形.
+@param[in] index 标签索引.
+@return 标签矩形.
+
+@fn int DTabBar::tabAt(const QPoint &pos) const
+@brief 根据位置返回标签索引位置.
+@param[in] pos 对应标签坐标，可以时标签内的任意坐标.
+@return 返回对应标签的索引值.
+
+@fn int DTabBar::currentIndex() const
+@brief 当前的标签索引位置.
+@return 当前标签索引.
+
+@fn int DTabBar::count() const
+@brief 标签总数.
+@return 返回标签总数.
+
+@fn QSize DTabBar::iconSize() const
+@brief 图标大小.
+@return 返回图标大小.
+
+@fn void DTabBar::setIconSize(const QSize &size)
+@brief 设置图标大小.
+@param[in] size 图标大小.
+
+@fn bool DTabBar::tabsClosable() const
+@brief 标签栏是否可关闭.
+@return 返回标签是否可关闭.
+
+@fn void DTabBar::setTabsClosable(bool closable)
+@brief 设置标签栏是否可关闭.
+@param[in] closable 标签是否可关闭.
+
+@fn void DTabBar::setEnabledEmbedStyle(bool enable)
+@brief 启用直角样式的 Tabbar.
+此风格适用于切换窗口的操作,多用于支持多开的应用.
+@param[in] enable true 启用直角样式的Tabbar,false 关闭直角样式
+
+@fn void DTabBar::setTabLabelAlignment(Qt::Alignment alignment)
+@brief 设置 tab 标签文字对齐方式.
+@param[in] alignment 对齐方式.
+
+@fn void DTabBar::setCurrentIndex(int index)
+@brief 设置当前标签索引位置.
+@param[in] index 标签索引.
+
+@fn void DTabBar::setVisibleAddButton(bool visibleAddButton)
+@brief 设置新建标签按钮是否显示.
+@param[in] visibleAddButton 新建按钮是否可视.
+
+@fn void DTabBar::setStartDragDistance(int startDragDistance)
+@brief 设置开始拖动距离.
+@param[in] startDragDistance 开始拖动的距离.
+
+@fn void DTabBar::setMaskColor(QColor maskColor)
+@brief 设置颜色.
+@param[in] maskColor 遮罩颜色.
 */
