@@ -41,6 +41,7 @@ dtkwidget.pc
 *.qdoc
 CMakeLists.txt.user
 
+
 # Ignore Doxygen theme files
 docs/doxygen-theme/
 
