@@ -64,15 +64,12 @@ public:
 };
 
 /*!
-    \class Dtk::Widget::DWaterProgress
-    \inmodule dtkwidget
-
-    \brief 可以使用 DWaterProgress 类快速创建圆形容器内水位高低指示进度的动画控件.
-    \brief Use DWaterProgress to create an new water animation progress.
-
-    \image html dwaterprogress.png
-
-    可以使用 DWaterProgress 类快速创建圆形容器内水位高低指示进度的动画控件。并提供了可选的是否显示进度文字的选项。
+@~english
+    @class Dtk::Widget::DWaterProgress
+    @ingroup progressbar
+    @brief Use DWaterProgress to create a new water animation progress.
+    @image html dwaterprogress.png
+    
     Use DWaterProgress to create an new water animation progress. There is also an optional progress
     text can be set as visible via setTextVisible().
 */
@@ -97,8 +94,8 @@ DWaterProgress::~DWaterProgress()
 }
 
 /*!
-  \brief get the current progress value
-  \brief 当前进度值
+@~english
+  @brief get the current progress value
  */
 int DWaterProgress::value() const
 {
@@ -107,8 +104,8 @@ int DWaterProgress::value() const
 }
 
 /*!
-  \brief star water animation.
-  \brief 开始水位动画
+@~english
+  @brief star water animation.
  */
 void DWaterProgress::start()
 {
@@ -117,8 +114,8 @@ void DWaterProgress::start()
 }
 
 /*!
-  \brief stop water animation.
-  \brief 停止水位动画
+@~english
+  @brief stop water animation.
  */
 void DWaterProgress::stop()
 {
@@ -127,8 +124,9 @@ void DWaterProgress::stop()
 }
 
 /*!
-  \brief set the current progress \a value (range: 0~100)
-  \brief 设置当前进度值，（范围 0~100）
+@~english
+  @brief set the current progress 
+  @param[in] value (range: 0~100)
  */
 void DWaterProgress::setValue(int value)
 {
@@ -141,11 +139,9 @@ void DWaterProgress::setValue(int value)
 }
 
 /*!
-  \brief set progress text \a visible or not
-  \brief 设置是否显示进度
-
-  set the progress text value(like 50% when value is 50) \a visible.
-  设置进度文字是否显示，如值为 50 时显示 50% 。
+@~english
+  @brief set progress text is visible or not
+  @param[in] visible set the progress text value is visible or not(like 50% when value is 50) 
  */
 void DWaterProgress::setTextVisible(bool visible)
 {
