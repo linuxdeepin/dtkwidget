@@ -2,11 +2,134 @@
 @~chinese
 @file dbuttonbox.h
 @ingroup button
-@class
-@brief
-@details
+@class Dtk::Widget::DButtonBoxButton
+@brief DButtonBoxButton类 提供了在 DButtonBox类 中使用的可修改样式的图标按钮.
+@details DButtonBoxButton类中 包含用于设置图标按钮的函数
+@code
+#代码示例
+DButtonBoxButton *btn1 = new DButtonBoxButton("btn1");
+btn1->setIcon(QStyle::StandardPixmap::SP_ArrowUp);
+@endcode
+@image html DButtonBoxButton.png
 
-TODO: 添加类简介、示例代码、示例截图和函数使用说明等
+@fn DButtonBoxButton::DButtonBoxButton(const QString &text, QWidget *parent)
+@brief DButtonBoxButton 的构造函数.
+@param[in] text 按钮名称
+@param[in] parent 父控件
 
+@fn DButtonBoxButton::DButtonBoxButton(const QIcon &icon, const QString &text, QWidget *parent)
+@brief DButtonBoxButton构造函数.
+@param[in] icon 图标
+@param[in] text 按钮名称
+@param[in] parent 父控件
+
+@fn DButtonBoxButton::DButtonBoxButton(QStyle::StandardPixmap iconType, const QString &text, QWidget *parent)
+@brief DButtonBoxButton构造函数.
+@param[in] iconType Qt标准图标类型
+@param[in] text 按钮名称
+@param[in] parent 父控件
+
+@fn DButtonBoxButton::DButtonBoxButton(DStyle::StandardPixmap iconType, const QString &text, QWidget *parent)
+@brief DButtonBoxButton 构造函数.
+@param[in] iconType Dtk标准图标类型
+@param[in] text 按钮名称
+@param[in] parent 父控件
+
+@fn void DButtonBoxButton::setIcon(const QIcon &icon)
+@brief 设置按钮图标.
+@param[in] icon 图标
+
+@fn void DButtonBoxButton::setIcon(QStyle::StandardPixmap iconType)
+@brief 设置按钮图标.
+@overload
+@param[in] iconType Qt标准图标类型
+
+@fn void DButtonBoxButton::setIcon(DStyle::StandardPixmap iconType)
+@brief 设置按钮图标.
+@overload
+@param[in] iconType Dtk标准图标类型
+
+@fn QSize DButtonBoxButton::iconSize() const
+@brief 返回图标尺寸.
+@return 图标尺寸.
+
+@fn QSize DButtonBoxButton::sizeHint() const
+@brief 返回按钮的推荐尺寸.
+@return 按钮的推荐尺寸.
+@sa QAbstractButton::sizeHint()
+
+@fn QSize DButtonBoxButton::minimumSizeHint() const
+@brief 返回按钮的推荐最小尺寸.
+@return 按钮的推荐最小尺寸.
+@sa QAbstractButton::minimumSizeHint()
 
 */
+
+/*!
+@~chinese
+@file dbuttonbox.h
+@ingroup button
+@class Dtk::Widget::DButtonBox
+@brief DButtonBox 类似于 QButtonGroup 类.
+@details DButtonBox 提供了设置其内部所使用按钮的布局方向的函数
+@code
+#示例代码
+DButtonBox box;
+DButtonBoxButton *btn1 = new DButtonBoxButton("btn1");
+DButtonBoxButton *btn2 = new DButtonBoxButton("btn2");
+btn1->setIcon(QStyle::StandardPixmap::SP_ArrowUp);
+box.setButtonList({btn1, btn2}, true);
+@endcode
+@image html DButtonBox.png
+@sa Dtk::Widget::DButtonBoxButton
+
+@fn DButtonBox::DButtonBox(QWidget *parent)
+@brief DButtonBox 的构造函数.
+@param[in] parent 父控件
+
+@fn Qt::Orientation DButtonBox::orientation() const
+@brief 返回当前的按钮布局方向.
+@sa Qt::Orientation
+
+@fn void DButtonBox::setOrientation(Qt::Orientation orientation)
+@brief 设置按钮布局方向.
+@param[in] orientation 
+@sa Qt::Orientation
+
+@fn void DButtonBox::setButtonList(const QList<DButtonBoxButton *> &list, bool checkable)
+@brief 将按钮添加到列表中.
+@param[in] list 存储按钮的 QList 列表
+@param[in] checkable 按钮是否可选中
+
+@fn QList<QAbstractButton *> DButtonBox::buttonList() const
+@brief 返回按钮列表.
+@return 按钮列表.
+@sa QButtonGroup::buttons()
+
+@fn QAbstractButton *DButtonBox::checkedButton() const
+@brief 返回处于选中状态的按钮
+@return 被选中的按钮.
+@sa QButtonGroup::checkedButton()
+
+@fn QAbstractButton *DButtonBox::button(int id) const
+@brief 通过 id 查找按钮
+@param[in] id 按钮的ID, 由函数 DButtonBox::setId 设置.
+@return 对应 id 的按钮, 若不存在这样的按钮, 则返回 nullptr .
+@sa QButtonGroup::button()
+
+@fn void DButtonBox::setId(QAbstractButton *button, int id)
+@brief 设置按钮的id .
+@param[in] button 等待设置 id 的按钮.
+@sa QButtonGroup::setId()
+
+@fn int DButtonBox::id(QAbstractButton *button) const
+@brief 返回按钮的 id .
+@param[in] button 按钮.
+@sa QButtonGroup::id()
+
+@fn int DButtonBox::checkedId() const
+@brief 返回处于选中状态按钮的 id .
+@return 被选中按钮的 id .
+@sa QButtonGroup
+*/
+
