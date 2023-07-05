@@ -28,43 +28,35 @@ void DSpinBoxPrivate::init()
 }
 
 /*!
-  \class Dtk::Widget::DSpinBox
-  \inmodule dtkwidget
-
-  \brief Deepin风格的QSpinBox.
-  \brief The DSpinBox class provides deepin style QSpinBox.
-  
-  类似 DLineEdit ，这个控件也提供了警告功能，用于提醒用户当前输入的数据不正确，另外，还可以设置一个默认的值，并在默认值发生改变时发出信号。
-  如下图上面的是正常状态的控件, 下面的是处于警告状态的控件:
-  Like DLineEdit, this widget can be set on alert to warn the user that the
-  input is not correct. In addition, there's a DSpinBox::defaultValue property
-  can be used to set a default value on the widget.
-
-  \image html DSpinBox.png
+@~english
+  @class Dtk::Widget::DSpinBox
+  @inmodule dtkwidget
+  @brief The DSpinBox class provides deepin style QSpinBox.
+  Like DLineEdit, this widget can be set on alert to warn the user that the input is not correct. In addition, there's a DSpinBox::defaultValue property can be used to set a default value on the widget.
+  As shown in the figure below, the upper is normal state widget and the lower is a warning state widget:
+  @image html DSpinBox.png
  */
 
 // ========================SIGNAL START========================
 /*!
-  \fn void DSpinBox::alertChanged(bool alert)
-  \brief 警告状态发生了变化.
-
-  \a alert 当前的警告状态。
+@~english
+  @fn void DSpinBox::alertChanged(bool alert)
+  @brief The warning state has changed.
+  @param[in] alert current warning state
  */
 
 /*!
-  \fn void DSpinBox::defaultValueChanged(int defaultValue)
-  \brief 默认值发生了变化.
-
-  \a defaultValue 控件的默认值。
+@~english
+  @fn void DSpinBox::defaultValueChanged(int defaultValue)
+  @brief The default value has changed.
+  @param[in] defaultValue default value of widget
  */
 // ========================SIGNAL END========================
 
 /*!
-  \brief 构造一个 DSpinBox 实例。
-  \brief DSpinBox::DSpinBox constructs an instance of DSpinBox
-
-  \a parent 作为该实例的父控件。
-  \a parent is passed to QSpinBox constructor
+@~english
+  @brief DSpinBox::DSpinBox construct an instance of DSpinBox
+  @param[in] parent passed to QSpinBox constructor
  */
 DSpinBox::DSpinBox(QWidget *parent) :
     QSpinBox(parent),
@@ -74,10 +66,9 @@ DSpinBox::DSpinBox(QWidget *parent) :
 }
 
 /*!
-  \brief 获取输入框控件。
-
-  \return 返回正在使用的输入库控件对象。
-  \return the QLineEdit used by this spin box.
+@~english
+  @brief get the input line widget
+  @return the QLineEdit used by this spin box
  */
 QLineEdit *DSpinBox::lineEdit() const
 {
@@ -85,17 +76,16 @@ QLineEdit *DSpinBox::lineEdit() const
 }
 
 /*!
-  \property DSpinBox::alert
-
-  \brief This property holds whether the widget on alert mode.
+@~english
+  @property DSpinBox::alert
+  @brief This property holds whether the widget on alert mode.
  */
 
 /*!
-  \brief 表示当前控件是否处于警告状态的属性.
-
-  使用 DSpinBox::isAlert 获取属性当前状态，使用 DSpinBox::setAlert 设置属性的状态。
-  
-  \return 当前状态处于警告状态，返回 true，否则返回 false.
+@~english
+  @brief It means whether the current widget is on alert mode.
+  Use DSpinBox::isAlert to get the current state of the property, use DSpinBox::setAlert to set the state of the property.
+  @return If the current state is warning, return true, otherwise, return false.
  */
 bool DSpinBox::isAlert() const
 {
@@ -105,10 +95,10 @@ bool DSpinBox::isAlert() const
 }
 
 /*!
-  \brief 显示指定的文本消息，超过指定时间后警告消息消失.
-
-   \a text text警告的文本
-   \a duration 显示的时间长度，单位毫秒
+@~english
+  @brief Display the specified text message and the warning message will disappear if time out.
+  @param[in] text warning text
+  @param[in] duration show the length of time, unit in millisecond
  */
 void DSpinBox::showAlertMessage(const QString &text, int duration)
 {
@@ -118,11 +108,11 @@ void DSpinBox::showAlertMessage(const QString &text, int duration)
 }
 
 /*!
-  \brief 显示指定的文本消息，超过指定时间后警告消息消失.
-
-  \a text text警告的文本
-  \a follower 指定文本消息跟随的对象
-  \a duration 显示的时间长度，单位毫秒
+@~english
+  @brief Display the specified text message and the warning message will disappear if time out.
+  @param[in] text warning text
+  @param[in] follower object of the text message
+  @param[in] duration show the length of time, unit in millisecond
  */
 void DSpinBox::showAlertMessage(const QString &text, QWidget *follower, int duration)
 {
@@ -132,9 +122,9 @@ void DSpinBox::showAlertMessage(const QString &text, QWidget *follower, int dura
 }
 
 /*!
-  \brief 这个属性的值是控件的默认值。
-  
-  使用 DSpinBox::defaultValue 获取默认值，使用 DSpinBox::setDefaultValue 设置默认值, 点击控件上的 reset 按钮会设置为此值。
+@~english
+  @brief default value of widget
+  Use DSpinBox::defaultValue to get the default value, use DSpinBox::setDefaultValue to set the default value, click the Reset button on the widget to set it to this value.
  */
 #if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0)
 int DSpinBox::defaultValue() const
@@ -179,10 +169,10 @@ void DDoubleSpinBoxPrivate::init()
 }
 
 /*!
-  \class Dtk::Widget::DDoubleSpinBox
-  \inmodule dtkwidget
-
-  \brief 类似 DDoubleSpinBox.
+@~english
+  @class Dtk::Widget::DDoubleSpinBox
+  @inmodule dtkwidget
+  @brief like DDoubleSpinBox
  */
 
 DDoubleSpinBox::DDoubleSpinBox(QWidget *parent) :
@@ -200,10 +190,10 @@ bool DDoubleSpinBox::isAlert() const
 }
 
 /*!
-  \brief 显示指定的文本消息，超过指定时间后警告消息消失.
-
-   \a text text警告的文本
-   \a duration 显示的时间长度，单位毫秒
+@~english
+  @brief Display the specified text message and the warning message will disappear if time out.
+  @param[in] text warning text
+  @param[in] duration show the length of time, unit in millisecond
  */
 void DDoubleSpinBox::showAlertMessage(const QString &text, int duration)
 {
@@ -213,11 +203,11 @@ void DDoubleSpinBox::showAlertMessage(const QString &text, int duration)
 }
 
 /*!
-  \brief 显示指定的文本消息，超过指定时间后警告消息消失.
-
-  \a text text警告的文本
-  \a follower 指定文本消息跟随的对象
-  \a duration 显示的时间长度，单位毫秒
+@~english
+  @brief Display the specified text message and the warning message will disappear if time out.
+  @param[in] text warning text
+  @param[in] follower object of the text message
+  @param[in] duration show the length of time, unit in millisecond
  */
 void DDoubleSpinBox::showAlertMessage(const QString &text, QWidget *follower, int duration)
 {
