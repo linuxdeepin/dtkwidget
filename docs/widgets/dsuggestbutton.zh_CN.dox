@@ -2,11 +2,51 @@
 @~chinese
 @file dsuggestbutton.h
 @ingroup button
-@class
-@brief
+
+@class Dtk::Widget::DSuggestButton
+@brief 这个控件提供了DTK中默认的建议按钮样式.点击按钮后会显示相应的建议信息
 @details
+### 使用示例
+#### mian.cpp
+```cpp
+#include <DApplication>
+#include <DMainWindow>
+#include <QLayout>
+#include <DSuggestButton>
 
-TODO: 添加类简介、示例代码、示例截图和函数使用说明等
+DWIDGET_USE_NAMESPACE
 
+int main(int argc, char *argv[])
+{
+    DApplication a(argc, argv);
+    DMainWindow w;
+    w.setMinimumSize(QSize(600, 200));
 
+    QWidget *cw = new QWidget(&w);
+    QVBoxLayout *layout = new QVBoxLayout(cw);
+
+    DSuggestButton *suggestButton = new DSuggestButton("suggest_button", cw);
+    layout->addWidget(suggestButton);
+    layout->setAlignment(Qt::AlignCenter);
+
+    w.setCentralWidget(cw);
+    w.show();
+
+    return a.exec();
+}
+```
+### demo运行示例
+@image html dsuggestbutton.png
+该示例展示了一个展示了一个名字为“suggest_button”的建议按钮.
+
+@fn DSuggestButton::DSuggestButton(QWidget *parent)
+@brief DSuggestButton的构造函数
+@param[in] parent
+
+@fn DSuggestButton::DSuggestButton(const QString &text, QWidget *parent)
+@brief DSuggestButton的重载构造函数，接收默认显示的文字
+@param[in] text 默认显示的文字
+@param[in] parent
 */
+
+

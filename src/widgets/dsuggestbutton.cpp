@@ -12,15 +12,15 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
-  \class Dtk::Widget::DSuggestButton
-  \inmodule dtkwidget
-  \brief 这个控件提供了DTK中默认的按钮样式.
+@~english
+  @class Dtk::Widget::DSuggestButton
+  @brief This widget provides the default suggest button style in DTK.
  */
 
 /*!
-  \brief DSuggestButton的构造函数
-  
-  \a parent
+@~english
+  @brief Constructor of DSuggestButton
+  @param[in] parent
  */
 DSuggestButton::DSuggestButton(QWidget *parent)
     : QPushButton(parent)
@@ -29,10 +29,10 @@ DSuggestButton::DSuggestButton(QWidget *parent)
 }
 
 /*!
-  \brief DSuggestButton的重载构造函数，接收默认显示的文字
-  
-  \a text 默认显示的文字
-  \a parent
+@~english
+  @brief Overloaded constructor of DSuggestButton that accepts the default displayed text.
+  @param[in] text The default displayed text
+  @param[in] parent
  */
 DSuggestButton::DSuggestButton(const QString &text, QWidget *parent)
     : QPushButton(text, parent)
