@@ -19,8 +19,16 @@ DIconButtonPrivate::DIconButtonPrivate(DIconButton *qq)
 }
 
 /*!
-  \brief DIconButton::DIconButton 实现一个方便定义图标的button
-  \a parent
+@~english
+  @class Dtk::Widget::DIconButton
+  @brief the button icon
+  @details Customized button icons that can be adjusted according to the input icon parameters.
+ */
+
+/*!
+@~english
+  @brief DIconButton::DIconButton implement a button easy to define icons
+  @param[in] parent
  */
 DIconButton::DIconButton(QWidget *parent)
     : DIconButton(*new DIconButtonPrivate(this), parent)
@@ -53,8 +61,9 @@ DIconButton::~DIconButton()
 }
 
 /*!
-  \brief DIconButton::setIcon　设置button的图标
-  \a icon　button的图标
+@~english
+  @brief DIconButton::setIcon　set the button icon
+  @param[in] icon　the button icon
  */
 void DIconButton::setIcon(const QIcon &icon)
 {
@@ -65,8 +74,9 @@ void DIconButton::setIcon(const QIcon &icon)
 }
 
 /*!
-  \brief DIconButton::setIcon 设置button图标的类型,传入QT预定义枚举值
-  \a iconType icon类型
+@~english
+  @brief DIconButton::setIcon Set the type of the Button icon and pass the predefined enumeration value of QT.
+  @param[in] iconType type of icon
  */
 void DIconButton::setIcon(QStyle::StandardPixmap iconType)
 {
@@ -77,8 +87,9 @@ void DIconButton::setIcon(QStyle::StandardPixmap iconType)
 }
 
 /*!
-  \brief DIconButton::setIcon 设置button图标的类型,传入DTK预定义枚举值
-  \a iconType icon类型
+@~english
+  @brief DIconButton::setIcon Set the type of the Button icon and pass the predefined enumeration value of DTK.
+  @param[in] iconType type of icon
  */
 void DIconButton::setIcon(DStyle::StandardPixmap iconType)
 {
@@ -131,8 +142,9 @@ QSize DIconButton::minimumSizeHint() const
 }
 
 /*!
-  \brief DIconButton::iconSize
-  \return 返回ICON的尺寸
+@~english
+  @brief DIconButton::iconSize
+  @return size of icon
  */
 QSize DIconButton::iconSize() const
 {
@@ -153,8 +165,9 @@ QSize DIconButton::iconSize() const
 }
 
 /*!
-  \brief DIconButton::isFlat
-  \return true无边框　false有边框
+@~english
+  @brief DIconButton::isFlat
+  @return "true":no frame  "false":frame
  */
 bool DIconButton::isFlat() const
 {
@@ -182,8 +195,9 @@ bool DIconButton::enabledCircle() const
 }
 
 /*!
-  \brief DIconButton::setFlat 设置是否保留边框
-  \a flat true无边框　false有边框
+@~english
+  @brief DIconButton::setFlat set whether to keep the frame
+  @param[in] flat "true":no frame  "false":frame
  */
 void DIconButton::setFlat(bool flat)
 {
@@ -270,8 +284,9 @@ void DIconButton::keyPressEvent(QKeyEvent *event)
 }
 
 /*!
-  \brief DIconButton::setNewNotification 设置是否显示小红点
-  \a set_new true有红点　false无红点
+@~english
+  @brief DIconButton::setNewNotification set whether to show small red dots
+  @param[in] set_new "true":small red dots  "false":no small red dots
  */
 void DIconButton::setNewNotification(const bool set_new)
 {
@@ -302,7 +317,7 @@ bool DIconButton::event(QEvent *e)
             }
         }
     } else if (e->type() == QEvent::ShowToParent) {
-        // 默认调整大小，否则可能会导致按钮显示后为 QWidget 的默认大小
+        // Resize by default, otherwise it may cause the button to display at the default size of QWidget.
         resize(sizeHint());
     }
 
