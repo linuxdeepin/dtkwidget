@@ -46,7 +46,7 @@ void DComboBoxPrivate::init()
 
 /*!
  * @~english
-    @brief Obtain the screen rectangle position of the control, replace QDesktopWidgetPrivate with QApplication::desktop() to access the application position.
+    @brief Obtain the screen rectangle of the widget. Use QScreen to access the screen geometry.
  */
 QRect DComboBoxPrivate::popupGeometry()
 {
