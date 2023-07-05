@@ -45,7 +45,8 @@ void DComboBoxPrivate::init()
 }
 
 /*!
- * \~chinese \brief 获得控件屏幕矩形位置，QDesktopWidgetPrivate改为QApplication::desktop()访问应用位置。
+ * @~english
+    @brief Obtain the screen rectangle position of the control, replace QDesktopWidgetPrivate with QApplication::desktop() to access the application position.
  */
 QRect DComboBoxPrivate::popupGeometry()
 {
@@ -58,9 +59,8 @@ QRect DComboBoxPrivate::popupGeometry()
 }
 
 /*!
- * \~chinese \brief
- * Computes a size hint based on the maximum width
- * for the items in the combobox.
+ * @~english 
+    @brief Computes a size hint based on the maximum width for the items in the combobox.
  */
 int DComboBoxPrivate::computeWidthHint() const
 {
@@ -92,12 +92,14 @@ int DComboBoxPrivate::computeWidthHint() const
 
 
 /*!
- * \~chinese \class DComboBox
- * \~chinese \brief DComboBox 重写QComboBox, 提供一个下拉列表供用户选择
+ * @~english @class DComboBox
+ * @~english @brief Override QComboBox to create a ComboBox and provide a dropdown list for the user to select from.
  *
- * \~chinese \note\row 代码示例
- * \~chinese \note\row DComboBox *btn1 = new DComboBox("btn1");
- * \~chinese \note\row btn1->addItem("ComboBox");
+ * @~english @note Code example.
+ * @~english @code
+ * DComboBox *btn1 = new DComboBox("btn1");
+ * btn1->addItem("ComboBox");
+ * @endcode 
  */
 DComboBox::DComboBox(QWidget *parent)
     : QComboBox(parent)
@@ -116,8 +118,8 @@ DComboBox::DComboBox(DComboBoxPrivate &dd, QWidget *parent)
 }
 
 /*!
- * \~chinese \brief 重写QComboBox::showPopup, 按照maxVisibleItems()来限制最大显示高度，其值默认为16，
- * 可通过setMaxVisibleItems()来改变最大显示高度，这个功能使得setMaximumHeight()接口无效。
+ * @~english 
+    @brief Override QComboBox::showPopup to limit the maximum display height according to maxVisibleItems(), which has a default value of 16. The maximum display height can be changed using setMaxVisibleItems(), which makes the setMaximumHeight() interface ineffective.
  */
 void DComboBox::showPopup()
 {
@@ -145,7 +147,7 @@ void DComboBox::showPopup()
         }
         return count;
     };
-    // 小于 16 的时候使用 qt 默认的，直接返回，避免显示多余的空白
+    // When the value of maxVisibleItems() is less than 16, use the default value of qt and return it directly to avoid displaying excess whitespace
     QComboBoxPrivateContainer *container = this->findChild<QComboBoxPrivateContainer *>();
     if (getRowCount() <= maxVisibleItems() || !container)
         return QComboBox::showPopup();
