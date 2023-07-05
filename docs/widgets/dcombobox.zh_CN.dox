@@ -2,11 +2,22 @@
 @~chinese
 @file dcombobox.h
 @ingroup button
-@class
-@brief
-@details
 
-TODO: 添加类简介、示例代码、示例截图和函数使用说明等
+@class Dtk::Widget::DComboBox
+@brief DComboBox 重写QComboBox, 提供一个下拉列表供用户选择
 
+@note 代码示例
 
+@code 
+ DComboBox *btn1 = new DComboBox("btn1");
+ btn1->addItem("ComboBox");
+@endcode
+
+## demo示例
+@image html ../images/DComboBox_1.png" 
+@image html ../images/DComboBox_2.png" 
+
+@fn void DComboBox::showPopup()
+@brief 重写QComboBox::showPopup, 按照maxVisibleItems()来限制最大显示高度，其值默认为16，可通过setMaxVisibleItems()来改变最大显示高度，这个功能使得setMaximumHeight()接口无效。
 */
+
