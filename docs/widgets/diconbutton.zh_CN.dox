@@ -2,11 +2,83 @@
 @~chinese
 @file diconbutton.h
 @ingroup button
-@class
-@brief
-@details
 
-TODO: 添加类简介、示例代码、示例截图和函数使用说明等
+@class Dtk::Widget::DIconButton
+@brief 按钮的图标
+@details 定制化的按钮图标，可以根据传入的图标参数具体调整
+### 示例代码
+#### main.cpp
+```cpp
+#include <QVBoxLayout>
+#include <DApplication>
+#include <DMainWindow>
+#include <DIconButton>
 
+DWIDGET_USE_NAMESPACE
+
+int main(int argc, char *argv[])
+{
+    DApplication app(argc, argv);
+    DMainWindow window;
+    window.setMinimumSize(QSize(600, 200));
+
+    QWidget *centralWidget = new QWidget(&window);
+    QVBoxLayout *layout = new QVBoxLayout(centralWidget);
+
+    DIconButton *button1 = new DIconButton(QStyle::SP_DirIcon);
+    button1->setNewNotification(true); // 显示小红点
+    button1->setIconSize(QSize(32, 32)); // 设置图标尺寸为 32x32
+    layout->addWidget(button1);
+
+    DIconButton *button2 = new DIconButton();
+    button2->setIcon(QIcon("image.jpg")); // 使用本地的图片作为icon
+    button2->setIconSize(QSize(48, 48)); // 设置图标尺寸为 48x48
+    layout->addWidget(button2);
+
+    DIconButton *button3 = new DIconButton(QStyle::SP_ComputerIcon);
+    button3->setIconSize(QSize(64, 64)); // 设置图标尺寸为 64x64
+    layout->addWidget(button3);
+
+    window.setCentralWidget(centralWidget);
+    window.show();
+
+    return app.exec();
+}
+```
+### demo运行图片
+@image html DIconButton_example.png
+
+@fn DIconButton::DIconButton(QWidget *parent)
+@brief 实现一个方便定义图标的button
+@param[in] parent
+
+@fn void DIconButton::setIcon(const QIcon &icon)
+@brief 设置button的图标
+@param[in] icon button的图标
+
+@fn void DIconButton::setIcon(QStyle::StandardPixmap iconType)
+@brief 设置button图标的类型,传入QT预定义枚举值
+@param[in] iconType icon类型
+
+@fn void DIconButton::setIcon(DStyle::StandardPixmap iconType)
+@brief 设置button图标的类型,传入DTK预定义枚举值
+@param[in] iconType icon类型
+
+@fn QSize DIconButton::iconSize() const
+@brief icon的尺寸
+@return 返回icon的尺寸
+
+@fn bool DIconButton::isFlat() const
+@brief button图标有无边框
+@return true无边框 false有边框
+
+@fn void DIconButton::setFlat(bool flat)
+@brief 设置是否保留边框
+@param[in] flat true无边框 false有边框
+
+@fn void DIconButton::setNewNotification(const bool set_new)
+@brief 设置是否显示小红点
+@param[in] set_new true有红点 false无红点
 
 */
+
