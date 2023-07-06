@@ -2,11 +2,83 @@
 @~chinese
 @file dmessagemanager.h
 @ingroup dialog
-@class
-@brief
+
+@class Dtk::Widget::DMessageManager
+@brief 该控件是一个显示应用内部通知消息的控件。根据具体应用，可以让通知消息自动消失；
+也可以让用户手动进行操作（如：点击“关闭”）后，通知消息消失。
 @details
+### 示例代码
+#### main.cpp
+```cpp
+#include <DApplication>
+#include <DMainWindow>
+#include <DWidgetUtil>
+#include <DMessageManager>
+#include <QPushButton>
+#include <QVBoxLayout>
 
-TODO: 添加类简介、示例代码、示例截图和函数使用说明等
+DWIDGET_USE_NAMESPACE
 
+int main(int argc, char *argv[])
+{
+    DApplication a(argc, argv);
+    DMainWindow w;
+    w.setMinimumSize(QSize(600, 200));
 
+    // 创建示例的 DMessageManager 实例
+    DMessageManager *messageManager = DMessageManager::instance();
+
+    // 显示消息通知的按钮
+    QPushButton *showMessageButton = new QPushButton("显示消息");
+    QObject::connect(showMessageButton, &QPushButton::clicked, [&w, messageManager]() {
+        QIcon icon;
+        QString message = "halo我是一条通知消息哇";
+
+        messageManager->sendMessage(&w, icon, message);
+    });
+
+    QVBoxLayout *layout = new QVBoxLayout();
+    layout->addWidget(showMessageButton);
+
+    QWidget *widget = new QWidget();
+    widget->setLayout(layout);
+
+    w.setCentralWidget(widget);
+
+    w.show();
+    Dtk::Widget::moveToCenter(&w);
+
+    return a.exec();
+}
+```
+### 示例图片
+@image html dmessagemanager.png
+
+@fn DMessageManager *DMessageManager::instance() 
+@brief DMessageManager::instance 构造一个单例对象
+@return 返回对象引用
+
+@fn void DMessageManager::sendMessage(QWidget *par, DFloatingMessage *floMsg)
+@brief DMessageManager::sendMessage 发送通知消息
+@param[in] par 父控件
+@param[in] floMsg 浮动的通知消息（控件）
+
+@fn void DMessageManager::sendMessage(QWidget *par, const QIcon &icon, const QString &message)
+@brief DMessageManager::sendMessage 发送通知消息
+@param[in] par 父控件
+@param[in] icon 消息图标
+@param[in] message 消息文字
+
+@fn bool DMessageManager::setContentMargens(QWidget *par, const QMargins &margins)
+@brief DMessageManager::setContentMargens 设置中间间隔值
+@param[in] par 父控件
+@param[in] margins四周的间隔值
+@return 是否设置成功
+
+@fn bool DMessageManager::eventFilter(QObject *watched, QEvent *event)
+@brief DMessageManager::eventFilter 消息过滤
+@param[in] watched 查看对象
+@param[in] event 消息事件
+@return 成功与否
 */
+
