@@ -92,8 +92,9 @@ DMessageManager::DMessageManager()               //私有静态构造函数
 }
 
 /*!
-  \brief DMessageManager::instance 构造一个单例对象
-  \return 返回对象引用
+@~english
+ @brief DMessageManager::instance constructs a singleton object.
+ @return Returns a reference to the object.
  */
 DMessageManager *DMessageManager::instance()  //公有静态函数
 {
@@ -102,9 +103,10 @@ DMessageManager *DMessageManager::instance()  //公有静态函数
 }
 
 /*!
-  \brief DMessageManager::sendMessage 发送弹窗消息
-  \a par 父控件
-  \a floMsg 弹窗浮动消息（控件）
+@~english
+ @brief DMessageManager::sendMessage sends a popup message.
+ @param[in] par The parent widget.
+ @param[in] floMsg The floating message (widget).
  */
 void DMessageManager::sendMessage(QWidget *par, DFloatingMessage *floMsg)
 {
@@ -134,10 +136,11 @@ void DMessageManager::sendMessage(QWidget *par, DFloatingMessage *floMsg)
 }
 
 /*!
-  \brief DMessageManager::sendMessage 发送弹窗消息
-  \a par 父控件
-  \a icon 消息图标
-  \a message 消息文字
+@~english
+ @brief DMessageManager::sendMessage sends a popup message.
+ @param[in] par The parent widget.
+ @param[in] icon The message icon.
+ @param[in] message The message text.
  */
 void DMessageManager::sendMessage(QWidget *par, const QIcon &icon, const QString &message)
 {
@@ -150,10 +153,11 @@ void DMessageManager::sendMessage(QWidget *par, const DDciIcon &icon, const QStr
 }
 
 /*!
-  \brief DMessageManager::setContentMargens 设置中间间隔值
-  \a par 父控件
-  \a margins四周的间隔值
-  \return 是否设置成功
+@~english
+ @brief DMessageManager::setContentMargins sets the margin values for the content.
+ @param[in] par The parent widget.
+ @param[in] margins The margin values for the four sides.
+ @return Whether the setting was successful.
  */
 bool DMessageManager::setContentMargens(QWidget *par, const QMargins &margins)
 {
@@ -168,10 +172,11 @@ bool DMessageManager::setContentMargens(QWidget *par, const QMargins &margins)
 }
 
 /*!
-  \brief DMessageManager::eventFilter 消息过滤
-  \a watched 查看对象
-  \a event 消息事件
-  \return 成功与否
+@~english
+ @brief DMessageManager::eventFilter message filtering.
+ @param[in] watched The watched object.
+ @param[in] event The message event.
+ @return Whether the operation was successful.
  */
 bool DMessageManager::eventFilter(QObject *watched, QEvent *event)
 {
