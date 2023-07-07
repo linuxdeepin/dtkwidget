@@ -65,14 +65,10 @@ void DCircleProgressPrivate::paint(QPainter *painter)
 }
 
 /*!
-    \class Dtk::Widget::DCircleProgress
-    \inmodule dtkwidget
-
-    \brief 可以使用 DCircleProgress 类快速创建环形进度条控件.
-    \brief Use DCircleProgress to create a circle progress display widget.
-
-    DCircleProgress 提供了一个可控制颜色并可以包含文字显示的环形进度条控件。可以快速创建底色为 backgroundColor
-    ，进度颜色为 chunkColor 的环形进度条。
+@~english
+    @class Dtk::Widget::DCircleProgress
+    @ingroup dtkwidget
+    @brief Use DCircleProgress to create a circle progress display widget.
     DCircleProgress provide a circle progress widget with configurable foreground color chunkColor
     and background color backgroundColor. You can also set text for display status or for other purpose.
 */
@@ -85,13 +81,10 @@ DCircleProgress::DCircleProgress(QWidget *parent)
 }
 
 /*!
-  \brief Progress value of the progressbar.
-  \brief 环形进度条的进度值。
-  
+@~english
+  @brief Progress value of the progressbar.
   Maximum value is 100, minimum value is 0.
-  最大值为 100 ，最小值为 0 。
-  
-  \sa setValue()
+  @sa setValue()
  */
 int DCircleProgress::value() const
 {
@@ -101,25 +94,26 @@ int DCircleProgress::value() const
 }
 
 /*!
-  \brief Set the progress \a value of the progressbar.
-  \brief 设置环形进度条的进度值。
-  
-  Maximum \a value is 100, minimum \a value is 0.
-  最大值为 100 ，最小值为 0 。将根据该值和最大值（100）的比例关系绘制进度。
-  
-  \sa value()
+@~english
+  @brief Set the progress 
+  @param[in] value Value of the progressbar.
+  Maximum value is 100, minimum value is 0.
+  @sa value()
  */
 void DCircleProgress::setValue(int value)
 {
     Q_D(DCircleProgress);
-
+    if (d->m_currentValue == value){
+        return;
+    }
     d->m_currentValue = value;
+    emit valueChanged(value);
     update();
 }
 
 /*!
-  \brief Text display near the circle progressbar.
-  \brief 环形进度条旁边的文字。
+@~english
+  @brief Text display near the circle progressbar.
  */
 const QString DCircleProgress::text() const
 {
@@ -129,8 +123,9 @@ const QString DCircleProgress::text() const
 }
 
 /*!
-  \brief Set the \a text display near the circle progressbar.
-  \brief 设置环形进度条旁边的文字。
+@~english
+  @brief Set the text display near the circle progressbar.
+  @param[in] text The text near the circle progressbar.
  */
 void DCircleProgress::setText(const QString &text)
 {
@@ -140,10 +135,9 @@ void DCircleProgress::setText(const QString &text)
 }
 
 /*!
-  \brief Background color of the circle progressbar.
-  \brief 环形进度条的背景色。
-  
-  \sa setBackgroundColor()
+@~english
+  @brief Background color of the circle progressbar.
+  @sa setBackgroundColor()
  */
 const QColor DCircleProgress::backgroundColor() const
 {
@@ -153,10 +147,10 @@ const QColor DCircleProgress::backgroundColor() const
 }
 
 /*!
-  \brief Set the background \a color of the circle progressbar.
-  \brief 设置环形进度条的背景色。
-  
-  \sa backgroundColor()
+@~english
+  @brief Set the background color of the circle progressbar.
+  @param[in] color Color of the circle progress
+  @sa backgroundColor()
  */
 void DCircleProgress::setBackgroundColor(const QColor &color)
 {
@@ -166,10 +160,9 @@ void DCircleProgress::setBackgroundColor(const QColor &color)
 }
 
 /*!
-  \brief Foreground color of the progressbar to indicate progress.
-  \brief 环形进度条的前景色，用以标识进度。
-  
-  \sa setChunkColor()
+@~english
+  @brief Foreground color of the progressbar to indicate progress.
+  @sa setChunkColor()
  */
 const QColor DCircleProgress::chunkColor() const
 {
@@ -179,10 +172,10 @@ const QColor DCircleProgress::chunkColor() const
 }
 
 /*!
-  \brief Set the foreground \a color of the progressbar to indicate progress.
-  \brief 设置用以标识进度环形进度条的前景色。
-  
-  \sa chunkColor()
+@~english
+  @brief Set the foreground color of the progressbar to indicate progress.
+  @param[in] color Color of the progressbar
+  @sa chunkColor()
  */
 void DCircleProgress::setChunkColor(const QColor &color)
 {
@@ -192,10 +185,9 @@ void DCircleProgress::setChunkColor(const QColor &color)
 }
 
 /*!
-  \brief circle line width of the circle progressbar.
-  \brief 环形进度条的环形宽度。
-  
-  \sa setLineWidth()
+@~english
+  @brief circle line width of the circle progressbar.
+  @sa setLineWidth()
  */
 int DCircleProgress::lineWidth() const
 {
@@ -205,10 +197,10 @@ int DCircleProgress::lineWidth() const
 }
 
 /*!
-  \brief Set the circle line \a width of the circle progressbar.
-  \brief 设置环形进度条的环形宽度。
-  
-  \sa setLineWidth()
+@~english
+  @brief Set the circle line width of the circle progressbar.
+  @param[in] width Width of the circle progressbar.
+  @sa setLineWidth()
  */
 void DCircleProgress::setLineWidth(const int width)
 {
@@ -218,8 +210,9 @@ void DCircleProgress::setLineWidth(const int width)
 }
 
 /*!
-  \brief DCircleProgress::topLabel
-  \return 返回环形进度条顶部文字Label
+@~english
+  @brief DCircleProgress::topLabel
+  @return 返回环形进度条顶部文字Label
  */
 QLabel *DCircleProgress::topLabel()
 {
@@ -229,8 +222,9 @@ QLabel *DCircleProgress::topLabel()
 }
 
 /*!
-  \brief DCircleProgress::bottomLabel
-  \return 返回环形进度条底部文字Label
+@~english
+  @brief DCircleProgress::bottomLabel
+  @return 返回环形进度条底部文字Label
  */
 QLabel *DCircleProgress::bottomLabel()
 {
@@ -274,25 +268,16 @@ void DCircleProgress::leaveEvent(QEvent *e)
 }
 
 /*!
-  \fn void Dtk::Widget::DCircleProgress::clicked()
-
+  @fn void Dtk::Widget::DCircleProgress::clicked()
   This signal is emitted when the user clicks the DCircleProgress widget.
-
-  该信号将会在用户点击 DCircleProgress 控件时发出。
 */
 
 /*!
-  \fn void Dtk::Widget::DCircleProgress::mouseEntered()
-
+  @fn void Dtk::Widget::DCircleProgress::mouseEntered()
   This signal is emitted when the user's mouse pointer entered the DCircleProgress widget.
-
-  该信号将会在用户的鼠标指针移入 DCircleProgress 控件时发出。
 */
 
 /*!
-  \fn void Dtk::Widget::DCircleProgress::mouseLeaved()
-
+  @fn void Dtk::Widget::DCircleProgress::mouseLeaved()
   This signal is emitted when the user's mouse pointer leaved the DCircleProgress widget.
-
-  该信号将会在用户的鼠标指针离开 DCircleProgress 控件时发出。
 */
