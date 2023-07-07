@@ -2,11 +2,102 @@
 @~chinese
 @file dipv4lineedit.h
 @ingroup edit
-@class
-@brief
-@details
+@class Dtk::Widget::DIpv4LineEdit
+@brief 类DIpv4LineEdit是专门用于输入ipv4格式文本的编辑框.
+@details 此类内部由四个@ref QLineEdit 组合而成，输入框之间可以通过Tab/Shift+Tab快捷切换光标，输入字符"."时会自动跳到下一个输入框。在使用左右方向键移动光标时会自动跨越输入框，和在同一个输入框内光标的没有区别。和 @ref QLineEdit 一样也可以使用快捷键方便的复制粘贴文本，在粘贴时会自动根据ipv4的规则过滤掉非法字符。每个输入框的文本内容必须要满足以下的正则规则：
+@code{.unparsed}
+  ^(2[0-4]\d|25[0-5]|[01]?\d\d?)?$
+@endcode
+@warning 不能使用DLineEdit和QLineEdit中的功能性函数
 
-TODO: 添加类简介、示例代码、示例截图和函数使用说明等
+@image html ../images/DIpv4LineEdit.png
 
+@property DIpv4LineEdit::selectedText
+@brief 选中的文本内容
+@note 只读
+@sa QLineEdit::selectedText
+
+@property DIpv4LineEdit::placeholderText
+@brief 输入框未输入内容时的占位文本，通常显示为灰色，当输入任意字符后就会被隐藏
+@note 只读。默认为空字符串
+@sa QLineEdit::placeholderText
+
+@brief 构造DIpv4LineEdit类，和普通 @ref QWidget 一样，可以传入一个QWidget指针对象作为其父对象管理的控件
+@a parent
+
+@property DIpv4LineEdit::clearButtonEnabled
+@brief 是否在输入框上显示清理按钮
+@note 只读。默认为 false
+@sa QLineEdit::clearButtonEnabled
+
+@brief 构造DIpv4LineEdit类，和普通 @l QWidget 一样，可以传入一个QWidget指针对象作为其父对象管理的控件
+@a parent
+
+@property DIpv4LineEdit::displayText
+@brief 输入框显示的文本内容
+和 QLineEdit::displayText 不同，无论 @ref echoMode 值为多少，都返回和 @ref text 同样的内容
+@note 可读可写
+@sa QLineEdit::echoMode QLineEdit::text
+@return text 的内容
+
+@property DIpv4LineEdit::cursorPosition
+@brief 当前光标所在位置
+@note 可读可写
+@sa QLineEdit::cursorPosition
+@return 当前光标所在位置
+
+@property DIpv4LineEdit::alignment
+@brief 文本内容对齐方式
+固定为 @ref Qt::AlignHCenter
+@note 只读
+@sa QLineEdit::alignment
+
+@property DIpv4LineEdit::acceptableInput
+@brief 检查 DIpv4LineEdit 类中所有  QLineEdit 对象是否都有可接受的输入
+@note 只读
+@sa QLineEdit::acceptableInput
+@return 如果都有，则返回 true，否则返回 false
+
+@property DIpv4LineEdit::isReadOnly
+@brief 检查 DIpv4LineEdit 类中第一个 QLineEdit 对象是否为只读模式
+@note 可读可写
+@sa QLineEdit::readOnly
+@return 如果是，则返回 true，否则返回 false
+
+@property DIpv4LineEdit::setCursorPosition
+@brief 将光标移动到指定位置，并将焦点设置到包含该位置的 QLineEdit 对象上
+@a cursorPosition
+@sa cursorPosition
+
+@property DIpv4LineEdit::setReadOnly
+@brief 用于设置 DIpv4LineEdit 对象中的所有 QLineEdit 对象是否为只读模式
+@a readOnly
+@sa readOnly
+
+@property DIpv4LineEdit::setSelection
+@brief 使用此方法选中文本时会把四个输入框当做一个看待
+@a start
+@a length
+@sa QLineEdit::setSelection
+
+@property DIpv4LineEdit::selectAll
+@brief 选中所有输入框的全部内容
+@sa QLineEdit::selectAll
+
+@property DIpv4LineEdit::eventFilter
+@brief 处理输入框中的键盘、鼠标等事件，以便正确地响应用户的输入和操作。
+@param obj 事件的目标对象。
+@param e 事件对象。
+@return bool 如果该事件已被处理，返回 true；否则返回 false。
+
+@property DIpv4LineEdit::DIpv4LineEdit
+@brief DIpv4LineEdit 类的构造函数，用于创建一个 DIpv4LineEdit 对象。
+@param q 一个指向 DIpv4LineEdit 对象内部数据的指针。
+@param parent DIpv4LineEdit 的父控件对象。
+
+@property DIpv4LineEdit::resizeEvent
+@brief 重写 resizeEvent 函数，调整输入框的大小和位置
+@param event 一个 QResizeEvent 对象，包含了窗口大小变化的信息
 
 */
+

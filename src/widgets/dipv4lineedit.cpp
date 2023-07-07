@@ -29,9 +29,9 @@ void DIpv4LineEditPrivate::init()
 {
     D_Q(DIpv4LineEdit);
 
-    // 和子edit保持一致不显示菜单
+    // Keep the consistency with the child edit and do not display the menu.
     q->setContextMenuPolicy(Qt::NoContextMenu);
-    // 带圆角的自绘制背景的frame，挡住背后的edit文字
+    // A frame with rounded corners is a self-drawn background that covers the text of the edit control behind it.
     DFrame *frame = new DFrame(q);
     frame->setAccessibleName("DIpv4LineEditFrame");
     frame->setFrameRounded(true);
@@ -84,7 +84,7 @@ QLineEdit *DIpv4LineEditPrivate::getEdit()
     edit->setAttribute(Qt::WA_InputMethodEnabled, false);
     edit->setContextMenuPolicy(Qt::NoContextMenu);
     edit->installEventFilter(q);
-    // 禁止绘制子edit的焦点框
+    // Prohibit drawing the focus box of sub edit
     edit->setProperty("_d_dtk_noFocusRect", true);
 
     editList << edit;
@@ -103,7 +103,7 @@ void DIpv4LineEditPrivate::setFocus(bool focus)
 
     this->focus = focus;
 
-    // 焦点改变时边框重绘一下
+    // Redraw the border when the focus changes
     q->update();
     Q_EMIT q->focusChanged(focus);
 }
@@ -169,47 +169,46 @@ void DIpv4LineEditPrivate::_q_setIpLineEditText(const QString &text)
 }
 
 /*!
-  \class Dtk::Widget::DIpv4LineEdit
+@~english
+  @class Dtk::Widget::DIpv4LineEdit
   \inmodule dtkwidget
-  \brief 类DIpv4LineEdit是专门用于输入ipv4格式文本的编辑框.
-  
-  此类内部由四个 \l QLineEdit 组合而成，输入框之间可以通过Tab/Shift+Tab快捷切
-  换光标，输入字符"."时会自动跳到下一个输入框。在使用左右方向键移动光标时会自动跨
-  越输入框，和在同一个输入框内光标的没有区别。和 \l QLineEdit 一样也可以使用快捷
-  键方便的复制粘贴文本，在粘贴时会自动根据ipv4的规则过滤掉非法字符。每个输入框的文
-  本内容必须要满足以下的正则规则：
-  \code{.unparsed}
+  @brief The class DIpv4LineEdit is specifically designed as an input box for entering text in IPv4 format.
+
+  This class is composed of four @ref`QLineEdit` objects. The user can switch the cursor between input boxes by using the `Tab/Shift+Tab` shortcut keys, and typing a "." will automatically move the cursor to the next input box. When moving the cursor using the left and right arrow keys, it will automatically cross input boxes, just like in a single input box. Similar to @ref `QLineEdit`, this class also supports shortcut keys for copying and pasting text, and illegal characters will be automatically filtered according to the rules for IPv4 addresses when pasting. The text in each input box must meet the following regular expression rules:
+  @code{.unparsed}
   ^(2[0-4]\d|25[0-5]|[01]?\d\d?)?$
-  \endcode
-  \warning 不能使用DLineEdit和QLineEdit中的功能性函数
+  @endcode
+  @warning functional functions of DLineEdit and QLineEdit cannot be used.
  */
 
 /*!
-  \property DIpv4LineEdit::selectedText
-  \brief 选中的文本内容
-  \note 只读
-  \sa QLineEdit::selectedText
+@~english
+  @property DIpv4LineEdit::selectedText
+  @brief Selected Text Content
+  @note readOnly
+  @sa QLineEdit::selectedText
   */
 
 /*!
-  \property DIpv4LineEdit::placeholderText
-  \brief 输入框未输入内容时的占位文本，通常显示为灰色，当输入任意字符后就会被隐藏
-  \note 只读。默认为空字符串
-  \sa QLineEdit::placeholderText
+@~english
+  @property DIpv4LineEdit::placeholderText
+  @brief The placeholder text in the input box is typically displayed in gray when there is no input, and will be hidden once any character is entered.
+  @note readOnly. The default is an empty string
+  @sa QLineEdit::placeholderText
   */
 
 /*!
-  \property DIpv4LineEdit::clearButtonEnabled
-  \brief 是否在输入框上显示清理按钮
-  \note 只读。默认为 false
-  \sa QLineEdit::clearButtonEnabled
+@~english
+  @property DIpv4LineEdit::clearButtonEnabled
+  @brief Whether to display the cleaning button on the input box
+  @note read only。Default is false.
+  @sa QLineEdit::clearButtonEnabled
   */
 
 /*!
-  \brief 构造DIpv4LineEdit类，和普通 \l QWidget 一样，可以传入一个QWidget指
-  针对象作为其父对象
-  管理的控件
-  \a parent
+@~english
+  @brief To construct the DIpv4LineEdit class, like any regular @ref QWidget, a pointer to a QWidget object can be passed in as its parent object to manage the widget.
+  @a parent
  */
 DIpv4LineEdit::DIpv4LineEdit(QWidget *parent)
     : QLineEdit(parent)
@@ -219,17 +218,18 @@ DIpv4LineEdit::DIpv4LineEdit(QWidget *parent)
 }
 
 /*!
-  \property DIpv4LineEdit::displayText
-  \brief 输入框显示的文本内容
+@~english
+  @property DIpv4LineEdit::displayText
+  @brief The text content displayed in the input box
   
-  和 QLineEdit::displayText 不同，无论 \l echoMode 值为多少，都返回和 \l text 同样的内容
+  Unlike QLineEdit::displayText, this method returns the same content as @ref text, regardless of the value of @ref echoMode.
   
-  \note 可读可写
-  \sa QLineEdit::echoMode QLineEdit::text
+  @note Read-write
+  @sa QLineEdit::echoMode QLineEdit::text
  */
 
 /*!
-  \return
+  @return
  */
 QString DIpv4LineEdit::displayText() const
 {
@@ -237,15 +237,16 @@ QString DIpv4LineEdit::displayText() const
 }
 
 /*!
-  \property DIpv4LineEdit::cursorPosition
-  \brief 当前光标所在位置
+@~english
+  @property DIpv4LineEdit::cursorPosition
+  @brief Current cursor position
   
-  \note 可读可写
-  \sa QLineEdit::cursorPosition
+  @note Read-write
+  @sa QLineEdit::cursorPosition
  */
 
 /*!
-  \return
+  @return
  */
 int DIpv4LineEdit::cursorPosition() const
 {
@@ -266,17 +267,18 @@ int DIpv4LineEdit::cursorPosition() const
 }
 
 /*!
-  \property DIpv4LineEdit::alignment
-  \brief 文本内容对齐方式
+@~english
+  @property DIpv4LineEdit::alignment
+  @brief Text Content Alignment
   
-  固定为 \l Qt::AlignHCenter
+  Fixed as @ref Qt:: AlignHCenter
   
-  \note 只读
-  \sa QLineEdit::alignment
+  @note readOnly
+  @sa QLineEdit::alignment
  */
 
 /*!
-  \return
+  @return
  */
 Qt::Alignment DIpv4LineEdit::alignment() const
 {
@@ -284,13 +286,15 @@ Qt::Alignment DIpv4LineEdit::alignment() const
 }
 
 /*!
-  \property DIpv4LineEdit::acceptableInput
-  \note 只读
-  \sa QLineEdit::acceptableInput
+@~english
+  @property DIpv4LineEdit::acceptableInput
+  @brief Check if all QLineEdit objects in the DIPv4LineEdit class have acceptable inputs
+  @note readOnly
+  @sa QLineEdit::acceptableInput
  */
 
 /*!
-  \return
+  @return
  */
 bool DIpv4LineEdit::hasAcceptableInput() const
 {
@@ -306,13 +310,15 @@ bool DIpv4LineEdit::hasAcceptableInput() const
 }
 
 /*!
-  \property DIpv4LineEdit::readOnly
-  \note 可读可写
-  \sa QLineEdit::readOnly
+@~english
+  @property DIpv4LineEdit::isReadOnly
+  @brief Check if the first QLineEdit object in the DIPv4LineEdit class is in read-only mode
+  @note Read-write
+  @sa QLineEdit::readOnly
  */
 
 /*!
-  \return
+  @return
  */
 bool DIpv4LineEdit::isReadOnly() const
 {
@@ -320,8 +326,11 @@ bool DIpv4LineEdit::isReadOnly() const
 }
 
 /*!
-  \a cursorPosition
-  \sa cursorPosition
+@~english
+  @property DIpv4LineEdit::setCursorPosition
+  @brief Move the cursor to the specified position and set the focus to the QLineEdit object containing that position
+  @a cursorPosition
+  @sa cursorPosition
  */
 void DIpv4LineEdit::setCursorPosition(int cursorPosition)
 {
@@ -343,8 +352,11 @@ void DIpv4LineEdit::setCursorPosition(int cursorPosition)
 }
 
 /*!
-  \a readOnly
-  \sa readOnly
+@~english
+  @property DIpv4LineEdit::setReadOnly
+  @brief set whether all QLineEdit objects in the DIPv4LineEdit object are in read-only mode
+  @a readOnly
+  @sa readOnly
  */
 void DIpv4LineEdit::setReadOnly(bool readOnly)
 {
@@ -356,10 +368,12 @@ void DIpv4LineEdit::setReadOnly(bool readOnly)
 }
 
 /*!
-  \brief 使用此方法选中文本时会把四个输入框当做一个看待
-  \a start
-  \a length
-  \sa QLineEdit::setSelection
+@~english
+  @property DIpv4LineEdit::setSelection
+  @brief When using this method to select text, the four input boxes will be treated as one
+  @a start
+  @a length
+  @sa QLineEdit::setSelection
  */
 void DIpv4LineEdit::setSelection(int start, int length)
 {
@@ -388,8 +402,10 @@ void DIpv4LineEdit::setSelection(int start, int length)
 }
 
 /*!
-  \brief 选中所有输入框的全部内容
-  \sa QLineEdit::selectAll
+@~english
+  @property DIpv4LineEdit::selectAll
+  @brief Select all contents of all input boxes
+  @sa QLineEdit::selectAll
  */
 void DIpv4LineEdit::selectAll()
 {
@@ -402,6 +418,15 @@ void DIpv4LineEdit::selectAll()
     QLineEdit::selectAll();
 }
 
+/*!
+@~english
+  @property DIpv4LineEdit::eventFilter
+  @brief Handle keyboard, mouse, and other events in input boxes to correctly respond to user input and actions.
+  @param obj The target object of the event.
+  @param e The event object.
+  @return bool Returns true if the event has been handled; otherwise returns false.
+ */
+
 bool DIpv4LineEdit::eventFilter(QObject *obj, QEvent *e)
 {
     if (e->type() == QEvent::KeyPress) {
@@ -411,7 +436,7 @@ bool DIpv4LineEdit::eventFilter(QObject *obj, QEvent *e)
             QKeyEvent *event = static_cast<QKeyEvent *>(e);
 
             if (event) {
-                // 按住shlft+left/right 时选中当前的edit文字，而非移动光标
+                // Select the current edit text while holding down shlft+left/right, instead of moving the cursor
                 if (event->modifiers() == Qt::ShiftModifier &&
                     (event->key() == Qt::Key_Left ||
                      event->key() == Qt::Key_Right)) {
@@ -517,7 +542,7 @@ bool DIpv4LineEdit::eventFilter(QObject *obj, QEvent *e)
         QLineEdit *edit = qobject_cast<QLineEdit *>(obj);
 
         if (edit) {
-            // focusProxy 只能设置一个， 所以每次focusIn时设置当前这个edit为FocusProxy吧
+            // focusProxy can only be set to one, so set the current edit control as the focusProxy each time focusIn is triggered.
             setFocusProxy(edit);
             QLineEdit::setCursorPosition(cursorPosition());
         }
@@ -542,6 +567,13 @@ bool DIpv4LineEdit::eventFilter(QObject *obj, QEvent *e)
     return QLineEdit::eventFilter(obj, e);
 }
 
+/*!
+@~english
+  @property DIpv4LineEdit::DIpv4LineEdit
+  @brief Constructor of DIpv4LineEdit class, used to create a DIpv4LineEdit object.
+  @param q A pointer to the internal data of the DIpv4LineEdit object.
+  @param parent The parent window object of the DIpv4LineEdit.
+ */
 DIpv4LineEdit::DIpv4LineEdit(DIpv4LineEditPrivate &q, QWidget *parent)
     : QLineEdit(parent)
     , DObject(q)
@@ -549,6 +581,12 @@ DIpv4LineEdit::DIpv4LineEdit(DIpv4LineEditPrivate &q, QWidget *parent)
 
 }
 
+/*!
+@~english
+  @property DIpv4LineEdit::resizeEvent
+  @brief Override the resizeEvent function to adjust the size and position of the input box.
+  @param event A QResizeEvent object that contains information about the window size change.
+ */
 void DIpv4LineEdit::resizeEvent(QResizeEvent *event)
 {
     D_D(DIpv4LineEdit);
