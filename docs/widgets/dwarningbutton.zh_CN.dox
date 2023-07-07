@@ -2,11 +2,23 @@
 @~chinese
 @file dwarningbutton.h
 @ingroup button
-@class
-@brief
-@details
+@class Dtk::Widget::DWarningButton
+@brief 警告按钮控件
+@details 
+继承于 DPushButton 控件, 主要替换了文字和背景的颜色.
+@note 通常在执行一些比较危险的动作时候, 给出的一个提醒标识, 但是并不强制阻止; 如: 某些小程序需要较高的权限才能够运行; 删除文件不可恢复等
 
-TODO: 添加类简介、示例代码、示例截图和函数使用说明等
+@image html ../images/DWarningButton.png
 
+@sa QPushButton
+
+@fn DWarningButton::DWarningButton(QWidget *parent): DPushButton(parent)
+@brief DWarningButton 的构造函数
+@param[in] parent 父控件
+
+@fn void DWarningButton::initStyleOption(QStyleOptionButton *option) const
+@brief 初始化控件风格属性
+@param[in] option 用于初始化本控件的具体基础风格属性
 
 */
+
