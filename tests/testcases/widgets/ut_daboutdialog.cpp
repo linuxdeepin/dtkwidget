@@ -23,10 +23,12 @@ protected:
     DAboutDialog *widget = nullptr;
 };
 
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0) // dtk 6.0 no longer support
 TEST_F(ut_DAboutDialog, setAcknowledgementLink)
 {
     widget->setAcknowledgementLink(QString{"setAcknowledgementLink"});
 };
+#endif
 
 TEST_F(ut_DAboutDialog, setAcknowledgementVisible)
 {
@@ -89,4 +91,3 @@ TEST_F(ut_DAboutDialog, setWindowTitle)
     widget->setWindowTitle("setWindowTitle");
     ASSERT_EQ(widget->windowTitle(), "setWindowTitle");
 };
-

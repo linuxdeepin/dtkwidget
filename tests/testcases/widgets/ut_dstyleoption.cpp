@@ -5,6 +5,7 @@
 #include <gtest/gtest.h>
 #include <DLineEdit>
 #include <DApplicationHelper>
+#include <DPaletteHelper>
 
 #include "dstyleoption.h"
 DWIDGET_USE_NAMESPACE
@@ -116,7 +117,7 @@ TEST_F(ut_DStyleOptionBackgroundGroup, init)
 {
     QWidget *widget = new QWidget();
     target->init(widget);
-    ASSERT_EQ(target->palette, DApplicationHelper::instance()->palette(widget));
+    ASSERT_EQ(target->palette, DPaletteHelper::instance()->palette(widget));
     widget->deleteLater();
 };
 
