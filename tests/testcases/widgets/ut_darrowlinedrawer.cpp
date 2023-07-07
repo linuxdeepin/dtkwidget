@@ -53,6 +53,8 @@ TEST_F(ut_DArrowLineDrawer, testDArrowLineDrawerSetExpand)
     // TODO
 }
 
+
+#if DTK_VERSION < DTK_VERSION_CHECK(6, 0, 0, 0) // dtk 6.0 no longer support
 TEST_F(ut_DArrowLineDrawer, testHeaderLineAndResizeEvent)
 {
     DBaseLine *headerLine = drawer->headerLine();
@@ -76,3 +78,4 @@ TEST_F(ut_DArrowLineDrawer, testHeaderLineAndResizeEvent)
 
     ASSERT_TRUE(QTest::qWaitFor([&] { return (drawer->width() == (originWidth + LoopCount)); }));
 }
+#endif
