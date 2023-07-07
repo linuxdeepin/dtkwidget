@@ -31,10 +31,10 @@ DColoredProgressBarPrivate::DColoredProgressBarPrivate(DColoredProgressBar *q)
 }
 
 /*!
-  \class Dtk::Widget::DColoredProgressBar
-  \inmodule dtkwidget
-
-  \brief DColoredProgressBar is the same as QProgressBar, except it can change its appearance depending on the value displayed.
+@~english
+  @class Dtk::Widget::DColoredProgressBar
+  @ingroup dtkwidget
+  @brief DColoredProgressBar is the same as QProgressBar, except it can change its appearance depending on the value displayed.
  */
 DColoredProgressBar::DColoredProgressBar(QWidget *parent)
     : QProgressBar(parent)
@@ -43,11 +43,11 @@ DColoredProgressBar::DColoredProgressBar(QWidget *parent)
 }
 
 /*!
-  \brief DColoredProgressBar::addThreshold adds a new threshold value and specifies the brush to use once that value is reached.
-
+@~english
+  @brief DColoredProgressBar::addThreshold adds a new threshold value and specifies the brush to use once that value is reached.
   If a threshold of the same value already exists, it will be overwritten.
-  \a brush The brush to use when the currently displayed value is no less than and less than the next threshold value.
-  \a threshold Minimum value for this brush to be used.
+  @param[in] brush The brush to use when the currently displayed value is no less than and less than the next threshold value.
+  @param[in] threshold Minimum value for this brush to be used.
  */
 void DColoredProgressBar::addThreshold(int threshold, QBrush brush)
 {
@@ -56,9 +56,9 @@ void DColoredProgressBar::addThreshold(int threshold, QBrush brush)
 }
 
 /*!
-  \brief DColoredProgressBar::removeThreshold removes a threshold.
-
-  \a threshold The threshold value to remove.
+@~english
+  @brief DColoredProgressBar::removeThreshold removes a threshold.
+  @param[in] threshold The threshold value to remove.
  */
 void DColoredProgressBar::removeThreshold(int threshold)
 {
@@ -69,9 +69,9 @@ void DColoredProgressBar::removeThreshold(int threshold)
 }
 
 /*!
-  \brief DColoredProgressBar::threadsholds gets all threshold values.
-
-  \return A list of threshold values.
+@~english
+  @brief DColoredProgressBar::threadsholds gets all threshold values.
+  @return A list of threshold values.
  */
 QList<int> DColoredProgressBar::thresholds() const
 {

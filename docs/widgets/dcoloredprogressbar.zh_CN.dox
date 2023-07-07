@@ -5,6 +5,47 @@
 
 @class Dtk::Widget::DColoredProgressBar
 @brief `DColoredProgressBar`和`QProgressBar`功能差不多一样,只是它可以根据显示的值更改其外观
+@details
+### 示例代码
+#### main.cpp
+```cpp
+#include <DApplication>
+#include <DMainWindow>
+#include <DWidgetUtil>
+#include <DColoredProgressBar>
+#include <QVBoxLayout>
+
+DWIDGET_USE_NAMESPACE
+
+int main(int argc, char *argv[])
+{
+    DApplication a(argc, argv);
+    DMainWindow w;
+    w.setMinimumSize(QSize(400, 200));
+
+    QWidget *progressWidget = new QWidget();
+
+    // 创建动态控件并添加到布局中
+    QVBoxLayout *progressLayout = new QVBoxLayout(progressWidget);
+    DColoredProgressBar *coloredProgressBar = new DColoredProgressBar();
+    coloredProgressBar->setRange(0, 100);
+    coloredProgressBar->setValue(90);
+    coloredProgressBar->addThreshold(30, QBrush(Qt::blue)); // 根据当前值的不同，使用不同的颜色显示进度
+    coloredProgressBar->addThreshold(90, QBrush(Qt::red));
+    progressLayout->addWidget(coloredProgressBar);
+
+    w.setCentralWidget(progressWidget);
+    w.show();
+    Dtk::Widget::moveToCenter(&w);
+
+    return a.exec();
+}
+```
+### demo示例图片
+#### 1. 当进度为 20% , 进度条颜色为蓝色：
+@image html dcoloredprogressbar1.png
+#### 2. 当进度为 90% , 意味着任务快要进行完成 , 进度条颜色为红色：
+@image html dcoloredprogressbar2.png
 
 @fn void DColoredProgressBar::addThreshold(int threshold, QBrush brush)
 @brief `DColoredProgressBar::addThreshold `添加一个新的阈值，并指定达到该值后要使用的画笔。如果一个相同值的阈值已经存在，它将被覆盖。
@@ -17,6 +58,6 @@
 
 @fn QList<int> DColoredProgressBar::thresholds() const
 @brief `DColoredProgressBar::thresholds` 获取所有的thresholds值
-@return  返回一个　threshold值的列表
-
+@return  返回一个 threshold 值的列表
 */
+
