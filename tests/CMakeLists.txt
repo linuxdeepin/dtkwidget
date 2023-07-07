@@ -22,10 +22,12 @@ set(WIDGET_TEST
     #testcases/widgets/ut_danchors.cpp
     testcases/widgets/ut_darrowbutton.cpp
     testcases/widgets/ut_darrowlinedrawer.cpp
-    testcases/widgets/ut_darrowlineexpand.cpp
+    # TODO: Qt6 no longer support 
+    #testcases/widgets/ut_darrowlineexpand.cpp
     testcases/widgets/ut_darrowrectangle.cpp
     testcases/widgets/ut_dbackgroundgroup.cpp
-    testcases/widgets/ut_dbaseexpand.cpp
+    # TODO: Qt6 no longer support
+    #testcases/widgets/ut_dbaseexpand.cpp
     testcases/widgets/ut_dbaseline.cpp
     testcases/widgets/ut_dblureffectwidget.cpp
     testcases/widgets/ut_dboxwidget.cpp
