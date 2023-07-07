@@ -26,23 +26,21 @@ static Qt::TextFormat textFormat = Qt::TextFormat::AutoText;
 }
 
 /*!
-  \brief 设置 tooltip 的文本格式.
-
-  通过给定 \a format , 将 DStyle 内部中的 ToolTip
-  文本格式设置为 \a format 指定的样式。
-
-  \sa Qt::TextFormat
+@~english
+  @brief set the Tooltip text format
+  Set the Tooltip text format inside DStyle to the specified style by setting format.
+  @param[in] format text format
+  @sa Qt::TextFormat
  */
 void DToolTip::setToolTipTextFormat(Qt::TextFormat format)
 {
     DToolTipStatic::textFormat = format;
 }
 /*!
-  \brief 获取 tooltip 文本格式.
-
-  \return 返回 DStyle 内部使用的 ToolTip 文本格式。
-
-  \sa Qt::TextFormat
+@~english
+  @brief get the Tooltip text format
+  @return Tooltip text format used inside DStyle
+  @sa Qt::TextFormat
  */
 Qt::TextFormat DToolTip::toolTipTextFormat()
 {
@@ -50,9 +48,27 @@ Qt::TextFormat DToolTip::toolTipTextFormat()
 }
 
 /*!
+@~english
  * @brief DToolTip::setToolTipShowMode
- * @param widget widget to set ToolTip show mode
- * @param mode ToolTip show mode
+ * @param[in] widget widget to set ToolTip show mode
+ * @param[in] mode ToolTip show mode
+ */
+/*!
+@~english
+  @enum Dtk::Widget::DToolTip::ToolTipShowMode
+  @brief The ToolTipShowMode enum indicate the ToolTip show mode.
+  
+  \value  NotShow
+  Do not display the ToolTip.
+  
+  \value  AlwaysShow
+  Always display the ToolTip.
+
+  \value  ShowWhenElided
+  Display the ToolTip when the text is elided.
+
+  \value  Default
+  Use the default ToolTip show mode.
  */
 void DToolTip::setToolTipShowMode(QWidget *widget, ToolTipShowMode mode)
 {
@@ -60,8 +76,9 @@ void DToolTip::setToolTipShowMode(QWidget *widget, ToolTipShowMode mode)
 }
 
 /*!
+@~english
  * @brief DToolTip::toolTipShowMode
- * @param widget widget to get ToolTip show mode
+ * @param[in] widget widget to get ToolTip show mode
  * @return ToolTip show mode
  */
 DToolTip::ToolTipShowMode DToolTip::toolTipShowMode(const QWidget *widget)
@@ -135,18 +152,18 @@ void DToolTip::setShowToolTip(QWidget *widget, bool showToolTip)
 }
 
 /*!
-  \class Dtk::Widget::DToolTip
-  \inmodule dtkwidget
-  \brief DToolTip类似于 QToolTip 功能的类.
-
-  DToolTip提供了将 DToolTip 显示在指定位置的函数
+@~english
+  @class Dtk::Widget::DToolTip
+  @inmodule dtkwidget
+  @brief like QToolTip
+  @details DToolTip provides a function that displays DTooltip in the specified position.
  */
 
 /*!
-  \brief DToolTip的构造函数.
-
-  \a text 文本信息
-  \a completionClose 提示消息消失后是否销毁
+@~english
+  @brief DToolTip constructor
+  @param[in] text text message
+  @param[in] completionClose Prompt whether the tip is destroyed after disappearing.
  */
 DToolTip::DToolTip(const QString &text, bool completionClose)
     : DTipLabel(text)
@@ -157,9 +174,10 @@ DToolTip::DToolTip(const QString &text, bool completionClose)
 }
 
 /*!
-  \brief DToolTip::sizeHint.
+@~english
+  @brief DToolTip::sizeHint
 
-  \sa QLabel::sizeHint()
+  @sa QLabel::sizeHint()
  */
 QSize DToolTip::sizeHint() const
 {
@@ -172,10 +190,11 @@ QSize DToolTip::sizeHint() const
 }
 
 /*!
-  \brief DToolTip::show设置提示消息出现的位置.
+@~english
+  @brief DToolTip::show set the location where the tip appears
 
-  \a pos 提示消息位置
-  \a duration 提示消息存在时间，单位毫秒
+  @param[in] pos location of tip
+  @param[in] duration tip existence time, unit in millisecond
  */
 void DToolTip::show(const QPoint &pos, int duration)
 {
