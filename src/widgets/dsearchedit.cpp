@@ -13,7 +13,7 @@
 #undef ENABLE_AI
 
 #ifdef ENABLE_AI
-// 讯飞语言相关
+//iFlytek related
 #include "session_interface.h"
 #include "iat_interface.h"
 #endif
@@ -74,7 +74,7 @@ public:
             return false;
         }
 
-        // 清理旧的数据
+        // clear old massage
         m_message.clear();
 
         connect(m_iat, &ComIflytekAiserviceIatInterface::onEnd, this, &VoiceDevice::onEnd);
@@ -156,20 +156,22 @@ private:
 #endif
 
 /*!
+@~english
   \class Dtk::Widget::DSearchEdit
   \inmodule dtkwidget
-  \brief DSearchEdit 类提供了专门用来进行搜索的输入框控件.
+  @brief The DSearchEdit class provides input box widget specifically used for searching
   
-  相比于一般的输入框控件，DSearchEdit 提供了搜索按钮指示，用户使用起来会更加自然。
-  如图示：
-  \image html searchedit.png
-  
-  \warning DSearchEdit 与 QLineEdit、DLineEdit 没有继承关系，功能不兼容。
+  @details The DSearchEdit class inherits from the DLineEdit class.
+  Compared to regular input box widgets, DSearchEdit provides search button instructions，thus users can use it more naturally.
+  As shown in the figure：
+
+  @image html ../images/DSearchEdit.png
  */
 
 /*!
-  \brief DSearchEdit::DSearchEdit 是 DSearchEdit 类的构造函数.
-  \a parent 指定了控件的父控件。
+@~english
+  @brief DSearchEdit constructor
+  @param[in] parent is the parent widget。
  */
 DSearchEdit::DSearchEdit(QWidget *parent)
     : DLineEdit(*new DSearchEditPrivate(this), parent)
@@ -179,7 +181,7 @@ DSearchEdit::DSearchEdit(QWidget *parent)
     d->init();
     setSpeechToTextEnabled(false);
 
-    //平板模式下屏蔽搜索框右键菜单
+    //hide the right-click menu for searching box in tablet environment
     if (DGuiApplicationHelper::isTabletEnvironment()) {
         d->lineEdit->setContextMenuPolicy(Qt::NoContextMenu);
     }
@@ -191,8 +193,8 @@ DSearchEdit::~DSearchEdit()
 }
 
 /*!
-  \brief DSearchEdit::setPlaceHolder 设置灰色的占位符文本
-  \a placeHolder 占位符文本内容
+  @brief set gray placeholder text
+  @param[in] placeHolder is the content of placeholder text
  */
 void DSearchEdit::setPlaceHolder(QString placeHolder)
 {
@@ -204,8 +206,9 @@ void DSearchEdit::setPlaceHolder(QString placeHolder)
 }
 
 /*!
-  \brief DSearchEdit::placeHolder
-  \return 返回占位符文本内容
+@~english
+  @brief return the placeholder text
+  @return placeholder text content
  */
 QString DSearchEdit::placeHolder() const
 {
@@ -220,7 +223,8 @@ void DSearchEdit::clear()
 }
 
 /*!
-  \brief DSearchEdit::clearEdit 清除内容，退出编辑状态
+@~english
+  @brief clear the input and exit editing status
  */
 void DSearchEdit::clearEdit()
 {
@@ -332,7 +336,7 @@ void DSearchEditPrivate::init()
         for (int i = 0; i < list.count(); i++) {
             if (list.at(i)->defaultAction() == clearAction) {
                 QToolButton *clearBtn = list.at(i);
-                //屏蔽lineedit清除按钮的槽函数,_q_clearFocus()获得有效的判断条件
+                //Block the private slots of the lineedit clear button,_q_clearFocus() gains effective jugding condition
                 q->disconnect(clearBtn, SIGNAL(clicked()), q->lineEdit(), nullptr);
                 q->connect(clearBtn, SIGNAL(clicked()), q, SLOT(_q_clearFocus()));
             }
@@ -347,12 +351,12 @@ void DSearchEditPrivate::init()
     lineEdit->addAction(voiceAction, QLineEdit::TrailingPosition);
 
     q->connect(voiceAction, SIGNAL(triggered(bool)), q, SLOT(_q_onVoiceActionTrigger(bool)));
-    // 语音输入按钮
+    // voice input button
     QDBusInterface testSpeechToText("com.iflytek.aiassistant",
                                "/aiassistant/iat",
                                "com.iflytek.aiassistant.iat",
                                QDBusConnection::sessionBus());
-    // 测试听写接口是否开启
+    // test whether the dictation interface is enabled
     QDBusPendingCall call = testSpeechToText.asyncCall("getIatEnable");
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, q);
     QObject::connect(watcher, &QDBusPendingCallWatcher::finished, q, [this](QDBusPendingCallWatcher *pWatcher) {
@@ -382,7 +386,7 @@ void DSearchEditPrivate::_q_toEditMode(bool focus)
     }
 
 #ifdef ENABLE_AI
-    //焦点消失，清除语音check
+    //Focus disappears, clear voice check
     if (voiceAction) {
         voiceAction->setChecked(false);
         _q_onVoiceActionTrigger(false);
@@ -414,7 +418,7 @@ void DSearchEditPrivate::_q_onVoiceActionTrigger(bool checked)
             }, Qt::QueuedConnection);
 
             q->connect(voiceIODevice, &VoiceDevice::finished, q, [q, this] {
-                // 自动结束录制
+                // end the recording automatically
                 voiceAction->setChecked(false);
                 _q_onVoiceActionTrigger(false);
                 Q_EMIT q->voiceInputFinished();

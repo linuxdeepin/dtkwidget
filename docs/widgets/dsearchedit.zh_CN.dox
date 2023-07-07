@@ -2,11 +2,27 @@
 @~chinese
 @file dsearchedit.h
 @ingroup edit
-@class
-@brief
-@details
+@class Dtk::Widget::DSearchEdit
+@brief DSearchEdit 类提供了专门用来进行搜索的输入框控件.
+@details DSearchEdit类 继承自 DLineEdit类, 相比于一般的输入框控件, DSearchEdit 提供了搜索按钮指示，用户使用起来会更加自然。
+如图示：
 
-TODO: 添加类简介、示例代码、示例截图和函数使用说明等
+@image html ../images/DSearchEdit.png
 
+@fn DSearchEdit::DSearchEdit(QWidget *parent)
+@brief DSearchEdit 类的构造函数.
+@param[in] parent 父控件。
+
+@fn void DSearchEdit::setPlaceHolder(QString placeHolder)
+@brief 设置灰色的占位符文本
+@param[in] placeHolder 占位符文本内容
+
+@fn QString DSearchEdit::placeHolder() const
+@brief 返回占位符文本
+@return 占位符文本内容
+
+@fn void DSearchEdit::clearEdit()
+@brief 清除内容，退出编辑状态
 
 */
+
