@@ -23,8 +23,9 @@ DFramePrivate::DFramePrivate(DFrame *qq)
 }
 
 /*!
-  \brief DFrame::DFrame 用于其他需要边框的widget的基类
-  \a parent
+@~english
+  @brief DFrame::DFrame is used for other widget base class that require frame
+  @param[in] parent
  */
 DFrame::DFrame(QWidget *parent)
     : DFrame(*new DFramePrivate(this), parent)
@@ -33,8 +34,9 @@ DFrame::DFrame(QWidget *parent)
 }
 
 /*!
-  \brief DFrame::setFrameRounded设置边框圆角是否开启
-  \a on true开启　false关闭
+@~english
+  @brief DFrame::setFrameRounded sets whether the frame corners are rounded
+  @param[in] on True means the corners will be rounded, while False means not
  */
 void DFrame::setFrameRounded(bool on)
 {
@@ -48,8 +50,9 @@ void DFrame::setFrameRounded(bool on)
 }
 
 /*!
-  \brief DFrame::setBackgroundRole　设置边框背景画刷的角色类型
-  \a type 背景画刷的角色类型
+@~english
+  @brief DFrame::setBackgroundRole sets role type of the frame background brush
+  @param[in] type role type of the frame background brush
  */
 void DFrame::setBackgroundRole(DGUI_NAMESPACE::DPalette::ColorType type)
 {

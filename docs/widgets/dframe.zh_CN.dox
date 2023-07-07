@@ -2,11 +2,25 @@
 @~chinese
 @file dframe.h
 @ingroup layout
-@class
-@brief
-@details
+@class Dtk::Widget::DFrame
+@brief 继承自QFrame类, 支持设置边框圆角，背景画刷功能
+@details 
 
-TODO: 添加类简介、示例代码、示例截图和函数使用说明等
+@image html ../images/DFrame.png
 
+@fn DFrame::DFrame(QWidget *parent)
+@brief 用于其他需要边框的控件基类
+@param[in] parent
+
+@fn void DFrame::setFrameRounded(bool on)
+@brief 设置边框圆角是否开启
+@param[in] on True表示开启边框圆角,False表示关闭
+
+@fn void DFrame::setBackgroundRole(DGUI_NAMESPACE::DPalette::ColorType type)
+@brief 设置边框背景画刷的种类
+@param[in] type 背景画刷的种类
+
+@fn void DFrame::paintEvent(QPaintEvent *event)
 
 */
+
