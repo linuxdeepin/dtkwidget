@@ -2,11 +2,91 @@
 @~chinese
 @file dtooltip.h
 @ingroup tooltip
-@class
-@brief
-@details
+@class Dtk::Widget::DToolTip
+@brief 类似于 QToolTip 功能的类
+@details 用于在指定位置显示工具提示信息
 
-TODO: 添加类简介、示例代码、示例截图和函数使用说明等
+### 示例代码
+#### main.cpp
+```cpp
+#include <QVBoxLayout>
+#include <DApplication>
+#include <DMainWindow>
+#include <DToolTip>
 
+DWIDGET_USE_NAMESPACE
+
+int main(int argc, char *argv[])
+{
+    DApplication app(argc, argv);
+    DMainWindow window;
+    window.setMinimumSize(QSize(300, 200));
+
+    QWidget *centralWidget = new QWidget(&window);
+    QVBoxLayout *layout = new QVBoxLayout(centralWidget);
+
+    QString Content = "<em><strong><u>这是一条提示消息"; // 设置提示信息文本，<em>斜体，<strong>加粗，<u>下划线，可根据所需添加
+    DToolTip *tool = new DToolTip(Content, false); // bool completionClose 提示消息消失后是否销毁
+    tool->setToolTipTextFormat(Qt::PlainText); // 设置纯文本格式，如有<html>等需求可以选择RichText等格式
+    tool->setToolTipShowMode(tool,DToolTip::Default); // 设置显示模式
+    QPoint pos(200,200);
+    tool->show(pos,5000); // 设置提示消息出现的位置与时间
+    layout->addWidget(tool);
+
+    window.setCentralWidget(centralWidget);
+    window.show();
+
+    return app.exec();
+}
+```
+@image html DToolTip_example.png
+
+@fn void DToolTip::setToolTipTextFormat(Qt::TextFormat format)
+@brief 设置 ToolTip 的文本格式
+通过给定参数 format , 将 DStyle 内部中的 ToolTip 文本格式设置为指定的样式
+@param[in] format 文本格式
+@sa Qt::TextFormat
+
+@fn Qt::TextFormat DToolTip::toolTipTextFormat()
+@brief 获取 ToolTip 文本格式
+@return 返回 DStyle 内部使用的 ToolTip 文本格式
+@sa Qt::TextFormat
+
+@fn void DToolTip::setToolTipShowMode(QWidget *widget, ToolTipShowMode mode)
+@brief 设置 ToolTip 显示模式
+@param[in] widget 获取 ToolTip 显示模式的控件
+@param[in] mode ToolTip 显示模式
+
+@enum Dtk::Widget::DToolTip::ToolTipShowMode
+@brief ToolTipShowMode 枚举指示 ToolTip 的显示模式
+@var Dtk::Widget::DToolTip::ToolTipShowMode Dtk::Widget::DToolTip::NotShow
+@brief 不显示模式，工具提示将不会显示
+@var Dtk::Widget::DToolTip::ToolTipShowMode Dtk::Widget::DToolTip::AlwaysShow
+@brief 始终显示模式，工具提示将始终显示在相关的控件上
+@var Dtk::Widget::DToolTip::ToolTipShowMode Dtk::Widget::DToolTip::ShowWhenElided
+@brief 省略时显示模式，只有当文本内容被省略时，工具提示才会显示为完整的文本内容
+@var Dtk::Widget::DToolTip::ToolTipShowMode Dtk::Widget::DToolTip::Default
+@brief 默认模式
+
+@fn DToolTip::ToolTipShowMode DToolTip::toolTipShowMode(const QWidget *widget)
+@brief 获取 ToolTip 显示模式
+@param[in] widget 获取 ToolTip 显示模式的控件
+@return ToolTip 显示模式
+
+@fn DToolTip::DToolTip(const QString &text, bool completionClose)
+@brief DToolTip的构造函数
+@param[in] text 文本信息
+@param[in] completionClose 提示消息消失后是否销毁
+
+@fn QSize DToolTip::sizeHint() const
+@brief 获取 ToolTip 控件的推荐大小
+@return ToolTip 控件的推荐大小
+@sa QLabel::sizeHint()
+
+@fn void DToolTip::show(const QPoint &pos, int duration)
+@brief 设置提示消息出现的位置
+@param[in] pos 提示消息位置
+@param[in] duration 提示消息存在时间，单位毫秒
 
 */
+
