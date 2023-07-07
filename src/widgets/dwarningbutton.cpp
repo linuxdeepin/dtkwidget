@@ -12,25 +12,28 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
-  \class Dtk::Widget::DWarningButton
+@~english
+  @class Dtk::Widget::DWarningButton
   \inmodule dtkwidget
-  \brief 警告按钮控件, 继承于 DPushButton 控件, 主要替换了文字和背景的颜色.
-
-  \note 通常在执行一些比较危险的动作时候, 给出的一个提醒标识, 但是并不强制阻止; 如: 某些小程序需要较高的权限才能够运行; 删除文件不可恢复等
-  \sa QPushButton
+  @brief warning button widget
+  @details inherits from DPushButton widget, mainly replacing the color of text and background.
+  @note Usually gives a warning sign when executing some dangerous commands but not forbid it; For example: some programs require higher permission to run; files connot be restored after delete
+  @sa QPushButton
  */
 
 /*!
-  \brief 构造函数
-  \a parent 本控件的父对象
+@~english
+  @brief constructor
+  @param[in] parent is the parent object of this widget
  */
 DWarningButton::DWarningButton(QWidget *parent): DPushButton(parent)
 {
 }
 
 /*!
-  \brief 初始化风格属性
-  \a option 用来初始化本控件的基础的风格属性
+@~english
+  @brief initialize the style option
+  @param[in] option is the style option used to initialize this widget
  */
 void DWarningButton::initStyleOption(QStyleOptionButton *option) const
 {
