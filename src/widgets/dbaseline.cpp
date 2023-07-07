@@ -8,18 +8,16 @@
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
-    \class Dtk::Widget::DBaseLine
-    \inmodule dtkwidget
+@~english
+    @class Dtk::Widget::DBaseLine
+    @ingroup dtkwidget
 
-    \brief 可以使用 DBaseLine 类快速创建具有位于左右两侧的两个控件的行控件.
-    \brief Use DBaseLine to create a widget for display inline widget.
-
-    DBaseLine 提供一个固定高度的控件，包含分别位于左侧和右侧的两个可供显示的控件。
-    DBaseLine 可用于构建固定行高并需要自定义左右控件的控件，比如上方导航栏等。如 DHeaderLine 即使用 DBaseLine
-    构建了一个带有文字标题和可选内容控件的控件。
-    DBaseLine provide a fixed height inline widget with two widgets for displaying related stuff.
-
-    \sa DHeaderLine
+    @brief Use the DBaseLine class to quickly create a row widget with two controls positioned on the left and right sides.
+The DBaseLine class provides a fixed-height widget that contains two displayable controls positioned on the left and 
+right sides, respectively. DBaseLine can be used to build widgets with a fixed row height and custom left and right 
+controls, such as a top navigation bar.For example, DHeaderLine utilizes DBaseLine to construct a widget with a text 
+title and an optional content control.
+    @sa DHeaderLine
 */
 
 DBaseLine::DBaseLine(QWidget *parent) : QLabel(parent)
@@ -42,8 +40,9 @@ DBaseLine::DBaseLine(QWidget *parent) : QLabel(parent)
 }
 
 /*!
-  \brief set left \a content widget
-  \brief 设置左侧内容控件
+@~english
+  @brief set left widget
+  @param[in] content widget
  */
 void DBaseLine::setLeftContent(QWidget *content)
 {
@@ -56,8 +55,9 @@ void DBaseLine::setLeftContent(QWidget *content)
 }
 
 /*!
-  \brief set right \a content widget
-  \brief 设置右侧内容控件
+@~english
+  @brief set right widget
+  @param[in] content widget
  */
 void DBaseLine::setRightContent(QWidget *content)
 {
@@ -70,8 +70,8 @@ void DBaseLine::setRightContent(QWidget *content)
 }
 
 /*!
-  \brief get left layout
-  \brief 获取左侧 QBoxLayout
+@~english
+  @brief get left layout
  */
 QBoxLayout *DBaseLine::leftLayout()
 {
@@ -79,8 +79,8 @@ QBoxLayout *DBaseLine::leftLayout()
 }
 
 /*!
-  \brief get right layout
-  \brief 获取右侧 QBoxLayout
+@~english
+  @brief get right layout
  */
 QBoxLayout *DBaseLine::rightLayout()
 {
@@ -88,8 +88,9 @@ QBoxLayout *DBaseLine::rightLayout()
 }
 
 /*!
-  \brief set left margin
-  \brief 设置左侧外补 \a margin 边距
+@~english
+  @brief set left margin
+  @param[in] margin the length of margin
  */
 void DBaseLine::setLeftMargin(int margin)
 {
@@ -98,8 +99,9 @@ void DBaseLine::setLeftMargin(int margin)
 }
 
 /*!
-  \brief set right margin
-  \brief 设置右侧外补 \a margin 边距
+@~english
+  @brief set right margin
+  @param[in] margin the length of margin
  */
 void DBaseLine::setRightMargin(int margin)
 {
@@ -108,8 +110,8 @@ void DBaseLine::setRightMargin(int margin)
 }
 
 /*!
-  \brief get left margin
-  \brief 获取左侧外边距
+@~english
+  @brief get left margin
  */
 int DBaseLine::leftMargin() const
 {
@@ -117,8 +119,8 @@ int DBaseLine::leftMargin() const
 }
 
 /*!
-  \brief get right margin
-  \brief 右侧外侧外边距
+@~english
+  @brief get right margin
  */
 int DBaseLine::rightMargin() const
 {

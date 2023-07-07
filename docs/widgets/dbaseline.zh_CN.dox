@@ -1,0 +1,90 @@
+/*!
+@~chinese
+@file dbaseline.h
+@ingroup dtkwidget
+
+@class Dtk::Widget::DBaseLine
+@brief 可以使用 DBaseLine 类快速创建具有位于左右两侧的两个控件的行控件.
+@details
+##示例1
+#### DHeaderLine控件
+DBaseLine 提供一个固定高度的控件，包含分别位于左侧和右侧的两个可供显示的控件。
+可用于构建固定行高并需要自定义左右控件的控件，比如上方导航栏等。如 DHeaderLine 即使用 DBaseLine
+构建了一个带有文字标题和可选内容控件的控件：
+@image html DHeaderLine.png
+@sa DHeaderLine
+##示例2
+### 示例代码
+#### main.cpp
+```cpp
+#include <DApplication>
+#include <DBaseLine>
+#include <QLabel>
+
+DWIDGET_USE_NAMESPACE
+
+int main(int argc, char *argv[])
+{
+    DApplication app(argc, argv);
+
+    // 创建主窗口
+    QWidget mainWindow;
+    mainWindow.setWindowTitle("DBaseLine Example");
+
+    // 创建DBaseLine控件
+    DBaseLine baseLine(&mainWindow);
+
+    // 创建左侧控件
+    QLabel *leftLabel = new QLabel("Left Widget");
+    baseLine.setLeftContent(leftLabel);
+
+    // 创建右侧控件
+    QLabel *rightLabel = new QLabel("Right Widget");
+    baseLine.setRightContent(rightLabel);
+
+    // 设置外边距
+    baseLine.setLeftMargin(10);
+    baseLine.setRightMargin(10);
+
+    // 将DBaseLine添加到主窗口
+    QVBoxLayout *layout = new QVBoxLayout(&mainWindow);
+    layout->addWidget(&baseLine);
+
+    mainWindow.show();
+
+    return app.exec();
+}
+```
+### 示例图片
+@image html dbaseline.png
+
+@fn void DBaseLine::setLeftContent(QWidget *content)
+@param[in] content 控件
+@brief 设置左侧内容控件
+
+@fn void DBaseLine::setRightContent(QWidget *content)
+@param[in] content 控件
+@brief 设置右侧内容控件
+
+@fn QBoxLayout *DBaseLine::leftLayout()
+@brief 获取左侧 QBoxLayout
+
+@fn QBoxLayout *DBaseLine::rightLayout()
+@brief 获取右侧 QBoxLayout
+
+@fn void DBaseLine::setLeftMargin(int margin)
+@brief 设置左侧外边距
+@param[in] margin 边距
+
+@fn void DBaseLine::setRightMargin(int margin)
+@brief 设置右侧外边距
+@param[in] margin 边距
+
+@fn int DBaseLine::leftMargin() const
+@brief 获取左侧外边距
+
+@fn int DBaseLine::rightMargin() const
+@brief 右侧外侧外边距
+*/
+
+
