@@ -11,5 +11,4 @@ concurrency:
 jobs:
   check_job:
     uses: linuxdeepin/.github/.github/workflows/doc-check.yml@master
-    secrets:
-      APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
+    secrets: inherit
