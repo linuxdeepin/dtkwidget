@@ -9,11 +9,24 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+/*!
+@~english
+    @class Dtk::Widget::DToolButton
+    @brief Inherited from the QToolButton class, used to customize tool buttons.
+ */
+
 DToolButton::DToolButton(QWidget *parent)
     : QToolButton(parent)
 {
 
 }
+
+/*!
+@~english
+    @fn void DToolButton::paintEvent(QPaintEvent *event)
+    @brief This method overrides the paintEvent method of QToolButton to draw a custom appearance for the tool button.
+    @param event The paint event, which is not used.
+ */
 
 void DToolButton::paintEvent(QPaintEvent *event)
 {
@@ -24,10 +37,23 @@ void DToolButton::paintEvent(QPaintEvent *event)
     p.drawComplexControl(QStyle::CC_ToolButton, opt);
 }
 
+/*!
+@~english
+    @fn void DToolButton::initStyleOption(QStyleOptionToolButton *option) const
+    @brief Initializes the style options for the tool button.
+    @param option A pointer to a QStyleOptionToolButton object, used to specify style options.
+ */
 void DToolButton::initStyleOption(QStyleOptionToolButton *option) const
 {
     QToolButton::initStyleOption(option);
 }
+
+/*!
+@~english
+    @fn QSize DToolButton::sizeHint() const
+    @brief Gets the size hint for the tool button.
+    @return The size hint for the tool button, of type QSize.
+ */
 
 QSize DToolButton::sizeHint() const
 {
@@ -35,8 +61,10 @@ QSize DToolButton::sizeHint() const
 }
 
 /*!
-  \brief DToolButton::setAlignment 设置DToolButton的对齐方式
-  \a flag Qt::AlignCenter居中对齐　Qt::AlignLeft左对齐　Qt::AlignRight右对齐
+@~english
+    @fn void DToolButton::setAlignment(Qt::Alignment flag)
+    @brief DToolButton:: setAlignment set the alignment of DToolButton
+    @a flag alignment mode
  */
 void DToolButton::setAlignment(Qt::Alignment flag)
 {
@@ -44,8 +72,10 @@ void DToolButton::setAlignment(Qt::Alignment flag)
 }
 
 /*!
-  \brief DToolButton::alignment 返回DToolButton当前的对齐方式
-  \return 如果setAlignment设置成功则返回当前对齐方式，否则返回Qt::AlignLeft
+@~english
+    @fn Qt::Alignment DToolButton::alignment() const
+    @brief DToolButton:: alignment returns the current alignment of DToolButton
+    @return If setAlignment is successfully set, the current alignment is returned; otherwise, Qt:: AlignLeft is returned
  */
 Qt::Alignment DToolButton::alignment() const
 {
