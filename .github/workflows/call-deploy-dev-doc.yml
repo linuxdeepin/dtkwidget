@@ -23,5 +23,4 @@ jobs:
     uses: linuxdeepin/.github/.github/workflows/deploy-dev-doc.yml@master
     with:
       ref: ${{ inputs.tag }}
-    secrets:
-      APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
+    secrets: inherit
