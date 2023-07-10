@@ -2,11 +2,32 @@
 @~chinese
 @file dtoolbutton.h
 @ingroup button
-@class
-@brief
+@class Dtk::Widget::DToolButton
+@brief 继承自QToolButton类，用于自定义工具按钮。
 @details
 
-TODO: 添加类简介、示例代码、示例截图和函数使用说明等
+### demo示例图片
+@image html ../images/DToolButton.png
 
+@fn void DToolButton::paintEvent(QPaintEvent *event)
+@brief 重写QToolButton的paintEvent方法，用于绘制自定义的工具按钮外观。
+@param event 绘制事件，未使用。
+
+@fn void DToolButton::initStyleOption(QStyleOptionToolButton *option) const
+@brief 初始化工具按钮的样式选项。
+@param option QStyleOptionToolButton类型指针，用于指定样式选项。
+
+@fn QSize DToolButton::sizeHint() const
+@brief 推荐合适的工具按钮大小。
+@return 工具按钮的大小提示，类型为QSize。
+
+@fn void DToolButton::setAlignment(Qt::Alignment flag)
+@brief DToolButton::setAlignment 设置DToolButton的对齐方式
+@a flag 对齐方式
+
+@fn Qt::Alignment DToolButton::alignment() const
+@brief DToolButton::alignment 返回DToolButton当前的对齐方式
+@return 如果setAlignment设置成功则返回当前对齐方式，否则返回Qt::AlignLeft
 
 */
+
