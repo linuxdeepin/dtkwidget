@@ -2,11 +2,134 @@
 @~chinese
 @file dcrumbedit.h
 @ingroup edit
-@class
-@brief
-@details
+@class Dtk::Widget::DCrumbTextFormat
+@brief 表示标签输入控件 DCrumbEdit类 所含标签的文字样式.
+@details DCrumbTextFormat 包含了表示标签输入控件 DCrumbEdit类 内所包含的标签的各种样式属性。
+文字属性 text 是能唯一标识和确定一个标签的重要属性, 其他可用的属性包含标签背景颜色，标签文字颜色以及标签圆角半径大小等也可供使用。
+通常情况下，建议通过 DCrumbEdit::makeTextFormat() 来构造一个可供使用的 DCrumbTextFormat 对象。若希望自行构造，请留意使用 DCrumbTextFormat::setObjectType 来设置必要的对象类型 (通常应为 `QTextFormat::UserObject + 1`).
 
-TODO: 添加类简介、示例代码、示例截图和函数使用说明等
+@sa Dtk::Widget::DCrumbEdit
 
+@fn QColor DCrumbTextFormat::tagColor() const
+@brief DCrumbTextFormat::tagColor
+@return 返回标签的颜色
+
+@fn void DCrumbTextFormat::setTagColor(const QColor &color)
+@brief DCrumbTextFormat::setTagColor 设置标签颜色
+@param[in] color 标签的颜色
+
+@fn QString DCrumbTextFormat::text() const
+@brief DCrumbTextFormat::text
+@return 返回标签的文本内容
+
+@fn void DCrumbTextFormat::setText(const QString &text)
+@brief DCrumbTextFormat::setText 设置文本内容（标签名称）
+@param[in] text 文本内容
+
+@fn QColor DCrumbTextFormat::textColor() const
+@brief DCrumbTextFormat::textColor
+@return 返回文本的颜色
+
+@fn void DCrumbTextFormat::setTextColor(const QColor &color)
+@brief DCrumbTextFormat::setTextColor 设置文本颜色
+@param[in] color 文本的颜色
+
+@fn QBrush DCrumbTextFormat::background() const
+@brief DCrumbTextFormat::background
+@return 返回背景画刷
+
+@fn void DCrumbTextFormat::setBackground(const QBrush &background)
+@brief DCrumbTextFormat::setBackground 设置背景
+@param[in] background 背景画刷
+
+@fn int DCrumbTextFormat::backgroundRadius() const
+@brief DCrumbTextFormat::backgroundRadius
+@return 返回背景的圆角
+
+@fn void DCrumbTextFormat::setBackgroundRadius(int radius)
+@brief DCrumbTextFormat::setBackgroundRadius 设置背景圆角程度
+@param[in] radius 圆角的大小
 
 */
+
+/*!
+@~chinese
+@file dcrumbedit.h
+@ingroup edit
+@class Dtk::Widget::DCrumbEdit
+@brief 标签输入控件.
+@details DCrumbEdit 提供了一个编辑框，编辑框内可包含若干个标签，并允许通过用户输入来编辑这些标签。
+编辑框所包含的标签由标签的文字内容唯一确定，即编辑框所包含的标签内容（字符串值）均不重复。
+
+编辑框中包含的标签的主体为字符串，除文字外，每个标签可以对应其不同的颜色等样式，对于可供使用的样式请参见 DCrumbTextFormat类 。
+DCrumbEdit 允许通过给定字符串的形式便捷的向其中添加一个默认样式的标签，也可以通过自行构建标签文字样式。请参见 insertCrumb() 和 appendCrumb() 的不同重载。
+可以通过 crumbList() 获得当前标签输入控件中包含的标签列表。
+
+@image html DCrumbEdit.png
+
+@sa Dtk::Widget::DCrumbTextFormat
+
+@fn bool DCrumbEdit::insertCrumb(const DCrumbTextFormat &format, int pos)
+@brief 凭 DCrumbTextFormat类 对象向标签编辑控件中插入新的标签
+@param[in] format 一个 DCrumbTextFormat类 的对象.
+@param[in] pos 待插入的位置.
+根据给定的 DCrumbTextFormat 对象所描述的属性创建新的标签并追加到标签编辑控件中。若要创建一个直接可供使用的 DCrumbTextFormat对象, 可以考虑使用 makeTextFormat() 。
+@return 插入标签成功时返回 true, 否则返回 false.
+@sa DCrumbEdit::makeTextFormat()
+
+@fn bool DCrumbEdit::appendCrumb(const DCrumbTextFormat &format)
+@brief 凭 DCrumbTextFormat类 对象向标签编辑控件中追加新的标签
+@param[in] format 一个 DCrumbTextFormat类 的对象.
+通过给定的 DCrumbTextFormat 对象所描述的属性创建新的标签并追加到标签编辑控件中。若要创建一个直接可供使用的 DCrumbTextFormat对象, 可以考虑使用 makeTextFormat() 。
+@return 插入标签成功时返回 true, 否则返回 false.
+@sa DCrumbEdit::makeTextFormat()
+
+@fn bool DCrumbEdit::insertCrumb(const QString &text, int pos)
+@brief 凭文字属性内容向标签编辑控件中插入新的标签
+@param[in] text 标签的文字内容.
+@param[in] pos 待插入的位置.
+通过给定的文字创建新的标签并插入到标签编辑控件中的指定位置。
+@return 插入标签成功时返回 true, 否则返回 false.
+@sa appendCrumb()
+
+@fn bool DCrumbEdit::appendCrumb(const QString &text)
+@brief 凭文字属性内容向标签编辑控件中追加新的标签
+@param[in] text 标签的文字内容.
+通过给定的文字创建新的标签并追加到标签编辑控件中。
+@return 插入标签成功时返回 true, 否则返回 false.
+@sa insertCrumb()
+
+@fn bool DCrumbEdit::containCrumb(const QString &text) const
+@brief 检查当前控件是否已经包含了 文字名称为 text 的标签
+@param[in] text 待检查的标签文字名称
+@return 如果包含，返回 true, 否则返回 false
+
+QStringList DCrumbEdit::crumbList() const
+@brief 取得标签输入控件内已包含的标签列表
+
+DCrumbTextFormat DCrumbEdit::crumbTextFormat(const QString &text) const
+@brief 根据标签名称取得对应的标签样式属性 DCrumbTextFormat 对象
+
+DCrumbTextFormat DCrumbEdit::makeTextFormat() const
+@brief 创建一个直接可用的 DCrumbTextFormat 对象.
+@return 创建的 DCrumbTextFormat 对象
+
+DCrumbTextFormat DCrumbEdit::makeTextFormat(DCrumbEdit::CrumbType type) const
+@brief 根据所给的标签类型（颜色）创建一个直接可用的 DCrumbTextFormat 对象.
+将根据所给的（颜色）类型创建一个新的 DCrumbTextFormat 对象，并将其内文字属性设为颜色的名称。
+@return 创建的 DCrumbTextFormat 对象
+
+void DCrumbEdit::setCrumbReadOnly(bool crumbReadOnly)
+@brief 设置或取消设置标签编辑控件的只读状态
+@param[in] crumbReadOnly 是否只读.
+
+void DCrumbEdit::setCrumbRadius(int crumbRadius)
+@brief 设置控件圆角半径大小
+@param[in] crumbRadius 圆角半径大小.
+
+void DCrumbEdit::setSplitter(const QString &splitter)
+@brief 设置分割符
+设置表示划分标签边界的分割字符，可用于一次性输入多个以给定分隔符分割的标签。
+@param[in] splitter 分割线字符.
+*/
+
