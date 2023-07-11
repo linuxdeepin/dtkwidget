@@ -1,0 +1,130 @@
+/*!
+@~chinese
+@file dcircleprogress.h
+@ingroup dtkwidget
+
+@class Dtk::Widget::DCircleProgress
+@brief 可以使用 DCircleProgress 类快速创建环形进度条控件.
+DCircleProgress 提供了一个可控制颜色并可以包含文字显示的环形进度条控件。可以快速创建底色为 backgroundColor，
+进度颜色为 chunkColor 的环形进度条。
+@details
+### 示例代码
+#### main.cpp
+```cpp
+#include <DApplication>
+#include <DMainWindow>
+#include <DWidgetUtil>
+#include <QVBoxLayout>
+#include "dcircleprogress.h"
+#include <QTimer>
+
+DWIDGET_USE_NAMESPACE
+
+int main(int argc, char *argv[])
+{
+    DApplication a(argc, argv);
+    DMainWindow w;
+    w.setMinimumSize(QSize(400, 400));
+
+    DCircleProgress *circleProgress = new DCircleProgress();
+    QTimer *timer = new QTimer();
+    int progress = 0;  // 初始进度为0%
+    QObject::connect(timer, &QTimer::timeout, [&]() {
+        progress += 1;
+        circleProgress->setValue(progress);
+        if (progress >= 100) {
+            timer->stop();
+        }
+    });
+    timer->start(100); // 启动定时器
+    timer->setInterval(100);  // 设置定时器的超时时间，每 100 ms 增加一点进度
+    // 链接valueChanged信号，使text值随value值而改变
+    QObject::connect(circleProgress, &DCircleProgress::valueChanged, circleProgress, [&](int value) {
+        circleProgress->setText(QString::number(value) + "%");
+    });
+
+    circleProgress->setBackgroundColor(Qt::white);
+    circleProgress->setChunkColor(Qt::blue);
+    circleProgress->setLineWidth(10);
+
+    QVBoxLayout *layout = new QVBoxLayout();
+    layout->addWidget(circleProgress);
+
+    QWidget *mainWidget = new QWidget();
+    mainWidget->setLayout(layout);
+    w.setCentralWidget(mainWidget);
+
+    w.show();
+    Dtk::Widget::moveToCenter(&w);
+
+    return a.exec();
+}
+```
+### demo示例图片
+@image html dcircleprogress.png
+
+@fn int DCircleProgress::value() const
+@brief 环形进度条的进度值。 最大值为 100 ，最小值为 0 。
+@sa setValue()
+
+@fn void DCircleProgress::setValue(int value)
+@brief 设置环形进度条的进度值。
+  最大值为 100 ，最小值为 0 。将根据该值和最大值（100）的比例关系绘制进度。
+@sa value()
+
+@fn const QString DCircleProgress::text() const
+@brief 环形进度条旁边的文字。
+
+@fn void DCircleProgress::setText(const QString &text)
+@brief 设置环形进度条旁边的文字
+@param[in] text 环形进度条旁边的文字
+
+@fn void DCircleProgress::setBackgroundColor(const QColor &color)
+@param[in] color 环形进度条的背景色
+@brief 设置环形进度条的背景色。
+@sa backgroundColor()
+
+@fn const QColor DCircleProgress::chunkColor() const
+@brief 环形进度条的前景色，用以标识进度。
+@sa setChunkColor()
+
+@fn void DCircleProgress::setChunkColor(const QColor &color)
+@param[in] color 环形进度条的前景色
+@brief 设置用以标识进度环形进度条的前景色。
+@sa chunkColor()
+
+@fn int DCircleProgress::lineWidth() const
+@brief 环形进度条的环形宽度。
+@sa setLineWidth()
+
+@fn void DCircleProgress::setLineWidth(const int width)
+@param[in] width 环形进度条的环形宽度
+@brief 设置环形进度条的环形宽度。
+@sa setLineWidth()
+
+@fn QLabel *DCircleProgress::topLabel()
+@brief DCircleProgress::topLabel
+@return 返回环形进度条顶部文字Label
+
+@fn QLabel *DCircleProgress::bottomLabel()
+@brief DCircleProgress::bottomLabel
+@return 返回环形进度条底部文字Label
+*/
+
+/*!
+@~chinese
+@fn void Dtk::Widget::DCircleProgress::clicked()
+  该信号将会在用户点击 DCircleProgress 控件时发出。
+*/
+
+/*!
+@~chinese
+@fn void Dtk::Widget::DCircleProgress::mouseEntered()
+  该信号将会在用户的鼠标指针移入 DCircleProgress 控件时发出。
+*/
+
+/*!
+@~chinese
+@fn void Dtk::Widget::DCircleProgress::mouseLeaved()
+  该信号将会在用户的鼠标指针离开 DCircleProgress 控件时发出。
+*/
