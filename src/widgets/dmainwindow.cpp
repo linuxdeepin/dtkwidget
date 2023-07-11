@@ -711,7 +711,7 @@ void DMainWindow::setEnableSystemMove(bool enableSystemMove)
 
 /*!
   \brief DMainWindow::setEnableBlurWindow　设置窗口模糊效果
-  \~shinese 开启此功能请设置setAttribute(Qt::WA_TranslucentBackground)
+  \~chinese 开启此功能请设置setAttribute(Qt::WA_TranslucentBackground)
   \a enableBlurWindow true开启模糊效果　false关闭模糊效果
  */
 void DMainWindow::setEnableBlurWindow(bool enableBlurWindow)

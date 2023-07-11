@@ -51,7 +51,9 @@
 
 @fn void Dtk::Widget::DAlertControl::showAlertMessage(const QString &text,  QWidget *follower,  int duration = 3000)
 @brief  显示警告消息
-@param[in] follow 指定文本消息跟随的对象
+@param[in] text 警告的文本
+@param[in] follower 指定文本消息跟随的对象
+@param[in] duration 显示的时间长度, 单位毫秒
 @sa DAlertControl::showAlertMessage(const QString &text,  int duration = 3000)
 
 @fn void Dtk::Widget::DAlertControl::hideAlertMessage()
