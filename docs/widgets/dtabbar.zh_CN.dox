@@ -57,6 +57,7 @@
 @brief 标签拖放.
 @param[in] index 拖放的标签索引
 @param[in] action 拖放的动作
+@param[in] target 被拖拽的 DTabBar 实例
 
 @fn void DTabBar::dragStarted()
 @brief 开始拖起.
@@ -132,9 +133,9 @@
 @param[in] index 标签索引
 @param[in] enable 是否启用.
 
-@fn void DTabBar::setTabEnabled(int index, bool enable)
+@fn QString DTabBar::tabText(int index) const
 @brief 返回标签索引位置文本.
-@param index 标签索引.
+@param[in] index 标签索引.
 @return 返回对应索引的文本.
 
 @fn void DTabBar::setTabText(int index, const QString &text)
@@ -142,7 +143,7 @@
 @param[in] index 标签索引
 @param[in] text 标签文本.
 
-@fn void DTabBar::setTabText(int index, const QString &text)
+@fn QIcon DTabBar::tabIcon(int index) const
 @brief 返回标签索引位置图标.
 @param[in] index 标签索引.
 @return 对应标签的图标.

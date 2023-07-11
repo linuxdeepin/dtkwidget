@@ -2434,7 +2434,7 @@ void DPrintPreviewDialogPrivate::pageRangeError(TipsNum tipNum)
     信号，但每次接收的数据量较小，因此不用担心响应速度的问题。
     默认情况下的打印预览窗口为同步模式。
 
-    \section1 \b 基本使用
+    \section \b 基本使用
     该代码在 example 中可以看到，这里简单贴出对应内容.
     \snippet mainwindow.cpp 0
 
@@ -2450,7 +2450,7 @@ void DPrintPreviewDialogPrivate::pageRangeError(TipsNum tipNum)
     根据用户选择的页码多少，向外获取对应页码的原始数据。
     \warning pageRange 对应的数据为页码值，而非页面索引值！
 
-    \section1 \b 其他接口
+    \section \b 其他接口
     除同步和异步接口之外，打印预览还提供给外部一些其他接口，例如
     setDocName 设置数据文件名，在输出 pdf 或者图片时可以看到
     效果。 setPrintFromPath 按照文件路径打印的接口，使用这个
