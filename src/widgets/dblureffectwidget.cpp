@@ -486,6 +486,9 @@ DBlurEffectWidget::DBlurEffectWidget(QWidget *parent)
     QObject::connect(DWindowManagerHelper::instance(), &DWindowManagerHelper::hasCompositeChanged, this, [this] {
         D_D(const DBlurEffectWidget);
 
+        bool hasComposite = DWindowManagerHelper::instance()->hasComposite();
+        setAttribute(Qt::WA_NoSystemBackground, hasComposite);
+
         if (d->maskColorType != CustomColor)
             update();
     });
