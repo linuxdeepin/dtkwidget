@@ -24,10 +24,11 @@ class DEnhancedWidgetPrivate
 };
 
 /*!
-  \property Dtk::Widget::DEnhancedWidget::target
-  \brief 要监听的目标控件，每一个 DEnhancedWidget 对象只能关联到一个 QWidget 对象
-  当 target 改变后，所有的信号和旧的 target 都不再有任何关系。
-  \code
+@~english
+  @property Dtk::Widget::DEnhancedWidget::target
+  @brief The target widget to be monitored. Each DEnhancedWidget object can only be associated to a QWidget object.
+  When target changes, all signals have no more relationship with the old target.
+  @code
   QWidget *w1 = new QWidget();
   w1->show();
   DEnhancedWidget *ew = new DEnhancedWidget(w1);
@@ -37,102 +38,113 @@ class DEnhancedWidgetPrivate
   QWidget *w2 = new QWidget();
   ew.setTarget(w2);
   w1->move(100, 100);
-  \endcode
-  移动控件 w1 时不会有任何打印
-  \code
+  @endcode
+  There will be no printing when moving widget w1.
+  @code
   w2->show();
   w2->move(100, 100);
-  \endcode
-  移动控件 w2 时会有打印
-  虽然将 target 设置为 w2 之前就已经连接了 x 改变的信号，不过 w2 位置改变时可以收到信号
-  \note 可读可写
+  @endcode
+  There will be printing when moving widget w2.
+  Although the xChanged signal has been connected before the target is set to w2, the signal can be received when the w2 position changes.
+  @note read or write
  */
 
 /*!
-  \property Dtk::Widget::DEnhancedWidget::enabled
-  \brief 值为 true 时过滤 target 控件的事件发送信号。否则卸载事件过滤器，控件属性
-  改变时也不会发出信号。
-  \note 可读可写
+@~english
+  @property Dtk::Widget::DEnhancedWidget::enabled
+  @brief If "true", event filter of the target widget sends a signal. Otherwise, uninstall the event filter, signal will not be sent when the widge property is changed.
+  @note read or write
  */
 
 /*!
-  \fn void DEnhancedWidget::xChanged(int x)
+@~english
+  @fn void DEnhancedWidget::xChanged(int x)
 
-  \a x 改变的 x 轴坐标.
-  这个信号在目标控件的 x 坐标改变后被发送
+  @param[in] x the changed x axis coordinate
+  The signal is sent when the x axis coordinate changed.
  */
 
 /*!
-  \fn void DEnhancedWidget::yChanged(int y)
+@~english
+  @fn void DEnhancedWidget::yChanged(int y)
 
-  \a y 改变的 y 轴坐标.
-  这个信号在目标控件的 y 坐标改变后被发送
+  @param[in] y the changed y axis coordinate
+  The signal is sent when the y axis coordinate changed.
  */
 
 /*!
-  \fn void DEnhancedWidget::positionChanged(const QPoint &point)
+@~english
+  @fn void DEnhancedWidget::positionChanged(const QPoint &point)
 
-  \a point 改变的位置坐标.
-  这个信号在目标控件的坐标改变后被发送
+  @param[in] point the changed position coordinates
+  The signal is sent when the position coordinates of target widget changed.
  */
 
 /*!
-  \fn void DEnhancedWidget::widthChanged(int width)
+@~english
+  @fn void DEnhancedWidget::widthChanged(int width)
 
-  \a width 改变的宽度大小.
-  这个信号在目标控件的宽度改变后被发送
+  @param[in] width the changed width
+  The signal is sent when the width of target widget changed.
  */
 
 /*!
-  \fn void DEnhancedWidget::heightChanged(int height)
+@~english
+  @fn void DEnhancedWidget::heightChanged(int height)
 
-  \a height 改变的高度大小.
-  这个信号在目标控件的高度改变后被发送
+  @param[in] height the changed height
+  The signal is sent when the height of target widget changed.
  */
 
 /*!
-  \fn void DEnhancedWidget::sizeChanged(const QSize &size)
+@~english
+  @fn void DEnhancedWidget::sizeChanged(const QSize &size)
 
-  \a size 改变的大小.
-  这个信号在目标控件的大小改变后被发送
+  @param[in] size the changed size
+  The signal is sent when the size of target widget changed.
  */
 
 /*!
-  \fn void DEnhancedWidget::targetChanged(QWidget *target)
+@~english
+  @fn void DEnhancedWidget::targetChanged(QWidget *target)
 
-  \a target 目标控件.
-  这个信号在属性 DEnhancedWidget::target 被改变后发送
+  @param[in] target the target widget
+  The signal is sent when the property DEnhancedWidget::target changed.
  */
 
 /*!
-  \fn void DEnhancedWidget::enabledChanged(bool enabled)
+@~english
+  @fn void DEnhancedWidget::enabledChanged(bool enabled)
 
-  \a enabled 是否可用.
-  这个信号在属性 DEnhancedWidget::enabled \a enabled 被改变后发送
+  @param[in] enabled usable or not
+  The signal is sent when the property DEnhancedWidget::enabled changed.
  */
 
 /*!
-  \fn void DEnhancedWidget::showed()
-  这个信号在目标控件显示后发送
+@~english
+  @fn void DEnhancedWidget::showed()
+  This signal is sent when the target widget displayed.
  */
 
 /*!
-  \class Dtk::Widget::DEnhancedWidget
-  \inmodule dtkwidget
+@~english
+  @class Dtk::Widget::DEnhancedWidget
+  @inmodule dtkwidget
 
-  QWidget 中只有少量的信号用于通知和窗口相关的属性变化，常用的如 x y width height
-  等属性的改变只能通过继承重写对应的事件才能知晓。DEnhancedWidget 中通过使用事件
-  过滤器监听目标控件的事件，收到对应事件之后转换为自身的信号发射出来，以此来实现对
-  QWidget 对象的信号扩展。
+  There are only few signals in Qwidget to notify the properties changes related to the window. The changes in
+  commonly used properties such as x, y, width, height can only be known by inheriting the corresponding events.
+  DEnhancedWidget monitors events of the target widget by the event filter. After receiving the corresponding event, 
+  it is converted into its own signal and then emitted, realizing signal expansion of the Qwidget object.
  */
 
 /*!
-  \brief DEnhancedWidget::DEnhancedWidget 构造函数.
+@~english
+  @brief DEnhancedWidget::DEnhancedWidget 构造函数.
 
-  \a w 初始时指定的 target 控件
-  \a parent 父对象，直接传递给基类
-  \sa DEnhancedWidget::target
-  \sa QObject::parent
+  @param[in] w initially specified target widget
+  @param[in] parent pass directly to the base class
+  @sa DEnhancedWidget::target
+  @sa QObject::parent
  */
 DEnhancedWidget::DEnhancedWidget(QWidget *w, QObject *parent):
     QObject(parent),
@@ -166,9 +178,10 @@ bool DEnhancedWidget::enabled() const
 }
 
 /*!
-  \brief DEnhancedWidget::setTarget
-  \a target
-  \sa DEnhancedWidget::target
+@~english
+  @brief Set the target widget and update the event filter when the target widget changes.
+  @param[in] target the target widget
+  @sa DEnhancedWidget::target
  */
 void DEnhancedWidget::setTarget(QWidget *target)
 {
@@ -189,9 +202,10 @@ void DEnhancedWidget::setTarget(QWidget *target)
 }
 
 /*!
-  \brief DEnhancedWidget::setEnabled
-  \a enabled
-  \sa DEnhancedWidget::enabled
+@~english
+  @brief Set the availability of the widget and install or uninstall the event filter according to the situation.
+  @param[in] enabled usable or not
+  @sa DEnhancedWidget::enabled
  */
 void DEnhancedWidget::setEnabled(bool enabled)
 {
