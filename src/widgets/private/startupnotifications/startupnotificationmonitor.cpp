@@ -61,7 +61,7 @@ static void monitor_event_func (SnMonitorEvent *event, void *user_data)
 
 /*!
   \class StartupNotificationMonitor
-  \inmodule dtkwidget
+  \ingroup dtkwidget
 
   \brief The StartupNotificationMonitor class is used to monitor the startup of applications on the system.
   

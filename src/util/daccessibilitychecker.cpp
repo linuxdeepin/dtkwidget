@@ -378,7 +378,7 @@ void DAccessibilityCheckerPrivate::_q_checkTimeout()
 
 /*!
   \class Dtk::Widget::DAccessibilityChecker
-  \inmodule dtkwidget
+  \ingroup dtkwidget
 
   \brief 该类用于检测自动化标记是否存在.
 

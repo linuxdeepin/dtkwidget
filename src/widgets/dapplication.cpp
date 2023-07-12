@@ -440,7 +440,7 @@ bool DApplicationPrivate::isUserManualExists()
 
 /*!
   \class Dtk::Widget::DApplication
-  \inmodule dtkwidget
+  \ingroup dtkwidget
   
   \brief DApplication 是 DTK 中用于替换 QCoreApplication 相关功能实现的类.
 
@@ -453,7 +453,9 @@ bool DApplicationPrivate::isUserManualExists()
   
   \note DApplication 设置的 QTapAndHoldGesture::timeout 会比 gsettings
   中的值小 100，用来绕过 Dock 长按松开容易导致应用启动的问题，详细解释见
-  见代码注释或者 \l {https://github.com/linuxdeepin/internal-discussion/issues/430}
+  见代码注释或者 
+  
+  \ref {https://github.com/linuxdeepin/internal-discussion/issues/430}
   
   \sa loadTranslator() setSingleInstance()
  */
@@ -475,11 +477,10 @@ bool DApplicationPrivate::isUserManualExists()
   依赖于 deepin 平台主题插件（dde-qt5integration 包中提供），实时更改
   屏幕缩放比是通过更改配置文件 ~/.config/deepin/qt-theme.ini 实现，与此相关的
   配置项有三个：
-  \list
+
   \li ScreenScaleFactors：多屏幕设置不同缩放比，值格式和环境变量QT_SCREEN_SCALE_FACTORS一致
   \li ScaleFactor: 设置所有屏幕缩放比，值格式和环境变量QT_SCALE_FACTOR一致
   \li ScaleLogcailDpi：指定屏幕逻辑dpi，可影响仅设置了 point size 的 QFont 的绘制大小。
-  \endlist
 
   未设置此值时，默认会在 ScreenScaleFactors 值改变后将屏幕逻辑dpi更改为主屏默认值，一般情况下，不需要设置此值。
   ScreenScaleFactors 和 ScaleFactor 的值改变后，会触发所有屏幕的 QScreen::geometryChanged, 且会根据当前缩放
@@ -748,11 +749,9 @@ bool DApplication::setSingleInstance(const QString &key, SingleScope singleScope
   Translation files must be placed in correct directories as well.
   The lookup order is as follows:
 
-  \list
   \li ~/.local/share/APPNAME/translations;
   \li /usr/local/share/APPNAME/translations;
   \li /usr/share/APPNAME/translations;
-  \endlist
 
   APPNAME is the name of program executable.
   \a localeFallback, a list of fallback locale you want load.
@@ -762,11 +761,9 @@ bool DApplication::setSingleInstance(const QString &key, SingleScope singleScope
   那么翻译文件在中文locale下的名称必须是 dde-dock_zh_CN.qm；翻译文件还需要放置
   在特定的位置，此函数会按照优先级顺序在以下目录中查找翻译文件：
 
-  \list
   \li ~/.local/share/APPNAME/translations;
   \li /usr/local/share/APPNAME/translations;
   \li /usr/share/APPNAME/translations;
-  \endlist
 
   APPNAME 即可执行文件的名称。
   

@@ -3,7 +3,7 @@
 @file dwatermarkhelper.h
 
 @class Dtk::Widget::DWaterMaskHelper
-@inmodule dtkwidget
+@ingroup dtkwidget
 @brief 不允许直接实例化此对象
 @param[in] parent
 @sa DWaterMaskHelper::instance

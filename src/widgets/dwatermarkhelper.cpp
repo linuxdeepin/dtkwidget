@@ -60,7 +60,7 @@ DWaterMarkHelper *DWaterMarkHelper::instance()
 
 /*!
   \class Dtk::Widget::DWaterMaskHelper
-  \inmodule dtkwidget
+  \ingroup dtkwidget
   \brief Direct instantiation of this object is not allowed
   \a parent
   \sa DWaterMaskHelper::instance

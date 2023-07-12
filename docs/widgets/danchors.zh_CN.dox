@@ -30,7 +30,7 @@ rect2.setLeft(rect1.right());
 锚定布局同时在多个控件中使用，控件之间只需要满足以下条件：<br>
 `控件之间为兄弟关系，或被锚定控件为父控件`<br>
 `锚定关系不能循环绑定`
-@subsection 锚定的间隔和偏移
+@section 锚定的间隔和偏移
 锚定系统允许设置“锚线”之间的间距，和“锚线”一一对应，每个控件都有一组4个 margin：
 leftMargin, rightMargin, topMargin 和 bottomMargin 以及两个 offset：
 horizontalCenterOffset 和 verticalCenterOffset。
@@ -51,7 +51,7 @@ margin，但并没有设置相应的锚点，对控件本身而已是没有任�
 
 除了基于“锚线”来设置锚定外，另外还有 setCenterIn 和 setFill 这两个比较特殊的
 的实现。
-@subsection 判断循环锚定的方式
+@section 判断循环锚定的方式
 假设 DAnchorsBase a1, a2; a1.setRight(a2.left()); 则判断 a1 和 a2 之间
 会不会存在循环绑定的逻辑为:
 尝试更改 a1 右边界的值，更新后如果 a2 左边界的值产出了变化，则认为会导致循环绑

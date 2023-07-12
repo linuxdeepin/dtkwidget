@@ -266,7 +266,7 @@ bool DBlurEffectWidgetPrivate::updateWindowBlurArea(QWidget *topLevelWidget)
 
 /*!
   \class Dtk::Widget::DBlurEffectWidget
-  \inmodule dtkwidget
+  \ingroup dtkwidget
 
   \brief 用于实现主窗口或控件背景的实时模糊效果.
   \brief The DBlurEffectWidget class provides widget that backgrounds are blurred and semitranslucent.
@@ -404,7 +404,7 @@ bool DBlurEffectWidgetPrivate::updateWindowBlurArea(QWidget *topLevelWidget)
   DBlurEffectWidget::BlurMode 模糊算法
   
   \value GaussianBlur
-  \l {https://zh.wikipedia.org/wiki/高斯模糊}{高斯模糊算法}
+  \ref {https://zh.wikipedia.org/wiki/高斯模糊}{高斯模糊算法}
  */
 
 /*!
