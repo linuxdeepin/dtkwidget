@@ -2,11 +2,22 @@
 @~chinese
 @file dprogressbar.h
 @ingroup dprogressbar
-@class
-@brief
-@details
+@class Dtk::Widget::DProgressBar
+@brief 继承自 QProgressBar类 ，一个用于表示进度条的控件
+@details DProgressBar类 继承自 QProgressBar类, 提供展现进度条的功能
 
-TODO: 添加类简介、示例代码、示例截图和函数使用说明等
+@image html ../images/DProgressBar_1.png
+@image html ../images/DProgressBar_2.png
 
+@fn DProgressBar::DProgressBar(QWidget *parent)
+@brief DProgressBar 的构造函数
+@param[in] parent 父构件 QProgressBar 对象
 
+@fn QSize DProgressBar::sizeHint() const
+@brief 与QProgressBar::sizeHint()类似，返回进度条的推荐大小
+@return 进度条的推荐大小
+
+@fn QSize DProgressBar::minimumSizeHint() const
+@brief 与DProgressBar::minimumSizeHint()类似，返回进度条的最小推荐大小
+@return 进度条的最小推荐大小
 */
