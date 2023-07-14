@@ -46,8 +46,9 @@ public:
 };
 
 /*!
-  \brief DTextEdit::DTextEdit 实现一个用于编辑和显示纯文本和富文本的控件
-  \a parent
+@~english
+  @brief DTextEdit constructor, implementing a widget for editing and displaying both plain and rich text
+  @param[in] parent is passed to QTextEdit
  */
 DTextEdit::DTextEdit(QWidget *parent)
     : QTextEdit(parent)
@@ -108,6 +109,7 @@ bool DTextEdit::event(QEvent *e)
                 DStyleHelper dstyle(style());
                 int frame_radius = dstyle.pixelMetric(DStyle::PM_FrameRadius, nullptr, this);
                 // FIX bug-79676 setViewportMargins 会导致光标位置异常，此处调整回来吧
+                // FIX bug-79676 setViewportMargins cause cursor position abnormal, fix it plz
                 rc.adjust(frame_radius, 0, frame_radius, 0);
                 query->setValue(property, rc);
                 query->accept();
@@ -150,6 +152,7 @@ void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
     auto msg = QDBusMessage::createMethodCall("com.iflytek.aiassistant", "/",
                                    "org.freedesktop.DBus.Peer", "Ping");
     // 用之前 Ping 一下, 300ms 内没回复就认定是服务出问题，不再添加助手菜单项
+    // ping before using it, consider no response within 300ms as a service issue, do not add menu anymore
     auto pingReply = QDBusConnection::sessionBus().call(msg, QDBus::Block, 300);
     auto errorType = QDBusConnection::sessionBus().lastError().type();
     if (errorType == QDBusError::Timeout || errorType == QDBusError::NoReply) {
@@ -162,6 +165,7 @@ void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
                                "com.iflytek.aiassistant.tts",
                                QDBusConnection::sessionBus());
     //测试朗读接口是否开启
+    //test whether textToSpeech interface is enabled
     QDBusReply<bool> speechReply = testSpeech.call(QDBus::AutoDetect, "getTTSEnable");
 
     QDBusInterface testReading("com.iflytek.aiassistant",
@@ -169,6 +173,7 @@ void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
                                "com.iflytek.aiassistant.tts",
                                QDBusConnection::sessionBus());
     //测试朗读是否在进行
+    //test whether textToSpeech is ongoing
     QDBusReply<bool> readingReply = testReading.call(QDBus::AutoDetect, "isTTSInWorking");
 
     QDBusInterface testTranslate("com.iflytek.aiassistant",
@@ -176,6 +181,7 @@ void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
                                "com.iflytek.aiassistant.trans",
                                QDBusConnection::sessionBus());
     //测试翻译接口是否开启
+    //test whether translating interface is enabled
     QDBusReply<bool> translateReply = testTranslate.call(QDBus::AutoDetect, "getTransEnable");
 
     QDBusInterface testSpeechToText("com.iflytek.aiassistant",
@@ -183,9 +189,10 @@ void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
                                "com.iflytek.aiassistant.iat",
                                QDBusConnection::sessionBus());
     //测试听写接口是否开启
+    //test whether speechToText interface is enabled
     QDBusReply<bool> speechToTextReply = testSpeechToText.call(QDBus::AutoDetect, "getIatEnable");
 
-    //测试服务是否存在
+    //test whether the service exists
     if ((!speechReply.value() && !translateReply.value() && !speechToTextReply.value())
             || (!textToSpeechIsEnabled() && !textToTranslateIsEnabled() && !speechToTextIsEnabled())) {
         QTextEdit::contextMenuEvent(e);
@@ -213,6 +220,7 @@ void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
         }
 
         //没有选中文本，则菜单置灰色
+        //set the menu in color gray if no text is selected
         if (textCursor().selectedText().isEmpty()) {
             pAction->setEnabled(false);
         }
@@ -224,7 +232,9 @@ void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
                                  QDBusConnection::sessionBus());
 
             if (speechInterface.isValid()) {
-                speechInterface.call(QDBus::BlockWithGui, "TextToSpeech");//此函在第一次调用时朗读，在朗读状态下再次调用为停止朗读
+                speechInterface.call(QDBus::BlockWithGui, "TextToSpeech");
+                //此函在第一次调用时朗读，在朗读状态下再次调用为停止朗读
+                //the first call means start textToSpeech, a second call means stop textToSpeech
             } else {
                 qWarning() << "[DTextEdit] TextToSpeech ERROR";
             }
@@ -235,6 +245,7 @@ void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
         QAction *pAction_2 = menu->addAction(QCoreApplication::translate("DTextEdit", "Translate"));
 
         //没有选中文本，则菜单置灰色
+        //set the menu in color gray if no text is selected
         if (textCursor().selectedText().isEmpty()) {
             pAction_2->setEnabled(false);
         }
@@ -270,6 +281,7 @@ void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
     }
 
     //FIXME: 由于Qt在UOS系统环境下不明原因的bug,使用menu->setAttribute(Qt::WA_DeleteOnClose) 销毁menu会在特定情况下出现崩溃的问题，这里采用一种变通的做法
+    //FIXME: Due to an unknown bug in Qt in the UOS system,using menu ->setAttribute (Qt:: WA-DeleteOnClose) to destroy a menu may cause a crash issue in specific situations, thus using another way to do it
     connect(menu, &QMenu::aboutToHide, this, [=] {
         if (menu->activeAction()) {
             menu->deleteLater();
@@ -284,8 +296,9 @@ void DTextEdit::contextMenuEvent(QContextMenuEvent *e)
 }
 
 /*!
-  \brief DLineEdit::speechToTextIsEnabled
-  \return true 显示语音听写菜单项 false不显示
+@~english
+  @brief DLineEdit::speechToTextIsEnabled return whether speechToText is enabled
+  @return true means speechToText is enabled, while false means not
  */
 bool DTextEdit::speechToTextIsEnabled() const
 {
@@ -294,8 +307,9 @@ bool DTextEdit::speechToTextIsEnabled() const
 }
 
 /*!
-  \brief DLineEdit::setSpeechToTextEnabled 设置是否显示语音听写菜单项
-  \a enable true显示 flase不显示
+@~english
+  @brief DLineEdit::setSpeechToTextEnabled whether speechToText should be enabled
+  @param[in] enable true means yes, while flase means no
  */
 void DTextEdit::setSpeechToTextEnabled(bool enable)
 {
@@ -304,8 +318,9 @@ void DTextEdit::setSpeechToTextEnabled(bool enable)
 }
 
 /*!
-  \brief DTextEdit::textToSpeechIsEnabled
-  \return true 显示语音朗读菜单项 false不显示
+@~english
+  @brief DTextEdit::textToSpeechIsEnabled return whether textToSpeech is enabled
+  @return true means enabled, while false means not
  */
 bool DTextEdit::textToSpeechIsEnabled() const
 {
@@ -314,8 +329,9 @@ bool DTextEdit::textToSpeechIsEnabled() const
 }
 
 /*!
-  \brief DTextEdit::setTextToSpeechEnabled 设置是否显示语音朗读菜单项
-  \a enable true显示 flase不显示
+@~english
+  @brief DTextEdit::setTextToSpeechEnabled set whether textToSpeech should be enabled
+  @param[in] enable true means enabled, while flase means not
  */
 void DTextEdit::setTextToSpeechEnabled(bool enable)
 {
@@ -324,8 +340,9 @@ void DTextEdit::setTextToSpeechEnabled(bool enable)
 }
 
 /*!
-  \brief DTextEdit::textToTranslateIsEnabled
-  \return true 显示文本翻译菜单项 false不显示
+@~english
+  @brief DTextEdit::textToTranslateIsEnabled return whether textToTranslate is enabled
+  @return true means enabled, while false means not
  */
 bool DTextEdit::textToTranslateIsEnabled() const
 {
@@ -334,8 +351,9 @@ bool DTextEdit::textToTranslateIsEnabled() const
 }
 
 /*!
-  \brief DTextEdit::setTextToTranslateEnabled 设置是否显示文本翻译菜单项
-  \a enable true显示 flase不显示
+@~english
+  @brief DTextEdit::setTextToTranslateEnabled set whether textToTranslate is enabled
+  @param[in] true means enabled, while false means not
  */
 void DTextEdit::setTextToTranslateEnabled(bool enable)
 {

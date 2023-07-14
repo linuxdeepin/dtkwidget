@@ -2,11 +2,37 @@
 @~chinese
 @file dtextedit.h
 @ingroup edit
-@class
-@brief
-@details
+@class Dtk::Widget::DTextEdit
+@brief 一个用于编辑和显示纯文本/富文本的控件
+@details DTextEdit类 继承于 QTextEdit类, 实现一个用于编辑和显示纯文本和富文本的控件
 
-TODO: 添加类简介、示例代码、示例截图和函数使用说明等
+@image html DTextEdit.png
 
+@fn DTextEdit::DTextEdit(QWidget *parent)
+@brief DTextEdit 构造函数, 实现一个用于编辑和显示纯文本和富文本的控件
+@param[in] parent
 
+@fn bool DTextEdit::speechToTextIsEnabled() const
+@brief DLineEdit::speechToTextIsEnabled
+@return true 显示语音听写菜单项 false不显示
+
+@fn void DTextEdit::setSpeechToTextEnabled(bool enable)
+@brief DLineEdit::setSpeechToTextEnabled 设置是否显示语音听写菜单项
+@param[in] enable true显示 flase不显示
+
+@fn bool DTextEdit::textToSpeechIsEnabled() const
+@brief DTextEdit::textToSpeechIsEnabled
+@return true 显示语音朗读菜单项 false不显示
+
+@fn void DTextEdit::setTextToSpeechEnabled(bool enable)
+@brief DTextEdit::setTextToSpeechEnabled 设置是否显示语音朗读菜单项
+@param[in] enable true显示 flase不显示
+
+@fn bool DTextEdit::textToTranslateIsEnabled() const
+@brief DTextEdit::textToTranslateIsEnabled
+@return true 显示文本翻译菜单项 false不显示
+
+@fn void DTextEdit::setTextToTranslateEnabled(bool enable)
+@brief DTextEdit::setTextToTranslateEnabled 设置是否显示文本翻译菜单项
+@param[in] enable true显示 flase不显示
 */
