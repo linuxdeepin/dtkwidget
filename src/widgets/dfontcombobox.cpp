@@ -30,7 +30,7 @@ public:
 
     virtual ~DFontComboBoxPrivate() override;
 
-    // DFontComboBox的具体实现采用QFontComboBox的实现
+    // The specific implementation of DFontComboBox adopts the implementation of QFontComboBox
     QFontComboBox* impl;
 };
 
@@ -40,17 +40,22 @@ DFontComboBoxPrivate::~DFontComboBoxPrivate()
 }
 
 /*!
- * \~chinese \class DFontComboBox
- * \~chinese \brief DFontComboBox 字体选择下拉列表
- * \~chinese \li DFontComboBox 提供了系统字体选择功能
- *
- * \~chinese \note\row 代码示例
- * \~chinese \note\row DFontComboBox *fontComboBox = new DFontComboBox();
- */
+@~english
+  @class DFontComboBox
+  @brief The DFontComboBox class provides combobox for selecting font
 
+  The DFontComboBox class provides functions to select system font
+
+  @code 
+  #code example
+  DFontComboBox *fontComboBox = new DFontComboBox();
+  @endcode
+  
+  @image html DFontComboBox.png
 /*!
- * \chinese \brief DFontComboBox 构造函数
- * \chinese \param parent参数被发送到 DComboBox 构造函数
+@~english
+  @brief DFontComboBox constructor.
+  @param[in] parent is passed to DComboBox constructor
  */
 DFontComboBox::DFontComboBox(QWidget *parent)
     : DComboBox(*new DFontComboBoxPrivate(this), parent)
@@ -69,7 +74,8 @@ DFontComboBox::~DFontComboBox()
 }
 
 /*!
- * \~chinese \brief 与QFontComboBox::setWritingSystem相同
+@~english
+  @brief same as QFontComboBox::setWritingSystem
  */
 void DFontComboBox::setWritingSystem(QFontDatabase::WritingSystem script)
 {
@@ -78,7 +84,8 @@ void DFontComboBox::setWritingSystem(QFontDatabase::WritingSystem script)
 }
 
 /*!
- * \~chinese \brief 与QFontComboBox::writingSystem相同
+@~english
+  @brief same as QFontComboBox::writingSystem
  */
 QFontDatabase::WritingSystem DFontComboBox::writingSystem() const
 {
@@ -87,7 +94,8 @@ QFontDatabase::WritingSystem DFontComboBox::writingSystem() const
 }
 
 /*!
- * \~chinese \brief 与QFontComboBox::setFontFilters相同
+@~english
+  @brief same as QFontComboBox::setFontFilters
  */
 void DFontComboBox::setFontFilters(QFontComboBox::FontFilters filters)
 {
@@ -96,7 +104,8 @@ void DFontComboBox::setFontFilters(QFontComboBox::FontFilters filters)
 }
 
 /*!
- * \~chinese \brief 与QFontComboBox::fontFilters相同
+@~english
+  @brief same as QFontComboBox::fontFilters
  */
 QFontComboBox::FontFilters DFontComboBox::fontFilters() const
 {
@@ -105,7 +114,8 @@ QFontComboBox::FontFilters DFontComboBox::fontFilters() const
 }
 
 /*!
- * \~chinese \brief 与QFontComboBox::currentFont相同
+@~english
+  @brief same as QFontComboBox::currentFont
  */
 QFont DFontComboBox::currentFont() const
 {
@@ -114,7 +124,8 @@ QFont DFontComboBox::currentFont() const
 }
 
 /*!
- * \~chinese \brief 与QFontComboBox::sizeHint相同
+@~english
+  @brief same as QFontComboBox::sizeHint
  */
 QSize DFontComboBox::sizeHint() const
 {
@@ -123,7 +134,8 @@ QSize DFontComboBox::sizeHint() const
 }
 
 /*!
- * \~chinese \brief 与QFontComboBox::setCurrentFont相同
+@~english
+  @brief same as QFontComboBox::setCurrentFont
  */
 void DFontComboBox::setCurrentFont(const QFont &f)
 {
@@ -132,7 +144,8 @@ void DFontComboBox::setCurrentFont(const QFont &f)
 }
 
 /*!
- * \~chinese \brief 与QFontComboBox::event相同
+@~english
+  @brief same as QFontComboBox::event
  */
 bool DFontComboBox::event(QEvent *e)
 {
