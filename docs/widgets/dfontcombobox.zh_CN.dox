@@ -2,11 +2,47 @@
 @~chinese
 @file dfontcombobox.h
 @ingroup button
-@class
-@brief
-@details
+@class Dtk::Widget::DFontComboBox
+@brief 继承自 DComboBox类 字体选择下拉列表
+@details DFontComboBox类 继承自 DComboBox类 提供了进行系统字体选择的下拉列表
 
-TODO: 添加类简介、示例代码、示例截图和函数使用说明等
+@image html DFontComboBox.png
 
+@fn DFontComboBox::DFontComboBox(QWidget *parent)
+@brief DFontComboBox 构造函数
+@param[in] parent 父构件对象
+
+@fn void DFontComboBox::setWritingSystem(QFontDatabase::WritingSystem script)
+@brief 与 QFontComboBox::setWritingSystem 功能相同, 设置字体选择器所使用的书写系统
+@param[in] script QFontDatabase::WritingSystem 类对象, Qt支持的书写系统
+
+@fn QFontDatabase::WritingSystem DFontComboBox::writingSystem() const
+@brief 与 QFontComboBox::writingSystem 功能相同, 返回字体选择器所使用的书写系统
+@return 字体选择器所选用的书写系统
+
+@fn void DFontComboBox::setFontFilters(QFontComboBox::FontFilters filters)
+@brief 与 QFontComboBox::setFontFilters 功能相同, 设置字体选择器可以显示的字体
+@param[in] script QFontComboBox::FontFilters 类对象, Qt支持的字体类型
+
+@fn QFontComboBox::FontFilters DFontComboBox::fontFilters() const
+@brief 与 QFontComboBox::fontFilters 功能相同, 返回字体选择器可以显示的字体
+@return 字体选择器所选用的字体
+
+@fn QFont DFontComboBox::currentFont() const
+@brief 与 QFontComboBox::currentFont 功能相同, 返回当前选择字体
+@return 当前选择字体
+
+@fn QSize DFontComboBox::sizeHint() const
+@brief 与 QFontComboBox::sizeHint 功能相同, 返回字体选择器的推荐大小
+@return 推荐大小
+
+@fn void DFontComboBox::setCurrentFont(const QFont &f)
+@brief 与 QFontComboBox::setCurrentFont 功能相同, 设置当前选择字体
+@param[in] QFont类型, 要选择的字体
+
+@fn bool DFontComboBox::event(QEvent *e)
+@brief 与 QFontComboBox::event 功能相同, 返回 DComboBox::event(e)的布尔值
+@return DComboBox::event(e)
 
 */
+
