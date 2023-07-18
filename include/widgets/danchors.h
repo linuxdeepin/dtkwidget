@@ -191,7 +191,7 @@ protected:
 private:
     DAnchorsBase(QWidget *w, bool);
 
-    QExplicitlySharedDataPointer<QSharedData> d_ptr;
+    QExplicitlySharedDataPointer<DAnchorsBasePrivate> d_ptr;
 
     Q_DECLARE_PRIVATE(DAnchorsBase)
 };
