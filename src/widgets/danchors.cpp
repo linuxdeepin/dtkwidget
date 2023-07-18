@@ -378,6 +378,7 @@ public:
 
 class DAnchorsBasePrivate : public QSharedData
 {
+public:
     DAnchorsBasePrivate(DAnchorsBase *qq): q_ptr(qq) {}
     ~DAnchorsBasePrivate()
     {
