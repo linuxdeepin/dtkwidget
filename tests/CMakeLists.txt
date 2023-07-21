@@ -116,6 +116,7 @@ set(RESCOUCES data.qrc)
 
 add_executable(${BINNAME}
     main.cpp
+    ${RESCOUCES}
     ${UTIL}
     ${WIDGETS}
     ${WIDGET_TEST}
