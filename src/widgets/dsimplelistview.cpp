@@ -4,6 +4,7 @@
 
 #include "dsimplelistview.h"
 #include <DObjectPrivate>
+#include <DIcon>
 #include <QApplication>
 #include <QDebug>
 #include <QEvent>
@@ -14,9 +15,8 @@
 #include <QPointer>
 #include <QPainterPath>
 
-#include "dhidpihelper.h"
-
 DCORE_USE_NAMESPACE
+DGUI_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
 class DSimpleListViewPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
@@ -107,19 +107,19 @@ DSimpleListView::DSimpleListView(QWidget *parent) : QWidget(parent), DObject(*ne
     d->titleHoverColumn = -1;
     d->titlePressColumn = -1;
 
-    arrowUpDarkNormalImage = DHiDPIHelper::loadNxPixmap(":/images/dark/images/arrow_up_normal.svg");
-    arrowUpDarkHoverImage = DHiDPIHelper::loadNxPixmap(":/images/dark/images/arrow_up_hover.svg");
-    arrowUpDarkPressImage = DHiDPIHelper::loadNxPixmap(":/images/dark/images/arrow_up_press.svg");
-    arrowDownDarkNormalImage = DHiDPIHelper::loadNxPixmap(":/images/dark/images/arrow_down_normal.svg");
-    arrowDownDarkHoverImage = DHiDPIHelper::loadNxPixmap(":/images/dark/images/arrow_down_hover.svg");
-    arrowDownDarkPressImage = DHiDPIHelper::loadNxPixmap(":/images/dark/images/arrow_down_press.svg");
+    arrowUpDarkNormalImage = DIcon::loadNxPixmap(":/images/dark/images/arrow_up_normal.svg");
+    arrowUpDarkHoverImage = DIcon::loadNxPixmap(":/images/dark/images/arrow_up_hover.svg");
+    arrowUpDarkPressImage = DIcon::loadNxPixmap(":/images/dark/images/arrow_up_press.svg");
+    arrowDownDarkNormalImage = DIcon::loadNxPixmap(":/images/dark/images/arrow_down_normal.svg");
+    arrowDownDarkHoverImage = DIcon::loadNxPixmap(":/images/dark/images/arrow_down_hover.svg");
+    arrowDownDarkPressImage = DIcon::loadNxPixmap(":/images/dark/images/arrow_down_press.svg");
 
-    arrowUpLightNormalImage = DHiDPIHelper::loadNxPixmap(":/images/light/images/arrow_up_normal.svg");
-    arrowUpLightHoverImage = DHiDPIHelper::loadNxPixmap(":/images/light/images/arrow_up_hover.svg");
-    arrowUpLightPressImage = DHiDPIHelper::loadNxPixmap(":/images/light/images/arrow_up_press.svg");
-    arrowDownLightNormalImage = DHiDPIHelper::loadNxPixmap(":/images/light/images/arrow_down_normal.svg");
-    arrowDownLightHoverImage = DHiDPIHelper::loadNxPixmap(":/images/light/images/arrow_down_hover.svg");
-    arrowDownLightPressImage = DHiDPIHelper::loadNxPixmap(":/images/light/images/arrow_down_press.svg");
+    arrowUpLightNormalImage = DIcon::loadNxPixmap(":/images/light/images/arrow_up_normal.svg");
+    arrowUpLightHoverImage = DIcon::loadNxPixmap(":/images/light/images/arrow_up_hover.svg");
+    arrowUpLightPressImage = DIcon::loadNxPixmap(":/images/light/images/arrow_up_press.svg");
+    arrowDownLightNormalImage = DIcon::loadNxPixmap(":/images/light/images/arrow_down_normal.svg");
+    arrowDownLightHoverImage = DIcon::loadNxPixmap(":/images/light/images/arrow_down_hover.svg");
+    arrowDownLightPressImage = DIcon::loadNxPixmap(":/images/light/images/arrow_down_press.svg");
 
     arrowUpNormalImage = arrowUpLightNormalImage;
     arrowUpHoverImage = arrowUpLightHoverImage;
