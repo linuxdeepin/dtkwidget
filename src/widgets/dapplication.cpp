@@ -235,24 +235,6 @@ bool DApplicationPrivate::setSingleInstanceByDbus(const QString &key)
 
 bool DApplicationPrivate::loadDtkTranslator(QList<QLocale> localeFallback)
 {
-    D_Q(DApplication);
-
-    auto qtTranslator = new QTranslator(q);
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    qtTranslator->load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-#else
-    qtTranslator->load("qt_" + QLocale::system().name(), QLibraryInfo::path(QLibraryInfo::TranslationsPath));
-#endif
-    q->installTranslator(qtTranslator);
-
-    auto qtbaseTranslator = new QTranslator(q);
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    qtTranslator->load("qtbase_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-#else
-    qtTranslator->load("qtbase_" + QLocale::system().name(), QLibraryInfo::path(QLibraryInfo::TranslationsPath));
-#endif
-    q->installTranslator(qtbaseTranslator);
-
     QList<QString> translateDirs;
     auto dtkwidgetDir = DWIDGET_TRANSLATIONS_DIR;
     auto dtkwidgetName = "dtkwidget";
@@ -777,22 +759,11 @@ bool DApplication::loadTranslator(QList<QLocale> localeFallback)
 {
     D_D(DApplication);
 
-    d->loadDtkTranslator(localeFallback);
+    bool loadDtkTranslator =  d->loadDtkTranslator(localeFallback);
+    // qt && qtbase && appName
+    bool loadQtAppTranslator = DGuiApplicationHelper::loadTranslator(localeFallback);
 
-    QList<QString> translateDirs;
-    auto appName = applicationName();
-    //("/home/user/.local/share", "/usr/local/share", "/usr/share")
-    auto dataDirs = DStandardPaths::standardLocations(QStandardPaths::GenericDataLocation);
-    for (const auto &path : dataDirs) {
-        DPathBuf DPathBuf(path);
-        translateDirs << (DPathBuf / appName / "translations").toString();
-    }
-
-#ifdef DTK_STATIC_TRANSLATION
-    translateDirs << QString(":/dtk/translations");
-#endif
-
-    return DGuiApplicationHelper::loadTranslator(appName, translateDirs, localeFallback);
+    return loadDtkTranslator && loadQtAppTranslator;
 }
 
 /*!
