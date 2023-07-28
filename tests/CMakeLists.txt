@@ -109,6 +109,7 @@ set(WIDGET_TEST
     testcases/widgets/ut_dwindowminbutton.cpp
     testcases/widgets/ut_dwindowoptionbutton.cpp
     testcases/widgets/ut_dwindowquitfullbutton.cpp
+    testcases/widgets/ut_dcombobox.cpp
 )
 
 include(${PROJECT_SOURCE_DIR}/src/util/util.cmake)
