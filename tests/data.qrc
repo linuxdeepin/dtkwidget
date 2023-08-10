@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>data/titlebar-settings.json</file>
+        <file>data/example-license.json</file>
     </qresource>
 </RCC>

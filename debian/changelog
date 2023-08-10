@@ -1,3 +1,62 @@
+dtkwidget (5.6.14) unstable; urgency=medium
+
+  * fix: Button background lightness display error(Issue: #82)
+  * doc: update docs for dpasswordedit
+    Thanks to homehome(Task: 26)
+  * doc: update docs for dtabbar
+    Thanks to homehome(Issue: #94)
+  * refactor!: deprecate some interfaces in dtk6
+  * doc: update docs for dcombobox
+    Thanks to Skye-rs(Issue: #94, #1773136810)
+  * doc: A small change to Dcombobox
+    Thanks to Skye-rs
+  * doc: update docs for dsuggestbutton
+    Thanks to homehome(Issue: #94)
+  * doc: update docs for dwaterprogress
+    Thanks to homehome(Issue: #94)
+  * doc: update docs for dbaseexpand
+    Thanks to syn(Issue: #94)
+  * doc: update docs for diconbutton
+    Thanks to syn(Issue: #94)
+  * doc: update docs for dipv4lineedit
+    Thanks to Skye-rs(Issue: #94, #1773136810)
+  * doc: update docs for dbuttonbox
+    Thanks to LyYeeeYuwu(Issue: #94)
+  * fix: remove ut to support DTK6.0
+  * chore: Sync by https://github.com/linuxdeepin/.github/commit/559e91167d4919644f37bbcf123eb0651c1528ea(Influence: none)
+  * doc: update docs for dwarningbutton
+    Thanks to LyYeeeYuwu(Issue: #94)
+  * doc: update docs for dframe
+    Thanks to LyYeeeYuwu(Issue: #94)
+  * doc: update docs for dtoolbutton
+    Thanks to Skye-rs(Issue: #94)
+  * fix: the 'ValueChanged' signal was never emitted in dcircleprogress
+    Thanks to homehome
+  * doc: update docs for dspinbox
+    Thanks to syn(Issue: #94)
+  * doc: update docs for dsearchedit
+    Thanks to LyYeeeYuwu(Issue: #94)
+  * doc: update docs for dbaseline
+    Thanks to homehome(Issue: #94)
+  * doc: update docs for dcoloredprogressbar
+    Thanks to homehome(Issue: #94)
+  * doc: update docs for dprogressbar
+    Thanks to LyYeeeYuwu(Issue: #94)
+  * chore: reduce compilation warnings
+    Thanks to SPUER(Issue: #96)
+  * doc: update docs for dmessagemanager
+    Thanks to homehome(Issue: #94)
+  * Revert "fix: 修改内存泄露问题"
+  * fix: fix memory leak in danchors.cpp
+  * fix: to fix unused qrc file in UT
+  * feat: add some UT
+  * doc: update docs for dtextedit
+    Thanks to LyYeeeYuwu(Issue: #94)
+  * fix: fix the bug of the test-recoverage.sh
+  * chore: deprecate dhidpihelper
+
+ -- Deepin Packages Builder <packages@deepin.org>  Thu, 27 Jul 2023 06:56:38 +0000
+
 dtkwidget (5.6.13) unstable; urgency=medium
 
   * chore: change the text of the title on licensedialog

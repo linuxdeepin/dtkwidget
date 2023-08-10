@@ -61,6 +61,7 @@ set(WIDGET_TEST
     testcases/widgets/ut_dipv4lineedit.cpp
     testcases/widgets/ut_dkeysequenceedit.cpp
     testcases/widgets/ut_dlabel.cpp
+    testcases/widgets/ut_dlicensedialog.cpp
     testcases/widgets/ut_dlineedit.cpp
     testcases/widgets/ut_dlistview.cpp
     testcases/widgets/ut_dloadingindicator.cpp
@@ -92,6 +93,7 @@ set(WIDGET_TEST
     testcases/widgets/ut_dstyleoption.cpp
     testcases/widgets/ut_dsuggestbutton.cpp
     testcases/widgets/ut_dswitchbutton.cpp
+    testcases/widgets/ut_dswitchlineexpand.cpp
     testcases/widgets/ut_dtabbar.cpp
     testcases/widgets/ut_dtextedit.cpp
     testcases/widgets/ut_dtickeffect.cpp
@@ -107,6 +109,7 @@ set(WIDGET_TEST
     testcases/widgets/ut_dwindowminbutton.cpp
     testcases/widgets/ut_dwindowoptionbutton.cpp
     testcases/widgets/ut_dwindowquitfullbutton.cpp
+    testcases/widgets/ut_dcombobox.cpp
 )
 
 include(${PROJECT_SOURCE_DIR}/src/util/util.cmake)
@@ -116,6 +119,7 @@ set(RESCOUCES data.qrc)
 
 add_executable(${BINNAME}
     main.cpp
+    ${RESCOUCES}
     ${UTIL}
     ${WIDGETS}
     ${WIDGET_TEST}

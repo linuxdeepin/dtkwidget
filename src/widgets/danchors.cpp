@@ -378,37 +378,16 @@ public:
 
 class DAnchorsBasePrivate : public QSharedData
 {
+public:
     DAnchorsBasePrivate(DAnchorsBase *qq): q_ptr(qq) {}
     ~DAnchorsBasePrivate()
     {
-        doDestory();
-    }
-    void tryDestory()
-    {
-        // TODO 应该是析构函数调用, 当ref.load() == 1时，提前释放资源。
-#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
-        if (ref.loadRelaxed () == 1)
-#else
-        if (ref.load() == 1)
-#endif
-            doDestory();
-    }
-    void doDestory()
-    {
-#define SAFE_DELETE(pointer) \
-    if (pointer) { \
-        delete pointer; \
-        pointer = nullptr; \
-    }
-
-        SAFE_DELETE(top);
-        SAFE_DELETE(bottom);
-        SAFE_DELETE(left);
-        SAFE_DELETE(right);
-        SAFE_DELETE(horizontalCenter);
-        SAFE_DELETE(verticalCenter);
-
-#undef SAFE_DELETE
+        delete top;
+        delete bottom;
+        delete left;
+        delete right;
+        delete horizontalCenter;
+        delete verticalCenter;
     }
 
     static void setWidgetAnchorsBase(const QWidget *w, DAnchorsBase *b)
@@ -687,15 +666,6 @@ DAnchorsBase::DAnchorsBase(QWidget *w):
 DAnchorsBase::~DAnchorsBase()
 {
     DAnchorsBasePrivate::removeWidgetAnchorsBase(target(), this);
-    /** TODO dynamic_cast会报警告`QSharedData is not polymorphic`，因为没有虚函数.
-    因为由QExplicitlySharedDataPointer管理, QSharedData没有虚析构，
-    导致delete QSharedData时，不会调用子类~DAnchorsBasePrivate.
-    之后改成QExplicitlySharedDataPointer<DAnchorsBasePrivate> d_ptr，
-    d_ptr计数为0会调用~DAnchorsBasePrivate
-    */
-    if (auto p = reinterpret_cast<DAnchorsBasePrivate*>(d_ptr.data())) {
-        p->tryDestory();
-    }
 }
 
 QWidget *DAnchorsBase::target() const

@@ -442,9 +442,9 @@ void DAccessibilityChecker::setOutputFormat(DAccessibilityChecker::OutputFormat 
 
    \brief 日志格式枚举.
 
-   \value AssertFormat
+   \var AssertFormat
    断言日志，如检查到缺失，直接断言。
-   \value FullFormat
+   \var FullFormat
    全日志，全日志将所有的缺失信息显示到控制台中。
    \sa DAccessibilityChecker::outputFormat
  */
@@ -455,9 +455,9 @@ void DAccessibilityChecker::setOutputFormat(DAccessibilityChecker::OutputFormat 
   \brief 检测的角色.
 
   检测角色目前分为两种。
-  \value Widget
+  \var Widget
   所有继承自 QWidget 的小控件
-  \value ViewItem
+  \var ViewItem
   所有继承自 QStandardItem 的View Item项
  */
 

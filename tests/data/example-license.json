@@ -1,0 +1,32 @@
+[
+    {
+    "name": "pkg-config",
+    "version": "",
+    "copyright": "NOASSERTION",
+    "license": "MIT"
+    },
+    {
+    "name": "lshw",
+    "version": "",
+    "copyright": "NOASSERTION",
+    "license": "GPL-2"
+    },
+    {
+    "name": "debhelper",
+    "version": "",
+    "copyright": "NOASSERTION",
+    "license": "GPL-2"
+    },
+    {
+    "name": "pkg-config",
+    "version": "",
+    "copyright": "NOASSERTION",
+    "license": "MIT"
+    },
+    {
+    "name": "debhelper",
+    "version": "",
+    "copyright": "NOASSERTION",
+    "license": "GPL-2"
+    }
+]

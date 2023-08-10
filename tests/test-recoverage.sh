@@ -13,15 +13,15 @@ export ASAN_OPTIONS="halt_on_error=0"
 # back to project directroy
 cd ..
 
-cmake -Bbuild -DCMAKE_BUILD_TYPE=Debug 
+cmake -Bbuild -DCMAKE_BUILD_TYPE=Debug -GNinja
 
-cmake --build build --target ut-DtkWidget -j$(nproc)
+cmake --build build --target ut-dtkwidget
 
 cd $BUILD_DIR
 
-./ut-DtkWidget -gtest_output=xml:${XML_DIR}/report_dtkwidget.xml
+./ut-dtkwidget
 lcov -d ./ -c -o coverage_all.info
-lcov --extract coverage_all.info $EXTRACT_ARGS --output-file coverage.info
+
 filter_files=(
 # deprecated
 "*/src/widgets/dimagebutton*"
@@ -48,7 +48,8 @@ filter_files=(
 "*/dbusinterface.*"
 "*/ddesktopservices_linux.cpp"
 )
-lcov --remove coverage_all.info "*/tests/*" "*/usr/include*" "*build-ut/src*" ${filter_files[*]} --output-file coverage.info
+lcov --remove coverage_all.info "*/tests/*" "*/usr/include*" "*build/src*" ${filter_files[*]} --output-file coverage.info
 genhtml -o $HTML_DIR $BUILD_DIR/coverage.info && mv ${BUILD_DIR}/html/index.html ${BUILD_DIR}/html/cov_dtkwidget.html
 
 test -e ${BUILD_DIR}/asan.log* && mv ${BUILD_DIR}/asan.log* ${BUILD_DIR}/asan_dtkwidget.log || touch ${BUILD_DIR}/asan_dtkwidget.log
+
