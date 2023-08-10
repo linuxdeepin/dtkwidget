@@ -69,6 +69,7 @@ set(WIDGET_TEST
     testcases/widgets/ut_dmessagemanager.cpp
     testcases/widgets/ut_dmpriscontrol.cpp
     testcases/widgets/ut_dpageindicator.cpp
+    testcases/widgets/ut_dpalettehelper.cpp
     testcases/widgets/ut_dpasswordedit.cpp
     testcases/widgets/ut_dpicturesequenceview.cpp
     # TODO PREAK
