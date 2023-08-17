@@ -92,3 +92,8 @@ License: LGPL-3.0-or-later
 Files: *.ui
 Copyright: UnionTech Software Technology Co., Ltd.
 License: LGPL-3.0-or-later
+
+# test
+Files: tests/data/*
+Copyright: None
+License: CC0-1.0
