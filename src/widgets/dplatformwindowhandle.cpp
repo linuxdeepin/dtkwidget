@@ -6,8 +6,26 @@
 
 #include <QWidget>
 #include <QApplication>
+#include <QSurfaceFormat>
+#include <QWindow>
 
 DWIDGET_BEGIN_NAMESPACE
+
+static inline void ensureAlpha(QWidget *w)
+{
+    QWindow *handle = w->windowHandle();
+    if (!handle)
+        return;
+
+    QSurfaceFormat format = handle->requestedFormat();
+    if ((w->windowFlags() & Qt::Window) &&
+            handle->surfaceType() != QSurface::OpenGLSurface
+            && w->testAttribute(Qt::WA_TranslucentBackground)) {
+        format.setAlphaBufferSize(8);
+    }
+
+    handle->setFormat(format);
+}
 
 static QWindow *ensureWindowHandle(QWidget *widget)
 {
@@ -26,6 +44,9 @@ static QWindow *ensureWindowHandle(QWidget *widget)
         window->setAttribute(Qt::WA_NativeWindow);
         handle = window->windowHandle();
         window->setAttribute(Qt::WA_NativeWindow, false);
+
+        // FIX developer-center#5187 updateIsTranslucent
+        ensureAlpha(window);
 
         // dxcb version >= 1.1.6
         if (!DPlatformWindowHandle::pluginVersion().isEmpty()) {
