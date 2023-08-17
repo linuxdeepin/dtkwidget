@@ -103,6 +103,7 @@ set(WIDGET_TEST
     testcases/widgets/ut_dtoolbutton.cpp
     testcases/widgets/ut_dtooltip.cpp
     testcases/widgets/ut_dwarningbutton.cpp
+    testcases/widgets/ut_dwatermarkhelper.cpp
     # FIXME break
     # testcases/widgets/ut_dwaterprogress.cpp
     testcases/widgets/ut_dwindowclosebutton.cpp
