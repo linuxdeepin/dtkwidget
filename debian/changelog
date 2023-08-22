@@ -1,3 +1,11 @@
+dtkwidget (5.6.16) unstable; urgency=medium
+
+  * feat: add ut_dpalettehelper
+  * chore: add test for dwatermarkhelper
+  * fix: update dependency libfreetype-dev
+
+ -- Deepin Packages Builder <packages@deepin.org>  Tue, 22 Aug 2023 06:13:44 +0000
+
 dtkwidget (5.6.15) unstable; urgency=medium
 
   * chore: remove useless files
