@@ -68,6 +68,11 @@ public:
         Q_EMIT expandChanged(m_expanded);
     }
 
+    inline bool sectionVisible() const
+    {
+        return m_visible ? m_expanded : false;
+    }
+
     int width() const
     {
         return m_width;
