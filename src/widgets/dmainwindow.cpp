@@ -223,8 +223,12 @@ void DMainWindow::setSidebarWidget(QWidget *widget)
             tb->setVisible(expanded);
             d->updateTitleShadowGeometry();
         });
-        connect(d->sidebarHelper, &DSidebarHelper::visibleChanged, tb, &QToolBar::setVisible);
+        connect(d->sidebarHelper, &DSidebarHelper::visibleChanged, tb, [tb, d] {
+            tb->setVisible(d->sidebarHelper->sectionVisible());
+            d->updateTitleShadowGeometry();
+        });
         d->tb = tb;
+        d->sidebarHelper->setVisible(false);
     }
 
 }
