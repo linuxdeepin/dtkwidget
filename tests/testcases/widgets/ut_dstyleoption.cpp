@@ -95,6 +95,11 @@ TEST_F(ut_DFontSizeManager, t9)
     ASSERT_EQ(target->t9().pixelSize(), target->fontPixelSize(DFontSizeManager::T9));
 };
 
+TEST_F(ut_DFontSizeManager, t11)
+{
+    ASSERT_EQ(target->t11().pixelSize(), target->fontPixelSize(DFontSizeManager::T11));
+};
+
 class ut_DStyleOptionBackgroundGroup : public testing::Test
 {
 protected:

@@ -179,7 +179,7 @@ public:
     }
 
     QList<QWidget*> binderMap[DFontSizeManager::NSizeTypes];
-    quint16 fontPixelSize[DFontSizeManager::NSizeTypes] = {40, 30, 24, 20, 17, 14, 13, 12, 11, 10};
+    quint16 fontPixelSize[DFontSizeManager::NSizeTypes] = {40, 30, 24, 20, 16, 14, 13, 12, 11, 10, 8};
     quint8 fontGenericSizeType = DFontSizeManager::T6;
     // 字号的差值
     quint16 fontPixelSizeDiff = 0;
