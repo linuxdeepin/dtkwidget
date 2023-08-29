@@ -176,6 +176,7 @@ public:
         T8,
         T9,
         T10,
+        T11,
         NSizeTypes
     };
 
@@ -210,6 +211,8 @@ public:
     { return get(T9, base); }
     inline const QFont t10(const QFont &base = QFont()) const
     { return get(T10, base); }
+    inline const QFont t11(const QFont &base = QFont()) const
+    { return get(T11, base); }
 
     static int fontPixelSize(const QFont &font);
 
