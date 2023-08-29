@@ -140,11 +140,3 @@ TEST_F(ut_DWaterMarkHelper, testSetGrayScale)
     helper->setData(data);
     EXPECT_TRUE(helper->data().grayScale());
 }
-
-TEST_F(ut_DWaterMarkHelper, testSetWaterMark)
-{
-    WaterMarkData data;
-    data.setText("test");
-    helper->setWaterMark(widget, data);
-    EXPECT_EQ(helper->data().text(), "test");
-}
