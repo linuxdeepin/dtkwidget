@@ -94,7 +94,7 @@ Q_SIGNALS:
     void widthChanged(int width);
 
 private:
-    bool m_visible = true;
+    bool m_visible = false;
     bool m_expanded = true;
     int m_width = -1;
     QColor m_backgroundColor;

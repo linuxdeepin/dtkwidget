@@ -227,8 +227,9 @@ void DMainWindow::setSidebarWidget(QWidget *widget)
             tb->setVisible(d->sidebarHelper->sectionVisible());
             d->updateTitleShadowGeometry();
         });
+
         d->tb = tb;
-        d->sidebarHelper->setVisible(false);
+        d->sidebarHelper->setVisible(true);
     }
 
 }
