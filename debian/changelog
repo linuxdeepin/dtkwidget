@@ -1,3 +1,9 @@
+dtkwidget (5.6.17) unstable; urgency=medium
+
+  * Release 5.6.17
+
+ -- Deepin Packages Builder <packages@deepin.org>  Fri, 08 Sep 2023 15:19:50 +0800
+
 dtkwidget (5.6.16) unstable; urgency=medium
 
   * feat: add ut_dpalettehelper
