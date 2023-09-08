@@ -207,6 +207,9 @@ void DAlertControl::showAlertMessage(const QString &text, QWidget *follower, int
     if (!d->target)
         return;
 
+    if (text.isEmpty())
+        return;
+
     if (!d->tooltip) {
         d->tooltip = new DToolTip(text);
         d->tooltip->setObjectName("AlertTooltip");
