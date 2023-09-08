@@ -1,3 +1,26 @@
+dtkwidget (5.6.16) unstable; urgency=medium
+
+  * feat: add ut_dpalettehelper
+  * chore: add test for dwatermarkhelper
+  * fix: update dependency libfreetype-dev
+
+ -- Deepin Packages Builder <packages@deepin.org>  Tue, 22 Aug 2023 06:13:44 +0000
+
+dtkwidget (5.6.15) unstable; urgency=medium
+
+  * chore: remove useless files
+  * feat: Add UT for DComboBox
+  * doc: update docs for dfontcombobox 更新dfontcombobox的文档
+    Thanks to LyYeeeYuwu(Issue: #94)
+  * doc: update docs for dtooltip
+    Thanks to syn(Issue: #94)
+  * doc: update docs for dcircleprogress
+    Thanks to homehome(Issue: #94)
+  * doc: update docs for dcrumbedit
+    Thanks to LyYeeeYuwu(Issue: #94)
+
+ -- Yixue Wang <wangyixue@deepin.org>  Fri, 11 Aug 2023 14:03:59 +0800
+
 dtkwidget (5.6.14) unstable; urgency=medium
 
   * fix: Button background lightness display error(Issue: #82)

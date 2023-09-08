@@ -69,6 +69,7 @@ set(WIDGET_TEST
     testcases/widgets/ut_dmessagemanager.cpp
     testcases/widgets/ut_dmpriscontrol.cpp
     testcases/widgets/ut_dpageindicator.cpp
+    testcases/widgets/ut_dpalettehelper.cpp
     testcases/widgets/ut_dpasswordedit.cpp
     testcases/widgets/ut_dpicturesequenceview.cpp
     # TODO PREAK
@@ -102,6 +103,7 @@ set(WIDGET_TEST
     testcases/widgets/ut_dtoolbutton.cpp
     testcases/widgets/ut_dtooltip.cpp
     testcases/widgets/ut_dwarningbutton.cpp
+    testcases/widgets/ut_dwatermarkhelper.cpp
     # FIXME break
     # testcases/widgets/ut_dwaterprogress.cpp
     testcases/widgets/ut_dwindowclosebutton.cpp
@@ -110,6 +112,7 @@ set(WIDGET_TEST
     testcases/widgets/ut_dwindowoptionbutton.cpp
     testcases/widgets/ut_dwindowquitfullbutton.cpp
     testcases/widgets/ut_dcombobox.cpp
+    testcases/widgets/ut_dwatermarkwidget.cpp
 )
 
 include(${PROJECT_SOURCE_DIR}/src/util/util.cmake)

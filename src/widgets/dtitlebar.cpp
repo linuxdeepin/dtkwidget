@@ -1281,7 +1281,6 @@ void DTitlebar::setSidebarHelper(DSidebarHelper *helper)
         d->sidebarBackgroundWidget->setAutoFillBackground(true);
         d->sidebarBackgroundWidget->setBackgroundRole(DPalette::Button);
         d->sidebarBackgroundWidget->move(pos());
-        d->sidebarBackgroundWidget->show();
         d->sidebarBackgroundWidget->lower();
         d->leftLayout->addWidget(d->expandButton, 0, Qt::AlignLeft);
         connect(d->expandButton, &DIconButton::clicked, [this, d] (bool isExpanded) {
@@ -1293,9 +1292,11 @@ void DTitlebar::setSidebarHelper(DSidebarHelper *helper)
 
     connect(helper, &DSidebarHelper::visibleChanged, this, [this](bool visible){
         d_func()->expandButton->setVisible(visible);
+        d_func()->sidebarBackgroundWidget->setVisible(d_func()->sidebarHelper->sectionVisible());
     });
     connect(helper, &DSidebarHelper::expandChanged, this, [this](bool isExpanded){
         d_func()->sidebarBackgroundWidget->setVisible(isExpanded);
+        d_func()->expandButton->setChecked(isExpanded);
     });
     connect(helper, &DSidebarHelper::widthChanged, this, [this](int width){
         d_func()->sidebarBackgroundWidget->setFixedWidth(width);
