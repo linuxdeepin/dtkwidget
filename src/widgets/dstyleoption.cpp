@@ -17,11 +17,13 @@
 #include <private/qfont_p.h>
 
 #include <cmath>
-
 QT_BEGIN_NAMESPACE
+#if QT_VERSION < QT_VERSION_CHECK(6, 4, 2)
 extern bool qt_is_gui_used;
+#else
+extern bool qt_is_tty_app;
+#endif
 QT_END_NAMESPACE
-
 DWIDGET_BEGIN_NAMESPACE
 
 /*!
@@ -362,8 +364,11 @@ static int d_defaultDpi()
 {
     if (QCoreApplication::instance()->testAttribute(Qt::AA_Use96Dpi))
         return 96;
-
+#if QT_VERSION < QT_VERSION_CHECK(6, 4, 2)
     if (!qt_is_gui_used)
+#else
+    if (qt_is_tty_app)
+#endif
         return 75;
 
     //PI has not been initialised, or it is being initialised. Give a default dpi
