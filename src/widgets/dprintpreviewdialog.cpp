@@ -1681,6 +1681,9 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
         //判断当前打印机是否支持彩色打印，不支持彩色打印删除彩色打印选择选项，pdf不做判断
         QPlatformPrinterSupport *ps = QPlatformPrinterSupportPlugin::get();
         QPrintDevice currentDevice = ps->createPrintDevice(printDeviceCombo->currentText());
+        // Keep previous selection.
+        const int selectColorIndex = 0;
+        bool previousPrinterSelectColor = (supportedColorMode && (selectColorIndex == colorModeCombo->currentIndex()));
         colorModeCombo->clear();
         supportedColorMode = false;
         if (currentDevice.supportedColorModes().contains(QPrint::Color)) {
@@ -1709,6 +1712,12 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
         if (supportedColorMode) {
             colorModeCombo->setCurrentText(qApp->translate("DPrintPreviewDialogPrivate", "Color"));
             settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_TextColor, true);
+
+            // Refresh the current print ColorMode, clear() and blockSignals() cause
+            // the current ColorMode to be inconsistent with currentIndex().
+            if (previousPrinterSelectColor) {
+                _q_ColorModeChange(selectColorIndex);
+            }
         } else {
             colorModeCombo->setCurrentText(qApp->translate("DPrintPreviewDialogPrivate", "Grayscale"));
             settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_TextColor, false);
