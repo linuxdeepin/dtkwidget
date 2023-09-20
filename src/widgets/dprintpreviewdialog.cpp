@@ -1632,6 +1632,9 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
     paperSizeCombo->clear();
     paperSizeCombo->blockSignals(true);
     QString currentName = printDeviceCombo->itemText(index);
+    colorModeCombo->blockSignals(true);
+    colorModeCombo->clear();
+    colorModeCombo->blockSignals(false);
     if (isActualPrinter(currentName)) {
         //actual printer
         if (printer) {
@@ -1650,10 +1653,6 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
         //判断当前打印机是否支持彩色打印，不支持彩色打印删除彩色打印选择选项，pdf不做判断
         QPlatformPrinterSupport *ps = QPlatformPrinterSupportPlugin::get();
         QPrintDevice currentDevice = ps->createPrintDevice(printDeviceCombo->currentText());
-        // Keep previous selection.
-        const int selectColorIndex = 0;
-        bool previousPrinterSelectColor = (supportedColorMode && (selectColorIndex == colorModeCombo->currentIndex()));
-        colorModeCombo->clear();
         supportedColorMode = false;
         if (currentDevice.supportedColorModes().contains(QPrint::Color)) {
             if (!isInited) {
@@ -1664,6 +1663,8 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
             }
             colorModeCombo->blockSignals(true);
             colorModeCombo->addItem(qApp->translate("DPrintPreviewDialogPrivate", "Color"));
+            // Ensure that the signal CurrentIndexChanged is triggered afterwards
+            colorModeCombo->setCurrentIndex(-1);
             colorModeCombo->blockSignals(false);
             updateSubControlSettings(DPrintPreviewSettingInfo::PS_ColorMode);
             supportedColorMode = true;
@@ -1671,6 +1672,8 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
         if (currentDevice.supportedColorModes().contains(QPrint::GrayScale)) {
             colorModeCombo->blockSignals(true);
             colorModeCombo->addItem(qApp->translate("DPrintPreviewDialogPrivate", "Grayscale"));
+            // Ensure that the signal CurrentIndexChanged is triggered afterwards
+            colorModeCombo->setCurrentIndex(-1);
             colorModeCombo->blockSignals(false);
             updateSubControlSettings(DPrintPreviewSettingInfo::PS_ColorMode);
             waterColor = QColor("#6f6f6f");
@@ -1681,12 +1684,6 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
         if (supportedColorMode) {
             colorModeCombo->setCurrentText(qApp->translate("DPrintPreviewDialogPrivate", "Color"));
             settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_TextColor, true);
-
-            // Refresh the current print ColorMode, clear() and blockSignals() cause
-            // the current ColorMode to be inconsistent with currentIndex().
-            if (previousPrinterSelectColor) {
-                _q_ColorModeChange(selectColorIndex);
-            }
         } else {
             colorModeCombo->setCurrentText(qApp->translate("DPrintPreviewDialogPrivate", "Grayscale"));
             settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_TextColor, false);
@@ -1699,8 +1696,11 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
         duplexCombo->clear();
         settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_DuplexWidget, false);
         settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_TextColor, true);
-        if (colorModeCombo->count() == 1)
-            colorModeCombo->insertItem(0, qApp->translate("DPrintPreviewDialogPrivate", "Color"));
+        colorModeCombo->blockSignals(true);
+        colorModeCombo->addItem(qApp->translate("DPrintPreviewDialogPrivate", "Color"));
+        colorModeCombo->addItem(qApp->translate("DPrintPreviewDialogPrivate", "Grayscale"));
+        // Ensure that the signal CurrentIndexChanged is triggered afterwards
+        colorModeCombo->setCurrentIndex(-1);
         updateSubControlSettings(DPrintPreviewSettingInfo::PS_ColorMode);
         colorModeCombo->blockSignals(false);
         colorModeCombo->setCurrentIndex(0);
