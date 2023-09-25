@@ -11,9 +11,11 @@
 #include <QtAlgorithms>
 #include <QPaintEngine>
 #include <DWidgetUtil>
+#include <DIconTheme>
 
 #include <cups/cups.h>
 #include <cups/ppd.h>
+
 
 #define FIRST_PAGE 1
 #define FIRST_INDEX 0
@@ -28,6 +30,7 @@
 #define WATER_DEFAULTFONTSIZE 65
 #define WATER_TEXTSPACE WATER_DEFAULTFONTSIZE
 
+DGUI_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
 static void saveImageToFile(int index, const QString &outPutFileName, const QString &suffix, bool isJpegImage, const QImage &srcImage)
@@ -2371,7 +2374,7 @@ GraphicsView::GraphicsView(QWidget *parent)
 
     scaleResetButton = new DIconButton(this);
     scaleResetButton->setFixedSize(36, 36);
-    scaleResetButton->setIcon(QIcon::fromTheme("print_previewscale"));
+    scaleResetButton->setIcon(DIconTheme::findQIcon("print_previewscale"));
     scaleResetButton->setIconSize(QSize(18, 18));
     scaleResetButton->setVisible(false);
 

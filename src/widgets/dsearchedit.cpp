@@ -10,6 +10,7 @@
 
 #include <DSysInfo>
 #include <DGuiApplicationHelper>
+#include <DIconTheme>
 #undef ENABLE_AI
 
 #ifdef ENABLE_AI
@@ -36,6 +37,7 @@
 
 DWIDGET_BEGIN_NAMESPACE
 DCORE_USE_NAMESPACE
+DGUI_USE_NAMESPACE
 
 #ifdef ENABLE_AI
 class VoiceDevice : public QIODevice
@@ -291,7 +293,7 @@ void DSearchEditPrivate::init()
 
     action = new QAction(q);
     action->setObjectName("_d_search_leftAction");
-    action->setIcon(QIcon::fromTheme("search_indicator"));
+    action->setIcon(DIconTheme::findQIcon("search_indicator"));
     q->lineEdit()->addAction(action, QLineEdit::LeadingPosition);
     action->setVisible(false);
     iconbtn->setIconSize(QSize(20, 20));
@@ -345,7 +347,7 @@ void DSearchEditPrivate::init()
 
 #ifdef ENABLE_AI
     voiceAction = new QAction(q);
-    voiceAction->setIcon(QIcon::fromTheme("button_voice"));
+    voiceAction->setIcon(DIconTheme::findQIcon("button_voice"));
     voiceAction->setCheckable(true);
     voiceAction->setEnabled(false);
     lineEdit->addAction(voiceAction, QLineEdit::TrailingPosition);
@@ -398,7 +400,7 @@ void DSearchEditPrivate::_q_onVoiceActionTrigger(bool checked)
 {
 #if (!defined DTK_NO_MULTIMEDIA) && (defined ENABLE_AI)
     if (checked) {
-        voiceAction->setIcon(QIcon::fromTheme("button_voice_active"));
+        voiceAction->setIcon(DIconTheme::findQIcon("button_voice_active"));
 
         if (!voiceInput) {
             QAudioFormat format;
@@ -430,7 +432,7 @@ void DSearchEditPrivate::_q_onVoiceActionTrigger(bool checked)
         if (voiceIODevice->open(QIODevice::WriteOnly))
             voiceInput->start(voiceIODevice);
     } else {
-        voiceAction->setIcon(QIcon::fromTheme("button_voice"));
+        voiceAction->setIcon(DIconTheme::findQIcon("button_voice"));
 
         if (voiceInput) {
             voiceInput->stop();

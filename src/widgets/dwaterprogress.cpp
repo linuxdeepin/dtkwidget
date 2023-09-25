@@ -13,11 +13,12 @@
 #include <QIcon>
 #include <QLinearGradient>
 
+#include <DIconTheme>
 #include <DObjectPrivate>
 #include <DSvgRenderer>
 
 DCORE_USE_NAMESPACE
-
+DGUI_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
 struct Pop {
@@ -175,7 +176,7 @@ void DWaterProgressPrivate::resizePixmap(QSize sz)
     auto waterSize = QSizeF(waterWidth, waterHeight).toSize();
 
     if (waterFrontImage.size() != waterSize) {
-        QIcon renderer = QIcon::fromTheme("water_front");
+        QIcon renderer = DIconTheme::findQIcon("water_front");
         QImage image(waterWidth, waterHeight, QImage::Format_ARGB32);
         image.fill(Qt::transparent);  // partly transparent red-ish background
         QPainter waterPainter(&image);
@@ -183,7 +184,7 @@ void DWaterProgressPrivate::resizePixmap(QSize sz)
         waterFrontImage = image;
     }
     if (waterBackImage.size() != waterSize) {
-        QIcon renderer = QIcon::fromTheme("water_back");
+        QIcon renderer = DIconTheme::findQIcon("water_back");
         QImage image(waterWidth, waterHeight, QImage::Format_ARGB32);
         image.fill(Qt::transparent);  // partly transparent red-ish background
         QPainter waterPainter(&image);
