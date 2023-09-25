@@ -16,6 +16,7 @@
 #include <QPainter>
 #include <QBitmap>
 
+#include <DIconTheme>
 #include <DListView>
 #include <DHorizontalLine>
 #include <DIconButton>
@@ -372,7 +373,7 @@ void DCollapseWidget::initExpandButton()
     m_expandButton->setObjectName("expandButton");
     m_expandButton->setFixedSize(36, 36);
     m_expandButton->setIconSize(QSize(36, 36));
-    m_expandButton->setIcon(QIcon::fromTheme("fold"));
+    m_expandButton->setIcon(DIconTheme::findQIcon("fold"));
     m_expandButton->setFlat(false);
     m_mainHLayout->insertWidget(m_mainHLayout->count(), m_expandButton);
     connect(m_expandButton, &QPushButton::clicked, this, [this] {
@@ -875,7 +876,7 @@ void DToolbarEditPanel::addWidgetToSelectionZone(const QString &id)
     Q_ASSERT(tool);
 
     IconTextWidget * customWidget = new IconTextWidget(new SelectionZoneWidget(id), id, m_selectZoneView);
-    customWidget->setContent(QIcon::fromTheme(tool->iconName()), tool->description());
+    customWidget->setContent(DIconTheme::findQIcon(tool->iconName()), tool->description());
     m_flowLayout->addWidget(customWidget);
 }
 

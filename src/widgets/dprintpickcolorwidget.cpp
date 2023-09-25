@@ -20,6 +20,7 @@
 #include <QRegularExpressionValidator>
 #include <QKeyEvent>
 #include <DWindowManagerHelper>
+#include <DIconTheme>
 
 #define PICKCOLOR_RADIUS 8
 const int IMAGE_HEIGHT = 10;
@@ -112,7 +113,7 @@ void DPrintPickColorWidget::initUI()
     bEdit->setClearButtonEnabled(false);
     pickColorBtn = new DIconButton(this);
     pickColorBtn->setFixedSize(55, 36);
-    pickColorBtn->setIcon(QIcon::fromTheme("dorpper_normal"));
+    pickColorBtn->setIcon(DIconTheme::findQIcon("dorpper_normal"));
     pickColorBtn->setIconSize(QSize(32, 32));
     pickColorBtn->setEnabled(DWindowManagerHelper::instance()->hasComposite());
     rgbPickColorLayout->addWidget(rgbLabel);
