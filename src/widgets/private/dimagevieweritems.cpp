@@ -11,6 +11,7 @@
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
+#include <DIconTheme>
 
 DGUI_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
@@ -447,20 +448,20 @@ void DGraphicsCropItem::drawCornerHandle(QPainter *painter)
         painter->resetTransform();
 
         // Draw four corner handles.
-        QPixmap cornerPixmap = QIcon::fromTheme("selection_topleft").pixmap(QSize(pixWidth, pixWidth));
+        QPixmap cornerPixmap = DIconTheme::findQIcon("selection_topleft").pixmap(QSize(pixWidth, pixWidth));
         QRectF cornerRect = QRectF(painterTopLeft + QPointF(-offset, -offset), painterTopLeft + QPointF(pixWidth, pixWidth));
         painter->drawPixmap(cornerRect, cornerPixmap, QRectF(0, 0, cornerPixmap.width(), cornerPixmap.height()));
 
-        cornerPixmap = QIcon::fromTheme("selection_topright").pixmap(QSize(pixWidth, pixWidth));
+        cornerPixmap = DIconTheme::findQIcon("selection_topright").pixmap(QSize(pixWidth, pixWidth));
         cornerRect =
             QRectF(QPointF(painterBottomRight.x() - offsetWidth, painterTopLeft.y() - offset), QSizeF(pixWidth, pixWidth));
         painter->drawPixmap(cornerRect, cornerPixmap, QRectF(0, 0, cornerPixmap.width(), cornerPixmap.height()));
 
-        cornerPixmap = QIcon::fromTheme("selection_bottomright").pixmap(QSize(pixWidth, pixWidth));
+        cornerPixmap = DIconTheme::findQIcon("selection_bottomright").pixmap(QSize(pixWidth, pixWidth));
         cornerRect = QRectF(rct.bottomRight() + QPointF(-pixWidth, -pixWidth), rct.bottomRight() + QPointF(offset, offset));
         painter->drawPixmap(cornerRect, cornerPixmap, QRectF(0, 0, cornerPixmap.width(), cornerPixmap.height()));
 
-        cornerPixmap = QIcon::fromTheme("selection_bottomleft").pixmap(QSize(pixWidth, pixWidth));
+        cornerPixmap = DIconTheme::findQIcon("selection_bottomleft").pixmap(QSize(pixWidth, pixWidth));
         cornerRect = QRectF(QPointF(rct.x() - offset, rct.y() + rct.height() - offsetWidth), QSizeF(pixWidth, pixWidth));
         painter->drawPixmap(cornerRect, cornerPixmap, QRectF(0, 0, cornerPixmap.width(), cornerPixmap.height()));
 

@@ -11,6 +11,7 @@
 #include "dsizemode.h"
 
 #include <DGuiApplicationHelper>
+#include <DIconTheme>
 
 #include <QStyleOption>
 #include <QTextLayout>
@@ -1834,76 +1835,76 @@ case static_cast<uint32_t>(SP_##Value): { \
         CASE_ICON(SelectElement)
 
     case SP_IndicatorUnchecked:
-        return QIcon::fromTheme("unselected_indicator");
+        return DIconTheme::findQIcon("unselected_indicator");
     case SP_IndicatorChecked: {
         bool checked = opt && (opt->state & QStyle::State_Selected);
-        const QIcon &sci = QIcon::fromTheme("selected_checked_indicator");
+        const QIcon &sci = DIconTheme::findQIcon("selected_checked_indicator");
         bool useNewIcon = checked && !sci.isNull();
-        const QIcon &icon = useNewIcon ? sci : QIcon::fromTheme("selected_indicator");
+        const QIcon &icon = useNewIcon ? sci : DIconTheme::findQIcon("selected_indicator");
         DStyledIconEngine *icon_engine = new DStyledIconEngine(std::bind(DStyledIconEngine::drawIcon, icon, std::placeholders::_1, std::placeholders::_2), QStringLiteral("IndicatorChecked"));
         icon_engine->setFrontRole(widget, useNewIcon ? DPalette::HighlightedText : DPalette::Highlight );
         return QIcon(icon_engine);
     }
     case SP_DeleteButton:
-        return QIcon::fromTheme("list_delete");
+        return DIconTheme::findQIcon("list_delete");
     case SP_AddButton:
-        return QIcon::fromTheme("list_add");
+        return DIconTheme::findQIcon("list_add");
     case SP_ForkElement:
-        return QIcon::fromTheme("fork_indicator");
+        return DIconTheme::findQIcon("fork_indicator");
     case SP_CloseButton:
-        return QIcon::fromTheme("window-close_round");
+        return DIconTheme::findQIcon("window-close_round");
     case SP_DecreaseElement:
-        return QIcon::fromTheme("button_reduce");
+        return DIconTheme::findQIcon("button_reduce");
     case SP_IncreaseElement:
-        return QIcon::fromTheme("button_add");
+        return DIconTheme::findQIcon("button_add");
     case SP_MarkElement:
-        return QIcon::fromTheme("mark_indicator");
+        return DIconTheme::findQIcon("mark_indicator");
     case SP_UnlockElement:
-        return QIcon::fromTheme("unlock_indicator");
+        return DIconTheme::findQIcon("unlock_indicator");
     case SP_LockElement:
-        return QIcon::fromTheme("lock_indicator");
+        return DIconTheme::findQIcon("lock_indicator");
     case SP_ExpandElement:
-        return QIcon::fromTheme("go-up");
+        return DIconTheme::findQIcon("go-up");
     case SP_ReduceElement:
-        return QIcon::fromTheme("go-down");
+        return DIconTheme::findQIcon("go-down");
     case SP_ArrowEnter:
         return style->standardIcon(SP_ArrowForward);
     case SP_ArrowNext:
-        return QIcon::fromTheme("next_indicator");
+        return DIconTheme::findQIcon("next_indicator");
     case SP_ArrowLeave:
         return style->standardIcon(SP_ArrowBack);
     case SP_ArrowPrev:
-        return QIcon::fromTheme("prev_indicator");
+        return DIconTheme::findQIcon("prev_indicator");
     case SP_EditElement:
-        return QIcon::fromTheme("edit");
+        return DIconTheme::findQIcon("edit");
     case SP_MediaVolumeLowElement:
-        return QIcon::fromTheme("audio-volume-low");
+        return DIconTheme::findQIcon("audio-volume-low");
     case SP_MediaVolumeHighElement:
-        return QIcon::fromTheme("audio-volume-medium");
+        return DIconTheme::findQIcon("audio-volume-medium");
     case SP_MediaVolumeMutedElement:
-        return QIcon::fromTheme("audio-volume-muted");
+        return DIconTheme::findQIcon("audio-volume-muted");
     case SP_MediaVolumeLeftElement:
-        return QIcon::fromTheme("audio-volume-left");
+        return DIconTheme::findQIcon("audio-volume-left");
     case SP_MediaVolumeRightElement:
-        return QIcon::fromTheme("audio-volume-right");
+        return DIconTheme::findQIcon("audio-volume-right");
     case SP_IndicatorMajuscule:
-        return QIcon::fromTheme("caps_lock");
+        return DIconTheme::findQIcon("caps_lock");
     case SP_ShowPassword:
-        return QIcon::fromTheme("password_show");
+        return DIconTheme::findQIcon("password_show");
     case SP_HidePassword:
-        return QIcon::fromTheme("password_hide");
+        return DIconTheme::findQIcon("password_hide");
     case SP_IndicatorSearch:
-        return QIcon::fromTheme("search_indicator");
+        return DIconTheme::findQIcon("search_indicator");
     case SP_TitleMoreButton:
-        return QIcon::fromTheme("titlebar_more");
+        return DIconTheme::findQIcon("titlebar_more");
     case SP_Title_SS_LeftButton:
-        return QIcon::fromTheme("splitscreen_left");
+        return DIconTheme::findQIcon("splitscreen_left");
     case SP_Title_SS_RightButton:
-        return QIcon::fromTheme("splitscreen_right");
+        return DIconTheme::findQIcon("splitscreen_right");
     case SP_Title_SS_ShowNormalButton:
-        return QIcon::fromTheme("splitscreen_shownormal");
+        return DIconTheme::findQIcon("splitscreen_shownormal");
     case SP_Title_SS_ShowMaximizeButton:
-        return QIcon::fromTheme("splitscreen_showmaximize");
+        return DIconTheme::findQIcon("splitscreen_showmaximize");
     default:
         break;
     }
@@ -2263,10 +2264,10 @@ QIcon DStyle::standardIcon(QStyle::StandardPixmap st, const QStyleOption *opt, c
         CASE_ICON(TitleBarNormalButton)
         CASE_ICON(TitleQuitFullButton)
     case SP_LineEditClearButton:
-        return QIcon::fromTheme("button_edit-clear");
+        return DIconTheme::findQIcon("button_edit-clear");
     case SP_CommandLink:
-            return QIcon::fromTheme(QLatin1String("go-next"),
-                                    QIcon::fromTheme(QLatin1String("forward")));
+            return DIconTheme::findQIcon(QLatin1String("go-next"),
+                                    DIconTheme::findQIcon(QLatin1String("forward")));
     default:
         break;
     }
