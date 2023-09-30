@@ -83,8 +83,8 @@ private:
 #ifndef QT_NO_MENU
     void _q_addDefaultMenuItems();
     void _q_helpActionTriggered();
-    void _q_feedbackActionTriggerd();
-    void _q_toolBarActionTriggerd();
+    void _q_feedbackActionTriggered();
+    void _q_toolBarActionTriggered();
     void _q_aboutActionTriggered();
     void _q_quitActionTriggered();
     void _q_switchThemeActionTriggered(QAction*action);
@@ -680,7 +680,7 @@ void DTitlebarPrivate::_q_addDefaultMenuItems()
     // add feedback menu item for deepin or uos application
     if (!feedbackAction && qApp->organizationName() == "deepin" && !QStandardPaths::findExecutable("deepin-feedback").isEmpty()) {
         feedbackAction = new QAction(qApp->translate("TitleBarMenu", "Feedback"), menu);
-        QObject::connect(feedbackAction, SIGNAL(triggered(bool)), q, SLOT(_q_feedbackActionTriggerd()));
+        QObject::connect(feedbackAction, SIGNAL(triggered(bool)), q, SLOT(_q_feedbackActionTriggered()));
         menu->addAction(feedbackAction);
     }
 
@@ -688,7 +688,7 @@ void DTitlebarPrivate::_q_addDefaultMenuItems()
     if (titlebarSettingsImpl && titlebarSettingsImpl->isValid() && !toolbarAction) {
         toolbarAction = new QAction(qApp->translate("TitleBarMenu", "Custom toolbar"), menu);
         toolbarAction->setObjectName("TitlebarSettings");
-        QObject::connect(toolbarAction, SIGNAL(triggered(bool)), q, SLOT(_q_toolBarActionTriggerd()));
+        QObject::connect(toolbarAction, SIGNAL(triggered(bool)), q, SLOT(_q_toolBarActionTriggered()));
         menu->addAction(toolbarAction);
     }
 
@@ -717,11 +717,11 @@ void DTitlebarPrivate::_q_helpActionTriggered()
     }
 }
 
-void DTitlebarPrivate::_q_feedbackActionTriggerd() {
+void DTitlebarPrivate::_q_feedbackActionTriggered() {
     QProcess::startDetached("deepin-feedback", { qApp->applicationName() });
 }
 
-void DTitlebarPrivate::_q_toolBarActionTriggerd()
+void DTitlebarPrivate::_q_toolBarActionTriggered()
 {
     D_Q(DTitlebar);
 
