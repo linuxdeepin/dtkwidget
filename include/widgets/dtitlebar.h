@@ -123,11 +123,11 @@ private:
 #ifndef QT_NO_MENU
     D_PRIVATE_SLOT(void _q_addDefaultMenuItems())
     D_PRIVATE_SLOT(void _q_helpActionTriggered())
-    D_PRIVATE_SLOT(void _q_feedbackActionTriggerd())
+    D_PRIVATE_SLOT(void _q_feedbackActionTriggered())
     D_PRIVATE_SLOT(void _q_aboutActionTriggered())
     D_PRIVATE_SLOT(void _q_quitActionTriggered())
     D_PRIVATE_SLOT(void _q_switchThemeActionTriggered(QAction*))
-    D_PRIVATE_SLOT(void _q_toolBarActionTriggerd())
+    D_PRIVATE_SLOT(void _q_toolBarActionTriggered())
 #endif
 };
 
