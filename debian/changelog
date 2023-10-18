@@ -1,3 +1,16 @@
+dtkwidget (5.6.18) unstable; urgency=medium
+
+  * fix: ColorMode may be inconsistent with settings.(Bug: 219201)(Influence: PrintPreview)
+  * chore: correct typos about action slots
+    Thanks to Felix Yan
+  * feat: use DIconTheme::findQIcon(Issue: #4112)
+  * fix: 修复打印预览，切换打印机的时候预览图颜色显示异常
+    Thanks to zhangkun(Bug: 220315)(Influence: 打印预览切换打印机时预览图的颜色表现)
+  * doc: update docs for denhancedwidget
+    Thanks to syn(Issue: #94)
+
+ -- Deepin Packages Builder <packages@deepin.org>  Wed, 18 Oct 2023 06:01:44 +0000
+
 dtkwidget (5.6.17) unstable; urgency=medium
 
   * Release 5.6.17
