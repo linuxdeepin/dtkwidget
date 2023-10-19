@@ -428,6 +428,7 @@ void DTitlebarPrivate::init()
     separator       = new DHorizontalLine(q);
     titleLabel      = centerArea;
     titleLabel->setElideMode(Qt::ElideMiddle);
+    titleLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
 
     minButton->installEventFilter(q);
     maxButton->installEventFilter(q);
@@ -1411,6 +1412,21 @@ bool DTitlebar::eventFilter(QObject *obj, QEvent *event)
             d->setFixedButtonsEnabled(true);
         }
     }
+
+    if (event->type() == QEvent::ToolTip
+            && d->maxButton->isVisible()
+            && d->maxButton->isEnabled()
+            && QRect(d->maxButton->mapToGlobal(d->maxButton->pos()) - d->maxButton->pos(), d->maxButton->size()).contains(QCursor::pos())
+            && splitScreenIsEnabled()
+            && !d->splitWidget) {
+        d->showSplitScreenWidget();
+    }
+    if (!QRect(d->maxButton->mapToGlobal(d->maxButton->pos()) - d->maxButton->pos(), d->maxButton->size()).contains(QCursor::pos())
+            && d->splitWidget
+            && !QRect(d->splitWidget->mapToGlobal(d->splitWidget->pos()) - d->splitWidget->pos(), d->splitWidget->size()).contains(QCursor::pos())) {
+        d->hideSplitScreenWidget();
+    }
+
     return QWidget::eventFilter(obj, event);
 }
 
