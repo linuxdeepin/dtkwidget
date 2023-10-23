@@ -11,6 +11,7 @@
 #include "dsizemode.h"
 
 #include <DGuiApplicationHelper>
+#include <DConfig>
 
 #include <QStyleOption>
 #include <QTextLayout>
@@ -32,6 +33,7 @@ QT_BEGIN_NAMESPACE
 extern Q_WIDGETS_EXPORT void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, bool quality, bool alphaOnly, int transposed = 0);
 QT_END_NAMESPACE
 
+DCORE_USE_NAMESPACE
 DGUI_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
@@ -161,6 +163,57 @@ void DStyle::setUncheckedItemIndicatorVisible(QWidget *widget, bool visible)
 void DStyle::setRedPointVisible(QObject *object, bool visible)
 {
     object->setProperty("_d_menu_item_redpoint", visible);
+}
+
+void DStyle::setShortcutUnderlineVisible(bool visible)
+{
+    qApp->setProperty("_d_menu_underlineshortcut", visible);
+}
+
+static inline bool hasConfig(const QString &key, bool fallback = false)
+{
+    DConfig config("org.deepin.dtk.preference");
+    return config.value(key, fallback).toBool();
+}
+
+static inline bool hasProperty(const char *key, std::function<bool()> fallback)
+{
+    const QVariant &prop = qApp->property(key);
+    if (prop.isValid())
+        return prop.toBool();
+
+    return fallback();
+}
+
+static inline bool hasEnv(const char *key, std::function<bool()> fallback)
+{
+    if (qEnvironmentVariableIsSet(key))
+        return true;
+
+    return fallback();
+}
+
+bool DStyle::shortcutUnderlineVisible()
+{
+    return hasEnv("D_MENU_UNDERLINESHORTCUT", []()->bool {
+        return hasProperty("_d_menu_underlineshortcut", []()->bool {
+            return hasConfig("underlineShortcut");
+        });
+    });
+}
+
+void DStyle::setMenuKeyboardSearchDisabled(bool disabled)
+{
+    qApp->setProperty("_d_menu_keyboardsearch_disabled", disabled);
+}
+
+bool DStyle::isMenuKeyboardSearchDisabled()
+{
+    return hasEnv("D_MENU_DISABLE_KEYBOARDSEARCH", []()->bool {
+        return hasProperty("_d_menu_keyboardsearch_disabled", []()->bool {
+            return hasConfig("keyboardsearchDisabled");
+        });
+    });
 }
 
 namespace DDrawUtils {
@@ -1916,9 +1969,14 @@ case static_cast<uint32_t>(SP_##Value): { \
 int DStyle::styleHint(QStyle::StyleHint sh, const QStyleOption *opt, const QWidget *w, QStyleHintReturn *shret) const
 {
     switch (sh) {
+    case SH_UnderlineShortcut: {
+        return shortcutUnderlineVisible();
+    }
+    case SH_Menu_KeyboardSearch: {
+        return !isMenuKeyboardSearchDisabled();
+    }
     case SH_ScrollBar_MiddleClickAbsolutePosition:
     case SH_FontDialog_SelectAssociatedText:
-    case SH_Menu_KeyboardSearch:
     case SH_Menu_Scrollable:
     case SH_Menu_SloppySubMenus:
     case SH_ComboBox_ListMouseTracking:
@@ -1941,7 +1999,6 @@ int DStyle::styleHint(QStyle::StyleHint sh, const QStyleOption *opt, const QWidg
     case SH_Slider_SnapToValue:
     case SH_Menu_AllowActiveAndDisabled:
     case SH_BlinkCursorWhenTextSelected:
-    case SH_UnderlineShortcut:
     case SH_ItemView_PaintAlternatingRowColorsForEmptyArea:
     case SH_ComboBox_AllowWheelScrolling:
         return false;
