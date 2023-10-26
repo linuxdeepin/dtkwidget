@@ -1,0 +1,11 @@
+# Paths that will be exclude from synchronize workflow
+# Please use relative path which use project directory as root
+# Notice that
+#   * .git
+#   * debian
+#   * archlinux
+#   * .obs
+#   * .github
+# are always ignored
+linglong.yaml
+conanfile.py
