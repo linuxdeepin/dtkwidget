@@ -9,7 +9,7 @@ Copyright: None
 License: CC0-1.0
 
 # gitignore
-Files: .gitignore
+Files: .gitignore .syncexclude
 Copyright: None
 License: CC0-1.0
 
