@@ -11,7 +11,9 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class DDesktopServices
+class
+    D_DECL_DEPRECATED_X("Use Dtk::Gui::DDesktopServices")
+    DDesktopServices
 {
 public:
 
