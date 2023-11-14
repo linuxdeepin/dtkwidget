@@ -41,6 +41,7 @@ public:
     QLabel *productNameLabel = nullptr;
     QLabel *versionLabel = nullptr;
     QLabel *descriptionLabel = nullptr;
+    QLabel *licenseTipLabel = nullptr;
     QLabel *licenseLabel = nullptr;
     QLabel *companyLogoLabel = nullptr;
     QLabel *websiteLabel = nullptr;
