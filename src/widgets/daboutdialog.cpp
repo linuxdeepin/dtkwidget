@@ -33,7 +33,7 @@
 DCORE_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
-const QString DAboutDialogPrivate::websiteLinkTemplate = "<a href='%1' style='text-decoration: none; font-size:13px; color: #004EE5;'>%2</a>";
+const QString DAboutDialogPrivate::websiteLinkTemplate = "<a href='%1' style='text-decoration: none; font-size:12px; color: #004EE5;'>%2</a>";
 
 DRedPointLabel::DRedPointLabel(QWidget *parent)
     : QLabel(parent)
@@ -63,7 +63,7 @@ void DAboutDialogPrivate::init()
 {
     D_Q(DAboutDialog);
 
-    q->setMaximumWidth(540);
+    q->setFixedSize(540, 290);
 
     // overwrite default info if distribution config file existed.
     loadDistributionInfo();
@@ -72,16 +72,19 @@ void DAboutDialogPrivate::init()
     logoLabel->setContentsMargins(0, 0, 0, 0);
 
     productNameLabel = new QLabel();
+    productNameLabel->setForegroundRole(QPalette::BrightText);
     productNameLabel->setObjectName("ProductNameLabel");
     DFontSizeManager *fontManager =  DFontSizeManager::instance();
-    fontManager->bind(productNameLabel, DFontSizeManager::T5, QFont::DemiBold);
+    fontManager->bind(productNameLabel, DFontSizeManager::T5, QFont::Medium);
 
     versionLabel = new QLabel();
     versionLabel->setObjectName("VersionLabel");
-    fontManager->bind(versionLabel, DFontSizeManager::T8, QFont::DemiBold);
+    versionLabel->setForegroundRole(QPalette::BrightText);
+    fontManager->bind(versionLabel, DFontSizeManager::T8, QFont::Medium);
 
     companyLogoLabel = new QLabel();
     companyLogoLabel->setPixmap(loadPixmap(logoPath));
+    companyLogoLabel->hide();
 
     websiteLabel = new QLabel();
     websiteLabel->setObjectName("WebsiteLabel");
@@ -90,24 +93,26 @@ void DAboutDialogPrivate::init()
     updateWebsiteLabel();
 
     descriptionLabel = new QLabel();
+    descriptionLabel->setForegroundRole(QPalette::BrightText);
     descriptionLabel->setFixedWidth(280);
     descriptionLabel->setObjectName("DescriptionLabel");
     descriptionLabel->setAlignment(Qt::AlignLeft);
     descriptionLabel->setWordWrap(true);
     descriptionLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-    fontManager->bind(descriptionLabel, DFontSizeManager::T8, QFont::DemiBold);
+    fontManager->bind(descriptionLabel, DFontSizeManager::T8, QFont::Medium);
 
     licenseLabel = new QLabel();
-    licenseLabel->setFixedWidth(180);
     licenseLabel->setObjectName("LicenseLabel");
-    licenseLabel->setAlignment(Qt::AlignHCenter);
     licenseLabel->setWordWrap(true);
+    licenseLabel->setForegroundRole(QPalette::BrightText);
+    licenseLabel->setFixedWidth(280);
+    licenseLabel->setAlignment(Qt::AlignLeft);
     licenseLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    fontManager->bind(licenseLabel, DFontSizeManager::T8, QFont::Medium);
     licenseLabel->hide();
-    fontManager->bind(licenseLabel, DFontSizeManager::T10, QFont::Medium);
 
     QLabel *versionTipLabel = new QLabel(QObject::tr("Version"));
-    fontManager->bind(versionTipLabel, DFontSizeManager::T10, QFont::Normal);
+    fontManager->bind(versionTipLabel, DFontSizeManager::T10, QFont::Thin);
     featureLabel = new QLabel(websiteLinkTemplate.arg(websiteLink).arg(QObject::tr("Features")));
     featureLabel->setContextMenuPolicy(Qt::NoContextMenu);
     featureLabel->setOpenExternalLinks(false);
@@ -121,17 +126,22 @@ void DAboutDialogPrivate::init()
     vFeatureLayout->addWidget(redPointLabel, 0, Qt::AlignLeft);
     vFeatureLayout->addStretch(0);
     QLabel *homePageTipLabel = new QLabel(QObject::tr("Homepage"));
-    fontManager->bind(homePageTipLabel, DFontSizeManager::T10, QFont::Normal);
+    fontManager->bind(homePageTipLabel, DFontSizeManager::T10, QFont::Thin);
     QLabel *descriptionTipLabel = new QLabel(QObject::tr("Description"));
-    fontManager->bind(descriptionTipLabel, DFontSizeManager::T10, QFont::Normal);
+    fontManager->bind(descriptionTipLabel, DFontSizeManager::T10, QFont::Thin);
     acknowledgementTipLabel = new QLabel(QObject::tr("Acknowledgements"));
-    fontManager->bind(acknowledgementTipLabel, DFontSizeManager::T10, QFont::Normal);
+    fontManager->bind(acknowledgementTipLabel, DFontSizeManager::T10, QFont::Thin);
+    licenseTipLabel = new QLabel(QObject::tr("License"));
+    fontManager->bind(licenseTipLabel, DFontSizeManager::T10, QFont::Thin);
+    licenseTipLabel->hide();
+
     acknowledgementLabel = new QLabel(QObject::tr("Sincerely appreciate the open-source software used."));
+    acknowledgementLabel->setForegroundRole(QPalette::BrightText);
     acknowledgementLabel->setFixedWidth(280);
     acknowledgementLabel->setWordWrap(true);
     acknowledgementLabel->setContextMenuPolicy(Qt::NoContextMenu);
     acknowledgementLabel->setOpenExternalLinks(false);
-    fontManager->bind(acknowledgementLabel, DFontSizeManager::T8, QFont::DemiBold);
+    fontManager->bind(acknowledgementLabel, DFontSizeManager::T8, QFont::Medium);
 
     licenseDialog = new DLicenseDialog(q);
     licenseDialog->load();
@@ -149,18 +159,17 @@ void DAboutDialogPrivate::init()
     q->connect(acknowledgementLabel, SIGNAL(linkActivated(QString)), q, SLOT(_q_onLicenseActivated(QString)));
 
     QVBoxLayout *leftVLayout = new QVBoxLayout;
-    leftVLayout->setContentsMargins(10, 3, 0, 10);
-    leftVLayout->setSpacing(0);
-    leftVLayout->addWidget(logoLabel, 0, Qt::AlignCenter);
+    leftVLayout->setContentsMargins(36, 10, 0, 0);
+    leftVLayout->addWidget(logoLabel);
     leftVLayout->addSpacing(8);
     leftVLayout->addWidget(productNameLabel, 0, Qt::AlignCenter);
-    leftVLayout->addStretch(0);
+    leftVLayout->addSpacing(16);
     leftVLayout->addWidget(companyLogoLabel, 0, Qt::AlignCenter);
     leftVLayout->addSpacing(3);
-    leftVLayout->addWidget(licenseLabel, 0, Qt::AlignHCenter);
+    leftVLayout->addStretch(0);
 
     QVBoxLayout *rightVLayout = new QVBoxLayout;
-    rightVLayout->setContentsMargins(0, 3, 20, 10);
+    rightVLayout->setContentsMargins(0, 0, 10, 0);
     rightVLayout->setSpacing(0);
     rightVLayout->addWidget(versionTipLabel, 0, Qt::AlignLeft);
     rightVLayout->addWidget(versionLabel, 0, Qt::AlignLeft);
@@ -174,27 +183,36 @@ void DAboutDialogPrivate::init()
     rightVLayout->addSpacing(10);
     rightVLayout->addWidget(acknowledgementTipLabel, 0, Qt::AlignLeft);
     rightVLayout->addWidget(acknowledgementLabel, 0, Qt::AlignLeft);
+    rightVLayout->addSpacing(10);
+    rightVLayout->addWidget(licenseTipLabel, 0, Qt::AlignLeft);
+    rightVLayout->addWidget(licenseLabel, 0, Qt::AlignLeft);
     rightVLayout->addStretch(0);
 
-    QHBoxLayout *mainLayout = new QHBoxLayout;
-    mainLayout->setSpacing(0);
-    mainLayout->setMargin(0);
-    mainLayout->addLayout(leftVLayout);
-    mainLayout->addSpacing(29);
-    mainLayout->addLayout(rightVLayout);
-
-    QScrollArea *mainScrollArea = new QScrollArea;
-    QWidget  *mainContent = new QWidget;
+    QScrollArea *rightScrollArea = new QScrollArea;
+    rightScrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
+    rightScrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
+    QWidget  *rightContent = new QWidget;
+    rightContent->setLayout(rightVLayout);
     QPalette scrollPalette;
 
     scrollPalette.setBrush(QPalette::Background, Qt::transparent);
-    mainScrollArea->setFrameShape(QFrame::NoFrame);
-    mainScrollArea->setWidget(mainContent);
-    mainScrollArea->setWidgetResizable(true);
-    mainScrollArea->setPalette(scrollPalette);
+    rightScrollArea->setFrameShape(QFrame::NoFrame);
+    rightScrollArea->setWidget(rightContent);
+    rightScrollArea->setWidgetResizable(true);
+    rightScrollArea->setPalette(scrollPalette);
 
+    QHBoxLayout *mainLayout = new QHBoxLayout;
+    mainLayout->setContentsMargins(0, 0, 0, 0);
+    mainLayout->setSpacing(0);
+    mainLayout->setMargin(0);
+    mainLayout->addLayout(leftVLayout);
+    mainLayout->addSpacing(56);
+    mainLayout->addWidget(rightScrollArea);
+
+    QWidget  *mainContent = new QWidget;
     mainContent->setLayout(mainLayout);
-    q->addContent(mainScrollArea);
+    q->addContent(mainContent);
+    q->setContentsMargins(0, 0, 0, 10);
 
     DConfig config("org.deepin.dtkwidget.feature-display");
     bool isUpdated = config.value("featureUpdated", false).toBool();
@@ -524,6 +542,7 @@ void DAboutDialog::setLicense(const QString &license)
 
     d->licenseLabel->setText(license);
     d->licenseLabel->setVisible(!license.isEmpty());
+    d->licenseTipLabel->setVisible(!license.isEmpty());
 }
 
 void DAboutDialog::keyPressEvent(QKeyEvent *event)
