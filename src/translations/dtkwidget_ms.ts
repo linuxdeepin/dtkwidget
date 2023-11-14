@@ -2,7 +2,6 @@
 <context>
     <name>DAboutDialog</name>
     <message>
-        <location filename="../widgets/dapplication.cpp" line="1405"/>
         <source>%1 is released under %2</source>
         <translation>%1 dikeluarkan bawah %2</translation>
     </message>
@@ -10,87 +9,70 @@
 <context>
     <name>DCrumbEdit</name>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="869"/>
         <source>Black</source>
         <translation>Hitam</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="872"/>
         <source>White</source>
         <translation>Putih</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="875"/>
         <source>Dark Gray</source>
         <translation>Kelabu Gelap</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="878"/>
         <source>Gray</source>
         <translation>Kelabu</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="881"/>
         <source>Light Gray</source>
         <translation>Kelabu Cerah</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="884"/>
         <source>Red</source>
         <translation>Merah</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="887"/>
         <source>Green</source>
         <translation>Hijau</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="890"/>
         <source>Blue</source>
         <translation>Biru</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="893"/>
         <source>Cyan</source>
         <translation>Sian</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="896"/>
         <source>Magenta</source>
         <translation>Magenta</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="899"/>
         <source>Yellow</source>
         <translation>Kuning</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="902"/>
         <source>Dark Red</source>
         <translation>Merah Gelap</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="905"/>
         <source>Dark Green</source>
         <translation>Hijau Gelap</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="908"/>
         <source>Dark Blue</source>
         <translation>Biru Gelap</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="911"/>
         <source>Dark Cyan</source>
         <translation>Sian Gelap</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="914"/>
         <source>Dark Magenta</source>
         <translation>Magenta Gelap</translation>
     </message>
     <message>
-        <location filename="../widgets/dcrumbedit.cpp" line="917"/>
         <source>Dark Yellow</source>
         <translation>Kuning Gelap</translation>
     </message>
@@ -98,12 +80,10 @@
 <context>
     <name>DInputDialog</name>
     <message>
-        <location filename="../widgets/dinputdialog.cpp" line="29"/>
         <source>Cancel</source>
         <translation>Batal</translation>
     </message>
     <message>
-        <location filename="../widgets/dinputdialog.cpp" line="30"/>
         <source>Confirm</source>
         <translation>Sahkan</translation>
     </message>
@@ -111,7 +91,6 @@
 <context>
     <name>DKeySequenceEdit</name>
     <message>
-        <location filename="../widgets/dkeysequenceedit.cpp" line="97"/>
         <source>Enter a new shortcut</source>
         <translation>Masukkan satu pintasan baharu</translation>
     </message>
@@ -119,22 +98,18 @@
 <context>
     <name>DLineEdit</name>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="593"/>
         <source>Stop reading</source>
         <translation>Henti membaca</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="595"/>
         <source>Text to Speech</source>
         <translation>Teks ke Pertuturan</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="618"/>
         <source>Translate</source>
         <translation>Terjemah</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="640"/>
         <source>Speech To Text</source>
         <translation>Pertuturan Ke Teks</translation>
     </message>
@@ -142,393 +117,305 @@
 <context>
     <name>DPrintPreviewDialogPrivate</name>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="278"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1268"/>
         <source>Advanced</source>
         <translation>Lanjutan</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="301"/>
         <source>Cancel</source>
         <comment>button</comment>
         <translation>Batal</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="302"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1647"/>
         <source>Print</source>
         <comment>button</comment>
         <translation>Cetak</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="318"/>
         <source>Basic</source>
         <translation>Asas</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="334"/>
         <source>Printer</source>
         <translation>Pencetak</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="350"/>
         <source>Copies</source>
         <translation>Salinan</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="372"/>
         <source>Page range</source>
         <translation>Julat halaman</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="375"/>
         <source>All</source>
         <translation>Semua</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="376"/>
         <source>Current page</source>
         <translation>Halaman semasa</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="377"/>
         <source>Select pages</source>
         <translation>Pilih halaman</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="397"/>
         <source>Orientation</source>
         <translation>Orientasi</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="422"/>
         <source>Portrait</source>
         <translation>Potret</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="432"/>
         <source>Landscape</source>
         <translation>Lanskap</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="460"/>
         <source>Pages</source>
         <translation>Halaman</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="472"/>
         <source>Color mode</source>
         <translation>Mod warna</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="475"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1583"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1663"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1679"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1694"/>
         <source>Color</source>
         <translation>Warna</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="475"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1670"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1682"/>
         <source>Grayscale</source>
         <translation>Skala kelabu</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="487"/>
         <source>Margins</source>
         <translation>Jidar</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="491"/>
         <source>Narrow (mm)</source>
         <translation>Sempit (mm)</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="491"/>
         <source>Normal (mm)</source>
         <translation>Biasa (mm)</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="491"/>
         <source>Moderate (mm)</source>
         <translation>Sederhana (mm)</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="491"/>
         <source>Customize (mm)</source>
         <translation>Suai (mm)</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="500"/>
         <source>Top</source>
         <translation>Atas</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="503"/>
         <source>Left</source>
         <translation>Kiri</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="506"/>
         <source>Bottom</source>
         <translation>Bawah</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="509"/>
         <source>Right</source>
         <translation>Kanan</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="556"/>
         <source>Scaling</source>
         <translation>Penskalaan</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="573"/>
         <source>Actual size</source>
         <translation>Saiz sebenar</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="582"/>
         <source>Scale</source>
         <translation>Skala</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="613"/>
         <source>Paper</source>
         <translation>Kertas</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="626"/>
         <source>Paper size</source>
         <translation>Saiz kertas</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="641"/>
         <source>Print Layout</source>
         <translation>Bentangan cetak</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="655"/>
         <source>Duplex</source>
         <translation>Dupleks</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="668"/>
         <source>N-up printing</source>
         <translation>Percetakan N-up</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="671"/>
         <source>2 pages/sheet, 1×2</source>
         <translation>2 halaman/helai, 1x2</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="671"/>
         <source>4 pages/sheet, 2×2</source>
         <translation>4 halaman/helai, 2x2</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="671"/>
         <source>6 pages/sheet, 2×3</source>
         <translation>6 halaman/helai, 2x3</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="671"/>
         <source>9 pages/sheet, 3×3</source>
         <translation>9 halaman/helai, 3x3</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="671"/>
         <source>16 pages/sheet, 4×4</source>
         <translation>16 halaman/helai, 4x4</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="683"/>
         <source>Layout direction</source>
         <translation>Arah bentangan</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="727"/>
         <source>Page Order</source>
         <translation>Tertib Halaman</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="740"/>
         <source>Collate pages</source>
         <translation>Kumpul semak halaman</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="746"/>
         <source>Print pages in order</source>
         <translation>Cetak halaman mengikut tertib</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="750"/>
         <source>Front to back</source>
         <translation>Hadapan ke belakang</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="750"/>
         <source>Back to front</source>
         <translation>Belakang ke hadapan</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="774"/>
         <source>Watermark</source>
         <translation>Tera air</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="788"/>
         <source>Add watermark</source>
         <translation>Tambah tera air</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="834"/>
         <source>Text watermark</source>
         <translation>Tera air teks</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="838"/>
         <source>Confidential</source>
         <translation>Sulit</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="838"/>
         <source>Draft</source>
         <translation>Draf</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="838"/>
         <source>Sample</source>
         <translation>Sampel</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="838"/>
         <source>Custom</source>
         <translation>Suai</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="847"/>
         <source>Input your text</source>
         <translation>Masukkan teks anda</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="872"/>
         <source>Picture watermark</source>
         <translation>Tera air gambar</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="896"/>
         <source>Layout</source>
         <translation>Bentangan</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="899"/>
         <source>Tile</source>
         <translation>Jubin</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="899"/>
         <source>Center</source>
         <translation>Tengah</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="912"/>
         <source>Angle</source>
         <translation>Sudut</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="931"/>
         <source>Size</source>
         <translation>Saiz</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="955"/>
         <source>Transparency</source>
         <translation>Kelutsinaran</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1013"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2283"/>
         <source>Print to PDF</source>
         <translation>Cetak ke PDF</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1014"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2282"/>
         <source>Save as Image</source>
         <translation>Simpan sebagai Imej</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1264"/>
         <source>Collapse</source>
         <translation>Kuncup</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1359"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1368"/>
         <source>Flip on short edge</source>
         <translation>Kalih pinggir pendek</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1298"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1363"/>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1367"/>
         <source>Flip on long edge</source>
         <translation>Kalih pinggir panjang</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1461"/>
         <source>Input page numbers please</source>
         <translation>Sila masukkan nombor halaman</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1464"/>
         <source>Maximum page number reached</source>
         <translation>Bilangan halaman maksimum dicapai</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1467"/>
         <source>Input English comma please</source>
         <translation>Sila masukkan tanda koma</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1470"/>
         <source>Input page numbers like this: 1,3,5-7,11-15,18,21</source>
         <translation>Masukkan nombor halaman seperti berikut: 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1700"/>
         <source>Save</source>
         <comment>button</comment>
         <translation>Simpan</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2312"/>
         <source>*.pdf</source>
         <translation>*.pdf</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="1770"/>
         <source>For example, 1,3,5-7,11-15,18,21</source>
         <translation>Contohnya, 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2312"/>
         <source>Save as PDF</source>
         <translation>Simpan sebagai PDF</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2351"/>
         <source>Save as image</source>
         <translation>Simpan sebagai imej</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewdialog.cpp" line="2353"/>
         <source>Images</source>
         <translation>Imej</translation>
     </message>
@@ -536,20 +423,14 @@
 <context>
     <name>DPrintPreviewWidget</name>
     <message>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1590"/>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1593"/>
         <source>Confidential</source>
         <translation>Sulit</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1608"/>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1611"/>
         <source>Draft</source>
         <translation>Draf</translation>
     </message>
     <message>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1626"/>
-        <location filename="../widgets/dprintpreviewwidget.cpp" line="1629"/>
         <source>Sample</source>
         <translation>Sampel</translation>
     </message>
@@ -557,7 +438,6 @@
 <context>
     <name>DSearchEdit</name>
     <message>
-        <location filename="../widgets/dsearchedit.cpp" line="286"/>
         <source>Search</source>
         <translation>Gelintar</translation>
     </message>
@@ -565,17 +445,14 @@
 <context>
     <name>DSettingsDialog</name>
     <message>
-        <location filename="../widgets/dsettingswidgetfactory.cpp" line="65"/>
         <source>Cancel</source>
         <translation>Batal</translation>
     </message>
     <message>
-        <location filename="../widgets/dsettingswidgetfactory.cpp" line="66"/>
         <source>Replace</source>
         <translation>Ganti</translation>
     </message>
     <message>
-        <location filename="../widgets/dsettingswidgetfactory.cpp" line="68"/>
         <source>This shortcut conflicts with %1, click on Add to make this shortcut effective immediately</source>
         <translation>Pintasan ini berkonflik dengan %1, klik pada Tambah untuk menjadikan pintasan ini berkesan serta-merta</translation>
     </message>
@@ -583,35 +460,48 @@
 <context>
     <name>DShortcutEdit</name>
     <message>
-        <location filename="../widgets/dshortcutedit.cpp" line="18"/>
         <source>Please input a new shortcut</source>
         <translation>Sila masukkan satu pintasan baharu</translation>
     </message>
     <message>
-        <location filename="../widgets/dshortcutedit.cpp" line="89"/>
         <source>None</source>
         <translation>Tiada</translation>
     </message>
 </context>
 <context>
+    <name>DSplitScreenWidget</name>
+    <message>
+        <source>Unmaximize</source>
+        <translation>Nyah-maksimum</translation>
+    </message>
+    <message>
+        <source>Maximize</source>
+        <translation>Maksimum</translation>
+    </message>
+    <message>
+        <source>Tile window to left of screen</source>
+        <translation>Jubinkan tetingkap ke sebelah kiri skrin</translation>
+    </message>
+    <message>
+        <source>Tile window to right of screen</source>
+        <translation>Jubinkan tetingkap ke sebelah kanan skrin</translation>
+    </message>
+</context>
+<context>
     <name>DTextEdit</name>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="202"/>
         <source>Stop reading</source>
         <translation>Henti membaca</translation>
     </message>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="204"/>
         <source>Text to Speech</source>
         <translation>Teks ke Pertuturan</translation>
     </message>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="227"/>
         <source>Translate</source>
         <translation>Terjemah</translation>
     </message>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="249"/>
         <source>Speech To Text</source>
         <translation>Pertuturan Ke Teks</translation>
     </message>
@@ -619,22 +509,18 @@
 <context>
     <name>DToolbarEditPanel</name>
     <message>
-        <location filename="../widgets/private/dtitlebareditpanel.cpp" line="884"/>
         <source>Default toolset</source>
-        <translation type="unfinished"/>
+        <translation>Set alat lalai</translation>
     </message>
     <message>
-        <location filename="../widgets/private/dtitlebareditpanel.cpp" line="915"/>
         <source>Drag your favorite items into the toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Seret item kegemaran anda masuk ke dalam palang alat</translation>
     </message>
     <message>
-        <location filename="../widgets/private/dtitlebareditpanel.cpp" line="916"/>
         <source>Drag below items into the toolbar to restore defaults</source>
-        <translation type="unfinished"/>
+        <translation>Seret item di bawah masuk ke dalam palang alat untuk pulih ke lalai</translation>
     </message>
     <message>
-        <location filename="../widgets/private/dtitlebareditpanel.cpp" line="921"/>
         <source>Confirm</source>
         <translation>Sahkan</translation>
     </message>
@@ -642,7 +528,6 @@
 <context>
     <name>PickColorWidget</name>
     <message>
-        <location filename="../widgets/dprintpickcolorwidget.cpp" line="94"/>
         <source>Color</source>
         <translation>Warna</translation>
     </message>
@@ -650,17 +535,14 @@
 <context>
     <name>QLineEdit</name>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="526"/>
         <source>&amp;Copy</source>
         <translation>Sa&amp;lin</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="529"/>
         <source>Cu&amp;t</source>
         <translation>Po&amp;tong</translation>
     </message>
     <message>
-        <location filename="../widgets/dlineedit.cpp" line="534"/>
         <source>Select All</source>
         <translation>Pilih Semua</translation>
     </message>
@@ -668,71 +550,61 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../widgets/dsimplelistview.cpp" line="1347"/>
         <source>No search result</source>
         <translation>Tiada keputusan gelintar</translation>
     </message>
     <message>
-        <location filename="../widgets/private/settings/content.cpp" line="330"/>
         <source>Restore Defaults</source>
         <translation>Pulih Lalai</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="109"/>
         <source>Version</source>
         <translation>Versi</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="111"/>
         <source>Features</source>
         <translation>Ciri-ciri</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="123"/>
         <source>Homepage</source>
         <translation>Laman Utama</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="125"/>
         <source>Description</source>
         <translation>Keterangan</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="127"/>
         <source>Acknowledgements</source>
         <translation>Penghargaan</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="129"/>
-        <location filename="../widgets/daboutdialog.cpp" line="138"/>
         <source>Sincerely appreciate the open-source software used.</source>
-        <translation type="unfinished"/>
+        <translation>Hargai perisian sumber-terbuka yang digunakan dengan ikhlas.</translation>
     </message>
     <message>
-        <location filename="../widgets/daboutdialog.cpp" line="140"/>
         <source>open-source software</source>
-        <translation type="unfinished"/>
+        <translation>perisian sumber-terbuka</translation>
     </message>
     <message>
-        <location filename="../widgets/dfeaturedisplaydialog.cpp" line="151"/>
         <source>Continue</source>
         <translation>Teruskan</translation>
     </message>
     <message>
-        <location filename="../widgets/dfeaturedisplaydialog.cpp" line="175"/>
         <source>Learn More</source>
         <translation>Ketahui Lagi</translation>
     </message>
     <message>
-        <location filename="../widgets/dlicensedialog.cpp" line="141"/>
         <source>Open-Source Software</source>
+        <translation>Perisian Sumber-Terbuka</translation>
+    </message>
+    <message>
+        <source>License</source>
         <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>QWidgetTextControl</name>
     <message>
-        <location filename="../widgets/dtextedit.cpp" line="194"/>
         <source>Select All</source>
         <translation>Pilih Semua</translation>
     </message>
@@ -740,7 +612,6 @@
 <context>
     <name>ShortcutEdit</name>
     <message>
-        <location filename="../widgets/private/settings/shortcutedit.cpp" line="104"/>
         <source>Please enter a new shortcut</source>
         <translation>Sila masukkan satu pintasan baharu</translation>
     </message>
@@ -748,47 +619,38 @@
 <context>
     <name>TitleBarMenu</name>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="634"/>
         <source>Theme</source>
         <translation>Tema</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="636"/>
         <source>Light Theme</source>
         <translation>Tema Cerah</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="637"/>
         <source>Dark Theme</source>
         <translation>Tema Gelap</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="638"/>
         <source>System Theme</source>
         <translation>Tema Sistem</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="668"/>
         <source>Help</source>
         <translation>Bantuan</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="676"/>
         <source>Feedback</source>
         <translation>Maklum balas</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="683"/>
         <source>Custom toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Palang alat suai</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="691"/>
         <source>About</source>
         <translation>Perihal</translation>
     </message>
     <message>
-        <location filename="../widgets/dtitlebar.cpp" line="698"/>
         <source>Exit</source>
         <translation>Keluar</translation>
     </message>
