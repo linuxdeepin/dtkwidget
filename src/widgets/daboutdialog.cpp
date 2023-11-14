@@ -32,7 +32,7 @@
 DCORE_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
-const QString DAboutDialogPrivate::websiteLinkTemplate = "<a href='%1' style='text-decoration: none; font-size:12px; color: #004EE5;'>%2</a>";
+const QString DAboutDialogPrivate::websiteLinkTemplate = "<a href='%1' style='text-decoration: none; font-size:12px; color: rgba(0,129,255,0.9);'>%2</a>";
 
 DRedPointLabel::DRedPointLabel(QWidget *parent)
     : QLabel(parent)
