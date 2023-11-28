@@ -1,3 +1,16 @@
+dtkwidget (5.6.20) unstable; urgency=medium
+
+  * feat: styleHint tweak
+  * chore: add synchronization workflow
+  * fix: redefinition of verticalTabs
+  * fix: export inexistent classes in config
+  * fix: 修复DLicenseDialog内存泄漏(Influence: DLicenseDialog)
+  * fix: DArrowRectangle left/right style incorrect(Issue: #92)
+  * fix: DApplication初始化过程中会覆盖原有事件掩码，导致丢失事件(Bug: 220369)
+  * feat: move ddesktopservices to dtkgui(Issue: #134)
+
+ -- Deepin Packages Builder <packages@deepin.org>  Tue, 28 Nov 2023 05:40:53 +0000
+
 dtkwidget (5.6.19) unstable; urgency=medium
 
   * feat: change DTK_STATIC_TRANSLATION to the default setting.
