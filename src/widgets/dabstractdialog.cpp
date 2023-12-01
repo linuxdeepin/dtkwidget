@@ -70,6 +70,7 @@ void DAbstractDialogPrivate::init(bool blurIfPossible)
 
         // fix wayland no titlebar
         //q->setWindowFlags(q->windowFlags() | Qt::FramelessWindowHint);
+        q->windowHandle()->setProperty("_d_enableSystemResize", false);
     }
 
     q->resize(DIALOG::DEFAULT_WIDTH, DIALOG::DEFAULT_HEIGHT);
