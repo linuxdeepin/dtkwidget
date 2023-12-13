@@ -1178,6 +1178,7 @@ void DArrowRectanglePrivate::updateClipPath()
         QPolygon polygon = outPath.united(path).toFillPolygon().toPolygon();
 
         q->clearMask();
+        q->repaint();
         q->setMask(polygon);
         if (m_blurBackground)
             m_blurBackground->setMaskPath(path);
