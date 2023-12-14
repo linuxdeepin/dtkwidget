@@ -950,7 +950,10 @@ QPainterPath DArrowRectanglePrivate::getTopCornerPath()
         }
     }
 
-    QPoint cornerPoint(rect.x() + (m_arrowX > 0 ? m_arrowX : rect.width() / 2), rect.y());
+    QPoint rectTopLeftGlobalPos = q->mapToGlobal(rect.topLeft());
+    const QRect cutScreenRect = currentScreenRect(rectTopLeftGlobalPos.x(), rectTopLeftGlobalPos.y());
+
+    QPoint cornerPoint(rect.x() + (m_arrowX > 0 || QCursor::pos().x() - cutScreenRect.x() == 0 ? m_arrowX : rect.width() / 2), rect.y());
     QPoint topLeft(rect.x(), rect.y() + m_arrowHeight);
     QPoint topRight(rect.x() + rect.width(), rect.y() + m_arrowHeight);
     QPoint bottomRight(rect.x() + rect.width(), rect.y() + rect.height());
@@ -1014,7 +1017,10 @@ QPainterPath DArrowRectanglePrivate::getBottomCornerPath()
         }
     }
 
-    QPoint cornerPoint(rect.x() + (m_arrowX > 0 ? m_arrowX : qRound(double(rect.width()) / 2)), rect.y() + rect.height());
+    QPoint rectTopLeftGlobalPos = q->mapToGlobal(rect.topLeft());
+    const QRect cutScreenRect = currentScreenRect(rectTopLeftGlobalPos.x(), rectTopLeftGlobalPos.y());
+
+    QPoint cornerPoint(rect.x() + (m_arrowX > 0 || QCursor::pos().x() - cutScreenRect.x() == 0 ? m_arrowX : qRound(double(rect.width()) / 2)), rect.y() + rect.height());
     QPoint topLeft(rect.x(), rect.y());
     QPoint topRight(rect.x() + rect.width(), rect.y());
     QPoint bottomRight(rect.x() + rect.width(), rect.y() + rect.height() - m_arrowHeight);
@@ -1104,15 +1110,15 @@ void DArrowRectanglePrivate::horizontalMove(int x, int y)
     qreal delta = m_handle ? 0 : (q->shadowBlurRadius() - m_shadowDistance);
 
     int lRelativeX = x - dRect.x() - (q->width() - delta) / 2;
-    int rRelativeX = x - dRect.x() + (q->width() - delta) / 2 - dRect.width();
+    // 箭头区域偏移中点距离（右侧）：控件宽度一半 - 当前屏幕鼠标到屏幕右边缘距离
+    int rRelativeX = q->width() / 2 - (dRect.width() - (x - dRect.x()));
     int absoluteX = 0;
-
     if (lRelativeX < 0) { //out of screen in left side
         //arrowX use relative coordinates
-        q->setArrowX((q->width() - delta) / 2 + lRelativeX);
+        q->setArrowX((q->width() - delta) / 2.0 + lRelativeX);
         absoluteX = dRect.x() - delta;
     } else if (rRelativeX > 0) { //out of screen in right side
-        q->setArrowX(q->width() / 2 - delta * 2 + rRelativeX);
+        q->setArrowX(q->width() / 2.0 - delta * 2.0 + rRelativeX);
         absoluteX = dRect.x() + dRect.width() - q->width() + delta;
     } else {
         q->setArrowX(0);
@@ -1173,7 +1179,8 @@ void DArrowRectanglePrivate::updateClipPath()
         q->setMask(polygon);
         if (m_blurBackground)
             m_blurBackground->setMaskPath(path);
-
+        // 目前wayland下该控件为纯白底色，且该逻辑会导致箭头部分有残影，故暂时先去掉模糊逻辑
+        /*
         if (QWidget *widget = q->window()) {
             if (QWindow *w = widget->windowHandle()) {
                 QList<QPainterPath> painterPaths;
@@ -1183,6 +1190,7 @@ void DArrowRectanglePrivate::updateClipPath()
                                                                    QVariant::fromValue(painterPaths));
             }
         }
+        */
     }
 }
 
