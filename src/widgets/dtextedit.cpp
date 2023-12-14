@@ -128,7 +128,7 @@ bool DTextEdit::event(QEvent *e)
             }
         }
     } else if ((e->type() == QEvent::WindowActivate || e->type() == QEvent::WindowDeactivate) &&
-               !DGuiApplicationHelper::testAttribute(DGuiApplicationHelper::UseInactiveColorGroup)) {
+               DGuiApplicationHelper::testAttribute(DGuiApplicationHelper::UseInactiveColorGroup)) {
         // only work for DTextEdit without setAttribute UseInactiveColorGroup false
         // TODO: remove me if QTextEdit fix it
         QTextEditPrivate *d = reinterpret_cast<QTextEditPrivate *>(qGetPtrHelper(d_ptr));
