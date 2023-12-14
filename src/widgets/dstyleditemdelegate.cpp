@@ -1385,7 +1385,8 @@ void DStyledItemDelegate::initStyleOption(QStyleOptionViewItem *option, const QM
         QPalette::ColorRole role = getViewItemColorRole(index, Dtk::ViewItemBackgroundRole);
 
         if (role != QPalette::NoRole) {
-            option->backgroundBrush = lv->palette().brush(role);
+            auto pa = option->widget ? option->widget->palette() : qApp->palette();
+            option->backgroundBrush = pa.brush(role);
         }
     }
 
