@@ -15,7 +15,6 @@
 #include <QGraphicsPixmapItem>
 #include <QGraphicsView>
 #include <QEasingCurve>
-#include <QDebug>
 
 #include <dtkwidget_global.h>
 #include <DObject>

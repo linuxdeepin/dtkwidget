@@ -8,7 +8,6 @@
 #include <QWidget>
 #include <QLabel>
 #include <QStyle>
-#include <QDebug>
 
 #include <dtkwidget_global.h>
 #include <dconstants.h>
