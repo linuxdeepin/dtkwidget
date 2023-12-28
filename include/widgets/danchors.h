@@ -11,7 +11,6 @@
 #include <QResizeEvent>
 #include <QMoveEvent>
 #include <QWidget>
-#include <QDebug>
 
 #include <dtkwidget_global.h>
 

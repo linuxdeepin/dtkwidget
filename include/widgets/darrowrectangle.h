@@ -11,13 +11,9 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QPainter>
-#include <QTimer>
-#include <QDebug>
 
 #include <DObject>
 #include <dtkwidget_global.h>
-#include <DThemeManager>
-#include <dgraphicsgloweffect.h>
 #include <DBlurEffectWidget>
 
 DWIDGET_BEGIN_NAMESPACE
