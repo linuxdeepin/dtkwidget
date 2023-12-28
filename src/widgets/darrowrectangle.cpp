@@ -6,6 +6,7 @@
 #include "dplatformwindowhandle.h"
 #include "dapplication.h"
 #include "private/darrowrectangle_p.h"
+#include "dgraphicsgloweffect.h"
 #include "dstyle.h"
 
 #include <DGuiApplicationHelper>
