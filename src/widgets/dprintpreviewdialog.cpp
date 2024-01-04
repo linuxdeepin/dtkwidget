@@ -42,6 +42,7 @@
 #include <QRegExpValidator>
 #include <QTimer>
 #include <QKeyEvent>
+#include <QWindow>
 #include <private/qprint_p.h>
 #include <private/qcups_p.h>
 #include <private/qprintdevice_p.h>
@@ -2448,6 +2449,14 @@ DPrintPreviewDialog::DPrintPreviewDialog(QWidget *parent)
         DPlatformWindowHandle *handle = new DPlatformWindowHandle(this, nullptr);
         handle->setEnableSystemResize(true);
         handle->deleteLater();
+    }
+    // print preview dialog needs resize and maximize
+    if (qApp->platformName() == "dwayland" ||
+        qApp->property("_d_isDwayland").toBool()) {
+      auto handle = this->windowHandle();
+      if (handle) {
+        handle->setProperty("_d_enableSystemResize", true);
+      }
     }
     d->startup();
 }
