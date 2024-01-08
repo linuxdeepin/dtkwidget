@@ -306,8 +306,6 @@ public:
 
     void registerHandler(QAbstractTextDocumentLayout *layout)
     {
-        D_Q(DCrumbEdit);
-
         for (int i = QTextFormat::UserObject + 1; ; ++i) {
             if (!layout->handlerForObject(i)) {
                 objectType = i;
@@ -379,7 +377,9 @@ public:
         if (cursor.charFormat().objectType() != objectType)
             return false;
 
-        DCrumbTextFormat format(cursor.charFormat());
+        auto fmt = q->document()->documentLayout()->formatAt(mousePos);
+        DCrumbTextFormat format = formats.value(fmt.stringProperty(QTextFormat::UserProperty + 1));
+
         currentText = format.text();
         currentBrush = format.background();
 
@@ -391,7 +391,8 @@ public:
 
         makeCrumb();
 
-        if (mousePos.x() < q->cursorRect().left())
+        if (mousePos.x() < q->cursorRect().left() ||
+            mousePos.y() < q->cursorRect().top())
             cursor.setPosition(cursor.position() - 1, QTextCursor::KeepAnchor);
         else
             cursor.setPosition(cursor.position() + 1, QTextCursor::KeepAnchor);
