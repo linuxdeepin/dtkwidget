@@ -134,9 +134,11 @@ QColor DBlurEffectWidgetPrivate::getMaskColor(const QColor &baseColor) const
 
     int maskAlpha = this->getMaskColorAlpha();
 
-    if (!isBehindWindowBlendMode()
-            || (DWindowManagerHelper::instance()->hasComposite()
-                && DWindowManagerHelper::instance()->hasBlurWindow()))
+    bool supportBlur = (qApp->platformName() == "dwayland" || qApp->property("_d_isDwayland").toBool())
+                ? DPlatformWindowHandle(q_func()->window()).enableBlurWindow()
+                : DWindowManagerHelper::instance()->hasBlurWindow();
+
+    if (!isBehindWindowBlendMode() || supportBlur)
     {
         color.setAlpha(maskAlpha);
     } else {
@@ -160,10 +162,12 @@ void DBlurEffectWidgetPrivate::setMaskColor(const QColor &color)
 {
     maskColor = color;
 
+    bool supportBlur = (qApp->platformName() == "dwayland" || qApp->property("_d_isDwayland").toBool())
+                ? DPlatformWindowHandle(q_func()->window()).enableBlurWindow()
+                : DWindowManagerHelper::instance()->hasBlurWindow();
+
     if (isBehindWindowBlendMode()) {
-        maskColor.setAlpha((DWindowManagerHelper::instance()->hasComposite()
-                            && DWindowManagerHelper::instance()->hasBlurWindow())
-                           ? getMaskColorAlpha() : MASK_COLOR_ALPHA_DEFAULT);
+        maskColor.setAlpha(supportBlur ? getMaskColorAlpha() : MASK_COLOR_ALPHA_DEFAULT);
     }
 
     D_Q(DBlurEffectWidget);
