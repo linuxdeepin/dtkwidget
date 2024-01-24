@@ -70,10 +70,13 @@ void DAboutDialogPrivate::init()
 
     logoLabel = new QLabel();
     logoLabel->setContentsMargins(0, 0, 0, 0);
+    logoLabel->setAlignment(Qt::AlignCenter);
 
     productNameLabel = new QLabel();
     productNameLabel->setForegroundRole(QPalette::BrightText);
     productNameLabel->setObjectName("ProductNameLabel");
+    productNameLabel->setWordWrap(true);
+    productNameLabel->setAlignment(Qt::AlignCenter);
     DFontSizeManager *fontManager =  DFontSizeManager::instance();
     fontManager->bind(productNameLabel, DFontSizeManager::T5, QFont::Medium);
 
@@ -158,13 +161,25 @@ void DAboutDialogPrivate::init()
     q->connect(licenseLabel, SIGNAL(linkActivated(QString)), q, SLOT(_q_onLinkActivated(QString)));
     q->connect(acknowledgementLabel, SIGNAL(linkActivated(QString)), q, SLOT(_q_onLicenseActivated(QString)));
 
+    QScrollArea *productNameScrollArea = new QScrollArea;
+    productNameScrollArea->setMaximumHeight(50);
+    productNameScrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
+    productNameScrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
+    QPalette scrollPalette;
+
+    scrollPalette.setBrush(QPalette::Background, Qt::transparent);
+    productNameScrollArea->setFrameShape(QFrame::NoFrame);
+    productNameScrollArea->setWidget(productNameLabel);
+    productNameScrollArea->setWidgetResizable(true);
+    productNameScrollArea->setPalette(scrollPalette);
+
     QVBoxLayout *leftVLayout = new QVBoxLayout;
-    leftVLayout->setContentsMargins(36, 10, 0, 0);
+    leftVLayout->setContentsMargins(0, 10, 0, 0);
     leftVLayout->addWidget(logoLabel);
     leftVLayout->addSpacing(8);
-    leftVLayout->addWidget(productNameLabel, 0, Qt::AlignCenter);
+    leftVLayout->addWidget(productNameScrollArea);
     leftVLayout->addSpacing(16);
-    leftVLayout->addWidget(companyLogoLabel, 0, Qt::AlignCenter);
+    leftVLayout->addWidget(companyLogoLabel);
     leftVLayout->addSpacing(3);
     leftVLayout->addStretch(0);
 
@@ -193,9 +208,7 @@ void DAboutDialogPrivate::init()
     rightScrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
     QWidget  *rightContent = new QWidget;
     rightContent->setLayout(rightVLayout);
-    QPalette scrollPalette;
 
-    scrollPalette.setBrush(QPalette::Background, Qt::transparent);
     rightScrollArea->setFrameShape(QFrame::NoFrame);
     rightScrollArea->setWidget(rightContent);
     rightScrollArea->setWidgetResizable(true);
@@ -205,9 +218,9 @@ void DAboutDialogPrivate::init()
     mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->setSpacing(0);
     mainLayout->setMargin(0);
-    mainLayout->addLayout(leftVLayout);
-    mainLayout->addSpacing(56);
-    mainLayout->addWidget(rightScrollArea);
+    mainLayout->addLayout(leftVLayout, 2);
+    mainLayout->addSpacing(20);
+    mainLayout->addWidget(rightScrollArea, 3);
 
     QWidget  *mainContent = new QWidget;
     mainContent->setLayout(mainLayout);
