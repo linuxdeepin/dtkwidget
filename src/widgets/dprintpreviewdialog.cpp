@@ -304,8 +304,8 @@ void DPrintPreviewDialogPrivate::initright(QVBoxLayout *layout)
     cancelBtn = new DPushButton(qApp->translate("DPrintPreviewDialogPrivate", "Cancel", "button"));
     printBtn = new DSuggestButton(qApp->translate("DPrintPreviewDialogPrivate", "Print", "button"));
 
-    cancelBtn->setFixedSize(170, 36);
-    printBtn->setFixedSize(170, 36);
+    cancelBtn->setMaximumSize(170, 36);
+    printBtn->setMaximumSize(170, 36);
     pbottomlayout->addWidget(cancelBtn);
     pbottomlayout->addWidget(printBtn);
 
@@ -629,7 +629,6 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     DLabel *papersizelabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Paper size"));
     papersizelabel->setSizePolicy(QSizePolicy::Maximum, papersizelabel->sizePolicy().verticalPolicy());
     paperSizeCombo = new DComboBox;
-    paperSizeCombo->setFixedHeight(36);
     paperframelayout->addWidget(papersizelabel, 4);
     paperframelayout->addStretch(1);
     paperframelayout->addWidget(paperSizeCombo, 9);
@@ -656,7 +655,6 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     duplexCombo = new DComboBox;
     duplexCombo->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_Duplex_TypeControl]);
     duplexCheckBox = new DCheckBox(qApp->translate("DPrintPreviewDialogPrivate", "Duplex"));
-    duplexCombo->setFixedHeight(36);
     duplexlayout->setContentsMargins(5, 5, 10, 5);
     duplexlayout->addWidget(duplexCheckBox, 4);
     duplexlayout->addWidget(duplexCombo, 9);
@@ -672,7 +670,6 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     pagePerSheetCombo = new DComboBox;
     pagePerSheetCombo->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_NPrint_Numbers]);
     pagePerSheetCombo->addItems(QStringList() << qApp->translate("DPrintPreviewDialogPrivate", "2 pages/sheet, 1×2") << qApp->translate("DPrintPreviewDialogPrivate", "4 pages/sheet, 2×2") << qApp->translate("DPrintPreviewDialogPrivate", "6 pages/sheet, 2×3") << qApp->translate("DPrintPreviewDialogPrivate", "9 pages/sheet, 3×3") << qApp->translate("DPrintPreviewDialogPrivate", "16 pages/sheet, 4×4"));
-    pagePerSheetCombo->setFixedHeight(36);
     pagepersheetlayout->setContentsMargins(5, 5, 10, 5);
     pagepersheetlayout->addWidget(sidebysideCheckBox, 4);
     pagepersheetlayout->addWidget(pagePerSheetCombo, 9);
@@ -900,7 +897,6 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     waterPosCombox = new DComboBox;
     waterPosCombox->addItems(QStringList() << qApp->translate("DPrintPreviewDialogPrivate", "Tile") << qApp->translate("DPrintPreviewDialogPrivate", "Center"));
     waterPosCombox->setCurrentIndex(waterPosCombox->count() - 1);
-    waterPosCombox->setFixedHeight(36);
     posframelayout->addWidget(poslabel, 4);
     posframelayout->addStretch(1);
     posframelayout->addWidget(waterPosCombox, 9);
@@ -918,7 +914,6 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     inclinatBox->setValue(30);
     inclinatBox->setSingleStep(5);
     inclinatBox->setRange(0, 360);
-    inclinatBox->setFixedHeight(36);
     inclinatBox->setEnabledEmbedStyle(true);
     inclinatframelayout->addWidget(inclinatlabel, 4);
     inclinatframelayout->addStretch(1);
