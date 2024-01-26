@@ -251,6 +251,7 @@ void DFileChooserEditPrivate::init()
         btn->setFixedWidth(defaultButtonWidth());
         btn->setIconSize(defaultIconSize());
     });
+    btn->setAutoDefault(false);
 
     q->setDialogDisplayPosition(DFileChooserEdit::DialogDisplayPosition::CurrentMonitorCenter);
 
