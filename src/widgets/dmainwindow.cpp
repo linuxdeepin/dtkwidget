@@ -24,6 +24,7 @@
 #include <qwidgetaction.h>
 #include <QScreen>
 
+#include <DAnchors>
 #include <DConfig>
 
 #ifdef Q_OS_MAC
@@ -148,11 +149,11 @@ void DMainWindowPrivate::_q_autoShowFeatureDialog()
   \class Dtk::Widget::DMainWindow
   \inmodule dtkwidget
   \brief The DMainWindow class provides a main application window.
-  
+
   A main window provides a framework for building an application's user
   interface. DMainWindow has its own layout compared to QMainWindow,
   it has only title bar and content area, simpler and cleaner.
-  
+
   Developers can provide customized title bar and content to make the
   application rich functional.
  */
@@ -203,28 +204,45 @@ void DMainWindow::setSidebarWidget(QWidget *widget)
         return;
 
     d->sidebarWidget = widget;
-    d->sidebarWidget->setAutoFillBackground(true);
-    d->sidebarWidget->setBackgroundRole(DPalette::Button);
     if (!d->sidebarHelper) {
         d->sidebarHelper = new DSidebarHelper(this);
         d->titlebar->setSidebarHelper(d->sidebarHelper);
         QToolBar *tb = new QToolBar(this);
+        d->sidebarSep = new DVerticalLine(this);
+        d->sidebarSep->setWindowFlag(Qt::WindowStaysOnTopHint);
+        d->sidebarSep->setLineWidth(1);
+        d->sidebarSep->raise();
+        DAnchorsBase::setAnchor(d->sidebarSep, Qt::AnchorRight, tb, Qt::AnchorRight);
+
+        tb->layout()->setMargin(0);
         tb->setMovable(false);
-        tb->setForegroundRole(QPalette::Base);
         auto *contentAction = tb->toggleViewAction();
         contentAction->setVisible(false);
         addToolBar(Qt::LeftToolBarArea, tb);
-        widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        tb->addWidget(widget);
-        widget->resize(tb->size());
+        d->sidebarWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+        setAttribute(Qt::WA_TranslucentBackground);
+        auto bgBlurWidget = new DBlurEffectWidget(this);
+        bgBlurWidget->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
+        bgBlurWidget->setMaskColor(DBlurEffectWidget::AutoColor);
+        bgBlurWidget->setObjectName("sidebarBlurWidget");
+        bgBlurWidget->setMaskAlpha(229); // 90%
+
+        QVBoxLayout *vlay = new QVBoxLayout(bgBlurWidget);
+        vlay->setContentsMargins(0, 0, 0, 0);
+        vlay->addWidget(d->sidebarWidget);
+        tb->addWidget(bgBlurWidget);
+        d->sidebarWidget->resize(tb->size());
 
         connect(d->sidebarHelper, &DSidebarHelper::widthChanged, tb, &QToolBar::setFixedWidth);
         connect(d->sidebarHelper, &DSidebarHelper::expandChanged, this, [tb, d] (bool expanded) {
             tb->setVisible(expanded);
+            d->sidebarSep->setVisible(expanded);
             d->updateTitleShadowGeometry();
         });
         connect(d->sidebarHelper, &DSidebarHelper::visibleChanged, tb, [tb, d] {
             tb->setVisible(d->sidebarHelper->sectionVisible());
+            d->sidebarSep->setVisible(d->sidebarHelper->sectionVisible());
             d->updateTitleShadowGeometry();
         });
 
@@ -295,7 +313,7 @@ void DMainWindow::setSidebarExpanded(bool expended)
 /*!
   \brief DMainWindow::isDXcbWindow
   \return Whether this window is dxcb backended.
-  
+
   Many features like blurred background and window clipping are supported
   only if the window is using the dxcb Qt platform plugin.
  */
@@ -399,10 +417,10 @@ QColor DMainWindow::shadowColor() const
 /*!
   \property DMainWindow::clipPath
   \brief This property holds the custom QPainterPath to be used to clip the window.
-  
+
   By default DMainWindow is clipped as a corner-rounded rectangle, but you can
   supply a custom QPainterPath to do custom shaped window.
-  
+
   \sa DMainWindow::frameMask
  */
 QPainterPath DMainWindow::clipPath() const
@@ -419,7 +437,7 @@ QPainterPath DMainWindow::clipPath() const
 /*!
   \property DMainWindow::frameMask
   \brief This property holds the mask to be applied on the window.
-  
+
   For better clip quality, for example antialiasing, use property
   DMainWindow::clipPath instead.
  */
@@ -463,9 +481,9 @@ bool DMainWindow::translucentBackground() const
 /*!
   \brief DMainWindow::enableSystemResize
   \return This property holds whether the window can be resized by the user.
-  
+
   The default value of this property is true.
-  
+
   You can set this property to false and implement the resize polizy of this
   window by you self.
  */
@@ -483,9 +501,9 @@ bool DMainWindow::enableSystemResize() const
 /*!
   \property DMainWindow::enableSystemMove
   \brief This property holds whether the window can be moved by the user.
-  
+
   The default value of this property is true.
-  
+
   You can set this property to false and choose the effective area to drag and move.
  */
 bool DMainWindow::enableSystemMove() const
@@ -517,10 +535,10 @@ bool DMainWindow::enableBlurWindow() const
 /*!
   \property DMainWindow::autoInputMaskByClipPath
   \brief This property holds whether the user input is masked by the clip path.
-  
+
   Sometimes you may want to handle events happening in the areas that are
   visually clipped by the setting DMainWindow::clipPath.
-  
+
   The default value of this property is true.
  */
 bool DMainWindow::autoInputMaskByClipPath() const
@@ -818,6 +836,8 @@ void DMainWindow::resizeEvent(QResizeEvent *event)
 
     if (sidebarWidget()) {
         sidebarWidget()->resize(d->tb->size());
+        d->sidebarSep->resize({1, rect().height()});
+        d->sidebarSep->raise();
     }
     return QMainWindow::resizeEvent(event);
 }

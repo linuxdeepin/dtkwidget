@@ -9,6 +9,7 @@
 #include <DMainWindow>
 #include <DShadowLine>
 
+#include <DFrame>
 #include <DObjectPrivate>
 
 class QShortcut;
@@ -118,6 +119,7 @@ public:
     DSidebarHelper          *sidebarHelper = nullptr;
     QWidget                 *sidebarWidget = nullptr;
     QToolBar                *tb = nullptr;
+    DVerticalLine           *sidebarSep = nullptr;
 
 private:
     D_DECLARE_PUBLIC(DMainWindow)

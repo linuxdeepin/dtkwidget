@@ -1272,19 +1272,27 @@ void DTitlebar::setSidebarHelper(DSidebarHelper *helper)
         d->expandButton = new DIconButton(this);
         d->expandButton->setIcon(DDciIcon::fromTheme("window_sidebar"));
         d->expandButton->setIconSize(QSize(DefaultExpandButtonHeight(), DefaultExpandButtonHeight()));
-        d->expandButton->setCheckable(true);
-        d->expandButton->setChecked(true);
         d->expandButton->setFlat(true);
 
         d->sidebarBackgroundWidget = new QWidget(this);
+        QHBoxLayout *hlay = new QHBoxLayout(d->sidebarBackgroundWidget);
+        hlay->setMargin(0);
+        auto bgBlurWidget = new DBlurEffectWidget(d->sidebarBackgroundWidget);
+        bgBlurWidget->setObjectName("titlebarBlurWidget");
+        bgBlurWidget->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
+        bgBlurWidget->setMaskColor(DBlurEffectWidget::AutoColor);
+        bgBlurWidget->setMaskAlpha(229); // 90%
+        hlay->addWidget(bgBlurWidget);
+
         d->sidebarBackgroundWidget->setAccessibleName("SidebarBackgroundWidget");
         d->sidebarBackgroundWidget->setAutoFillBackground(true);
         d->sidebarBackgroundWidget->setBackgroundRole(DPalette::Button);
         d->sidebarBackgroundWidget->move(pos());
         d->sidebarBackgroundWidget->lower();
         d->leftLayout->addWidget(d->expandButton, 0, Qt::AlignLeft);
-        connect(d->expandButton, &DIconButton::clicked, [this, d] (bool isExpanded) {
-            d->sidebarHelper->setExpanded(isExpanded);
+        connect(d->expandButton, &DIconButton::clicked, [this, d] (bool) {
+            bool isExpanded = d->sidebarHelper->expanded();
+            d->sidebarHelper->setExpanded(!isExpanded);
             int x = isExpanded ? d->sidebarHelper->width() : 0;
             d->separator->move(x, height() - d->separator->height());
         });
