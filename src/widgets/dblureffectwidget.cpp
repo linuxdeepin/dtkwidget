@@ -134,7 +134,7 @@ QColor DBlurEffectWidgetPrivate::getMaskColor(const QColor &baseColor) const
 
     int maskAlpha = this->getMaskColorAlpha();
 
-    if (!isBehindWindowBlendMode() || DWindowManagerHelper::instance()->hasComposite()) {
+    if (!isBehindWindowBlendMode() || DWindowManagerHelper::instance()->hasBlurWindow()) {
         color.setAlpha(maskAlpha);
     } else {
         return ct == DGuiApplicationHelper::DarkType ? "#202020" : "#D2D2D2";
@@ -158,7 +158,7 @@ void DBlurEffectWidgetPrivate::setMaskColor(const QColor &color)
     maskColor = color;
 
     if (isBehindWindowBlendMode()) {
-        maskColor.setAlpha(DWindowManagerHelper::instance()->hasComposite() ? getMaskColorAlpha() : MASK_COLOR_ALPHA_DEFAULT);
+        maskColor.setAlpha(DWindowManagerHelper::instance()->hasBlurWindow() ? getMaskColorAlpha() : MASK_COLOR_ALPHA_DEFAULT);
     }
 
     D_Q(DBlurEffectWidget);
