@@ -168,13 +168,18 @@ MainWindow::MainWindow(QWidget *parent)
     m_pStackedWidget = new QStackedWidget;
     m_pListViewModel = new QStandardItemModel(this);
 
-    m_pListView = new DListView(this);
+    QWidget *pw = new QWidget(this);
+    m_pListView = new DListView(pw);
     m_pListView->setFixedWidth(200);
     m_pListView->setItemSpacing(0);
     m_pListView->setModel(m_pListViewModel);
+    m_pListView->setViewportMargins(0, 0, 10, 0);
 
-    setSidebarWidget(m_pListView);
-    setSidebarWidth(200);
+    QHBoxLayout *hlay = new QHBoxLayout(pw);
+    hlay->setContentsMargins(10, 0, 10, 0);
+    hlay->addWidget(m_pListView);
+    setSidebarWidget(pw);
+    setSidebarWidth(210);
 
 //    mainLayout->addWidget(m_pListView);
 
