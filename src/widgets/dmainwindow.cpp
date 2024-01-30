@@ -25,6 +25,7 @@
 #include <QScreen>
 
 #include <DConfig>
+#include <DWindowManagerHelper>
 
 #ifdef Q_OS_MAC
 #include "osxwindow.h"
@@ -203,20 +204,27 @@ void DMainWindow::setSidebarWidget(QWidget *widget)
         return;
 
     d->sidebarWidget = widget;
-    d->sidebarWidget->setAutoFillBackground(true);
-    d->sidebarWidget->setBackgroundRole(DPalette::Button);
     if (!d->sidebarHelper) {
         d->sidebarHelper = new DSidebarHelper(this);
         d->titlebar->setSidebarHelper(d->sidebarHelper);
         QToolBar *tb = new QToolBar(this);
+        tb->layout()->setMargin(0);
         tb->setMovable(false);
-        tb->setForegroundRole(QPalette::Base);
         auto *contentAction = tb->toggleViewAction();
         contentAction->setVisible(false);
         addToolBar(Qt::LeftToolBarArea, tb);
-        widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        tb->addWidget(widget);
-        widget->resize(tb->size());
+        d->sidebarWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+        auto bgBlurWidget = new DBlurEffectWidget(this);
+        bgBlurWidget->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
+        const bool blurIfPossible = DWindowManagerHelper::instance()->hasBlurWindow();
+        bgBlurWidget->setBlurEnabled(blurIfPossible);
+        setAttribute(Qt::WA_TranslucentBackground, blurIfPossible);
+
+        QVBoxLayout *vlay = new QVBoxLayout(bgBlurWidget);
+        vlay->addWidget(d->sidebarWidget);
+        tb->addWidget(bgBlurWidget);
+        d->sidebarWidget->resize(tb->size());
 
         connect(d->sidebarHelper, &DSidebarHelper::widthChanged, tb, &QToolBar::setFixedWidth);
         connect(d->sidebarHelper, &DSidebarHelper::expandChanged, this, [tb, d] (bool expanded) {

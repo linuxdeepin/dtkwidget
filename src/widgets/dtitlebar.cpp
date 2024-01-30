@@ -172,7 +172,7 @@ private:
     bool                fullScreenButtonVisible = true;
     bool                splitScreenWidgetEnable = true;
     QTimer              *maxButtonPressAndHoldTimer = nullptr;
-    QWidget             *sidebarBackgroundWidget = nullptr;
+    DBlurEffectWidget   *sidebarBackgroundWidget = nullptr;
     DTitlebarSettingsImpl *titlebarSettingsImpl = nullptr;
     DTitlebarSettings *titlebarSettings = nullptr;
     Q_DECLARE_PUBLIC(DTitlebar)
@@ -1272,19 +1272,22 @@ void DTitlebar::setSidebarHelper(DSidebarHelper *helper)
         d->expandButton = new DIconButton(this);
         d->expandButton->setIcon(DDciIcon::fromTheme("window_sidebar"));
         d->expandButton->setIconSize(QSize(DefaultExpandButtonHeight(), DefaultExpandButtonHeight()));
-        d->expandButton->setCheckable(true);
-        d->expandButton->setChecked(true);
         d->expandButton->setFlat(true);
 
-        d->sidebarBackgroundWidget = new QWidget(this);
+        d->sidebarBackgroundWidget = new DBlurEffectWidget(this);
+        d->sidebarBackgroundWidget->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
+        const bool blurIfPossible = DWindowManagerHelper::instance()->hasBlurWindow();
+        d->sidebarBackgroundWidget->setBlurEnabled(blurIfPossible);
+
         d->sidebarBackgroundWidget->setAccessibleName("SidebarBackgroundWidget");
         d->sidebarBackgroundWidget->setAutoFillBackground(true);
         d->sidebarBackgroundWidget->setBackgroundRole(DPalette::Button);
         d->sidebarBackgroundWidget->move(pos());
         d->sidebarBackgroundWidget->lower();
         d->leftLayout->addWidget(d->expandButton, 0, Qt::AlignLeft);
-        connect(d->expandButton, &DIconButton::clicked, [this, d] (bool isExpanded) {
-            d->sidebarHelper->setExpanded(isExpanded);
+        connect(d->expandButton, &DIconButton::clicked, [this, d] (bool) {
+            bool isExpanded = d->sidebarHelper->expanded();
+            d->sidebarHelper->setExpanded(!isExpanded);
             int x = isExpanded ? d->sidebarHelper->width() : 0;
             d->separator->move(x, height() - d->separator->height());
         });
