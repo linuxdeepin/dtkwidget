@@ -1272,8 +1272,6 @@ void DTitlebar::setSidebarHelper(DSidebarHelper *helper)
         d->expandButton = new DIconButton(this);
         d->expandButton->setIcon(DDciIcon::fromTheme("window_sidebar"));
         d->expandButton->setIconSize(QSize(DefaultExpandButtonHeight(), DefaultExpandButtonHeight()));
-        d->expandButton->setCheckable(true);
-        d->expandButton->setChecked(true);
         d->expandButton->setFlat(true);
 
         d->sidebarBackgroundWidget = new QWidget(this);
@@ -1283,9 +1281,10 @@ void DTitlebar::setSidebarHelper(DSidebarHelper *helper)
         d->sidebarBackgroundWidget->move(pos());
         d->sidebarBackgroundWidget->lower();
         d->leftLayout->addWidget(d->expandButton, 0, Qt::AlignLeft);
-        connect(d->expandButton, &DIconButton::clicked, [this, d] (bool isExpanded) {
-            d->sidebarHelper->setExpanded(isExpanded);
-            int x = isExpanded ? d->sidebarHelper->width() : 0;
+        connect(d->expandButton, &DIconButton::clicked, [this, d] {
+            bool originExpanded = d->sidebarHelper->expanded();
+            d->sidebarHelper->setExpanded(!originExpanded);
+            int x = originExpanded ? d->sidebarHelper->width() : 0;
             d->separator->move(x, height() - d->separator->height());
         });
     }
@@ -1296,7 +1295,6 @@ void DTitlebar::setSidebarHelper(DSidebarHelper *helper)
     });
     connect(helper, &DSidebarHelper::expandChanged, this, [this](bool isExpanded){
         d_func()->sidebarBackgroundWidget->setVisible(isExpanded);
-        d_func()->expandButton->setChecked(isExpanded);
     });
     connect(helper, &DSidebarHelper::widthChanged, this, [this](int width){
         d_func()->sidebarBackgroundWidget->setFixedWidth(width);
