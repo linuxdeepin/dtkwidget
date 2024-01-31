@@ -99,3 +99,4 @@ install(
 install(FILES ${QM_FILES} DESTINATION "${CMAKE_INSTALL_DATADIR}/${TRANSLATIONS_INSTALL_DIR}")
 
 dconfig_meta_files(COMMONID org.deepin.dtkwidget FILES ${CMAKE_CURRENT_LIST_DIR}/org.deepin.dtkwidget.feature-display.json)
+dconfig_meta_files(APPID org.deepin.dtkwidget FILES ${CMAKE_CURRENT_LIST_DIR}/org.deepin.dtkwidget.print-preview.json)

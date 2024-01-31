@@ -17,6 +17,7 @@
 #include <DCheckBox>
 #include <DComboBox>
 #include <DRadioButton>
+#include <DConfig>
 #include <QBasicTimer>
 
 class QVBoxLayout;
@@ -92,6 +93,8 @@ public:
     void setPageLayoutEnable(const bool &checked);
     void matchFitablePageSize();
     bool isActualPrinter(const QString &name);
+    QString getColorModeConfig(const QString &printer);
+    void saveColorModeConfig(const QString &printer, const QString &colorMode);
 
     void _q_printerChanged(int index);
     void _q_pageRangeChanged(int index);
@@ -196,6 +199,7 @@ public:
     QHash<QWidget *, QString> spinboxTextCaches;
     PreviewSettingsPluginHelper *settingHelper;
     QBasicTimer settingUpdateTimer;
+    DCORE_NAMESPACE::DConfig *config;
     Q_DECLARE_PUBLIC(DPrintPreviewDialog)
 };
 

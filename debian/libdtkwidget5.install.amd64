@@ -1,4 +1,4 @@
 usr/lib/*/lib*.so.*
 #usr/lib/*/libmsc.so
 usr/share/*/*/translations/*
-usr/share/dsg/configs/org.deepin.dtkwidget.feature-display.json
+usr/share/dsg
