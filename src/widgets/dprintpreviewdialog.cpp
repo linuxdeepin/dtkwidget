@@ -28,7 +28,9 @@
 #include <DScrollBar>
 #include <DPlatformWindowHandle>
 #include <DIconTheme>
+#include <DConfig>
 #include <QPluginLoader>
+#include <QJsonDocument>
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -81,6 +83,7 @@
 #define WATERLAYOUT_TILED 1
 #define WATERFONT_SIZE 65
 
+DCORE_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
 static QLatin1String _d_printSettingNameMap[DPrintPreviewSettingInterface::SC_ControlCount] = {
@@ -476,7 +479,7 @@ void DPrintPreviewDialogPrivate::initadvanceui()
     DLabel *colorlabel = new DLabel(qApp->translate("DPrintPreviewDialogPrivate", "Color mode"));
     colorlabel->setSizePolicy(QSizePolicy::Maximum, colorlabel->sizePolicy().verticalPolicy());
     colorModeCombo = new DComboBox;
-    colorModeCombo->addItems(QStringList() << qApp->translate("DPrintPreviewDialogPrivate", "Color") << qApp->translate("DPrintPreviewDialogPrivate", "Grayscale"));
+    colorModeCombo->addItems(QStringList() << qApp->translate("DPrintPreviewDialogPrivate", "Full Color") << qApp->translate("DPrintPreviewDialogPrivate", "Grayscale"));
     colorlayout->addWidget(colorlabel, 4);
     colorlayout->addStretch(1);
     colorlayout->addWidget(colorModeCombo, 9);
@@ -1006,6 +1009,7 @@ void DPrintPreviewDialogPrivate::marginsLayout(bool adapted)
 
 void DPrintPreviewDialogPrivate::initdata()
 {
+    Q_Q(DPrintPreviewDialog);
     QStringList itemlist;
     itemlist << QPrinterInfo::availablePrinterNames()
              << qApp->translate("DPrintPreviewDialogPrivate", "Print to PDF")
@@ -1616,7 +1620,7 @@ void DPrintPreviewDialogPrivate::watermarkTypeChoosed(int index)
         settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_TextFont, true);
         settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_ImageEdit, false);
         if (colorModeCombo->count() == 2 &&
-                colorModeCombo->currentText() == qApp->translate("DPrintPreviewDialogPrivate", "Color"))
+                colorModeCombo->currentText() == qApp->translate("DPrintPreviewDialogPrivate", "Full Color"))
             settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_TextColor, true);
         _q_textWaterMarkModeChanged(waterTextCombo->currentIndex());
         initWaterSettings();
@@ -1702,7 +1706,7 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
                 pickColorWidget->setRgbEdit(waterColor);
             }
             colorModeCombo->blockSignals(true);
-            colorModeCombo->addItem(qApp->translate("DPrintPreviewDialogPrivate", "Color"));
+            colorModeCombo->addItem(qApp->translate("DPrintPreviewDialogPrivate", "Full Color"));
             // Ensure that the signal CurrentIndexChanged is triggered afterwards
             colorModeCombo->setCurrentIndex(-1);
             colorModeCombo->blockSignals(false);
@@ -1726,7 +1730,7 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
             // 后面连接了信号后，切换打印机时又会触发_q_printerChanged信号重新设置colorModeCombo，
             // 为了避免多次触发currentIndexChanged信号，先block信号再手动触发
             colorModeCombo->blockSignals(true);
-            colorModeCombo->setCurrentText(qApp->translate("DPrintPreviewDialogPrivate", "Color"));
+            colorModeCombo->setCurrentText(qApp->translate("DPrintPreviewDialogPrivate", getColorModeConfig(currentName) == "gray" ? "Grayscale" : "Full Color"));
             colorModeCombo->blockSignals(false);
             _q_ColorModeChange(colorModeCombo->currentIndex());
             settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_TextColor, true);
@@ -1743,7 +1747,7 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
         settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_DuplexWidget, false);
         settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_TextColor, true);
         colorModeCombo->blockSignals(true);
-        colorModeCombo->addItem(qApp->translate("DPrintPreviewDialogPrivate", "Color"));
+        colorModeCombo->addItem(qApp->translate("DPrintPreviewDialogPrivate", "Full Color"));
         colorModeCombo->addItem(qApp->translate("DPrintPreviewDialogPrivate", "Grayscale"));
         // Ensure that the signal CurrentIndexChanged is triggered afterwards
         colorModeCombo->setCurrentIndex(-1);
@@ -1901,6 +1905,7 @@ void DPrintPreviewDialogPrivate::_q_ColorModeChange(int index)
         supportedColorMode = false;
         waterColor = QColor("#6f6f6f");
     }
+    saveColorModeConfig(printDeviceCombo->currentText(), index == 0 ? "color" : "gray");
     _q_selectColorButton(waterColor);
     pickColorWidget->convertColor(waterColor);
 }
@@ -2232,6 +2237,30 @@ bool DPrintPreviewDialogPrivate::isActualPrinter(const QString &name)
 {
     const QStringList &printerNames = QPrinterInfo::availablePrinterNames();
     return printerNames.contains(name);
+}
+
+QString DPrintPreviewDialogPrivate::getColorModeConfig(const QString &printer)
+{
+    DConfig config("org.deepin.dtk.preference");
+    QString colorMode = config.value("defaultColorMode", "color").toString();
+    QString colorConfig = config.value("colorMode").toString();
+    const QJsonDocument &document = QJsonDocument::fromJson(colorConfig.toUtf8());
+    const QJsonObject &obj = document.object();
+    if (obj.contains(printer)) {
+        colorMode = obj.value(printer).toString();
+    }
+    return colorMode;
+}
+
+void DPrintPreviewDialogPrivate::saveColorModeConfig(const QString &printer, const QString &colorMode)
+{
+    DConfig config("org.deepin.dtk.preference");
+    QString colorConfig = config.value("colorMode").toString();
+    const QJsonDocument &document = QJsonDocument::fromJson(colorConfig.toUtf8());
+    QJsonObject obj = document.object();
+    obj.insert(printer, colorMode);
+    QJsonDocument doc(obj);
+    config.setValue("colorMode", doc.toJson(QJsonDocument::Compact));
 }
 
 /*!
