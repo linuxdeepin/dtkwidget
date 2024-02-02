@@ -121,7 +121,7 @@ void setwidgetfont(QWidget *widget, DFontSizeManager::SizeType type = DFontSizeM
     QFont font = widget->font();
     font.setBold(true);
     widget->setFont(font);
-    DFontSizeManager::instance()->bind(widget, type);
+    DFontSizeManager::instance()->bind(widget, type, 74);
 }
 
 static void _d_setSpinboxDefaultValue(QHash<QWidget *, QString> valueCaches, DSpinBox *spinBox)
@@ -178,6 +178,7 @@ void DPrintPreviewDialogPrivate::initui()
     QVBoxLayout *pleftlayout = new QVBoxLayout;
     initleft(pleftlayout);
     QVBoxLayout *prightlayout = new QVBoxLayout;
+    prightlayout->setContentsMargins(QMargins(0, 10, 0, 5));
     initright(prightlayout);
 
     DWidget *leftWidget = new DWidget;
@@ -366,7 +367,7 @@ void DPrintPreviewDialogPrivate::initbasicui()
     DFrame *pageFrame = new DFrame(basicsettingwdg);
     pageFrame->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_PageRangeWidget]);
     layout->addWidget(pageFrame);
-    pageFrame->setMinimumSize(WIDTH_NORMAL, 94);
+    pageFrame->setMinimumWidth(WIDTH_NORMAL);
     setfrmaeback(pageFrame);
     QVBoxLayout *pagelayout = new QVBoxLayout(pageFrame);
     pagelayout->setContentsMargins(10, 5, 10, 5);
