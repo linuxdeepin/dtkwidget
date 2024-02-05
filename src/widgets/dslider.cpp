@@ -820,6 +820,10 @@ void SliderStrip::paintEvent(QPaintEvent *event)
     if (scaleInfo.isEmpty())
         return;
 
+    auto elidedText = [this](const QString &text, int width) {
+        return fontMetrics().elidedText(text, Qt::ElideRight, width);
+    };
+
     if (orient == Qt::Horizontal) {
         width -= 2 * offsetSize + margin * 2;
         startX += offsetSize + margin;
@@ -837,7 +841,7 @@ void SliderStrip::paintEvent(QPaintEvent *event)
         pa.setPen(penLine);
         pa.drawLine(QPointF(startX, startY), QPointF(endX, endY));
         pa.setPen(penNumber);
-        pa.drawText(QRectF(endX, textPos, width, height - tickSize), Qt::AlignLeft, scaleInfo[0]);
+        pa.drawText(QRectF(endX, textPos, width, height - tickSize), Qt::AlignLeft, elidedText(scaleInfo[0], width / paragraph));
 
         for (int i = 1; i < paragraph - 1; i++) {
             startX += average;
@@ -845,7 +849,7 @@ void SliderStrip::paintEvent(QPaintEvent *event)
             pa.setPen(penLine);
             pa.drawLine(QPointF(startX, startY), QPointF(endX, endY));
             pa.setPen(penNumber);
-            pa.drawText(QRectF(endX - width / 2, textPos, width, height - tickSize), Qt::AlignHCenter, scaleInfo[i]);
+            pa.drawText(QRectF(endX - width / 2, textPos, width, height - tickSize), Qt::AlignHCenter, elidedText(scaleInfo[i], width / paragraph));
         }
 
         if (paragraph > 1) {
@@ -854,7 +858,7 @@ void SliderStrip::paintEvent(QPaintEvent *event)
             pa.setPen(penLine);
             pa.drawLine(QPointF(startX, startY), QPointF(endX, endY));
             pa.setPen(penNumber);
-            pa.drawText(QRectF(endX - width, textPos, width, height - tickSize), Qt::AlignRight, scaleInfo[paragraph - 1]);
+            pa.drawText(QRectF(endX - width, textPos, width, height - tickSize), Qt::AlignRight, elidedText(scaleInfo[paragraph - 1], width / paragraph));
         }
     } else {
         startY = offsetSize + margin;
@@ -877,7 +881,7 @@ void SliderStrip::paintEvent(QPaintEvent *event)
         pa.setPen(penLine);
         pa.drawLine(QPointF(startX, startY), QPointF(endX, endY));
         pa.setPen(penNumber);
-        pa.drawText(QRectF(textPos, endY - average / 2 + offsetSize / 2, width - tickSize, average), text_flags, scaleInfo[0]);
+        pa.drawText(QRectF(textPos, endY - average / 2 + offsetSize / 2, width - tickSize, average), text_flags, elidedText(scaleInfo[0], width - tickSize));
 
         for (int i = 1; i < paragraph - 1; i++) {
             startY += average;
@@ -885,7 +889,7 @@ void SliderStrip::paintEvent(QPaintEvent *event)
             pa.setPen(penLine);
             pa.drawLine(QPointF(startX, startY), QPointF(endX, endY));
             pa.setPen(penNumber);
-            pa.drawText(QRectF(textPos, endY - average / 2, width - tickSize, average), text_flags, scaleInfo[i]);
+            pa.drawText(QRectF(textPos, endY - average / 2, width - tickSize, average), text_flags, elidedText(scaleInfo[i], width - tickSize));
         }
 
         if (paragraph > 1) {
@@ -894,7 +898,7 @@ void SliderStrip::paintEvent(QPaintEvent *event)
             pa.setPen(penLine);
             pa.drawLine(QPointF(startX, startY), QPointF(endX, endY));
             pa.setPen(penNumber);
-            pa.drawText(QRectF(textPos, endY - average / 2 - offsetSize / 2, width - tickSize, average), text_flags, scaleInfo[paragraph - 1]);
+            pa.drawText(QRectF(textPos, endY - average / 2 - offsetSize / 2, width - tickSize, average), text_flags, elidedText(scaleInfo[paragraph - 1], width - tickSize));
         }
     }
 }
