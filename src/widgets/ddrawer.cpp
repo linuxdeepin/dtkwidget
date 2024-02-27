@@ -68,8 +68,8 @@ void DDrawerPrivate::init()
     layout_contentLoader->addStretch();
 
     m_animation = new QPropertyAnimation(m_contentLoader, "height", qq);
-    m_animation->setDuration(200);
-    m_animation->setEasingCurve(QEasingCurve::InSine);
+    m_animation->setDuration(400);
+    m_animation->setEasingCurve(QEasingCurve::InQuad);
     qq->connect(m_animation, &QPropertyAnimation::valueChanged, qq, [qq] {
         qq->setFixedHeight(qq->sizeHint().height());
     });
