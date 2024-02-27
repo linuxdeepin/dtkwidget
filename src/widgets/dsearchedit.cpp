@@ -293,7 +293,7 @@ void DSearchEditPrivate::init()
 
     action = new QAction(q);
     action->setObjectName("_d_search_leftAction");
-    action->setIcon(DIconTheme::findQIcon("search_indicator"));
+    action->setIcon(DIconTheme::findQIcon("search_left_action"));
     q->lineEdit()->addAction(action, QLineEdit::LeadingPosition);
     action->setVisible(false);
     iconbtn->setIconSize(QSize(20, 20));

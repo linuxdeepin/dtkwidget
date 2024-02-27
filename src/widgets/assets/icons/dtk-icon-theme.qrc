@@ -44,9 +44,11 @@
         <file>light/texts/spacer_fixed_34px.svg</file>
         <file>light/texts/spacer_stretch_34px.svg</file>
         <file>light/texts/fold_14px.svg</file>
+        <file>light/texts/search_left_action_20px.svg</file>
         <file>dark/texts/spacer_fixed_34px.svg</file>
         <file>dark/texts/spacer_stretch_34px.svg</file>
         <file>dark/texts/fold_14px.svg</file>
+        <file>dark/texts/search_left_action_20px.svg</file>
         <file>dark/actions/printer_lrtb_1_24px.svg</file>
         <file>dark/actions/printer_lrtb_2_24px.svg</file>
         <file>dark/actions/printer_lrtb_3_24px.svg</file>
