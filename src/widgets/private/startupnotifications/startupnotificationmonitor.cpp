@@ -77,22 +77,11 @@ StartupNotificationMonitor::StartupNotificationMonitor() :
         return;
 
     int screen = 0;
+
     xcb_screen_t *s = xcb_aux_get_screen (QX11Info::connection(), screen);
-    xcb_get_window_attributes_cookie_t attr_cookie = xcb_get_window_attributes (QX11Info::connection(), s->root);
-    xcb_get_window_attributes_reply_t *attr_reply = xcb_get_window_attributes_reply (QX11Info::connection(), attr_cookie, NULL);
-
-    if (attr_reply) {
-        uint32_t old_event_mask = attr_reply->your_event_mask;
-        if (!(old_event_mask & XCB_EVENT_MASK_PROPERTY_CHANGE)) {
-            const uint32_t select_input_val[] = { XCB_EVENT_MASK_PROPERTY_CHANGE | old_event_mask };
-
-            xcb_change_window_attributes (QX11Info::connection(), s->root, XCB_CW_EVENT_MASK,
-                                          select_input_val);
-        }
-        free(attr_reply);
-    } else {
-        qWarning() << "can not get xcb window attributes reply";
-    }
+    const uint32_t select_input_val[] = { XCB_EVENT_MASK_PROPERTY_CHANGE };
+    xcb_change_window_attributes (QX11Info::connection(), s->root, XCB_CW_EVENT_MASK,
+                                  select_input_val);
 
     display = sn_xcb_display_new (QX11Info::connection(), NULL, NULL);
 
