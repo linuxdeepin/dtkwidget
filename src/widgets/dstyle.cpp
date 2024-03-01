@@ -178,7 +178,7 @@ void DStyle::setShortcutUnderlineVisible(bool visible)
 
 static inline bool hasConfig(const QString &key, bool fallback = false)
 {
-    DConfig config("org.deepin.dtk.preference");
+    static DConfig config("org.deepin.dtk.preference");
     return config.value(key, fallback).toBool();
 }
 
