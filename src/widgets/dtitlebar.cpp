@@ -1694,6 +1694,16 @@ void DTitlebar::setSwitchThemeMenuVisible(bool visible)
 void DTitlebar::setDisableFlags(Qt::WindowFlags flags)
 {
     D_D(DTitlebar);
+
+    if (parentWidget()) {
+        if (flags & Qt::WindowCloseButtonHint)
+            parentWidget()->setWindowFlag(Qt::WindowCloseButtonHint, false);
+        if (flags & Qt::WindowMinimizeButtonHint)
+            parentWidget()->setWindowFlag(Qt::WindowMinimizeButtonHint, false);
+        if (flags & Qt::WindowMaximizeButtonHint)
+            parentWidget()->setWindowFlag(Qt::WindowMaximizeButtonHint, false);
+    }
+
     d->disableFlags = flags;
     d->updateButtonsFunc();
 }
