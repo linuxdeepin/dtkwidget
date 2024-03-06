@@ -210,7 +210,6 @@ void DAboutDialogPrivate::init()
     QHBoxLayout *mainLayout = new QHBoxLayout;
     mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->setSpacing(0);
-    mainLayout->setMargin(0);
     mainLayout->addLayout(leftVLayout, 2);
     mainLayout->addSpacing(20);
     mainLayout->addWidget(rightScrollArea, 3);

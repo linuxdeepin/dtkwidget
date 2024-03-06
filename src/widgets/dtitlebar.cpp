@@ -1276,7 +1276,7 @@ void DTitlebar::setSidebarHelper(DSidebarHelper *helper)
 
         d->sidebarBackgroundWidget = new QWidget(this);
         QHBoxLayout *hlay = new QHBoxLayout(d->sidebarBackgroundWidget);
-        hlay->setMargin(0);
+        hlay->setContentsMargins(QMargins(0, 0, 0, 0));
         auto bgBlurWidget = new DBlurEffectWidget(d->sidebarBackgroundWidget);
         bgBlurWidget->setObjectName("titlebarBlurWidget");
         bgBlurWidget->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
