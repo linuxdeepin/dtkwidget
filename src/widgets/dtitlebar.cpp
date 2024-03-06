@@ -690,12 +690,18 @@ void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
 
 void DTitlebarPrivate::updateButtonsFunc()
 {
+    D_Q(DTitlebar);
     // TASK-18145 (bug-17474) do not setMotifFunctions on wayland
     if (!targetWindowHandle) {
         return;
     }
     if (!qgetenv("WAYLAND_DISPLAY").isEmpty()) {
-        closeButton->setEnabled(!disableFlags.testFlag(Qt::WindowCloseButtonHint));
+        bool enableClose = !disableFlags.testFlag(Qt::WindowCloseButtonHint);
+        closeButton->setEnabled(enableClose);
+        auto funPtr = qApp->platformFunction("_d_enableCloseable");
+        if (funPtr && q->parentWidget() && q->parentWidget()->windowHandle()) {
+            reinterpret_cast<void(*)(quint32, quint32)>(funPtr)(q->parentWidget()->windowHandle()->winId(), enableClose);
+        }
         return;
     }
 
@@ -1923,16 +1929,6 @@ void DTitlebar::setSwitchThemeMenuVisible(bool visible)
 void DTitlebar::setDisableFlags(Qt::WindowFlags flags)
 {
     D_D(DTitlebar);
-
-    if (parentWidget()) {
-        if (flags & Qt::WindowCloseButtonHint)
-            parentWidget()->setWindowFlag(Qt::WindowCloseButtonHint, false);
-        if (flags & Qt::WindowMinimizeButtonHint)
-            parentWidget()->setWindowFlag(Qt::WindowMinimizeButtonHint, false);
-        if (flags & Qt::WindowMaximizeButtonHint)
-            parentWidget()->setWindowFlag(Qt::WindowMaximizeButtonHint, false);
-    }
-
     d->disableFlags = flags;
     d->updateButtonsFunc();
 }
