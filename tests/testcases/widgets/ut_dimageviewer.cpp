@@ -441,15 +441,16 @@ TEST_F(ut_DImageViewer, testRequestPreviousImage)
     ASSERT_EQ(changeSignal.count(), 1);
 #else
     QMutableEventPoint point;
-    point.setGlobalPosition({0,0});
-    point.setGlobalLastPosition({300,0});
-    QTouchEvent touchEvent{QEvent::TouchEnd,nullptr,Qt::NoModifier,{point}};
+    QEventPoint ep;
+    point.setGlobalPosition(ep, {0, 0});
+    point.setGlobalLastPosition(ep, {300, 0});
+    QTouchEvent touchEvent(QEvent::TouchEnd, nullptr, Qt::NoModifier, {ep});
 
     viewer->event(&touchEvent);
     ASSERT_EQ(changeSignal.count(), 1);
 
-    point.setGlobalLastPosition({100,0});
-    QTouchEvent touchEvent2{QEvent::TouchEnd, nullptr, Qt::NoModifier, {point}};
+    point.setGlobalLastPosition(ep, {100, 0});
+    QTouchEvent touchEvent2(QEvent::TouchEnd, nullptr, Qt::NoModifier, {ep});
     viewer->event(&touchEvent2);
     ASSERT_EQ(changeSignal.count(), 1);
 #endif
@@ -476,15 +477,16 @@ TEST_F(ut_DImageViewer, testRequestNextImage)
     ASSERT_EQ(changeSignal.count(), 1);
 #else
     QMutableEventPoint point;
-    point.setGlobalPosition({0,0});
-    point.setGlobalLastPosition({-300, 0});
-    QTouchEvent touchEvent(QEvent::TouchEnd, nullptr, Qt::NoModifier,{point});
+    QEventPoint ep;
+    point.setGlobalPosition(ep, {0, 0});
+    point.setGlobalLastPosition(ep, {-300, 0});
+    QTouchEvent touchEvent(QEvent::TouchEnd, nullptr, Qt::NoModifier, {ep});
 
     viewer->event(&touchEvent);
     ASSERT_EQ(changeSignal.count(), 1);
 
     // Test multi point touch.
-    QTouchEvent touchEvent2(QEvent::TouchEnd, nullptr, Qt::NoModifier, {point, point});
+    QTouchEvent touchEvent2(QEvent::TouchEnd, nullptr, Qt::NoModifier, {ep, ep});
     viewer->event(&touchEvent2);
     ASSERT_EQ(changeSignal.count(), 1);
 #endif

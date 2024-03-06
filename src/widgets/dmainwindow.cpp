@@ -214,7 +214,7 @@ void DMainWindow::setSidebarWidget(QWidget *widget)
         d->sidebarSep->raise();
         DAnchorsBase::setAnchor(d->sidebarSep, Qt::AnchorRight, tb, Qt::AnchorRight);
 
-        tb->layout()->setMargin(0);
+        tb->layout()->setContentsMargins(QMargins(0, 0, 0, 0));
         tb->setMovable(false);
         auto *contentAction = tb->toggleViewAction();
         contentAction->setVisible(false);
