@@ -23,7 +23,6 @@ class DLineEditPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 public:
     DLineEditPrivate(DLineEdit *q);
     void updateTooltipPos();
-    void updateFont();
 
     void init();
 

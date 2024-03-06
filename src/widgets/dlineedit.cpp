@@ -341,7 +341,6 @@ void DLineEdit::setEchoMode(QLineEdit::EchoMode mode)
 {
     D_D(DLineEdit);
     d->lineEdit->setEchoMode(mode);
-    d->updateFont();
 }
 
 /*!
@@ -668,8 +667,6 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
         event->accept();
         pLineEdit->setFocus();
         return true;
-    } else if (event->type() == QEvent::FontChange) {
-        d->updateFont();
     }
 
 //    if (d->frame)
@@ -705,20 +702,7 @@ DLineEditPrivate::DLineEditPrivate(DLineEdit *q)
 
 void DLineEditPrivate::updateTooltipPos()
 {
-}
-
-void DLineEditPrivate::updateFont()
-{
-    Q_Q(DLineEdit);
-    
-    if (lineEdit->echoMode() == QLineEdit::Password) {
-        QFont passwordFont = lineEdit->font();
-        passwordFont.setPixelSize(6);
-        passwordFont.setLetterSpacing(passwordFont.letterSpacingType(), 200);
-        lineEdit->setFont(passwordFont);
-    } else {
-        lineEdit->setFont(q->font());
-    }
+    //control->updateTooltipPos();
 }
 
 void DLineEditPrivate::init()
@@ -748,8 +732,6 @@ void DLineEditPrivate::init()
     q->connect(lineEdit, &QLineEdit::returnPressed, q, &DLineEdit::returnPressed);
     q->connect(lineEdit, &QLineEdit::editingFinished, q, &DLineEdit::editingFinished);
     q->connect(lineEdit, &QLineEdit::selectionChanged, q, &DLineEdit::selectionChanged);
-
-    updateFont();
 }
 
 DWIDGET_END_NAMESPACE

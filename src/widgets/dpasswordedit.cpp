@@ -127,7 +127,7 @@ void DPasswordEditPrivate::init()
 {
     D_Q(DPasswordEdit);
 
-    q->DLineEdit::setEchoMode(QLineEdit::Password);
+    q->lineEdit()->setEchoMode(QLineEdit::Password);
     q->lineEdit()->setAttribute(Qt::WA_InputMethodEnabled, false);
 
     QList<QWidget *> list;
