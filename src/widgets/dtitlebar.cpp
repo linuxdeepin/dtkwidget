@@ -1109,13 +1109,16 @@ bool DTitlebar::eventFilter(QObject *obj, QEvent *event)
 {
     D_D(DTitlebar);
 
-    if (event->type() == QEvent::MouseButtonPress &&
-            static_cast<QMouseEvent *>(event)->button() == Qt::RightButton &&
-            (obj ==d->minButton || obj == d->maxButton ||
-            obj == d->closeButton || obj == d->optionButton ||
-            obj == d->quitFullButton))
-    {
-        event->accept(); // button on titlebar should not show kwin menu
+    bool isRightButtonPressed = event->type() == QEvent::MouseButtonPress && static_cast<QMouseEvent *>(event)->button() == Qt::RightButton;
+    bool isMouseMoved = event->type() == QEvent::MouseMove;
+    bool isTitleButton = obj == d->minButton ||
+                         obj == d->maxButton ||
+                         obj == d->closeButton ||
+                         obj == d->optionButton ||
+                         obj == d->quitFullButton;
+
+    if ((isRightButtonPressed || isMouseMoved) && isTitleButton) {
+        event->accept(); // buttons on titlebar should not show kwin menu and they should not be moved
         return true;
     }
 
