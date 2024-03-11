@@ -1,3 +1,17 @@
+dtkwidget (5.6.25) unstable; urgency=medium
+
+  * chore: 调整关于对话框界面布局和样式(Task: 303535)(Influence: 关于对话框)
+  * fix: 调整关于对话框链接颜色(Task: 303535)(Influence: 关于对话框链接颜色)
+  * fix: 修复关于对话框在应用名称很长时内容有被截断的情况(Bug: 240835)(Influence: 关于对话框布局)
+  * fix: 修复dslider刻度标签内容过长时，显示不下的问题(Task: 325247)(Influence: DSlider刻度标签显示)
+  * fix: dconfig frequent construction and destruction
+  * fix: black circle in PasswordEdit(Issue: https://github.com/linuxdeepin/developer-center/issues/7335)
+  * chore: Adapt to Qt 6.6.1
+  * Revert "fix: black circle in PasswordEdit"
+  * fix: black circle in PasswordLineEdit(Issue: https://github.com/linuxdeepin/developer-center/issues/7335)
+
+ -- Deepin Packages Builder <packages@deepin.org>  Mon, 11 Mar 2024 01:16:27 +0000
+
 dtkwidget (5.6.23) unstable; urgency=medium
 
   * release 5.6.23
