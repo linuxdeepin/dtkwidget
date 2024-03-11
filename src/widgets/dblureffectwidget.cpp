@@ -135,8 +135,7 @@ QColor DBlurEffectWidgetPrivate::getMaskColor(const QColor &baseColor) const
     int maskAlpha = this->getMaskColorAlpha();
 
     bool supportBlur = (qApp->platformName() == "dwayland" || qApp->property("_d_isDwayland").toBool())
-                ? DPlatformWindowHandle(q_func()->window()).enableBlurWindow()
-                : DWindowManagerHelper::instance()->hasBlurWindow();
+                ? true : DWindowManagerHelper::instance()->hasBlurWindow();
 
     if (!isBehindWindowBlendMode() || supportBlur)
     {
@@ -163,8 +162,7 @@ void DBlurEffectWidgetPrivate::setMaskColor(const QColor &color)
     maskColor = color;
 
     bool supportBlur = (qApp->platformName() == "dwayland" || qApp->property("_d_isDwayland").toBool())
-                ? DPlatformWindowHandle(q_func()->window()).enableBlurWindow()
-                : DWindowManagerHelper::instance()->hasBlurWindow();
+                ? true : DWindowManagerHelper::instance()->hasBlurWindow();
 
     if (isBehindWindowBlendMode()) {
         maskColor.setAlpha(supportBlur ? getMaskColorAlpha() : MASK_COLOR_ALPHA_DEFAULT);
