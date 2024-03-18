@@ -15,8 +15,8 @@ class DBlurEffectWithBorderWidgetPrivate : public DTK_CORE_NAMESPACE::DObjectPri
 public:
     DBlurEffectWithBorderWidgetPrivate(DBlurEffectWithBorderWidget *qq);
 
-    int cornerRadius;
-    DGUI_NAMESPACE::DGuiApplicationHelper::ColorType themeType;
+    int cornerRadius = 0;
+    DGUI_NAMESPACE::DGuiApplicationHelper::ColorType themeType = DGUI_NAMESPACE::DGuiApplicationHelper::LightType;
 
 private:
     D_DECLARE_PUBLIC(DBlurEffectWithBorderWidget)
