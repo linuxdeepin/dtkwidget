@@ -68,5 +68,9 @@
         <file alias="play_pause.dci">bloom/play_pause.dci</file>
         <file alias="play_previous.dci">bloom/play_previous.dci</file>
         <file alias="play_next.dci">bloom/play_next.dci</file>
+        <file alias="window_close.dci">bloom/window_close.dci</file>
+        <file alias="window_maximize.dci">bloom/window_maximize.dci</file>
+        <file alias="window_minimize.dci">bloom/window_minimize.dci</file>
+        <file alias="window_normal.dci">bloom/window_normal.dci</file>
     </qresource>
 </RCC>
