@@ -73,6 +73,7 @@ void drawIndicatorChecked(QPainter *pa, const QRectF &rect);
 void drawDeleteButton(QPainter *pa, const QRectF &rect);
 void drawAddButton(QPainter *pa, const QRectF &rect);
 
+void drawTitleBarIcon(QPainter *pa, const QRectF &rect, const QString &iconName);
 void drawTitleBarMenuButton(QPainter *pa, const QRectF &rect);
 void drawTitleBarMinButton(QPainter *pa, const QRectF &rect);
 void drawTitleBarMaxButton(QPainter *pa, const QRectF &rect);
