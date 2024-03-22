@@ -282,9 +282,6 @@ bool DAlertControl::eventFilter(QObject *watched, QEvent *event)
     if (watched == d->follower) {
         if (event->type() == QEvent::Move || event->type() == QEvent::Resize)
             d->updateTooltipPos();
-
-        if (event->type() == QEvent::Hide || event->type() == QEvent::HideToParent)
-            hideAlertMessage();
     }
 
     if (d->follower && watched == d->follower->topLevelWidget()) {
