@@ -2343,7 +2343,11 @@ void DPrintPreviewDialogPrivate::_q_startPrint(bool clicked)
             desktopPath += q->docName();
         }
         if (desktopPath.right(4).compare(".pdf", Qt::CaseInsensitive)) {
-            desktopPath += ".pdf";
+            int dotIndex = desktopPath.lastIndexOf(".");
+            if (dotIndex != -1)
+                desktopPath = desktopPath.left(dotIndex) + ".pdf";
+            else
+                desktopPath += ".pdf";
         }
         QFileInfo file(desktopPath);
         QString path = desktopPath;
