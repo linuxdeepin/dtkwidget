@@ -63,6 +63,7 @@ void DAboutDialogPrivate::init()
     D_Q(DAboutDialog);
 
     q->setFixedSize(540, 290);
+    q->setWindowFlags(q->windowFlags() | Qt::CustomizeWindowHint);
 
     // overwrite default info if distribution config file existed.
     loadDistributionInfo();
