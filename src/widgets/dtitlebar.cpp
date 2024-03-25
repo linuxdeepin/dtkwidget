@@ -259,7 +259,7 @@ void DSplitScreenWidget::setButtonsEnable(bool enable)
 void DSplitScreenWidget::onThemeTypeChanged(DGuiApplicationHelper::ColorType ct)
 {
     if (ct == DGuiApplicationHelper::DarkType) {
-        this->setBackgroundColor(QColor(25, 25, 25, qRound(0.8 * 255)));
+        this->setBackgroundColor(QColor(30, 30, 30, qRound(0.98 * 255)));
     } else {
         this->setBackgroundColor(this->palette().window().color());
     }
