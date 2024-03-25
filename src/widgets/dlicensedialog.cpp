@@ -77,6 +77,7 @@ void DLicenseDialogPrivate::init()
     titleBar->setBackgroundTransparent(true);
     titleBar->setTitle(QObject::tr("Open-Source Software"));
     titleBar->addWidget(backwardBtn, Qt::AlignLeft | Qt::AlignVCenter);
+    titleBar->setContentsMargins(10, 0, 0, 0);
 
     backwardBtn->setVisible(false);
 
@@ -121,7 +122,7 @@ void DLicenseDialogPrivate::init()
     stackedLayout->addWidget(scrollArea);
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
-    mainLayout->setContentsMargins(10, 0, 10, 0);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->addWidget(titleBar, 0, Qt::AlignTop);
     mainLayout->addLayout(stackedLayout);
 
