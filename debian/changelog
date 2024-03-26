@@ -1,3 +1,10 @@
+dtkwidget (5.6.26) unstable; urgency=medium
+
+  * chore: 调整标题栏“更多/最小化/最大化/关闭按钮”的图标为最新1070图标样式(Task: 331465)(Influence: 窗口标题栏 更多/最小化/最大化/关闭按钮)
+  * feat: don't hide alert message automatically.(Issue: https://github.com/linuxdeepin/developer-center/issues/5622)
+
+ -- Deepin Packages Builder <packages@deepin.org>  Tue, 26 Mar 2024 05:47:35 +0000
+
 dtkwidget (5.6.25) unstable; urgency=medium
 
   * chore: 调整关于对话框界面布局和样式(Task: 303535)(Influence: 关于对话框)
