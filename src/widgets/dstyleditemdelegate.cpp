@@ -267,13 +267,13 @@ public:
 
                 if (action->alignment().testFlag(Qt::AlignVCenter)) {
                     result_list << QStyle::alignedRect(direction, action->alignment(), size_list.at(i), center_rect);
-                    center_rect.setLeft(result_list.last().right() + spacing);
+                    center_rect.setLeft(result_list.last().right() + spacing + 1);
                 } else if (action->alignment().testFlag(Qt::AlignBottom)) {
                     result_list << QStyle::alignedRect(direction, action->alignment(), size_list.at(i), bottom_rect);
-                    bottom_rect.setLeft(result_list.last().right() + spacing);
+                    bottom_rect.setLeft(result_list.last().right() + spacing + 1);
                 } else {
                     result_list << QStyle::alignedRect(direction, action->alignment(), size_list.at(i), top_rect);
-                    top_rect.setLeft(result_list.last().right() + spacing);
+                    top_rect.setLeft(result_list.last().right() + spacing + 1);
                 }
 
                 if (bounding)
@@ -311,13 +311,13 @@ public:
 
                 if (action->alignment().testFlag(Qt::AlignHCenter)) {
                     result_list << QStyle::alignedRect(direction, action->alignment(), size_list.at(i), center_rect);
-                    center_rect.setTop(result_list.last().bottom() + spacing);
+                    center_rect.setTop(result_list.last().bottom() + spacing + 1);
                 } else if (action->alignment().testFlag(Qt::AlignRight)) {
                     result_list << QStyle::alignedRect(direction, action->alignment(), size_list.at(i), right_rect);
-                    right_rect.setTop(result_list.last().bottom() + spacing);
+                    right_rect.setTop(result_list.last().bottom() + spacing + 1);
                 } else {
                     result_list << QStyle::alignedRect(direction, action->alignment(), size_list.at(i), left_rect);
-                    left_rect.setTop(result_list.last().bottom() + spacing);
+                    left_rect.setTop(result_list.last().bottom() + spacing + 1);
                 }
 
                 if (bounding)
@@ -443,7 +443,6 @@ public:
         for (int i = 0; i < list.count(); ++i) {
             DViewItemAction *action = visiable_actionList.at(i);
             const QRect &rect = list.at(i).translated(origin);
-
             drawAction(pa, option, rect, action, spacing);
 
             if (action->isClickable()) {
