@@ -33,7 +33,7 @@
 DCORE_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
-const QString DAboutDialogPrivate::websiteLinkTemplate = "<a href='%1' style='text-decoration: none; font-size:12px; color: rgba(0,129,255,0.9);'>%2</a>";
+const QString DAboutDialogPrivate::websiteLinkTemplate = "<a href='%1' style='text-decoration: none; color: rgba(0,129,255,0.9);'>%2</a>";
 
 DRedPointLabel::DRedPointLabel(QWidget *parent)
     : QLabel(parent)
@@ -90,6 +90,7 @@ void DAboutDialogPrivate::init()
     companyLogoLabel->hide();
 
     websiteLabel = new QLabel();
+    fontManager->bind(websiteLabel, DFontSizeManager::T8, QFont::Medium);
     websiteLabel->setObjectName("WebsiteLabel");
     websiteLabel->setContextMenuPolicy(Qt::NoContextMenu);
     websiteLabel->setOpenExternalLinks(false);
@@ -120,6 +121,7 @@ void DAboutDialogPrivate::init()
     featureLabel->setContextMenuPolicy(Qt::NoContextMenu);
     featureLabel->setOpenExternalLinks(false);
     featureLabel->setVisible(!qApp->featureDisplayDialog()->isEmpty());
+    fontManager->bind(featureLabel, DFontSizeManager::T8, QFont::Medium);
     redPointLabel = new DRedPointLabel();
     redPointLabel->setFixedSize(10, 10);
     QHBoxLayout *vFeatureLayout =  new QHBoxLayout;
