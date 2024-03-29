@@ -89,6 +89,7 @@ void DAboutDialogPrivate::init()
     companyLogoLabel->hide();
 
     websiteLabel = new QLabel();
+    fontManager->bind(websiteLabel, DFontSizeManager::T8, QFont::Medium);
     websiteLabel->setObjectName("WebsiteLabel");
     websiteLabel->setContextMenuPolicy(Qt::NoContextMenu);
     websiteLabel->setOpenExternalLinks(false);
@@ -123,6 +124,7 @@ void DAboutDialogPrivate::init()
       featureLabel->setVisible(!qApp->featureDisplayDialog()->isEmpty());
     else
       featureLabel->setVisible(false);
+    fontManager->bind(featureLabel, DFontSizeManager::T8, QFont::Medium);
     redPointLabel = new DRedPointLabel();
     redPointLabel->setFixedSize(10, 10);
     QHBoxLayout *vFeatureLayout =  new QHBoxLayout;
