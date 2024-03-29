@@ -1265,11 +1265,11 @@ void DArrowRectanglePrivate::init(DArrowRectangle::FloatMode mode)
             this->updateClipPath();
         }, Qt::QueuedConnection);
     } else if (DArrowRectangle::FloatWidget == floatMode) {
-        DGraphicsGlowEffect *glowEffect = new DGraphicsGlowEffect;
+        QGraphicsDropShadowEffect *glowEffect = new QGraphicsDropShadowEffect;
         glowEffect->setBlurRadius(q->shadowBlurRadius());
-        glowEffect->setDistance(m_shadowDistance);
         glowEffect->setXOffset(q->shadowXOffset());
         glowEffect->setYOffset(q->shadowYOffset());
+        glowEffect->setColor(QColor(0, 0, 0, 0.1 * 255));
         q->setGraphicsEffect(glowEffect);
     } else {
 #ifndef QT_DEBUG
