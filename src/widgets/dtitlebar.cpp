@@ -259,8 +259,10 @@ void DSplitScreenWidget::setButtonsEnable(bool enable)
 void DSplitScreenWidget::onThemeTypeChanged(DGuiApplicationHelper::ColorType ct)
 {
     if (ct == DGuiApplicationHelper::DarkType) {
+        this->setBorderColor(QColor(255, 255, 255, qRound(0.1 * 255)));
         this->setBackgroundColor(QColor(30, 30, 30, qRound(0.98 * 255)));
     } else {
+        this->setBorderColor(QColor(0, 0, 0, qRound(0.1 * 255)));
         this->setBackgroundColor(this->palette().window().color());
     }
 }
@@ -277,7 +279,11 @@ void DSplitScreenWidget::init()
     this->setArrowWidth(50);
     this->setArrowHeight(30);
     this->setRadiusArrowStyleEnable(true);
-    this->setBorderColor(QColor(0, 0, 0, qRound(0.05 * 255)));
+
+    if (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::DarkType)
+        this->setBorderColor(QColor(255, 255, 255, qRound(0.05 * 255)));
+    else
+        this->setBorderColor(QColor(0, 0, 0, qRound(0.05 * 255)));
 
     contentWidget = new QWidget(this);
     QHBoxLayout *contentLayout = new QHBoxLayout(contentWidget);
