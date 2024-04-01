@@ -16,13 +16,6 @@ test_build:
               - x86_64
               - aarch64
 
-          - name: debian
-            paths:
-              - target_project: deepin:CI
-                target_repository: debian_sid
-            architectures:
-              - x86_64
-
           - name: archlinux
             paths:
               - target_project: deepin:CI
