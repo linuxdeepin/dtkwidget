@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="en">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="en">
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -182,7 +180,7 @@
     </message>
     <message>
         <source>Color</source>
-        <translation>Color</translation>
+        <translation type="vanished">Color</translation>
     </message>
     <message>
         <source>Grayscale</source>
@@ -421,6 +419,10 @@
         <source>Images</source>
         <translation>Images</translation>
     </message>
+    <message>
+        <source>Full Color</source>
+        <translation>Full Color</translation>
+    </message>
 </context>
 <context>
     <name>DPrintPreviewWidget</name>
@@ -474,19 +476,19 @@
     <name>DSplitScreenWidget</name>
     <message>
         <source>Unmaximize</source>
-        <translation type="unfinished"></translation>
+        <translation>Unmaximize</translation>
     </message>
     <message>
         <source>Maximize</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximize</translation>
     </message>
     <message>
         <source>Tile window to left of screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Tile window to left of screen</translation>
     </message>
     <message>
         <source>Tile window to right of screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Tile window to right of screen</translation>
     </message>
 </context>
 <context>
@@ -601,7 +603,7 @@
     </message>
     <message>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>License</translation>
     </message>
 </context>
 <context>

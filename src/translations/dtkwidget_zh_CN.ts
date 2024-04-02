@@ -180,7 +180,7 @@
     </message>
     <message>
         <source>Color</source>
-        <translation>颜色</translation>
+        <translation type="vanished">颜色</translation>
     </message>
     <message>
         <source>Grayscale</source>
@@ -418,6 +418,10 @@
     <message>
         <source>Images</source>
         <translation>图片文件</translation>
+    </message>
+    <message>
+        <source>Full Color</source>
+        <translation>彩色</translation>
     </message>
 </context>
 <context>
