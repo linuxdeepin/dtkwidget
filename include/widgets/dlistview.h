@@ -112,6 +112,8 @@ protected:
 
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QStyleOptionViewItem viewOptions() const override;
+#else
+    void initViewItemOption(QStyleOptionViewItem *option) const override;
 #endif
     virtual QModelIndex moveCursor(CursorAction cursorAction,
                                    Qt::KeyboardModifiers modifiers) override;
