@@ -921,7 +921,7 @@ bool DListView::edit(const QModelIndex &index, QAbstractItemView::EditTrigger tr
     return tmp;
 }
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0) //TODO: error Maybe
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 QStyleOptionViewItem DListView::viewOptions() const
 {
     QStyleOptionViewItem item = QListView::viewOptions();
@@ -935,6 +935,20 @@ QStyleOptionViewItem DListView::viewOptions() const
     }
 
     return item;
+}
+#else
+/*!
+  \reimp
+*/
+void DListView::initViewItemOption(QStyleOptionViewItem *option) const
+{
+    QListView::initViewItemOption(option);
+    option->showDecorationSelected = true;
+    // 列表项不会变为Inactive状态
+    option->state |= QStyle::State_Active;
+    if (viewMode() == QListView::ListMode) {
+        option->decorationAlignment = Qt::AlignVCenter;
+    }
 }
 #endif
 
