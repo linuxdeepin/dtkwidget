@@ -14,6 +14,7 @@
 #include <QTimer>
 #include <QPushButton>
 #include <QLineEdit>
+#include <QKeyEvent>
 
 
 DWIDGET_BEGIN_NAMESPACE
@@ -29,7 +30,7 @@ DWIDGET_BEGIN_NAMESPACE
 /*!
   \brief DPasswordEdit的构造函数.
   \brief DPasswordEdit::DPasswordEdit constructs an instance of DPasswordEdit.
-  
+
   \a parent is passed to DLineEdit constructor.
  */
 DPasswordEdit::DPasswordEdit(QWidget *parent)
@@ -46,7 +47,7 @@ DPasswordEdit::DPasswordEdit(QWidget *parent)
   \brief 该属性会控制用户输入是否可见.
   \brief This property holds whether the user input should be displayed directly
   or show as dots.
-  
+
   \sa QLineEdit::EchoMode
  */
 bool DPasswordEdit::isEchoMode() const
@@ -110,6 +111,21 @@ void DPasswordEdit::changeEvent(QEvent *event)
     return DLineEdit::changeEvent(event);
 }
 
+bool DPasswordEdit::eventFilter(QObject* watcher, QEvent* event)
+{
+    if (event->type() == QEvent::KeyPress) {
+        D_D(DPasswordEdit);
+        if (watcher == d->togglePasswordVisibleButton && !d->togglePasswordVisibleButton->isDefault()) {
+            const auto keyEvent = dynamic_cast<QKeyEvent*>(event);
+            if (keyEvent && (keyEvent->key() == Qt::Key_Return || keyEvent->key() == Qt::Key_Enter)) {
+                d->togglePasswordVisibleButton->click();
+            }
+        }
+    }
+
+    return QWidget::eventFilter(watcher, event);
+}
+
 DPasswordEditPrivate::DPasswordEditPrivate(DPasswordEdit *q)
     : DLineEditPrivate(q)
 {
@@ -129,6 +145,7 @@ void DPasswordEditPrivate::init()
     togglePasswordVisibleButton->setIcon(DStyle::standardIcon(q->style(), DStyle::SP_ShowPassword));
     togglePasswordVisibleButton->setFixedWidth(defaultButtonWidth());
     togglePasswordVisibleButton->setIconSize(defaultIconSize());
+    togglePasswordVisibleButton->installEventFilter(q);
 
     list.append(togglePasswordVisibleButton);
     q->setRightWidgets(list);
