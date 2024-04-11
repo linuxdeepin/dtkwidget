@@ -846,8 +846,7 @@ void DTitlebarPrivate::showSplitScreenWidget()
     if (splitWidget->isVisible())
         return;
 
-    auto centerPos = maxButton->mapToGlobal(maxButton->rect().center());
-    auto bottomPos = maxButton->mapToGlobal(maxButton->rect().bottomLeft());
+    QRect maxBtnRect = QRect(maxButton->mapToGlobal(maxButton->rect().topLeft()), maxButton->rect().size());
 
     QRect rect;
     if (QScreen *screen = QGuiApplication::screenAt(QCursor::pos())) {
@@ -856,11 +855,20 @@ void DTitlebarPrivate::showSplitScreenWidget()
         rect = QGuiApplication::primaryScreen()->geometry();
     }
 
-    if (bottomPos.y() + splitWidget->height() > rect.height()) {
-        splitWidget->show(QPoint(centerPos.x() - splitWidget->width() / 2, bottomPos.y() - maxButton->rect().height() - splitWidget->height()));
-    } else {
-        splitWidget->show(QPoint(centerPos.x() - splitWidget->width() / 2, bottomPos.y()));
+    int targetX = maxBtnRect.center().x() - splitWidget->width() / 2;
+    int targetY = maxBtnRect.bottom();
+
+    if (int outRightLen = maxBtnRect.center().x() - rect.x() + splitWidget->width() / 2 - rect.width(); outRightLen > 0) {    // 超出右边缘
+        targetX -= outRightLen;
+    } else if (int outLeftLen = splitWidget->width() / 2 - maxBtnRect.center().x() + rect.x(); outLeftLen > 0) {    // 超出左边缘
+        targetX += outLeftLen;
     }
+
+    if (maxBtnRect.bottom() + splitWidget->height() - rect.y() > rect.height()) {   // 超出下边缘
+        targetY  -= maxButton->rect().height() + splitWidget->height();
+    } 
+
+    splitWidget->show(QPoint(targetX, targetY));
 }
 
 void DTitlebarPrivate::hideSplitScreenWidget()
