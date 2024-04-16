@@ -5,6 +5,7 @@
 #include "private/dblureffectwithborderwidget_p.h"
 
 #include <DPlatformWindowHandle>
+#include <DWindowManagerHelper>
 
 #include <QPainter>
 
@@ -78,7 +79,14 @@ void DBlurEffectWithBorderWidget::paintEvent(QPaintEvent *e)
 
     pen.setColor(innerBorderNewColor);
     p.setPen(pen);
-    p.drawRoundedRect(rect(), d->cornerRadius, d->cornerRadius);
+
+    if (qApp->platformName() != "dwayland"
+            && !qApp->property("_d_isDwayland").toBool()
+            && !DWindowManagerHelper::instance()->hasBlurWindow())
+        p.drawRect(rect());
+    else
+        p.drawRoundedRect(rect(), d->cornerRadius, d->cornerRadius);
+
 }
 
 DBlurEffectWithBorderWidgetPrivate::DBlurEffectWithBorderWidgetPrivate(DBlurEffectWithBorderWidget *qq)
