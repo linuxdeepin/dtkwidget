@@ -120,7 +120,7 @@ void DMainWindowPrivate::init()
     QColor color = (DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::DarkType) ? Qt::white : Qt::black;
     color.setAlphaF(0.08);
     q->setBorderColor(color);
-    q->connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged, [q](DGuiApplicationHelper::ColorType themeType) {
+    q->connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged, q, [q](DGuiApplicationHelper::ColorType themeType) {
         QColor color = (themeType == DGuiApplicationHelper::DarkType) ? Qt::white : Qt::black;
         color.setAlphaF(0.08);
         q->setBorderColor(color);
