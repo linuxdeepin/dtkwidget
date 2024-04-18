@@ -1190,9 +1190,6 @@ void DPrintPreviewDialogPrivate::initconnections()
         if (isInited) {
             this->marginsUpdate(false);
         }
-        if (pview->pageRangeMode() == DPrintPreviewWidget::SelectPage && pageRangeCombo->isEnabled())
-            pageRangeCombo->setCurrentIndex(PAGERANGE_ALL);
-
     });
 
     QObject::connect(scaleRateEdit->lineEdit(), &QLineEdit::editingFinished, q, [this] {
@@ -1736,8 +1733,6 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
     }
 
     marginsUpdate(true);
-    if (pview->pageRangeMode() == DPrintPreviewWidget::SelectPage && pageRangeCombo->isEnabled())
-        pageRangeCombo->setCurrentIndex(PAGERANGE_ALL);
     paperSizeCombo->blockSignals(false);
     if (isInited)
         updateAllControlSettings();
@@ -1826,9 +1821,6 @@ void DPrintPreviewDialogPrivate::_q_pageMarginChanged(int index)
         pview->updatePreview();
     }
 
-    if (pview->pageRangeMode() == DPrintPreviewWidget::SelectPage && pageRangeCombo->isEnabled())
-        pageRangeCombo->setCurrentIndex(PAGERANGE_ALL);
-
     if (marginOldValue.length() > 4)
         marginOldValue.clear();
 
@@ -1880,8 +1872,6 @@ void DPrintPreviewDialogPrivate::_q_orientationChanged(int index)
         // 横向按钮
         pview->setOrientation(DPrinter::Landscape);
     }
-    if (pview->pageRangeMode() == DPrintPreviewWidget::SelectPage && pageRangeCombo->isEnabled())
-        pageRangeCombo->setCurrentIndex(PAGERANGE_ALL);
 }
 
 /*!
@@ -1976,8 +1966,6 @@ void DPrintPreviewDialogPrivate::adjustMargins()
     marginOldValue << topMarginF << leftMarginF << rightMarginF << bottomMarginF;
     this->printer->setPageMargins(QMarginsF(leftMarginF, topMarginF, rightMarginF, bottomMarginF), QPageLayout::Millimeter);
     this->pview->updatePreview();
-    if (pview->pageRangeMode() == DPrintPreviewWidget::SelectPage && pageRangeCombo->isEnabled())
-        pageRangeCombo->setCurrentIndex(PAGERANGE_ALL);
 }
 
 /*!
