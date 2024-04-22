@@ -153,7 +153,7 @@ bool DFloatingWidget::event(QEvent *event)
         setContentsMargins(margins, margins, margins, margins);
 
         if (d->background) {
-            int radius = DStyleHelper(style()).pixelMetric(DStyle::PM_TopLevelWindowRadius);
+            int radius = DStyleHelper(style()).pixelMetric(DStyle::PM_FrameRadius);
 
             d->background->setBlurRectXRadius(radius);
             d->background->setBlurRectYRadius(radius);
@@ -233,7 +233,7 @@ void DFloatingWidget::setBlurBackgroundEnabled(bool blurBackgroundEnabled)
         d->background->setAttribute(Qt::WA_TransparentForMouseEvents);
         d->background->show();
 
-        int radius = DStyleHelper(style()).pixelMetric(DStyle::PM_TopLevelWindowRadius);
+        int radius = DStyleHelper(style()).pixelMetric(DStyle::PM_FrameRadius);
 
         d->background->setBlurRectXRadius(radius);
         d->background->setBlurRectYRadius(radius);
