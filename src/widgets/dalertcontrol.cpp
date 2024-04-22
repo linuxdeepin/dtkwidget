@@ -9,6 +9,7 @@
 #include <QTimer>
 #include <QLayout>
 #include <QEvent>
+#include <QGraphicsDropShadowEffect>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -222,6 +223,14 @@ void DAlertControl::showAlertMessage(const QString &text, QWidget *follower, int
         d->frame->setFramRadius(DStyle::pixelMetric(d->target->style(), DStyle::PM_FrameRadius));
         d->frame->setBackgroundRole(QPalette::ToolTipBase);
         d->frame->setWidget(d->tooltip);
+        d->frame->setBlurBackgroundEnabled(true);
+
+        auto effect = new QGraphicsDropShadowEffect(d->frame);
+        effect->setColor(QColor(0, 0, 0, 0.2 * 255));
+        effect->setBlurRadius(40);
+        effect->setXOffset(0);
+        effect->setYOffset(2);
+        d->frame->setGraphicsEffect(effect);
     }
 
     if (follower) {
