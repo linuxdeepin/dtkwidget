@@ -276,13 +276,13 @@ void DKeySequenceEdit::keyPressEvent(QKeyEvent *e)
     }
 
     if (e->modifiers() & Qt::ShiftModifier) {
-        QList<int> possibleKeys = QKeyMapper::possibleKeys(e);
+        auto possibleKeys = QKeyMapper::possibleKeys(e);
         int pkTotal = possibleKeys.count();
         if (!pkTotal)
             return;
         bool found = false;
         for (int i = 0; i < possibleKeys.size(); ++i) {
-            if (possibleKeys.at(i) - nextKey == int(e->modifiers())
+            if (static_cast<int>(possibleKeys.at(i)) - nextKey == static_cast<int>(e->modifiers())
                 || (possibleKeys.at(i) == nextKey && e->modifiers() == Qt::ShiftModifier)) {
                 nextKey = possibleKeys.at(i);
                 found = true;
