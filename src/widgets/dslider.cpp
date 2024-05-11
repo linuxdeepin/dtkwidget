@@ -709,6 +709,7 @@ void DSliderPrivate::init()
     slider->setTickPosition(QSlider::NoTicks);
     slider->installEventFilter(q);
     slider->setAccessibleName("DSliderSpecialSlider");
+    slider->setFocusPolicy(Qt::StrongFocus);                                // 滑动条默认支持鼠标点击后获得焦点，方便使用键盘进行微调
 }
 
 QSize SliderStrip::sizeHint() const
