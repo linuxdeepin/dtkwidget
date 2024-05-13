@@ -23,8 +23,8 @@ private:
     bool isAlert = false;
     QPointer<DToolTip> tooltip;
     QPointer<DFloatingWidget> frame;
-    QWidget *follower{nullptr};
-    QWidget *target{nullptr};
+    QPointer<QWidget> follower;
+    QPointer<QWidget> target;
     QColor  alertColor;
     Qt::Alignment alignment{Qt::AlignLeft};
     QTimer timer;
