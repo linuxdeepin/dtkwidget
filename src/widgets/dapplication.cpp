@@ -1480,19 +1480,6 @@ bool DApplication::notify(QObject *obj, QEvent *event)
         }
     }
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 4, 0)
-    if (event->type() == QEvent::KeyPress && obj == focusWidget()) {
-        if (auto keyEvent = dynamic_cast<QKeyEvent *>(event)) {
-            if (keyEvent->key() == Qt::Key_Return || keyEvent->key() == Qt::Key_Enter) {
-                if (auto btn = qobject_cast<QAbstractButton *>(obj)) {
-                    Q_EMIT btn->clicked();
-                    return true;
-                }
-            }
-        }
-    }
-#endif
-
     if (event->type() == QEvent::ApplicationFontChange) {
         // ApplicationFontChange 调用 font() 是 ok 的，如果在 fontChanged 中调用在某些版本中会出现 deadlock
         DFontSizeManager::instance()->setFontGenericPixelSize(static_cast<quint16>(DFontSizeManager::fontPixelSize(font())));
