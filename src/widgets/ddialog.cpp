@@ -125,12 +125,14 @@ void DDialogPrivate::init()
     spacer = new QSpacerItem(1, 0);
 
     // MainLayout--TopLayout
+    mainLayout->setSpacing(0);
     mainLayout->addWidget(titleBar, 0, Qt::AlignTop);
     mainLayout->addWidget(contentWidget);
     mainLayout->setContentsMargins(QMargins(0, 0, 0, 0));
 
     // MainLayout--ButtonLayout
     buttonLayout = new QHBoxLayout;
+    buttonLayout->setSpacing(5);
     buttonLayout->setContentsMargins(DIALOG::BUTTON_LAYOUT_LEFT_MARGIN,
                                      DIALOG::BUTTON_LAYOUT_TOP_MARGIN,
                                      DIALOG::BUTTON_LAYOUT_RIGHT_MARGIN,
