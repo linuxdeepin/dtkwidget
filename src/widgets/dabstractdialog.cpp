@@ -68,6 +68,11 @@ void DAbstractDialogPrivate::init(bool blurIfPossible)
         q->setAttribute(Qt::WA_TranslucentBackground, blurIfPossible);
     } else if (noTitlebarEnabled()) {
         handle = new DPlatformWindowHandle(q, q);
+
+        if (!handle->enableBlurWindow()) {
+            handle->setEnableBlurWindow(true);
+        }
+
         // fix wayland no titlebar
         //q->setWindowFlags(q->windowFlags() | Qt::FramelessWindowHint);
     }
