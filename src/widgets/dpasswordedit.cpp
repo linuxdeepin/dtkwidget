@@ -130,7 +130,7 @@ bool DPasswordEdit::eventFilter(QObject* watcher, QEvent* event)
         }
     }
 
-    return QWidget::eventFilter(watcher, event);
+    return DLineEdit::eventFilter(watcher, event);
 }
 
 DPasswordEditPrivate::DPasswordEditPrivate(DPasswordEdit *q)
