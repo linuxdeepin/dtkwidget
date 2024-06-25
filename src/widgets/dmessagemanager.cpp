@@ -68,17 +68,21 @@ template<typename IconType>
 static void sendMessage_helper(DMessageManager *manager, QWidget *par, IconType icon, const QString &message)
 {
     QWidget *content = par->findChild<QWidget *>(D_MESSAGE_MANAGER_CONTENT, Qt::FindDirectChildrenOnly);
-    int text_message_count = 0;
 
-    for (DFloatingMessage *message : content->findChildren<DFloatingMessage*>(QString(), Qt::FindDirectChildrenOnly)) {
-        if (message->messageType() == DFloatingMessage::TransientType) {
-            ++text_message_count;
+    if (content) {
+        int text_message_count = 0;
+
+        for (DFloatingMessage *message : content->findChildren<DFloatingMessage *>(QString(), Qt::FindDirectChildrenOnly)) {
+            if (message->messageType() == DFloatingMessage::TransientType) {
+                ++text_message_count;
+            }
+        }
+
+        // TransientType 类型的通知消息，最多只允许同时显示三个
+        if (text_message_count >= 3) {
+            return;
         }
     }
-
-    // TransientType 类型的通知消息，最多只允许同时显示三个
-    if (text_message_count >= 3)
-        return;
 
     DFloatingMessage *floMsg = new DFloatingMessage(DFloatingMessage::TransientType);
     floMsg->setAttribute(Qt::WA_DeleteOnClose);
