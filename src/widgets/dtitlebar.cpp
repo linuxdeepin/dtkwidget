@@ -775,6 +775,9 @@ void DTitlebarPrivate::setIconVisible(bool visible)
         return;
 
     if (visible) {
+        if (auto spacerItem = dynamic_cast<QSpacerItem *>(leftLayout->takeAt(0)))
+            delete leftLayout->takeAt(0);
+            
         leftLayout->insertSpacing(0, 10);
         leftLayout->insertWidget(1, iconLabel, 0, Qt::AlignLeading | Qt::AlignVCenter);
         iconLabel->show();
