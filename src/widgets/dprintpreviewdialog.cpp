@@ -1719,7 +1719,13 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
             pickColorWidget->setRgbEdit(waterColor);
         }
         if (supportedColorMode) {
+            // 第一次加载时没有连接currentIndexChanged的信号，此时需要手动触发_q_ColorModeChange
+            // 后面连接了信号后，切换打印机时又会触发_q_printerChanged信号重新设置colorModeCombo，
+            // 为了避免多次触发currentIndexChanged信号，先block信号再手动触发
+            colorModeCombo->blockSignals(true);
             colorModeCombo->setCurrentText(qApp->translate("DPrintPreviewDialogPrivate", "Color"));
+            colorModeCombo->blockSignals(false);
+            _q_ColorModeChange(colorModeCombo->currentIndex());
             settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_TextColor, true);
         } else {
             colorModeCombo->setCurrentText(qApp->translate("DPrintPreviewDialogPrivate", "Grayscale"));
