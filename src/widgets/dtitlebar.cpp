@@ -775,7 +775,7 @@ void DTitlebarPrivate::setIconVisible(bool visible)
         return;
 
     if (visible) {
-        if (auto spacerItem = dynamic_cast<QSpacerItem *>(leftLayout->takeAt(0)))
+        if (dynamic_cast<QSpacerItem *>(leftLayout->itemAt(0)))
             delete leftLayout->takeAt(0);
             
         leftLayout->insertSpacing(0, 10);
