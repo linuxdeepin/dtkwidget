@@ -8,6 +8,51 @@
 @param[in] parent
 @sa DWaterMaskHelper::instance
 
+@details
+### 实例代码
+#### main.cpp
+
+```cpp
+#include <DApplication>
+#include <DWaterMarkHelper>
+#include <QMainWindow>
+
+using namespace Dtk::Widget;
+
+
+int main(int argc,char* argv[])
+{
+    QApplication a(argc,argv);
+
+    QMainWindow w;
+    w.show();
+    
+    auto ins = DWaterMarkHelper::instance();
+
+    WaterMarkData data = ins->data();
+    data.setText("dtk example");
+    data.setType(WaterMarkData::WaterMarkType::Text);
+    data.setLayout(WaterMarkData::WaterMarkLayout::Tiled) ;
+    data.setRotation(30);
+    data.setScaleFactor(0.5);
+    data.setColor(Qt::red);
+    QFont font;
+    font.setPointSize(30);
+    data.setFont(font);
+    data.setSpacing(65);
+    data.setLineSpacing(-1);
+    data.setOpacity(0.3);
+    data.setGrayScale(true);
+
+    ins->setData(data);
+
+    ins->registerWidget(&w);
+    return a.exec();
+}
+```
+### 实例图片
+@image html dwatermarkhelper_example.png
+
 @fn DWaterMarkHelper::instance
 @brief DWaterMarkHelper 的单例对象，使用 Q_GLOBAL_STATIC 定义，在第一次调用时实例化。
 
