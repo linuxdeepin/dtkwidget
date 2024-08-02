@@ -53,4 +53,16 @@ public:
     int getFixedHeight() const override;
 };
 
+class DIndeterminateProgressBarExample : public ExampleWindowInterface
+{
+    Q_OBJECT
+
+public:
+    explicit DIndeterminateProgressBarExample(QWidget *parent = nullptr);
+
+    QString getTitleName() const override;
+    QString getDescriptionInfo() const override;
+    int getFixedHeight() const override;
+};
+
 #endif // PROGRESSBAREXAMPLE_H
