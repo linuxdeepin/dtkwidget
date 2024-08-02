@@ -9,6 +9,7 @@
 #include <DWaterProgress>
 #include <QPropertyAnimation>
 #include <DColoredProgressBar>
+#include <DIndeterminateProgressbar>
 #include "progressbarexample.h"
 
 DWIDGET_USE_NAMESPACE
@@ -28,6 +29,7 @@ ProgressBarExampleWindow::ProgressBarExampleWindow(QWidget *parent)
     addExampleWindow(new DProgressBarExample(this));
     addExampleWindow(new DWaterProgressExample(this));
     addExampleWindow(new DColoredProgressBarExample(this));
+    addExampleWindow(new DIndeterminateProgressBarExample(this));
 }
 
 DProgressBarExample::DProgressBarExample(QWidget *parent)
@@ -178,6 +180,35 @@ QString DColoredProgressBarExample::getDescriptionInfo() const
 }
 
 int DColoredProgressBarExample::getFixedHeight() const
+{
+    return 200;
+}
+
+DIndeterminateProgressBarExample::DIndeterminateProgressBarExample(QWidget *parent)
+    : ExampleWindowInterface(parent)
+{
+    auto mainLayout = new QVBoxLayout(this);
+    auto indeterBar = new DIndeterminateProgressbar();
+    indeterBar->setFixedSize(500, 35);
+    mainLayout->addWidget(indeterBar, 0, Qt::AlignCenter);
+    setLayout(mainLayout);
+}
+
+QString DIndeterminateProgressBarExample::getTitleName() const
+{
+    return "DIndeterminateProgressbar";
+}
+
+QString DIndeterminateProgressBarExample::getDescriptionInfo() const
+{
+    return QString("一个模糊进度条，不展示具体进度值，\n"
+                   "用于等待时间不确定的情况。主要用\n"
+                   "在小工具主窗口内部，作为一个中间状态\n"
+                   "展示给用户，最终的结果往往会跟随成功\n"
+                   "或者失败的图标。");
+}
+
+int DIndeterminateProgressBarExample::getFixedHeight() const
 {
     return 200;
 }
