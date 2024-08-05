@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2019 - 2023 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2019 - 2024 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -1443,9 +1443,6 @@ void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const Q
             DStyleOptionButton option = *btn;
             option.dpalette = btn->dpalette;
             option.rect = dstyle.subElementRect(SE_SwitchButtonGroove, opt, w);
-            dstyle.drawPrimitive(PE_SwitchButtonGroove, &option, p, w);
-            option.rect = dstyle.subElementRect(SE_SwitchButtonHandle, opt, w);
-            dstyle.drawPrimitive(PE_SwitchButtonHandle, &option, p, w);
 
             if (btn->state & State_HasFocus) {
                 QStyleOptionFocusRect fropt;
