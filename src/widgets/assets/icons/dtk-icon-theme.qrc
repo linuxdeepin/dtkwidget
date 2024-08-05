@@ -72,5 +72,7 @@
         <file alias="window_maximize.dci">bloom/window_maximize.dci</file>
         <file alias="window_minimize.dci">bloom/window_minimize.dci</file>
         <file alias="window_normal.dci">bloom/window_normal.dci</file>
+        <file alias="switch_on.dci">bloom/switch_on.dci</file>
+        <file alias="switch_off.dci">bloom/switch_off.dci</file>
     </qresource>
 </RCC>
