@@ -1357,6 +1357,9 @@ void DPrintPreviewDialogPrivate::setupPrinter()
         pview->isPageByPage(printer->copyCount(), isFirst);
         //由于手动设置逐页打印，这种情况下，输出打印机的打印份数为1
         printer->setCopyCount(1);
+    } else {
+        // 设置多分打印时逐份打印
+        printer->setCollateCopies(true);
     }
 }
 

@@ -746,6 +746,10 @@ PrintOptions DPrintPreviewWidgetPrivate::printerOptions()
     options.append(QPair<QByteArray, QByteArray>(QStringLiteral("copies").toLocal8Bit(), QString::number(previewPrinter->copyCount()).toLocal8Bit()));
     options.append(QPair<QByteArray, QByteArray>(QStringLiteral("fit-to-page").toLocal8Bit(), QStringLiteral("true").toLocal8Bit()));
 
+    if (previewPrinter->collateCopies()) {
+        options.append(QPair<QByteArray, QByteArray>(QStringLiteral("collate").toLocal8Bit(),  QStringLiteral("true").toLocal8Bit()));
+    }
+
     if (pageRangeMode != DPrintPreviewWidget::AllPage) {
         QString pageRangeString;
         if (pageRangeMode == DPrintPreviewWidget::CurrentPage) {
