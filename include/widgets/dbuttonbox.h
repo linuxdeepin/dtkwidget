@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2019 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2019 - 2024 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -47,6 +47,8 @@ private:
     void paintEvent(QPaintEvent *e) override;
     void keyPressEvent(QKeyEvent *event) override;
     bool event(QEvent *e) override;
+
+    friend class DButtonBox;
 };
 
 class DButtonBoxPrivate;
@@ -77,6 +79,9 @@ Q_SIGNALS:
     void buttonPressed(QAbstractButton *);
     void buttonReleased(QAbstractButton *);
     void buttonToggled(QAbstractButton *, bool);
+
+protected:
+    bool eventFilter(QObject *o, QEvent *e) override;
 
 private:
     void paintEvent(QPaintEvent *e) override;
