@@ -39,6 +39,9 @@ DWIDGET_BEGIN_NAMESPACE
 DCORE_USE_NAMESPACE
 DGUI_USE_NAMESPACE
 
+constexpr int ANI_DURATION = 200;
+constexpr int HIDE_CURSOR_MARGIN = -4;
+
 #ifdef ENABLE_AI
 class VoiceDevice : public QIODevice
 {
@@ -270,7 +273,11 @@ DSearchEditPrivate::DSearchEditPrivate(DSearchEdit *q)
     , action(nullptr)
     , iconWidget(nullptr)
     , label(nullptr)
+    , animation(new QPropertyAnimation)
 {
+    animation->setPropertyName("pos");
+    animation->setEasingCurve(QEasingCurve::OutCubic);
+    animation->setDuration(ANI_DURATION);
 }
 
 DSearchEditPrivate::~DSearchEditPrivate()
@@ -377,15 +384,31 @@ void DSearchEditPrivate::_q_toEditMode(bool focus)
 {
     D_Q(DSearchEdit);
 
-    if (focus  || !q->lineEdit()->text().isEmpty()) {
-        action->setVisible(true);
-        iconWidget->setVisible(false);
-        lineEdit->setPlaceholderText(placeholderText);
-    } else {
-        action->setVisible(false);
-        iconWidget->setVisible(true);
-        lineEdit->setPlaceholderText(QString());
-    }
+    if (animation->state() == QPropertyAnimation::Running)
+        return;
+
+    auto textMargins = q->lineEdit()->textMargins();
+    QMargins marginsInAnimation(HIDE_CURSOR_MARGIN, 0, 0, 0);
+
+    if (!animation->parent())
+        animation->setParent(iconWidget);
+
+    animation->setTargetObject(iconWidget);
+    animation->setStartValue(QPoint(q->lineEdit()->geometry().center().x() - iconWidget->width() / 2, iconWidget->pos().y()));
+    animation->setEndValue(QPoint(0, iconWidget->pos().y()));
+
+    q->connect(animation, &QPropertyAnimation::finished, q, [q, this, textMargins]() {
+        q->lineEdit()->setTextMargins(textMargins);
+        if (animation->direction() == QPropertyAnimation::Direction::Forward) {
+            action->setVisible(true);
+            iconWidget->setVisible(false);
+            lineEdit->setPlaceholderText(placeholderText);
+        } else {
+            iconWidget->setVisible(true);
+            lineEdit->setPlaceholderText(QString());
+            iconWidget->move(QPoint(q->lineEdit()->geometry().center().x() - iconWidget->width() / 2, iconWidget->pos().y()));
+        }
+    });
 
 #ifdef ENABLE_AI
     //Focus disappears, clear voice check
@@ -394,6 +417,20 @@ void DSearchEditPrivate::_q_toEditMode(bool focus)
         _q_onVoiceActionTrigger(false);
     }
 #endif
+
+    if (!q->lineEdit()->text().isEmpty())
+        return;
+
+    if (focus) {
+        animation->setDirection(QPropertyAnimation::Direction::Forward);
+    } else {
+        action->setVisible(false);
+        animation->setDirection(QPropertyAnimation::Direction::Backward);
+    }
+
+    iconWidget->setVisible(true);
+    q->lineEdit()->setTextMargins(marginsInAnimation);
+    animation->start();
 }
 
 void DSearchEditPrivate::_q_onVoiceActionTrigger(bool checked)
