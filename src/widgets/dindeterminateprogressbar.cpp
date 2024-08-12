@@ -48,6 +48,7 @@ DIndeterminateProgressbar::DIndeterminateProgressbar(QWidget *parent)
 
         d->m_leftToRight ? step += 2 : step -= 2;
         d->m_sliderWidget->move(step, 0);
+        update();
     });
     d->m_timer->start();
 }

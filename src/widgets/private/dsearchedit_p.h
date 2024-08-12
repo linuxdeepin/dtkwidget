@@ -9,6 +9,7 @@
 #include <DSearchEdit>
 
 #include <QLabel>
+#include <QPropertyAnimation>
 
 QT_BEGIN_NAMESPACE
 class QAudioInput;
@@ -37,6 +38,7 @@ public:
 
     QWidget *iconWidget;
     QLabel *label;
+    QPropertyAnimation *animation;
 
 #ifdef ENABLE_AI
     QAction *voiceAction = nullptr;
