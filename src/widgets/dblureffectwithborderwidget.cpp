@@ -31,7 +31,7 @@ DBlurEffectWithBorderWidget::DBlurEffectWithBorderWidget(QWidget *parent)
     auto setOuterBorderColor = [this, d, handle]() {
         auto outerBorderNewColor = outerBorderColor;
         if (d->themeType == DGuiApplicationHelper::ColorType::DarkType) {
-            outerBorderNewColor.setAlpha(maskAlpha() + ALPHA_OFFSET * 2);
+            outerBorderNewColor.setAlpha(maskAlpha() + ALPHA_OFFSET * 2 >= 255 ? maskAlpha() : maskAlpha() + ALPHA_OFFSET * 2);
         }
 
         handle->setBorderColor(outerBorderNewColor);
@@ -74,7 +74,7 @@ void DBlurEffectWithBorderWidget::paintEvent(QPaintEvent *e)
 
     auto innerBorderNewColor = innerBorderColor;
     if (d->themeType != DGuiApplicationHelper::DarkType) {
-        innerBorderNewColor.setAlpha(maskAlpha() + ALPHA_OFFSET);
+        innerBorderNewColor.setAlpha(maskAlpha() + ALPHA_OFFSET >= 255 ? maskAlpha() : maskAlpha() + ALPHA_OFFSET);
     }
 
     pen.setColor(innerBorderNewColor);
