@@ -1,3 +1,15 @@
+dtkwidget (5.6.33) unstable; urgency=medium
+
+  * fix: DMessageManager::sendMessage cause crash
+    Thanks to zty199
+  * fix: wrong product icon size in DAboutDialog
+    Thanks to zty199
+  * fix: DTitleBar动态设置Icon时间距异常
+  * fix: 控制中心标题栏返回按钮消失 (#588)
+    Thanks to Whale107(Bug: 264379)(Influence: 控制中心-标题栏)
+
+ -- Deepin Packages Builder <packages@deepin.org>  Tue, 20 Aug 2024 03:30:08 +0000
+
 dtkwidget (5.6.31) unstable; urgency=medium
 
   [ root ]
