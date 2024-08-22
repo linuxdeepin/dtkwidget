@@ -72,5 +72,9 @@
         <file alias="window_maximize.dci">bloom/window_maximize.dci</file>
         <file alias="window_minimize.dci">bloom/window_minimize.dci</file>
         <file alias="window_normal.dci">bloom/window_normal.dci</file>
+        <file alias="radio_checked.dci">bloom/radio_checked.dci</file>
+        <file alias="radio_unchecked.dci">bloom/radio_unchecked.dci</file>
+        <file alias="checkbox_checked.dci">bloom/checkbox_checked.dci</file>
+        <file alias="checkbox_unchecked.dci">bloom/checkbox_unchecked.dci</file>
     </qresource>
 </RCC>
