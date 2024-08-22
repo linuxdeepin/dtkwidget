@@ -1487,7 +1487,6 @@ void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const Q
     case CE_ButtonBoxButton: {
         if (const DStyleOptionButton *btn = qstyleoption_cast<const DStyleOptionButton *>(opt)) {
             DStyleHelper dstyle(style);
-            dstyle.drawControl(CE_ButtonBoxButtonBevel, btn, p, w);
             DStyleOptionButton subopt = *btn;
             if (btn->features & DStyleOptionButton::HasDciIcon)
                 subopt.dciIcon = btn->dciIcon;
@@ -1498,6 +1497,7 @@ void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const Q
                     DStyleOptionButtonBoxButton fropt;
                     fropt = *boxbtn;
                     fropt.rect = dstyle.subElementRect(SE_ButtonBoxButtonFocusRect, btn, w);
+                    fropt.position = DStyleOptionButtonBoxButton::OnlyOne;
                     style->drawPrimitive(PE_FrameFocusRect, &fropt, p, w);
                 }
             }
@@ -1572,6 +1572,14 @@ void DStyle::drawControl(const QStyle *style, DStyle::ControlElement ce, const Q
         break;
     }
     case CE_ButtonBoxButtonLabel: {
+        if (opt->state & StateFlag::State_MouseOver) {
+            constexpr qreal hoverScale = 1.2; // hover 时放大1.2倍
+            p->scale(hoverScale, hoverScale);
+            p->setRenderHint(QPainter::SmoothPixmapTransform);
+            p->translate((1 - hoverScale) * (opt->rect.x() + opt->rect.width() / 2) / hoverScale
+                       , (1 - hoverScale) * (opt->rect.y() + opt->rect.height() / 2) / hoverScale);
+        }
+
         style->drawControl(CE_PushButtonLabel, opt, p, w);
         break;
     }
