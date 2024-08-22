@@ -5,12 +5,15 @@
 #include "private/dindeterminateprogressbar_p.h"
 
 #include <DStyle>
+#include <DGuiApplicationHelper>
 
 #include <QPainter>
 #include <QTimer>
 #include <QPropertyAnimation>
 #include <QDebug>
 #include <QPainterPath>
+
+DGUI_USE_NAMESPACE
 
 const int SPOT_WIDGET_WIDTH = 200;
 
@@ -48,6 +51,7 @@ DIndeterminateProgressbar::DIndeterminateProgressbar(QWidget *parent)
 
         d->m_leftToRight ? step += 2 : step -= 2;
         d->m_sliderWidget->move(step, 0);
+        update();
     });
     d->m_timer->start();
 }
@@ -81,26 +85,31 @@ void DIndeterminateProgressbar::paintEvent(QPaintEvent *e)
             ? radius = height() / 2
             : radius = DTK_WIDGET_NAMESPACE::DStyle::pixelMetric(style(), DTK_WIDGET_NAMESPACE::DStyle::PM_FrameRadius);
 
-    p.setBrush(QColor(0, 0, 0, int(0.1 * 255)));
+    bool isDarkType = DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::DarkType;
+    QColor color = isDarkType ? QColor(255, 255, 255, int(0.1 * 255)) : QColor(0, 0, 0, int(0.1 * 255));
+    p.setBrush(color);
     p.setPen(Qt::NoPen);
 
     p.drawRoundedRect(rect(), radius, radius);
 
     QPen pen;
     pen.setWidth(1);
-    pen.setColor(QColor(0, 0, 0, int(0.2 * 255)));
+    pen.setColor(color);
     p.setBrush(Qt::NoBrush);
     p.setPen(pen);
-    p.drawRoundedRect(rect().marginsRemoved(QMargins(1, 1, 1, 1)), radius, radius);
+    p.drawRoundedRect(rect(), radius, radius);
 
     p.setPen(Qt::NoPen);
     p.setBrush(palette().highlight().color());
     p.drawRoundedRect(d->m_sliderWidget->geometry(), radius, radius);
 
-    pen.setColor(QColor(0, 0, 0, int(0.3 * 255)));
+    QColor highLightColor(palette().highlight().color());
+    auto borderColor = isDarkType ? DGuiApplicationHelper::adjustColor(highLightColor, 0, 0, +10, 0, 0, 0, 0)
+                                  : DGuiApplicationHelper::adjustColor(highLightColor, 0, 0, -20, 0, 0, 0, -20);
+    pen.setColor(borderColor);
     p.setBrush(Qt::NoBrush);
     p.setPen(pen);
-    p.drawRoundedRect(d->m_sliderWidget->geometry().marginsRemoved(QMargins(1, 1, 1, 1)), radius, radius);
+    p.drawRoundedRect(d->m_sliderWidget->geometry(), radius, radius);
 
     if (d->m_sliderWidget->width() < d->m_spotWidget->width() / 2)
         return;
@@ -108,15 +117,11 @@ void DIndeterminateProgressbar::paintEvent(QPaintEvent *e)
     QPointF pointStart(d->m_spotWidget->geometry().left(), d->m_spotWidget->geometry().center().y());
     QPointF pointEnd(d->m_spotWidget->geometry().right(), d->m_spotWidget->geometry().center().y());
 
-    QColor shadowColor(0, 0, 0, int(0.15 * 255));
-    QColor spotColor(255, 255, 255, int(0.5 * 255));
-    QColor highLightColor(palette().highlight().color());
+    QColor spotColor = DGuiApplicationHelper::adjustColor(highLightColor, 0, +30, +30, 0, 0, 0, 0);
 
     QLinearGradient linear(pointStart, pointEnd);
     linear.setColorAt(0, highLightColor);
-    linear.setColorAt(0.35, shadowColor);
     linear.setColorAt(0.5, spotColor);
-    linear.setColorAt(0.65, shadowColor);
     linear.setColorAt(1, highLightColor);
     linear.setSpread(QGradient::PadSpread);
     linear.setInterpolationMode(QLinearGradient::InterpolationMode::ColorInterpolation);
@@ -125,9 +130,9 @@ void DIndeterminateProgressbar::paintEvent(QPaintEvent *e)
     p.setPen(Qt::NoPen);
 
     QPainterPath clipPath;
-    clipPath.addRoundedRect(d->m_sliderWidget->geometry(), radius, radius);
+    clipPath.addRoundedRect(d->m_sliderWidget->geometry().marginsRemoved(QMargins(1, 1, 1, 1)), radius - 1, radius - 1);
     p.setClipPath(clipPath);
     p.setClipping(true);
-    p.drawRoundedRect(d->m_spotWidget->geometry().marginsRemoved(QMargins(2, 2, 2, 2)), radius, radius);
+    p.drawRoundedRect(d->m_spotWidget->geometry(), radius, radius);
     p.setClipping(false);
 }

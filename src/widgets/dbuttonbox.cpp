@@ -1,9 +1,10 @@
-// SPDX-FileCopyrightText: 2019 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2019 - 2024 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
 #include "dbuttonbox.h"
 #include "private/dbuttonbox_p.h"
+#include <private/qabstractbutton_p.h>
 #include "dstyleoption.h"
 #include "dstyle.h"
 
@@ -12,9 +13,16 @@
 #include <QHBoxLayout>
 #include <QStyleOptionButton>
 #include <QStylePainter>
-#include <private/qabstractbutton_p.h>
+#include <QVariantAnimation>
+
+#include <DGuiApplicationHelper>
 
 DWIDGET_BEGIN_NAMESPACE
+
+constexpr int HOVER_ANI_DURATION = 150;
+constexpr int CHECK_ANI_DURATION = 200;
+constexpr qreal HOVER_BACKGROUND_SCALE = 0.8;
+constexpr int SHADOW_HEIGHT = 2;
 
 class DButtonBoxButtonPrivate : public DCORE_NAMESPACE::DObjectPrivate
 {
@@ -291,6 +299,7 @@ void DButtonBoxButton::paintEvent(QPaintEvent *e)
     DStylePainter p(this);
     DStyleOptionButtonBoxButton option;
     initStyleOption(&option);
+    option.palette.setColor(QPalette::HighlightedText, this->palette().highlight().color());
     p.drawControl(DStyle::CE_ButtonBoxButton, option);
 }
 
@@ -351,6 +360,11 @@ bool DButtonBoxButton::event(QEvent *e)
 
 DButtonBoxPrivate::DButtonBoxPrivate(DButtonBox *qq)
     : DObjectPrivate(qq)
+    , m_hoverId(-1)
+    , m_checkedId(-1)
+    , m_pressId(-1)
+    , m_hoverAnimation(new QVariantAnimation(qq))
+    , m_checkMoveAnimation(new QVariantAnimation(qq))
 {
 
 }
@@ -366,9 +380,17 @@ void DButtonBoxPrivate::init()
     q->connect(group, SIGNAL(buttonPressed(QAbstractButton*)), q, SIGNAL(buttonPressed(QAbstractButton*)));
     q->connect(group, SIGNAL(buttonReleased(QAbstractButton*)), q, SIGNAL(buttonReleased(QAbstractButton*)));
     q->connect(group, SIGNAL(buttonToggled(QAbstractButton*, bool)), q, SIGNAL(buttonToggled(QAbstractButton*, bool)));
+    q->connect(m_hoverAnimation, &QVariantAnimation::valueChanged, q, [q]() {
+        q->update();
+    });
+    q->connect(m_checkMoveAnimation, &QVariantAnimation::valueChanged, q, [q]() {
+        q->update();
+    });
+    m_hoverAnimation->setDuration(HOVER_ANI_DURATION);
+    m_checkMoveAnimation->setDuration(CHECK_ANI_DURATION);
 
     layout = new QHBoxLayout(q);
-    layout->setContentsMargins(0,0,0,0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
 }
 
@@ -484,6 +506,7 @@ void DButtonBox::setButtonList(const QList<DButtonBoxButton *> &list, bool check
         d->group->addButton(button);
 
         button->setCheckable(checkable);
+        button->installEventFilter(this);
     }
 }
 
@@ -575,9 +598,11 @@ int DButtonBox::checkedId() const
 void DButtonBox::paintEvent(QPaintEvent *e)
 {
     Q_UNUSED(e)
+    D_D(DButtonBox);
 
     QStylePainter p(this);
     QStyleOptionButton opt;
+    p.setRenderHint(QPainter::Antialiasing);
     opt.state = QStyle::State_None;
     opt.rect = rect();
     opt.direction = layoutDirection();
@@ -591,7 +616,156 @@ void DButtonBox::paintEvent(QPaintEvent *e)
         opt.state |= QStyle::State_Active;
     }
 
-    p.drawControl(QStyle::CE_PushButtonBevel, opt);
+    bool isDarkType = DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::DarkType;
+    int radius = DStyle::pixelMetric(style(), DStyle::PM_FrameRadius);
+    QColor background;
+    if (d->m_hoverId >= 0 && d->m_hoverId < buttonList().size()) {
+        if (isDarkType) {
+            background = "#141414";
+            background.setAlphaF(0.2);
+        } else {
+            background = Qt::black;
+            background.setAlphaF(0.1);
+        }
+
+        p.setPen(Qt::NoPen);
+        p.setBrush(background);
+
+        auto rect = d->m_hoverAnimation->currentValue().toRect();
+        p.drawRoundedRect(rect, radius, radius);
+
+        if (isDarkType) {                                                      // 深色模式需要绘制上下阴影
+            QPainterPath rectPath;
+            rectPath.addRoundedRect(rect, radius, radius);
+
+            QRect excludeRect = rect;
+            excludeRect.setHeight(rect.height() - SHADOW_HEIGHT);
+            QPainterPath bottomShadowPath;
+            bottomShadowPath.addRoundedRect(excludeRect, radius, radius);
+            bottomShadowPath = rectPath.subtracted(bottomShadowPath);
+
+            background.setAlphaF(0.5);
+            p.setBrush(background);
+            p.drawPath(bottomShadowPath);                                      // 下阴影
+
+            excludeRect.moveBottom(rect.bottom());
+            QPainterPath topShadowPath;
+            topShadowPath.addRoundedRect(excludeRect, radius, radius);
+            topShadowPath = rectPath.subtracted(topShadowPath);
+
+            background = Qt::white;
+            background.setAlphaF(0.1);
+            p.setBrush(background);
+            p.drawPath(topShadowPath);                                         // 上阴影
+        }
+    }
+
+    if (d->m_pressId >= 0 && d->m_pressId < buttonList().size()) {
+        background = Qt::black;
+        background.setAlphaF(isDarkType ? 0.15 : 0.2);
+
+        p.setBrush(background);
+        p.setPen(Qt::NoPen);
+        p.drawRoundedRect(d->m_hoverAnimation->currentValue().toRect(), radius, radius);
+    }
+
+    if (d->m_checkedId >= 0 && d->m_checkedId < buttonList().size()) {
+        background = Qt::black;
+        background.setAlphaF(isDarkType ? 0.3 : 0.1);
+        p.setBrush(background);
+        p.setPen(Qt::NoPen);
+
+        QRect rect;
+        if (d->m_checkMoveAnimation->currentValue().toRect().isValid())
+            rect = d->m_checkMoveAnimation->currentValue().toRect();
+        else
+            rect = buttonList().at(d->m_checkedId)->geometry();
+        p.drawRoundedRect(rect, radius, radius);
+
+        p.setPen(Qt::NoPen);
+        QColor shadowColor = Qt::black;
+        shadowColor.setAlphaF(0.2);
+        p.setBrush(shadowColor);
+
+        QPainterPath rectPath;
+        rectPath.addRoundedRect(rect, radius, radius);
+
+        QRect excludeRect = rect;
+        excludeRect.setHeight(rect.height() - SHADOW_HEIGHT);
+        QPainterPath shadowPath;
+        shadowPath.addRoundedRect(excludeRect, radius, radius);
+        shadowPath = rectPath.subtracted(shadowPath);
+
+        if (isDarkType) {
+            background.setAlphaF(0.5);
+            p.setBrush(background);
+        }
+        p.drawPath(shadowPath);
+    }
+}
+
+bool DButtonBox::eventFilter(QObject *o, QEvent *e)
+{
+    D_D(DButtonBox);
+    for (int i = 0; i < buttonList().size(); ++i) {
+        if (o == buttonList().at(i)) {
+            DStyleOptionButtonBoxButton option;
+            dynamic_cast<DButtonBoxButton *>(o)->initStyleOption(&option);
+            if (option.state.testFlag(QStyle::State_On)) {
+                if (d->m_checkedId == i)
+                    return false;
+
+                if (d->m_checkedId >= 0 && d->m_checkedId < buttonList().size()) {
+                    d->m_checkMoveAnimation->setStartValue(buttonList().at(d->m_checkedId)->geometry());
+                    d->m_checkedId = i;
+                    d->m_checkMoveAnimation->setEndValue(buttonList().at(d->m_checkedId)->geometry());
+                } else {
+                    d->m_checkedId = i;
+                    d->m_checkMoveAnimation->setStartValue(0);
+                    d->m_checkMoveAnimation->setEndValue(0);
+                }
+                d->m_checkMoveAnimation->start();
+                update();
+            }
+            if (e->type() == QEvent::HoverEnter) {
+                if (d->m_hoverId == i)
+                    return false;
+
+                d->m_hoverId = i;
+
+                if (d->m_hoverId < 0 || d->m_hoverId >= buttonList().size())
+                    return false;
+
+                QRect smallRect = buttonList().at(d->m_hoverId)->geometry();
+                smallRect.setSize(QSize(smallRect.width() * HOVER_BACKGROUND_SCALE, smallRect.height() * HOVER_BACKGROUND_SCALE));
+                smallRect.moveCenter(buttonList().at(d->m_hoverId)->geometry().center());
+                d->m_hoverAnimation->setStartValue(smallRect);
+                d->m_hoverAnimation->setEndValue(buttonList().at(d->m_hoverId)->geometry());
+                d->m_hoverAnimation->start();
+                update();
+            } else if (e->type() == QEvent::HoverLeave) {
+                d->m_hoverId = -1;
+                update();
+            } else if (e->type() == QEvent::MouseButtonPress) {
+                if (d->m_pressId == i)
+                    return false;
+
+                d->m_pressId = i;
+                d->m_hoverId = -1;
+                update();
+            } else if (e->type() == QEvent::MouseButtonRelease) {
+                d->m_pressId = -1;
+                update();
+            } else if (e->type() == QEvent::Resize) {
+                d->m_hoverId = -1;
+                if (d->m_checkedId >= 0 && d->m_checkedId < buttonList().size()) {
+                    d->m_checkMoveAnimation->setStartValue(buttonList().at(d->m_checkedId)->geometry());
+                    d->m_checkMoveAnimation->setEndValue(buttonList().at(d->m_checkedId)->geometry());
+                }
+            }
+        }
+    }
+    return QWidget::eventFilter(o, e);
 }
 
 DWIDGET_END_NAMESPACE
