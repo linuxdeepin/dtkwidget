@@ -1104,7 +1104,7 @@ bool DTitlebar::eventFilter(QObject *obj, QEvent *event)
         switch (event->type()) {
         case QEvent::ShowToParent:
             d->handleParentWindowIdChange();
-            d->updateButtonsState(d->targetWindow()->windowFlags());
+            d->handleParentWindowStateChange();
             break;
         case QEvent::Resize:
             if (d->autoHideOnFullscreen) {
