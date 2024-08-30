@@ -13,6 +13,7 @@
 
 #include <DPaletteHelper>
 #include <DFontSizeManager>
+#include <DGuiApplicationHelper>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -784,7 +785,7 @@ void SliderStrip::paintEvent(QPaintEvent *event)
     Q_UNUSED(event)
     QPainter pa(this);
     auto dpa = DPaletteHelper::instance()->palette(this);
-    QPen penLine = QPen(dpa.color(DPalette::ObviousBackground), 1);
+    QPen penLine = QPen(DGuiApplicationHelper::adjustColor(dpa.color(DPalette::ObviousBackground), 0, 0, 0, 0, 0, 0, +20), 1);
     QPen penNumber = QPen(dpa.textTips(), 1);
 
     int tickSize = fontMetrics().height() / 2;
