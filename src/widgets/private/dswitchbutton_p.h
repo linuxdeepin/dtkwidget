@@ -31,7 +31,6 @@ public:
     double animationEndValue = 0.0;
 
     DDciIconPlayer player;
-    QTimer *timer;
 
 public:
     D_DECLARE_PUBLIC(DSwitchButton)

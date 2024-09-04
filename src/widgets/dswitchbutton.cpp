@@ -11,12 +11,10 @@
 #include <DGuiApplicationHelper>
 
 #include <QApplication>
-#include <QTimer>
 
 DWIDGET_BEGIN_NAMESPACE
 
 constexpr int DCI_ICON_SIZE = 120;
-constexpr int TIMER_INTERVAL = 200;
 
 /*!
 @~english
@@ -63,7 +61,7 @@ void DSwitchButton::paintEvent(QPaintEvent *e)
     painter.drawControl(DStyle::CE_SwitchButton, opt);
 
     painter.setRenderHint(QPainter::SmoothPixmapTransform);
-    painter.drawImage(rect().adjusted(2, -10, -2, 8), d->player.currentImage());          // 为了显示按钮的阴影所留的空白
+    painter.drawImage(rect().adjusted(4, -8, -4, 8), d->player.currentImage());          // 为了显示按钮的阴影所留的空白
 }
 
 /*!
@@ -98,7 +96,6 @@ void DSwitchButton::initStyleOption(DStyleOptionButton *option) const
 
 DSwitchButtonPrivate::DSwitchButtonPrivate(DSwitchButton *qq)
     : DObjectPrivate(qq)
-    , timer(new QTimer(qq))
 {
 
 }
@@ -113,7 +110,6 @@ void DSwitchButtonPrivate::init()
     checked = false;
     animationStartValue = 0;
     animationEndValue = 1;
-    timer->setInterval(TIMER_INTERVAL);
 
     D_Q(DSwitchButton);
 
@@ -143,20 +139,12 @@ void DSwitchButtonPrivate::init()
         DDciIcon icon = checked ? DDciIcon::fromTheme("switch_on") : DDciIcon::fromTheme("switch_off");
         player.setIcon(icon);
         player.play(DDciIcon::Mode::Normal);
-        timer->start();
 
         Q_EMIT q->checkedChanged(checked);
     });
 
     q->connect(&player, &DDciIconPlayer::updated, q, [q]() {
         q->update();
-    });
-
-    q->connect(timer, &QTimer::timeout, q, [q, this]() {
-        player.stop();
-        player.setIcon(!q->isChecked() ? DDciIcon::fromTheme("switch_on") : DDciIcon::fromTheme("switch_off"));
-        player.setMode(DDciIcon::Normal);
-        timer->stop();
     });
 
     q->connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged, q, initPlayer);
