@@ -2,24 +2,12 @@
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
-#include "private/dtoolbutton_p.h"
-
-#include <DGuiApplicationHelper>
-#include <DStyle>
+#include "dtoolbutton.h"
 
 #include <QStyleOptionButton>
 #include <QStylePainter>
-#include <QEvent>
-#include <QDebug>
-#include <QKeyEvent>
 
 DWIDGET_BEGIN_NAMESPACE
-
-Dtk::Widget::DToolButtonPrivate::DToolButtonPrivate(DToolButton *qq)
-    : DObjectPrivate(qq)
-{
-
-}
 
 /*!
 @~english
@@ -29,15 +17,8 @@ Dtk::Widget::DToolButtonPrivate::DToolButtonPrivate(DToolButton *qq)
 
 DToolButton::DToolButton(QWidget *parent)
     : QToolButton(parent)
-    , DObject(*new DToolButtonPrivate(this))
 {
-    D_D(DToolButton);
-    connect(this, &DToolButton::pressed, this, [d]() {
-        d->m_dciPlayer.play(DDciIcon::Pressed);
-    });
-    connect(this, &DToolButton::released, this, [d]() {
-        d->m_dciPlayer.play(DDciIcon::Normal);
-    });
+
 }
 
 /*!
@@ -49,26 +30,10 @@ DToolButton::DToolButton(QWidget *parent)
 
 void DToolButton::paintEvent(QPaintEvent *event)
 {
-    D_D(DToolButton);
     Q_UNUSED(event)
     QStylePainter p(this);
     QStyleOptionToolButton opt;
     initStyleOption(&opt);
-
-    if (!d->m_dciIcon.isNull()) {
-        p.setRenderHint(QPainter::SmoothPixmapTransform);
-        p.drawImage(rect(), d->m_dciPlayer.currentImage());
-
-        if (opt.state & QStyle::State_HasFocus) {
-            p.setPen(QPen(palette().highlight().color(), 2));
-            p.setBrush(Qt::NoBrush);
-            p.setRenderHint(QPainter::Antialiasing);
-            int radius = DStyle::pixelMetric(style(), DStyle::PM_FrameRadius);
-            p.drawRoundedRect(opt.rect.marginsRemoved(QMargins(1, 1, 1, 1)), radius, radius);
-        }
-        return;
-    }
-
     p.drawComplexControl(QStyle::CC_ToolButton, opt);
 }
 
@@ -95,26 +60,6 @@ QSize DToolButton::sizeHint() const
     return QToolButton::sizeHint();
 }
 
-bool DToolButton::event(QEvent *e)
-{
-    D_D(DToolButton);
-    if (d->m_dciIcon.isNull())
-        return QToolButton::event(e);
-
-    if (e->type() == QEvent::WindowActivate) {
-        auto palette = DDciIconPalette::fromQPalette(this->palette());
-        d->m_dciPlayer.setPalette(palette);
-        d->m_dciPlayer.setTheme(DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::DarkType
-                                ? DDciIcon::Dark : DDciIcon::Light);
-        d->m_dciPlayer.setMode(DDciIcon::Normal);
-    } else if (e->type() == QEvent::HoverEnter) {
-        d->m_dciPlayer.play(DDciIcon::Hover);
-    } else if (e->type() == QEvent::HoverLeave) {
-        d->m_dciPlayer.play(DDciIcon::Normal);
-    }
-    return QToolButton::event(e);
-}
-
 /*!
 @~english
     @fn void DToolButton::setAlignment(Qt::Alignment flag)
@@ -138,24 +83,6 @@ Qt::Alignment DToolButton::alignment() const
         return static_cast<Qt::Alignment>(this->property("_d_dtk_toolButtonAlign").toInt());
     else
         return Qt::AlignLeft;
-}
-
-void DToolButton::setDciIcon(const DDciIcon &dciIcon)
-{
-    D_D(DToolButton);
-    d->m_dciIcon = dciIcon;
-    d->m_dciPlayer.setIcon(dciIcon);
-    d->m_dciPlayer.setIconSize(120);
-
-    connect(&d->m_dciPlayer, &DDciIconPlayer::updated, this, [this]() {
-        update();
-    });
-
-    connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged, this, [this, d](DGuiApplicationHelper::ColorType colorType) {
-        auto palette = DDciIconPalette::fromQPalette(this->palette());
-        d->m_dciPlayer.setPalette(palette);
-        d->m_dciPlayer.setTheme(colorType ? DDciIcon::Dark : DDciIcon::Light);
-    });
 }
 
 DWIDGET_END_NAMESPACE
