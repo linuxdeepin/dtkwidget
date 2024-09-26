@@ -37,7 +37,7 @@ protected:
         QPainter p(this);
         p.setRenderHint(QPainter::Antialiasing);
         p.setOpacity(m_opacity);
-        p.drawPixmap(rect().marginsRemoved(contentsMargins()), *pixmap());
+        p.drawPixmap(rect().marginsRemoved(contentsMargins()), pixmap(Qt::ReturnByValue));
     };
 private:
     qreal m_opacity;
