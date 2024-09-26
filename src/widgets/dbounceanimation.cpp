@@ -50,7 +50,7 @@ bool DBounceAnimation::eventFilter(QObject *o, QEvent *e)
         if (auto absscroll = dynamic_cast<QAbstractScrollArea *>(o)) {
             if (auto wheelEvent = dynamic_cast<QWheelEvent *>(e)) {
                 if (absscroll->verticalScrollBar()->value() <= 0 || absscroll->verticalScrollBar()->value() >= absscroll->verticalScrollBar()->maximum()) {
-                    d->m_deltaSum += wheelEvent->delta();
+                    d->m_deltaSum += wheelEvent->pixelDelta().x() != 0 ? wheelEvent->pixelDelta().x() : wheelEvent->pixelDelta().y();
                     bounceBack(wheelEvent->angleDelta().x() == 0 ? Qt::Vertical : Qt::Horizontal);
                 }
             }
