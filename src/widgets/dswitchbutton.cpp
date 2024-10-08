@@ -58,6 +58,12 @@ void DSwitchButton::paintEvent(QPaintEvent *e)
     DStylePainter painter(this);
     DStyleOptionButton opt;
     initStyleOption(&opt);
+    if (isChecked() != d->checked) {
+        d->checked = isChecked();
+        DDciIcon icon = !d->checked ? DDciIcon::fromTheme("switch_on") : DDciIcon::fromTheme("switch_off");
+        d->player.setIcon(icon);
+        Q_EMIT checkedChanged(d->checked);
+    }
     painter.drawControl(DStyle::CE_SwitchButton, opt);
 
     painter.setRenderHint(QPainter::SmoothPixmapTransform);
