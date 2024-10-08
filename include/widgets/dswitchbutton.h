@@ -30,6 +30,7 @@ Q_SIGNALS:
 protected:
     void paintEvent(QPaintEvent *e) Q_DECL_OVERRIDE;
     void initStyleOption(DStyleOptionButton *option) const;
+    void checkStateSet() Q_DECL_OVERRIDE;
 
 private:
     D_DECLARE_PRIVATE(DSwitchButton)
