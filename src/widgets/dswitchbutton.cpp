@@ -94,6 +94,17 @@ void DSwitchButton::initStyleOption(DStyleOptionButton *option) const
     option->rect.adjust(4, 4, -4, -4);
 }
 
+void DSwitchButton::checkStateSet()
+{
+    D_D(DSwitchButton);
+    if (d->checked == isChecked())
+        return;
+
+    d->checked = isChecked();
+    DDciIcon icon = !d->checked ? DDciIcon::fromTheme("switch_on") : DDciIcon::fromTheme("switch_off");
+    d->player.setIcon(icon);
+}
+
 DSwitchButtonPrivate::DSwitchButtonPrivate(DSwitchButton *qq)
     : DObjectPrivate(qq)
 {
