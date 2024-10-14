@@ -955,10 +955,10 @@ void DSimpleListView::mouseMoveEvent(QMouseEvent *mouseEvent)
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
                 auto point = QPoint{mouseEvent->x() - columnRenderX, d->renderOffset + mouseEvent->y() - hoverItemIndex * d->rowHeight};
 #else
-                auto point = QPoint{mouseEvent->position().x() - columnRenderX,
+                auto point = QPointF{mouseEvent->position().x() - columnRenderX,
                                          d->renderOffset + mouseEvent->position().y() - hoverItemIndex * d->rowHeight};
 #endif
-                mouseHoverChanged(d->mouseHoverItem, item, columnCounter,point);
+                mouseHoverChanged(d->mouseHoverItem, item, columnCounter,point.toPoint());
                 d->mouseHoverItem = item;
 
                 if (d->lastHoverItem == NULL || !item->sameAs(d->lastHoverItem) || columnCounter != d->lastHoverColumnIndex) {
@@ -1235,10 +1235,10 @@ void DSimpleListView::mouseReleaseEvent(QMouseEvent *mouseEvent)
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
         auto point = QPoint{mouseEvent->x() - columnRenderX, d->renderOffset + mouseEvent->y() - releaseItemIndex * d->rowHeight};
 #else
-        auto point = QPoint{mouseEvent->position().x() - columnRenderX,
+        auto point = QPointF{mouseEvent->position().x() - columnRenderX,
                                    d->renderOffset + mouseEvent->position().y() - releaseItemIndex * d->rowHeight};
 #endif
-        mouseReleaseChanged((*d->renderItems)[releaseItemIndex], columnCounter, point);
+        mouseReleaseChanged((*d->renderItems)[releaseItemIndex], columnCounter, point.toPoint());
     }
 }
 
