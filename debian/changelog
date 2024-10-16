@@ -1,3 +1,33 @@
+dtkwidget (5.7.1) unstable; urgency=medium
+
+  * fix: 如果窗口打开时即为最大化状态,则最大化图标显示错误 (#601)
+    Thanks to Whale107(Bug: 262201)(Influence: mainwindow最大化)
+  * feat: support treeland notitlebar mode
+  * chore: 新增进度条动效和一个新进度条类 (#589)
+    Thanks to Whale107
+  * chore: 新增搜索框图标移动动画 (#590)
+    Thanks to Whale107
+  * fix: adjust indeterminateprogressbar color (#597)
+    Thanks to Whale107
+  * chore: 增加滚动区域滚轮滚动到顶部或底部的回弹效果 (#596)
+    Thanks to Whale107
+  * chore: 增加ButtonBox hover 和切换动画 (#595)
+    Thanks to Whale107
+  * chore: 使用dci icon重绘toolbutton, 增加动画 (#594)
+    Thanks to Whale107
+  * chore: 使用dci icon重绘switchButton, 增加动画 (#593)
+    Thanks to Whale107
+  * chore: 增加应用内通知动画 (#592)
+    Thanks to Whale107
+  * fix: adjust switchbutton dci icon (#603)
+    Thanks to Whale107
+  * Revert "chore: 使用dci icon重绘toolbutton, 增加动画 (#594)"
+  * fix: obsolete interfaces
+  * fix: display exception of checkbox & radiobutton(Bug: 276189)
+  * fix: wrong status of switch button(Bug: 276221)
+
+ -- Deepin Packages Builder <packages@deepin.org>  Wed, 16 Oct 2024 03:30:46 +0000
+
 dtkwidget (5.6.34) unstable; urgency=medium
 
   [ root ]
