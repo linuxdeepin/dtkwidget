@@ -262,6 +262,7 @@ void DLabel::paintEvent(QPaintEvent *event)
         if (d->scaledcontents) {
             QSize scaledSize = cr.size() * devicePixelRatioF();
             if (!d->scaledpixmap || d->scaledpixmap->size() != scaledSize) {
+#if QT_VERSION < QT_VERSION_CHECK(6, 8, 0)
                 if (!d->cachedimage)
 #if QT_VERSION < QT_VERSION_CHECK(6, 4, 2)
                     d->cachedimage = new QImage(d->pixmap->toImage());
@@ -272,11 +273,17 @@ void DLabel::paintEvent(QPaintEvent *event)
 #endif
                 QImage scaledImage =
                     d->cachedimage->scaled(scaledSize,
+#else
+                d->scaledpixmap.reset();
+                d->scaledpixmap = d->pixmap->scaled(scaledSize,
+#endif
                                            Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+#if QT_VERSION < QT_VERSION_CHECK(6, 8, 0)
 #if QT_VERSION < QT_VERSION_CHECK(6, 4, 2)
                 d->scaledpixmap = new QPixmap(QPixmap::fromImage(scaledImage));
 #else
                 d->scaledpixmap = QPixmap(QPixmap::fromImage(scaledImage));
+#endif
 #endif
                 d->scaledpixmap->setDevicePixelRatio(devicePixelRatioF());
             }
