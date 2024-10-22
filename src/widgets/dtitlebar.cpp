@@ -53,7 +53,7 @@ DWIDGET_BEGIN_NAMESPACE
 #define GETSUPPORTSPLITWINDOW_VAR "_d_supportForSplittingWindow"
 
 static inline int DefaultIconHeight() { return DSizeModeHelper::element(24, 32); }
-static inline int DefaultExpandButtonHeight() { return DSizeModeHelper::element(30, 48); }
+static inline int DefaultExpandButtonHeight() { return DSizeModeHelper::element(48, 48); }
 
 class DTitlebarPrivate : public DTK_CORE_NAMESPACE::DObjectPrivate
 {
