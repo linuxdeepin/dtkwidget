@@ -60,8 +60,10 @@ void DSwitchButton::paintEvent(QPaintEvent *e)
     initStyleOption(&opt);
     painter.drawControl(DStyle::CE_SwitchButton, opt);
 
-    painter.setRenderHint(QPainter::SmoothPixmapTransform);
-    painter.drawImage(rect().adjusted(4, -8, -4, 8), d->player.currentImage());          // 为了显示按钮的阴影所留的空白
+    if (ENABLE_ANIMATIONS && ENABLE_ANIMATION_SWITCHBUTTON) {
+        painter.setRenderHint(QPainter::SmoothPixmapTransform);
+        painter.drawImage(rect().adjusted(4, -8, -4, 8), d->player.currentImage());          // 为了显示按钮的阴影所留的空白
+    }
 }
 
 /*!
@@ -128,6 +130,12 @@ void DSwitchButtonPrivate::init()
     q->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     q->setCheckable(true);
     
+
+    if(!ENABLE_ANIMATIONS || !ENABLE_ANIMATION_SWITCHBUTTON) {
+        q->connect(q, &DSwitchButton::toggled, q, &DSwitchButton::checkedChanged);
+        return;
+    }
+
     auto initPlayer= [this, q]() {
         DDciIcon icon = !checked ? DDciIcon::fromTheme("switch_on") : DDciIcon::fromTheme("switch_off");
         player.setIcon(icon);

@@ -55,17 +55,23 @@ void DFloatingMessagePrivate::init()
     iconButton->setIconSize(DSizeModeHelper::element(QSize(20, 20), QSize(30, 30)));
 
     hBoxLayout->addWidget(iconButton);
-    hBoxLayout->addSpacing(10);
+
+    if (ENABLE_ANIMATIONS && ENABLE_ANIMATION_MESSAGE)
+        hBoxLayout->addSpacing(10);
+
     hBoxLayout->addWidget(labMessage);
 
     if (notifyType == DFloatingMessage::MessageType::TransientType) {  //临时消息
         timer = new QTimer(q);
         timer->setInterval(4000);
         timer->setSingleShot(true);
-        q->connect(timer, &QTimer::timeout, q, [q]() {
-            q->close();
-            Q_EMIT q->messageClosed();
-        });
+        if (ENABLE_ANIMATIONS && ENABLE_ANIMATION_MESSAGE)
+            q->connect(timer, &QTimer::timeout, q, [q]() {
+                q->close();
+                Q_EMIT q->messageClosed();
+            });
+        else
+            q->connect(timer, &QTimer::timeout, q, &DFloatingMessage::close);
     } else {  //常驻消息
         content  = nullptr;
         closeButton = new DDialogCloseButton(q);
@@ -74,11 +80,18 @@ void DFloatingMessagePrivate::init()
 
         hBoxLayout->addWidget(closeButton);
         q->connect(closeButton, &DIconButton::clicked, q, &DFloatingMessage::closeButtonClicked);
-        q->connect(closeButton, &DIconButton::clicked, q, [q]() {
-            q->close();
-            Q_EMIT q->messageClosed();
-        });
+
+        if(ENABLE_ANIMATIONS && ENABLE_ANIMATION_MESSAGE)
+            q->connect(closeButton, &DIconButton::clicked, q, [q]() {
+                q->close();
+                Q_EMIT q->messageClosed();
+            });
+        else
+            q->connect(closeButton, &DIconButton::clicked, q, &DFloatingMessage::close);
     }
+
+    if (!ENABLE_ANIMATIONS || !ENABLE_ANIMATION_MESSAGE)
+        return;
 
     auto effect = new QGraphicsDropShadowEffect(q);
     effect->setColor(QColor(0, 0, 0, 0.1 * 255));
