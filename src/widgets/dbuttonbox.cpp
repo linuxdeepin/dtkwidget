@@ -299,7 +299,10 @@ void DButtonBoxButton::paintEvent(QPaintEvent *e)
     DStylePainter p(this);
     DStyleOptionButtonBoxButton option;
     initStyleOption(&option);
-    option.palette.setColor(QPalette::HighlightedText, this->palette().highlight().color());
+
+    if (ENABLE_ANIMATIONS && ENABLE_ANIMATION_BUTTONBOX)
+        option.palette.setColor(QPalette::HighlightedText, this->palette().highlight().color());
+
     p.drawControl(DStyle::CE_ButtonBoxButton, option);
 }
 
@@ -363,10 +366,13 @@ DButtonBoxPrivate::DButtonBoxPrivate(DButtonBox *qq)
     , m_hoverId(-1)
     , m_checkedId(-1)
     , m_pressId(-1)
-    , m_hoverAnimation(new QVariantAnimation(qq))
-    , m_checkMoveAnimation(new QVariantAnimation(qq))
+    , m_hoverAnimation(nullptr)
+    , m_checkMoveAnimation(nullptr)
 {
-
+    if (ENABLE_ANIMATIONS && ENABLE_ANIMATION_BUTTONBOX) {
+        m_hoverAnimation = new QVariantAnimation(qq);
+        m_checkMoveAnimation = new QVariantAnimation(qq);
+    }
 }
 
 void DButtonBoxPrivate::init()
@@ -380,14 +386,17 @@ void DButtonBoxPrivate::init()
     q->connect(group, SIGNAL(buttonPressed(QAbstractButton*)), q, SIGNAL(buttonPressed(QAbstractButton*)));
     q->connect(group, SIGNAL(buttonReleased(QAbstractButton*)), q, SIGNAL(buttonReleased(QAbstractButton*)));
     q->connect(group, SIGNAL(buttonToggled(QAbstractButton*, bool)), q, SIGNAL(buttonToggled(QAbstractButton*, bool)));
-    q->connect(m_hoverAnimation, &QVariantAnimation::valueChanged, q, [q]() {
-        q->update();
-    });
-    q->connect(m_checkMoveAnimation, &QVariantAnimation::valueChanged, q, [q]() {
-        q->update();
-    });
-    m_hoverAnimation->setDuration(HOVER_ANI_DURATION);
-    m_checkMoveAnimation->setDuration(CHECK_ANI_DURATION);
+
+    if (ENABLE_ANIMATIONS && ENABLE_ANIMATION_BUTTONBOX) {
+        q->connect(m_hoverAnimation, &QVariantAnimation::valueChanged, q, [q]() {
+            q->update();
+        });
+        q->connect(m_checkMoveAnimation, &QVariantAnimation::valueChanged, q, [q]() {
+            q->update();
+        });
+        m_hoverAnimation->setDuration(HOVER_ANI_DURATION);
+        m_checkMoveAnimation->setDuration(CHECK_ANI_DURATION);
+    }
 
     layout = new QHBoxLayout(q);
     layout->setContentsMargins(0, 0, 0, 0);
@@ -506,7 +515,9 @@ void DButtonBox::setButtonList(const QList<DButtonBoxButton *> &list, bool check
         d->group->addButton(button);
 
         button->setCheckable(checkable);
-        button->installEventFilter(this);
+
+        if (ENABLE_ANIMATIONS && ENABLE_ANIMATION_BUTTONBOX)
+            button->installEventFilter(this);
     }
 }
 
@@ -616,6 +627,11 @@ void DButtonBox::paintEvent(QPaintEvent *e)
         opt.state |= QStyle::State_Active;
     }
 
+    if (!ENABLE_ANIMATIONS || !ENABLE_ANIMATION_BUTTONBOX) {
+        p.drawControl(QStyle::CE_PushButtonBevel, opt);
+        return;
+    }
+
     bool isDarkType = DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::DarkType;
     int radius = DStyle::pixelMetric(style(), DStyle::PM_FrameRadius);
     QColor background;
@@ -706,6 +722,9 @@ void DButtonBox::paintEvent(QPaintEvent *e)
 
 bool DButtonBox::eventFilter(QObject *o, QEvent *e)
 {
+    if (!ENABLE_ANIMATIONS || !ENABLE_ANIMATION_BUTTONBOX)
+        return QWidget::eventFilter(o, e);
+
     D_D(DButtonBox);
     for (int i = 0; i < buttonList().size(); ++i) {
         if (o == buttonList().at(i)) {

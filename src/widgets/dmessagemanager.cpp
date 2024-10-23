@@ -122,11 +122,19 @@ static void sendMessage_helper(DMessageManager *manager, QWidget *par, IconType 
 
 DMessageManagerPrivate::DMessageManagerPrivate(DMessageManager *qq)
     : DObjectPrivate(qq)
-    , m_aniGeometry(new QPropertyAnimation(qq))
-    , m_aniOpacity(new QPropertyAnimation(qq))
-    , m_aniGroup(new QParallelAnimationGroup(qq))
-    , m_label(new ImageLabel)
+    , m_aniGeometry(nullptr)
+    , m_aniOpacity(nullptr)
+    , m_aniGroup(nullptr)
+    , m_label(nullptr)
 {
+    if (!ENABLE_ANIMATIONS || !ENABLE_ANIMATION_MESSAGE)
+        return;
+
+    m_aniGeometry = new QPropertyAnimation(qq);
+    m_aniOpacity = new QPropertyAnimation(qq);
+    m_aniGroup = new QParallelAnimationGroup(qq);
+    m_label = new ImageLabel;
+
     m_aniGeometry->setPropertyName("geometry");
     m_aniGeometry->setDuration(ANIMATION_DURATION);
     m_aniGeometry->setEasingCurve(QEasingCurve::OutCubic);
@@ -187,13 +195,19 @@ void DMessageManager::sendMessage(QWidget *par, DFloatingMessage *floMsg)
         layout->setContentsMargins(0, 0, 0, 0);
         layout->setDirection(QBoxLayout::BottomToTop);
     }
-
-    if (content->layout()->count() >= 1) {
-        content->layout()->itemAt(content->layout()->count() - 1)->widget()->hide();
-        delete content->layout()->takeAt(content->layout()->count() - 1);
+    if (ENABLE_ANIMATIONS && ENABLE_ANIMATION_MESSAGE) {
+        if (content->layout()->count() >= 1) {
+            content->layout()->itemAt(content->layout()->count() - 1)->widget()->hide();
+            delete content->layout()->takeAt(content->layout()->count() - 1);
+        }
+    } else {
+        content->show();
     }
 
     static_cast<QBoxLayout*>(content->layout())->addWidget(floMsg, 0, Qt::AlignHCenter);
+
+    if (!ENABLE_ANIMATIONS || !ENABLE_ANIMATION_MESSAGE)
+        return;
 
     // 限制通知消息的最大宽度
     for (DFloatingMessage *message : content->findChildren<DFloatingMessage*>(QString(), Qt::FindDirectChildrenOnly)) {
@@ -214,31 +228,35 @@ void DMessageManager::sendMessage(QWidget *par, DFloatingMessage *floMsg)
     d->m_label->setParent(par);
     d->m_label->setAlignment(Qt::AlignCenter);
     d->m_label->setContentsMargins(MARGIN, 0, MARGIN, 0);
-    d->m_label->setPixmap(floMsg->grab());
+
+    if (floMsg && !floMsg->grab().isNull())
+        d->m_label->setPixmap(floMsg->grab());
+
     d->m_label->setScaledContents(true);
     d->m_label->show();
     d->m_aniGeometry->setTargetObject(d->m_label);
     d->m_aniOpacity->setTargetObject(d->m_label);
     d->m_aniGeometry->setStartValue(QRect(par->rect().center().x(), par->rect().bottom(), 0, 0));
     d->m_aniGeometry->setEndValue(content->geometry());
+    d->m_aniGroup->setDirection(QAbstractAnimation::Forward);
     d->m_aniGroup->start();
-    connect(d->m_aniGroup, &QPropertyAnimation::finished, this, [d, content]() {
-        if (d->m_aniGroup->direction() == QAbstractAnimation::Backward) {
-            d->m_aniGroup->setDirection(QAbstractAnimation::Forward);
-        } else {
-            content->show();
-        }
+    connect(d->m_aniGroup, &QPropertyAnimation::finished, this, [d, this, content]() {
+        content->show();
         d->m_label->hide();
+        disconnect(d->m_aniGroup, &QPropertyAnimation::finished, this, nullptr);
     });
 
-    connect(floMsg, &DFloatingMessage::messageClosed, [=, this]() {
+    connect(floMsg, &DFloatingMessage::messageClosed, [=]() {
         d->m_aniGeometry->setStartValue(QRect(par->rect().center().x(), par->rect().bottom(), 0, 0));
         d->m_aniGeometry->setEndValue(content->geometry());
-        d->m_label->setPixmap(floMsg->grab());
 
-        d->m_aniGroup->setDirection(QAbstractAnimation::Backward);
+        if (floMsg && !floMsg->grab().isNull())
+            d->m_label->setPixmap(floMsg->grab());
+
         d->m_label->show();
+        d->m_aniGroup->setDirection(QAbstractAnimation::Backward);
         d->m_aniGroup->start();
+        content->hide();
     });
 }
 
@@ -287,20 +305,47 @@ bool DMessageManager::setContentMargens(QWidget *par, const QMargins &margins)
  */
 bool DMessageManager::eventFilter(QObject *watched, QEvent *event)
 {
-    if (event->type() == QEvent::Resize) {
-        if (auto content = watched->findChild<QWidget *>(D_MESSAGE_MANAGER_CONTENT, Qt::FindDirectChildrenOnly)) {
+    bool isOnlyResizeEvent = ENABLE_ANIMATIONS && ENABLE_ANIMATION_MESSAGE ?  event->type() == QEvent::Resize : event->type() == QEvent::LayoutRequest || event->type() == QEvent::Resize;
 
-            auto par = qobject_cast<QWidget *>(watched);
+    if (isOnlyResizeEvent) {
+        if (ENABLE_ANIMATIONS && ENABLE_ANIMATION_MESSAGE) {
+            if (auto content = watched->findChild<QWidget *>(D_MESSAGE_MANAGER_CONTENT, Qt::FindDirectChildrenOnly)) {
 
-            for (DFloatingMessage *message : content->findChildren<DFloatingMessage*>(QString(), Qt::FindDirectChildrenOnly)) {
-                message->setMaximumWidth(par->rect().marginsRemoved(content->contentsMargins()).width());
-                message->setMinimumHeight(message->sizeHint().height());
+                auto par = qobject_cast<QWidget *>(watched);
+
+                for (DFloatingMessage *message : content->findChildren<DFloatingMessage*>(QString(), Qt::FindDirectChildrenOnly)) {
+                    message->setMaximumWidth(par->rect().marginsRemoved(content->contentsMargins()).width());
+                    message->setMinimumHeight(message->sizeHint().height());
+                }
+
+                QRect geometry(QPoint(0, 0), content->sizeHint());
+                geometry.moveCenter(par->rect().center());
+                geometry.moveBottom(par->rect().bottom() - MESSGAE_HEIGHT);
+                content->setGeometry(geometry);
             }
+        } else {
+            if (QWidget *widget = qobject_cast<QWidget *>(watched)) {
+                QWidget *content;
 
-            QRect geometry(QPoint(0, 0), content->sizeHint());
-            geometry.moveCenter(par->rect().center());
-            geometry.moveBottom(par->rect().bottom() - MESSGAE_HEIGHT);
-            content->setGeometry(geometry);
+                if (widget->objectName() == D_MESSAGE_MANAGER_CONTENT) {
+                    content = widget;
+                } else {
+                    content = widget->findChild<QWidget*>(D_MESSAGE_MANAGER_CONTENT, Qt::FindDirectChildrenOnly);
+                }
+
+                QWidget *par = content->parentWidget();
+
+                // 限制通知消息的最大宽度
+                for (DFloatingMessage *message : content->findChildren<DFloatingMessage*>(QString(), Qt::FindDirectChildrenOnly)) {
+                    message->setMaximumWidth(par->rect().marginsRemoved(content->contentsMargins()).width());
+                    message->setMinimumHeight(message->sizeHint().height());
+                }
+
+                QRect geometry(QPoint(0, 0), content->sizeHint());
+                geometry.moveCenter(par->rect().center());
+                geometry.moveBottom(par->rect().bottom());
+                content->setGeometry(geometry);
+            }
         }
     } else if (event->type() == QEvent::ChildRemoved) {
         // 如果是通知消息被删除的事件

@@ -8,6 +8,7 @@
 #include <dtkwidget_global.h>
 #include <DPalette>
 #include <DDciIcon>
+#include <DGuiApplicationHelper>
 
 #include <QCommonStyle>
 #include <QPainter>
@@ -19,9 +20,17 @@ QT_BEGIN_NAMESPACE
 class QTextLayout;
 QT_END_NAMESPACE
 
+#define ENABLE_ANIMATIONS DGuiApplicationHelper::testAttribute(DGuiApplicationHelper::HasAnimations)
+#define ENABLE_ANIMATION_BUTTONBOX (!qEnvironmentVariableIsSet("DTK_DISABLE_ANIMATION_BUTTONBOX"))
+#define ENABLE_ANIMATION_MESSAGE (!qEnvironmentVariableIsSet("DTK_DISABLE_ANIMATION_MESSAGE"))
+#define ENABLE_ANIMATION_LISTVIEWBOUNCE (!qEnvironmentVariableIsSet("DTK_DISABLE_ANIMATION_LISTVIREBOUNCE"))
+#define ENABLE_ANIMATION_SEARCH (!qEnvironmentVariableIsSet("DTK_DISABLE_ANIMATION_SEARCH"))
+#define ENABLE_ANIMATION_SWITCHBUTTON (!qEnvironmentVariableIsSet("DTK_DISABLE_ANIMATION_SWITCHBUTTON"))
+#define ENABLE_ANIMATION_PROGRESSBAR (!qEnvironmentVariableIsSet("DTK_DISABLE_ANIMATION_PROGRESSBAR"))
+#define ENABLE_ANIMATION_RADIOBUTTON (!qEnvironmentVariableIsSet("DTK_DISABLE_ANIMATION_RADIOBUTTON"))
+#define ENABLE_ANIMATION_CHECKBOX (!qEnvironmentVariableIsSet("DTK_DISABLE_ANIMATION_CHECKBOX"))
 
 DWIDGET_BEGIN_NAMESPACE
-
 DGUI_USE_NAMESPACE
 
 namespace DDrawUtils

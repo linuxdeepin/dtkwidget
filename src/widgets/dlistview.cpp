@@ -198,7 +198,7 @@ DListView::DListView(QWidget *parent) :
     DObject(*new DListViewPrivate(this))
 {
     d_func()->init();
-    if (!qEnvironmentVariableIsSet("DTK_DISABLE_LISTVIEW_ANIMATION")) {
+    if (ENABLE_ANIMATIONS && ENABLE_ANIMATION_SEARCH) {
         auto ani = new DBounceAnimation(this);
         ani->setAnimationTarget(this);
         ani->setAniMationEnable(true);
