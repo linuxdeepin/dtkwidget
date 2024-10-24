@@ -22,9 +22,14 @@ DIndeterminateProgressbarPrivate::DIndeterminateProgressbarPrivate(DIndeterminat
     , m_sliderWidget(new QWidget(qq))
     , m_timer(new QTimer(qq))
     , m_leftToRight(true)
-    , m_spotWidget(new QWidget(qq))
-    , m_animation(new QPropertyAnimation(m_spotWidget, "pos", qq))
+    , m_spotWidget(nullptr)
+    , m_animation(nullptr)
 {
+    if (!ENABLE_ANIMATIONS && !ENABLE_ANIMATION_PROGRESSBAR)
+        return;
+
+    m_spotWidget = new QWidget(qq);
+    m_animation = new QPropertyAnimation(m_spotWidget, "pos", qq);
 }
 
 DIndeterminateProgressbar::DIndeterminateProgressbar(QWidget *parent)
@@ -32,8 +37,11 @@ DIndeterminateProgressbar::DIndeterminateProgressbar(QWidget *parent)
     , DObject(*new DIndeterminateProgressbarPrivate(this))
 {
     D_D(DIndeterminateProgressbar);
-    d->m_spotWidget->setFixedSize(SPOT_WIDGET_WIDTH, height());
-    d->m_spotWidget->move(-SPOT_WIDGET_WIDTH, 0);
+
+    if (ENABLE_ANIMATIONS && ENABLE_ANIMATION_PROGRESSBAR) {
+        d->m_spotWidget->setFixedSize(SPOT_WIDGET_WIDTH, height());
+        d->m_spotWidget->move(-SPOT_WIDGET_WIDTH, 0);
+    }
 
     d->m_sliderWidget->setFixedWidth(150);
     d->m_sliderWidget->move(0, 0);
@@ -60,6 +68,10 @@ void DIndeterminateProgressbar::resizeEvent(QResizeEvent *e)
 {
     D_D(DIndeterminateProgressbar);
     d->m_sliderWidget->setFixedHeight(height());
+
+    if (!ENABLE_ANIMATIONS || !ENABLE_ANIMATION_PROGRESSBAR)
+        QWidget::resizeEvent(e);
+
     d->m_spotWidget->setFixedSize(SPOT_WIDGET_WIDTH, height());
 
     d->m_animation->setStartValue(QPoint(-SPOT_WIDGET_WIDTH, 0));
@@ -110,6 +122,9 @@ void DIndeterminateProgressbar::paintEvent(QPaintEvent *e)
     p.setBrush(Qt::NoBrush);
     p.setPen(pen);
     p.drawRoundedRect(d->m_sliderWidget->geometry(), radius, radius);
+
+    if (!ENABLE_ANIMATIONS || !ENABLE_ANIMATION_PROGRESSBAR)
+        return;
 
     if (d->m_sliderWidget->width() < d->m_spotWidget->width() / 2)
         return;

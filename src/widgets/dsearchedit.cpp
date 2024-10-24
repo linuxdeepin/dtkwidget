@@ -273,11 +273,14 @@ DSearchEditPrivate::DSearchEditPrivate(DSearchEdit *q)
     , action(nullptr)
     , iconWidget(nullptr)
     , label(nullptr)
-    , animation(new QPropertyAnimation)
+    , animation(nullptr)
 {
-    animation->setPropertyName("pos");
-    animation->setEasingCurve(QEasingCurve::OutCubic);
-    animation->setDuration(ANI_DURATION);
+    if (ENABLE_ANIMATIONS && ENABLE_ANIMATION_SEARCH) {
+        animation = new QPropertyAnimation;
+        animation->setPropertyName("pos");
+        animation->setEasingCurve(QEasingCurve::OutCubic);
+        animation->setDuration(ANI_DURATION);
+    }
 }
 
 DSearchEditPrivate::~DSearchEditPrivate()
@@ -384,31 +387,58 @@ void DSearchEditPrivate::_q_toEditMode(bool focus)
 {
     D_Q(DSearchEdit);
 
-    if (animation->state() == QPropertyAnimation::Running)
-        return;
+    if (ENABLE_ANIMATIONS && ENABLE_ANIMATION_SEARCH) {
+        if (animation->state() == QPropertyAnimation::Running)
+            return;
 
-    auto textMargins = q->lineEdit()->textMargins();
-    QMargins marginsInAnimation(HIDE_CURSOR_MARGIN, 0, 0, 0);
+        auto textMargins = q->lineEdit()->textMargins();
+        QMargins marginsInAnimation(HIDE_CURSOR_MARGIN, 0, 0, 0);
 
-    if (!animation->parent())
-        animation->setParent(iconWidget);
+        if (!animation->parent())
+            animation->setParent(iconWidget);
 
-    animation->setTargetObject(iconWidget);
-    animation->setStartValue(QPoint(q->lineEdit()->geometry().center().x() - iconWidget->width() / 2, iconWidget->pos().y()));
-    animation->setEndValue(QPoint(0, iconWidget->pos().y()));
+        animation->setTargetObject(iconWidget);
+        animation->setStartValue(QPoint(q->lineEdit()->geometry().center().x() - iconWidget->width() / 2, iconWidget->pos().y()));
+        animation->setEndValue(QPoint(10, iconWidget->pos().y()));
 
-    q->connect(animation, &QPropertyAnimation::finished, q, [q, this, textMargins]() {
-        q->lineEdit()->setTextMargins(textMargins);
-        if (animation->direction() == QPropertyAnimation::Direction::Forward) {
+        q->connect(animation, &QPropertyAnimation::finished, q, [q, this, textMargins]() {
+            q->lineEdit()->setTextMargins(textMargins);
+            if (animation->direction() == QPropertyAnimation::Direction::Forward) {
+                iconWidget->setVisible(false);
+                action->setVisible(true);
+                lineEdit->setPlaceholderText(placeholderText);
+            } else {
+                iconWidget->setVisible(true);
+                lineEdit->setPlaceholderText(QString());
+                iconWidget->move(QPoint(q->lineEdit()->geometry().center().x() - iconWidget->width() / 2, iconWidget->pos().y()));
+            }
+        });
+
+        if (!q->lineEdit()->text().isEmpty())
+            return;
+
+        if (focus) {
+            animation->setDirection(QPropertyAnimation::Direction::Forward);
+        } else {
+            action->setVisible(false);
+            animation->setDirection(QPropertyAnimation::Direction::Backward);
+        }
+
+        iconWidget->setVisible(true);
+        q->lineEdit()->setTextMargins(marginsInAnimation);
+        animation->start();
+    } else {
+        if (focus  || !q->lineEdit()->text().isEmpty()) {
             action->setVisible(true);
             iconWidget->setVisible(false);
             lineEdit->setPlaceholderText(placeholderText);
         } else {
+            action->setVisible(false);
             iconWidget->setVisible(true);
             lineEdit->setPlaceholderText(QString());
-            iconWidget->move(QPoint(q->lineEdit()->geometry().center().x() - iconWidget->width() / 2, iconWidget->pos().y()));
         }
-    });
+
+    }
 
 #ifdef ENABLE_AI
     //Focus disappears, clear voice check
@@ -418,19 +448,6 @@ void DSearchEditPrivate::_q_toEditMode(bool focus)
     }
 #endif
 
-    if (!q->lineEdit()->text().isEmpty())
-        return;
-
-    if (focus) {
-        animation->setDirection(QPropertyAnimation::Direction::Forward);
-    } else {
-        action->setVisible(false);
-        animation->setDirection(QPropertyAnimation::Direction::Backward);
-    }
-
-    iconWidget->setVisible(true);
-    q->lineEdit()->setTextMargins(marginsInAnimation);
-    animation->start();
 }
 
 void DSearchEditPrivate::_q_onVoiceActionTrigger(bool checked)
