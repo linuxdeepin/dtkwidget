@@ -43,7 +43,7 @@ DMainWindowPrivate::DMainWindowPrivate(DMainWindow *qq)
     titlebar = new DTitlebar(qq);
     titlebar->setAccessibleName("DMainWindowTitlebar");
     auto noTitlebarEnabled = []{
-        if (qEnvironmentVariable("DDE_CURRENT_COMPOSITOR") == "TreeLand") {
+        if (DGuiApplicationHelper::testAttribute(DGuiApplicationHelper::IsWaylandPlatform)) {
             return true;
         }
         QFunctionPointer enableNoTitlebar = qApp->platformFunction("_d_isEnableNoTitlebar");
