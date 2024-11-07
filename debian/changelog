@@ -1,3 +1,10 @@
+dtkwidget (5.7.2) unstable; urgency=medium
+
+  [ root ]
+  * UNRELEASED
+
+ -- Deepin Packages Builder <packages@deepin.org>  Thu, 07 Nov 2024 08:47:57 +0000
+
 dtkwidget (5.7.1) unstable; urgency=medium
 
   * fix: 如果窗口打开时即为最大化状态,则最大化图标显示错误 (#601)
