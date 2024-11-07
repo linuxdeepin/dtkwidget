@@ -354,7 +354,7 @@ void DTitlebarPrivate::init()
     q->setFocusPolicy(Qt::StrongFocus);
 
     auto noTitlebarEnabled = []{
-        if (qEnvironmentVariable("DDE_CURRENT_COMPOSITOR") == "TreeLand") {
+        if (DGuiApplicationHelper::testAttribute(DGuiApplicationHelper::IsWaylandPlatform)) {
             return true;
         }
 
@@ -431,7 +431,8 @@ void DTitlebarPrivate::updateFullscreen()
 void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
 {
     D_Q(DTitlebar);
-    bool useDXcb = DPlatformWindowHandle::isEnabledDXcb(targetWindow()) || qEnvironmentVariable("DDE_CURRENT_COMPOSITOR") == "TreeLand";
+    bool useDXcb = DPlatformWindowHandle::isEnabledDXcb(targetWindow()) ||
+                   DGuiApplicationHelper::testAttribute(DGuiApplicationHelper::IsWaylandPlatform);
     bool isFullscreen = targetWindow()->windowState().testFlag(Qt::WindowFullScreen);
 
 //    bool forceShow = !useDXcb;
