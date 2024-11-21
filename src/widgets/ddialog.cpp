@@ -41,7 +41,7 @@ DDialogPrivate::DDialogPrivate(DDialog *qq)
     , iconLayout(nullptr)
     , contentLayout(nullptr)
     , buttonLayout(nullptr)
-    , clickedButtonIndex(0)
+    , clickedButtonIndex(-1)
 {
 
 }
@@ -240,9 +240,9 @@ void DDialogPrivate::_q_onButtonClicked()
     if (button) {
         int index = buttonList.indexOf(button);
         q->buttonClicked(index, button->text());
+        clickedButtonIndex = index;
 
         if (onButtonClickedClose) {
-            clickedButtonIndex = index;
             q->done(clickedButtonIndex);
         }
     }
@@ -1109,19 +1109,7 @@ int DDialog::exec()
     D_D(DDialog);
 
     d->clickedButtonIndex = -1;
-    int clickedIndex = d->clickedButtonIndex;
-
-    if (d->onButtonClickedClose) {
-        // 如果设置了WA_DeleteOnClose属性，那么在exec()中将直接delete this
-        // d->clickedButtonIndex中记录的数据失效，这里通过信号槽更新正确的数据
-        connect(this, &DDialog::buttonClicked, this, [ &clickedIndex ] (int index, const QString &) {
-                clickedIndex = index;
-        });
-    }
-
-    int code = DAbstractDialog::exec();
-
-    return clickedIndex >= 0 ? clickedIndex : code;
+    return DAbstractDialog::exec();
 }
 
 void DDialog::setCloseButtonVisible(bool closeButtonVisible)
@@ -1163,10 +1151,11 @@ void DDialog::hideEvent(QHideEvent *event)
 void DDialog::closeEvent(QCloseEvent *event)
 {
     Q_UNUSED(event)
+    Q_D(DDialog);
 
     Q_EMIT aboutToClose();
 
-    done(-1);
+    done(d->clickedButtonIndex);
 
     Q_EMIT visibleChanged(isVisible());
     Q_EMIT closed();
