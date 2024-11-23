@@ -1533,7 +1533,7 @@ void DTitlebar::setVisible(bool visible)
         connect(d->maxButton, SIGNAL(clicked()), this, SLOT(_q_toggleWindowState()), Qt::UniqueConnection);
         connect(this, SIGNAL(doubleClicked()), this, SLOT(_q_toggleWindowState()), Qt::UniqueConnection);
         connect(d->minButton, SIGNAL(clicked()), this, SLOT(_q_showMinimized()), Qt::UniqueConnection);
-        connect(d->closeButton, &DWindowCloseButton::clicked, d->targetWindow(), &QWidget::close, Qt::UniqueConnection);
+        connect(d->closeButton, SIGNAL(clicked(bool)), this, SLOT(_q_quitActionTriggered()), Qt::UniqueConnection);
 
         d->updateButtonsState(d->targetWindow()->windowFlags());
     } else {
