@@ -40,11 +40,6 @@ void DAbstractDialogPrivate::init(bool blurIfPossible)
     // TODO: 这里对dialog特殊处理，dialog不需要设置固定的位置，否则里面的坐标会发生偏移导致点击偏移
     // 但是这不是问题的根本原因，还需要进一步分析。该属性在插件中做了特殊处理
     q->QDialog::setProperty("DAbstractDialog", true);
-    auto noTitlebarEnabled = []{
-        QFunctionPointer enableNoTitlebar = qApp->platformFunction("_d_isEnableNoTitlebar");
-        bool enabled = qApp->platformName() == "dwayland" || qApp->property("_d_isDwayland").toBool();
-        return enabled && enableNoTitlebar != nullptr;
-    };
 
     if (qApp->isDXcbPlatform()) {
         handle = new DPlatformWindowHandle(q, q);
@@ -66,7 +61,7 @@ void DAbstractDialogPrivate::init(bool blurIfPossible)
 
         bgBlurWidget->setBlurEnabled(blurIfPossible);
         q->setAttribute(Qt::WA_TranslucentBackground, blurIfPossible);
-    } else if (noTitlebarEnabled()) {
+    } else if (DWindowManagerHelper::instance()->hasNoTitlebar()) {
         handle = new DPlatformWindowHandle(q, q);
 
         if (!handle->enableBlurWindow()) {
