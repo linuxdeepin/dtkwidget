@@ -119,6 +119,7 @@ private:
     D_PRIVATE_SLOT(void _q_toggleWindowState())
     D_PRIVATE_SLOT(void _q_showMinimized())
     D_PRIVATE_SLOT(void _q_onTopWindowMotifHintsChanged(quint32))
+    D_PRIVATE_SLOT(void _q_closeWindow())
 
 #ifndef QT_NO_MENU
     D_PRIVATE_SLOT(void _q_addDefaultMenuItems())
