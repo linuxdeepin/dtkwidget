@@ -139,8 +139,8 @@ bool DSlider::eventFilter(QObject *watched, QEvent *e)
         return !d->mouseWheelEnabled;
     }
 
-    if ((watched == d->slider) && (e->type() == QEvent::MouseButtonRelease)) {
-        d->needFocus = true;
+    if (e->type() == QEvent::MouseButtonRelease) {
+        d->needFocus = watched == d->slider;
     }
 
     if (d->needFocus && (e->type() == QEvent::KeyPress)) {
