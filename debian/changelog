@@ -1,3 +1,10 @@
+dtkwidget (5.7.4) unstable; urgency=medium
+
+  * fix: ddialog's lambda func may cause segfault
+  * fix: some windows have dual title bars
+
+ -- Deepin Packages Builder <packages@deepin.org>  Tue, 03 Dec 2024 02:00:46 +0000
+
 dtkwidget (5.7.3) unstable; urgency=medium
 
   [ root ]
