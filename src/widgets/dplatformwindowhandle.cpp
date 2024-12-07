@@ -6,8 +6,11 @@
 
 #include <QWidget>
 #include <QApplication>
+#include <QWindow>
 
 DWIDGET_BEGIN_NAMESPACE
+
+static int g_surfaceType = -1;
 
 static QWindow *ensureWindowHandle(QWidget *widget)
 {
@@ -25,6 +28,18 @@ static QWindow *ensureWindowHandle(QWidget *widget)
 
         window->setAttribute(Qt::WA_NativeWindow);
         handle = window->windowHandle();
+
+        // default type is `RasterSurface`
+        if (g_surfaceType >= QWindow::RasterSurface &&
+            g_surfaceType <=
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+            QWindow::MetalSurface
+#else
+            QWindow::Direct3DSurface
+#endif
+            )
+            handle->setSurfaceType(QWindow::SurfaceType(g_surfaceType));
+
         window->setAttribute(Qt::WA_NativeWindow, false);
 
         // dxcb version >= 1.1.6
@@ -235,6 +250,11 @@ bool DPlatformWindowHandle::setWindowWallpaperParaByWM(QWidget *widget, const QR
     Q_ASSERT(widget);
 
     return DPlatformHandle::setWindowWallpaperParaByWM(ensureWindowHandle(widget), area, sMode, fMode);
+}
+
+void DPlatformWindowHandle::setWindowSurfaceType(int surfaceType)
+{
+    g_surfaceType = surfaceType;
 }
 
 DWIDGET_END_NAMESPACE

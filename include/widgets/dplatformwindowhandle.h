@@ -30,6 +30,9 @@ public:
     static bool setWindowBlurAreaByWM(QWidget *widget, const QList<QPainterPath> &paths);
     static bool setWindowWallpaperParaByWM(QWidget *widget, const QRect &area, WallpaperScaleMode sMode, WallpaperFillMode fMode);
 
+    // for webengineView you may need this to set `QWindow::SurfaceType::OpenGLSurface`
+    static void setWindowSurfaceType(int surfaceType);
+
     using DPlatformHandle::setWindowBlurAreaByWM;
     using DPlatformHandle::setWindowWallpaperParaByWM;
 };
