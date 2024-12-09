@@ -16,12 +16,13 @@ test_build:
               - x86_64
               - aarch64
 
-          - name: archlinux
-            paths:
-              - target_project: deepin:CI
-                target_repository: archlinux
-            architectures:
-              - x86_64
+# Temporarily remove archlinux build
+#          - name: archlinux
+#            paths:
+#              - target_project: deepin:CI
+#                target_repository: archlinux
+#            architectures:
+#              - x86_64
 
   filters:
     event: pull_request
