@@ -1398,6 +1398,10 @@ bool DStyledItemDelegate::eventFilter(QObject *object, QEvent *event)
     case QEvent::MouseButtonPress: {
         D_D(DStyledItemDelegate);
         d->pressedAction = nullptr;
+        const auto view = qobject_cast<QAbstractItemView*>(parent());
+        if (view) {
+            view->update();
+        }
         Q_FALLTHROUGH();
     }
     case QEvent::MouseButtonRelease: {
