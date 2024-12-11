@@ -1395,6 +1395,13 @@ void DStyledItemDelegate::initStyleOption(QStyleOptionViewItem *option, const QM
 bool DStyledItemDelegate::eventFilter(QObject *object, QEvent *event)
 {
     switch (event->type()) {
+    case QEvent::Paint: {
+        const auto view = qobject_cast<QAbstractItemView*>(parent());
+        if (view) {
+            view->update();
+        }
+        break;
+    }
     case QEvent::MouseButtonPress: {
         D_D(DStyledItemDelegate);
         d->pressedAction = nullptr;
