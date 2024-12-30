@@ -82,9 +82,8 @@ void DFloatingMessagePrivate::init()
         hBoxLayout->addWidget(closeButton);
 
         q->connect(closeButton, &DIconButton::clicked, q, [q]() {
-            if (q->windowHandle()) {
-                q->windowHandle()->close();
-            }
+            q->close();
+            
             if(ENABLE_ANIMATIONS && ENABLE_ANIMATION_MESSAGE) {
                 Q_EMIT q->messageClosed();
             }
