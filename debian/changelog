@@ -1,3 +1,10 @@
+dtkwidget (5.7.7) unstable; urgency=medium
+
+  [ root ]
+  * UNRELEASED
+
+ -- Deepin Packages Builder <packages@deepin.org>  Thu, 09 Jan 2025 09:28:39 +0000
+
 dtkwidget (5.7.6) unstable; urgency=medium
 
   * fix: resident floating message cannot be closed(Bug: 297669)
