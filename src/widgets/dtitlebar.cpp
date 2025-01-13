@@ -164,7 +164,7 @@ private:
     QAction             *darkThemeAction  = nullptr;
 #endif
 
-    QWindow            *targetWindowHandle = Q_NULLPTR;
+    QPointer<QWindow>            targetWindowHandle;
 
     Qt::WindowFlags     disableFlags;
     bool                mousePressed    = false;
