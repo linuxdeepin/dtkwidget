@@ -1,3 +1,9 @@
+dtkwidget (5.7.10) unstable; urgency=medium
+
+  * fix: 修复 桌面/文管文件，打开属性窗口闪烁
+
+ -- YeShanShan <yeshanshan@uniontech.com>  Thu, 13 Feb 2025 17:18:34 +0800
+
 dtkwidget (5.7.9) unstable; urgency=medium
 
   * fix: missing QT_QPA_PLATFORM for DApplication
