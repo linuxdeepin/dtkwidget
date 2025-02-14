@@ -1399,9 +1399,7 @@ void DPrintPreviewWidget::setColorMode(const DPrinter::ColorMode &colorMode)
 void DPrintPreviewWidget::setOrientation(const DPrinter::Orientation &pageOrientation)
 {
     Q_D(DPrintPreviewWidget);
-    auto layout = d->previewPrinter->pageLayout();
-    layout.setOrientation(static_cast<QPageLayout::Orientation>(pageOrientation));
-    d->previewPrinter->setPageLayout(layout);
+    d->previewPrinter->setPageOrientation(static_cast<QPageLayout::Orientation>(pageOrientation));
     updatePreview();
 }
 
