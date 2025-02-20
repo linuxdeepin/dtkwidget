@@ -459,9 +459,7 @@ void DAboutDialog::setProductIcon(const QIcon &icon)
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     d->logoLabel->setPixmap(icon.pixmap(windowHandle(), QSize(128, 128)));
 #else
-    winId(); // TODO: wait for checking
-    auto window = windowHandle();
-    d->logoLabel->setPixmap(icon.pixmap(QSize(128, 128), window->screen()->devicePixelRatio()));
+    d->logoLabel->setPixmap(icon.pixmap(QSize(128, 128), devicePixelRatio()));
 #endif
 }
 
