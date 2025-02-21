@@ -932,6 +932,12 @@ void DBlurEffectWidget::paintEvent(QPaintEvent *event)
     if (!d->blurEnabled)
         return;
 
+    if (!d->isBehindWindowBlendMode()) {
+        // 此模式下是自行控制sourceImage的更新
+        if (d->blendMode != InWidgetBlend) {
+            updateBlurSourceImage(event->region());
+        }
+    }
     QPainter pa(this);
 
     if (d->blurRectXRadius > 0 || d->blurRectYRadius > 0) {
@@ -957,11 +963,6 @@ void DBlurEffectWidget::paintEvent(QPaintEvent *event)
     if (d->isBehindWindowBlendMode()) {
         pa.setCompositionMode(QPainter::CompositionMode_Source);
     } else {
-        // 此模式下是自行控制sourceImage的更新
-        if (d->blendMode != InWidgetBlend) {
-            updateBlurSourceImage(event->region());
-        }
-
         if (d->customSourceImage || !d->sourceImage.isNull()) {
             int radius = d->radius;
             qreal device_pixel_ratio = devicePixelRatioF();
