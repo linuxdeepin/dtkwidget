@@ -70,7 +70,9 @@ void DDrawerPrivate::init()
     m_animation = new QPropertyAnimation(m_contentLoader, "height", qq);
     m_animation->setDuration(400);
     m_animation->setEasingCurve(QEasingCurve::InQuad);
-    qq->connect(m_animation, &QPropertyAnimation::valueChanged, qq, [qq] {
+    qq->connect(m_animation, &QPropertyAnimation::valueChanged, qq, [this, qq] {
+        if (!m_enableAnimation)
+            return;
         qq->setFixedHeight(qq->sizeHint().height());
     });
 
@@ -82,6 +84,10 @@ void DDrawerPrivate::init()
     qq->setLayout(mainLayout);
 
     qq->connect(m_boxWidget, &DBoxWidget::sizeChanged, qq, [this] {
+        if (!m_enableAnimation) {
+            updateHeightDirect();
+            return;
+        }
         if (m_expand) {
             int endHeight = 0;
             endHeight = m_boxWidget->height();
@@ -92,6 +98,13 @@ void DDrawerPrivate::init()
             m_animation->start();
         }
     });
+}
+
+void DDrawerPrivate::updateHeightDirect()
+{
+    D_Q(DDrawer);
+    m_contentLoader->setFixedHeight(m_expand ? m_boxWidget->height() : 0);
+    q->setFixedHeight(q->sizeHint().height());
 }
 
 /*!
@@ -209,6 +222,15 @@ void DDrawer::setExpand(bool value)
 
     d->m_expand = value;
     Q_EMIT expandChange(value);
+
+    // Disable animation to update height when widget is invisible by default.
+    static const bool disableAnimation(qEnvironmentVariableIsSet("D_DTK_DISABLE_ANIMATIONS"));
+    d->m_enableAnimation = !disableAnimation && isVisible();
+
+    if (!d->m_enableAnimation) {
+        d->updateHeightDirect();
+        return;
+    }
 
     if (value) {
         d->m_animation->setStartValue(0);
