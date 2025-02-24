@@ -25,6 +25,7 @@ public:
     ~DDrawerPrivate();
 
     void init();
+    void updateHeightDirect();
 
     QWidget *m_header = nullptr;
     QWidget *m_content = nullptr;
@@ -35,6 +36,7 @@ public:
     DHorizontalLine * m_hSeparator = nullptr;
     DHorizontalLine *m_bottom_separator = nullptr;
     QPropertyAnimation *m_animation = nullptr;
+    bool m_enableAnimation = false;
     bool m_expand = false;
     bool m_reservedPadding[7];
 
