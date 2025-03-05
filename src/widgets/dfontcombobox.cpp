@@ -63,8 +63,13 @@ DFontComboBox::DFontComboBox(QWidget *parent)
     setModel(d_func()->impl->model());
     setItemDelegate(d_func()->impl->itemDelegate());
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     connect(this, SIGNAL(currentIndexChanged(QString)),
             d_func()->impl, SIGNAL(currentIndexChanged(QString)));
+#else
+    connect(this, SIGNAL(currentIndexChanged(int)),
+            d_func()->impl, SIGNAL(currentIndexChanged(int)));
+#endif
     connect(d_func()->impl, SIGNAL(currentFontChanged(const QFont &)),
             this, SIGNAL(currentFontChanged(const QFont &)));
 }
