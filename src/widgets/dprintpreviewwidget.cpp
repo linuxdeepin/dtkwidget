@@ -33,6 +33,17 @@
 DGUI_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
+static QString truncateFileName(const QString &str, int maxLength = 255) {
+    if (str.length() <= maxLength)
+        return str;
+
+    int keepFront = (maxLength - 3) / 2; // 例如 maxLength=255 → keepFront=126
+    int keepBack = (maxLength - 3) - keepFront; // 126
+
+    // 截取前半部分 + "..." + 后半部分
+    return str.left(keepFront) + QString("...") + str.right(keepBack);
+}
+
 static void saveImageToFile(int index, const QString &outPutFileName, const QString &suffix, bool isJpegImage, const QImage &srcImage)
 {
     // write image
@@ -41,7 +52,11 @@ static void saveImageToFile(int index, const QString &outPutFileName, const QStr
 
     // 多线程保存文件修复大文件卡顿问题
     QtConcurrent::run(QThreadPool::globalInstance(), [srcImage, tmpString, isJpegImage] {
-        srcImage.save(tmpString, isJpegImage ? "JPEG" : "PNG");
+        const QFileInfo file(tmpString);
+        const auto fileName = file.absolutePath() + "/" + truncateFileName(file.fileName());
+        if (!srcImage.save(fileName, isJpegImage ? "JPEG" : "PNG")) {
+            qWarning() << "Failed to save image to file, filePath:" << fileName;
+        }
     });
 }
 
