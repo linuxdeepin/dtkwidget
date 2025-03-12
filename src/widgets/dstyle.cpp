@@ -2037,7 +2037,10 @@ int DStyle::styleHint(QStyle::StyleHint sh, const QStyleOption *opt, const QWidg
     case SH_ScrollView_FrameOnlyAroundContents:
         return false;
     case SH_LineEdit_PasswordCharacter:
-        return 0x26AB;
+        if (w && QFontMetrics(w->font()).inFont(QChar(0x26AB)))
+            return 0x26AB;
+
+	return 0x25CF;
     default:
         break;
     }
