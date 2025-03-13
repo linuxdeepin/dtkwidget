@@ -1436,7 +1436,6 @@ void DApplication::handleAboutAction()
     if (d->aboutDialog) {
         d->aboutDialog->activateWindow();
         d->aboutDialog->raise();
-        d->aboutDialog->setLicenseEnabled(d->licenseDialog->isValid());
         if (DGuiApplicationHelper::isTabletEnvironment()) {
             d->aboutDialog->exec();
         } else {
