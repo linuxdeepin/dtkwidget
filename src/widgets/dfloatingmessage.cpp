@@ -19,7 +19,7 @@ class MessageLabel : public QLabel
 public:
     QSize sizeHint() const override
     {
-        return fontMetrics().size(Qt::TextSingleLine, text());
+        return fontMetrics().size({}, text());
     }
 };
 DWIDGET_BEGIN_NAMESPACE
