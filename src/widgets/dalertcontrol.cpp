@@ -158,11 +158,11 @@ QColor DAlertControl::alertColor() const
 
 /*!
 @~english
-  \brief DAlertControl::setMessageAlignmentSpecify the alignment method Now only support the left, right, center, default left
+  \brief DAlertControl::setAlertAlignment Specify the alignment method Now only support the left, right, center, default left
   \note When the parameters are other, the default left
   \a alignment 消息对齐方式
  */
-void DAlertControl::setMessageAlignment(Qt::Alignment alignment)
+void DAlertControl::setAlertAlignment(Qt::Alignment alignment)
 {
     D_D(DAlertControl);
     d->alignment = alignment;
@@ -170,12 +170,34 @@ void DAlertControl::setMessageAlignment(Qt::Alignment alignment)
 
 /*!
 @~english
-  \brief DAlertControl::messageAlignment Return to the current alarm Tooltips alignment method
+  \brief DAlertControl::alertAlignment Return to the current alarm Tooltips alignment method
+ */
+Qt::Alignment DAlertControl::alertAlignment() const
+{
+    D_DC(DAlertControl);
+    return d->alignment;
+}
+
+/*!
+@~english
+  \brief DAlertControl::setMessageAlignment Specify the alignment method Now only support the left, right, center, default center
+  \note When the parameters are other, the default center
+  \a alignment 文本内容对齐方式
+ */
+void DAlertControl::setMessageAlignment(Qt::Alignment alignment)
+{
+    D_D(DAlertControl);
+    d->messageAlignment = alignment;
+}
+
+/*!
+@~english
+  \brief DAlertControl::messageAlignment Return to the current tooltip message alignment method
  */
 Qt::Alignment DAlertControl::messageAlignment() const
 {
     D_DC(DAlertControl);
-    return d->alignment;
+    return d->messageAlignment;
 }
 
 /*!
@@ -216,6 +238,7 @@ void DAlertControl::showAlertMessage(const QString &text, QWidget *follower, int
         d->tooltip->setAccessibleName("DAlertControlAlertToolTip");
         d->tooltip->setForegroundRole(DPalette::TextWarning);
         d->tooltip->setWordWrap(true);
+        d->tooltip->setAlignment(d->messageAlignment);
 
         d->frame = new DFloatingWidget;
         d->frame->setAccessibleName("DAlertControlFloatingWidget");
