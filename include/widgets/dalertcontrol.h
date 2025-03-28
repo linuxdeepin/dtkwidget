@@ -30,6 +30,8 @@ public:
     void setAlertColor(QColor c);
     QColor alertColor() const;
     QColor defaultAlertColor() const;
+    void setAlertAlignment(Qt::Alignment alignment);
+    Qt::Alignment alertAlignment() const;
     void setMessageAlignment(Qt::Alignment alignment);
     Qt::Alignment messageAlignment() const;
     void showAlertMessage(const QString &text, int duration = 3000);

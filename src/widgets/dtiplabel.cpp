@@ -82,7 +82,6 @@ DTipLabelPrivate::DTipLabelPrivate(DTipLabel *q)
 void DTipLabelPrivate::init()
 {
     Q_Q(DTipLabel);
-    q->setAlignment(Qt::AlignCenter);
 
     DFontSizeManager::instance()->bind(q, DFontSizeManager::T7);
 }
