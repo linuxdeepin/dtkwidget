@@ -182,7 +182,7 @@ DToolTip::DToolTip(const QString &text, bool completionClose)
 QSize DToolTip::sizeHint() const
 {
     int radius = DStyleHelper(style()).pixelMetric(DStyle::PM_FrameRadius);
-    QSize fontSize = fontMetrics().size(Qt::TextSingleLine, text());
+    QSize fontSize = fontMetrics().size({}, text());
 
     fontSize.setWidth(fontSize.width() + radius);
 
