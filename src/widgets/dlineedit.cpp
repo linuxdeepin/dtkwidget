@@ -129,6 +129,18 @@ void DLineEdit::showAlertMessage(const QString &text, QWidget *follower, int dur
   \note When the parameter is other, the default left alignment
   \a alignment Message alignment
  */
+void DLineEdit::setAlertAlignment(Qt::Alignment alignment)
+{
+    D_D(DLineEdit);
+    d->control->setAlertAlignment(alignment);
+}
+
+Qt::Alignment DLineEdit::alertAlignment() const
+{
+    D_DC(DLineEdit);
+    return d->control->alertAlignment();
+}
+
 void DLineEdit::setAlertMessageAlignment(Qt::Alignment alignment)
 {
     D_D(DLineEdit);
