@@ -1,3 +1,12 @@
+dtkwidget (5.7.14) unstable; urgency=medium
+
+  * fix: wheel event is accepted in qt6
+  * fix: 修复SwitchButton在透明窗口上显示时颜色太亮,太突兀的问题
+  * fix: DToolTip宽度计算
+  * fix: DFloatingMessage宽度计算
+
+ -- YeShanShan <yeshanshan@uniontech.com>  Thu, 17 Apr 2025 21:51:46 +0800
+
 dtkwidget (5.7.13) unstable; urgency=medium
 
   * fix: accessing wild pointer for DAboutDialog
