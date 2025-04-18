@@ -8,6 +8,7 @@
 
 #include <DPaletteHelper>
 
+#include <private/qhexstring_p.h>
 #include <private/qlabel_p.h>
 
 DWIDGET_BEGIN_NAMESPACE
@@ -257,11 +258,16 @@ void DLabel::paintEvent(QPaintEvent *event)
         }
     } else
 #endif
-    if (d->pixmap && !d->pixmap->isNull()) {
-        QPixmap pix;
-        if (d->scaledcontents) {
-            QSize scaledSize = cr.size() * devicePixelRatioF();
-            if (!d->scaledpixmap || d->scaledpixmap->size() != scaledSize) {
+#if QT_VERSION < QT_VERSION_CHECK(6, 9, 0)
+        if (d->pixmap && !d->pixmap->isNull()) {
+#else
+        if (d->icon && !d->icon->isNull()) {
+#endif
+#if QT_VERSION < QT_VERSION_CHECK(6, 9, 0)
+      QPixmap pix;
+      if (d->scaledcontents) {
+        QSize scaledSize = cr.size() * devicePixelRatioF();
+        if (!d->scaledpixmap || d->scaledpixmap->size() != scaledSize) {
 #if QT_VERSION < QT_VERSION_CHECK(6, 8, 0)
                 if (!d->cachedimage)
 #endif
@@ -290,15 +296,45 @@ void DLabel::paintEvent(QPaintEvent *event)
 #endif
 #endif
                 d->scaledpixmap->setDevicePixelRatio(devicePixelRatioF());
-            }
+        }
             pix = *d->scaledpixmap;
-        } else
-            pix = *d->pixmap;
-        QStyleOption opt;
-        opt.initFrom(this);
-        if (!isEnabled())
-            pix = style->generatedIconPixmap(QIcon::Disabled, pix, &opt);
-        style->drawItemPixmap(&painter, cr, align, pix);
+      } else
+        pix = *d->pixmap;
+      QStyleOption opt;
+      opt.initFrom(this);
+      if (!isEnabled())
+        pix = style->generatedIconPixmap(QIcon::Disabled, pix, &opt);
+      style->drawItemPixmap(&painter, cr, align, pix);
+#else
+      // pick up from
+      // https://github.com/qt/qtbase/blob/25986746947798e1a22d0830d3bcb11a55fcd3ae/src/widgets/widgets/qlabel.cpp#L1052
+      const qreal dpr = devicePixelRatio();
+      const QSize size = d->scaledcontents ? cr.size() : d->pixmapSize;
+      const auto mode = isEnabled() ? QIcon::Normal : QIcon::Disabled;
+      QPixmap pix = d->icon->pixmap(size, dpr, mode);
+      if (d->scaledcontents && pix.size() != size * dpr) {
+        using namespace Qt::StringLiterals;
+        const QString key =
+            "qt_label_"_L1 % HexString<quint64>(pix.cacheKey()) %
+            HexString<quint8>(mode) % HexString<uint>(size.width()) %
+            HexString<uint>(size.height()) %
+            HexString<quint16>(qRound(dpr * 1000));
+        if (!QPixmapCache::find(key, &pix)) {
+          pix = pix.scaled(size * dpr, Qt::IgnoreAspectRatio,
+                           Qt::SmoothTransformation);
+          pix.setDevicePixelRatio(dpr);
+          // using QIcon to cache the newly create pixmap is not possible
+          // because QIcon does not clear this cache (so we grow indefinitely)
+          // and also uses the newly added pixmap as starting point for new
+          // scaled pixmap which makes it very blurry.
+          // Therefore use QPixmapCache here.
+          QPixmapCache::insert(key, pix);
+        }
+      }
+      QStyleOption opt;
+      opt.initFrom(this);
+      style->drawItemPixmap(&painter, cr, align, pix);
+#endif
     }
 }
 
