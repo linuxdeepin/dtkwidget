@@ -60,6 +60,6 @@ DTitlebarSettingsImpl *DTitlebarSettings::impl()
     return d->impl;
 }
 
-#include "moc_dtitlebarsettings.cpp"
-
 DWIDGET_END_NAMESPACE
+
+#include "moc_dtitlebarsettings.cpp"
