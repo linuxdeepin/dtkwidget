@@ -874,7 +874,7 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     DRadioButton *picBtn = new DRadioButton(qApp->translate("DPrintPreviewDialogPrivate", "Picture watermark"));
     picPathEdit = new DFileChooserEdit;
     picPathEdit->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_Watermark_ImageEdit]);
-    picPathEdit->setNameFilters(QStringList() << "*.png *.jpg");
+    picPathEdit->setNameFilters(QStringList() << qApp->translate("DPrintPreviewDialogPrivate", "Images") + "(*.png *.jpg)");
     QString desktopPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
     picPathEdit->setDirectoryUrl(QUrl(desktopPath, QUrl::TolerantMode));
 
