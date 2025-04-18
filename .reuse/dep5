@@ -4,7 +4,7 @@ Upstream-Contact: UnionTech Software Technology Co., Ltd. <>
 Source: https://github.com/linuxdeepin/dtkwidget
 
 # ci
-Files: .github/* .gitlab-ci.yml output/results.txt .obs/*
+Files: .github/* .gitlab-ci.yml output/results.txt .obs/* .tx/*
 Copyright: None
 License: CC0-1.0
 
