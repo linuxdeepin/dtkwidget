@@ -210,7 +210,7 @@ void DLabel::paintEvent(QPaintEvent *event)
             QString text = d->text;
             if (elideMode() != Qt::ElideNone) {
                 const QFontMetrics fm(fontMetrics());
-                text = fm.elidedText(text, elideMode(), width(), Qt::TextShowMnemonic);
+                text = fm.elidedText(text, elideMode(), width(), flags);
             }
             const DToolTip::ToolTipShowMode &toolTipShowMode = DToolTip::toolTipShowMode(this);
             if (toolTipShowMode != DToolTip::Default) {
