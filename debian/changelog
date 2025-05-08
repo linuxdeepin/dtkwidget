@@ -1,3 +1,14 @@
+dtkwidget (5.7.15) unstable; urgency=medium
+
+  * fix: correct text elision behavior with shortcuts
+  * style: adjust website link style in about dialog
+  * chore: reuse warning
+  * fix: watermark can't select picture for PrintPreivew
+  * build: compiling failed with Qt 6.9
+  * chore: bump version to 5.7.14
+
+ -- YeShanShan <yeshanshan@uniontech.com>  Thu, 08 May 2025 17:53:16 +0800
+
 dtkwidget (5.7.14) unstable; urgency=medium
 
   * fix: wheel event is accepted in qt6
