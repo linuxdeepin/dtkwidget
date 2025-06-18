@@ -71,7 +71,8 @@
         <file alias="window_close.dci">bloom/window_close.dci</file>
         <file alias="window_maximize.dci">bloom/window_maximize.dci</file>
         <file alias="window_minimize.dci">bloom/window_minimize.dci</file>
-        <file alias="window_normal.dci">bloom/window_normal.dci</file>
+        <file alias="window_restore.dci">bloom/window_restore.dci</file>
+        <file alias="window_quit_full.dci">bloom/window_quit_full.dci</file>
         <file alias="switch_on.dci">bloom/switch_on.dci</file>
         <file alias="switch_off.dci">bloom/switch_off.dci</file>
         <file alias="radio_checked.dci">bloom/radio_checked.dci</file>

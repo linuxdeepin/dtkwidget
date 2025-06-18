@@ -736,33 +736,12 @@ void drawTitleBarCloseButton(QPainter *pa, const QRectF &rect)
 
 void drawTitleBarNormalButton(QPainter *pa, const QRectF &rect)
 {
-    drawTitleBarIcon(pa, rect, QLatin1String("window_normal"));
+    drawTitleBarIcon(pa, rect, QLatin1String("window_restore"));
 }
 
 void drawTitleQuitFullButton(QPainter *pa, const QRectF &rect)
 {
-    const QPen pen = pa->pen();
-    pa->setPen(Qt::NoPen);
-    pa->drawRect(rect);
-    QRectF content_rect(0, 0, rect.width() / 5, rect.height() / 5);
-    content_rect.moveCenter(rect.center());
-    pa->setPen(pen);
-    pa->setRenderHint(QPainter::Antialiasing, pa->device()->devicePixelRatioF() > 1.0);
-    qreal x = content_rect.x();
-    qreal y = content_rect.y();
-    qreal w = content_rect.width();
-    qreal h = content_rect.height();
-    qreal mean = w / 11;
-
-    QRectF right(x + mean * 6, y, mean * 5, mean * 5);
-    pa->drawLine(QPointF(x + mean * 7, y), QPointF(x + mean * 7, y + mean * 5));
-    pa->drawLine(QPointF(x + mean * 7, y + mean * 5), QPointF(x + w, y + mean * 5));
-    pa->drawPoint(right.center());
-
-    QRectF left(x, y + mean * 6, mean * 5, mean * 5);
-    pa->drawLine(QPointF(x, y + mean * 7), QPointF(x + mean * 5, y + mean * 7));
-    pa->drawLine(QPointF(x + mean * 5, y + mean * 7), QPointF(x + mean * 5, y + h));
-    pa->drawPoint(left.center());
+    drawTitleBarIcon(pa, rect, QLatin1String("window_quit_full"));
 }
 
 void drawArrowUp(QPainter *pa, const QRectF &rect)
