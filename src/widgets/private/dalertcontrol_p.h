@@ -27,6 +27,7 @@ private:
     QPointer<QWidget> target;
     QColor  alertColor;
     Qt::Alignment alignment{Qt::AlignLeft};
+    Qt::Alignment messageAlignment{Qt::AlignLeft};
     QTimer timer;
 };
 
