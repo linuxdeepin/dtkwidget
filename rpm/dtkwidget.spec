@@ -1,6 +1,6 @@
 Name:           dtkwidget
-Version: 5.7.17
-Release: 1
+Version:        5.7.17
+Release:        1%{?dist}
 Summary:        Deepin tool kit widget modules
 License:        LGPLv3+
 URL:            https://github.com/linuxdeepin/dtkwidget

@@ -5,7 +5,7 @@ on:
       version:
         description: 'Release version (e.g., 1.0.0)'
         type: string
-        required: true
+        required: false
       name:
         description: 'The name of the person to release the version'
         type: string
