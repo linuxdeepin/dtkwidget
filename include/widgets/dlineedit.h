@@ -34,6 +34,8 @@ public:
     bool isAlert() const;
     void showAlertMessage(const QString &text, int duration = 3000);
     void showAlertMessage(const QString &text, QWidget *follower, int duration = 3000);
+    void setAlertAlignment(Qt::Alignment alignment);
+    Qt::Alignment alertAlignment() const;
     void setAlertMessageAlignment(Qt::Alignment alignment);
     Qt::Alignment alertMessageAlignment() const;
     void hideAlertMessage();
