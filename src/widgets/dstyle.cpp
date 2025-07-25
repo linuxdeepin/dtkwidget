@@ -2117,7 +2117,7 @@ DStyle::StyleState DStyle::getState(const QStyleOption *option)
 
 static DStyle::StateFlags getFlags(const QStyleOption *option)
 {
-    DStyle::StateFlags flags{0};
+    DStyle::StateFlags flags{};
 
     if (option->state.testFlag(DStyle::State_On)) {
         flags |= DStyle::SS_CheckedFlag;

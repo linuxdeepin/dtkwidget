@@ -259,7 +259,7 @@ int DIpv4LineEdit::cursorPosition() const
             cursorPosition += edit->cursorPosition();
             break;
         } else {
-            cursorPosition += edit->text().count() + 1;
+            cursorPosition += edit->text().size() + 1;
         }
     }
 
@@ -339,8 +339,8 @@ void DIpv4LineEdit::setCursorPosition(int cursorPosition)
     D_D(DIpv4LineEdit);
 
     for (QLineEdit *edit : d->editList) {
-        if (cursorPosition > edit->text().count()) {
-            cursorPosition -= edit->text().count();
+        if (cursorPosition > edit->text().size()) {
+            cursorPosition -= edit->text().size();
             --cursorPosition;
         } else {
             edit->setCursorPosition(cursorPosition);
@@ -380,9 +380,9 @@ void DIpv4LineEdit::setSelection(int start, int length)
     D_D(DIpv4LineEdit);
 
     for (QLineEdit *edit : d->editList) {
-        if (edit->text().count() > start) {
-            if (edit->text().count() < length + start) {
-                int tmp_length = edit->text().count() - start;
+        if (edit->text().size() > start) {
+            if (edit->text().size() < length + start) {
+                int tmp_length = edit->text().size() - start;
 
                 edit->setSelection(start, tmp_length);
 
@@ -395,7 +395,7 @@ void DIpv4LineEdit::setSelection(int start, int length)
             edit->setSelection(edit->cursorPosition(), 0);
         }
 
-        start -= edit->text().count();
+        start -= edit->text().size();
     }
 
     QLineEdit::setSelection(start, length);
@@ -445,7 +445,7 @@ bool DIpv4LineEdit::eventFilter(QObject *obj, QEvent *e)
 
                 D_D(DIpv4LineEdit);
                 if (event->key() <= Qt::Key_9 && event->key() >= Qt::Key_0) {
-                    if (edit->cursorPosition() == edit->text().count()) {
+                    if (edit->cursorPosition() == edit->text().size()) {
                         QRegularExpression rx(RX_PATTERN_IP);
 
                         const QString number = QString::number(event->key() - Qt::Key_0);

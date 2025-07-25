@@ -474,7 +474,7 @@ DTitlebarToolFactory::~DTitlebarToolFactory()
 void DTitlebarToolFactory::add(DTitlebarToolBaseInterface *tool)
 {
     bool exist = false;
-    for (const auto &item : qAsConst(m_tools)) {
+    for (const auto &item : std::as_const(m_tools)) {
         if (item.tool->id() == tool->id()) {
             exist =  true;
             break;
@@ -495,7 +495,7 @@ void DTitlebarToolFactory::remove(const QString &id)
 void DTitlebarToolFactory::setTools(const QList<DTitlebarToolBaseInterface *> &tools)
 {
     m_tools.clear();
-    for (auto tool : qAsConst(tools))
+    for (auto tool : std::as_const(tools))
         m_tools[tool->id()] = ToolWrapper{tool};
 }
 

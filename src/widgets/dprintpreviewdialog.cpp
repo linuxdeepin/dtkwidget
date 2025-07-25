@@ -1145,7 +1145,11 @@ void DPrintPreviewDialogPrivate::initconnections()
             pageRangeError(NullTip);
         }
     });
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    QObject::connect(sidebysideCheckBox, &DCheckBox::checkStateChanged, q, [this](int status) {
+#else
     QObject::connect(sidebysideCheckBox, &DCheckBox::stateChanged, q, [this](int status) {
+#endif
         if (status == 0) {
             if (isActualPrinter(printDeviceCombo->currentText()))
                 settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_PageOrder_SequentialPrint, true);
@@ -1257,7 +1261,11 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(marginRightSpin, SIGNAL(valueChanged(double)), q, SLOT(_q_marginspinChanged(double)));
     QObject::connect(marginLeftSpin, SIGNAL(valueChanged(double)), q, SLOT(_q_marginspinChanged(double)));
     QObject::connect(marginBottomSpin, SIGNAL(valueChanged(double)), q, SLOT(_q_marginspinChanged(double)));
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    QObject::connect(duplexCheckBox, SIGNAL(checkStateChanged(int)), q, SLOT(_q_checkStateChanged(int)));
+#else
     QObject::connect(duplexCheckBox, SIGNAL(stateChanged(int)), q, SLOT(_q_checkStateChanged(int)));
+#endif
     QObject::connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::themeTypeChanged, pview, &DPrintPreviewWidget::themeTypeChanged);
     QObject::connect(marginTopSpin, SIGNAL(editingFinished()), q, SLOT(_q_marginEditFinished()));
     QObject::connect(marginRightSpin, SIGNAL(editingFinished()), q, SLOT(_q_marginEditFinished()));
