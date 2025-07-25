@@ -372,7 +372,11 @@ QPixmap DAboutDialog::companyLogo() const
 {
     D_DC(DAboutDialog);
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    return d->companyLogoLabel->pixmap(Qt::ReturnByValue);
+#else
     return d->companyLogoLabel->pixmap();
+#endif
 }
 
 /*!

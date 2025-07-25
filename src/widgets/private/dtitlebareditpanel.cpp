@@ -727,7 +727,11 @@ void DTitlebarEditPanel::handleTitlebarZoneWidgetMoveEvent(QDropEvent *event)
     QSize size;
     dataStream >> key >> hotSpot >> size;
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    positionPlaceHolder(event->position().toPoint(), hotSpot, size);
+#else
     positionPlaceHolder(event->pos(), hotSpot, size);
+#endif
     Q_EMIT startScreenShot();
 }
 
@@ -744,7 +748,11 @@ void DTitlebarEditPanel::handleSelectionZoneWidgetMoveEvent(QDropEvent *event)
     QSize size;
     dataStream >> key >> hotSpot >> size;
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    positionPlaceHolder(event->position().toPoint(), hotSpot, size);
+#else
     positionPlaceHolder(event->pos(), hotSpot, size);
+#endif
     Q_EMIT startScreenShot();
 }
 

@@ -95,7 +95,7 @@ void DAccessibilityCheckerPrivate::checkWidgetName()
     for (const QWidget *topLevelWidget : topLevelWidgets)
         childrenList.append(topLevelWidget->findChildren<QWidget *>());
 
-    for (auto child : qAsConst(childrenList)) {
+    for (auto child : std::as_const(childrenList)) {
         if (q->isIgnore(DAccessibilityChecker::Widget, child)) {
             widgetIgnoredCount++;
             continue;
@@ -134,7 +134,7 @@ void DAccessibilityCheckerPrivate::checkViewItemName()
     for (const QWidget *topLevelWidget : topLevelWidgets)
         listViewList.append(topLevelWidget->findChildren<QAbstractItemView *>());
 
-    for (auto absListView : qAsConst(listViewList)) {
+    for (auto absListView : std::as_const(listViewList)) {
         if (q->isIgnore(DAccessibilityChecker::ViewItem, absListView))
             continue;
 

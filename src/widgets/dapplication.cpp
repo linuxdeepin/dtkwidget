@@ -179,7 +179,7 @@ bool DApplicationPrivate::setSingleInstanceBySemaphore(const QString &key)
     singleInstance = tryAcquireSystemSemaphore(&ss);
 
     if (singleInstance) {
-        QtConcurrent::run([this] {
+        (void)QtConcurrent::run([this] {
             QPointer<DApplication> that = q_func();
 
             while (ss.acquire() && singleInstance)

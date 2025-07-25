@@ -100,7 +100,7 @@ QString DToolTip::wrapToolTipText(QString text, QTextOption option)
     QStringList paragraphs = text.split('\n');
     const QFont &toolTipFont = QToolTip::font();
     QString toolTip{""};
-    for (const QString &paragraph : qAsConst(paragraphs))
+    for (const QString &paragraph : std::as_const(paragraphs))
     {
         if (paragraph.isEmpty())
             continue;

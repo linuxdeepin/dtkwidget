@@ -7,6 +7,13 @@
 
 #include <QtUiPlugin/QDesignerCustomWidgetInterface>
 
+// 定义键位组合操作符，兼容DTK5和DTK6
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#define DTKEY_OPERATOR |
+#else
+#define DTKEY_OPERATOR +
+#endif
+
 #include <DFrame>
 #include <DArrowLineDrawer>
 #include <DButtonBox>
@@ -121,7 +128,7 @@ public:                                                                         
         }                                                                                                   \
         if (IS_SAME(UPPER_NAME, DKeySequenceEdit)) {                                                        \
             DKeySequenceEdit *w = new DKeySequenceEdit(parent);                                             \
-            w->setKeySequence(QKeySequence(Qt::CTRL + Qt::Key_A)); /* 用+号不要用逗号 */                      \
+            w->setKeySequence(QKeySequence(Qt::CTRL DTKEY_OPERATOR Qt::Key_A)); /* 用+号不要用逗号 */                      \
             return reinterpret_cast<UPPER_NAME *>(w);                                                       \
         }                                                                                                   \
         if (IS_SAME(UPPER_NAME, DWaterProgress)) {                                                          \
