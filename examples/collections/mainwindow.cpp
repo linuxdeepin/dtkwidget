@@ -313,18 +313,11 @@ void MainWindow::menuItemInvoked(QAction *action)
                             _printer->newPage();
 
                         // 给出调用方widget界面作为打印内容
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-                        double xscale = _printer->pageRect().width() / double(this->width());
-                        double yscale = _printer->pageRect().height() / double(this->height());
-                        double scale = qMin(xscale, yscale);
-                        painter.translate(_printer->pageRect().width() / 2.0, _printer->pageRect().height() / 2.0);
-#else
                         double xscale = _printer->pageLayout().paintRectPixels(_printer->resolution()).width() / double(this->width());
                         double yscale = _printer->pageLayout().paintRectPixels(_printer->resolution()).height() / double(this->height());
                         double scale = qMin(xscale, yscale);
                         painter.translate(_printer->pageLayout().paintRectPixels(_printer->resolution()).width() / 2.0,
                                           _printer->pageLayout().paintRectPixels(_printer->resolution()).height() /2.0);
-#endif
                         painter.scale(scale, scale);
                         painter.translate(-this->width() / 2, -this->height() / 2);
                         this->render(&painter);
@@ -333,11 +326,7 @@ void MainWindow::menuItemInvoked(QAction *action)
                         QFont font /*("CESI仿宋-GB2312")*/;
                         font.setPixelSize(16);
                         font = QFont(font, painter.device());
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-                        QRectF rect = _printer->pageRect();
-#else
                         QRectF rect = _printer->pageLayout().paintRectPixels(_printer->resolution());
-#endif
                         rect = QRectF(0, 0, rect.width(), rect.height());
                         painter.setFont(font);
                         // 画可用页面矩形,提供调试效果参考

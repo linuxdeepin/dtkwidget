@@ -101,10 +101,10 @@ TEST_F(ut_DSlider, testDSliderss)
     aboveTicks << "above tick 1" <<  "above tick 2";
     belowTicks << "below tick 1" <<  "below tick 2";
 
-    dslider->setLeftTicks(qAsConst(leftTicks));
-    dslider->setRightTicks(qAsConst(rightTicks));
-    dslider->setAboveTicks(qAsConst(aboveTicks));
-    dslider->setBelowTicks(qAsConst(belowTicks));
+    dslider->setLeftTicks(std::as_const(leftTicks));
+    dslider->setRightTicks(std::as_const(rightTicks));
+    dslider->setAboveTicks(std::as_const(aboveTicks));
+    dslider->setBelowTicks(std::as_const(belowTicks));
 
     // TODO 是否考虑预留接口以获取 leftTicks、rightTicks、aboveTicks、belowTicks
 }

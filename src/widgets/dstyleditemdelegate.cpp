@@ -490,7 +490,7 @@ public:
         if (lastWidgets.isEmpty() && currentWidgets.isEmpty())
             return;
 
-        for (const auto &widget : qAsConst(lastWidgets)) {
+        for (const auto &widget : std::as_const(lastWidgets)) {
             if (currentWidgets.contains(widget))
                 continue;
             if (widget && widget->isVisible())

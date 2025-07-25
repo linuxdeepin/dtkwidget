@@ -128,7 +128,11 @@ MainWindow::MainWindow(QWidget *parent) :
     // 设置 key seq
     DKeySequenceEdit *keyEditer = ui->Dtk__Widget__DKeySequenceEdit;
     keyEditer->setAlignment(Qt::AlignCenter);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    keyEditer->setKeySequence(QKeySequence(Qt::CTRL | Qt::Key_A));      // 用|号，不要用+号
+#else
     keyEditer->setKeySequence(QKeySequence(Qt::CTRL + Qt::Key_A));      // 用+号不要用逗号
+#endif
     connect(ui->Dtk__Widget__DKeySequenceEdit, &DKeySequenceEdit::keySequenceChanged, [] (const QKeySequence &seq) {
         qDebug() << "Key sequence: " << seq;
     });

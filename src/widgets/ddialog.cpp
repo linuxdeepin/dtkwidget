@@ -626,7 +626,7 @@ void DDialog::insertButton(int index, QAbstractButton *button, bool isDefault)
 
     const QString &text = button->text();
 
-    if (text.count() == 2) {
+    if (text.size() == 2) {
         for (const QChar &ch : text) {
             switch (ch.script()) {
             case QChar::Script_Han:

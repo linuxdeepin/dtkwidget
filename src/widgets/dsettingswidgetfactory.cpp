@@ -270,7 +270,11 @@ QPair<QWidget *, QWidget *> createCheckboxOptionHandle(QObject *opt)
     rightWidget->setAccessibleName("OptionCheckbox");
     rightWidget->setChecked(option->value().toBool());
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    option->connect(rightWidget, &QCheckBox::checkStateChanged,
+#else
     option->connect(rightWidget, &QCheckBox::stateChanged,
+#endif
     option, [ = ](int status) {
         option->setValue(status == Qt::Checked);
     });

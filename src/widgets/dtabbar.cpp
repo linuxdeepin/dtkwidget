@@ -1049,8 +1049,13 @@ void DTabBarPrivate::startMove(int index)
 
 void DTabBarPrivate::stopMove()
 {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    QMouseEvent event(QEvent::MouseButtonRelease, mapFromGlobal(QCursor::pos()),
+                      QCursor::pos(), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+#else
     QMouseEvent event(QEvent::MouseButtonRelease, mapFromGlobal(QCursor::pos()),
                       Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+#endif
     bool movable = isMovable();
     setMovable(true);
     mouseReleaseEvent(&event);
@@ -1392,13 +1397,23 @@ void DTabBarPrivate::dragEnterEvent(QDragEnterEvent *e)
     if (e->source() == this) {
         e->acceptProposedAction();
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        QMouseEvent event(QEvent::MouseMove, e->position(),
+                          QCursor::pos(), Qt::LeftButton, e->buttons(),
+                          e->modifiers());
+#else
         QMouseEvent event(QEvent::MouseMove, e->posF(),
                           Qt::LeftButton, e->mouseButtons(),
                           e->keyboardModifiers());
+#endif
 
         mouseMoveEvent(&event);
     } else {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        int index = tabInsertIndexFromMouse(e->position().toPoint());
+#else
         int index = tabInsertIndexFromMouse(e->pos());
+#endif
 
         if (q_func()->canInsertFromMimeData(index, e->mimeData())) {
             setDragingFromOther(true);
@@ -1425,15 +1440,29 @@ void DTabBarPrivate::dragMoveEvent(QDragMoveEvent *e)
     if (e->source() == this) {
         e->acceptProposedAction();
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        QMouseEvent event(QEvent::MouseMove, e->position(),
+                          QCursor::pos(), Qt::LeftButton, e->buttons(),
+                          e->modifiers());
+#else
         QMouseEvent event(QEvent::MouseMove, e->posF(),
                           Qt::LeftButton, e->mouseButtons(),
                           e->keyboardModifiers());
+#endif
 
         mouseMoveEvent(&event);
     } else {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        autoScrollTabs(e->position().toPoint());
+#else
         autoScrollTabs(e->pos());
+#endif
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        int index = tabInsertIndexFromMouse(e->position().toPoint());
+#else
         int index = tabInsertIndexFromMouse(e->pos());
+#endif
 
         if (q_func()->canInsertFromMimeData(index, e->mimeData())) {
             setDragingFromOther(true);
@@ -1447,15 +1476,25 @@ void DTabBarPrivate::dropEvent(QDropEvent *e)
     if (e->source() == this) {
         e->acceptProposedAction();
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        QMouseEvent event(QEvent::MouseButtonRelease, e->position(),
+                          QCursor::pos(), Qt::LeftButton, e->buttons(),
+                          e->modifiers());
+#else
         QMouseEvent event(QEvent::MouseButtonRelease, e->posF(),
                           Qt::LeftButton, e->mouseButtons(),
                           e->keyboardModifiers());
+#endif
 
         mouseReleaseEvent(&event);
     } else {
         setDragingFromOther(false);
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        int index = tabInsertIndexFromMouse(e->position().toPoint());
+#else
         int index = tabInsertIndexFromMouse(e->pos());
+#endif
 
         if (q_func()->canInsertFromMimeData(index, e->mimeData())) {
             e->acceptProposedAction();
@@ -2337,7 +2376,11 @@ void DTabBar::dragEnterEvent(QDragEnterEvent *e)
     if (e->source() == d)
         return QWidget::dragEnterEvent(e);
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    int index = d->tabInsertIndexFromMouse(d->mapFromParent(e->position().toPoint()));
+#else
     int index = d->tabInsertIndexFromMouse(d->mapFromParent(e->pos()));
+#endif
 
     if (canInsertFromMimeData(index, e->mimeData())) {
         d->setDragingFromOther(true);
@@ -2378,7 +2421,11 @@ void DTabBar::dragMoveEvent(QDragMoveEvent *e)
     if (e->source() == d)
         return QWidget::dragMoveEvent(e);
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    int index = d->dd()->validIndex(d->ghostTabIndex) ? d->ghostTabIndex : d->tabInsertIndexFromMouse(d->mapFromParent(e->position().toPoint()));
+#else
     int index = d->dd()->validIndex(d->ghostTabIndex) ? d->ghostTabIndex : d->tabInsertIndexFromMouse(d->mapFromParent(e->pos()));
+#endif
     bool canInsert = false;
 
     if (canInsertFromMimeData(index, e->mimeData())) {
@@ -2394,8 +2441,13 @@ void DTabBar::dragMoveEvent(QDragMoveEvent *e)
     if (e->source() != d) {
         if (canInsert) {
             if (d->dd()->validIndex(d->ghostTabIndex)) {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+                QMouseEvent event(QEvent::MouseMove, d->mapFromParent(e->position().toPoint()),
+                                  d->mapFromParent(e->position().toPoint()), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+#else
                 QMouseEvent event(QEvent::MouseMove, d->mapFromParent(e->pos()),
                                   Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+#endif
                 d->mouseMoveEvent(&event);
             } else {
                 d->ghostTabIndex = index;
@@ -2403,7 +2455,11 @@ void DTabBar::dragMoveEvent(QDragMoveEvent *e)
                 d->startMove(index);
             }
         } else {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+            d->autoScrollTabs(d->mapFromParent(e->position().toPoint()));
+#else
             d->autoScrollTabs(d->mapFromParent(e->pos()));
+#endif
         }
     }
 }
@@ -2418,7 +2474,11 @@ void DTabBar::dropEvent(QDropEvent *e)
     d->setDragingFromOther(false);
     d->stopAutoScrollTabs();
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    int index = d->tabInsertIndexFromMouse(d->mapFromParent(e->position().toPoint()));
+#else
     int index = d->tabInsertIndexFromMouse(d->mapFromParent(e->pos()));
+#endif
 
     if (canInsertFromMimeData(index, e->mimeData())) {
         e->acceptProposedAction();

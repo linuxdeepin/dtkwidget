@@ -909,7 +909,11 @@ bool DImageViewer::event(QEvent *event)
         }
         case QEvent::TouchUpdate: {
             QTouchEvent *touchEvent = dynamic_cast<QTouchEvent *>(event);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+            QList<QTouchEvent::TouchPoint> touchPoints = touchEvent->points();
+#else
             QList<QTouchEvent::TouchPoint> touchPoints = touchEvent->touchPoints();
+#endif
             if (touchPoints.size() > touchCount) {
                 touchCount = touchPoints.size();
             }
@@ -917,10 +921,18 @@ bool DImageViewer::event(QEvent *event)
         }
         case QEvent::TouchEnd: {
             QTouchEvent *touchEvent = dynamic_cast<QTouchEvent *>(event);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+            QList<QTouchEvent::TouchPoint> touchPoints = touchEvent->points();
+#else
             QList<QTouchEvent::TouchPoint> touchPoints = touchEvent->touchPoints();
+#endif
             if (touchPoints.size() == 1 && touchCount <= 1) {
                 // Swipe gesture.
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+                qreal offset = touchPoints.at(0).lastPosition().x() - touchPoints.at(0).pressPosition().x();
+#else
                 qreal offset = touchPoints.at(0).lastPos().x() - touchPoints.at(0).startPos().x();
+#endif
                 if (qAbs(offset) > 200) {
                     if (offset > 0) {
                         Q_EMIT requestPreviousImage();

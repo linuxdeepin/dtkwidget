@@ -106,20 +106,20 @@ public:
 
     static QString getText(QWidget *parent, const QString &title, const QString &message,
                            QLineEdit::EchoMode echo = QLineEdit::Normal,
-                           const QString &text = QString(), bool *ok = 0, Qt::WindowFlags flags = Qt::WindowFlags{0},
+                           const QString &text = QString(), bool *ok = 0, Qt::WindowFlags flags = {},
                            Qt::InputMethodHints inputMethodHints = Qt::ImhNone);
 
     static QString getItem(QWidget *parent, const QString &title, const QString &message,
                            const QStringList &items, int current = 0, bool editable = true,
-                           bool *ok = 0, Qt::WindowFlags flags = Qt::WindowFlags{0},
+                           bool *ok = 0, Qt::WindowFlags flags = {},
                            Qt::InputMethodHints inputMethodHints = Qt::ImhNone);
 
     static int getInt(QWidget *parent, const QString &title, const QString &message, int value = 0,
                       int minValue = -2147483647, int maxValue = 2147483647,
-                      int step = 1, bool *ok = 0, Qt::WindowFlags flags = Qt::WindowFlags{0});
+                      int step = 1, bool *ok = 0, Qt::WindowFlags flags = {});
     static double getDouble(QWidget *parent, const QString &title, const QString &message, double value = 0,
                             double minValue = -2147483647, double maxValue = 2147483647,
-                            int decimals = 1, bool *ok = 0, Qt::WindowFlags flags = Qt::WindowFlags{0});
+                            int decimals = 1, bool *ok = 0, Qt::WindowFlags flags = {});
 
 protected:
     void showEvent(QShowEvent *e);

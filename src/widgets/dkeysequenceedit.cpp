@@ -282,16 +282,26 @@ void DKeySequenceEdit::keyPressEvent(QKeyEvent *e)
             return;
         bool found = false;
         for (int i = 0; i < possibleKeys.size(); ++i) {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+            if (possibleKeys.at(i).toCombined() - nextKey == static_cast<int>(e->modifiers())
+                || (possibleKeys.at(i).toCombined() == nextKey && e->modifiers() == Qt::ShiftModifier)) {
+                nextKey = possibleKeys.at(i).toCombined();
+#else
             if (static_cast<int>(possibleKeys.at(i)) - nextKey == static_cast<int>(e->modifiers())
                 || (possibleKeys.at(i) == nextKey && e->modifiers() == Qt::ShiftModifier)) {
                 nextKey = possibleKeys.at(i);
+#endif
                 found = true;
                 break;
             }
         }
         // Use as fallback
         if (!found)
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+            nextKey = possibleKeys.first().toCombined();
+#else
             nextKey = possibleKeys.first();
+#endif
     }
 
     QString modifiers = QKeySequence(e->modifiers()).toString();

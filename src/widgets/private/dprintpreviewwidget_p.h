@@ -543,7 +543,7 @@ struct DPrintPreviewWidgetPrivate::NumberUpData {
         if (waterList.isEmpty())
             return;
 
-        for (auto *item : qAsConst(waterList))
+        for (auto *item : std::as_const(waterList))
             item->update();
     }
 
@@ -556,7 +556,7 @@ struct DPrintPreviewWidgetPrivate::NumberUpData {
         auto *firstWm = waterList.first();
         outFunction(firstWm);
 
-        for (auto *item : qAsConst(waterList)) {
+        for (auto *item : std::as_const(waterList)) {
             if (item == firstWm)
                 continue;
 
