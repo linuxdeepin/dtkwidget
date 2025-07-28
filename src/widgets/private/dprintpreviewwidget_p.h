@@ -289,6 +289,7 @@ public:
     void calculateNumberPageScale();// 计算缩放比，拼版数发生改变需要调用
     void calculateCurrentNumberPage();// page是相对于原文档,添加page页需要显示的小页面到Vector
     QByteArray foundColorModelByCups() const;
+    void updateBaseWatermark();
 
     inline void setCurrentPageNumber(int page)
     {
@@ -303,6 +304,7 @@ public:
     QList<QGraphicsItem *> pages;
     QGraphicsRectItem *background;
     WaterMark *waterMark;
+    WaterMark *baseWatermarkItem = nullptr;
     QVector<int> pageRange; // 选择的页码
     int currentPageNumber = 0; // 处理以后当前页，值一定是连续的，比如处理共10页，那么取值就是1到10
     DPrinter::ColorMode colorMode;

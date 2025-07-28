@@ -15,7 +15,8 @@
 
 #include <cups/cups.h>
 #include <cups/ppd.h>
-
+#include <pwd.h>
+#include <selinux/selinux.h>
 
 #define FIRST_PAGE 1
 #define FIRST_INDEX 0
@@ -29,6 +30,8 @@
 
 #define WATER_DEFAULTFONTSIZE 65
 #define WATER_TEXTSPACE WATER_DEFAULTFONTSIZE
+#define DATE_TIME_FORMAT "yyyy-MM-dd hh:mm:ss"
+#define USER_USEC_CONFIG_FILE "/etc/usec/default/contexts/default_mls_type"
 
 DGUI_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
@@ -58,6 +61,77 @@ static void saveImageToFile(int index, const QString &outPutFileName, const QStr
             qWarning() << "Failed to save image to file, filePath:" << fileName;
         }
     });
+}
+
+//优先从环境变量中获取，如果环境变量为空，则通过系统调用获取。
+static QString getUserInfo(const QString &envVar, std::function<QString()> fallback) {
+    QString value = qgetenv(envVar.toUtf8());
+    if (value.isEmpty() && fallback) {
+        value = fallback();
+    }
+    return value;
+}
+
+static QString getUserName() {
+    return getUserInfo("USER", []() {
+        struct passwd *pw = getpwuid(getuid());
+        return pw ? QString::fromLocal8Bit(pw->pw_name) : QString();
+    });
+}
+
+static QString getUserId() {
+    return getUserInfo("UID", []() {
+        return QString::number(getuid());
+    });
+}
+
+// 获取用户的安全标签
+static QPair<int, int> getUserSecurityLabel() {
+    QPair<int, int> securityLabel = qMakePair(-1, -1);
+    QFile file(USER_USEC_CONFIG_FILE);
+    if (!file.exists()) {
+        qWarning() << "Failed to open default_mls_type file:" << file.fileName();
+        return securityLabel;
+    }
+
+    bool res = file.open(QIODevice::ReadOnly | QIODevice::Text);
+    if (!res) {
+        qWarning() << "Failed to open file:" << file.fileName();
+        return securityLabel;
+    }
+
+    QString userName = getUserName();
+    QString defaultSmodel;
+    QString hexString;
+    QTextStream in(&file);
+
+    while (!in.atEnd()) {
+        QString line = in.readLine().trimmed();
+        if (line.startsWith(userName + " ")) {
+            hexString = line.split(' ').value(1).trimmed();
+            break;
+        }else if (line.startsWith("default ")) {
+            defaultSmodel = line.split(' ').value(1).trimmed();
+        }
+    }
+
+    bool ok = false;
+    quint32 hexValue = 0;
+    if (!hexString.isEmpty()) {
+        hexValue = hexString.mid(2).toUInt(&ok, 16);
+    }else if (!defaultSmodel.isEmpty()) {
+        hexValue = defaultSmodel.mid(2).toUInt(&ok, 16);
+    } else {
+        qWarning() << "Invalid security label format in file:" << file.fileName();
+    }
+
+    if (ok) {
+        int ilevel = (hexValue >> 16) & 0xFF;
+        int slevel = hexValue & 0xFF;
+        securityLabel = qMakePair(ilevel, slevel);
+    }
+    file.close();
+    return securityLabel;
 }
 
 DPrintPreviewWidgetPrivate::DPrintPreviewWidgetPrivate(DPrintPreviewWidget *qq)
@@ -92,6 +166,13 @@ void DPrintPreviewWidgetPrivate::init()
     background = new QGraphicsRectItem();
     background->setZValue(-1);
     scene->addItem(background);
+
+    if (usec_strict_getenforce() == 1) {
+        baseWatermarkItem = new WaterMark();
+        scene->addItem(baseWatermarkItem);
+        updateBaseWatermark();
+        baseWatermarkItem->setZValue(2);
+    }
 
     waterMark = new WaterMark;
     scene->addItem(waterMark);
@@ -143,6 +224,8 @@ void DPrintPreviewWidgetPrivate::populateScene()
     }
 
     waterMark->setBoundingRect(pageRect);
+    if (baseWatermarkItem)
+        baseWatermarkItem->setBoundingRect(pageRect);
 
     scene->setSceneRect(QRect(QPoint(0, 0), paperSize));
 }
@@ -418,11 +501,19 @@ void DPrintPreviewWidgetPrivate::printSinglePageDrawUtil(QPainter *painter, cons
     }
     // 绘制水印
     if (!waterImage.isNull()) {
+        painter->save();
         painter->resetTransform();
         painter->translate(translateSize.width() / 2, translateSize.height() / 2);
         painter->rotate(waterMark->rotation());
-
         painter->drawImage(-waterImage.width() / 2, -waterImage.height() / 2, waterImage);
+        painter->restore();
+    }
+
+    // 绘制基底水印
+    if (baseWatermarkItem) {
+        QRectF boundingRect = QRectF(QPointF(0, 0), translateSize);
+        baseWatermarkItem->setBoundingRect(boundingRect);
+        baseWatermarkItem->paint(painter, nullptr, nullptr);
     }
 
     painter->restore();
@@ -460,6 +551,13 @@ void DPrintPreviewWidgetPrivate::printMultiPageDrawUtil(QPainter *painter, const
     // 绘制并打水印 此时不能再设置缩放比
     if (!waterImage.isNull())
         painter->drawImage(leftTop, waterImage);
+
+    // 绘制基底水印
+    if (baseWatermarkItem) {
+        QRectF boundingRect = QRectF(leftTop, previewPrinter->pageLayout().paintRectPixels(previewPrinter->resolution()).size());
+        baseWatermarkItem->setBoundingRect(boundingRect);
+        baseWatermarkItem->paint(painter, nullptr, nullptr);
+    }
 }
 
 void DPrintPreviewWidgetPrivate::print(bool printAsPicture)
@@ -1201,6 +1299,28 @@ QVector<int> DPrintPreviewWidgetPrivate::requestPages(int page)
         pagesVector.append(pageRange.at((page - 1) * pageCount + i));
     }
     return pagesVector;
+}
+
+//更新基底水印的文字相关内容。
+void DPrintPreviewWidgetPrivate::updateBaseWatermark()
+{
+    baseWatermarkItem->setType(WaterMark::Text);
+    baseWatermarkItem->setLayoutType(WaterMark::Center);
+    QString userName = getUserName();
+    QString userId = getUserId();
+    QPair<int,int> securityLabel = getUserSecurityLabel();
+    QString timeStr = QDateTime::currentDateTime().toString(DATE_TIME_FORMAT);
+    QString waterMarkText = QString("%1: %2\n"
+                                    "%3: %4  UID: %5\n"
+                                    "ilevel_%6    slevel_%7")
+                                    .arg(qApp->translate("WaterMark", "Date"), timeStr,
+                                    qApp->translate("WaterMark", "Username"), userName, userId,
+                                    QString::number(securityLabel.first),
+                                    QString::number(securityLabel.second));
+    baseWatermarkItem->setText(waterMarkText);
+    baseWatermarkItem->setScaleFactor(0.3);
+    baseWatermarkItem->setColor(QColor("#6f6f6f"));
+    baseWatermarkItem->update();
 }
 
 /*!

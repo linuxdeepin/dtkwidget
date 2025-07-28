@@ -800,4 +800,17 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <translation>退出</translation>
     </message>
 </context>
+<context>
+    <name>WaterMark</name>
+    <message>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="254"/>
+        <source>Date</source>
+        <translation>时间</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="255"/>
+        <source>Username</source>
+        <translation>用户名</translation>
+    </message>
+</context>
 </TS>
