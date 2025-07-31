@@ -800,4 +800,17 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <translation>چېكىنىش</translation>
     </message>
 </context>
+<context>
+    <name>WaterMark</name>
+    <message>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="254"/>
+        <source>Date</source>
+        <translation>ۋاقىت</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="255"/>
+        <source>Username</source>
+        <translation>نامى ئىشلەتكۈچى</translation>
+    </message>
+</context>
 </TS>
