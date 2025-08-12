@@ -516,23 +516,10 @@ public:
         }
     }
 
-
-    inline int itemSpacing() const
-    {
-        if (spacing >= 0) 
-            return spacing;
-        const auto type = backgroundType & DStyledItemDelegate::BackgroundType_Mask;
-        if (type == DStyledItemDelegate::RoundedBackground)
-            return 10;
-        if (type == DStyledItemDelegate::ClipCornerBackground)
-            return 1;
-        return 0;
-    }
-
     DStyledItemDelegate::BackgroundType backgroundType = DStyledItemDelegate::NoBackground;
     QMargins margins;
     QSize itemSize;
-    int spacing = -1;
+    int itemSpacing = 0;
     QMap<QModelIndex, QList<QPair<QAction*, QRect>>> clickableActionMap;
     QAction *pressedAction = nullptr;
     QList<QPointer<QWidget>> lastWidgets;
@@ -1189,9 +1176,9 @@ QSize DStyledItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QM
     const QListView * lv = qobject_cast<const QListView*>(option.widget);
     if (lv) {
         if (lv->flow() == QListView::LeftToRight) {
-            size.rwidth() += d->itemSpacing();
+            size.rwidth() += d->itemSpacing;
         } else {
-            size.rheight() += d->itemSpacing();
+            size.rheight() += d->itemSpacing;
         }
     }
 
@@ -1266,7 +1253,7 @@ int DStyledItemDelegate::spacing() const
 {
     D_DC(DStyledItemDelegate);
 
-    return d->itemSpacing();
+    return d->itemSpacing;
 }
 
 void DStyledItemDelegate::setBackgroundType(DStyledItemDelegate::BackgroundType type)
@@ -1310,7 +1297,7 @@ void DStyledItemDelegate::setItemSpacing(int spacing)
 {
     D_D(DStyledItemDelegate);
 
-    d->spacing = spacing;
+    d->itemSpacing = spacing;
 }
 
 void DStyledItemDelegate::initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const
@@ -1366,9 +1353,9 @@ void DStyledItemDelegate::initStyleOption(QStyleOptionViewItem *option, const QM
     const QListView * lv = qobject_cast<const QListView*>(option->widget);
     if (lv) {
         if (lv->flow() == QListView::LeftToRight) {
-            option->rect.adjust(0, 0, 0 - d->itemSpacing(), 0);
+            option->rect.adjust(0, 0, 0 - d->itemSpacing, 0);
         } else {
-            option->rect.adjust(0, 0, 0, 0 - d->itemSpacing());
+            option->rect.adjust(0, 0, 0, 0 - d->itemSpacing);
         }
         if (lv->window() && lv->window()->isActiveWindow()) {
             option->state |= QStyle::State_Active;
