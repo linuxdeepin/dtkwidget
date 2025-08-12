@@ -516,10 +516,17 @@ public:
         }
     }
 
+    inline int spacing() const
+    {
+        if (itemSpacing < 0) 
+            return 0;
+        return itemSpacing;
+    }
+
     DStyledItemDelegate::BackgroundType backgroundType = DStyledItemDelegate::NoBackground;
     QMargins margins;
     QSize itemSize;
-    int itemSpacing = 0;
+    int itemSpacing = -1;
     QMap<QModelIndex, QList<QPair<QAction*, QRect>>> clickableActionMap;
     QAction *pressedAction = nullptr;
     QList<QPointer<QWidget>> lastWidgets;
@@ -1176,9 +1183,9 @@ QSize DStyledItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QM
     const QListView * lv = qobject_cast<const QListView*>(option.widget);
     if (lv) {
         if (lv->flow() == QListView::LeftToRight) {
-            size.rwidth() += d->itemSpacing;
+            size.rwidth() += d->spacing();
         } else {
-            size.rheight() += d->itemSpacing;
+            size.rheight() += d->spacing();
         }
     }
 
@@ -1353,9 +1360,9 @@ void DStyledItemDelegate::initStyleOption(QStyleOptionViewItem *option, const QM
     const QListView * lv = qobject_cast<const QListView*>(option->widget);
     if (lv) {
         if (lv->flow() == QListView::LeftToRight) {
-            option->rect.adjust(0, 0, 0 - d->itemSpacing, 0);
+            option->rect.adjust(0, 0, 0 - d->spacing(), 0);
         } else {
-            option->rect.adjust(0, 0, 0, 0 - d->itemSpacing);
+            option->rect.adjust(0, 0, 0, 0 - d->spacing());
         }
         if (lv->window() && lv->window()->isActiveWindow()) {
             option->state |= QStyle::State_Active;
