@@ -421,7 +421,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="847"/>
         <source>Input your text</source>
-        <translation>Insira o texto</translation>
+        <translation>Insira seu texto</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="872"/>
