@@ -584,7 +584,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="68"/>
         <source>This shortcut conflicts with %1, click on Add to make this shortcut effective immediately</source>
-        <translation>Este atalho entra em conflito com %1; clique em Adicionar para efetivar este atalho</translation>
+        <translation>Este atalho entra em conflito com %1. Clique em Adicionar para efetivar este atalho</translation>
     </message>
 </context>
 <context>
@@ -638,7 +638,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/private/dtitlebareditpanel.cpp" line="916"/>
         <source>Drag below items into the toolbar to restore defaults</source>
-        <translation>Arraste os itens da barra de ferramentas, para baixo, visando restaurar os padrões</translation>
+        <translation>Arraste os itens abaixo para a barra de ferramentas para restaurar os padrões</translation>
     </message>
     <message>
         <location filename="../widgets/private/dtitlebareditpanel.cpp" line="921"/>
