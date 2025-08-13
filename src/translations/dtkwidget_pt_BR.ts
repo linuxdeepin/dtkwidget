@@ -291,7 +291,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="556"/>
         <source>Scaling</source>
-        <translation>Escala</translation>
+        <translation>Dimensionamento</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="573"/>
@@ -316,17 +316,17 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="641"/>
         <source>Print Layout</source>
-        <translation>Layout de Impressão</translation>
+        <translation>Layout de impressão</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="655"/>
         <source>Duplex</source>
-        <translation>Duplex</translation>
+        <translation>Frente e verso</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="668"/>
         <source>N-up printing</source>
-        <translation>Impressão N-up</translation>
+        <translation>Impressão N em 1</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="671"/>
