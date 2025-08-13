@@ -376,12 +376,12 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="750"/>
         <source>Front to back</source>
-        <translation>De frente para trás</translation>
+        <translation>Frente para trás</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="750"/>
         <source>Back to front</source>
-        <translation>De trás para frente</translation>
+        <translation>Trás para frente</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="774"/>
