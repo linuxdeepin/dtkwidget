@@ -133,7 +133,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dlineedit.cpp" line="595"/>
         <source>Text to Speech</source>
-        <translation>Texto em Voz</translation>
+        <translation>Texto para fala</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="618"/>
@@ -143,7 +143,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dlineedit.cpp" line="640"/>
         <source>Speech To Text</source>
-        <translation>Voz em Texto</translation>
+        <translation>Fala para texto</translation>
     </message>
 </context>
 <context>
