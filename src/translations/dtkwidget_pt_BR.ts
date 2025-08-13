@@ -605,12 +605,12 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dtextedit.cpp" line="202"/>
         <source>Stop reading</source>
-        <translation>Parar de ler</translation>
+        <translation>Parar leitura</translation>
     </message>
     <message>
         <location filename="../widgets/dtextedit.cpp" line="204"/>
         <source>Text to Speech</source>
-        <translation>Texto em Voz</translation>
+        <translation>Texto para fala</translation>
     </message>
     <message>
         <location filename="../widgets/dtextedit.cpp" line="227"/>
@@ -620,7 +620,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dtextedit.cpp" line="249"/>
         <source>Speech To Text</source>
-        <translation>Voz em Texto</translation>
+        <translation>Fala para texto</translation>
     </message>
 </context>
 <context>
