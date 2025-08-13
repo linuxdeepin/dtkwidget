@@ -1,11 +1,4 @@
 <?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="pl">
-
-<!--
-SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
-
-SPDX-License-Identifier: LGPL-3.0-or-later
--->
-
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -210,12 +203,12 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="422"/>
         <source>Portrait</source>
-        <translation>Pionowo</translation>
+        <translation>Portret</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="432"/>
         <source>Landscape</source>
-        <translation>Poziomo</translation>
+        <translation>Krajobraz</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="460"/>
@@ -396,7 +389,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="834"/>
         <source>Text watermark</source>
-        <translation>Tekst jako znak wodny</translation>
+        <translation>Tekstowy znak wodny</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="838"/>
@@ -501,7 +494,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1467"/>
         <source>Input English comma please</source>
-        <translation>Wprowadź Angielski przecinek</translation>
+        <translation>Wprowadź angielski przecinek</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1470"/>

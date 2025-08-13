@@ -1,11 +1,4 @@
 <?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="sl">
-
-<!--
-SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
-
-SPDX-License-Identifier: LGPL-3.0-or-later
--->
-
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -628,17 +621,17 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/private/dtitlebareditpanel.cpp" line="884"/>
         <source>Default toolset</source>
-        <translation type="unfinished"/>
+        <translation>Priveti nabor orodji</translation>
     </message>
     <message>
         <location filename="../widgets/private/dtitlebareditpanel.cpp" line="915"/>
         <source>Drag your favorite items into the toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Povlecite priljubljene predmete v orodno vrstico</translation>
     </message>
     <message>
         <location filename="../widgets/private/dtitlebareditpanel.cpp" line="916"/>
         <source>Drag below items into the toolbar to restore defaults</source>
-        <translation type="unfinished"/>
+        <translation>Povlecite spodnje predmete v orodno vrstico, da povrnite privzeto</translation>
     </message>
     <message>
         <location filename="../widgets/private/dtitlebareditpanel.cpp" line="921"/>
@@ -659,12 +652,12 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dlineedit.cpp" line="526"/>
         <source>&amp;Copy</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Kopiraj</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="529"/>
         <source>Cu&amp;t</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Izrezi</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="534"/>
@@ -687,22 +680,22 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="108"/>
         <source>Version</source>
-        <translation type="unfinished"/>
+        <translation>Različica</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="110"/>
         <source>Features</source>
-        <translation type="unfinished"/>
+        <translation>Zmožnosti</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="122"/>
         <source>Homepage</source>
-        <translation type="unfinished"/>
+        <translation>Domača stran</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="124"/>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>Opis</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="126"/>
@@ -713,27 +706,27 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/daboutdialog.cpp" line="128"/>
         <location filename="../widgets/daboutdialog.cpp" line="393"/>
         <source>Sincerely appreciate the open-source software used.</source>
-        <translation type="unfinished"/>
+        <translation>Spoštujte odprtokodni program, ki ga uporabljate.</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="395"/>
         <source>open-source software</source>
-        <translation type="unfinished"/>
+        <translation>odprtkodni program</translation>
     </message>
     <message>
         <location filename="../widgets/dfeaturedisplaydialog.cpp" line="151"/>
         <source>Continue</source>
-        <translation type="unfinished"/>
+        <translation>Nadaljuj</translation>
     </message>
     <message>
         <location filename="../widgets/dfeaturedisplaydialog.cpp" line="175"/>
         <source>Learn More</source>
-        <translation type="unfinished"/>
+        <translation>Več o tem</translation>
     </message>
     <message>
         <location filename="../widgets/dlicensedialog.cpp" line="78"/>
         <source>Open-Source Software</source>
-        <translation type="unfinished"/>
+        <translation>Odprtkodni program</translation>
     </message>
 </context>
 <context>
@@ -782,12 +775,12 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="676"/>
         <source>Feedback</source>
-        <translation type="unfinished"/>
+        <translation>Odziv</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="683"/>
         <source>Custom toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Orodna vrstica po meri</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="691"/>

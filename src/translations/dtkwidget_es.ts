@@ -1,17 +1,10 @@
 <?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="es">
-
-<!--
-SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
-
-SPDX-License-Identifier: LGPL-3.0-or-later
--->
-
 <context>
     <name>DAboutDialog</name>
     <message>
         <location filename="../widgets/dapplication.cpp" line="1454"/>
         <source>%1 is released under %2</source>
-        <translation>%1 está lanzado bajo %2</translation>
+        <translation>%1 se publica bajo la licencia %2</translation>
     </message>
 </context>
 <context>
@@ -473,7 +466,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1264"/>
         <source>Collapse</source>
-        <translation>Colapsar</translation>
+        <translation>Contraer</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1359"/>
@@ -713,12 +706,12 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/daboutdialog.cpp" line="128"/>
         <location filename="../widgets/daboutdialog.cpp" line="393"/>
         <source>Sincerely appreciate the open-source software used.</source>
-        <translation type="unfinished"/>
+        <translation>Agradecimientos al software de código abierto utilizado.</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="395"/>
         <source>open-source software</source>
-        <translation type="unfinished"/>
+        <translation>software de código abierto</translation>
     </message>
     <message>
         <location filename="../widgets/dfeaturedisplaydialog.cpp" line="151"/>
@@ -733,7 +726,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dlicensedialog.cpp" line="78"/>
         <source>Open-Source Software</source>
-        <translation type="unfinished"/>
+        <translation>software de código abierto</translation>
     </message>
 </context>
 <context>
