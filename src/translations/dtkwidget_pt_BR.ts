@@ -361,7 +361,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="727"/>
         <source>Page Order</source>
-        <translation>Ordem das Páginas</translation>
+        <translation>Ordem das páginas</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="740"/>
