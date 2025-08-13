@@ -74,32 +74,32 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="902"/>
         <source>Dark Red</source>
-        <translation>Vermelho Escuro</translation>
+        <translation>Vermelho escuro</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="905"/>
         <source>Dark Green</source>
-        <translation>Verde Escuro</translation>
+        <translation>Verde escuro</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="908"/>
         <source>Dark Blue</source>
-        <translation>Azul Escuro</translation>
+        <translation>Azul escuro</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="911"/>
         <source>Dark Cyan</source>
-        <translation>Ciano Escuro</translation>
+        <translation>Ciano escuro</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="914"/>
         <source>Dark Magenta</source>
-        <translation>Magenta Escuro</translation>
+        <translation>Magenta escuro</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="917"/>
         <source>Dark Yellow</source>
-        <translation>Amarelo Escuro</translation>
+        <translation>Amarelo escuro</translation>
     </message>
 </context>
 <context>
