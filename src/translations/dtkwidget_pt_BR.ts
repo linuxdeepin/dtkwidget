@@ -491,7 +491,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1461"/>
         <source>Input page numbers please</source>
-        <translation>Insira o números de páginas</translation>
+        <translation>Insira os números das páginas</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1464"/>
@@ -677,7 +677,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dsimplelistview.cpp" line="1347"/>
         <source>No search result</source>
-        <translation>Nenhum resultado</translation>
+        <translation>Nenhum resultado encontrado</translation>
     </message>
     <message>
         <location filename="../widgets/private/settings/content.cpp" line="330"/>
