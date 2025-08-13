@@ -462,13 +462,13 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1013"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2283"/>
         <source>Print to PDF</source>
-        <translation>Imprimir em PDF</translation>
+        <translation>Imprimir para PDF</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1014"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2282"/>
         <source>Save as Image</source>
-        <translation>Salvar como Imagem</translation>
+        <translation>Salvar como imagem</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1264"/>
