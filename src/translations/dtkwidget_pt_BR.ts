@@ -718,7 +718,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="395"/>
         <source>open-source software</source>
-        <translation>software de código aberto</translation>
+        <translation>Software de código aberto</translation>
     </message>
     <message>
         <location filename="../widgets/dfeaturedisplaydialog.cpp" line="151"/>
@@ -728,12 +728,12 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dfeaturedisplaydialog.cpp" line="175"/>
         <source>Learn More</source>
-        <translation>Aprenda Mais</translation>
+        <translation>Saiba mais</translation>
     </message>
     <message>
         <location filename="../widgets/dlicensedialog.cpp" line="78"/>
         <source>Open-Source Software</source>
-        <translation>Software de Código Aberto</translation>
+        <translation>Software de código aberto</translation>
     </message>
 </context>
 <context>
