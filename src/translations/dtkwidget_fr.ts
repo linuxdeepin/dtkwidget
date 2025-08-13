@@ -1,11 +1,4 @@
 <?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="fr">
-
-<!--
-SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
-
-SPDX-License-Identifier: LGPL-3.0-or-later
--->
-
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -628,17 +621,17 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/private/dtitlebareditpanel.cpp" line="884"/>
         <source>Default toolset</source>
-        <translation type="unfinished"/>
+        <translation>Outils par défaut</translation>
     </message>
     <message>
         <location filename="../widgets/private/dtitlebareditpanel.cpp" line="915"/>
         <source>Drag your favorite items into the toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Déposer vos éléments favoris dans la barre d&apos;outils</translation>
     </message>
     <message>
         <location filename="../widgets/private/dtitlebareditpanel.cpp" line="916"/>
         <source>Drag below items into the toolbar to restore defaults</source>
-        <translation type="unfinished"/>
+        <translation>Déposer les éléments ci-dessous dans la barre d&apos;outils pour restaurer les éléments par défaut</translation>
     </message>
     <message>
         <location filename="../widgets/private/dtitlebareditpanel.cpp" line="921"/>
@@ -713,12 +706,12 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/daboutdialog.cpp" line="128"/>
         <location filename="../widgets/daboutdialog.cpp" line="393"/>
         <source>Sincerely appreciate the open-source software used.</source>
-        <translation type="unfinished"/>
+        <translation>J&apos;apprécie sincèrement le logiciel open source utilisé.</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="395"/>
         <source>open-source software</source>
-        <translation type="unfinished"/>
+        <translation>Logiciel open-source</translation>
     </message>
     <message>
         <location filename="../widgets/dfeaturedisplaydialog.cpp" line="151"/>
@@ -733,7 +726,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dlicensedialog.cpp" line="78"/>
         <source>Open-Source Software</source>
-        <translation type="unfinished"/>
+        <translation>Logiciel open-source</translation>
     </message>
 </context>
 <context>
@@ -787,7 +780,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="683"/>
         <source>Custom toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Barre d&apos;outils personnalisée</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="691"/>

@@ -1,11 +1,4 @@
 <?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ja">
-
-<!--
-SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
-
-SPDX-License-Identifier: LGPL-3.0-or-later
--->
-
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -120,7 +113,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dkeysequenceedit.cpp" line="97"/>
         <source>Enter a new shortcut</source>
-        <translation type="unfinished"/>
+        <translation>新しいショートカットを入力</translation>
     </message>
 </context>
 <context>
@@ -128,22 +121,22 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dlineedit.cpp" line="593"/>
         <source>Stop reading</source>
-        <translation type="unfinished"/>
+        <translation>読み上げ停止</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="595"/>
         <source>Text to Speech</source>
-        <translation type="unfinished"/>
+        <translation>読み上げる</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="618"/>
         <source>Translate</source>
-        <translation type="unfinished"/>
+        <translation>翻訳</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="640"/>
         <source>Speech To Text</source>
-        <translation type="unfinished"/>
+        <translation>音声入力</translation>
     </message>
 </context>
 <context>
@@ -152,7 +145,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/dprintpreviewdialog.cpp" line="278"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1268"/>
         <source>Advanced</source>
-        <translation type="unfinished"/>
+        <translation>詳細</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="301"/>
@@ -165,22 +158,22 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1647"/>
         <source>Print</source>
         <comment>button</comment>
-        <translation type="unfinished"/>
+        <translation>印刷</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="318"/>
         <source>Basic</source>
-        <translation type="unfinished"/>
+        <translation>基本</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="334"/>
         <source>Printer</source>
-        <translation type="unfinished"/>
+        <translation>プリンター</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="350"/>
         <source>Copies</source>
-        <translation type="unfinished"/>
+        <translation>コピー</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="372"/>
@@ -190,12 +183,12 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="375"/>
         <source>All</source>
-        <translation type="unfinished"/>
+        <translation>すべて</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="376"/>
         <source>Current page</source>
-        <translation type="unfinished"/>
+        <translation>現在のページ</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="377"/>
@@ -205,27 +198,27 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="397"/>
         <source>Orientation</source>
-        <translation type="unfinished"/>
+        <translation>回転</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="422"/>
         <source>Portrait</source>
-        <translation type="unfinished"/>
+        <translation>縦</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="432"/>
         <source>Landscape</source>
-        <translation type="unfinished"/>
+        <translation>横</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="460"/>
         <source>Pages</source>
-        <translation type="unfinished"/>
+        <translation>ページ</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="472"/>
         <source>Color mode</source>
-        <translation type="unfinished"/>
+        <translation>カラーモード</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="475"/>
@@ -234,14 +227,14 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1679"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1694"/>
         <source>Color</source>
-        <translation type="unfinished"/>
+        <translation>カラー</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="475"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1670"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1682"/>
         <source>Grayscale</source>
-        <translation type="unfinished"/>
+        <translation>モノクロ</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="487"/>
@@ -271,27 +264,27 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="500"/>
         <source>Top</source>
-        <translation type="unfinished"/>
+        <translation>上</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="503"/>
         <source>Left</source>
-        <translation type="unfinished"/>
+        <translation>左</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="506"/>
         <source>Bottom</source>
-        <translation type="unfinished"/>
+        <translation>下</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="509"/>
         <source>Right</source>
-        <translation type="unfinished"/>
+        <translation>右</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="556"/>
         <source>Scaling</source>
-        <translation type="unfinished"/>
+        <translation>スケーリング</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="573"/>
@@ -306,17 +299,17 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="613"/>
         <source>Paper</source>
-        <translation type="unfinished"/>
+        <translation>用紙</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="626"/>
         <source>Paper size</source>
-        <translation type="unfinished"/>
+        <translation>用紙サイズ</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="641"/>
         <source>Print Layout</source>
-        <translation type="unfinished"/>
+        <translation>印刷レイアウト</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="655"/>
@@ -356,7 +349,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="683"/>
         <source>Layout direction</source>
-        <translation type="unfinished"/>
+        <translation>レイアウトの方向</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="727"/>
@@ -386,17 +379,17 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="774"/>
         <source>Watermark</source>
-        <translation type="unfinished"/>
+        <translation>透かし</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="788"/>
         <source>Add watermark</source>
-        <translation type="unfinished"/>
+        <translation>透かしを追加</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="834"/>
         <source>Text watermark</source>
-        <translation type="unfinished"/>
+        <translation>テキスト透かし</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="838"/>
@@ -406,12 +399,12 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="838"/>
         <source>Draft</source>
-        <translation type="unfinished"/>
+        <translation>ドラフト</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="838"/>
         <source>Sample</source>
-        <translation type="unfinished"/>
+        <translation>サンプル</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="838"/>
@@ -462,7 +455,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1013"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2283"/>
         <source>Print to PDF</source>
-        <translation type="unfinished"/>
+        <translation>Print to PDF</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1014"/>
@@ -473,7 +466,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1264"/>
         <source>Collapse</source>
-        <translation type="unfinished"/>
+        <translation>折りたたむ</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1359"/>
@@ -512,32 +505,32 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1700"/>
         <source>Save</source>
         <comment>button</comment>
-        <translation type="unfinished"/>
+        <translation>保存</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2312"/>
         <source>*.pdf</source>
-        <translation type="unfinished"/>
+        <translation>*.pdf</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1770"/>
         <source>For example, 1,3,5-7,11-15,18,21</source>
-        <translation type="unfinished"/>
+        <translation>例, 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2312"/>
         <source>Save as PDF</source>
-        <translation type="unfinished"/>
+        <translation>PDFとして保存</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2351"/>
         <source>Save as image</source>
-        <translation type="unfinished"/>
+        <translation>画像として保存</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2353"/>
         <source>Images</source>
-        <translation type="unfinished"/>
+        <translation>画像</translation>
     </message>
 </context>
 <context>
@@ -552,13 +545,13 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1608"/>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1611"/>
         <source>Draft</source>
-        <translation type="unfinished"/>
+        <translation>ドラフト</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1626"/>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1629"/>
         <source>Sample</source>
-        <translation type="unfinished"/>
+        <translation>サンプル</translation>
     </message>
 </context>
 <context>
@@ -566,7 +559,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dsearchedit.cpp" line="286"/>
         <source>Search</source>
-        <translation type="unfinished"/>
+        <translation>検索</translation>
     </message>
 </context>
 <context>
@@ -579,7 +572,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="66"/>
         <source>Replace</source>
-        <translation type="unfinished"/>
+        <translation>置き換える</translation>
     </message>
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="68"/>
@@ -605,22 +598,22 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dtextedit.cpp" line="202"/>
         <source>Stop reading</source>
-        <translation type="unfinished"/>
+        <translation>読み上げ停止</translation>
     </message>
     <message>
         <location filename="../widgets/dtextedit.cpp" line="204"/>
         <source>Text to Speech</source>
-        <translation type="unfinished"/>
+        <translation>読み上げる</translation>
     </message>
     <message>
         <location filename="../widgets/dtextedit.cpp" line="227"/>
         <source>Translate</source>
-        <translation type="unfinished"/>
+        <translation>翻訳</translation>
     </message>
     <message>
         <location filename="../widgets/dtextedit.cpp" line="249"/>
         <source>Speech To Text</source>
-        <translation type="unfinished"/>
+        <translation>音声入力</translation>
     </message>
 </context>
 <context>
@@ -628,7 +621,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/private/dtitlebareditpanel.cpp" line="884"/>
         <source>Default toolset</source>
-        <translation type="unfinished"/>
+        <translation>既定のツールセット</translation>
     </message>
     <message>
         <location filename="../widgets/private/dtitlebareditpanel.cpp" line="915"/>
@@ -651,7 +644,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpickcolorwidget.cpp" line="94"/>
         <source>Color</source>
-        <translation type="unfinished"/>
+        <translation>カラー</translation>
     </message>
 </context>
 <context>
@@ -669,7 +662,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dlineedit.cpp" line="534"/>
         <source>Select All</source>
-        <translation type="unfinished"/>
+        <translation>すべて選択</translation>
     </message>
 </context>
 <context>
@@ -687,22 +680,22 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="108"/>
         <source>Version</source>
-        <translation type="unfinished"/>
+        <translation>バージョン</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="110"/>
         <source>Features</source>
-        <translation type="unfinished"/>
+        <translation>機能</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="122"/>
         <source>Homepage</source>
-        <translation type="unfinished"/>
+        <translation>ホームページ</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="124"/>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>説明</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="126"/>
@@ -713,27 +706,27 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/daboutdialog.cpp" line="128"/>
         <location filename="../widgets/daboutdialog.cpp" line="393"/>
         <source>Sincerely appreciate the open-source software used.</source>
-        <translation type="unfinished"/>
+        <translation>使用しているオープンソースソフトウェアに、心から感謝します。</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="395"/>
         <source>open-source software</source>
-        <translation type="unfinished"/>
+        <translation>オープンソース ソフトウェア</translation>
     </message>
     <message>
         <location filename="../widgets/dfeaturedisplaydialog.cpp" line="151"/>
         <source>Continue</source>
-        <translation type="unfinished"/>
+        <translation>続行</translation>
     </message>
     <message>
         <location filename="../widgets/dfeaturedisplaydialog.cpp" line="175"/>
         <source>Learn More</source>
-        <translation type="unfinished"/>
+        <translation>詳細を見る</translation>
     </message>
     <message>
         <location filename="../widgets/dlicensedialog.cpp" line="78"/>
         <source>Open-Source Software</source>
-        <translation type="unfinished"/>
+        <translation>オープンソース ソフトウェア</translation>
     </message>
 </context>
 <context>
@@ -741,7 +734,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dtextedit.cpp" line="194"/>
         <source>Select All</source>
-        <translation type="unfinished"/>
+        <translation>すべて選択</translation>
     </message>
 </context>
 <context>
@@ -757,22 +750,22 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="634"/>
         <source>Theme</source>
-        <translation type="unfinished"/>
+        <translation>テーマ</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="636"/>
         <source>Light Theme</source>
-        <translation type="unfinished"/>
+        <translation>ライトテーマ</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="637"/>
         <source>Dark Theme</source>
-        <translation type="unfinished"/>
+        <translation>ダークテーマ</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="638"/>
         <source>System Theme</source>
-        <translation type="unfinished"/>
+        <translation>システムテーマ</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="668"/>
@@ -782,12 +775,12 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="676"/>
         <source>Feedback</source>
-        <translation type="unfinished"/>
+        <translation>フィードバック</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="683"/>
         <source>Custom toolbar</source>
-        <translation type="unfinished"/>
+        <translation>カスタムツールバー</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="691"/>

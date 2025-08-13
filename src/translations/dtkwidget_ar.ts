@@ -1,17 +1,10 @@
 <?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ar">
-
-<!--
-SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
-
-SPDX-License-Identifier: LGPL-3.0-or-later
--->
-
 <context>
     <name>DAboutDialog</name>
     <message>
         <location filename="../widgets/dapplication.cpp" line="1454"/>
         <source>%1 is released under %2</source>
-        <translation> %1 أصدر تحت رخصة %2</translation>
+        <translation> %1 أصدر تحت رخصة 2%</translation>
     </message>
 </context>
 <context>
@@ -152,7 +145,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/dprintpreviewdialog.cpp" line="278"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1268"/>
         <source>Advanced</source>
-        <translation type="unfinished"/>
+        <translation>متقدم</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="301"/>
@@ -165,67 +158,67 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1647"/>
         <source>Print</source>
         <comment>button</comment>
-        <translation type="unfinished"/>
+        <translation>طباعة</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="318"/>
         <source>Basic</source>
-        <translation type="unfinished"/>
+        <translation>أساسي</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="334"/>
         <source>Printer</source>
-        <translation type="unfinished"/>
+        <translation>الطابعة</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="350"/>
         <source>Copies</source>
-        <translation type="unfinished"/>
+        <translation>النسخ</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="372"/>
         <source>Page range</source>
-        <translation type="unfinished"/>
+        <translation>مدى الصفحة</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="375"/>
         <source>All</source>
-        <translation type="unfinished"/>
+        <translation>الكل</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="376"/>
         <source>Current page</source>
-        <translation type="unfinished"/>
+        <translation>الصفحة الحالية</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="377"/>
         <source>Select pages</source>
-        <translation type="unfinished"/>
+        <translation>اختيار الصفحات</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="397"/>
         <source>Orientation</source>
-        <translation type="unfinished"/>
+        <translation>اتجاه</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="422"/>
         <source>Portrait</source>
-        <translation type="unfinished"/>
+        <translation>عامودي</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="432"/>
         <source>Landscape</source>
-        <translation type="unfinished"/>
+        <translation>أفقي</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="460"/>
         <source>Pages</source>
-        <translation type="unfinished"/>
+        <translation>الصفحات</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="472"/>
         <source>Color mode</source>
-        <translation type="unfinished"/>
+        <translation>وضع الألوان</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="475"/>
@@ -234,59 +227,59 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1679"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1694"/>
         <source>Color</source>
-        <translation type="unfinished"/>
+        <translation>اللون</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="475"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1670"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1682"/>
         <source>Grayscale</source>
-        <translation type="unfinished"/>
+        <translation>تدرج الرمادي</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="487"/>
         <source>Margins</source>
-        <translation type="unfinished"/>
+        <translation>الهوامش</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="491"/>
         <source>Narrow (mm)</source>
-        <translation type="unfinished"/>
+        <translation>ضيق (مم)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="491"/>
         <source>Normal (mm)</source>
-        <translation type="unfinished"/>
+        <translation>عادي (مم)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="491"/>
         <source>Moderate (mm)</source>
-        <translation type="unfinished"/>
+        <translation>معتدل (مم)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="491"/>
         <source>Customize (mm)</source>
-        <translation type="unfinished"/>
+        <translation>مخصص (مم)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="500"/>
         <source>Top</source>
-        <translation type="unfinished"/>
+        <translation>أعلى</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="503"/>
         <source>Left</source>
-        <translation type="unfinished"/>
+        <translation>اليسار</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="506"/>
         <source>Bottom</source>
-        <translation type="unfinished"/>
+        <translation>الأسفل</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="509"/>
         <source>Right</source>
-        <translation type="unfinished"/>
+        <translation>اليمين</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="556"/>
@@ -296,7 +289,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="573"/>
         <source>Actual size</source>
-        <translation type="unfinished"/>
+        <translation>الحجم الفعلي</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="582"/>
@@ -306,17 +299,17 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="613"/>
         <source>Paper</source>
-        <translation type="unfinished"/>
+        <translation>الورقة</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="626"/>
         <source>Paper size</source>
-        <translation type="unfinished"/>
+        <translation>حجم الورقة</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="641"/>
         <source>Print Layout</source>
-        <translation type="unfinished"/>
+        <translation>تخطيط الطباعة</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="655"/>
@@ -356,82 +349,82 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="683"/>
         <source>Layout direction</source>
-        <translation type="unfinished"/>
+        <translation>اتجاه التخطيط</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="727"/>
         <source>Page Order</source>
-        <translation type="unfinished"/>
+        <translation>ترتيب الصفحات</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="740"/>
         <source>Collate pages</source>
-        <translation type="unfinished"/>
+        <translation>صفحات مرتبة</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="746"/>
         <source>Print pages in order</source>
-        <translation type="unfinished"/>
+        <translation>طباعة الصفحات بناءً على الترتيب</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="750"/>
         <source>Front to back</source>
-        <translation type="unfinished"/>
+        <translation>من الأمام إلى الخلف</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="750"/>
         <source>Back to front</source>
-        <translation type="unfinished"/>
+        <translation>من الخلف إلى الأمام</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="774"/>
         <source>Watermark</source>
-        <translation type="unfinished"/>
+        <translation>العلامة المائية</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="788"/>
         <source>Add watermark</source>
-        <translation type="unfinished"/>
+        <translation>إضافة علامة مائية</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="834"/>
         <source>Text watermark</source>
-        <translation type="unfinished"/>
+        <translation>نص العلامة المائية</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="838"/>
         <source>Confidential</source>
-        <translation type="unfinished"/>
+        <translation>سري</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="838"/>
         <source>Draft</source>
-        <translation type="unfinished"/>
+        <translation>مسودة</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="838"/>
         <source>Sample</source>
-        <translation type="unfinished"/>
+        <translation>عينة</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="838"/>
         <source>Custom</source>
-        <translation type="unfinished"/>
+        <translation>مخصص</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="847"/>
         <source>Input your text</source>
-        <translation type="unfinished"/>
+        <translation>أدخل النص الخاص بك</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="872"/>
         <source>Picture watermark</source>
-        <translation type="unfinished"/>
+        <translation>صورة العلامة المائية</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="896"/>
         <source>Layout</source>
-        <translation type="unfinished"/>
+        <translation>التخطيط</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="899"/>
@@ -441,34 +434,34 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="899"/>
         <source>Center</source>
-        <translation type="unfinished"/>
+        <translation>الوسط</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="912"/>
         <source>Angle</source>
-        <translation type="unfinished"/>
+        <translation>الزاوية</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="931"/>
         <source>Size</source>
-        <translation type="unfinished"/>
+        <translation>الحجم</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="955"/>
         <source>Transparency</source>
-        <translation type="unfinished"/>
+        <translation>الشفافية</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1013"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2283"/>
         <source>Print to PDF</source>
-        <translation type="unfinished"/>
+        <translation>طباعة إلى ملف PDF</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1014"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2282"/>
         <source>Save as Image</source>
-        <translation type="unfinished"/>
+        <translation>حفظ كصورة</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1264"/>
@@ -491,53 +484,53 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1461"/>
         <source>Input page numbers please</source>
-        <translation type="unfinished"/>
+        <translation>إدخال أرقام الصفحات من فضلك</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1464"/>
         <source>Maximum page number reached</source>
-        <translation type="unfinished"/>
+        <translation>تم الوصول إلى الحد الأقصى لعدد الصفحات</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1467"/>
         <source>Input English comma please</source>
-        <translation type="unfinished"/>
+        <translation>إدخال فاصلة الإنجليزية من فضلك</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1470"/>
         <source>Input page numbers like this: 1,3,5-7,11-15,18,21</source>
-        <translation type="unfinished"/>
+        <translation>مثال على إدخال أرقام هكذا: 1،3،5-7،11-15،18،21</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1700"/>
         <source>Save</source>
         <comment>button</comment>
-        <translation type="unfinished"/>
+        <translation>حفظ</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2312"/>
         <source>*.pdf</source>
-        <translation type="unfinished"/>
+        <translation>*.pdf</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1770"/>
         <source>For example, 1,3,5-7,11-15,18,21</source>
-        <translation type="unfinished"/>
+        <translation>على سبيل المثال، 1،3،5-7،11-15،18،21</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2312"/>
         <source>Save as PDF</source>
-        <translation type="unfinished"/>
+        <translation>حفظ كصورة</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2351"/>
         <source>Save as image</source>
-        <translation type="unfinished"/>
+        <translation>حفظ كصورة</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2353"/>
         <source>Images</source>
-        <translation type="unfinished"/>
+        <translation>صور</translation>
     </message>
 </context>
 <context>
@@ -546,19 +539,19 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1590"/>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1593"/>
         <source>Confidential</source>
-        <translation type="unfinished"/>
+        <translation>سري</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1608"/>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1611"/>
         <source>Draft</source>
-        <translation type="unfinished"/>
+        <translation>مسودة</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1626"/>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1629"/>
         <source>Sample</source>
-        <translation type="unfinished"/>
+        <translation>عينة</translation>
     </message>
 </context>
 <context>
@@ -628,17 +621,17 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/private/dtitlebareditpanel.cpp" line="884"/>
         <source>Default toolset</source>
-        <translation type="unfinished"/>
+        <translation>مجموعة الأدوات الافتراضية</translation>
     </message>
     <message>
         <location filename="../widgets/private/dtitlebareditpanel.cpp" line="915"/>
         <source>Drag your favorite items into the toolbar</source>
-        <translation type="unfinished"/>
+        <translation>اسحب العناصر المفضلة لديك إلى شريط الأدوات</translation>
     </message>
     <message>
         <location filename="../widgets/private/dtitlebareditpanel.cpp" line="916"/>
         <source>Drag below items into the toolbar to restore defaults</source>
-        <translation type="unfinished"/>
+        <translation>اسحب العناصر أدناه إلى شريط الأدوات لاستعادة الإعدادات الافتراضية</translation>
     </message>
     <message>
         <location filename="../widgets/private/dtitlebareditpanel.cpp" line="921"/>
@@ -651,7 +644,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpickcolorwidget.cpp" line="94"/>
         <source>Color</source>
-        <translation type="unfinished"/>
+        <translation>اللون</translation>
     </message>
 </context>
 <context>
@@ -669,7 +662,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dlineedit.cpp" line="534"/>
         <source>Select All</source>
-        <translation type="unfinished"/>
+        <translation>تحديد الكل</translation>
     </message>
 </context>
 <context>
@@ -687,22 +680,22 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="108"/>
         <source>Version</source>
-        <translation type="unfinished"/>
+        <translation>الإصدار</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="110"/>
         <source>Features</source>
-        <translation type="unfinished"/>
+        <translation>المزايا</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="122"/>
         <source>Homepage</source>
-        <translation type="unfinished"/>
+        <translation>الصفحة الرئيسية</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="124"/>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>الوصف</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="126"/>
@@ -713,27 +706,27 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/daboutdialog.cpp" line="128"/>
         <location filename="../widgets/daboutdialog.cpp" line="393"/>
         <source>Sincerely appreciate the open-source software used.</source>
-        <translation type="unfinished"/>
+        <translation>نقدر بصدق البرامج مفتوحة المصدر المستخدمة.</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="395"/>
         <source>open-source software</source>
-        <translation type="unfinished"/>
+        <translation>تطبيق مفنوح المصدر</translation>
     </message>
     <message>
         <location filename="../widgets/dfeaturedisplaydialog.cpp" line="151"/>
         <source>Continue</source>
-        <translation type="unfinished"/>
+        <translation>متابعة</translation>
     </message>
     <message>
         <location filename="../widgets/dfeaturedisplaydialog.cpp" line="175"/>
         <source>Learn More</source>
-        <translation type="unfinished"/>
+        <translation>تعلم أكثر</translation>
     </message>
     <message>
         <location filename="../widgets/dlicensedialog.cpp" line="78"/>
         <source>Open-Source Software</source>
-        <translation type="unfinished"/>
+        <translation>تطبيق مفنوح المصدر</translation>
     </message>
 </context>
 <context>
@@ -741,7 +734,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dtextedit.cpp" line="194"/>
         <source>Select All</source>
-        <translation type="unfinished"/>
+        <translation>تحديد الكل</translation>
     </message>
 </context>
 <context>
@@ -757,22 +750,22 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="634"/>
         <source>Theme</source>
-        <translation>الموضوع</translation>
+        <translation>السمة</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="636"/>
         <source>Light Theme</source>
-        <translation>موضوع فاتح</translation>
+        <translation>سمة فاتحة</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="637"/>
         <source>Dark Theme</source>
-        <translation>موضوع غامق</translation>
+        <translation>سمة غامقة</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="638"/>
         <source>System Theme</source>
-        <translation>موضوع النظام</translation>
+        <translation>سمة النظام</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="668"/>
@@ -782,12 +775,12 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="676"/>
         <source>Feedback</source>
-        <translation type="unfinished"/>
+        <translation>الإفادة</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="683"/>
         <source>Custom toolbar</source>
-        <translation type="unfinished"/>
+        <translation>شريط أدوات مخصص</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="691"/>

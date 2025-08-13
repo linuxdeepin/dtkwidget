@@ -1,11 +1,4 @@
 <?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="gl_ES">
-
-<!--
-SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
-
-SPDX-License-Identifier: LGPL-3.0-or-later
--->
-
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -251,22 +244,22 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="491"/>
         <source>Narrow (mm)</source>
-        <translation type="unfinished"/>
+        <translation>Estreito (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="491"/>
         <source>Normal (mm)</source>
-        <translation type="unfinished"/>
+        <translation>Normal (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="491"/>
         <source>Moderate (mm)</source>
-        <translation type="unfinished"/>
+        <translation>Moderado (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="491"/>
         <source>Customize (mm)</source>
-        <translation type="unfinished"/>
+        <translation>Personalizar (mm)</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="500"/>
@@ -316,17 +309,17 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="641"/>
         <source>Print Layout</source>
-        <translation type="unfinished"/>
+        <translation>Deseño de impresión</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="655"/>
         <source>Duplex</source>
-        <translation type="unfinished"/>
+        <translation>Dúplex</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="668"/>
         <source>N-up printing</source>
-        <translation type="unfinished"/>
+        <translation>Impresión de varias páxinas por folla</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="671"/>
@@ -356,17 +349,17 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="683"/>
         <source>Layout direction</source>
-        <translation type="unfinished"/>
+        <translation>Dirección de deseño</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="727"/>
         <source>Page Order</source>
-        <translation type="unfinished"/>
+        <translation>Orde de páxina</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="740"/>
         <source>Collate pages</source>
-        <translation type="unfinished"/>
+        <translation>Recolle páxinas</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="746"/>
@@ -376,12 +369,12 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="750"/>
         <source>Front to back</source>
-        <translation type="unfinished"/>
+        <translation>Fronte a atrás</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="750"/>
         <source>Back to front</source>
-        <translation type="unfinished"/>
+        <translation>De atrás á fronte</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="774"/>
@@ -406,7 +399,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="838"/>
         <source>Draft</source>
-        <translation type="unfinished"/>
+        <translation>Borrador</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="838"/>
@@ -416,113 +409,113 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="838"/>
         <source>Custom</source>
-        <translation type="unfinished"/>
+        <translation>Personalizar</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="847"/>
         <source>Input your text</source>
-        <translation type="unfinished"/>
+        <translation>Introduce o teu texto</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="872"/>
         <source>Picture watermark</source>
-        <translation type="unfinished"/>
+        <translation>Imaxe da marca de auga</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="896"/>
         <source>Layout</source>
-        <translation type="unfinished"/>
+        <translation>Deseño</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="899"/>
         <source>Tile</source>
-        <translation type="unfinished"/>
+        <translation>Mosaico</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="899"/>
         <source>Center</source>
-        <translation type="unfinished"/>
+        <translation>Centro</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="912"/>
         <source>Angle</source>
-        <translation type="unfinished"/>
+        <translation>Ángulo</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="931"/>
         <source>Size</source>
-        <translation type="unfinished"/>
+        <translation>Tamaño</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="955"/>
         <source>Transparency</source>
-        <translation type="unfinished"/>
+        <translation>Transparencia</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1013"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2283"/>
         <source>Print to PDF</source>
-        <translation type="unfinished"/>
+        <translation>Imprimir en PDF</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1014"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2282"/>
         <source>Save as Image</source>
-        <translation type="unfinished"/>
+        <translation>Gardar como Imaxe</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1264"/>
         <source>Collapse</source>
-        <translation type="unfinished"/>
+        <translation>Colapsar</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1359"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1368"/>
         <source>Flip on short edge</source>
-        <translation type="unfinished"/>
+        <translation>Xirar no borde curto</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1298"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1363"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1367"/>
         <source>Flip on long edge</source>
-        <translation type="unfinished"/>
+        <translation>Xirar no borde longo</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1461"/>
         <source>Input page numbers please</source>
-        <translation type="unfinished"/>
+        <translation>Introduza os números de páxinas, por favor</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1464"/>
         <source>Maximum page number reached</source>
-        <translation type="unfinished"/>
+        <translation>Alcanzouse o número máximo de páxinas</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1467"/>
         <source>Input English comma please</source>
-        <translation type="unfinished"/>
+        <translation>Introduza a coma inglesa, por favor</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1470"/>
         <source>Input page numbers like this: 1,3,5-7,11-15,18,21</source>
-        <translation type="unfinished"/>
+        <translation>Introduza os números de páxina como segue: 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1700"/>
         <source>Save</source>
         <comment>button</comment>
-        <translation type="unfinished"/>
+        <translation>Gardar</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2312"/>
         <source>*.pdf</source>
-        <translation type="unfinished"/>
+        <translation>*.pdf</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1770"/>
         <source>For example, 1,3,5-7,11-15,18,21</source>
-        <translation type="unfinished"/>
+        <translation>Por exemplo, 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2312"/>
@@ -552,7 +545,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1608"/>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1611"/>
         <source>Draft</source>
-        <translation type="unfinished"/>
+        <translation>Borrador</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewwidget.cpp" line="1626"/>
@@ -628,17 +621,17 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/private/dtitlebareditpanel.cpp" line="884"/>
         <source>Default toolset</source>
-        <translation type="unfinished"/>
+        <translation>Conxunto de ferramentas predeterminado</translation>
     </message>
     <message>
         <location filename="../widgets/private/dtitlebareditpanel.cpp" line="915"/>
         <source>Drag your favorite items into the toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Arrastra os teus elementos favoritos á barra de ferramentas</translation>
     </message>
     <message>
         <location filename="../widgets/private/dtitlebareditpanel.cpp" line="916"/>
         <source>Drag below items into the toolbar to restore defaults</source>
-        <translation type="unfinished"/>
+        <translation>Arrastra os elementos de abaixo á barra de ferramentas para restaurar os valores predeterminados</translation>
     </message>
     <message>
         <location filename="../widgets/private/dtitlebareditpanel.cpp" line="921"/>
@@ -659,12 +652,12 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dlineedit.cpp" line="526"/>
         <source>&amp;Copy</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Copiar</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="529"/>
         <source>Cu&amp;t</source>
-        <translation type="unfinished"/>
+        <translation>Pegar&amp;</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="534"/>
@@ -687,22 +680,22 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="108"/>
         <source>Version</source>
-        <translation type="unfinished"/>
+        <translation>Versión</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="110"/>
         <source>Features</source>
-        <translation type="unfinished"/>
+        <translation>Características</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="122"/>
         <source>Homepage</source>
-        <translation type="unfinished"/>
+        <translation>Páxina de inicio</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="124"/>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>Descripción</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="126"/>
@@ -713,27 +706,27 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/daboutdialog.cpp" line="128"/>
         <location filename="../widgets/daboutdialog.cpp" line="393"/>
         <source>Sincerely appreciate the open-source software used.</source>
-        <translation type="unfinished"/>
+        <translation>Agradecemos sinceramente o software de código aberto utilizado.</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="395"/>
         <source>open-source software</source>
-        <translation type="unfinished"/>
+        <translation>software de código aberto</translation>
     </message>
     <message>
         <location filename="../widgets/dfeaturedisplaydialog.cpp" line="151"/>
         <source>Continue</source>
-        <translation type="unfinished"/>
+        <translation>Continuar</translation>
     </message>
     <message>
         <location filename="../widgets/dfeaturedisplaydialog.cpp" line="175"/>
         <source>Learn More</source>
-        <translation type="unfinished"/>
+        <translation>Saber máis</translation>
     </message>
     <message>
         <location filename="../widgets/dlicensedialog.cpp" line="78"/>
         <source>Open-Source Software</source>
-        <translation type="unfinished"/>
+        <translation>Software de código aberto</translation>
     </message>
 </context>
 <context>
@@ -782,12 +775,12 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="676"/>
         <source>Feedback</source>
-        <translation type="unfinished"/>
+        <translation>Retroalimentar</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="683"/>
         <source>Custom toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Barra de ferramentas personalizada</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="691"/>

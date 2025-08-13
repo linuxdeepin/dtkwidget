@@ -14,7 +14,7 @@ Copyright: None
 License: CC0-1.0
 
 # xml toml json conf yaml
-Files:  *.toml *.json *conf *.yaml
+Files:  *.toml *.json *conf *.yaml  .tx/transifex.yaml
 Copyright: None
 License: CC0-1.0
 
@@ -102,3 +102,8 @@ License: CC0-1.0
 Files: toolGenerate/**/*
 Copyright: None
 License: CC0-1.0
+
+# translations
+Files: */translations/*.ts
+Copyright: UnionTech Software Technology Co., Ltd.
+License: LGPL-3.0-or-later

@@ -1,11 +1,4 @@
 <?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="az">
-
-<!--
-SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
-
-SPDX-License-Identifier: LGPL-3.0-or-later
--->
-
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -733,7 +726,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dlicensedialog.cpp" line="78"/>
         <source>Open-Source Software</source>
-        <translation type="unfinished"/>
+        <translation>Açıq qaynaq proqram təminatı</translation>
     </message>
 </context>
 <context>

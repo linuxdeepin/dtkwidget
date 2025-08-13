@@ -1,11 +1,4 @@
 <?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ug">
-
-<!--
-SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
-
-SPDX-License-Identifier: LGPL-3.0-or-later
--->
-
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -787,7 +780,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="683"/>
         <source>Custom toolbar</source>
-        <translation type="unfinished"/>
+        <translation>قورال ئىستونى بەلگىلەش</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="691"/>
