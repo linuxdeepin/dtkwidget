@@ -11,7 +11,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dapplication.cpp" line="1454"/>
         <source>%1 is released under %2</source>
-        <translation>%1 é lançado em %2</translation>
+        <translation>%1 é lançado sob a %2</translation>
     </message>
 </context>
 <context>
