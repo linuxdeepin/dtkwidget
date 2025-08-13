@@ -1,4 +1,11 @@
 <?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ru">
+
+<!--
+SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+
+SPDX-License-Identifier: LGPL-3.0-or-later
+-->
+
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -22,7 +29,7 @@
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="875"/>
         <source>Dark Gray</source>
-        <translation>Темно-Серый</translation>
+        <translation>Темно-серый</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="878"/>
@@ -32,7 +39,7 @@
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="881"/>
         <source>Light Gray</source>
-        <translation>Светло-Серый</translation>
+        <translation>Светло-серый</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="884"/>
@@ -67,32 +74,32 @@
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="902"/>
         <source>Dark Red</source>
-        <translation>Темно-Красный</translation>
+        <translation>Темно-красный</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="905"/>
         <source>Dark Green</source>
-        <translation>Темно-Зеленый</translation>
+        <translation>Темно-зеленый</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="908"/>
         <source>Dark Blue</source>
-        <translation>Темно-Синий</translation>
+        <translation>Темно-синий</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="911"/>
         <source>Dark Cyan</source>
-        <translation>Темно-Голубой</translation>
+        <translation>Темно-голубой</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="914"/>
         <source>Dark Magenta</source>
-        <translation>Темно-Пурпурный</translation>
+        <translation>Темно-пурпурный</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="917"/>
         <source>Dark Yellow</source>
-        <translation>Темно-Желтый</translation>
+        <translation>Темно-желтый</translation>
     </message>
 </context>
 <context>
@@ -203,12 +210,12 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="422"/>
         <source>Portrait</source>
-        <translation>Портрет</translation>
+        <translation>Книжная</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="432"/>
         <source>Landscape</source>
-        <translation>Ландшафт</translation>
+        <translation>Альбомная</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="460"/>
@@ -309,7 +316,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="641"/>
         <source>Print Layout</source>
-        <translation>Макет Печати</translation>
+        <translation>Макет печати</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="655"/>
@@ -369,12 +376,12 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="750"/>
         <source>Front to back</source>
-        <translation>С лицевой стороны обратно</translation>
+        <translation>От лицевой к задней</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="750"/>
         <source>Back to front</source>
-        <translation> С обратной стороны на лицевую</translation>
+        <translation> От задней к лицевой</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="774"/>
@@ -520,7 +527,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2312"/>
         <source>Save as PDF</source>
-        <translation>Сохранить в PDF</translation>
+        <translation>Сохранить как PDF</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2351"/>
@@ -675,7 +682,7 @@
     <message>
         <location filename="../widgets/private/settings/content.cpp" line="330"/>
         <source>Restore Defaults</source>
-        <translation>Восстановить значения По-умолчанию</translation>
+        <translation>Восстановить значения по умолчанию</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="108"/>
@@ -755,17 +762,17 @@
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="636"/>
         <source>Light Theme</source>
-        <translation>Светлая Тема</translation>
+        <translation>Светлая тема</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="637"/>
         <source>Dark Theme</source>
-        <translation>Темная Тема</translation>
+        <translation>Темная тема</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="638"/>
         <source>System Theme</source>
-        <translation>Тема Системы</translation>
+        <translation>Тема системы</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="668"/>
