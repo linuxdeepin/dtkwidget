@@ -479,14 +479,14 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1359"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1368"/>
         <source>Flip on short edge</source>
-        <translation>Virar na borda curta</translation>
+        <translation>Virar pela borda curta</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1298"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1363"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1367"/>
         <source>Flip on long edge</source>
-        <translation>Virar na borda longa</translation>
+        <translation>Virar pela borda longa</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1461"/>
