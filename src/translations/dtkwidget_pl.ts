@@ -1,4 +1,11 @@
 <?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="pl">
+
+<!--
+SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+
+SPDX-License-Identifier: LGPL-3.0-or-later
+-->
+
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -515,7 +522,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1770"/>
         <source>For example, 1,3,5-7,11-15,18,21</source>
-        <translation>Na przykład, 1,3,5-7,11-15,18,21</translation>
+        <translation>Na przykład: 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2312"/>
