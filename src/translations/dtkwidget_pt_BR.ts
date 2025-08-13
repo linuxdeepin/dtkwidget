@@ -225,7 +225,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="472"/>
         <source>Color mode</source>
-        <translation>Modo de cores</translation>
+        <translation>Modo de cor</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="475"/>
