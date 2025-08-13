@@ -120,7 +120,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dkeysequenceedit.cpp" line="97"/>
         <source>Enter a new shortcut</source>
-        <translation>Introducir un nuevo acceso directo</translation>
+        <translation>Introducir nuevo acceso directo</translation>
     </message>
 </context>
 <context>
