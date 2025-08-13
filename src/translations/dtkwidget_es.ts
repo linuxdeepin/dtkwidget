@@ -1,4 +1,11 @@
 <?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="es">
+
+<!--
+SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+
+SPDX-License-Identifier: LGPL-3.0-or-later
+-->
+
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -113,7 +120,7 @@
     <message>
         <location filename="../widgets/dkeysequenceedit.cpp" line="97"/>
         <source>Enter a new shortcut</source>
-        <translation>Introducir un nuevo atajo</translation>
+        <translation>Introducir un nuevo acceso directo</translation>
     </message>
 </context>
 <context>
@@ -577,7 +584,7 @@
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="68"/>
         <source>This shortcut conflicts with %1, click on Add to make this shortcut effective immediately</source>
-        <translation>Este atajo tiene conflicto con %1, haga clic en Añadir para que este atajo sea efectivo inmediatamente.</translation>
+        <translation>Este acceso directo tiene conflicto con %1, haga clic en Añadir para que este atajo sea efectivo inmediatamente.</translation>
     </message>
 </context>
 <context>
