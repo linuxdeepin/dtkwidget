@@ -496,7 +496,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1464"/>
         <source>Maximum page number reached</source>
-        <translation>O número máximo de páginas foi atingido</translation>
+        <translation>Número máximo de páginas atingido</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1467"/>
