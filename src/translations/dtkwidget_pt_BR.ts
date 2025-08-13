@@ -506,7 +506,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1470"/>
         <source>Input page numbers like this: 1,3,5-7,11-15,18,21</source>
-        <translation>Insira os números das páginas assim: 1, 3, 5-7, 11-15, 18, 21</translation>
+        <translation>Insira os números das páginas: 1, 3, 5-7, 11-15, 18, 21</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1700"/>
