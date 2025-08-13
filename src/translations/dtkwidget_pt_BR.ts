@@ -128,7 +128,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dlineedit.cpp" line="593"/>
         <source>Stop reading</source>
-        <translation>Parar de ler</translation>
+        <translation>Parar leitura</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="595"/>
