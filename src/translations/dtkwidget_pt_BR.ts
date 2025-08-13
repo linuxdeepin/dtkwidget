@@ -29,7 +29,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="875"/>
         <source>Dark Gray</source>
-        <translation>Cinza Escuro</translation>
+        <translation>Cinza escuro</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="878"/>
@@ -39,7 +39,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="881"/>
         <source>Light Gray</source>
-        <translation>Cinza Claro</translation>
+        <translation>Cinza claro</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="884"/>
@@ -669,7 +669,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dlineedit.cpp" line="534"/>
         <source>Select All</source>
-        <translation>Selecionar Tudo</translation>
+        <translation>Selecionar tudo</translation>
     </message>
 </context>
 <context>
@@ -682,7 +682,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/private/settings/content.cpp" line="330"/>
         <source>Restore Defaults</source>
-        <translation>Restaurar Padrões</translation>
+        <translation>Restaurar padrões</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="108"/>
@@ -697,7 +697,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="122"/>
         <source>Homepage</source>
-        <translation>Página na Internet</translation>
+        <translation>Página web</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="124"/>
@@ -741,7 +741,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dtextedit.cpp" line="194"/>
         <source>Select All</source>
-        <translation>Selecionar Tudo</translation>
+        <translation>Selecionar tudo</translation>
     </message>
 </context>
 <context>
