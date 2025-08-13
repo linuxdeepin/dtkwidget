@@ -1,4 +1,11 @@
 <?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="bo">
+
+<!--
+SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+
+SPDX-License-Identifier: LGPL-3.0-or-later
+-->
+
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -711,7 +718,7 @@
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="395"/>
         <source>open-source software</source>
-        <translation>སྒོ་འབྱེད་མཉེན་ཆས།</translation>
+        <translation>སྒོ་འབྱེད་མཉེན་ཆས་</translation>
     </message>
     <message>
         <location filename="../widgets/dfeaturedisplaydialog.cpp" line="151"/>
