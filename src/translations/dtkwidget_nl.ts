@@ -1,4 +1,11 @@
 <?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="nl">
+
+<!--
+SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+
+SPDX-License-Identifier: LGPL-3.0-or-later
+-->
+
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -105,7 +112,7 @@
     <message>
         <location filename="../widgets/dinputdialog.cpp" line="30"/>
         <source>Confirm</source>
-        <translation>Oké</translation>
+        <translation>Bevestigen</translation>
     </message>
 </context>
 <context>
