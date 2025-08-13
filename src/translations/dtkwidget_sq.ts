@@ -1,4 +1,11 @@
 <?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="sq">
+
+<!--
+SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+
+SPDX-License-Identifier: LGPL-3.0-or-later
+-->
+
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -131,7 +138,7 @@
     <message>
         <location filename="../widgets/dlineedit.cpp" line="618"/>
         <source>Translate</source>
-        <translation>Përktheni</translation>
+        <translation>Përktheje</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="640"/>
@@ -284,7 +291,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="556"/>
         <source>Scaling</source>
-        <translation>Përshkallëzim</translation>
+        <translation>Ripërmasim</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="573"/>
@@ -499,7 +506,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1470"/>
         <source>Input page numbers like this: 1,3,5-7,11-15,18,21</source>
-        <translation>Jepni numra faqesh si: 1,3,5-7,11-15,18,21</translation>
+        <translation>Numrat e faqeve jepni kështu: 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1700"/>
@@ -577,7 +584,7 @@
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="68"/>
         <source>This shortcut conflicts with %1, click on Add to make this shortcut effective immediately</source>
-        <translation>Kjo shkurtore përplaset me %1, klikoni mbi Shtoje që ta bëni këtë shkurtore menjëherë efektive</translation>
+        <translation>Kjo shkurtore përplaset me %1, klikoni mbi “Shtoje”, që ta bëni këtë shkurtore menjëherë efektive</translation>
     </message>
 </context>
 <context>
@@ -608,7 +615,7 @@
     <message>
         <location filename="../widgets/dtextedit.cpp" line="227"/>
         <source>Translate</source>
-        <translation>Përktheni</translation>
+        <translation>Përktheje</translation>
     </message>
     <message>
         <location filename="../widgets/dtextedit.cpp" line="249"/>
