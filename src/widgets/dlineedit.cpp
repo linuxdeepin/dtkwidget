@@ -494,7 +494,7 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
     D_D(DLineEdit);
 
     if (event->type() == QEvent::FocusIn) {
-        if (DGuiApplicationHelper::IsTableEnvironment && QGuiApplication::inputMethod())
+        if (DGuiApplicationHelper::testAttribute(DGuiApplicationHelper::IsTableEnvironment) && QGuiApplication::inputMethod() != nullptr)
             QGuiApplication::inputMethod()->show();
         Q_EMIT focusChanged(true);
     } else if (event->type() == QEvent::FocusOut) {

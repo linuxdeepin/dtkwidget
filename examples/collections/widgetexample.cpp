@@ -153,7 +153,7 @@ QVariant CalendarModel::data(const QModelIndex &index, int role) const
             return QString::number(days);
         }
     }
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#if QT_VERSION < QT_VERSION_CHECK(5, 13, 0)
     case Qt::TextColorRole: {
 #else
     case Qt::ForegroundRole:{
@@ -179,7 +179,7 @@ QVariant CalendarModel::data(const QModelIndex &index, int role) const
 QVariant CalendarModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#if QT_VERSION < QT_VERSION_CHECK(5, 13, 0)
         role == Qt::BackgroundColorRole ||
 #endif
         role == Qt::BackgroundRole)

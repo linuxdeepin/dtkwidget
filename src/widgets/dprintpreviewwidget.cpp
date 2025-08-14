@@ -1222,7 +1222,7 @@ QVector<int> DPrintPreviewWidgetPrivate::requestPages(int page)
   \a parent 父控件
  */
 DPrintPreviewWidget::DPrintPreviewWidget(DPrinter *printer, QWidget *parent)
-    : DFrame(*new DPrintPreviewWidgetPrivate(this))
+    : DFrame(*new DPrintPreviewWidgetPrivate(this), parent)
 {
     Q_D(DPrintPreviewWidget);
     d->previewPrinter = printer;

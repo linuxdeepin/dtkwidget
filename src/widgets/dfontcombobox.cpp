@@ -52,6 +52,8 @@ DFontComboBoxPrivate::~DFontComboBoxPrivate()
   @endcode
   
   @image html DFontComboBox.png
+*/
+
 /*!
 @~english
   @brief DFontComboBox constructor.

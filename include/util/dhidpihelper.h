@@ -9,10 +9,10 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
-class Q_DECL_DEPRECATED DHiDPIHelper
+class D_DECL_DEPRECATED DHiDPIHelper
 {
 public:
-    Q_DECL_DEPRECATED_X("Use Dtk::Gui::DIcon::loadNxPixmap") static QPixmap loadNxPixmap(const QString &fileName);
+    D_DECL_DEPRECATED_X("Use Dtk::Gui::DIcon::loadNxPixmap") static QPixmap loadNxPixmap(const QString &fileName);
 };
 
 DWIDGET_END_NAMESPACE

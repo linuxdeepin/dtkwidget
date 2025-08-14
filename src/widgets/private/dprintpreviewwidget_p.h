@@ -409,7 +409,7 @@ struct DPrintPreviewWidgetPrivate::NumberUpData {
 
     QVector<QPointF> updatePositions(const qreal &scale)
     {
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
         QRectF pageRect = parent->previewPrinter->pageLayout().paintRectPixels(parent->previewPrinter->resolution());
 #else
         QRectF pageRect = parent->previewPrinter->pageRect();
@@ -474,7 +474,7 @@ struct DPrintPreviewWidgetPrivate::NumberUpData {
     {
         if (waterList.isEmpty())
             return;
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
         QRectF pageRect = parent->previewPrinter->pageLayout().paintRectPixels(parent->previewPrinter->resolution());
 #else
         QRectF pageRect = parent->previewPrinter->pageRect();
