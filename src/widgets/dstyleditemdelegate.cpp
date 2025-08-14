@@ -83,6 +83,7 @@ DWIDGET_END_NAMESPACE
 Q_DECLARE_METATYPE(DTK_WIDGET_NAMESPACE::ActionList)
 
 DWIDGET_BEGIN_NAMESPACE
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 static void saveDViewItemActionList(QDataStream &s, const void *d)
 {
     const ActionList &data = *static_cast<const ActionList*>(d);
@@ -95,16 +96,17 @@ static void loadDViewItemActionList(QDataStream &s, void *d)
     s >> data;
 }
 
-__attribute__((constructor))
 static void registerMetaType ()
 {
-    #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     // register DViewItemActionList's stream operator to support that QMetaType can using save and load function.
     QMetaType::registerStreamOperators(QMetaTypeId<DTK_WIDGET_NAMESPACE::ActionList>::qt_metatype_id(),
                                        saveDViewItemActionList,
                                        loadDViewItemActionList);
-    #endif
 }
+
+Q_CONSTRUCTOR_FUNCTION(registerMetaType)
+
+#endif
 
 static DViewItemActionList qvariantToActionList(const QVariant &v)
 {

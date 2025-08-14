@@ -75,6 +75,10 @@ TEST_F(ut_DTextEdit, testDTextEditKeyPressEvent)
 
 TEST_F(ut_DTextEdit, testDTextEditContextMenuEvent)
 {
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+    QContextMenuEvent menuEvent(QContextMenuEvent::Mouse, QPoint(0,0), QPoint(0,0));
+#else
     QContextMenuEvent menuEvent(QContextMenuEvent::Mouse, QPoint(0,0));
+#endif
     widget->contextMenuEvent(&menuEvent);
 }

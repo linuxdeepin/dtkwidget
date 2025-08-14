@@ -2194,7 +2194,7 @@ void DStyle::drawControl(QStyle::ControlElement ce, const QStyleOption *opt, QPa
  */
 int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QWidget *widget) const
 {
-    switch (m) {
+    switch (static_cast<uint32_t>(m)) {
     case PM_ButtonDefaultIndicator:
     case PM_ButtonShiftHorizontal:
     case PM_ButtonShiftVertical:

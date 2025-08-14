@@ -115,6 +115,7 @@ DBaseExpandPrivate::~DBaseExpandPrivate()
   @fn void DBaseExpand::expandChange(bool e)
   @brief content widget visibility signal
   @param[in] e If "true", the content widget becomes visible, otherwise, the content widget becomes invisible.
+*/
 
 /*!
 @~english

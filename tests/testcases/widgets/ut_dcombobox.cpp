@@ -30,7 +30,7 @@ TEST_F(ut_DComboBox, maxVisibleItems)
         target->addItem(QString::number(i));
     }
     target->show();
-    QTest::qWaitForWindowExposed(target->windowHandle());
+    (void)QTest::qWaitForWindowExposed(target->windowHandle());
 
     const QPoint arrowPos(target->rect().right() - 1, target->rect().center().y());
     QTest::mouseClick(target, Qt::LeftButton, Qt::KeyboardModifiers(), arrowPos);

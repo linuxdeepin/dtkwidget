@@ -20,7 +20,9 @@ int main(int argc, char *argv[])
 #endif
     DApplication *a = DApplication::globalApplication(argc, argv);
 
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     DApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, true);
+#endif
     DLogManager::registerConsoleAppender();
 
     a->loadTranslator();

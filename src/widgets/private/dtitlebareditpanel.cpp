@@ -351,7 +351,7 @@ void DCollapseWidget::updateMinimumValue()
                 continue;
             minimum += w->width();
             qDebug() << "+" << w->width();
-            if (auto dragDropWidget = qobject_cast<DragDropWidget *>(w)) {
+            if (qobject_cast<DragDropWidget *>(w)) {
                if (m_settingsImpl->isSpacerTool(m_settingsImpl->findKeyByPos(i)) && !m_settingsImpl->isStrecherTool(m_settingsImpl->findKeyByPos(i))) {
                    minimum += SPACING;
                    qDebug() << "+" << SPACING;
@@ -402,7 +402,7 @@ void DCollapseWidget::collapse()
     }
 
     if (auto item = m_mainHLayout->takeAt(index)) {
-        if (auto spacerItem = item->spacerItem()) { // 如果是spacer，只存数据，不处理expand按钮
+        if (item->spacerItem()) { // 如果是spacer，只存数据，不处理expand按钮
             QPair<QString, QWidget*> tmp{m_settingsImpl->findKeyByPos(index), nullptr};
             m_viewsInMenu.append(tmp);
             qDebug() << "collapse:" << m_viewsInMenu;

@@ -36,10 +36,8 @@
 #include <DTextEdit>
 #include <DSearchComboBox>
 #include <DSpinBox>
-#include <DSegmentedHighlight>
 #include <DSpinner>
 #include <DToolButton>
-#include <DSegmentedControl>
 #include <DSuggestButton>
 #include <DSwitchButton>
 #include <DWarningButton>

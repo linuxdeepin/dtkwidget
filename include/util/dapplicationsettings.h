@@ -19,7 +19,7 @@ class DApplicationSettings : public QObject, public DCORE_NAMESPACE::DObject
     D_DECLARE_PRIVATE(DApplicationSettings)
 
 public:
-    Q_DECL_DEPRECATED_X("The feature has been moved to DGuiApplicationHelper, We can disable it by setting DGuiApplicationHelper::DontSaveApplicationTheme enum with setAttribute.")
+    D_DECL_DEPRECATED_X("The feature has been moved to DGuiApplicationHelper, We can disable it by setting DGuiApplicationHelper::DontSaveApplicationTheme enum with setAttribute.")
     explicit DApplicationSettings(QObject *parent = nullptr);
 
 private:

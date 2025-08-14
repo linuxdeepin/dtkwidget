@@ -71,7 +71,7 @@ DPushButtonExample::DPushButtonExample(QWidget *parent)
     DPushButton *pButtonDisabled = new DPushButton("button disabled", this);
     pButtonDisabled->setFixedSize(DSizeModeHelper::element(QSize(200, 24), QSize(200, 36)));
     // connect `sizeModeChanged()` signal to update Size.
-    connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::sizeModeChanged, [pButtonDisabled](DGuiApplicationHelper::SizeMode mode) {
+    connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::sizeModeChanged, [pButtonDisabled](DGuiApplicationHelper::SizeMode) {
         pButtonDisabled->setFixedSize(DSizeModeHelper::element(QSize(200, 24), QSize(200, 36)));
     });
     pButtonDisabled->setEnabled(false);
@@ -402,7 +402,7 @@ DIconButtonExample::DIconButtonExample(QWidget *parent)
     pButton_8->setIconSize(QSize(16, 16));
     DStyle::setFocusRectVisible(pButton_8, false);
 
-    auto updateButtonSize = [](QWidget *widget, int mode) {
+    auto updateButtonSize = [](QWidget *widget, int) {
         for (auto button : widget->findChildren<DIconButton *>(QString(), Qt::FindDirectChildrenOnly)) {
             if (button->iconSize() == QSize(16, 16)) {
                 button->setFixedSize(DSizeModeHelper::element(QSize(20, 20), QSize(24, 24)));

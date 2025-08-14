@@ -12,6 +12,7 @@
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 #include <QDesktopWidget>
 #endif
+#include <QScreen>
 
 QT_BEGIN_NAMESPACE
 //extern Q_WIDGETS_EXPORT void qt_blurImage(QImage &blurImage, qreal radius, bool quality, int transposed = 0);
@@ -60,7 +61,7 @@ QImage dropShadow(const QPixmap &px, qreal radius, const QColor &color)
 void moveToCenter(QWidget *w)
 {
     Q_ASSERT(w != nullptr);
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#if QT_VERSION < QT_VERSION_CHECK(5, 11, 0)
     QDesktopWidget *dw = QApplication::desktop();
     QRect parentRect = dw->availableGeometry(dw->primaryScreen());
 #else
