@@ -633,7 +633,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/private/dtitlebareditpanel.cpp" line="915"/>
         <source>Drag your favorite items into the toolbar</source>
-        <translation>Arraste os itens favoritos para a barra de ferramentas</translation>
+        <translation>Arraste seus itens favoritos para a barra de ferramentas</translation>
     </message>
     <message>
         <location filename="../widgets/private/dtitlebareditpanel.cpp" line="916"/>
@@ -713,7 +713,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/daboutdialog.cpp" line="128"/>
         <location filename="../widgets/daboutdialog.cpp" line="393"/>
         <source>Sincerely appreciate the open-source software used.</source>
-        <translation>Agradeço sinceramente o software de código aberto usado.</translation>
+        <translation>Agradecemos sinceramente pelo software de código aberto utilizado.</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="395"/>
