@@ -1,4 +1,11 @@
 <?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="fr">
+
+<!--
+SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+
+SPDX-License-Identifier: LGPL-3.0-or-later
+-->
+
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -559,7 +566,7 @@
     <message>
         <location filename="../widgets/dsearchedit.cpp" line="286"/>
         <source>Search</source>
-        <translation>Rechercher</translation>
+        <translation>Chercher</translation>
     </message>
 </context>
 <context>
@@ -670,7 +677,7 @@
     <message>
         <location filename="../widgets/dsimplelistview.cpp" line="1347"/>
         <source>No search result</source>
-        <translation>Aucun résultat trouvé</translation>
+        <translation>Aucun résultat de recherche</translation>
     </message>
     <message>
         <location filename="../widgets/private/settings/content.cpp" line="330"/>

@@ -1,10 +1,17 @@
 <?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="pt_BR">
+
+<!--
+SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+
+SPDX-License-Identifier: LGPL-3.0-or-later
+-->
+
 <context>
     <name>DAboutDialog</name>
     <message>
         <location filename="../widgets/dapplication.cpp" line="1454"/>
         <source>%1 is released under %2</source>
-        <translation>%1 é lançado em %2</translation>
+        <translation>%1 é lançado sob a %2</translation>
     </message>
 </context>
 <context>
@@ -22,7 +29,7 @@
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="875"/>
         <source>Dark Gray</source>
-        <translation>Cinza Escuro</translation>
+        <translation>Cinza escuro</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="878"/>
@@ -32,7 +39,7 @@
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="881"/>
         <source>Light Gray</source>
-        <translation>Cinza Claro</translation>
+        <translation>Cinza claro</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="884"/>
@@ -67,32 +74,32 @@
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="902"/>
         <source>Dark Red</source>
-        <translation>Vermelho Escuro</translation>
+        <translation>Vermelho escuro</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="905"/>
         <source>Dark Green</source>
-        <translation>Verde Escuro</translation>
+        <translation>Verde escuro</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="908"/>
         <source>Dark Blue</source>
-        <translation>Azul Escuro</translation>
+        <translation>Azul escuro</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="911"/>
         <source>Dark Cyan</source>
-        <translation>Ciano Escuro</translation>
+        <translation>Ciano escuro</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="914"/>
         <source>Dark Magenta</source>
-        <translation>Magenta Escuro</translation>
+        <translation>Magenta escuro</translation>
     </message>
     <message>
         <location filename="../widgets/dcrumbedit.cpp" line="917"/>
         <source>Dark Yellow</source>
-        <translation>Amarelo Escuro</translation>
+        <translation>Amarelo escuro</translation>
     </message>
 </context>
 <context>
@@ -121,12 +128,12 @@
     <message>
         <location filename="../widgets/dlineedit.cpp" line="593"/>
         <source>Stop reading</source>
-        <translation>Parar de ler</translation>
+        <translation>Parar leitura</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="595"/>
         <source>Text to Speech</source>
-        <translation>Texto em Voz</translation>
+        <translation>Texto para fala</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="618"/>
@@ -136,7 +143,7 @@
     <message>
         <location filename="../widgets/dlineedit.cpp" line="640"/>
         <source>Speech To Text</source>
-        <translation>Voz em Texto</translation>
+        <translation>Fala para texto</translation>
     </message>
 </context>
 <context>
@@ -218,7 +225,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="472"/>
         <source>Color mode</source>
-        <translation>Modo de cores</translation>
+        <translation>Modo de cor</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="475"/>
@@ -284,7 +291,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="556"/>
         <source>Scaling</source>
-        <translation>Escala</translation>
+        <translation>Dimensionamento</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="573"/>
@@ -309,17 +316,17 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="641"/>
         <source>Print Layout</source>
-        <translation>Layout de Impressão</translation>
+        <translation>Layout de impressão</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="655"/>
         <source>Duplex</source>
-        <translation>Duplex</translation>
+        <translation>Frente e verso</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="668"/>
         <source>N-up printing</source>
-        <translation>Impressão N-up</translation>
+        <translation>Impressão N em 1</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="671"/>
@@ -354,7 +361,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="727"/>
         <source>Page Order</source>
-        <translation>Ordem das Páginas</translation>
+        <translation>Ordem das páginas</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="740"/>
@@ -369,12 +376,12 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="750"/>
         <source>Front to back</source>
-        <translation>De frente para trás</translation>
+        <translation>Frente para trás</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="750"/>
         <source>Back to front</source>
-        <translation>De trás para frente</translation>
+        <translation>Trás para frente</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="774"/>
@@ -414,7 +421,7 @@
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="847"/>
         <source>Input your text</source>
-        <translation>Insira o texto</translation>
+        <translation>Insira seu texto</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="872"/>
@@ -455,13 +462,13 @@
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1013"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2283"/>
         <source>Print to PDF</source>
-        <translation>Imprimir em PDF</translation>
+        <translation>Imprimir para PDF</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1014"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2282"/>
         <source>Save as Image</source>
-        <translation>Salvar como Imagem</translation>
+        <translation>Salvar como imagem</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1264"/>
@@ -472,34 +479,34 @@
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1359"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1368"/>
         <source>Flip on short edge</source>
-        <translation>Virar na borda curta</translation>
+        <translation>Virar pela borda curta</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1298"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1363"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1367"/>
         <source>Flip on long edge</source>
-        <translation>Virar na borda longa</translation>
+        <translation>Virar pela borda longa</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1461"/>
         <source>Input page numbers please</source>
-        <translation>Insira o números de páginas</translation>
+        <translation>Insira os números das páginas</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1464"/>
         <source>Maximum page number reached</source>
-        <translation>O número máximo de páginas foi atingido</translation>
+        <translation>Número máximo de páginas atingido</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1467"/>
         <source>Input English comma please</source>
-        <translation>Insira uma vírgula</translation>
+        <translation>Insira a vírgula</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1470"/>
         <source>Input page numbers like this: 1,3,5-7,11-15,18,21</source>
-        <translation>Insira os números das páginas assim: 1, 3, 5-7, 11-15, 18, 21</translation>
+        <translation>Insira os números das páginas: 1, 3, 5-7, 11-15, 18, 21</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1700"/>
@@ -577,7 +584,7 @@
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="68"/>
         <source>This shortcut conflicts with %1, click on Add to make this shortcut effective immediately</source>
-        <translation>Este atalho entra em conflito com %1; clique em Adicionar para efetivar este atalho</translation>
+        <translation>Este atalho entra em conflito com %1. Clique em Adicionar para efetivar este atalho</translation>
     </message>
 </context>
 <context>
@@ -598,12 +605,12 @@
     <message>
         <location filename="../widgets/dtextedit.cpp" line="202"/>
         <source>Stop reading</source>
-        <translation>Parar de ler</translation>
+        <translation>Parar leitura</translation>
     </message>
     <message>
         <location filename="../widgets/dtextedit.cpp" line="204"/>
         <source>Text to Speech</source>
-        <translation>Texto em Voz</translation>
+        <translation>Texto para fala</translation>
     </message>
     <message>
         <location filename="../widgets/dtextedit.cpp" line="227"/>
@@ -613,7 +620,7 @@
     <message>
         <location filename="../widgets/dtextedit.cpp" line="249"/>
         <source>Speech To Text</source>
-        <translation>Voz em Texto</translation>
+        <translation>Fala para texto</translation>
     </message>
 </context>
 <context>
@@ -626,12 +633,12 @@
     <message>
         <location filename="../widgets/private/dtitlebareditpanel.cpp" line="915"/>
         <source>Drag your favorite items into the toolbar</source>
-        <translation>Arraste os itens favoritos para a barra de ferramentas</translation>
+        <translation>Arraste seus itens favoritos para a barra de ferramentas</translation>
     </message>
     <message>
         <location filename="../widgets/private/dtitlebareditpanel.cpp" line="916"/>
         <source>Drag below items into the toolbar to restore defaults</source>
-        <translation>Arraste os itens da barra de ferramentas, para baixo, visando restaurar os padrões</translation>
+        <translation>Arraste os itens abaixo para a barra de ferramentas para restaurar os padrões</translation>
     </message>
     <message>
         <location filename="../widgets/private/dtitlebareditpanel.cpp" line="921"/>
@@ -662,7 +669,7 @@
     <message>
         <location filename="../widgets/dlineedit.cpp" line="534"/>
         <source>Select All</source>
-        <translation>Selecionar Tudo</translation>
+        <translation>Selecionar tudo</translation>
     </message>
 </context>
 <context>
@@ -670,12 +677,12 @@
     <message>
         <location filename="../widgets/dsimplelistview.cpp" line="1347"/>
         <source>No search result</source>
-        <translation>Nenhum resultado</translation>
+        <translation>Nenhum resultado encontrado</translation>
     </message>
     <message>
         <location filename="../widgets/private/settings/content.cpp" line="330"/>
         <source>Restore Defaults</source>
-        <translation>Restaurar Padrões</translation>
+        <translation>Restaurar padrões</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="108"/>
@@ -690,7 +697,7 @@
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="122"/>
         <source>Homepage</source>
-        <translation>Página na Internet</translation>
+        <translation>Página web</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="124"/>
@@ -706,12 +713,12 @@
         <location filename="../widgets/daboutdialog.cpp" line="128"/>
         <location filename="../widgets/daboutdialog.cpp" line="393"/>
         <source>Sincerely appreciate the open-source software used.</source>
-        <translation>Agradeço sinceramente o software de código aberto usado.</translation>
+        <translation>Agradecemos sinceramente pelo software de código aberto utilizado.</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="395"/>
         <source>open-source software</source>
-        <translation>software de código aberto</translation>
+        <translation>Software de código aberto</translation>
     </message>
     <message>
         <location filename="../widgets/dfeaturedisplaydialog.cpp" line="151"/>
@@ -721,12 +728,12 @@
     <message>
         <location filename="../widgets/dfeaturedisplaydialog.cpp" line="175"/>
         <source>Learn More</source>
-        <translation>Aprenda Mais</translation>
+        <translation>Saiba mais</translation>
     </message>
     <message>
         <location filename="../widgets/dlicensedialog.cpp" line="78"/>
         <source>Open-Source Software</source>
-        <translation>Software de Código Aberto</translation>
+        <translation>Software de código aberto</translation>
     </message>
 </context>
 <context>
@@ -734,7 +741,7 @@
     <message>
         <location filename="../widgets/dtextedit.cpp" line="194"/>
         <source>Select All</source>
-        <translation>Selecionar Tudo</translation>
+        <translation>Selecionar tudo</translation>
     </message>
 </context>
 <context>

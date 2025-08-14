@@ -1,4 +1,11 @@
 <?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="cs">
+
+<!--
+SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+
+SPDX-License-Identifier: LGPL-3.0-or-later
+-->
+
 <context>
     <name>DAboutDialog</name>
     <message>
@@ -577,7 +584,7 @@
     <message>
         <location filename="../widgets/dsettingswidgetfactory.cpp" line="68"/>
         <source>This shortcut conflicts with %1, click on Add to make this shortcut effective immediately</source>
-        <translation>Tato klávesová zkratka se střetává s %1. Aby začala platit, klepněte na Přidat</translation>
+        <translation>Tato klávesová zkratka koliduje s %1. Aby začala platit, klikněte na Přidat</translation>
     </message>
 </context>
 <context>
@@ -652,7 +659,7 @@
     <message>
         <location filename="../widgets/dlineedit.cpp" line="526"/>
         <source>&amp;Copy</source>
-        <translation>&amp;Kopírovat</translation>
+        <translation>&amp;Zkopírovat</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="529"/>
@@ -690,12 +697,12 @@
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="122"/>
         <source>Homepage</source>
-        <translation>Hlavní stránka</translation>
+        <translation>Domovská stránka</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="124"/>
         <source>Description</source>
-        <translation>Popisek</translation>
+        <translation>Popis</translation>
     </message>
     <message>
         <location filename="../widgets/daboutdialog.cpp" line="126"/>
@@ -716,7 +723,7 @@
     <message>
         <location filename="../widgets/dfeaturedisplaydialog.cpp" line="151"/>
         <source>Continue</source>
-        <translation>Další</translation>
+        <translation>Pokračovat</translation>
     </message>
     <message>
         <location filename="../widgets/dfeaturedisplaydialog.cpp" line="175"/>
@@ -750,7 +757,7 @@
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="634"/>
         <source>Theme</source>
-        <translation>Vzhled</translation>
+        <translation>Motiv vzhledu</translation>
     </message>
     <message>
         <location filename="../widgets/dtitlebar.cpp" line="636"/>
