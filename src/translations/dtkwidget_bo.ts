@@ -800,4 +800,17 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <translation>ཕྱིར་འབུད།</translation>
     </message>
 </context>
+<context>
+    <name>WaterMark</name>
+    <message>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="254"/>
+        <source>Date</source>
+        <translation>དུས་ཚོད།</translation>
+    </message>
+    <message>
+        <location filename="../widgets/dprintpreviewwidget.cpp" line="255"/>
+        <source>Username</source>
+        <translation>མི་སྤྱོད་པའི་མིང་།</translation>
+    </message>
+</context>
 </TS>
