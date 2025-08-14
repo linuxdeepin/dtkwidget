@@ -659,12 +659,12 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dlineedit.cpp" line="526"/>
         <source>&amp;Copy</source>
-        <translation>&amp;Copiar</translation>
+        <translation>Copiar</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="529"/>
         <source>Cu&amp;t</source>
-        <translation>Recor&amp;tar</translation>
+        <translation>Recortar</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="534"/>
