@@ -1,9 +1,7 @@
 [main]
 host = https://www.transifex.com
-minimum_perc = 80
-mode = developer
-
-[o:linuxdeepin:p:deepin-tool-kit:r:dwidget]
+                                                                                                   
+[o:linuxdeepin:p:deepin-tool-kit:r:656c086e604038efa2bb99f59767da6f]
 file_filter = src/translations/dtkwidget_<lang>.ts
 source_file = src/translations/dtkwidget.ts
 source_lang = en
