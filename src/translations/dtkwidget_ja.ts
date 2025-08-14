@@ -659,12 +659,12 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     <message>
         <location filename="../widgets/dlineedit.cpp" line="526"/>
         <source>&amp;Copy</source>
-        <translation type="unfinished"/>
+        <translation>コピー(&amp;C)</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="529"/>
         <source>Cu&amp;t</source>
-        <translation type="unfinished"/>
+        <translation>切り取り(&amp;T)</translation>
     </message>
     <message>
         <location filename="../widgets/dlineedit.cpp" line="534"/>
