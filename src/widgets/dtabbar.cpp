@@ -687,6 +687,7 @@ void DTabBarPrivate::layoutTab(int index)
     Q_ASSERT(index >= 0);
     QTabBarPrivate *d = reinterpret_cast<QTabBarPrivate *>(qGetPtrHelper(d_ptr));
     QTabBarPrivate::Tab *tab = d->at(index);
+    Q_ASSERT(tab);
     bool vertical = dtk_verticalTabs(d->shape);
 
     if (!(tab->leftWidget || tab->rightWidget))
@@ -1279,7 +1280,7 @@ void DTabBarPrivate::paintEvent(QPaintEvent *e)
     }
 
     // Draw the selected tab last to get it "on top"
-    if (selected >= 0) {
+    if (selected >= 0 && d->validIndex(selected)) {
         QStyleOptionTab tab;
         initStyleOption(&tab, selected);
         // 强制让文本居中
