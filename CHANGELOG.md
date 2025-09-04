@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.7.22] - 2025-09-04
+
+### Changed
+
+- I18n: [dtkwidget] Updates for project Deepin Tool Kit (#681)
+
+### Fixed
+
+- Prevent potential tab index out of bounds crash
+
 ## [5.7.21] - 2025-08-14
 
 ### Changed
