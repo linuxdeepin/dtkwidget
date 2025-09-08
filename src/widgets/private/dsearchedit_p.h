@@ -13,6 +13,7 @@
 
 QT_BEGIN_NAMESPACE
 class QAudioInput;
+class QWidgetAction;
 QT_END_NAMESPACE
 
 DWIDGET_BEGIN_NAMESPACE
@@ -32,7 +33,7 @@ public:
     void _q_clearFocus();
 
 public:
-    QAction *action;
+    QWidgetAction *action;
     QString placeHolder;
     QString placeholderText;
 

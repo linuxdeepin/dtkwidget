@@ -20,6 +20,7 @@
 #endif
 
 #include <QAction>
+#include <QWidgetAction>
 #include <QPainter>
 #include <QDebug>
 #include <QLabel>
@@ -292,21 +293,27 @@ void DSearchEditPrivate::init()
 {
     D_Q(DSearchEdit);
     label = new QLabel;
-    DIconButton *iconbtn = new DIconButton(DStyle::SP_IndicatorSearch);
 
-    iconbtn->setFlat(true);
-    iconbtn->setFocusPolicy(Qt::NoFocus);
-    iconbtn->setAttribute(Qt::WA_TransparentForMouseEvents);
-    iconbtn->setAccessibleName("DSearchEditIconButton");
+    auto createSearchIconButton = []() {
+        DIconButton *iconbtn = new DIconButton(DStyle::SP_IndicatorSearch);
+        iconbtn->setFlat(true);
+        iconbtn->setFocusPolicy(Qt::NoFocus);
+        iconbtn->setAttribute(Qt::WA_TransparentForMouseEvents);
+        iconbtn->setAccessibleName("DSearchEditIconButton");
+        iconbtn->setIconSize(QSize(20, 20));
+        return iconbtn;
+    };
+
+    auto iconbtn = createSearchIconButton();
 
     placeHolder = qApp->translate("DSearchEdit", "Search");
 
-    action = new QAction(q);
+    action = new QWidgetAction(q);
     action->setObjectName("_d_search_leftAction");
-    action->setIcon(DIconTheme::findQIcon("search_indicator"));
+    auto iconAction = createSearchIconButton();
+    action->setDefaultWidget(iconAction);
     q->lineEdit()->addAction(action, QLineEdit::LeadingPosition);
-    action->setVisible(false);
-    iconbtn->setIconSize(QSize(20, 20));
+    action->defaultWidget()->setVisible(false);
 
     DPalette pe;
     QStyleOption opt;
@@ -405,7 +412,7 @@ void DSearchEditPrivate::_q_toEditMode(bool focus)
             q->lineEdit()->setTextMargins(textMargins);
             if (animation->direction() == QPropertyAnimation::Direction::Forward) {
                 iconWidget->setVisible(false);
-                action->setVisible(true);
+                action->defaultWidget()->setVisible(true);
                 lineEdit->setPlaceholderText(placeholderText);
             } else {
                 iconWidget->setVisible(true);
@@ -420,7 +427,7 @@ void DSearchEditPrivate::_q_toEditMode(bool focus)
         if (focus) {
             animation->setDirection(QPropertyAnimation::Direction::Forward);
         } else {
-            action->setVisible(false);
+            action->defaultWidget()->setVisible(false);
             animation->setDirection(QPropertyAnimation::Direction::Backward);
         }
 
@@ -429,11 +436,11 @@ void DSearchEditPrivate::_q_toEditMode(bool focus)
         animation->start();
     } else {
         if (focus  || !q->lineEdit()->text().isEmpty()) {
-            action->setVisible(true);
+            action->defaultWidget()->setVisible(true);
             iconWidget->setVisible(false);
             lineEdit->setPlaceholderText(placeholderText);
         } else {
-            action->setVisible(false);
+            action->defaultWidget()->setVisible(false);
             iconWidget->setVisible(true);
             lineEdit->setPlaceholderText(QString());
         }
