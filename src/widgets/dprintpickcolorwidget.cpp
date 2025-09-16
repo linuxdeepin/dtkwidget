@@ -66,6 +66,10 @@ void ColorButton::paintEvent(QPaintEvent *)
     }
 }
 
+static bool supportWindowEffect()
+{
+    return DWindowManagerHelper::instance()->hasComposite() && DWindowManagerHelper::instance()->hasBlurWindow();
+}
 DPrintPickColorWidget::DPrintPickColorWidget(QWidget *parent)
     : DWidget(parent)
     , pinterface(nullptr)
@@ -115,7 +119,7 @@ void DPrintPickColorWidget::initUI()
     pickColorBtn->setFixedSize(55, 36);
     pickColorBtn->setIcon(DIconTheme::findQIcon("dorpper_normal"));
     pickColorBtn->setIconSize(QSize(32, 32));
-    pickColorBtn->setEnabled(DWindowManagerHelper::instance()->hasComposite());
+    pickColorBtn->setEnabled(supportWindowEffect());
     rgbPickColorLayout->addWidget(rgbLabel);
     rgbPickColorLayout->addWidget(rEdit);
     rgbPickColorLayout->addWidget(gEdit);
@@ -162,7 +166,10 @@ void DPrintPickColorWidget::initConnection()
 
     connect(valueLineEdit, SIGNAL(textChanged(QString)), this, SLOT(slotEditColor(QString)));
     connect(DWindowManagerHelper::instance(), &DWindowManagerHelper::hasCompositeChanged, this, [this]() {
-        this->pickColorBtn->setEnabled(DWindowManagerHelper::instance()->hasComposite());
+        this->pickColorBtn->setEnabled(supportWindowEffect());
+    });
+    connect(DWindowManagerHelper::instance(), &DWindowManagerHelper::hasBlurWindowChanged, this, [this]() {
+        this->pickColorBtn->setEnabled(supportWindowEffect());
     });
 }
 
