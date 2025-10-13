@@ -49,6 +49,13 @@ find_package(PkgConfig REQUIRED)
 
 if("${QT_VERSION_MAJOR}" STREQUAL "5")
     find_package(Qt5 REQUIRED COMPONENTS X11Extras)
+elseif("${QT_VERSION_MAJOR}" STREQUAL "6")
+    if (${Qt6Core_VERSION} VERSION_GREATER_EQUAL "6.10.0")
+      set(QT_NO_PRIVATE_MODULE_WARNING ON)
+      find_package(Qt6 REQUIRED COMPONENTS GuiPrivate WidgetsPrivate PrintSupportPrivate)
+    endif()
+else()
+    message(FATAL_ERROR "Unsupported Qt Version: ${QT_VERSION_MAJOR}")
 endif()
 
 file(GLOB D_HEADERS "${PROJECT_SOURCE_DIR}/include/DWidget/*")
