@@ -69,6 +69,7 @@ void DIconButton::setIcon(const QIcon &icon)
 {
     D_D(DIconButton);
 
+    d->dciIcon = DDciIcon();
     d->iconType = -1;
     QAbstractButton::setIcon(icon);
 }
@@ -82,6 +83,7 @@ void DIconButton::setIcon(QStyle::StandardPixmap iconType)
 {
     D_D(DIconButton);
 
+    d->dciIcon = DDciIcon();
     d->iconType = iconType;
     QAbstractButton::setIcon(style()->standardIcon(iconType, nullptr, this));
 }
@@ -95,6 +97,7 @@ void DIconButton::setIcon(DStyle::StandardPixmap iconType)
 {
     D_D(DIconButton);
 
+    d->dciIcon = DDciIcon();
     d->iconType = iconType;
     QAbstractButton::setIcon(DStyleHelper(style()).standardIcon(iconType, nullptr, this));
 }
@@ -105,6 +108,7 @@ void DIconButton::setIcon(const DDciIcon &icon)
 
     d->iconType = -1;
     d->dciIcon = icon;
+    QAbstractButton::setIcon(QIcon());
     this->update();
     this->updateGeometry();
 }
