@@ -125,6 +125,7 @@ void DButtonBoxButton::setIcon(const QIcon &icon)
     D_D(DButtonBoxButton);
 
     d->iconType = -1;
+    d->dciIcon = DDciIcon();
     QAbstractButton::setIcon(icon);
 }
 
@@ -140,6 +141,7 @@ void DButtonBoxButton::setIcon(QStyle::StandardPixmap iconType)
     D_D(DButtonBoxButton);
 
     d->iconType = iconType;
+    d->dciIcon = DDciIcon();
     QAbstractButton::setIcon(style()->standardIcon(iconType, nullptr, this));
 }
 
@@ -154,6 +156,7 @@ void DButtonBoxButton::setIcon(DStyle::StandardPixmap iconType)
 {
     D_D(DButtonBoxButton);
 
+    d->dciIcon = DDciIcon();
     d->iconType = iconType;
     QAbstractButton::setIcon(DStyleHelper(style()).standardIcon(iconType, nullptr, this));
 }
@@ -163,6 +166,7 @@ void DButtonBoxButton::setIcon(const DDciIcon &icon)
     D_D(DButtonBoxButton);
 
     d->dciIcon = icon;
+    QAbstractButton::setIcon(QIcon());
 }
 
 DDciIcon DButtonBoxButton::dciIcon() const
