@@ -78,10 +78,6 @@ Navigation::Navigation(QWidget *parent) :
     d->navbar->setContentsMargins(0, 0, 0, 0);
     d->navbar->setAutoFillBackground(true);
     d->navbar->setViewportMargins(10, 0, 10, 0);
-    DPalette pa = DPaletteHelper::instance()->palette(d->navbar);
-    pa.setBrush(DPalette::ItemBackground, Qt::transparent);
-    DPaletteHelper::instance()->setPalette(d->navbar, pa);
-
     d->navbar->setSelectionMode(QListView::SingleSelection);
     d->navbar->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
@@ -92,6 +88,9 @@ Navigation::Navigation(QWidget *parent) :
     d->navbar->setEditTriggers(QAbstractItemView::NoEditTriggers);
     d->navbar->setItemDelegate(new NavigationDelegate(d->navbar));
 
+    d->navbar->setItemSpacing(0);
+    d->navbar->setBackgroundType(static_cast<DStyledItemDelegate::BackgroundType>(DStyledItemDelegate::RoundedBackground | DStyledItemDelegate::NoNormalState));
+    
     layout->addWidget(d->navbar);
 
     connect(d->navbar->selectionModel(), &QItemSelectionModel::currentChanged, this, [=] (const QModelIndex &current) {
