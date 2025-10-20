@@ -1220,6 +1220,8 @@ void DDialog::changeEvent(QEvent *event)
             }
         }
         d->updateSize();
+    } else if (event->type() == QEvent::FontChange) {
+        d->updateSize();
     }
     return DAbstractDialog::changeEvent(event);
 }
