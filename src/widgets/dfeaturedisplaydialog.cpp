@@ -58,7 +58,7 @@ DFeatureItemWidget::DFeatureItemWidget(const QIcon &icon, const QString &name,
     setMinimumWidth(360);
     auto fontMetrics = m_featureDescriptionLabel->fontMetrics();
     auto size = fontMetrics.size(Qt::TextShowMnemonic, description);
-    setFixedHeight(size.width() <= DefaultTextLineWidth ? 66 : 86);
+    setMinimumHeight(size.width() <= DefaultTextLineWidth ? 66 : 86);
 }
 
 DFeatureItemWidget::~DFeatureItemWidget()
