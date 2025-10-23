@@ -46,6 +46,8 @@ public:
     bool mouseWheelEnabled;
 
     void updtateTool(int value);
+
+    bool needFocus;
 };
 
 DWIDGET_END_NAMESPACE

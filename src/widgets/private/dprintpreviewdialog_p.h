@@ -92,6 +92,8 @@ public:
     void setPageLayoutEnable(const bool &checked);
     void matchFitablePageSize();
     bool isActualPrinter(const QString &name);
+    QString getColorModeConfig(const QString &printer);
+    void saveColorModeConfig(const QString &printer, const QString &colorMode);
 
     void _q_printerChanged(int index);
     void _q_pageRangeChanged(int index);

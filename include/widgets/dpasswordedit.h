@@ -33,6 +33,7 @@ protected:
     Q_PRIVATE_SLOT(d_func(), void _q_toggleEchoMode())
 
     void changeEvent(QEvent *event) override;
+    bool eventFilter(QObject* watcher, QEvent* event) override;
 };
 
 DWIDGET_END_NAMESPACE

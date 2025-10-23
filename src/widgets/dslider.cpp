@@ -7,6 +7,7 @@
 
 #include <QPainter>
 #include <QEvent>
+#include <QKeyEvent>
 #include <QtMath>
 #include <QDebug>
 #include <DStyle>
@@ -137,6 +138,24 @@ bool DSlider::eventFilter(QObject *watched, QEvent *e)
     if ((watched == d->slider) && (e->type() == QEvent::Wheel)) {
         return !d->mouseWheelEnabled;
     }
+
+    if (e->type() == QEvent::MouseButtonRelease) {
+        d->needFocus = watched == d->slider;
+    }
+
+    if (d->needFocus && (e->type() == QEvent::KeyPress)) {
+        if (auto keyEvent = dynamic_cast<QKeyEvent *>(e)) {
+            if ((keyEvent->key() == Qt::Key_Up
+              || keyEvent->key() == Qt::Key_Down
+              || keyEvent->key() == Qt::Key_Left
+              || keyEvent->key() == Qt::Key_Right))
+            {
+                d->needFocus = false;
+                d->slider->setFocus();
+            }
+        }
+    }
+
     return QWidget::eventFilter(watched, e);
 }
 
@@ -680,6 +699,7 @@ DSliderPrivate::DSliderPrivate(DSlider *q)
     , tipvalue(nullptr)
     , label(nullptr)
     , mouseWheelEnabled(false)
+    , needFocus(false)
 {
 
 }
@@ -708,7 +728,7 @@ void DSliderPrivate::init()
         q->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::MinimumExpanding);
     }
     slider->setTickPosition(QSlider::NoTicks);
-    slider->installEventFilter(q);
+    qApp->installEventFilter(q);
     slider->setAccessibleName("DSliderSpecialSlider");
 }
 

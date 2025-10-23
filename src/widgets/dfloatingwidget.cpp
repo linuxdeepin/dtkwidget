@@ -153,7 +153,9 @@ bool DFloatingWidget::event(QEvent *event)
         setContentsMargins(margins, margins, margins, margins);
 
         if (d->background) {
-            int radius = DStyleHelper(style()).pixelMetric(DStyle::PM_TopLevelWindowRadius);
+            // 背景圆角使用控件的圆角，如果控件圆角未设置则使用默认值
+            int radius = d->framRadius == -1 ? DStyleHelper(style()).pixelMetric(DStyle::PM_TopLevelWindowRadius)
+                                             : d->framRadius;
 
             d->background->setBlurRectXRadius(radius);
             d->background->setBlurRectYRadius(radius);
@@ -233,7 +235,9 @@ void DFloatingWidget::setBlurBackgroundEnabled(bool blurBackgroundEnabled)
         d->background->setAttribute(Qt::WA_TransparentForMouseEvents);
         d->background->show();
 
-        int radius = DStyleHelper(style()).pixelMetric(DStyle::PM_TopLevelWindowRadius);
+        // 背景圆角使用控件的圆角，如果控件圆角未设置则使用默认值
+        int radius = d->framRadius == -1 ? DStyleHelper(style()).pixelMetric(DStyle::PM_TopLevelWindowRadius)
+                                         : d->framRadius;
 
         d->background->setBlurRectXRadius(radius);
         d->background->setBlurRectYRadius(radius);
