@@ -70,7 +70,7 @@ public:
         setMessage(str);
         cancel->setAccessibleName("ChangeDDialogCancelButton");
         replace->setAccessibleName("ChangeDDialogReplaceButton");
-        insertButton(1, cancel);
+        insertButton(0, cancel);
         insertButton(1, replace);
         connect(replace, &DSuggestButton::clicked, [ = ] {  //替换
             auto value = shortcutMap.value(key);
