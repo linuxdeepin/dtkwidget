@@ -171,6 +171,11 @@ void DStyle::setRedPointVisible(QObject *object, bool visible)
     object->setProperty("_d_menu_item_redpoint", visible);
 }
 
+void DStyle::setLineEditIconMargin(QObject *object, int margin)
+{
+    object->setProperty("_d_dtk_lineeditIconMargin", margin);
+}
+
 void DStyle::setShortcutUnderlineVisible(bool visible)
 {
     qApp->setProperty("_d_menu_underlineshortcut", visible);
@@ -2255,6 +2260,20 @@ int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QW
         return 16;
     case PM_MenuButtonIndicator:
         return DSizeModeHelper::element(8, QCommonStyle::pixelMetric(m, opt, widget));
+    // since Qt 6.3 or applied patch Add-setting-thc-ICON-size-attribute-in-lineedit-to-the-style-plugin.patch( uos or deepin).
+    case PM_LineEditIconMargin: {
+        if (widget) {
+            const QVariant &margin_value = widget->property("_d_dtk_lineeditIconMargin");
+            if (margin_value.isValid()) {
+                bool ok = false;
+                int margin = margin_value.toInt(&ok);
+                if (ok && margin >= 0) {
+                    return margin;
+                }
+            }
+        }
+        Q_FALLTHROUGH();
+    }
     case PM_FloatingButtonFrameMargin:
         return 3;
     default:
