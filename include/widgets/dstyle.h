@@ -239,6 +239,7 @@ public:
     static void setFrameRadius(QWidget *widget, int radius);
     static void setUncheckedItemIndicatorVisible(QWidget *widget, bool visible);
     static void setRedPointVisible(QObject *object, bool visible);
+    static void setLineEditIconMargin(QObject *object, int margin);
 
     static void setShortcutUnderlineVisible(bool visible);
     static bool shortcutUnderlineVisible();
