@@ -218,7 +218,10 @@ void DDialogPrivate::updateSize()
     if (!q->testAttribute(Qt::WA_Resized)) {
         QSize size = q->sizeHint();
 
-        size.setWidth(qMax(size.width(), DIALOG::DEFAULT_WIDTH));
+        size.setWidth(qMin(q->maximumWidth(), qMax(size.width(), DIALOG::DEFAULT_WIDTH)));
+        if (auto layout = q->layout()) {
+            size.setHeight(layout->totalHeightForWidth(size.width()));
+        }
         size.setHeight(qMax(size.height(), DIALOG::DEFAULT_HEIGHT));
 
         q->resize(size);
@@ -1191,22 +1194,6 @@ void DDialog::keyPressEvent(QKeyEvent *event)
 
 bool DDialog::eventFilter(QObject *watched, QEvent *event)
 {
-    Q_D(DDialog);
-
-    if (watched == d->messageLabel || watched == d->titleLabel) {
-        if (event->type() == QEvent::FontChange) {
-            QLabel *label = qobject_cast<QLabel *>(watched);
-
-            if (label && !label->text().isEmpty() && label->wordWrap()) {
-                QSize sz = style()->itemTextRect(label->fontMetrics(), label->rect(), Qt::TextWordWrap, false, label->text()).size();
-
-                label->setMinimumHeight(qMax(sz.height(), label->sizeHint().height()));
-            }
-        }
-
-        return false;
-    }
-
     return DAbstractDialog::eventFilter(watched, event);
 }
 
