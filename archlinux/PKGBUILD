@@ -1,6 +1,6 @@
 # Maintainer: justforlxz <justforlxz@gmail.com>
 pkgname=dtkwidget-git
-pkgver=5.7.24
+pkgver=5.7.25
 pkgrel=1
 sourcename=dtkwidget
 sourcetars=("$sourcename"_"$pkgver".tar.xz)
