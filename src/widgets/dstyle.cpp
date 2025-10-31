@@ -1096,7 +1096,11 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
             p->setRenderHint(QPainter::Antialiasing);
 
             if (vopt->directions != Qt::Horizontal && vopt->directions != Qt::Vertical) {
-                p->drawRoundedRect(vopt->rect, frame_radius, frame_radius);
+                QRect vrect = vopt->rect;
+                if (vopt->state & QStyle::State_MouseOver) {
+                    vrect = vopt->rect.marginsRemoved(QMargins(0, 1, 0, 0));
+                }
+                p->drawRoundedRect(vrect, frame_radius, frame_radius);
                 break;
             }
 

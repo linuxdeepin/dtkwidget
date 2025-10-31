@@ -746,6 +746,10 @@ PrintOptions DPrintPreviewWidgetPrivate::printerOptions()
     options.append(QPair<QByteArray, QByteArray>(QStringLiteral("copies").toLocal8Bit(), QString::number(previewPrinter->copyCount()).toLocal8Bit()));
     options.append(QPair<QByteArray, QByteArray>(QStringLiteral("fit-to-page").toLocal8Bit(), QStringLiteral("true").toLocal8Bit()));
 
+    if (previewPrinter->collateCopies()) {
+        options.append(QPair<QByteArray, QByteArray>(QStringLiteral("collate").toLocal8Bit(),  QStringLiteral("true").toLocal8Bit()));
+    }
+
     if (pageRangeMode != DPrintPreviewWidget::AllPage) {
         QString pageRangeString;
         if (pageRangeMode == DPrintPreviewWidget::CurrentPage) {
@@ -1051,7 +1055,7 @@ QByteArray DPrintPreviewWidgetPrivate::foundColorModelByCups() const
                 for (int i = 0; i < colorModel->num_choices; ++i) {
                     ppd_choice_t *choice = colorModel->choices + i;
 
-                    if (QString(choice->choice).startsWith("gray", Qt::CaseInsensitive)) {
+                    if (QString(choice->choice).contains("gray", Qt::CaseInsensitive)) {
                         continue;
                     } else {
                         // 寻找ColorModel属性 获取到时返回支持的颜色

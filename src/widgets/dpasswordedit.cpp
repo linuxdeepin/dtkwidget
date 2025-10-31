@@ -14,6 +14,7 @@
 #include <QTimer>
 #include <QPushButton>
 #include <QLineEdit>
+#include <QKeyEvent>
 
 
 DWIDGET_BEGIN_NAMESPACE
@@ -117,6 +118,21 @@ void DPasswordEdit::changeEvent(QEvent *event)
     return DLineEdit::changeEvent(event);
 }
 
+bool DPasswordEdit::eventFilter(QObject* watcher, QEvent* event)
+{
+    if (event->type() == QEvent::KeyPress) {
+        D_D(DPasswordEdit);
+        if (watcher == d->togglePasswordVisibleButton && !d->togglePasswordVisibleButton->isDefault()) {
+            const auto keyEvent = dynamic_cast<QKeyEvent*>(event);
+            if (keyEvent && (keyEvent->key() == Qt::Key_Return || keyEvent->key() == Qt::Key_Enter)) {
+                d->togglePasswordVisibleButton->click();
+            }
+        }
+    }
+
+    return DLineEdit::eventFilter(watcher, event);
+}
+
 DPasswordEditPrivate::DPasswordEditPrivate(DPasswordEdit *q)
     : DLineEditPrivate(q)
 {
@@ -136,6 +152,7 @@ void DPasswordEditPrivate::init()
     togglePasswordVisibleButton->setIcon(DStyle::standardIcon(q->style(), DStyle::SP_ShowPassword));
     togglePasswordVisibleButton->setFixedWidth(defaultButtonWidth());
     togglePasswordVisibleButton->setIconSize(defaultIconSize());
+    togglePasswordVisibleButton->installEventFilter(q);
 
     list.append(togglePasswordVisibleButton);
     q->setRightWidgets(list);

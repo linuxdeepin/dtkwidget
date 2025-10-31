@@ -22,17 +22,9 @@
         <file>light/icons/dorpper_normal_32px.svg</file>
         <file>dark/icons/titlebar_more_50px.svg</file>
         <file>light/icons/titlebar_more_50px.svg</file>
-        <file>dark/actions/splitscreen_left_36px.svg</file>
-        <file>dark/actions/splitscreen_right_36px.svg</file>
-        <file>dark/actions/splitscreen_showmaximize_36px.svg</file>
-        <file>dark/actions/splitscreen_shownormal_36px.svg</file>
         <file>light/actions/print_previewscale_18px.svg</file>
         <file>light/actions/printer_dropup_14px.svg</file>
         <file>light/actions/printer_dropdown_14px.svg</file>
-        <file>light/actions/splitscreen_left_36px.svg</file>
-        <file>light/actions/splitscreen_right_36px.svg</file>
-        <file>light/actions/splitscreen_showmaximize_36px.svg</file>
-        <file>light/actions/splitscreen_shownormal_36px.svg</file>
         <file>light/actions/printer_lrtb_1_24px.svg</file>
         <file>light/actions/printer_lrtb_2_24px.svg</file>
         <file>light/actions/printer_lrtb_3_24px.svg</file>
@@ -60,6 +52,14 @@
         <file>light/icons/selection_topleft_40px.svg</file>
         <file>light/icons/selection_bottomright_40px.svg</file>
         <file>light/icons/selection_bottomleft_40px.svg</file>
+        <file>dark/icons/splitscreen_left_36px.svg</file>
+        <file>dark/icons/splitscreen_right_36px.svg</file>
+        <file>dark/icons/splitscreen_showmaximize_36px.svg</file>
+        <file>dark/icons/splitscreen_shownormal_36px.svg</file>
+        <file>light/icons/splitscreen_left_36px.svg</file>
+        <file>light/icons/splitscreen_right_36px.svg</file>
+        <file>light/icons/splitscreen_showmaximize_36px.svg</file>
+        <file>light/icons/splitscreen_shownormal_36px.svg</file>
     </qresource>
     <qresource prefix="/dsg/built-in-icons">
         <file alias="window_menu.dci">bloom/window_menu.dci</file>

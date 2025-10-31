@@ -487,12 +487,18 @@ void DTitlebarPrivate::updateButtonsState(Qt::WindowFlags type)
 
 void DTitlebarPrivate::updateButtonsFunc()
 {
+    D_Q(DTitlebar);
     // TASK-18145 (bug-17474) do not setMotifFunctions on wayland
     if (!targetWindowHandle) {
         return;
     }
     if (!qgetenv("WAYLAND_DISPLAY").isEmpty()) {
-        closeButton->setEnabled(!disableFlags.testFlag(Qt::WindowCloseButtonHint));
+        bool enableClose = !disableFlags.testFlag(Qt::WindowCloseButtonHint);
+        closeButton->setEnabled(enableClose);
+        auto funPtr = qApp->platformFunction("_d_enableCloseable");
+        if (funPtr && q->parentWidget() && q->parentWidget()->windowHandle()) {
+            reinterpret_cast<void(*)(quint32, quint32)>(funPtr)(q->parentWidget()->windowHandle()->winId(), enableClose);
+        }
         return;
     }
 
@@ -1103,13 +1109,16 @@ bool DTitlebar::eventFilter(QObject *obj, QEvent *event)
 {
     D_D(DTitlebar);
 
-    if (event->type() == QEvent::MouseButtonPress &&
-            static_cast<QMouseEvent *>(event)->button() == Qt::RightButton &&
-            (obj ==d->minButton || obj == d->maxButton ||
-            obj == d->closeButton || obj == d->optionButton ||
-            obj == d->quitFullButton))
-    {
-        event->accept(); // button on titlebar should not show kwin menu
+    bool isRightButtonPressed = event->type() == QEvent::MouseButtonPress && static_cast<QMouseEvent *>(event)->button() == Qt::RightButton;
+    bool isMouseMoved = event->type() == QEvent::MouseMove;
+    bool isTitleButton = obj == d->minButton ||
+                         obj == d->maxButton ||
+                         obj == d->closeButton ||
+                         obj == d->optionButton ||
+                         obj == d->quitFullButton;
+
+    if ((isRightButtonPressed || isMouseMoved) && isTitleButton) {
+        event->accept(); // buttons on titlebar should not show kwin menu and they should not be moved
         return true;
     }
 
