@@ -77,7 +77,7 @@ List of some open source projects using dtkwidget: (Contact us or open a pull re
 * **[SparkStore](https://github.com/Spark-Store/Spark-Store)**: SparkStore
 * **[WingHexExplorer](https://github.com/Wing-summer/WingHexExplorer)**: Powerful Hexadecimal Editor with dtkwidget
 * **[WingTool](https://github.com/Wing-summer/WingTool)**: A Productivity Plugin-based Toolbox with dtkwidget
-* **[ScreenLight](https://github.com/Wing-summer/ScreenLight)**: A small tool to ajust the brightness of the screen with dtkwidget
+* **[ScreenLight](https://github.com/Wing-summer/ScreenLight)**: A small tool to adjust the brightness of the screen with dtkwidget
 
 ## License
 
