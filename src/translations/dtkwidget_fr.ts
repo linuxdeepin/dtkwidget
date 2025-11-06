@@ -234,7 +234,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1679"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1694"/>
         <source>Color</source>
-        <translation>Couleur</translation>
+        <translation type="vanished">Couleur</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="475"/>
@@ -538,6 +538,10 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2353"/>
         <source>Images</source>
         <translation>Images</translation>
+    </message>
+    <message>
+        <source>Full Color</source>
+        <translation>Pleines couleurs</translation>
     </message>
 </context>
 <context>
