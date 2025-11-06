@@ -539,6 +539,10 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <source>Images</source>
         <translation>이미지</translation>
     </message>
+    <message>
+        <source>Full Color</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DPrintPreviewWidget</name>
