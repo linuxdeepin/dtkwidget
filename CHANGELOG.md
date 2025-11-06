@@ -5,6 +5,62 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.7.26] - 2025-11-06
+
+### Added
+
+- Add support for custom line edit icon margin
+
+### Changed
+
+- Improve navigation widget styling
+- Chore: New release 5.7.25
+- Revert "fix: DApplication初始化过程中会覆盖原有事件掩码，导致丢失事件"
+- 新增一个含有内外边界的blurEffectWidget
+- 优化新增的DBlurEffectWithBorderWidget
+- 点击enter 和 return 按键可以切换密码明文显示状态
+- 打印预览中的按照页码范围进行打印，不进行重置处理
+- 滑动条默认支持鼠标点击后获得焦点，方便使用键盘进行微调
+- Revert "fix: 修复大多数按钮不响应enter事件"
+- 调整DTK滑动控件的焦点逻辑
+- 打印预览添加默认色彩配置
+
+### Fixed
+
+- Correct button order in settings dialog
+- Handle font change events in dialog
+- Adjust feature item widget height calculation
+- Improve dialog sizing and remove unused event filter
+- 修复控制中心一级菜单悬浮后离开有残影
+- 解决wayland机器部分对话框可以改变大小
+- 修复DArrowRectangle在屏幕边缘处移动时其箭头有残影
+- 修复wayland下DArrowRectangle控件在屏幕左边缘箭头位置跳变、右边缘箭头位置错误、箭头区域有模糊残影
+- 去除水印自定义文本字数限制
+- Wayland协议打印预览弹窗的最大化按钮点击无响应
+- 修复打印预览部分控件未适配紧凑模式
+- 修复打印预览对话框UI问题
+- 修复dtk图标颜色更新后，分屏菜单里的图标颜色没有跟随改变
+- 修复华为机型数据备份进度显示界面，表头右键菜单中“关闭”按钮为可点击状态
+- 修复窗口设置不允许关闭时,还可通过窗口右键菜单来关闭窗口
+- 修复x11拖动窗口，鼠标放在最大化按钮，无分屏菜单
+- 修复打印预览保存时文件名带上了原本的后缀名
+- 修复开源软件弹窗关闭按钮没有贴边
+- 修复分屏菜单投影的样式问题
+- 修复开源软件 链接字体 不跟随系统字体大小设置导致不协调
+- 修复窗口边界不能跟随窗口主题实时变化
+- 修复拖动终端Tab后再hover标题栏菜单，终端有概率直接崩溃
+- 修复模糊窗口最佳性能模式有内描边
+- 编辑框错误提示控件增加模糊和阴影
+- 修复ColorModel判断条件错误问题
+- 修复DPasswordEdit无focusChanged信号
+- DFloatingwidget 圆角异常
+- 修复加载颜色配置后没有触发信号导致颜色选项没有生效的问题
+- 修复打印PDF文件时逐份打印选项异常
+- 修复任务栏完全不透明时，点击企业微信，任务栏日志中有大量报错
+- 适配dde-watermark-plugin,添加对应头文件的简写文件
+- 修复按下方向键后，界面默认第一个slider滑块获取到焦点的问题
+- 更新翻译
+
 ## [5.7.25] - 2025-10-30
 
 ### Added
