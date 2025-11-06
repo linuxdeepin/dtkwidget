@@ -234,7 +234,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1679"/>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="1694"/>
         <source>Color</source>
-        <translation>رەڭلىك</translation>
+        <translation type="vanished">رەڭلىك</translation>
     </message>
     <message>
         <location filename="../widgets/dprintpreviewdialog.cpp" line="475"/>
@@ -538,6 +538,10 @@ SPDX-License-Identifier: LGPL-3.0-or-later
         <location filename="../widgets/dprintpreviewdialog.cpp" line="2353"/>
         <source>Images</source>
         <translation>رەسىم</translation>
+    </message>
+    <message>
+        <source>Full Color</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
