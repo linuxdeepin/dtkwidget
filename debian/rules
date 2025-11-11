@@ -9,6 +9,9 @@ export DEB_CFLAGS_MAINT_APPEND = -Wall
 export DEB_CXXFLAGS_MAINT_APPEND = -Wall
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,-z,noexecstack -Wl,-E
 
+# reproducible编译参数
+DEB_CMAKE_EXTRA_FLAGS += -DCMAKE_SKIP_BUILD_RPATH=ON
+
 DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 
 DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
@@ -26,7 +29,7 @@ endif
 	dh $@
 
 override_dh_auto_configure:
-	dh_auto_configure -- -DBUILD_PLUGINS=OFF -DBUILD_DOCS=ON -DDTK_VERSION=$(_PACK_VER) -DDTK_STATIC_TRANSLATION=YES
+	dh_auto_configure -- $(DEB_CMAKE_EXTRA_FLAGS) -DBUILD_PLUGINS=OFF -DBUILD_DOCS=ON -DDTK_VERSION=$(_PACK_VER) -DDTK_STATIC_TRANSLATION=YES
 #override_dh_auto_configure:
 #	dh_auto_configure -- LIB_INSTALL_DIR=/usr/lib/$(DEB_HOST_MULTIARCH)
 #override_dh_makeshlibs:
