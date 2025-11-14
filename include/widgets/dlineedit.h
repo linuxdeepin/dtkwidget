@@ -72,6 +72,9 @@ public:
     bool cutEnabled() const;
     void setCutEnabled(bool enable);
 
+    bool pasteEnabled() const;
+    void setPasteEnabled(bool enable);
+
 Q_SIGNALS:
     void alertChanged(bool alert) const;
     void focusChanged(bool onFocus) const;
