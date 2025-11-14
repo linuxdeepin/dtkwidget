@@ -481,6 +481,28 @@ void DLineEdit::setCopyEnabled(bool enable)
 
 /*!
 @~english
+  \brief Returns whether the input text can be pasted
+  \return True means that the text can be pasted, and false means that it cannot be pasted
+ */
+bool DLineEdit::pasteEnabled() const
+{
+    D_DC(DLineEdit);
+    return d->bEnablePaste;
+}
+
+/*!
+@~english
+  \brief Set whether the input text can be pasted
+  \a enable　True means the input text can be pasted, false means it cannot be pasted
+ */
+void DLineEdit::setPasteEnabled(bool enable)
+{
+    D_D(DLineEdit);
+    d->bEnablePaste = enable;
+}
+
+/*!
+@~english
   \brief Event filter
 
   \a watched Listened child control pointer， \a event Events to be filtered \a event example.
@@ -508,6 +530,9 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
         if (pKeyEvent == QKeySequence::Cut && !cutEnabled()) {
             return true;
         }
+        if (pKeyEvent == QKeySequence::Paste && !pasteEnabled()) {
+            return true;
+        }
 
         if (pKeyEvent == QKeySequence::SelectAll) {
             QApplication::clipboard()->setText(lineEdit()->text(), QClipboard::Mode::Selection);
@@ -527,6 +552,9 @@ bool DLineEdit::eventFilter(QObject *watched, QEvent *event)
                 action->setEnabled(false);
             }
             if (action->text().startsWith(QLineEdit::tr("Cu&t")) && !cutEnabled()) {
+                action->setEnabled(false);
+            }
+            if (action->text().startsWith(QLineEdit::tr("&Paste")) && !pasteEnabled()) {
                 action->setEnabled(false);
             }
         }

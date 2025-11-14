@@ -48,6 +48,7 @@ public:
     bool bSpeechToText = true;
     bool bTextToSpeech = true;
     bool bTextToTranslate = true;
+    bool bEnablePaste = true;
 };
 
 DWIDGET_END_NAMESPACE
