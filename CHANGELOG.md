@@ -5,6 +5,68 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.7.27] - 2025-11-27
+
+### Added
+
+- Add reproducible build support
+- Add paste control to DLineEdit
+
+### Changed
+
+- Translate dtkwidget.ts in bn
+- Translate dtkwidget.ts in de
+- Translate dtkwidget.ts in hu
+- Translate dtkwidget.ts in ug
+- Translate dtkwidget.ts in pt_BR
+- Translate dtkwidget.ts in am_ET
+- Translate dtkwidget.ts in zh_TW
+- Translate dtkwidget.ts in ar
+- Translate dtkwidget.ts in sr
+- Translate dtkwidget.ts in pl
+- Translate dtkwidget.ts in fr
+- Translate dtkwidget.ts in sl
+- Translate dtkwidget.ts in ro
+- Translate dtkwidget.ts in lt
+- Translate dtkwidget.ts in ca
+- Translate dtkwidget.ts in hi_IN
+- Translate dtkwidget.ts in uk
+- Translate dtkwidget.ts in id
+- Translate dtkwidget.ts in pt
+- Translate dtkwidget.ts in hr
+- Translate dtkwidget.ts in ms
+- Translate dtkwidget.ts in nb
+- Translate dtkwidget.ts in sk
+- Translate dtkwidget.ts in ne
+- Translate dtkwidget.ts in ko
+- Translate dtkwidget.ts in az
+- Translate dtkwidget.ts in es
+- Translate dtkwidget.ts in cs
+- Translate dtkwidget.ts in ast
+- Translate dtkwidget.ts in bg
+- Translate dtkwidget.ts in lo
+- Translate dtkwidget.ts in sq
+- Translate dtkwidget.ts in fa
+- Translate dtkwidget.ts in da
+- Translate dtkwidget.ts in ja
+- Translate dtkwidget.ts in bo
+- Translate dtkwidget.ts in nl
+- Translate dtkwidget.ts in br
+- Translate dtkwidget.ts in zh_CN
+- Translate dtkwidget.ts in fi
+- Translate dtkwidget.ts in gl_ES
+- Translate dtkwidget.ts in tr
+- Translate dtkwidget.ts in eu
+- Translate dtkwidget.ts in zh_HK
+- Translate dtkwidget.ts in ru
+- Translate dtkwidget.ts in it
+- Translate dtkwidget.ts in sq
+- Reapply "fix: DApplication初始化过程中会覆盖原有事件掩码，导致丢失事件"
+
+### Fixed
+
+- Fix spelling errors
+
 ## [5.7.26] - 2025-11-06
 
 ### Added
