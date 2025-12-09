@@ -21,6 +21,7 @@
 #include <QGuiApplication>
 #include <QAbstractItemView>
 #include <QPainterPath>
+#include <QLoggingCategory>
 
 #include <qmath.h>
 #include <private/qfixed_p.h>
@@ -38,6 +39,7 @@ DCORE_USE_NAMESPACE
 DGUI_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
 
+Q_LOGGING_CATEGORY(dStyle, "dtk.widget.style")
 
 /*!
   \brief 该函数用于调整给定颜色.
@@ -173,7 +175,13 @@ void DStyle::setRedPointVisible(QObject *object, bool visible)
 
 void DStyle::setLineEditIconMargin(QObject *object, int margin)
 {
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 3, 0))
     object->setProperty("_d_dtk_lineeditIconMargin", margin);
+#else
+    Q_UNUSED(object)
+    Q_UNUSED(margin)
+    qWarning(dStyle) << "DStyle::setLineEditIconMargin is only available since Qt 6.3 or in uos.";
+#endif
 }
 
 void DStyle::setShortcutUnderlineVisible(bool visible)
@@ -2264,6 +2272,7 @@ int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QW
         return 16;
     case PM_MenuButtonIndicator:
         return DSizeModeHelper::element(8, QCommonStyle::pixelMetric(m, opt, widget));
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 3, 0))
     // since Qt 6.3 or applied patch Add-setting-thc-ICON-size-attribute-in-lineedit-to-the-style-plugin.patch( uos or deepin).
     case PM_LineEditIconMargin: {
         if (widget) {
@@ -2278,6 +2287,7 @@ int DStyle::pixelMetric(QStyle::PixelMetric m, const QStyleOption *opt, const QW
         }
         Q_FALLTHROUGH();
     }
+#endif
     case PM_FloatingButtonFrameMargin:
         return 3;
     default:
