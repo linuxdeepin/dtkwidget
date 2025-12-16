@@ -10,19 +10,25 @@ pkg_check_modules(X11 REQUIRED IMPORTED_TARGET x11)
 include(util/util.cmake)
 include(widgets/widgets.cmake)
 
-file(GLOB TRANSLATIONS translations/*.ts)
-if("${QT_VERSION_MAJOR}" STREQUAL "5")
-    qt5_add_translation(QM_FILES ${TRANSLATIONS})
-else()
-    qt6_add_translation(QM_FILES ${TRANSLATIONS})
-endif()
+file(GLOB TS_FILES translations/*.ts)
 
 add_library(${LIBNAME} SHARED
     ${WIDGETS}
-    ${QM_FILES}
     ${UTIL}
     ${PUBLIC_HEADERS}
 )
+
+if(QT_VERSION_MAJOR EQUAL 6)
+    qt_add_translations(${LIBNAME}
+        TS_FILES ${TS_FILES}
+        QM_FILES_OUTPUT_VARIABLE QM_FILES
+        LUPDATE_OPTIONS -no-ui-lines -locations none
+    )
+else()
+    qt5_add_translation(QM_FILES ${TS_FILES})
+    add_custom_target(translations ALL DEPENDS ${QM_FILES})
+    target_sources(${LIBNAME} PRIVATE ${QM_FILES})
+endif()
 
 set(TRANSLATIONS_INSTALL_DIR
     "dtk${PROJECT_VERSION_MAJOR}/DWidget/translations"
