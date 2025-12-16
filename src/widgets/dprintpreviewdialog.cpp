@@ -47,6 +47,7 @@
 #include <QTimer>
 #include <QKeyEvent>
 #include <QWindow>
+#include <QLoggingCategory>
 #include <private/qprint_p.h>
 #include <private/qcups_p.h>
 #include <private/qprintdevice_p.h>
@@ -82,6 +83,9 @@
 #define WATERLAYOUT_CENTER 0
 #define WATERLAYOUT_TILED 1
 #define WATERFONT_SIZE 65
+
+Q_LOGGING_CATEGORY(dPrintPreview, "dtk.widget.printPreview")
+
 
 DCORE_USE_NAMESPACE
 DWIDGET_BEGIN_NAMESPACE
@@ -1049,7 +1053,10 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(marginsCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_pageMarginChanged(int)));
     QObject::connect(printBtn, SIGNAL(clicked(bool)), q, SLOT(_q_startPrint(bool)));
     QObject::connect(waterColorBtn, SIGNAL(clicked(bool)), q, SLOT(_q_colorButtonCliked(bool)));
-    QObject::connect(colorModeCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_ColorModeChange(int)));
+    QObject::connect(colorModeCombo, &QComboBox::currentIndexChanged, q, [this](int index){
+        _q_ColorModeChange(index);
+        saveColorModeConfig(printDeviceCombo->currentText(), index == 0 ? "color" : "gray");
+    });
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QObject::connect(orientationgroup, SIGNAL(buttonClicked(int)), q, SLOT(_q_orientationChanged(int)));
 #else
@@ -1905,7 +1912,6 @@ void DPrintPreviewDialogPrivate::_q_ColorModeChange(int index)
         supportedColorMode = false;
         waterColor = QColor("#6f6f6f");
     }
-    saveColorModeConfig(printDeviceCombo->currentText(), index == 0 ? "color" : "gray");
     _q_selectColorButton(waterColor);
     pickColorWidget->convertColor(waterColor);
 }
@@ -2241,9 +2247,13 @@ bool DPrintPreviewDialogPrivate::isActualPrinter(const QString &name)
 
 QString DPrintPreviewDialogPrivate::getColorModeConfig(const QString &printer)
 {
-    DConfig config("org.deepin.dtk.preference");
-    QString colorMode = config.value("defaultColorMode", "color").toString();
-    QString colorConfig = config.value("colorMode").toString();
+    std::unique_ptr<DConfig> config(DConfig::createGeneric("org.deepin.dtk.preference"));
+    if (!config->isValid()) {
+        qWarning(dPrintPreview) << "config is invalid";
+        return "color";
+    }
+    QString colorMode = config->value("defaultColorMode", "color").toString();
+    QString colorConfig = config->value("colorMode").toString();
     const QJsonDocument &document = QJsonDocument::fromJson(colorConfig.toUtf8());
     const QJsonObject &obj = document.object();
     if (obj.contains(printer)) {
@@ -2254,13 +2264,17 @@ QString DPrintPreviewDialogPrivate::getColorModeConfig(const QString &printer)
 
 void DPrintPreviewDialogPrivate::saveColorModeConfig(const QString &printer, const QString &colorMode)
 {
-    DConfig config("org.deepin.dtk.preference");
-    QString colorConfig = config.value("colorMode").toString();
+    std::unique_ptr<DConfig> config(DConfig::createGeneric("org.deepin.dtk.preference"));
+    if (!config->isValid()) {
+        qWarning(dPrintPreview) << "config is invalid";
+        return;
+    }
+    QString colorConfig = config->value("colorMode").toString();
     const QJsonDocument &document = QJsonDocument::fromJson(colorConfig.toUtf8());
     QJsonObject obj = document.object();
     obj.insert(printer, colorMode);
     QJsonDocument doc(obj);
-    config.setValue("colorMode", doc.toJson(QJsonDocument::Compact));
+    config->setValue("colorMode", doc.toJson(QJsonDocument::Compact));
 }
 
 /*!
@@ -3251,7 +3265,7 @@ bool PreviewSettingsPluginHelper::setCurrentPlugin(const QString &pluginName)
     });
 
     if (it == m_availablePlugins.cend()) {
-        qWarning() << "DPrintPreviewDialog: " << "No plugin named " << pluginName << " was found.";
+        qWarning(dPrintPreview) << "DPrintPreviewDialog: " << "No plugin named " << pluginName << " was found.";
         return false;
     }
     m_currentInterface = *it;
