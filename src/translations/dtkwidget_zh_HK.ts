@@ -541,7 +541,7 @@ SPDX-License-Identifier: LGPL-3.0-or-later
     </message>
     <message>
         <source>Full Color</source>
-        <translation type="unfinished"/>
+        <translation>彩色</translation>
     </message>
 </context>
 <context>
