@@ -3,19 +3,19 @@
     <name>CameraForm</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"/>
+        <translation>Formular</translation>
     </message>
     <message>
         <source>ok</source>
-        <translation type="unfinished"/>
+        <translation>ok</translation>
     </message>
     <message>
         <source>mirrored</source>
-        <translation type="unfinished"/>
+        <translation>e pasqyruar</translation>
     </message>
     <message>
         <source>Round</source>
-        <translation type="unfinished"/>
+        <translation>Rrumbullake</translation>
     </message>
     <message>
         <source>start</source>
@@ -545,7 +545,7 @@
     </message>
     <message>
         <source>255.255.255.255</source>
-        <translation type="unfinished"/>
+        <translation>255.255.255.255</translation>
     </message>
     <message>
         <source>这是一个富文本编辑框</source>
@@ -553,11 +553,11 @@
     </message>
     <message>
         <source>warning</source>
-        <translation type="unfinished"/>
+        <translation>kujdes</translation>
     </message>
     <message>
         <source>suggest</source>
-        <translation type="unfinished"/>
+        <translation>sugjeroni</translation>
     </message>
 </context>
 <context>
@@ -579,7 +579,7 @@
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Ngjite</translation>
     </message>
     <message>
         <source>Select All</source>
@@ -642,11 +642,11 @@
     </message>
     <message>
         <source>Collections</source>
-        <translation type="unfinished"/>
+        <translation>Koleksione</translation>
     </message>
     <message>
         <source>2023 UnionTech Software Technology Co., Ltd.</source>
-        <translation type="unfinished"/>
+        <translation>2023 UnionTech Software Technology Co., Ltd.</translation>
     </message>
 </context>
 <context>
@@ -706,7 +706,7 @@
     <name>main</name>
     <message>
         <source>Collections provides the examples for dtk applications.</source>
-        <translation type="unfinished"/>
+        <translation>Koleksionet ofrojnë shembujt për aplikacionet dtk.</translation>
     </message>
 </context>
 </TS>
