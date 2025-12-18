@@ -3,15 +3,15 @@
     <name>CameraForm</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"/>
+        <translation>Forma</translation>
     </message>
     <message>
         <source>ok</source>
-        <translation type="unfinished"/>
+        <translation>ok</translation>
     </message>
     <message>
         <source>mirrored</source>
-        <translation type="unfinished"/>
+        <translation>zduplikowany</translation>
     </message>
     <message>
         <source>Round</source>
@@ -19,7 +19,7 @@
     </message>
     <message>
         <source>start</source>
-        <translation type="unfinished"/>
+        <translation>rozpocznij</translation>
     </message>
 </context>
 <context>
@@ -537,11 +537,11 @@
     <name>MainWindow</name>
     <message>
         <source>MainWindow</source>
-        <translation type="unfinished"/>
+        <translation>GłówneOkno</translation>
     </message>
     <message>
         <source>This is DLabel...</source>
-        <translation type="unfinished"/>
+        <translation>To jest DLabel...</translation>
     </message>
     <message>
         <source>255.255.255.255</source>
@@ -549,15 +549,15 @@
     </message>
     <message>
         <source>这是一个富文本编辑框</source>
-        <translation type="unfinished"/>
+        <translation>To jest zaawansowany edytor tekstu.</translation>
     </message>
     <message>
         <source>warning</source>
-        <translation type="unfinished"/>
+        <translation>ostrzeżenie</translation>
     </message>
     <message>
         <source>suggest</source>
-        <translation type="unfinished"/>
+        <translation>wyślij sugestie</translation>
     </message>
 </context>
 <context>
@@ -579,7 +579,7 @@
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Wklej</translation>
     </message>
     <message>
         <source>Select All</source>
@@ -642,7 +642,7 @@
     </message>
     <message>
         <source>Collections</source>
-        <translation type="unfinished"/>
+        <translation>Kolekcje</translation>
     </message>
     <message>
         <source>2023 UnionTech Software Technology Co., Ltd.</source>
