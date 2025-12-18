@@ -1053,7 +1053,7 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(marginsCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_pageMarginChanged(int)));
     QObject::connect(printBtn, SIGNAL(clicked(bool)), q, SLOT(_q_startPrint(bool)));
     QObject::connect(waterColorBtn, SIGNAL(clicked(bool)), q, SLOT(_q_colorButtonCliked(bool)));
-    QObject::connect(colorModeCombo, &QComboBox::currentIndexChanged, q, [this](int index){
+    QObject::connect(colorModeCombo, qOverload<int>(&QComboBox::currentIndexChanged), q, [this](int index){
         _q_ColorModeChange(index);
         saveColorModeConfig(printDeviceCombo->currentText(), index == 0 ? "color" : "gray");
     });
