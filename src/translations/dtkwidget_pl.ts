@@ -15,7 +15,7 @@
     </message>
     <message>
         <source>Round</source>
-        <translation type="unfinished"/>
+        <translation>Runda</translation>
     </message>
     <message>
         <source>start</source>
