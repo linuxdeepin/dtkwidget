@@ -1,27 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="ca">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ca">
 <context>
     <name>CameraForm</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulari</translation>
     </message>
     <message>
         <source>ok</source>
-        <translation type="unfinished"></translation>
+        <translation>D&apos;acord</translation>
     </message>
     <message>
         <source>mirrored</source>
-        <translation type="unfinished"></translation>
+        <translation>replicat</translation>
     </message>
     <message>
         <source>Round</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodó</translation>
     </message>
     <message>
         <source>start</source>
-        <translation type="unfinished"></translation>
+        <translation>inicia</translation>
     </message>
 </context>
 <context>
@@ -539,27 +537,27 @@
     <name>MainWindow</name>
     <message>
         <source>MainWindow</source>
-        <translation type="unfinished"></translation>
+        <translation>Finestra principal</translation>
     </message>
     <message>
         <source>This is DLabel...</source>
-        <translation type="unfinished"></translation>
+        <translation>Això és l&apos;EtiquetaD...</translation>
     </message>
     <message>
         <source>255.255.255.255</source>
-        <translation type="unfinished"></translation>
+        <translation>255.255.255.255</translation>
     </message>
     <message>
         <source>这是一个富文本编辑框</source>
-        <translation type="unfinished"></translation>
+        <translation>Aquest és un quadre d&apos;edició de text enriquit.</translation>
     </message>
     <message>
         <source>warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Avís</translation>
     </message>
     <message>
         <source>suggest</source>
-        <translation type="unfinished"></translation>
+        <translation>Suggeriment</translation>
     </message>
 </context>
 <context>
@@ -581,7 +579,7 @@
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>En&amp;ganxa</translation>
     </message>
     <message>
         <source>Select All</source>
@@ -620,7 +618,7 @@
     </message>
     <message>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>Llicència</translation>
     </message>
     <message>
         <source>Sincerely appreciate the open-source software used.</source>
@@ -644,11 +642,11 @@
     </message>
     <message>
         <source>Collections</source>
-        <translation type="unfinished"></translation>
+        <translation>Col·leccions</translation>
     </message>
     <message>
         <source>2023 UnionTech Software Technology Co., Ltd.</source>
-        <translation type="unfinished"></translation>
+        <translation>2023 UnionTech Software Technology Co., Ltd.</translation>
     </message>
 </context>
 <context>
@@ -708,7 +706,7 @@
     <name>main</name>
     <message>
         <source>Collections provides the examples for dtk applications.</source>
-        <translation type="unfinished"></translation>
+        <translation>Les col·leccions proporcionen exemples per a aplicacions de dtk.</translation>
     </message>
 </context>
 </TS>
