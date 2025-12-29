@@ -1,4 +1,4 @@
-set(BINNAME "ut-${LIBNAME}")
+set(BINNAME "ut-${LIB_NAME}")
 
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Test)
 find_package(GTest REQUIRED)
@@ -143,8 +143,11 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     target_compile_options(${BINNAME} PRIVATE -fprofile-arcs -ftest-coverage)
 endif()
 
-target_compile_options(${BINNAME} PRIVATE -fno-access-control -fsanitize=address)
-target_link_options(${BINNAME} PRIVATE -fsanitize=address)
+target_compile_options(${BINNAME} PRIVATE -fno-access-control)
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+    target_compile_options(${BINNAME} PRIVATE -fsanitize=address)
+    target_link_options(${BINNAME} PRIVATE -fsanitize=address)
+endif()
 
 target_include_directories(${BINNAME} PRIVATE
     ${PROJECT_SOURCE_DIR}/src/widgets
@@ -173,8 +176,8 @@ target_link_libraries(${BINNAME} PRIVATE
     PkgConfig::Xi
     PkgConfig::X11
     PkgConfig::XcbUtil
-    Dtk${DTK_VERSION_MAJOR}::Gui
-    Dtk${DTK_VERSION_MAJOR}::Core
+    Dtk${DTK_NAME_SUFFIX}::Gui
+    Dtk${DTK_NAME_SUFFIX}::Core
     GTest::GTest
     gmock
     pthread

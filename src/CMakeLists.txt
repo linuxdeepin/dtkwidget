@@ -12,14 +12,14 @@ include(widgets/widgets.cmake)
 
 file(GLOB TS_FILES translations/*.ts)
 
-add_library(${LIBNAME} SHARED
+add_library(${LIB_NAME} SHARED
     ${WIDGETS}
     ${UTIL}
     ${PUBLIC_HEADERS}
 )
 
 if(QT_VERSION_MAJOR EQUAL 6)
-    qt_add_translations(${LIBNAME}
+    qt_add_translations(${LIB_NAME}
         TS_FILES ${TS_FILES}
         QM_FILES_OUTPUT_VARIABLE QM_FILES
         LUPDATE_OPTIONS -no-ui-lines -locations none
@@ -27,14 +27,14 @@ if(QT_VERSION_MAJOR EQUAL 6)
 else()
     qt5_add_translation(QM_FILES ${TS_FILES})
     add_custom_target(translations ALL DEPENDS ${QM_FILES})
-    target_sources(${LIBNAME} PRIVATE ${QM_FILES})
+    target_sources(${LIB_NAME} PRIVATE ${QM_FILES})
 endif()
 
 set(TRANSLATIONS_INSTALL_DIR
-    "dtk${PROJECT_VERSION_MAJOR}/DWidget/translations"
+    "dtk${DTK_VERSION_MAJOR}/DWidget/translations"
 )
 
-target_compile_definitions(${LIBNAME} PRIVATE
+target_compile_definitions(${LIB_NAME} PRIVATE
     SN_API_NOT_YET_FROZEN
     DTK_NO_MULTIMEDIA
     DWIDGET_TRANSLATIONS_DIR="${TRANSLATIONS_INSTALL_DIR}"
@@ -43,12 +43,12 @@ target_compile_definitions(${LIBNAME} PRIVATE
 )
 
 if(DTK_STATIC_TRANSLATION)
-target_compile_definitions(${LIBNAME} PRIVATE
+target_compile_definitions(${LIB_NAME} PRIVATE
     DTK_STATIC_TRANSLATION
 )
 endif()
 
-target_include_directories(${LIBNAME}
+target_include_directories(${LIB_NAME}
 PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include/DWidget>
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include/util>
@@ -60,15 +60,15 @@ INTERFACE
     $<INSTALL_INTERFACE:${INCLUDE_INSTALL_DIR}>
 )
 
-target_link_libraries(${LIBNAME}
+target_link_libraries(${LIB_NAME}
 PUBLIC
     Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::Network
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::DBus
     Qt${QT_VERSION_MAJOR}::PrintSupport
-    Dtk${DTK_VERSION_MAJOR}::Gui
-    Dtk${DTK_VERSION_MAJOR}::Core
+    Dtk${DTK_NAME_SUFFIX}::Gui
+    Dtk${DTK_NAME_SUFFIX}::Core
 PRIVATE
     Qt${QT_VERSION_MAJOR}::Concurrent
     Qt${QT_VERSION_MAJOR}::GuiPrivate
@@ -82,26 +82,26 @@ PRIVATE
 )
 
 if("${QT_VERSION_MAJOR}" STREQUAL "5")
-    target_link_libraries(${LIBNAME} PRIVATE
+    target_link_libraries(${LIB_NAME} PRIVATE
         PkgConfig::QGSettings
         Qt5::X11Extras
     )
 endif()
 
-target_link_directories(${LIBNAME} INTERFACE
+target_link_directories(${LIB_NAME} INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
     $<INSTALL_INTERFACE:${LIBRARY_INSTALL_DIR}>
 )
 
-set_target_properties(${LIBNAME}
+set_target_properties(${LIB_NAME}
     PROPERTIES
-    VERSION ${CMAKE_PROJECT_VERSION}
-    SOVERSION ${CMAKE_PROJECT_VERSION_MAJOR}
+    VERSION ${DTK_VERSION}
+    SOVERSION ${DTK_VERSION_MAJOR}
     EXPORT_NAME Widget
     PUBLIC_HEADER "${PUBLIC_HEADERS}"
 )
 install(
-    TARGETS ${LIBNAME}
+    TARGETS ${LIB_NAME}
     EXPORT ${DtkWidget}Targets
     DESTINATION ${LIBRARY_INSTALL_DIR}
     PUBLIC_HEADER DESTINATION ${INCLUDE_INSTALL_DIR}
@@ -109,7 +109,7 @@ install(
 
 install(
     EXPORT ${DtkWidget}Targets 
-    NAMESPACE Dtk${DTK_VERSION_MAJOR}:: 
+    NAMESPACE Dtk${DTK_NAME_SUFFIX}:: 
     FILE ${DtkWidget}Targets.cmake 
     DESTINATION "${CONFIG_CMAKE_INSTALL_DIR}"
 )

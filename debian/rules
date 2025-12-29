@@ -1,7 +1,6 @@
 #!/usr/bin/make -f
 DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/default.mk
-export QT_SELECT = qt5
 
 # 安全编译参数
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
@@ -9,36 +8,80 @@ export DEB_CFLAGS_MAINT_APPEND = -Wall
 export DEB_CXXFLAGS_MAINT_APPEND = -Wall
 export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,-z,noexecstack -Wl,-E
 
-# reproducible编译参数
+# reproducible 编译参数
 DEB_CMAKE_EXTRA_FLAGS += -DCMAKE_SKIP_BUILD_RPATH=ON
 
 DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
-
 DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
 
-VERSION = $(DEB_VERSION_UPSTREAM)
-_PACK_VER = $(shell echo $(VERSION) | awk -F'[+_~-]' '{print $$1}')
-_BUILD_VER = $(shell echo $(VERSION) | awk -F'[+_~-]' '{print $$2}' | sed 's/[^0-9]//g' | awk '{print int($$1)}')
-ifeq ($(_BUILD_VER),)
-	CONFIG_VERSION = $(_PACK_VER)
-else
-	CONFIG_VERSION = $(_PACK_VER).$(_BUILD_VER)
-endif
+# 版本映射：x.y.z -> 5.y.z 和 6.y.z
+DTK5_VERSION := $(shell echo $(DEB_VERSION_UPSTREAM) | sed -E 's/^[0-9]+(\.|[^0-9]|$$)/5\1/')
+DTK6_VERSION := $(shell echo $(DEB_VERSION_UPSTREAM) | sed -E 's/^[0-9]+(\.|[^0-9]|$$)/6\1/')
+DTK5_MAJOR_MINOR := $(shell echo $(DTK5_VERSION) | cut -d '.' -f 1,2)
+
+# Build-Profiles 控制
+BUILD_DOCS := $(if $(filter nodoc,$(DEB_BUILD_PROFILES)),OFF,ON)
+BUILD_DTK5 := $(if $(filter nodtk5,$(DEB_BUILD_PROFILES)),OFF,ON)
+BUILD_DTK6 := $(if $(filter nodtk6,$(DEB_BUILD_PROFILES)),OFF,ON)
 
 %:
 	dh $@
 
 override_dh_auto_configure:
-	dh_auto_configure -- $(DEB_CMAKE_EXTRA_FLAGS) -DBUILD_PLUGINS=OFF -DBUILD_DOCS=ON -DDTK_VERSION=$(_PACK_VER) -DDTK_STATIC_TRANSLATION=YES
-#override_dh_auto_configure:
-#	dh_auto_configure -- LIB_INSTALL_DIR=/usr/lib/$(DEB_HOST_MULTIARCH)
-#override_dh_makeshlibs:
-#	dh_makeshlibs -V
+ifeq ($(BUILD_DTK5),ON)
+	mkdir -p build5
+	QT_SELECT=qt5 dh_auto_configure --builddirectory=build5 -- \
+		$(DEB_CMAKE_EXTRA_FLAGS) \
+		-DBUILD_TESTING=OFF \
+		-DBUILD_PLUGINS=OFF \
+		-DBUILD_DOCS=$(BUILD_DOCS) \
+		-DDTK_STATIC_TRANSLATION=YES \
+		-DDTK5=ON
+endif
+ifeq ($(BUILD_DTK6),ON)
+	mkdir -p build6
+	dh_auto_configure --builddirectory=build6 -- \
+		$(DEB_CMAKE_EXTRA_FLAGS) \
+		-DBUILD_TESTING=OFF \
+		-DBUILD_PLUGINS=OFF \
+		-DBUILD_DOCS=$(BUILD_DOCS) \
+		-DDTK_STATIC_TRANSLATION=YES \
+		-DDTK5=OFF
+endif
 
-#ifeq ($(DEB_BUILD_ARCH), sw_64)
-#override_dh_makeshlibs:
-#	dh_makeshlibs -V -- -c0
-#endif
+override_dh_auto_build:
+ifeq ($(BUILD_DTK5),ON)
+	QT_SELECT=qt5 dh_auto_build --builddirectory=build5
+endif
+ifeq ($(BUILD_DTK6),ON)
+	dh_auto_build --builddirectory=build6
+endif
+
+override_dh_auto_install:
+ifeq ($(BUILD_DTK5),ON)
+	QT_SELECT=qt5 dh_auto_install --builddirectory=build5
+endif
+ifeq ($(BUILD_DTK6),ON)
+	dh_auto_install --builddirectory=build6
+endif
+
+override_dh_auto_test:
+ifeq ($(BUILD_DTK5),ON)
+	QT_SELECT=qt5 dh_auto_test --builddirectory=build5
+endif
+ifeq ($(BUILD_DTK6),ON)
+	dh_auto_test --builddirectory=build6
+endif
 
 override_dh_makeshlibs:
-	dh_makeshlibs  -V "libdtkwidget5 (>= $(shell echo $(VERSION) | cut -d '.' -f 1,2))"
+ifeq ($(BUILD_DTK5),ON)
+	dh_makeshlibs -V "libdtkwidget5 (>= $(DTK5_MAJOR_MINOR))" -plibdtkwidget5
+endif
+ifeq ($(BUILD_DTK6),ON)
+	dh_makeshlibs -V "libdtk6widget (>= $(DTK6_VERSION))" -plibdtk6widget
+endif
+
+override_dh_auto_clean:
+	dh_auto_clean --builddirectory=build5
+	dh_auto_clean --builddirectory=build6
+	rm -rf build5 build6

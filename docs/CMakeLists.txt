@@ -6,7 +6,7 @@ set (DOXYGEN_GENERATE_HTML "YES" CACHE STRING "Doxygen HTML output")
 set (DOXYGEN_GENERATE_XML "YES" CACHE STRING "Doxygen XML output")
 set (DOXYGEN_GENERATE_QHP "YES" CACHE STRING "Doxygen QHP output")
 set (DOXYGEN_FILE_PATTERNS *.cpp *.h *.zh_CN.md *.zh_CN.dox CACHE STRING "Doxygen File Patterns")
-set (DOXYGEN_PROJECT_NUMBER ${CMAKE_PROJECT_VERSION} CACHE STRING "") # Should be the same as this project is using.
+set (DOXYGEN_PROJECT_NUMBER ${DTK_VERSION} CACHE STRING "") # Should be the same as this project is using.
 set (DOXYGEN_EXTRACT_STATIC YES)
 set (DOXYGEN_OUTPUT_LANGUAGE "Chinese" CACHE STRING "Doxygen Output Language")
 set (DOXYGEN_IMAGE_PATH ${CMAKE_CURRENT_LIST_DIR}/images/)
