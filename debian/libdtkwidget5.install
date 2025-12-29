@@ -1,2 +1,2 @@
-usr/lib/*/lib*.so.*
-usr/share/*/*/translations/*
+usr/lib/*/libdtkwidget.so.5*
+usr/share/dtk5/DWidget/translations/*

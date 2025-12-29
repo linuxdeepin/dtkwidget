@@ -3,7 +3,7 @@ project(${UIPLUGIN} VERSION 1.0.0 LANGUAGES CXX)
 
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS UiPlugin Gui)
 
-set(LIB_DWIDGET ${LIBNAME})
+set(LIB_DWIDGET ${LIB_NAME})
 
 if (CMAKE_PROJECT_NAME STREQUAL ${UIPLUGIN})
     message(STATUS "compile ${UIPLUGIN} individually")
@@ -16,8 +16,8 @@ if (CMAKE_PROJECT_NAME STREQUAL ${UIPLUGIN})
     if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
         set(CMAKE_INSTALL_PREFIX /usr)
     endif()
-    find_package(Dtk${DTK_VERSION_MAJOR} REQUIRED COMPONENT Widget)
-    set(LIB_DWIDGET Dtk${DTK_VERSION_MAJOR}::Widget)
+    find_package(Dtk${DTK_NAME_SUFFIX} REQUIRED COMPONENT Widget)
+    set(LIB_DWIDGET Dtk${DTK_NAME_SUFFIX}::Widget)
 endif()
 
 add_library(

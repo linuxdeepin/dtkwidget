@@ -1,0 +1,5 @@
+usr/lib/*/libdtk6widget.so
+usr/include/dtk6/
+usr/lib/*/pkgconfig/dtk6widget.pc
+usr/lib/*/cmake/Dtk6Widget/
+usr/lib/*/qt6/mkspecs/modules/*

@@ -1,5 +1,5 @@
-set(LIBNAME dtk${DTK_VERSION_MAJOR}widget)
-set(DtkWidget Dtk${DTK_VERSION_MAJOR}Widget)
+set(LIB_NAME dtk${DTK_NAME_SUFFIX}widget)
+set(DtkWidget Dtk${DTK_NAME_SUFFIX}Widget)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -16,10 +16,10 @@ set(BUILD_VERSION "0" CACHE STRING "buildversion")
 set(BUILD_PLUGINS ON CACHE BOOL "Build plugin and plugin example")
 
 set(INCLUDE_INSTALL_DIR
-    "${CMAKE_INSTALL_INCLUDEDIR}/dtk${PROJECT_VERSION_MAJOR}/DWidget"
+    "${CMAKE_INSTALL_INCLUDEDIR}/dtk${DTK_VERSION_MAJOR}/DWidget"
 )
 set(TOOL_INSTALL_DIR
-  "${CMAKE_INSTALL_LIBDIR}/dtk${PROJECT_VERSION_MAJOR}/DWidget/bin"
+  "${CMAKE_INSTALL_LIBEXECDIR}/dtk${DTK_VERSION_MAJOR}/DWidget/bin"
 )
 set(LIBRARY_INSTALL_DIR
     "${CMAKE_INSTALL_LIBDIR}"
@@ -37,7 +37,7 @@ set(PKGCONFIG_INSTALL_DIR
     CACHE STRING "Install directory for pkgconfig files"
 )
 
-find_package(Dtk${DTK_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui)
+find_package(Dtk${DTK_NAME_SUFFIX} REQUIRED COMPONENTS Core Gui)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core
     Network
     Concurrent
@@ -143,8 +143,8 @@ write_basic_package_version_file(
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${DtkWidget}Config.cmake DESTINATION ${CONFIG_CMAKE_INSTALL_DIR})
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${DtkWidget}ConfigVersion.cmake DESTINATION ${CONFIG_CMAKE_INSTALL_DIR})
 
-configure_file(misc/DtkWidget.pc.in ${LIBNAME}.pc @ONLY)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${LIBNAME}.pc DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+configure_file(misc/DtkWidget.pc.in ${LIB_NAME}.pc @ONLY)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${LIB_NAME}.pc DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 
 configure_file(misc/qt_lib_DtkWidget.pri.in qt_lib_DtkWidget.pri @ONLY)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/qt_lib_DtkWidget.pri DESTINATION "${MKSPECS_INSTALL_DIR}")

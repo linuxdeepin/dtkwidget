@@ -53,9 +53,9 @@ target_link_libraries(${BIN_NAME} PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::Gui
     Qt${QT_VERSION_MAJOR}::GuiPrivate
-    ${LIBNAME}
+    ${LIB_NAME}
 )
 install(
     TARGETS ${BIN_NAME}
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/dtk${PROJECT_VERSION_MAJOR}/DWidget/examples/"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/dtk${DTK_VERSION_MAJOR}/DWidget/examples/"
 )
