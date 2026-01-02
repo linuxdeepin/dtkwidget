@@ -706,7 +706,7 @@
     <name>main</name>
     <message>
         <source>Collections provides the examples for dtk applications.</source>
-        <translation type="unfinished"/>
+        <translation>Kokoelmat tarjoaa esimerkkejä dtk-sovelluksista.</translation>
     </message>
 </context>
 </TS>
