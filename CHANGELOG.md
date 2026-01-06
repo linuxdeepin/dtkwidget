@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.7.31] - 2026-01-06
+
+### Changed
+
+- I18n: [dtkwidget] Updates for project Deepin Tool Kit (#713)
+- Translate dtkwidget.ts in pl
+- Translate dtkwidget.ts in pl
+- Translate dtkwidget.ts in pl
+- Unify DTK5 and DTK6 build system
+
+### Fixed
+
+- Update CMake translation handling for Qt6 compatibility
+- Improve color mode configuration handling
+- Fix color mode combo signal connection
+
 ## [5.7.30] - 2025-12-11
 
 ### Added
