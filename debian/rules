@@ -14,11 +14,6 @@ DEB_CMAKE_EXTRA_FLAGS += -DCMAKE_SKIP_BUILD_RPATH=ON
 DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
 
-# 版本映射：x.y.z -> 5.y.z 和 6.y.z
-DTK5_VERSION := $(shell echo $(DEB_VERSION_UPSTREAM) | sed -E 's/^[0-9]+(\.|[^0-9]|$$)/5\1/')
-DTK6_VERSION := $(shell echo $(DEB_VERSION_UPSTREAM) | sed -E 's/^[0-9]+(\.|[^0-9]|$$)/6\1/')
-DTK5_MAJOR_MINOR := $(shell echo $(DTK5_VERSION) | cut -d '.' -f 1,2)
-
 # Build-Profiles 控制
 BUILD_DOCS := $(if $(filter nodoc,$(DEB_BUILD_PROFILES)),OFF,ON)
 BUILD_DTK5 := $(if $(filter nodtk5,$(DEB_BUILD_PROFILES)),OFF,ON)
@@ -71,14 +66,6 @@ ifeq ($(BUILD_DTK5),ON)
 endif
 ifeq ($(BUILD_DTK6),ON)
 	dh_auto_test --builddirectory=build6
-endif
-
-override_dh_makeshlibs:
-ifeq ($(BUILD_DTK5),ON)
-	dh_makeshlibs -V "libdtkwidget5 (>= $(DTK5_MAJOR_MINOR))" -plibdtkwidget5
-endif
-ifeq ($(BUILD_DTK6),ON)
-	dh_makeshlibs -V "libdtk6widget (>= $(DTK6_VERSION))" -plibdtk6widget
 endif
 
 override_dh_auto_clean:
