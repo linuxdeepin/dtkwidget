@@ -579,7 +579,7 @@
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Pegar</translation>
     </message>
     <message>
         <source>Select All</source>
@@ -646,7 +646,7 @@
     </message>
     <message>
         <source>2023 UnionTech Software Technology Co., Ltd.</source>
-        <translation type="unfinished"/>
+        <translation>2023 UnionTech Software Technology Co., Ltd.</translation>
     </message>
 </context>
 <context>
@@ -706,7 +706,7 @@
     <name>main</name>
     <message>
         <source>Collections provides the examples for dtk applications.</source>
-        <translation type="unfinished"/>
+        <translation>Colecciones proporciona ejemplos para aplicaciones dtk.</translation>
     </message>
 </context>
 </TS>
