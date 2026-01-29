@@ -120,16 +120,6 @@ void DPasswordEdit::changeEvent(QEvent *event)
 
 bool DPasswordEdit::eventFilter(QObject* watcher, QEvent* event)
 {
-    if (event->type() == QEvent::KeyPress) {
-        D_D(DPasswordEdit);
-        if (watcher == d->togglePasswordVisibleButton && !d->togglePasswordVisibleButton->isDefault()) {
-            const auto keyEvent = dynamic_cast<QKeyEvent*>(event);
-            if (keyEvent && (keyEvent->key() == Qt::Key_Return || keyEvent->key() == Qt::Key_Enter)) {
-                d->togglePasswordVisibleButton->click();
-            }
-        }
-    }
-
     return DLineEdit::eventFilter(watcher, event);
 }
 
