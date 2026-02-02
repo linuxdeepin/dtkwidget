@@ -207,6 +207,12 @@ void DLabel::paintEvent(QPaintEvent *event)
                 palette.setBrush(foregroundRole(), DPaletteHelper::instance()->palette(this).brush(d_func()->color));
             }
 
+            if (d->text != d_func()->lastText) {
+                // clear flag when text changed, avoid tooltip don't show new text
+                DToolTip::setShowToolTip(this, false);
+                d_func()->lastText = d->text;
+            }
+
             QString text = d->text;
             if (elideMode() != Qt::ElideNone) {
                 const QFontMetrics fm(fontMetrics());
