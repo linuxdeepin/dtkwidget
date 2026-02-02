@@ -1222,9 +1222,9 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
                     QColor color;
                     DGuiApplicationHelper *guiAppHelp = DGuiApplicationHelper::instance();
                     if (guiAppHelp->themeType() == DGuiApplicationHelper::ColorType::DarkType)
-                        color = QColor(255, 255, 255, 255 * 0.05);
+                        color = QColor(255, 255, 255, 255 * 0.1);
                     else
-                        color = QColor(0, 0, 0, 255 * 0.05);
+                        color = QColor(0, 0, 0, 255 * 0.1);
                     pa.setBrush(QPalette::Window, color);
                 }
 
