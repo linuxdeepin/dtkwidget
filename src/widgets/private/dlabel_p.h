@@ -27,6 +27,7 @@ public:
 
     DPalette::ColorType color = DPalette::NoType;
     Qt::TextElideMode elideMode = Qt::ElideNone;
+    QString lastText;
 };
 
 DWIDGET_END_NAMESPACE
