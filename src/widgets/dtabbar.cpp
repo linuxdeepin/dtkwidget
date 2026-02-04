@@ -699,7 +699,11 @@ void DTabBarPrivate::layoutTab(int index)
     if (tab->leftWidget) {
         QRect rect = style()->subElementRect(QStyle::SE_TabBarTabLeftButton, &opt, this);
         QPoint p = rect.topLeft();
+#if QT_VERSION <= QT_VERSION_CHECK(6, 10, 1)
         if ((index == d->pressedIndex) || d->paintWithOffsets) {
+#else
+        if (d->at(index)->dragOffset != 0) {
+#endif
             if (vertical)
                 p.setY(p.y() + d->at(index)->dragOffset);
             else
@@ -711,7 +715,11 @@ void DTabBarPrivate::layoutTab(int index)
     if (tab->rightWidget) {
         QRect rect = style()->subElementRect(QStyle::SE_TabBarTabRightButton, &opt, this);
         QPoint p = rect.topLeft();
+#if QT_VERSION <= QT_VERSION_CHECK(6, 10, 1)
         if ((index == d->pressedIndex) || d->paintWithOffsets) {
+#else
+        if (d->at(index)->dragOffset != 0) {
+#endif
             if (vertical)
                 p.setY(p.y() + tab->dragOffset);
             else
@@ -1234,7 +1242,11 @@ void DTabBarPrivate::paintEvent(QPaintEvent *e)
         // 强制让文本居中
         tab.rightButtonSize = QSize();
 
+#if QT_VERSION <= QT_VERSION_CHECK(6, 10, 1)
         if (d->paintWithOffsets && d->at(i)->dragOffset != 0) {
+#else
+        if (d->at(i)->dragOffset != 0) {
+#endif
             if (vertical) {
                 tab.rect.moveTop(tab.rect.y() + d->at(i)->dragOffset);
             } else {
@@ -1286,7 +1298,11 @@ void DTabBarPrivate::paintEvent(QPaintEvent *e)
         // 强制让文本居中
         tab.rightButtonSize = QSize();
 
+#if QT_VERSION <= QT_VERSION_CHECK(6, 10, 1)
         if (d->paintWithOffsets && d->at(selected)->dragOffset != 0) {
+#else
+        if (d->at(selected)->dragOffset != 0) {
+#endif
             if (vertical) {
                 tab.rect.moveTop(tab.rect.y() + d->at(selected)->dragOffset);
             } else {
