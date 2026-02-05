@@ -7,5 +7,5 @@ Name: Dtk@DTK_NAME_SUFFIX@Widget
 Description: Deepin Tool Kit Widget library
 Version: @DTK_VERSION@
 Libs: -L${libdir} -ldtk@DTK_NAME_SUFFIX@widget
-Cflags: -I${includedir}/dtk@DTK_VERSION_MAJOR@/DWidget
+Cflags: -I${includedir}
 Requires: dtk@DTK_NAME_SUFFIX@core dtk@DTK_NAME_SUFFIX@gui Qt@QT_VERSION_MAJOR@Core Qt@QT_VERSION_MAJOR@Widgets Qt@QT_VERSION_MAJOR@DBus Qt@QT_VERSION_MAJOR@Network Qt@QT_VERSION_MAJOR@PrintSupport
