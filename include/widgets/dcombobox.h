@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2021 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2021 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -26,6 +26,7 @@ protected:
     // QComboBox interface
 public:
     virtual void showPopup() override;
+    virtual bool eventFilter(QObject *watched, QEvent *event) override;
 };
 
 DWIDGET_END_NAMESPACE
