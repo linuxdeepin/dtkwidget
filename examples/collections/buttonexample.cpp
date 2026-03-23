@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2020 - 2023 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2020 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -855,7 +855,7 @@ DComboBoxExample::DComboBoxExample(QWidget *parent)
     }
     pHBoxLayout_1->addWidget(pComboBox_1);
 
-    QComboBox *pComboBox_1_count = new QComboBox();
+    DComboBox *pComboBox_1_count = new DComboBox();
     pComboBox_1_count->setFixedWidth(100);
     pComboBox_1_count->addItem(QString::number(10));
     pComboBox_1_count->addItem(QString::number(20));

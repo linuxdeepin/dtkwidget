@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2021 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2021 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -7,6 +7,7 @@
 
 #include "dcombobox.h"
 #include <DObjectPrivate>
+#include <QPersistentModelIndex>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -26,9 +27,11 @@ public:
 
     // 最大显示项数
     static const int MaxVisibleItems = 16;
+
+    QPersistentModelIndex popupIndexBeforeLeave;
+    bool popupIndexClearedByLeave = false;
 };
 
 DWIDGET_END_NAMESPACE
 
 #endif // DCOMBOBOX_P_H
-

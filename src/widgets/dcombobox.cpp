@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2021 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2021 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -17,6 +17,7 @@
 #include <private/qguiapplication_p.h>
 #include <qpa/qplatformtheme.h>
 
+#include <QAbstractItemView>
 #include <QListView>
 #include <QTableView>
 #include <QItemDelegate>
@@ -27,6 +28,7 @@
 #include <QLayout>
 #include <QScrollBar>
 #include <QHeaderView>
+#include <QCursor>
 #include <QScreen>
 #include <QStack>
 #include <QWindow>
@@ -147,10 +149,28 @@ void DComboBox::showPopup()
         }
         return count;
     };
+
+    auto installPopupEventFilters = [this] {
+        QComboBoxPrivateContainer *popupContainer = this->findChild<QComboBoxPrivateContainer *>();
+        if (!popupContainer)
+            return;
+
+        popupContainer->installEventFilter(this);
+        view()->installEventFilter(this);
+        view()->viewport()->installEventFilter(this);
+    };
+
+    d->popupIndexBeforeLeave = QModelIndex();
+    d->popupIndexClearedByLeave = false;
+
     // When the value of maxVisibleItems() is less than 16, use the default value of qt and return it directly to avoid displaying excess whitespace
     QComboBoxPrivateContainer *container = this->findChild<QComboBoxPrivateContainer *>();
-    if (getRowCount() <= maxVisibleItems() || !container)
-        return QComboBox::showPopup();
+    if (getRowCount() <= maxVisibleItems() || !container) {
+        QComboBox::showPopup();
+        installPopupEventFilters();
+        return;
+    }
+    installPopupEventFilters();
 
     // Calculate maximum height by maximum item size
     QStyle * const style = this->style();
@@ -261,6 +281,50 @@ void DComboBox::showPopup()
     int offset = mapToGlobal(rect().topLeft()).y() - currentIndexTopLeft.y();
     int newY = qMax(screen.top(), qMin(container->y() + offset, screen.bottom() - container->height()));
     container->move(container->x(), newY);
+}
+
+bool DComboBox::eventFilter(QObject *watched, QEvent *event)
+{
+    D_D(DComboBox);
+
+    QComboBoxPrivateContainer *container = this->findChild<QComboBoxPrivateContainer *>();
+    QAbstractItemView *popupView = view();
+    QWidget *viewport = popupView ? popupView->viewport() : nullptr;
+    const bool isPopupObject = watched == container || watched == popupView || watched == viewport;
+
+    if (isPopupObject) {
+        switch (event->type()) {
+        case QEvent::Leave:
+            if (popupView && popupView->currentIndex().isValid() && container
+                    && !container->rect().contains(container->mapFromGlobal(QCursor::pos()))) {
+                d->popupIndexBeforeLeave = popupView->currentIndex();
+                d->popupIndexClearedByLeave = true;
+                popupView->setCurrentIndex(QModelIndex());
+            }
+            break;
+        case QEvent::MouseMove:
+        case QEvent::MouseButtonPress:
+        case QEvent::MouseButtonRelease:
+            d->popupIndexClearedByLeave = false;
+            break;
+        case QEvent::KeyPress:
+        case QEvent::ShortcutOverride:
+            if (d->popupIndexClearedByLeave && popupView && !popupView->currentIndex().isValid()
+                    && d->popupIndexBeforeLeave.isValid()) {
+                popupView->setCurrentIndex(d->popupIndexBeforeLeave);
+            }
+            d->popupIndexClearedByLeave = false;
+            break;
+        case QEvent::Hide:
+            d->popupIndexBeforeLeave = QModelIndex();
+            d->popupIndexClearedByLeave = false;
+            break;
+        default:
+            break;
+        }
+    }
+
+    return QComboBox::eventFilter(watched, event);
 }
 
 DWIDGET_END_NAMESPACE
