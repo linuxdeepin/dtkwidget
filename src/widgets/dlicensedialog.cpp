@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2023 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2023 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -173,7 +173,7 @@ bool DLicenseDialogPrivate::loadLicense()
 {
     if (!content.isEmpty()) {
         isValid = licenseInfo.loadContent(content);
-    } else if (!path.isEmpty()) {
+    } else {
         isValid = licenseInfo.loadFile(path);
     }
     if (isValid) {
