@@ -16,6 +16,7 @@
 #include <QRegularExpression>
 #include <QRegularExpressionValidator>
 #include <QLayout>
+#include <QCompleter>
 
 DWIDGET_BEGIN_NAMESPACE
 
