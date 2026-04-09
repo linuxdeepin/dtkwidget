@@ -5,6 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.7.39] - 2026-04-09
+
+### Changed
+
+- I18n: [dtkwidget] Updates for project Deepin Tool Kit (#722)
+- Chore: New release 6.7.33
+- Chore: New release 6.7.34
+- Chore: New release 6.7.35
+- Chore: New release 6.7.36
+- Translate dtkwidget.ts in ru
+- Chore: New release 6.7.37
+- Chore: New release 6.7.38
+
+### Fixed
+
+- Adjust window decoration button background opacity
+- Tooltip does not show the latest text
+- Fix build with Qt 6.10.2
+- Correct include path in pkg-config file
+- Fix window positioning with multi-screen and scaling
+- Clear DComboBox popup highlight on mouse leave
+- Qt 6.11 compatibility for QCompleter include
+- Use default license loading method
+
+### Removed
+
+- Remove password visibility button key event handling
+
 ## [6.7.38] - 2026-03-31
 
 ### Changed
