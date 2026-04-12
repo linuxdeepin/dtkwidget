@@ -72,7 +72,7 @@ void DExpandGroup::addExpand(DBaseExpand *expand, int id)
     if (m_expandMap.values().indexOf(expand) == -1){
         if (id == -1){
             int maxId = -1;
-            Q_FOREACH (int tmp, m_expandMap.keys()) {
+            for (int tmp : std::as_const(m_expandMap).keys()) {
                 maxId = qMax(tmp, maxId);
             }
 

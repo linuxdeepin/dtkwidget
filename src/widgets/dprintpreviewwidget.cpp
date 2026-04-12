@@ -755,7 +755,7 @@ PrintOptions DPrintPreviewWidgetPrivate::printerOptions()
         if (pageRangeMode == DPrintPreviewWidget::CurrentPage) {
             pageRangeString = QString::number(pageRange.at(currentPageNumber - 1));
         } else {
-            Q_FOREACH (int pageRangeCount, pageRange) {
+            for (int pageRangeCount : std::as_const(pageRange)) {
                 pageRangeString.append(QString::number(pageRangeCount).append(","));
             }
 
@@ -957,7 +957,7 @@ void DPrintPreviewWidgetPrivate::calculateCurrentNumberPage()
         }
     }
 
-    Q_FOREACH (auto pageIndex, pageIndexVector) {
+    for (const auto &pageIndex : std::as_const(pageIndexVector)) {
         QPair<int, const QPicture *> picPair(pageIndex.first, pictures.at(pageIndex.second));
         numberUpPrintData->previewPictures.append(picPair);
     }

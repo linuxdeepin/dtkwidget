@@ -176,7 +176,7 @@ bool DBlurEffectWidgetPrivate::updateWindowBlurArea(QWidget *topLevelWidget)
 
     bool isExistMaskPath = false;
 
-    Q_FOREACH (const DBlurEffectWidget *w, blurEffectWidgetList) {
+    for (const auto *w : std::as_const(blurEffectWidgetList)) {
         if (!w->d_func()->blurEnabled) {
             continue;
         }
@@ -210,7 +210,7 @@ bool DBlurEffectWidgetPrivate::updateWindowBlurArea(QWidget *topLevelWidget)
     if (isExistMaskPath) {
         QList<QPainterPath> pathList;
 
-        Q_FOREACH (const DBlurEffectWidget *w, blurEffectWidgetList) {
+        for (const auto *w : std::as_const(blurEffectWidgetList)) {
             if (!w->d_func()->blurEnabled) {
                 continue;
             }
@@ -238,7 +238,7 @@ bool DBlurEffectWidgetPrivate::updateWindowBlurArea(QWidget *topLevelWidget)
 
         areaList.reserve(blurEffectWidgetList.size());
 
-        Q_FOREACH (const DBlurEffectWidget *w, blurEffectWidgetList) {
+        for (const auto *w : std::as_const(blurEffectWidgetList)) {
             if (!w->d_func()->blurEnabled) {
                 continue;
             }

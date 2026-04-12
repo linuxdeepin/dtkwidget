@@ -561,7 +561,7 @@ DApplication::DApplication(int &argc, char **argv) :
     QApplication(argc, argv),
     DObject(*new DApplicationPrivate(this))
 {
-    // FIXME: fix bug in nvidia prime workaround, do not know effoct, must test more!!!
+    // FIXME: fix bug in nvidia prime workaround, do not know effect, must test more!!!
     // 在龙芯和申威上，xcb插件中加载glx相关库（r600_dri.so等）会额外耗时1.xs（申威应该更长）
     if (
 #ifdef FORCE_RASTER_WIDGETS

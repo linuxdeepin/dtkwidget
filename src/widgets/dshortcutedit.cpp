@@ -135,24 +135,6 @@ bool DShortcutEdit::isValidShortcutKey(const QString &key)
             return false;
         }
 
-    /*const QStringList keys = key.split("+");
-
-    if (keys.size() == 1)
-    {
-        const QString firstKey = keys.first();
-        // F1 ~ F12
-        if (!firstKey.contains(QRegExp("^F(\\d|1[0-2])$")))
-            return false;
-    }
-
-    const QString lastKey = keys.last();
-    if (lastKey.size() == 2 && !lastKey.at(0).isLetter())
-        return false;
-    if (lastKey == "Meta" || lastKey == "Ctrl" ||
-        lastKey == "Shift" || lastKey == "Alt")
-        return false;*/
-
-
     qWarning() << "isValidShortcutKey: " << key;
     return true;
 }

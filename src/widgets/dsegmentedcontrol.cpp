@@ -215,7 +215,7 @@ int DSegmentedControl::indexByTitle(const QString &title) const
     D_DC(DSegmentedControl);
 
     int i=0;
-    Q_FOREACH (QToolButton *button, d->tabList) {
+    for (const auto *button : std::as_const(d->tabList)) {
         if(button->text() == title)
             return i;
         ++i;
@@ -278,7 +278,7 @@ int DSegmentedControl::addSegmented(const QIcon &icon, const QString &title)
  */
 void DSegmentedControl::addSegmented(const QStringList &titleList)
 {
-    Q_FOREACH (const QString &title, titleList) {
+    for (const auto &title : titleList) {
         addSegmented(title);
     }
 }
@@ -393,7 +393,7 @@ bool DSegmentedControl::setCurrentIndex(int currentIndex)
 
     d->currentIndex = currentIndex;
 
-    Q_FOREACH (QToolButton *button, d->tabList) {
+    for (auto *button : std::as_const(d->tabList)) {
         button->setEnabled(true);
     }
 

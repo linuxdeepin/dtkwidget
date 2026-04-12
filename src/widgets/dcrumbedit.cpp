@@ -520,7 +520,7 @@ public:
             }
         }
 
-        Q_FOREACH(const DCrumbTextFormat &f, formats) {
+        for (const auto &f : std::as_const(formats)) {
             if (!crumbList.contains(f.text())) {
                 formats.remove(f.text());
                 formatsChanged = true;
