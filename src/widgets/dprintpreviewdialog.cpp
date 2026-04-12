@@ -1638,7 +1638,7 @@ void DPrintPreviewDialogPrivate::watermarkTypeChoosed(int index)
 #else
         QStringList fontList = QFontDatabase::families(QFontDatabase::Any);
 #endif
-        Q_FOREACH (const QString &font, fontList) {
+        for (const auto &font : std::as_const(fontList)) {
             if (fontCombo->findText(font) != -1)
                 continue;
 

@@ -96,7 +96,7 @@ void DDrawerGroup::addExpand(DDrawer *expand, int id)
     if (d->expandMap.values().indexOf(expand) == -1){
         if (id == -1){
             int maxId = -1;
-            Q_FOREACH (int tmp, d->expandMap.keys()) {
+            for (int tmp : std::as_const(d->expandMap).keys()) {
                 maxId = qMax(tmp, maxId);
             }
 

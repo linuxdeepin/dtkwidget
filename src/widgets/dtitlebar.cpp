@@ -63,9 +63,9 @@ protected:
 private:
     void init();
     QWidget *targetWindow();
-    // FIXME: get a batter salution
+    // FIXME: get a better solution
     // hide title will make eventFilter not work, instead set Height to zero
-    bool isVisableOnFullscreen();
+    bool isVisibleOnFullscreen();
     void hideOnFullscreen();
     void showOnFullscreen();
 
@@ -375,7 +375,7 @@ QWidget *DTitlebarPrivate::targetWindow()
     return q->topLevelWidget()->window();
 }
 
-bool DTitlebarPrivate::isVisableOnFullscreen()
+bool DTitlebarPrivate::isVisibleOnFullscreen()
 {
     D_Q(DTitlebar);
     return !q->property("_restore_height").isValid();
@@ -1137,7 +1137,7 @@ bool DTitlebar::eventFilter(QObject *obj, QEvent *event)
             auto mouseEvent = reinterpret_cast<QMouseEvent *>(event);
             bool isFullscreen = d->targetWindow()->windowState().testFlag(Qt::WindowFullScreen);
             if (isFullscreen && d->autoHideOnFullscreen) {
-                if (mouseEvent->pos().y() > height() && d->isVisableOnFullscreen()) {
+                if (mouseEvent->pos().y() > height() && d->isVisibleOnFullscreen()) {
                     d->hideOnFullscreen();
                 }
                 if (mouseEvent->pos().y() < 2) {
