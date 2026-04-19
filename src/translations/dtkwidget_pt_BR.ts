@@ -19,7 +19,7 @@
     </message>
     <message>
         <source>start</source>
-        <translation type="unfinished"/>
+        <translation>Iniciar</translation>
     </message>
 </context>
 <context>
@@ -537,15 +537,15 @@
     <name>MainWindow</name>
     <message>
         <source>MainWindow</source>
-        <translation type="unfinished"/>
+        <translation>Janela principal</translation>
     </message>
     <message>
         <source>This is DLabel...</source>
-        <translation type="unfinished"/>
+        <translation>Isso é um DLabel...</translation>
     </message>
     <message>
         <source>255.255.255.255</source>
-        <translation type="unfinished"/>
+        <translation>255.255.255.255</translation>
     </message>
     <message>
         <source>这是一个富文本编辑框</source>
