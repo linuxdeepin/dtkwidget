@@ -553,11 +553,11 @@
     </message>
     <message>
         <source>warning</source>
-        <translation type="unfinished"/>
+        <translation>Aviso</translation>
     </message>
     <message>
         <source>suggest</source>
-        <translation type="unfinished"/>
+        <translation>Sugerir</translation>
     </message>
 </context>
 <context>
@@ -579,7 +579,7 @@
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Colar</translation>
     </message>
     <message>
         <source>Select All</source>
@@ -642,11 +642,11 @@
     </message>
     <message>
         <source>Collections</source>
-        <translation type="unfinished"/>
+        <translation>Coleções</translation>
     </message>
     <message>
         <source>2023 UnionTech Software Technology Co., Ltd.</source>
-        <translation type="unfinished"/>
+        <translation>2023 UnionTech Software Technology Ltda.</translation>
     </message>
 </context>
 <context>
@@ -706,7 +706,7 @@
     <name>main</name>
     <message>
         <source>Collections provides the examples for dtk applications.</source>
-        <translation type="unfinished"/>
+        <translation>Coleções fornece exemplos para aplicativos DTK.</translation>
     </message>
 </context>
 </TS>
