@@ -549,7 +549,7 @@
     </message>
     <message>
         <source>这是一个富文本编辑框</source>
-        <translation type="unfinished"/>
+        <translation>Tekstin muokkausruutu</translation>
     </message>
     <message>
         <source>warning</source>
