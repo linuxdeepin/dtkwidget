@@ -3,23 +3,23 @@
     <name>CameraForm</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"/>
+        <translation>Formulário</translation>
     </message>
     <message>
         <source>ok</source>
-        <translation type="unfinished"/>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>mirrored</source>
-        <translation type="unfinished"/>
+        <translation>Espelhado</translation>
     </message>
     <message>
         <source>Round</source>
-        <translation type="unfinished"/>
+        <translation>Redondo</translation>
     </message>
     <message>
         <source>start</source>
-        <translation type="unfinished"/>
+        <translation>Iniciar</translation>
     </message>
 </context>
 <context>
@@ -537,27 +537,27 @@
     <name>MainWindow</name>
     <message>
         <source>MainWindow</source>
-        <translation type="unfinished"/>
+        <translation>Janela principal</translation>
     </message>
     <message>
         <source>This is DLabel...</source>
-        <translation type="unfinished"/>
+        <translation>Isso é um DLabel...</translation>
     </message>
     <message>
         <source>255.255.255.255</source>
-        <translation type="unfinished"/>
+        <translation>255.255.255.255</translation>
     </message>
     <message>
         <source>这是一个富文本编辑框</source>
-        <translation type="unfinished"/>
+        <translation>Este é um campo de edição de texto com formatação</translation>
     </message>
     <message>
         <source>warning</source>
-        <translation type="unfinished"/>
+        <translation>Aviso</translation>
     </message>
     <message>
         <source>suggest</source>
-        <translation type="unfinished"/>
+        <translation>Sugerir</translation>
     </message>
 </context>
 <context>
@@ -579,7 +579,7 @@
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Colar</translation>
     </message>
     <message>
         <source>Select All</source>
@@ -642,11 +642,11 @@
     </message>
     <message>
         <source>Collections</source>
-        <translation type="unfinished"/>
+        <translation>Coleções</translation>
     </message>
     <message>
         <source>2023 UnionTech Software Technology Co., Ltd.</source>
-        <translation type="unfinished"/>
+        <translation>2023 UnionTech Software Technology Ltda.</translation>
     </message>
 </context>
 <context>
@@ -706,7 +706,7 @@
     <name>main</name>
     <message>
         <source>Collections provides the examples for dtk applications.</source>
-        <translation type="unfinished"/>
+        <translation>Coleções fornece exemplos para aplicativos DTK.</translation>
     </message>
 </context>
 </TS>
