@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2015 - 2023 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2015 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -6,14 +6,6 @@
 #include "private/dapplication_p.h"
 
 #include <QtGlobal>
-#ifdef Q_OS_LINUX
-#ifdef private
-#undef private
-#endif
-#define private public
-#include <QWidget>
-#undef private
-#endif
 #include <QDebug>
 #include <QDir>
 #include <QLocalSocket>
