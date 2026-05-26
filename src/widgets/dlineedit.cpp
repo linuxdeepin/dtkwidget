@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2015 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2015 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -16,12 +16,10 @@
 #include <DPalette>
 #include <DGuiApplicationHelper>
 
-#define private public
 #ifndef slots
 #define slots Q_SLOTS
 #endif
 #include <private/qlineedit_p.h>
-#undef private
 
 DWIDGET_BEGIN_NAMESPACE
 

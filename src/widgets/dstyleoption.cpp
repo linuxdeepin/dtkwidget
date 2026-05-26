@@ -1,10 +1,6 @@
-// SPDX-FileCopyrightText: 2017 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2017 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
-
-#define private public
-#include <QFont>
-#undef private
 
 #include "dstyleoption.h"
 
@@ -12,9 +8,13 @@
 #include "private/dlineedit_p.h"
 #include "dpalettehelper.h"
 
+#include <QFont>
 #include <QGuiApplication>
 #include <qmath.h>
 #include <private/qfont_p.h>
+#include "util/dprivateaccessor_p.h"
+
+D_DECLARE_PRIVATE_MEMBER(QFont_d_tag, QFont, d, QExplicitlySharedDataPointer<QFontPrivate>);
 
 #include <cmath>
 QT_BEGIN_NAMESPACE
@@ -382,7 +382,8 @@ int DFontSizeManager::fontPixelSize(const QFont &font)
     if (px == -1) {
         // font.d->dpi <= 0 is unacceptable,this fallback is to avoid errors.
         // TODO: Remove me if invalid font dpi was fixed
-        px = qRound(std::floor(((font.pointSizeF() * (font.d->dpi <= 0 ? d_defaultDpi() : font.d->dpi)) / 72) * 100 + 0.5) / 100);
+        const auto fontD = D_PRIVATE_MEMBER(font, QFont_d_tag{});
+        px = qRound(std::floor(((font.pointSizeF() * (fontD->dpi <= 0 ? d_defaultDpi() : fontD->dpi)) / 72) * 100 + 0.5) / 100);
     }
 
     return px;
