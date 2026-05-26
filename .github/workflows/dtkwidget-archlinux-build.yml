@@ -1,0 +1,101 @@
+name: Build dtkwidget on Arch Linux
+
+on:
+  push:
+
+  pull_request:
+
+jobs:
+  container:
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+    strategy:
+      matrix:
+        include:
+          - qt_version: 5
+            dtk5: "ON"
+          - qt_version: 6
+            dtk5: "OFF"
+    steps:
+      - name: Initialize pacman and system update
+        run: |
+          pacman-key --init
+          pacman --noconfirm --noprogressbar -Syu
+
+      - name: Install base build tools
+        run: |
+          pacman -S --noconfirm --noprogressbar base-devel git cmake ninja pkgconf
+
+      - name: Install dtkwidget Qt5 system dependencies
+        if: matrix.qt_version == 5
+        run: |
+          pacman -S --noconfirm --noprogressbar \
+            qt5-base qt5-tools qt5-x11extras qt5-svg \
+            qt5-wayland qt5-imageformats \
+            extra-cmake-modules \
+            gtest \
+            gsettings-qt \
+            libxext libxrender libxi \
+            cups startup-notification \
+            libglvnd systemd mtdev \
+            xcb-util \
+            icu uchardet dbus spdlog \
+            librsvg libraw libqtxdg kwayland \
+            dtkcommon dtklog \
+            treeland-protocols dtkcore dtkgui
+
+      - name: Install dtkwidget Qt6 system dependencies
+        if: matrix.qt_version == 6
+        run: |
+          pacman -S --noconfirm --noprogressbar \
+            qt6-base qt6-tools qt6-svg \
+            qt6-wayland qt6-imageformats \
+            extra-cmake-modules \
+            gtest \
+            libxext libxrender libxi \
+            cups startup-notification \
+            libglvnd systemd mtdev \
+            xcb-util \
+            icu uchardet dbus spdlog \
+            librsvg libraw \
+            dtkcommon dtk6log \
+            treeland-protocols dtk6core dtk6gui
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure and build dtkwidget
+        run: |
+          cmake -B build \
+            -GNinja \
+            -DCMAKE_INSTALL_PREFIX=/usr \
+            -DCMAKE_INSTALL_LIBDIR=lib \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DMKSPECS_INSTALL_DIR=lib/qt/mkspecs/modules \
+            -DBUILD_DOCS=OFF \
+            -DBUILD_EXAMPLES=OFF \
+            -DBUILD_TESTING=OFF \
+            -DBUILD_PLUGINS=OFF \
+            -DDTK5=${{ matrix.dtk5 }}
+          cmake --build build -j$(nproc)
+          echo "✅ dtkwidget Qt${{ matrix.qt_version }} built successfully!"
+
+      - name: Install dtkwidget to staging directory
+        run: |
+          DESTDIR=/tmp/dtkwidget-install cmake --install build
+          echo "Total: $(find /tmp/dtkwidget-install -type f | wc -l) files"
+
+      - name: Create installation package
+        run: |
+          tar -czf /tmp/dtkwidget-archlinux-qt${{ matrix.qt_version }}-$(date +%Y%m%d-%H%M%S).tar.gz -C /tmp/dtkwidget-install .
+          ls -la /tmp/dtkwidget-archlinux-qt${{ matrix.qt_version }}-*.tar.gz
+
+      - name: Upload dtkwidget Arch Linux build artifacts
+        if: ${{ !env.ACT }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: dtkwidget-archlinux-qt${{ matrix.qt_version }}-build
+          path: "/tmp/dtkwidget-archlinux-qt${{ matrix.qt_version }}-*.tar.gz"
+          if-no-files-found: error
+          retention-days: 30
