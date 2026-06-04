@@ -1,3 +1,9 @@
+dtkwidget (6.7.43) unstable; urgency=medium
+
+  * fix: prevent IME from activating when echo mode is Normal
+
+ -- zhangkun <zhangkun2@uniontech.com>  Thu, 04 Jun 2026 19:47:04 +0800
+
 dtkwidget (6.7.42) unstable; urgency=medium
 
   * Release 6.7.42
