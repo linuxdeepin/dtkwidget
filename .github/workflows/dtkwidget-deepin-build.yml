@@ -1,0 +1,111 @@
+name: Build dtkwidget on Deepin crimson
+
+on:
+  push:
+
+  pull_request:
+
+jobs:
+  container:
+    runs-on: ubuntu-latest
+    container: linuxdeepin/deepin:crimson
+    strategy:
+      matrix:
+        include:
+          - qt_version: 5
+            dtk_profile: nodtk6
+          - qt_version: 6
+            dtk_profile: nodtk5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup apt sources and build tools
+        run: |
+          set -euxo pipefail
+          echo "deb [trusted=yes] http://mirrors.kernel.org/deepin/beige/ crimson main commercial community" > /etc/apt/sources.list
+          echo "deb-src [trusted=yes] http://mirrors.kernel.org/deepin/beige/ crimson main commercial community" >> /etc/apt/sources.list
+          rm -rf /etc/apt/sources.list.d
+          apt-get update
+          apt-get install -y devscripts equivs git
+
+      - name: Build and install dtkcommon from source
+        run: |
+          set -euxo pipefail
+          cd /tmp
+          git clone --depth=1 https://github.com/linuxdeepin/dtkcommon.git
+          cd dtkcommon
+          mk-build-deps --install --remove --tool='apt-get -o Debug::pkgProblemResolver=yes --no-install-recommends --yes' debian/control
+          dpkg-buildpackage -uc -us -b
+          dpkg -i ../*.deb 2>/dev/null || apt-get install -f -y
+          echo "✅ dtkcommon installed"
+
+      - name: Build and install dtklog from source
+        run: |
+          set -euxo pipefail
+          cd /tmp
+          git clone --depth=1 https://github.com/linuxdeepin/dtklog.git
+          cd dtklog
+          mk-build-deps --install --remove --tool='apt-get -o Debug::pkgProblemResolver=yes --no-install-recommends --yes' debian/control
+          dpkg-buildpackage -uc -us -b -P${{ matrix.dtk_profile }}
+          dpkg -i ../*.deb 2>/dev/null || apt-get install -f -y
+          echo "✅ dtklog installed"
+
+      - name: Build and install treeland-protocols from source
+        run: |
+          set -euxo pipefail
+          apt-get install -y --allow-unauthenticated wlr-protocols || true
+          cd /tmp
+          git clone --depth=1 https://github.com/linuxdeepin/treeland-protocols.git
+          cd treeland-protocols
+          mk-build-deps --install --remove --tool='apt-get -o Debug::pkgProblemResolver=yes --no-install-recommends --yes' debian/control
+          dpkg-buildpackage -uc -us -b
+          dpkg -i ../*.deb 2>/dev/null || apt-get install -f -y
+          echo "✅ treeland-protocols installed"
+
+      - name: Build and install dtkcore from source
+        run: |
+          set -euxo pipefail
+          cd /tmp
+          git clone --depth=1 https://github.com/linuxdeepin/dtkcore.git
+          cd dtkcore
+          mk-build-deps --install --remove --tool='apt-get -o Debug::pkgProblemResolver=yes --no-install-recommends --yes' debian/control
+          dpkg-buildpackage -uc -us -b -P${{ matrix.dtk_profile }}
+          dpkg -i ../*.deb 2>/dev/null || apt-get install -f -y
+          echo "✅ dtkcore installed"
+
+      - name: Build and install dtkgui from source
+        run: |
+          set -euxo pipefail
+          cd /tmp
+          git clone --depth=1 https://github.com/linuxdeepin/dtkgui.git
+          cd dtkgui
+          mk-build-deps --install --remove --tool='apt-get -o Debug::pkgProblemResolver=yes --no-install-recommends --yes' debian/control
+          dpkg-buildpackage -uc -us -b -P${{ matrix.dtk_profile }}
+          dpkg -i ../*.deb 2>/dev/null || apt-get install -f -y
+          echo "✅ dtkgui installed"
+
+      - name: Install dtkwidget build dependencies
+        run: |
+          set -euxo pipefail
+          mk-build-deps --install --remove --tool='apt-get -o Debug::pkgProblemResolver=yes --no-install-recommends --yes' debian/control
+
+      - name: Build dtkwidget deb packages
+        run: |
+          set -euxo pipefail
+          dpkg-buildpackage -uc -us -b -P${{ matrix.dtk_profile }}
+          echo "✅ dtkwidget Qt${{ matrix.qt_version }} deb packages built successfully!"
+          ls -la ../
+
+      - name: Collect deb artifacts
+        run: |
+          mkdir -p dist
+          mv ../*.deb dist/
+          ls -la dist
+
+      - name: Upload dtkwidget deb packages as artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dtkwidget-deepin-deb-packages-qt${{ matrix.qt_version }}
+          path: dist/*.deb
+          if-no-files-found: error
+          retention-days: 30

@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2017 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2017 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -20,13 +20,16 @@
 #include <DApplicationHelper>
 
 #include <private/qtabbar_p.h>
-#define private public
-#define protected public
 #include <private/qdnd_p.h>
 #include <private/qsimpledrag_p.h>
 #include <private/qshapedpixmapdndwindow_p.h>
-#undef private
-#undef protected
+
+#include "util/dprivateaccessor_p.h"
+
+D_DECLARE_PRIVATE_MEMBER(QDragManager_m_platformDrag_tag, QDragManager, m_platformDrag, QPlatformDrag *);
+D_DECLARE_PRIVATE_METHOD(QBasicDrag_cancel_tag, QBasicDrag, cancel, void);
+D_DECLARE_PRIVATE_MEMBER(QBasicDrag_m_executed_drop_action_tag, QBasicDrag, m_executed_drop_action, Qt::DropAction);
+D_DECLARE_PRIVATE_MEMBER(QBasicDrag_m_eventLoop_tag, QBasicDrag, m_eventLoop, QEventLoop *);
 
 #include "dpalettehelper.h"
 #include "diconbutton.h"
@@ -2377,12 +2380,12 @@ void DTabBar::startDrag(int index)
 
 void DTabBar::stopDrag(Qt::DropAction action)
 {
-    if (QBasicDrag *drag = dynamic_cast<QBasicDrag*>(QDragManager::self()->m_platformDrag)) {
-        drag->cancel();
-        drag->m_executed_drop_action = action;
+    if (QBasicDrag *drag = dynamic_cast<QBasicDrag*>(D_PRIVATE_MEMBER(*QDragManager::self(), QDragManager_m_platformDrag_tag{}))) {
+        D_PRIVATE_CALL(*drag, QBasicDrag_cancel_tag{});
+        D_PRIVATE_MEMBER(*drag, QBasicDrag_m_executed_drop_action_tag{}) = action;
 
-        if (drag->m_eventLoop)
-            drag->m_eventLoop->quit();
+        if (auto *eventLoop = D_PRIVATE_MEMBER(*drag, QBasicDrag_m_eventLoop_tag{}))
+            eventLoop->quit();
     }
 }
 

@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2017 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2017 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -20,15 +20,17 @@
 #define slots Q_SLOTS
 #endif
 
-#define private public
-
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
 #include <private/qwidgetrepaintmanager_p.h>
 #else
 #include <private/qwidgetbackingstore_p.h>
 #endif
 
-#undef private
+#include "util/dprivateaccessor_p.h"
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+D_DECLARE_PRIVATE_MEMBER(QWidgetRepaintManager_dirtyWidgets_tag, QWidgetRepaintManager, dirtyWidgets, QVector<QWidget *>);
+#endif
 
 #define MASK_COLOR_ALPHA_DEFAULT 204
 
@@ -1106,7 +1108,7 @@ bool DBlurEffectWidget::eventFilter(QObject *watched, QEvent *event)
         // 当前待绘制的区域
         QRegion dirty;
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
-        for (const QWidget *w : wd->maybeRepaintManager()->dirtyWidgets) {
+        for (const QWidget *w : D_PRIVATE_MEMBER(*wd->maybeRepaintManager(), QWidgetRepaintManager_dirtyWidgets_tag{})) {
 #else
         for (const QWidget *w : wd->maybeBackingStore()->dirtyWidgets) {
 #endif
