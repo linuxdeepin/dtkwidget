@@ -186,7 +186,7 @@ DMainWindow::DMainWindow(QWidget *parent)
     }
 
     D_D(DMainWindow);
-    DEnhancedWidget *hanceedWidget = new DEnhancedWidget(d->titlebar, parent);
+    DEnhancedWidget *hanceedWidget = new DEnhancedWidget(d->titlebar, this);
     connect(hanceedWidget, &DEnhancedWidget::heightChanged, hanceedWidget, [d]() {
         d->updateTitleShadowGeometry();
     });
