@@ -14,7 +14,9 @@
 #include <QTimer>
 #include <QPushButton>
 #include <QLineEdit>
+#include <QMenu>
 #include <QKeyEvent>
+#include <QKeySequence>
 
 
 DWIDGET_BEGIN_NAMESPACE
@@ -42,6 +44,9 @@ DPasswordEdit::DPasswordEdit(QWidget *parent)
     D_D(DPasswordEdit);
 
     d->init();
+
+    setCopyEnabled(false);
+    setCutEnabled(false);
 }
 
 /*!
@@ -135,13 +140,49 @@ bool DPasswordEdit::eventFilter(QObject* watcher, QEvent* event)
         }
     }
 #endif
+
+    if (watcher == lineEdit() && event->type() == QEvent::KeyPress) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+        if (keyEvent->matches(QKeySequence::Undo)
+            || keyEvent->matches(QKeySequence::Redo)) {
+            return true;
+        }
+    }
+
+    if (watcher == lineEdit() && event->type() == QEvent::ContextMenu) {
+        QMenu *menu = lineEdit()->createStandardContextMenu();
+        if (!menu)
+            return DLineEdit::eventFilter(watcher, event);
+
+        for (QAction *action : menu->actions()) {
+            const auto &text = action->text();
+            if (text.startsWith(QLineEdit::tr("&Undo"))
+                || text.startsWith(QLineEdit::tr("&Redo"))) {
+                action->setEnabled(false);
+            }
+            if (text.startsWith(QLineEdit::tr("Cu&t")) && !cutEnabled()) {
+                action->setEnabled(false);
+            }
+            if (text.startsWith(QLineEdit::tr("&Copy")) && !copyEnabled()) {
+                action->setEnabled(false);
+            }
+            if (text.startsWith(QLineEdit::tr("&Paste")) && !pasteEnabled()) {
+                action->setEnabled(false);
+            }
+        }
+
+        menu->popup(static_cast<QContextMenuEvent *>(event)->globalPos());
+        event->accept();
+        lineEdit()->setFocus();
+        return true;
+    }
+
     return DLineEdit::eventFilter(watcher, event);
 }
 
 DPasswordEditPrivate::DPasswordEditPrivate(DPasswordEdit *q)
     : DLineEditPrivate(q)
 {
-
 }
 
 void DPasswordEditPrivate::init()
