@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2021 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2021 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -38,6 +38,8 @@ TEST_F(ut_DPasswordEdit, setEchoMode)
 
 TEST_F(ut_DPasswordEdit, setCopyEnabled)
 {
+    ASSERT_FALSE(target->copyEnabled());
+
     target->setCopyEnabled(true);
     ASSERT_TRUE(target->copyEnabled());
 
@@ -47,10 +49,23 @@ TEST_F(ut_DPasswordEdit, setCopyEnabled)
 
 TEST_F(ut_DPasswordEdit, setCutEnabled)
 {
+    ASSERT_FALSE(target->cutEnabled());
+
     target->setCutEnabled(true);
     ASSERT_TRUE(target->cutEnabled());
 
     target->setCutEnabled(false);
     ASSERT_FALSE(target->cutEnabled());
+}
+
+TEST_F(ut_DPasswordEdit, setPasteEnabled)
+{
+    ASSERT_TRUE(target->pasteEnabled());
+
+    target->setPasteEnabled(true);
+    ASSERT_TRUE(target->pasteEnabled());
+
+    target->setPasteEnabled(false);
+    ASSERT_FALSE(target->pasteEnabled());
 }
 
