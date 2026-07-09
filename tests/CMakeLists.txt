@@ -151,6 +151,7 @@ endif()
 
 target_include_directories(${BINNAME} PRIVATE
     ${PROJECT_SOURCE_DIR}/src/widgets
+    ${PROJECT_SOURCE_DIR}/src
     ${PROJECT_SOURCE_DIR}/include/DWidget
     ${PROJECT_SOURCE_DIR}/include/util
     ${PROJECT_SOURCE_DIR}/include/widgets
