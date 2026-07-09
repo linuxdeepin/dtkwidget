@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.7.45] - 2026-07-09
+
+### Added
+
+- Add GitHub Actions CI workflows for Arch Linux and Deepin builds
+
+### Changed
+
+- Update SPDX copyright year to 2026
+- Replace #define private public hacks with template accessor pattern
+- Translate dtkwidget.ts in fi
+- Translate dtkwidget.ts in pt_BR
+- Translate dtkwidget.ts in pt_BR
+- Translate dtkwidget.ts in pt_BR
+- Translate dtkwidget.ts in pt_BR
+- Translate dtkwidget.ts in fi
+
+### Fixed
+
+- Parent DEnhancedWidget to DMainWindow to fix memory leak
+- Disable copy/cut/paste and block undo/redo in DPasswordEdit
+
+### Removed
+
+- Remove outdated conanfile.py with license inconsistency
+
 ## [6.7.44] - 2026-06-17
 
 ## [6.7.43] - 2026-06-04
