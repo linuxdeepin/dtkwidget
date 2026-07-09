@@ -33,7 +33,7 @@
     <name>DCrumbEdit</name>
     <message>
         <source>Black</source>
-        <translation>Черный</translation>
+        <translation>Чёрный</translation>
     </message>
     <message>
         <source>White</source>
@@ -41,7 +41,7 @@
     </message>
     <message>
         <source>Dark Gray</source>
-        <translation>Темно-серый</translation>
+        <translation>Тёмно-серый</translation>
     </message>
     <message>
         <source>Gray</source>
@@ -77,27 +77,27 @@
     </message>
     <message>
         <source>Dark Red</source>
-        <translation>Темно-красный</translation>
+        <translation>Тёмно-красный</translation>
     </message>
     <message>
         <source>Dark Green</source>
-        <translation>Темно-зеленый</translation>
+        <translation>Тёмно-зелёный</translation>
     </message>
     <message>
         <source>Dark Blue</source>
-        <translation>Темно-синий</translation>
+        <translation>Тёмно-синий</translation>
     </message>
     <message>
         <source>Dark Cyan</source>
-        <translation>Темно-голубой</translation>
+        <translation>Тёмно-голубой</translation>
     </message>
     <message>
         <source>Dark Magenta</source>
-        <translation>Темно-пурпурный</translation>
+        <translation>Тёмно-пурпурный</translation>
     </message>
     <message>
         <source>Dark Yellow</source>
-        <translation>Темно-желтый</translation>
+        <translation>Тёмно-жёлтый</translation>
     </message>
 </context>
 <context>
@@ -675,7 +675,7 @@
     </message>
     <message>
         <source>Dark Theme</source>
-        <translation>Темная тема</translation>
+        <translation>Тёмная тема</translation>
     </message>
     <message>
         <source>System Theme</source>
