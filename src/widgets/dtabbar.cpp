@@ -475,6 +475,11 @@ void DTabBarPrivate::startDrag()
 
     Q_EMIT q_func()->dragEnd(action);
 
+    // QDrag may be deleted by Qt's DnD framework during exec(),
+    // causing the QPointer to become null. Early-return to avoid SIGSEGV.
+    if (!drag)
+        return;
+
     if (action == Qt::IgnoreAction) {
         Q_EMIT q_func()->tabReleaseRequested(d->pressedIndex);
     } else if (drag->target() != this) {
