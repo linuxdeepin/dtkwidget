@@ -23,6 +23,24 @@
 
 DWIDGET_BEGIN_NAMESPACE
 
+// TODO: Qt6 QLineEdit 已实现 Qt::ImEnabled 查询项，返回 isEnabled() && !isReadOnly()，
+// 导致 Qt::WA_InputMethodEnabled 设置失效。已向 Qt 上游提交修复，
+// 若上游合入，此处的输入法事件拦截即可回退。
+// 上游提交: https://codereview.qt-project.org/c/qt/qtbase/+/741207
+// 类似#746，支持阻止 IME 激活但不影响软键盘（软键盘通过 KeyEvent 路径输入）。
+class Q_DECL_HIDDEN DLineEditImpl : public QLineEdit
+{
+public:
+    using QLineEdit::QLineEdit;
+
+    QVariant inputMethodQuery(Qt::InputMethodQuery query) const override
+    {
+        if (query == Qt::ImEnabled)
+            return testAttribute(Qt::WA_InputMethodEnabled) && isEnabled() && !isReadOnly();
+        return QLineEdit::inputMethodQuery(query);
+    }
+};
+
 /*!
 @~english
   \class Dtk::Widget::DLineEdit
@@ -736,7 +754,7 @@ void DLineEditPrivate::init()
     Q_Q(DLineEdit);
 
     hLayout = new QHBoxLayout(q);
-    lineEdit = new QLineEdit(q);
+    lineEdit = new DLineEditImpl(q);
     q->setFocusProxy(lineEdit); // fix DlineEdit setFocut but lineEdit can not edit(without focus rect)
     q->setFocusPolicy(lineEdit->focusPolicy());
 
