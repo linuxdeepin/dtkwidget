@@ -125,22 +125,6 @@ void DPasswordEdit::changeEvent(QEvent *event)
 
 bool DPasswordEdit::eventFilter(QObject* watcher, QEvent* event)
 {
-    // TODO: Qt6 QLineEdit 已实现 Qt::ImEnabled 查询项，返回 isEnabled() && !isReadOnly()，
-    // 导致 Qt::WA_InputMethodEnabled 设置失效。已向 Qt 上游提交修复，
-    // 若上游合入，此处的输入法事件拦截即可回退。
-    // 上游提交: https://codereview.qt-project.org/c/qt/qtbase/+/741207
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-    if (watcher == lineEdit()) {
-        switch (event->type()) {
-        case QEvent::InputMethod:
-        case QEvent::InputMethodQuery:
-            return true;
-        default:
-            break;
-        }
-    }
-#endif
-
     if (watcher == lineEdit() && event->type() == QEvent::KeyPress) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
         if (keyEvent->matches(QKeySequence::Undo)
