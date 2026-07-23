@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -13,8 +13,10 @@
 #include <DWidgetUtil>
 #include <DIconTheme>
 
+#ifdef Q_OS_LINUX
 #include <cups/cups.h>
 #include <cups/ppd.h>
+#endif
 
 
 #define FIRST_PAGE 1
@@ -796,6 +798,7 @@ PrintOptions DPrintPreviewWidgetPrivate::printerOptions()
     return options;
 }
 
+#ifdef Q_OS_LINUX
 void DPrintPreviewWidgetPrivate::printByCups()
 {
     //  libcups2-dev libcups2
@@ -835,6 +838,7 @@ void DPrintPreviewWidgetPrivate::printByCups()
     cupsPrintFile(printerName.toLocal8Bit().constData(), printFromPath.toLocal8Bit().constData(),
                   previewPrinter->docName().toLocal8Bit().constData(), numOptions, optPtr);
 }
+#endif
 
 void DPrintPreviewWidgetPrivate::generatePreviewPicture()
 {
@@ -963,6 +967,7 @@ void DPrintPreviewWidgetPrivate::calculateCurrentNumberPage()
     }
 }
 
+#ifdef Q_OS_LINUX
 QByteArray DPrintPreviewWidgetPrivate::foundColorModelByCups() const
 {
     const auto parts = previewPrinter->printerName().split(QLatin1Char('/'));
@@ -1074,6 +1079,7 @@ QByteArray DPrintPreviewWidgetPrivate::foundColorModelByCups() const
 
     return {};
 }
+#endif
 
 void DPrintPreviewWidgetPrivate::displayWaterMarkItem()
 {
@@ -1940,7 +1946,11 @@ QByteArray DPrintPreviewWidget::printerColorModel() const
 {
     D_DC(DPrintPreviewWidget);
 
+#ifdef Q_OS_LINUX
     return d->foundColorModelByCups();
+#else
+    return {};
+#endif
 }
 
 /*!
@@ -2040,8 +2050,10 @@ void DPrintPreviewWidget::print(bool isSavedPicture)
             // 通过QPrinter打印
             d->print(false);
         } else {
+#ifdef Q_OS_LINUX
             // 通过cups打印
             d->printByCups();
+#endif
         }
 
         break;
