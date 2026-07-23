@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2019 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2019 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -275,7 +275,9 @@ public:
     int impositionPages(DPrintPreviewWidget::Imposition im); // 每页版数
     QImage generateWaterMarkImage() const;
     PrintOptions printerOptions();
+#ifdef Q_OS_LINUX
     void printByCups();
+#endif
 
     void generatePreviewPicture();// 发送requestPaint信号，重新获取原文档数据
     void calculateNumberUpPage();// 重绘页面，当拼版数改变、纸张大小等操作时必须调用，
@@ -288,7 +290,9 @@ public:
     void displayWaterMarkItem();// 添加或更新水印效果，
     void calculateNumberPageScale();// 计算缩放比，拼版数发生改变需要调用
     void calculateCurrentNumberPage();// page是相对于原文档,添加page页需要显示的小页面到Vector
+#ifdef Q_OS_LINUX
     QByteArray foundColorModelByCups() const;
+#endif
 
     inline void setCurrentPageNumber(int page)
     {

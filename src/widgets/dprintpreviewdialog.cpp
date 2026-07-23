@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 - 2023 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -49,7 +49,9 @@
 #include <QWindow>
 #include <QLoggingCategory>
 #include <private/qprint_p.h>
+#ifdef Q_OS_LINUX
 #include <private/qcups_p.h>
+#endif
 #include <private/qprintdevice_p.h>
 #include <qpa/qplatformprintplugin.h>
 #include <qpa/qplatformprintersupport.h>
@@ -1350,10 +1352,18 @@ void DPrintPreviewDialogPrivate::setupPrinter()
     }
     //设置色彩打印
     if (supportedColorMode) {
+#ifdef Q_OS_LINUX
         QByteArray currentColorModel = pview->printerColorModel().isEmpty() ? QByteArrayLiteral("RGB") : pview->printerColorModel();
         QCUPSSupport::setCupsOption(printer, "ColorModel", currentColorModel);
+#else
+        Q_UNUSED(pview)
+#endif
     } else {
+#ifdef Q_OS_LINUX
         QCUPSSupport::setCupsOption(printer, "ColorModel", "Gray");
+#else
+        Q_UNUSED(printer)
+#endif
     }
     //设置纸张打印边距
     printer->setPageMargins(QMarginsF(marginLeftSpin->value(), marginTopSpin->value(), marginRightSpin->value(), marginBottomSpin->value()), QPageLayout::Millimeter);

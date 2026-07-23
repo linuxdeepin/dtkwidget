@@ -8,6 +8,11 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+# Export all symbols on Windows
+if(WIN32 AND NOT MSVC)
+  set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--export-all-symbols")
+endif()
+
 message(STATUS "Current Qt Version: ${QT_VERSION_MAJOR}")
 message(STATUS "Current Dtk Version: ${DTK_VERSION_MAJOR}")
 
@@ -44,7 +49,8 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core
     Widgets
     PrintSupport
     LinguistTools
-    DBus)
+    DBus
+    Svg)
 find_package(PkgConfig REQUIRED)
 
 if("${QT_VERSION_MAJOR}" STREQUAL "5")
