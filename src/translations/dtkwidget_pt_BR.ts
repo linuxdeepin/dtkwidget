@@ -7,7 +7,7 @@
     </message>
     <message>
         <source>ok</source>
-        <translation>Ok</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>mirrored</source>
