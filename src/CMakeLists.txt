@@ -1,11 +1,13 @@
 if("${QT_VERSION_MAJOR}" STREQUAL "5")
     pkg_check_modules(QGSettings REQUIRED IMPORTED_TARGET gsettings-qt) #Dtk6 removed.
 endif()
-pkg_check_modules(XcbUtil REQUIRED IMPORTED_TARGET xcb-util)
-pkg_check_modules(StartupNotification REQUIRED IMPORTED_TARGET libstartup-notification-1.0)
-pkg_check_modules(Xext REQUIRED IMPORTED_TARGET xext)
-pkg_check_modules(Xi REQUIRED IMPORTED_TARGET xi)
-pkg_check_modules(X11 REQUIRED IMPORTED_TARGET x11)
+if(LINUX)
+  pkg_check_modules(XcbUtil REQUIRED IMPORTED_TARGET xcb-util)
+  pkg_check_modules(StartupNotification REQUIRED IMPORTED_TARGET libstartup-notification-1.0)
+  pkg_check_modules(Xext REQUIRED IMPORTED_TARGET xext)
+  pkg_check_modules(Xi REQUIRED IMPORTED_TARGET xi)
+  pkg_check_modules(X11 REQUIRED IMPORTED_TARGET x11)
+endif()
 
 include(util/util.cmake)
 include(widgets/widgets.cmake)
@@ -69,6 +71,7 @@ PUBLIC
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::DBus
     Qt${QT_VERSION_MAJOR}::PrintSupport
+    Qt${QT_VERSION_MAJOR}::Svg
     Dtk${DTK_NAME_SUFFIX}::Gui
     Dtk${DTK_NAME_SUFFIX}::Core
 PRIVATE
@@ -76,12 +79,17 @@ PRIVATE
     Qt${QT_VERSION_MAJOR}::GuiPrivate
     Qt${QT_VERSION_MAJOR}::WidgetsPrivate
     Qt${QT_VERSION_MAJOR}::PrintSupportPrivate
-    PkgConfig::StartupNotification
-    PkgConfig::Xext
-    PkgConfig::Xi
-    PkgConfig::X11
-    PkgConfig::XcbUtil
 )
+if(LINUX)
+  target_link_libraries(${LIB_NAME}
+  PRIVATE
+      PkgConfig::StartupNotification
+      PkgConfig::Xext
+      PkgConfig::Xi
+      PkgConfig::X11
+      PkgConfig::XcbUtil
+  )
+endif()
 
 if("${QT_VERSION_MAJOR}" STREQUAL "5")
     target_link_libraries(${LIB_NAME} PRIVATE

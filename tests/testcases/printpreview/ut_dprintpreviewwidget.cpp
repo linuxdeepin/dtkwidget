@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2021 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2021 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -1155,8 +1155,10 @@ TEST_F(ut_DPrintPreviewWidgetPrivate, testPrivatePrintDrawUtil)
     ASSERT_FALSE(pview_d->printerOptions().isEmpty());
 
     if (pview_d->previewPrinter->outputFormat() == DPrinter::NativeFormat) {
+#ifdef Q_OS_LINUX
         // 测试正常打印机能否正常输出打印
         pview_d->printByCups();
+#endif
     }
 
     enum { TestPageCount = 3 };

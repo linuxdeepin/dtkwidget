@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2022 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -224,7 +224,7 @@ qreal DImageViewerPrivate::validRotateAngle(qreal angle) const
 {
     // From Qt help doc: A rotation transformation of 180 degrees
     // and/or 360 degrees is treated as a scaling transformation.
-    if (qFuzzyCompare(abs(angle), 180)) {
+    if (qFuzzyCompare(qreal(abs(angle)), qreal(180))) {
         // 180 degrees needs adjustment to avoid transformation errors.
         return angle + (angle < 0 ? -0.00001 : 0.0001);
     } else {
