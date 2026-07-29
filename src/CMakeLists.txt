@@ -71,7 +71,6 @@ PUBLIC
     Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::DBus
     Qt${QT_VERSION_MAJOR}::PrintSupport
-    Qt${QT_VERSION_MAJOR}::Svg
     Dtk${DTK_NAME_SUFFIX}::Gui
     Dtk${DTK_NAME_SUFFIX}::Core
 PRIVATE
@@ -79,6 +78,7 @@ PRIVATE
     Qt${QT_VERSION_MAJOR}::GuiPrivate
     Qt${QT_VERSION_MAJOR}::WidgetsPrivate
     Qt${QT_VERSION_MAJOR}::PrintSupportPrivate
+    Qt${QT_VERSION_MAJOR}::Svg
 )
 if(LINUX)
   target_link_libraries(${LIB_NAME}
