@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2017 - 2023 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2017 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -1158,7 +1158,7 @@ void DDialog::closeEvent(QCloseEvent *event)
 
     Q_EMIT aboutToClose();
 
-    done(d->clickedButtonIndex);
+    reject();
 
     Q_EMIT visibleChanged(isVisible());
     Q_EMIT closed();
