@@ -407,6 +407,11 @@ void DAbstractDialog::showEvent(QShowEvent *event)
         setDisplayPosition(displayPosition());
     }
 
+    // A derived dialog can adjust its size during the initial show without
+    // receiving another resize event, so synchronize the blur widget here.
+    if (d->bgBlurWidget)
+        d->bgBlurWidget->resize(size());
+
     QDialog::showEvent(event);
 }
 
