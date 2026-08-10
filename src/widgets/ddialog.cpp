@@ -1179,7 +1179,17 @@ void DDialog::childEvent(QChildEvent *event)
 
 void DDialog::resizeEvent(QResizeEvent *event)
 {
-    return DAbstractDialog::resizeEvent(event);
+    D_D(DDialog);
+    const bool shouldUpdateSize = !testAttribute(Qt::WA_Resized)
+            && event->size().width() != event->oldSize().width();
+
+    DAbstractDialog::resizeEvent(event);
+
+    // With a fractional scale factor, the platform may report a logical width
+    // that differs by one pixel from the requested width. Recalculate the
+    // height using that final width so word-wrapped text is not clipped.
+    if (shouldUpdateSize)
+        d->updateSize();
 }
 
 void DDialog::keyPressEvent(QKeyEvent *event)
