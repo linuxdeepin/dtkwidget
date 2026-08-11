@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2017 - 2023 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2017 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -172,6 +172,10 @@ private:
     bool                autoHideOnFullscreen = false;
     bool                fullScreenButtonVisible = true;
     bool                splitScreenWidgetEnable = true;
+    // Marks whether the currently shown split menu is provided by kwin (true) or
+    // by the self-drawn DSplitScreenWidget fallback (false). Decides which hide
+    // path to take on hover-leave/press/focus-loss.
+    bool                splitMenuUsingWM = false;
     QTimer              *maxButtonPressAndHoldTimer = nullptr;
     QWidget             *sidebarBackgroundWidget = nullptr;
     DTitlebarSettingsImpl *titlebarSettingsImpl = nullptr;
@@ -861,6 +865,21 @@ void DTitlebarPrivate::showSplitScreenWidget()
     if (!Q_LIKELY(DSplitScreenWidget::supportSplitScreenByWM(q->window())))
         return;
 
+    // Prefer the kwin-provided split menu when the window manager supports it; only
+    // fall back to the self-drawn DSplitScreenWidget on older kwin / unsupported WMs
+    // so behaviour stays identical to the status quo there.
+    if (auto wmHelper = DWindowManagerHelper::instance()) {
+        if (wmHelper->isSplitScreenMenuSupported()) {
+            splitMenuUsingWM = true;
+            QRect maxBtnRect = QRect(maxButton->mapToGlobal(maxButton->rect().topLeft()),
+                                     maxButton->rect().size());
+            wmHelper->showSplitMenu(q->window()->windowHandle(), maxBtnRect);
+            return;
+        }
+    }
+
+    splitMenuUsingWM = false;
+
     if (!splitWidget) {
         splitWidget = new DSplitScreenWidget(q->window());
     }
@@ -895,6 +914,13 @@ void DTitlebarPrivate::showSplitScreenWidget()
 
 void DTitlebarPrivate::hideSplitScreenWidget()
 {
+    if (splitMenuUsingWM) {
+        if (auto wmHelper = DWindowManagerHelper::instance())
+            wmHelper->hideSplitMenu(true);
+        splitMenuUsingWM = false;
+        return;
+    }
+
     if (!splitWidget)
         return;
 
