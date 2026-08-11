@@ -613,8 +613,10 @@ void CrumbObjectInterface::drawObject(QPainter *painter, const QRectF &rect,
 
         painter->setPen(crumb_format.textColor());
         const QRectF textRect = new_rect.adjusted(tag_rect.width() + 2, 0, -radius, 0);
-        const QString displayText = font_metrics.elidedText(
-            crumb_format.text(), Qt::ElideRight, textRect.width());
+        // 仅在容器宽度不足（shrink）时做省略；常规宽度直接绘制原文，避免无谓省略计算
+        QString displayText = crumb_format.text();
+        if (shrink)
+            displayText = font_metrics.elidedText(displayText, Qt::ElideRight, textRect.width());
         painter->drawText(textRect, displayText, Qt::AlignVCenter | Qt::AlignLeft);
     } else {
         painter->setPen(crumb_format.textColor());
