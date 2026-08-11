@@ -572,13 +572,27 @@ QSizeF CrumbObjectInterface::intrinsicSize(QTextDocument *doc, int posInDocument
 void CrumbObjectInterface::drawObject(QPainter *painter, const QRectF &rect,
                                       QTextDocument *doc, int posInDocument, const QTextFormat &format)
 {
-    Q_UNUSED(doc)
     Q_UNUSED(posInDocument)
 
-    const QRect new_rect = rect.adjusted(LeftMargin, TopMargin, 0, -TopMargin).toRect();
+    QRect new_rect = rect.adjusted(LeftMargin, TopMargin, 0, -TopMargin).toRect();
     const DCrumbTextFormat crumb_format(format);
     const QFontMetricsF font_metrics(crumb_format.font());
     const int radius = crumb_format.backgroundRadius();
+
+    // 当容器（文档）可用宽度小于 crumb 固有宽度时，将 crumb 收缩到可用宽度，
+    // 配合下方的文字省略，避免缩小侧边栏时标记信息溢出框外。
+    // 仅对带标记颜色的 crumb 生效（本 issue 场景），无标记颜色的 crumb 保持原样。
+    // 注意：intrinsicSize 拿不到可靠视口宽度，故不在此处收缩固有尺寸，
+    // 而是在绘制阶段依据 doc->textWidth() 收缩，文档宽度变化时会自动重新布局重绘。
+    const qreal docTextWidth = doc->textWidth();
+    const bool shrink = crumb_format.tagColor().isValid()
+        && docTextWidth > 0
+        && new_rect.x() + new_rect.width() > docTextWidth;
+    if (shrink) {
+        const int maxRight = int(docTextWidth) - 1;
+        if (maxRight > new_rect.x() + radius)
+            new_rect.setRight(maxRight);
+    }
 
     QPainterPath background_path;
     QPainterPath tag_path;
@@ -588,18 +602,26 @@ void CrumbObjectInterface::drawObject(QPainter *painter, const QRectF &rect,
     background_path.addRoundedRect(new_rect, radius, crumb_format.backgroundRadius());
 
     painter->setRenderHint(QPainter::Antialiasing);
+    if (shrink) {
+        painter->save();
+        painter->setClipRect(new_rect);
+    }
     painter->fillPath(background_path, backgroundBrush(new_rect, crumb_format.background()));
 
     if (crumb_format.tagColor().isValid()) {
         painter->fillPath(tag_path, crumb_format.tagColor());
 
         painter->setPen(crumb_format.textColor());
-        painter->drawText(new_rect.adjusted(tag_rect.width() + 2, 0, -radius, 0),
-                          crumb_format.text(), Qt::AlignVCenter | Qt::AlignRight);
+        const QRectF textRect = new_rect.adjusted(tag_rect.width() + 2, 0, -radius, 0);
+        const QString displayText = font_metrics.elidedText(
+            crumb_format.text(), Qt::ElideRight, textRect.width());
+        painter->drawText(textRect, displayText, Qt::AlignVCenter | Qt::AlignLeft);
     } else {
         painter->setPen(crumb_format.textColor());
         painter->drawText(new_rect, Qt::AlignCenter, crumb_format.text());
     }
+    if (shrink)
+        painter->restore();
 }
 
 QBrush CrumbObjectInterface::backgroundBrush(const QRect &rect, const QBrush &brush)
