@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2017 - 2023 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2017 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -73,6 +73,7 @@ private:
     void updateButtonsState(Qt::WindowFlags type);
     void updateButtonsFunc();
     void updateCenterArea();
+    void updateOptionButtonHoverState();
 
     void handleParentWindowStateChange();
     void handleParentWindowIdChange();
@@ -375,6 +376,22 @@ QWidget *DTitlebarPrivate::targetWindow()
     return q->topLevelWidget()->window();
 }
 
+void DTitlebarPrivate::updateOptionButtonHoverState()
+{
+    if (!optionButton || !optionButton->underMouse())
+        return;
+
+    // Closing a popup while the option button is pressed may prevent
+    // QWidget from receiving the mouse leave event. Check the real cursor
+    // position before correcting the stale under-mouse state.
+    const QPoint cursorPos = optionButton->mapFromGlobal(QCursor::pos());
+    if (optionButton->rect().contains(cursorPos))
+        return;
+
+    optionButton->setAttribute(Qt::WA_UnderMouse, false);
+    optionButton->update();
+}
+
 bool DTitlebarPrivate::isVisableOnFullscreen()
 {
     D_Q(DTitlebar);
@@ -550,6 +567,11 @@ void DTitlebarPrivate::handleParentWindowIdChange()
 {
     if (!targetWindowHandle) {
         targetWindowHandle = targetWindow()->windowHandle();
+        D_Q(DTitlebar);
+        // After a popup mouse grab, the release event is delivered to the
+        // QWidget's backing QWindow (QWidgetWindow), rather than the QWidget.
+        // Filter only this window handle instead of the whole application.
+        targetWindowHandle->installEventFilter(q);
 
         updateButtonsFunc();
     } else if (targetWindow()->windowHandle() != targetWindowHandle) {
@@ -1175,6 +1197,21 @@ bool DTitlebar::eventFilter(QObject *obj, QEvent *event)
             break;
 
         }
+    } else if (obj == d->targetWindowHandle) {
+        switch (event->type()) {
+        case QEvent::MouseButtonRelease: {
+            const auto mouseEvent = static_cast<QMouseEvent *>(event);
+            // Reconcile the option button's hover state after the popup mouse
+            // grab ends and the left button is released on the backing window.
+            if (mouseEvent->button() == Qt::LeftButton) {
+                d->updateOptionButtonHoverState();
+            }
+            break;
+        }
+        default:
+            break;
+        }
+
     }
     if (d->titlebarSettings && d->titlebarSettingsImpl->hasEditPanel() && obj == d->titlebarSettingsImpl->toolsEditPanel()) {
         if (event->type() == QEvent::Show) {
