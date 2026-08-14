@@ -138,6 +138,12 @@ TEST_F(ut_DCrumbedit, tagCrumbElidedAndNoOverflowWhenContainerNarrow)
     ASSERT_LT(qreal(narrowWidth), intrinsicWidth);
     doc->setTextWidth(narrowWidth);
 
+    // 修复前 intrinsicSize 未限宽，单个超宽 crumb 会撑开文档宽度导致水平滚动条；
+    // 修复后 idealWidth 应不超出文档可用宽度。
+    EXPECT_LE(doc->idealWidth(), qreal(narrowWidth))
+        << "单个超宽 crumb 撑开了文档宽度(" << doc->idealWidth()
+        << " > " << narrowWidth << ")，会产生水平滚动条";
+
     // 渲染文档到一张比 narrowWidth 更宽的图片，检测 crumb 是否溢出文档可用宽度
     QImage img(int(intrinsicWidth) + 40, 100, QImage::Format_ARGB32);
     img.fill(Qt::white);
