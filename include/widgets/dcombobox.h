@@ -23,6 +23,8 @@ public:
 protected:
     DComboBox(DComboBoxPrivate &dd, QWidget *parent);
 
+    void wheelEvent(QWheelEvent *event) override;
+
     // QComboBox interface
 public:
     virtual void showPopup() override;

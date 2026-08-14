@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2015 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2015 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -7,6 +7,8 @@
 #include "dspinbox.h"
 #include "private/dspinbox_p.h"
 #include "dlineedit.h"
+
+#include <QWheelEvent>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -63,6 +65,16 @@ DSpinBox::DSpinBox(QWidget *parent) :
     DObject(*new DSpinBoxPrivate(this))
 {
     d_func()->init();
+    setFocusPolicy(Qt::StrongFocus);
+}
+
+void DSpinBox::wheelEvent(QWheelEvent *event)
+{
+    if (hasFocus()) {
+        QSpinBox::wheelEvent(event);
+    } else {
+        QWidget::wheelEvent(event);
+    }
 }
 
 /*!
@@ -180,6 +192,16 @@ DDoubleSpinBox::DDoubleSpinBox(QWidget *parent) :
     DObject(*new DDoubleSpinBoxPrivate(this))
 {
     d_func()->init();
+    setFocusPolicy(Qt::StrongFocus);
+}
+
+void DDoubleSpinBox::wheelEvent(QWheelEvent *event)
+{
+    if (hasFocus()) {
+        QDoubleSpinBox::wheelEvent(event);
+    } else {
+        QWidget::wheelEvent(event);
+    }
 }
 
 bool DDoubleSpinBox::isAlert() const
