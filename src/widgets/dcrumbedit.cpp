@@ -556,17 +556,28 @@ public:
 
 QSizeF CrumbObjectInterface::intrinsicSize(QTextDocument *doc, int posInDocument, const QTextFormat &format)
 {
-    Q_UNUSED(doc)
     Q_UNUSED(posInDocument)
 
     const DCrumbTextFormat crumb_format(format);
     const QFontMetricsF font_metrics(crumb_format.font());
     int radius = crumb_format.backgroundRadius();
 
-    if (crumb_format.tagColor().isValid())
-        return QSizeF(font_metrics.horizontalAdvance(crumb_format.text()) + font_metrics.height() + radius + 2, font_metrics.height() + 2);
+    if (crumb_format.tagColor().isValid()) {
+        qreal width = font_metrics.horizontalAdvance(crumb_format.text())
+                      + font_metrics.height() + radius + 2;
+        // 限制单个 crumb 不超过文档可用内容宽度，避免超宽标记撑开文档导致水平滚动条。
+        // 超宽时由 drawObject 做省略显示。仅对带标记颜色的 crumb 生效（本 issue 场景）。
+        const qreal textWidth = doc->textWidth();
+        if (textWidth > 0) {
+            const qreal avail = textWidth - 2 * doc->documentMargin();
+            if (avail > 0 && width > avail)
+                width = avail;
+        }
+        return QSizeF(width, font_metrics.height() + 2);
+    }
 
-    return QSizeF(font_metrics.horizontalAdvance(crumb_format.text()) + 2 * radius + 2, font_metrics.height() + 2 + TopMargin *2);
+    return QSizeF(font_metrics.horizontalAdvance(crumb_format.text()) + 2 * radius + 2,
+                  font_metrics.height() + 2 + TopMargin * 2);
 }
 
 void CrumbObjectInterface::drawObject(QPainter *painter, const QRectF &rect,
@@ -582,24 +593,32 @@ void CrumbObjectInterface::drawObject(QPainter *painter, const QRectF &rect,
 
     QPainterPath background_path;
     QPainterPath tag_path;
-    const QRectF tag_rect(new_rect.x() + 2, new_rect.y() + 2, font_metrics.height() - 4, font_metrics.height() - 4);
+    const QRectF tag_rect(new_rect.x() + 2, new_rect.y() + 2,
+                          font_metrics.height() - 4, font_metrics.height() - 4);
 
     tag_path.addEllipse(tag_rect);
     background_path.addRoundedRect(new_rect, radius, crumb_format.backgroundRadius());
 
     painter->setRenderHint(QPainter::Antialiasing);
+    // 极窄宽度下色块可能超出收缩后的矩形，裁剪兜底防绘制越界
+    painter->save();
+    painter->setClipRect(new_rect);
     painter->fillPath(background_path, backgroundBrush(new_rect, crumb_format.background()));
 
     if (crumb_format.tagColor().isValid()) {
         painter->fillPath(tag_path, crumb_format.tagColor());
-
         painter->setPen(crumb_format.textColor());
-        painter->drawText(new_rect.adjusted(tag_rect.width() + 2, 0, -radius, 0),
-                          crumb_format.text(), Qt::AlignVCenter | Qt::AlignRight);
+        const QRectF textRect = new_rect.adjusted(tag_rect.width() + 2, 0, -radius, 0);
+        // intrinsicSize 已将超宽 crumb 收缩到可用宽度，此处按实际可用宽度省略文字
+        QString displayText = crumb_format.text();
+        if (font_metrics.horizontalAdvance(displayText) > textRect.width())
+            displayText = font_metrics.elidedText(displayText, Qt::ElideRight, textRect.width());
+        painter->drawText(textRect, displayText, Qt::AlignVCenter | Qt::AlignLeft);
     } else {
         painter->setPen(crumb_format.textColor());
         painter->drawText(new_rect, Qt::AlignCenter, crumb_format.text());
     }
+    painter->restore();
 }
 
 QBrush CrumbObjectInterface::backgroundBrush(const QRect &rect, const QBrush &brush)
