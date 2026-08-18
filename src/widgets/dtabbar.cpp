@@ -1589,6 +1589,10 @@ void DTabBarPrivate::tabLayoutChange()
     q->tabLayoutChange();
     // 更新关闭按钮的显示
     updateCloseButtonVisible();
+    // 修正滚动按钮的启用状态：layoutTabs() 会将 leftB 重置为 disabled，
+    // 需根据实际 scrollOffset 重新计算，修复惰性布局路径（如 paintEvent
+    // 中经 tabRect() 触发的 layoutTabs）下左右滚动按钮 enabled 状态反转的问题。
+    makeVisible(currentIndex());
 }
 
 void DTabBarPrivate::initStyleOption(QStyleOptionTab *option, int tabIndex) const
