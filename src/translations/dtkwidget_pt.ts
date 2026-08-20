@@ -3,23 +3,23 @@
     <name>CameraForm</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"/>
+        <translation>Formulário</translation>
     </message>
     <message>
         <source>ok</source>
-        <translation type="unfinished"/>
+        <translation>ok</translation>
     </message>
     <message>
         <source>mirrored</source>
-        <translation type="unfinished"/>
+        <translation>espelhado</translation>
     </message>
     <message>
         <source>Round</source>
-        <translation type="unfinished"/>
+        <translation>Redondo</translation>
     </message>
     <message>
         <source>start</source>
-        <translation type="unfinished"/>
+        <translation>iniciar</translation>
     </message>
 </context>
 <context>
@@ -537,23 +537,23 @@
     <name>MainWindow</name>
     <message>
         <source>MainWindow</source>
-        <translation type="unfinished"/>
+        <translation>JanelaPrincipal</translation>
     </message>
     <message>
         <source>This is DLabel...</source>
-        <translation type="unfinished"/>
+        <translation>Isto é uma DLabel...</translation>
     </message>
     <message>
         <source>255.255.255.255</source>
-        <translation type="unfinished"/>
+        <translation>255.255.255.255</translation>
     </message>
     <message>
         <source>这是一个富文本编辑框</source>
-        <translation type="unfinished"/>
+        <translation>Esta é uma caixa de edição de rich-text</translation>
     </message>
     <message>
         <source>warning</source>
-        <translation type="unfinished"/>
+        <translation>aviso</translation>
     </message>
     <message>
         <source>suggest</source>
@@ -618,7 +618,7 @@
     </message>
     <message>
         <source>License</source>
-        <translation type="unfinished"/>
+        <translation>Licença</translation>
     </message>
     <message>
         <source>Sincerely appreciate the open-source software used.</source>
