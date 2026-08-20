@@ -444,7 +444,7 @@
     </message>
     <message>
         <source>Full Color</source>
-        <translation type="unfinished"/>
+        <translation>Todas as Cores</translation>
     </message>
 </context>
 <context>
@@ -518,15 +518,15 @@
     <name>DToolbarEditPanel</name>
     <message>
         <source>Default toolset</source>
-        <translation type="unfinished"/>
+        <translation>Conjunto de ferramentas padrão</translation>
     </message>
     <message>
         <source>Drag your favorite items into the toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Arraste seus itens favoritos para a barra de ferramentas</translation>
     </message>
     <message>
         <source>Drag below items into the toolbar to restore defaults</source>
-        <translation type="unfinished"/>
+        <translation>Arraste os itens abaixo para a barra de ferramentas para restaurar as predefinições</translation>
     </message>
     <message>
         <source>Confirm</source>
@@ -622,11 +622,11 @@
     </message>
     <message>
         <source>Sincerely appreciate the open-source software used.</source>
-        <translation type="unfinished"/>
+        <translation>Agradecemos sinceramente pelo software de código aberto utilizado.</translation>
     </message>
     <message>
         <source>open-source software</source>
-        <translation type="unfinished"/>
+        <translation>software de código aberto</translation>
     </message>
     <message>
         <source>Continue</source>
@@ -638,7 +638,7 @@
     </message>
     <message>
         <source>Open-Source Software</source>
-        <translation type="unfinished"/>
+        <translation>Software de Código Aberto</translation>
     </message>
     <message>
         <source>Collections</source>
@@ -691,7 +691,7 @@
     </message>
     <message>
         <source>Custom toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Barra de ferramentas personalizada</translation>
     </message>
     <message>
         <source>About</source>
