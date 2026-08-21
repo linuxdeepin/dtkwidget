@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2021 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2021 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -336,6 +336,21 @@ TEST_F(ut_DPrintPreviewDialog, testPrintDeviceCombo)
 
     ASSERT_STREQ(test_dialog_d->printDeviceCombo->currentText().toLocal8Bit(), "Print to PDF");
     ASSERT_STREQ(test_dialog_d->pageRangeCombo->currentText().toLocal8Bit(), "All");
+}
+
+TEST_F(ut_DPrintPreviewDialog, testPaperSizeAppliedAfterPrinterChanged)
+{
+    test_dialog_d->paperSizeCombo->setCurrentText("8K");
+    ASSERT_EQ(test_dialog_d->printer->pageSize(), QPrinter::Custom);
+
+    // Rebuild the paper-size list while preserving the selected custom size.
+    // This path blocks the combo-box signal, so the page size must be applied
+    // explicitly after the selection is restored.
+    test_dialog_d->printer->setPageSize(QPageSize::A4);
+    test_dialog_d->_q_printerChanged(test_dialog_d->printDeviceCombo->currentIndex());
+
+    ASSERT_STREQ(test_dialog_d->paperSizeCombo->currentText().toLocal8Bit(), "8K");
+    ASSERT_EQ(test_dialog_d->printer->pageSize(), QPrinter::Custom);
 }
 
 TEST_F(ut_DPrintPreviewDialog, testCancelBtn)
