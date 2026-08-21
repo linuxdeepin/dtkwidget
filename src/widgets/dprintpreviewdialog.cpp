@@ -1802,6 +1802,9 @@ void DPrintPreviewDialogPrivate::_q_printerChanged(int index)
         }
     }
 
+    // The current index may not change when the paper list is rebuilt, so the
+    // combo-box signal is not guaranteed to apply the selected page size.
+    matchFitablePageSize();
     marginsUpdate(true);
     paperSizeCombo->blockSignals(false);
     if (isInited)
