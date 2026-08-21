@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2015 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2015 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -25,6 +25,10 @@ class LIBDTKWIDGETSHARED_EXPORT DSpinBox : public QSpinBox, public DTK_CORE_NAME
 public:
     explicit DSpinBox(QWidget *parent = nullptr);
 
+protected:
+    void wheelEvent(QWheelEvent *event) override;
+
+public:
     QLineEdit *lineEdit() const;
 
     bool isAlert() const;
@@ -65,6 +69,10 @@ class LIBDTKWIDGETSHARED_EXPORT DDoubleSpinBox : public QDoubleSpinBox, public D
 public:
     explicit DDoubleSpinBox(QWidget *parent = nullptr);
 
+protected:
+    void wheelEvent(QWheelEvent *event) override;
+
+public:
     bool isAlert() const;
     void showAlertMessage(const QString &text, int duration = 3000);
     void showAlertMessage(const QString &text, QWidget *follower, int duration = 3000);

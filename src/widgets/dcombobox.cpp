@@ -32,6 +32,7 @@
 #include <QScreen>
 #include <QStack>
 #include <QWindow>
+#include <QWheelEvent>
 
 DWIDGET_BEGIN_NAMESPACE
 
@@ -109,6 +110,7 @@ DComboBox::DComboBox(QWidget *parent)
 {
     D_D(DComboBox);
     d->init();
+    setFocusPolicy(Qt::StrongFocus);
 }
 
 DComboBox::DComboBox(DComboBoxPrivate &dd, QWidget *parent)
@@ -117,6 +119,16 @@ DComboBox::DComboBox(DComboBoxPrivate &dd, QWidget *parent)
 {
     D_D(DComboBox);
     d->init();
+    setFocusPolicy(Qt::StrongFocus);
+}
+
+void DComboBox::wheelEvent(QWheelEvent *event)
+{
+    if (hasFocus()) {
+        QComboBox::wheelEvent(event);
+    } else {
+        QWidget::wheelEvent(event);
+    }
 }
 
 /*!

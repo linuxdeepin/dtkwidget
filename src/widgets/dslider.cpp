@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2011 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2011 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -136,7 +136,11 @@ bool DSlider::eventFilter(QObject *watched, QEvent *e)
     Q_D(DSlider);
 
     if ((watched == d->slider) && (e->type() == QEvent::Wheel)) {
-        return !d->mouseWheelEnabled;
+        if (d->mouseWheelEnabled && d->slider->hasFocus()) {
+            return false;  // let QSlider::wheelEvent handle it (stepBy + accept)
+        }
+        e->ignore();  // Qt6: un-accept so event propagates to parent (e.g. scrollarea)
+        return true;   // block delivery to the inner QSlider
     }
 
     if (e->type() == QEvent::MouseButtonRelease) {
