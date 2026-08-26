@@ -3,23 +3,23 @@
     <name>CameraForm</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"/>
+        <translation>Formulário</translation>
     </message>
     <message>
         <source>ok</source>
-        <translation type="unfinished"/>
+        <translation>ok</translation>
     </message>
     <message>
         <source>mirrored</source>
-        <translation type="unfinished"/>
+        <translation>espelhado</translation>
     </message>
     <message>
         <source>Round</source>
-        <translation type="unfinished"/>
+        <translation>Redondo</translation>
     </message>
     <message>
         <source>start</source>
-        <translation type="unfinished"/>
+        <translation>iniciar</translation>
     </message>
 </context>
 <context>
@@ -444,7 +444,7 @@
     </message>
     <message>
         <source>Full Color</source>
-        <translation type="unfinished"/>
+        <translation>Todas as Cores</translation>
     </message>
 </context>
 <context>
@@ -518,15 +518,15 @@
     <name>DToolbarEditPanel</name>
     <message>
         <source>Default toolset</source>
-        <translation type="unfinished"/>
+        <translation>Conjunto de ferramentas padrão</translation>
     </message>
     <message>
         <source>Drag your favorite items into the toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Arraste seus itens favoritos para a barra de ferramentas</translation>
     </message>
     <message>
         <source>Drag below items into the toolbar to restore defaults</source>
-        <translation type="unfinished"/>
+        <translation>Arraste os itens abaixo para a barra de ferramentas para restaurar as predefinições</translation>
     </message>
     <message>
         <source>Confirm</source>
@@ -537,27 +537,27 @@
     <name>MainWindow</name>
     <message>
         <source>MainWindow</source>
-        <translation type="unfinished"/>
+        <translation>JanelaPrincipal</translation>
     </message>
     <message>
         <source>This is DLabel...</source>
-        <translation type="unfinished"/>
+        <translation>Isto é uma DLabel...</translation>
     </message>
     <message>
         <source>255.255.255.255</source>
-        <translation type="unfinished"/>
+        <translation>255.255.255.255</translation>
     </message>
     <message>
         <source>这是一个富文本编辑框</source>
-        <translation type="unfinished"/>
+        <translation>Esta é uma caixa de edição de rich-text</translation>
     </message>
     <message>
         <source>warning</source>
-        <translation type="unfinished"/>
+        <translation>aviso</translation>
     </message>
     <message>
         <source>suggest</source>
-        <translation type="unfinished"/>
+        <translation>sugerir</translation>
     </message>
 </context>
 <context>
@@ -579,7 +579,7 @@
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Colar</translation>
     </message>
     <message>
         <source>Select All</source>
@@ -618,15 +618,15 @@
     </message>
     <message>
         <source>License</source>
-        <translation type="unfinished"/>
+        <translation>Licença</translation>
     </message>
     <message>
         <source>Sincerely appreciate the open-source software used.</source>
-        <translation type="unfinished"/>
+        <translation>Agradecemos sinceramente pelo software de código aberto utilizado.</translation>
     </message>
     <message>
         <source>open-source software</source>
-        <translation type="unfinished"/>
+        <translation>software de código aberto</translation>
     </message>
     <message>
         <source>Continue</source>
@@ -638,15 +638,15 @@
     </message>
     <message>
         <source>Open-Source Software</source>
-        <translation type="unfinished"/>
+        <translation>Software de Código Aberto</translation>
     </message>
     <message>
         <source>Collections</source>
-        <translation type="unfinished"/>
+        <translation>Coleções</translation>
     </message>
     <message>
         <source>2023 UnionTech Software Technology Co., Ltd.</source>
-        <translation type="unfinished"/>
+        <translation>2023 UnionTech Software Technology Co., Ltd.</translation>
     </message>
 </context>
 <context>
@@ -691,7 +691,7 @@
     </message>
     <message>
         <source>Custom toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Barra de ferramentas personalizada</translation>
     </message>
     <message>
         <source>About</source>
@@ -706,7 +706,7 @@
     <name>main</name>
     <message>
         <source>Collections provides the examples for dtk applications.</source>
-        <translation type="unfinished"/>
+        <translation>Coleções fornece exemplos para aplicações DTK.</translation>
     </message>
 </context>
 </TS>
