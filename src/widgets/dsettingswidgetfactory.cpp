@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2016 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2016 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -275,8 +275,8 @@ QPair<QWidget *, QWidget *> createCheckboxOptionHandle(QObject *opt)
 #else
     option->connect(rightWidget, &QCheckBox::stateChanged,
 #endif
-    option, [ = ](int status) {
-        option->setValue(status == Qt::Checked);
+    option, [ = ] {
+        option->setValue(rightWidget->isChecked());
     });
     option->connect(option, &DTK_CORE_NAMESPACE::DSettingsOption::valueChanged,
     rightWidget, [ = ](const QVariant & value) {
