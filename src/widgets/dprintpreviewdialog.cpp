@@ -1155,11 +1155,11 @@ void DPrintPreviewDialogPrivate::initconnections()
         }
     });
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-    QObject::connect(sidebysideCheckBox, &DCheckBox::checkStateChanged, q, [this](int status) {
+    QObject::connect(sidebysideCheckBox, &DCheckBox::checkStateChanged, q, [this](Qt::CheckState status) {
 #else
     QObject::connect(sidebysideCheckBox, &DCheckBox::stateChanged, q, [this](int status) {
 #endif
-        if (status == 0) {
+        if (status == Qt::Unchecked) {
             if (isActualPrinter(printDeviceCombo->currentText()))
                 settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_PageOrder_SequentialPrint, true);
             setPageLayoutEnable(false);
@@ -1268,7 +1268,8 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(marginLeftSpin, SIGNAL(valueChanged(double)), q, SLOT(_q_marginspinChanged(double)));
     QObject::connect(marginBottomSpin, SIGNAL(valueChanged(double)), q, SLOT(_q_marginspinChanged(double)));
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-    QObject::connect(duplexCheckBox, SIGNAL(checkStateChanged(int)), q, SLOT(_q_checkStateChanged(int)));
+    QObject::connect(duplexCheckBox, &DCheckBox::checkStateChanged, q,
+                     [this](Qt::CheckState state) { _q_checkStateChanged(int(state)); });
 #else
     QObject::connect(duplexCheckBox, SIGNAL(stateChanged(int)), q, SLOT(_q_checkStateChanged(int)));
 #endif
