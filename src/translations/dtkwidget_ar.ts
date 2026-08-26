@@ -3,23 +3,23 @@
     <name>CameraForm</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"/>
+        <translation>نموذج</translation>
     </message>
     <message>
         <source>ok</source>
-        <translation type="unfinished"/>
+        <translation>موافق</translation>
     </message>
     <message>
         <source>mirrored</source>
-        <translation type="unfinished"/>
+        <translation>معكوس</translation>
     </message>
     <message>
         <source>Round</source>
-        <translation type="unfinished"/>
+        <translation>دائري</translation>
     </message>
     <message>
         <source>start</source>
-        <translation type="unfinished"/>
+        <translation>ابدأ</translation>
     </message>
 </context>
 <context>
@@ -247,7 +247,7 @@
     </message>
     <message>
         <source>Scaling</source>
-        <translation type="unfinished"/>
+        <translation>تحجيم</translation>
     </message>
     <message>
         <source>Actual size</source>
@@ -255,7 +255,7 @@
     </message>
     <message>
         <source>Scale</source>
-        <translation type="unfinished"/>
+        <translation>مقياس</translation>
     </message>
     <message>
         <source>Paper</source>
@@ -271,31 +271,31 @@
     </message>
     <message>
         <source>Duplex</source>
-        <translation type="unfinished"/>
+        <translation>طباعة وجهين</translation>
     </message>
     <message>
         <source>N-up printing</source>
-        <translation type="unfinished"/>
+        <translation>طباعة متعددة الصفحات</translation>
     </message>
     <message>
         <source>2 pages/sheet, 1×2</source>
-        <translation type="unfinished"/>
+        <translation>صفحتان/ورقة، 1×2</translation>
     </message>
     <message>
         <source>4 pages/sheet, 2×2</source>
-        <translation type="unfinished"/>
+        <translation>4 صفحات/ورقة، 2×2</translation>
     </message>
     <message>
         <source>6 pages/sheet, 2×3</source>
-        <translation type="unfinished"/>
+        <translation>6 صفحات/ورقة، 2×3</translation>
     </message>
     <message>
         <source>9 pages/sheet, 3×3</source>
-        <translation type="unfinished"/>
+        <translation>9 صفحات/ورقة، 3×3</translation>
     </message>
     <message>
         <source>16 pages/sheet, 4×4</source>
-        <translation type="unfinished"/>
+        <translation>16 صفحة/ورقة، 4×4</translation>
     </message>
     <message>
         <source>Layout direction</source>
@@ -363,7 +363,7 @@
     </message>
     <message>
         <source>Tile</source>
-        <translation type="unfinished"/>
+        <translation>تجانب</translation>
     </message>
     <message>
         <source>Center</source>
@@ -391,15 +391,15 @@
     </message>
     <message>
         <source>Collapse</source>
-        <translation type="unfinished"/>
+        <translation>طيّ</translation>
     </message>
     <message>
         <source>Flip on short edge</source>
-        <translation type="unfinished"/>
+        <translation>قلب على الحافة القصيرة</translation>
     </message>
     <message>
         <source>Flip on long edge</source>
-        <translation type="unfinished"/>
+        <translation>قلب على الحافة الطويلة</translation>
     </message>
     <message>
         <source>Input page numbers please</source>
@@ -537,27 +537,27 @@
     <name>MainWindow</name>
     <message>
         <source>MainWindow</source>
-        <translation type="unfinished"/>
+        <translation>النافذة الرئيسية</translation>
     </message>
     <message>
         <source>This is DLabel...</source>
-        <translation type="unfinished"/>
+        <translation>هذا DLabel...</translation>
     </message>
     <message>
         <source>255.255.255.255</source>
-        <translation type="unfinished"/>
+        <translation>255.255.255.255</translation>
     </message>
     <message>
         <source>这是一个富文本编辑框</source>
-        <translation type="unfinished"/>
+        <translation>هذا مربع تحرير نص منسّق</translation>
     </message>
     <message>
         <source>warning</source>
-        <translation type="unfinished"/>
+        <translation>تحذير</translation>
     </message>
     <message>
         <source>suggest</source>
-        <translation type="unfinished"/>
+        <translation>اقتراح</translation>
     </message>
 </context>
 <context>
@@ -571,15 +571,15 @@
     <name>QLineEdit</name>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished"/>
+        <translation>&amp;نسخ</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation type="unfinished"/>
+        <translation>&amp;قص</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished"/>
+        <translation>&amp;لصق</translation>
     </message>
     <message>
         <source>Select All</source>
@@ -642,11 +642,11 @@
     </message>
     <message>
         <source>Collections</source>
-        <translation type="unfinished"/>
+        <translation>مجموعات</translation>
     </message>
     <message>
         <source>2023 UnionTech Software Technology Co., Ltd.</source>
-        <translation type="unfinished"/>
+        <translation>2023 UnionTech Software Technology Co., Ltd.</translation>
     </message>
 </context>
 <context>
@@ -706,7 +706,7 @@
     <name>main</name>
     <message>
         <source>Collections provides the examples for dtk applications.</source>
-        <translation type="unfinished"/>
+        <translation>توفر المجموعات أمثلة لتطبيقات dtk.</translation>
     </message>
 </context>
 </TS>
