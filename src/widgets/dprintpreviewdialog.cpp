@@ -1017,7 +1017,7 @@ void DPrintPreviewDialogPrivate::initdata()
 {
     Q_Q(DPrintPreviewDialog);
     QStringList itemlist;
-    itemlist << QPrinterInfo::availablePrinterNames()
+    itemlist << availablePrinterNames()
              << qApp->translate("DPrintPreviewDialogPrivate", "Print to PDF")
              << qApp->translate("DPrintPreviewDialogPrivate", "Save as Image");
     printDeviceCombo->addItems(itemlist);
@@ -1294,6 +1294,12 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(copycountspinbox->lineEdit(), SIGNAL(textEdited(const QString &)), q, SLOT(_q_spinboxValueEmptyChecked(const QString &)));
     QObject::connect(scaleRateEdit->lineEdit(), SIGNAL(textEdited(const QString &)), q, SLOT(_q_spinboxValueEmptyChecked(const QString &)));
     QObject::connect(inclinatBox->lineEdit(), SIGNAL(textEdited(const QString &)), q, SLOT(_q_spinboxValueEmptyChecked(const QString &)));
+
+    QObject::connect(q, &DPrintPreviewDialog::finished, q, [this]() {
+        qDebug(dPrintPreview) << "DPrintPreviewDialog finished, clear printerNames";
+        printerNames.clear();
+        printerNamesInited = false;
+    });
 }
 
 void DPrintPreviewDialogPrivate::setfrmaeback(DFrame *frame)
@@ -2253,10 +2259,20 @@ void DPrintPreviewDialogPrivate::matchFitablePageSize()
     }
 }
 
+QStringList DPrintPreviewDialogPrivate::availablePrinterNames()
+{
+    if (!printerNamesInited) {
+        qDebug(dPrintPreview) << "Get printer names from QPrinterInfo.";
+        printerNamesInited = true;
+        printerNames = QPrinterInfo::availablePrinterNames();
+        qDebug(dPrintPreview) << "Available printer names:" << printerNames;
+    }
+    return printerNames;
+}
+
 bool DPrintPreviewDialogPrivate::isActualPrinter(const QString &name)
 {
-    const QStringList &printerNames = QPrinterInfo::availablePrinterNames();
-    return printerNames.contains(name);
+    return availablePrinterNames().contains(name);
 }
 
 QString DPrintPreviewDialogPrivate::getColorModeConfig(const QString &printer)
