@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2019 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2019 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -92,6 +92,7 @@ public:
     void setPageLayoutEnable(const bool &checked);
     void matchFitablePageSize();
     bool isActualPrinter(const QString &name);
+    QStringList availablePrinterNames();
     QString getColorModeConfig(const QString &printer);
     void saveColorModeConfig(const QString &printer, const QString &colorMode);
 
@@ -189,6 +190,8 @@ public:
     DSpinBox *opaBox = nullptr;
     QVector<qreal> marginOldValue; // 记录margin自定义时的旧值  如果旧值和新值一致，就不需要刷新，top left right bottom
     QList<qreal> minnumMargins;
+    QStringList printerNames;
+    bool printerNamesInited = false;
     QSpacerItem *spacer = nullptr;
     QSpacerItem *wmSpacer = nullptr;
     DFloatingWidget *colorWidget = nullptr;
