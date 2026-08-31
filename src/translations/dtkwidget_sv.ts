@@ -3,23 +3,23 @@
     <name>CameraForm</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"/>
+        <translation>Formulär</translation>
     </message>
     <message>
         <source>ok</source>
-        <translation type="unfinished"/>
+        <translation>ok</translation>
     </message>
     <message>
         <source>mirrored</source>
-        <translation type="unfinished"/>
+        <translation>spegelvänd</translation>
     </message>
     <message>
         <source>Round</source>
-        <translation type="unfinished"/>
+        <translation>Rund</translation>
     </message>
     <message>
         <source>start</source>
-        <translation type="unfinished"/>
+        <translation>starta</translation>
     </message>
 </context>
 <context>
@@ -444,7 +444,7 @@
     </message>
     <message>
         <source>Full Color</source>
-        <translation type="unfinished"/>
+        <translation>Fullfärg</translation>
     </message>
 </context>
 <context>
@@ -526,7 +526,7 @@
     </message>
     <message>
         <source>Drag below items into the toolbar to restore defaults</source>
-        <translation type="unfinished"/>
+        <translation>Dra objekten nedan till verktygsfältet för att återställa standardinställningarna</translation>
     </message>
     <message>
         <source>Confirm</source>
@@ -571,11 +571,11 @@
     <name>QLineEdit</name>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Kopiera</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation type="unfinished"/>
+        <translation>Klipp u&amp;t</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -590,11 +590,11 @@
     <name>QObject</name>
     <message>
         <source>No search result</source>
-        <translation type="unfinished"/>
+        <translation>Inga sökresultat</translation>
     </message>
     <message>
         <source>Restore Defaults</source>
-        <translation type="unfinished"/>
+        <translation>Återställ standardinställningarna</translation>
     </message>
     <message>
         <source>Version</source>
@@ -602,7 +602,7 @@
     </message>
     <message>
         <source>Features</source>
-        <translation type="unfinished"/>
+        <translation>Funktioner</translation>
     </message>
     <message>
         <source>Homepage</source>
@@ -618,11 +618,11 @@
     </message>
     <message>
         <source>License</source>
-        <translation type="unfinished"/>
+        <translation>Licens</translation>
     </message>
     <message>
         <source>Sincerely appreciate the open-source software used.</source>
-        <translation type="unfinished"/>
+        <translation>Stort tack till den programvara med öppen källkod som används.</translation>
     </message>
     <message>
         <source>open-source software</source>
@@ -630,15 +630,15 @@
     </message>
     <message>
         <source>Continue</source>
-        <translation type="unfinished"/>
+        <translation>Fortsätt</translation>
     </message>
     <message>
         <source>Learn More</source>
-        <translation type="unfinished"/>
+        <translation>Läs mer</translation>
     </message>
     <message>
         <source>Open-Source Software</source>
-        <translation type="unfinished"/>
+        <translation>Programvara med öppen källkod</translation>
     </message>
     <message>
         <source>Collections</source>
@@ -660,7 +660,7 @@
     <name>ShortcutEdit</name>
     <message>
         <source>Please enter a new shortcut</source>
-        <translation type="unfinished"/>
+        <translation>Ange ett nytt kortkommando</translation>
     </message>
 </context>
 <context>
@@ -687,11 +687,11 @@
     </message>
     <message>
         <source>Feedback</source>
-        <translation type="unfinished"/>
+        <translation>Återkoppling</translation>
     </message>
     <message>
         <source>Custom toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Anpassat verktygsfält</translation>
     </message>
     <message>
         <source>About</source>
