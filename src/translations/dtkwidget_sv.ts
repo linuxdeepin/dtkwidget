@@ -1,710 +1,712 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="sv">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="sv">
 <context>
     <name>CameraForm</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulär</translation>
     </message>
     <message>
         <source>ok</source>
-        <translation type="unfinished"></translation>
+        <translation>ok</translation>
     </message>
     <message>
         <source>mirrored</source>
-        <translation type="unfinished"></translation>
+        <translation>spegelvänd</translation>
     </message>
     <message>
         <source>Round</source>
-        <translation type="unfinished"></translation>
+        <translation>Rund</translation>
     </message>
     <message>
         <source>start</source>
-        <translation type="unfinished"></translation>
+        <translation>starta</translation>
     </message>
 </context>
 <context>
     <name>DAboutDialog</name>
     <message>
         <source>%1 is released under %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ges ut under %2</translation>
     </message>
 </context>
 <context>
     <name>DCrumbEdit</name>
     <message>
         <source>Black</source>
-        <translation type="unfinished"></translation>
+        <translation>Svart</translation>
     </message>
     <message>
         <source>White</source>
-        <translation type="unfinished"></translation>
+        <translation>Vit</translation>
     </message>
     <message>
         <source>Dark Gray</source>
-        <translation type="unfinished"></translation>
+        <translation>Mörkgrå</translation>
     </message>
     <message>
         <source>Gray</source>
-        <translation type="unfinished"></translation>
+        <translation>Grå</translation>
     </message>
     <message>
         <source>Light Gray</source>
-        <translation type="unfinished"></translation>
+        <translation>Ljusgrå</translation>
     </message>
     <message>
         <source>Red</source>
-        <translation type="unfinished"></translation>
+        <translation>Röd</translation>
     </message>
     <message>
         <source>Green</source>
-        <translation type="unfinished"></translation>
+        <translation>Grön</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Blå</translation>
     </message>
     <message>
         <source>Cyan</source>
-        <translation type="unfinished"></translation>
+        <translation>Cyan</translation>
     </message>
     <message>
         <source>Magenta</source>
-        <translation type="unfinished"></translation>
+        <translation>Magenta</translation>
     </message>
     <message>
         <source>Yellow</source>
-        <translation type="unfinished"></translation>
+        <translation>Gul</translation>
     </message>
     <message>
         <source>Dark Red</source>
-        <translation type="unfinished"></translation>
+        <translation>Mörkröd</translation>
     </message>
     <message>
         <source>Dark Green</source>
-        <translation type="unfinished"></translation>
+        <translation>Mörkgrön</translation>
     </message>
     <message>
         <source>Dark Blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Mörkblå</translation>
     </message>
     <message>
         <source>Dark Cyan</source>
-        <translation type="unfinished"></translation>
+        <translation>Mörkcyan</translation>
     </message>
     <message>
         <source>Dark Magenta</source>
-        <translation type="unfinished"></translation>
+        <translation>Mörk magenta</translation>
     </message>
     <message>
         <source>Dark Yellow</source>
-        <translation type="unfinished"></translation>
+        <translation>Mörkgul</translation>
     </message>
 </context>
 <context>
     <name>DInputDialog</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <source>Confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>Bekräfta</translation>
     </message>
 </context>
 <context>
     <name>DKeySequenceEdit</name>
     <message>
         <source>Enter a new shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange ett nytt kortkommando</translation>
     </message>
 </context>
 <context>
     <name>DLineEdit</name>
     <message>
         <source>Stop reading</source>
-        <translation type="unfinished"></translation>
+        <translation>Sluta läsa</translation>
     </message>
     <message>
         <source>Text to Speech</source>
-        <translation type="unfinished"></translation>
+        <translation>Text till tal</translation>
     </message>
     <message>
         <source>Translate</source>
-        <translation type="unfinished"></translation>
+        <translation>Översätt</translation>
     </message>
     <message>
         <source>Speech To Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Tal till text</translation>
     </message>
 </context>
 <context>
     <name>DPrintPreviewDialogPrivate</name>
     <message>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Avancerat</translation>
     </message>
     <message>
         <source>Cancel</source>
         <comment>button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <source>Print</source>
         <comment>button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Skriv ut</translation>
     </message>
     <message>
         <source>Basic</source>
-        <translation type="unfinished"></translation>
+        <translation>Grundläggande</translation>
     </message>
     <message>
         <source>Printer</source>
-        <translation type="unfinished"></translation>
+        <translation>Skrivare</translation>
     </message>
     <message>
         <source>Copies</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopior</translation>
     </message>
     <message>
         <source>Page range</source>
-        <translation type="unfinished"></translation>
+        <translation>Sidintervall</translation>
     </message>
     <message>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alla</translation>
     </message>
     <message>
         <source>Current page</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuell sida</translation>
     </message>
     <message>
         <source>Select pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj sidor</translation>
     </message>
     <message>
         <source>Orientation</source>
-        <translation type="unfinished"></translation>
+        <translation>Orientering</translation>
     </message>
     <message>
         <source>Portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>Stående</translation>
     </message>
     <message>
         <source>Landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>Liggande</translation>
     </message>
     <message>
         <source>Pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Sidor</translation>
     </message>
     <message>
         <source>Color mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Färgläge</translation>
+    </message>
+    <message>
+        <source>Color</source>
+        <translation type="vanished">Färg</translation>
     </message>
     <message>
         <source>Grayscale</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Full Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Gråskala</translation>
     </message>
     <message>
         <source>Margins</source>
-        <translation type="unfinished"></translation>
+        <translation>Marginaler</translation>
     </message>
     <message>
         <source>Narrow (mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Smal (mm)</translation>
     </message>
     <message>
         <source>Normal (mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Normal (mm)</translation>
     </message>
     <message>
         <source>Moderate (mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Medel (mm)</translation>
     </message>
     <message>
         <source>Customize (mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Anpassa (mm)</translation>
     </message>
     <message>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Överst</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Vänster</translation>
     </message>
     <message>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Nederst</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Höger</translation>
     </message>
     <message>
         <source>Scaling</source>
-        <translation type="unfinished"></translation>
+        <translation>Skalning</translation>
     </message>
     <message>
         <source>Actual size</source>
-        <translation type="unfinished"></translation>
+        <translation>Verklig storlek</translation>
     </message>
     <message>
         <source>Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Skala</translation>
     </message>
     <message>
         <source>Paper</source>
-        <translation type="unfinished"></translation>
+        <translation>Papper</translation>
     </message>
     <message>
         <source>Paper size</source>
-        <translation type="unfinished"></translation>
+        <translation>Pappersstorlek</translation>
     </message>
     <message>
         <source>Print Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Utskriftslayout</translation>
     </message>
     <message>
         <source>Duplex</source>
-        <translation type="unfinished"></translation>
+        <translation>Dubbelsidigt</translation>
     </message>
     <message>
         <source>N-up printing</source>
-        <translation type="unfinished"></translation>
+        <translation>Flera sidor per ark</translation>
     </message>
     <message>
         <source>2 pages/sheet, 1×2</source>
-        <translation type="unfinished"></translation>
+        <translation>2 sidor/ark, 1×2</translation>
     </message>
     <message>
         <source>4 pages/sheet, 2×2</source>
-        <translation type="unfinished"></translation>
+        <translation>4 sidor/ark, 2×2</translation>
     </message>
     <message>
         <source>6 pages/sheet, 2×3</source>
-        <translation type="unfinished"></translation>
+        <translation>6 sidor/ark, 2×3</translation>
     </message>
     <message>
         <source>9 pages/sheet, 3×3</source>
-        <translation type="unfinished"></translation>
+        <translation>9 sidor/ark, 3×3</translation>
     </message>
     <message>
         <source>16 pages/sheet, 4×4</source>
-        <translation type="unfinished"></translation>
+        <translation>16 sidor/ark, 4×4</translation>
     </message>
     <message>
         <source>Layout direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Layout-riktning</translation>
     </message>
     <message>
         <source>Page Order</source>
-        <translation type="unfinished"></translation>
+        <translation>Sidordning</translation>
     </message>
     <message>
         <source>Collate pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortera sidor</translation>
     </message>
     <message>
         <source>Print pages in order</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv ut sidor i ordning</translation>
     </message>
     <message>
         <source>Front to back</source>
-        <translation type="unfinished"></translation>
+        <translation>Framifrån och bakåt</translation>
     </message>
     <message>
         <source>Back to front</source>
-        <translation type="unfinished"></translation>
+        <translation>Bakifrån och framåt</translation>
     </message>
     <message>
         <source>Watermark</source>
-        <translation type="unfinished"></translation>
+        <translation>Vattenmärke</translation>
     </message>
     <message>
         <source>Add watermark</source>
-        <translation type="unfinished"></translation>
+        <translation>Lägg till vattenmärke</translation>
     </message>
     <message>
         <source>Text watermark</source>
-        <translation type="unfinished"></translation>
+        <translation>Textvattenmärke</translation>
     </message>
     <message>
         <source>Confidential</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfidentiellt</translation>
     </message>
     <message>
         <source>Draft</source>
-        <translation type="unfinished"></translation>
+        <translation>Utkast</translation>
     </message>
     <message>
         <source>Sample</source>
-        <translation type="unfinished"></translation>
+        <translation>Exempel</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation type="unfinished"></translation>
+        <translation>Anpassad</translation>
     </message>
     <message>
         <source>Input your text</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange din text</translation>
     </message>
     <message>
         <source>Picture watermark</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildvattenmärke</translation>
     </message>
     <message>
         <source>Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Layout</translation>
     </message>
     <message>
         <source>Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Sida vid sida</translation>
     </message>
     <message>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Centrera</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Vinkel</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Storlek</translation>
     </message>
     <message>
         <source>Transparency</source>
-        <translation type="unfinished"></translation>
+        <translation>Genomskinlighet</translation>
     </message>
     <message>
         <source>Print to PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv ut till PDF</translation>
     </message>
     <message>
         <source>Save as Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara som bild</translation>
     </message>
     <message>
         <source>Collapse</source>
-        <translation type="unfinished"></translation>
+        <translation>Fäll ihop</translation>
     </message>
     <message>
         <source>Flip on short edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Vänd längs kortsidan</translation>
     </message>
     <message>
         <source>Flip on long edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Vänd längs långsidan</translation>
     </message>
     <message>
         <source>Input page numbers please</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange sidnummer</translation>
     </message>
     <message>
         <source>Maximum page number reached</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximalt sidnummer har nåtts</translation>
     </message>
     <message>
         <source>Input English comma please</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange engelskt kommatecken</translation>
     </message>
     <message>
         <source>Input page numbers like this: 1,3,5-7,11-15,18,21</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange sidnummer så här: 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
         <source>Save</source>
         <comment>button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Spara</translation>
     </message>
     <message>
         <source>*.pdf</source>
-        <translation type="unfinished"></translation>
+        <translation>*.pdf</translation>
     </message>
     <message>
         <source>For example, 1,3,5-7,11-15,18,21</source>
-        <translation type="unfinished"></translation>
+        <translation>Till exempel 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
         <source>Save as PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara som PDF</translation>
     </message>
     <message>
         <source>Save as image</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara som bild</translation>
     </message>
     <message>
         <source>Images</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilder</translation>
+    </message>
+    <message>
+        <source>Full Color</source>
+        <translation>Fullfärg</translation>
     </message>
 </context>
 <context>
     <name>DPrintPreviewWidget</name>
     <message>
         <source>Confidential</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfidentiellt</translation>
     </message>
     <message>
         <source>Draft</source>
-        <translation type="unfinished"></translation>
+        <translation>Utkast</translation>
     </message>
     <message>
         <source>Sample</source>
-        <translation type="unfinished"></translation>
+        <translation>Exempel</translation>
     </message>
 </context>
 <context>
     <name>DSearchEdit</name>
     <message>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Sök</translation>
     </message>
 </context>
 <context>
     <name>DSettingsDialog</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <source>Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>Ersätt</translation>
     </message>
     <message>
         <source>This shortcut conflicts with %1, click on Add to make this shortcut effective immediately</source>
-        <translation type="unfinished"></translation>
+        <translation>Det här kortkommandot står i konflikt med %1. Klicka på Lägg till för att aktivera det direkt.</translation>
     </message>
 </context>
 <context>
     <name>DShortcutEdit</name>
     <message>
         <source>Please input a new shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange ett nytt kortkommando</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Inget</translation>
     </message>
 </context>
 <context>
     <name>DTextEdit</name>
     <message>
         <source>Stop reading</source>
-        <translation type="unfinished"></translation>
+        <translation>Sluta läsa</translation>
     </message>
     <message>
         <source>Text to Speech</source>
-        <translation type="unfinished"></translation>
+        <translation>Text till tal</translation>
     </message>
     <message>
         <source>Translate</source>
-        <translation type="unfinished"></translation>
+        <translation>Översätt</translation>
     </message>
     <message>
         <source>Speech To Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Tal till text</translation>
     </message>
 </context>
 <context>
     <name>DToolbarEditPanel</name>
     <message>
         <source>Default toolset</source>
-        <translation type="unfinished"></translation>
+        <translation>Standardverktyg</translation>
     </message>
     <message>
         <source>Drag your favorite items into the toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Dra dina favoritobjekt till verktygsfältet</translation>
     </message>
     <message>
         <source>Drag below items into the toolbar to restore defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Dra objekten nedan till verktygsfältet för att återställa standardinställningarna</translation>
     </message>
     <message>
         <source>Confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>Bekräfta</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>MainWindow</source>
-        <translation type="unfinished"></translation>
+        <translation>Huvudfönster</translation>
     </message>
     <message>
         <source>This is DLabel...</source>
-        <translation type="unfinished"></translation>
+        <translation>Det här är DLabel …</translation>
     </message>
     <message>
         <source>255.255.255.255</source>
-        <translation type="unfinished"></translation>
+        <translation>255.255.255.255</translation>
     </message>
     <message>
         <source>这是一个富文本编辑框</source>
-        <translation type="unfinished"></translation>
+        <translation>Det här är ett redigeringsfält för formaterad text</translation>
     </message>
     <message>
         <source>warning</source>
-        <translation type="unfinished"></translation>
+        <translation>varning</translation>
     </message>
     <message>
         <source>suggest</source>
-        <translation type="unfinished"></translation>
+        <translation>förslag</translation>
     </message>
 </context>
 <context>
     <name>PickColorWidget</name>
     <message>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Färg</translation>
     </message>
 </context>
 <context>
     <name>QLineEdit</name>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kopiera</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation type="unfinished"></translation>
+        <translation>Klipp u&amp;t</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Klistra &amp;in</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Markera allt</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>No search result</source>
-        <translation type="unfinished"></translation>
+        <translation>Inga sökresultat</translation>
     </message>
     <message>
         <source>Restore Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Återställ standardinställningarna</translation>
     </message>
     <message>
         <source>Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Version</translation>
     </message>
     <message>
         <source>Features</source>
-        <translation type="unfinished"></translation>
+        <translation>Funktioner</translation>
     </message>
     <message>
         <source>Homepage</source>
-        <translation type="unfinished"></translation>
+        <translation>Webbplats</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Beskrivning</translation>
     </message>
     <message>
         <source>Acknowledgements</source>
-        <translation type="unfinished"></translation>
+        <translation>Tack</translation>
     </message>
     <message>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>Licens</translation>
     </message>
     <message>
         <source>Sincerely appreciate the open-source software used.</source>
-        <translation type="unfinished"></translation>
+        <translation>Stort tack till den programvara med öppen källkod som används.</translation>
     </message>
     <message>
         <source>open-source software</source>
-        <translation type="unfinished"></translation>
+        <translation>programvara med öppen källkod</translation>
     </message>
     <message>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Fortsätt</translation>
     </message>
     <message>
         <source>Learn More</source>
-        <translation type="unfinished"></translation>
+        <translation>Läs mer</translation>
     </message>
     <message>
         <source>Open-Source Software</source>
-        <translation type="unfinished"></translation>
+        <translation>Programvara med öppen källkod</translation>
     </message>
     <message>
         <source>Collections</source>
-        <translation type="unfinished"></translation>
+        <translation>Samlingar</translation>
     </message>
     <message>
         <source>2023 UnionTech Software Technology Co., Ltd.</source>
-        <translation type="unfinished"></translation>
+        <translation>2023 UnionTech Software Technology Co., Ltd.</translation>
     </message>
 </context>
 <context>
     <name>QWidgetTextControl</name>
     <message>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Markera allt</translation>
     </message>
 </context>
 <context>
     <name>ShortcutEdit</name>
     <message>
         <source>Please enter a new shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange ett nytt kortkommando</translation>
     </message>
 </context>
 <context>
     <name>TitleBarMenu</name>
     <message>
         <source>Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Tema</translation>
     </message>
     <message>
         <source>Light Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Ljust tema</translation>
     </message>
     <message>
         <source>Dark Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Mörkt tema</translation>
     </message>
     <message>
         <source>System Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Systemtema</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Hjälp</translation>
     </message>
     <message>
         <source>Feedback</source>
-        <translation type="unfinished"></translation>
+        <translation>Återkoppling</translation>
     </message>
     <message>
         <source>Custom toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Anpassat verktygsfält</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Om</translation>
     </message>
     <message>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Avsluta</translation>
     </message>
 </context>
 <context>
     <name>main</name>
     <message>
         <source>Collections provides the examples for dtk applications.</source>
-        <translation type="unfinished"></translation>
+        <translation>Samlingar innehåller exempel för DTK-program.</translation>
     </message>
 </context>
 </TS>
