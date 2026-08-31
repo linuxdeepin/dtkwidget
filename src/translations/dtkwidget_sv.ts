@@ -537,27 +537,27 @@
     <name>MainWindow</name>
     <message>
         <source>MainWindow</source>
-        <translation type="unfinished"/>
+        <translation>Huvudfönster</translation>
     </message>
     <message>
         <source>This is DLabel...</source>
-        <translation type="unfinished"/>
+        <translation>Det här är DLabel …</translation>
     </message>
     <message>
         <source>255.255.255.255</source>
-        <translation type="unfinished"/>
+        <translation>255.255.255.255</translation>
     </message>
     <message>
         <source>这是一个富文本编辑框</source>
-        <translation type="unfinished"/>
+        <translation>Det här är ett redigeringsfält för formaterad text</translation>
     </message>
     <message>
         <source>warning</source>
-        <translation type="unfinished"/>
+        <translation>varning</translation>
     </message>
     <message>
         <source>suggest</source>
-        <translation type="unfinished"/>
+        <translation>förslag</translation>
     </message>
 </context>
 <context>
@@ -579,7 +579,7 @@
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished"/>
+        <translation>Klistra &amp;in</translation>
     </message>
     <message>
         <source>Select All</source>
@@ -642,11 +642,11 @@
     </message>
     <message>
         <source>Collections</source>
-        <translation type="unfinished"/>
+        <translation>Samlingar</translation>
     </message>
     <message>
         <source>2023 UnionTech Software Technology Co., Ltd.</source>
-        <translation type="unfinished"/>
+        <translation>2023 UnionTech Software Technology Co., Ltd.</translation>
     </message>
 </context>
 <context>
@@ -706,7 +706,7 @@
     <name>main</name>
     <message>
         <source>Collections provides the examples for dtk applications.</source>
-        <translation type="unfinished"/>
+        <translation>Samlingar innehåller exempel för DTK-program.</translation>
     </message>
 </context>
 </TS>
