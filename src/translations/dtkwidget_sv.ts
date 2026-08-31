@@ -339,108 +339,108 @@
     </message>
     <message>
         <source>Draft</source>
-        <translation type="unfinished"/>
+        <translation>Utkast</translation>
     </message>
     <message>
         <source>Sample</source>
-        <translation type="unfinished"/>
+        <translation>Exempel</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation type="unfinished"/>
+        <translation>Anpassad</translation>
     </message>
     <message>
         <source>Input your text</source>
-        <translation type="unfinished"/>
+        <translation>Ange din text</translation>
     </message>
     <message>
         <source>Picture watermark</source>
-        <translation type="unfinished"/>
+        <translation>Bildvattenmärke</translation>
     </message>
     <message>
         <source>Layout</source>
-        <translation type="unfinished"/>
+        <translation>Layout</translation>
     </message>
     <message>
         <source>Tile</source>
-        <translation type="unfinished"/>
+        <translation>Sida vid sida</translation>
     </message>
     <message>
         <source>Center</source>
-        <translation type="unfinished"/>
+        <translation>Centrera</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation type="unfinished"/>
+        <translation>Vinkel</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"/>
+        <translation>Storlek</translation>
     </message>
     <message>
         <source>Transparency</source>
-        <translation type="unfinished"/>
+        <translation>Genomskinlighet</translation>
     </message>
     <message>
         <source>Print to PDF</source>
-        <translation type="unfinished"/>
+        <translation>Skriv ut till PDF</translation>
     </message>
     <message>
         <source>Save as Image</source>
-        <translation type="unfinished"/>
+        <translation>Spara som bild</translation>
     </message>
     <message>
         <source>Collapse</source>
-        <translation type="unfinished"/>
+        <translation>Fäll ihop</translation>
     </message>
     <message>
         <source>Flip on short edge</source>
-        <translation type="unfinished"/>
+        <translation>Vänd längs kortsidan</translation>
     </message>
     <message>
         <source>Flip on long edge</source>
-        <translation type="unfinished"/>
+        <translation>Vänd längs långsidan</translation>
     </message>
     <message>
         <source>Input page numbers please</source>
-        <translation type="unfinished"/>
+        <translation>Ange sidnummer</translation>
     </message>
     <message>
         <source>Maximum page number reached</source>
-        <translation type="unfinished"/>
+        <translation>Maximalt sidnummer har nåtts</translation>
     </message>
     <message>
         <source>Input English comma please</source>
-        <translation type="unfinished"/>
+        <translation>Ange engelskt kommatecken</translation>
     </message>
     <message>
         <source>Input page numbers like this: 1,3,5-7,11-15,18,21</source>
-        <translation type="unfinished"/>
+        <translation>Ange sidnummer så här: 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
         <source>Save</source>
         <comment>button</comment>
-        <translation type="unfinished"/>
+        <translation>Spara</translation>
     </message>
     <message>
         <source>*.pdf</source>
-        <translation type="unfinished"/>
+        <translation>*.pdf</translation>
     </message>
     <message>
         <source>For example, 1,3,5-7,11-15,18,21</source>
-        <translation type="unfinished"/>
+        <translation>Till exempel 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
         <source>Save as PDF</source>
-        <translation type="unfinished"/>
+        <translation>Spara som PDF</translation>
     </message>
     <message>
         <source>Save as image</source>
-        <translation type="unfinished"/>
+        <translation>Spara som bild</translation>
     </message>
     <message>
         <source>Images</source>
-        <translation type="unfinished"/>
+        <translation>Bilder</translation>
     </message>
     <message>
         <source>Full Color</source>
@@ -455,11 +455,11 @@
     </message>
     <message>
         <source>Draft</source>
-        <translation type="unfinished"/>
+        <translation>Utkast</translation>
     </message>
     <message>
         <source>Sample</source>
-        <translation type="unfinished"/>
+        <translation>Exempel</translation>
     </message>
 </context>
 <context>
@@ -477,22 +477,22 @@
     </message>
     <message>
         <source>Replace</source>
-        <translation type="unfinished"/>
+        <translation>Ersätt</translation>
     </message>
     <message>
         <source>This shortcut conflicts with %1, click on Add to make this shortcut effective immediately</source>
-        <translation type="unfinished"/>
+        <translation>Det här kortkommandot står i konflikt med %1. Klicka på Lägg till för att aktivera det direkt.</translation>
     </message>
 </context>
 <context>
     <name>DShortcutEdit</name>
     <message>
         <source>Please input a new shortcut</source>
-        <translation type="unfinished"/>
+        <translation>Ange ett nytt kortkommando</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>Inget</translation>
     </message>
 </context>
 <context>
@@ -518,11 +518,11 @@
     <name>DToolbarEditPanel</name>
     <message>
         <source>Default toolset</source>
-        <translation type="unfinished"/>
+        <translation>Standardverktyg</translation>
     </message>
     <message>
         <source>Drag your favorite items into the toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Dra dina favoritobjekt till verktygsfältet</translation>
     </message>
     <message>
         <source>Drag below items into the toolbar to restore defaults</source>
