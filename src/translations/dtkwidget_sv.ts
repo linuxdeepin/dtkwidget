@@ -299,43 +299,43 @@
     </message>
     <message>
         <source>Layout direction</source>
-        <translation type="unfinished"/>
+        <translation>Layout-riktning</translation>
     </message>
     <message>
         <source>Page Order</source>
-        <translation type="unfinished"/>
+        <translation>Sidordning</translation>
     </message>
     <message>
         <source>Collate pages</source>
-        <translation type="unfinished"/>
+        <translation>Sortera sidor</translation>
     </message>
     <message>
         <source>Print pages in order</source>
-        <translation type="unfinished"/>
+        <translation>Skriv ut sidor i ordning</translation>
     </message>
     <message>
         <source>Front to back</source>
-        <translation type="unfinished"/>
+        <translation>Framifrån och bakåt</translation>
     </message>
     <message>
         <source>Back to front</source>
-        <translation type="unfinished"/>
+        <translation>Bakifrån och framåt</translation>
     </message>
     <message>
         <source>Watermark</source>
-        <translation type="unfinished"/>
+        <translation>Vattenmärke</translation>
     </message>
     <message>
         <source>Add watermark</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till vattenmärke</translation>
     </message>
     <message>
         <source>Text watermark</source>
-        <translation type="unfinished"/>
+        <translation>Textvattenmärke</translation>
     </message>
     <message>
         <source>Confidential</source>
-        <translation type="unfinished"/>
+        <translation>Konfidentiellt</translation>
     </message>
     <message>
         <source>Draft</source>
@@ -451,7 +451,7 @@
     <name>DPrintPreviewWidget</name>
     <message>
         <source>Confidential</source>
-        <translation type="unfinished"/>
+        <translation>Konfidentiellt</translation>
     </message>
     <message>
         <source>Draft</source>
