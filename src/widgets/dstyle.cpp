@@ -392,6 +392,61 @@ void drawShadow(QPainter *pa, const QRect &rect, const QPainterPath &path, const
     pa->drawPixmap(shadow_rect, shadow);
 }
 
+void drawInsetShadow(QPainter *pa, const QRect &rect, qreal xRadius, qreal yRadius, const QColor &sc, qreal radius, const QPoint &offset)
+{
+    if (radius <= 0 || rect.isNull())
+        return;
+
+    qreal scale = pa->paintEngine()->paintDevice()->devicePixelRatioF();
+    QSize size = rect.size() * scale;
+    xRadius *= scale;
+    yRadius *= scale;
+    radius *= scale;
+    QPoint scaledOffset(offset.x() * scale, offset.y() * scale);
+
+    // Build an opaque image, then cut out a rounded-rect hole shifted by
+    // 'offset'. After blurring, the hole edges fade inward, producing an
+    // inset shadow. Positive offset.y() makes the shadow stronger at the
+    // top edge; negative at the bottom.
+    QImage shadow_base(size, QImage::Format_ARGB32_Premultiplied);
+    shadow_base.fill(Qt::black);
+
+    QPainter holePainter(&shadow_base);
+    holePainter.setRenderHint(QPainter::Antialiasing, true);
+    holePainter.setPen(Qt::NoPen);
+    holePainter.setCompositionMode(QPainter::CompositionMode_Clear);
+    holePainter.setBrush(Qt::transparent);
+    QRectF holeRect = QRectF(shadow_base.rect()).translated(scaledOffset);
+    holeRect = holeRect.marginsRemoved(QMarginsF(radius, radius, radius, radius));
+    holePainter.drawRoundedRect(holeRect, xRadius, yRadius);
+    holePainter.end();
+
+    // Blur the alpha channel so the hole edges become a soft gradient.
+    QImage blurred(size, QImage::Format_ARGB32_Premultiplied);
+    blurred.fill(0);
+    QPainter blurPainter(&blurred);
+    qt_blurImage(&blurPainter, shadow_base, radius, false, true);
+    blurPainter.end();
+
+    // Replace the placeholder black with the actual shadow color.
+    QPainter colorPainter(&blurred);
+    colorPainter.setCompositionMode(QPainter::CompositionMode_SourceIn);
+    colorPainter.fillRect(blurred.rect(), sc);
+    colorPainter.end();
+
+    blurred.setDevicePixelRatio(scale);
+
+    // Clip to the rounded-rect shape so the opaque outer area is hidden;
+    // only the inward-fading shadow at the edges is visible.
+    pa->save();
+    pa->setRenderHint(QPainter::Antialiasing, true);
+    QPainterPath clipPath;
+    clipPath.addRoundedRect(rect, xRadius / scale, yRadius / scale);
+    pa->setClipPath(clipPath);
+    pa->drawImage(rect.topLeft(), blurred);
+    pa->restore();
+}
+
 void drawFork(QPainter *pa, const QRectF &rect, const QColor &color, int width)
 {
     QPen pen;
