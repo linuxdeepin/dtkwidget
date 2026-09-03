@@ -11,6 +11,7 @@
 #include <QLocalSocket>
 #include <QLibraryInfo>
 #include <QTranslator>
+#include <QUrl>
 #include <QLocalServer>
 #include <QPixmapCache>
 #include <QProcess>
@@ -997,6 +998,11 @@ void DApplication::setApplicationDescription(const QString &description)
 
   该属性记录程序的主页网址，主要用于在关于对话框中进行展示。
   默认情况下，该地址为 Uos 或者 Deepin 官方网站地址。
+
+  当通过 setApplicationHomePage() 设置自定义主页地址后，关于对话框的
+  Homepage 行会以该地址作为链接，并自动取其主机名作为显示名称（例如
+  "https://example.com" 显示为 "example.com"）；若该值无法解析为 URL，
+  则直接以原始字符串作为显示名称。未设置时仍回退为发行版默认网站。
  */
 QString DApplication::applicationHomePage() const
 {
@@ -1450,6 +1456,13 @@ void DApplication::handleAboutAction()
         aboutDialog->setAcknowledgementLink(applicationAcknowledgementPage());
     }
 #endif
+    // 将 applicationHomePage 作为关于对话框的网站链接，并以 URL 主机名作为显示名称。
+    const QString homePage = applicationHomePage();
+    if (!homePage.isEmpty()) {
+        aboutDialog->setWebsiteLink(homePage);
+        const QString host = QUrl(homePage).host();
+        aboutDialog->setWebsiteName(host.isEmpty() ? homePage : host);
+    }
     aboutDialog->setAcknowledgementVisible(d->acknowledgementPageVisible);
     aboutDialog->setAttribute(Qt::WA_DeleteOnClose);
 
