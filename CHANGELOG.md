@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.7.49] - 2026-09-10
+
+### Changed
+
+- I18n: [dtkwidget] Updates for project Deepin Tool Kit (#773)
+- I18n: [dtkwidget] Updates for project Deepin Tool Kit (#777)
+- Refactor printer name retrieval to use cached list
+
+### Fixed
+
+- Install DLL to bin directory on Windows
+- Adapt to Qt6 DCheckBox API changes in preview dialog
+- Apply selected paper size after printer settings rebuild
+- Wire up applicationHomePage in about dialog
+
 ## [6.7.48] - 2026-08-18
 
 ### Fixed
