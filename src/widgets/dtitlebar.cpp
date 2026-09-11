@@ -21,7 +21,6 @@
 #include <QScreen>
 #include <QWindow>
 #include <QActionGroup>
-#include <qpa/qplatformwindow.h>
 
 #include "dpalettehelper.h"
 #include "dstyleoption.h"
@@ -51,6 +50,36 @@ DWIDGET_BEGIN_NAMESPACE
 
 #define CHANGESPLITWINDOW_VAR "_d_splitWindowOnScreen"
 #define GETSUPPORTSPLITWINDOW_VAR "_d_supportForSplittingWindow"
+#define SUPPORTSPLITMENU_VAR "_d_supportSplitMenu"
+#define SHOWSPLITMENU_VAR "_d_showSplitMenu"
+#define HIDESPLITMENU_VAR "_d_hideSplitMenu"
+
+static WId nativeWindowId(const QWidget *widget)
+{
+    if (!widget || !widget->windowHandle() || !widget->windowHandle()->handle())
+        return 0;
+
+    return widget->windowHandle()->winId();
+}
+
+static bool showSplitMenuByWM(WId wid, const QRect &buttonRect)
+{
+    const auto support = reinterpret_cast<bool (*)(WId)>(qApp->platformFunction(SUPPORTSPLITMENU_VAR));
+    const auto show = reinterpret_cast<void (*)(WId, const QRect &)>(qApp->platformFunction(SHOWSPLITMENU_VAR));
+    if (!wid || !support || !show || !qApp->platformFunction(HIDESPLITMENU_VAR) || !support(wid))
+        return false;
+
+    show(wid, buttonRect);
+    return true;
+}
+
+static void hideSplitMenuByWM(WId wid, bool delay)
+{
+    QFunctionPointer function = qApp->platformFunction(HIDESPLITMENU_VAR);
+    if (function) {
+        reinterpret_cast<void (*)(WId, bool)>(function)(wid, delay);
+    }
+}
 
 static inline int DefaultIconHeight() { return DSizeModeHelper::element(24, 32); }
 static inline int DefaultExpandButtonHeight() { return DSizeModeHelper::element(48, 48); }
@@ -95,7 +124,7 @@ private:
     void setIconVisible(bool visible);
     void updateTabOrder();
     void showSplitScreenWidget();
-    void hideSplitScreenWidget();
+    void hideSplitScreenWidget(bool delay = true);
     void updateTitleBarSize()
     {
         if (optionButton)
@@ -173,6 +202,9 @@ private:
     bool                autoHideOnFullscreen = false;
     bool                fullScreenButtonVisible = true;
     bool                splitScreenWidgetEnable = true;
+    bool                splitMenuByWM = false;
+    WId                 splitMenuWindowId = 0;
+    bool                splitMenuByWMPressAndHold = false;
     QTimer              *maxButtonPressAndHoldTimer = nullptr;
     QWidget             *sidebarBackgroundWidget = nullptr;
     DTitlebarSettingsImpl *titlebarSettingsImpl = nullptr;
@@ -324,8 +356,12 @@ void DTitlebarPrivate::init()
         iconLabel->update();
     });
     q->connect(maxButtonPressAndHoldTimer, &QTimer::timeout, q, [this]() {
-        showSplitScreenWidget();
-        if (splitWidget && splitWidget->isVisible())
+        if (!splitMenuByWM)
+            showSplitScreenWidget();
+
+        if (splitMenuByWM)
+            splitMenuByWMPressAndHold = true;
+        else if (splitWidget && splitWidget->isVisible())
             splitWidget->isMaxButtonPressAndHold = true;
     });
     if (isUpdated) {
@@ -582,6 +618,11 @@ void DTitlebarPrivate::handleParentWindowIdChange()
 
 void DTitlebarPrivate::_q_toggleWindowState()
 {
+    if (splitMenuByWMPressAndHold) {
+        splitMenuByWMPressAndHold = false;
+        return;
+    }
+
     if (splitWidget && splitWidget->isMaxButtonPressAndHold) {
         splitWidget->isMaxButtonPressAndHold = false;
         return;
@@ -818,7 +859,7 @@ void DTitlebarPrivate::setIconVisible(bool visible)
     if (visible) {
         if (dynamic_cast<QSpacerItem *>(leftLayout->itemAt(0)))
             delete leftLayout->takeAt(0);
-            
+
         leftLayout->insertSpacing(0, 10);
         leftLayout->insertWidget(1, iconLabel, 0, Qt::AlignLeading | Qt::AlignVCenter);
         iconLabel->show();
@@ -873,14 +914,31 @@ void DTitlebarPrivate::showSplitScreenWidget()
     if (disableFlags.testFlag(Qt::WindowMaximizeButtonHint))
         return;
 
+    if (!maxButton->isVisible() || !maxButton->isEnabled())
+        return;
+
+    if (splitMenuByWM)
+        return;
+
     // 应产品要求 2D 模式下不对窗口分屏做任何显示
     if (auto wmHelper = DWindowManagerHelper::instance()) {
         if (!wmHelper->hasComposite())
             return;
     }
 
-    // 窗管不支持分屏时，不显示分屏菜单
-    if (!Q_LIKELY(DSplitScreenWidget::supportSplitScreenByWM(q->window())))
+    QRect maxBtnRect = QRect(maxButton->mapToGlobal(maxButton->rect().topLeft()), maxButton->rect().size());
+    const WId wid = nativeWindowId(targetWindow());
+    if (showSplitMenuByWM(wid, maxBtnRect)) {
+        splitMenuByWM = true;
+        splitMenuWindowId = wid;
+        return;
+    }
+
+    if (splitMenuWindowId)
+        hideSplitScreenWidget(false);
+
+    // Older window managers use the client-side split menu.
+    if (!DSplitScreenWidget::supportSplitScreenByWM(q->window()))
         return;
 
     if (!splitWidget) {
@@ -889,8 +947,6 @@ void DTitlebarPrivate::showSplitScreenWidget()
 
     if (splitWidget->isVisible())
         return;
-
-    QRect maxBtnRect = QRect(maxButton->mapToGlobal(maxButton->rect().topLeft()), maxButton->rect().size());
 
     QRect rect;
     if (QScreen *screen = QGuiApplication::screenAt(QCursor::pos())) {
@@ -910,20 +966,32 @@ void DTitlebarPrivate::showSplitScreenWidget()
 
     if (maxBtnRect.bottom() + splitWidget->height() - rect.y() > rect.height()) {   // 超出下边缘
         targetY  -= maxButton->rect().height() + splitWidget->height();
-    } 
+    }
 
     splitWidget->show(QPoint(targetX, targetY));
 }
 
-void DTitlebarPrivate::hideSplitScreenWidget()
+void DTitlebarPrivate::hideSplitScreenWidget(bool delay)
 {
+    if (splitMenuWindowId) {
+        const WId wid = splitMenuWindowId;
+        hideSplitMenuByWM(wid, delay);
+        splitMenuByWM = false;
+        if (!delay)
+            splitMenuWindowId = 0;
+        return;
+    }
+
     if (!splitWidget)
         return;
 
     if (splitWidget->isHidden())
         return;
 
-    splitWidget->hide();
+    if (delay)
+        splitWidget->hide();
+    else
+        splitWidget->hideImmediately();
 }
 
 #endif
@@ -1182,15 +1250,26 @@ bool DTitlebar::eventFilter(QObject *obj, QEvent *event)
             break;
         }
         case QEvent::Leave: {
+            d->maxButtonPressAndHoldTimer->stop();
             d->hideSplitScreenWidget();
             break;
         }
+        case QEvent::Hide:
+            d->maxButtonPressAndHoldTimer->stop();
+            d->splitMenuByWM = false;
+            d->splitMenuWindowId = 0;
+            break;
         case QEvent::MouseButtonPress: {
-            d->maxButtonPressAndHoldTimer->start(300);
+            if (static_cast<QMouseEvent *>(event)->button() == Qt::LeftButton) {
+                d->splitMenuByWMPressAndHold = false;
+                d->maxButtonPressAndHoldTimer->start(300);
+            }
             break;
         }
         case QEvent::MouseButtonRelease: {
             d->maxButtonPressAndHoldTimer->stop();
+            if (d->splitMenuWindowId && !d->splitMenuByWMPressAndHold)
+                d->hideSplitScreenWidget(false);
             break;
         }
         default:
@@ -1759,6 +1838,10 @@ void DTitlebar::setSplitScreenEnabled(bool enabled)
 {
     D_D(DTitlebar);
     d->splitScreenWidgetEnable = enabled;
+    if (!enabled) {
+        d->maxButtonPressAndHoldTimer->stop();
+        d->hideSplitScreenWidget(false);
+    }
 }
 
 bool DTitlebar::splitScreenIsEnabled() const
