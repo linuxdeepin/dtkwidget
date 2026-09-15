@@ -1065,7 +1065,21 @@ void DTitlebar::showMenu()
         bool isUpdated = config.value("featureUpdated", false).toBool();
         DStyle::setRedPointVisible(d->aboutAction, isUpdated);
 
-        d->menu->exec(d->optionButton->mapToGlobal(d->optionButton->rect().bottomLeft()));
+        QPoint menuPos = d->optionButton->mapToGlobal(d->optionButton->rect().bottomLeft());
+        QSize menuSize = d->menu->sizeHint();
+        if (QScreen *screen = d->optionButton->screen()) {
+            QRect screenGeo = screen->availableGeometry();
+            if (menuPos.x() + menuSize.width() > screenGeo.right()) {
+                menuPos.setX(d->optionButton->mapToGlobal(d->optionButton->rect().bottomRight()).x() - menuSize.width());
+            }
+            if (menuPos.x() < screenGeo.left()) {
+                menuPos.setX(screenGeo.left());
+            }
+            if (menuPos.y() + menuSize.height() > screenGeo.bottom()) {
+                menuPos.setY(d->optionButton->mapToGlobal(d->optionButton->rect().topLeft()).y() - menuSize.height());
+            }
+        }
+        d->menu->exec(menuPos);
         d->optionButton->update(); // FIX: bug-25253 sometimes optionButton not udpate after menu exec(but why?)
     }
 }
