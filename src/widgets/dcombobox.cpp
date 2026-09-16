@@ -31,6 +31,7 @@
 #include <QCursor>
 #include <QScreen>
 #include <QStack>
+#include <QWheelEvent>
 #include <QWindow>
 
 DWIDGET_BEGIN_NAMESPACE
@@ -43,6 +44,12 @@ DComboBoxPrivate::DComboBoxPrivate(DComboBox *q)
 void DComboBoxPrivate::init()
 {
     D_Q(DComboBox);
+    // QComboBox 默认使用 Qt::WheelFocus，导致鼠标滚轮划过下拉框时焦点被抢走并“铆定”在
+    // 下拉框上。降级为 Qt::StrongFocus 去掉 WheelFocus 位：Tab 键和鼠标
+    // 点击仍然可以聚焦，但滚轮不再抢占焦点。
+    if (q->focusPolicy() == Qt::WheelFocus)
+        q->setFocusPolicy(Qt::StrongFocus);
+
     q->setMaxVisibleItems(MaxVisibleItems);
 }
 
@@ -117,6 +124,15 @@ DComboBox::DComboBox(DComboBoxPrivate &dd, QWidget *parent)
 {
     D_D(DComboBox);
     d->init();
+}
+
+void DComboBox::wheelEvent(QWheelEvent *event)
+{
+    // Qt6: the event arrives accepted, so ignore it up front and let the base
+    // class accept it again in case it actually consumes the wheel.
+    event->ignore();
+
+    QComboBox::wheelEvent(event);
 }
 
 /*!
