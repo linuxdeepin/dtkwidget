@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2017 - 2023 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2017 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -556,17 +556,22 @@ public:
 
 QSizeF CrumbObjectInterface::intrinsicSize(QTextDocument *doc, int posInDocument, const QTextFormat &format)
 {
-    Q_UNUSED(doc)
     Q_UNUSED(posInDocument)
 
     const DCrumbTextFormat crumb_format(format);
     const QFontMetricsF font_metrics(crumb_format.font());
     int radius = crumb_format.backgroundRadius();
+    QSizeF size;
 
     if (crumb_format.tagColor().isValid())
-        return QSizeF(font_metrics.horizontalAdvance(crumb_format.text()) + font_metrics.height() + radius + 2, font_metrics.height() + 2);
+        size = QSizeF(font_metrics.horizontalAdvance(crumb_format.text()) + font_metrics.height() + radius + 2, font_metrics.height() + 2);
+    else
+        size = QSizeF(font_metrics.horizontalAdvance(crumb_format.text()) + 2 * radius + 2, font_metrics.height() + 2 + TopMargin *2);
 
-    return QSizeF(font_metrics.horizontalAdvance(crumb_format.text()) + 2 * radius + 2, font_metrics.height() + 2 + TopMargin *2);
+    if (doc->textWidth() >= 0)
+        size.setWidth(qMin(size.width(), qMax(qreal(0), doc->textWidth() - 2 * doc->documentMargin())));
+
+    return size;
 }
 
 void CrumbObjectInterface::drawObject(QPainter *painter, const QRectF &rect,
@@ -593,12 +598,14 @@ void CrumbObjectInterface::drawObject(QPainter *painter, const QRectF &rect,
     if (crumb_format.tagColor().isValid()) {
         painter->fillPath(tag_path, crumb_format.tagColor());
 
+        const QRect text_rect = new_rect.adjusted(tag_rect.width() + 2, 0, -radius, 0);
         painter->setPen(crumb_format.textColor());
-        painter->drawText(new_rect.adjusted(tag_rect.width() + 2, 0, -radius, 0),
-                          crumb_format.text(), Qt::AlignVCenter | Qt::AlignRight);
+        painter->drawText(text_rect, font_metrics.elidedText(crumb_format.text(), Qt::ElideRight, text_rect.width()),
+                          Qt::AlignVCenter | Qt::AlignRight);
     } else {
         painter->setPen(crumb_format.textColor());
-        painter->drawText(new_rect, Qt::AlignCenter, crumb_format.text());
+        painter->drawText(new_rect, Qt::AlignCenter,
+                          font_metrics.elidedText(crumb_format.text(), Qt::ElideRight, new_rect.width()));
     }
 }
 
