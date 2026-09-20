@@ -392,22 +392,16 @@ void drawShadow(QPainter *pa, const QRect &rect, const QPainterPath &path, const
     pa->drawPixmap(shadow_rect, shadow);
 }
 
-void drawInsetShadow(QPainter *pa, const QRect &rect, qreal xRadius, qreal yRadius, const QColor &sc, qreal radius, const QPoint &offset)
+// Build the inset-shadow image for a given geometry. Separated from the
+// public drawInsetShadow so the result can be cached and reused across
+// repaints (hover/animation) instead of being recomputed every paint.
+// All geometry params are already scaled to physical pixels by the caller.
+static QImage createInsetShadow(const QSize &size, qreal xRadius, qreal yRadius,
+                                qreal radius, const QPointF &offset, const QColor &sc)
 {
-    if (radius <= 0 || rect.isNull())
-        return;
-
-    qreal scale = pa->paintEngine()->paintDevice()->devicePixelRatioF();
-    QSize size = rect.size() * scale;
-    xRadius *= scale;
-    yRadius *= scale;
-    radius *= scale;
-    QPoint scaledOffset(offset.x() * scale, offset.y() * scale);
-
-    // Build an opaque image, then cut out a rounded-rect hole shifted by
-    // 'offset'. After blurring, the hole edges fade inward, producing an
-    // inset shadow. Positive offset.y() makes the shadow stronger at the
-    // top edge; negative at the bottom.
+    // Opaque mask, then cut out a rounded-rect hole shifted by 'offset'.
+    // After blurring, the hole edges fade inward, producing an inset shadow.
+    // Positive offset.y() strengthens the top edge; negative the bottom.
     QImage shadow_base(size, QImage::Format_ARGB32_Premultiplied);
     shadow_base.fill(Qt::black);
 
@@ -416,7 +410,7 @@ void drawInsetShadow(QPainter *pa, const QRect &rect, qreal xRadius, qreal yRadi
     holePainter.setPen(Qt::NoPen);
     holePainter.setCompositionMode(QPainter::CompositionMode_Clear);
     holePainter.setBrush(Qt::transparent);
-    QRectF holeRect = QRectF(shadow_base.rect()).translated(scaledOffset);
+    QRectF holeRect = QRectF(shadow_base.rect()).translated(offset);
     holeRect = holeRect.marginsRemoved(QMarginsF(radius, radius, radius, radius));
     holePainter.drawRoundedRect(holeRect, xRadius, yRadius);
     holePainter.end();
@@ -434,16 +428,50 @@ void drawInsetShadow(QPainter *pa, const QRect &rect, qreal xRadius, qreal yRadi
     colorPainter.fillRect(blurred.rect(), sc);
     colorPainter.end();
 
-    blurred.setDevicePixelRatio(scale);
+    return blurred;
+}
+
+void drawInsetShadow(QPainter *pa, const QRect &rect, qreal xRadius, qreal yRadius, const QColor &sc, qreal radius, const QPoint &offset)
+{
+    if (radius <= 0 || rect.isNull())
+        return;
+
+    qreal scale = pa->paintEngine()->paintDevice()->devicePixelRatioF();
+    QSize size = rect.size() * scale;
+    qreal sxRadius = xRadius * scale;
+    qreal syRadius = yRadius * scale;
+    qreal sRadius = radius * scale;
+    QPointF scaledOffset(offset.x() * scale, offset.y() * scale);
+
+    // Cache the full inset-shadow image, mirroring drawShadow's QPixmapCache
+    // usage. The inset shadow cannot be rebuilt by nine-grid (borderImage)
+    // scaling like drawShadow: the rounded corners and the inward-fading
+    // gradient both sit on the inner edge of the punched hole, so stretching
+    // the middle tiles would distort them. The cache key therefore carries
+    // the pixel size, and the precomputed image is reused across repaints of
+    // the same shape (hover/animation).
+    const QString key = QString("dtk-inset-shadow-%1x%2-%3-%4-%5-%6-%7-%8-%9")
+            .arg(size.width()).arg(size.height())
+            .arg(sxRadius).arg(syRadius).arg(sRadius)
+            .arg(sc.name()).arg(sc.alpha())
+            .arg(scaledOffset.x()).arg(scaledOffset.y());
+
+    QPixmap shadow;
+    if (!QPixmapCache::find(key, &shadow)) {
+        shadow = QPixmap::fromImage(createInsetShadow(size, sxRadius, syRadius,
+                                                      sRadius, scaledOffset, sc));
+        shadow.setDevicePixelRatio(scale);
+        QPixmapCache::insert(key, shadow);
+    }
 
     // Clip to the rounded-rect shape so the opaque outer area is hidden;
     // only the inward-fading shadow at the edges is visible.
     pa->save();
     pa->setRenderHint(QPainter::Antialiasing, true);
     QPainterPath clipPath;
-    clipPath.addRoundedRect(rect, xRadius / scale, yRadius / scale);
+    clipPath.addRoundedRect(rect, xRadius, yRadius);
     pa->setClipPath(clipPath);
-    pa->drawImage(rect.topLeft(), blurred);
+    pa->drawPixmap(rect.topLeft(), shadow);
     pa->restore();
 }
 
