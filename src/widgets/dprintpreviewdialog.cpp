@@ -854,6 +854,7 @@ void DPrintPreviewDialogPrivate::initWaterMarkui()
     waterTextEdit->setObjectName(_d_printSettingNameMap[DPrintPreviewSettingInterface::SC_Watermark_CustomText]);
     settingHelper->setSubControlEnabled(DPrintPreviewSettingInterface::SC_Watermark_CustomText, false);
     waterTextEdit->lineEdit()->setPlaceholderText(qApp->translate("DPrintPreviewDialogPrivate", "Input your text"));
+    waterTextEdit->lineEdit()->setMaxLength(16);
     hlayout2->addStretch(5);
     hlayout2->addWidget(waterTextEdit, 10);
 
