@@ -18,6 +18,8 @@
 #include <DComboBox>
 #include <DRadioButton>
 #include <QBasicTimer>
+#include <QFutureWatcher>
+#include <QPointer>
 
 class QVBoxLayout;
 class QButtonGroup;
@@ -93,6 +95,9 @@ public:
     void matchFitablePageSize();
     bool isActualPrinter(const QString &name);
     QStringList availablePrinterNames();
+    void fetchPrinterInfo();
+    void discardPrinterInfoRequest();
+    void applyPrinterInfo();
     QString getColorModeConfig(const QString &printer);
     void saveColorModeConfig(const QString &printer, const QString &colorMode);
 
@@ -191,7 +196,10 @@ public:
     QVector<qreal> marginOldValue; // 记录margin自定义时的旧值  如果旧值和新值一致，就不需要刷新，top left right bottom
     QList<qreal> minnumMargins;
     QStringList printerNames;
-    bool printerNamesInited = false;
+    bool printerInfoReady = false;
+    bool pageIsLegal = true;
+    QPointer<QFutureWatcher<QStringList>> printerNamesWatcher;
+    QPointer<QFutureWatcher<QString>> defaultPrinterWatcher;
     QSpacerItem *spacer = nullptr;
     QSpacerItem *wmSpacer = nullptr;
     DFloatingWidget *colorWidget = nullptr;
