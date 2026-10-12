@@ -48,6 +48,8 @@
 #include <QKeyEvent>
 #include <QWindow>
 #include <QLoggingCategory>
+#include <QSignalBlocker>
+#include <QtConcurrent>
 #include <private/qprint_p.h>
 #ifdef Q_OS_LINUX
 #include <private/qcups_p.h>
@@ -1017,18 +1019,6 @@ void DPrintPreviewDialogPrivate::marginsLayout(bool adapted)
 void DPrintPreviewDialogPrivate::initdata()
 {
     Q_Q(DPrintPreviewDialog);
-    QStringList itemlist;
-    itemlist << availablePrinterNames()
-             << qApp->translate("DPrintPreviewDialogPrivate", "Print to PDF")
-             << qApp->translate("DPrintPreviewDialogPrivate", "Save as Image");
-    printDeviceCombo->addItems(itemlist);
-    QString defauledevice = QPrinterInfo::defaultPrinterName();
-    for (int i = 0; i < itemlist.size(); ++i) {
-        if (defauledevice.compare(itemlist.at(i)) == 0) {
-            printDeviceCombo->setCurrentIndex(i);
-            break;
-        }
-    }
     _q_pageRangeChanged(0);
     _q_pageMarginChanged(0);
     _q_printerChanged(printDeviceCombo->currentIndex());
@@ -1297,9 +1287,11 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(inclinatBox->lineEdit(), SIGNAL(textEdited(const QString &)), q, SLOT(_q_spinboxValueEmptyChecked(const QString &)));
 
     QObject::connect(q, &DPrintPreviewDialog::finished, q, [this]() {
+        discardPrinterInfoRequest();
+        const QSignalBlocker blocker(printDeviceCombo);
+        printDeviceCombo->clear();
         qDebug(dPrintPreview) << "DPrintPreviewDialog finished, clear printerNames";
         printerNames.clear();
-        printerNamesInited = false;
     });
 }
 
@@ -1515,7 +1507,8 @@ void DPrintPreviewDialogPrivate::themeTypeChange(DGuiApplicationHelper::ColorTyp
  */
 void DPrintPreviewDialogPrivate::setPageIsLegal(bool islegal)
 {
-    printBtn->setEnabled(islegal);
+    pageIsLegal = islegal;
+    printBtn->setEnabled(islegal && printerInfoReady);
     pageRangeEdit->setAlert(!islegal);
 }
 
@@ -2226,8 +2219,8 @@ void DPrintPreviewDialogPrivate::setPageLayoutEnable(const bool &checked)
 
 void DPrintPreviewDialogPrivate::matchFitablePageSize()
 {
-    QPrinterInfo prInfo(*printer);
     if (isActualPrinter(printDeviceCombo->currentText())) {
+        QPrinterInfo prInfo(*printer);
         auto const &pageSizes = prInfo.supportedPageSizes();
         auto it = std::find_if(pageSizes.cbegin(), pageSizes.cend(), [&](const QPageSize &pageSize) {
             return pageSize.name() == paperSizeCombo->currentText();
@@ -2262,13 +2255,82 @@ void DPrintPreviewDialogPrivate::matchFitablePageSize()
 
 QStringList DPrintPreviewDialogPrivate::availablePrinterNames()
 {
-    if (!printerNamesInited) {
-        qDebug(dPrintPreview) << "Get printer names from QPrinterInfo.";
-        printerNamesInited = true;
-        printerNames = QPrinterInfo::availablePrinterNames();
-        qDebug(dPrintPreview) << "Available printer names:" << printerNames;
-    }
     return printerNames;
+}
+
+void DPrintPreviewDialogPrivate::fetchPrinterInfo()
+{
+    Q_Q(DPrintPreviewDialog);
+    qDebug(dPrintPreview) << "Fetch printer information, dialog:" << q;
+    discardPrinterInfoRequest();
+    printerNames.clear();
+    printDeviceCombo->setEnabled(false);
+    printBtn->setEnabled(false);
+
+    printerNamesWatcher = new QFutureWatcher<QStringList>(q);
+    defaultPrinterWatcher = new QFutureWatcher<QString>(q);
+    QObject::connect(printerNamesWatcher.data(), &QFutureWatcher<QStringList>::finished,
+                     q, [this] { applyPrinterInfo(); }, Qt::QueuedConnection);
+    QObject::connect(defaultPrinterWatcher.data(), &QFutureWatcher<QString>::finished,
+                     q, [this] { applyPrinterInfo(); }, Qt::QueuedConnection);
+
+    printerNamesWatcher->setFuture(QtConcurrent::run([] {
+        qDebug(dPrintPreview) << "Available printer names query started";
+        const QStringList names = QPrinterInfo::availablePrinterNames();
+        qDebug(dPrintPreview) << "Available printer names query finished, printer count:" << names.size();
+        return names;
+    }));
+    defaultPrinterWatcher->setFuture(QtConcurrent::run([] {
+        qDebug(dPrintPreview) << "Default printer name query started";
+        const QString name = QPrinterInfo::defaultPrinterName();
+        qDebug(dPrintPreview) << "Default printer name query finished, default printer:" << name;
+        return name;
+    }));
+}
+
+void DPrintPreviewDialogPrivate::discardPrinterInfoRequest()
+{
+    // QPrinterInfo queries cannot be interrupted. Destroying the watchers
+    // discards their results without waiting for the worker threads.
+    if (printerNamesWatcher) {
+        printerNamesWatcher->disconnect(q_func());
+        delete printerNamesWatcher.data();
+    }
+    if (defaultPrinterWatcher) {
+        defaultPrinterWatcher->disconnect(q_func());
+        delete defaultPrinterWatcher.data();
+    }
+    printerInfoReady = false;
+}
+
+void DPrintPreviewDialogPrivate::applyPrinterInfo()
+{
+    if (!printerNamesWatcher || !defaultPrinterWatcher
+        || !printerNamesWatcher->isFinished() || !defaultPrinterWatcher->isFinished())
+        return;
+
+    printerNames = printerNamesWatcher->result();
+    const QString defaultName = defaultPrinterWatcher->result();
+    qDebug(dPrintPreview) << "Apply printer information, dialog:" << q_func() << "default printer:" << defaultName;
+    discardPrinterInfoRequest();
+    printerInfoReady = true;
+    qDebug(dPrintPreview) << "Available printer names:" << printerNames;
+
+    {
+        const QSignalBlocker blocker(printDeviceCombo);
+        QStringList itemlist = printerNames;
+        itemlist << qApp->translate("DPrintPreviewDialogPrivate", "Print to PDF")
+                 << qApp->translate("DPrintPreviewDialogPrivate", "Save as Image");
+        printDeviceCombo->addItems(itemlist);
+        updateSubControlSettings(DPrintPreviewSettingInfo::PS_Printer);
+        const int defaultIndex = printDeviceCombo->findText(defaultName);
+        printDeviceCombo->setCurrentIndex(defaultIndex >= 0 ? defaultIndex : 0);
+    }
+    _q_printerChanged(printDeviceCombo->currentIndex());
+    printDeviceCombo->setEnabled(true);
+    updateAllControlStatus();
+    setPageIsLegal(pageIsLegal);
+    qDebug(dPrintPreview) << "Printer information applied, dialog:" << q_func();
 }
 
 bool DPrintPreviewDialogPrivate::isActualPrinter(const QString &name)
@@ -2395,6 +2457,8 @@ void DPrintPreviewDialogPrivate::_q_pagePersheetComboIndexChanged(int index)
 void DPrintPreviewDialogPrivate::_q_startPrint(bool clicked)
 {
     Q_Q(DPrintPreviewDialog);
+    if (!printerInfoReady)
+        return;
     if (!clicked) {
         setupPrinter();
     }
@@ -2579,6 +2643,7 @@ DPrintPreviewDialog::DPrintPreviewDialog(QWidget *parent)
 DPrintPreviewDialog::~DPrintPreviewDialog()
 {
     Q_D(DPrintPreviewDialog);
+    d->discardPrinterInfoRequest();
     if (nullptr != d->printer)
         delete d->printer;
     delete d->settingHelper;
@@ -2627,7 +2692,10 @@ bool DPrintPreviewDialog::event(QEvent *event)
             d->marginsLayout(false);
         }
         d->fontSizeMore = false;
-    } else if (event->type() == QEvent::Show) {
+    }
+    if (event->type() == QEvent::Show) {
+        if (!d->printerInfoReady && !d->printerNamesWatcher && !d->defaultPrinterWatcher)
+            d->fetchPrinterInfo();
         d->pview->updatePreview();
         d->updateAllControlSettings();
         d->updateAllControlStatus();
@@ -3029,9 +3097,10 @@ void PreviewSettingsPluginHelper::updateSettingInfo(DPrintPreviewSettingInfo *in
         }
         if (targetPrinters.isEmpty() || targetPrinters == sourcePrinters)
             break;
-        d->printDeviceCombo->blockSignals(true);
-        d->printDeviceCombo->clear();
-        d->printDeviceCombo->blockSignals(false);
+        {
+            const QSignalBlocker blocker(d->printDeviceCombo);
+            d->printDeviceCombo->clear();
+        }
         d->printDeviceCombo->addItems(targetPrinters);
     }
         break;
