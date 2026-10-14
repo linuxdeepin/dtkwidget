@@ -1,710 +1,712 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="mn">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="mn">
 <context>
     <name>CameraForm</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Маягт</translation>
     </message>
     <message>
         <source>ok</source>
-        <translation type="unfinished"></translation>
+        <translation>ОК</translation>
     </message>
     <message>
         <source>mirrored</source>
-        <translation type="unfinished"></translation>
+        <translation>Толгойсон</translation>
     </message>
     <message>
         <source>Round</source>
-        <translation type="unfinished"></translation>
+        <translation>Дугуй</translation>
     </message>
     <message>
         <source>start</source>
-        <translation type="unfinished"></translation>
+        <translation>Эхлэх</translation>
     </message>
 </context>
 <context>
     <name>DAboutDialog</name>
     <message>
         <source>%1 is released under %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 нь %2-д худалдагдсан</translation>
     </message>
 </context>
 <context>
     <name>DCrumbEdit</name>
     <message>
         <source>Black</source>
-        <translation type="unfinished"></translation>
+        <translation>Хар</translation>
     </message>
     <message>
         <source>White</source>
-        <translation type="unfinished"></translation>
+        <translation>Цагаан</translation>
     </message>
     <message>
         <source>Dark Gray</source>
-        <translation type="unfinished"></translation>
+        <translation>Бараан саарал</translation>
     </message>
     <message>
         <source>Gray</source>
-        <translation type="unfinished"></translation>
+        <translation>Саарал</translation>
     </message>
     <message>
         <source>Light Gray</source>
-        <translation type="unfinished"></translation>
+        <translation>Цайвар саарал</translation>
     </message>
     <message>
         <source>Red</source>
-        <translation type="unfinished"></translation>
+        <translation>Улаан</translation>
     </message>
     <message>
         <source>Green</source>
-        <translation type="unfinished"></translation>
+        <translation>Ногоон</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Цэнхэр</translation>
     </message>
     <message>
         <source>Cyan</source>
-        <translation type="unfinished"></translation>
+        <translation>Цэнхэр ногоон</translation>
     </message>
     <message>
         <source>Magenta</source>
-        <translation type="unfinished"></translation>
+        <translation>Ягаан</translation>
     </message>
     <message>
         <source>Yellow</source>
-        <translation type="unfinished"></translation>
+        <translation>Шар</translation>
     </message>
     <message>
         <source>Dark Red</source>
-        <translation type="unfinished"></translation>
+        <translation>Бараан улаан</translation>
     </message>
     <message>
         <source>Dark Green</source>
-        <translation type="unfinished"></translation>
+        <translation>Бараан ногоон</translation>
     </message>
     <message>
         <source>Dark Blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Бараан цэнхэр</translation>
     </message>
     <message>
         <source>Dark Cyan</source>
-        <translation type="unfinished"></translation>
+        <translation>Бараан цэнхэр ногоон</translation>
     </message>
     <message>
         <source>Dark Magenta</source>
-        <translation type="unfinished"></translation>
+        <translation>Бараан ягаан</translation>
     </message>
     <message>
         <source>Dark Yellow</source>
-        <translation type="unfinished"></translation>
+        <translation>Бараан шар</translation>
     </message>
 </context>
 <context>
     <name>DInputDialog</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Цуцлах</translation>
     </message>
     <message>
         <source>Confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>Баталгаажуулах</translation>
     </message>
 </context>
 <context>
     <name>DKeySequenceEdit</name>
     <message>
         <source>Enter a new shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Шинэ товчлуурын хослол оруулна уу</translation>
     </message>
 </context>
 <context>
     <name>DLineEdit</name>
     <message>
         <source>Stop reading</source>
-        <translation type="unfinished"></translation>
+        <translation>Уншихыг зогсоох</translation>
     </message>
     <message>
         <source>Text to Speech</source>
-        <translation type="unfinished"></translation>
+        <translation>Текстийг ярианд хувиргах</translation>
     </message>
     <message>
         <source>Translate</source>
-        <translation type="unfinished"></translation>
+        <translation>Орчуулах</translation>
     </message>
     <message>
         <source>Speech To Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Яриаг текст рүү хувиргах</translation>
     </message>
 </context>
 <context>
     <name>DPrintPreviewDialogPrivate</name>
     <message>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Дэвшилтэт</translation>
     </message>
     <message>
         <source>Cancel</source>
         <comment>button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Цуцлах</translation>
     </message>
     <message>
         <source>Print</source>
         <comment>button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Хэвлэх</translation>
     </message>
     <message>
         <source>Basic</source>
-        <translation type="unfinished"></translation>
+        <translation>Үндсэн</translation>
     </message>
     <message>
         <source>Printer</source>
-        <translation type="unfinished"></translation>
+        <translation>Хэвлэгч</translation>
     </message>
     <message>
         <source>Copies</source>
-        <translation type="unfinished"></translation>
+        <translation>Хуулалт</translation>
     </message>
     <message>
         <source>Page range</source>
-        <translation type="unfinished"></translation>
+        <translation>Хуудасны хүрээ</translation>
     </message>
     <message>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Бүгд</translation>
     </message>
     <message>
         <source>Current page</source>
-        <translation type="unfinished"></translation>
+        <translation>Одоогийн хуудас</translation>
     </message>
     <message>
         <source>Select pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Хуудас сонгох</translation>
     </message>
     <message>
         <source>Orientation</source>
-        <translation type="unfinished"></translation>
+        <translation>Чиглэл</translation>
     </message>
     <message>
         <source>Portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>Босоо</translation>
     </message>
     <message>
         <source>Landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>Хэвтээ</translation>
     </message>
     <message>
         <source>Pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Хуудсууд</translation>
     </message>
     <message>
         <source>Color mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Өнгөний горим</translation>
+    </message>
+    <message>
+        <source>Color</source>
+        <translation type="vanished">Өнгө</translation>
     </message>
     <message>
         <source>Grayscale</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Full Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Саарал өнгө</translation>
     </message>
     <message>
         <source>Margins</source>
-        <translation type="unfinished"></translation>
+        <translation>Захын зай</translation>
     </message>
     <message>
         <source>Narrow (mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Нарийн (мм)</translation>
     </message>
     <message>
         <source>Normal (mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Хэвийн (мм)</translation>
     </message>
     <message>
         <source>Moderate (mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Дунд (мм)</translation>
     </message>
     <message>
         <source>Customize (mm)</source>
-        <translation type="unfinished"></translation>
+        <translation>Тохируулах (мм)</translation>
     </message>
     <message>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Дээд</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Зүүн</translation>
     </message>
     <message>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Доод</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Баруун</translation>
     </message>
     <message>
         <source>Scaling</source>
-        <translation type="unfinished"></translation>
+        <translation>Хэмжээ өөрчлөх</translation>
     </message>
     <message>
         <source>Actual size</source>
-        <translation type="unfinished"></translation>
+        <translation>Жинхэнэ хэмжээ</translation>
     </message>
     <message>
         <source>Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Хэмжээ</translation>
     </message>
     <message>
         <source>Paper</source>
-        <translation type="unfinished"></translation>
+        <translation>Цаас</translation>
     </message>
     <message>
         <source>Paper size</source>
-        <translation type="unfinished"></translation>
+        <translation>Цаасны хэмжээ</translation>
     </message>
     <message>
         <source>Print Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Хэвлэх байрлал</translation>
     </message>
     <message>
         <source>Duplex</source>
-        <translation type="unfinished"></translation>
+        <translation>Хоёр тал</translation>
     </message>
     <message>
         <source>N-up printing</source>
-        <translation type="unfinished"></translation>
+        <translation>Олон хуудас хэвлэх</translation>
     </message>
     <message>
         <source>2 pages/sheet, 1×2</source>
-        <translation type="unfinished"></translation>
+        <translation>2 хуудас/хуудас, 1×2</translation>
     </message>
     <message>
         <source>4 pages/sheet, 2×2</source>
-        <translation type="unfinished"></translation>
+        <translation>4 хуудас/хуудас, 2×2</translation>
     </message>
     <message>
         <source>6 pages/sheet, 2×3</source>
-        <translation type="unfinished"></translation>
+        <translation>6 хуудас/хуудас, 2×3</translation>
     </message>
     <message>
         <source>9 pages/sheet, 3×3</source>
-        <translation type="unfinished"></translation>
+        <translation>9 хуудас/хуудас, 3×3</translation>
     </message>
     <message>
         <source>16 pages/sheet, 4×4</source>
-        <translation type="unfinished"></translation>
+        <translation>16 хуудас/хуудас, 4×4</translation>
     </message>
     <message>
         <source>Layout direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Байрлалын чиглэл</translation>
     </message>
     <message>
         <source>Page Order</source>
-        <translation type="unfinished"></translation>
+        <translation>Хуудасны дараалал</translation>
     </message>
     <message>
         <source>Collate pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Хуудас эрэмбэлэх</translation>
     </message>
     <message>
         <source>Print pages in order</source>
-        <translation type="unfinished"></translation>
+        <translation>Хуудсыг дарааллаар хэвлэх</translation>
     </message>
     <message>
         <source>Front to back</source>
-        <translation type="unfinished"></translation>
+        <translation>Урдаас хойш</translation>
     </message>
     <message>
         <source>Back to front</source>
-        <translation type="unfinished"></translation>
+        <translation>Хойноос урагш</translation>
     </message>
     <message>
         <source>Watermark</source>
-        <translation type="unfinished"></translation>
+        <translation>Усан хээ</translation>
     </message>
     <message>
         <source>Add watermark</source>
-        <translation type="unfinished"></translation>
+        <translation>Усан хээ нэмэх</translation>
     </message>
     <message>
         <source>Text watermark</source>
-        <translation type="unfinished"></translation>
+        <translation>Текстэн усан хээ</translation>
     </message>
     <message>
         <source>Confidential</source>
-        <translation type="unfinished"></translation>
+        <translation>Нууц</translation>
     </message>
     <message>
         <source>Draft</source>
-        <translation type="unfinished"></translation>
+        <translation>Ноорог</translation>
     </message>
     <message>
         <source>Sample</source>
-        <translation type="unfinished"></translation>
+        <translation>Жишээ</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation type="unfinished"></translation>
+        <translation>Тохируулах</translation>
     </message>
     <message>
         <source>Input your text</source>
-        <translation type="unfinished"></translation>
+        <translation>Текстээ оруулна уу</translation>
     </message>
     <message>
         <source>Picture watermark</source>
-        <translation type="unfinished"></translation>
+        <translation>Зурагт усан хээ</translation>
     </message>
     <message>
         <source>Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Байрлал</translation>
     </message>
     <message>
         <source>Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Давхарлах</translation>
     </message>
     <message>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Төв</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Өнцөг</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Хэмжээ</translation>
     </message>
     <message>
         <source>Transparency</source>
-        <translation type="unfinished"></translation>
+        <translation>Тунгалаг байдал</translation>
     </message>
     <message>
         <source>Print to PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF рүү хэвлэх</translation>
     </message>
     <message>
         <source>Save as Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Зураг болгон хадгалах</translation>
     </message>
     <message>
         <source>Collapse</source>
-        <translation type="unfinished"></translation>
+        <translation>Хумих</translation>
     </message>
     <message>
         <source>Flip on short edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Богин талаар эргүүлэх</translation>
     </message>
     <message>
         <source>Flip on long edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Урт талаар эргүүлэх</translation>
     </message>
     <message>
         <source>Input page numbers please</source>
-        <translation type="unfinished"></translation>
+        <translation>Хуудасны дугаарыг оруулна уу</translation>
     </message>
     <message>
         <source>Maximum page number reached</source>
-        <translation type="unfinished"></translation>
+        <translation>Хуудасны дээд хязгаарт хүрлээ</translation>
     </message>
     <message>
         <source>Input English comma please</source>
-        <translation type="unfinished"></translation>
+        <translation>Англи таслал оруулна уу</translation>
     </message>
     <message>
         <source>Input page numbers like this: 1,3,5-7,11-15,18,21</source>
-        <translation type="unfinished"></translation>
+        <translation>Хуудасны дугаарыг ингэж оруулна уу: 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
         <source>Save</source>
         <comment>button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Хадгалах</translation>
     </message>
     <message>
         <source>*.pdf</source>
-        <translation type="unfinished"></translation>
+        <translation>*.pdf</translation>
     </message>
     <message>
         <source>For example, 1,3,5-7,11-15,18,21</source>
-        <translation type="unfinished"></translation>
+        <translation>Жишээлбэл, 1,3,5-7,11-15,18,21</translation>
     </message>
     <message>
         <source>Save as PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF болгон хадгалах</translation>
     </message>
     <message>
         <source>Save as image</source>
-        <translation type="unfinished"></translation>
+        <translation>Зураг болгон хадгалах</translation>
     </message>
     <message>
         <source>Images</source>
-        <translation type="unfinished"></translation>
+        <translation>Зургууд</translation>
+    </message>
+    <message>
+        <source>Full Color</source>
+        <translation>Бүтэн өнгө</translation>
     </message>
 </context>
 <context>
     <name>DPrintPreviewWidget</name>
     <message>
         <source>Confidential</source>
-        <translation type="unfinished"></translation>
+        <translation>Нууц</translation>
     </message>
     <message>
         <source>Draft</source>
-        <translation type="unfinished"></translation>
+        <translation>Ноорог</translation>
     </message>
     <message>
         <source>Sample</source>
-        <translation type="unfinished"></translation>
+        <translation>Жишээ</translation>
     </message>
 </context>
 <context>
     <name>DSearchEdit</name>
     <message>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Хайх</translation>
     </message>
 </context>
 <context>
     <name>DSettingsDialog</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Цуцлах</translation>
     </message>
     <message>
         <source>Replace</source>
-        <translation type="unfinished"></translation>
+        <translation>Солих</translation>
     </message>
     <message>
         <source>This shortcut conflicts with %1, click on Add to make this shortcut effective immediately</source>
-        <translation type="unfinished"></translation>
+        <translation>Энэ товчлуурын хослол %1-тэй зөрчилтэй, шууд хүчинтэй болгохын тулд Нэмэх дээр дарна уу</translation>
     </message>
 </context>
 <context>
     <name>DShortcutEdit</name>
     <message>
         <source>Please input a new shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Шинэ товчлуурын хослол оруулна уу</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Байхгүй</translation>
     </message>
 </context>
 <context>
     <name>DTextEdit</name>
     <message>
         <source>Stop reading</source>
-        <translation type="unfinished"></translation>
+        <translation>Уншихыг зогсоох</translation>
     </message>
     <message>
         <source>Text to Speech</source>
-        <translation type="unfinished"></translation>
+        <translation>Текстийг ярианд хувиргах</translation>
     </message>
     <message>
         <source>Translate</source>
-        <translation type="unfinished"></translation>
+        <translation>Орчуулах</translation>
     </message>
     <message>
         <source>Speech To Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Яриаг текст рүү хувиргах</translation>
     </message>
 </context>
 <context>
     <name>DToolbarEditPanel</name>
     <message>
         <source>Default toolset</source>
-        <translation type="unfinished"></translation>
+        <translation>Үндсэн багаж</translation>
     </message>
     <message>
         <source>Drag your favorite items into the toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Дуртай зүйлсээ багаж самбар луу чирнэ үү</translation>
     </message>
     <message>
         <source>Drag below items into the toolbar to restore defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Үндсэн тохиргоог сэргээхийн тулд доорх зүйлсийг багаж самбар луу чирнэ үү</translation>
     </message>
     <message>
         <source>Confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>Баталгаажуулах</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>MainWindow</source>
-        <translation type="unfinished"></translation>
+        <translation>Үндсэн цонх</translation>
     </message>
     <message>
         <source>This is DLabel...</source>
-        <translation type="unfinished"></translation>
+        <translation>Энэ бол DLabel...</translation>
     </message>
     <message>
         <source>255.255.255.255</source>
-        <translation type="unfinished"></translation>
+        <translation>255.255.255.255</translation>
     </message>
     <message>
         <source>这是一个富文本编辑框</source>
-        <translation type="unfinished"></translation>
+        <translation>Энэ бол баялаг текст засварлах талбар</translation>
     </message>
     <message>
         <source>warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Анхааруулга</translation>
     </message>
     <message>
         <source>suggest</source>
-        <translation type="unfinished"></translation>
+        <translation>Санал болгох</translation>
     </message>
 </context>
 <context>
     <name>PickColorWidget</name>
     <message>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Өнгө</translation>
     </message>
 </context>
 <context>
     <name>QLineEdit</name>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Хуулах</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation type="unfinished"></translation>
+        <translation>Та&amp;слах</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Буулгах</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Бүгдийг сонгох</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>No search result</source>
-        <translation type="unfinished"></translation>
+        <translation>Хайлтын үр дүн алга</translation>
     </message>
     <message>
         <source>Restore Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Үндсэн тохиргоог сэргээх</translation>
     </message>
     <message>
         <source>Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Хувилбар</translation>
     </message>
     <message>
         <source>Features</source>
-        <translation type="unfinished"></translation>
+        <translation>Боломжууд</translation>
     </message>
     <message>
         <source>Homepage</source>
-        <translation type="unfinished"></translation>
+        <translation>Нүүр хуудас</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Тайлбар</translation>
     </message>
     <message>
         <source>Acknowledgements</source>
-        <translation type="unfinished"></translation>
+        <translation>Талархал</translation>
     </message>
     <message>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>Лиценз</translation>
     </message>
     <message>
         <source>Sincerely appreciate the open-source software used.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ашигласан нээлттэй эхийн програм хангамжид үнэхээр талархаж байна.</translation>
     </message>
     <message>
         <source>open-source software</source>
-        <translation type="unfinished"></translation>
+        <translation>нээлттэй эхийн програм хангамж</translation>
     </message>
     <message>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Үргэлжлүүлэх</translation>
     </message>
     <message>
         <source>Learn More</source>
-        <translation type="unfinished"></translation>
+        <translation>Илүү ихийг мэдэх</translation>
     </message>
     <message>
         <source>Open-Source Software</source>
-        <translation type="unfinished"></translation>
+        <translation>Нээлттэй эхийн програм хангамж</translation>
     </message>
     <message>
         <source>Collections</source>
-        <translation type="unfinished"></translation>
+        <translation>Цуглуулга</translation>
     </message>
     <message>
         <source>2023 UnionTech Software Technology Co., Ltd.</source>
-        <translation type="unfinished"></translation>
+        <translation>2023 UnionTech Software Technology Co., Ltd.</translation>
     </message>
 </context>
 <context>
     <name>QWidgetTextControl</name>
     <message>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>Бүгдийг сонгох</translation>
     </message>
 </context>
 <context>
     <name>ShortcutEdit</name>
     <message>
         <source>Please enter a new shortcut</source>
-        <translation type="unfinished"></translation>
+        <translation>Шинэ товчлуурын хослол оруулна уу</translation>
     </message>
 </context>
 <context>
     <name>TitleBarMenu</name>
     <message>
         <source>Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Загвар</translation>
     </message>
     <message>
         <source>Light Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Цайвар загвар</translation>
     </message>
     <message>
         <source>Dark Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Бараан загвар</translation>
     </message>
     <message>
         <source>System Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Системийн загвар</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Тусламж</translation>
     </message>
     <message>
         <source>Feedback</source>
-        <translation type="unfinished"></translation>
+        <translation>Санал хүсэлт</translation>
     </message>
     <message>
         <source>Custom toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Тохируулсан багаж самбар</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Тухай</translation>
     </message>
     <message>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Гарах</translation>
     </message>
 </context>
 <context>
     <name>main</name>
     <message>
         <source>Collections provides the examples for dtk applications.</source>
-        <translation type="unfinished"></translation>
+        <translation>Цуглуулга нь dtk програмуудын жишээг өгдөг.</translation>
     </message>
 </context>
 </TS>
