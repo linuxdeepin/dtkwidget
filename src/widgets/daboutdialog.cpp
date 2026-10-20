@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2017 - 2023 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2017 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -81,38 +81,34 @@ void DAboutDialogPrivate::init()
 
     versionLabel = new QLabel();
     versionLabel->setObjectName("VersionLabel");
-    versionLabel->setForegroundRole(QPalette::BrightText);
-    fontManager->bind(versionLabel, DFontSizeManager::T8, QFont::Medium);
+    fontManager->bind(versionLabel, DFontSizeManager::T8);
 
     companyLogoLabel = new QLabel();
     companyLogoLabel->setPixmap(loadPixmap(logoPath));
     companyLogoLabel->hide();
 
     websiteLabel = new QLabel();
-    fontManager->bind(websiteLabel, DFontSizeManager::T8, QFont::Medium);
     websiteLabel->setObjectName("WebsiteLabel");
     websiteLabel->setContextMenuPolicy(Qt::NoContextMenu);
     websiteLabel->setOpenExternalLinks(false);
-    fontManager->bind(websiteLabel, DFontSizeManager::T8, QFont::Medium);
+    fontManager->bind(websiteLabel, DFontSizeManager::T8);
     updateWebsiteLabel();
 
     descriptionLabel = new QLabel();
-    descriptionLabel->setForegroundRole(QPalette::BrightText);
     descriptionLabel->setFixedWidth(280);
     descriptionLabel->setObjectName("DescriptionLabel");
     descriptionLabel->setAlignment(Qt::AlignLeft);
     descriptionLabel->setWordWrap(true);
     descriptionLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-    fontManager->bind(descriptionLabel, DFontSizeManager::T8, QFont::Medium);
+    fontManager->bind(descriptionLabel, DFontSizeManager::T8);
 
     licenseLabel = new QLabel();
     licenseLabel->setObjectName("LicenseLabel");
     licenseLabel->setWordWrap(true);
-    licenseLabel->setForegroundRole(QPalette::BrightText);
     licenseLabel->setFixedWidth(280);
     licenseLabel->setAlignment(Qt::AlignLeft);
     licenseLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-    fontManager->bind(licenseLabel, DFontSizeManager::T8, QFont::Medium);
+    fontManager->bind(licenseLabel, DFontSizeManager::T8);
     licenseLabel->hide();
 
     QLabel *versionTipLabel = new QLabel(QObject::tr("Version"));
@@ -124,7 +120,7 @@ void DAboutDialogPrivate::init()
       featureLabel->setVisible(!qApp->featureDisplayDialog()->isEmpty());
     else
       featureLabel->setVisible(false);
-    fontManager->bind(featureLabel, DFontSizeManager::T8, QFont::Medium);
+    fontManager->bind(featureLabel, DFontSizeManager::T8);
     redPointLabel = new DRedPointLabel();
     redPointLabel->setFixedSize(10, 10);
     QHBoxLayout *vFeatureLayout =  new QHBoxLayout;
@@ -144,12 +140,11 @@ void DAboutDialogPrivate::init()
     licenseTipLabel->hide();
 
     acknowledgementLabel = new QLabel(QObject::tr("Sincerely appreciate the open-source software used."));
-    acknowledgementLabel->setForegroundRole(QPalette::BrightText);
     acknowledgementLabel->setFixedWidth(280);
     acknowledgementLabel->setWordWrap(true);
     acknowledgementLabel->setContextMenuPolicy(Qt::NoContextMenu);
     acknowledgementLabel->setOpenExternalLinks(false);
-    fontManager->bind(acknowledgementLabel, DFontSizeManager::T8, QFont::Medium);
+    fontManager->bind(acknowledgementLabel, DFontSizeManager::T8);
 
     q->connect(websiteLabel, SIGNAL(linkActivated(QString)), q, SLOT(_q_onLinkActivated(QString)));
     q->connect(featureLabel, SIGNAL(linkActivated(QString)), q, SLOT(_q_onFeatureActivated(QString)));
