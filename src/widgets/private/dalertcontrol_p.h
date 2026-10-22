@@ -7,6 +7,7 @@
 #include <DAlertControl>
 #include <DObjectPrivate>
 #include <QPointer>
+#include <QList>
 #include <QTimer>
 
 DWIDGET_BEGIN_NAMESPACE
@@ -25,6 +26,7 @@ private:
     QPointer<DFloatingWidget> frame;
     QPointer<QWidget> follower;
     QPointer<QWidget> target;
+    QList<QPointer<QWidget>> ancestorFilters;
     QColor  alertColor;
     Qt::Alignment alignment{Qt::AlignLeft};
     QTimer timer;
