@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2021 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2021-2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -43,9 +43,9 @@ TEST_F(ut_DPushButton, testDPushButtonClicked)
         ASSERT_EQ(clickState, isClicked);
     });
     clickState = true;
-    emit button->clicked(clickState);
+    Q_EMIT button->clicked(clickState);
     clickState = false;
-    emit button->clicked(clickState);
+    Q_EMIT button->clicked(clickState);
 
     QObject::disconnect(button, &DPushButton::clicked, button, nullptr);
 }
@@ -59,9 +59,9 @@ TEST_F(ut_DPushButton, testDPushButtonToggled)
     });
 
     toggleState = true;
-    emit button->toggled(toggleState);
+    Q_EMIT button->toggled(toggleState);
     toggleState = false;
-    emit button->toggled(toggleState);
+    Q_EMIT button->toggled(toggleState);
 
     QObject::disconnect(button, &DPushButton::toggled, button, nullptr);
 }
