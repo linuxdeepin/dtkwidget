@@ -5,6 +5,7 @@
 #include "dprintpreviewdialog.h"
 
 #include "private/dprintpreviewdialog_p.h"
+#include "private/dprintpreviewwidget_p.h"
 #include "dframe.h"
 #include "diconbutton.h"
 #include "dlabel.h"
@@ -151,19 +152,60 @@ DPrintPreviewDialogPrivate::DPrintPreviewDialogPrivate(DPrintPreviewDialog *qq)
 {
 }
 
+// Setting objects belong to the caller and may be destroyed before startup finishes.
+static DPrintPreviewSettingInfo *copyPrintSetting(const DPrintPreviewSettingInfo *info)
+{
+    switch (info->type()) {
+    case DPrintPreviewSettingInfo::PS_Printer:
+        return new DPrintPreviewPrinterInfo(*static_cast<const DPrintPreviewPrinterInfo *>(info));
+    case DPrintPreviewSettingInfo::PS_Copies:
+        return new DPrintPreviewCopiesInfo(*static_cast<const DPrintPreviewCopiesInfo *>(info));
+    case DPrintPreviewSettingInfo::PS_PageRange:
+        return new DPrintPreviewPageRangeInfo(*static_cast<const DPrintPreviewPageRangeInfo *>(info));
+    case DPrintPreviewSettingInfo::PS_Orientation:
+        return new DPrintPreviewOrientationInfo(*static_cast<const DPrintPreviewOrientationInfo *>(info));
+    case DPrintPreviewSettingInfo::PS_PaperSize:
+        return new DPrintPreviewPaperSizeInfo(*static_cast<const DPrintPreviewPaperSizeInfo *>(info));
+    case DPrintPreviewSettingInfo::PS_PrintDuplex:
+        return new DPrintPreviewPrintDuplexInfo(*static_cast<const DPrintPreviewPrintDuplexInfo *>(info));
+    case DPrintPreviewSettingInfo::PS_NUpPrinting:
+        return new DPrintPreviewNUpPrintInfo(*static_cast<const DPrintPreviewNUpPrintInfo *>(info));
+    case DPrintPreviewSettingInfo::PS_PageOrder:
+        return new DPrintPreviewPageOrderInfo(*static_cast<const DPrintPreviewPageOrderInfo *>(info));
+    case DPrintPreviewSettingInfo::PS_ColorMode:
+        return new DPrintPreviewColorModeInfo(*static_cast<const DPrintPreviewColorModeInfo *>(info));
+    case DPrintPreviewSettingInfo::PS_PaperMargins:
+        return new DPrintPreviewPaperMarginsInfo(*static_cast<const DPrintPreviewPaperMarginsInfo *>(info));
+    case DPrintPreviewSettingInfo::PS_Scaling:
+        return new DPrintPreviewScalingInfo(*static_cast<const DPrintPreviewScalingInfo *>(info));
+    case DPrintPreviewSettingInfo::PS_Watermark:
+        return new DPrintPreviewWatermarkInfo(*static_cast<const DPrintPreviewWatermarkInfo *>(info));
+    default:
+        return nullptr;
+    }
+}
+
 void DPrintPreviewDialogPrivate::startup()
 {
     Q_Q(DPrintPreviewDialog);
 
-    this->printer = new DPrinter;
     this->settingHelper = new PreviewSettingsPluginHelper(this);
     PreviewSettingsPluginHelper::loadPlugin();
 
     if (qApp)
         qApp->installEventFilter(q);
     initui();
-    initdata();
-    initconnections();
+    scrollarea->setEnabled(false);
+    pview->parentWidget()->setEnabled(false);
+    printBtn->setEnabled(false);
+    QObject::connect(cancelBtn, &DPushButton::clicked, q, &DPrintPreviewDialog::reject);
+    QObject::connect(q, &DPrintPreviewDialog::finished, q, [this]() {
+        discardPrinterInfoRequest();
+        const QSignalBlocker blocker(printDeviceCombo);
+        printDeviceCombo->clear();
+        qDebug(dPrintPreview) << "DPrintPreviewDialog finished, clear printerNames";
+        printerNames.clear();
+    });
 }
 
 void DPrintPreviewDialogPrivate::initui()
@@ -1041,7 +1083,6 @@ void DPrintPreviewDialogPrivate::initconnections()
 
     QObject::connect(advanceBtn, &QPushButton::clicked, q, [this] { this->showadvancesetting(); });
     QObject::connect(printDeviceCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_printerChanged(int)));
-    QObject::connect(cancelBtn, &DPushButton::clicked, q, &DPrintPreviewDialog::reject);
     QObject::connect(pageRangeCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_pageRangeChanged(int)));
     QObject::connect(marginsCombo, SIGNAL(currentIndexChanged(int)), q, SLOT(_q_pageMarginChanged(int)));
     QObject::connect(printBtn, SIGNAL(clicked(bool)), q, SLOT(_q_startPrint(bool)));
@@ -1285,14 +1326,6 @@ void DPrintPreviewDialogPrivate::initconnections()
     QObject::connect(copycountspinbox->lineEdit(), SIGNAL(textEdited(const QString &)), q, SLOT(_q_spinboxValueEmptyChecked(const QString &)));
     QObject::connect(scaleRateEdit->lineEdit(), SIGNAL(textEdited(const QString &)), q, SLOT(_q_spinboxValueEmptyChecked(const QString &)));
     QObject::connect(inclinatBox->lineEdit(), SIGNAL(textEdited(const QString &)), q, SLOT(_q_spinboxValueEmptyChecked(const QString &)));
-
-    QObject::connect(q, &DPrintPreviewDialog::finished, q, [this]() {
-        discardPrinterInfoRequest();
-        const QSignalBlocker blocker(printDeviceCombo);
-        printDeviceCombo->clear();
-        qDebug(dPrintPreview) << "DPrintPreviewDialog finished, clear printerNames";
-        printerNames.clear();
-    });
 }
 
 void DPrintPreviewDialogPrivate::setfrmaeback(DFrame *frame)
@@ -2267,11 +2300,13 @@ void DPrintPreviewDialogPrivate::fetchPrinterInfo()
     printDeviceCombo->setEnabled(false);
     printBtn->setEnabled(false);
 
+    // Initialize Qt's unguarded plugin singleton before querying it in workers.
+    QPlatformPrinterSupportPlugin::get();
     printerNamesWatcher = new QFutureWatcher<QStringList>(q);
-    defaultPrinterWatcher = new QFutureWatcher<QString>(q);
+    defaultPrinterWatcher = new QFutureWatcher<DefaultPrinterInfo>(q);
     QObject::connect(printerNamesWatcher.data(), &QFutureWatcher<QStringList>::finished,
                      q, [this] { applyPrinterInfo(); }, Qt::QueuedConnection);
-    QObject::connect(defaultPrinterWatcher.data(), &QFutureWatcher<QString>::finished,
+    QObject::connect(defaultPrinterWatcher.data(), &QFutureWatcher<DefaultPrinterInfo>::finished,
                      q, [this] { applyPrinterInfo(); }, Qt::QueuedConnection);
 
     printerNamesWatcher->setFuture(QtConcurrent::run([] {
@@ -2280,11 +2315,20 @@ void DPrintPreviewDialogPrivate::fetchPrinterInfo()
         qDebug(dPrintPreview) << "Available printer names query finished, printer count:" << names.size();
         return names;
     }));
-    defaultPrinterWatcher->setFuture(QtConcurrent::run([] {
-        qDebug(dPrintPreview) << "Default printer name query started";
-        const QString name = QPrinterInfo::defaultPrinterName();
-        qDebug(dPrintPreview) << "Default printer name query finished, default printer:" << name;
-        return name;
+    defaultPrinterWatcher->setFuture(QtConcurrent::run([createPrinter = !printer] {
+        qDebug(dPrintPreview) << "Default printer query started";
+        DefaultPrinterInfo info;
+        if (createPrinter) {
+            // QPrinter already queries the default printer during construction.
+            // Shared ownership also releases results discarded when the dialog closes.
+            info.printer = QSharedPointer<DPrinter>::create();
+            info.name = info.printer->printerName();
+            info.printer->setPrinterName(QString());
+        } else {
+            info.name = QPrinterInfo::defaultPrinterName();
+        }
+        qDebug(dPrintPreview) << "Default printer query finished, default printer:" << info.name;
+        return info;
     }));
 }
 
@@ -2310,7 +2354,19 @@ void DPrintPreviewDialogPrivate::applyPrinterInfo()
         return;
 
     printerNames = printerNamesWatcher->result();
-    const QString defaultName = defaultPrinterWatcher->result();
+    const auto defaultInfo = defaultPrinterWatcher->result();
+    const QString defaultName = defaultInfo.name;
+    if (!printer) {
+        printerOwner = defaultInfo.printer;
+        printer = printerOwner.data();
+        printer->setDocName(pendingDocName);
+        pview->d_func()->previewPrinter = printer;
+        pview->d_func()->colorMode = printer->colorMode();
+        initdata();
+        initconnections();
+        scrollarea->setEnabled(true);
+        pview->parentWidget()->setEnabled(true);
+    }
     qDebug(dPrintPreview) << "Apply printer information, dialog:" << q_func() << "default printer:" << defaultName;
     discardPrinterInfoRequest();
     printerInfoReady = true;
@@ -2327,6 +2383,13 @@ void DPrintPreviewDialogPrivate::applyPrinterInfo()
         printDeviceCombo->setCurrentIndex(defaultIndex >= 0 ? defaultIndex : 0);
     }
     _q_printerChanged(printDeviceCombo->currentIndex());
+    disablePrintSettings();
+    if (!pendingSettings.isEmpty())
+        pview->d_func()->updatePreview();
+    for (const auto &info : pendingSettings)
+        settingHelper->updateSettingInfo(info.data());
+    pendingSettings.clear();
+    pview->updatePreview();
     printDeviceCombo->setEnabled(true);
     updateAllControlStatus();
     setPageIsLegal(pageIsLegal);
@@ -2644,8 +2707,6 @@ DPrintPreviewDialog::~DPrintPreviewDialog()
 {
     Q_D(DPrintPreviewDialog);
     d->discardPrinterInfoRequest();
-    if (nullptr != d->printer)
-        delete d->printer;
     delete d->settingHelper;
 }
 
@@ -2682,7 +2743,7 @@ QString DPrintPreviewDialog::currentPlugin()
 bool DPrintPreviewDialog::event(QEvent *event)
 {
     Q_D(DPrintPreviewDialog);
-    if (event->type() == QEvent::ApplicationFontChange || d->fontSizeMore == true) {
+    if (d->isInited && (event->type() == QEvent::ApplicationFontChange || d->fontSizeMore == true)) {
         if (d->waterTypeGroup->button(0)->isChecked()) {
             d->watermarkTypeChoosed(0);
         }
@@ -2696,9 +2757,11 @@ bool DPrintPreviewDialog::event(QEvent *event)
     if (event->type() == QEvent::Show) {
         if (!d->printerInfoReady && !d->printerNamesWatcher && !d->defaultPrinterWatcher)
             d->fetchPrinterInfo();
-        d->pview->updatePreview();
-        d->updateAllControlSettings();
-        d->updateAllControlStatus();
+        if (d->isInited) {
+            d->pview->updatePreview();
+            d->updateAllControlSettings();
+            d->updateAllControlStatus();
+        }
     }
     return DDialog::event(event);
 }
@@ -2706,6 +2769,9 @@ bool DPrintPreviewDialog::event(QEvent *event)
 bool DPrintPreviewDialog::eventFilter(QObject *watched, QEvent *event)
 {
     Q_D(DPrintPreviewDialog);
+
+    if (!d->isInited)
+        return DDialog::eventFilter(watched, event);
 
     if (event->type() == QEvent::KeyRelease) {
         QKeyEvent *keye = dynamic_cast<QKeyEvent *>(event);
@@ -2786,7 +2852,9 @@ bool DPrintPreviewDialog::eventFilter(QObject *watched, QEvent *event)
 void DPrintPreviewDialog::setDocName(const QString &str)
 {
     Q_D(DPrintPreviewDialog);
-    d->printer->setDocName(str);
+    d->pendingDocName = str;
+    if (d->printer)
+        d->printer->setDocName(str);
 }
 
 /*!
@@ -2796,7 +2864,7 @@ void DPrintPreviewDialog::setDocName(const QString &str)
 QString DPrintPreviewDialog::docName() const
 {
     D_DC(DPrintPreviewDialog);
-    return d->printer->docName();
+    return d->printer ? d->printer->docName() : d->pendingDocName;
 }
 
 /*!
@@ -2812,7 +2880,8 @@ bool DPrintPreviewDialog::setPrintFromPath(const QString &path)
     Q_D(DPrintPreviewDialog);
 
     d->pview->setPrintFromPath(path);
-    d->disablePrintSettings();
+    if (d->isInited)
+        d->disablePrintSettings();
 
     return true;
 }
@@ -2855,6 +2924,13 @@ DPrintPreviewSettingInfo *DPrintPreviewDialog::createDialogSettingInfo(DPrintPre
 void DPrintPreviewDialog::updateDialogSettingInfo(DPrintPreviewSettingInfo *info)
 {
     Q_D(DPrintPreviewDialog);
+    if (!info)
+        return;
+    if (!d->isInited) {
+        if (auto copy = copyPrintSetting(info))
+            d->pendingSettings.append(QSharedPointer<DPrintPreviewSettingInfo>(copy));
+        return;
+    }
     d->settingHelper->updateSettingInfo(info);
 }
 
@@ -2903,6 +2979,17 @@ DPrintPreviewSettingInfo *PreviewSettingsPluginHelper::loadInfo(DPrintPreviewSet
     }
 
     DPrintPreviewSettingInfo *info = nullptr;
+    if (!d->isInited) {
+        for (auto it = d->pendingSettings.crbegin(); it != d->pendingSettings.crend(); ++it) {
+            if ((*it)->type() == type) {
+                info = copyPrintSetting(it->data());
+                if (!m_currentInterface || m_currentInterface->settingFilter(m_printSettingData, info))
+                    return info;
+                delete info;
+                return nullptr;
+            }
+        }
+    }
     switch (type) {
     case DPrintPreviewSettingInfo::PS_Printer: {
         DPrintPreviewPrinterInfo *printerInfo = new DPrintPreviewPrinterInfo;
@@ -2926,7 +3013,8 @@ DPrintPreviewSettingInfo *PreviewSettingsPluginHelper::loadInfo(DPrintPreviewSet
         break;
     case DPrintPreviewSettingInfo::PS_Orientation: {
         DPrintPreviewOrientationInfo *orientationInfo = new DPrintPreviewOrientationInfo;
-        orientationInfo->orientationMode = static_cast<DPrinter::Orientation>(d->printer->pageLayout().orientation());
+        orientationInfo->orientationMode = d->printer
+            ? static_cast<DPrinter::Orientation>(d->printer->pageLayout().orientation()) : DPrinter::Portrait;
         info  = orientationInfo;
     }
         break;
@@ -2940,7 +3028,7 @@ DPrintPreviewSettingInfo *PreviewSettingsPluginHelper::loadInfo(DPrintPreviewSet
     case DPrintPreviewSettingInfo::PS_PrintDuplex: {
         DPrintPreviewPrintDuplexInfo *duplexInfo = new DPrintPreviewPrintDuplexInfo;
         duplexInfo->enable = d->duplexCheckBox->isChecked();
-        duplexInfo->duplex = d->printer->duplex();
+        duplexInfo->duplex = d->printer ? d->printer->duplex() : DPrinter::DuplexNone;
         info = duplexInfo;
     }
         break;

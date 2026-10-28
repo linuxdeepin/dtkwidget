@@ -20,6 +20,7 @@
 #include <QBasicTimer>
 #include <QFutureWatcher>
 #include <QPointer>
+#include <QSharedPointer>
 
 class QVBoxLayout;
 class QButtonGroup;
@@ -124,6 +125,9 @@ public:
 
     //printer
     DPrinter *printer = nullptr;
+    QSharedPointer<DPrinter> printerOwner;
+    QString pendingDocName;
+    QList<QSharedPointer<DPrintPreviewSettingInfo>> pendingSettings;
     int totalPages = 0;
     bool fontSizeMore = false;
     QString lastPageRange = "";
@@ -199,7 +203,11 @@ public:
     bool printerInfoReady = false;
     bool pageIsLegal = true;
     QPointer<QFutureWatcher<QStringList>> printerNamesWatcher;
-    QPointer<QFutureWatcher<QString>> defaultPrinterWatcher;
+    struct DefaultPrinterInfo {
+        QString name;
+        QSharedPointer<DPrinter> printer;
+    };
+    QPointer<QFutureWatcher<DefaultPrinterInfo>> defaultPrinterWatcher;
     QSpacerItem *spacer = nullptr;
     QSpacerItem *wmSpacer = nullptr;
     DFloatingWidget *colorWidget = nullptr;

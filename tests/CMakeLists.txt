@@ -74,7 +74,7 @@ set(WIDGET_TEST
     testcases/widgets/ut_dpicturesequenceview.cpp
     # TODO PREAK
     #testcases/widgets/ut_dprintpickcolorwidget.cpp
-    #testcases/widgets/ut_dprintpreviewdialog.cpp
+    testcases/widgets/ut_dprintpreviewdialog.cpp
     testcases/widgets/ut_dprintpreviewwidget.cpp
     testcases/widgets/ut_dprogressbar.cpp
     testcases/widgets/ut_dpushbutton.cpp
