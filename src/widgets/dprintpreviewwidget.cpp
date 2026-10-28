@@ -103,7 +103,7 @@ void DPrintPreviewWidgetPrivate::init()
     layout->setContentsMargins(10, 10, 10, 10);
     layout->addWidget(graphicsView);
 
-    colorMode = previewPrinter->colorMode();
+    colorMode = previewPrinter ? previewPrinter->colorMode() : QPrinter::Color;
 }
 
 void DPrintPreviewWidgetPrivate::populateScene()
@@ -151,6 +151,8 @@ void DPrintPreviewWidgetPrivate::populateScene()
 
 void DPrintPreviewWidgetPrivate::updatePreview()
 {
+    if (!previewPrinter)
+        return;
     generatePreview();
     graphicsView->updateGeometry();
 }

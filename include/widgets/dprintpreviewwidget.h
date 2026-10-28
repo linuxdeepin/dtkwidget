@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2019 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2019 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -151,6 +151,7 @@ private:
 
     D_DECLARE_PRIVATE(DPrintPreviewWidget)
     friend class ContentItem;
+    friend class DPrintPreviewDialogPrivate;
 };
 
 DWIDGET_END_NAMESPACE
