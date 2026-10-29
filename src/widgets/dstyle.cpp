@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2019 - 2024 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2019 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -1345,7 +1345,6 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
                 p->setPen(QPen(btn->dpalette.frameShadowBorder(), 1));
             }
 
-            p->setPen(Qt::NoPen);
             p->setBrush(btn->noBackground ? Qt::NoBrush : p->background());
             p->drawRoundedRect(opt->rect, frameRadius, frameRadius);
 
@@ -1354,8 +1353,8 @@ void DStyle::drawPrimitive(const QStyle *style, DStyle::PrimitiveElement pe, con
                 QPen pen;
                 pen.setWidth(1);
                 pen.setColor(DGuiApplicationHelper::instance()->themeType() == DGuiApplicationHelper::DarkType
-                                 ? QColor(255, 255, 255, int(0.1 * 255))
-                                 : QColor(0, 0, 0, int(0.12 * 255)));
+                                 ? QColor(255, 255, 255, int(0.3 * 255))
+                                 : QColor(0, 0, 0, int(0.3 * 255)));
                 p->setPen(pen);
                 p->drawRoundedRect(opt->rect, frameRadius, frameRadius);
             }
