@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2015 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2015 - 2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -7,6 +7,7 @@
 #include "dstyle.h"
 #include "private/dsearchedit_p.h"
 #include "diconbutton.h"
+#include "dsizemode.h"
 
 #include <DSysInfo>
 #include <DGuiApplicationHelper>
@@ -300,7 +301,7 @@ void DSearchEditPrivate::init()
         iconbtn->setFocusPolicy(Qt::NoFocus);
         iconbtn->setAttribute(Qt::WA_TransparentForMouseEvents);
         iconbtn->setAccessibleName("DSearchEditIconButton");
-        iconbtn->setIconSize(QSize(20, 20));
+        iconbtn->setIconSize(DSizeModeHelper::element(QSize(16, 16), QSize(20, 20)));
         return iconbtn;
     };
 
@@ -314,6 +315,14 @@ void DSearchEditPrivate::init()
     action->setDefaultWidget(iconAction);
     q->lineEdit()->addAction(action, QLineEdit::LeadingPosition);
     action->defaultWidget()->setVisible(false);
+
+    auto updateIconSize = [iconbtn, iconAction]() {
+        QSize iconSize = DSizeModeHelper::element(QSize(16, 16), QSize(20, 20));
+        iconbtn->setIconSize(iconSize);
+        iconAction->setIconSize(iconSize);
+    };
+    updateIconSize();
+    QObject::connect(DGuiApplicationHelper::instance(), &DGuiApplicationHelper::sizeModeChanged, q, updateIconSize);
 
     DPalette pe;
     QStyleOption opt;
