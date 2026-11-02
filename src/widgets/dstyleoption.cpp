@@ -382,7 +382,11 @@ int DFontSizeManager::fontPixelSize(const QFont &font)
     if (px == -1) {
         // font.d->dpi <= 0 is unacceptable,this fallback is to avoid errors.
         // TODO: Remove me if invalid font dpi was fixed
-        const auto fontD = D_PRIVATE_MEMBER(font, QFont_d_tag{});
+        // bind by reference: copying the member by value odr-uses
+        // QExplicitlySharedDataPointer<QFontPrivate>::~QExplicitlySharedDataPointer(),
+        // which Qt 6.12 no longer emits into this TU, leaving an undefined
+        // reference in libdtk6widget.so that breaks every downstream link
+        const auto &fontD = D_PRIVATE_MEMBER(font, QFont_d_tag{});
         px = qRound(std::floor(((font.pointSizeF() * (fontD->dpi <= 0 ? d_defaultDpi() : fontD->dpi)) / 72) * 100 + 0.5) / 100);
     }
 
