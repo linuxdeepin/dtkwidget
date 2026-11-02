@@ -107,7 +107,7 @@ void DCircleProgress::setValue(int value)
         return;
     }
     d->m_currentValue = value;
-    emit valueChanged(value);
+    Q_EMIT valueChanged(value);
     update();
 }
 
