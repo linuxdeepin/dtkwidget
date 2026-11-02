@@ -74,5 +74,5 @@ TEST_F(ut_DAlertcontrol, showALertMessage)
         ASSERT_EQ(text, testStr);
     });
 
-    emit lineEdit->textChanged(testStr);
+    Q_EMIT lineEdit->textChanged(testStr);
 }
