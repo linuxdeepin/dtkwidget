@@ -236,6 +236,20 @@ void DAlertControl::showAlertMessage(const QString &text, QWidget *follower, int
     }
     d->follower->topLevelWidget()->installEventFilter(this);
 
+    // Clean up previous ancestor filters before installing new ones
+    for (const auto &ancestor : d->ancestorFilters) {
+        if (ancestor)
+            ancestor->removeEventFilter(this);
+    }
+    d->ancestorFilters.clear();
+
+    // Install eventFilter on intermediate ancestor widgets between follower and topLevelWidget
+    QWidget *topLevel = d->follower->topLevelWidget();
+    for (QWidget *ancestor = d->follower->parentWidget(); ancestor && ancestor != topLevel; ancestor = ancestor->parentWidget()) {
+        ancestor->installEventFilter(this);
+        d->ancestorFilters.append(ancestor);
+    }
+
     d->tooltip->setText(text);
     if (d->frame->parent()) {
         d->updateTooltipPos();
@@ -264,9 +278,15 @@ void DAlertControl::hideAlertMessage()
         d->frame->hide();
         if (d->follower) {
             //this->removeEventFilter(d->follower);
+            d->follower->topLevelWidget()->removeEventFilter(this);
             d->follower->removeEventFilter(this);
             d->follower = nullptr;
         }
+        for (const auto &ancestor : d->ancestorFilters) {
+            if (ancestor)
+                ancestor->removeEventFilter(this);
+        }
+        d->ancestorFilters.clear();
     }
 }
 
@@ -291,6 +311,15 @@ bool DAlertControl::eventFilter(QObject *watched, QEvent *event)
 
         if (d->timer.isActive())
             d->frame->setVisible(!d->follower->visibleRegion().isNull());
+    }
+
+    if (event->type() == QEvent::Move) {
+        for (const auto &ancestor : d->ancestorFilters) {
+            if (ancestor && watched == ancestor) {
+                d->updateTooltipPos();
+                break;
+            }
+        }
     }
     return QObject::eventFilter(watched, event);
 }
