@@ -1181,7 +1181,7 @@ void DDialog::resizeEvent(QResizeEvent *event)
 {
     D_D(DDialog);
     const bool shouldUpdateSize = !testAttribute(Qt::WA_Resized)
-            && event->size().width() != event->oldSize().width();
+            && qAbs(event->size().width() - event->oldSize().width()) <= 1;
 
     DAbstractDialog::resizeEvent(event);
 
