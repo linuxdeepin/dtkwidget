@@ -1180,7 +1180,7 @@ void DDialog::childEvent(QChildEvent *event)
 void DDialog::resizeEvent(QResizeEvent *event)
 {
     D_D(DDialog);
-    const bool shouldUpdateSize = !testAttribute(Qt::WA_Resized)
+    const bool shouldUpdateSize = isVisible() && !testAttribute(Qt::WA_Resized)
             && event->size().width() != event->oldSize().width();
 
     DAbstractDialog::resizeEvent(event);
