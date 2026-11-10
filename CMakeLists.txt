@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2026 UnionTech Software Technology Co., Ltd.
+#
+# SPDX-License-Identifier: LGPL-3.0-or-later
+
 cmake_minimum_required(VERSION 3.13)
 
 file(READ "${CMAKE_CURRENT_SOURCE_DIR}/VERSION" FILE_VERSION)
@@ -31,5 +35,7 @@ set(DTK_VERSION_MINOR ${PROJECT_VERSION_MINOR})
 set(DTK_VERSION_PATCH ${PROJECT_VERSION_PATCH})
 set(DTK_VERSION "${DTK_VERSION_MAJOR}.${DTK_VERSION_MINOR}.${DTK_VERSION_PATCH}")
 set(QT_VERSION_MAJOR ${DTK_VERSION_MAJOR})
+
+add_compile_definitions(QT_NO_KEYWORDS)
 
 include(dtkwidget.cmake)
