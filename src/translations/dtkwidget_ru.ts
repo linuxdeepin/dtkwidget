@@ -319,7 +319,7 @@
     </message>
     <message>
         <source>Back to front</source>
-        <translation> От задней к лицевой</translation>
+        <translation>От задней к лицевой</translation>
     </message>
     <message>
         <source>Watermark</source>
@@ -683,7 +683,7 @@
     </message>
     <message>
         <source>Help</source>
-        <translation>Помощь</translation>
+        <translation>Справка</translation>
     </message>
     <message>
         <source>Feedback</source>
