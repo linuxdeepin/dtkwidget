@@ -10,7 +10,7 @@
           "name[zh_CN]": "配置应用的更新状态",
           "description": "Configure the update status of the application",
           "permissions": "readwrite",
-          "visibility": "public"
+          "visibility": "private"
       },
       "autoDisplayFeature": {
           "value": false,
@@ -20,7 +20,7 @@
           "name[zh_CN]": "配置应用是否自动展示一次新特性",
           "description": "The application automatically display updated contents once",
           "permissions": "readwrite",
-          "visibility": "public"
+          "visibility": "private"
       }
   }
 }
