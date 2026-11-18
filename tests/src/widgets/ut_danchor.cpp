@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2021 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2021-2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -75,8 +75,8 @@ TEST_F(ut_DAnchors, testDAnchors)
     result = anchor2.setAnchor(Qt::AnchorBottom, widget, Qt::AnchorBottom);
     ASSERT_TRUE(result);
 
-    emit anchorBase->horizontalCenterOffsetChanged(offset);
-    emit anchorBase->verticalCenterOffsetChanged(offset);
+    Q_EMIT anchorBase->horizontalCenterOffsetChanged(offset);
+    Q_EMIT anchorBase->verticalCenterOffsetChanged(offset);
     ASSERT_TRUE(signalTest == 2);
 
     anchor2.setHorizontalCenterOffset(offset);

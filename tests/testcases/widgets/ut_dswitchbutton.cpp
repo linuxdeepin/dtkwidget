@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2021 - 2022 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2021-2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
@@ -46,8 +46,8 @@ TEST_F(ut_DSwitchButton, testDSwitchButtonClicked)
             ASSERT_TRUE(isClicked == true);
         ++count;
     });
-    emit button->clicked(true);
-    emit button->clicked(false);
+    Q_EMIT button->clicked(true);
+    Q_EMIT button->clicked(false);
 
     QObject::disconnect(button, &DSwitchButton::clicked, button, nullptr);
 
@@ -66,8 +66,8 @@ TEST_F(ut_DSwitchButton, testDSwitchButtonToggled)
         ++count;
     });
 
-    emit button->toggled(true);
-    emit button->toggled(false);
+    Q_EMIT button->toggled(true);
+    Q_EMIT button->toggled(false);
 
     QObject::disconnect(button, &DSwitchButton::toggled, button, nullptr);
 
@@ -86,8 +86,8 @@ TEST_F(ut_DSwitchButton, testDSwitchButtonCheckedChanged)
         ++count;
     });
 
-    emit button->setChecked(true);
-    emit button->setChecked(false);
+    Q_EMIT button->setChecked(true);
+    Q_EMIT button->setChecked(false);
 
     QObject::disconnect(button, &DSwitchButton::toggled, button, nullptr);
 
